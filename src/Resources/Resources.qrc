@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/Fonts">
+        <file alias="Courier New">Fonts/Courier New.otf</file>
+    </qresource>
+    <qresource prefix="/SpellChecking">
+        <file>HunspellDictionaries/en_AU.aff</file>
+        <file>HunspellDictionaries/en_AU.dic</file>
+        <file>HunspellDictionaries/en_GB.aff</file>
+        <file>HunspellDictionaries/en_GB.dic</file>
+        <file>HunspellDictionaries/en_US.aff</file>
+        <file>HunspellDictionaries/en_US.dic</file>
+        <file>HunspellDictionaries/en_ZA.aff</file>
+        <file>HunspellDictionaries/en_ZA.dic</file>
+        <file>HunspellDictionaries/ru_RU.aff</file>
+        <file>HunspellDictionaries/ru_RU.dic</file>
+    </qresource>
+</RCC>
