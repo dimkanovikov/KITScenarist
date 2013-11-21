@@ -5,9 +5,20 @@
 
 # Compiled Dynamic libraries
 *.so
+*.so.*
 *.dylib
 
 # Compiled Static libraries
 *.lai
 *.la
 *.a
+
+# Qt generated files
+*.user
+*.bak
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+
+# Makefiles
+Makefile
