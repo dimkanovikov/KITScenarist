@@ -17,7 +17,10 @@ public:
 	 * @brief Возможные языки для проверки орфографии
 	 */
 	enum Language {
-		Russian
+		Russian,
+		EnglishAU,
+		EnglishGB,
+		EnglishUS
 	};
 
 public:

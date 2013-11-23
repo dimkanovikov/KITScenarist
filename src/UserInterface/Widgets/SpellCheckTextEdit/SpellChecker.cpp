@@ -149,13 +149,22 @@ QString SpellChecker::dictionaryFilePath(
 	QString filePath = ":/SpellChecking/HunspellDictionaries/";
 
 	//
-	// Получим файл со словарём в зависимости от выбранного языка
+	// Получим файл со словарём в зависимости от выбранного языка,
 	// по-умолчанию используется русский язык
 	//
 	switch (_language) {
 		case Russian:
 		default:
 			filePath += "ru_RU";
+			break;
+		case EnglishAU:
+			filePath += "en_AU";
+			break;
+		case EnglishGB:
+			filePath += "en_GB";
+			break;
+		case EnglishUS:
+			filePath += "en_US";
 			break;
 	}
 
