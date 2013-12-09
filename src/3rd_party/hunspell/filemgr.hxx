@@ -12,7 +12,7 @@ protected:
     int fail(const char * err, const char * par);
     
 public:
-    FileMgr(const char * filename, const char * key = NULL);
+    FileMgr(const char * filename, const char * key = 0);
     ~FileMgr();
     char * getline();
 };

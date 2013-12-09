@@ -50,7 +50,7 @@ using namespace std;
 #endif
 #endif
 
-static struct unicode_info2 * utf_tbl = NULL;
+static struct unicode_info2 * utf_tbl = 0;
 static int utf_tbl_count = 0; // utf_tbl can be used by multiple Hunspell instances
 
 /* only UTF-16 (BMP) implementation */
@@ -230,7 +230,7 @@ int flag_bsearch(unsigned short flags[], unsigned short flag, int length) {
         // don't use isspace() here, the string can be in some random charset
         // that's way different than the locale's
         for (dp = mp; (*dp && *dp != ' ' && *dp != '\t'); dp++);
-        if (!*dp) dp = NULL;
+        if (!*dp) dp = 0;
       }
       if (dp) {
          *stringp = dp+1;
@@ -242,14 +242,14 @@ int flag_bsearch(unsigned short flags[], unsigned short flag, int length) {
          return mp;
       }
    }
-   return NULL;
+   return 0;
  }
 
  
  // replaces strdup with ansi version
  char * mystrdup(const char * s)
  {
-   char * d = NULL;
+   char * d = 0;
    if (s) {
       int sl = strlen(s);
       d = (char *) malloc(((sl+1) * sizeof(char)));
@@ -275,7 +275,7 @@ int flag_bsearch(unsigned short flags[], unsigned short flag, int length) {
  //  does an ansi strdup of the reverse of a string
  char * myrevstrdup(const char * s)
  {
-     char * d = NULL;
+     char * d = 0;
      if (s) {
         int sl = strlen(s);
         d = (char *) malloc((sl+1) * sizeof(char));
@@ -442,7 +442,7 @@ int morphcmp(const char * s, const char * t)
     if (!s || (sl && sl < s)) s = strstr(olds, MORPH_INFL_SFX);
     if (!s || (sl && sl < s)) {
         s= strstr(olds, MORPH_TERM_SFX);
-        olds = NULL;
+        olds = 0;
     }
     oldt = t;
     tl = strchr(t, '\n');
@@ -450,7 +450,7 @@ int morphcmp(const char * s, const char * t)
     if (!t || (tl && tl < t)) t = strstr(oldt, MORPH_INFL_SFX);
     if (!t || (tl && tl < t)) {
         t = strstr(oldt, MORPH_TERM_SFX);
-        oldt = NULL;
+        oldt = 0;
     }
     while (s && t && (!sl || sl > s) && (!tl || tl > t)) {
         s += MORPH_TAG_LEN;
@@ -483,14 +483,14 @@ int morphcmp(const char * s, const char * t)
         if (!s || (sl && sl < s)) s = strstr(olds, MORPH_INFL_SFX);
         if (!s || (sl && sl < s)) {
             s = strstr(olds, MORPH_TERM_SFX);
-            olds = NULL;
+            olds = 0;
         }
         oldt = t;
         t = strstr(t, MORPH_DERI_SFX);
         if (!t || (tl && tl < t)) t = strstr(oldt, MORPH_INFL_SFX);
         if (!t || (tl && tl < t)) {
             t = strstr(oldt, MORPH_TERM_SFX);
-            oldt = NULL;
+            oldt = 0;
         }
     }
     if (!s && !t && se && te) return 0;
@@ -528,7 +528,7 @@ int fieldlen(const char * r)
 
 char * copy_field(char * dest, const char * morph, const char * var)
 {
-    if (!morph) return NULL;
+    if (!morph) return 0;
     const char * beg = strstr(morph, var);
     if (beg) {
        char * d = dest;
@@ -539,7 +539,7 @@ char * copy_field(char * dest, const char * morph, const char * var)
        *d = '\0';
        return dest;
   }
-  return NULL;
+  return 0;
 }
 
 char * mystrrep(char * word, const char * pat, const char * rep) {
@@ -599,7 +599,7 @@ char * mystrrep(char * word, const char * pat, const char * rep) {
      for (int j = 0; j < i; j++) {
         if (list[j] && list[i] && (strcmp(list[j], list[i]) == 0)) {
             free(list[i]);
-            list[i] = NULL;
+            list[i] = 0;
             break;
         }
      }
@@ -616,7 +616,7 @@ char * mystrrep(char * word, const char * pat, const char * rep) {
    if (list && *list && n > 0) {
      for (int i = 0; i < n; i++) if ((*list)[i]) free((*list)[i]);
      free(*list);
-     *list = NULL;
+     *list = 0;
    }
  }
  
@@ -5283,7 +5283,7 @@ const char * get_default_enc(const char * lang) {
       return lang2enc[i].def_enc;
     }
   }
-  return NULL;
+  return 0;
 }
 
 int get_lang_num(const char * lang) {
@@ -5324,7 +5324,7 @@ void free_utf_tbl() {
   if (utf_tbl_count > 0) utf_tbl_count--;
   if (utf_tbl && (utf_tbl_count == 0)) {
     free(utf_tbl);
-    utf_tbl = NULL;
+    utf_tbl = 0;
   }
 }
 
@@ -5392,7 +5392,7 @@ int get_captype(char * word, int nl, cs_info * csconv) {
    int ncap = 0;
    int nneutral = 0;
    int firstcap = 0;
-   if (csconv == NULL) return NOCAP;
+   if (csconv == 0) return NOCAP;
    for (char * q = word; *q != '\0'; q++) {
       if (csconv[*((unsigned char *)q)].ccase) ncap++;
       if (csconv[*((unsigned char *)q)].cupper == csconv[*((unsigned char *)q)].clower) nneutral++;

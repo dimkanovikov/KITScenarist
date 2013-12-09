@@ -10,7 +10,7 @@
 
 
 SpellChecker::SpellChecker(const QString& _userDictionaryPath) :
-	m_checker(NULL),
+	m_checker(0),
 	m_userDictionaryPath(_userDictionaryPath)
 {
 	//
@@ -22,7 +22,7 @@ SpellChecker::SpellChecker(const QString& _userDictionaryPath) :
 SpellChecker::~SpellChecker()
 {
 	delete m_checker;
-	m_checker = NULL;
+	m_checker = 0;
 }
 
 void SpellChecker::setSpellingLanguage(SpellChecker::Language _spellingLanguage)
@@ -31,7 +31,7 @@ void SpellChecker::setSpellingLanguage(SpellChecker::Language _spellingLanguage)
 	// Удаляем предыдущего проверяющего
 	//
 	delete m_checker;
-	m_checker = NULL;
+	m_checker = 0;
 
 	//
 	// Получаем пути к файлам словарей

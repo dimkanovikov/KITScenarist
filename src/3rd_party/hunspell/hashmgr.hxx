@@ -36,7 +36,7 @@ class HashMgr
 
 
 public:
-  HashMgr(const char * tpath, const char * apath, const char * key = NULL);
+  HashMgr(const char * tpath, const char * apath, const char * key = 0);
   ~HashMgr();
 
   struct hentry * lookup(const char *) const;

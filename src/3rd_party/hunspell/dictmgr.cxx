@@ -26,27 +26,27 @@ DictMgr::DictMgr(const char * dictpath, const char * etype)
 
 DictMgr::~DictMgr() 
 {
-  dictentry * pdict = NULL;
+  dictentry * pdict = 0;
   if (pdentry) {
      pdict = pdentry;
      for (int i=0;i<numdict;i++) {
         if (pdict->lang) {
             free(pdict->lang);
-            pdict->lang = NULL;
+            pdict->lang = 0;
         }
         if (pdict->region) {
             free(pdict->region);
-            pdict->region=NULL;
+            pdict->region=0;
         }
         if (pdict->filename) {
             free(pdict->filename);
-            pdict->filename = NULL;
+            pdict->filename = 0;
         }
         pdict++;
      }
      free(pdentry);
-     pdentry = NULL;
-     pdict = NULL;
+     pdentry = 0;
+     pdict = 0;
   }
   numdict = 0;
 }
@@ -126,7 +126,7 @@ int DictMgr::get_list(dictentry ** ppentry)
 
 char * DictMgr::mystrsep(char ** stringp, const char delim)
 {
-  char * rv = NULL;
+  char * rv = 0;
   char * mp = *stringp;
   int n = strlen(mp);
   if (n > 0) {
@@ -150,14 +150,14 @@ char * DictMgr::mystrsep(char ** stringp, const char delim)
        }
      }
   }
-  return NULL;
+  return 0;
 }
 
 
 // replaces strdup with ansi version
 char * DictMgr::mystrdup(const char * s)
 {
-  char * d = NULL;
+  char * d = 0;
   if (s) {
      int sl = strlen(s);
      d = (char *) malloc(((sl+1) * sizeof(char)));

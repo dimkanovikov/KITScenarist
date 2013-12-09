@@ -31,7 +31,7 @@ DLL char *Hunspell_get_dic_encoding(Hunhandle *pHunspell);
  * input: pointer to an array of strings pointer and the (bad) word
  *   array of strings pointer (here *slst) may not be initialized
  * output: number of suggestions in string array, and suggestions in
- *   a newly allocated array of strings (*slts will be NULL when number
+ *   a newly allocated array of strings (*slts will be 0 when number
  *   of suggestion equals 0.)
  */
 DLL int Hunspell_suggest(Hunhandle *pHunspell, char*** slst, const char * word);

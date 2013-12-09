@@ -33,7 +33,7 @@ protected:
     int fail(const char * err, const char * par);
     
 public:   
-    Hunzip(const char * filename, const char * key = NULL);
+    Hunzip(const char * filename, const char * key = 0);
     ~Hunzip();
     const char * getline();
 };

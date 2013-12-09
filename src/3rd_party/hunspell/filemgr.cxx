@@ -10,7 +10,7 @@ int FileMgr::fail(const char * err, const char * par) {
 }
 
 FileMgr::FileMgr(const char * file, const char * key) {
-    hin = NULL;
+    hin = 0;
     fin = fopen(file, "r");
     if (!fin) {
         // check hzipped file
@@ -34,5 +34,5 @@ char * FileMgr::getline() {
     const char * l;
     if (fin) return fgets(in, BUFSIZE - 1, fin);
     if (hin && (l = hin->getline())) return strcpy(in, l);
-    return NULL;
+    return 0;
 }

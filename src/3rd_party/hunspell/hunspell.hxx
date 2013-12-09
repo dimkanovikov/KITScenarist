@@ -53,11 +53,11 @@ public:
    * input: path of affix file and dictionary file
    */
 
-  Hunspell(const char * affpath, const char * dpath, const char * key = NULL);
+  Hunspell(const char * affpath, const char * dpath, const char * key = 0);
   ~Hunspell();
 
   /* load extra dictionaries (only dic files) */
-  int add_dic(const char * dpath, const char * key = NULL);
+  int add_dic(const char * dpath, const char * key = 0);
 
   /* spell(word) - spellcheck word
    * output: 0 = bad word, not 0 = good word
@@ -69,13 +69,13 @@ public:
    *   root: root (stem), when input is a word with affix(es)
    */
    
-  int spell(const char * word, int * info = NULL, char ** root = NULL);
+  int spell(const char * word, int * info = 0, char ** root = 0);
 
   /* suggest(suggestions, word) - search suggestions
    * input: pointer to an array of strings pointer and the (bad) word
    *   array of strings pointer (here *slst) may not be initialized
    * output: number of suggestions in string array, and suggestions in
-   *   a newly allocated array of strings (*slts will be NULL when number
+   *   a newly allocated array of strings (*slts will be 0 when number
    *   of suggestion equals 0.)
    */
 

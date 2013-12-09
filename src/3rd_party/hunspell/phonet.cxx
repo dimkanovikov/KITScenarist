@@ -108,14 +108,14 @@ int phonet (const char * inword, char * target,
           s++;     /**  important for (see below)  "*(s-1)"  **/
           
           while (*s != '\0'  &&  word[i+k] == *s
-                 &&  !isdigit (*s)  &&  strchr ("(-<^$", *s) == NULL) {
+                 &&  !isdigit (*s)  &&  strchr ("(-<^$", *s) == 0) {
             k++;
             s++;
           }
           if (*s == '(') {
             /**  check letters in "(..)"  **/
             if (isalpha(word[i+k])  // ...could be implied?
-                && strchr(s+1, word[i+k]) != NULL) {
+                && strchr(s+1, word[i+k]) != 0) {
               k++;
               while (*s != ')')
                 s++;
@@ -164,14 +164,14 @@ int phonet (const char * inword, char * target,
                 s = parms.rules[n0];
                 s++;
                 while (*s != '\0'  &&  word[i+k0] == *s
-                       && ! isdigit(*s)  &&  strchr("(-<^$",*s) == NULL) {
+                       && ! isdigit(*s)  &&  strchr("(-<^$",*s) == 0) {
                   k0++;
                   s++;
                 }
                 if (*s == '(') {
                   /**  check letters  **/
                   if (isalpha(word[i+k0])
-                      &&  strchr (s+1, word[i+k0]) != NULL) {
+                      &&  strchr (s+1, word[i+k0]) != 0) {
                     k0++;
                     while (*s != ')'  &&  *s != '\0')
                       s++;
@@ -221,7 +221,7 @@ int phonet (const char * inword, char * target,
             /**  replace string  **/
             s = parms.rules[n+1];
             p0 = (parms.rules[n][0] != '\0'
-                 &&  strchr (parms.rules[n]+1,'<') != NULL) ? 1:0;
+                 &&  strchr (parms.rules[n]+1,'<') != 0) ? 1:0;
             if (p0 == 1 &&  z == 0) {
               /**  rule with '<' is used  **/
               if (j > 0  &&  *s != '\0'
@@ -256,7 +256,7 @@ int phonet (const char * inword, char * target,
               /**  new "actual letter"  **/
               c = *s;
               if (parms.rules[n][0] != '\0'
-                 &&  strstr (parms.rules[n]+1, "^^") != NULL) {
+                 &&  strstr (parms.rules[n]+1, "^^") != 0) {
                 if (c != '\0') {
                   target[j] = c;
                   j++;

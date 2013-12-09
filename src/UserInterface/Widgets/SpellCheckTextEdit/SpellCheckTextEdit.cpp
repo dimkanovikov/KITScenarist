@@ -10,8 +10,8 @@ namespace {
 	const int SUGGESTIONS_ACTIONS_MAX_COUNT = 5;
 }
 
-SpellCheckTextEdit::SpellCheckTextEdit(QWidget *parent) :
-	QTextEdit(parent)
+SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
+	QTextEdit(_parent)
 {
 	//
 	// Настроим проверяющего

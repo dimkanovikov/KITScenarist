@@ -16,7 +16,7 @@ class SpellCheckTextEdit : public QTextEdit
 	Q_OBJECT
 
 public:
-	explicit SpellCheckTextEdit(QWidget *parent = 0);
+	explicit SpellCheckTextEdit(QWidget* _parent = 0);
 
 	/**
 	 * @brief Установить язык для проверки орфографии

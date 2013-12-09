@@ -100,36 +100,36 @@ class AffixMgr
 public:
 
   AffixMgr(const char * affpath, HashMgr** ptr, int * md,
-    const char * key = NULL);
+    const char * key = 0);
   ~AffixMgr();
   struct hentry *     affix_check(const char * word, int len,
             const unsigned short needflag = (unsigned short) 0,
             char in_compound = IN_CPD_NOT);
   struct hentry *     prefix_check(const char * word, int len,
-            char in_compound, const FLAG needflag = FLAG_NULL);
+            char in_compound, const FLAG needflag = FLAG_0);
   inline int isSubset(const char * s1, const char * s2);
   struct hentry *     prefix_check_twosfx(const char * word, int len,
-            char in_compound, const FLAG needflag = FLAG_NULL);
+            char in_compound, const FLAG needflag = FLAG_0);
   inline int isRevSubset(const char * s1, const char * end_of_s2, int len);
   struct hentry *     suffix_check(const char * word, int len, int sfxopts,
             AffEntry* ppfx, char ** wlst, int maxSug, int * ns,
-            const FLAG cclass = FLAG_NULL, const FLAG needflag = FLAG_NULL,
+            const FLAG cclass = FLAG_0, const FLAG needflag = FLAG_0,
             char in_compound = IN_CPD_NOT);
   struct hentry *     suffix_check_twosfx(const char * word, int len,
-            int sfxopts, AffEntry* ppfx, const FLAG needflag = FLAG_NULL);
+            int sfxopts, AffEntry* ppfx, const FLAG needflag = FLAG_0);
 
   char * affix_check_morph(const char * word, int len,
-            const FLAG needflag = FLAG_NULL, char in_compound = IN_CPD_NOT);
+            const FLAG needflag = FLAG_0, char in_compound = IN_CPD_NOT);
   char * prefix_check_morph(const char * word, int len,
-            char in_compound, const FLAG needflag = FLAG_NULL);
+            char in_compound, const FLAG needflag = FLAG_0);
   char * suffix_check_morph (const char * word, int len, int sfxopts,
-            AffEntry * ppfx, const FLAG cclass = FLAG_NULL,
-            const FLAG needflag = FLAG_NULL, char in_compound = IN_CPD_NOT);
+            AffEntry * ppfx, const FLAG cclass = FLAG_0,
+            const FLAG needflag = FLAG_0, char in_compound = IN_CPD_NOT);
 
   char * prefix_check_twosfx_morph(const char * word, int len,
-            char in_compound, const FLAG needflag = FLAG_NULL);
+            char in_compound, const FLAG needflag = FLAG_0);
   char * suffix_check_twosfx_morph(const char * word, int len,
-            int sfxopts, AffEntry * ppfx, const FLAG needflag = FLAG_NULL);
+            int sfxopts, AffEntry * ppfx, const FLAG needflag = FLAG_0);
 
   char * morphgen(char * ts, int wl, const unsigned short * ap,
             unsigned short al, char * morph, char * targetmorph, int level);

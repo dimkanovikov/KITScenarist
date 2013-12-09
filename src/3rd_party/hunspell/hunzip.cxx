@@ -28,7 +28,7 @@ Hunzip::Hunzip(const char * file, const char * key) {
     lastbit = 0;
     inc = 0;
     outc = 0;
-    dec = NULL;
+    dec = 0;
     filename = (char *) malloc(strlen(file) + 1);
     if (filename) strcpy(filename, file);
     if (getcode(key) == -1) bufsiz = -1;
@@ -59,7 +59,7 @@ int Hunzip::getcode(const char * key) {
         for (cs = 0; *enc; enc++) cs ^= *enc;
         if (cs != c[0]) return fail(MSG_KEY, filename);
         enc = key;
-    } else key = NULL;
+    } else key = 0;
 
     // read record count
     if (fread(&c, 1, 2, fin) < 2) return fail(MSG_FORMAT, filename);
@@ -138,7 +138,7 @@ int Hunzip::getbuf() {
             if (p == 0) {
                 if (oldp == lastbit) {
                     fclose(fin);
-                    fin = NULL;
+                    fin = 0;
                     // add last odd byte
                     if (dec[lastbit].c[0]) out[o++]  = dec[lastbit].c[1];
                     return o;
@@ -157,7 +157,7 @@ int Hunzip::getbuf() {
 const char * Hunzip::getline() {
     char linebuf[BUFSIZE];
     int l = 0, eol = 0, left = 0, right = 0;
-    if (bufsiz == -1) return NULL;
+    if (bufsiz == -1) return 0;
     while (l < bufsiz && !eol) {
         linebuf[l++] = out[outc];
         switch (out[outc]) {

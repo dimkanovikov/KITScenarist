@@ -23,15 +23,15 @@ public:
 
   inline bool          allowCross() { return ((opts & aeXPRODUCT) != 0); }
   struct hentry *      checkword(const char * word, int len, char in_compound, 
-                            const FLAG needflag = FLAG_NULL);
+                            const FLAG needflag = FLAG_0);
 
-  struct hentry *      check_twosfx(const char * word, int len, char in_compound, const FLAG needflag = NULL);
+  struct hentry *      check_twosfx(const char * word, int len, char in_compound, const FLAG needflag = 0);
 
   char *      check_morph(const char * word, int len, char in_compound,
-                            const FLAG needflag = FLAG_NULL);
+                            const FLAG needflag = FLAG_0);
 
   char *      check_twosfx_morph(const char * word, int len,
-                  char in_compound, const FLAG needflag = FLAG_NULL);
+                  char in_compound, const FLAG needflag = FLAG_0);
 
   inline FLAG getFlag()   { return aflag;   }
   inline const char *  getKey()    { return appnd;  } 
@@ -85,13 +85,13 @@ public:
   inline bool          allowCross() { return ((opts & aeXPRODUCT) != 0); }
   struct hentry *   checkword(const char * word, int len, int optflags, 
                     AffEntry* ppfx, char ** wlst, int maxSug, int * ns,
-//                    const FLAG cclass = FLAG_NULL, const FLAG needflag = FLAG_NULL, char in_compound=IN_CPD_NOT);
-                    const FLAG cclass = FLAG_NULL, const FLAG needflag = FLAG_NULL, const FLAG badflag = 0);
+//                    const FLAG cclass = FLAG_0, const FLAG needflag = FLAG_0, char in_compound=IN_CPD_NOT);
+                    const FLAG cclass = FLAG_0, const FLAG needflag = FLAG_0, const FLAG badflag = 0);
 
-  struct hentry *   check_twosfx(const char * word, int len, int optflags, AffEntry* ppfx, const FLAG needflag = NULL);
+  struct hentry *   check_twosfx(const char * word, int len, int optflags, AffEntry* ppfx, const FLAG needflag = 0);
 
   char *      check_twosfx_morph(const char * word, int len, int optflags,
-                 AffEntry* ppfx, const FLAG needflag = FLAG_NULL);
+                 AffEntry* ppfx, const FLAG needflag = FLAG_0);
   struct hentry * get_next_homonym(struct hentry * he);
   struct hentry * get_next_homonym(struct hentry * word, int optflags, AffEntry* ppfx, 
     const FLAG cclass, const FLAG needflag);
