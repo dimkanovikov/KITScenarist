@@ -52,6 +52,8 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 
 void ScenarioTextEdit::setScenarioBlockType(ScenarioTextBlockStyle::Type _blockType)
 {
+	int verticalScrollPosition = verticalScrollBar()->value();
+
 	QTextCursor cursor = textCursor();
 
 	//
@@ -89,6 +91,8 @@ void ScenarioTextEdit::setScenarioBlockType(ScenarioTextBlockStyle::Type _blockT
 		cursor.setPosition(cursorPosition);
 		setTextCursor(cursor);
 	}
+
+	verticalScrollBar()->setValue(verticalScrollPosition + 100);
 }
 
 ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType(const QTextBlock& _block)
@@ -146,6 +150,11 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	// Завершим блок операций
 	//
 	cursor.endEditBlock();
+
+	//
+	// Убедимся, что курсор виден
+	//
+	ensureCursorVisible();
 }
 
 void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)

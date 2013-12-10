@@ -13,6 +13,13 @@ PreHandler::PreHandler(ScenarioTextEdit* _editor) :
 {
 }
 
+void PreHandler::handleDelete(QKeyEvent* _event)
+{
+	if (_event == 0) {
+		StandardKeyHandler::handleDelete();
+	}
+}
+
 void PreHandler::handleOther(QKeyEvent* _event)
 {
 	//
