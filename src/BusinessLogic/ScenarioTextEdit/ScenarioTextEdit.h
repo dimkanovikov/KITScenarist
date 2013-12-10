@@ -11,6 +11,10 @@ class ScenarioTextEdit : public CompletableTextEdit
 {
 	Q_OBJECT
 
+
+public slots:
+	void test();
+
 public:
 	explicit ScenarioTextEdit(QWidget* _parent = 0);
 
@@ -36,8 +40,16 @@ protected:
 	 */
 	void wheelEvent(QWheelEvent* _event);
 
-public slots:
-	void test();
+private:
+	/**
+	 * @brief Изменить регистр текста, если это необходимо
+	 */
+	void makeTextUpper(QKeyEvent* _event);
+
+	/**
+	 * @brief Оканчивается ли строка сокращением
+	 */
+	bool stringEndsWithAbbrev(const QString& _text);
 };
 
 #endif // SCENARIOTEXTEDIT_H

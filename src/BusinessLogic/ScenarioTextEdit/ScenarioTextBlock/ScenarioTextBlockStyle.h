@@ -23,12 +23,23 @@ public:
 		Parenthetical,	//!< Ремарка
 		Dialog,			//!< Реплика героя
 		Transition,		//!< Переход
-		OtherText,		//!< Примечание
+		NoteText,		//!< Примечание
 		TitleHeader,	//!< Заголовок титра
 		Title,			//!< Текст титра
 		SceneGroupHeader, //!< Заголовок группы сцен
 		SceneGroupFooter, //!< Окончание группы сцен
 		SimpleText		//!< Простой текст
+	};
+
+	/**
+	 * @brief Дополнительные свойства стилей текстовых блоков
+	 */
+	enum Property {
+		PropertyType = QTextFormat::UserProperty + 1,
+		PropertyPrefix,
+		PropertyPostfix,
+		PropertyIsFirstUppercase,
+		PropertyIsCanModify
 	};
 
 public:

@@ -1,5 +1,10 @@
 #include "PrepareHandler.h"
 
+#include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
+#include <BusinessLogic/ScenarioTextEdit/ScenarioTextBlock/ScenarioTextBlockStyle.h>
+
+#include <QTextCharFormat>
+
 using namespace KeyProcessingLayer;
 
 
@@ -56,5 +61,11 @@ void PrepareHandler::handleDown(QKeyEvent*)
 
 void PrepareHandler::handleOther(QKeyEvent*)
 {
-	m_needSendEventToBaseClass = true;
+	//
+	// Не все стили можно редактировать
+	//
+	QTextCharFormat currentCharFormat = editor()->textCursor().blockCharFormat();
+	bool isCanModify = currentCharFormat.boolProperty(ScenarioTextBlockStyle::PropertyIsCanModify);
+
+	m_needSendEventToBaseClass = isCanModify;
 }

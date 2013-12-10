@@ -11,9 +11,7 @@ class ScenarioTextBlockStylePrivate
 {
 public:
 	ScenarioTextBlockStylePrivate(ScenarioTextBlockStyle::Type _blockType) :
-		blockType(_blockType),
-		isFirstUppercase(true),
-		isCanModify(true)
+		blockType(_blockType)
 	{}
 
 	/**
@@ -30,26 +28,6 @@ public:
 	 * @brief Настройки шрифта блока
 	 */
 	QTextCharFormat charFormat;
-
-	/**
-	 * @brief Первый символ заглавный
-	 */
-	bool isFirstUppercase;
-
-	/**
-	 * @brief Разрешено изменять текст блока
-	 */
-	bool isCanModify;
-
-	/**
-	 * @brief Префикс
-	 */
-	QString prefix;
-
-	/**
-	 * @brief Постфикс
-	 */
-	QString postfix;
 };
 
 #endif // SCENARIOTEXTBLOCKSTYLEPRIVATE_H

@@ -134,7 +134,7 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 				//! Текст пуст
 
 				//
-				// Меняем стиль на реплику
+				// Меняем стиль на реплику, предварительно стерев символы обрамления
 				//
 				cursor.movePosition(QTextCursor::EndOfBlock);
 				editor()->setTextCursor(cursor);

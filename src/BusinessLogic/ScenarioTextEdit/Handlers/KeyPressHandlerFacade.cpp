@@ -94,7 +94,7 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Ty
 		}
 
 		case ScenarioTextBlockStyle::Transition: break;
-		case ScenarioTextBlockStyle::OtherText: break;
+		case ScenarioTextBlockStyle::NoteText: break;
 		case ScenarioTextBlockStyle::TitleHeader: break;
 		case ScenarioTextBlockStyle::Title: break;
 		case ScenarioTextBlockStyle::SceneGroupHeader: break;

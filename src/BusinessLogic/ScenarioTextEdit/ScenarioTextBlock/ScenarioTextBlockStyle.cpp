@@ -8,7 +8,9 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 	//
 	// Запомним в стиле его тип
 	//
-	m_pimpl->blockFormat.setProperty(QTextFormat::UserProperty, blockType());
+	m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyType, blockType());
+	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase, true);
+	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsCanModify, true);
 
 	//
 	// Настроим остальные характеристики
@@ -30,9 +32,9 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 		case Parenthetical:
 			m_pimpl->blockFormat.setLeftMargin(150);
 			m_pimpl->blockFormat.setRightMargin(150);
-			m_pimpl->isFirstUppercase = false;
-			m_pimpl->prefix = "(";
-			m_pimpl->postfix = ")";
+			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase, false);
+			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyPrefix, "(");
+			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyPostfix, ")");
 			break;
 		case Dialog:
 			m_pimpl->blockFormat.setLeftMargin(100);
@@ -42,7 +44,7 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 			m_pimpl->blockFormat.setAlignment(Qt::AlignRight);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
-		case OtherText:
+		case NoteText:
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		case TitleHeader:
@@ -87,26 +89,27 @@ QTextCharFormat ScenarioTextBlockStyle::charFormat() const
 
 bool ScenarioTextBlockStyle::isFirstUppercase() const
 {
-	return m_pimpl->isFirstUppercase;
+	return m_pimpl->charFormat.boolProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase);
 }
 
 bool ScenarioTextBlockStyle::isCanModify() const
 {
-	return m_pimpl->isCanModify;
+	return m_pimpl->charFormat.boolProperty(ScenarioTextBlockStyle::PropertyIsCanModify);
 }
 
 bool ScenarioTextBlockStyle::hasDecoration() const
 {
+
 	return !prefix().isEmpty()
 			|| !postfix().isEmpty();
 }
 
 QString ScenarioTextBlockStyle::prefix() const
 {
-	return m_pimpl->prefix;
+	return m_pimpl->charFormat.stringProperty(ScenarioTextBlockStyle::PropertyPrefix);
 }
 
 QString ScenarioTextBlockStyle::postfix() const
 {
-	return m_pimpl->postfix;
+	return m_pimpl->charFormat.stringProperty(ScenarioTextBlockStyle::PropertyPostfix);
 }
