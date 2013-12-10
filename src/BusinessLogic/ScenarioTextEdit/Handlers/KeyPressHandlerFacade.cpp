@@ -1,9 +1,12 @@
 #include "KeyPressHandlerFacade.h"
 
 #include "PrepareHandler.h"
+#include "PreHandler.h"
 #include "SceneHeaderHandler.h"
 #include "ActionHandler.h"
 #include "CharacterHandler.h"
+#include "ParentheticalHandler.h"
+#include "DialogHandler.h"
 
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
 
@@ -20,22 +23,7 @@ void KeyPressHandlerFacade::prepare(QKeyEvent* _event)
 
 void KeyPressHandlerFacade::prehandle(QKeyEvent* _event)
 {
-	//
-	// Получим необходимые значения
-	//
-	// ... курсор в текущем положении
-	QTextCursor cursor = m_editor->textCursor();
-
-	//
-	// Если есть выделенный текст и пользователь хочет вставить текст заменив его,
-	// то сперва применим удаление, потом обработаем действие
-	//
-	if (cursor.hasSelection()
-		&& !_event->text().isEmpty()) {
-		//
-		// FIXME: Удалить выделенный текст, обновив стиль блока
-		//
-	}
+	m_preHandler->handle(_event);
 }
 
 void KeyPressHandlerFacade::handle(QKeyEvent* _event)
@@ -68,9 +56,12 @@ KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :
 	m_editor(_editor)
 {
 	m_prepareHandler = new PrepareHandler(_editor);
+	m_preHandler = new PreHandler(_editor);
 	m_sceneHeaderHandler = new SceneHeaderHandler(_editor);
 	m_actionHandler = new ActionHandler(_editor);
 	m_characterHandler = new CharacterHandler(_editor);
+	m_parentheticalHandler = new ParentheticalHandler(_editor);
+	m_dialogHandler = new DialogHandler(_editor);
 }
 
 AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Type _type)
@@ -92,8 +83,16 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Ty
 			handler = m_characterHandler;
 			break;
 		}
-		case ScenarioTextBlockStyle::Parenthetical: break;
-		case ScenarioTextBlockStyle::Dialog: break;
+		case ScenarioTextBlockStyle::Parenthetical: {
+			handler = m_parentheticalHandler;
+			break;
+		}
+
+		case ScenarioTextBlockStyle::Dialog: {
+			handler = m_dialogHandler;
+			break;
+		}
+
 		case ScenarioTextBlockStyle::Transition: break;
 		case ScenarioTextBlockStyle::OtherText: break;
 		case ScenarioTextBlockStyle::TitleHeader: break;

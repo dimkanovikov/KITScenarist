@@ -27,14 +27,14 @@ namespace KeyProcessingLayer
 		 */
 		/** @{ */
 		virtual void handleShortcut(QKeyEvent* _event = 0) = 0;
-		virtual void handleEnter() = 0;
-		virtual void handleTab() = 0;
-		virtual void handleDelete() = 0;
-		virtual void handleBackspace() = 0;
-		virtual void handleEscape() = 0;
+		virtual void handleEnter(QKeyEvent* _event = 0) = 0;
+		virtual void handleTab(QKeyEvent* _event = 0) = 0;
+		virtual void handleDelete(QKeyEvent* _event = 0) = 0;
+		virtual void handleBackspace(QKeyEvent* _event = 0) = 0;
+		virtual void handleEscape(QKeyEvent* _event = 0) = 0;
 		virtual void handleUp(QKeyEvent* _event = 0) = 0;
 		virtual void handleDown(QKeyEvent* _event = 0) = 0;
-		virtual void handleOther() = 0;
+		virtual void handleOther(QKeyEvent* _event = 0) = 0;
 		/** @} */
 
 	protected:

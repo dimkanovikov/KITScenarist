@@ -28,7 +28,7 @@ SceneHeaderHandler::SceneHeaderHandler(ScenarioTextEdit* _editor) :
 {
 }
 
-void SceneHeaderHandler::handleEnter()
+void SceneHeaderHandler::handleEnter(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -130,7 +130,7 @@ void SceneHeaderHandler::handleEnter()
 	//
 }
 
-void SceneHeaderHandler::handleTab()
+void SceneHeaderHandler::handleTab(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -226,7 +226,7 @@ void SceneHeaderHandler::handleTab()
 	}
 }
 
-void SceneHeaderHandler::handleOther()
+void SceneHeaderHandler::handleOther(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения

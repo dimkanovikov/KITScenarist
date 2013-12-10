@@ -20,12 +20,12 @@ namespace KeyProcessingLayer
 		 */
 		/** @{ */
 		void handleShortcut(QKeyEvent* _event = 0);
-		void handleDelete();
-		void handleBackspace();
-		void handleEscape();
+		void handleDelete(QKeyEvent* _event = 0);
+		void handleBackspace(QKeyEvent* _event = 0);
+		void handleEscape(QKeyEvent* _event = 0);
 		void handleUp(QKeyEvent* _event = 0);
 		void handleDown(QKeyEvent* _event = 0);
-		void handleOther();
+		void handleOther(QKeyEvent* _event = 0);
 		/** @} */
 	};
 }

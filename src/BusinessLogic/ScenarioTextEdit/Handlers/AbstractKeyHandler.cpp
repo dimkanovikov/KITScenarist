@@ -22,17 +22,10 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	//
 	// Получим необходимые переменные
 	//
-	// ... курсор в текущем положении
-	QTextCursor cursor = editor()->textCursor();
 	// ... нажатая кнопка
 	Qt::Key pressedKey = (Qt::Key)_event->key();
 	// ... зажатые управляющие клавиши
 	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
-
-	//
-	// Начнём блок операций
-	//
-	cursor.beginEditBlock();
 
 	//
 	// Нажата клавиша "Control" в сочетании с какой-либо другой
@@ -47,35 +40,35 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	//
 	else if (pressedKey == Qt::Key_Enter
 			 || pressedKey == Qt::Key_Return) {
-		handleEnter();
+		handleEnter(_event);
 	}
 
 	//
 	// Нажата клавиша "Tab"
 	//
 	else if (pressedKey == Qt::Key_Tab) {
-		handleTab();
+		handleTab(_event);
 	}
 
 	//
 	// Нажата кнопка "Delete"
 	//
 	else if (pressedKey == Qt::Key_Delete) {
-		handleDelete();
+		handleDelete(_event);
 	}
 
 	//
 	// Нажата кнопка "Backspace"
 	//
 	else if (pressedKey == Qt::Key_Backspace) {
-		handleBackspace();
+		handleBackspace(_event);
 	}
 
 	//
 	// Нажата кнопка "Escape"
 	//
 	else if (pressedKey == Qt::Key_Escape) {
-		handleEscape();
+		handleEscape(_event);
 	}
 
 	//
@@ -96,13 +89,8 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	// Нажата любая другая клавиша
 	//
 	else {
-		handleOther();
+		handleOther(_event);
 	}
-
-	//
-	// Завершим блок операций
-	//
-	cursor.endEditBlock();
 }
 
 ScenarioTextEdit* AbstractKeyHandler::editor() const

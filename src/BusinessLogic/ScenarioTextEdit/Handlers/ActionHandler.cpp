@@ -14,7 +14,7 @@ ActionHandler::ActionHandler(ScenarioTextEdit* _editor) :
 
 }
 
-void ActionHandler::handleEnter()
+void ActionHandler::handleEnter(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -92,7 +92,7 @@ void ActionHandler::handleEnter()
 	}
 }
 
-void ActionHandler::handleTab()
+void ActionHandler::handleTab(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения

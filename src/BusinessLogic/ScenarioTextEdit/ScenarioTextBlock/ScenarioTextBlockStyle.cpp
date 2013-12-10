@@ -15,14 +15,12 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 	//
 	switch (blockType()) {
 		case SceneHeader:
-			m_pimpl->blockFormat.setTopMargin(15);
-			m_pimpl->blockFormat.setBottomMargin(15);
+			m_pimpl->blockFormat.setTopMargin(25);
 			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		case Action:
-			m_pimpl->blockFormat.setTopMargin(15);
-			m_pimpl->blockFormat.setBottomMargin(15);
+			m_pimpl->blockFormat.setTopMargin(20);
 			break;
 		case Character:
 			m_pimpl->blockFormat.setTopMargin(15);
@@ -39,7 +37,6 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 		case Dialog:
 			m_pimpl->blockFormat.setLeftMargin(100);
 			m_pimpl->blockFormat.setRightMargin(100);
-			m_pimpl->blockFormat.setBottomMargin(15);
 			break;
 		case Transition:
 			m_pimpl->blockFormat.setAlignment(Qt::AlignRight);

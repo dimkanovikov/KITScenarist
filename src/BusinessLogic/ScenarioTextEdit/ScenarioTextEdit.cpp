@@ -59,6 +59,16 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 			KeyProcessingLayer::KeyPressHandlerFacade::instance(this);
 
 	//
+	// Получим курсор в текущем положении
+	//
+	QTextCursor cursor = textCursor();
+
+	//
+	// Начнём блок операций
+	//
+	cursor.beginEditBlock();
+
+	//
 	// Подготовка к обработке
 	//
 	handler->prepare(_event);
@@ -66,7 +76,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Предварительная обработка
 	//
-//	handler->prehandle(_event);
+	handler->prehandle(_event);
 
 	//
 	// Отправить событие в базовый класс
@@ -84,6 +94,11 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	// Событие дошло по назначению
 	//
 	_event->accept();
+
+	//
+	// Завершим блок операций
+	//
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)

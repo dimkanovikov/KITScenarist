@@ -1,25 +1,19 @@
-#include "CharacterHandler.h"
+#include "DialogHandler.h"
 
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
-
-#include <Domain/Character.h>
-
-#include <Storage/StorageFacade.h>
-#include <Storage/CharacterStorage.h>
 
 #include <QKeyEvent>
 #include <QTextBlock>
 
 using namespace KeyProcessingLayer;
-using namespace StorageLayer;
 
 
-CharacterHandler::CharacterHandler(ScenarioTextEdit* _editor) :
+DialogHandler::DialogHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
 }
 
-void CharacterHandler::handleEnter(QKeyEvent*)
+void DialogHandler::handleEnter(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -41,9 +35,8 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 		//! Если открыт подстановщик
 
 		//
-		// Вставить выбранный вариант
+		// Ни чего не делаем
 		//
-		editor()->applyCompletion();
 	} else {
 		//! Подстановщик закрыт
 
@@ -70,18 +63,16 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 					//! В начале блока
 
 					//
-					// Вставим блок имени героя перед собой
+					// Ни чего не делаем
 					//
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Character);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 
 					//
-					// Вставить блок реплики героя
+					// Перейдём к блоку описание действия
 					//
 					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Dialog);
+					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
 				} else {
 					//! Внутри блока
 
@@ -94,7 +85,7 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 	}
 }
 
-void CharacterHandler::handleTab(QKeyEvent*)
+void DialogHandler::handleTab(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -116,9 +107,8 @@ void CharacterHandler::handleTab(QKeyEvent*)
 		//! Если открыт подстановщик
 
 		//
-		// Работаем, как ENTER
+		// Ни чего не делаем
 		//
-		handleEnter();
 	} else {
 		//! Подстановщик закрыт
 
@@ -136,9 +126,9 @@ void CharacterHandler::handleTab(QKeyEvent*)
 				//! Текст пуст
 
 				//
-				// Cменить стиль на описание действия
+				// Меняем стиль на ремарку
 				//
-				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
+				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
 			} else {
 				//! Текст не пуст
 
@@ -152,7 +142,7 @@ void CharacterHandler::handleTab(QKeyEvent*)
 					//! В конце блока
 
 					//
-					// Вставить блок ремарки
+					// Вставляем блок ремарки
 					//
 					cursor.insertBlock();
 					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
@@ -166,28 +156,4 @@ void CharacterHandler::handleTab(QKeyEvent*)
 			}
 		}
 	}
-}
-
-void CharacterHandler::handleOther(QKeyEvent*)
-{
-	//
-	// Получим необходимые значения
-	//
-	// ... курсор в текущем положении
-	QTextCursor cursor = editor()->textCursor();
-	// ... блок текста в котором находится курсор
-	QTextBlock currentBlock = cursor.block();
-	// ... текст блока
-	QString currentBlockText = currentBlock.text();
-
-
-	//
-	// Получим модель подсказок для текущей секции и выведем пользователю
-	//
-	QAbstractItemModel* characterModel = StorageFacade::characterStorage()->all();
-
-	//
-	// Дополним текст
-	//
-	editor()->complete(characterModel, currentBlockText);
 }

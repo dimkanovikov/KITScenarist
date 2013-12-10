@@ -62,7 +62,10 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneHeaderHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/StandardKeyHandler.h \
     BusinessLogic/ScenarioTextEdit/Parsers/SceneGroupHeaderParser.h \
-    BusinessLogic/ScenarioTextEdit/Handlers/PrepareHandler.h
+    BusinessLogic/ScenarioTextEdit/Handlers/PrepareHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/PreHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/DialogHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/ParentheticalHandler.h
 
 SOURCES += main.cpp \
     Domain/Action.cpp \
@@ -112,7 +115,10 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneHeaderHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/StandardKeyHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Parsers/SceneGroupHeaderParser.cpp \
-    BusinessLogic/ScenarioTextEdit/Handlers/PrepareHandler.cpp
+    BusinessLogic/ScenarioTextEdit/Handlers/PrepareHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/PreHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/DialogHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/ParentheticalHandler.cpp
 
 
 #

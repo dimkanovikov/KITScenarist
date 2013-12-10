@@ -1,25 +1,23 @@
-#include "CharacterHandler.h"
+#include "ParentheticalHandler.h"
 
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
-
-#include <Domain/Character.h>
-
-#include <Storage/StorageFacade.h>
-#include <Storage/CharacterStorage.h>
+#include <BusinessLogic/ScenarioTextEdit/ScenarioTextBlock/ScenarioTextBlockStyle.h>
 
 #include <QKeyEvent>
 #include <QTextBlock>
 
 using namespace KeyProcessingLayer;
-using namespace StorageLayer;
 
 
-CharacterHandler::CharacterHandler(ScenarioTextEdit* _editor) :
+ParentheticalHandler::ParentheticalHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
+	ScenarioTextBlockStyle style(ScenarioTextBlockStyle::Parenthetical);
+	m_stylePrefix = style.prefix();
+	m_stylePostfix = style.postfix();
 }
 
-void CharacterHandler::handleEnter(QKeyEvent*)
+void ParentheticalHandler::handleEnter(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -41,9 +39,8 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 		//! Если открыт подстановщик
 
 		//
-		// Вставить выбранный вариант
+		// Ни чего не делаем
 		//
-		editor()->applyCompletion();
 	} else {
 		//! Подстановщик закрыт
 
@@ -56,8 +53,8 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 		} else {
 			//! Нет выделения
 
-			if (cursorBackwardText.isEmpty()
-				&& cursorForwardText.isEmpty()) {
+			if ((cursorBackwardText.isEmpty() && cursorForwardText.isEmpty())
+				|| (cursorBackwardText + cursorForwardText == m_stylePrefix + m_stylePostfix)) {
 				//! Текст пуст
 
 				//
@@ -66,20 +63,22 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 			} else {
 				//! Текст не пуст
 
-				if (cursorBackwardText.isEmpty()) {
+				if (cursorBackwardText.isEmpty()
+					|| cursorBackwardText == m_stylePrefix) {
 					//! В начале блока
 
 					//
-					// Вставим блок имени героя перед собой
+					// Ни чего не делаем
 					//
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Character);
-				} else if (cursorForwardText.isEmpty()) {
+				} else if (cursorForwardText.isEmpty()
+						   || cursorForwardText == m_stylePostfix) {
 					//! В конце блока
 
 					//
-					// Вставить блок реплики героя
+					// Перейдём к блоку реплики
 					//
+					cursor.movePosition(QTextCursor::EndOfBlock);
+					editor()->setTextCursor(cursor);
 					cursor.insertBlock();
 					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Dialog);
 				} else {
@@ -94,7 +93,7 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 	}
 }
 
-void CharacterHandler::handleTab(QKeyEvent*)
+void ParentheticalHandler::handleTab(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -116,9 +115,8 @@ void CharacterHandler::handleTab(QKeyEvent*)
 		//! Если открыт подстановщик
 
 		//
-		// Работаем, как ENTER
+		// Ни чего не делаем
 		//
-		handleEnter();
 	} else {
 		//! Подстановщик закрыт
 
@@ -131,31 +129,40 @@ void CharacterHandler::handleTab(QKeyEvent*)
 		} else {
 			//! Нет выделения
 
-			if (cursorBackwardText.isEmpty()
-				&& cursorForwardText.isEmpty()) {
+			if ((cursorBackwardText.isEmpty() && cursorForwardText.isEmpty())
+				|| (cursorBackwardText + cursorForwardText == m_stylePrefix + m_stylePostfix)) {
 				//! Текст пуст
 
 				//
-				// Cменить стиль на описание действия
+				// Меняем стиль на реплику
 				//
-				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
+				cursor.movePosition(QTextCursor::EndOfBlock);
+				editor()->setTextCursor(cursor);
+				while(!cursor.block().text().isEmpty()) {
+					cursor.deletePreviousChar();
+				}
+				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Dialog);
 			} else {
 				//! Текст не пуст
 
-				if (cursorBackwardText.isEmpty()) {
+				if (cursorBackwardText.isEmpty()
+					|| cursorBackwardText == m_stylePrefix) {
 					//! В начале блока
 
 					//
 					// Ни чего не делаем
 					//
-				} else if (cursorForwardText.isEmpty()) {
+				} else if (cursorForwardText.isEmpty()
+						   || cursorForwardText == m_stylePostfix) {
 					//! В конце блока
 
 					//
-					// Вставить блок ремарки
+					// Вставляем блок реплики
 					//
+					cursor.movePosition(QTextCursor::EndOfBlock);
+					editor()->setTextCursor(cursor);
 					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
+					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Dialog);
 				} else {
 					//! Внутри блока
 
@@ -166,28 +173,4 @@ void CharacterHandler::handleTab(QKeyEvent*)
 			}
 		}
 	}
-}
-
-void CharacterHandler::handleOther(QKeyEvent*)
-{
-	//
-	// Получим необходимые значения
-	//
-	// ... курсор в текущем положении
-	QTextCursor cursor = editor()->textCursor();
-	// ... блок текста в котором находится курсор
-	QTextBlock currentBlock = cursor.block();
-	// ... текст блока
-	QString currentBlockText = currentBlock.text();
-
-
-	//
-	// Получим модель подсказок для текущей секции и выведем пользователю
-	//
-	QAbstractItemModel* characterModel = StorageFacade::characterStorage()->all();
-
-	//
-	// Дополним текст
-	//
-	editor()->complete(characterModel, currentBlockText);
 }

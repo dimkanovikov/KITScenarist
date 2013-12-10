@@ -19,27 +19,27 @@ void PrepareHandler::handleShortcut(QKeyEvent*)
 	m_needSendEventToBaseClass = false;
 }
 
-void PrepareHandler::handleEnter()
+void PrepareHandler::handleEnter(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
 }
 
-void PrepareHandler::handleTab()
+void PrepareHandler::handleTab(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
 }
 
-void PrepareHandler::handleDelete()
+void PrepareHandler::handleDelete(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
 }
 
-void PrepareHandler::handleBackspace()
+void PrepareHandler::handleBackspace(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
 }
 
-void PrepareHandler::handleEscape()
+void PrepareHandler::handleEscape(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
 }
@@ -54,7 +54,7 @@ void PrepareHandler::handleDown(QKeyEvent*)
 	m_needSendEventToBaseClass = false;
 }
 
-void PrepareHandler::handleOther()
+void PrepareHandler::handleOther(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = true;
 }

@@ -11,9 +11,12 @@ namespace KeyProcessingLayer
 {
 	class AbstractKeyHandler;
 	class PrepareHandler;
+	class PreHandler;
 	class SceneHeaderHandler;
 	class ActionHandler;
 	class CharacterHandler;
+	class ParentheticalHandler;
+	class DialogHandler;
 
 	/**
 	 * @brief Класс обработчика нажатия клавиш в текстовом редакторе
@@ -53,9 +56,12 @@ namespace KeyProcessingLayer
 		ScenarioTextEdit* m_editor;
 
 		PrepareHandler* m_prepareHandler;
+		PreHandler* m_preHandler;
 		SceneHeaderHandler* m_sceneHeaderHandler;
 		ActionHandler* m_actionHandler;
 		CharacterHandler* m_characterHandler;
+		ParentheticalHandler* m_parentheticalHandler;
+		DialogHandler* m_dialogHandler;
 
 	/**
 	 * @brief Одиночка

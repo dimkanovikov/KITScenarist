@@ -19,9 +19,9 @@ namespace KeyProcessingLayer
 		 * @brief Реализация интерфейса AbstractKeyHandler
 		 */
 		/** @{ */
-		void handleEnter();
-		void handleTab();
-		void handleOther();
+		void handleEnter(QKeyEvent* _event = 0);
+		void handleTab(QKeyEvent* _event = 0);
+		void handleOther(QKeyEvent* _event = 0);
 		/** @} */
 	};
 }

@@ -16,7 +16,7 @@ void StandardKeyHandler::handleShortcut(QKeyEvent*)
 {
 }
 
-void StandardKeyHandler::handleDelete()
+void StandardKeyHandler::handleDelete(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -45,7 +45,7 @@ void StandardKeyHandler::handleDelete()
 	handleOther();
 }
 
-void StandardKeyHandler::handleBackspace()
+void StandardKeyHandler::handleBackspace(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -74,7 +74,7 @@ void StandardKeyHandler::handleBackspace()
 	handleOther();
 }
 
-void StandardKeyHandler::handleEscape()
+void StandardKeyHandler::handleEscape(QKeyEvent*)
 {
 	editor()->closeCompleter();
 }
@@ -105,7 +105,7 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 	}
 }
 
-void StandardKeyHandler::handleOther()
+void StandardKeyHandler::handleOther(QKeyEvent*)
 {
 
 }
