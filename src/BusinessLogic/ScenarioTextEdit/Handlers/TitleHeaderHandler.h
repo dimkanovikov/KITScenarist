@@ -23,6 +23,8 @@ namespace KeyProcessingLayer
 		/** @{ */
 		void handleEnter(QKeyEvent* = 0) {}
 		void handleTab(QKeyEvent* = 0) {}
+		void handleDelete(QKeyEvent* = 0) {}
+		void handleBackspace(QKeyEvent* = 0) {}
 		/** @} */
 	};
 }

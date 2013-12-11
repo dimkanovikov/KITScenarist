@@ -85,7 +85,6 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 		}
 
 		case SimpleText: {
-			m_pimpl->blockFormat.setTopMargin(15);
 			break;
 		}
 

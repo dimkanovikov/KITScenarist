@@ -79,7 +79,8 @@ void ScenarioTextEdit::setScenarioBlockType(ScenarioTextBlockStyle::Type _blockT
 			ScenarioTextBlockStyle oldBlockStyle(scenarioBlockType());
 
 			//
-			// Удалить заголовок
+			// Удалить заголовок если происходит смена стиля в текущем блоке
+			// в противном случае его не нужно удалять
 			//
 			if (oldBlockStyle.hasHeader()) {
 				QTextCursor headerCursor = cursor;
@@ -89,6 +90,13 @@ void ScenarioTextEdit::setScenarioBlockType(ScenarioTextBlockStyle::Type _blockT
 					== oldBlockStyle.headerType()) {
 					headerCursor.select(QTextCursor::BlockUnderCursor);
 					headerCursor.deleteChar();
+
+					//
+					// Если находимся в самом начале документа, то необходимо удалить ещё один символ
+					//
+					if (headerCursor.position() == 0) {
+						headerCursor.deleteChar();
+					}
 				}
 			}
 

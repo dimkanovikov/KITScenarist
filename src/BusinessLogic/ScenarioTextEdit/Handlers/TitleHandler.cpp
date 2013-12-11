@@ -155,3 +155,8 @@ void TitleHandler::handleTab(QKeyEvent*)
 		}
 	}
 }
+
+void TitleHandler::handleBackspace(QKeyEvent* _event)
+{
+	StandardKeyHandler::handleBackspace(_event);
+}
