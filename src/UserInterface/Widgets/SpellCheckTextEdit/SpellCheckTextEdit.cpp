@@ -22,10 +22,16 @@ SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 	// Настраиваем подсветку слов не прошедших проверку орфографии
 	//
 	m_spellCheckHighlighter = new SpellCheckHighlighter(document(), m_spellChecker);
+	m_spellCheckHighlighter->setUseSpellChecker(false);
 
 	//
 	// Настраиваем действия контекстного меню для слов не прошедших проверку орфографии
 	//
+	// ... включить/выключить проверку орфографии
+	m_useSpellChecking = new QAction(tr("Spell Checking"), this);
+	m_useSpellChecking->setCheckable(true);
+	m_useSpellChecking->setChecked(false);
+	connect(m_useSpellChecking, SIGNAL(triggered(bool)), this, SLOT(aboutUseSpellChecker(bool)));
 	// ... игнорировать слово
 	m_ignoreWordAction = new QAction(tr("Ignore"), this);
 	connect(m_ignoreWordAction, SIGNAL(triggered()), this, SLOT(aboutIgnoreWord()));
@@ -77,37 +83,54 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 	QMenu* menu = createStandardContextMenu();
 
 	//
-	// Если слово не проходит проверку орфографии добавим дополнительные действия в контекстное меню
+	// Если проверка правописания включена
 	//
-	if (!m_spellChecker->spellCheckWord(wordUnderCursor)) {
-		// ... действие, перед которым вставляем дополнительные пункты
-		QStringList suggestions = m_spellChecker->suggestionsForWord(wordUnderCursor);
-		// ... вставляем варианты
-		QAction* actionInsertBefore = menu->actions().first();
-		int addedSuggestionsCount = 0;
-		foreach (const QString& suggestion, suggestions) {
-			if (addedSuggestionsCount < SUGGESTIONS_ACTIONS_MAX_COUNT) {
-				m_suggestionsActions.at(addedSuggestionsCount)->setText(suggestion);
-				menu->insertAction(actionInsertBefore, m_suggestionsActions.at(addedSuggestionsCount));
-				++addedSuggestionsCount;
-			} else {
-				break;
+	if (m_useSpellChecking->isChecked()) {
+		//
+		// Если слово не проходит проверку орфографии добавим дополнительные действия в контекстное меню
+		//
+		if (!m_spellChecker->spellCheckWord(wordUnderCursor)) {
+			// ... действие, перед которым вставляем дополнительные пункты
+			QStringList suggestions = m_spellChecker->suggestionsForWord(wordUnderCursor);
+			// ... вставляем варианты
+			QAction* actionInsertBefore = menu->actions().first();
+			int addedSuggestionsCount = 0;
+			foreach (const QString& suggestion, suggestions) {
+				if (addedSuggestionsCount < SUGGESTIONS_ACTIONS_MAX_COUNT) {
+					m_suggestionsActions.at(addedSuggestionsCount)->setText(suggestion);
+					menu->insertAction(actionInsertBefore, m_suggestionsActions.at(addedSuggestionsCount));
+					++addedSuggestionsCount;
+				} else {
+					break;
+				}
 			}
-		}
-		if (addedSuggestionsCount > 0) {
+			if (addedSuggestionsCount > 0) {
+				menu->insertSeparator(actionInsertBefore);
+			}
+			// ... вставляем дополнительные действия
+			menu->insertAction(actionInsertBefore, m_ignoreWordAction);
+			menu->insertAction(actionInsertBefore, m_addWordToUserDictionaryAction);
 			menu->insertSeparator(actionInsertBefore);
 		}
-		// ... вставляем дополнительные действия
-		menu->insertAction(actionInsertBefore, m_ignoreWordAction);
-		menu->insertAction(actionInsertBefore, m_addWordToUserDictionaryAction);
-		menu->insertSeparator(actionInsertBefore);
 	}
+
+	//
+	// Добавим пункт меню для включения/выключения проверки орфографии
+	//
+	menu->addSeparator();
+	menu->addAction(m_useSpellChecking);
 
 	//
 	// Покажем меню, а после очистим от него память
 	//
 	menu->exec(_event->globalPos());
 	delete menu;
+}
+
+void SpellCheckTextEdit::aboutUseSpellChecker(bool _use)
+{
+	m_useSpellChecking->setChecked(_use);
+	m_spellCheckHighlighter->setUseSpellChecker(_use);
 }
 
 void SpellCheckTextEdit::aboutIgnoreWord() const

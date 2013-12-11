@@ -104,7 +104,7 @@ void SceneHeaderHandler::handleEnter(QKeyEvent*)
 					// Вставка блока заголовка перед собой
 					//
 					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::SceneHeader);
+					editor()->setScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 

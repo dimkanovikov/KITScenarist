@@ -9,6 +9,10 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 	// Запомним в стиле его тип
 	//
 	m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyType, blockType());
+
+	m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeaderType,
+									 ScenarioTextBlockStyle::Undefined);
+
 	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase, true);
 	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsCanModify, true);
 
@@ -16,54 +20,78 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 	// Настроим остальные характеристики
 	//
 	switch (blockType()) {
-		case SceneHeader:
+		case TimeAndPlace: {
 			m_pimpl->blockFormat.setTopMargin(25);
 			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
-		case Action:
+		}
+
+		case Action: {
 			m_pimpl->blockFormat.setTopMargin(20);
 			break;
-		case Character:
+		}
+
+		case Character: {
 			m_pimpl->blockFormat.setTopMargin(15);
 			m_pimpl->blockFormat.setLeftMargin(200);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
-		case Parenthetical:
+		}
+
+		case Parenthetical: {
 			m_pimpl->blockFormat.setLeftMargin(150);
 			m_pimpl->blockFormat.setRightMargin(150);
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase, false);
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyPrefix, "(");
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyPostfix, ")");
 			break;
-		case Dialog:
+		}
+
+		case Dialog: {
 			m_pimpl->blockFormat.setLeftMargin(100);
 			m_pimpl->blockFormat.setRightMargin(100);
 			break;
-		case Transition:
+		}
+
+		case Transition: {
+			m_pimpl->blockFormat.setTopMargin(15);
 			m_pimpl->blockFormat.setAlignment(Qt::AlignRight);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
-		case NoteText:
+		}
+
+		case Note: {
+			m_pimpl->blockFormat.setTopMargin(15);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
-		case TitleHeader:
+		}
+
+		case TitleHeader: {
+			m_pimpl->blockFormat.setTopMargin(15);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
+			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsCanModify, false);
 			break;
-		case Title:
+		}
+
+		case Title: {
 			m_pimpl->blockFormat.setLeftMargin(150);
 			m_pimpl->blockFormat.setRightMargin(150);
+			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeaderType,
+											 ScenarioTextBlockStyle::TitleHeader);
+			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeader,
+											 QObject::tr("Title", "ScenarioTextBlockStyle"));
 			break;
-		case SceneGroupHeader:
-			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
+		}
+
+		case SimpleText: {
+			m_pimpl->blockFormat.setTopMargin(15);
 			break;
-		case SceneGroupFooter:
-			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
+		}
+
+		default: {
 			break;
-		case SimpleText:
-			break;
-		default:
-			break;
+		}
 	}
 }
 
@@ -99,7 +127,6 @@ bool ScenarioTextBlockStyle::isCanModify() const
 
 bool ScenarioTextBlockStyle::hasDecoration() const
 {
-
 	return !prefix().isEmpty()
 			|| !postfix().isEmpty();
 }
@@ -112,4 +139,19 @@ QString ScenarioTextBlockStyle::prefix() const
 QString ScenarioTextBlockStyle::postfix() const
 {
 	return m_pimpl->charFormat.stringProperty(ScenarioTextBlockStyle::PropertyPostfix);
+}
+
+bool ScenarioTextBlockStyle::hasHeader() const
+{
+	return !header().isEmpty();
+}
+
+ScenarioTextBlockStyle::Type ScenarioTextBlockStyle::headerType() const
+{
+	return (ScenarioTextBlockStyle::Type)m_pimpl->blockFormat.intProperty(ScenarioTextBlockStyle::PropertyHeaderType);
+}
+
+QString ScenarioTextBlockStyle::header() const
+{
+	return m_pimpl->blockFormat.stringProperty(ScenarioTextBlockStyle::PropertyHeader);
 }

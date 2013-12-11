@@ -17,17 +17,16 @@ public:
 	 * @brief Виды блоков текста сценария
 	 */
 	enum Type {
-		SceneHeader,	//!< Время - место
+		Undefined,		//!< Неопределён
+		TimeAndPlace,	//!< Время - место
 		Action,			//!< Описание действия
 		Character,		//!< Имя героя
 		Parenthetical,	//!< Ремарка
 		Dialog,			//!< Реплика героя
 		Transition,		//!< Переход
-		NoteText,		//!< Примечание
+		Note,			//!< Примечание
 		TitleHeader,	//!< Заголовок титра
 		Title,			//!< Текст титра
-		SceneGroupHeader, //!< Заголовок группы сцен
-		SceneGroupFooter, //!< Окончание группы сцен
 		SimpleText		//!< Простой текст
 	};
 
@@ -36,8 +35,10 @@ public:
 	 */
 	enum Property {
 		PropertyType = QTextFormat::UserProperty + 1,
+		PropertyHeaderType,
 		PropertyPrefix,
 		PropertyPostfix,
+		PropertyHeader,
 		PropertyIsFirstUppercase,
 		PropertyIsCanModify
 	};
@@ -85,6 +86,21 @@ public:
 	 * @brief Постфикс стиля
 	 */
 	QString postfix() const;
+
+	/**
+	 * @brief Имеет ли стиль заголовок
+	 */
+	bool hasHeader() const;
+
+	/**
+	 * @brief Вид заголовка
+	 */
+	ScenarioTextBlockStyle::Type headerType() const;
+
+	/**
+	 * @brief Заголовок стиля
+	 */
+	QString header() const;
 
 private:
 	/**

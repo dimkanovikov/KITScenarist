@@ -28,6 +28,11 @@ public:
 	 * @brief Настройки шрифта блока
 	 */
 	QTextCharFormat charFormat;
+
+	/**
+	 * @brief Заголовок блока
+	 */
+	QString m_header;
 };
 
 #endif // SCENARIOTEXTBLOCKSTYLEPRIVATE_H

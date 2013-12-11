@@ -15,6 +15,7 @@
 #include <QStringListModel>
 #include <QAbstractItemView>
 #include <QScrollBar>
+#include <QMimeData>
 
 
 ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
@@ -47,57 +48,151 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	//
 	textCursor().insertBlock();
 	textCursor().deletePreviousChar();
-	setScenarioBlockType(ScenarioTextBlockStyle::SceneHeader);
+	setScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+
+	//
+	// При перемещении курсора может меняться стиль блока
+	//
+	connect(this, SIGNAL(cursorPositionChanged()), this, SIGNAL(currentStyleChanged()));
 }
 
 void ScenarioTextEdit::setScenarioBlockType(ScenarioTextBlockStyle::Type _blockType)
 {
-	int verticalScrollPosition = verticalScrollBar()->value();
-
-	QTextCursor cursor = textCursor();
-
 	//
-	// Применим стиль к блоку
+	// Является ли текущий вид заголовком
 	//
-	ScenarioTextBlockStyle blockStyle(_blockType);
-	cursor.setBlockCharFormat(blockStyle.charFormat());
-	cursor.setBlockFormat(blockStyle.blockFormat());
+	bool currentTypeIsHeader =
+			scenarioBlockType() == ScenarioTextBlockStyle::TitleHeader;
 
 	//
-	// Применим стиль текста ко всему блоку, выделив его,
-	// т.к. в блоке могут находиться фрагменты в другом стиле
+	// Если текущий вид не заголовок
+	// и если пришёл новый стиль
 	//
-	cursor.select(QTextCursor::BlockUnderCursor);
-	cursor.setCharFormat(blockStyle.charFormat());
-	cursor.clearSelection();
+	if (!currentTypeIsHeader
+		&& scenarioBlockType() != _blockType) {
 
-	//
-	// Вставим префикс и постфикс стиля, если необходимо
-	//
-	if (blockStyle.hasDecoration()) {
-		int cursorPosition = cursor.position();
-		QString blockText = cursor.block().text();
-		if (!blockStyle.postfix().isEmpty()
-			&& !blockText.startsWith(blockStyle.prefix())) {
-			cursor.movePosition(QTextCursor::StartOfBlock);
-			cursor.insertText(blockStyle.prefix());
-			cursorPosition += blockStyle.prefix().length();
+		//
+		// Обработаем предшествующий установленный стиль
+		//
+		{
+			QTextCursor cursor = textCursor();
+			ScenarioTextBlockStyle oldBlockStyle(scenarioBlockType());
+
+			//
+			// Удалить заголовок
+			//
+			if (oldBlockStyle.hasHeader()) {
+				QTextCursor headerCursor = cursor;
+				headerCursor.movePosition(QTextCursor::StartOfBlock);
+				headerCursor.movePosition(QTextCursor::Left);
+				if (scenarioBlockType(headerCursor.block())
+					== oldBlockStyle.headerType()) {
+					headerCursor.select(QTextCursor::BlockUnderCursor);
+					headerCursor.deleteChar();
+				}
+			}
+
+			//
+			// Убрать декорации
+			//
+			if (oldBlockStyle.hasDecoration()) {
+				QString blockText = cursor.block().text();
+				//
+				// ... префикс
+				//
+				if (blockText.startsWith(oldBlockStyle.prefix())) {
+					cursor.movePosition(QTextCursor::StartOfBlock);
+					for (int repeats = 0; repeats < oldBlockStyle.prefix().length(); ++repeats) {
+						cursor.deleteChar();
+					}
+				}
+
+				//
+				// ... постфикс
+				//
+				if (blockText.endsWith(oldBlockStyle.postfix())) {
+					cursor.movePosition(QTextCursor::EndOfBlock);
+					for (int repeats = 0; repeats < oldBlockStyle.postfix().length(); ++repeats) {
+						cursor.deletePreviousChar();
+					}
+				}
+			}
 		}
-		if (!blockStyle.prefix().isEmpty()
-			&& !blockText.endsWith(blockStyle.postfix())) {
-			cursor.movePosition(QTextCursor::EndOfBlock);
-			cursor.insertText(blockStyle.postfix());
+
+		//
+		// Применим новый стиль к блоку
+		//
+		{
+			QTextCursor cursor = textCursor();
+			ScenarioTextBlockStyle newBlockStyle(_blockType);
+
+			//
+			// Обновим стили
+			//
+			cursor.setBlockCharFormat(newBlockStyle.charFormat());
+			cursor.setBlockFormat(newBlockStyle.blockFormat());
+
+			//
+			// Применим стиль текста ко всему блоку, выделив его,
+			// т.к. в блоке могут находиться фрагменты в другом стиле
+			//
+			cursor.select(QTextCursor::BlockUnderCursor);
+			cursor.setCharFormat(newBlockStyle.charFormat());
+			cursor.clearSelection();
+
+			//
+			// Вставим префикс и постфикс стиля, если необходимо
+			//
+			if (newBlockStyle.hasDecoration()) {
+				int cursorPosition = cursor.position();
+				QString blockText = cursor.block().text();
+				if (!newBlockStyle.postfix().isEmpty()
+					&& !blockText.startsWith(newBlockStyle.prefix())) {
+					cursor.movePosition(QTextCursor::StartOfBlock);
+					cursor.insertText(newBlockStyle.prefix());
+					cursorPosition += newBlockStyle.prefix().length();
+				}
+				if (!newBlockStyle.prefix().isEmpty()
+					&& !blockText.endsWith(newBlockStyle.postfix())) {
+					cursor.movePosition(QTextCursor::EndOfBlock);
+					cursor.insertText(newBlockStyle.postfix());
+				}
+				cursor.setPosition(cursorPosition);
+				setTextCursor(cursor);
+			}
+
+			//
+			// Вставим заголовок, если необходимо
+			//
+			if (newBlockStyle.hasHeader()) {
+				ScenarioTextBlockStyle headerStyle(newBlockStyle.headerType());
+
+				cursor.movePosition(QTextCursor::StartOfBlock);
+				cursor.insertBlock();
+				cursor.movePosition(QTextCursor::Left);
+
+				cursor.setBlockCharFormat(headerStyle.charFormat());
+				cursor.setBlockFormat(headerStyle.blockFormat());
+
+				cursor.insertText(newBlockStyle.header());
+			}
 		}
-		cursor.setPosition(cursorPosition);
-		setTextCursor(cursor);
+
+		//
+		// Уведомим о том, что стиль сменился
+		//
+		emit currentStyleChanged();
 	}
-
-	verticalScrollBar()->setValue(verticalScrollPosition + 100);
 }
 
 ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType(const QTextBlock& _block)
 {
 	return (ScenarioTextBlockStyle::Type)_block.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType);
+}
+
+ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType()
+{
+	return scenarioBlockType(textCursor().block());
 }
 
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
@@ -171,6 +266,15 @@ void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)
 		_event->accept();
 	} else {
 		QTextEdit::wheelEvent(_event);
+	}
+}
+
+void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
+{
+	if (_source->hasText()) {
+		QString textToInsert = _source->text();
+		textToInsert = textToInsert.simplified();
+		textCursor().insertText(textToInsert);
 	}
 }
 
@@ -277,7 +381,9 @@ bool ScenarioTextEdit::stringEndsWithAbbrev(const QString& _text)
 void ScenarioTextEdit::test()
 {
 	QTextBlock block = textCursor().block();
-	qDebug() << block.userState() << block.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType);
+	qDebug()
+			<< block.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType)
+			<< textCursor().charFormat().boolProperty(ScenarioTextBlockStyle::PropertyIsCanModify);
 
 	QTextBlock::iterator it;
 	for (it = block.begin(); !(it.atEnd()); ++it) {

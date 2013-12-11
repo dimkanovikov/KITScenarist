@@ -54,7 +54,7 @@ void SpellChecker::setSpellingLanguage(SpellChecker::Language _spellingLanguage)
 	//
 	// Загружаем слова из пользовательского словаря
 	//
-	if (!m_userDictionaryPath.isEmpty()) {
+	if (!m_userDictionaryPath.isNull()) {
 		QFile userDictonaryFile(m_userDictionaryPath);
 		if (userDictonaryFile.open(QIODevice::ReadOnly)) {
 			QTextStream stream(&userDictonaryFile);
@@ -128,7 +128,7 @@ void SpellChecker::addWordToDictionary(const QString& _word) const
 	//
 	// Запишем слово в пользовательский словарь
 	//
-	if (!m_userDictionaryPath.isEmpty()) {
+	if (!m_userDictionaryPath.isNull()) {
 		QFile userDictonaryFile(m_userDictionaryPath);
 		if (userDictonaryFile.open(QIODevice::Append)) {
 			QTextStream stream(&userDictonaryFile);

@@ -29,6 +29,14 @@ public:
 	 */
 	ScenarioTextBlockStyle::Type scenarioBlockType(const QTextBlock& _block);
 
+	/**
+	 * @brief Получить вид блока в котором находится курсор
+	 */
+	ScenarioTextBlockStyle::Type scenarioBlockType();
+
+signals:
+	void currentStyleChanged();
+
 protected:
 	/**
 	 * @brief Нажатия многих клавиш обрабатываются вручную
@@ -39,6 +47,11 @@ protected:
 	 * @brief Переопределяется для реализации увеличения/уменьшения текста
 	 */
 	void wheelEvent(QWheelEvent* _event);
+
+	/**
+	 * @brief Переопределяется для предварительной обработки вставляемого текста
+	 */
+	void insertFromMimeData(const QMimeData *_source);
 
 private:
 	/**

@@ -47,10 +47,6 @@ void ActionHandler::handleEnter(QKeyEvent*)
 			//
 			// Ни чего не делаем
 			//
-			//cursor.movePosition(QTextCursor::EndOfBlock);
-			//editor()->setTextCursor(cursor);
-			//cursor.insertBlock();
-			//editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
 		} else {
 			//! Нет выделения
 

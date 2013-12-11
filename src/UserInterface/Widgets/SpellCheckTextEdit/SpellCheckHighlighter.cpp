@@ -9,7 +9,8 @@
 
 SpellCheckHighlighter::SpellCheckHighlighter(QTextDocument* _parent, SpellChecker* _checker) :
 	QSyntaxHighlighter(_parent),
-	m_spellchecker(_checker)
+	m_spellchecker(_checker),
+	m_useSpellChecker(true)
 {
 	Q_ASSERT(_parent);
 	Q_ASSERT(_checker);
@@ -21,50 +22,58 @@ SpellCheckHighlighter::SpellCheckHighlighter(QTextDocument* _parent, SpellChecke
 	m_misspeledCharFormat.setUnderlineColor(Qt::red);
 }
 
+void SpellCheckHighlighter::setUseSpellChecker(bool _use)
+{
+	m_useSpellChecker = _use;
+	rehighlight();
+}
+
 void SpellCheckHighlighter::highlightBlock(const QString& _text)
 {
-	//
-	// Убираем пустоты из проверяемого текста
-	//
-	QString textToCheck = _text.simplified();
-	if (!textToCheck.isEmpty()) {
+	if (m_useSpellChecker) {
 		//
-		// Разбиваем проверяемый текст на слова
+		// Убираем пустоты из проверяемого текста
 		//
-		QStringList wordsToCheck =
-				textToCheck.split(QRegExp("([^\\w,^\\\\]|(?=\\\\))+"),
-								  QString::SkipEmptyParts);
-		//
-		// Проверяем каждое слово
-		//
-		foreach (const QString wordToCheck, wordsToCheck) {
+		QString textToCheck = _text.simplified();
+		if (!textToCheck.isEmpty()) {
 			//
-			// Проверяем слова длинной более одного символа
-			// и не начинающиеся с символа "\"
+			// Разбиваем проверяемый текст на слова
 			//
-			if (wordToCheck.length() > 1
-				&& !wordToCheck.startsWith('\\')) {
+			QStringList wordsToCheck =
+					textToCheck.split(QRegExp("([^\\w,^\\\\]|(?=\\\\))+"),
+									  QString::SkipEmptyParts);
+			//
+			// Проверяем каждое слово
+			//
+			foreach (const QString wordToCheck, wordsToCheck) {
 				//
-				// Если слово не прошло проверку
+				// Проверяем слова длинной более одного символа
+				// и не начинающиеся с символа "\"
 				//
-				if (!m_spellchecker->spellCheckWord(wordToCheck)) {
+				if (wordToCheck.length() > 1
+					&& !wordToCheck.startsWith('\\')) {
 					//
-					// Проходим по всем вхождения этого слова в тексте
+					// Если слово не прошло проверку
 					//
-					int wordsCount = _text.count(QRegExp("\\b" + wordToCheck + "\\b"));
-					int positionInText = -1;
+					if (!m_spellchecker->spellCheckWord(wordToCheck)) {
+						//
+						// Проходим по всем вхождения этого слова в тексте
+						//
+						int wordsCount = _text.count(QRegExp("\\b" + wordToCheck + "\\b"));
+						int positionInText = -1;
 
-					for (int wordIndex = 0; wordIndex < wordsCount; ++wordIndex) {
-						positionInText =
-								_text.indexOf(QRegExp("\\b" + wordToCheck + "\\b"),
-											  positionInText + 1);
-						//
-						// Пометим вхождение слова, как ошибочное
-						//
-						if (positionInText >= 0) {
-							setFormat(positionInText,
-									  wordToCheck.length(),
-									  m_misspeledCharFormat);
+						for (int wordIndex = 0; wordIndex < wordsCount; ++wordIndex) {
+							positionInText =
+									_text.indexOf(QRegExp("\\b" + wordToCheck + "\\b"),
+												  positionInText + 1);
+							//
+							// Пометим вхождение слова, как ошибочное
+							//
+							if (positionInText >= 0) {
+								setFormat(positionInText,
+										  wordToCheck.length(),
+										  m_misspeledCharFormat);
+							}
 						}
 					}
 				}

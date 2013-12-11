@@ -7,6 +7,11 @@
 #include "CharacterHandler.h"
 #include "ParentheticalHandler.h"
 #include "DialogHandler.h"
+#include "TransitionHandler.h"
+#include "NoteHandler.h"
+#include "TitleHeaderHandler.h"
+#include "TitleHandler.h"
+#include "SimpleTextHandler.h"
 
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
 
@@ -62,6 +67,11 @@ KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :
 	m_characterHandler = new CharacterHandler(_editor);
 	m_parentheticalHandler = new ParentheticalHandler(_editor);
 	m_dialogHandler = new DialogHandler(_editor);
+	m_transitionHandler = new TransitionHandler(_editor);
+	m_noteHandler = new NoteHandler(_editor);
+	m_titleheaderHandler = new TitleHeaderHandler(_editor);
+	m_titleHandler = new TitleHandler(_editor);
+	m_simpleTextHandler = new SimpleTextHandler(_editor);
 }
 
 AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Type _type)
@@ -69,7 +79,7 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Ty
 	AbstractKeyHandler* handler = 0;
 
 	switch (_type) {
-		case ScenarioTextBlockStyle::SceneHeader: {
+		case ScenarioTextBlockStyle::TimeAndPlace: {
 			handler = m_sceneHeaderHandler;
 			break;
 		}
@@ -93,14 +103,35 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Ty
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Transition: break;
-		case ScenarioTextBlockStyle::NoteText: break;
-		case ScenarioTextBlockStyle::TitleHeader: break;
-		case ScenarioTextBlockStyle::Title: break;
-		case ScenarioTextBlockStyle::SceneGroupHeader: break;
-		case ScenarioTextBlockStyle::SceneGroupFooter: break;
-		case ScenarioTextBlockStyle::SimpleText: break;
-		default: break;
+		case ScenarioTextBlockStyle::Transition: {
+			handler = m_transitionHandler;
+			break;
+		}
+
+		case ScenarioTextBlockStyle::Note: {
+			handler = m_noteHandler;
+			break;
+		}
+
+		case ScenarioTextBlockStyle::TitleHeader: {
+			handler = m_titleheaderHandler;
+			break;
+		}
+
+		case ScenarioTextBlockStyle::Title: {
+			handler = m_titleHandler;
+			break;
+		}
+
+		case ScenarioTextBlockStyle::SimpleText: {
+			handler = m_simpleTextHandler;
+			break;
+		}
+
+		default: {
+			handler = 0;
+			break;
+		}
 	}
 
 	return handler;

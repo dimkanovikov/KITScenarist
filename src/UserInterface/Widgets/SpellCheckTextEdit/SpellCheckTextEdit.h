@@ -40,6 +40,11 @@ protected:
 
 private slots:
 	/**
+	 * @brief Включить/выключить проверку правописания
+	 */
+	void aboutUseSpellChecker(bool _use);
+
+	/**
 	 * @brief Игнорировать слово под курсором
 	 */
 	void aboutIgnoreWord() const;
@@ -77,6 +82,7 @@ private:
 	 * @brief Действия для слова не прошедшего проверку орфографии
 	 */
 	/** @{ */
+	QAction* m_useSpellChecking;
 	QAction* m_ignoreWordAction;
 	QAction* m_addWordToUserDictionaryAction;
 	QList<QAction*> m_suggestionsActions;

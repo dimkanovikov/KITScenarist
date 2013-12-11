@@ -61,11 +61,16 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Handlers/CharacterHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneHeaderHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/StandardKeyHandler.h \
-    BusinessLogic/ScenarioTextEdit/Parsers/SceneGroupHeaderParser.h \
     BusinessLogic/ScenarioTextEdit/Handlers/PrepareHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/PreHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/DialogHandler.h \
-    BusinessLogic/ScenarioTextEdit/Handlers/ParentheticalHandler.h
+    BusinessLogic/ScenarioTextEdit/Handlers/ParentheticalHandler.h \
+    UserInterface/widget.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/TransitionHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/NoteHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/TitleHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/TitleHeaderHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.h
 
 SOURCES += main.cpp \
     Domain/Action.cpp \
@@ -114,11 +119,15 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/CharacterHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneHeaderHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/StandardKeyHandler.cpp \
-    BusinessLogic/ScenarioTextEdit/Parsers/SceneGroupHeaderParser.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/PrepareHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/PreHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/DialogHandler.cpp \
-    BusinessLogic/ScenarioTextEdit/Handlers/ParentheticalHandler.cpp
+    BusinessLogic/ScenarioTextEdit/Handlers/ParentheticalHandler.cpp \
+    UserInterface/widget.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/TransitionHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/NoteHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/TitleHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.cpp
 
 
 #

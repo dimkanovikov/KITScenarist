@@ -1,7 +1,6 @@
-#include "ParentheticalHandler.h"
+#include "TransitionHandler.h"
 
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
-#include <BusinessLogic/ScenarioTextEdit/ScenarioTextBlock/ScenarioTextBlockStyle.h>
 
 #include <QKeyEvent>
 #include <QTextBlock>
@@ -9,15 +8,12 @@
 using namespace KeyProcessingLayer;
 
 
-ParentheticalHandler::ParentheticalHandler(ScenarioTextEdit* _editor) :
+TransitionHandler::TransitionHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
-	ScenarioTextBlockStyle style(ScenarioTextBlockStyle::Parenthetical);
-	m_stylePrefix = style.prefix();
-	m_stylePostfix = style.postfix();
 }
 
-void ParentheticalHandler::handleEnter(QKeyEvent*)
+void TransitionHandler::handleEnter(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -53,8 +49,8 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 		} else {
 			//! Нет выделения
 
-			if ((cursorBackwardText.isEmpty() && cursorForwardText.isEmpty())
-				|| (cursorBackwardText + cursorForwardText == m_stylePrefix + m_stylePostfix)) {
+			if (cursorBackwardText.isEmpty()
+				&& cursorForwardText.isEmpty()) {
 				//! Текст пуст
 
 				//
@@ -63,24 +59,20 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 			} else {
 				//! Текст не пуст
 
-				if (cursorBackwardText.isEmpty()
-					|| cursorBackwardText == m_stylePrefix) {
+				if (cursorBackwardText.isEmpty()) {
 					//! В начале блока
 
 					//
 					// Ни чего не делаем
 					//
-				} else if (cursorForwardText.isEmpty()
-						   || cursorForwardText == m_stylePostfix) {
+				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 
 					//
-					// Перейдём к блоку реплики
+					// Вставляем блок и применяем ему стиль время и место
 					//
-					cursor.movePosition(QTextCursor::EndOfBlock);
-					editor()->setTextCursor(cursor);
 					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Dialog);
+					editor()->setScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
 				} else {
 					//! Внутри блока
 
@@ -93,7 +85,7 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 	}
 }
 
-void ParentheticalHandler::handleTab(QKeyEvent*)
+void TransitionHandler::handleTab(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -129,35 +121,29 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 		} else {
 			//! Нет выделения
 
-			if ((cursorBackwardText.isEmpty() && cursorForwardText.isEmpty())
-				|| (cursorBackwardText + cursorForwardText == m_stylePrefix + m_stylePostfix)) {
+			if (cursorBackwardText.isEmpty()
+				&& cursorForwardText.isEmpty()) {
 				//! Текст пуст
 
 				//
-				// Меняем стиль на реплику
+				// Ни чего не делаем
 				//
-				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Dialog);
 			} else {
 				//! Текст не пуст
 
-				if (cursorBackwardText.isEmpty()
-					|| cursorBackwardText == m_stylePrefix) {
+				if (cursorBackwardText.isEmpty()) {
 					//! В начале блока
 
 					//
 					// Ни чего не делаем
 					//
-				} else if (cursorForwardText.isEmpty()
-						   || cursorForwardText == m_stylePostfix) {
+				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 
 					//
-					// Вставляем блок реплики
+					// Действуем как нажатие клавиши ENTER
 					//
-					cursor.movePosition(QTextCursor::EndOfBlock);
-					editor()->setTextCursor(cursor);
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Dialog);
+					handleEnter();
 				} else {
 					//! Внутри блока
 

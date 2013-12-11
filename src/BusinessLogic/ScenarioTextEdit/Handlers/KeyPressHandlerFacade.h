@@ -17,6 +17,11 @@ namespace KeyProcessingLayer
 	class CharacterHandler;
 	class ParentheticalHandler;
 	class DialogHandler;
+	class TransitionHandler;
+	class NoteHandler;
+	class TitleHeaderHandler;
+	class TitleHandler;
+	class SimpleTextHandler;
 
 	/**
 	 * @brief Класс обработчика нажатия клавиш в текстовом редакторе
@@ -62,6 +67,11 @@ namespace KeyProcessingLayer
 		CharacterHandler* m_characterHandler;
 		ParentheticalHandler* m_parentheticalHandler;
 		DialogHandler* m_dialogHandler;
+		TransitionHandler* m_transitionHandler;
+		NoteHandler* m_noteHandler;
+		TitleHeaderHandler* m_titleheaderHandler;
+		TitleHandler* m_titleHandler;
+		SimpleTextHandler* m_simpleTextHandler;
 
 	/**
 	 * @brief Одиночка
