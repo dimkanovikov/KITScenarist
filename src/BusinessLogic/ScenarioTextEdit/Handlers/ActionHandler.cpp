@@ -60,29 +60,11 @@ void ActionHandler::handleEnter(QKeyEvent*)
 			} else {
 				//! Текст не пуст
 
-				if (cursorBackwardText.isEmpty()) {
-					//! В начале блока
-
-					//
-					// Вставка блока описание действия перед собой
-					//
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
-				} else if (cursorForwardText.isEmpty()) {
-					//! В конце блока
-
-					//
-					// Вставляем блок и применяем ему стиль описания действия
-					//
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
-				} else {
-					//! Внутри блока
-
-					//
-					// Ни чего не делаем
-					//
-				}
+				//
+				// Вставляем блок и применяем ему стиль описания действия
+				//
+				cursor.insertBlock();
+				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
 			}
 		}
 	}

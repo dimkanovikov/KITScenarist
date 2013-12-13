@@ -49,6 +49,8 @@ protected:
 	void wheelEvent(QWheelEvent* _event);
 
 	/**
+	 * FIXME: Реализовать драг и дроп и корректные копирование/вставку
+	 *
 	 * @brief Переопределяется для предварительной обработки вставляемого текста
 	 */
 	void insertFromMimeData(const QMimeData *_source);

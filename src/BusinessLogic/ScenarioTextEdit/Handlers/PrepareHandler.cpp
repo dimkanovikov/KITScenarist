@@ -3,7 +3,8 @@
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextBlock/ScenarioTextBlockStyle.h>
 
-#include <QTextCharFormat>
+#include <QTextBlock>
+#include <QKeyEvent>
 
 using namespace KeyProcessingLayer;
 
@@ -59,13 +60,38 @@ void PrepareHandler::handleDown(QKeyEvent*)
 	m_needSendEventToBaseClass = false;
 }
 
-void PrepareHandler::handleOther(QKeyEvent*)
+void PrepareHandler::handleOther(QKeyEvent* _event)
 {
 	//
-	// Не все стили можно редактировать
+	// Получим необходимые значения
 	//
-	QTextCharFormat currentCharFormat = editor()->textCursor().blockCharFormat();
-	bool isCanModify = currentCharFormat.boolProperty(ScenarioTextBlockStyle::PropertyIsCanModify);
+	// ... курсор в текущем положении
+	QTextCursor cursor = editor()->textCursor();
 
-	m_needSendEventToBaseClass = isCanModify;
+	//
+	// Получим стиль первого блока в выделении
+	//
+	QTextCursor topCursor(editor()->document());
+	topCursor.movePosition(QTextCursor::Right,
+						   QTextCursor::MoveAnchor,
+						   qMin(cursor.selectionStart(), cursor.selectionEnd()));
+	ScenarioTextBlockStyle topStyle(editor()->scenarioBlockType(topCursor.block()));
+
+	//
+	// Получим стиль последнего блока в выделении
+	//
+	QTextCursor bottomCursor(editor()->document());
+	bottomCursor.movePosition(QTextCursor::Right,
+							  QTextCursor::MoveAnchor,
+							  qMax(cursor.selectionStart(), cursor.selectionEnd()));
+	ScenarioTextBlockStyle bottomStyle(editor()->scenarioBlockType(bottomCursor.block()));
+
+	if (!_event->text().isEmpty()) {
+		//
+		// Не все стили можно редактировать
+		//
+		m_needSendEventToBaseClass = topStyle.isCanModify() && bottomStyle.isCanModify() ;
+	} else {
+		m_needSendEventToBaseClass = true;
+	}
 }

@@ -66,10 +66,8 @@ void ScenarioTextEdit::setScenarioBlockType(ScenarioTextBlockStyle::Type _blockT
 
 	//
 	// Если текущий вид не заголовок
-	// и если пришёл новый стиль
 	//
-	if (!currentTypeIsHeader
-		&& scenarioBlockType() != _blockType) {
+	if (!currentTypeIsHeader) {
 
 		//
 		// Обработаем предшествующий установленный стиль

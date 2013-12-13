@@ -27,6 +27,12 @@ namespace KeyProcessingLayer
 		void handleDown(QKeyEvent* _event = 0);
 		void handleOther(QKeyEvent* _event = 0);
 		/** @} */
+
+	private:
+		/**
+		 * @brief Удалить символы
+		 */
+		void removeCharacters(bool _backward);
 	};
 }
 

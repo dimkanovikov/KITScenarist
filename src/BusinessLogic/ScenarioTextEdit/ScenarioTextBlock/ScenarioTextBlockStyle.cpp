@@ -3,8 +3,20 @@
 
 
 ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType) :
-	m_pimpl(new ScenarioTextBlockStylePrivate(_blockType))
+	m_pimpl(new ScenarioTextBlockStylePrivate(ScenarioTextBlockStyle::Undefined))
 {
+	setType(_blockType);
+}
+
+ScenarioTextBlockStyle::~ScenarioTextBlockStyle()
+{
+	delete m_pimpl;
+}
+
+void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
+{
+	m_pimpl->blockType = _type;
+
 	//
 	// Запомним в стиле его тип
 	//
@@ -94,11 +106,6 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 	}
 }
 
-ScenarioTextBlockStyle::~ScenarioTextBlockStyle()
-{
-	delete m_pimpl;
-}
-
 ScenarioTextBlockStyle::Type ScenarioTextBlockStyle::blockType() const
 {
 	return m_pimpl->blockType;
@@ -153,4 +160,9 @@ ScenarioTextBlockStyle::Type ScenarioTextBlockStyle::headerType() const
 QString ScenarioTextBlockStyle::header() const
 {
 	return m_pimpl->blockFormat.stringProperty(ScenarioTextBlockStyle::PropertyHeader);
+}
+
+bool ScenarioTextBlockStyle::isHeader() const
+{
+	return blockType() == ScenarioTextBlockStyle::TitleHeader;
 }

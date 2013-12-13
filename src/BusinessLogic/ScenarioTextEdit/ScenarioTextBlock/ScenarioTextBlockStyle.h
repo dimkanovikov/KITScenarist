@@ -48,6 +48,11 @@ public:
 	~ScenarioTextBlockStyle();
 
 	/**
+	 * @brief Сменить стиль
+	 */
+	void setType(ScenarioTextBlockStyle::Type _type);
+
+	/**
 	 * @brief Вид блока
 	 */
 	ScenarioTextBlockStyle::Type blockType() const;
@@ -101,6 +106,11 @@ public:
 	 * @brief Заголовок стиля
 	 */
 	QString header() const;
+
+	/**
+	 * @brief Является ли стиль заголовком
+	 */
+	bool isHeader() const;
 
 private:
 	/**
