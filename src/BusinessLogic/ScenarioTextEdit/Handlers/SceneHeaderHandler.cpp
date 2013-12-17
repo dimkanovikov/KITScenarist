@@ -103,16 +103,14 @@ void SceneHeaderHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставка блока заголовка перед собой
 					//
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 
 					//
 					// Переход к следующему блоку
 					//
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
 				} else {
 					//! Внутри блока
 
@@ -174,7 +172,7 @@ void SceneHeaderHandler::handleTab(QKeyEvent*)
 				//
 				// Если строка пуста, то сменить стиль на описание действия
 				//
-				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
 			} else {
 				//! Текст не пуст
 

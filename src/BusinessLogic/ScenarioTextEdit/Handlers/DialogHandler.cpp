@@ -71,8 +71,7 @@ void DialogHandler::handleEnter(QKeyEvent*)
 					//
 					// Перейдём к блоку описание действия
 					//
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
 				} else {
 					//! Внутри блока
 
@@ -128,7 +127,7 @@ void DialogHandler::handleTab(QKeyEvent*)
 				//
 				// Меняем стиль на ремарку
 				//
-				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
 			} else {
 				//! Текст не пуст
 
@@ -144,8 +143,7 @@ void DialogHandler::handleTab(QKeyEvent*)
 					//
 					// Вставляем блок ремарки
 					//
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Parenthetical);
 				} else {
 					//! Внутри блока
 

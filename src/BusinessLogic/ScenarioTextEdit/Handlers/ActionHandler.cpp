@@ -63,8 +63,7 @@ void ActionHandler::handleEnter(QKeyEvent*)
 				//
 				// Вставляем блок и применяем ему стиль описания действия
 				//
-				cursor.insertBlock();
-				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
+				editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
 			}
 		}
 	}
@@ -113,7 +112,7 @@ void ActionHandler::handleTab(QKeyEvent*)
 				//
 				// Если строка пуста, то сменить стиль на имя героя
 				//
-				editor()->setScenarioBlockType(ScenarioTextBlockStyle::Character);
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Character);
 			} else {
 				//! Текст не пуст
 

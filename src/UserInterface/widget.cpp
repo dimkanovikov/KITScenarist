@@ -16,9 +16,9 @@ Widget::Widget(QWidget *parent) :
 	QWidget(parent)
 {
 
-	QRadioButton* cbSceneHeading = new QRadioButton("Scene Heading");
-	cbSceneHeading->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::TimeAndPlace);
-	connect(cbSceneHeading,SIGNAL(clicked()), this, SLOT(setStyle()));
+	QRadioButton* cbTimeAndAction = new QRadioButton("Time and Action");
+	cbTimeAndAction->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::TimeAndPlace);
+	connect(cbTimeAndAction,SIGNAL(clicked()), this, SLOT(setStyle()));
 
 	QRadioButton* cbAction = new QRadioButton("Action");
 	cbAction->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::Action);
@@ -48,6 +48,10 @@ Widget::Widget(QWidget *parent) :
 	cbTransition->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::Transition);
 	connect(cbTransition,SIGNAL(clicked()), this, SLOT(setStyle()));
 
+	QRadioButton* cbSceneGroup = new QRadioButton("Scene Group");
+	cbSceneGroup->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::SceneGroupHeader);
+	connect(cbSceneGroup,SIGNAL(clicked()), this, SLOT(setStyle()));
+
 	QRadioButton* cbSimpleText = new QRadioButton("Simple Text");
 	cbSimpleText->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::SimpleText);
 	connect(cbSimpleText,SIGNAL(clicked()), this, SLOT(setStyle()));
@@ -57,7 +61,7 @@ Widget::Widget(QWidget *parent) :
 	QPushButton* testBtn = new QPushButton("Test");
 
 	QVBoxLayout* stylesLayout = new QVBoxLayout;
-	stylesLayout->addWidget(cbSceneHeading);
+	stylesLayout->addWidget(cbTimeAndAction);
 	stylesLayout->addWidget(cbAction);
 	stylesLayout->addWidget(cbCharacter);
 	stylesLayout->addWidget(cbDialog);
@@ -65,6 +69,7 @@ Widget::Widget(QWidget *parent) :
 	stylesLayout->addWidget(cbTitle);
 	stylesLayout->addWidget(cbNote);
 	stylesLayout->addWidget(cbTransition);
+	stylesLayout->addWidget(cbSceneGroup);
 	stylesLayout->addWidget(cbSimpleText);
 	stylesLayout->addWidget(testBtn);
 	stylesLayout->addStretch();
@@ -85,8 +90,8 @@ void Widget::exec()
 {
 	resize(600,400);
 
-	m_screenEdit->setScenarioBlockType(ScenarioTextBlockStyle::Action);
-	m_screenEdit->setScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+	m_screenEdit->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
+	m_screenEdit->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
 	m_screenEdit->setFocus();
 
 	show();
@@ -98,7 +103,7 @@ void Widget::setStyle()
 		if (rb->isChecked()) {
 			ScenarioTextBlockStyle::Type type =
 					(ScenarioTextBlockStyle::Type)rb->property(TYPE_PROPERTY).toInt();
-			m_screenEdit->setScenarioBlockType(type);
+			m_screenEdit->changeScenarioBlockType(type);
 			m_screenEdit->setFocus();
 		}
 	}
@@ -109,6 +114,8 @@ void Widget::styleChanged()
 	ScenarioTextBlockStyle::Type currentType = m_screenEdit->scenarioBlockType();
 	if (currentType == ScenarioTextBlockStyle::TitleHeader) {
 		currentType = ScenarioTextBlockStyle::Title;
+	} else if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
+		currentType = ScenarioTextBlockStyle::SceneGroupHeader;
 	}
 
 	foreach (QObject* child, children()) {

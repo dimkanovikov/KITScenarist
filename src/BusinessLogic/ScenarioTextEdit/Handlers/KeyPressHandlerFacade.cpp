@@ -11,6 +11,8 @@
 #include "NoteHandler.h"
 #include "TitleHeaderHandler.h"
 #include "TitleHandler.h"
+#include "SceneGroupHeaderHandler.h"
+#include "SceneGroupFooterHandler.h"
 #include "SimpleTextHandler.h"
 
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
@@ -71,6 +73,8 @@ KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :
 	m_noteHandler = new NoteHandler(_editor);
 	m_titleheaderHandler = new TitleHeaderHandler(_editor);
 	m_titleHandler = new TitleHandler(_editor);
+	m_sceneGroupHeaderHandler = new SceneGroupHeaderHandler(_editor);
+	m_sceneGroupFooterHandler = new SceneGroupFooterHandler(_editor);
 	m_simpleTextHandler = new SimpleTextHandler(_editor);
 }
 
@@ -120,6 +124,16 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Ty
 
 		case ScenarioTextBlockStyle::Title: {
 			handler = m_titleHandler;
+			break;
+		}
+
+		case ScenarioTextBlockStyle::SceneGroupHeader: {
+			handler = m_sceneGroupHeaderHandler;
+			break;
+		}
+
+		case ScenarioTextBlockStyle::SceneGroupFooter: {
+			handler = m_sceneGroupFooterHandler;
 			break;
 		}
 

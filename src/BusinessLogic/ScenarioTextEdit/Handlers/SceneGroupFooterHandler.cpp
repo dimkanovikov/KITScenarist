@@ -1,4 +1,4 @@
-#include "TransitionHandler.h"
+#include "SceneGroupFooterHandler.h"
 
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
 
@@ -8,12 +8,12 @@
 using namespace KeyProcessingLayer;
 
 
-TransitionHandler::TransitionHandler(ScenarioTextEdit* _editor) :
+SceneGroupFooterHandler::SceneGroupFooterHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
 }
 
-void TransitionHandler::handleEnter(QKeyEvent*)
+void SceneGroupFooterHandler::handleEnter(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -69,9 +69,9 @@ void TransitionHandler::handleEnter(QKeyEvent*)
 					//! В конце блока
 
 					//
-					// Вставляем блок и применяем ему стиль время и место
+					// Вставить блок время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
 				} else {
 					//! Внутри блока
 
@@ -84,7 +84,7 @@ void TransitionHandler::handleEnter(QKeyEvent*)
 	}
 }
 
-void TransitionHandler::handleTab(QKeyEvent*)
+void SceneGroupFooterHandler::handleTab(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -140,7 +140,7 @@ void TransitionHandler::handleTab(QKeyEvent*)
 					//! В конце блока
 
 					//
-					// Действуем как нажатие клавиши ENTER
+					// Как ENTER
 					//
 					handleEnter();
 				} else {

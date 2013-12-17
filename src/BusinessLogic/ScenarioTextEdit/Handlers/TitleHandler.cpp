@@ -71,8 +71,7 @@ void TitleHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставляем блок и применяем ему стиль описания действия
 					//
-					cursor.insertBlock();
-					editor()->setScenarioBlockType(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
 				} else {
 					//! Внутри блока
 

@@ -19,10 +19,22 @@ public:
 	explicit ScenarioTextEdit(QWidget* _parent = 0);
 
 	/**
+	 * @brief Вставить новый блок
+	 * @param Тип блока
+	 */
+	void addScenarioBlock(ScenarioTextBlockStyle::Type _blockType);
+
+	/**
 	 * @brief Установить вид текущего блока
 	 * @param Тип блока
 	 */
-	void setScenarioBlockType(ScenarioTextBlockStyle::Type _blockType);
+	void changeScenarioBlockType(ScenarioTextBlockStyle::Type _blockType);
+
+	/**
+	 * @brief Применить тип блока ко всему тексту в блоке
+	 * @param Тип для применения
+	 */
+	void applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type _blockType);
 
 	/**
 	 * @brief Получить вид блока
@@ -35,6 +47,9 @@ public:
 	ScenarioTextBlockStyle::Type scenarioBlockType();
 
 signals:
+	/**
+	 * @brief Сменился стиль под курсором
+	 */
 	void currentStyleChanged();
 
 protected:
@@ -56,6 +71,18 @@ protected:
 	void insertFromMimeData(const QMimeData *_source);
 
 private:
+	/**
+	 * @brief Очистить текущий блок от установленного в нём типа
+	 */
+	void cleanScenarioTypeFromBlock();
+
+	/**
+	 * @brief Применить заданный тип к текущему блоку редактора
+	 * @param Тип блока
+	 */
+	void applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _blockType);
+
+
 	/**
 	 * @brief Изменить регистр текста, если это необходимо
 	 */

@@ -33,6 +33,26 @@ namespace KeyProcessingLayer
 		 * @brief Удалить символы
 		 */
 		void removeCharacters(bool _backward);
+
+		/**
+		 * @brief Посчитать сколько блоков открывающих/закрывающих группу нужно удалить
+		 * @param _isFirstGroupHeader
+		 * @param _groupHeadersCount
+		 * @param _groupFootersCount
+		 */
+		void findGroupBlocks(int _startPosition,
+							 int _endPosition,
+							 int& _groupHeadersCount,
+							 int& _groupFootersCount);
+
+		/**
+		 * @brief Удалить пары стёртых групп
+		 * @param _isFirstGroupHeader
+		 * @param _groupHeadersCount
+		 * @param _groupFootersCount
+		 */
+		void removeGroupsPairs(int _groupHeadersCount,
+							   int _groupFootersCount);
 	};
 }
 

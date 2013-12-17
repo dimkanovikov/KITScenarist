@@ -70,7 +70,9 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Handlers/NoteHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/TitleHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/TitleHeaderHandler.h \
-    BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.h
+    BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h
 
 SOURCES += main.cpp \
     Domain/Action.cpp \
@@ -127,7 +129,9 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/TransitionHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/NoteHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/TitleHandler.cpp \
-    BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.cpp
+    BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp
 
 
 #

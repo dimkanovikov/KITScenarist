@@ -48,7 +48,7 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	//
 	textCursor().insertBlock();
 	textCursor().deletePreviousChar();
-	setScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+	changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
 
 	//
 	// При перемещении курсора может меняться стиль блока
@@ -56,139 +56,72 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	connect(this, SIGNAL(cursorPositionChanged()), this, SIGNAL(currentStyleChanged()));
 }
 
-void ScenarioTextEdit::setScenarioBlockType(ScenarioTextBlockStyle::Type _blockType)
+void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
+{
+	//
+	// Вставим блок
+	//
+	textCursor().insertBlock();
+
+	//
+	// Применим стиль к новому блоку
+	//
+	applyScenarioTypeToBlock(_blockType);
+
+	//
+	// Уведомим о том, что стиль сменился
+	//
+	emit currentStyleChanged();
+}
+
+void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blockType)
 {
 	//
 	// Является ли текущий вид заголовком
 	//
-	bool currentTypeIsHeader =
-			scenarioBlockType() == ScenarioTextBlockStyle::TitleHeader;
+	bool canChangeType =
+			(scenarioBlockType() != ScenarioTextBlockStyle::TitleHeader)
+			&& (scenarioBlockType() != ScenarioTextBlockStyle::SceneGroupFooter);
 
 	//
 	// Если текущий вид не заголовок
 	//
-	if (!currentTypeIsHeader) {
+	if (canChangeType) {
 
 		//
 		// Обработаем предшествующий установленный стиль
 		//
-		{
-			QTextCursor cursor = textCursor();
-			ScenarioTextBlockStyle oldBlockStyle(scenarioBlockType());
-
-			//
-			// Удалить заголовок если происходит смена стиля в текущем блоке
-			// в противном случае его не нужно удалять
-			//
-			if (oldBlockStyle.hasHeader()) {
-				QTextCursor headerCursor = cursor;
-				headerCursor.movePosition(QTextCursor::StartOfBlock);
-				headerCursor.movePosition(QTextCursor::Left);
-				if (scenarioBlockType(headerCursor.block())
-					== oldBlockStyle.headerType()) {
-					headerCursor.select(QTextCursor::BlockUnderCursor);
-					headerCursor.deleteChar();
-
-					//
-					// Если находимся в самом начале документа, то необходимо удалить ещё один символ
-					//
-					if (headerCursor.position() == 0) {
-						headerCursor.deleteChar();
-					}
-				}
-			}
-
-			//
-			// Убрать декорации
-			//
-			if (oldBlockStyle.hasDecoration()) {
-				QString blockText = cursor.block().text();
-				//
-				// ... префикс
-				//
-				if (blockText.startsWith(oldBlockStyle.prefix())) {
-					cursor.movePosition(QTextCursor::StartOfBlock);
-					for (int repeats = 0; repeats < oldBlockStyle.prefix().length(); ++repeats) {
-						cursor.deleteChar();
-					}
-				}
-
-				//
-				// ... постфикс
-				//
-				if (blockText.endsWith(oldBlockStyle.postfix())) {
-					cursor.movePosition(QTextCursor::EndOfBlock);
-					for (int repeats = 0; repeats < oldBlockStyle.postfix().length(); ++repeats) {
-						cursor.deletePreviousChar();
-					}
-				}
-			}
-		}
+		cleanScenarioTypeFromBlock();
 
 		//
 		// Применим новый стиль к блоку
 		//
-		{
-			QTextCursor cursor = textCursor();
-			ScenarioTextBlockStyle newBlockStyle(_blockType);
-
-			//
-			// Обновим стили
-			//
-			cursor.setBlockCharFormat(newBlockStyle.charFormat());
-			cursor.setBlockFormat(newBlockStyle.blockFormat());
-
-			//
-			// Применим стиль текста ко всему блоку, выделив его,
-			// т.к. в блоке могут находиться фрагменты в другом стиле
-			//
-			cursor.select(QTextCursor::BlockUnderCursor);
-			cursor.setCharFormat(newBlockStyle.charFormat());
-			cursor.clearSelection();
-
-			//
-			// Вставим префикс и постфикс стиля, если необходимо
-			//
-			if (newBlockStyle.hasDecoration()) {
-				int cursorPosition = cursor.position();
-				QString blockText = cursor.block().text();
-				if (!newBlockStyle.postfix().isEmpty()
-					&& !blockText.startsWith(newBlockStyle.prefix())) {
-					cursor.movePosition(QTextCursor::StartOfBlock);
-					cursor.insertText(newBlockStyle.prefix());
-					cursorPosition += newBlockStyle.prefix().length();
-				}
-				if (!newBlockStyle.prefix().isEmpty()
-					&& !blockText.endsWith(newBlockStyle.postfix())) {
-					cursor.movePosition(QTextCursor::EndOfBlock);
-					cursor.insertText(newBlockStyle.postfix());
-				}
-				cursor.setPosition(cursorPosition);
-				setTextCursor(cursor);
-			}
-
-			//
-			// Вставим заголовок, если необходимо
-			//
-			if (newBlockStyle.hasHeader()) {
-				ScenarioTextBlockStyle headerStyle(newBlockStyle.headerType());
-
-				cursor.movePosition(QTextCursor::StartOfBlock);
-				cursor.insertBlock();
-				cursor.movePosition(QTextCursor::Left);
-
-				cursor.setBlockCharFormat(headerStyle.charFormat());
-				cursor.setBlockFormat(headerStyle.blockFormat());
-
-				cursor.insertText(newBlockStyle.header());
-			}
-		}
+		applyScenarioTypeToBlock(_blockType);
 
 		//
 		// Уведомим о том, что стиль сменился
 		//
 		emit currentStyleChanged();
 	}
+}
+
+void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type _blockType)
+{
+	QTextCursor cursor = textCursor();
+	ScenarioTextBlockStyle newBlockStyle(_blockType);
+
+	//
+	// Обновим стили
+	//
+	cursor.setBlockCharFormat(newBlockStyle.charFormat());
+	cursor.setBlockFormat(newBlockStyle.blockFormat());
+
+	//
+	// Применим стиль текста ко всему блоку, выделив его,
+	// т.к. в блоке могут находиться фрагменты в другом стиле
+	//
+	cursor.select(QTextCursor::BlockUnderCursor);
+	cursor.setCharFormat(newBlockStyle.charFormat());
 }
 
 ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType(const QTextBlock& _block)
@@ -281,6 +214,177 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 		QString textToInsert = _source->text();
 		textToInsert = textToInsert.simplified();
 		textCursor().insertText(textToInsert);
+	}
+}
+
+void ScenarioTextEdit::cleanScenarioTypeFromBlock()
+{
+	QTextCursor cursor = textCursor();
+	ScenarioTextBlockStyle oldBlockStyle(scenarioBlockType());
+
+	//
+	// Удалить завершающий блок группы сцен
+	//
+	if (oldBlockStyle.blockType() == ScenarioTextBlockStyle::SceneGroupHeader) {
+		QTextCursor cursor = textCursor();
+		cursor.movePosition(QTextCursor::NextBlock);
+
+		// ... открытые группы на пути поиска необходимого для обновления блока
+		int openedGroups = 0;
+		bool isFooterUpdated = false;
+		do {
+			ScenarioTextBlockStyle::Type currentType =
+					scenarioBlockType(cursor.block());
+
+			if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
+				if (openedGroups == 0) {
+					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+					cursor.deleteChar();
+					cursor.deletePreviousChar();
+					isFooterUpdated = true;
+				} else {
+					--openedGroups;
+				}
+			} else if (currentType == ScenarioTextBlockStyle::SceneGroupHeader) {
+				// ... встретилась новая группа
+				++openedGroups;
+			}
+
+			cursor.movePosition(QTextCursor::NextBlock);
+		} while (!isFooterUpdated);
+	}
+
+	//
+	// Удалить заголовок если происходит смена стиля в текущем блоке
+	// в противном случае его не нужно удалять
+	//
+	if (oldBlockStyle.hasHeader()) {
+		QTextCursor headerCursor = cursor;
+		headerCursor.movePosition(QTextCursor::StartOfBlock);
+		headerCursor.movePosition(QTextCursor::Left);
+		if (scenarioBlockType(headerCursor.block())
+			== oldBlockStyle.headerType()) {
+			headerCursor.select(QTextCursor::BlockUnderCursor);
+			headerCursor.deleteChar();
+
+			//
+			// Если находимся в самом начале документа, то необходимо удалить ещё один символ
+			//
+			if (headerCursor.position() == 0) {
+				headerCursor.deleteChar();
+			}
+		}
+	}
+
+	//
+	// Убрать декорации
+	//
+	if (oldBlockStyle.hasDecoration()) {
+		QString blockText = cursor.block().text();
+		//
+		// ... префикс
+		//
+		if (blockText.startsWith(oldBlockStyle.prefix())) {
+			cursor.movePosition(QTextCursor::StartOfBlock);
+			for (int repeats = 0; repeats < oldBlockStyle.prefix().length(); ++repeats) {
+				cursor.deleteChar();
+			}
+		}
+
+		//
+		// ... постфикс
+		//
+		if (blockText.endsWith(oldBlockStyle.postfix())) {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			for (int repeats = 0; repeats < oldBlockStyle.postfix().length(); ++repeats) {
+				cursor.deletePreviousChar();
+			}
+		}
+	}
+}
+
+void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _blockType)
+{
+	QTextCursor cursor = textCursor();
+	ScenarioTextBlockStyle newBlockStyle(_blockType);
+
+	//
+	// Обновим стили
+	//
+	cursor.setBlockCharFormat(newBlockStyle.charFormat());
+	cursor.setBlockFormat(newBlockStyle.blockFormat());
+
+	//
+	// Применим стиль текста ко всему блоку, выделив его,
+	// т.к. в блоке могут находиться фрагменты в другом стиле
+	//
+	cursor.select(QTextCursor::BlockUnderCursor);
+	cursor.setCharFormat(newBlockStyle.charFormat());
+	cursor.clearSelection();
+
+	//
+	// Вставим префикс и постфикс стиля, если необходимо
+	//
+	if (newBlockStyle.hasDecoration()) {
+		int cursorPosition = cursor.position();
+		QString blockText = cursor.block().text();
+		if (!newBlockStyle.postfix().isEmpty()
+			&& !blockText.startsWith(newBlockStyle.prefix())) {
+			cursor.movePosition(QTextCursor::StartOfBlock);
+			cursor.insertText(newBlockStyle.prefix());
+			cursorPosition += newBlockStyle.prefix().length();
+		}
+		if (!newBlockStyle.prefix().isEmpty()
+			&& !blockText.endsWith(newBlockStyle.postfix())) {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			cursor.insertText(newBlockStyle.postfix());
+		}
+		cursor.setPosition(cursorPosition);
+		setTextCursor(cursor);
+	}
+
+	//
+	// Вставим заголовок, если необходимо
+	//
+	if (newBlockStyle.hasHeader()) {
+		ScenarioTextBlockStyle headerStyle(newBlockStyle.headerType());
+
+		cursor.movePosition(QTextCursor::StartOfBlock);
+		cursor.insertBlock();
+		cursor.movePosition(QTextCursor::Left);
+
+		cursor.setBlockCharFormat(headerStyle.charFormat());
+		cursor.setBlockFormat(headerStyle.blockFormat());
+
+		cursor.insertText(newBlockStyle.header());
+	}
+
+	//
+	// Для заголовка группы нужно создать завершение
+	//
+	if (newBlockStyle.blockType() == ScenarioTextBlockStyle::SceneGroupHeader) {
+		ScenarioTextBlockStyle footerStyle(ScenarioTextBlockStyle::SceneGroupFooter);
+
+		//
+		// Запомним позицию курсора
+		//
+		int lastCursorPosition = textCursor().position();
+
+		cursor.movePosition(QTextCursor::EndOfBlock);
+		cursor.insertBlock();
+
+		cursor.setBlockCharFormat(footerStyle.charFormat());
+		cursor.setBlockFormat(footerStyle.blockFormat());
+
+		//
+		// т.к. вставлен блок, нужно вернуть курсор на место
+		//
+		cursor.setPosition(lastCursorPosition);
+		setTextCursor(cursor);
+
+
+		QKeyEvent empyEvent(QEvent::KeyPress, Qt::Key_Shift, Qt::ShiftModifier);
+		keyPressEvent(&empyEvent);
 	}
 }
 

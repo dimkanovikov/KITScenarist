@@ -21,10 +21,8 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 	// Запомним в стиле его тип
 	//
 	m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyType, blockType());
-
 	m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeaderType,
 									 ScenarioTextBlockStyle::Undefined);
-
 	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase, true);
 	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsCanModify, true);
 
@@ -93,6 +91,18 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 											 ScenarioTextBlockStyle::TitleHeader);
 			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeader,
 											 QObject::tr("Title", "ScenarioTextBlockStyle"));
+			break;
+		}
+
+		case SceneGroupHeader: {
+			m_pimpl->blockFormat.setTopMargin(25);
+			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
+			break;
+		}
+
+		case SceneGroupFooter: {
+			m_pimpl->blockFormat.setTopMargin(25);
+			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
