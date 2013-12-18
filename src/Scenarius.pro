@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -72,7 +72,8 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Handlers/TitleHeaderHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
-    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
+    BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.h
 
 SOURCES += main.cpp \
     Domain/Action.cpp \
@@ -131,7 +132,8 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/TitleHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
-    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.cpp
 
 
 #

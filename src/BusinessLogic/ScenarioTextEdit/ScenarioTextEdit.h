@@ -39,12 +39,12 @@ public:
 	/**
 	 * @brief Получить вид блока
 	 */
-	ScenarioTextBlockStyle::Type scenarioBlockType(const QTextBlock& _block);
+	ScenarioTextBlockStyle::Type scenarioBlockType(const QTextBlock& _block) const;
 
 	/**
 	 * @brief Получить вид блока в котором находится курсор
 	 */
-	ScenarioTextBlockStyle::Type scenarioBlockType();
+	ScenarioTextBlockStyle::Type scenarioBlockType() const;
 
 signals:
 	/**
@@ -64,11 +64,13 @@ protected:
 	void wheelEvent(QWheelEvent* _event);
 
 	/**
-	 * FIXME: Реализовать драг и дроп и корректные копирование/вставку
-	 *
-	 * @brief Переопределяется для предварительной обработки вставляемого текста
+	 * @brief Переопределяем работу с буфером обмена для использования собственного майм типа данных
 	 */
-	void insertFromMimeData(const QMimeData *_source);
+	/** @{ */
+	bool canInsertFromMimeData(const QMimeData* _source) const;
+	QMimeData* createMimeDataFromSelection() const;
+	void insertFromMimeData(const QMimeData* _source);
+	/** @} */
 
 private:
 	/**
@@ -92,6 +94,11 @@ private:
 	 * @brief Оканчивается ли строка сокращением
 	 */
 	bool stringEndsWithAbbrev(const QString& _text);
+
+private:
+	void initEditor();
+	void initView();
+	void initConnections();
 };
 
 #endif // SCENARIOTEXTEDIT_H

@@ -1,6 +1,7 @@
 #include "ScenarioTextEdit.h"
 
 #include "Handlers/KeyPressHandlerFacade.h"
+#include "MimeData/MimeDataProcessor.h"
 
 #include <QTextCursor>
 #include <QTextBlock>
@@ -21,39 +22,9 @@
 ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	CompletableTextEdit(_parent)
 {
-	//
-	// Параметры стиля страницы
-	//
-	const int PAGE_FONT_SIZE = 12;
-	const QFont PAGE_FONT("Courier New", PAGE_FONT_SIZE);
-	const int PAGE_WIDTH = 60;
-	const int PAGE_HEIGHT = 50;
-	const QSizeF PAGE_SIZE(PAGE_WIDTH, PAGE_HEIGHT);
-	const int PAGE_MARGIN = 10;
-
-	//
-	// Настраиваем редактор
-	//
-	setFont(PAGE_FONT);
-
-	//
-	// Создаём и настраиваем документ редактора
-	//
-	document()->setDefaultFont(PAGE_FONT);
-	document()->setDocumentMargin(PAGE_MARGIN);
-	document()->setPageSize(PAGE_SIZE);
-
-	//
-	// Финт ушами для того, чтобы применить UpperCase
-	//
-	textCursor().insertBlock();
-	textCursor().deletePreviousChar();
-	changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
-
-	//
-	// При перемещении курсора может меняться стиль блока
-	//
-	connect(this, SIGNAL(cursorPositionChanged()), this, SIGNAL(currentStyleChanged()));
+	initEditor();
+	initView();
+	initConnections();
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
@@ -124,12 +95,12 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type
 	cursor.setCharFormat(newBlockStyle.charFormat());
 }
 
-ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType(const QTextBlock& _block)
+ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType(const QTextBlock& _block) const
 {
 	return (ScenarioTextBlockStyle::Type)_block.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType);
 }
 
-ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType()
+ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType() const
 {
 	return scenarioBlockType(textCursor().block());
 }
@@ -150,7 +121,9 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Начнём блок операций
 	//
-	cursor.beginEditBlock();
+	if (_event->key() != -1) {
+		cursor.beginEditBlock();
+	}
 
 	//
 	// Подготовка к обработке
@@ -183,7 +156,9 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Завершим блок операций
 	//
-	cursor.endEditBlock();
+	if (_event->key() != -1) {
+		cursor.endEditBlock();
+	}
 
 	//
 	// Убедимся, что курсор виден
@@ -208,9 +183,47 @@ void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)
 	}
 }
 
+bool ScenarioTextEdit::canInsertFromMimeData(const QMimeData* _source) const
+{
+	bool canInsert = false;
+	if (_source->formats().contains(MimeDataProcessor::SCENARIO_MIME_TYPE)
+		|| _source->hasText()) {
+		canInsert = true;
+	}
+	return canInsert;
+}
+
+QMimeData* ScenarioTextEdit::createMimeDataFromSelection() const
+{
+	QMimeData* mimeData = new QMimeData;
+
+	//
+	// Если выделен текст из разных блоков, поместим
+	// в буфер данные о них в специальном формате
+	//
+	{
+		QTextCursor cursor = textCursor();
+		cursor.setPosition(textCursor().selectionStart());
+		int startSelectionBlockNumber = cursor.blockNumber();
+		cursor.setPosition(textCursor().selectionEnd());
+		int endSelectionBlockNumber = cursor.blockNumber();
+
+		if (startSelectionBlockNumber != endSelectionBlockNumber) {
+			mimeData->setData(
+						MimeDataProcessor::SCENARIO_MIME_TYPE,
+						MimeDataProcessor::createMimeFromSelection(this).toUtf8());
+		}
+	}
+
+	mimeData->setData("text/plain", textCursor().selectedText().toUtf8());
+	return mimeData;
+}
+
 void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 {
-	if (_source->hasText()) {
+	if (_source->formats().contains(MimeDataProcessor::SCENARIO_MIME_TYPE)) {
+		MimeDataProcessor::insertFromMime(this, _source);
+	} else if (_source->hasText()) {
 		QString textToInsert = _source->text();
 		textToInsert = textToInsert.simplified();
 		textCursor().insertText(textToInsert);
@@ -383,7 +396,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 		setTextCursor(cursor);
 
 
-		QKeyEvent empyEvent(QEvent::KeyPress, Qt::Key_Shift, Qt::ShiftModifier);
+		QKeyEvent empyEvent(QEvent::KeyPress, -1, Qt::NoModifier);
 		keyPressEvent(&empyEvent);
 	}
 }
@@ -482,6 +495,57 @@ bool ScenarioTextEdit::stringEndsWithAbbrev(const QString& _text)
 	//
 
 	return false;
+}
+
+void ScenarioTextEdit::initEditor()
+{
+	//
+	// Параметры стиля страницы
+	//
+	const int PAGE_FONT_SIZE = 12;
+	const QFont PAGE_FONT("Courier New", PAGE_FONT_SIZE);
+	const int PAGE_WIDTH = 60;
+	const int PAGE_HEIGHT = 50;
+	const QSizeF PAGE_SIZE(PAGE_WIDTH, PAGE_HEIGHT);
+	const int PAGE_MARGIN = 10;
+
+	//
+	// Настраиваем редактор
+	//
+	setFont(PAGE_FONT);
+
+	//
+	// Создаём и настраиваем документ редактора
+	//
+	document()->setDefaultFont(PAGE_FONT);
+	document()->setDocumentMargin(PAGE_MARGIN);
+	document()->setPageSize(PAGE_SIZE);
+
+	//
+	// Финт ушами для того, чтобы применить UpperCase
+	//
+	textCursor().insertBlock();
+	textCursor().deletePreviousChar();
+	changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+}
+
+void ScenarioTextEdit::initView()
+{
+	//
+	// Параметры внешнего вида
+	//
+	const int MINIMUM_WIDTH = 600;
+	const int MINIMUM_HEIGHT = 100;
+
+	setMinimumSize(MINIMUM_WIDTH, MINIMUM_HEIGHT);
+}
+
+void ScenarioTextEdit::initConnections()
+{
+	//
+	// При перемещении курсора может меняться стиль блока
+	//
+	connect(this, SIGNAL(cursorPositionChanged()), this, SIGNAL(currentStyleChanged()));
 }
 
 

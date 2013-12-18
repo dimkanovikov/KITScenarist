@@ -35,11 +35,6 @@ void KeyPressHandlerFacade::prehandle(QKeyEvent* _event)
 
 void KeyPressHandlerFacade::handle(QKeyEvent* _event)
 {
-	//
-	// FIXME: вставка, копирование, вырезание,
-	//		  отмена, повтор
-	//
-
 	QTextBlock currentBlock = m_editor->textCursor().block();
 	ScenarioTextBlockStyle::Type currentType = m_editor->scenarioBlockType(currentBlock);
 	AbstractKeyHandler* currentHandler = handlerFor(currentType);

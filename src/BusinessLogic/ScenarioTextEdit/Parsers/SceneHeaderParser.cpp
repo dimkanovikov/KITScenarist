@@ -6,13 +6,11 @@
 
 SceneHeaderSection SceneHeaderParser::section(const QString& _text)
 {
-	//
-	// TODO: Проработать, улучшить определение секции блока заголовка сцена
-	//
-
 	SceneHeaderSection section = SceneHeaderSectionUndefined;
 
-	if (_text.split(" - ").count() == 2) {
+	if (_text.split(", ").count() == 2) {
+		section = SceneHeaderSectionScenarioDay;
+	} else if (_text.split(" - ").count() == 2) {
 		section = SceneHeaderSectionTime;
 	} else {
 		const int splitDotCount = _text.split(". ").count();
@@ -22,8 +20,6 @@ SceneHeaderSection SceneHeaderParser::section(const QString& _text)
 			section = SceneHeaderSectionLocation;
 		} else if (splitDotCount == 3) {
 			section = SceneHeaderSectionSubLocation;
-		} else if (splitDotCount == 4) {
-			section = SceneHeaderSectionScenarioDay;
 		}
 	}
 
@@ -67,8 +63,8 @@ QString SceneHeaderParser::scenarioDayName(const QString& _text)
 {
 	QString scenarioDayName;
 
-	if (_text.split(". ").count() >= 4) {
-		scenarioDayName = _text.split(". ").value(3);
+	if (_text.split(", ").count() == 2) {
+		scenarioDayName = _text.split(", ").last();
 	}
 
 	return scenarioDayName;
@@ -79,7 +75,7 @@ QString SceneHeaderParser::timeName(const QString& _text)
 	QString timeName;
 
 	if (_text.split(" - ").count() == 2) {
-		timeName = _text.split(" - ").last();
+		timeName = _text.split(" - ").last().split(",").first();
 	}
 
 	return timeName;
