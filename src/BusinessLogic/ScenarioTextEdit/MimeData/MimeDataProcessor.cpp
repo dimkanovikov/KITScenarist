@@ -46,7 +46,7 @@ QString MimeDataProcessor::createMimeFromSelection(const ScenarioTextEdit* _edit
 			//
 			// Получить текст под курсором
 			//
-			QString textToSave = cursor.selectedText();
+			QString textToSave = cursor.selectedText().simplified();
 
 			//
 			// Дописать xml
@@ -175,7 +175,7 @@ QString MimeDataProcessor::createMimeFromSelection(const ScenarioTextEdit* _edit
 
 
 	//
-	// Добавим заголовок
+	// Добавим корневой элемент
 	//
 	resultXml.prepend("<scenario>");
 	resultXml.append("</scenario>");
@@ -185,8 +185,12 @@ QString MimeDataProcessor::createMimeFromSelection(const ScenarioTextEdit* _edit
 
 void MimeDataProcessor::insertFromMime(ScenarioTextEdit* _editor, const QMimeData* _mimeData)
 {
-	QString mimeDataText = _mimeData->data(SCENARIO_MIME_TYPE);
+	//
+	// Сместим курсор в конец блока, чтобы не разрывать блок вставкой
+	//
+	_editor->moveCursor(QTextCursor::EndOfBlock);
 
+	QString mimeDataText = _mimeData->data(SCENARIO_MIME_TYPE);
 	QXmlStreamReader reader(mimeDataText);
 	while (!reader.atEnd()) {
 		switch (reader.readNext()) {
@@ -213,7 +217,6 @@ void MimeDataProcessor::insertFromMime(ScenarioTextEdit* _editor, const QMimeDat
 				} else if (tokenName == "footer") {
 					_editor->moveCursor(QTextCursor::NextBlock);
 					_editor->moveCursor(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-//					_editor->addScenarioBlock(ScenarioTextBlockStyle::SceneGroupFooter);
 				} else if (tokenName == "simple_text") {
 					_editor->addScenarioBlock(ScenarioTextBlockStyle::SimpleText);
 				}

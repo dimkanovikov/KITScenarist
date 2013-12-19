@@ -183,6 +183,28 @@ void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)
 	}
 }
 
+void ScenarioTextEdit::dropEvent(QDropEvent* _event)
+{
+	QTextCursor cursor = textCursor();
+
+	if (cursor.hasSelection()) {
+		//
+		// Если курсор в начале блоке, нужно сместиться ещё на один символ влево,
+		// чтобы не оставлять за собой пустых блоков
+		//
+		int startCursorPosition = qMin(cursor.selectionStart(), cursor.selectionEnd());
+		int endCursorPosition = qMax(cursor.selectionStart(), cursor.selectionEnd());
+		cursor.setPosition(startCursorPosition);
+		if (cursor.atBlockStart()) {
+			cursor.movePosition(QTextCursor::Left);
+		}
+		cursor.setPosition(endCursorPosition, QTextCursor::KeepAnchor);
+		setTextCursor(cursor);
+	}
+
+	CompletableTextEdit::dropEvent(_event);
+}
+
 bool ScenarioTextEdit::canInsertFromMimeData(const QMimeData* _source) const
 {
 	bool canInsert = false;

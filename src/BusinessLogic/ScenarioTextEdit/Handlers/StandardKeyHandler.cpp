@@ -25,6 +25,10 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 		// Проверяем по коду клавиатуры, этот способ независим от выбранного пользователем языка
 		//
 		switch (_event->nativeScanCode()) {
+			/**
+			 * @note Действия редактирования текста (дублирующие контектстное меню)
+			 */
+			/** @{ */
 			// z
 			case 52: {
 				if (pressedModifiers.testFlag(Qt::ShiftModifier)) {
@@ -52,6 +56,7 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 				editor()->paste();
 				break;
 			}
+			/** @{ */
 
 			default: {
 				break;
