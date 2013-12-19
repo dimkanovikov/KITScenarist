@@ -33,6 +33,7 @@ public:
 	 */
 	bool complete(QAbstractItemModel* _model, const QString& _completionPrefix);
 
+public slots:
 	/**
 	 * @brief Применить выбранный в подстановщике элемент
 	 */

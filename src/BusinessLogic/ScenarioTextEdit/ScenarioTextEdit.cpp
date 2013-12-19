@@ -58,6 +58,10 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 	// Если текущий вид не заголовок
 	//
 	if (canChangeType) {
+		//
+		// Закроем подсказку
+		//
+		closeCompleter();
 
 		//
 		// Обработаем предшествующий установленный стиль

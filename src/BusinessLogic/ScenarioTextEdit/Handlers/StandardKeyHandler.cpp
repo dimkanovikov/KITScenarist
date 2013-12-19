@@ -21,6 +21,7 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
 
 	if (pressedModifiers.testFlag(Qt::ControlModifier)) {
+		qDebug() << _event->nativeScanCode();
 		//
 		// Проверяем по коду клавиатуры, этот способ независим от выбранного пользователем языка
 		//
@@ -56,7 +57,74 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 				editor()->paste();
 				break;
 			}
+			/** @} */
+
+			/**
+			 * @note Действия смены стиля
+			 *
+				Время и место: Ctrl+Enter 36
+				Описание действия: Ctrl+J (на русской раскладке это Ctrl+О) 44
+				Персонаж: Ctrl+U (на русской раскладке это Ctrl+Г (герой)) 30
+				Диалог: Ctrl+L (на русской раскладке это Ctrl+Д) 46
+				Ремарка: Ctrl+H (на русской раскладке это Ctrl+Р) 43
+				Титр: Ctrl+N (на русской раскладке это Ctrl+Т) 57
+				Примечание: Ctrl+P (на русской раскладке это Ctrl+З (заметка)) 33
+				Переход: Ctrl+G (на русской раскладке это Ctrl+П) 42
+				Группа сцен: Ctrl+D (на русской раскладке это Ctrl+В (вставка)) 40
+				Простой текст: Ctrl+пробел 65
+			 *
+			 */
 			/** @{ */
+			case 36: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+				break;
+			}
+
+			case 44: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
+				break;
+			}
+
+			case 30: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Character);
+				break;
+			}
+
+			case 46: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Dialog);
+				break;
+			}
+
+			case 43: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
+				break;
+			}
+
+			case 57: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Title);
+				break;
+			}
+
+			case 33: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Note);
+				break;
+			}
+
+			case 42: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Transition);
+				break;
+			}
+
+			case 40: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::SceneGroupHeader);
+				break;
+			}
+
+			case 65: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::SimpleText);
+				break;
+			}
+			/** @} */
 
 			default: {
 				break;
@@ -103,9 +171,7 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 	//
 	if (!editor()->isCompleterVisible()) {
 		bool isShiftPressed = _event->modifiers().testFlag(Qt::ShiftModifier);
-		editor()->moveCursor(
-					QTextCursor::Up,
-					isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+		moveCursorUpDown(true, isShiftPressed);
 	}
 }
 
@@ -116,15 +182,38 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 	//
 	if (!editor()->isCompleterVisible()) {
 		bool isShiftPressed = _event->modifiers().testFlag(Qt::ShiftModifier);
-		editor()->moveCursor(
-					QTextCursor::Down,
-					isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+		moveCursorUpDown(false, isShiftPressed);
 	}
 }
 
 void StandardKeyHandler::handleOther(QKeyEvent*)
 {
 
+}
+
+
+// **** private ****
+
+
+void StandardKeyHandler::moveCursorUpDown(bool _up, bool _isShiftPressed)
+{
+	QTextCursor cursor = editor()->textCursor();
+	int positionInBlock = cursor.positionInBlock();
+	int lastBlockNumber = cursor.blockNumber();
+	cursor.movePosition(
+				_up ? QTextCursor::Up : QTextCursor::Down,
+				_isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+	if (cursor.blockNumber() != lastBlockNumber) {
+		while (positionInBlock > 0
+			   && !cursor.atBlockEnd()) {
+			cursor.movePosition(
+						QTextCursor::Right,
+						_isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+			--positionInBlock;
+		}
+	}
+
+	editor()->setTextCursor(cursor);
 }
 
 void StandardKeyHandler::removeCharacters(bool _backward)

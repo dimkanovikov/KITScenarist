@@ -20,9 +20,22 @@ bool PrepareHandler::needSendEventToBaseClass() const
 	return m_needSendEventToBaseClass;
 }
 
-void PrepareHandler::handleShortcut(QKeyEvent*)
+void PrepareHandler::handleShortcut(QKeyEvent* _event)
 {
-	m_needSendEventToBaseClass = false;
+	//
+	// Получим необходимые переменные
+	//
+	// ... нажатая клавиша
+	Qt::Key pressedKey = (Qt::Key)_event->key();
+	// ... зажатые управляющие клавиши
+	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
+
+	if (pressedModifiers.testFlag(Qt::ControlModifier)
+		&& (pressedKey == Qt::Key_Left || pressedKey == Qt::Key_Right)) {
+		m_needSendEventToBaseClass = true;
+	} else {
+		m_needSendEventToBaseClass = false;
+	}
 }
 
 void PrepareHandler::handleEnter(QKeyEvent*)

@@ -30,6 +30,11 @@ namespace KeyProcessingLayer
 
 	private:
 		/**
+		 * @brief Переместить курсор вверх или вниз
+		 */
+		void moveCursorUpDown(bool _up, bool _isShiftPressed);
+
+		/**
 		 * @brief Удалить символы
 		 */
 		void removeCharacters(bool _backward);
