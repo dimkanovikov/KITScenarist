@@ -1,4 +1,4 @@
-ScreenWriter
+Scenarius
 ============
 
 Application to write scenarios.
