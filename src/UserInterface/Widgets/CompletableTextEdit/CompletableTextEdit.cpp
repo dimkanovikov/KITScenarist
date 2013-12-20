@@ -31,7 +31,15 @@ bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _c
 		//
 		// Настроим завершателя
 		//
-		if (m_completer->model() != _model) {
+		bool settedNewModel = m_completer->model() != _model;
+		bool oldModelWasChanged = false;
+		if (!settedNewModel
+			&& _model != 0) {
+			oldModelWasChanged = m_completer->model()->rowCount() == _model->rowCount();
+		}
+
+		if (settedNewModel
+			|| oldModelWasChanged) {
 			m_completer->setModel(_model);
 			m_completer->setModelSorting(QCompleter::UnsortedModel);
 			m_completer->setCaseSensitivity(Qt::CaseInsensitive);

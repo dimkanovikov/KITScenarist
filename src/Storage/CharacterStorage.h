@@ -3,6 +3,8 @@
 
 #include "StorageFacade.h"
 
+class QString;
+
 namespace Domain {
 	class Character;
 	class CharactersTable;
@@ -17,6 +19,7 @@ namespace StorageLayer
 	{
 	public:
 		CharactersTable* all();
+		void storeCharacter(const QString& _name);
 
 	private:
 		CharactersTable* m_all;

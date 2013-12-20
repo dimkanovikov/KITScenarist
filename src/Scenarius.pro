@@ -11,6 +11,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Scenarius
 TEMPLATE = app
 
+#
+# Для создания предустановленных справочников на русском языке
+#
+DEFINES += USE_RUSSIAN_DATABASE_ENUMS
+
 INCLUDEPATH += $$PWD
 
 HEADERS  += \
@@ -73,7 +78,8 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
-    BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.h
+    BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.h \
+    BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.h
 
 SOURCES += main.cpp \
     Domain/Action.cpp \
@@ -133,7 +139,8 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
-    BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.cpp
+    BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.cpp \
+    BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.cpp
 
 
 #

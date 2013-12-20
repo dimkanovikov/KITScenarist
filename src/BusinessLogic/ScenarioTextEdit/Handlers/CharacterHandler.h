@@ -23,6 +23,9 @@ namespace KeyProcessingLayer
 		void handleTab(QKeyEvent* _event = 0);
 		void handleOther(QKeyEvent* _event = 0);
 		/** @} */
+
+	private:
+		void storeCharacter() const;
 	};
 }
 

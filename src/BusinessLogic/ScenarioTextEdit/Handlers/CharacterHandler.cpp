@@ -1,5 +1,7 @@
 #include "CharacterHandler.h"
 
+#include "../Parsers/CharacterParser.h"
+
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
 
 #include <Domain/Character.h>
@@ -70,11 +72,21 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 					//! В начале блока
 
 					//
+					// Сохраним имя персонажа
+					//
+					storeCharacter();
+
+					//
 					// Вставим блок имени героя перед собой
 					//
 					editor()->addScenarioBlock(ScenarioTextBlockStyle::Character);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
+
+					//
+					// Сохраним имя персонажа
+					//
+					storeCharacter();
 
 					//
 					// Вставить блок реплики героя
@@ -187,4 +199,24 @@ void CharacterHandler::handleOther(QKeyEvent*)
 	// Дополним текст
 	//
 	editor()->complete(characterModel, currentBlockText);
+}
+
+void CharacterHandler::storeCharacter() const
+{
+	//
+	// Получим необходимые значения
+	//
+	// ... курсор в текущем положении
+	QTextCursor cursor = editor()->textCursor();
+	// ... блок текста в котором находится курсор
+	QTextBlock currentBlock = cursor.block();
+	// ... текст блока
+	QString currentBlockText = currentBlock.text();
+	// ... имя персонажа
+	QString characterName = CharacterParser::name(currentBlockText);
+
+	//
+	// Сохраняем персонажа
+	//
+	StorageFacade::characterStorage()->storeCharacter(characterName);
 }
