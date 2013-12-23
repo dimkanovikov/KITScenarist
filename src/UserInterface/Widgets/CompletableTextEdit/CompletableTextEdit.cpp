@@ -29,7 +29,7 @@ bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _c
 
 	if (_model != 0) {
 		//
-		// Настроим завершателя
+		// Настроим завершателя, если необходимо
 		//
 		bool settedNewModel = m_completer->model() != _model;
 		bool oldModelWasChanged = false;

@@ -1,5 +1,5 @@
-#ifndef SCENEHEADERHANDLER_H
-#define SCENEHEADERHANDLER_H
+#ifndef TIMEANDPLACEHANDLER_H
+#define TIMEANDPLACEHANDLER_H
 
 #include "StandardKeyHandler.h"
 
@@ -9,10 +9,10 @@ namespace KeyProcessingLayer
 	/**
 	 * @brief Класс выполняющий обработку нажатия клавиш в блоке время и место
 	 */
-	class SceneHeaderHandler : public StandardKeyHandler
+	class TimeAndPlaceHandler : public StandardKeyHandler
 	{
 	public:
-		SceneHeaderHandler(ScenarioTextEdit* _editor);
+		TimeAndPlaceHandler(ScenarioTextEdit* _editor);
 
 	protected:
 		/**
@@ -23,7 +23,10 @@ namespace KeyProcessingLayer
 		void handleTab(QKeyEvent* _event = 0);
 		void handleOther(QKeyEvent* _event = 0);
 		/** @} */
+
+	private:
+		void storeSceneParameters() const;
 	};
 }
 
-#endif // SCENEHEADERHANDLER_H
+#endif // TIMEANDPLACEHANDLER_H

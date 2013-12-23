@@ -1,12 +1,12 @@
-#include "SceneHeaderParser.h"
+#include "TimeAndPlaceParser.h"
 
 #include <QString>
 #include <QStringList>
 
 
-SceneHeaderSection SceneHeaderParser::section(const QString& _text)
+TimeAndPlaceSection TimeAndPlaceParser::section(const QString& _text)
 {
-	SceneHeaderSection section = SceneHeaderSectionUndefined;
+	TimeAndPlaceSection section = SceneHeaderSectionUndefined;
 
 	if (_text.split(", ").count() == 2) {
 		section = SceneHeaderSectionScenarioDay;
@@ -26,40 +26,42 @@ SceneHeaderSection SceneHeaderParser::section(const QString& _text)
 	return section;
 }
 
-QString SceneHeaderParser::placeName(const QString& _text)
+QString TimeAndPlaceParser::placeName(const QString& _text)
 {
 	QString placeName;
 
-	if (_text.split(". ").count() >= 1) {
+	if (_text.split(". ").count() > 0) {
 		placeName = _text.split(". ").value(0);
 	}
 
 	return placeName;
 }
 
-QString SceneHeaderParser::locationName(const QString& _text)
+QString TimeAndPlaceParser::locationName(const QString& _text)
 {
 	QString locationName;
 
-	if (_text.split(". ").count() >= 2) {
+	if (_text.split(". ").count() > 1) {
 		locationName = _text.split(". ").value(1);
+		locationName = locationName.split(" - ").first();
 	}
 
 	return locationName;
 }
 
-QString SceneHeaderParser::sublocationName(const QString& _text)
+QString TimeAndPlaceParser::sublocationName(const QString& _text)
 {
 	QString sublocationName;
 
-	if (_text.split(". ").count() >= 3) {
+	if (_text.split(". ").count() > 2) {
 		sublocationName = _text.split(". ").value(2);
+		sublocationName = sublocationName.split(" - ").first();
 	}
 
 	return sublocationName;
 }
 
-QString SceneHeaderParser::scenarioDayName(const QString& _text)
+QString TimeAndPlaceParser::scenarioDayName(const QString& _text)
 {
 	QString scenarioDayName;
 
@@ -70,7 +72,7 @@ QString SceneHeaderParser::scenarioDayName(const QString& _text)
 	return scenarioDayName;
 }
 
-QString SceneHeaderParser::timeName(const QString& _text)
+QString TimeAndPlaceParser::timeName(const QString& _text)
 {
 	QString timeName;
 

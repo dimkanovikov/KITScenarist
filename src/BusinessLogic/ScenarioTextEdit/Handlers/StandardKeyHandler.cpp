@@ -11,7 +11,7 @@ StandardKeyHandler::StandardKeyHandler(ScenarioTextEdit* _editor) :
 	AbstractKeyHandler(_editor)
 {
 }
-#include <QDebug>
+
 void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 {
 	//
@@ -21,7 +21,6 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
 
 	if (pressedModifiers.testFlag(Qt::ControlModifier)) {
-		qDebug() << _event->nativeScanCode();
 		//
 		// Проверяем по коду клавиатуры, этот способ независим от выбранного пользователем языка
 		//

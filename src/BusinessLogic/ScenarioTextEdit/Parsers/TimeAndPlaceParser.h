@@ -9,7 +9,7 @@ class QString;
  *
  * @note [МЕСТО]. [ЛОКАЦИЯ]. [ВНУТРЕННЯЯ ЛОКАЦИЯ] - [ВРЕМЯ], [СЦЕНАРНЫЙ ДЕНЬ]
  */
-enum SceneHeaderSection {
+enum TimeAndPlaceSection {
 	SceneHeaderSectionUndefined,	 //!< Неопределённое
 	SceneHeaderSectionPlace,		 //!< МЕСТО
 	SceneHeaderSectionLocation,		 //!< ЛОКАЦИЯ
@@ -22,13 +22,13 @@ enum SceneHeaderSection {
 /**
  * @brief Парсер текста блока время и место
  */
-class SceneHeaderParser
+class TimeAndPlaceParser
 {
 public:
 	/**
 	 * @brief Получить секцию блока
 	 */
-	static SceneHeaderSection section(const QString& _text);
+	static TimeAndPlaceSection section(const QString& _text);
 
 	/**
 	 * @brief Получить название места

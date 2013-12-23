@@ -2,7 +2,7 @@
 
 #include "PrepareHandler.h"
 #include "PreHandler.h"
-#include "SceneHeaderHandler.h"
+#include "TimeAndPlaceHandler.h"
 #include "ActionHandler.h"
 #include "CharacterHandler.h"
 #include "ParentheticalHandler.h"
@@ -59,7 +59,7 @@ KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :
 {
 	m_prepareHandler = new PrepareHandler(_editor);
 	m_preHandler = new PreHandler(_editor);
-	m_sceneHeaderHandler = new SceneHeaderHandler(_editor);
+	m_sceneHeaderHandler = new TimeAndPlaceHandler(_editor);
 	m_actionHandler = new ActionHandler(_editor);
 	m_characterHandler = new CharacterHandler(_editor);
 	m_parentheticalHandler = new ParentheticalHandler(_editor);
