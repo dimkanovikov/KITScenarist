@@ -15,6 +15,11 @@ int main(int argc, char *argv[])
 	QFontDatabase fontDatabase;
 	fontDatabase.addApplicationFont(":/Fonts/Courier New");
 
+	//
+	// Настроим версию приложения
+	//
+	a.setApplicationVersion("0.0.1");
+
 	Widget w;
 	w.exec();
 

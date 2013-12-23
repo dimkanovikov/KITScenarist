@@ -4,6 +4,7 @@
 #include <QSqlRecord>
 #include <QVariant>
 #include <QTextCodec>
+#include <QApplication>
 
 using namespace DatabaseLayer;
 
@@ -74,6 +75,14 @@ void Database::createTables(QSqlDatabase& _database)
 	QSqlQuery q_creator(_database);
 	_database.transaction();
 
+	// Таблица системных переменных
+	q_creator.exec("CREATE TABLE system_variables "
+				   "( "
+				   "variable TEXT PRIMARY KEY, "
+				   "value TEXT NOT NULL "
+				   "); "
+				   );
+
 	// Таблица "Место"
 	q_creator.exec("CREATE TABLE places "
 				   "( "
@@ -127,6 +136,14 @@ void Database::createEnums(QSqlDatabase& _database)
 {
 	QSqlQuery q_creator(_database);
 	_database.transaction();
+
+	// Версия программы
+	{
+		q_creator.exec(
+					QString("INSERT INTO system_variables VALUES ('version', '%1')")
+					.arg(qApp->applicationVersion())
+					);
+	}
 
 	// Справочник мест
 	{
