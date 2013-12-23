@@ -17,6 +17,7 @@ signals:
 public slots:
 	void setStyle();
 	void styleChanged();
+	void save();
 
 private:
 	ScenarioTextEdit* m_screenEdit;

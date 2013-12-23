@@ -7,6 +7,9 @@
 #include <QPushButton>
 #include "BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h"
 #include <QTextCodec>
+#include <QFileDialog>
+#include <Database/DatabaseHelper.h>
+
 
 namespace {
 	const char* TYPE_PROPERTY = "style_property";
@@ -59,6 +62,7 @@ Widget::Widget(QWidget *parent) :
 	// ****
 
 	QPushButton* testBtn = new QPushButton("Test");
+	QPushButton* saveBtn = new QPushButton("Save");
 
 	QVBoxLayout* stylesLayout = new QVBoxLayout;
 	stylesLayout->addWidget(cbTimeAndAction);
@@ -72,11 +76,13 @@ Widget::Widget(QWidget *parent) :
 	stylesLayout->addWidget(cbSceneGroup);
 	stylesLayout->addWidget(cbSimpleText);
 	stylesLayout->addWidget(testBtn);
+	stylesLayout->addWidget(saveBtn);
 	stylesLayout->addStretch();
 
 	m_screenEdit = new ScenarioTextEdit;
 	connect(m_screenEdit, SIGNAL(currentStyleChanged()), this, SLOT(styleChanged()));
 	connect(testBtn, SIGNAL(clicked()), m_screenEdit, SLOT(test()));
+	connect(saveBtn, SIGNAL(clicked()), this, SLOT(save()));
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->addLayout(stylesLayout);
@@ -127,5 +133,13 @@ void Widget::styleChanged()
 				break;
 			}
 		}
+	}
+}
+
+void Widget::save()
+{
+	QString fileName = QFileDialog::getSaveFileName(this, "Save");
+	if (!fileName.isEmpty()) {
+		DatabaseLayer::DatabaseHelper::saveDatabaseToFile(fileName);
 	}
 }

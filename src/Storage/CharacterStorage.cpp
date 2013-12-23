@@ -17,38 +17,46 @@ CharactersTable* CharacterStorage::all()
 	return m_all;
 }
 
-void CharacterStorage::storeCharacter(const QString& _name)
+Character* CharacterStorage::storeCharacter(const QString& _name)
 {
-	QString characterName = _name.toUpper();
+	Character* newCharacter = 0;
+
+	QString characterName = _name.toUpper().trimmed();
 
 	//
-	// Проверяем наличии данного персонажа
+	// Если персонажа можно сохранить
 	//
-	bool characterExists = false;
-	foreach (DomainObject* domainObject, m_all->toList()) {
-		Character* character = dynamic_cast<Character*>(domainObject);
-		if (character->name() == characterName) {
-			characterExists = true;
-			break;
+	if (!characterName.isEmpty()) {
+		//
+		// Проверяем наличии данного персонажа
+		//
+		foreach (DomainObject* domainObject, m_all->toList()) {
+			Character* character = dynamic_cast<Character*>(domainObject);
+			if (character->name() == characterName) {
+				newCharacter = character;
+				break;
+			}
+		}
+
+		//
+		// Если такого персонажа ещё нет, то сохраним его
+		//
+		if (!DomainObject::isValid(newCharacter)) {
+			newCharacter = new Character(Identifier(), characterName);
+
+			//
+			// ... в базе данных
+			//
+			MapperFacade::characterMapper()->insert(newCharacter);
+
+			//
+			// ... в текущем списке персонажей
+			//
+			m_all->append(newCharacter);
 		}
 	}
 
-	//
-	// Если такого персонажа ещё нет, то сохраним его
-	//
-	if (!characterExists) {
-		Character* character = new Character(Identifier(), characterName);
-
-		//
-		// ... в базе данных
-		//
-		MapperFacade::characterMapper()->insert(character);
-
-		//
-		// ... в текущем списке персонажей
-		//
-		m_all->append(character);
-	}
+	return newCharacter;
 }
 
 CharacterStorage::CharacterStorage() :

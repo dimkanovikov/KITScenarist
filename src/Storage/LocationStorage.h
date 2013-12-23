@@ -37,6 +37,21 @@ namespace StorageLayer
 		 */
 		LocationsTable* sublocations(const QString& _locationName);
 
+		/**
+		 * @brief Сохранить основную локацию
+		 */
+		Location* storeLocation(const QString& _locationName);
+
+		/**
+		 * @brief Сохранить подлокацию для заданной локации
+		 */
+		Location* storeSublocation(Location* _parent, const QString& _sublocationName);
+
+		/**
+		 * @brief Сохранить локацию и её подлокацию
+		 */
+		void storeLocationWithSublocation(const QString& _locationName, const QString& _sublocationName);
+
 	private:
 		LocationsTable* m_all;
 		LocationsTable* m_allMainLocations;

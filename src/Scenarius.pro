@@ -43,7 +43,6 @@ HEADERS  += \
 	BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h \
 	BusinessLogic/ScenarioTextEdit/ScenarioTextBlock/ScenarioTextBlockStyle.h \
 	BusinessLogic/ScenarioTextEdit/ScenarioTextBlock/ScenarioTextBlockStylePrivate.h \
-	BusinessLogic/ScenarioTextEdit/Parsers/SceneHeaderParser.h \
     BusinessLogic/ScenarioTextEdit/Handlers/KeyPressHandlerFacade.h \
     Database/Database.h \
     DataMapper/PlaceMapper.h \
@@ -64,7 +63,6 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Handlers/AbstractKeyHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/ActionHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/CharacterHandler.h \
-    BusinessLogic/ScenarioTextEdit/Handlers/SceneHeaderHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/StandardKeyHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/PrepareHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/PreHandler.h \
@@ -79,7 +77,10 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
     BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.h \
-    BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.h
+    BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.h \
+    BusinessLogic/ScenarioTextEdit/Parsers/TimeAndPlaceParser.h \
+    Database/DatabaseHelper.h
 
 SOURCES += main.cpp \
     Domain/Action.cpp \
@@ -105,7 +106,6 @@ SOURCES += main.cpp \
 #
 	BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.cpp \
 	BusinessLogic/ScenarioTextEdit/ScenarioTextBlock/ScenarioTextBlockStyle.cpp \
-	BusinessLogic/ScenarioTextEdit/Parsers/SceneHeaderParser.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/KeyPressHandlerFacade.cpp \
     Database/Database.cpp \
     DataMapper/PlaceMapper.cpp \
@@ -126,7 +126,6 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/AbstractKeyHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/ActionHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/CharacterHandler.cpp \
-    BusinessLogic/ScenarioTextEdit/Handlers/SceneHeaderHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/StandardKeyHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/PrepareHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/PreHandler.cpp \
@@ -140,7 +139,10 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
     BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.cpp \
-    BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.cpp
+    BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Parsers/TimeAndPlaceParser.cpp \
+    Database/DatabaseHelper.cpp
 
 
 #

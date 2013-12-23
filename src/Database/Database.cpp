@@ -23,7 +23,7 @@ QSqlDatabase Database::instanse()
 
 QString Database::CONNECTION_NAME = "local_database";
 QString Database::SQL_DRIVER      = "QSQLITE";
-QString Database::DATABASE_NAME   = "database.db";
+QString Database::DATABASE_NAME   = ":memory:";
 
 void Database::open(QSqlDatabase& _database, const QString& _connectionName, const QString& _databaseName)
 {

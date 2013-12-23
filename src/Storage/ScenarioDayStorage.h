@@ -3,6 +3,8 @@
 
 #include "StorageFacade.h"
 
+class QString;
+
 namespace Domain {
 	class ScenarioDay;
 	class ScenarioDaysTable;
@@ -16,7 +18,15 @@ namespace StorageLayer
 	class ScenarioDayStorage
 	{
 	public:
+		/**
+		 * @brief Все дни сценария
+		 */
 		ScenarioDaysTable* all();
+
+		/**
+		 * @brief Сохранить сценарный день
+		 */
+		ScenarioDay* storeScenarioDay(const QString& _scenarioDayName) const;
 
 	private:
 		ScenarioDaysTable* m_all;

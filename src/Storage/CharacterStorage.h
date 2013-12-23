@@ -18,8 +18,15 @@ namespace StorageLayer
 	class CharacterStorage
 	{
 	public:
+		/**
+		 * @brief Все персонажи сценария
+		 */
 		CharactersTable* all();
-		void storeCharacter(const QString& _name);
+
+		/**
+		 * @brief Сохранить персонажа
+		 */
+		Character* storeCharacter(const QString& _name);
 
 	private:
 		CharactersTable* m_all;
