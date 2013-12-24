@@ -59,6 +59,14 @@ ScenarioDay* ScenarioDayStorage::storeScenarioDay(const QString& _scenarioDayNam
 	return newScenarioDay;
 }
 
+void ScenarioDayStorage::clear()
+{
+	delete m_all;
+	m_all = 0;
+
+	MapperFacade::scenarioDayMapper()->clear();
+}
+
 ScenarioDayStorage::ScenarioDayStorage() :
 	m_all(0)
 {

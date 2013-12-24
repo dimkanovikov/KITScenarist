@@ -59,6 +59,14 @@ Character* CharacterStorage::storeCharacter(const QString& _name)
 	return newCharacter;
 }
 
+void CharacterStorage::clear()
+{
+	delete m_all;
+	m_all = 0;
+
+	MapperFacade::characterMapper()->clear();
+}
+
 CharacterStorage::CharacterStorage() :
 	m_all(0)
 {

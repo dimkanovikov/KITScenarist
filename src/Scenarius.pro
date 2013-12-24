@@ -80,7 +80,8 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.h \
     BusinessLogic/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.h \
     BusinessLogic/ScenarioTextEdit/Parsers/TimeAndPlaceParser.h \
-    Database/DatabaseHelper.h
+    Database/DatabaseHelper.h \
+    BusinessLogic/ScenarioTextEdit/ScenarioXml.h
 
 SOURCES += main.cpp \
     Domain/Action.cpp \
@@ -142,7 +143,8 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Parsers/TimeAndPlaceParser.cpp \
-    Database/DatabaseHelper.cpp
+    Database/DatabaseHelper.cpp \
+    BusinessLogic/ScenarioTextEdit/ScenarioXml.cpp
 
 
 #

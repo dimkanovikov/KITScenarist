@@ -52,6 +52,11 @@ namespace StorageLayer
 		 */
 		void storeLocationWithSublocation(const QString& _locationName, const QString& _sublocationName);
 
+		/**
+		 * @brief Очистить хранилище
+		 */
+		void clear();
+
 	private:
 		LocationsTable* m_all;
 		LocationsTable* m_allMainLocations;

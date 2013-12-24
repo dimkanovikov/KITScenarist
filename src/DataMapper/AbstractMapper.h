@@ -14,6 +14,12 @@ namespace DataMappingLayer
 
 class AbstractMapper
 {
+public:
+	/**
+	 * @brief Очистить все загруженные ранее данные
+	 */
+	void clear();
+
 protected:
 	virtual QString findStatement(const Identifier&) const = 0;
     virtual QString findAllStatement() const = 0;

@@ -28,6 +28,11 @@ namespace StorageLayer
 		 */
 		Character* storeCharacter(const QString& _name);
 
+		/**
+		 * @brief Очистить хранилище
+		 */
+		void clear();
+
 	private:
 		CharactersTable* m_all;
 

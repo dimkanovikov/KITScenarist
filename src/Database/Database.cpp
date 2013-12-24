@@ -124,6 +124,17 @@ void Database::createTables(QSqlDatabase& _database)
 				   "); "
 				   );
 
+	// Таблица "Текст сценария"
+	q_creator.exec("CREATE TABLE scenario "
+				   "( "
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "text TEXT NOT NULL, "
+				   "is_fixed INTEGER NOT NULL DEFAULT(0), "
+				   "fix_date TEXT DEFAULT(NULL), "
+				   "fix_comment TEXT DEFAULT(NULL) "
+				   ")"
+				   );
+
 	_database.commit();
 }
 
@@ -140,7 +151,7 @@ void Database::createEnums(QSqlDatabase& _database)
 	// Версия программы
 	{
 		q_creator.exec(
-					QString("INSERT INTO system_variables VALUES ('version', '%1')")
+					QString("INSERT INTO system_variables VALUES ('application-version', '%1')")
 					.arg(qApp->applicationVersion())
 					);
 	}

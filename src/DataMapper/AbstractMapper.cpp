@@ -20,6 +20,16 @@ AbstractMapper::~AbstractMapper()
 
 }
 
+void AbstractMapper::clear()
+{
+	foreach (DomainObject* domainObject, m_loadedObjectsMap.values()) {
+		delete domainObject;
+		domainObject = 0;
+	}
+
+	m_loadedObjectsMap.clear();
+}
+
 DomainObject * AbstractMapper::abstractFind(const Identifier& _id )
 {
     DomainObject *result = m_loadedObjectsMap.value( _id, 0 );

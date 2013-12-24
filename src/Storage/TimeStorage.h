@@ -16,7 +16,15 @@ namespace StorageLayer
 	class TimeStorage
 	{
 	public:
+		/**
+		 * @brief Получить все времена
+		 */
 		TimesTable* all();
+
+		/**
+		 * @brief Очистить хранилище
+		 */
+		void clear();
 
 	private:
 		TimesTable* m_all;

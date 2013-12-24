@@ -18,6 +18,7 @@ public slots:
 	void setStyle();
 	void styleChanged();
 	void save();
+	void load();
 
 private:
 	ScenarioTextEdit* m_screenEdit;

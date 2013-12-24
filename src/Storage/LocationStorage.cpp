@@ -188,6 +188,22 @@ void LocationStorage::storeLocationWithSublocation(const QString& _locationName,
 	storeSublocation(location, _sublocationName);
 }
 
+void LocationStorage::clear()
+{
+	delete m_all;
+	m_all = 0;
+
+	delete m_allMainLocations;
+	m_allMainLocations = 0;
+
+	delete m_allSublocations;
+	m_allSublocations = 0;
+
+	m_sublocations.clear();
+
+	MapperFacade::locationMapper()->clear();
+}
+
 LocationStorage::LocationStorage() :
 	m_all(0),
 	m_allMainLocations(0),

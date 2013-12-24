@@ -16,7 +16,15 @@ namespace StorageLayer
 	class PlaceStorage
 	{
 	public:
+		/**
+		 * @brief Получить все места
+		 */
 		PlacesTable* all();
+
+		/**
+		 * @brief Очистить хранилище
+		 */
+		void clear();
 
 	private:
 		PlacesTable* m_all;

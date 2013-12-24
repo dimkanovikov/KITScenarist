@@ -2,6 +2,7 @@
 #define DATABASEHELPER_H
 
 class QString;
+class QSqlDatabase;
 
 
 namespace DatabaseLayer
@@ -14,13 +15,23 @@ namespace DatabaseLayer
 	public:
 		/**
 		 * @brief Сохранить данные из БД в памяти в файл
+		 *
+		 * @note Происходит полное копирование всех данных
 		 */
 		static void saveDatabaseToFile(const QString& _databaseFileName);
 
 		/**
 		 * @brief Загрузить данные из БД в файле в память
 		 */
-		static void loadDatabaseFromFile(const QString* _databaseFileName);
+		static void loadDatabaseFromFile(const QString& _databaseFileName);
+
+	private:
+		/**
+		 * @brief Очистить данные из БД в памяти
+		 */
+		static void clearDatabaseInMemory();
+
+		static void loadDatabaseFromFileVersion0(const QSqlDatabase& _fileDatabase);
 	};
 }
 

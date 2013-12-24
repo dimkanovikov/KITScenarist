@@ -9,6 +9,15 @@
 using namespace StorageLayer;
 
 
+void StorageFacade::clearStorages()
+{
+	placeStorage()->clear();
+	locationStorage()->clear();
+	scenarioDayStorage()->clear();
+	timeStorage()->clear();
+	characterStorage()->clear();
+}
+
 PlaceStorage* StorageFacade::placeStorage()
 {
 	if (s_placeStorage == 0) {

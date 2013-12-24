@@ -13,6 +13,12 @@ namespace StorageLayer
 	class StorageFacade
 	{
 	public:
+		/**
+		 * @brief Очистить все хранилища
+		 */
+		static void clearStorages();
+
+	public:
 		static PlaceStorage* placeStorage();
 		static LocationStorage* locationStorage();
 		static ScenarioDayStorage* scenarioDayStorage();

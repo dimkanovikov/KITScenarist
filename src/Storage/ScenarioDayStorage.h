@@ -28,6 +28,11 @@ namespace StorageLayer
 		 */
 		ScenarioDay* storeScenarioDay(const QString& _scenarioDayName) const;
 
+		/**
+		 * @brief Очистить хранилище
+		 */
+		void clear();
+
 	private:
 		ScenarioDaysTable* m_all;
 
