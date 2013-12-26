@@ -19,22 +19,11 @@ DEFINES += USE_RUSSIAN_DATABASE_ENUMS
 INCLUDEPATH += $$PWD
 
 HEADERS  += \
-	Domain/Action.h \
 	Domain/Character.h \
-	Domain/Dialog.h \
-	Domain/Folder.h \
-	Domain/Scene.h \
-	Domain/SceneGroup.h \
-	Domain/Parenthetical.h \
-	Domain/Transition.h \
-	Domain/Title.h \
-	Domain/OtherText.h \
-	Domain/SimpleText.h \
 	Domain/ScenarioDay.h \
 	Domain/Location.h \
 	Domain/Place.h \
 	Domain/Time.h \
-	Domain/ScenarioObject.h \
 	UserInterface/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.h \
 	UserInterface/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
 	UserInterface/Widgets/SpellCheckTextEdit/SpellChecker.h \
@@ -84,22 +73,11 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/ScenarioXml.h
 
 SOURCES += main.cpp \
-    Domain/Action.cpp \
     Domain/Character.cpp \
-    Domain/Dialog.cpp \
-    Domain/Folder.cpp \
-    Domain/Scene.cpp \
-    Domain/SceneGroup.cpp \
-    Domain/Parenthetical.cpp \
-    Domain/Transition.cpp \
-    Domain/Title.cpp \
-    Domain/OtherText.cpp \
-    Domain/SimpleText.cpp \
     Domain/ScenarioDay.cpp \
     Domain/Location.cpp \
     Domain/Place.cpp \
     Domain/Time.cpp \
-	Domain/ScenarioObject.cpp \
 	UserInterface/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
 	UserInterface/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
 	UserInterface/Widgets/SpellCheckTextEdit/SpellChecker.cpp \
