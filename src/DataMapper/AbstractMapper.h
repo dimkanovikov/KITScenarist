@@ -24,9 +24,9 @@ protected:
 	virtual QString findStatement(const Identifier&) const = 0;
     virtual QString findAllStatement() const = 0;
     virtual QString maxIdStatement() const = 0;
-	virtual QString insertStatement(DomainObject*) const = 0;
-	virtual QString updateStatement(DomainObject*) const = 0;
-	virtual QString deleteStatement(DomainObject*) const = 0;
+	virtual QString insertStatement(DomainObject*, QVariantList&) const = 0;
+	virtual QString updateStatement(DomainObject*, QVariantList&) const = 0;
+	virtual QString deleteStatement(DomainObject*, QVariantList&) const = 0;
 
 protected:
 	virtual DomainObject* doLoad(const Identifier& _id, const QSqlRecord& _record) = 0;
@@ -37,7 +37,7 @@ protected:
 	DomainObjectsItemModel * abstractFindAll(const QString& _filter = QString());
 	void abstractInsert(DomainObject* subject);
 	void abstractUpdate(DomainObject* subject);
-	void abstractRemove(DomainObject* subject);
+	void abstractDelete(DomainObject* subject);
 
 protected:
     AbstractMapper();

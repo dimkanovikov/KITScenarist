@@ -5,6 +5,7 @@
 #include "ScenarioDayStorage.h"
 #include "TimeStorage.h"
 #include "CharacterStorage.h"
+#include "ScenarioStorage.h"
 
 using namespace StorageLayer;
 
@@ -16,6 +17,7 @@ void StorageFacade::clearStorages()
 	scenarioDayStorage()->clear();
 	timeStorage()->clear();
 	characterStorage()->clear();
+	scenarioStorage()->clear();
 }
 
 PlaceStorage* StorageFacade::placeStorage()
@@ -58,8 +60,17 @@ CharacterStorage*StorageFacade::characterStorage()
 	return s_characterStorage;
 }
 
+ScenarioStorage*StorageFacade::scenarioStorage()
+{
+	if (s_scenarioStorage == 0) {
+		s_scenarioStorage = new ScenarioStorage;
+	}
+	return s_scenarioStorage;
+}
+
 PlaceStorage* StorageFacade::s_placeStorage = 0;
 LocationStorage* StorageFacade::s_locationStorage = 0;
 ScenarioDayStorage* StorageFacade::s_scenarioDayStorage = 0;
 TimeStorage* StorageFacade::s_timeStorage = 0;
 CharacterStorage* StorageFacade::s_characterStorage = 0;
+ScenarioStorage* StorageFacade::s_scenarioStorage = 0;

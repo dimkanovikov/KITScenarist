@@ -234,14 +234,13 @@ void DatabaseHelper::loadDatabaseFromFileVersion0(const QSqlDatabase& _fileDatab
 	// Текст сценария
 	q_dataFromFile.exec("SELECT id, text, is_fixed, fix_date, fix_comment FROM scenario");
 	while (q_dataFromFile.next()) {
-		q_dataToMemory.exec(
-					QString("INSERT INTO scenario (id, text, is_fixed, fix_date, fix_comment) "
-							"VALUES(%1, '%2', %3, %4, %5)")
-					.arg(q_dataFromFile.value("id").toInt())
-					.arg(q_dataFromFile.value("text").toString())
-					.arg(q_dataFromFile.value("is_fixed").toInt())
-					.arg(q_dataFromFile.value("fix_date").toString())
-					.arg(q_dataFromFile.value("fix_comment").toString())
-					);
+		q_dataToMemory.prepare("INSERT INTO scenario (id, text, is_fixed, fix_date, fix_comment) "
+							   "VALUES(?, ?, ?, ?, ?)");
+		q_dataToMemory.addBindValue(q_dataFromFile.value("id"));
+		q_dataToMemory.addBindValue(q_dataFromFile.value("text"));
+		q_dataToMemory.addBindValue(q_dataFromFile.value("is_fixed"));
+		q_dataToMemory.addBindValue(q_dataFromFile.value("fix_date"));
+		q_dataToMemory.addBindValue(q_dataFromFile.value("fix_comment"));
+		q_dataToMemory.exec();
 	}
 }

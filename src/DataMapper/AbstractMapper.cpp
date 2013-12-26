@@ -55,46 +55,112 @@ DomainObjectsItemModel * AbstractMapper::abstractFindAll(const QString& _filter 
 
 void AbstractMapper::abstractInsert( DomainObject *subject )
 {
-    subject->setId( findNextIdentifier() );
-    QSqlQuery query( Database::instanse() );
-    query.prepare( insertStatement( subject ) );
-    query.exec();
-    m_loadedObjectsMap.insert( subject->id(), subject );
+	//
+	// Установим идентификатор для нового объекта
+	//
+	subject->setId(findNextIdentifier());
 
-    qDebug() << query.lastQuery();
-    qDebug() << query.lastError();
+	//
+	// Получим данные для формирования запроса на их добавление
+	//
+	QVariantList insertValues;
+	QString insertQuery = insertStatement(subject, insertValues);
+
+	//
+	// Сформируем запрос на добавление данных в базу
+	//
+	QSqlQuery q_insert(Database::instanse());
+	q_insert.prepare(insertQuery);
+	foreach (const QVariant& value, insertValues) {
+		q_insert.addBindValue(value);
+	}
+
+	//
+	// Добавим данные в базу
+	//
+	q_insert.exec();
+
+	//
+	// Добавим вновь созданный объект в список загруженных объектов
+	//
+	m_loadedObjectsMap.insert(subject->id(), subject);
+
+	qDebug() << q_insert.lastQuery();
+	qDebug() << q_insert.lastError();
 }
 
 void AbstractMapper::abstractUpdate( DomainObject *subject )
 {
+	//
     // т.к. в m_loadedObjectsMap хранится список указателей, то после обновления элементов
     // обновлять элемент непосредственно в списке не нужно
+	//
 
+	Identifier idBeforeUpdate = subject->id();
+
+	//
+	// Получим данные для формирования запроса на их обновление
+	//
+	QVariantList updateValues;
+	QString updateQuery = updateStatement(subject, updateValues);
+
+	//
+	// Сформируем запрос на обновление данных в базе
+	//
+	QSqlQuery q_update(Database::instanse());
+	q_update.prepare(updateQuery);
+	foreach (const QVariant& value, updateValues) {
+		q_update.addBindValue(value);
+	}
+
+	//
+	// Обновим данные в базе
+	//
+	q_update.exec();
+
+	//
 	// Если во время обновления изменился идентификатор объекта,
 	// нужно обновить идентификатор в списке загруженных
-	Identifier previousId = subject->id();
-	QSqlQuery query( Database::instanse() );
-    query.prepare( updateStatement( subject ) );
-    query.exec();
-	if ( previousId != subject->id() ) {
+	//
+	if ( idBeforeUpdate != subject->id() ) {
 		m_loadedObjectsMap.insert( subject->id(), subject );
 	}
 
-    qDebug() << query.lastQuery();
-    qDebug() << query.lastError();
+	qDebug() << q_update.lastQuery();
+	qDebug() << q_update.lastError();
 }
 
-void AbstractMapper::abstractRemove( DomainObject *subject )
+void AbstractMapper::abstractDelete( DomainObject *subject )
 {
-    QSqlQuery query( Database::instanse() );
-    query.prepare( deleteStatement( subject ) );
-    query.exec();
+	//
+	// Получим данные для формирования запроса на их удаление
+	//
+	QVariantList deleteValues;
+	QString deleteQuery = deleteStatement(subject, deleteValues);
+
+	//
+	// Сформируем запрос на удаление данных из базы
+	//
+	QSqlQuery q_delete(Database::instanse());
+	q_delete.prepare(deleteQuery);
+	foreach (const QVariant& value, deleteValues) {
+		q_delete.addBindValue(value);
+	}
+
+	//
+	// Удалим данные из базы
+	//
+	q_delete.exec();
+
+	//
+	// Удалим объекст из списка загруженных
+	//
     m_loadedObjectsMap.remove( subject->id() );
     delete subject;
     subject = 0;
 
-    qDebug() << query.lastQuery();
-    qDebug() << query.lastError();
+	qDebug() << q_delete.lastQuery();
+	qDebug() << q_delete.lastError();
 }
 
 DomainObject *AbstractMapper::loadObjectFromDatabase(const Identifier& _id )

@@ -26,9 +26,9 @@ namespace DataMappingLayer
 		QString findStatement(const Identifier& _id) const;
 		QString findAllStatement() const;
 		QString maxIdStatement() const;
-		QString insertStatement(DomainObject* _subject) const;
-		QString updateStatement(DomainObject* _subject) const;
-		QString deleteStatement(DomainObject* _subject) const;
+		QString insertStatement(DomainObject* _subject, QVariantList& _insertValues) const;
+		QString updateStatement(DomainObject* _subject, QVariantList& _updateValues) const;
+		QString deleteStatement(DomainObject* _subject, QVariantList& _deleteValues) const;
 
 	protected:
 		DomainObject* doLoad(const Identifier& _id, const QSqlRecord& _record);

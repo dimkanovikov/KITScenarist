@@ -70,7 +70,10 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.h \
     BusinessLogic/ScenarioTextEdit/Parsers/TimeAndPlaceParser.h \
     Database/DatabaseHelper.h \
-    BusinessLogic/ScenarioTextEdit/ScenarioXml.h
+    BusinessLogic/ScenarioTextEdit/ScenarioXml.h \
+    Domain/Scenario.h \
+    DataMapper/ScenarioMapper.h \
+    Storage/ScenarioStorage.h
 
 SOURCES += main.cpp \
     Domain/Character.cpp \
@@ -122,7 +125,10 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Parsers/TimeAndPlaceParser.cpp \
     Database/DatabaseHelper.cpp \
-    BusinessLogic/ScenarioTextEdit/ScenarioXml.cpp
+    BusinessLogic/ScenarioTextEdit/ScenarioXml.cpp \
+    Domain/Scenario.cpp \
+    DataMapper/ScenarioMapper.cpp \
+    Storage/ScenarioStorage.cpp
 
 
 #

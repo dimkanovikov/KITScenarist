@@ -51,35 +51,46 @@ QString CharacterMapper::maxIdStatement() const
 	return "SELECT MAX(id) FROM  " + TABLE_NAME;
 }
 
-QString CharacterMapper::insertStatement(DomainObject* _subject) const
+QString CharacterMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
 {
-	Character* character = dynamic_cast<Character*>(_subject );
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (id, name) "
-					" VALUES(%1, '%2') "
-					)
-			.arg(character->id().value())
-			.arg(character->name());
+					" VALUES(?, ?) "
+					);
+
+	Character* character = dynamic_cast<Character*>(_subject );
+	_insertValues.clear();
+	_insertValues.append(character->id().value());
+	_insertValues.append(character->name());
+
 	return insertStatement;
 }
 
-QString CharacterMapper::updateStatement(DomainObject* _subject) const
+QString CharacterMapper::updateStatement(DomainObject* _subject, QVariantList& _updateValues) const
 {
-	Character* character = dynamic_cast<Character*>(_subject);
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET name = '%1' "
-					" WHERE id = %2 "
-					)
-			.arg(character->name())
-			.arg(character->id().value());
+					" SET name = ? "
+					" WHERE id = ? "
+					);
+
+	Character* character = dynamic_cast<Character*>(_subject);
+	_updateValues.clear();
+	_updateValues.append(character->name());
+	_updateValues.append(character->id().value());
+
 	return updateStatement;
 }
 
-QString CharacterMapper::deleteStatement(DomainObject* _subject) const
+QString CharacterMapper::deleteStatement(DomainObject* _subject, QVariantList& _deleteValues) const
 {
-	return "DELETE FROM " + TABLE_NAME + " WHERE id = " + QString::number(_subject->id().value());
+	QString deleteStatement = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+
+	_deleteValues.clear();
+	_deleteValues.append(_subject->id().value());
+
+	return deleteStatement;
 }
 
 DomainObject* CharacterMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)

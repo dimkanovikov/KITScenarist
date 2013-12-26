@@ -6,10 +6,13 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h"
+#include <BusinessLogic/ScenarioTextEdit/ScenarioXml.h>
 #include <QTextCodec>
 #include <QFileDialog>
 #include <Database/DatabaseHelper.h>
 #include <Storage/StorageFacade.h>
+#include <Storage/ScenarioStorage.h>
+#include <Domain/Scenario.h>
 
 
 namespace {
@@ -82,15 +85,15 @@ Widget::Widget(QWidget *parent) :
 	stylesLayout->addWidget(loadBtn);
 	stylesLayout->addStretch();
 
-	m_screenEdit = new ScenarioTextEdit;
-	connect(m_screenEdit, SIGNAL(currentStyleChanged()), this, SLOT(styleChanged()));
-	connect(testBtn, SIGNAL(clicked()), m_screenEdit, SLOT(test()));
+	m_scenarioEdit = new ScenarioTextEdit;
+	connect(m_scenarioEdit, SIGNAL(currentStyleChanged()), this, SLOT(styleChanged()));
+	connect(testBtn, SIGNAL(clicked()), m_scenarioEdit, SLOT(test()));
 	connect(saveBtn, SIGNAL(clicked()), this, SLOT(save()));
 	connect(loadBtn, SIGNAL(clicked()), this, SLOT(load()));
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->addLayout(stylesLayout);
-	layout->addWidget(m_screenEdit);
+	layout->addWidget(m_scenarioEdit);
 
 
 	setLayout(layout);
@@ -100,9 +103,9 @@ void Widget::exec()
 {
 	resize(600,400);
 
-	m_screenEdit->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
-	m_screenEdit->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
-	m_screenEdit->setFocus();
+	m_scenarioEdit->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
+	m_scenarioEdit->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+	m_scenarioEdit->setFocus();
 
 	show();
 }
@@ -113,15 +116,15 @@ void Widget::setStyle()
 		if (rb->isChecked()) {
 			ScenarioTextBlockStyle::Type type =
 					(ScenarioTextBlockStyle::Type)rb->property(TYPE_PROPERTY).toInt();
-			m_screenEdit->changeScenarioBlockType(type);
-			m_screenEdit->setFocus();
+			m_scenarioEdit->changeScenarioBlockType(type);
+			m_scenarioEdit->setFocus();
 		}
 	}
 }
 
 void Widget::styleChanged()
 {
-	ScenarioTextBlockStyle::Type currentType = m_screenEdit->scenarioBlockType();
+	ScenarioTextBlockStyle::Type currentType = m_scenarioEdit->scenarioBlockType();
 	if (currentType == ScenarioTextBlockStyle::TitleHeader) {
 		currentType = ScenarioTextBlockStyle::Title;
 	} else if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
@@ -144,6 +147,7 @@ void Widget::save()
 {
 	QString fileName = QFileDialog::getSaveFileName(this, "Save");
 	if (!fileName.isEmpty()) {
+		StorageLayer::StorageFacade::scenarioStorage()->storeScenario(ScenarioXmlWriter::scenarioToXml(m_scenarioEdit));
 		DatabaseLayer::DatabaseHelper::saveDatabaseToFile(fileName);
 	}
 }
@@ -154,5 +158,9 @@ void Widget::load()
 	if (!fileName.isEmpty()) {
 		StorageLayer::StorageFacade::clearStorages();
 		DatabaseLayer::DatabaseHelper::loadDatabaseFromFile(fileName);
+		m_scenarioEdit->clear();
+		if (Scenario* scenario = StorageLayer::StorageFacade::scenarioStorage()->current()) {
+			ScenarioXmlReader::xmlToScenario(scenario->text(), m_scenarioEdit);
+		}
 	}
 }

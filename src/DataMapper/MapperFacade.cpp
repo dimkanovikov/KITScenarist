@@ -5,6 +5,7 @@
 #include "ScenarioDayMapper.h"
 #include "TimeMapper.h"
 #include "CharacterMapper.h"
+#include "ScenarioMapper.h"
 
 using namespace DataMappingLayer;
 
@@ -49,8 +50,17 @@ CharacterMapper*MapperFacade::characterMapper()
 	return s_characterMapper;
 }
 
+ScenarioMapper*MapperFacade::scenarioMapper()
+{
+	if (s_scenarioMapper == 0) {
+		s_scenarioMapper = new ScenarioMapper;
+	}
+	return s_scenarioMapper;
+}
+
 PlaceMapper* MapperFacade::s_placeMapper = 0;
 LocationMapper* MapperFacade::s_locationMapper = 0;
 ScenarioDayMapper* MapperFacade::s_scenarioDayMapper = 0;
 TimeMapper* MapperFacade::s_timeMapper = 0;
 CharacterMapper* MapperFacade::s_characterMapper = 0;
+ScenarioMapper* MapperFacade::s_scenarioMapper = 0;

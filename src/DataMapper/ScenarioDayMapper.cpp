@@ -51,35 +51,46 @@ QString ScenarioDayMapper::maxIdStatement() const
 	return "SELECT MAX(id) FROM  " + TABLE_NAME;
 }
 
-QString ScenarioDayMapper::insertStatement(DomainObject* _subject) const
+QString ScenarioDayMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
 {
-	ScenarioDay* scenaryDay = dynamic_cast<ScenarioDay*>(_subject );
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (id, name) "
-					" VALUES(%1, '%2') "
-					)
-			.arg(scenaryDay->id().value())
-			.arg(scenaryDay->name());
+					" VALUES(?, ?) "
+					);
+
+	ScenarioDay* scenaryDay = dynamic_cast<ScenarioDay*>(_subject );
+	_insertValues.clear();
+	_insertValues.append(scenaryDay->id().value());
+	_insertValues.append(scenaryDay->name());
+
 	return insertStatement;
 }
 
-QString ScenarioDayMapper::updateStatement(DomainObject* _subject) const
+QString ScenarioDayMapper::updateStatement(DomainObject* _subject, QVariantList& _updateValues) const
 {
-	ScenarioDay* scenaryDay = dynamic_cast<ScenarioDay*>(_subject);
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET name = '%1' "
-					" WHERE id = %2 "
-					)
-			.arg(scenaryDay->name())
-			.arg(scenaryDay->id().value());
+					" SET name = ? "
+					" WHERE id = ? "
+					);
+
+	ScenarioDay* scenaryDay = dynamic_cast<ScenarioDay*>(_subject);
+	_updateValues.clear();
+	_updateValues.append(scenaryDay->name());
+	_updateValues.append(scenaryDay->id().value());
+
 	return updateStatement;
 }
 
-QString ScenarioDayMapper::deleteStatement(DomainObject* _subject) const
+QString ScenarioDayMapper::deleteStatement(DomainObject* _subject, QVariantList& _deleteValues) const
 {
-	return "DELETE FROM " + TABLE_NAME + " WHERE id = " + QString::number(_subject->id().value());
+	QString deleteStatement = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+
+	_deleteValues.clear();
+	_deleteValues.append(_subject->id().value());
+
+	return deleteStatement;
 }
 
 DomainObject* ScenarioDayMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)

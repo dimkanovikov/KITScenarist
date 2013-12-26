@@ -51,35 +51,46 @@ QString TimeMapper::maxIdStatement() const
 	return "SELECT MAX(id) FROM  " + TABLE_NAME;
 }
 
-QString TimeMapper::insertStatement(DomainObject* _subject) const
+QString TimeMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
 {
-	Time* time = dynamic_cast<Time*>(_subject );
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (id, name) "
-					" VALUES(%1, '%2') "
-					)
-			.arg(time->id().value())
-			.arg(time->name());
+					" VALUES(?, ?) "
+					);
+
+	Time* time = dynamic_cast<Time*>(_subject );
+	_insertValues.clear();
+	_insertValues.append(time->id().value());
+	_insertValues.append(time->name());
+
 	return insertStatement;
 }
 
-QString TimeMapper::updateStatement(DomainObject* _subject) const
+QString TimeMapper::updateStatement(DomainObject* _subject, QVariantList& _updateValues) const
 {
-	Time* time = dynamic_cast<Time*>(_subject);
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET name = '%1' "
-					" WHERE id = %2 "
-					)
-			.arg(time->name())
-			.arg(time->id().value());
+					" SET name = ? "
+					" WHERE id = ? "
+					);
+
+	Time* time = dynamic_cast<Time*>(_subject);
+	_updateValues.clear();
+	_updateValues.append(time->name());
+	_updateValues.append(time->id().value());
+
 	return updateStatement;
 }
 
-QString TimeMapper::deleteStatement(DomainObject* _subject) const
+QString TimeMapper::deleteStatement(DomainObject* _subject, QVariantList& _deleteValues) const
 {
-	return "DELETE FROM " + TABLE_NAME + " WHERE id = " + QString::number(_subject->id().value());
+	QString deleteStatement = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+
+	_deleteValues.clear();
+	_deleteValues.append(_subject->id().value());
+
+	return deleteStatement;
 }
 
 DomainObject* TimeMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)

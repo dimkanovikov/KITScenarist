@@ -1,12 +1,12 @@
-#ifndef CHARACTERMAPPER_H
-#define CHARACTERMAPPER_H
+#ifndef SCENARIOMAPPER_H
+#define SCENARIOMAPPER_H
 
 #include "AbstractMapper.h"
 #include "MapperFacade.h"
 
 namespace Domain {
-	class Character;
-	class CharactersTable;
+	class Scenario;
+	class ScenariosTable;
 }
 
 using namespace Domain;
@@ -14,13 +14,13 @@ using namespace Domain;
 
 namespace DataMappingLayer
 {
-	class CharacterMapper : public AbstractMapper
+	class ScenarioMapper : public AbstractMapper
 	{
 	public:
-		Character* find(const Identifier& _id);
-		CharactersTable* findAll();
-		void insert(Character* _character);
-		void update(Character* _character);
+		Scenario* find(const Identifier& _id);
+		ScenariosTable* findAll();
+		void insert(Scenario* _scenario);
+		void update(Scenario* _scenario);
 
 	protected:
 		QString findStatement(const Identifier& _id) const;
@@ -35,11 +35,11 @@ namespace DataMappingLayer
 		DomainObjectsItemModel* modelInstance();
 
 	private:
-		CharacterMapper();
+		ScenarioMapper();
 
 		// Для доступа к конструктору
 		friend class MapperFacade;
 	};
 }
 
-#endif // CHARACTERMAPPER_H
+#endif // SCENARIOMAPPER_H

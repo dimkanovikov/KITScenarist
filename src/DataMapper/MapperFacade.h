@@ -9,6 +9,7 @@ namespace DataMappingLayer
 	class ScenarioDayMapper;
 	class TimeMapper;
 	class CharacterMapper;
+	class ScenarioMapper;
 
 	class MapperFacade
 	{
@@ -18,6 +19,7 @@ namespace DataMappingLayer
 		static ScenarioDayMapper* scenarioDayMapper();
 		static TimeMapper* timeMapper();
 		static CharacterMapper* characterMapper();
+		static ScenarioMapper* scenarioMapper();
 
 	private:
 		static PlaceMapper* s_placeMapper;
@@ -25,6 +27,7 @@ namespace DataMappingLayer
 		static ScenarioDayMapper* s_scenarioDayMapper;
 		static TimeMapper* s_timeMapper;
 		static CharacterMapper* s_characterMapper;
+		static ScenarioMapper* s_scenarioMapper;
 	};
 }
 

@@ -21,7 +21,7 @@ public slots:
 	void load();
 
 private:
-	ScenarioTextEdit* m_screenEdit;
+	ScenarioTextEdit* m_scenarioEdit;
 
 };
 

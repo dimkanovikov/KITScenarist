@@ -51,42 +51,53 @@ QString LocationMapper::maxIdStatement() const
 	return "SELECT MAX(id) FROM  " + TABLE_NAME;
 }
 
-QString LocationMapper::insertStatement(DomainObject* _subject) const
+QString LocationMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
 {
-	Location* location = dynamic_cast<Location*>(_subject );
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (id, parent_id, name) "
-					" VALUES(%1, %2, '%3') "
-					)
-			.arg(location->id().value())
-			.arg(DomainObject::isValid(location->parentLocation())
-				 ? QString::number(location->parentLocation()->id().value())
-				 : "null")
-			.arg(location->name());
+					" VALUES(?, ?, ?) "
+					);
+
+	Location* location = dynamic_cast<Location*>(_subject );
+	_insertValues.clear();
+	_insertValues.append(location->id().value());
+	_insertValues.append(DomainObject::isValid(location->parentLocation())
+						 ? QString::number(location->parentLocation()->id().value())
+						 : "null");
+	_insertValues.append(location->name());
+
 	return insertStatement;
 }
 
-QString LocationMapper::updateStatement(DomainObject* _subject) const
+QString LocationMapper::updateStatement(DomainObject* _subject, QVariantList& _updateValues) const
 {
-	Location* location = dynamic_cast<Location*>(_subject);
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET name = '%1', "
-					" parent_id = %2 "
-					" WHERE id = %3 "
-					)
-			.arg(location->name())
-			.arg(DomainObject::isValid(location->parentLocation())
-				 ? QString::number(location->parentLocation()->id().value())
-				 : "null")
-			.arg(location->id().value());
+					" SET name = ?, "
+					" parent_id = ? "
+					" WHERE id = ? "
+					);
+
+	Location* location = dynamic_cast<Location*>(_subject);
+	_updateValues.clear();
+	_updateValues.append(location->name());
+	_updateValues.append(DomainObject::isValid(location->parentLocation())
+						 ? QString::number(location->parentLocation()->id().value())
+						 : "null");
+	_updateValues.append(location->id().value());
+
 	return updateStatement;
 }
 
-QString LocationMapper::deleteStatement(DomainObject* _subject) const
+QString LocationMapper::deleteStatement(DomainObject* _subject, QVariantList& _deleteValues) const
 {
-	return "DELETE FROM " + TABLE_NAME + " WHERE id = " + QString::number(_subject->id().value());
+	QString deleteStatement = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+
+	_deleteValues.clear();
+	_deleteValues.append(_subject->id().value());
+
+	return deleteStatement;
 }
 
 DomainObject* LocationMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)

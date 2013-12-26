@@ -51,35 +51,46 @@ QString PlaceMapper::maxIdStatement() const
 	return "SELECT MAX(id) FROM  " + TABLE_NAME;
 }
 
-QString PlaceMapper::insertStatement(DomainObject* _subject) const
+QString PlaceMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
 {
-	Place* place = dynamic_cast<Place*>(_subject );
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (id, name) "
-					" VALUES(%1, '%2') "
-					)
-			.arg(place->id().value())
-			.arg(place->name());
+					" VALUES(?, ?) "
+					);
+
+	Place* place = dynamic_cast<Place*>(_subject );
+	_insertValues.clear();
+	_insertValues.append(place->id().value());
+	_insertValues.append(place->name());
+
 	return insertStatement;
 }
 
-QString PlaceMapper::updateStatement(DomainObject* _subject) const
+QString PlaceMapper::updateStatement(DomainObject* _subject, QVariantList& _updateValues) const
 {
-	Place* place = dynamic_cast<Place*>(_subject);
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET name = '%1' "
-					" WHERE id = %2 "
-					)
-			.arg(place->name())
-			.arg(place->id().value());
+					" SET name = ? "
+					" WHERE id = ? "
+					);
+
+	Place* place = dynamic_cast<Place*>(_subject);
+	_updateValues.clear();
+	_updateValues.append(place->name());
+	_updateValues.append(place->id().value());
+
 	return updateStatement;
 }
 
-QString PlaceMapper::deleteStatement(DomainObject* _subject) const
+QString PlaceMapper::deleteStatement(DomainObject* _subject, QVariantList& _deleteValues) const
 {
-	return "DELETE FROM " + TABLE_NAME + " WHERE id = " + QString::number(_subject->id().value());
+	QString deleteStatement = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+
+	_deleteValues.clear();
+	_deleteValues.append(_subject->id().value());
+
+	return deleteStatement;
 }
 
 DomainObject* PlaceMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
