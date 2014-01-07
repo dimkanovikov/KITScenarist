@@ -69,15 +69,16 @@ void DialogHandler::handleEnter(QKeyEvent*)
 					//! В конце блока
 
 					//
-					// Перейдём к блоку описание действия
+					// Перейдём к блоку персонажа
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Character);
 				} else {
 					//! Внутри блока
 
 					//
-					// Ни чего не делаем
+					// Перейдём к блоку персонажа
 					//
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Character);
 				}
 			}
 		}

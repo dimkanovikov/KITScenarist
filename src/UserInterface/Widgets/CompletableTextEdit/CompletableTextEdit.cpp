@@ -94,7 +94,16 @@ void CompletableTextEdit::applyCompletion()
 		//
 		int completionStartFrom = m_completer->completionPrefix().length();
 		QString textToInsert = completion.mid(completionStartFrom);
-		textCursor().insertText(textToInsert);
+
+		forever {
+			QTextCursor cursor = textCursor();
+			cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
+			if (cursor.selectedText().endsWith(m_completer->completionPrefix())) {
+				textCursor().insertText(textToInsert);
+				break;
+			}
+			moveCursor(QTextCursor::Right);
+		}
 
 		closeCompleter();
 	}

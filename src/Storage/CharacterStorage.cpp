@@ -30,7 +30,7 @@ Character* CharacterStorage::storeCharacter(const QString& _name)
 		//
 		// Проверяем наличии данного персонажа
 		//
-		foreach (DomainObject* domainObject, m_all->toList()) {
+		foreach (DomainObject* domainObject, all()->toList()) {
 			Character* character = dynamic_cast<Character*>(domainObject);
 			if (character->name() == characterName) {
 				newCharacter = character;
@@ -52,7 +52,7 @@ Character* CharacterStorage::storeCharacter(const QString& _name)
 			//
 			// ... в текущем списке персонажей
 			//
-			m_all->append(newCharacter);
+			all()->append(newCharacter);
 		}
 	}
 

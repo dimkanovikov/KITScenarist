@@ -51,7 +51,7 @@ Scenario* ScenarioStorage::storeScenario(const QString& _scenarioText)
 		//
 		// ... добавим в список
 		//
-		m_all->append(scenario);
+		all()->append(scenario);
 	}
 
 	//

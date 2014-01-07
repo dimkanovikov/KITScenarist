@@ -71,7 +71,7 @@ void SceneGroupFooterHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставить блок время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
 				} else {
 					//! Внутри блока
 

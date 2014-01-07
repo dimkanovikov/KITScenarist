@@ -57,6 +57,11 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 		editor()->applyCompletion();
 
 		//
+		// Обновим курсор, т.к. после автозавершения он смещается
+		//
+		cursor = editor()->textCursor();
+
+		//
 		// Дописать необходимые символы
 		//
 		switch (currentSection) {

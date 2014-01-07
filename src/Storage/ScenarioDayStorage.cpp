@@ -9,7 +9,7 @@ using namespace StorageLayer;
 using namespace DataMappingLayer;
 
 
-ScenarioDaysTable*ScenarioDayStorage::all()
+ScenarioDaysTable* ScenarioDayStorage::all()
 {
 	if (m_all == 0) {
 		m_all = MapperFacade::scenarioDayMapper()->findAll();
@@ -17,7 +17,7 @@ ScenarioDaysTable*ScenarioDayStorage::all()
 	return m_all;
 }
 
-ScenarioDay* ScenarioDayStorage::storeScenarioDay(const QString& _scenarioDayName) const
+ScenarioDay* ScenarioDayStorage::storeScenarioDay(const QString& _scenarioDayName)
 {
 	ScenarioDay* newScenarioDay = 0;
 
@@ -30,7 +30,7 @@ ScenarioDay* ScenarioDayStorage::storeScenarioDay(const QString& _scenarioDayNam
 		//
 		// Проверяем наличии данного сценарного дня
 		//
-		foreach (DomainObject* domainObject, m_all->toList()) {
+		foreach (DomainObject* domainObject, all()->toList()) {
 			ScenarioDay* scenarioDay = dynamic_cast<ScenarioDay*>(domainObject);
 			if (scenarioDay->name() == scenarioDayName) {
 				newScenarioDay = scenarioDay;
@@ -52,7 +52,7 @@ ScenarioDay* ScenarioDayStorage::storeScenarioDay(const QString& _scenarioDayNam
 			//
 			// ... в списке
 			//
-			m_all->append(newScenarioDay);
+			all()->append(newScenarioDay);
 		}
 	}
 

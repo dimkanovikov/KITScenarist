@@ -84,8 +84,20 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 					//! Внутри блока
 
 					//
-					// Ни чего не делаем
+					// Переместим обрамление в правильное место
 					//
+					cursor.movePosition(QTextCursor::EndOfBlock);
+					for (int deleteReplays = m_stylePostfix.length(); deleteReplays > 0; --deleteReplays) {
+						cursor.deletePreviousChar();
+					}
+					cursor = editor()->textCursor();
+					cursor.insertText(m_stylePostfix);
+
+					//
+					// Перейдём к блоку реплики
+					//
+					editor()->setTextCursor(cursor);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
 				}
 			}
 		}

@@ -99,7 +99,7 @@ Location* LocationStorage::storeLocation(const QString& _locationName)
 		//
 		// Проверяем наличии данной локации
 		//
-		foreach (DomainObject* domainObject, m_all->toList()) {
+		foreach (DomainObject* domainObject, all()->toList()) {
 			Location* location = dynamic_cast<Location*>(domainObject);
 			if (location->name() == locationName) {
 				newLocation = location;

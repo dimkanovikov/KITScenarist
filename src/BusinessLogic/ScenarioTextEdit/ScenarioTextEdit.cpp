@@ -47,6 +47,8 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
 
 void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blockType)
 {
+	textCursor().beginEditBlock();
+
 	//
 	// Является ли текущий вид заголовком
 	//
@@ -78,6 +80,8 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 		//
 		emit currentStyleChanged();
 	}
+
+	textCursor().endEditBlock();
 }
 
 void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type _blockType)
@@ -251,8 +255,10 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 		MimeDataProcessor::insertFromMime(this, _source);
 	} else if (_source->hasText()) {
 		QString textToInsert = _source->text();
-		textToInsert = textToInsert.simplified();
-		textCursor().insertText(textToInsert);
+		foreach (const QString& line, textToInsert.split("\n")) {
+			addScenarioBlock(ScenarioTextBlockStyle::SimpleText);
+			textCursor().insertText(line.simplified());
+		}
 	}
 }
 

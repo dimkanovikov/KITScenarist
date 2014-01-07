@@ -32,7 +32,6 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 	switch (blockType()) {
 		case TimeAndPlace: {
 			m_pimpl->blockFormat.setTopMargin(25);
-			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
@@ -96,17 +95,20 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 
 		case SceneGroupHeader: {
 			m_pimpl->blockFormat.setTopMargin(25);
+			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case SceneGroupFooter: {
 			m_pimpl->blockFormat.setTopMargin(25);
+			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case SimpleText: {
+//			m_pimpl->charFormat.setForeground(QColor("lightGray"));
 			break;
 		}
 

@@ -68,13 +68,13 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 			} else {
 				//! Текст не пуст
 
+				//
+				// Сохраним имя персонажа
+				//
+				storeCharacter();
+
 				if (cursorBackwardText.isEmpty()) {
 					//! В начале блока
-
-					//
-					// Сохраним имя персонажа
-					//
-					storeCharacter();
 
 					//
 					// Вставим блок имени героя перед собой
@@ -84,11 +84,6 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 					//! В конце блока
 
 					//
-					// Сохраним имя персонажа
-					//
-					storeCharacter();
-
-					//
 					// Вставить блок реплики героя
 					//
 					editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
@@ -96,8 +91,9 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 					//! Внутри блока
 
 					//
-					// Ни чего не делаем
+					// Вставить блок реплики героя
 					//
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
 				}
 			}
 		}

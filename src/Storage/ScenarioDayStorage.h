@@ -26,7 +26,7 @@ namespace StorageLayer
 		/**
 		 * @brief Сохранить сценарный день
 		 */
-		ScenarioDay* storeScenarioDay(const QString& _scenarioDayName) const;
+		ScenarioDay* storeScenarioDay(const QString& _scenarioDayName);
 
 		/**
 		 * @brief Очистить хранилище
