@@ -54,7 +54,7 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 	//
 	bool canChangeType =
 			(scenarioBlockType() != ScenarioTextBlockStyle::TitleHeader)
-			&& (scenarioBlockType() != ScenarioTextBlockStyle::SceneGroupFooter);
+			&& (scenarioBlockType() != ScenarioTextBlockStyle::FolderFooter);
 
 	//
 	// Если текущий вид не заголовок
@@ -270,7 +270,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 	//
 	// Удалить завершающий блок группы сцен
 	//
-	if (oldBlockStyle.blockType() == ScenarioTextBlockStyle::SceneGroupHeader) {
+	if (oldBlockStyle.blockType() == ScenarioTextBlockStyle::FolderHeader) {
 		QTextCursor cursor = textCursor();
 		cursor.movePosition(QTextCursor::NextBlock);
 
@@ -281,7 +281,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 			ScenarioTextBlockStyle::Type currentType =
 					scenarioBlockType(cursor.block());
 
-			if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
+			if (currentType == ScenarioTextBlockStyle::FolderFooter) {
 				if (openedGroups == 0) {
 					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 					cursor.deleteChar();
@@ -290,7 +290,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == ScenarioTextBlockStyle::SceneGroupHeader) {
+			} else if (currentType == ScenarioTextBlockStyle::FolderHeader) {
 				// ... встретилась новая группа
 				++openedGroups;
 			}
@@ -407,8 +407,8 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	//
 	// Для заголовка группы нужно создать завершение
 	//
-	if (newBlockStyle.blockType() == ScenarioTextBlockStyle::SceneGroupHeader) {
-		ScenarioTextBlockStyle footerStyle(ScenarioTextBlockStyle::SceneGroupFooter);
+	if (newBlockStyle.blockType() == ScenarioTextBlockStyle::FolderHeader) {
+		ScenarioTextBlockStyle footerStyle(ScenarioTextBlockStyle::FolderFooter);
 
 		//
 		// Запомним позицию курсора

@@ -1,5 +1,5 @@
-#ifndef SCENEGROUPFOOTERHANDLER_H
-#define SCENEGROUPFOOTERHANDLER_H
+#ifndef FOLDERFOOTERHANDLER_H
+#define FOLDERFOOTERHANDLER_H
 
 #include "StandardKeyHandler.h"
 
@@ -9,10 +9,10 @@ namespace KeyProcessingLayer
 	/**
 	 * @brief Класс выполняющий обработку нажатия клавиш в блоке завершения группы сцен
 	 */
-	class SceneGroupFooterHandler : public StandardKeyHandler
+	class FolderFooterHandler : public StandardKeyHandler
 	{
 	public:
-		SceneGroupFooterHandler(ScenarioTextEdit* _editor);
+		FolderFooterHandler(ScenarioTextEdit* _editor);
 
 	protected:
 		/**
@@ -25,4 +25,4 @@ namespace KeyProcessingLayer
 	};
 }
 
-#endif // SCENEGROUPFOOTERHANDLER_H
+#endif // FOLDERFOOTERHANDLER_H

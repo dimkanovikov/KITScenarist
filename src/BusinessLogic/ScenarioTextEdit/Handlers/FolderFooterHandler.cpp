@@ -1,4 +1,4 @@
-#include "SceneGroupHeaderHandler.h"
+#include "FolderFooterHandler.h"
 
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
 
@@ -8,12 +8,12 @@
 using namespace KeyProcessingLayer;
 
 
-SceneGroupHeaderHandler::SceneGroupHeaderHandler(ScenarioTextEdit* _editor) :
+FolderFooterHandler::FolderFooterHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
 }
 
-void SceneGroupHeaderHandler::handleEnter(QKeyEvent*)
+void FolderFooterHandler::handleEnter(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -76,15 +76,16 @@ void SceneGroupHeaderHandler::handleEnter(QKeyEvent*)
 					//! Внутри блока
 
 					//
-					// Ни чего не делаем
+					// Вставить блок время и место
 					//
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
 				}
 			}
 		}
 	}
 }
 
-void SceneGroupHeaderHandler::handleTab(QKeyEvent*)
+void FolderFooterHandler::handleTab(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -152,47 +153,5 @@ void SceneGroupHeaderHandler::handleTab(QKeyEvent*)
 				}
 			}
 		}
-	}
-}
-
-void SceneGroupHeaderHandler::handleOther(QKeyEvent*)
-{
-	//
-	// Найти закрывающий блок и обновить его текст
-	//
-
-	QTextCursor cursor = editor()->textCursor();
-
-	//
-	// Если редактируется заголовок группы
-	//
-	if (editor()->scenarioBlockType() == ScenarioTextBlockStyle::SceneGroupHeader) {
-
-		cursor.movePosition(QTextCursor::NextBlock);
-
-		// ... открытые группы на пути поиска необходимого для обновления блока
-		int openedGroups = 0;
-		bool isFooterUpdated = false;
-		do {
-			ScenarioTextBlockStyle::Type currentType =
-					editor()->scenarioBlockType(cursor.block());
-
-			if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
-				if (openedGroups == 0) {
-					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-					cursor.insertText(QObject::tr("END OF", "SceneGroupHeader"));
-					cursor.insertText(" ");
-					cursor.insertText(editor()->textCursor().block().text());
-					isFooterUpdated = true;
-				} else {
-					--openedGroups;
-				}
-			} else if (currentType == ScenarioTextBlockStyle::SceneGroupHeader) {
-				// ... встретилась новая группа
-				++openedGroups;
-			}
-
-			cursor.movePosition(QTextCursor::NextBlock);
-		} while (!isFooterUpdated && !cursor.atEnd());
 	}
 }

@@ -27,8 +27,8 @@ public:
 		Note,			//!< Примечание
 		TitleHeader,	//!< Заголовок титра
 		Title,			//!< Текст титра
-		SceneGroupHeader,	//!< Заголовок группы сцен
-		SceneGroupFooter,	//!< Окончание группы сцен
+		FolderHeader,	//!< Заголовок группы сцен
+		FolderFooter,	//!< Окончание группы сцен
 		SimpleText		//!< Простой текст
 	};
 

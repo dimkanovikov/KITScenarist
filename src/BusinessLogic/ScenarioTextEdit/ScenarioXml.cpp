@@ -119,7 +119,7 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 					break;
 				}
 
-				case ScenarioTextBlockStyle::SceneGroupHeader: {
+				case ScenarioTextBlockStyle::FolderHeader: {
 					resultXml += "<scene_group>";
 					resultXml += "<header>";
 					resultXml += textToSave;
@@ -130,7 +130,7 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 					break;
 				}
 
-				case ScenarioTextBlockStyle::SceneGroupFooter: {
+				case ScenarioTextBlockStyle::FolderFooter: {
 					//
 					// Закрываем группы, если были открыты, то просто корректируем счётчик,
 					// а если открытых нет, то не записываем и конец
@@ -231,7 +231,7 @@ void ScenarioXmlReader::xmlToScenario(const QString& _xml, ScenarioTextEdit* _ed
 				} else if (tokenName == "title") {
 					tokenType = ScenarioTextBlockStyle::Title;
 				} else if (tokenName == "header") {
-					tokenType = ScenarioTextBlockStyle::SceneGroupHeader;
+					tokenType = ScenarioTextBlockStyle::FolderHeader;
 				} else if (tokenName == "footer") {
 					//
 					// Для блока конца группы нужно сместиться к следующему блоку

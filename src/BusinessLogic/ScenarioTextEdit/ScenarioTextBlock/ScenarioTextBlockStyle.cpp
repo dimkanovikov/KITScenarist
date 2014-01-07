@@ -93,14 +93,14 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 			break;
 		}
 
-		case SceneGroupHeader: {
+		case FolderHeader: {
 			m_pimpl->blockFormat.setTopMargin(25);
 			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
-		case SceneGroupFooter: {
+		case FolderFooter: {
 			m_pimpl->blockFormat.setTopMargin(25);
 			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);

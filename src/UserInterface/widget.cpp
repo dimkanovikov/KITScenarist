@@ -55,9 +55,9 @@ Widget::Widget(QWidget *parent) :
 	cbTransition->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::Transition);
 	connect(cbTransition,SIGNAL(clicked()), this, SLOT(setStyle()));
 
-	QRadioButton* cbSceneGroup = new QRadioButton("Scene Group");
-	cbSceneGroup->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::SceneGroupHeader);
-	connect(cbSceneGroup,SIGNAL(clicked()), this, SLOT(setStyle()));
+	QRadioButton* cbFolder = new QRadioButton("Folder");
+	cbFolder->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::FolderHeader);
+	connect(cbFolder,SIGNAL(clicked()), this, SLOT(setStyle()));
 
 	QRadioButton* cbSimpleText = new QRadioButton("Simple Text");
 	cbSimpleText->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::SimpleText);
@@ -78,7 +78,7 @@ Widget::Widget(QWidget *parent) :
 	stylesLayout->addWidget(cbTitle);
 	stylesLayout->addWidget(cbNote);
 	stylesLayout->addWidget(cbTransition);
-	stylesLayout->addWidget(cbSceneGroup);
+	stylesLayout->addWidget(cbFolder);
 	stylesLayout->addWidget(cbSimpleText);
 	stylesLayout->addWidget(testBtn);
 	stylesLayout->addWidget(saveBtn);
@@ -127,8 +127,8 @@ void Widget::styleChanged()
 	ScenarioTextBlockStyle::Type currentType = m_scenarioEdit->scenarioBlockType();
 	if (currentType == ScenarioTextBlockStyle::TitleHeader) {
 		currentType = ScenarioTextBlockStyle::Title;
-	} else if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
-		currentType = ScenarioTextBlockStyle::SceneGroupHeader;
+	} else if (currentType == ScenarioTextBlockStyle::FolderFooter) {
+		currentType = ScenarioTextBlockStyle::FolderHeader;
 	}
 
 	foreach (QObject* child, children()) {

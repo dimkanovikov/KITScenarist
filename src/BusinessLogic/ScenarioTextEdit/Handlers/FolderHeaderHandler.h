@@ -1,5 +1,5 @@
-#ifndef SCENEGROUPHEADERHANDLER_H
-#define SCENEGROUPHEADERHANDLER_H
+#ifndef FOLDERHEADERHANDLER_H
+#define FOLDERHEADERHANDLER_H
 
 #include "StandardKeyHandler.h"
 
@@ -9,10 +9,10 @@ namespace KeyProcessingLayer
 	/**
 	 * @brief Класс выполняющий обработку нажатия клавиш в блоке заголовка группы сцен
 	 */
-	class SceneGroupHeaderHandler : public StandardKeyHandler
+	class FolderHeaderHandler : public StandardKeyHandler
 	{
 	public:
-		SceneGroupHeaderHandler(ScenarioTextEdit* _editor);
+		FolderHeaderHandler(ScenarioTextEdit* _editor);
 
 	protected:
 		/**
@@ -26,4 +26,4 @@ namespace KeyProcessingLayer
 	};
 }
 
-#endif // SCENEGROUPHEADERHANDLER_H
+#endif // FOLDERHEADERHANDLER_H

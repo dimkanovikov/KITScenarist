@@ -102,13 +102,13 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 			} else {
 				//! Текст не пуст
 
+				//
+				// Сохраним параметры сцены
+				//
+				storeSceneParameters();
+
 				if (cursorBackwardText.isEmpty()) {
 					//! В начале блока
-
-					//
-					// Сохраним параметры сцены
-					//
-					storeSceneParameters();
 
 					//
 					// Вставка блока заголовка перед собой
@@ -118,11 +118,6 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 					//! В конце блока
 
 					//
-					// Сохраним параметры сцены
-					//
-					storeSceneParameters();
-
-					//
 					// Вставка блока описания действия
 					//
 					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
@@ -130,8 +125,9 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 					//! Внутри блока
 
 					//
-					// Ни чего не делаем
+					// Вставка блока описания действия
 					//
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
 				}
 			}
 		}

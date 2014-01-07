@@ -63,8 +63,6 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/Handlers/TitleHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/TitleHeaderHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.h \
-    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
-    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
     BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.h \
     BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.h \
     BusinessLogic/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.h \
@@ -73,7 +71,10 @@ HEADERS  += \
     BusinessLogic/ScenarioTextEdit/ScenarioXml.h \
     Domain/Scenario.h \
     DataMapper/ScenarioMapper.h \
-    Storage/ScenarioStorage.h
+    Storage/ScenarioStorage.h \
+    BusinessLogic/ScenarioNavigator/ScenarioNavigator.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/FolderFooterHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/FolderHeaderHandler.h
 
 SOURCES += main.cpp \
     Domain/Character.cpp \
@@ -118,8 +119,6 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/NoteHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/TitleHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SimpleTextHandler.cpp \
-    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
-    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
     BusinessLogic/ScenarioTextEdit/MimeData/MimeDataProcessor.cpp \
     BusinessLogic/ScenarioTextEdit/Parsers/CharacterParser.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.cpp \
@@ -128,7 +127,10 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioTextEdit/ScenarioXml.cpp \
     Domain/Scenario.cpp \
     DataMapper/ScenarioMapper.cpp \
-    Storage/ScenarioStorage.cpp
+    Storage/ScenarioStorage.cpp \
+    BusinessLogic/ScenarioNavigator/ScenarioNavigator.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/FolderFooterHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/FolderHeaderHandler.cpp
 
 
 #
