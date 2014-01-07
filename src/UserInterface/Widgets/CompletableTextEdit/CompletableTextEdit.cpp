@@ -3,6 +3,7 @@
 #include <QCompleter>
 #include <QAbstractItemView>
 #include <QScrollBar>
+#include <QTextBlock>
 
 
 CompletableTextEdit::CompletableTextEdit(QWidget* _parent) :
@@ -95,14 +96,18 @@ void CompletableTextEdit::applyCompletion()
 		int completionStartFrom = m_completer->completionPrefix().length();
 		QString textToInsert = completion.mid(completionStartFrom);
 
-		forever {
-			QTextCursor cursor = textCursor();
-			cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
-			if (cursor.selectedText().endsWith(m_completer->completionPrefix())) {
-				textCursor().insertText(textToInsert);
-				break;
+		if (!textCursor().block().text().isEmpty()) {
+			forever {
+				QTextCursor cursor = textCursor();
+				cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
+				if (cursor.selectedText().endsWith(m_completer->completionPrefix())) {
+					textCursor().insertText(textToInsert);
+					break;
+				}
+				moveCursor(QTextCursor::Right);
 			}
-			moveCursor(QTextCursor::Right);
+		} else {
+			textCursor().insertText(textToInsert);
 		}
 
 		closeCompleter();

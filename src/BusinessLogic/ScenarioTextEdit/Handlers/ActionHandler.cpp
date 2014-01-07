@@ -55,8 +55,9 @@ void ActionHandler::handleEnter(QKeyEvent*)
 				//! Текст пуст
 
 				//
-				// Ни чего не делаем
+				// Меняем стиль на место и время
 				//
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
 			} else {
 				//! Текст не пуст
 

@@ -63,8 +63,9 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 				//! Текст пуст
 
 				//
-				// Ни чего не делаем
+				// Cменить стиль на описание действия
 				//
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
 			} else {
 				//! Текст не пуст
 

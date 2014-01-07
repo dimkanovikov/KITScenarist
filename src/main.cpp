@@ -8,6 +8,7 @@
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
+	a.setStyle("Cleanlooks");
 
 	//
 	// Загрузим шрифт Courier New в базу шрифтов программы, если его там ещё нет

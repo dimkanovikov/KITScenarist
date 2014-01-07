@@ -36,6 +36,9 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 				} else {
 					editor()->undo();
 				}
+
+				emit editor()->currentStyleChanged();
+
 				break;
 			}
 
