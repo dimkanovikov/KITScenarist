@@ -29,6 +29,12 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 			 * @note Действия редактирования текста (дублирующие контектстное меню)
 			 */
 			/** @{ */
+			// a
+			case 38: {
+				editor()->selectAll();
+				break;
+			}
+
 			// z
 			case 52: {
 				if (pressedModifiers.testFlag(Qt::ShiftModifier)) {
