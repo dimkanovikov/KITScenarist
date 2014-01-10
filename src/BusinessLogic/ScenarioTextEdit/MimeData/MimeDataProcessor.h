@@ -5,6 +5,7 @@
 
 class ScenarioTextEdit;
 class QMimeData;
+class QTextBlock;
 
 
 /**
@@ -16,6 +17,7 @@ public:
 	static QString SCENARIO_MIME_TYPE;
 
 	static QString createMimeFromSelection(const ScenarioTextEdit* _editor);
+	static QString createMimeFromBlocks(const ScenarioTextEdit* _editor, const QTextBlock& _start, const QTextBlock& _end);
 	static void insertFromMime(ScenarioTextEdit* _editor, const QMimeData* _mimeData);
 };
 

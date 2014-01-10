@@ -12,4 +12,8 @@
         <file>HunspellDictionaries/ru_RU.aff</file>
         <file>HunspellDictionaries/ru_RU.dic</file>
     </qresource>
+    <qresource prefix="/Graphics">
+        <file>Icons/folder.png</file>
+        <file>Icons/scene.png</file>
+    </qresource>
 </RCC>

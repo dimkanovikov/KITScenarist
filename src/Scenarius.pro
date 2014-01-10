@@ -74,7 +74,13 @@ HEADERS  += \
     Storage/ScenarioStorage.h \
     BusinessLogic/ScenarioNavigator/ScenarioNavigator.h \
     BusinessLogic/ScenarioTextEdit/Handlers/FolderFooterHandler.h \
-    BusinessLogic/ScenarioTextEdit/Handlers/FolderHeaderHandler.h
+    BusinessLogic/ScenarioTextEdit/Handlers/FolderHeaderHandler.h \
+    BusinessLogic/ScenarioNavigator/NavigatorItemDelegate.h \
+    BusinessLogic/ScenarioNavigator/NavigatorItemWidget.h \
+    BusinessLogic/ScenarioNavigator/NavigatorItemsModel.h \
+    BusinessLogic/ScenarioNavigator/NavigatorItem.h \
+    UserInterface/Widgets/ElidedLabel/ElidedLabel.h \
+    3rd_party/qt_utils/QTreeViewState.h
 
 SOURCES += main.cpp \
     Domain/Character.cpp \
@@ -130,7 +136,12 @@ SOURCES += main.cpp \
     Storage/ScenarioStorage.cpp \
     BusinessLogic/ScenarioNavigator/ScenarioNavigator.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/FolderFooterHandler.cpp \
-    BusinessLogic/ScenarioTextEdit/Handlers/FolderHeaderHandler.cpp
+    BusinessLogic/ScenarioTextEdit/Handlers/FolderHeaderHandler.cpp \
+    BusinessLogic/ScenarioNavigator/NavigatorItemDelegate.cpp \
+    BusinessLogic/ScenarioNavigator/NavigatorItemWidget.cpp \
+    BusinessLogic/ScenarioNavigator/NavigatorItemsModel.cpp \
+    BusinessLogic/ScenarioNavigator/NavigatorItem.cpp \
+    UserInterface/Widgets/ElidedLabel/ElidedLabel.cpp
 
 
 #

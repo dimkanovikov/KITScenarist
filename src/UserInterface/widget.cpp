@@ -13,6 +13,7 @@
 #include <Storage/StorageFacade.h>
 #include <Storage/ScenarioStorage.h>
 #include <Domain/Scenario.h>
+#include <BusinessLogic/ScenarioNavigator/ScenarioNavigator.h>
 
 
 namespace {
@@ -91,8 +92,11 @@ Widget::Widget(QWidget *parent) :
 	connect(saveBtn, SIGNAL(clicked()), this, SLOT(save()));
 	connect(loadBtn, SIGNAL(clicked()), this, SLOT(load()));
 
+	m_scenarioNavigator = new ScenarioNavigator(this, m_scenarioEdit);
+
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->addLayout(stylesLayout);
+	layout->addWidget(m_scenarioNavigator);
 	layout->addWidget(m_scenarioEdit);
 
 

@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class ScenarioTextEdit;
+class ScenarioNavigator;
 
 class Widget : public QWidget
 {
@@ -22,7 +23,7 @@ public slots:
 
 private:
 	ScenarioTextEdit* m_scenarioEdit;
-
+	ScenarioNavigator* m_scenarioNavigator;
 };
 
 #endif // WIDGET_H

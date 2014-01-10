@@ -21,7 +21,18 @@ QString MimeDataProcessor::createMimeFromSelection(const ScenarioTextEdit* _edit
 	int startCursorPosition = qMin(cursor.selectionStart(), cursor.selectionEnd());
 	int endCursorPosition = qMax(cursor.selectionStart(), cursor.selectionEnd());
 
-	return ScenarioXmlWriter::scenarioToXml(_editor, startCursorPosition, endCursorPosition);
+	return ScenarioXmlWriter::scenarioToXml(
+				_editor,
+				startCursorPosition,
+				endCursorPosition);
+}
+
+QString MimeDataProcessor::createMimeFromBlocks(const ScenarioTextEdit* _editor, const QTextBlock& _start, const QTextBlock& _end)
+{
+	return ScenarioXmlWriter::scenarioToXml(
+				_editor,
+				_start.position(),
+				_end.position() + _end.length() - 1);
 }
 
 void MimeDataProcessor::insertFromMime(ScenarioTextEdit* _editor, const QMimeData* _mimeData)

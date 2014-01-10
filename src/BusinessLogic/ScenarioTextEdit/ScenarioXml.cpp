@@ -120,10 +120,10 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 				}
 
 				case ScenarioTextBlockStyle::FolderHeader: {
-					resultXml += "<scene_group>";
-					resultXml += "<header>";
+					resultXml += "<folder>";
+					resultXml += "<folder_header>";
 					resultXml += textToSave;
-					resultXml += "</header>";
+					resultXml += "</folder_header>";
 
 					++openedGroups;
 
@@ -138,10 +138,10 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 					if (openedGroups > 0) {
 						--openedGroups;
 
-						resultXml += "<footer>";
+						resultXml += "<folder_footer>";
 						resultXml += textToSave;
-						resultXml += "</footer>";
-						resultXml += "</scene_group>";
+						resultXml += "</folder_footer>";
+						resultXml += "</folder>";
 					}
 					break;
 				}
@@ -171,7 +171,7 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 	// Закроем открытые группы
 	//
 	while (openedGroups > 0) {
-		resultXml += "</scene_group>";
+		resultXml += "</folder>";
 		--openedGroups;
 	}
 
@@ -230,9 +230,9 @@ void ScenarioXmlReader::xmlToScenario(const QString& _xml, ScenarioTextEdit* _ed
 					tokenType = ScenarioTextBlockStyle::Note;
 				} else if (tokenName == "title") {
 					tokenType = ScenarioTextBlockStyle::Title;
-				} else if (tokenName == "header") {
+				} else if (tokenName == "folder_header") {
 					tokenType = ScenarioTextBlockStyle::FolderHeader;
-				} else if (tokenName == "footer") {
+				} else if (tokenName == "folder_footer") {
 					//
 					// Для блока конца группы нужно сместиться к следующему блоку
 					// этот блок как раз и будет блоком конца группы.
