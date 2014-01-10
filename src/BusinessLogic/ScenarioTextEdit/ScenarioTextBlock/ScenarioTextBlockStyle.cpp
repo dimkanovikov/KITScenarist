@@ -1,6 +1,8 @@
 #include "ScenarioTextBlockStyle.h"
 #include "ScenarioTextBlockStylePrivate.h"
 
+#include <QUuid>
+
 
 ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType) :
 	m_pimpl(new ScenarioTextBlockStylePrivate(ScenarioTextBlockStyle::Undefined))
@@ -18,13 +20,18 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 	m_pimpl->blockType = _type;
 
 	//
-	// Запомним в стиле его тип
+	// Запомним в стиле его настройки
 	//
 	m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyType, blockType());
 	m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeaderType,
 									 ScenarioTextBlockStyle::Undefined);
 	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase, true);
 	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsCanModify, true);
+
+	//
+	// Зададим для него уникальный идентификатор
+	//
+	m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyID, QUuid::createUuid().toString());
 
 	//
 	// Настроим остальные характеристики

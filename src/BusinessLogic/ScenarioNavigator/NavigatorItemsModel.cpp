@@ -100,7 +100,8 @@ Qt::ItemFlags NavigatorItemsModel::flags(const QModelIndex& _index) const
 	Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
 
 	NavigatorItem* item = itemForIndex(_index);
-	if (item->isFolder()) {
+	if (item->isFolder()
+		|| item == m_rootItem) {
 		flags |= Qt::ItemIsDropEnabled;
 	}
 
@@ -112,7 +113,7 @@ QVariant NavigatorItemsModel::data(const QModelIndex& _index, int _role) const
 	QVariant result;
 
 	NavigatorItem* item = itemForIndex(_index);
-	switch ((Qt::ItemDataRole)_role) {
+	switch (_role) {
 		case Qt::DisplayRole: {
 			result = item->header();
 			break;
@@ -130,6 +131,11 @@ QVariant NavigatorItemsModel::data(const QModelIndex& _index, int _role) const
 
 		case Qt::UserRole: {
 			result = item->timing();
+			break;
+		}
+
+		case Qt::UserRole + 1: {
+			return item->headerBlock().blockFormat().property(ScenarioTextBlockStyle::PropertyID);
 			break;
 		}
 
@@ -202,13 +208,10 @@ bool NavigatorItemsModel::dropMimeData(const QMimeData* _data, Qt::DropAction _a
 				//
 				// Если вкладывание происходит в папку, то нужно вставить текст перед блоком закрывающим её
 				//
-				else if (parentItem->isFolder()) {
-					if (parentItem == m_rootItem) {
-						insertPosition = parentItem->endBlock().position() + parentItem->endBlock().length() - 1;
-					} else {
-						insertPosition = parentItem->endBlock().position();
-						needStepBack = true;
-					}
+				else if (parentItem->isFolder()
+						 && parentItem != m_rootItem) {
+					insertPosition = parentItem->endBlock().position();
+					needStepBack = true;
 				}
 				//
 				// В оставшихся случаях вкладываем данные за последним блоком

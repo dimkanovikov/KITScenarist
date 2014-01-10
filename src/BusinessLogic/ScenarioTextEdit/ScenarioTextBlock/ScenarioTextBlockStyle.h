@@ -42,7 +42,8 @@ public:
 		PropertyPostfix,
 		PropertyHeader,
 		PropertyIsFirstUppercase,
-		PropertyIsCanModify
+		PropertyIsCanModify,
+		PropertyID
 	};
 
 public:

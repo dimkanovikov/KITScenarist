@@ -90,9 +90,7 @@ bool NavigatorItem::isFolder() const
 {
 	ScenarioTextBlockStyle::Type headerType =
 			(ScenarioTextBlockStyle::Type)m_headerBlock.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType);
-	return
-			headerType == ScenarioTextBlockStyle::FolderHeader
-			|| !m_children.isEmpty();
+	return headerType == ScenarioTextBlockStyle::FolderHeader;
 }
 
 void NavigatorItem::setHeaderBlock(const QTextBlock& _block)

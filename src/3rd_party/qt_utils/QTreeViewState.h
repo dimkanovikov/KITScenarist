@@ -48,13 +48,21 @@ private:
 
 inline QString QTreeViewState::pathOfIndex(const QModelIndex& _index) const
 {
-	QString parentPath;
-	QString selfPath;
-	if (_index.isValid()) {
-		parentPath = pathOfIndex(_index.parent());
-		selfPath = QString("%1:%2:%3").arg(parentPath).arg(_index.row()).arg(_index.column());
-	}
-	return selfPath;
+//	QString parentPath;
+//	QString selfPath;
+//	if (_index.isValid()) {
+//		parentPath = pathOfIndex(_index.parent());
+//		//
+//		// Если есть дети
+//		//
+//		if (_index.child(0,0).isValid()) {
+//			selfPath = QString("%1:%2:%3").arg(parentPath).arg(_index.row()).arg(_index.column());
+//		} else {
+//			selfPath = QString("%1:[%2]").arg(parentPath).arg(_index.data().toString());
+//		}
+//	}
+	qDebug() << _index.data(Qt::UserRole+1).toString();
+	return _index.data(Qt::UserRole+1).toString();
 }
 
 /**
@@ -68,7 +76,6 @@ inline void QTreeViewState::saveIndex(QTreeView* view,QModelIndex parent)
 		if(view->isExpanded(p))
 		{
 			QTreeViewState child;
-//			ERS_DEBUG(0,"This is expanded : " << view->model()->data(p).toString().toStdString());
 			child.saveIndex(view,p);
 			this->expandedChildren.insert(pathOfIndex(p),child);
 
@@ -76,7 +83,6 @@ inline void QTreeViewState::saveIndex(QTreeView* view,QModelIndex parent)
 		if(view->selectionModel()->isSelected(p))
 		{
 			QTreeViewState child;
-//			ERS_DEBUG(0,"This is selected : " << view->model()->data(p).toString().toStdString());
 			this->selectedChildren.insert(pathOfIndex(p),child);
 		}
 
