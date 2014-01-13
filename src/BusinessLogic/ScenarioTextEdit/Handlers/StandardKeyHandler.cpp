@@ -286,7 +286,8 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 		//
 		// Вернём курсор в исходное положение
 		//
-		cursor.setPosition(initCursorPosition);
+		cursor.setPosition(initCursorPosition,
+						   isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
 
 		//
 		// Сместим курсор к следующей строке или к концу документа
