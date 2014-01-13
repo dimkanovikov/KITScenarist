@@ -11,13 +11,19 @@ using namespace KeyProcessingLayer;
 
 PrepareHandler::PrepareHandler(ScenarioTextEdit* _editor) :
 	AbstractKeyHandler(_editor),
-	m_needSendEventToBaseClass(true)
+	m_needSendEventToBaseClass(true),
+	m_needEnsureCursorVisible(true)
 {
 }
 
 bool PrepareHandler::needSendEventToBaseClass() const
 {
 	return m_needSendEventToBaseClass;
+}
+
+bool PrepareHandler::needEnsureCursorVisible() const
+{
+	return m_needEnsureCursorVisible;
 }
 
 void PrepareHandler::handleShortcut(QKeyEvent* _event)
@@ -106,5 +112,12 @@ void PrepareHandler::handleOther(QKeyEvent* _event)
 		m_needSendEventToBaseClass = topStyle.isCanModify() && bottomStyle.isCanModify() ;
 	} else {
 		m_needSendEventToBaseClass = true;
+	}
+
+	//
+	// Если нажат шифт, то не нужно прокручивать окно редактора к тому месту, где установлен курсор
+	//
+	if (_event->key() == Qt::Key_Shift) {
+		m_needEnsureCursorVisible = false;
 	}
 }

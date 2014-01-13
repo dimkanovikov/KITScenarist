@@ -19,6 +19,11 @@ namespace KeyProcessingLayer
 		 */
 		bool needSendEventToBaseClass() const;
 
+		/**
+		 * @brief Нужно ли чтобы курсор был обязательно видим пользователю
+		 */
+		bool needEnsureCursorVisible() const;
+
 	protected:
 		/**
 		 * @brief Необходимые действия при нажатии конкретной клавиши/сочетания
@@ -37,6 +42,7 @@ namespace KeyProcessingLayer
 
 	private:
 		bool m_needSendEventToBaseClass;
+		bool m_needEnsureCursorVisible;
 	};
 }
 

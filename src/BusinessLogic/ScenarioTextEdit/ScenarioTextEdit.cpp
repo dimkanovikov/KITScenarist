@@ -171,7 +171,9 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Убедимся, что курсор виден
 	//
-	ensureCursorVisible();
+	if (handler->needEnshureCursorVisible()) {
+		ensureCursorVisible();
+	}
 }
 
 void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)
