@@ -179,7 +179,74 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 	//
 	if (!editor()->isCompleterVisible()) {
 		bool isShiftPressed = _event->modifiers().testFlag(Qt::ShiftModifier);
-		moveCursorUpDown(true, isShiftPressed);
+
+		QTextCursor cursor = editor()->textCursor();
+		cursor.beginEditBlock();
+
+		//
+		// Исходная позиция курсора
+		//
+		int initCursorPosition = cursor.position();
+
+		//
+		// Рассчитаем количество символов от края
+		//
+		int marginFromLineStart = 0;
+		{
+			int currentLineYCoordinate = editor()->cursorRect(cursor).y();
+			while (!cursor.atStart()
+				   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
+				cursor.movePosition(QTextCursor::Left,
+									isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+			}
+			marginFromLineStart =
+					initCursorPosition
+					- cursor.position()
+					- (cursor.atStart() ? 0 : 1);
+		}
+
+		//
+		// В данный момент курсор либо в начале документа, либо поднялся к концу предыдущей строки
+		//
+		if (!cursor.atStart()) {
+			//
+			// Сместим курсор в предыдущей строке на то кол-во символов, на которое он был смещён прежде
+			//
+			{
+				int currentLineEndPosition = cursor.position();
+				int currentLineYCoordinate = editor()->cursorRect(cursor).y();
+				while (!cursor.atStart()
+					   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
+					cursor.movePosition(
+								QTextCursor::Left,
+								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+				}
+
+				//
+				// Возвратим курсор на одну позицию назад, т.к. в предыдущем цикле мы перешли на новую строку
+				//
+				if (!cursor.atStart()) {
+					cursor.movePosition(
+								QTextCursor::Right,
+								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+				}
+
+				int currentLineStartPosition = cursor.position();
+				if (currentLineStartPosition + marginFromLineStart < currentLineEndPosition) {
+					cursor.movePosition(
+								QTextCursor::Right,
+								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor,
+								marginFromLineStart);
+				} else {
+					cursor.setPosition(
+								currentLineEndPosition,
+								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+				}
+			}
+		}
+
+		cursor.endEditBlock();
+		editor()->setTextCursor(cursor);
 	}
 }
 
@@ -190,7 +257,91 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 	//
 	if (!editor()->isCompleterVisible()) {
 		bool isShiftPressed = _event->modifiers().testFlag(Qt::ShiftModifier);
-		moveCursorUpDown(false, isShiftPressed);
+
+		QTextCursor cursor = editor()->textCursor();
+		cursor.beginEditBlock();
+
+		//
+		// Исходная позиция курсора
+		//
+		int initCursorPosition = cursor.position();
+
+		//
+		// Рассчитаем количество символов от края
+		//
+		int marginFromLineStart = 0;
+		{
+			int currentLineYCoordinate = editor()->cursorRect(cursor).y();
+			while (!cursor.atStart()
+				   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
+				cursor.movePosition(QTextCursor::Left,
+									isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+			}
+			marginFromLineStart =
+					initCursorPosition
+					- cursor.position()
+					- (cursor.atStart() ? 0 : 1);
+		}
+
+		//
+		// Вернём курсор в исходное положение
+		//
+		cursor.setPosition(initCursorPosition);
+
+		//
+		// Сместим курсор к следующей строке или к концу документа
+		//
+		{
+			int currentLineYCoordinate = editor()->cursorRect(cursor).y();
+			while (!cursor.atEnd()
+				   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
+				cursor.movePosition(QTextCursor::Right,
+									isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+			}
+		}
+
+		//
+		// В данный момент курсор либо в конце документа, либо перешёл к началу следующей строки
+		//
+		if (!cursor.atEnd()) {
+			//
+			// Сместим курсор в следующей строке на то кол-во символов, на которое он был смещён прежде
+			//
+			{
+				int currentLineStartPosition = cursor.position();
+				int currentLineYCoordinate = editor()->cursorRect(cursor).y();
+				while (!cursor.atEnd()
+					   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
+					cursor.movePosition(
+								QTextCursor::Right,
+								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+				}
+
+				//
+				// Возвратим курсор на одну позицию назад, т.к. в предыдущем цикле мы перешли на новую строку
+				//
+				if (!cursor.atEnd()) {
+					cursor.movePosition(
+								QTextCursor::Left,
+								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+				}
+
+				int currentLineEndPosition = cursor.position();
+				if (currentLineStartPosition + marginFromLineStart < currentLineEndPosition) {
+					cursor.movePosition(
+								QTextCursor::Left,
+								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor,
+								currentLineEndPosition - currentLineStartPosition - marginFromLineStart);
+				} else {
+					cursor.setPosition(
+								currentLineEndPosition,
+								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+				}
+			}
+		}
+
+		cursor.endEditBlock();
+		editor()->setTextCursor(cursor);
 	}
 }
 
@@ -202,27 +353,6 @@ void StandardKeyHandler::handleOther(QKeyEvent*)
 
 // **** private ****
 
-
-void StandardKeyHandler::moveCursorUpDown(bool _up, bool _isShiftPressed)
-{
-	QTextCursor cursor = editor()->textCursor();
-	int positionInBlock = cursor.positionInBlock();
-	int lastBlockNumber = cursor.blockNumber();
-	cursor.movePosition(
-				_up ? QTextCursor::Up : QTextCursor::Down,
-				_isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
-	if (cursor.blockNumber() != lastBlockNumber) {
-		while (positionInBlock > 0
-			   && !cursor.atBlockEnd()) {
-			cursor.movePosition(
-						QTextCursor::Right,
-						_isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
-			--positionInBlock;
-		}
-	}
-
-	editor()->setTextCursor(cursor);
-}
 
 void StandardKeyHandler::removeCharacters(bool _backward)
 {
