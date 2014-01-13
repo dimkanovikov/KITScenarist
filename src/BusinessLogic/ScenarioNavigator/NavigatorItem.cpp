@@ -2,6 +2,7 @@
 
 #include <QTextDocument>
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextBlock/ScenarioTextBlockStyle.h>
+#include <BusinessLogic/Chronometry/ChronometerFacade.h>
 
 
 NavigatorItem::NavigatorItem() :
@@ -71,9 +72,9 @@ QString NavigatorItem::description() const
 	return description;
 }
 
-QString NavigatorItem::timing() const
+int NavigatorItem::timing() const
 {
-	return "(00:00)";
+	return ChronometerFacade::calculate(m_headerBlock, m_endBlock);
 }
 
 QTextBlock NavigatorItem::headerBlock() const
@@ -88,9 +89,7 @@ QTextBlock NavigatorItem::endBlock() const
 
 bool NavigatorItem::isFolder() const
 {
-	ScenarioTextBlockStyle::Type headerType =
-			(ScenarioTextBlockStyle::Type)m_headerBlock.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType);
-	return headerType == ScenarioTextBlockStyle::FolderHeader;
+	return ScenarioTextBlockStyle::forBlock(m_headerBlock) == ScenarioTextBlockStyle::FolderHeader;
 }
 
 void NavigatorItem::setHeaderBlock(const QTextBlock& _block)

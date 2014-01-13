@@ -24,7 +24,7 @@ public:
 	QPixmap icon() const;
 	QString header() const;
 	QString description() const;
-	QString timing() const;
+	int timing() const;
 
 	QTextBlock headerBlock() const;
 	QTextBlock endBlock() const;

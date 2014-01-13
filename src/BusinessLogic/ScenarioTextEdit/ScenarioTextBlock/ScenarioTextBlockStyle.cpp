@@ -2,6 +2,7 @@
 #include "ScenarioTextBlockStylePrivate.h"
 
 #include <QUuid>
+#include <QTextBlock>
 
 
 ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType) :
@@ -13,6 +14,11 @@ ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blo
 ScenarioTextBlockStyle::~ScenarioTextBlockStyle()
 {
 	delete m_pimpl;
+}
+
+ScenarioTextBlockStyle::Type ScenarioTextBlockStyle::forBlock(const QTextBlock& _block)
+{
+	return (ScenarioTextBlockStyle::Type)_block.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType);
 }
 
 void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)

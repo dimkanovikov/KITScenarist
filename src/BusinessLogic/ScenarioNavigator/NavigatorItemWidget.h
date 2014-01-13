@@ -20,7 +20,7 @@ public:
 	void setIcon(const QPixmap& _icon);
 	void setHeader(const QString& _header);
 	void setDescription(const QString& _description);
-	void setTiming(const QString& _timing);
+	void setTiming(int _timing);
 
 private:
 	/**

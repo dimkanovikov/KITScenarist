@@ -80,7 +80,10 @@ HEADERS  += \
     BusinessLogic/ScenarioNavigator/NavigatorItemsModel.h \
     BusinessLogic/ScenarioNavigator/NavigatorItem.h \
     UserInterface/Widgets/ElidedLabel/ElidedLabel.h \
-    3rd_party/qt_utils/QTreeViewState.h
+    3rd_party/qt_utils/QTreeViewState.h \
+    BusinessLogic/Chronometry/AbstractChronometer.h \
+    BusinessLogic/Chronometry/ChronometerFacade.h \
+    BusinessLogic/Chronometry/PagesChronometer.h
 
 SOURCES += main.cpp \
     Domain/Character.cpp \
@@ -141,7 +144,9 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioNavigator/NavigatorItemWidget.cpp \
     BusinessLogic/ScenarioNavigator/NavigatorItemsModel.cpp \
     BusinessLogic/ScenarioNavigator/NavigatorItem.cpp \
-    UserInterface/Widgets/ElidedLabel/ElidedLabel.cpp
+    UserInterface/Widgets/ElidedLabel/ElidedLabel.cpp \
+    BusinessLogic/Chronometry/ChronometerFacade.cpp \
+    BusinessLogic/Chronometry/PagesChronometer.cpp
 
 
 #

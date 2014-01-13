@@ -30,7 +30,7 @@ void NavigatorItemDelegate::paint(QPainter* _painter, const QStyleOptionViewItem
 	m_itemWidget->setIcon(icon.value<QPixmap>());
 	m_itemWidget->setHeader(header.toString());
 	m_itemWidget->setDescription(description.toString());
-	m_itemWidget->setTiming(timing.toString());
+	m_itemWidget->setTiming(timing.toInt());
 
 	//
 	// Получим настройки стиля

@@ -5,6 +5,7 @@
 #include <QTextCharFormat>
 
 class ScenarioTextBlockStylePrivate;
+class QTextBlock;
 
 
 /**
@@ -49,6 +50,11 @@ public:
 public:
 	ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType);
 	~ScenarioTextBlockStyle();
+
+	/**
+	 * @brief Получить тип блока
+	 */
+	static ScenarioTextBlockStyle::Type forBlock(const QTextBlock& _block);
 
 	/**
 	 * @brief Сменить стиль

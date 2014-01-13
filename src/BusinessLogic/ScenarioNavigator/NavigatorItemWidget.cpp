@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QPixmap>
+#include <QTime>
 
 
 NavigatorItemWidget::NavigatorItemWidget(QWidget *parent) :
@@ -66,7 +67,17 @@ void NavigatorItemWidget::setDescription(const QString& _description)
 	m_description->setText(_description);
 }
 
-void NavigatorItemWidget::setTiming(const QString& _timing)
+void NavigatorItemWidget::setTiming(int _timing)
 {
-	m_timing->setText(_timing);
+	if (_timing == 0) {
+		m_timing->clear();
+	} else {
+		QTime time(0, 0, 0);
+		time = time.addSecs(_timing);
+		m_timing->setText(
+					QString("(%1:%2)")
+					.arg(time.hour()*60 + time.minute())
+					.arg(time.toString("ss"))
+					);
+	}
 }
