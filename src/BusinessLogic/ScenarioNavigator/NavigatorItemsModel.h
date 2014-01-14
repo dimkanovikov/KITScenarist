@@ -40,6 +40,11 @@ public:
 	Qt::DropActions supportedDropActions() const;
 	/** @} */
 
+	/**
+	 * @brief Получить индекс элемента в дереве, в котором установлен курсор редактора
+	 */
+	QModelIndex indexOfItemUnderCursor() const;
+
 public slots:
 	/**
 	 * @brief Прокрутить окно редактора до выделенного элемента
@@ -48,7 +53,12 @@ public slots:
 
 private slots:
 	/**
-	 * @brief Необходимо обновить структуру
+	 * @brief Обновить текущую сцену
+	 */
+	void aboutUpdateCurrentItem();
+
+	/**
+	 * @brief Перестроить структуру полностью
 	 */
 	void aboutUpdateStructure();
 
@@ -63,6 +73,16 @@ private:
 	 */
 	NavigatorItem* itemForIndex(const QModelIndex& _index) const;
 
+	/**
+	 * @brief Получить элемент находящийся под курсором
+	 */
+	NavigatorItem* itemForTextCursor() const;
+
+	/**
+	 * @brief Получить индекс элемента
+	 */
+	QModelIndex indexForItem(NavigatorItem* _item) const;
+
 private:
 	/**
 	 * @brief Редактор сценария
@@ -73,7 +93,6 @@ private:
 	 * @brief Корневой элемент дерева
 	 */
 	NavigatorItem* m_rootItem;
-
 
 	mutable int m_dropDeleteFrom, m_dropDeleteTo;
 	bool m_canUpdateStructure;

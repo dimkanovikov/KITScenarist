@@ -23,6 +23,11 @@ namespace KeyProcessingLayer
 
 	protected:
 		/**
+		 * @brief Подготовка к обработке
+		 */
+		virtual void prepareForHandle() {}
+
+		/**
 		 * @brief Необходимые действия при нажатии конкретной клавиши/сочетания
 		 */
 		/** @{ */

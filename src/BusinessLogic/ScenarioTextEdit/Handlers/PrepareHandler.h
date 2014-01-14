@@ -24,7 +24,17 @@ namespace KeyProcessingLayer
 		 */
 		bool needEnsureCursorVisible() const;
 
+		/**
+		 * @brief Изменилась ли структура сценария
+		 */
+		bool structureChanged() const;
+
 	protected:
+		/**
+		 * @brief Подготовка к обработке
+		 */
+		void prepareForHandle();
+
 		/**
 		 * @brief Необходимые действия при нажатии конкретной клавиши/сочетания
 		 */
@@ -41,8 +51,11 @@ namespace KeyProcessingLayer
 		/** @} */
 
 	private:
+
+	private:
 		bool m_needSendEventToBaseClass;
 		bool m_needEnsureCursorVisible;
+		bool m_structureChanged;
 	};
 }
 

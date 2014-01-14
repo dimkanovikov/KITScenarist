@@ -271,4 +271,6 @@ void ScenarioXmlReader::xmlToScenario(const QString& _xml, ScenarioTextEdit* _ed
 			}
 		}
 	}
+
+	emit _editor->structureChanged();
 }

@@ -52,6 +52,11 @@ signals:
 	 */
 	void currentStyleChanged();
 
+	/**
+	 * @brief Изменилась структура документа
+	 */
+	void structureChanged();
+
 protected:
 	/**
 	 * @brief Нажатия многих клавиш обрабатываются вручную

@@ -13,7 +13,12 @@ ScenarioNavigator::ScenarioNavigator(QWidget* _parent, ScenarioTextEdit* _editor
 	QWidget(_parent)
 {
 	initView(_editor);
-	initConnections();
+	initConnections(_editor);
+}
+
+void ScenarioNavigator::aboutSelectItemForCurrentScene()
+{
+	m_view->setCurrentIndex(m_model->indexOfItemUnderCursor());
 }
 
 void ScenarioNavigator::aboutStoreTreeViewState()
@@ -39,6 +44,7 @@ void ScenarioNavigator::initView(ScenarioTextEdit* _editor)
 	// ... настраиваем внешний вид
 	m_view->setHeaderHidden(true);
 	m_view->setAlternatingRowColors(true);
+	m_view->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	m_view->setItemDelegate(new NavigatorItemDelegate(m_view));
 	// ... настраиваем перетаскивание элементов
 	m_view->setSelectionMode(QAbstractItemView::ContiguousSelection);
@@ -55,10 +61,13 @@ void ScenarioNavigator::initView(ScenarioTextEdit* _editor)
 	this->setLayout(layout);
 }
 
-void ScenarioNavigator::initConnections()
+void ScenarioNavigator::initConnections(ScenarioTextEdit* _editor)
 {
 	connect(m_model, SIGNAL(beginUpdateStructure()), this, SLOT(aboutStoreTreeViewState()));
 	connect(m_model, SIGNAL(endUpdateStructure()), this, SLOT(aboutRestoreTreeViewState()));
 
 	connect(m_view, SIGNAL(doubleClicked(QModelIndex)), m_model, SLOT(aboutscrollEditorToItem(QModelIndex)));
+
+	connect(_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutSelectItemForCurrentScene()));
+	connect(m_model, SIGNAL(endUpdateStructure()), this, SLOT(aboutSelectItemForCurrentScene()));
 }

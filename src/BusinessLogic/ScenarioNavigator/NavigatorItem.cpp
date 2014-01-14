@@ -6,13 +6,19 @@
 
 
 NavigatorItem::NavigatorItem() :
-	m_parent(0)
+	m_parent(0),
+	m_timing(0)
 {
 }
 
 NavigatorItem::~NavigatorItem()
 {
 	qDeleteAll(m_children);
+}
+
+bool NavigatorItem::hasParent() const
+{
+	return m_parent != 0;
 }
 
 NavigatorItem* NavigatorItem::parent() const
@@ -50,31 +56,17 @@ QPixmap NavigatorItem::icon() const
 
 QString NavigatorItem::header() const
 {
-	return m_headerBlock.text();
+	return m_header;
 }
 
 QString NavigatorItem::description() const
 {
-	QString description;
-
-	if (m_headerBlock != m_endBlock) {
-		QTextBlock descriptionBuilder = m_headerBlock;
-		do {
-			descriptionBuilder = descriptionBuilder.next();
-			if (!description.isEmpty()) {
-				description += " ";
-			}
-			description += descriptionBuilder.text();
-		} while (descriptionBuilder != m_endBlock
-				 && descriptionBuilder.isValid());
-	}
-
-	return description;
+	return m_description;
 }
 
 int NavigatorItem::timing() const
 {
-	return ChronometerFacade::calculate(m_headerBlock, m_endBlock);
+	return m_timing;
 }
 
 QTextBlock NavigatorItem::headerBlock() const
@@ -103,6 +95,45 @@ void NavigatorItem::setEndBlock(const QTextBlock& _block)
 {
 	if (m_endBlock != _block) {
 		m_endBlock = _block;
+
+		updateItem();
+	}
+}
+
+void NavigatorItem::updateItem()
+{
+	//
+	// Обновим заголовок
+	//
+	m_header = m_headerBlock.text();
+
+	//
+	// Обновим описание
+	//
+	m_description.clear();
+	if (m_headerBlock != m_endBlock) {
+		QTextBlock descriptionBuilder = m_headerBlock;
+		do {
+			descriptionBuilder = descriptionBuilder.next();
+			if (!m_description.isEmpty()) {
+				m_description += " ";
+			}
+			m_description += descriptionBuilder.text();
+		} while (descriptionBuilder != m_endBlock
+				 && descriptionBuilder.isValid()
+				 && m_description.length() < 200);
+	}
+
+	//
+	// Обновим хронометраж
+	//
+	if (isFolder()) {
+		m_timing = 0;
+		foreach (NavigatorItem* child, m_children) {
+			m_timing += child->timing();
+		}
+	} else {
+		m_timing = ChronometerFacade::calculate(m_headerBlock, m_endBlock);
 	}
 }
 

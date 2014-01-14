@@ -19,6 +19,8 @@ AbstractKeyHandler::~AbstractKeyHandler()
 
 void AbstractKeyHandler::handle(QKeyEvent* _event)
 {
+	prepareForHandle();
+
 	//
 	// Получим необходимые переменные
 	//

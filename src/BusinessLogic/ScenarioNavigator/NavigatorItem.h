@@ -16,6 +16,7 @@ public:
 	NavigatorItem();
 	~NavigatorItem();
 
+	bool hasParent() const;
 	NavigatorItem* parent() const;
 	NavigatorItem* childAt(int _index) const;
 	int rowOfChild(NavigatorItem* _child) const;
@@ -34,6 +35,8 @@ public:
 	void setHeaderBlock(const QTextBlock& _block);
 	void setEndBlock(const QTextBlock& _block);
 
+	void updateItem();
+
 	void append(NavigatorItem* _item);
 
 private:
@@ -42,6 +45,10 @@ private:
 
 	QTextBlock m_headerBlock;
 	QTextBlock m_endBlock;
+
+	QString m_header;
+	QString m_description;
+	int m_timing;
 };
 
 #endif // NAVIGATORITEM_H

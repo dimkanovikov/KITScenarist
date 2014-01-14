@@ -10,6 +10,7 @@
 #include <QXmlStreamReader>
 #include <QScrollBar>
 #include <QMimeData>
+#include <QTextCursor>
 
 
 NavigatorItemsModel::NavigatorItemsModel(QObject* _parent, ScenarioTextEdit* _editor) :
@@ -325,6 +326,15 @@ Qt::DropActions NavigatorItemsModel::supportedDropActions() const
 	return Qt::CopyAction | Qt::MoveAction;
 }
 
+QModelIndex NavigatorItemsModel::indexOfItemUnderCursor() const
+{
+	QModelIndex index;
+	if (NavigatorItem* item = itemForTextCursor()) {
+		index = indexForItem(item);
+	}
+	return index;
+}
+
 void NavigatorItemsModel::aboutscrollEditorToItem(const QModelIndex& _index)
 {
 	NavigatorItem* item = itemForIndex(_index);
@@ -333,6 +343,16 @@ void NavigatorItemsModel::aboutscrollEditorToItem(const QModelIndex& _index)
 	m_editor->verticalScrollBar()->setValue(m_editor->verticalScrollBar()->maximum());
 	m_editor->setTextCursor(cursor);
 	m_editor->setFocus();
+}
+
+void NavigatorItemsModel::aboutUpdateCurrentItem()
+{
+	NavigatorItem* current = itemForTextCursor();
+	if (current != 0) {
+		current->updateItem();
+		QModelIndex currentIndex = indexForItem(current);
+		emit dataChanged(currentIndex, currentIndex);
+	}
 }
 
 void NavigatorItemsModel::aboutUpdateStructure()
@@ -346,7 +366,7 @@ void NavigatorItemsModel::aboutUpdateStructure()
 	m_dropDeleteTo = -1;
 
 	/*
-	 * Полное перестроение структуры не очень эффективно, особенно в больших проектах,
+	 * Полное перестроение структуры очень неэффективно, особенно в больших проектах,
 	 * но зато очень упрощает понамание, и мне пока не удалось придумать способ кэширования,
 	 * который бы значительно повысил эффективность и не сильно усложнил код
 	 */
@@ -469,7 +489,8 @@ void NavigatorItemsModel::aboutUpdateStructure()
 
 void NavigatorItemsModel::initConnections()
 {
-	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateStructure()));
+	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutUpdateCurrentItem()));
+	connect(m_editor, SIGNAL(structureChanged()), this, SLOT(aboutUpdateStructure()));
 }
 
 NavigatorItem* NavigatorItemsModel::itemForIndex(const QModelIndex& _index) const
@@ -482,4 +503,57 @@ NavigatorItem* NavigatorItemsModel::itemForIndex(const QModelIndex& _index) cons
 		}
 	}
 	return resultItem;
+}
+
+namespace {
+	/**
+	 * @brief Найти элемент в который входит блок текста
+	 */
+	static NavigatorItem* findItemWithBlock(const QTextBlock& _block, NavigatorItem* _parent) {
+		NavigatorItem* searchedItem = 0;
+
+		for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
+			NavigatorItem* child = _parent->childAt(childIndex);
+			if (child->isFolder()) {
+				searchedItem = findItemWithBlock(_block, child);
+				if (searchedItem != 0) {
+					break;
+				}
+			}
+
+			if (child->headerBlock().blockNumber() <= _block.blockNumber()
+				&& child->endBlock().blockNumber() >= _block.blockNumber()) {
+				searchedItem = child;
+				break;
+			}
+		}
+
+		return searchedItem;
+	}
+}
+
+NavigatorItem* NavigatorItemsModel::itemForTextCursor() const
+{
+	return findItemWithBlock(m_editor->textCursor().block(), m_rootItem);
+}
+
+QModelIndex NavigatorItemsModel::indexForItem(NavigatorItem* _item) const
+{
+	QModelIndex parent;
+	if (_item->hasParent()
+		&& _item->parent()->hasParent()) {
+		parent = indexForItem(_item->parent());
+	} else {
+		parent = QModelIndex();
+	}
+
+	int row;
+	if (_item->hasParent()
+		&& _item->parent()->hasParent()) {
+		row = _item->parent()->rowOfChild(_item);
+	} else {
+		row = m_rootItem->rowOfChild(_item);
+	}
+
+	return index(row, 0, parent);
 }

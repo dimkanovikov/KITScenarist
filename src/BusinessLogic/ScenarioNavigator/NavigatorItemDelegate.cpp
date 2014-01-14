@@ -16,7 +16,8 @@ NavigatorItemDelegate::~NavigatorItemDelegate()
 {
 	delete m_itemWidget;
 }
-
+#include <QDebug>
+#include <QTime>
 void NavigatorItemDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& _option, const QModelIndex& _index) const
 {
 	QVariant icon = _index.data(Qt::DecorationRole);

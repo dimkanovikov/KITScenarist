@@ -57,6 +57,11 @@ bool KeyPressHandlerFacade::needEnshureCursorVisible() const
 	return m_prepareHandler->needEnsureCursorVisible();
 }
 
+bool KeyPressHandlerFacade::structureChanged() const
+{
+	return m_prepareHandler->structureChanged();
+}
+
 // ******** private ********
 
 KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :

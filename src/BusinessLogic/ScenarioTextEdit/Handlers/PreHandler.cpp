@@ -32,18 +32,14 @@ void PreHandler::handleOther(QKeyEvent* _event)
 	// Получим стиль первого блока в выделении
 	//
 	QTextCursor topCursor(editor()->document());
-	topCursor.movePosition(QTextCursor::Right,
-						   QTextCursor::MoveAnchor,
-						   qMin(cursor.selectionStart(), cursor.selectionEnd()));
+	topCursor.setPosition(qMin(cursor.selectionStart(), cursor.selectionEnd()));
 	ScenarioTextBlockStyle topStyle(editor()->scenarioBlockType(topCursor.block()));
 
 	//
 	// Получим стиль последнего блока в выделении
 	//
 	QTextCursor bottomCursor(editor()->document());
-	bottomCursor.movePosition(QTextCursor::Right,
-							  QTextCursor::MoveAnchor,
-							  qMax(cursor.selectionStart(), cursor.selectionEnd()));
+	bottomCursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
 	ScenarioTextBlockStyle bottomStyle(editor()->scenarioBlockType(bottomCursor.block()));
 
 	//

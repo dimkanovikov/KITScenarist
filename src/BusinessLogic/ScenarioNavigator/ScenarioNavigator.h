@@ -22,6 +22,11 @@ public:
 
 private slots:
 	/**
+	 * @brief Выделить элемент в дереве в соответствии с редактируемой сценой
+	 */
+	void aboutSelectItemForCurrentScene();
+
+	/**
 	 * @brief Сохранить состояние дерева
 	 */
 	void aboutStoreTreeViewState();
@@ -40,7 +45,7 @@ private:
 	/**
 	 * @brief Настройка соединений для обработки событий
 	 */
-	void initConnections();
+	void initConnections(ScenarioTextEdit* _editor);
 
 private:
 	/**

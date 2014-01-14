@@ -174,20 +174,28 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	if (handler->needEnshureCursorVisible()) {
 		ensureCursorVisible();
 	}
+
+	//
+	// Если необходимо уведомим об изменении структуры
+	//
+	if (handler->structureChanged()) {
+		emit structureChanged();
+	}
 }
 
 void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)
 {
-	if (_event->orientation() == Qt::Vertical
-		&& (_event->modifiers() & Qt::ControlModifier)) {
-		//
-		// zoomRange > 0 - Текст увеличивается
-		// zoomRange < 0 - Текст уменьшается
-		//
-		int zoomRange = (_event->delta() / 120) * 2;
-		zoomIn(zoomRange);
+	if (_event->modifiers() & Qt::ControlModifier) {
+		if (_event->orientation() == Qt::Vertical) {
+			//
+			// zoomRange > 0 - Текст увеличивается
+			// zoomRange < 0 - Текст уменьшается
+			//
+			int zoomRange = (_event->delta() / 120) * 2;
+			zoomIn(zoomRange);
 
-		_event->accept();
+			_event->accept();
+		}
 	} else {
 		QTextEdit::wheelEvent(_event);
 	}
