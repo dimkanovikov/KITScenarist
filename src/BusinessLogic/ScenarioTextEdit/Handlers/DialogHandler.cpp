@@ -156,3 +156,37 @@ void DialogHandler::handleTab(QKeyEvent*)
 		}
 	}
 }
+
+void DialogHandler::handleOther(QKeyEvent* _event)
+{
+	//
+	// Получим необходимые значения
+	//
+	// ... курсор в текущем положении
+	QTextCursor cursor = editor()->textCursor();
+	// ... блок текста в котором находится курсор
+	QTextBlock currentBlock = cursor.block();
+	// ... текст до курсора
+	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
+	// ... текст после курсора
+	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
+
+
+	//
+	// Обработка
+	//
+	if (cursorBackwardText == "("
+		&& cursorForwardText.isEmpty()
+		&& _event->text() == "(") {
+		//! Если текст пуст и нажата открывающая скобка
+
+		//
+		// Cменить стиль на ремарку
+		//
+		editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
+	} else {
+		//! В противном случае, обрабатываем в базовом классе
+
+		StandardKeyHandler::handleOther(_event);
+	}
+}
