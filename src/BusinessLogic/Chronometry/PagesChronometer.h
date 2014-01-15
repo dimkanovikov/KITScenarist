@@ -9,7 +9,10 @@ class PagesChronometer : public AbstractChronometer
 public:
 	PagesChronometer();
 
-	int calculateFrom(ScenarioTextBlockStyle::Type _type, const QString &_text) const;
+	float calculateFrom(ScenarioTextBlockStyle::Type _type, const QString &_text) const;
+
+private:
+	int linesInText(const QString& _text, int _lineLength) const;
 };
 
 #endif // PAGESCHRONOMETER_H
