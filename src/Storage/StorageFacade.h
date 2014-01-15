@@ -10,6 +10,7 @@ namespace StorageLayer
 	class TimeStorage;
 	class CharacterStorage;
 	class ScenarioStorage;
+	class SettingsStorage;
 
 	class StorageFacade
 	{
@@ -26,6 +27,7 @@ namespace StorageLayer
 		static TimeStorage* timeStorage();
 		static CharacterStorage* characterStorage();
 		static ScenarioStorage* scenarioStorage();
+		static SettingsStorage* settingsStorage();
 
 	private:
 		static PlaceStorage* s_placeStorage;
@@ -34,6 +36,7 @@ namespace StorageLayer
 		static TimeStorage* s_timeStorage;
 		static CharacterStorage* s_characterStorage;
 		static ScenarioStorage* s_scenarioStorage;
+		static SettingsStorage* s_settingsStorage;
 	};
 }
 

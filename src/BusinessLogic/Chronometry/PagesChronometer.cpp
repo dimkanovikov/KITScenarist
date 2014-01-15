@@ -4,6 +4,11 @@ PagesChronometer::PagesChronometer()
 {
 }
 
+QString PagesChronometer::name() const
+{
+	return "pages-chronometer";
+}
+
 float PagesChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const QString& _text) const
 {
 	//

@@ -1,13 +1,13 @@
-#ifndef PAGESCHRONOMETER_H
-#define PAGESCHRONOMETER_H
+#ifndef CHARACTERSCHRONOMETER_H
+#define CHARACTERSCHRONOMETER_H
 
 #include "AbstractChronometer.h"
 
 
-class PagesChronometer : public AbstractChronometer
+class CharactersChronometer : public AbstractChronometer
 {
 public:
-	PagesChronometer();
+	CharactersChronometer();
 
 	/**
 	 * @brief Наименование хронометра
@@ -18,9 +18,6 @@ public:
 	 * @brief Подсчитать длительность заданного текста определённого типа
 	 */
 	float calculateFrom(ScenarioTextBlockStyle::Type _type, const QString &_text) const;
-
-private:
-	int linesInText(const QString& _text, int _lineLength) const;
 };
 
-#endif // PAGESCHRONOMETER_H
+#endif // CHARACTERSCHRONOMETER_H

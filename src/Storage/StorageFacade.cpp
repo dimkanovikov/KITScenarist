@@ -6,6 +6,7 @@
 #include "TimeStorage.h"
 #include "CharacterStorage.h"
 #include "ScenarioStorage.h"
+#include "SettingsStorage.h"
 
 using namespace StorageLayer;
 
@@ -68,9 +69,18 @@ ScenarioStorage*StorageFacade::scenarioStorage()
 	return s_scenarioStorage;
 }
 
+SettingsStorage*StorageFacade::settingsStorage()
+{
+	if (s_settingsStorage == 0) {
+		s_settingsStorage = new SettingsStorage;
+	}
+	return s_settingsStorage;
+}
+
 PlaceStorage* StorageFacade::s_placeStorage = 0;
 LocationStorage* StorageFacade::s_locationStorage = 0;
 ScenarioDayStorage* StorageFacade::s_scenarioDayStorage = 0;
 TimeStorage* StorageFacade::s_timeStorage = 0;
 CharacterStorage* StorageFacade::s_characterStorage = 0;
 ScenarioStorage* StorageFacade::s_scenarioStorage = 0;
+SettingsStorage* StorageFacade::s_settingsStorage = 0;

@@ -15,6 +15,11 @@ public:
 	virtual ~AbstractChronometer() {}
 
 	/**
+	 * @brief Наименование хронометра
+	 */
+	virtual QString name() const = 0;
+
+	/**
 	 * @brief Подсчитать длительность заданного текста определённого типа
 	 */
 	virtual float calculateFrom(ScenarioTextBlockStyle::Type _type, const QString& _text) const = 0;

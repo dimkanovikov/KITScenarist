@@ -9,7 +9,7 @@ using namespace StorageLayer;
 using namespace DataMappingLayer;
 
 
-TimesTable*TimeStorage::all()
+TimesTable* TimeStorage::all()
 {
 	if (m_all == 0) {
 		m_all = MapperFacade::timeMapper()->findAll();

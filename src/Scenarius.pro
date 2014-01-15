@@ -83,7 +83,11 @@ HEADERS  += \
     3rd_party/qt_utils/QTreeViewState.h \
     BusinessLogic/Chronometry/AbstractChronometer.h \
     BusinessLogic/Chronometry/ChronometerFacade.h \
-    BusinessLogic/Chronometry/PagesChronometer.h
+    BusinessLogic/Chronometry/PagesChronometer.h \
+    DataMapper/SettingsMapper.h \
+    Storage/SettingsStorage.h \
+    BusinessLogic/Chronometry/CharactersChronometer.h \
+    BusinessLogic/Chronometry/ConfigurableChronometer.h
 
 SOURCES += main.cpp \
     Domain/Character.cpp \
@@ -146,7 +150,11 @@ SOURCES += main.cpp \
     BusinessLogic/ScenarioNavigator/NavigatorItem.cpp \
     UserInterface/Widgets/ElidedLabel/ElidedLabel.cpp \
     BusinessLogic/Chronometry/ChronometerFacade.cpp \
-    BusinessLogic/Chronometry/PagesChronometer.cpp
+    BusinessLogic/Chronometry/PagesChronometer.cpp \
+    DataMapper/SettingsMapper.cpp \
+    Storage/SettingsStorage.cpp \
+    BusinessLogic/Chronometry/CharactersChronometer.cpp \
+    BusinessLogic/Chronometry/ConfigurableChronometer.cpp
 
 
 #
@@ -193,4 +201,6 @@ RESOURCES += \
     Resources/Resources.qrc
 
 OTHER_FILES += \
-	TODO
+	TODO \
+	settings_keys \
+	scenario_settings_keys

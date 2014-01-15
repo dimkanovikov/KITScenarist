@@ -180,6 +180,16 @@ void DatabaseHelper::loadDatabaseFromFileVersion0(const QSqlDatabase& _fileDatab
 	QSqlQuery q_dataFromFile(_fileDatabase);
 	QSqlQuery q_dataToMemory(memoryDatabase);
 
+	// Настройки
+	q_dataFromFile.exec("SELECT variable, value FROM system_variables WHERE variable != 'application-version'");
+	while (q_dataFromFile.next()) {
+		q_dataToMemory.exec(
+					QString("INSERT INTO system_variables (variable, value) VALUES('%1', '%2')")
+					.arg(q_dataFromFile.value("variable").toString())
+					.arg(q_dataFromFile.value("value").toString())
+					);
+	}
+
 	// Место
 	q_dataFromFile.exec("SELECT id, name FROM places");
 	while (q_dataFromFile.next()) {
