@@ -381,14 +381,16 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	QTextCursor topCursor(editor()->document());
 	topCursor.setPosition(topCursorPosition);
 	ScenarioTextBlockStyle topStyle(editor()->scenarioBlockType(topCursor.block()));
+	// ... тип, который будет установлен после удаления блоку
+	ScenarioTextBlockStyle::Type nextType = topStyle.blockType();
 	// ... если блок является заголовком - расширим выделение
 	while (topStyle.isHeader()) {
 		topCursor.movePosition(QTextCursor::Left);
 		topStyle.setType(editor()->scenarioBlockType(topCursor.block()));
 
-		// ... если дошли до начала документа
-		if (topCursor.position() == 0) {
-			topStyle.setType(ScenarioTextBlockStyle::TimeAndPlace);
+		if (topCursor.atStart()) {
+			nextType = ScenarioTextBlockStyle::TimeAndPlace;
+			break;
 		}
 	}
 
@@ -411,11 +413,10 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	bottomCursor.setPosition(bottomCursorPosition);
 	ScenarioTextBlockStyle bottomStyle(editor()->scenarioBlockType(bottomCursor.block()));
 	// ... если блок является заголовком - расширим выделение
-	while (bottomStyle.isHeader()) {
+	while (bottomStyle.isHeader()
+		   && !bottomCursor.atEnd()) {
 		bottomCursor.movePosition(QTextCursor::Right);
 		bottomStyle.setType(editor()->scenarioBlockType(bottomCursor.block()));
-
-		// ... после заголовка всегда есть текст, поэтому тут нет ограничений
 	}
 
 	//
@@ -455,6 +456,51 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 			}
 		}
 	}
+	//
+	// Иначе расширим выделение
+	//
+	else {
+		//
+		// ... сверху
+		//
+		bool wasInsideCycle = false;
+		while ((topStyle.blockType() == ScenarioTextBlockStyle::FolderFooter
+				|| topStyle.blockType() == ScenarioTextBlockStyle::FolderHeader)
+			   && !topCursor.atStart()) {
+			topCursor.movePosition(QTextCursor::Left);
+			topStyle.setType(editor()->scenarioBlockType(topCursor.block()));
+			wasInsideCycle = true;
+		}
+		// ... если не дошли до начала документа, нужно вернуться на один символ назад
+		/*if (!topCursor.atStart() && wasInsideCycle) {
+			topCursor.movePosition(QTextCursor::Right);
+		} else*/ if (topCursor.atStart()) {
+			nextType = ScenarioTextBlockStyle::TimeAndPlace;
+		}
+		//
+		// ... и снизу
+		//
+		wasInsideCycle = false;
+		while ((bottomStyle.blockType() == ScenarioTextBlockStyle::FolderFooter
+				|| bottomStyle.blockType() == ScenarioTextBlockStyle::FolderHeader)
+			   && !bottomCursor.atEnd()) {
+			bottomCursor.movePosition(QTextCursor::Right);
+			bottomStyle.setType(editor()->scenarioBlockType(bottomCursor.block()));
+			wasInsideCycle = true;
+		}
+		// ... если не дошли до конца документа, нужно вернуться на один символ назад
+		if (!bottomCursor.atEnd()
+			&& wasInsideCycle
+			&& !bottomCursor.block().text().isEmpty()) {
+			bottomCursor.movePosition(QTextCursor::Left);
+		}
+
+		//
+		// ... а затем обновим выделение
+		//
+		cursor.setPosition(topCursor.position());
+		cursor.setPosition(bottomCursor.position(), QTextCursor::KeepAnchor);
+	}
 
 	//
 	// Очистим выделение
@@ -473,7 +519,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	//
 	// Применим стиль ко всему тексту (главным образом к новому) в блоке
 	//
-	editor()->applyScenarioTypeToBlockText(topStyle.blockType());
+	editor()->applyScenarioTypeToBlockText(nextType);
 }
 
 void StandardKeyHandler::findGroupBlocks(
@@ -490,10 +536,7 @@ void StandardKeyHandler::findGroupBlocks(
 	searchGroupsCursor.setPosition(_startPosition);
 	// поиск начинается с блока
 	int searchStartFromBlock = searchGroupsCursor.blockNumber();
-	// нужно сместиться в конец следующего
-	// т.к. нас интересуют блоки полностью входящие в выделение
 	searchGroupsCursor.movePosition(QTextCursor::NextBlock);
-	searchGroupsCursor.movePosition(QTextCursor::EndOfBlock);
 
 	//
 	// Посчитаем количество открывающих и закрывающих блоков для удаления
@@ -535,15 +578,15 @@ void StandardKeyHandler::findGroupBlocks(
 			//
 			// Если достигнут конец документа, то прервать выполнение
 			//
-			if (searchGroupsCursor.atEnd()) {
+			if (searchGroupsCursor.atEnd()
+				|| searchGroupsCursor.blockNumber() == searchGroupsCursor.document()->blockCount()-1) {
 				break;
 			}
 
 			//
-			// Перейдём в конец следующего блока
+			// Перейдём к следующему блоку
 			//
 			searchGroupsCursor.movePosition(QTextCursor::NextBlock);
-			searchGroupsCursor.movePosition(QTextCursor::EndOfBlock);
 		}
 	}
 }
@@ -584,7 +627,8 @@ void StandardKeyHandler::removeGroupsPairs(int _groupHeadersCount, int _groupFoo
 				}
 
 				cursor.movePosition(QTextCursor::NextBlock);
-			} while (groupsToDeleteCount > 0);
+			} while (groupsToDeleteCount > 0
+					 && cursor.blockNumber() != (cursor.document()->blockCount()-1));
 		}
 
 		//
@@ -605,6 +649,14 @@ void StandardKeyHandler::removeGroupsPairs(int _groupHeadersCount, int _groupFoo
 					if (openedGroups == 0) {
 						cursor.select(QTextCursor::BlockUnderCursor);
 						cursor.deleteChar();
+
+						//
+						// Если это был самый первый блок
+						//
+						if (cursor.atStart()) {
+							cursor.deleteChar();
+						}
+
 						--groupsToDeleteCount;
 					} else {
 						--openedGroups;
@@ -615,7 +667,8 @@ void StandardKeyHandler::removeGroupsPairs(int _groupHeadersCount, int _groupFoo
 				}
 
 				cursor.movePosition(QTextCursor::PreviousBlock);
-			} while (groupsToDeleteCount > 0);
+			} while (groupsToDeleteCount > 0
+					 && cursor.blockNumber() != 0);
 		}
 	}
 }

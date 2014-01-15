@@ -17,7 +17,7 @@ public:
 	/**
 	 * @brief Подсчитать длительность заданного текста определённого типа
 	 */
-	virtual int calculateFrom(ScenarioTextBlockStyle::Type _type, const QString& _text) const = 0;
+	virtual float calculateFrom(ScenarioTextBlockStyle::Type _type, const QString& _text) const = 0;
 };
 
 #endif // ABSTRACTCHRONOMETER_H

@@ -188,6 +188,8 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 
 void ScenarioXmlReader::xmlToScenario(const QString& _xml, ScenarioTextEdit* _editor)
 {
+	_editor->setTextUpdateInProgress(true);
+
 	//
 	// Необходимо ли изменить тип блока, в который вставляется текст
 	//
@@ -271,6 +273,8 @@ void ScenarioXmlReader::xmlToScenario(const QString& _xml, ScenarioTextEdit* _ed
 			}
 		}
 	}
+
+	_editor->setTextUpdateInProgress(false);
 
 	emit _editor->structureChanged();
 }

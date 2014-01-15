@@ -86,13 +86,63 @@ void PrepareHandler::handleTab(QKeyEvent*)
 void PrepareHandler::handleDelete(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
-	m_structureChanged = true;
+
+	//
+	// Получим необходимые значения
+	//
+	// ... курсор в текущем положении
+	QTextCursor cursor = editor()->textCursor();
+
+	//
+	// Получим стиль первого блока в выделении
+	//
+	QTextCursor topCursor(editor()->document());
+	topCursor.setPosition(qMin(cursor.selectionStart(), cursor.selectionEnd()));
+
+	//
+	// Получим стиль последнего блока в выделении
+	//
+	QTextCursor bottomCursor(editor()->document());
+	bottomCursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
+
+	//
+	// Если действие выполняется над несколькими блоками
+	//
+	if (topCursor.blockNumber() != bottomCursor.blockNumber()
+		|| bottomCursor.atBlockEnd()) {
+		m_structureChanged = true;
+	}
 }
 
 void PrepareHandler::handleBackspace(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
-	m_structureChanged = true;
+
+	//
+	// Получим необходимые значения
+	//
+	// ... курсор в текущем положении
+	QTextCursor cursor = editor()->textCursor();
+
+	//
+	// Получим стиль первого блока в выделении
+	//
+	QTextCursor topCursor(editor()->document());
+	topCursor.setPosition(qMin(cursor.selectionStart(), cursor.selectionEnd()));
+
+	//
+	// Получим стиль последнего блока в выделении
+	//
+	QTextCursor bottomCursor(editor()->document());
+	bottomCursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
+
+	//
+	// Если действие выполняется над несколькими блоками
+	//
+	if (topCursor.blockNumber() != bottomCursor.blockNumber()
+		|| topCursor.atBlockStart()) {
+		m_structureChanged = true;
+	}
 }
 
 void PrepareHandler::handleEscape(QKeyEvent*)

@@ -46,6 +46,16 @@ public:
 	 */
 	ScenarioTextBlockStyle::Type scenarioBlockType() const;
 
+	/**
+	 * @brief Находится ли редактор в состоянии обновления текста
+	 */
+	bool textUpdateInProgress() const;
+
+	/**
+	 * @brief Установить состояние обновления текста редактора
+	 */
+	void setTextUpdateInProgress(bool _inProgress);
+
 signals:
 	/**
 	 * @brief Сменился стиль под курсором
@@ -105,6 +115,13 @@ private:
 	void initEditor();
 	void initView();
 	void initConnections();
+
+private:
+	/**
+	 * @brief Выполняется ли обновление текста в данный момент,
+	 *		  например вставка из буфера или загрузка текста из файла
+	 */
+	bool m_textUpdateInProgress;
 };
 
 #endif // SCENARIOTEXTEDIT_H

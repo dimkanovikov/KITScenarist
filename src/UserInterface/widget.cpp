@@ -14,6 +14,7 @@
 #include <Storage/ScenarioStorage.h>
 #include <Domain/Scenario.h>
 #include <BusinessLogic/ScenarioNavigator/ScenarioNavigator.h>
+#include <QApplication>
 
 
 namespace {

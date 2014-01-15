@@ -34,7 +34,7 @@ void SpellCheckHighlighter::highlightBlock(const QString& _text)
 		//
 		// Убираем пустоты из проверяемого текста
 		//
-		QString textToCheck = _text.simplified();
+		QString textToCheck = _text.simplified().toLower();
 		if (!textToCheck.isEmpty()) {
 			//
 			// Разбиваем проверяемый текст на слова
@@ -47,31 +47,45 @@ void SpellCheckHighlighter::highlightBlock(const QString& _text)
 			//
 			foreach (const QString wordToCheck, wordsToCheck) {
 				//
+				// Убираем знаки препинания окружающие слово
+				//
+				QString wordWithoutPunct = wordToCheck.trimmed();
+				while (!wordWithoutPunct.isEmpty()
+					   && (wordWithoutPunct.at(0).isPunct()
+						   || wordWithoutPunct.at(wordWithoutPunct.length()-1).isPunct())) {
+					if (wordWithoutPunct.at(0).isPunct()) {
+						wordWithoutPunct = wordWithoutPunct.mid(1);
+					} else {
+						wordWithoutPunct = wordWithoutPunct.left(wordWithoutPunct.length()-1);
+					}
+				}
+
+				//
 				// Проверяем слова длинной более одного символа
 				// и не начинающиеся с символа "\"
 				//
-				if (wordToCheck.length() > 1
-					&& !wordToCheck.startsWith('\\')) {
+				if (wordWithoutPunct.length() > 1
+					&& !wordWithoutPunct.startsWith('\\')) {
 					//
 					// Если слово не прошло проверку
 					//
-					if (!m_spellchecker->spellCheckWord(wordToCheck)) {
+					if (!m_spellchecker->spellCheckWord(wordWithoutPunct)) {
 						//
 						// Проходим по всем вхождения этого слова в тексте
 						//
-						int wordsCount = _text.count(QRegExp("\\b" + wordToCheck + "\\b"));
+						int wordsCount = _text.count(QRegExp("\\b" + wordWithoutPunct + "\\b"));
 						int positionInText = -1;
 
 						for (int wordIndex = 0; wordIndex < wordsCount; ++wordIndex) {
 							positionInText =
-									_text.indexOf(QRegExp("\\b" + wordToCheck + "\\b"),
+									_text.indexOf(QRegExp("\\b" + wordWithoutPunct + "\\b"),
 												  positionInText + 1);
 							//
 							// Пометим вхождение слова, как ошибочное
 							//
 							if (positionInText >= 0) {
 								setFormat(positionInText,
-										  wordToCheck.length(),
+										  wordWithoutPunct.length(),
 										  m_misspeledCharFormat);
 							}
 						}

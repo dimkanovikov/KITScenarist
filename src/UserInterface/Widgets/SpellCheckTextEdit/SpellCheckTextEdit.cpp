@@ -78,6 +78,20 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 	QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
 
 	//
+	// Убираем знаки препинания окружающие слово
+	//
+	QString wordWithoutPunct = wordUnderCursor.trimmed();
+	while (!wordWithoutPunct.isEmpty()
+		   && (wordWithoutPunct.at(0).isPunct()
+			   || wordWithoutPunct.at(wordWithoutPunct.length()-1).isPunct())) {
+		if (wordWithoutPunct.at(0).isPunct()) {
+			wordWithoutPunct = wordWithoutPunct.mid(1);
+		} else {
+			wordWithoutPunct = wordWithoutPunct.left(wordWithoutPunct.length()-1);
+		}
+	}
+
+	//
 	// Сформируем стандартное контекстное меню
 	//
 	QMenu* menu = createStandardContextMenu();
@@ -89,9 +103,9 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 		//
 		// Если слово не проходит проверку орфографии добавим дополнительные действия в контекстное меню
 		//
-		if (!m_spellChecker->spellCheckWord(wordUnderCursor)) {
+		if (!m_spellChecker->spellCheckWord(wordWithoutPunct)) {
 			// ... действие, перед которым вставляем дополнительные пункты
-			QStringList suggestions = m_spellChecker->suggestionsForWord(wordUnderCursor);
+			QStringList suggestions = m_spellChecker->suggestionsForWord(wordWithoutPunct);
 			// ... вставляем варианты
 			QAction* actionInsertBefore = menu->actions().first();
 			int addedSuggestionsCount = 0;

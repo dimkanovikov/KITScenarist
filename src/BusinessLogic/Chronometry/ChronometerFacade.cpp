@@ -18,7 +18,7 @@ int ChronometerFacade::calculate(const QTextBlock& _fromBlock, const QTextBlock&
 
 int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition)
 {
-	int chronometry = 0;
+	float chronometry = 0;
 
 	QTextCursor cursor(_document);
 	cursor.setPosition(_fromCursorPosition);
@@ -28,9 +28,14 @@ int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPositi
 		// Перейти к следующему, если это не первый шаг цикла
 		//
 		if (!isFirstStep) {
-			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+			cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+			if (cursor.position() > _toCursorPosition) {
+				cursor.setPosition(_toCursorPosition+1, QTextCursor::KeepAnchor);
+			}
 		} else {
 			isFirstStep = false;
+			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 		}
 
 		//
@@ -51,7 +56,7 @@ int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPositi
 	} while (!cursor.atEnd()
 			 && cursor.position() <= _toCursorPosition);
 
-	return chronometry;
+	return qRound(chronometry);
 }
 
 AbstractChronometer* ChronometerFacade::chronometer()

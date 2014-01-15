@@ -20,7 +20,8 @@
 
 
 ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
-	CompletableTextEdit(_parent)
+	CompletableTextEdit(_parent),
+	m_textUpdateInProgress(false)
 {
 	initEditor();
 	initView();
@@ -111,6 +112,18 @@ ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType(const QTextBloc
 ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType() const
 {
 	return scenarioBlockType(textCursor().block());
+}
+
+bool ScenarioTextEdit::textUpdateInProgress() const
+{
+	return m_textUpdateInProgress;
+}
+
+void ScenarioTextEdit::setTextUpdateInProgress(bool _inProgress)
+{
+	if (m_textUpdateInProgress != _inProgress) {
+		m_textUpdateInProgress = _inProgress;
+	}
 }
 
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)

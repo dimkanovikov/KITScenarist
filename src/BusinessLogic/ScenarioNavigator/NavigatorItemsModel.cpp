@@ -18,8 +18,7 @@ NavigatorItemsModel::NavigatorItemsModel(QObject* _parent, ScenarioTextEdit* _ed
 	m_editor(_editor),
 	m_rootItem(new NavigatorItem),
 	m_dropDeleteFrom(-1),
-	m_dropDeleteTo(-1),
-	m_canUpdateStructure(true)
+	m_dropDeleteTo(-1)
 {
 	//
 	// Редактор обязательно должен быть задан
@@ -166,7 +165,7 @@ bool NavigatorItemsModel::dropMimeData(const QMimeData* _data, Qt::DropAction _a
 	//
 	// На время операции вставки данных запрещаем обновлять структуру
 	//
-	m_canUpdateStructure = false;
+	m_editor->setTextUpdateInProgress(true);
 
 	if (_data != 0
 		&& _data->hasFormat(MimeDataProcessor::SCENARIO_MIME_TYPE)) {
@@ -269,7 +268,7 @@ bool NavigatorItemsModel::dropMimeData(const QMimeData* _data, Qt::DropAction _a
 		}
 	}
 
-	m_canUpdateStructure = true;
+	m_editor->setTextUpdateInProgress(false);
 
 	if (isDropSucceed) {
 		aboutUpdateStructure();
@@ -329,8 +328,10 @@ Qt::DropActions NavigatorItemsModel::supportedDropActions() const
 QModelIndex NavigatorItemsModel::indexOfItemUnderCursor() const
 {
 	QModelIndex index;
-	if (NavigatorItem* item = itemForTextCursor()) {
-		index = indexForItem(item);
+	if (!m_editor->textUpdateInProgress()) {
+		if (NavigatorItem* item = itemForTextCursor()) {
+			index = indexForItem(item);
+		}
 	}
 	return index;
 }
@@ -347,6 +348,10 @@ void NavigatorItemsModel::aboutscrollEditorToItem(const QModelIndex& _index)
 
 void NavigatorItemsModel::aboutUpdateCurrentItem()
 {
+	if (m_editor->textUpdateInProgress()) {
+		return;
+	}
+
 	NavigatorItem* current = itemForTextCursor();
 	if (current != 0) {
 		current->updateItem();
@@ -357,8 +362,7 @@ void NavigatorItemsModel::aboutUpdateCurrentItem()
 
 void NavigatorItemsModel::aboutUpdateStructure()
 {
-	if (m_editor->document()->isEmpty()
-		|| !m_canUpdateStructure) {
+	if (m_editor->textUpdateInProgress()) {
 		return;
 	}
 
@@ -477,7 +481,23 @@ void NavigatorItemsModel::aboutUpdateStructure()
 	//
 	if (currentChild != 0
 		&& !currentChild->isFolder()) {
+		if (cursor.block().text().isEmpty()
+			&& ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::TimeAndPlace) {
+			currentChild->setEndBlock(cursor.block().previous());
+		} else {
+			currentChild->setEndBlock(cursor.block());
+		}
+	}
+
+	//
+	// Если последним идёт пустой блок создать для него элемент
+	//
+	if (cursor.block().text().isEmpty()
+		&& ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::TimeAndPlace) {
+		currentChild = new NavigatorItem;
+		currentChild->setHeaderBlock(cursor.block());
 		currentChild->setEndBlock(cursor.block());
+		currentParent->append(currentChild);
 	}
 
 	//
@@ -539,6 +559,10 @@ NavigatorItem* NavigatorItemsModel::itemForTextCursor() const
 
 QModelIndex NavigatorItemsModel::indexForItem(NavigatorItem* _item) const
 {
+	if (_item == 0) {
+		return QModelIndex();
+	}
+
 	QModelIndex parent;
 	if (_item->hasParent()
 		&& _item->parent()->hasParent()) {

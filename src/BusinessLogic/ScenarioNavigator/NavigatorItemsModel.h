@@ -95,7 +95,6 @@ private:
 	NavigatorItem* m_rootItem;
 
 	mutable int m_dropDeleteFrom, m_dropDeleteTo;
-	bool m_canUpdateStructure;
 };
 
 #endif // NAVIGATORITEMSMODEL_H
