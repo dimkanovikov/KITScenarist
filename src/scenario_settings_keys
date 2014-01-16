@@ -2,3 +2,5 @@
 
 application-version - версия приложения, в которой был создан файл сценария
 chronometry/current-chronometer-type - используемая система хронометража
+chronometry/characters/characters - количество символов в посимвольном хронометре
+chronometry/characters/seconds - количество секунд в посимвольном хронометре

@@ -71,14 +71,14 @@ void DialogHandler::handleEnter(QKeyEvent*)
 					//
 					// Перейдём к блоку персонажа
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Character);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
 				} else {
 					//! Внутри блока
 
 					//
 					// Перейдём к блоку персонажа
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Character);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
 				}
 			}
 		}
@@ -176,7 +176,7 @@ void DialogHandler::handleOther(QKeyEvent* _event)
 	// Обработка
 	//
 	if (cursorBackwardText == "("
-		&& cursorForwardText.isEmpty()
+		&& _event != 0
 		&& _event->text() == "(") {
 		//! Если текст пуст и нажата открывающая скобка
 
