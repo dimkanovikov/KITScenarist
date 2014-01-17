@@ -17,7 +17,13 @@ QString CharactersChronometer::name() const
 
 float CharactersChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const QString& _text) const
 {
-	Q_UNUSED(_type);
+	//
+	// Не включаем в хронометраж заголовок и окончание папки
+	//
+	if (_type == ScenarioTextBlockStyle::FolderHeader
+		|| _type == ScenarioTextBlockStyle::FolderFooter) {
+		return 0;
+	}
 
 	static const QString CHARACTERS_KEY = "chronometry/characters/characters";
 	static const QString SECONDS_KEY = "chronometry/characters/seconds";

@@ -1,5 +1,11 @@
 #include "PagesChronometer.h"
 
+#include <Storage/StorageFacade.h>
+#include <Storage/SettingsStorage.h>
+
+using namespace StorageLayer;
+
+
 PagesChronometer::PagesChronometer()
 {
 }
@@ -12,9 +18,25 @@ QString PagesChronometer::name() const
 float PagesChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const QString& _text) const
 {
 	//
-	// Длительность строки на странице равна 1.2, из расчёта что одна страница - 60 секунд
+	// Получим значение длительности одной страницы текста
 	//
-	const float LINE_CHRON = 1.2;
+	static const QString SECONDS_KEY = "chronometry/pages/seconds";
+	int seconds = StorageFacade::settingsStorage()->value(SECONDS_KEY).toInt();
+
+	//
+	// Если не заданы, применим значения по умолчанию
+	//
+	if (seconds == 0) {
+		seconds = 60;
+		StorageFacade::settingsStorage()->setValue(SECONDS_KEY, QString::number(seconds));
+	}
+
+
+	//
+	// Высчитываем длительность строки на странице, из расчёта что на одной странице - 50 строк
+	//
+	const float LINES_IN_PAGE = 50;
+	const float LINE_CHRON = seconds / LINES_IN_PAGE;
 
 	//
 	// Длина строки в зависимости от типа
