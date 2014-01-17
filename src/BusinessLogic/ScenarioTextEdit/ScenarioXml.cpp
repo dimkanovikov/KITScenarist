@@ -30,9 +30,10 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 	cursor.setPosition(_startPosition);
 
 	//
-	// Подсчитаем кол-во незакрытых групп и закроем, если необходимо
+	// Подсчитаем кол-во незакрытых групп и папок, и закроем, если необходимо
 	//
 	int openedGroups = 0;
+	int openedFolders = 0;
 
 	do {
 		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
@@ -119,18 +120,25 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 					break;
 				}
 
-				case ScenarioTextBlockStyle::FolderHeader: {
-					resultXml += "<folder>";
-					resultXml += "<folder_header>";
+				case ScenarioTextBlockStyle::SimpleText: {
+					resultXml += "<simple_text>";
 					resultXml += textToSave;
-					resultXml += "</folder_header>";
+					resultXml += "</simple_text>";
+					break;
+				}
+
+				case ScenarioTextBlockStyle::SceneGroupHeader: {
+					resultXml += "<scene_group>";
+					resultXml += "<scene_group_header>";
+					resultXml += textToSave;
+					resultXml += "</scene_group_header>";
 
 					++openedGroups;
 
 					break;
 				}
 
-				case ScenarioTextBlockStyle::FolderFooter: {
+				case ScenarioTextBlockStyle::SceneGroupFooter: {
 					//
 					// Закрываем группы, если были открыты, то просто корректируем счётчик,
 					// а если открытых нет, то не записываем и конец
@@ -138,18 +146,38 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 					if (openedGroups > 0) {
 						--openedGroups;
 
+						resultXml += "<scene_group_footer>";
+						resultXml += textToSave;
+						resultXml += "</scene_group_footer>";
+						resultXml += "</scene_group>";
+					}
+					break;
+				}
+
+				case ScenarioTextBlockStyle::FolderHeader: {
+					resultXml += "<folder>";
+					resultXml += "<folder_header>";
+					resultXml += textToSave;
+					resultXml += "</folder_header>";
+
+					++openedFolders;
+
+					break;
+				}
+
+				case ScenarioTextBlockStyle::FolderFooter: {
+					//
+					// Закрываем папки, если были открыты, то просто корректируем счётчик,
+					// а если открытых нет, то не записываем и конец
+					//
+					if (openedFolders > 0) {
+						--openedFolders;
+
 						resultXml += "<folder_footer>";
 						resultXml += textToSave;
 						resultXml += "</folder_footer>";
 						resultXml += "</folder>";
 					}
-					break;
-				}
-
-				case ScenarioTextBlockStyle::SimpleText: {
-					resultXml += "<simple_text>";
-					resultXml += textToSave;
-					resultXml += "</simple_text>";
 					break;
 				}
 
@@ -171,10 +199,17 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 	// Закроем открытые группы
 	//
 	while (openedGroups > 0) {
-		resultXml += "</folder>";
+		resultXml += "</scene_group>";
 		--openedGroups;
 	}
 
+	//
+	// Закроем открытые папки
+	//
+	while (openedFolders > 0) {
+		resultXml += "</folder>";
+		--openedFolders;
+	}
 
 	//
 	// Добавим корневой элемент
@@ -232,9 +267,11 @@ void ScenarioXmlReader::xmlToScenario(const QString& _xml, ScenarioTextEdit* _ed
 					tokenType = ScenarioTextBlockStyle::Note;
 				} else if (tokenName == "title") {
 					tokenType = ScenarioTextBlockStyle::Title;
-				} else if (tokenName == "folder_header") {
-					tokenType = ScenarioTextBlockStyle::FolderHeader;
-				} else if (tokenName == "folder_footer") {
+				} else if (tokenName == "simple_text") {
+					tokenType = ScenarioTextBlockStyle::SimpleText;
+				} else if (tokenName == "scene_group_header") {
+					tokenType = ScenarioTextBlockStyle::SceneGroupHeader;
+				} else if (tokenName == "scene_group_footer") {
 					//
 					// Для блока конца группы нужно сместиться к следующему блоку
 					// этот блок как раз и будет блоком конца группы.
@@ -243,8 +280,17 @@ void ScenarioXmlReader::xmlToScenario(const QString& _xml, ScenarioTextEdit* _ed
 					//
 					_editor->moveCursor(QTextCursor::NextBlock);
 					_editor->moveCursor(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-				} else if (tokenName == "simple_text") {
-					tokenType = ScenarioTextBlockStyle::SimpleText;
+				} else if (tokenName == "folder_header") {
+					tokenType = ScenarioTextBlockStyle::FolderHeader;
+				} else if (tokenName == "folder_footer") {
+					//
+					// Для блока конца папки нужно сместиться к следующему блоку
+					// этот блок как раз и будет блоком конца группы.
+					// Затем необходимо выделить автоматически сгенерированный текст блока
+					// для того, чтобы заменить его текстом из xml.
+					//
+					_editor->moveCursor(QTextCursor::NextBlock);
+					_editor->moveCursor(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 				}
 
 				//

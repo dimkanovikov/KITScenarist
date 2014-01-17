@@ -51,14 +51,15 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 	textCursor().beginEditBlock();
 
 	//
-	// Является ли текущий вид заголовком
+	// Нельзя сменить стиль заголовка блока и конечных элементов групп и папок
 	//
 	bool canChangeType =
 			(scenarioBlockType() != ScenarioTextBlockStyle::TitleHeader)
+			&& (scenarioBlockType() != ScenarioTextBlockStyle::SceneGroupFooter)
 			&& (scenarioBlockType() != ScenarioTextBlockStyle::FolderFooter);
 
 	//
-	// Если текущий вид не заголовок
+	// Если текущий вид можно сменить
 	//
 	if (canChangeType) {
 		//
@@ -293,7 +294,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 	//
 	// Удалить завершающий блок группы сцен
 	//
-	if (oldBlockStyle.blockType() == ScenarioTextBlockStyle::FolderHeader) {
+	if (oldBlockStyle.isEmbeddableHeader()) {
 		QTextCursor cursor = textCursor();
 		cursor.movePosition(QTextCursor::NextBlock);
 
@@ -304,7 +305,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 			ScenarioTextBlockStyle::Type currentType =
 					scenarioBlockType(cursor.block());
 
-			if (currentType == ScenarioTextBlockStyle::FolderFooter) {
+			if (currentType == oldBlockStyle.embeddableFooter()) {
 				if (openedGroups == 0) {
 					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 					cursor.deleteChar();
@@ -313,7 +314,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == ScenarioTextBlockStyle::FolderHeader) {
+			} else if (currentType == oldBlockStyle.blockType()) {
 				// ... встретилась новая группа
 				++openedGroups;
 			}
@@ -430,8 +431,8 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	//
 	// Для заголовка группы нужно создать завершение
 	//
-	if (newBlockStyle.blockType() == ScenarioTextBlockStyle::FolderHeader) {
-		ScenarioTextBlockStyle footerStyle(ScenarioTextBlockStyle::FolderFooter);
+	if (newBlockStyle.isEmbeddableHeader()) {
+		ScenarioTextBlockStyle footerStyle(newBlockStyle.embeddableFooter());
 
 		//
 		// Запомним позицию курсора

@@ -28,23 +28,25 @@ public:
 		Note,			//!< Примечание
 		TitleHeader,	//!< Заголовок титра
 		Title,			//!< Текст титра
-		FolderHeader,	//!< Заголовок группы сцен
-		FolderFooter,	//!< Окончание группы сцен
-		SimpleText		//!< Простой текст
+		SimpleText,		//!< Простой текст
+		SceneGroupHeader,	//!< Заголовок группы сцен
+		SceneGroupFooter,	//!< Окончание группы сцен
+		FolderHeader,	//!< Заголовок папки
+		FolderFooter	//!< Окончание папки
 	};
 
 	/**
 	 * @brief Дополнительные свойства стилей текстовых блоков
 	 */
 	enum Property {
-		PropertyType = QTextFormat::UserProperty + 1,
-		PropertyHeaderType,
-		PropertyPrefix,
-		PropertyPostfix,
-		PropertyHeader,
-		PropertyIsFirstUppercase,
-		PropertyIsCanModify,
-		PropertyID
+		PropertyType = QTextFormat::UserProperty + 1, //!< Тип блока
+		PropertyHeaderType,		//!< Тип блока заголовка
+		PropertyHeader,			//!< Текст заголовка блока (а-ля ТИТР:)
+		PropertyPrefix,			//!< Префикс блока
+		PropertyPostfix,		//!< Постфикс блока
+		PropertyIsFirstUppercase,	//!< Необходимо ли первый символ поднимать в верхний регистр
+		PropertyIsCanModify,	//!< Редактируемый ли блок
+		PropertyID				//!< Уникальный идентификатор блока
 	};
 
 public:
@@ -120,6 +122,16 @@ public:
 	 * @brief Является ли стиль заголовком
 	 */
 	bool isHeader() const;
+
+	/**
+	 * @brief Является ли блок заголовком группы
+	 */
+	bool isEmbeddableHeader() const;
+
+	/**
+	 * @brief Блок закрывающий группу
+	 */
+	ScenarioTextBlockStyle::Type embeddableFooter() const;
 
 private:
 	/**

@@ -21,9 +21,11 @@ namespace KeyProcessingLayer
 	class NoteHandler;
 	class TitleHeaderHandler;
 	class TitleHandler;
+	class SimpleTextHandler;
+	class SceneGroupHeaderHandler;
+	class SceneGroupFooterHandler;
 	class FolderHeaderHandler;
 	class FolderFooterHandler;
-	class SimpleTextHandler;
 
 	/**
 	 * @brief Класс обработчика нажатия клавиш в текстовом редакторе
@@ -84,8 +86,10 @@ namespace KeyProcessingLayer
 		TitleHeaderHandler* m_titleheaderHandler;
 		TitleHandler* m_titleHandler;
 		SimpleTextHandler* m_simpleTextHandler;
-		FolderHeaderHandler* m_sceneGroupHeaderHandler;
-		FolderFooterHandler* m_sceneGroupFooterHandler;
+		SceneGroupHeaderHandler* m_sceneGroupHeaderHandler;
+		SceneGroupFooterHandler* m_sceneGroupFooterHandler;
+		FolderHeaderHandler* m_folderHeaderHandler;
+		FolderFooterHandler* m_folderFooterHandler;
 
 	/**
 	 * @brief Одиночка

@@ -11,7 +11,7 @@ StandardKeyHandler::StandardKeyHandler(ScenarioTextEdit* _editor) :
 	AbstractKeyHandler(_editor)
 {
 }
-
+#include <QDebug>
 void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 {
 	//
@@ -22,21 +22,27 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 
 	if (pressedModifiers.testFlag(Qt::ControlModifier)) {
 		//
+		// Получим код нажатой кнопки
+		//
+		Qt::Key realKey = (Qt::Key)keyCharacterToQtKey(_event->text());
+		if (realKey == Qt::Key_unknown) {
+			realKey = (Qt::Key)_event->key();
+		}
+
+		//
 		// Проверяем по коду клавиатуры, этот способ независим от выбранного пользователем языка
 		//
-		switch (_event->nativeScanCode()) {
+		switch (realKey) {
 			/**
 			 * @note Действия редактирования текста (дублирующие контектстное меню)
 			 */
 			/** @{ */
-			// a
-			case 38: {
+			case Qt::Key_A: {
 				editor()->selectAll();
 				break;
 			}
 
-			// z
-			case 52: {
+			case Qt::Key_Z: {
 				if (pressedModifiers.testFlag(Qt::ShiftModifier)) {
 					editor()->redo();
 				} else {
@@ -48,20 +54,18 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 				break;
 			}
 
-			// x
-			case 53: {
-				editor()->cut();
+			case Qt::Key_X: {
+				editor()->copy();
+				handleDelete();
 				break;
 			}
 
-			// c
-			case 54: {
+			case Qt::Key_C: {
 				editor()->copy();
 				break;
 			}
 
-			// v
-			case 55: {
+			case Qt::Key_V: {
 				editor()->paste();
 				break;
 			}
@@ -70,66 +74,73 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 			/**
 			 * @note Действия смены стиля
 			 *
-				Время и место: Ctrl+Enter 36
-				Описание действия: Ctrl+J (на русской раскладке это Ctrl+О) 44
-				Персонаж: Ctrl+U (на русской раскладке это Ctrl+Г (герой)) 30
-				Диалог: Ctrl+L (на русской раскладке это Ctrl+Д) 46
-				Ремарка: Ctrl+H (на русской раскладке это Ctrl+Р) 43
-				Титр: Ctrl+N (на русской раскладке это Ctrl+Т) 57
-				Примечание: Ctrl+P (на русской раскладке это Ctrl+З (заметка)) 33
-				Переход: Ctrl+G (на русской раскладке это Ctrl+П) 42
-				Группа сцен: Ctrl+D (на русской раскладке это Ctrl+В (вставка)) 40
-				Простой текст: Ctrl+пробел 65
+				Время и место: Ctrl+Enter
+				Описание действия: Ctrl+J (на русской раскладке это Ctrl+О)
+				Персонаж: Ctrl+U (на русской раскладке это Ctrl+Г (герой))
+				Диалог: Ctrl+L (на русской раскладке это Ctrl+Д)
+				Ремарка: Ctrl+H (на русской раскладке это Ctrl+Р)
+				Титр: Ctrl+N (на русской раскладке это Ctrl+Т)
+				Примечание: Ctrl+P (на русской раскладке это Ctrl+З (заметка))
+				Переход: Ctrl+G (на русской раскладке это Ctrl+П)
+				Группа сцен: Ctrl+D (на русской раскладке это Ctrl+В (вставка))
+				Простой текст: Ctrl+пробел
+				Папка: Ctrl+Y (на русской Н (набор сцен))
 			 *
 			 */
 			/** @{ */
-			case 36: {
+			case Qt::Key_Enter:
+			case Qt::Key_Return: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
 				break;
 			}
 
-			case 44: {
+			case Qt::Key_J: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
 				break;
 			}
 
-			case 30: {
+			case Qt::Key_U: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Character);
 				break;
 			}
 
-			case 46: {
+			case Qt::Key_L: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Dialog);
 				break;
 			}
 
-			case 43: {
+			case Qt::Key_H: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
 				break;
 			}
 
-			case 57: {
+			case Qt::Key_N: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Title);
 				break;
 			}
 
-			case 33: {
+			case Qt::Key_P: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Note);
 				break;
 			}
 
-			case 42: {
+			case Qt::Key_G: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Transition);
 				break;
 			}
 
-			case 40: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::FolderHeader);
+			case Qt::Key_D: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::SceneGroupHeader);
 				break;
 			}
 
-			case 65: {
+			case Qt::Key_Space: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::SimpleText);
+				break;
+			}
+
+			case Qt::Key_Y: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::FolderHeader);
 				break;
 			}
 			/** @} */
@@ -671,4 +682,61 @@ void StandardKeyHandler::removeGroupsPairs(int _groupHeadersCount, int _groupFoo
 					 && cursor.blockNumber() != 0);
 		}
 	}
+}
+
+int StandardKeyHandler::keyCharacterToQtKey(const QString& _keyCharacter) const
+{
+	int qtKey = Qt::Key_unknown;
+
+	//
+	// Если это не одиночный символ, то не возможно определить код клавиши
+	//
+	if (_keyCharacter.length() == 1) {
+		QString keyCharacter = _keyCharacter.toLower();
+		if (keyCharacter == "a"
+			|| keyCharacter == QString::fromUtf8("ф")) {
+			qtKey = Qt::Key_A;
+		} else if (keyCharacter == "z"
+				   || keyCharacter == QString::fromUtf8("я")) {
+			qtKey = Qt::Key_Z;
+		} else if (keyCharacter == "x"
+				   || keyCharacter == QString::fromUtf8("ч")) {
+			qtKey = Qt::Key_X;
+		} else if (keyCharacter == "c"
+				   || keyCharacter == QString::fromUtf8("с")) {
+			qtKey = Qt::Key_C;
+		} else if (keyCharacter == "v"
+				   || keyCharacter == QString::fromUtf8("м")) {
+			qtKey = Qt::Key_V;
+		} else if (keyCharacter == "j"
+				   || keyCharacter == QString::fromUtf8("о")) {
+			qtKey = Qt::Key_S;
+		} else if (keyCharacter == "u"
+				   || keyCharacter == QString::fromUtf8("г")) {
+			qtKey = Qt::Key_D;
+		} else if (keyCharacter == "l"
+				   || keyCharacter == QString::fromUtf8("д")) {
+			qtKey = Qt::Key_L;
+		} else if (keyCharacter == "h"
+				   || keyCharacter == QString::fromUtf8("р")) {
+			qtKey = Qt::Key_H;
+		} else if (keyCharacter == "n"
+				   || keyCharacter == QString::fromUtf8("т")) {
+			qtKey = Qt::Key_N;
+		} else if (keyCharacter == "p"
+				   || keyCharacter == QString::fromUtf8("з")) {
+			qtKey = Qt::Key_P;
+		} else if (keyCharacter == "g"
+				   || keyCharacter == QString::fromUtf8("п")) {
+			qtKey = Qt::Key_G;
+		} else if (keyCharacter == "d"
+				   || keyCharacter == QString::fromUtf8("в")) {
+			qtKey = Qt::Key_D;
+		} else if (keyCharacter == "y"
+				   || keyCharacter == QString::fromUtf8("н")) {
+			qtKey = Qt::Key_Y;
+		}
+	}
+
+	return qtKey;
 }

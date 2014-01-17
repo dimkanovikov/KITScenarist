@@ -7,7 +7,7 @@
 namespace KeyProcessingLayer
 {
 	/**
-	 * @brief Класс выполняющий обработку нажатия клавиш в блоке заголовка группы сцен
+	 * @brief Класс выполняющий обработку нажатия клавиш в блоке заголовка папки
 	 */
 	class FolderHeaderHandler : public StandardKeyHandler
 	{

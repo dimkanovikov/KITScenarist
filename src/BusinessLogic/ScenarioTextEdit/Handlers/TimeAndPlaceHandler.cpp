@@ -132,11 +132,6 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 			}
 		}
 	}
-
-	//
-	// FIXME: Сохранение элементов в базу данных (локация и т.п.) происходит на этом этапе,
-	//		  в тот момент, когда пользователь переходит к описанию действия
-	//
 }
 
 void TimeAndPlaceHandler::handleTab(QKeyEvent*)
@@ -212,7 +207,7 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 						}
 
 						//
-						// Покажем подсказку
+						// Отображение подсказки
 						//
 						handleOther();
 					}

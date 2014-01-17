@@ -85,7 +85,9 @@ HEADERS  += \
     DataMapper/SettingsMapper.h \
     Storage/SettingsStorage.h \
     BusinessLogic/Chronometry/CharactersChronometer.h \
-    BusinessLogic/Chronometry/ConfigurableChronometer.h
+    BusinessLogic/Chronometry/ConfigurableChronometer.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h
 
 SOURCES += main.cpp \
     Domain/Character.cpp \
@@ -152,7 +154,9 @@ SOURCES += main.cpp \
     DataMapper/SettingsMapper.cpp \
     Storage/SettingsStorage.cpp \
     BusinessLogic/Chronometry/CharactersChronometer.cpp \
-    BusinessLogic/Chronometry/ConfigurableChronometer.cpp
+    BusinessLogic/Chronometry/ConfigurableChronometer.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
+    BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp
 
 
 #

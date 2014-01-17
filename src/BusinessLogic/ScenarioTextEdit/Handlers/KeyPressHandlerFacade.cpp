@@ -11,9 +11,11 @@
 #include "NoteHandler.h"
 #include "TitleHeaderHandler.h"
 #include "TitleHandler.h"
+#include "SimpleTextHandler.h"
+#include "SceneGroupHeaderHandler.h"
+#include "SceneGroupFooterHandler.h"
 #include "FolderHeaderHandler.h"
 #include "FolderFooterHandler.h"
-#include "SimpleTextHandler.h"
 
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
 
@@ -78,9 +80,11 @@ KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :
 	m_noteHandler = new NoteHandler(_editor);
 	m_titleheaderHandler = new TitleHeaderHandler(_editor);
 	m_titleHandler = new TitleHandler(_editor);
-	m_sceneGroupHeaderHandler = new FolderHeaderHandler(_editor);
-	m_sceneGroupFooterHandler = new FolderFooterHandler(_editor);
 	m_simpleTextHandler = new SimpleTextHandler(_editor);
+	m_sceneGroupHeaderHandler = new SceneGroupHeaderHandler(_editor);
+	m_sceneGroupFooterHandler = new SceneGroupFooterHandler(_editor);
+	m_folderHeaderHandler = new FolderHeaderHandler(_editor);
+	m_folderFooterHandler = new FolderFooterHandler(_editor);
 }
 
 AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Type _type)
@@ -132,18 +136,28 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Ty
 			break;
 		}
 
-		case ScenarioTextBlockStyle::FolderHeader: {
+		case ScenarioTextBlockStyle::SimpleText: {
+			handler = m_simpleTextHandler;
+			break;
+		}
+
+		case ScenarioTextBlockStyle::SceneGroupHeader: {
 			handler = m_sceneGroupHeaderHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::FolderFooter: {
+		case ScenarioTextBlockStyle::SceneGroupFooter: {
 			handler = m_sceneGroupFooterHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::SimpleText: {
-			handler = m_simpleTextHandler;
+		case ScenarioTextBlockStyle::FolderHeader: {
+			handler = m_folderHeaderHandler;
+			break;
+		}
+
+		case ScenarioTextBlockStyle::FolderFooter: {
+			handler = m_folderFooterHandler;
 			break;
 		}
 

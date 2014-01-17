@@ -44,13 +44,13 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 	//
 	switch (blockType()) {
 		case TimeAndPlace: {
-			m_pimpl->blockFormat.setTopMargin(25);
+			m_pimpl->blockFormat.setTopMargin(15);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case Action: {
-			m_pimpl->blockFormat.setTopMargin(20);
+			m_pimpl->blockFormat.setTopMargin(15);
 			break;
 		}
 
@@ -102,26 +102,38 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeaderType,
 											 ScenarioTextBlockStyle::TitleHeader);
 			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeader,
-											 QObject::tr("Title", "ScenarioTextBlockStyle"));
+											 QObject::tr("Title:", "ScenarioTextBlockStyle"));
+			break;
+		}
+
+		case SimpleText: {
+//			m_pimpl->charFormat.setForeground(QColor("lightGray"));
+			break;
+		}
+
+		case SceneGroupHeader: {
+			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
+			break;
+		}
+
+		case SceneGroupFooter: {
+			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case FolderHeader: {
-			m_pimpl->blockFormat.setTopMargin(25);
+			m_pimpl->blockFormat.setTopMargin(15);
 			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case FolderFooter: {
-			m_pimpl->blockFormat.setTopMargin(25);
+			m_pimpl->blockFormat.setTopMargin(15);
 			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
-			break;
-		}
-
-		case SimpleText: {
-//			m_pimpl->charFormat.setForeground(QColor("lightGray"));
 			break;
 		}
 
@@ -190,4 +202,24 @@ QString ScenarioTextBlockStyle::header() const
 bool ScenarioTextBlockStyle::isHeader() const
 {
 	return blockType() == ScenarioTextBlockStyle::TitleHeader;
+}
+
+bool ScenarioTextBlockStyle::isEmbeddableHeader() const
+{
+	return
+			blockType() == SceneGroupHeader
+			|| blockType() == FolderHeader;
+}
+
+ScenarioTextBlockStyle::Type ScenarioTextBlockStyle::embeddableFooter() const
+{
+	ScenarioTextBlockStyle::Type footer = Undefined;
+
+	if (blockType() == SceneGroupHeader) {
+		footer = SceneGroupFooter;
+	} else if (blockType() == FolderHeader) {
+		footer = FolderFooter;
+	}
+
+	return footer;
 }

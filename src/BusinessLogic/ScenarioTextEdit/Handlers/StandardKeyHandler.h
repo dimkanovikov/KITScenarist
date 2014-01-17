@@ -3,6 +3,8 @@
 
 #include "AbstractKeyHandler.h"
 
+class QString;
+
 
 namespace KeyProcessingLayer
 {
@@ -58,6 +60,11 @@ namespace KeyProcessingLayer
 		 */
 		void removeGroupsPairs(int _groupHeadersCount,
 							   int _groupFootersCount);
+
+		/**
+		 * @brief Преобразовать текст в значение клавиши
+		 */
+		int keyCharacterToQtKey(const QString& _keyCharacter) const;
 	};
 }
 
