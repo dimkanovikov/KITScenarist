@@ -20,71 +20,50 @@
 
 
 /***************************************************************************************************
-//
-// Получим необходимые значения
-//
-// ... курсор в текущем положении
-QTextCursor cursor = editor()->textCursor();
-// ... блок текста в котором находится курсор
-QTextBlock currentBlock = cursor.block();
-// ... текст до курсора
-QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
-// ... текст после курсора
-QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
+
+/* Стиль для выпадающего списка */
+
+QComboBox  {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #5f5f5f;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #5f5f5f;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #1c1f21;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #1c1f21;
+	border-radius: 0px;
+	padding: 1px 18px 1px 8px;
+	min-width: 6em;
+	background: #282d31;
+	color: #d5d6d6;
+}
+
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 15px;
+	border-width: 0px;
+	padding-right: 4px;
+}
+
+QComboBox::down-arrow {
+	image: url(/home/dimkanovikov/dev/study/styles/1downarrow.png);
+}
 
 
-//
-// Обработка
-//
-if (editor()->isCompleterVisible()) {
-	//! Если открыт подстановщик
+QComboBox:on, QComboBox:off {
+	color: palette(window-text);
+	background: palette(window);
+}
 
-	//
-	// Ни чего не делаем
-	//
-} else {
-	//! Подстановщик закрыт
-
-	if (cursor.hasSelection()) {
-		//! Есть выделение
-
-		//
-		// Ни чего не делаем
-		//
-	} else {
-		//! Нет выделения
-
-		if (cursorBackwardText.isEmpty()
-			&& cursorForwardText.isEmpty()) {
-			//! Текст пуст
-
-			//
-			// Ни чего не делаем
-			//
-		} else {
-			//! Текст не пуст
-
-			if (cursorBackwardText.isEmpty()) {
-				//! В начале блока
-
-				//
-				// Ни чего не делаем
-				//
-			} else if (cursorForwardText.isEmpty()) {
-				//! В конце блока
-
-				//
-				// Ни чего не делаем
-				//
-			} else {
-				//! Внутри блока
-
-				//
-				// Ни чего не делаем
-				//
-			}
-		}
-	}
+QComboBox:on:selected, QComboBox:off:selected {
+	color: palette(highlighted-text);
+	background: palette(highlight);
 }
 ***************************************************************************************************/
 
