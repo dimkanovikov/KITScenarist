@@ -18,6 +18,14 @@ QString PagesChronometer::name() const
 float PagesChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const QString& _text) const
 {
 	//
+	// Не включаем в хронометраж заголовок и окончание папки
+	//
+	if (_type == ScenarioTextBlockStyle::FolderHeader
+		|| _type == ScenarioTextBlockStyle::FolderFooter) {
+		return 0;
+	}
+
+	//
 	// Получим значение длительности одной страницы текста
 	//
 	static const QString SECONDS_KEY = "chronometry/pages/seconds";
@@ -66,13 +74,6 @@ float PagesChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const 
 			break;
 		}
 
-		case ScenarioTextBlockStyle::FolderHeader:
-		case ScenarioTextBlockStyle::FolderFooter: {
-			lineLength = 0;
-			additionalLines = 0;
-			break;
-		}
-
 		default: {
 			lineLength = 58;
 			break;
@@ -82,10 +83,7 @@ float PagesChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const 
 	//
 	// Подсчитаем хронометраж
 	//
-	float textChron = 0;
-	if (lineLength > 0) {
-		textChron = (float)(linesInText(_text, lineLength) + additionalLines) * LINE_CHRON;
-	}
+	float textChron = (float)(linesInText(_text, lineLength) + additionalLines) * LINE_CHRON;
 	return textChron;
 }
 
