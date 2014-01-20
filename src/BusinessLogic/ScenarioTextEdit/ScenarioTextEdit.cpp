@@ -280,7 +280,7 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 	} else if (_source->hasText()) {
 		QString textToInsert = _source->text();
 		foreach (const QString& line, textToInsert.split("\n", QString::SkipEmptyParts)) {
-			addScenarioBlock(ScenarioTextBlockStyle::SimpleText);
+			addScenarioBlock(ScenarioTextBlockStyle::NoprintableText);
 			textCursor().insertText(line.simplified());
 		}
 	}

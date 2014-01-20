@@ -106,8 +106,9 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 			break;
 		}
 
-		case SimpleText: {
-//			m_pimpl->charFormat.setForeground(QColor("lightGray"));
+		case NoprintableText: {
+			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->charFormat.setForeground(QColor("gray"));
 			break;
 		}
 

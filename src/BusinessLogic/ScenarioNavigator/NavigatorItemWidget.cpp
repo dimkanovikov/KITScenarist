@@ -1,6 +1,7 @@
 #include "NavigatorItemWidget.h"
 
 #include <UserInterface/Widgets/ElidedLabel/ElidedLabel.h>
+#include <BusinessLogic/Chronometry/ChronometerFacade.h>
 
 #include <QLabel>
 #include <QGridLayout>
@@ -69,15 +70,8 @@ void NavigatorItemWidget::setDescription(const QString& _description)
 
 void NavigatorItemWidget::setTiming(int _timing)
 {
-	if (_timing == 0) {
-		m_timing->clear();
-	} else {
-		QTime time(0, 0, 0);
-		time = time.addSecs(_timing);
-		m_timing->setText(
-					QString("(%1:%2)")
-					.arg(time.hour()*60 + time.minute())
-					.arg(time.toString("ss"))
-					);
-	}
+	m_timing->setText(
+				"("
+				+ ChronometerFacade::secondsToTime(_timing)
+				+ ")");
 }

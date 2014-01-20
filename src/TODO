@@ -8,62 +8,9 @@
 		прокета
 		сцены
 Актёры на площадке/участники сцены
-Узнать поподробней про логлайн
 Вставка комментариев в сценарий
 	разными цветами, разные люди
 	в комментарии может быть текст и фотография
 Титульная страница
 Шкала хронометража, по которой можно перемещаться по сценарию + график накала страстей на самой шкале
 Разбиение сцены/реплики на две
-
-
-
-
-/***************************************************************************************************
-
-/* Стиль для выпадающего списка */
-
-QComboBox  {
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-top-color: #5f5f5f;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #5f5f5f;
-	border-left-width: 1px;
-	border-left-style: solid;
-	border-left-color: #1c1f21;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #1c1f21;
-	border-radius: 0px;
-	padding: 1px 18px 1px 8px;
-	min-width: 6em;
-	background: #282d31;
-	color: #d5d6d6;
-}
-
-QComboBox::drop-down {
-	subcontrol-origin: padding;
-	subcontrol-position: top right;
-	width: 15px;
-	border-width: 0px;
-	padding-right: 4px;
-}
-
-QComboBox::down-arrow {
-	image: url(/home/dimkanovikov/dev/study/styles/1downarrow.png);
-}
-
-
-QComboBox:on, QComboBox:off {
-	color: palette(window-text);
-	background: palette(window);
-}
-
-QComboBox:on:selected, QComboBox:off:selected {
-	color: palette(highlighted-text);
-	background: palette(highlight);
-}
-***************************************************************************************************/
-

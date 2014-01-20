@@ -1,8 +1,9 @@
 #ifndef CHRONOMETERFACADE_H
 #define CHRONOMETERFACADE_H
 
+#include <QString>
+
 class QTextBlock;
-class QString;
 class QTextDocument;
 class AbstractChronometer;
 
@@ -22,6 +23,11 @@ public:
 	 * @brief Вычислить хронометраж последовательности ограниченной заданными позициями
 	 */
 	static int calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition);
+
+	/**
+	 * @brief Получить строковое представление для заданного количества секунд
+	 */
+	static QString secondsToTime(int _seconds);
 
 private:
 	/**

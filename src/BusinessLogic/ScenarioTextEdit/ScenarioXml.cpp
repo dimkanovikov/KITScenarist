@@ -120,7 +120,7 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 					break;
 				}
 
-				case ScenarioTextBlockStyle::SimpleText: {
+				case ScenarioTextBlockStyle::NoprintableText: {
 					resultXml += "<simple_text>";
 					resultXml += textToSave;
 					resultXml += "</simple_text>";
@@ -268,7 +268,7 @@ void ScenarioXmlReader::xmlToScenario(const QString& _xml, ScenarioTextEdit* _ed
 				} else if (tokenName == "title") {
 					tokenType = ScenarioTextBlockStyle::Title;
 				} else if (tokenName == "simple_text") {
-					tokenType = ScenarioTextBlockStyle::SimpleText;
+					tokenType = ScenarioTextBlockStyle::NoprintableText;
 				} else if (tokenName == "scene_group_header") {
 					tokenType = ScenarioTextBlockStyle::SceneGroupHeader;
 				} else if (tokenName == "scene_group_footer") {

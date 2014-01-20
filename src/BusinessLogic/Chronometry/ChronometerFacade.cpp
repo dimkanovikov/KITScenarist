@@ -10,7 +10,7 @@
 
 #include <QTextCursor>
 #include <QTextBlock>
-#include <QString>
+#include <QTime>
 
 using namespace StorageLayer;
 
@@ -38,7 +38,7 @@ int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPositi
 			cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
 			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 			if (cursor.position() > _toCursorPosition) {
-				cursor.setPosition(_toCursorPosition+1, QTextCursor::KeepAnchor);
+				cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
 			}
 		} else {
 			isFirstStep = false;
@@ -61,9 +61,23 @@ int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPositi
 			cursor.clearSelection();
 		}
 	} while (!cursor.atEnd()
-			 && cursor.position() <= _toCursorPosition);
+			 && cursor.position() < _toCursorPosition);
 
 	return qRound(chronometry);
+}
+
+QString ChronometerFacade::secondsToTime(int _seconds)
+{
+	QString timeString = "00:00";
+	if (_seconds != 0) {
+		QTime time(0, 0, 0);
+		time = time.addSecs(_seconds);
+		timeString =
+				QString("%1:%2")
+				.arg(time.hour()*60 + time.minute())
+				.arg(time.toString("ss"));
+	}
+	return timeString;
 }
 
 AbstractChronometer* ChronometerFacade::chronometer()

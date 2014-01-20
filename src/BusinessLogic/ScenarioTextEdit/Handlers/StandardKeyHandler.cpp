@@ -135,7 +135,7 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 			}
 
 			case Qt::Key_Space: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::SimpleText);
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::NoprintableText);
 				break;
 			}
 

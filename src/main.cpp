@@ -4,6 +4,7 @@
 #include <QFontDatabase>
 
 #include <UserInterface/widget.h>
+#include <UserInterface/ScenarioEditor/ScenarioEditorWidget.h>
 
 
 int main(int argc, char *argv[])
@@ -30,8 +31,8 @@ int main(int argc, char *argv[])
 	QFontDatabase fontDatabase;
 	fontDatabase.addApplicationFont(":/Fonts/Courier New");
 
-	Widget w;
-	w.exec();
+	ScenarioEditorWidget w;
+	w.show();
 
 	return a.exec();
 }

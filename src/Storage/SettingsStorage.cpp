@@ -22,7 +22,7 @@ QString SettingsStorage::value(const QString& _key, Settingsplace _settingsPlace
 {
 	QString value;
 	if (_settingsPlace == ApplicationSettings) {
-		value = QSettings().value(_key, QString::null).toString();
+		value = QSettings().value(_key, QVariant()).toString();
 	} else {
 		value = MapperFacade::settingsMapper()->value(_key);
 	}

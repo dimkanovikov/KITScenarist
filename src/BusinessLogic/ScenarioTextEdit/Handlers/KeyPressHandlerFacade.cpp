@@ -136,7 +136,7 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Ty
 			break;
 		}
 
-		case ScenarioTextBlockStyle::SimpleText: {
+		case ScenarioTextBlockStyle::NoprintableText: {
 			handler = m_simpleTextHandler;
 			break;
 		}

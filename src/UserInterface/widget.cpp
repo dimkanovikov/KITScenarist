@@ -62,7 +62,7 @@ Widget::Widget(QWidget *parent) :
 	connect(cbFolder,SIGNAL(clicked()), this, SLOT(setStyle()));
 
 	QRadioButton* cbSimpleText = new QRadioButton("Simple Text");
-	cbSimpleText->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::SimpleText);
+	cbSimpleText->setProperty(TYPE_PROPERTY, ScenarioTextBlockStyle::NoprintableText);
 	connect(cbSimpleText,SIGNAL(clicked()), this, SLOT(setStyle()));
 
 	// ****
