@@ -336,6 +336,26 @@ QModelIndex NavigatorItemsModel::indexOfItemUnderCursor() const
 	return index;
 }
 
+namespace {
+	static int scenesCount(NavigatorItem* _item) {
+		int count = 0;
+		for (int childIndex = 0; childIndex < _item->childCount(); ++childIndex) {
+			NavigatorItem* child = _item->childAt(childIndex);
+			if (child->isFolder()) {
+				count += ::scenesCount(child);
+			} else {
+				++count;
+			}
+		}
+		return count;
+	}
+}
+
+int NavigatorItemsModel::scenesCount() const
+{
+	return ::scenesCount(m_rootItem);
+}
+
 void NavigatorItemsModel::aboutscrollEditorToItem(const QModelIndex& _index)
 {
 	NavigatorItem* item = itemForIndex(_index);

@@ -72,11 +72,32 @@ QLabel {
 	color: #d5d6d6;
 	padding-top: 2px;
 	padding-bottom: 2px;
+	min-height: 21px;
 }
 
-/* Сам виджет */
-QWidget[mainContainer="true"] {
+/* Дерево */
+QTreeView {
+	border: 0px solid black;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #1c1f21;
+}
+
+/* Разделитель */
+QSplitter {
+	background: #282d31;
+}
+
+/* Основные виджеты формы */
+*[mainContainerLeft="true"] {
 	border: 1px solid #1c1f21;
+	border-right-width: 0px;
+	background: #282d31;
+}
+
+*[mainContainerRight="true"] {
+	border: 1px solid #1c1f21;
+	border-left-width: 0px;
 	background: #282d31;
 }
 

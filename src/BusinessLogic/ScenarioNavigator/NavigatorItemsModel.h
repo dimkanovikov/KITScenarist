@@ -45,6 +45,11 @@ public:
 	 */
 	QModelIndex indexOfItemUnderCursor() const;
 
+	/**
+	 * @brief Получить кол-во сцен
+	 */
+	int scenesCount() const;
+
 public slots:
 	/**
 	 * @brief Прокрутить окно редактора до выделенного элемента

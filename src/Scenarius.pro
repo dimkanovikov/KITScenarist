@@ -88,6 +88,9 @@ HEADERS  += \
     BusinessLogic/Chronometry/ConfigurableChronometer.h \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
+    UserInterface/ScenarioEditor/ScenarioNavigatorWidget.h \
+    UserInterface/ApplicationWidget.h \
+    UserInterface/ScenarioEditor/ScenarioTextEditWidget.h \
     UserInterface/ScenarioEditor/ScenarioEditorWidget.h
 
 SOURCES += main.cpp \
@@ -158,6 +161,9 @@ SOURCES += main.cpp \
     BusinessLogic/Chronometry/ConfigurableChronometer.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
     BusinessLogic/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
+    UserInterface/ScenarioEditor/ScenarioNavigatorWidget.cpp \
+    UserInterface/ApplicationWidget.cpp \
+    UserInterface/ScenarioEditor/ScenarioTextEditWidget.cpp \
     UserInterface/ScenarioEditor/ScenarioEditorWidget.cpp
 
 

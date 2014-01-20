@@ -16,6 +16,11 @@ ScenarioNavigator::ScenarioNavigator(QWidget* _parent, ScenarioTextEdit* _editor
 	initConnections(_editor);
 }
 
+int ScenarioNavigator::scenesCount() const
+{
+	m_model->scenesCount();
+}
+
 void ScenarioNavigator::aboutSelectItemForCurrentScene()
 {
 	m_view->setCurrentIndex(m_model->indexOfItemUnderCursor());
@@ -70,4 +75,6 @@ void ScenarioNavigator::initConnections(ScenarioTextEdit* _editor)
 
 	connect(_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutSelectItemForCurrentScene()));
 	connect(m_model, SIGNAL(endUpdateStructure()), this, SLOT(aboutSelectItemForCurrentScene()));
+
+	connect(m_model, SIGNAL(endUpdateStructure()), this, SIGNAL(structureChanged()));
 }

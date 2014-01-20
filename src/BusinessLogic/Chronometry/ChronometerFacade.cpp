@@ -8,6 +8,7 @@
 #include <Storage/StorageFacade.h>
 #include <Storage/SettingsStorage.h>
 
+#include <QTextDocument>
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QTime>
@@ -27,48 +28,51 @@ int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPositi
 {
 	float chronometry = 0;
 
-	QTextCursor cursor(_document);
-	cursor.setPosition(_fromCursorPosition);
-	bool isFirstStep = true;
-	do {
-		//
-		// Перейти к следующему, если это не первый шаг цикла
-		//
-		if (!isFirstStep) {
-			cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
-			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-			if (cursor.position() > _toCursorPosition) {
-				cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
+	if (!_document->isEmpty()) {
+		QTextCursor cursor(_document);
+		cursor.setPosition(_fromCursorPosition);
+		bool isFirstStep = true;
+		do {
+			//
+			// Перейти к следующему, если это не первый шаг цикла
+			//
+			if (!isFirstStep) {
+				cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+				cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+				if (cursor.position() > _toCursorPosition) {
+					cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
+				}
+			} else {
+				isFirstStep = false;
+				cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 			}
-		} else {
-			isFirstStep = false;
-			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-		}
 
-		//
-		// Получить текст одного блока
-		//
-		if (cursor.atBlockEnd()
-			|| cursor.position() == _toCursorPosition) {
 			//
-			// Посчитать его хронометраж, добавив к результату
+			// Получить текст одного блока
 			//
-			chronometry +=
-					chronometer()->calculateFrom(
-						ScenarioTextBlockStyle::forBlock(cursor.block()),
-						cursor.selectedText()
-						);
-			cursor.clearSelection();
-		}
-	} while (!cursor.atEnd()
-			 && cursor.position() < _toCursorPosition);
+			if (cursor.atBlockEnd()
+				|| cursor.position() == _toCursorPosition) {
+				//
+				// Посчитать его хронометраж, добавив к результату
+				//
+				chronometry +=
+						chronometer()->calculateFrom(
+							ScenarioTextBlockStyle::forBlock(cursor.block()),
+							cursor.selectedText()
+							);
+				cursor.clearSelection();
+			}
+		} while (!cursor.atEnd()
+				 && cursor.position() < _toCursorPosition);
+	}
+
 
 	return qRound(chronometry);
 }
 
 QString ChronometerFacade::secondsToTime(int _seconds)
 {
-	QString timeString = "00:00";
+	QString timeString = "0:00";
 	if (_seconds != 0) {
 		QTime time(0, 0, 0);
 		time = time.addSecs(_seconds);

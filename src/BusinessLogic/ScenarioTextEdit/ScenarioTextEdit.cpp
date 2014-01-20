@@ -590,7 +590,7 @@ void ScenarioTextEdit::initView()
 	//
 	// Параметры внешнего вида
 	//
-	const int MINIMUM_WIDTH = 600;
+	const int MINIMUM_WIDTH = 400;
 	const int MINIMUM_HEIGHT = 100;
 
 	setMinimumSize(MINIMUM_WIDTH, MINIMUM_HEIGHT);

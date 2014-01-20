@@ -73,5 +73,5 @@ void NavigatorItemWidget::setTiming(int _timing)
 	m_timing->setText(
 				"("
 				+ ChronometerFacade::secondsToTime(_timing)
-				+ ")");
+				+ ") ");
 }

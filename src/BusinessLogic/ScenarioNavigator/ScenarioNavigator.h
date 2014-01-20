@@ -20,6 +20,17 @@ class ScenarioNavigator : public QWidget
 public:
 	explicit ScenarioNavigator(QWidget* _parent, ScenarioTextEdit* _editor);
 
+	/**
+	 * @brief Получить кол-во сцен
+	 */
+	int scenesCount() const;
+
+signals:
+	/**
+	 * @brief Была обновлена структура сценария
+	 */
+	void structureChanged();
+
 private slots:
 	/**
 	 * @brief Выделить элемент в дереве в соответствии с редактируемой сценой
