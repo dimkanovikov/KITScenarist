@@ -52,18 +52,38 @@ float ConfigurableChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type,
 	// Получим значения длительности
 	// Если они не заданы, применим значения по умолчанию
 	//
-	if (StorageFacade::settingsStorage()->value(secondsForParagraphKey).isNull()) {
+	if (StorageFacade::settingsStorage()->value(
+			secondsForParagraphKey,
+			SettingsStorage::ApplicationSettings)
+		.isNull()) {
 		secondsForParagraph = defaultSecondsForParagraph;
-		StorageFacade::settingsStorage()->setValue(secondsForParagraphKey, QString::number(secondsForParagraph));
+		StorageFacade::settingsStorage()->setValue(
+					secondsForParagraphKey,
+					QString::number(secondsForParagraph),
+					SettingsStorage::ApplicationSettings);
 	} else {
-		secondsForParagraph = StorageFacade::settingsStorage()->value(secondsForParagraphKey).toFloat();
+		secondsForParagraph =
+				StorageFacade::settingsStorage()->value(
+					secondsForParagraphKey,
+					SettingsStorage::ApplicationSettings)
+				.toFloat();
 	}
 
-	if (StorageFacade::settingsStorage()->value(secondsForEvery50Key).isNull()) {
+	if (StorageFacade::settingsStorage()->value(
+			secondsForEvery50Key,
+			SettingsStorage::ApplicationSettings)
+		.isNull()) {
 		secondsForEvery50 = defaultSecondsForEvery50;
-		StorageFacade::settingsStorage()->setValue(secondsForEvery50Key, QString::number(secondsForEvery50));
+		StorageFacade::settingsStorage()->setValue(
+					secondsForEvery50Key,
+					QString::number(secondsForEvery50),
+					SettingsStorage::ApplicationSettings);
 	} else {
-		secondsForEvery50 = StorageFacade::settingsStorage()->value(secondsForEvery50Key).toFloat();
+		secondsForEvery50 =
+				StorageFacade::settingsStorage()->value(
+					secondsForEvery50Key,
+					SettingsStorage::ApplicationSettings)
+				.toFloat();
 	}
 
 	const int EVERY_50 = 50;

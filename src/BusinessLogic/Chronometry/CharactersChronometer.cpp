@@ -31,19 +31,33 @@ float CharactersChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, c
 	//
 	// Рассчитаем длительность одного символа
 	//
-	int characters = StorageFacade::settingsStorage()->value(CHARACTERS_KEY).toInt();
-	int seconds = StorageFacade::settingsStorage()->value(SECONDS_KEY).toInt();
+	int characters =
+			StorageFacade::settingsStorage()->value(
+				CHARACTERS_KEY,
+				SettingsStorage::ApplicationSettings)
+			.toInt();
+	int seconds =
+			StorageFacade::settingsStorage()->value(
+				SECONDS_KEY,
+				SettingsStorage::ApplicationSettings)
+			.toInt();
 
 	//
 	// Если не заданы, применим значения по умолчанию
 	//
 	if (characters == 0) {
 		characters = 1000;
-		StorageFacade::settingsStorage()->setValue(CHARACTERS_KEY, QString::number(characters));
+		StorageFacade::settingsStorage()->setValue(
+					CHARACTERS_KEY,
+					QString::number(characters),
+					SettingsStorage::ApplicationSettings);
 	}
 	if (seconds == 0) {
 		seconds = 60;
-		StorageFacade::settingsStorage()->setValue(SECONDS_KEY, QString::number(seconds));
+		StorageFacade::settingsStorage()->setValue(
+					SECONDS_KEY,
+					QString::number(seconds),
+					SettingsStorage::ApplicationSettings);
 	}
 
 	const float CHARACTER_CHRON = (float)seconds / (float)characters;

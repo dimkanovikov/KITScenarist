@@ -77,10 +77,16 @@ AbstractChronometer* ChronometerFacade::chronometer()
 	// Определить какой хронометр нужно использовать
 	// Если не задан, настроить на хронометр для страниц
 	//
-	QString chronometryType = StorageFacade::settingsStorage()->value(CHRONOMETRY_TYPE_KEY);
+	QString chronometryType =
+			StorageFacade::settingsStorage()->value(
+				CHRONOMETRY_TYPE_KEY,
+				SettingsStorage::ApplicationSettings);
 	if (chronometryType.isEmpty()) {
 		chronometryType = CHRONOMETRY_PAGES;
-		StorageFacade::settingsStorage()->setValue(CHRONOMETRY_TYPE_KEY, chronometryType);
+		StorageFacade::settingsStorage()->setValue(
+					CHRONOMETRY_TYPE_KEY,
+					chronometryType,
+					SettingsStorage::ApplicationSettings);
 	}
 
 	//

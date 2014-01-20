@@ -29,14 +29,21 @@ float PagesChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const 
 	// Получим значение длительности одной страницы текста
 	//
 	static const QString SECONDS_KEY = "chronometry/pages/seconds";
-	int seconds = StorageFacade::settingsStorage()->value(SECONDS_KEY).toInt();
+	int seconds =
+			StorageFacade::settingsStorage()->value(
+				SECONDS_KEY,
+				SettingsStorage::ApplicationSettings)
+			.toInt();
 
 	//
 	// Если не заданы, применим значения по умолчанию
 	//
 	if (seconds == 0) {
 		seconds = 60;
-		StorageFacade::settingsStorage()->setValue(SECONDS_KEY, QString::number(seconds));
+		StorageFacade::settingsStorage()->setValue(
+					SECONDS_KEY,
+					QString::number(seconds),
+					SettingsStorage::ApplicationSettings);
 	}
 
 
