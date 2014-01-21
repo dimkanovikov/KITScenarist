@@ -82,9 +82,9 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 				Титр: Ctrl+N (на русской раскладке это Ctrl+Т)
 				Примечание: Ctrl+P (на русской раскладке это Ctrl+З (заметка))
 				Переход: Ctrl+G (на русской раскладке это Ctrl+П)
+				Непечатный текст: Ctrl+Y (на русской Ctrl+Н)
 				Группа сцен: Ctrl+D (на русской раскладке это Ctrl+В (вставка))
-				Простой текст: Ctrl+пробел
-				Папка: Ctrl+Y (на русской Н (набор сцен))
+				Папка: Ctrl+Пробел
 			 *
 			 */
 			/** @{ */
@@ -129,17 +129,17 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 				break;
 			}
 
+			case Qt::Key_Y: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::NoprintableText);
+				break;
+			}
+
 			case Qt::Key_D: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::SceneGroupHeader);
 				break;
 			}
 
 			case Qt::Key_Space: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::NoprintableText);
-				break;
-			}
-
-			case Qt::Key_Y: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::FolderHeader);
 				break;
 			}

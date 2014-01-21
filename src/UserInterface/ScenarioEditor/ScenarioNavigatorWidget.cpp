@@ -63,7 +63,9 @@ void ScenarioNavigatorWidget::initStyleSheet()
 	// Установим для виджетов доп. параметры настройки стиля
 	//
 	setProperty("mainContainerLeft", true);
+	title()->setProperty("inTopPanel", true);
 	title()->setProperty("topPanelTopBordered", true);
+	scenesCounter()->setProperty("inTopPanel", true);
 	scenesCounter()->setProperty("topPanelTopBordered", true);
 }
 

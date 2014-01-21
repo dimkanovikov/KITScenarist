@@ -164,10 +164,10 @@ void DatabaseHelper::clearDatabaseInMemory()
 	QSqlQuery q_cleaner(memoryDatabase);
 
 	memoryDatabase.transaction();
-	q_cleaner.exec("DELETE FROM places");
+//	q_cleaner.exec("DELETE FROM places");
 	q_cleaner.exec("DELETE FROM locations");
 	q_cleaner.exec("DELETE FROM scenary_days");
-	q_cleaner.exec("DELETE FROM times");
+//	q_cleaner.exec("DELETE FROM times");
 	q_cleaner.exec("DELETE FROM characters");
 	q_cleaner.exec("DELETE FROM scenario");
 	memoryDatabase.commit();

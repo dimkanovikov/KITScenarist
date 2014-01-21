@@ -18,9 +18,10 @@ QString CharactersChronometer::name() const
 float CharactersChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const QString& _text) const
 {
 	//
-	// Не включаем в хронометраж заголовок и окончание папки
+	// Не включаем в хронометраж непечатный текст, заголовок и окончание папки
 	//
-	if (_type == ScenarioTextBlockStyle::FolderHeader
+	if (_type == ScenarioTextBlockStyle::NoprintableText
+		|| _type == ScenarioTextBlockStyle::FolderHeader
 		|| _type == ScenarioTextBlockStyle::FolderFooter) {
 		return 0;
 	}
@@ -41,24 +42,6 @@ float CharactersChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, c
 				SECONDS_KEY,
 				SettingsStorage::ApplicationSettings)
 			.toInt();
-
-	//
-	// Если не заданы, применим значения по умолчанию
-	//
-	if (characters == 0) {
-		characters = 1000;
-		StorageFacade::settingsStorage()->setValue(
-					CHARACTERS_KEY,
-					QString::number(characters),
-					SettingsStorage::ApplicationSettings);
-	}
-	if (seconds == 0) {
-		seconds = 60;
-		StorageFacade::settingsStorage()->setValue(
-					SECONDS_KEY,
-					QString::number(seconds),
-					SettingsStorage::ApplicationSettings);
-	}
 
 	const float CHARACTER_CHRON = (float)seconds / (float)characters;
 

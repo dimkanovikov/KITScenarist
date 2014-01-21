@@ -47,6 +47,12 @@ SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 	}
 }
 
+void SpellCheckTextEdit::aboutUseSpellChecker(bool _use)
+{
+	m_useSpellChecking->setChecked(_use);
+	m_spellCheckHighlighter->setUseSpellChecker(_use);
+}
+
 void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 {
 	//
@@ -131,20 +137,14 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 	//
 	// Добавим пункт меню для включения/выключения проверки орфографии
 	//
-	menu->addSeparator();
-	menu->addAction(m_useSpellChecking);
+//	menu->addSeparator();
+//	menu->addAction(m_useSpellChecking);
 
 	//
 	// Покажем меню, а после очистим от него память
 	//
 	menu->exec(_event->globalPos());
 	delete menu;
-}
-
-void SpellCheckTextEdit::aboutUseSpellChecker(bool _use)
-{
-	m_useSpellChecking->setChecked(_use);
-	m_spellCheckHighlighter->setUseSpellChecker(_use);
 }
 
 void SpellCheckTextEdit::aboutIgnoreWord() const

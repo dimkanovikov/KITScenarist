@@ -2,13 +2,4 @@
 
 application-version - версия приложения, в которой был создан файл сценария
 
-chronometry/current-chronometer-type - используемая система хронометража
-chronometry/pages/seconds - количество секунд на страницу текста
-chronometry/characters/characters - количество символов в посимвольном хронометре
-chronometry/characters/seconds - количество секунд в посимвольном хронометре
-chronometry/configurable/seconds-for-paragraph/time-and-place - секунд за блок текста
-chronometry/configurable/seconds-for-paragraph/action - секунд за блок текста
-chronometry/configurable/seconds-for-paragraph/dialog - секунд за блок текста
-chronometry/configurable/seconds-for-every-50/time-and-place - секунд за каждые 50 символов
-chronometry/configurable/seconds-for-every-50/action - секунд за каждые 50 символов
-chronometry/configurable/seconds-for-every-50/dialog - секунд за каждые 50 символов
+

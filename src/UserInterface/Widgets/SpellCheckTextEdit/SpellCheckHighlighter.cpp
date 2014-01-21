@@ -34,7 +34,7 @@ void SpellCheckHighlighter::highlightBlock(const QString& _text)
 		//
 		// Убираем пустоты из проверяемого текста
 		//
-		QString textToCheck = _text.simplified().toLower();
+		QString textToCheck = _text.simplified();
 		if (!textToCheck.isEmpty()) {
 			//
 			// Разбиваем проверяемый текст на слова

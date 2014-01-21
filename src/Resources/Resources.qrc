@@ -16,9 +16,19 @@
         <file>Icons/folder.png</file>
         <file>Icons/scene.png</file>
         <file>Icons/scene_group.png</file>
+        <file>Icons/characters.png</file>
+        <file>Icons/locations.png</file>
+        <file>Icons/project.png</file>
+        <file>Icons/script.png</file>
+        <file>Icons/settings.png</file>
+        <file>Icons/start.png</file>
+        <file>Icons/settings_text_editor.png</file>
+        <file>Icons/settings_chronometry.png</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/ScenarioEditor/comboboxarrow.png</file>
         <file>UI/ScenarioEditor/style.qss</file>
+        <file>UI/SideBar/sidebar-texture.png</file>
+        <file>UI/Menu/menuarrow.png</file>
     </qresource>
 </RCC>

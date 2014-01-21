@@ -1,5 +1,5 @@
 /* Выпадающий список */
-QComboBox  {
+QComboBox[inTopPanel="true"]  {
 	padding: 1px 18px 1px 8px;
 	min-width: 6em;
 	background: #282d31;
@@ -8,7 +8,7 @@ QComboBox  {
 	padding-bottom: 2px;
 }
 
-QComboBox::drop-down {
+QComboBox::drop-down[inTopPanel="true"] {
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
 	width: 15px;
@@ -16,17 +16,17 @@ QComboBox::drop-down {
 	padding-right: 4px;
 }
 
-QComboBox::down-arrow {
+QComboBox::down-arrow[inTopPanel="true"] {
 	image: url(:/Interface/UI/ScenarioEditor/comboboxarrow.png);
 }
 
 
-QComboBox:on, QComboBox:off {
+QComboBox:on[inTopPanel="true"], QComboBox:off[inTopPanel="true"] {
 	color: palette(window-text);
 	background: palette(window);
 }
 
-QComboBox:on:selected, QComboBox:off:selected {
+QComboBox:on:selected[inTopPanel="true"], QComboBox:off:selected[inTopPanel="true"] {
 	color: palette(highlighted-text);
 	background: palette(highlight);
 }
@@ -40,7 +40,7 @@ QTextEdit {
 }
 
 /* Переключатель */
-QRadioButton {
+QRadioButton[inTopPanel="true"] {
 	background: #282d31;
 	color: #d5d6d6;
 	padding-top: 2px;
@@ -48,26 +48,26 @@ QRadioButton {
 	padding-right: 6px;
 }
 
-QRadioButton::indicator {
+QRadioButton::indicator[inTopPanel="true"] {
 	height: 0px;
 	width: 0px;
 	image: none;
 }
 
-QRadioButton:unchecked {
+QRadioButton:unchecked[inTopPanel="true"] {
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
 	border-bottom-color: #282d31;
 }
 
-QRadioButton:checked {
+QRadioButton:checked[inTopPanel="true"] {
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
 	border-bottom-color: #0891d6;
 }
 
 /* Текстовые метки */
-QLabel {
+QLabel[inTopPanel="true"] {
 	background: #282d31;
 	color: #d5d6d6;
 	padding-top: 2px;
@@ -88,16 +88,50 @@ QSplitter {
 	background: #282d31;
 }
 
+/* Кнопка меню */
+QToolButton[menuButton="true"] {
+	background: #282d31;
+	color: #d5d6d6;
+	border: 0px solid black;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #5f5f5f;
+	padding-left: 4px;
+	padding-right: 12px;
+	height: 22px;
+}
+
+QToolButton::menu-button[menuButton="true"] {
+	background: #282d31;
+	color: #d5d6d6;
+	border: 0px solid black;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #5f5f5f;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #5f5f5f;
+	width: 10px;
+	padding-top: 5px;
+	padding-right: 4px;
+}
+
+QToolButton::menu-arrow[menuButton="true"] {
+	image: url(:Interface/UI/Menu/menuarrow.png);
+}
+
 /* Основные виджеты формы */
 *[mainContainerLeft="true"] {
 	border: 1px solid #1c1f21;
 	border-right-width: 0px;
+	border-top-width: 0px;
 	background: #282d31;
 }
 
 *[mainContainerRight="true"] {
 	border: 1px solid #1c1f21;
 	border-left-width: 0px;
+	border-top-width: 0px;
 	background: #282d31;
 }
 

@@ -3,6 +3,9 @@
 #include <BusinessLogic/ScenarioTextEdit/ScenarioTextEdit.h>
 #include <BusinessLogic/Chronometry/ChronometerFacade.h>
 
+#include <Storage/StorageFacade.h>
+#include <Storage/SettingsStorage.h>
+
 #include <QComboBox>
 #include <QLabel>
 #include <QRadioButton>
@@ -64,27 +67,36 @@ void ScenarioTextEditWidget::aboutSetStyle()
 
 void ScenarioTextEditWidget::aboutUpdateChronometry()
 {
-	int chronForCursor =
-			ChronometerFacade::calculate(
-				scenarioEdit()->document(),
-				0,
-				scenarioEdit()->textCursor().position());
-	int chronForAll =
-			ChronometerFacade::calculate(
-				scenarioEdit()->document(),
-				0,
-				scenarioEdit()->document()->characterCount() - 1);
+	if (!scenarioEdit()->textUpdateInProgress()) {
+		int chronForCursor =
+				ChronometerFacade::calculate(
+					scenarioEdit()->document(),
+					0,
+					scenarioEdit()->textCursor().position());
+		int chronForAll =
+				ChronometerFacade::calculate(
+					scenarioEdit()->document(),
+					0,
+					scenarioEdit()->document()->characterCount() - 1);
 
-	chron()->setText(
-				QString("%1: %2 | %3")
-				.arg(tr("Chron"))
-				.arg(ChronometerFacade::secondsToTime(chronForCursor))
-				.arg(ChronometerFacade::secondsToTime(chronForAll))
-				);
+		chron()->setText(
+					QString("%1: %2 | %3")
+					.arg(tr("Chron"))
+					.arg(ChronometerFacade::secondsToTime(chronForCursor))
+					.arg(ChronometerFacade::secondsToTime(chronForAll))
+					);
+	}
 }
 
 void ScenarioTextEditWidget::initView()
 {
+	scenarioEdit()->aboutUseSpellChecker(
+				StorageLayer::StorageFacade::settingsStorage()->value(
+					"text-editor/spell-checking",
+					StorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+
 	//
 	// Верхняя панель
 	//
@@ -128,9 +140,12 @@ void ScenarioTextEditWidget::initStyleSheet()
 	// Установим для виджетов доп. параметры настройки стиля
 	//
 	setProperty("mainContainerRight", true);
+	types()->setProperty("inTopPanel", true);
 	types()->setProperty("topPanelRightBordered", true);
 	types()->setProperty("topPanelTopBordered", true);
+	textMode()->setProperty("inTopPanel", true);
 	textMode()->setProperty("topPanelTopBordered", true);
+	chron()->setProperty("inTopPanel", true);
 	chron()->setProperty("topPanelTopBordered", true);
 }
 

@@ -91,7 +91,12 @@ HEADERS  += \
     UserInterface/ScenarioEditor/ScenarioNavigatorWidget.h \
     UserInterface/ApplicationWidget.h \
     UserInterface/ScenarioEditor/ScenarioTextEditWidget.h \
-    UserInterface/ScenarioEditor/ScenarioEditorWidget.h
+    UserInterface/ScenarioEditor/ScenarioEditorWidget.h \
+    UserInterface/Widgets/SideBar/SideBar.h \
+    UserInterface/StartUp/StartUpWidget.h \
+    UserInterface/CharactersEditor/CharactersEditorWidget.h \
+    UserInterface/LocationsEditor/LocationsEditorWidget.h \
+    UserInterface/SettingsEditor/SettingsEditorWidget.h
 
 SOURCES += main.cpp \
     Domain/Character.cpp \
@@ -164,7 +169,12 @@ SOURCES += main.cpp \
     UserInterface/ScenarioEditor/ScenarioNavigatorWidget.cpp \
     UserInterface/ApplicationWidget.cpp \
     UserInterface/ScenarioEditor/ScenarioTextEditWidget.cpp \
-    UserInterface/ScenarioEditor/ScenarioEditorWidget.cpp
+    UserInterface/ScenarioEditor/ScenarioEditorWidget.cpp \
+    UserInterface/Widgets/SideBar/SideBar.cpp \
+    UserInterface/StartUp/StartUpWidget.cpp \
+    UserInterface/CharactersEditor/CharactersEditorWidget.cpp \
+    UserInterface/LocationsEditor/LocationsEditorWidget.cpp \
+    UserInterface/SettingsEditor/SettingsEditorWidget.cpp
 
 
 #
@@ -214,3 +224,6 @@ OTHER_FILES += \
 	TODO \
 	settings_keys \
 	scenario_settings_keys
+
+FORMS += \
+    UserInterface/SettingsEditor/SettingsEditorWidget.ui

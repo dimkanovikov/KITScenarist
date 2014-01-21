@@ -37,7 +37,7 @@ NavigatorItemWidget::NavigatorItemWidget(QWidget *parent) :
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->addWidget(m_header);
 	topLayout->addWidget(m_timing);
-	topLayout->setContentsMargins(QMargins());
+	topLayout->setContentsMargins(QMargins(0, 4, 0, 0));
 
 	QVBoxLayout* rightLayout = new QVBoxLayout;
 	rightLayout->addLayout(topLayout);

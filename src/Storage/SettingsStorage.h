@@ -2,6 +2,7 @@
 #define SETTINGSSTORAGE_H
 
 #include <QString>
+#include <QHash>
 
 
 namespace StorageLayer
@@ -30,6 +31,16 @@ namespace StorageLayer
 
 	private:
 		SettingsStorage();
+
+		/**
+		 * @brief Получить значение по умолчанию для параметра
+		 */
+		QString defaultValue(const QString& _key) const;
+
+		/**
+		 * @brief Значения параметров по умолчанию
+		 */
+		QHash<QString, QString> m_defaultValues;
 
 		// Для доступа к конструктору
 		friend class StorageFacade;

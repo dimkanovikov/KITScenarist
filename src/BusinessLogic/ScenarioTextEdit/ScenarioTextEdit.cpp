@@ -563,7 +563,7 @@ void ScenarioTextEdit::initEditor()
 	const int PAGE_WIDTH = 60;
 	const int PAGE_HEIGHT = 50;
 	const QSizeF PAGE_SIZE(PAGE_WIDTH, PAGE_HEIGHT);
-	const int PAGE_MARGIN = 10;
+	const int PAGE_MARGIN = 24;
 
 	//
 	// Настраиваем редактор

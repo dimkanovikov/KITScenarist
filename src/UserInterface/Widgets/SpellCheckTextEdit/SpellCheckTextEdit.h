@@ -18,6 +18,12 @@ class SpellCheckTextEdit : public QTextEdit
 public:
 	explicit SpellCheckTextEdit(QWidget* _parent = 0);
 
+public slots:
+	/**
+	 * @brief Включить/выключить проверку правописания
+	 */
+	void aboutUseSpellChecker(bool _use);
+
 	/**
 	 * @brief Установить язык для проверки орфографии
 	 * @param Язык
@@ -39,10 +45,6 @@ protected:
 	void contextMenuEvent(QContextMenuEvent* _event);
 
 private slots:
-	/**
-	 * @brief Включить/выключить проверку правописания
-	 */
-	void aboutUseSpellChecker(bool _use);
 
 	/**
 	 * @brief Игнорировать слово под курсором

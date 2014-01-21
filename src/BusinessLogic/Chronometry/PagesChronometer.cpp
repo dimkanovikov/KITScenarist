@@ -18,9 +18,10 @@ QString PagesChronometer::name() const
 float PagesChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const QString& _text) const
 {
 	//
-	// Не включаем в хронометраж заголовок и окончание папки
+	// Не включаем в хронометраж непечатный текст, заголовок и окончание папки
 	//
-	if (_type == ScenarioTextBlockStyle::FolderHeader
+	if (_type == ScenarioTextBlockStyle::NoprintableText
+		|| _type == ScenarioTextBlockStyle::FolderHeader
 		|| _type == ScenarioTextBlockStyle::FolderFooter) {
 		return 0;
 	}
@@ -34,18 +35,6 @@ float PagesChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const 
 				SECONDS_KEY,
 				SettingsStorage::ApplicationSettings)
 			.toInt();
-
-	//
-	// Если не заданы, применим значения по умолчанию
-	//
-	if (seconds == 0) {
-		seconds = 60;
-		StorageFacade::settingsStorage()->setValue(
-					SECONDS_KEY,
-					QString::number(seconds),
-					SettingsStorage::ApplicationSettings);
-	}
-
 
 	//
 	// Высчитываем длительность строки на странице, из расчёта что на одной странице - 50 строк
@@ -72,10 +61,16 @@ float PagesChronometer::calculateFrom(ScenarioTextBlockStyle::Type _type, const 
 
 		case ScenarioTextBlockStyle::Dialog: {
 			lineLength = 28;
+			additionalLines = 0;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Parenthetical:
+		case ScenarioTextBlockStyle::Parenthetical: {
+			lineLength = 18;
+			additionalLines = 0;
+			break;
+		}
+
 		case ScenarioTextBlockStyle::Title: {
 			lineLength = 18;
 			break;
