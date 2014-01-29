@@ -79,7 +79,7 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 			//
 			// Если вставляется не первый блок текста
 			//
-			if (!preparedDocument->isEmpty()) {
+			if (!sourceDocumentCursor.atStart()) {
 				//
 				// Если нужно сделать отступ
 				//

@@ -564,9 +564,6 @@ void ScenarioTextEdit::initEditor()
 	//
 	const int PAGE_FONT_SIZE = 12;
 	const QFont PAGE_FONT("Courier New", PAGE_FONT_SIZE);
-	const int PAGE_WIDTH = 60;
-	const int PAGE_HEIGHT = 50;
-	const QSizeF PAGE_SIZE(PAGE_WIDTH, PAGE_HEIGHT);
 	const int PAGE_MARGIN = 24;
 
 	//
@@ -579,7 +576,6 @@ void ScenarioTextEdit::initEditor()
 	//
 	document()->setDefaultFont(PAGE_FONT);
 	document()->setDocumentMargin(PAGE_MARGIN);
-//	document()->setPageSize(PAGE_SIZE);
 
 	//
 	// Финт ушами для того, чтобы применить UpperCase
