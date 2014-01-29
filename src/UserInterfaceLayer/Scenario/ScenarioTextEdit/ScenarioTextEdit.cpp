@@ -579,7 +579,7 @@ void ScenarioTextEdit::initEditor()
 	//
 	document()->setDefaultFont(PAGE_FONT);
 	document()->setDocumentMargin(PAGE_MARGIN);
-	document()->setPageSize(PAGE_SIZE);
+//	document()->setPageSize(PAGE_SIZE);
 
 	//
 	// Финт ушами для того, чтобы применить UpperCase

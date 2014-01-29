@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql xml widgets
+QT       += core gui sql xml widgets printsupport
 
 TARGET = Scenarius
 TEMPLATE = app
@@ -124,7 +124,9 @@ SOURCES += main.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemWidget.cpp \
-    3rd_party/Widgets/ElidedLabel/ElidedLabel.cpp
+    3rd_party/Widgets/ElidedLabel/ElidedLabel.cpp \
+    BusinessLayer/Export/PdfExporter.cpp \
+    BusinessLayer/Export/RtfExporter.cpp
 
 RESOURCES += \
     Resources/Resources.qrc
@@ -245,8 +247,12 @@ HEADERS += \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemWidget.h \
-    3rd_party/Widgets/ElidedLabel/ElidedLabel.h
+    3rd_party/Widgets/ElidedLabel/ElidedLabel.h \
+    BusinessLayer/Export/AbstractExporter.h \
+    BusinessLayer/Export/PdfExporter.h \
+    BusinessLayer/Export/RtfExporter.h
 
 OTHER_FILES += \
-    3rd_party/Hunspell/license.hunspell \
-    3rd_party/Hunspell/license.myspell
+    TODO \
+    settings_keys \
+    scenario_settings_keys
