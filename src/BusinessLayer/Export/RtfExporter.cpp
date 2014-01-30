@@ -52,6 +52,7 @@ void RtfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 				// Если вставляется не первый блок текста и нужно сделать отступ
 				//
 				if (!documentCursor.atStart()
+					&& !documentCursor.block().text().isEmpty()
 					&& currentBlockType != ScenarioTextBlockStyle::Dialog
 					&& currentBlockType != ScenarioTextBlockStyle::Parenthetical) {
 						rtfFile.write(EMPTY_LINE);
@@ -91,7 +92,7 @@ QString RtfExporter::header() const
 	//
 	// Настройки шрифтов
 	//
-	header.append("{\\fonttbl\\f0\\fmodern\\fcharset0 Courier;}");
+	header.append("{\\fonttbl\\f0\\fmodern\\fcharset0 Courier New;}");
 
 	//
 	// Настройки полей документа

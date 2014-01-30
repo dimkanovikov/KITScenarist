@@ -1,6 +1,7 @@
 #include "ApplicationManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
+#include <BusinessLayer/Export/PdfExporter.h>
 #include <BusinessLayer/Export/RtfExporter.h>
 
 #include <QTextEdit>
@@ -43,6 +44,8 @@ void ApplicationManager::exec()
 
 void ApplicationManager::print()
 {
-	BusinessLogic::RtfExporter exporter;
-	exporter.exportTo(document->document(), "/home/dimkanovikov/1.rtf");
+	BusinessLogic::PdfExporter exporter;
+	exporter.exportTo(document->document(), "/home/dimkanovikov/1.pdf");
+	BusinessLogic::RtfExporter exporter1;
+	exporter1.exportTo(document->document(), "/home/dimkanovikov/1.rtf");
 }

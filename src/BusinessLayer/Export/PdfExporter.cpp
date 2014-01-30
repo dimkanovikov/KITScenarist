@@ -83,7 +83,8 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 				//
 				// Если нужно сделать отступ
 				//
-				if (currentBlockType != ScenarioTextBlockStyle::Dialog
+				if (!sourceDocumentCursor.block().text().isEmpty()
+					&& currentBlockType != ScenarioTextBlockStyle::Dialog
 					&& currentBlockType != ScenarioTextBlockStyle::Parenthetical) {
 					destDocumentCursor.insertBlock();
 				}
