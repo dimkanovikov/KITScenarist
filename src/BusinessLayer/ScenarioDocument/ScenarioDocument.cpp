@@ -31,9 +31,14 @@ QAbstractItemModel* ScenarioDocument::model() const
 {
 	return m_model;
 }
-
+#include <QDebug>
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
+	QTextCursor test(m_document);
+	test.setPosition(_position+_charsAdded - 1); // Установить курсор в тот блок, в котором закончилось редактирование
+	test.movePosition(QTextCursor::EndOfBlock);
+	qDebug() << _position << _charsRemoved << _charsAdded << m_document->characterCount() << test.position();
+
 	//
 	// Если были удалены данные
 	//
@@ -43,67 +48,11 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		// строки, или со следующего за курсором, если курсор не в начале строки
 		//
 		QMap<int, ScenarioModelItem*>::iterator iter = m_modelItems.lowerBound(_position);
-
 		while (iter != m_modelItems.end()
+			   && iter.key() > _position
 			   && iter.key() < (_position + _charsRemoved)) {
 			m_model->removeItem(iter.value());
 			iter = m_modelItems.erase(iter);
-		}
-
-		//
-		// Обновить элемент находящийся перед удаляемым блоком
-		//
-		ScenarioModelItem* itemToUpdate = 0;
-		if (iter != m_modelItems.begin()) {
-			--iter;
-			m_modelItems.value(iter.key());
-		}
-
-		if (itemToUpdate != 0) {
-			//
-			// Пройти по документу обновляя элемент
-			//
-			QTextCursor cursor(m_document);
-			cursor.setPosition(iter.key());
-
-			//
-			// Получим заголовок
-			//
-			itemToUpdate->setHeader(cursor.block().text());
-
-			//
-			// Пройдём до следующего начала сцены, начала/конца группы сцен, начала/конца папки, конца документа
-			//
-			QTextBlock block;
-			do {
-				cursor.movePosition(QTextCursor::NextBlock);
-				cursor.movePosition(QTextCursor::EndOfBlock);
-				block = cursor.block();
-			} while (!cursor.atEnd()
-					 && ScenarioTextBlockStyle::forBlock(block) != ScenarioTextBlockStyle::TimeAndPlace
-					 && ScenarioTextBlockStyle::forBlock(block) != ScenarioTextBlockStyle::SceneGroupHeader
-					 && ScenarioTextBlockStyle::forBlock(block) != ScenarioTextBlockStyle::SceneGroupFooter
-					 && ScenarioTextBlockStyle::forBlock(block) != ScenarioTextBlockStyle::FolderHeader
-					 && ScenarioTextBlockStyle::forBlock(block) != ScenarioTextBlockStyle::FolderFooter);
-			//
-			// Если не конец документа, то блок, который не следует включать, поэтому шаг назад
-			//
-			if (!cursor.atEnd()) {
-				cursor.movePosition(QTextCursor::PreviousBlock);
-				cursor.movePosition(QTextCursor::EndOfBlock);
-			}
-
-			//
-			// Обновим текст документа
-			//
-			cursor.setPosition(iter.key(), QTextCursor::KeepAnchor);
-			itemToUpdate->setText(cursor.selectedText());
-
-			//
-			// Обновим хронометраж блока
-			//
-			int duration = ChronometerFacade::calculate(m_document, cursor.selectionEnd(), cursor.selectionStart());
-			itemToUpdate->setDuration(duration);
 		}
 	}
 
@@ -219,7 +168,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				|| currentType == ScenarioTextBlockStyle::SceneGroupFooter
 				|| currentType == ScenarioTextBlockStyle::FolderHeader
 				|| currentType == ScenarioTextBlockStyle::FolderFooter) {
-				nextBlockType = ScenarioTextBlockStyle::forBlock(cursor.block());
+				nextBlockType = currentType;
 				cursor.movePosition(QTextCursor::PreviousBlock);
 				cursor.movePosition(QTextCursor::EndOfBlock);
 
@@ -249,6 +198,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				}
 			}
 
+			cursor.movePosition(QTextCursor::NextBlock);
 			//
 			// Если не конец документа и всё ещё можно строить структуру
 			//
@@ -257,7 +207,6 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				//
 				// Обновим позицию начала следующего элемента
 				//
-				cursor.movePosition(QTextCursor::NextBlock);
 				currentItemStartPos = cursor.position();
 
 				//
