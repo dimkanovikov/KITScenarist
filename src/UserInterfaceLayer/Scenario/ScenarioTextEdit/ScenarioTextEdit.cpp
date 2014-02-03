@@ -71,15 +71,30 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 		//
 		closeCompleter();
 
-		//
-		// Обработаем предшествующий установленный стиль
-		//
-		cleanScenarioTypeFromBlock();
+		ScenarioTextBlockStyle oldStyle(scenarioBlockType());
+		ScenarioTextBlockStyle newStyle(_blockType);
 
 		//
-		// Применим новый стиль к блоку
+		// Если необходимо сменить группирующий стиль на аналогичный
 		//
-		applyScenarioTypeToBlock(_blockType);
+		if (oldStyle.isEmbeddableHeader()
+			&& newStyle.isEmbeddableHeader()) {
+			applyScenarioGroupTypeToGroupBlock(_blockType);
+		}
+		//
+		// Во всех остальных случаях
+		//
+		else {
+			//
+			// Обработаем предшествующий установленный стиль
+			//
+			cleanScenarioTypeFromBlock();
+
+			//
+			// Применим новый стиль к блоку
+			//
+			applyScenarioTypeToBlock(_blockType);
+		}
 
 		//
 		// Уведомим о том, что стиль сменился
@@ -458,6 +473,76 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 
 		QKeyEvent empyEvent(QEvent::KeyPress, -1, Qt::NoModifier);
 		keyPressEvent(&empyEvent);
+	}
+}
+
+void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioTextBlockStyle::Type _blockType)
+{
+	ScenarioTextBlockStyle oldBlockStyle(scenarioBlockType());
+	ScenarioTextBlockStyle newBlockHeaderStyle(_blockType);
+	ScenarioTextBlockStyle newBlockFooterStyle(newBlockHeaderStyle.embeddableFooter());
+
+	//
+	// Сменим стиль заголовочного блока
+	//
+	{
+		QTextCursor cursor = textCursor();
+
+		//
+		// Обновим стили
+		//
+		cursor.setBlockCharFormat(newBlockHeaderStyle.charFormat());
+		cursor.setBlockFormat(newBlockHeaderStyle.blockFormat());
+
+		//
+		// Применим стиль текста ко всему блоку, выделив его,
+		// т.к. в блоке могут находиться фрагменты в другом стиле
+		//
+		cursor.select(QTextCursor::BlockUnderCursor);
+		cursor.setCharFormat(newBlockHeaderStyle.charFormat());
+		cursor.clearSelection();
+	}
+
+	//
+	// Обновим стиль завершающего блока группы
+	//
+	{
+		QTextCursor cursor = textCursor();
+		cursor.movePosition(QTextCursor::NextBlock);
+
+		// ... открытые группы на пути поиска необходимого для обновления блока
+		int openedGroups = 0;
+		bool isFooterUpdated = false;
+		do {
+			ScenarioTextBlockStyle::Type currentType =
+					scenarioBlockType(cursor.block());
+
+			if (currentType == oldBlockStyle.embeddableFooter()) {
+				if (openedGroups == 0) {
+					//
+					// Обновим стили
+					//
+					cursor.setBlockCharFormat(newBlockFooterStyle.charFormat());
+					cursor.setBlockFormat(newBlockFooterStyle.blockFormat());
+
+					//
+					// Применим стиль текста ко всему блоку, выделив его,
+					// т.к. в блоке могут находиться фрагменты в другом стиле
+					//
+					cursor.select(QTextCursor::BlockUnderCursor);
+					cursor.setCharFormat(newBlockFooterStyle.charFormat());
+					cursor.clearSelection();
+					isFooterUpdated = true;
+				} else {
+					--openedGroups;
+				}
+			} else if (currentType == oldBlockStyle.blockType()) {
+				// ... встретилась новая группа
+				++openedGroups;
+			}
+
+			cursor.movePosition(QTextCursor::NextBlock);
+		} while (!isFooterUpdated);
 	}
 }
 

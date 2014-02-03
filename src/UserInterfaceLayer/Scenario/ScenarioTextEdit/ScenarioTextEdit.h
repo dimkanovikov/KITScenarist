@@ -100,6 +100,12 @@ private:
 	 */
 	void applyScenarioTypeToBlock(BusinessLogic::ScenarioTextBlockStyle::Type _blockType);
 
+	/**
+	 * @brief Применить стиль группы к блоку группе
+	 * @param Тип для применения
+	 */
+	void applyScenarioGroupTypeToGroupBlock(BusinessLogic::ScenarioTextBlockStyle::Type _blockType);
+
 
 	/**
 	 * @brief Изменить регистр текста, если это необходимо
