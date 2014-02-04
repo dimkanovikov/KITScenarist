@@ -159,18 +159,18 @@ void Database::createEnums(QSqlDatabase& _database)
 	// Справочник мест
 	{
 #ifdef USE_RUSSIAN_DATABASE_ENUMS
-		q_creator.exec(
-					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("ИНТ"))
-					);
-		q_creator.exec(
-					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("НАТ"))
-					);
-		q_creator.exec(
-					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("ПАВ"))
-					);
+//		q_creator.exec(
+//					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
+//					.arg(QString::fromUtf8("ИНТ"))
+//					);
+//		q_creator.exec(
+//					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
+//					.arg(QString::fromUtf8("НАТ"))
+//					);
+//		q_creator.exec(
+//					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
+//					.arg(QString::fromUtf8("ПАВ"))
+//					);
 #else
 		q_creator.exec("INSERT INTO places (id, name) VALUES (null, 'INT');");
 		q_creator.exec("INSERT INTO places (id, name) VALUES (null, 'EXT');");

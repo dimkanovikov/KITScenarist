@@ -209,16 +209,10 @@ void ScenarioModelItem::insertItem(int _index, ScenarioModelItem* _item)
 
 void ScenarioModelItem::removeItem(ScenarioModelItem* _item)
 {
-	if (_item->hasChildren()) {
-		ScenarioModelItem* itemParent = _item->parent();
-		int insertIndex = itemParent->rowOfChild(_item);
-		for (int childIndex = 0; childIndex < _item->childCount(); ++childIndex) {
-			itemParent->insertItem(insertIndex + childIndex, _item->childAt(childIndex));
-		}
-	}
-
+	//
+	// removeOne - удаляет объект при помощи delete, так что потом самому удалять не нужно
+	//
 	m_children.removeOne(_item);
-	delete _item;
 	_item = 0;
 }
 

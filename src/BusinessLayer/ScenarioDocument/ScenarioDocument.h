@@ -62,6 +62,11 @@ namespace BusinessLogic
 		 */
 		void updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos);
 
+		/**
+		 * @brief Создать или получить существующий элемент для позиции в документе
+		 */
+		ScenarioModelItem* itemForPosition(int _position);
+
 	private:
 		/**
 		 * @brief Документ сценария

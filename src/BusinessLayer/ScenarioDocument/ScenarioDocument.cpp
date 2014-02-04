@@ -31,13 +31,16 @@ QAbstractItemModel* ScenarioDocument::model() const
 {
 	return m_model;
 }
-#include <QDebug>
+
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
-	QTextCursor test(m_document);
-	test.setPosition(_position+_charsAdded - 1); // Установить курсор в тот блок, в котором закончилось редактирование
-	test.movePosition(QTextCursor::EndOfBlock);
-	qDebug() << _position << _charsRemoved << _charsAdded << m_document->characterCount() << test.position();
+	//
+	// Скорректируем позицию
+	//
+	if (_charsRemoved > _charsAdded
+		&& _position > 0) {
+		++_position;
+	}
 
 	//
 	// Если были удалены данные
@@ -49,8 +52,25 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		//
 		QMap<int, ScenarioModelItem*>::iterator iter = m_modelItems.lowerBound(_position);
 		while (iter != m_modelItems.end()
-			   && iter.key() > _position
+			   && iter.key() >= _position
 			   && iter.key() < (_position + _charsRemoved)) {
+			//
+			// Элемент для удаления
+			//
+			ScenarioModelItem* itemToDelete = iter.value();
+
+			//
+			// Если удаляется элемент содержащий потомков, необходимо вынести потомков на уровень выше
+			//
+			if (itemToDelete->hasChildren()) {
+				for (int childIndex = 0; childIndex < itemToDelete->childCount(); ++childIndex) {
+					m_model->insertItem(itemToDelete->childAt(childIndex), itemToDelete);
+				}
+			}
+
+			//
+			// Удалим элемент из кэша
+			//
 			m_model->removeItem(iter.value());
 			iter = m_modelItems.erase(iter);
 		}
@@ -127,15 +147,15 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			currentItemStartPos = iter.key();
 		}
 
+		//
+		// Текущий родитель
+		//
 		ScenarioModelItem* currentParent = 0;
-		if (currentItem->type() == ScenarioModelItem::Scene) {
-			currentParent = currentItem->parent();
-		} else {
-			currentParent = currentItem;
-		}
 
 		QTextCursor cursor(m_document);
-		cursor.setPosition(currentItemStartPos);
+		if (currentItemStartPos > 0) {
+			cursor.setPosition(currentItemStartPos);
+		}
 
 		do {
 
@@ -198,6 +218,15 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				}
 			}
 
+			//
+			// Определим родителя
+			//
+			if (currentItem->type() == ScenarioModelItem::Scene) {
+				currentParent = currentItem->parent();
+			} else {
+				currentParent = currentItem;
+			}
+
 			cursor.movePosition(QTextCursor::NextBlock);
 			//
 			// Если не конец документа и всё ещё можно строить структуру
@@ -217,7 +246,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						//
 						// Создать новый элемент
 						//
-						ScenarioModelItem* newItem = new ScenarioModelItem;
+						ScenarioModelItem* newItem = itemForPosition(cursor.position());
 						//
 						// Вставить в группирующий элемент
 						//
@@ -247,7 +276,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						//
 						// Создать новый элемент
 						//
-						ScenarioModelItem* newItem = new ScenarioModelItem;
+						ScenarioModelItem* newItem = itemForPosition(cursor.position());
 						//
 						// Вставить в группирующий элемент
 						//
@@ -350,4 +379,13 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setType(itemType);
 	_item->setText(itemText);
 	_item->setDuration(itemDuration);
+}
+
+ScenarioModelItem* ScenarioDocument::itemForPosition(int _position)
+{
+	ScenarioModelItem* item = m_modelItems.value(_position, 0);
+	if (item == 0) {
+		item = new ScenarioModelItem;
+	}
+	return item;
 }

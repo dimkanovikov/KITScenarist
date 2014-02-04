@@ -29,12 +29,18 @@ void ScenarioModel::prependItem(ScenarioModelItem* _item, ScenarioModelItem* _pa
 	if (_parentItem == 0) {
 		_parentItem = m_scenarioItem;
 	}
-	QModelIndex parentIndex = indexForItem(_parentItem);
-	int itemRowIndex = 0; // т.к. в самое начало
 
-	beginInsertRows(parentIndex, itemRowIndex, itemRowIndex);
-	_parentItem->prependItem(_item);
-	endInsertRows();
+	//
+	// Если такого элемента ещё нет у родителя
+	//
+	if (_parentItem->rowOfChild(_item) == -1) {
+		QModelIndex parentIndex = indexForItem(_parentItem);
+		int itemRowIndex = 0; // т.к. в самое начало
+
+		beginInsertRows(parentIndex, itemRowIndex, itemRowIndex);
+		_parentItem->prependItem(_item);
+		endInsertRows();
+	}
 }
 
 void ScenarioModel::appendItem(ScenarioModelItem* _item, ScenarioModelItem* _parentItem)
@@ -45,23 +51,35 @@ void ScenarioModel::appendItem(ScenarioModelItem* _item, ScenarioModelItem* _par
 	if (_parentItem == 0) {
 		_parentItem = m_scenarioItem;
 	}
-	QModelIndex parentIndex = indexForItem(_parentItem);
-	int itemRowIndex = _parentItem->childCount();
 
-	beginInsertRows(parentIndex, itemRowIndex, itemRowIndex);
-	_parentItem->appendItem(_item);
-	endInsertRows();
+	//
+	// Если такого элемента ещё нет у родителя
+	//
+	if (_parentItem->rowOfChild(_item) == -1) {
+		QModelIndex parentIndex = indexForItem(_parentItem);
+		int itemRowIndex = _parentItem->childCount();
+
+		beginInsertRows(parentIndex, itemRowIndex, itemRowIndex);
+		_parentItem->appendItem(_item);
+		endInsertRows();
+	}
 }
 
 void ScenarioModel::insertItem(ScenarioModelItem* _item, ScenarioModelItem* _afterSiblingItem)
 {
 	ScenarioModelItem* parent = _afterSiblingItem->parent();
-	QModelIndex parentIndex = indexForItem(parent);
-	int itemRowIndex = parent->rowOfChild(_afterSiblingItem) + 1;
 
-	beginInsertRows(parentIndex, itemRowIndex, itemRowIndex);
-	parent->insertItem(itemRowIndex, _item);
-	endInsertRows();
+	//
+	// Если такого элемента ещё нет у родителя
+	//
+	if (parent->rowOfChild(_item) == -1) {
+		QModelIndex parentIndex = indexForItem(parent);
+		int itemRowIndex = parent->rowOfChild(_afterSiblingItem) + 1;
+
+		beginInsertRows(parentIndex, itemRowIndex, itemRowIndex);
+		parent->insertItem(itemRowIndex, _item);
+		endInsertRows();
+	}
 }
 
 void ScenarioModel::removeItem(ScenarioModelItem* _item)

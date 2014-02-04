@@ -38,7 +38,7 @@ void ApplicationManager::exec()
 	QHBoxLayout* layout = new QHBoxLayout(widget);
 	layout->addLayout(leftLayout);
 	layout->addWidget(textEdit);
-
+widget->resize(800,600);
 	widget->show();
 }
 
