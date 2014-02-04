@@ -124,14 +124,9 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type
 	cursor.setCharFormat(newBlockStyle.charFormat());
 }
 
-ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType(const QTextBlock& _block) const
-{
-	return (ScenarioTextBlockStyle::Type)_block.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType);
-}
-
 ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType() const
 {
-	return scenarioBlockType(textCursor().block());
+	return ScenarioTextBlockStyle::forBlock(textCursor().block());
 }
 
 bool ScenarioTextEdit::textUpdateInProgress() const
@@ -322,7 +317,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 		bool isFooterUpdated = false;
 		do {
 			ScenarioTextBlockStyle::Type currentType =
-					scenarioBlockType(cursor.block());
+					ScenarioTextBlockStyle::forBlock(cursor.block());
 
 			if (currentType == oldBlockStyle.embeddableFooter()) {
 				if (openedGroups == 0) {
@@ -350,8 +345,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 		QTextCursor headerCursor = cursor;
 		headerCursor.movePosition(QTextCursor::StartOfBlock);
 		headerCursor.movePosition(QTextCursor::Left);
-		if (scenarioBlockType(headerCursor.block())
-			== oldBlockStyle.headerType()) {
+		if (ScenarioTextBlockStyle::forBlock(headerCursor.block()) == oldBlockStyle.headerType()) {
 			headerCursor.select(QTextCursor::BlockUnderCursor);
 			headerCursor.deleteChar();
 
@@ -515,7 +509,7 @@ void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioTextBlockStyle
 		bool isFooterUpdated = false;
 		do {
 			ScenarioTextBlockStyle::Type currentType =
-					scenarioBlockType(cursor.block());
+					ScenarioTextBlockStyle::forBlock(cursor.block());
 
 			if (currentType == oldBlockStyle.embeddableFooter()) {
 				if (openedGroups == 0) {

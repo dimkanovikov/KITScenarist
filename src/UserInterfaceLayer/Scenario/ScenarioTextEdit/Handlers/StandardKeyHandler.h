@@ -3,6 +3,8 @@
 
 #include "AbstractKeyHandler.h"
 
+#include <QList>
+
 class QString;
 
 
@@ -42,15 +44,17 @@ namespace KeyProcessingLayer
 		void removeCharacters(bool _backward);
 
 		/**
-		 * @brief Посчитать сколько блоков открывающих/закрывающих группу нужно удалить
-		 * @param _isFirstGroupHeader
-		 * @param _groupHeadersCount
-		 * @param _groupFootersCount
+		 * @brief Найти количество групповых элементов для удаления
+		 * @param _topCursorPosition
+		 * @param _bottomCursorPosition
+		 * @return
+		 *
+		 * 0 - заголовки групп сцен
+		 * 1 - окончания групп сцен
+		 * 2 - заголовки папок
+		 * 3 - окончания папок
 		 */
-		void findGroupBlocks(int _startPosition,
-							 int _endPosition,
-							 int& _groupHeadersCount,
-							 int& _groupFootersCount);
+		QList<int> findGroupCountsToDelete(int _topCursorPosition, int _bottomCursorPosition);
 
 		/**
 		 * @brief Удалить пары стёртых групп
@@ -58,8 +62,8 @@ namespace KeyProcessingLayer
 		 * @param _groupHeadersCount
 		 * @param _groupFootersCount
 		 */
-		void removeGroupsPairs(int _groupHeadersCount,
-							   int _groupFootersCount);
+		void removeGroupsPairs(int _cursorPosition,
+							   const QList<int>& _groupCountsToDelete);
 
 		/**
 		 * @brief Преобразовать текст в значение клавиши

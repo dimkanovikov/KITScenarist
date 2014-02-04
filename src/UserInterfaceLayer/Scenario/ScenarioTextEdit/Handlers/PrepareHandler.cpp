@@ -174,14 +174,14 @@ void PrepareHandler::handleOther(QKeyEvent* _event)
 	//
 	QTextCursor topCursor(editor()->document());
 	topCursor.setPosition(qMin(cursor.selectionStart(), cursor.selectionEnd()));
-	ScenarioTextBlockStyle topStyle(editor()->scenarioBlockType(topCursor.block()));
+	ScenarioTextBlockStyle topStyle(ScenarioTextBlockStyle::forBlock(topCursor.block()));
 
 	//
 	// Получим стиль последнего блока в выделении
 	//
 	QTextCursor bottomCursor(editor()->document());
 	bottomCursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
-	ScenarioTextBlockStyle bottomStyle(editor()->scenarioBlockType(bottomCursor.block()));
+	ScenarioTextBlockStyle bottomStyle(ScenarioTextBlockStyle::forBlock(bottomCursor.block()));
 
 	if (!_event->text().isEmpty()) {
 		//

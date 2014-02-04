@@ -127,6 +127,11 @@ namespace BusinessLogic
 		bool isHeader() const;
 
 		/**
+		 * @brief Является ли блок частью группы
+		 */
+		bool isEmbeddable() const;
+
+		/**
 		 * @brief Является ли блок заголовком группы
 		 */
 		bool isEmbeddableHeader() const;

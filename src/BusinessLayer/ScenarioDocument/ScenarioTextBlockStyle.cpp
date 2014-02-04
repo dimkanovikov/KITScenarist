@@ -201,6 +201,15 @@ bool ScenarioTextBlockStyle::isHeader() const
 	return blockType() == ScenarioTextBlockStyle::TitleHeader;
 }
 
+bool ScenarioTextBlockStyle::isEmbeddable() const
+{
+	return
+			blockType() == SceneGroupHeader
+			|| blockType() == SceneGroupFooter
+			|| blockType() == FolderHeader
+			|| blockType() == FolderFooter;
+}
+
 bool ScenarioTextBlockStyle::isEmbeddableHeader() const
 {
 	return

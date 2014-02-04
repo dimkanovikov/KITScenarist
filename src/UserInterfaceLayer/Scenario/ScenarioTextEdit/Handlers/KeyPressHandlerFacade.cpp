@@ -39,7 +39,7 @@ void KeyPressHandlerFacade::prehandle(QKeyEvent* _event)
 void KeyPressHandlerFacade::handle(QKeyEvent* _event)
 {
 	QTextBlock currentBlock = m_editor->textCursor().block();
-	ScenarioTextBlockStyle::Type currentType = m_editor->scenarioBlockType(currentBlock);
+	ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(currentBlock);
 	AbstractKeyHandler* currentHandler = handlerFor(currentType);
 
 	//

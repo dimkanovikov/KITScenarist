@@ -39,7 +39,7 @@ QString ScenarioXmlWriter::scenarioToXml(const ScenarioTextEdit* _editor, int _s
 	do {
 		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
 
-		ScenarioTextBlockStyle::Type currentType = _editor->scenarioBlockType(cursor.block());
+		ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
 
 		//
 		// Курсор в конце текущего блока

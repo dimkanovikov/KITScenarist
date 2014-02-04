@@ -183,7 +183,7 @@ void SceneGroupHeaderHandler::handleOther(QKeyEvent*)
 		bool isFooterUpdated = false;
 		do {
 			ScenarioTextBlockStyle::Type currentType =
-					editor()->scenarioBlockType(cursor.block());
+					ScenarioTextBlockStyle::forBlock(cursor.block());
 
 			if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
 				if (openedGroups == 0) {

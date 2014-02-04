@@ -183,7 +183,7 @@ void FolderHeaderHandler::handleOther(QKeyEvent*)
 		bool isFooterUpdated = false;
 		do {
 			ScenarioTextBlockStyle::Type currentType =
-					editor()->scenarioBlockType(cursor.block());
+					ScenarioTextBlockStyle::forBlock(cursor.block());
 
 			if (currentType == ScenarioTextBlockStyle::FolderFooter) {
 				if (openedGroups == 0) {
@@ -200,7 +200,9 @@ void FolderHeaderHandler::handleOther(QKeyEvent*)
 				++openedGroups;
 			}
 
-			cursor.movePosition(QTextCursor::NextBlock);
+			if (!cursor.movePosition(QTextCursor::NextBlock)) {
+				cursor.movePosition(QTextCursor::EndOfBlock);
+			}
 		} while (!isFooterUpdated && !cursor.atEnd());
 	}
 }
