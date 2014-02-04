@@ -219,12 +219,14 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			}
 
 			//
-			// Определим родителя
+			// Определим родителя если ещё не определён
 			//
-			if (currentItem->type() == ScenarioModelItem::Scene) {
-				currentParent = currentItem->parent();
-			} else {
-				currentParent = currentItem;
+			if (currentParent == 0) {
+				if (currentItem->type() == ScenarioModelItem::Scene) {
+					currentParent = currentItem->parent();
+				} else {
+					currentParent = currentItem;
+				}
 			}
 
 			cursor.movePosition(QTextCursor::NextBlock);
