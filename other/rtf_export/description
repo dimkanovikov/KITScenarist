@@ -1,0 +1,45 @@
+Документ ртф с указанной кодировкой
+{\rtf1\ansi
+таблица шрифтов состоит из одного шрифта
+{\fonttbl\f0\fmodern\fcharset0 Courier;}
+
+поля страницы в твипсах
+1 сантиметр = 566.929133858 твипсов
+\margl2126\margr1417\margt1417\margb709
+
+стили документа
+\s1 - название стиля
+\f0 - шрифт на котором он базируется
+\caps - использовать верхний регистр
+\fs24 - размер шрифта (12 пунктов)
+\sb480 - отступ перед в твипсах
+\sa480 - отступ после в твипсах
+\fi0 - отступ первой строки в твипсах
+\ql - выравнивание по левому краю
+\qr - выравнивание по правому краю
+\sbasedon222 - стиль на котором основан текущий (222 - ни на каком)
+\snext0 - стиль на который переходит редактор в следующем абзаце при нажатии энтера
+\li340 - левый отступ в твипсах
+\ri340 - правый отступ в твипсах
+после всех настроек идёт название стиля, название можно задать используя символы юникода, например \u1044?\u1077?\u1081?\u1089?\u1090?\u1074?\u1080?\u1077? для действия
+завершается точкой с запятой
+{\stylesheet{\f0 \sbasedon222\snext0 Normal;}
+{\s1\f0\caps\fs24\sb480\fi0\ql\snext2\sbasedon0 TIME AND PLACE;}
+{\s2\f0\fs24\sb240\fi0\ql\snext0\sbasedon0 ACTION;}
+{\s3\f0\caps\fs24\sb240\fi0\li3472\ql\snext5\sbasedon0 CHARACTER;}
+{\s4\f0\fs24\sb0\fi0\li2778\ri2778\ql\snext5\sbasedon0 PARENTHETICAL;}
+{\s5\f0\fs24\sb0\fi0\li1804\ri1389\ql\snext2\sbasedon0 DIALOGUE;}
+{\s6\f0\caps\fs24\sb240\fi0\li5556\ri694\qr\snext1\sbasedon0 TRANSITION;}
+{\s7\f0\caps\fs24\sb240\fi0\ql\snext2\sbasedon0 SHOT;}
+}
+
+текст документа
+\pard - сбросить параметры документа в исходные
+\plain - сброс параметров текста
+\page - перенос страницы
+\line - перенос строки
+
+\pard\plain \s1 BLA BLA BLA\par
+\pard\plain \s3 DIMA\par
+\pard\plain \s5 Hello guys. I am from Russia. London is the capital of great brittan.\par
+}
