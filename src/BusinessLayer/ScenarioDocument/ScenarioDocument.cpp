@@ -1,4 +1,7 @@
 #include "ScenarioDocument.h"
+
+#include "ScenarioXml.h"
+#include "ScenarioTextDocument.h"
 #include "ScenarioModel.h"
 #include "ScenarioModelItem.h"
 #include "ScenarioTextBlockStyle.h"
@@ -16,13 +19,14 @@ QString ScenarioDocument::MIME_TYPE = "application/x-scenarius/scenario";
 
 ScenarioDocument::ScenarioDocument(QObject* _parent) :
 	QObject(_parent),
-	m_document(new QTextDocument(this)),
-	m_model(new ScenarioModel(this))
+	m_xmlHandler(new ScenarioXml(this)),
+	m_document(new ScenarioTextDocument(this, m_xmlHandler)),
+	m_model(new ScenarioModel(this, m_xmlHandler))
 {
 	initConnections();
 }
 
-QTextDocument* ScenarioDocument::document() const
+ScenarioTextDocument* ScenarioDocument::document() const
 {
 	return m_document;
 }
@@ -30,6 +34,57 @@ QTextDocument* ScenarioDocument::document() const
 QAbstractItemModel* ScenarioDocument::model() const
 {
 	return m_model;
+}
+
+int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const
+{
+	int insertPosition = 0;
+	int insertAfterItemStartPos = 0;
+
+	//
+	// Если необходимо вставить перед заданным элементом
+	//
+	if (_insertBefore != 0) {
+		insertAfterItemStartPos = m_modelItems.key(_insertBefore);
+
+		//
+		// Шаг назад
+		//
+		insertPosition = insertAfterItemStartPos - 1;
+	}
+	//
+	// Если необходимо вставить в конец родительского элемента
+	//
+	else {
+		//
+		// Получим следующий за родителем элемент
+		//
+		insertAfterItemStartPos = m_modelItems.key(_insertParent);
+		QMap<int, ScenarioModelItem*>::const_iterator iter = m_modelItems.find(insertAfterItemStartPos);
+		++iter;
+
+		//
+		// Если конец документа
+		//
+		if (iter == m_modelItems.end()) {
+			insertPosition = m_document->characterCount() - 1;
+		}
+		//
+		// Если не конец документа, то отступим на один символ назад
+		//
+		else {
+			insertPosition = iter.key() - 1;
+		}
+	}
+
+	//
+	// Если необходимо вставить в начало документа
+	//
+	if (insertPosition < 0) {
+		insertPosition = 0;
+	}
+
+	return insertPosition;
 }
 
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
@@ -127,7 +182,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		// Если в документе нет ни одного элемента, создадим первый
 		//
 		if (iter == m_modelItems.end()) {
-			currentItem = new ScenarioModelItem;
+			currentItem = itemForPosition(0);
 			m_model->appendItem(currentItem);
 			m_modelItems.insert(0, currentItem);
 		}
@@ -135,7 +190,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		// Или если вставляется новый элемент в начале текста
 		//
 		else if (_position == 0 && iter == m_modelItems.begin() && iter.key() > 0) {
-			currentItem = new ScenarioModelItem;
+			currentItem = itemForPosition(0);
 			m_model->prependItem(currentItem);
 			m_modelItems.insert(0, currentItem);
 		}
@@ -383,11 +438,32 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setDuration(itemDuration);
 }
 
-ScenarioModelItem* ScenarioDocument::itemForPosition(int _position)
+ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNear)
 {
 	ScenarioModelItem* item = m_modelItems.value(_position, 0);
 	if (item == 0) {
-		item = new ScenarioModelItem;
+		//
+		// Если необходимо ищем ближайшего
+		//
+		if (_findNear) {
+			QMap<int, ScenarioModelItem*>::const_iterator i = m_modelItems.lowerBound(_position);
+			if (i != m_modelItems.end()) {
+				item = i.value();
+			} else if (i != m_modelItems.begin()) {
+				--i;
+				item = i.value();
+			} else {
+				//
+				// не найден, т.к. в модели нет элементов
+				//
+			}
+		}
+		//
+		// В противном случае создаём новый элемент
+		//
+		else {
+			item = new ScenarioModelItem;
+		}
 	}
 	return item;
 }

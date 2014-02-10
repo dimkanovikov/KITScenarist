@@ -13,8 +13,7 @@ using namespace BusinessLogic;
 PrepareHandler::PrepareHandler(ScenarioTextEdit* _editor) :
 	AbstractKeyHandler(_editor),
 	m_needSendEventToBaseClass(true),
-	m_needEnsureCursorVisible(true),
-	m_structureChanged(false)
+	m_needEnsureCursorVisible(true)
 {
 }
 
@@ -28,16 +27,10 @@ bool PrepareHandler::needEnsureCursorVisible() const
 	return m_needEnsureCursorVisible;
 }
 
-bool PrepareHandler::structureChanged() const
-{
-	return m_structureChanged;
-}
-
 void PrepareHandler::prepareForHandle()
 {
 	m_needSendEventToBaseClass = true;
 	m_needEnsureCursorVisible = true;
-	m_structureChanged = false;
 }
 
 void PrepareHandler::handleShortcut(QKeyEvent* _event)
@@ -56,32 +49,16 @@ void PrepareHandler::handleShortcut(QKeyEvent* _event)
 	} else {
 		m_needSendEventToBaseClass = false;
 	}
-
-	if (pressedModifiers.testFlag(Qt::ControlModifier)
-		&& (_event->nativeScanCode() == 52	   // z
-			|| _event->nativeScanCode() == 53  // x
-			|| _event->nativeScanCode() == 55) // v
-		) {
-		m_structureChanged = true;
-	}
 }
 
 void PrepareHandler::handleEnter(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
-
-	if (!editor()->isCompleterVisible()){
-		m_structureChanged = true;
-	}
 }
 
 void PrepareHandler::handleTab(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
-
-	if (!editor()->isCompleterVisible()){
-		m_structureChanged = true;
-	}
 }
 
 void PrepareHandler::handleDelete(QKeyEvent*)
@@ -105,14 +82,6 @@ void PrepareHandler::handleDelete(QKeyEvent*)
 	//
 	QTextCursor bottomCursor(editor()->document());
 	bottomCursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
-
-	//
-	// Если действие выполняется над несколькими блоками
-	//
-	if (topCursor.blockNumber() != bottomCursor.blockNumber()
-		|| bottomCursor.atBlockEnd()) {
-		m_structureChanged = true;
-	}
 }
 
 void PrepareHandler::handleBackspace(QKeyEvent*)
@@ -136,14 +105,6 @@ void PrepareHandler::handleBackspace(QKeyEvent*)
 	//
 	QTextCursor bottomCursor(editor()->document());
 	bottomCursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
-
-	//
-	// Если действие выполняется над несколькими блоками
-	//
-	if (topCursor.blockNumber() != bottomCursor.blockNumber()
-		|| topCursor.atBlockStart()) {
-		m_structureChanged = true;
-	}
 }
 
 void PrepareHandler::handleEscape(QKeyEvent*)
@@ -197,12 +158,5 @@ void PrepareHandler::handleOther(QKeyEvent* _event)
 	//
 	if (_event->key() == Qt::Key_Shift) {
 		m_needEnsureCursorVisible = false;
-	}
-
-	//
-	// Если действие выполняется над несколькими блоками
-	//
-	if (topCursor.blockNumber() != bottomCursor.blockNumber()) {
-		m_structureChanged = true;
 	}
 }

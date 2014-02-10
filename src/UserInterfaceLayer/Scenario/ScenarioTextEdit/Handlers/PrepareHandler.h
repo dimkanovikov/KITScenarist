@@ -55,7 +55,6 @@ namespace KeyProcessingLayer
 	private:
 		bool m_needSendEventToBaseClass;
 		bool m_needEnsureCursorVisible;
-		bool m_structureChanged;
 	};
 }
 

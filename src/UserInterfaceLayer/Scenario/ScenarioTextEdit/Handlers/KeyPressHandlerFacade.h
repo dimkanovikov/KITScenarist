@@ -58,11 +58,6 @@ namespace KeyProcessingLayer
 		 */
 		bool needEnshureCursorVisible() const;
 
-		/**
-		 * @brief Изменилась ли структура сценария
-		 */
-		bool structureChanged() const;
-
 	private:
 		KeyPressHandlerFacade(ScenarioTextEdit* _editor);
 

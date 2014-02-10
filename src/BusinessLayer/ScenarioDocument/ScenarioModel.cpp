@@ -1,15 +1,22 @@
 #include "ScenarioModel.h"
+
 #include "ScenarioModelItem.h"
 #include "ScenarioDocument.h"
+#include "ScenarioXml.h"
+
+#include <QMimeData>
 
 using namespace BusinessLogic;
 
 
-ScenarioModel::ScenarioModel(QObject *parent) :
+ScenarioModel::ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler) :
 	QAbstractItemModel(parent),
 	m_rootItem(new ScenarioModelItem),
-	m_scenarioItem(new ScenarioModelItem)
+	m_scenarioItem(new ScenarioModelItem),
+	m_xmlHandler(_xmlHandler)
 {
+	Q_ASSERT(m_xmlHandler);
+
 	m_scenarioItem->setHeader(QObject::tr("Scenario"));
 	m_scenarioItem->setType(ScenarioModelItem::Scenario);
 	m_rootItem->appendItem(m_scenarioItem);
@@ -220,7 +227,81 @@ bool ScenarioModel::dropMimeData(
 		const QMimeData* _data, Qt::DropAction _action,
 		int _row, int _column, const QModelIndex& _parent)
 {
-	return false;
+	/*
+	 * Вставка данных в этом случае происходит напрямую в текст документа, а не в дерево,
+	 * само дерево просто перестраивается после всех манипуляций с текстовым редактором
+	 */
+
+	Q_UNUSED(_column);
+
+	//
+	// _row - индекс, куда вставлять, если в папку, то он равен -1 и если в самый низ списка, то он тоже равен -1
+	//
+
+	bool isDropSucceed = false;
+
+	if (_data != 0
+		&& _data->hasFormat(ScenarioDocument::MIME_TYPE)) {
+
+		switch (_action) {
+			case Qt::IgnoreAction: {
+				isDropSucceed = true;
+				break;
+			}
+
+			case Qt::MoveAction:
+			case Qt::CopyAction: {
+				//
+				// Получим структурные элементы дерева, чтобы понять, куда вкладывать данные
+				//
+				// ... элемент, в который будут вкладываться данные
+				ScenarioModelItem* parentItem = itemForIndex(_parent);
+				// ... элемент, перед которым будут вкладываться данные
+				ScenarioModelItem* childItem = parentItem->childAt(_row);
+
+				//
+				// Определим элемент, после которого необходимо вставить данные
+				//
+				ScenarioModelItem* insertBeforeItem = 0;
+
+				//
+				// Если вкладывание происходит перед каким-либо структурным элементом
+				//
+				if (childItem != 0) {
+					insertBeforeItem = childItem;
+				}
+				//
+				// Если вкладывание происходит в папку, то нужно вставить текст после последнего элемента в ней
+				//
+				else if ((parentItem->type() == ScenarioModelItem::SceneGroup
+						  || parentItem->type() == ScenarioModelItem::Folder)
+						 && parentItem != m_scenarioItem
+						 && parentItem != m_rootItem) {
+					insertBeforeItem = parentItem->childAt(parentItem->childCount() - 1);
+				}
+				//
+				// В оставшихся случаях вкладываем данные за последним блоком
+				//
+				else if (parentItem == m_scenarioItem) {
+					insertBeforeItem = m_scenarioItem->childAt(m_scenarioItem->childCount() - 1);
+				}
+
+				//
+				// Вставим данные
+				//
+				m_xmlHandler->xmlToScenario(parentItem, insertBeforeItem, _data->data(ScenarioDocument::MIME_TYPE));
+				isDropSucceed = true;
+
+				break;
+			}
+
+			default: {
+				break;
+			}
+		}
+	}
+
+	return isDropSucceed;
 }
 
 QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const

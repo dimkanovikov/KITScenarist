@@ -4,6 +4,10 @@
 #include <3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
 
+namespace BusinessLogic {
+	class ScenarioTextDocument;
+}
+
 class QCompleter;
 
 
@@ -16,7 +20,7 @@ public slots:
 	void test();
 
 public:
-	explicit ScenarioTextEdit(QWidget* _parent = 0, QTextDocument* _document = 0);
+	explicit ScenarioTextEdit(QWidget* _parent, BusinessLogic::ScenarioTextDocument* _document);
 
 	/**
 	 * @brief Вставить новый блок
@@ -46,26 +50,11 @@ public:
 	 */
 	BusinessLogic::ScenarioTextBlockStyle::Type scenarioBlockType() const;
 
-	/**
-	 * @brief Находится ли редактор в состоянии обновления текста
-	 */
-	bool textUpdateInProgress() const;
-
-	/**
-	 * @brief Установить состояние обновления текста редактора
-	 */
-	void setTextUpdateInProgress(bool _inProgress);
-
 signals:
 	/**
 	 * @brief Сменился стиль под курсором
 	 */
 	void currentStyleChanged();
-
-	/**
-	 * @brief Изменилась структура документа
-	 */
-	void structureChanged();
 
 protected:
 	/**
@@ -124,10 +113,9 @@ private:
 
 private:
 	/**
-	 * @brief Выполняется ли обновление текста в данный момент,
-	 *		  например вставка из буфера или загрузка текста из файла
+	 * @brief Документ
 	 */
-	bool m_textUpdateInProgress;
+	BusinessLogic::ScenarioTextDocument* m_document;
 };
 
 #endif // SCENARIOTEXTEDIT_H

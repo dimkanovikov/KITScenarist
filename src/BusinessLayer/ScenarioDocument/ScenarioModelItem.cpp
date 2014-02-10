@@ -7,8 +7,8 @@ namespace {
 	const int MAX_TEXT_LENGTH = 100;
 }
 
-ScenarioModelItem::ScenarioModelItem() :
-	m_uuid(QUuid::createUuid()),
+ScenarioModelItem::ScenarioModelItem(QUuid _uuid) :
+	m_uuid(_uuid.isNull() ? QUuid::createUuid() : _uuid),
 	m_number(0),
 	m_duration(0),
 	m_type(Scene),

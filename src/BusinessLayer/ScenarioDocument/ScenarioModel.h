@@ -7,6 +7,7 @@
 namespace BusinessLogic
 {
 	class ScenarioModelItem;
+	class ScenarioXml;
 
 
 	/**
@@ -17,7 +18,7 @@ namespace BusinessLogic
 		Q_OBJECT
 
 	public:
-		explicit ScenarioModel(QObject *parent = 0);
+		explicit ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler);
 		~ScenarioModel();
 
 		/**
@@ -84,6 +85,11 @@ namespace BusinessLogic
 		 * @brief Обязательный элемент сценария
 		 */
 		ScenarioModelItem* m_scenarioItem;
+
+		/**
+		 * @brief Обработчик xml
+		 */
+		ScenarioXml* m_xmlHandler;
 	};
 }
 

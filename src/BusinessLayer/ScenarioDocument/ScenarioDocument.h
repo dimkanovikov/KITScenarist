@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMap>
+#include <QUuid>
 
 class QTextDocument;
 class QAbstractItemModel;
@@ -10,6 +11,8 @@ class QAbstractItemModel;
 
 namespace BusinessLogic
 {
+	class ScenarioXml;
+	class ScenarioTextDocument;
 	class ScenarioModel;
 	class ScenarioModelItem;
 
@@ -24,12 +27,10 @@ namespace BusinessLogic
 	{
 		Q_OBJECT
 
-		/**
-		 * Необхдимые методы:
-		 * - загрузка/сохраниение документа из/в xml-текста
-		 * - синхронизация модели и документа
-		 */
 	public:
+		/**
+		 * @brief Майм-тип данных сценариев
+		 */
 		static QString MIME_TYPE;
 
 	public:
@@ -38,12 +39,17 @@ namespace BusinessLogic
 		/**
 		 * @brief Текстовый документ
 		 */
-		QTextDocument* document() const;
+		ScenarioTextDocument* document() const;
 
 		/**
 		 * @brief Модель сценария
 		 */
 		QAbstractItemModel* model() const;
+
+		/**
+		 * @brief Вспомогательная функция для определения позиции вставки майм-данных в документ
+		 */
+		int positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const;
 
 	private slots:
 		/**
@@ -64,14 +70,20 @@ namespace BusinessLogic
 
 		/**
 		 * @brief Создать или получить существующий элемент для позиции в документе
+		 *		  или ближайший к позиции
 		 */
-		ScenarioModelItem* itemForPosition(int _position);
+		ScenarioModelItem* itemForPosition(int _position, bool _findNear = false);
 
 	private:
 		/**
+		 * @brief Обработчик xml
+		 */
+		ScenarioXml* m_xmlHandler;
+
+		/**
 		 * @brief Документ сценария
 		 */
-		QTextDocument* m_document;
+		ScenarioTextDocument* m_document;
 
 		/**
 		 * @brief Дерево сценария

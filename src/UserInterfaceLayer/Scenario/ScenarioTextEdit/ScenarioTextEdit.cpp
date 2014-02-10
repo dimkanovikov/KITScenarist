@@ -1,7 +1,9 @@
 #include "ScenarioTextEdit.h"
 
 #include "Handlers/KeyPressHandlerFacade.h"
-#include "MimeData/MimeDataProcessor.h"
+
+#include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 
 #include <QTextCursor>
 #include <QTextBlock>
@@ -21,11 +23,13 @@
 using namespace BusinessLogic;
 
 
-ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent, QTextDocument* _document) :
+ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent, BusinessLogic::ScenarioTextDocument* _document) :
 	CompletableTextEdit(_parent),
-	m_textUpdateInProgress(false)
+	m_document(_document)
 {
-	setDocument(_document);
+	Q_ASSERT(m_document);
+
+	setDocument(m_document);
 
 	initEditor();
 	initView();
@@ -129,18 +133,6 @@ ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType() const
 	return ScenarioTextBlockStyle::forBlock(textCursor().block());
 }
 
-bool ScenarioTextEdit::textUpdateInProgress() const
-{
-	return m_textUpdateInProgress;
-}
-
-void ScenarioTextEdit::setTextUpdateInProgress(bool _inProgress)
-{
-	if (m_textUpdateInProgress != _inProgress) {
-		m_textUpdateInProgress = _inProgress;
-	}
-}
-
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 {
 	//
@@ -202,13 +194,6 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	if (handler->needEnshureCursorVisible()) {
 		ensureCursorVisible();
 	}
-
-	//
-	// Если необходимо уведомим об изменении структуры
-	//
-	if (handler->structureChanged()) {
-		emit structureChanged();
-	}
 }
 
 void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)
@@ -254,7 +239,7 @@ void ScenarioTextEdit::dropEvent(QDropEvent* _event)
 bool ScenarioTextEdit::canInsertFromMimeData(const QMimeData* _source) const
 {
 	bool canInsert = false;
-	if (_source->formats().contains(MimeDataProcessor::SCENARIO_MIME_TYPE)
+	if (_source->formats().contains(ScenarioDocument::MIME_TYPE)
 		|| _source->hasText()) {
 		canInsert = true;
 	}
@@ -278,8 +263,9 @@ QMimeData* ScenarioTextEdit::createMimeDataFromSelection() const
 
 		if (startSelectionBlockNumber != endSelectionBlockNumber) {
 			mimeData->setData(
-						MimeDataProcessor::SCENARIO_MIME_TYPE,
-						MimeDataProcessor::createMimeFromSelection(this).toUtf8());
+						ScenarioDocument::MIME_TYPE,
+						m_document->mimeFromSelection(textCursor().selectionStart(),
+													  textCursor().selectionEnd()).toUtf8());
 		}
 	}
 
@@ -289,9 +275,16 @@ QMimeData* ScenarioTextEdit::createMimeDataFromSelection() const
 
 void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 {
-	if (_source->formats().contains(MimeDataProcessor::SCENARIO_MIME_TYPE)) {
-		MimeDataProcessor::insertFromMime(this, _source);
-	} else if (_source->hasText()) {
+	//
+	// Если вставляются данные в сценарном формате, то вставляем как положено
+	//
+	if (_source->formats().contains(ScenarioDocument::MIME_TYPE)) {
+		m_document->insertFromMime(textCursor().position(), _source->data(ScenarioDocument::MIME_TYPE));
+	}
+	//
+	// Если простой текст, то вставляем его, как непечатаемый текст
+	//
+	else if (_source->hasText()) {
 		QString textToInsert = _source->text();
 		foreach (const QString& line, textToInsert.split("\n", QString::SkipEmptyParts)) {
 			addScenarioBlock(ScenarioTextBlockStyle::NoprintableText);

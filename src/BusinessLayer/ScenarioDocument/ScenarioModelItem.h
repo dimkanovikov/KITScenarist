@@ -25,7 +25,7 @@ namespace BusinessLogic
 		};
 
 	public:
-		ScenarioModelItem();
+		ScenarioModelItem(QUuid _uuid = QUuid());
 		~ScenarioModelItem();
 
 		/**

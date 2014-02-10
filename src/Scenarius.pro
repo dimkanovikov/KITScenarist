@@ -102,7 +102,6 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TransitionHandler.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/MimeData/MimeDataProcessor.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Parsers/CharacterParser.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Parsers/TimeAndPlaceParser.cpp \
     3rd_party/Hunspell/affentry.cxx \
@@ -119,14 +118,15 @@ SOURCES += main.cpp \
     3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.cpp \
     3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.cpp \
     3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
-    3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioXml.cpp \
+	3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemWidget.cpp \
     3rd_party/Widgets/ElidedLabel/ElidedLabel.cpp \
     BusinessLayer/Export/PdfExporter.cpp \
-    BusinessLayer/Export/RtfExporter.cpp
+    BusinessLayer/Export/RtfExporter.cpp \
+    BusinessLayer/ScenarioDocument/ScenarioXml.cpp \
+    BusinessLayer/ScenarioDocument/ScenarioTextDocument.cpp
 
 RESOURCES += \
     Resources/Resources.qrc
@@ -219,7 +219,6 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHeaderHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TransitionHandler.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/MimeData/MimeDataProcessor.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Parsers/CharacterParser.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Parsers/TimeAndPlaceParser.h \
     3rd_party/Hunspell/affentry.hxx \
@@ -241,8 +240,7 @@ HEADERS += \
     3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.h \
     3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h \
     3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.h \
-    3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioXml.h \
+	3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockStylePrivate.h \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
@@ -250,7 +248,9 @@ HEADERS += \
     3rd_party/Widgets/ElidedLabel/ElidedLabel.h \
     BusinessLayer/Export/AbstractExporter.h \
     BusinessLayer/Export/PdfExporter.h \
-    BusinessLayer/Export/RtfExporter.h
+    BusinessLayer/Export/RtfExporter.h \
+    BusinessLayer/ScenarioDocument/ScenarioXml.h \
+    BusinessLayer/ScenarioDocument/ScenarioTextDocument.h
 
 OTHER_FILES += \
     TODO \
