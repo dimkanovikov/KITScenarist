@@ -51,6 +51,16 @@ namespace BusinessLogic
 		 */
 		int positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const;
 
+		/**
+		 * @brief Определить начальную позицию элемента в тексте
+		 */
+		int itemStartPosition(ScenarioModelItem* _item) const;
+
+		/**
+		 * @brief Получить последнюю позицию элемента в тексте
+		 */
+		int itemEndPosition(ScenarioModelItem* _item) const;
+
 	private slots:
 		/**
 		 * @brief Изменилось содержимое документа

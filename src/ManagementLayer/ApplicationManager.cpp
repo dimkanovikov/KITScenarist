@@ -29,6 +29,8 @@ void ApplicationManager::exec()
 	QTreeView* view = new QTreeView;
 	view->setItemDelegate(new ScenarioNavigatorItemDelegate(view));
 	view->setDragDropMode(QAbstractItemView::DragDrop);
+	view->setDragEnabled(true);
+	view->setDropIndicatorShown(true);
 	view->setModel(document->model());
 	QPushButton* btn = new QPushButton("Print");
 	connect(btn, SIGNAL(clicked()), this, SLOT(print()));

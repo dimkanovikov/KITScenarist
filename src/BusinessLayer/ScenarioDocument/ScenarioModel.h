@@ -18,6 +18,12 @@ namespace BusinessLogic
 		Q_OBJECT
 
 	public:
+		/**
+		 * @brief Майм-тип данных дерева сценария
+		 */
+		static QString MIME_TYPE;
+
+	public:
 		explicit ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler);
 		~ScenarioModel();
 
@@ -90,6 +96,8 @@ namespace BusinessLogic
 		 * @brief Обработчик xml
 		 */
 		ScenarioXml* m_xmlHandler;
+
+		mutable QMimeData* m_lastMime;
 	};
 }
 

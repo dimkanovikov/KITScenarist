@@ -9,6 +9,8 @@
 using namespace BusinessLogic;
 
 
+QString ScenarioModel::MIME_TYPE = "application/x-scenarius/scenario-tree";
+
 ScenarioModel::ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler) :
 	QAbstractItemModel(parent),
 	m_rootItem(new ScenarioModelItem),
@@ -241,7 +243,7 @@ bool ScenarioModel::dropMimeData(
 	bool isDropSucceed = false;
 
 	if (_data != 0
-		&& _data->hasFormat(ScenarioDocument::MIME_TYPE)) {
+		&& _data->hasFormat(MIME_TYPE)) {
 
 		switch (_action) {
 			case Qt::IgnoreAction: {
@@ -270,26 +272,18 @@ bool ScenarioModel::dropMimeData(
 				if (childItem != 0) {
 					insertBeforeItem = childItem;
 				}
+
 				//
-				// Если вкладывание происходит в папку, то нужно вставить текст после последнего элемента в ней
+				// Если производится перемещение данных
 				//
-				else if ((parentItem->type() == ScenarioModelItem::SceneGroup
-						  || parentItem->type() == ScenarioModelItem::Folder)
-						 && parentItem != m_scenarioItem
-						 && parentItem != m_rootItem) {
-					insertBeforeItem = parentItem->childAt(parentItem->childCount() - 1);
-				}
-				//
-				// В оставшихся случаях вкладываем данные за последним блоком
-				//
-				else if (parentItem == m_scenarioItem) {
-					insertBeforeItem = m_scenarioItem->childAt(m_scenarioItem->childCount() - 1);
+				if (m_lastMime == _data) {
+					m_xmlHandler->removeLastMime();
 				}
 
 				//
 				// Вставим данные
 				//
-				m_xmlHandler->xmlToScenario(parentItem, insertBeforeItem, _data->data(ScenarioDocument::MIME_TYPE));
+				m_xmlHandler->xmlToScenario(parentItem, insertBeforeItem, _data->data(MIME_TYPE));
 				isDropSucceed = true;
 
 				break;
@@ -306,12 +300,33 @@ bool ScenarioModel::dropMimeData(
 
 QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const
 {
-	return 0;
+	QMimeData* mimeData = new QMimeData;
+
+	if (!_indexes.isEmpty()) {
+		//
+		// Т.к. выделение может быть только последовательным, то не переживая
+		// используем первый и последний индексы выления
+		//
+
+		ScenarioModelItem* fromItem = itemForIndex(_indexes.first());
+		ScenarioModelItem* toItem = itemForIndex(_indexes.last());
+
+		//
+		// Сформируем данные
+		//
+		mimeData->setData(
+					MIME_TYPE,
+					m_xmlHandler->scenarioToXml(fromItem, toItem).toUtf8());
+	}
+
+	m_lastMime = mimeData;
+
+	return mimeData;
 }
 
 QStringList ScenarioModel::mimeTypes() const
 {
-	return QStringList() << ScenarioDocument::MIME_TYPE;
+	return QStringList() << MIME_TYPE;
 }
 
 Qt::DropActions ScenarioModel::supportedDragActions() const

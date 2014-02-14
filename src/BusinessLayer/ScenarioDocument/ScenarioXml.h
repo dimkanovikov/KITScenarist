@@ -29,6 +29,11 @@ namespace BusinessLogic
 		QString scenarioToXml(int _startPosition = 0, int _endPosition = 0);
 
 		/**
+		 * @brief Записать сценарий в xml-строку из заданного диапозона элементов
+		 */
+		QString scenarioToXml(ScenarioModelItem* _fromItem, ScenarioModelItem* _toItem);
+
+		/**
 		 * @brief Загрузить сценарий из xml в документ
 		 */
 		void xmlToScenario(int _position, const QString& _xml);
@@ -38,8 +43,21 @@ namespace BusinessLogic
 		 */
 		void xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml);
 
+		void removeLastMime();
+
 	private:
+		/**
+		 * @brief Документ сценария
+		 */
 		ScenarioDocument* m_scenario;
+
+		/**
+		 * @brief Последние позиции создания майм-данных
+		 */
+		/** @{ */
+		int m_lastMimeFrom;
+		int m_lastMimeTo;
+		/** @} */
 	};
 }
 

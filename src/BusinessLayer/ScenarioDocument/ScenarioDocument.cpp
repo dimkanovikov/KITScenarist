@@ -39,41 +39,31 @@ QAbstractItemModel* ScenarioDocument::model() const
 int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const
 {
 	int insertPosition = 0;
-	int insertAfterItemStartPos = 0;
 
 	//
 	// Если необходимо вставить перед заданным элементом
 	//
 	if (_insertBefore != 0) {
-		insertAfterItemStartPos = m_modelItems.key(_insertBefore);
+		int insertBeforeItemStartPos = m_modelItems.key(_insertBefore);
 
 		//
 		// Шаг назад
 		//
-		insertPosition = insertAfterItemStartPos - 1;
+		insertPosition = insertBeforeItemStartPos - 1;
 	}
 	//
 	// Если необходимо вставить в конец родительского элемента
 	//
 	else {
-		//
-		// Получим следующий за родителем элемент
-		//
-		insertAfterItemStartPos = m_modelItems.key(_insertParent);
-		QMap<int, ScenarioModelItem*>::const_iterator iter = m_modelItems.find(insertAfterItemStartPos);
-		++iter;
-
-		//
-		// Если конец документа
-		//
-		if (iter == m_modelItems.end()) {
-			insertPosition = m_document->characterCount() - 1;
-		}
-		//
-		// Если не конец документа, то отступим на один символ назад
-		//
-		else {
-			insertPosition = iter.key() - 1;
+		if (_insertParent->hasChildren()) {
+			ScenarioModelItem* lastChild = _insertParent->childAt(_insertParent->childCount() - 1);
+			insertPosition = itemEndPosition(lastChild);
+		} else {
+			int parentStartPosition = itemStartPosition(_insertParent);
+			QTextCursor cursor(m_document);
+			cursor.setPosition(parentStartPosition);
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			insertPosition = cursor.position();
 		}
 	}
 
@@ -85,6 +75,72 @@ int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, Sce
 	}
 
 	return insertPosition;
+}
+
+int ScenarioDocument::itemStartPosition(ScenarioModelItem* _item) const
+{
+	return m_modelItems.key(_item, 0);
+}
+
+int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
+{
+	ScenarioModelItem* itemToFindPosition = 0;
+
+	//
+	// Если у элемента нет вложеных элементов
+	//
+	if (!_item->hasChildren()) {
+		//
+		// Ищем позицию перед следующим элементом
+		//
+		itemToFindPosition = _item;
+	}
+	//
+	// Если есть вложенные элементы
+	//
+	else {
+		//
+		// Ищем за последним вложенным элементом
+		//
+		itemToFindPosition = _item->childAt(_item->childCount() - 1);
+	}
+
+	const int itemToFindPositionKey = m_modelItems.key(itemToFindPosition, 0);
+	QMap<int, ScenarioModelItem*>::const_iterator itemToFindPositionIter =
+			m_modelItems.find(itemToFindPositionKey);
+
+	//
+	// Определяем позицию
+	//
+	int endPosition = 0;
+	++itemToFindPositionIter;
+	if (itemToFindPositionIter == m_modelItems.end()) {
+		endPosition = m_document->characterCount() - 1;
+	} else {
+		endPosition = itemToFindPositionIter.key() - 1;
+	}
+
+	//
+	// Если элементом является сцена, то не нужно учитывать идущие в конце её
+	// закрывающие блоки групп
+	//
+	if (_item->type() == ScenarioModelItem::Scene) {
+		QTextCursor cursor(m_document);
+		cursor.setPosition(endPosition);
+		ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+		while ((currentType == ScenarioTextBlockStyle::SceneGroupFooter
+			   || currentType == ScenarioTextBlockStyle::FolderFooter)
+			   && !cursor.atStart()) {
+			cursor.movePosition(QTextCursor::PreviousBlock);
+			currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+		}
+		if (!cursor.atStart()) {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			endPosition = cursor.position();
+		}
+	}
+
+	return endPosition;
 }
 
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
