@@ -145,13 +145,6 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
-	//
-	// Скорректируем позицию
-	//
-	if (_charsRemoved > _charsAdded
-		&& _position > 0) {
-		++_position;
-	}
 
 	//
 	// Если были удалены данные
@@ -188,9 +181,29 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	}
 
 	//
+	// Скорректируем позицию
+	//
+	if (_charsRemoved > _charsAdded
+		&& _position > 0) {
+		++_position;
+	}
+
+	//
 	// Сместить позиции всех сохранённых в кэше элементов после текущего на _charsRemoved и _charsAdded
 	//
 	{
+		int position = _position;
+
+		//
+		// Если нажат энтер, то нужно сместить все элементы, включая тот, перед блоком
+		// которого он нажат
+		//
+		if (_charsAdded == 1 && _charsRemoved == 0) {
+			if (m_document->characterAt(_position) == QChar(QChar::ParagraphSeparator)) {
+				--position;
+			}
+		}
+
 		QMutableMapIterator<int, ScenarioModelItem*> removeIter(m_modelItems);
 		QMap<int, ScenarioModelItem*> updatedItems;
 		//
@@ -198,7 +211,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		//
 		while (removeIter.hasNext()) {
 			removeIter.next();
-			if (removeIter.key() > _position) {
+			if (removeIter.key() > position) {
 				updatedItems.insert(removeIter.key() - _charsRemoved + _charsAdded, removeIter.value());
 				removeIter.remove();
 			}
@@ -364,7 +377,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						// Вставить в группирующий элемент
 						//
 						if (currentItem == currentParent) {
-							m_model->appendItem(newItem, currentParent);
+							m_model->prependItem(newItem, currentParent);
 						}
 						//
 						// Вставить после текущего элемента
