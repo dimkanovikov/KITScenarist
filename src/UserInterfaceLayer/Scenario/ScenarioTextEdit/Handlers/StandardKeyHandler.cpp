@@ -513,7 +513,9 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 		// Если начало документа, то время и место
 		//
 		if (topCursorPosition == 0) {
-			targetType = ScenarioTextBlockStyle::TimeAndPlace;
+			if (bottomCursorPosition != 1) {
+				targetType = ScenarioTextBlockStyle::TimeAndPlace;
+			}
 		}
 		//
 		// Если не начало документа
