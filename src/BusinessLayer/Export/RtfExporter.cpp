@@ -169,15 +169,14 @@ QString RtfExporter::style(ScenarioTextBlockStyle::Type _type) const
 
 QString RtfExporter::stringToUtfCode(const QString& _text) const
 {
-	QString strNew;
-	QString isAcsii;
-	QString tmp;
-	foreach(QChar cr, _text)
-	{
-		tmp.setNum(cr.unicode());
-		tmp.prepend("\\u");
-		strNew+=tmp;
+	QString result;
+
+	QString utfCharacter;
+	foreach (QChar character, _text)	{
+		utfCharacter.setNum(character.unicode());
+		utfCharacter.prepend("\\u");
+		result += utfCharacter;
 	}
 
-	return strNew;
+	return result;
 }

@@ -70,7 +70,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 			//
 			// Получить текст под курсором
 			//
-			QString textToSave = cursor.selectedText().simplified();
+			QString textToSave =
+					QString("<![CDATA[%1]]>")
+					.arg(cursor.selectedText().simplified());
+
 
 			//
 			// Дописать xml

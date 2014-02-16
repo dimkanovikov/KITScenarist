@@ -381,6 +381,14 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	}
 
 	//
+	// Если в конце документа нажат delete
+	//
+	if (cursor.atEnd()
+		&& _backward == false) {
+		return;
+	}
+
+	//
 	// Определим границы выделения
 	//
 	// ... верхнюю
@@ -465,7 +473,8 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 			//
 			// Если необходимо расширим верхний
 			//
-			if (topStyle.isEmbeddable()) {
+			if (topStyle.isEmbeddable()
+				&& !bottomCursor.block().text().isEmpty()) {
 				//
 				// Если блок является группирующим - расширим выделение, сдвигая курсор влево
 				//
@@ -485,7 +494,8 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 			//
 			// Если необходимо расширим нижний
 			//
-			if (bottomStyle.isEmbeddable()) {
+			if (bottomStyle.isEmbeddable()
+				&& !topCursor.block().text().isEmpty()) {
 				//
 				// Если блок является группирующим - расширим выделение, сдвигая курсор вправо
 				//
