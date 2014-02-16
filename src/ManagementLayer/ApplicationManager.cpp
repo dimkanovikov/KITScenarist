@@ -4,6 +4,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Export/PdfExporter.h>
 #include <BusinessLayer/Export/RtfExporter.h>
+#include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
 #include <QTextEdit>
 #include <UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEdit.h>
@@ -12,6 +13,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QLabel>
 
 ApplicationManager::ApplicationManager(QObject *parent) :
 	QObject(parent)
@@ -25,7 +27,7 @@ namespace {
 void ApplicationManager::exec()
 {
 	document = new BusinessLogic::ScenarioDocument(this);
-	ScenarioTextEdit* textEdit = new ScenarioTextEdit(0, document->document());
+	textEdit = new ScenarioTextEdit(0, document->document());
 	QTreeView* view = new QTreeView;
 	view->setItemDelegate(new ScenarioNavigatorItemDelegate(view));
 	view->setDragDropMode(QAbstractItemView::DragDrop);
@@ -34,9 +36,12 @@ void ApplicationManager::exec()
 	view->setModel(document->model());
 	QPushButton* btn = new QPushButton("Print");
 	connect(btn, SIGNAL(clicked()), this, SLOT(print()));
+	label = new QLabel;
+	connect(textEdit, SIGNAL(cursorPositionChanged()), this, SLOT(updatePositionDuration()));
 	QVBoxLayout* leftLayout = new QVBoxLayout;
 	leftLayout->addWidget(view);
 	leftLayout->addWidget(btn);
+	leftLayout->addWidget(label);
 
 	QWidget* widget = new QWidget;
 	QHBoxLayout* layout = new QHBoxLayout(widget);
@@ -52,4 +57,12 @@ void ApplicationManager::print()
 	exporter.exportTo(document->document(), "/home/dimkanovikov/1.pdf");
 	BusinessLogic::RtfExporter exporter1;
 	exporter1.exportTo(document->document(), "/home/dimkanovikov/1.rtf");
+}
+
+void ApplicationManager::updatePositionDuration()
+{
+	label->setText(
+				ChronometerFacade::secondsToTime(
+					document->durationToPosition(textEdit->textCursor().position()))
+				);
 }

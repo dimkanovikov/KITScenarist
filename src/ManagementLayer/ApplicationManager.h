@@ -3,6 +3,9 @@
 
 #include <QObject>
 
+class ScenarioTextEdit;
+class QLabel;
+
 class ApplicationManager : public QObject
 {
 	Q_OBJECT
@@ -15,7 +18,11 @@ signals:
 
 public slots:
 	void print();
+	void updatePositionDuration();
 
+private:
+	ScenarioTextEdit* textEdit;
+	QLabel* label;
 };
 
 #endif // APPLICATIONMANAGER_H

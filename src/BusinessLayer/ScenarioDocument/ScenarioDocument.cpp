@@ -143,6 +143,43 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 	return endPosition;
 }
 
+int ScenarioDocument::durationToPosition(int _position) const
+{
+	//
+	// Определим сцену, в которой находится курсор
+	//
+	QMap<int, ScenarioModelItem*>::const_iterator iter = m_modelItems.lowerBound(_position);
+	if (iter.key() > _position) {
+		--iter;
+	}
+
+	//
+	// Запомним позицию начала сцены
+	//
+	int startPositionInLastScene = iter.key();
+
+	//
+	// Посчитаем хронометраж всех предыдущих сцен
+	//
+	int duration = 0;
+	if (iter.value()->type() == ScenarioModelItem::Scene) {
+		iter.value()->duration();
+	}
+	while (iter != m_modelItems.begin()) {
+		--iter;
+		if (iter.value()->type() == ScenarioModelItem::Scene) {
+			duration += iter.value()->duration();
+		}
+	}
+
+	//
+	// Добавим к суммарному хрономертажу хронометраж от начала сцены
+	//
+	duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
+
+	return duration;
+}
+
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
 

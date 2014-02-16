@@ -372,20 +372,22 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 {
 	QTextCursor cursor = editor()->textCursor();
 
-	//
-	// Если в начале документа нажат backspace
-	//
-	if (cursor.atStart()
-		&& _backward == true) {
-		return;
-	}
+	if (!cursor.hasSelection()) {
+		//
+		// Если в начале документа нажат backspace
+		//
+		if (cursor.atStart()
+			&& _backward == true) {
+			return;
+		}
 
-	//
-	// Если в конце документа нажат delete
-	//
-	if (cursor.atEnd()
-		&& _backward == false) {
-		return;
+		//
+		// Если в конце документа нажат delete
+		//
+		if (cursor.atEnd()
+			&& _backward == false) {
+			return;
+		}
 	}
 
 	//

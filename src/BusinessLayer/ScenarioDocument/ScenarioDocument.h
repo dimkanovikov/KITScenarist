@@ -61,6 +61,11 @@ namespace BusinessLogic
 		 */
 		int itemEndPosition(ScenarioModelItem* _item) const;
 
+		/**
+		 * @brief Посчитать длительность сценария до указанной позиции
+		 */
+		int durationToPosition(int _position) const;
+
 	private slots:
 		/**
 		 * @brief Изменилось содержимое документа
