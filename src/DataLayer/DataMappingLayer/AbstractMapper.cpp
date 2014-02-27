@@ -1,5 +1,7 @@
 #include "AbstractMapper.h"
 
+#include "AbstractMapperPrivate.h"
+
 #include <DataLayer/Database/Database.h>
 
 #include <QVariant>
@@ -10,14 +12,15 @@ using namespace DataMappingLayer;
 using namespace DatabaseLayer;
 
 
-AbstractMapper::AbstractMapper()
+AbstractMapper::AbstractMapper() :
+	m_sqlExecuter(new SqlExecutingQueuedThread)
 {
-
 }
 
 AbstractMapper::~AbstractMapper()
 {
-
+	delete m_sqlExecuter;
+	m_sqlExecuter = 0;
 }
 
 void AbstractMapper::clear()
@@ -30,7 +33,7 @@ void AbstractMapper::clear()
 	m_loadedObjectsMap.clear();
 }
 
-DomainObject * AbstractMapper::abstractFind(const Identifier& _id )
+DomainObject * AbstractMapper::abstractFind(const Identifier& _id)
 {
     DomainObject *result = m_loadedObjectsMap.value( _id, 0 );
     if ( !DomainObject::isValid( result ) ) {
@@ -39,7 +42,7 @@ DomainObject * AbstractMapper::abstractFind(const Identifier& _id )
 	return result;
 }
 
-DomainObjectsItemModel * AbstractMapper::abstractFindAll(const QString& _filter )
+DomainObjectsItemModel * AbstractMapper::abstractFindAll(const QString& _filter)
 {
     QSqlQuery query ( Database::instanse() );
     query.prepare( findAllStatement() + _filter );
@@ -53,18 +56,23 @@ DomainObjectsItemModel * AbstractMapper::abstractFindAll(const QString& _filter 
     return result;
 }
 
-void AbstractMapper::abstractInsert( DomainObject *subject )
+void AbstractMapper::abstractInsert(DomainObject* _subject)
 {
 	//
 	// Установим идентификатор для нового объекта
 	//
-	subject->setId(findNextIdentifier());
+	_subject->setId(findNextIdentifier());
+
+	//
+	// Добавим вновь созданный объект в список загруженных объектов
+	//
+	m_loadedObjectsMap.insert(_subject->id(), _subject);
 
 	//
 	// Получим данные для формирования запроса на их добавление
 	//
 	QVariantList insertValues;
-	QString insertQuery = insertStatement(subject, insertValues);
+	QString insertQuery = insertStatement(_subject, insertValues);
 
 	//
 	// Сформируем запрос на добавление данных в базу
@@ -78,31 +86,24 @@ void AbstractMapper::abstractInsert( DomainObject *subject )
 	//
 	// Добавим данные в базу
 	//
-	q_insert.exec();
-
-	//
-	// Добавим вновь созданный объект в список загруженных объектов
-	//
-	m_loadedObjectsMap.insert(subject->id(), subject);
-
-	qDebug() << q_insert.lastQuery();
-	qDebug() << q_insert.lastError();
+	m_sqlExecuter->executeSql(q_insert);
+//	q_insert.exec();
+//	qDebug() << q_insert.lastQuery();
+//	qDebug() << q_insert.lastError();
 }
 
-void AbstractMapper::abstractUpdate( DomainObject *subject )
+void AbstractMapper::abstractUpdate(DomainObject* _subject)
 {
 	//
     // т.к. в m_loadedObjectsMap хранится список указателей, то после обновления элементов
     // обновлять элемент непосредственно в списке не нужно
 	//
 
-	Identifier idBeforeUpdate = subject->id();
-
 	//
 	// Получим данные для формирования запроса на их обновление
 	//
 	QVariantList updateValues;
-	QString updateQuery = updateStatement(subject, updateValues);
+	QString updateQuery = updateStatement(_subject, updateValues);
 
 	//
 	// Сформируем запрос на обновление данных в базе
@@ -116,27 +117,19 @@ void AbstractMapper::abstractUpdate( DomainObject *subject )
 	//
 	// Обновим данные в базе
 	//
-	q_update.exec();
-
-	//
-	// Если во время обновления изменился идентификатор объекта,
-	// нужно обновить идентификатор в списке загруженных
-	//
-	if ( idBeforeUpdate != subject->id() ) {
-		m_loadedObjectsMap.insert( subject->id(), subject );
-	}
-
-	qDebug() << q_update.lastQuery();
-	qDebug() << q_update.lastError();
+	m_sqlExecuter->executeSql(q_update);
+//	q_update.exec();
+//	qDebug() << q_update.lastQuery();
+//	qDebug() << q_update.lastError();
 }
 
-void AbstractMapper::abstractDelete( DomainObject *subject )
+void AbstractMapper::abstractDelete(DomainObject* _subject)
 {
 	//
 	// Получим данные для формирования запроса на их удаление
 	//
 	QVariantList deleteValues;
-	QString deleteQuery = deleteStatement(subject, deleteValues);
+	QString deleteQuery = deleteStatement(_subject, deleteValues);
 
 	//
 	// Сформируем запрос на удаление данных из базы
@@ -150,20 +143,20 @@ void AbstractMapper::abstractDelete( DomainObject *subject )
 	//
 	// Удалим данные из базы
 	//
-	q_delete.exec();
+	m_sqlExecuter->executeSql(q_delete);
+//	q_delete.exec();
+//	qDebug() << q_delete.lastQuery();
+//	qDebug() << q_delete.lastError();
 
 	//
 	// Удалим объекст из списка загруженных
 	//
-    m_loadedObjectsMap.remove( subject->id() );
-    delete subject;
-    subject = 0;
-
-	qDebug() << q_delete.lastQuery();
-	qDebug() << q_delete.lastError();
+	m_loadedObjectsMap.remove(_subject->id());
+	delete _subject;
+	_subject = 0;
 }
 
-DomainObject *AbstractMapper::loadObjectFromDatabase(const Identifier& _id )
+DomainObject* AbstractMapper::loadObjectFromDatabase(const Identifier& _id)
 {
     DomainObject *result = 0;
     QSqlQuery query( Database::instanse() );
@@ -177,11 +170,12 @@ DomainObject *AbstractMapper::loadObjectFromDatabase(const Identifier& _id )
 
 Identifier AbstractMapper::findNextIdentifier()
 {
-    QSqlQuery query( Database::instanse() );
-    query.prepare( maxIdStatement() );
-    query.exec();
-    query.next();
-    Identifier maxId( query.value(0).toInt() );
+	Identifier maxId(0);
+	if (!m_loadedObjectsMap.isEmpty()) {
+		QMap<Identifier, DomainObject*>::const_iterator iter = m_loadedObjectsMap.end();
+		--iter;
+		maxId = iter.key();
+	}
     return maxId.next();
 }
 
@@ -208,4 +202,37 @@ DomainObject * AbstractMapper::load(const QSqlRecord& _record )
         m_loadedObjectsMap.insert( id, result );
     }
     return result;
+}
+
+
+/**
+ * Реализация поточного выполнения запросов
+ */
+
+
+SqlExecutingQueuedThread::SqlExecutingQueuedThread(QObject *_parent) :
+	QThread(_parent)
+{
+}
+
+void SqlExecutingQueuedThread::executeSql(const QSqlQuery &_sqlQuery)
+{
+	m_mutex.lock();
+	m_sqlQueue.enqueue(_sqlQuery);
+	m_mutex.unlock();
+
+	if (!isRunning()) {
+		start();
+	}
+}
+
+void SqlExecutingQueuedThread::run()
+{
+	while (!m_sqlQueue.isEmpty()) {
+		QSqlQuery queryToExecute = m_sqlQueue.dequeue();
+		queryToExecute.exec();
+
+		qDebug() << queryToExecute.lastQuery();
+		qDebug() << queryToExecute.lastError();
+	}
 }

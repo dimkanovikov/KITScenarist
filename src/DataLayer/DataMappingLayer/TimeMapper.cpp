@@ -46,11 +46,6 @@ QString TimeMapper::findAllStatement() const
 	return "SELECT " + COLUMNS + " FROM  " + TABLE_NAME;
 }
 
-QString TimeMapper::maxIdStatement() const
-{
-	return "SELECT MAX(id) FROM  " + TABLE_NAME;
-}
-
 QString TimeMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
 {
 	QString insertStatement =

@@ -46,11 +46,6 @@ QString CharacterMapper::findAllStatement() const
 	return "SELECT " + COLUMNS + " FROM  " + TABLE_NAME;
 }
 
-QString CharacterMapper::maxIdStatement() const
-{
-	return "SELECT MAX(id) FROM  " + TABLE_NAME;
-}
-
 QString CharacterMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
 {
 	QString insertStatement =

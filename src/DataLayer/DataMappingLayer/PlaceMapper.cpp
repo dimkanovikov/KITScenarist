@@ -46,11 +46,6 @@ QString PlaceMapper::findAllStatement() const
 	return "SELECT " + COLUMNS + " FROM  " + TABLE_NAME;
 }
 
-QString PlaceMapper::maxIdStatement() const
-{
-	return "SELECT MAX(id) FROM  " + TABLE_NAME;
-}
-
 QString PlaceMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
 {
 	QString insertStatement =

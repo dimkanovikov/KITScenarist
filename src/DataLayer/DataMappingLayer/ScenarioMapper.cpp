@@ -46,11 +46,6 @@ QString ScenarioMapper::findAllStatement() const
 	return "SELECT " + COLUMNS + " FROM  " + TABLE_NAME;
 }
 
-QString ScenarioMapper::maxIdStatement() const
-{
-	return "SELECT MAX(id) FROM  " + TABLE_NAME;
-}
-
 QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
 {
 	QString insertStatement =

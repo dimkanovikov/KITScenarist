@@ -9,14 +9,22 @@
 using namespace DatabaseLayer;
 
 
-QSqlDatabase Database::instanse()
+QSqlDatabase Database::instanse(const QString& _databaseFileName)
 {
 	QSqlDatabase database;
 
-	if ( !QSqlDatabase::contains( CONNECTION_NAME ) ) {
-		open( database );
+	if ( !QSqlDatabase::contains(CONNECTION_NAME) ) {
+		//
+		// Если имя файла с базой данных не задано, то используем значение по умолчанию
+		//
+		open(database,
+			 CONNECTION_NAME,
+			 (_databaseFileName.isEmpty()
+			  ? DATABASE_NAME
+			  : _databaseFileName)
+			 );
 	} else {
-		database = QSqlDatabase::database( CONNECTION_NAME );
+		database = QSqlDatabase::database(CONNECTION_NAME);
 	}
 
 	return database;
@@ -159,18 +167,18 @@ void Database::createEnums(QSqlDatabase& _database)
 	// Справочник мест
 	{
 #ifdef USE_RUSSIAN_DATABASE_ENUMS
-//		q_creator.exec(
-//					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
-//					.arg(QString::fromUtf8("ИНТ"))
-//					);
-//		q_creator.exec(
-//					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
-//					.arg(QString::fromUtf8("НАТ"))
-//					);
-//		q_creator.exec(
-//					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
-//					.arg(QString::fromUtf8("ПАВ"))
-//					);
+		q_creator.exec(
+					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ИНТ"))
+					);
+		q_creator.exec(
+					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("НАТ"))
+					);
+		q_creator.exec(
+					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ПАВ"))
+					);
 #else
 		q_creator.exec("INSERT INTO places (id, name) VALUES (null, 'INT');");
 		q_creator.exec("INSERT INTO places (id, name) VALUES (null, 'EXT');");
@@ -187,6 +195,14 @@ void Database::createEnums(QSqlDatabase& _database)
 		q_creator.exec(
 					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
 					.arg(QString::fromUtf8("НОЧЬ"))
+					);
+		q_creator.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("УТРО"))
+					);
+		q_creator.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ВЕЧЕР"))
 					);
 #else
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'DAY');");

@@ -9,7 +9,7 @@ namespace DatabaseLayer
 	class Database
 	{
 	public:
-		static QSqlDatabase instanse();
+		static QSqlDatabase instanse(const QString& _databaseFileName = QString());
 
 		enum State {
 			Null,
@@ -27,8 +27,8 @@ namespace DatabaseLayer
 					   DATABASE_NAME;
 
 		static void open(QSqlDatabase& _database,
-				const QString& _connectionName = CONNECTION_NAME,
-				const QString& _databaseName = DATABASE_NAME
+				const QString& _connectionName,
+				const QString& _databaseName
 				);
 		static Database::States checkState(QSqlDatabase& _database);
 		static void createTables(QSqlDatabase& _database);

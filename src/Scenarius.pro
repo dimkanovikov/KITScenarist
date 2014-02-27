@@ -250,7 +250,8 @@ HEADERS += \
     BusinessLayer/Export/PdfExporter.h \
     BusinessLayer/Export/RtfExporter.h \
     BusinessLayer/ScenarioDocument/ScenarioXml.h \
-    BusinessLayer/ScenarioDocument/ScenarioTextDocument.h
+    BusinessLayer/ScenarioDocument/ScenarioTextDocument.h \
+    DataLayer/DataMappingLayer/AbstractMapperPrivate.h
 
 OTHER_FILES += \
     TODO \
