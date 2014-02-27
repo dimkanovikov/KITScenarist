@@ -1,4 +1,4 @@
-Scenarius
+Scenarist
 ============
 
 Application to write scenarios.

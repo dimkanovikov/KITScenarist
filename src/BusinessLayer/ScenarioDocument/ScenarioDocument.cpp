@@ -15,7 +15,7 @@
 using namespace BusinessLogic;
 
 
-QString ScenarioDocument::MIME_TYPE = "application/x-scenarius/scenario";
+QString ScenarioDocument::MIME_TYPE = "application/x-scenarist/scenario";
 
 ScenarioDocument::ScenarioDocument(QObject* _parent) :
 	QObject(_parent),

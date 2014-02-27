@@ -6,7 +6,7 @@
 
 QT       += core gui sql xml widgets printsupport
 
-TARGET = Scenarius
+TARGET = Scenarist
 TEMPLATE = app
 
 #
@@ -118,7 +118,7 @@ SOURCES += main.cpp \
     3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.cpp \
     3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.cpp \
     3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
-	3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
+    3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemWidget.cpp \
@@ -240,7 +240,7 @@ HEADERS += \
     3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.h \
     3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h \
     3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.h \
-	3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
+    3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockStylePrivate.h \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \

@@ -9,7 +9,7 @@
 using namespace BusinessLogic;
 
 
-QString ScenarioModel::MIME_TYPE = "application/x-scenarius/scenario-tree";
+QString ScenarioModel::MIME_TYPE = "application/x-scenarist/scenario-tree";
 
 ScenarioModel::ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler) :
 	QAbstractItemModel(parent),

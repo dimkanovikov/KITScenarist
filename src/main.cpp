@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	//
 	a.setOrganizationName("DimkaNovikov labs.");
 	a.setOrganizationDomain("dimkanovikov.pro");
-	a.setApplicationName("Scenarius");
+	a.setApplicationName("Scenarist");
 	a.setApplicationVersion("0.0.1");
 
 	//
