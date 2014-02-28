@@ -6,23 +6,69 @@
 class ScenarioTextEdit;
 class QLabel;
 
-class ApplicationManager : public QObject
+namespace ManagementLayer
 {
-	Q_OBJECT
-public:
-	explicit ApplicationManager(QObject *parent = 0);
+	/**
+	 * @brief Управляющий приложением
+	 */
+	class ApplicationManager : public QObject
+	{
+		Q_OBJECT
 
-	void exec();
+	public:
+		explicit ApplicationManager(QObject *parent = 0);
+		~ApplicationManager();
 
-signals:
+		/**
+		 * @brief Запуск приложения
+		 */
+		void exec();
 
-public slots:
-	void print();
-	void updatePositionDuration();
+	private slots:
+		/**
+		 * @brief Создать новый
+		 */
+		void aboutCreateNew();
 
-private:
-	ScenarioTextEdit* textEdit;
-	QLabel* label;
-};
+		/**
+		 * @brief Сохранить как...
+		 */
+		void aboutSaveAs();
+
+		/**
+		 * @brief Сохранить в файл
+		 */
+		void aboutSave();
+
+		/**
+		 * @brief Загрузить
+		 */
+		void aboutLoad();
+
+	private:
+		/**
+		 * @brief Если проект был изменён, но не сохранён предложить пользователю сохранить его
+		 */
+		void saveIfNeeded();
+
+	private:
+		/**
+		 * @brief Главное окно приложения
+		 */
+		QWidget* m_view;
+
+
+
+		/// tests
+
+	public slots:
+		void print();
+		void updatePositionDuration();
+
+	private:
+		ScenarioTextEdit* textEdit;
+		QLabel* label;
+	};
+}
 
 #endif // APPLICATIONMANAGER_H

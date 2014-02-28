@@ -143,7 +143,7 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 	return endPosition;
 }
 
-int ScenarioDocument::durationToPosition(int _position) const
+int ScenarioDocument::durationAtPosition(int _position) const
 {
 	//
 	// Определим сцену, в которой находится курсор

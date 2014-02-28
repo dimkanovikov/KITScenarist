@@ -64,7 +64,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Посчитать длительность сценария до указанной позиции
 		 */
-		int durationToPosition(int _position) const;
+		int durationAtPosition(int _position) const;
 
 	private slots:
 		/**

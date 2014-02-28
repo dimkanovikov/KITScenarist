@@ -9,7 +9,20 @@ namespace DatabaseLayer
 	class Database
 	{
 	public:
-		static QSqlDatabase instanse(const QString& _databaseFileName = QString());
+		/**
+		 * @brief Установить текущий файл базы данных
+		 */
+		static void setCurrentFile(const QString& _databaseFileName);
+
+		/**
+		 * @brief Получить имя текущей базы данных
+		 */
+		static QString currentFile();
+
+		/**
+		 * @brief Получить объект текущей базы данных
+		 */
+		static QSqlDatabase instanse();
 
 		enum State {
 			Null,

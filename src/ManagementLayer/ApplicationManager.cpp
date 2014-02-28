@@ -1,5 +1,14 @@
 #include "ApplicationManager.h"
 
+#include <DataLayer/Database/Database.h>
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+
+#include <QFileDialog>
+#include <QMessageBox>
+
+
+
+
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Export/PdfExporter.h>
@@ -15,9 +24,24 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
+
+
+
+
+
+using namespace ManagementLayer;
+
+
 ApplicationManager::ApplicationManager(QObject *parent) :
-	QObject(parent)
+	QObject(parent),
+	m_view(new QWidget)
 {
+}
+
+ApplicationManager::~ApplicationManager()
+{
+	delete m_view;
+	m_view = 0;
 }
 
 namespace {
@@ -43,12 +67,174 @@ void ApplicationManager::exec()
 	leftLayout->addWidget(btn);
 	leftLayout->addWidget(label);
 
-	QWidget* widget = new QWidget;
-	QHBoxLayout* layout = new QHBoxLayout(widget);
+	QHBoxLayout* layout = new QHBoxLayout(m_view);
 	layout->addLayout(leftLayout);
 	layout->addWidget(textEdit);
-	widget->resize(800,600);
-	widget->show();
+	m_view->resize(800,600);
+	m_view->show();
+}
+
+void ApplicationManager::aboutCreateNew()
+{
+	//
+	// Если нужно сохранить проект
+	//
+	saveIfNeeded();
+
+	//
+	// Получим имя файла для нового проекта
+	//
+	QString newProjectFileName =
+			QFileDialog::getSaveFileName(
+				m_view,
+				tr("Choose file for new project"),
+				QString(),
+				tr ("Scenarist project files (*.ksp)") // kit scenarist project
+				);
+
+	//
+	// Если файл выбран
+	//
+	if (!newProjectFileName.isEmpty()) {
+		//
+		// ... очистим все загруженные на текущий момент данные
+		//
+		DataStorageLayer::StorageFacade::clearStorages();
+
+		//
+		// ... если файл существовал, удалим его для удаления данных в нём
+		//
+		if (QFile::exists(newProjectFileName)) {
+			QFile::remove(newProjectFileName);
+		}
+
+		//
+		// ... создаём новую базу данных в файле
+		//
+		DatabaseLayer::Database::setCurrentFile(newProjectFileName);
+
+		//
+		// TODO: проинициилизовать контроллеры
+		//
+	}
+}
+
+void ApplicationManager::aboutSaveAs()
+{
+	//
+	// Получим имя файла для сохранения
+	//
+	QString saveAsProjectFileName =
+			QFileDialog::getSaveFileName(
+				m_view,
+				tr("Choose file for save project"),
+				QString(),
+				tr ("Scenarist project files (*.ksp)") // kit scenarist project
+				);
+
+	//
+	// Если файл выбран
+	//
+	if (!saveAsProjectFileName.isEmpty()) {
+		//
+		// ... если пользователь хочет просто пересохранить проект
+		//
+		if (saveAsProjectFileName == DatabaseLayer::Database::currentFile()) {
+			aboutSave();
+		}
+		//
+		// ... если сохраняем в новый файл
+		//
+		else {
+			//
+			// ... если файл существовал, удалим его для удаления данных в нём
+			//
+			if (QFile::exists(saveAsProjectFileName)) {
+				QFile::remove(saveAsProjectFileName);
+			}
+
+			//
+			// ... скопируем текущую базу в указанный файл
+			//
+			QFile::copy(DatabaseLayer::Database::currentFile(), saveAsProjectFileName);
+
+			//
+			// ... переключаемся на использование другого файла
+			//
+			DatabaseLayer::Database::setCurrentFile(saveAsProjectFileName);
+
+			//
+			// ... сохраняем изменения
+			//
+			aboutSave();
+		}
+	}
+}
+
+void ApplicationManager::aboutSave()
+{
+	//
+	// TODO: управляющие должны сохранить несохранённые данные
+	//
+}
+
+void ApplicationManager::aboutLoad()
+{
+	//
+	// Если нужно сохранить проект
+	//
+	saveIfNeeded();
+
+	//
+	// Получим имя файла для загрузки
+	//
+	QString loadProjectFileName =
+			QFileDialog::getOpenFileName(
+				m_view,
+				tr("Choose project file to open"),
+				QString(),
+				tr ("Scenarist project files (*.ksp)") // kit scenarist project
+				);
+
+	//
+	// Если файл выбран
+	//
+	if (!loadProjectFileName.isEmpty()) {
+		//
+		// ... очистим все загруженные на текущий момент данные
+		//
+		DataStorageLayer::StorageFacade::clearStorages();
+
+		//
+		// ... переключаемся на работу с выбранным файлом
+		//
+		DatabaseLayer::Database::setCurrentFile(loadProjectFileName);
+
+		//
+		// TODO: загрузить данные из файла
+		//
+	}
+}
+
+void ApplicationManager::saveIfNeeded()
+{
+	//
+	// Если какие-то данные изменены
+	//
+	if (m_view->isWindowModified()) {
+		//
+		// ... спрашиваем пользователя, хочет ли он сохранить изменения
+		//
+		int questionResult = QMessageBox::question(m_view, tr("Save project changes?"),
+												   tr("Project was modified. Save changes?"),
+												   QMessageBox::Yes | QMessageBox::No);
+		//
+		// ... и сохраняем, если хочет
+		//
+		if (questionResult == QMessageBox::Yes) {
+			aboutSave();
+		}
+	}
 }
 
 void ApplicationManager::print()
@@ -63,6 +249,6 @@ void ApplicationManager::updatePositionDuration()
 {
 	label->setText(
 				ChronometerFacade::secondsToTime(
-					document->durationToPosition(textEdit->textCursor().position()))
+					document->durationAtPosition(textEdit->textCursor().position()))
 				);
 }

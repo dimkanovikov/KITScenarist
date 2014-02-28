@@ -9,20 +9,39 @@
 using namespace DatabaseLayer;
 
 
-QSqlDatabase Database::instanse(const QString& _databaseFileName)
+void Database::setCurrentFile(const QString& _databaseFileName)
+{
+	//
+	// Если использовалась база данных, то удалим старое соединение
+	//
+	if (QSqlDatabase::contains(CONNECTION_NAME)) {
+		QSqlDatabase::removeDatabase(CONNECTION_NAME);
+	}
+
+	//
+	// Установим текущее имя базы данных
+	//
+	if (DATABASE_NAME != _databaseFileName) {
+		DATABASE_NAME = _databaseFileName;
+	}
+
+	//
+	// Откроем базу данных, или создадим новую
+	//
+	instanse();
+}
+
+QString Database::currentFile()
+{
+	return instanse().databaseName();
+}
+
+QSqlDatabase Database::instanse()
 {
 	QSqlDatabase database;
 
-	if ( !QSqlDatabase::contains(CONNECTION_NAME) ) {
-		//
-		// Если имя файла с базой данных не задано, то используем значение по умолчанию
-		//
-		open(database,
-			 CONNECTION_NAME,
-			 (_databaseFileName.isEmpty()
-			  ? DATABASE_NAME
-			  : _databaseFileName)
-			 );
+	if (!QSqlDatabase::contains(CONNECTION_NAME)) {
+		open(database, CONNECTION_NAME, DATABASE_NAME);
 	} else {
 		database = QSqlDatabase::database(CONNECTION_NAME);
 	}

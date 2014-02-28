@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	QFontDatabase fontDatabase;
 	fontDatabase.addApplicationFont(":/Fonts/Courier New");
 
-	ApplicationManager m;
+	ManagementLayer::ApplicationManager m;
 	m.exec();
 
 	return a.exec();
