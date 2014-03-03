@@ -24,5 +24,8 @@
         <file>Icons/start.png</file>
         <file>Icons/settings_text_editor.png</file>
         <file>Icons/settings_chronometry.png</file>
+        <file>Icons/project_new.png</file>
+        <file>Icons/project_open.png</file>
+        <file>Icons/help.png</file>
     </qresource>
 </RCC>

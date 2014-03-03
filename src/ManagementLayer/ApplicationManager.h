@@ -8,6 +8,8 @@ class QLabel;
 
 namespace ManagementLayer
 {
+	class StartUpManager;
+
 	/**
 	 * @brief Управляющий приложением
 	 */
@@ -42,8 +44,10 @@ namespace ManagementLayer
 
 		/**
 		 * @brief Загрузить
+		 *
+		 * Если имя файла не задано, то будет вызван диалог выбора файла
 		 */
-		void aboutLoad();
+		void aboutLoad(const QString& _fileName = QString());
 
 	private:
 		/**
@@ -51,11 +55,24 @@ namespace ManagementLayer
 		 */
 		void saveIfNeeded();
 
+		/**
+		 * @brief Сохранить текущий проект в недавно используемых
+		 */
+		void saveCurrentProjectInRecent();
+
+	private:
+		void initConnections();
+
 	private:
 		/**
 		 * @brief Главное окно приложения
 		 */
 		QWidget* m_view;
+
+		/**
+		 * @brief Управляющий стартовой страницей
+		 */
+		StartUpManager* m_startUpManager;
 
 
 

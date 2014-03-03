@@ -1,5 +1,7 @@
 #include "ApplicationManager.h"
 
+#include "StartUp/StartUpManager.h"
+
 #include <DataLayer/Database/Database.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 
@@ -34,8 +36,10 @@ using namespace ManagementLayer;
 
 ApplicationManager::ApplicationManager(QObject *parent) :
 	QObject(parent),
-	m_view(new QWidget)
+	m_view(new QWidget),
+	m_startUpManager(new StartUpManager(this, m_view))
 {
+	initConnections();
 }
 
 ApplicationManager::~ApplicationManager()
@@ -50,26 +54,30 @@ namespace {
 
 void ApplicationManager::exec()
 {
-	document = new BusinessLogic::ScenarioDocument(this);
-	textEdit = new ScenarioTextEdit(0, document->document());
-	QTreeView* view = new QTreeView;
-	view->setItemDelegate(new ScenarioNavigatorItemDelegate(view));
-	view->setDragDropMode(QAbstractItemView::DragDrop);
-	view->setDragEnabled(true);
-	view->setDropIndicatorShown(true);
-	view->setModel(document->model());
-	QPushButton* btn = new QPushButton("Print");
-	connect(btn, SIGNAL(clicked()), this, SLOT(print()));
-	label = new QLabel;
-	connect(textEdit, SIGNAL(cursorPositionChanged()), this, SLOT(updatePositionDuration()));
-	QVBoxLayout* leftLayout = new QVBoxLayout;
-	leftLayout->addWidget(view);
-	leftLayout->addWidget(btn);
-	leftLayout->addWidget(label);
+//	document = new BusinessLogic::ScenarioDocument(this);
+//	textEdit = new ScenarioTextEdit(0, document->document());
+//	QTreeView* view = new QTreeView;
+//	view->setItemDelegate(new ScenarioNavigatorItemDelegate(view));
+//	view->setDragDropMode(QAbstractItemView::DragDrop);
+//	view->setDragEnabled(true);
+//	view->setDropIndicatorShown(true);
+//	view->setModel(document->model());
+//	QPushButton* btn = new QPushButton("Print");
+//	connect(btn, SIGNAL(clicked()), this, SLOT(print()));
+//	label = new QLabel;
+//	connect(textEdit, SIGNAL(cursorPositionChanged()), this, SLOT(updatePositionDuration()));
+//	QVBoxLayout* leftLayout = new QVBoxLayout;
+//	leftLayout->addWidget(view);
+//	leftLayout->addWidget(btn);
+//	leftLayout->addWidget(label);
+
+//	QHBoxLayout* layout = new QHBoxLayout(m_view);
+//	layout->addLayout(leftLayout);
+//	layout->addWidget(textEdit);
 
 	QHBoxLayout* layout = new QHBoxLayout(m_view);
-	layout->addLayout(leftLayout);
-	layout->addWidget(textEdit);
+	layout->addWidget(m_startUpManager->view());
+
 	m_view->resize(800,600);
 	m_view->show();
 }
@@ -116,6 +124,11 @@ void ApplicationManager::aboutCreateNew()
 		//
 		// TODO: проинициилизовать контроллеры
 		//
+
+		//
+		// Добавим проект к недавно используемым
+		//
+		saveCurrentProjectInRecent();
 	}
 }
 
@@ -176,9 +189,15 @@ void ApplicationManager::aboutSave()
 	//
 	// TODO: управляющие должны сохранить несохранённые данные
 	//
+
+
+	//
+	// Добавим проект к недавно используемым
+	//
+	saveCurrentProjectInRecent();
 }
 
-void ApplicationManager::aboutLoad()
+void ApplicationManager::aboutLoad(const QString& _fileName)
 {
 	//
 	// Если нужно сохранить проект
@@ -186,15 +205,22 @@ void ApplicationManager::aboutLoad()
 	saveIfNeeded();
 
 	//
-	// Получим имя файла для загрузки
+	// Имя файла для загрузки
 	//
-	QString loadProjectFileName =
-			QFileDialog::getOpenFileName(
-				m_view,
-				tr("Choose project file to open"),
-				QString(),
-				tr ("Scenarist project files (*.ksp)") // kit scenarist project
-				);
+	QString loadProjectFileName = _fileName;
+
+	//
+	// Если имя файла не определено, выберем его в диалоге выбора файла
+	//
+	if (loadProjectFileName.isEmpty()) {
+		loadProjectFileName =
+				QFileDialog::getOpenFileName(
+					m_view,
+					tr("Choose project file to open"),
+					QString(),
+					tr ("Scenarist project files (*.ksp)") // kit scenarist project
+					);
+	}
 
 	//
 	// Если файл выбран
@@ -235,6 +261,21 @@ void ApplicationManager::saveIfNeeded()
 			aboutSave();
 		}
 	}
+}
+
+void ApplicationManager::saveCurrentProjectInRecent()
+{
+	//
+	// Сохраним текущий проект в недавно использованых
+	//
+	m_startUpManager->addRecentFile(DatabaseLayer::Database::currentFile());
+}
+
+void ApplicationManager::initConnections()
+{
+	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
+	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
+	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QString)), this, SLOT(aboutLoad(QString)));
 }
 
 void ApplicationManager::print()

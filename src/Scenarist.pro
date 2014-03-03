@@ -126,7 +126,10 @@ SOURCES += main.cpp \
     BusinessLayer/Export/PdfExporter.cpp \
     BusinessLayer/Export/RtfExporter.cpp \
     BusinessLayer/ScenarioDocument/ScenarioXml.cpp \
-    BusinessLayer/ScenarioDocument/ScenarioTextDocument.cpp
+    BusinessLayer/ScenarioDocument/ScenarioTextDocument.cpp \
+    UserInterfaceLayer/StartUp/StartUpView.cpp \
+    UserInterfaceLayer/StartUp/RecentFilesDelegate.cpp \
+    UserInterfaceLayer/StartUp/RecentFileWidget.cpp
 
 RESOURCES += \
     Resources/Resources.qrc
@@ -251,9 +254,15 @@ HEADERS += \
     BusinessLayer/Export/RtfExporter.h \
     BusinessLayer/ScenarioDocument/ScenarioXml.h \
     BusinessLayer/ScenarioDocument/ScenarioTextDocument.h \
-    DataLayer/DataMappingLayer/AbstractMapperPrivate.h
+    DataLayer/DataMappingLayer/AbstractMapperPrivate.h \
+    UserInterfaceLayer/StartUp/StartUpView.h \
+    UserInterfaceLayer/StartUp/RecentFilesDelegate.h \
+    UserInterfaceLayer/StartUp/RecentFileWidget.h
 
 OTHER_FILES += \
     TODO \
     settings_keys \
     scenario_settings_keys
+
+FORMS += \
+    UserInterfaceLayer/StartUp/StartUpView.ui

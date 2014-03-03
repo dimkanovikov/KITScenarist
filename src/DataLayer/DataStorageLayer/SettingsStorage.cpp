@@ -4,25 +4,66 @@
 #include <DataLayer/DataMappingLayer/SettingsMapper.h>
 
 #include <QSettings>
+#include <QStringList>
 
 using namespace DataStorageLayer;
 using namespace DataMappingLayer;
 
 
-void SettingsStorage::setValue(const QString& _key, const QString& _value, Settingsplace _settingsPlace)
+void SettingsStorage::setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace)
 {
 	if (_settingsPlace == ApplicationSettings) {
-		QSettings().setValue(_key, _value);
+		QSettings().setValue(_key.toUtf8().toHex(), _value);
 	} else {
 		MapperFacade::settingsMapper()->setValue(_key, _value);
 	}
 }
 
-QString SettingsStorage::value(const QString& _key, Settingsplace _settingsPlace)
+void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QString& _valuesGroup, SettingsStorage::SettingsPlace _settingsPlace)
+{
+	if (_settingsPlace == ApplicationSettings) {
+		QSettings settings;
+
+		//
+		// Очистим группу
+		//
+		{
+			settings.beginGroup(_valuesGroup);
+			settings.remove("");
+			settings.endGroup();
+		}
+
+		//
+		// Откроем группу
+		//
+		settings.beginGroup(_valuesGroup);
+
+		//
+		// Сохраним значения
+		//
+		foreach (const QString& key, _values.keys()) {
+			settings.setValue(key.toUtf8().toHex(), _values.value(key));
+		}
+
+		//
+		// Закроем группу
+		//
+		settings.endGroup();
+	}
+	//
+	// В базу данных карта параметров не умеет сохраняться
+	//
+	else {
+		Q_ASSERT_X(0, Q_FUNC_INFO, "Database settings can't save group of settings");
+	}
+
+}
+
+QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace)
 {
 	QString value;
 	if (_settingsPlace == ApplicationSettings) {
-		value = QSettings().value(_key, QVariant()).toString();
+		value = QSettings().value(_key.toUtf8().toHex(), QVariant()).toString();
 	} else {
 		value = MapperFacade::settingsMapper()->value(_key);
 	}
@@ -32,6 +73,45 @@ QString SettingsStorage::value(const QString& _key, Settingsplace _settingsPlace
 	}
 
 	return value;
+}
+
+QMap<QString, QString> SettingsStorage::values(const QString& _valuesGroup, SettingsStorage::SettingsPlace _settingsPlace)
+{
+	QMap<QString, QString> settingsValues;
+
+	if (_settingsPlace == ApplicationSettings) {
+		QSettings settings;
+
+		//
+		// Откроем группу для считывания
+		//
+		settings.beginGroup(_valuesGroup);
+
+		//
+		// Получим все ключи
+		//
+		QStringList keys = settings.childKeys();
+
+		//
+		// Получим все значения
+		//
+		foreach (QString key, keys) {
+			 settingsValues.insert(QByteArray::fromHex(key.toUtf8()), settings.value(key).toString());
+		}
+
+		//
+		// Закроем группу
+		//
+		settings.endGroup();
+	}
+	//
+	// Из базы данных карта параметров не умеет загружаться
+	//
+	else {
+		Q_ASSERT_X(0, Q_FUNC_INFO, "Database settings can't load group of settings");
+	}
+
+	return settingsValues;
 }
 
 SettingsStorage::SettingsStorage()

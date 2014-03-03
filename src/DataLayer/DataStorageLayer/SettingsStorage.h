@@ -2,7 +2,7 @@
 #define SETTINGSSTORAGE_H
 
 #include <QString>
-#include <QHash>
+#include <QMap>
 
 
 namespace DataStorageLayer
@@ -13,7 +13,7 @@ namespace DataStorageLayer
 	class SettingsStorage
 	{
 	public:
-		enum Settingsplace {
+		enum SettingsPlace {
 			ApplicationSettings,
 			ScenarioSettings
 		};
@@ -22,12 +22,22 @@ namespace DataStorageLayer
 		/**
 		 * @brief Сохранить значение с заданным ключём
 		 */
-		void setValue(const QString& _key, const QString& _value, Settingsplace _settingsPlace);
+		void setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace);
+
+		/**
+		 * @brief Сохранить карту параметров
+		 */
+		void setValues(const QMap<QString, QString>& _values, const QString& _valuesGroup, SettingsPlace _settingsPlace);
 
 		/**
 		 * @brief Получить значение по ключу
 		 */
-		QString value(const QString& _key, Settingsplace _settingsPlace);
+		QString value(const QString& _key, SettingsPlace _settingsPlace);
+
+		/**
+		 * @brief Получить группу значений
+		 */
+		QMap<QString, QString> values(const QString& _valuesGroup, SettingsPlace _settingsPlace);
 
 	private:
 		SettingsStorage();
@@ -40,7 +50,7 @@ namespace DataStorageLayer
 		/**
 		 * @brief Значения параметров по умолчанию
 		 */
-		QHash<QString, QString> m_defaultValues;
+		QMap<QString, QString> m_defaultValues;
 
 		// Для доступа к конструктору
 		friend class StorageFacade;

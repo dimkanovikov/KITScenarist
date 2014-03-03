@@ -78,7 +78,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	m_itemWidget->setPalette(palette);
 
 	//
-	// Отрисовываем термин
+	// Отрисовываем виджет
 	//
 	_painter->save();
 	_painter->setRenderHint(QPainter::Antialiasing, true);

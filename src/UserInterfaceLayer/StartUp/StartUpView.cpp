@@ -1,0 +1,85 @@
+#include "StartUpView.h"
+#include "ui_StartUpView.h"
+
+#include "RecentFilesDelegate.h"
+
+#include <QStandardItemModel>
+
+using UserInterface::StartUpView;
+using UserInterface::RecentFilesDelegate;
+
+
+StartUpView::StartUpView(QWidget *parent) :
+	QWidget(parent),
+	ui(new Ui::StartUpView)
+{
+	ui->setupUi(this);
+
+	initView();
+	initConnections();
+}
+
+StartUpView::~StartUpView()
+{
+	delete ui;
+}
+
+void StartUpView::setRecentFiles(const QMap<QString, QString>& _recentFiles)
+{
+	//
+	// Если в списке была установлена модель, удалим её
+	//
+	if (ui->recentFiles->model() != 0) {
+		QAbstractItemModel* oldModel = ui->recentFiles->model();
+		ui->recentFiles->setModel(0);
+		delete oldModel;
+		oldModel = 0;
+	}
+
+	//
+	// Создаём новую модель
+	//
+	QStandardItemModel* newModel = new QStandardItemModel(ui->recentFiles);
+	foreach (const QString& filePath, _recentFiles.keys()) {
+		QStandardItem* item = new QStandardItem;
+		item->setData(_recentFiles.value(filePath), Qt::DisplayRole);
+		item->setData(filePath, Qt::ToolTipRole);
+		newModel->appendRow(item);
+	}
+
+	//
+	// Устанавливаем модель
+	//
+	ui->recentFiles->setModel(newModel);
+}
+
+void StartUpView::aboutOpenRecentFileClicked()
+{
+	QModelIndex currentIndex = ui->recentFiles->currentIndex();
+	QAbstractItemModel* recentFiles = ui->recentFiles->model();
+
+	//
+	// Получим путь к файлу для загрузки
+	//
+	QString clickedFilePath =
+			recentFiles->data(currentIndex, Qt::ToolTipRole).toString();
+
+	//
+	// Уведомляем о том, что файл выбран
+	//
+	emit openRecentProjectClicked(clickedFilePath);
+}
+
+void StartUpView::initView()
+{
+	ui->recentFiles->setItemDelegate(new RecentFilesDelegate(ui->recentFiles));
+}
+
+void StartUpView::initConnections()
+{
+	connect(ui->createProject, SIGNAL(linkActivated(QString)), this, SIGNAL(createProjectClicked()));
+	connect(ui->openProject, SIGNAL(linkActivated(QString)), this, SIGNAL(openProjectClicked()));
+	connect(ui->help, SIGNAL(linkActivated(QString)), this, SIGNAL(helpClicked()));
+
+	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SLOT(aboutOpenRecentFileClicked()));
+}
