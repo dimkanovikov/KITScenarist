@@ -13,4 +13,5 @@ chronometry/configurable/seconds-for-every-50/time-and-place - секунд за
 chronometry/configurable/seconds-for-every-50/action - секунд за каждые 50 символов
 chronometry/configurable/seconds-for-every-50/dialog - секунд за каждые 50 символов
 
-application/recent-files/... - последние использованые файлы программы (в виде ключ - название проекта (если не задано, то имя файла без расширения), значение - путь)
+application/recent-files/list/... - последние использованые файлы программы (в виде ключ - название проекта (если не задано, то имя файла без расширения), значение - путь)
+application/recent-files/using/... - даты использования последних файлов

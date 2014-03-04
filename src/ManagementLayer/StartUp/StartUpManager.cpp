@@ -8,12 +8,15 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QDateTime>
 
 using ManagementLayer::StartUpManager;
 using UserInterface::StartUpView;
 
 namespace {
-	const QString RECENT_FILES_SETTINGS_KEY = "application/recent-files";
+	const int MAX_RECENT_FILES_COUNT = 7;
+	const QString RECENT_FILES_LIST_SETTINGS_KEY = "application/recent-files/list";
+	const QString RECENT_FILES_USING_SETTINGS_KEY = "application/recent-files/using";
 }
 
 
@@ -33,7 +36,12 @@ StartUpManager::~StartUpManager()
 	//
 	DataStorageLayer::StorageFacade::settingsStorage()->setValues(
 				m_recentFiles,
-				RECENT_FILES_SETTINGS_KEY,
+				RECENT_FILES_LIST_SETTINGS_KEY,
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValues(
+				m_recentFilesUsing,
+				RECENT_FILES_USING_SETTINGS_KEY,
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
 }
@@ -55,14 +63,31 @@ void StartUpManager::addRecentFile(const QString& _filePath, const QString& _pro
 	}
 
 	//
+	// Если в списке больше допустимого кол-ва используемых файлов удалим давно используемый
+	//
+	if (m_recentFiles.count() == MAX_RECENT_FILES_COUNT
+		&& !m_recentFiles.contains(_filePath)) {
+		QStringList usingDates = m_recentFilesUsing.keys();
+		qSort(usingDates);
+		QString lastUsingProject = m_recentFilesUsing.key(usingDates.first());
+		m_recentFiles.remove(lastUsingProject);
+		m_recentFilesUsing.remove(lastUsingProject);
+	}
+
+	//
 	// Добавим файл в список
 	//
 	m_recentFiles.insert(_filePath, projectName);
 
 	//
+	// Сохраним информацию о последнем использовании
+	//
+	m_recentFilesUsing.insert(_filePath, QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss"));
+
+	//
 	// Обновим список файлов в представлении
 	//
-	m_view->setRecentFiles(m_recentFiles);
+	m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
 }
 
 void StartUpManager::aboutOpenRecentProjectRequested(const QString& _filePath)
@@ -85,11 +110,12 @@ void StartUpManager::aboutOpenRecentProjectRequested(const QString& _filePath)
 		// ... удалим его из списка
 		//
 		m_recentFiles.remove(_filePath);
+		m_recentFilesUsing.remove(_filePath);
 
 		//
 		// ... обновим список файлов в представлении
 		//
-		m_view->setRecentFiles(m_recentFiles);
+		m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
 	}
 	//
 	// Если выбранный файл существует, испускаем соответствующий сигнал
@@ -103,14 +129,19 @@ void StartUpManager::initData()
 {
 	m_recentFiles =
 			DataStorageLayer::StorageFacade::settingsStorage()->values(
-				RECENT_FILES_SETTINGS_KEY,
+				RECENT_FILES_LIST_SETTINGS_KEY,
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+	m_recentFilesUsing =
+			DataStorageLayer::StorageFacade::settingsStorage()->values(
+				RECENT_FILES_USING_SETTINGS_KEY,
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
 }
 
 void StartUpManager::initView()
 {
-	m_view->setRecentFiles(m_recentFiles);
+	m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
 }
 
 void StartUpManager::initConnections()

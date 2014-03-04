@@ -86,6 +86,14 @@ namespace ManagementLayer
 		 * value - название проекта
 		 */
 		QMap<QString, QString> m_recentFiles;
+
+		/**
+		 * @brief Порядок использования недавних файлов
+		 *
+		 * key - путь к файлу проекта
+		 * value - последнее использование
+		 */
+		QMap<QString, QString> m_recentFilesUsing;
 	};
 }
 

@@ -24,7 +24,9 @@ StartUpView::~StartUpView()
 	delete ui;
 }
 
-void StartUpView::setRecentFiles(const QMap<QString, QString>& _recentFiles)
+void StartUpView::setRecentFiles(
+		const QMap<QString, QString>& _recentFiles,
+		const QMap<QString, QString>& _recentFilesUsing)
 {
 	//
 	// Если в списке была установлена модель, удалим её
@@ -40,9 +42,19 @@ void StartUpView::setRecentFiles(const QMap<QString, QString>& _recentFiles)
 	// Создаём новую модель
 	//
 	QStandardItemModel* newModel = new QStandardItemModel(ui->recentFiles);
-	foreach (const QString& filePath, _recentFiles.keys()) {
+	QStringList usingDates = _recentFilesUsing.values();
+	qSort(usingDates.begin(), usingDates.end(), qGreater<QString>());
+	foreach (const QString& usingDate, usingDates) {
+		QString filePath = _recentFilesUsing.key(usingDate);
 		QStandardItem* item = new QStandardItem;
+
+		//
+		// Название проекта
+		//
 		item->setData(_recentFiles.value(filePath), Qt::DisplayRole);
+		//
+		// Путь к файлу
+		//
 		item->setData(filePath, Qt::ToolTipRole);
 		newModel->appendRow(item);
 	}

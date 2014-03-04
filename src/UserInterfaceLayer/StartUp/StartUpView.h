@@ -26,7 +26,9 @@ namespace UserInterface
 		/**
 		 * @brief Установить недавно использованные файлы
 		 */
-		void setRecentFiles(const QMap<QString, QString>& _recentFiles);
+		void setRecentFiles(
+				const QMap<QString, QString>& _recentFiles,
+				const QMap<QString, QString>& _recentFilesUsing);
 
 	signals:
 		/**
