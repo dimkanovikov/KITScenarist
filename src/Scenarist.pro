@@ -129,7 +129,8 @@ SOURCES += main.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTextDocument.cpp \
     UserInterfaceLayer/StartUp/StartUpView.cpp \
     UserInterfaceLayer/StartUp/RecentFilesDelegate.cpp \
-    UserInterfaceLayer/StartUp/RecentFileWidget.cpp
+    UserInterfaceLayer/StartUp/RecentFileWidget.cpp \
+    3rd_party/Widgets/SideBar/SideBar.cpp
 
 RESOURCES += \
     Resources/Resources.qrc
@@ -257,7 +258,8 @@ HEADERS += \
     DataLayer/DataMappingLayer/AbstractMapperPrivate.h \
     UserInterfaceLayer/StartUp/StartUpView.h \
     UserInterfaceLayer/StartUp/RecentFilesDelegate.h \
-    UserInterfaceLayer/StartUp/RecentFileWidget.h
+    UserInterfaceLayer/StartUp/RecentFileWidget.h \
+    3rd_party/Widgets/SideBar/SideBar.h
 
 OTHER_FILES += \
     TODO \

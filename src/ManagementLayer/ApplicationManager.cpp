@@ -5,6 +5,9 @@
 #include <DataLayer/Database/Database.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 
+#include <3rd_party/Widgets/SideBar/SideBar.h>
+
+#include <QStackedLayout>
 #include <QFileDialog>
 #include <QMessageBox>
 
@@ -37,8 +40,11 @@ using namespace ManagementLayer;
 ApplicationManager::ApplicationManager(QObject *parent) :
 	QObject(parent),
 	m_view(new QWidget),
+	m_tabs(new SideBar(m_view)),
+	m_tabsWidgets(new QStackedLayout),
 	m_startUpManager(new StartUpManager(this, m_view))
 {
+	initView();
 	initConnections();
 }
 
@@ -75,8 +81,7 @@ void ApplicationManager::exec()
 //	layout->addLayout(leftLayout);
 //	layout->addWidget(textEdit);
 
-	QHBoxLayout* layout = new QHBoxLayout(m_view);
-	layout->addWidget(m_startUpManager->view());
+
 
 	m_view->resize(800,600);
 	m_view->show();
@@ -271,8 +276,38 @@ void ApplicationManager::saveCurrentProjectInRecent()
 	m_startUpManager->addRecentFile(DatabaseLayer::Database::currentFile());
 }
 
+void ApplicationManager::initView()
+{
+	//
+	// Настроим боковую панель
+	//
+	m_tabs->addAction(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
+//	m_tabs->addAction(tr("Project"), QIcon(":/Graphics/Icons/project.png"));
+	m_tabs->addAction(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
+	m_tabs->addAction(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
+	m_tabs->addAction(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
+	m_tabs->addAction(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
+
+	//
+	// Настроим виджеты соответствующие вкладкам
+	//
+	m_tabsWidgets->addWidget(m_startUpManager->view());
+
+	//
+	// Расположим всё на форме
+	//
+	QHBoxLayout* layout = new QHBoxLayout;
+	layout->setContentsMargins(QMargins());
+	layout->setSpacing(0);
+	layout->addWidget(m_tabs);
+	layout->addLayout(m_tabsWidgets);
+
+	m_view->setLayout(layout);
+}
+
 void ApplicationManager::initConnections()
 {
+	connect(m_tabs, SIGNAL(currentChanged(int)), m_tabsWidgets, SLOT(setCurrentIndex(int)));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QString)), this, SLOT(aboutLoad(QString)));

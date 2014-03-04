@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>818</width>
-    <height>488</height>
+    <width>518</width>
+    <height>389</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,9 +22,12 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>80</width>
+       <width>0</width>
        <height>40</height>
       </size>
      </property>
@@ -35,9 +38,12 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>81</width>
+       <width>0</width>
        <height>40</height>
       </size>
      </property>
@@ -45,10 +51,22 @@
    </item>
    <item row="0" column="1" rowspan="2">
     <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>800</width>
+       <width>500</width>
        <height>300</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1200</width>
+       <height>16777215</height>
       </size>
      </property>
      <property name="frameShape">
@@ -67,7 +85,7 @@
       <item row="1" column="0">
        <widget class="QWidget" name="widget" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>

@@ -20,9 +20,7 @@ void SideBar::paintEvent(QPaintEvent *event)
 {
 	QPainter p(this);
 
-	//Adapter l'adresse de la texture ici
-	QImage texture(":/Interface/UI/SideBar/sidebar-texture.png");
-	p.fillRect(event->rect(), QBrush(texture));
+	p.fillRect(event->rect(), QBrush(QColor(32, 37, 41)));
 	p.setPen(QColor(95, 95, 95));
 	p.drawLine(event->rect().topRight(), event->rect().bottomRight());
 

@@ -5,6 +5,9 @@
 
 class ScenarioTextEdit;
 class QLabel;
+class SideBar;
+class QStackedLayout;
+
 
 namespace ManagementLayer
 {
@@ -61,6 +64,14 @@ namespace ManagementLayer
 		void saveCurrentProjectInRecent();
 
 	private:
+		/**
+		 * @brief Настроить представление
+		 */
+		void initView();
+
+		/**
+		 * @brief Настроить соединения
+		 */
 		void initConnections();
 
 	private:
@@ -68,6 +79,16 @@ namespace ManagementLayer
 		 * @brief Главное окно приложения
 		 */
 		QWidget* m_view;
+
+		/**
+		 * @brief Панель вкладок
+		 */
+		SideBar* m_tabs;
+
+		/**
+		 * @brief Виджеты вкладок
+		 */
+		QStackedLayout* m_tabsWidgets;
 
 		/**
 		 * @brief Управляющий стартовой страницей
