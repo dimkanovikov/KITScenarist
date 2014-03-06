@@ -29,7 +29,7 @@ using BusinessLogic::ScenarioTextBlockStyle;
 ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new QWidget(_parentWidget)),
-	m_document(new ScenarioDocument(this)),
+	m_scenario(new ScenarioDocument(this)),
 	m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
 	m_textEditManager(new ScenarioTextEditManager(this, m_view))
 {
@@ -43,6 +43,11 @@ QWidget* ScenarioManager::view() const
 	return m_view;
 }
 
+BusinessLogic::ScenarioDocument*ScenarioManager::scenario() const
+{
+	return m_scenario;
+}
+
 void ScenarioManager::loadCurrentProject()
 {
 	m_navigatorManager->setNavigationModel(0);
@@ -50,23 +55,23 @@ void ScenarioManager::loadCurrentProject()
 
 	Domain::Scenario* currentScenario =
 			DataStorageLayer::StorageFacade::scenarioStorage()->current();
-	m_document->load(currentScenario);
+	m_scenario->load(currentScenario);
 
-	m_navigatorManager->setNavigationModel(m_document->model());
-	m_textEditManager->setScenarioDocument(m_document->document());
+	m_navigatorManager->setNavigationModel(m_scenario->model());
+	m_textEditManager->setScenarioDocument(m_scenario->document());
 }
 
 void ScenarioManager::saveCurrentProject()
 {
-	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_document->save());
+	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenario->save());
 }
 
 void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 {
 	QString durationToCursor =
-			ChronometerFacade::secondsToTime(m_document->durationAtPosition(_cursorPosition));
+			ChronometerFacade::secondsToTime(m_scenario->durationAtPosition(_cursorPosition));
 	QString durationToEnd =
-			ChronometerFacade::secondsToTime(m_document->fullDuration());
+			ChronometerFacade::secondsToTime(m_scenario->fullDuration());
 	m_textEditManager->setDuration(
 				QString("%1 | %2")
 				.arg(durationToCursor)

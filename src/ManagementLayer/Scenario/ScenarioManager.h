@@ -28,6 +28,8 @@ namespace ManagementLayer
 
 		QWidget* view() const;
 
+		BusinessLogic::ScenarioDocument* scenario() const;
+
 		/**
 		 * @brief Загрузить данные текущего проекта
 		 */
@@ -69,7 +71,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Документ сценария
 		 */
-		BusinessLogic::ScenarioDocument* m_document;
+		BusinessLogic::ScenarioDocument* m_scenario;
 
 		/**
 		 * @brief Управляющий навигацией по сценарию

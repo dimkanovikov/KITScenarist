@@ -53,6 +53,16 @@ namespace ManagementLayer
 		 */
 		void aboutLoad(const QString& _fileName = QString());
 
+		/**
+		 * @brief Экспортировать в PDF
+		 */
+		void aboutExportToPdf();
+
+		/**
+		 * @brief Экспортировать в RTF
+		 */
+		void aboutExportToRtf();
+
 	private:
 		/**
 		 * @brief Если проект был изменён, но не сохранён предложить пользователю сохранить его
