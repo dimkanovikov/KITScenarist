@@ -22,6 +22,21 @@ namespace UserInterface
 		 */
 		void setModel(QAbstractItemModel* _model);
 
+		/**
+		 * @brief Выделить первого персонажа
+		 */
+		void selectFirstCharacter();
+
+		/**
+		 * @brief Выделить персонажа
+		 */
+		void selectCharacter(const QString& _name);
+
+		/**
+		 * @brief Выделить персонажа
+		 */
+		void selectCharacter(const QModelIndex& _index);
+
 	signals:
 		/**
 		 * @brief Добавить персонажа

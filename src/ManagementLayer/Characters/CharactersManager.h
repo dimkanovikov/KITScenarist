@@ -26,6 +26,33 @@ namespace ManagementLayer
 		 */
 		void loadCurrentProject();
 
+	signals:
+		/**
+		 * @brief Было изменено имя персонажа
+		 */
+		void characterNameChanged(const QString& _oldName, const QString& _newName);
+
+		/**
+		 * @brief Обновить список персонажей
+		 */
+		void refreshCharacters();
+
+	private slots:
+		/**
+		 * @brief Добавить персонажа
+		 */
+		void aboutAddCharacter(const QString& _name);
+
+		/**
+		 * @brief Изменить персонажа
+		 */
+		void aboutEditCharacter(const QString& _name);
+
+		/**
+		 * @brief Удалить персонажа
+		 */
+		void aboutRemoveCharacter(const QString& _name);
+
 	private:
 		/**
 		 * @brief Настроить представление

@@ -21,6 +21,11 @@ namespace Domain
 		 */
 		QString name() const;
 
+		/**
+		 * @brief Установить имя
+		 */
+		void setName(const QString& _name);
+
 	private:
 		/*
 		 * Параметры:

@@ -85,6 +85,11 @@ DomainObject *DomainObjectsItemModel::itemForIndex(const QModelIndex &index) con
 	return domainObjects().value(index.row());
 }
 
+QModelIndex DomainObjectsItemModel::indexForItem(DomainObject* _item) const
+{
+	return index(domainObjects().indexOf(_item), 0, QModelIndex());
+}
+
 QList<DomainObject*> DomainObjectsItemModel::toList() const
 {
     return domainObjects();

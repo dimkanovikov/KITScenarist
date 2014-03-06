@@ -25,6 +25,36 @@ void CharactersNavigator::setModel(QAbstractItemModel* _model)
 	m_navigator->setModel(_model);
 }
 
+void CharactersNavigator::selectFirstCharacter()
+{
+	selectCharacter(m_navigator->model()->index(0, 0));
+}
+
+void CharactersNavigator::selectCharacter(const QString& _name)
+{
+	const QModelIndex matchStartFrom = m_navigator->model()->index(0, 0);
+	QModelIndexList matches = m_navigator->model()->match(matchStartFrom, Qt::DisplayRole, _name);
+	if (matches.size() > 0) {
+		selectCharacter(matches.first());
+	}
+}
+
+void CharactersNavigator::selectCharacter(const QModelIndex& _index)
+{
+	if (m_navigator->model() != 0
+		&& m_navigator->model()->rowCount() > 0) {
+		//
+		// Выделим первого персонажа
+		//
+		m_navigator->setCurrentIndex(_index);
+
+		//
+		// Готовим к изменению
+		//
+		aboutEditCharacter();
+	}
+}
+
 void CharactersNavigator::aboutEditCharacter()
 {
 	emit editCharacter(selectedUserName());
@@ -73,7 +103,7 @@ void CharactersNavigator::initView()
 void CharactersNavigator::initConnections()
 {
 	connect(m_addCharacter, SIGNAL(clicked()), this, SIGNAL(addCharacter()));
-	connect(m_navigator, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(aboutEditCharacter()));
+	connect(m_navigator, SIGNAL(activated(QModelIndex)), this, SLOT(aboutEditCharacter()));
 	connect(m_removeCharacter, SIGNAL(clicked()), this, SLOT(aboutRemoveCharacter()));
 	connect(m_refreshCharacters, SIGNAL(clicked()), this, SIGNAL(refreshCharacters()));
 }

@@ -29,7 +29,7 @@ PlaceStorage* StorageFacade::placeStorage()
 	return s_placeStorage;
 }
 
-LocationStorage*StorageFacade::locationStorage()
+LocationStorage* StorageFacade::locationStorage()
 {
 	if (s_locationStorage == 0) {
 		s_locationStorage = new LocationStorage;
@@ -37,7 +37,7 @@ LocationStorage*StorageFacade::locationStorage()
 	return s_locationStorage;
 }
 
-ScenarioDayStorage*StorageFacade::scenarioDayStorage()
+ScenarioDayStorage* StorageFacade::scenarioDayStorage()
 {
 	if (s_scenarioDayStorage == 0) {
 		s_scenarioDayStorage = new ScenarioDayStorage;
@@ -45,7 +45,7 @@ ScenarioDayStorage*StorageFacade::scenarioDayStorage()
 	return s_scenarioDayStorage;
 }
 
-TimeStorage*StorageFacade::timeStorage()
+TimeStorage* StorageFacade::timeStorage()
 {
 	if (s_timeStorage == 0) {
 		s_timeStorage = new TimeStorage;
@@ -53,7 +53,7 @@ TimeStorage*StorageFacade::timeStorage()
 	return s_timeStorage;
 }
 
-CharacterStorage*StorageFacade::characterStorage()
+CharacterStorage* StorageFacade::characterStorage()
 {
 	if (s_characterStorage == 0) {
 		s_characterStorage = new CharacterStorage;
@@ -61,7 +61,7 @@ CharacterStorage*StorageFacade::characterStorage()
 	return s_characterStorage;
 }
 
-ScenarioStorage*StorageFacade::scenarioStorage()
+ScenarioStorage* StorageFacade::scenarioStorage()
 {
 	if (s_scenarioStorage == 0) {
 		s_scenarioStorage = new ScenarioStorage;
@@ -69,7 +69,7 @@ ScenarioStorage*StorageFacade::scenarioStorage()
 	return s_scenarioStorage;
 }
 
-SettingsStorage*StorageFacade::settingsStorage()
+SettingsStorage* StorageFacade::settingsStorage()
 {
 	if (s_settingsStorage == 0) {
 		s_settingsStorage = new SettingsStorage;

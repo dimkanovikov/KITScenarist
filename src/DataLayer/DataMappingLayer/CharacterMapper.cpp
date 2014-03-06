@@ -30,6 +30,11 @@ void CharacterMapper::update(Character* _character)
 	abstractUpdate(_character);
 }
 
+void CharacterMapper::remove(Character* _character)
+{
+	abstractDelete(_character);
+}
+
 QString CharacterMapper::findStatement(const Identifier& _id) const
 {
 	QString findStatement =

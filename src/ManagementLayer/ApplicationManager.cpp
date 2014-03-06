@@ -473,4 +473,8 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QString)), this, SLOT(aboutLoad(QString)));
+	connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
+			m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
+	connect(m_charactersManager, SIGNAL(refreshCharacters()),
+			m_scenarioManager, SLOT(refreshCharacters()));
 }

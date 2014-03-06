@@ -269,4 +269,5 @@ OTHER_FILES += \
     scenario_settings_keys
 
 FORMS += \
-    UserInterfaceLayer/StartUp/StartUpView.ui
+    UserInterfaceLayer/StartUp/StartUpView.ui \
+    UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui

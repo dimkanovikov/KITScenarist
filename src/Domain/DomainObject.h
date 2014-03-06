@@ -54,6 +54,7 @@ namespace Domain
 		virtual int columnCount(const QModelIndex&) const;
 		virtual QVariant data(const QModelIndex&, int) const;
 		virtual DomainObject* itemForIndex(const QModelIndex&) const;
+		virtual QModelIndex indexForItem(DomainObject* _item) const;
 		QList<DomainObject*> toList() const;
 		int count() const;
 		bool contains(DomainObject*) const;

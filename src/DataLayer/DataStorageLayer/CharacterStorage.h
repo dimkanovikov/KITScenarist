@@ -29,6 +29,21 @@ namespace DataStorageLayer
 		Character* storeCharacter(const QString& _name);
 
 		/**
+		 * @brief Обновить персонажа
+		 */
+		Character* updateCharacter(const QString& _oldName, const QString& _newName);
+
+		/**
+		 * @brief Удалить персонажа
+		 */
+		void removeCharacter(const QString& _name);
+
+		/**
+		 * @brief Проверить наличие заданного персонажа
+		 */
+		bool hasCharacter(const QString& _name);
+
+		/**
 		 * @brief Очистить хранилище
 		 */
 		void clear();

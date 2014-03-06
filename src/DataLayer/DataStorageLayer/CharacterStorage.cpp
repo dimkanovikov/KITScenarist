@@ -28,7 +28,7 @@ Character* CharacterStorage::storeCharacter(const QString& _name)
 	//
 	if (!characterName.isEmpty()) {
 		//
-		// Проверяем наличии данного персонажа
+		// Проверяем наличие данного персонажа
 		//
 		foreach (DomainObject* domainObject, all()->toList()) {
 			Character* character = dynamic_cast<Character*>(domainObject);
@@ -57,6 +57,86 @@ Character* CharacterStorage::storeCharacter(const QString& _name)
 	}
 
 	return newCharacter;
+}
+
+Character* CharacterStorage::updateCharacter(const QString& _oldName, const QString& _newName)
+{
+	Character* characterToUpdate = 0;
+
+	//
+	// Если такой персонаж есть
+	//
+	if (hasCharacter(_oldName)) {
+		//
+		// ... найдём его
+		//
+		foreach (DomainObject* domainObject, all()->toList()) {
+			Character* character = dynamic_cast<Character*>(domainObject);
+			if (character->name() == _oldName) {
+				characterToUpdate = character;
+				break;
+			}
+		}
+
+		//
+		// ... обновим
+		//
+		characterToUpdate->setName(_newName);
+
+		//
+		// ... и сохраним изменение в базе данных
+		//
+		MapperFacade::characterMapper()->update(characterToUpdate);
+
+		//
+		// ... уведомим об обновлении
+		//
+		int indexRow = all()->toList().indexOf(characterToUpdate);
+		QModelIndex fromIndex = all()->index(indexRow, 0, QModelIndex());
+		QModelIndex toIndex = all()->index(indexRow, all()->columnCount(fromIndex), QModelIndex());
+		emit all()->dataChanged(fromIndex, toIndex);
+	}
+
+	return characterToUpdate;
+}
+
+void CharacterStorage::removeCharacter(const QString& _name)
+{
+	//
+	// Если такой персонаж есть
+	//
+	if (hasCharacter(_name)) {
+		//
+		// ... найдём его
+		//
+		Character* characterToDelete = 0;
+		foreach (DomainObject* domainObject, all()->toList()) {
+			Character* character = dynamic_cast<Character*>(domainObject);
+			if (character->name() == _name) {
+				characterToDelete = character;
+				break;
+			}
+		}
+
+		//
+		// ... и удалим из локального списка и базы данных
+		//
+		all()->remove(characterToDelete);
+		MapperFacade::characterMapper()->remove(characterToDelete);
+	}
+}
+
+bool CharacterStorage::hasCharacter(const QString& _name)
+{
+	bool contains = false;
+	foreach (DomainObject* domainObject, all()->toList()) {
+		Character* character = dynamic_cast<Character*>(domainObject);
+		if (character->name() == _name) {
+			contains = true;
+			break;
+		}
+	}
+	return contains;
 }
 
 void CharacterStorage::clear()

@@ -27,6 +27,38 @@ namespace ManagementLayer
 		 */
 		void loadCharacters();
 
+		/**
+		 * @brief Выделить персонажа
+		 */
+		void chooseCharacter(const QString& _name);
+		
+	signals:
+		/**
+		 * @brief Добавить персонажа
+		 */
+		void addCharacter(const QString& _name);
+
+		/**
+		 * @brief Изменить персонажа
+		 */
+		void editCharacter(const QString& _name);
+
+		/**
+		 * @brief Удалить персонажа
+		 */
+		void removeCharacter(const QString& _name);
+
+		/**
+		 * @brief Обновить список персонажей
+		 */
+		void refreshCharacters();
+		
+	private slots:
+		/**
+		 * @brief Предобработчик добавления персонажа
+		 */
+		void aboutAddCharacter();
+
 	private:
 		/**
 		 * @brief Настроить представление

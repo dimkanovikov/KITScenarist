@@ -40,6 +40,17 @@ namespace ManagementLayer
 		 */
 		void saveCurrentProject();
 
+	public slots:
+		/**
+		 * @brief Изменено имя персонажа
+		 */
+		void aboutCharacterNameChanged(const QString& _oldName, const QString& _newName);
+
+		/**
+		 * @brief Пересоздать персонажей
+		 */
+		void refreshCharacters();
+
 	private slots:
 		/**
 		 * @brief Обновить хронометраж

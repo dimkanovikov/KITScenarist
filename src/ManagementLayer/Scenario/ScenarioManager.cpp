@@ -3,6 +3,8 @@
 #include "ScenarioNavigatorManager.h"
 #include "ScenarioTextEditManager.h"
 
+#include <Domain/Character.h>
+
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
@@ -10,6 +12,7 @@
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
+#include <DataLayer/DataStorageLayer/CharacterStorage.h>
 
 #include <QWidget>
 #include <QComboBox>
@@ -18,6 +21,7 @@
 #include <QHBoxLayout>
 #include <QTextCursor>
 #include <QTextBlock>
+#include <QSet>
 
 using ManagementLayer::ScenarioManager;
 using ManagementLayer::ScenarioNavigatorManager;
@@ -63,6 +67,62 @@ void ScenarioManager::loadCurrentProject()
 void ScenarioManager::saveCurrentProject()
 {
 	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenario->save());
+}
+
+void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const QString& _newName)
+{
+	//
+	// Обновить тексты всех сценариев
+	//
+	QTextCursor cursor(m_scenario->document());
+	while (!cursor.isNull() && !cursor.atEnd()) {
+		cursor = m_scenario->document()->find(_oldName, cursor);
+
+		if (!cursor.isNull()) {
+			cursor.insertText(_newName);
+		}
+	}
+}
+
+void ScenarioManager::refreshCharacters()
+{
+	//
+	// Найти персонажей во всём тексте
+	//
+	QSet<QString> characters;
+	QTextCursor cursor(m_scenario->document());
+	while (!cursor.atEnd()) {
+		cursor.movePosition(QTextCursor::NextBlock);
+		if (ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::Character) {
+			cursor.select(QTextCursor::BlockUnderCursor);
+			characters.insert(cursor.selectedText().toUpper().trimmed());
+		}
+		cursor.movePosition(QTextCursor::EndOfBlock);
+	}
+
+	//
+	// Удалить тех, которых нет в тексте
+	//
+	QSet<QString> charactersToDelete;
+	foreach (DomainObject* domainObject,
+			 DataStorageLayer::StorageFacade::characterStorage()->all()->toList()) {
+		Character* character = dynamic_cast<Character*>(domainObject);
+		if (!characters.contains(character->name())) {
+			charactersToDelete.insert(character->name());
+		}
+	}
+	foreach (const QString& character, charactersToDelete) {
+		DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(character);
+	}
+
+	//
+	// Добавить новых
+	//
+	foreach (const QString& character, characters) {
+		if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
+			DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
+		}
+	}
 }
 
 void ScenarioManager::aboutUpdateDuration(int _cursorPosition)

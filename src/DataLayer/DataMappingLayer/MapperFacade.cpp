@@ -19,7 +19,7 @@ PlaceMapper* MapperFacade::placeMapper()
 	return s_placeMapper;
 }
 
-LocationMapper*MapperFacade::locationMapper()
+LocationMapper* MapperFacade::locationMapper()
 {
 	if (s_locationMapper == 0) {
 		s_locationMapper = new LocationMapper;
@@ -27,7 +27,7 @@ LocationMapper*MapperFacade::locationMapper()
 	return s_locationMapper;
 }
 
-ScenarioDayMapper*MapperFacade::scenarioDayMapper()
+ScenarioDayMapper* MapperFacade::scenarioDayMapper()
 {
 	if (s_scenarioDayMapper == 0) {
 		s_scenarioDayMapper = new ScenarioDayMapper;
@@ -35,7 +35,7 @@ ScenarioDayMapper*MapperFacade::scenarioDayMapper()
 	return s_scenarioDayMapper;
 }
 
-TimeMapper*MapperFacade::timeMapper()
+TimeMapper* MapperFacade::timeMapper()
 {
 	if (s_timeMapper == 0) {
 		s_timeMapper = new TimeMapper;
@@ -43,7 +43,7 @@ TimeMapper*MapperFacade::timeMapper()
 	return s_timeMapper;
 }
 
-CharacterMapper*MapperFacade::characterMapper()
+CharacterMapper* MapperFacade::characterMapper()
 {
 	if (s_characterMapper == 0) {
 		s_characterMapper = new CharacterMapper;
@@ -51,7 +51,7 @@ CharacterMapper*MapperFacade::characterMapper()
 	return s_characterMapper;
 }
 
-ScenarioMapper*MapperFacade::scenarioMapper()
+ScenarioMapper* MapperFacade::scenarioMapper()
 {
 	if (s_scenarioMapper == 0) {
 		s_scenarioMapper = new ScenarioMapper;
@@ -59,7 +59,7 @@ ScenarioMapper*MapperFacade::scenarioMapper()
 	return s_scenarioMapper;
 }
 
-SettingsMapper*MapperFacade::settingsMapper()
+SettingsMapper* MapperFacade::settingsMapper()
 {
 	if (s_settingsMapper == 0) {
 		s_settingsMapper = new SettingsMapper;
