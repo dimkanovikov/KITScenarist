@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class CharacterHandler : public StandardKeyHandler
 	{
 	public:
-		CharacterHandler(ScenarioTextEdit* _editor);
+		CharacterHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

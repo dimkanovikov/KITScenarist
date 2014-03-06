@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class FolderHeaderHandler : public StandardKeyHandler
 	{
 	public:
-		FolderHeaderHandler(ScenarioTextEdit* _editor);
+		FolderHeaderHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

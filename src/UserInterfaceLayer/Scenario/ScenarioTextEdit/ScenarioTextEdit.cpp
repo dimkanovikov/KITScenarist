@@ -20,20 +20,29 @@
 #include <QScrollBar>
 #include <QMimeData>
 
+using UserInterface::ScenarioTextEdit;
 using namespace BusinessLogic;
 
 
-ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent, BusinessLogic::ScenarioTextDocument* _document) :
-	CompletableTextEdit(_parent),
-	m_document(_document)
+ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
+	CompletableTextEdit(_parent)
 {
-	Q_ASSERT(m_document);
-
+	m_document = new ScenarioTextDocument(this, 0);
 	setDocument(m_document);
 
 	initEditor();
 	initView();
 	initConnections();
+}
+
+void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
+{
+	m_document = _document;
+	setDocument(m_document);
+
+	if (_document != 0) {
+		initEditor();
+	}
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
@@ -56,6 +65,10 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
 
 void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blockType)
 {
+	if (scenarioBlockType() == _blockType) {
+		return;
+	}
+
 	textCursor().beginEditBlock();
 
 	//
@@ -649,12 +662,12 @@ void ScenarioTextEdit::initEditor()
 	document()->setDefaultFont(PAGE_FONT);
 	document()->setDocumentMargin(PAGE_MARGIN);
 
-	//
-	// Финт ушами для того, чтобы применить UpperCase
-	//
-	textCursor().insertBlock();
-	textCursor().deletePreviousChar();
-	changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+	QTextCursor cursor(document());
+	setTextCursor(cursor);
+	if (BusinessLogic::ScenarioTextBlockStyle::forBlock(cursor.block())
+		== BusinessLogic::ScenarioTextBlockStyle::Undefined) {
+		applyScenarioTypeToBlockText(ScenarioTextBlockStyle::TimeAndPlace);
+	}
 }
 
 void ScenarioTextEdit::initView()
@@ -674,24 +687,4 @@ void ScenarioTextEdit::initConnections()
 	// При перемещении курсора может меняться стиль блока
 	//
 	connect(this, SIGNAL(cursorPositionChanged()), this, SIGNAL(currentStyleChanged()));
-}
-
-
-
-//*************************************************
-
-void ScenarioTextEdit::test()
-{
-	QTextBlock block = textCursor().block();
-	qDebug()
-			<< block.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType)
-			<< textCursor().charFormat().boolProperty(ScenarioTextBlockStyle::PropertyIsCanModify);
-
-	QTextBlock::iterator it;
-	for (it = block.begin(); !(it.atEnd()); ++it) {
-		QTextFragment currentFragment = it.fragment();
-		if (currentFragment.isValid()) {
-			qDebug() << currentFragment.text();
-		}
-	}
 }

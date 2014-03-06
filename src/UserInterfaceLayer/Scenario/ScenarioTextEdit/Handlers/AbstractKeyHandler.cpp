@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 
 using namespace KeyProcessingLayer;
+using UserInterface::ScenarioTextEdit;
 
 
 AbstractKeyHandler::AbstractKeyHandler(ScenarioTextEdit* _editor) :

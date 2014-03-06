@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class SimpleTextHandler : public StandardKeyHandler
 	{
 	public:
-		SimpleTextHandler(ScenarioTextEdit* _editor);
+		SimpleTextHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

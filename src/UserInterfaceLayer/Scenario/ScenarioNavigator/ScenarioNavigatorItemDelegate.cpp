@@ -4,6 +4,9 @@
 #include <QApplication>
 #include <QPainter>
 
+using UserInterface::ScenarioNavigatorItemDelegate;
+using UserInterface::ScenarioNavigatorItemWidget;
+
 
 ScenarioNavigatorItemDelegate::ScenarioNavigatorItemDelegate(QObject* _parent) :
 	QStyledItemDelegate(_parent),

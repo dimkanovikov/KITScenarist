@@ -9,22 +9,29 @@ ScenarioTextDocument::ScenarioTextDocument(QObject *parent, ScenarioXml* _xmlHan
 	QTextDocument(parent),
 	m_xmlHandler(_xmlHandler)
 {
-	Q_ASSERT(m_xmlHandler);
 }
 
 QString ScenarioTextDocument::mimeFromSelection(int _startPosition, int _endPosition) const
 {
-	//
-	// Скорректируем позиции в случае необходимости
-	//
-	if (_startPosition > _endPosition) {
-		qSwap(_startPosition, _endPosition);
+	QString mime;
+
+	if (m_xmlHandler != 0) {
+		//
+		// Скорректируем позиции в случае необходимости
+		//
+		if (_startPosition > _endPosition) {
+			qSwap(_startPosition, _endPosition);
+		}
+
+		mime = m_xmlHandler->scenarioToXml(_startPosition, _endPosition);
 	}
 
-	return m_xmlHandler->scenarioToXml(_startPosition, _endPosition);
+	return mime;
 }
 
 void ScenarioTextDocument::insertFromMime(int _insertPosition, const QString& _mimeData)
 {
-	m_xmlHandler->xmlToScenario(_insertPosition, _mimeData);
+	if (m_xmlHandler != 0) {
+		m_xmlHandler->xmlToScenario(_insertPosition, _mimeData);
+	}
 }

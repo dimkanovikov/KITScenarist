@@ -130,7 +130,8 @@ SOURCES += main.cpp \
     UserInterfaceLayer/StartUp/StartUpView.cpp \
     UserInterfaceLayer/StartUp/RecentFilesDelegate.cpp \
     UserInterfaceLayer/StartUp/RecentFileWidget.cpp \
-    3rd_party/Widgets/SideBar/SideBar.cpp
+    3rd_party/Widgets/SideBar/SideBar.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp
 
 RESOURCES += \
     Resources/Resources.qrc
@@ -259,7 +260,8 @@ HEADERS += \
     UserInterfaceLayer/StartUp/StartUpView.h \
     UserInterfaceLayer/StartUp/RecentFilesDelegate.h \
     UserInterfaceLayer/StartUp/RecentFileWidget.h \
-    3rd_party/Widgets/SideBar/SideBar.h
+    3rd_party/Widgets/SideBar/SideBar.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.h
 
 OTHER_FILES += \
     TODO \

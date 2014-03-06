@@ -14,7 +14,7 @@ namespace KeyProcessingLayer
 	class ParentheticalHandler : public StandardKeyHandler
 	{
 	public:
-		ParentheticalHandler(ScenarioTextEdit* _editor);
+		ParentheticalHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

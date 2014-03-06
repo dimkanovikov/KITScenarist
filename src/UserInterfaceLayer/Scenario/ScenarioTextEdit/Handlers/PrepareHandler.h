@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class PrepareHandler : public AbstractKeyHandler
 	{
 	public:
-		PrepareHandler(ScenarioTextEdit* _editor);
+		PrepareHandler(UserInterface::ScenarioTextEdit* _editor);
 
 		/**
 		 * @brief Нужно ли отправлять событие в базовый класс

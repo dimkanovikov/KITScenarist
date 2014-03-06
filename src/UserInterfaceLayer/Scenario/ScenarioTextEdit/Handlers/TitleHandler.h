@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class TitleHandler : public StandardKeyHandler
 	{
 	public:
-		TitleHandler(ScenarioTextEdit* _editor);
+		TitleHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

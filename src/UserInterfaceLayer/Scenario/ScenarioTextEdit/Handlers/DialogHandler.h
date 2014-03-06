@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class DialogHandler : public StandardKeyHandler
 	{
 	public:
-		DialogHandler(ScenarioTextEdit* _editor);
+		DialogHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

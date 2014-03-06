@@ -11,6 +11,7 @@ CompletableTextEdit::CompletableTextEdit(QWidget* _parent) :
 	m_completer = new QCompleter(this);
 	m_completer->setWidget(this);
 	m_completer->setWrapAround(false);
+	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(applyCompletion(QString)));
 }
 
 QCompleter* CompletableTextEdit::completer() const
@@ -89,25 +90,30 @@ void CompletableTextEdit::applyCompletion()
 		QModelIndex currentIndex = m_completer->popup()->currentIndex();
 		QString completion = m_completer->popup()->model()->data(currentIndex).toString();
 
-		//
-		// Вставим дополнение в текст
-		//
-		int completionStartFrom = m_completer->completionPrefix().length();
-		QString textToInsert = completion.mid(completionStartFrom);
-
-		while (!textCursor().atBlockEnd()) {
-			QTextCursor cursor = textCursor();
-			cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
-			if (cursor.selectedText().endsWith(m_completer->completionPrefix())) {
-				break;
-			}
-			moveCursor(QTextCursor::Right);
-		}
-
-		textCursor().insertText(textToInsert);
+		applyCompletion(completion);
 
 		closeCompleter();
 	}
+}
+
+void CompletableTextEdit::applyCompletion(const QString& _completion)
+{
+	//
+	// Вставим дополнение в текст
+	//
+	int completionStartFrom = m_completer->completionPrefix().length();
+	QString textToInsert = _completion.mid(completionStartFrom);
+
+	while (!textCursor().atBlockEnd()) {
+		QTextCursor cursor = textCursor();
+		cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
+		if (cursor.selectedText().endsWith(m_completer->completionPrefix())) {
+			break;
+		}
+		moveCursor(QTextCursor::Right);
+	}
+
+	textCursor().insertText(textToInsert);
 }
 
 void CompletableTextEdit::closeCompleter()

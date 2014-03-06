@@ -81,6 +81,7 @@ namespace BusinessLogic
 		 */
 		QPixmap icon() const;
 
+	private:
 		/**
 		 * @brief Обновить текст элемента
 		 *
@@ -94,6 +95,11 @@ namespace BusinessLogic
 		 * @note Для элементов группирующих в себе подэлементы
 		 */
 		void updateParentDuration();
+
+		/**
+		 * @brief Очистить элемент
+		 */
+		void clear();
 
 	private:
 		/**

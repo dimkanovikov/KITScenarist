@@ -24,12 +24,12 @@ namespace BusinessLogic
 		ScenarioXml(ScenarioDocument* _scenario);
 
 		/**
-		 * @brief Записать сценарий в xml-строку из заданного диапозона текста
+		 * @brief Записать сценарий в xml-строку из заданного диапазона текста
 		 */
 		QString scenarioToXml(int _startPosition = 0, int _endPosition = 0);
 
 		/**
-		 * @brief Записать сценарий в xml-строку из заданного диапозона элементов
+		 * @brief Записать сценарий в xml-строку из заданного диапазона элементов
 		 */
 		QString scenarioToXml(ScenarioModelItem* _fromItem, ScenarioModelItem* _toItem);
 

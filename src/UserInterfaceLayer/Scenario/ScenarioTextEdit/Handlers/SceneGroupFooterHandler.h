@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class SceneGroupFooterHandler : public StandardKeyHandler
 	{
 	public:
-		SceneGroupFooterHandler(ScenarioTextEdit* _editor);
+		SceneGroupFooterHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

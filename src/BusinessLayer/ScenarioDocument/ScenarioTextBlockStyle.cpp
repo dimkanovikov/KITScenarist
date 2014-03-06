@@ -19,7 +19,11 @@ ScenarioTextBlockStyle::~ScenarioTextBlockStyle()
 
 ScenarioTextBlockStyle::Type ScenarioTextBlockStyle::forBlock(const QTextBlock& _block)
 {
-	return (ScenarioTextBlockStyle::Type)_block.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType);
+	ScenarioTextBlockStyle::Type blockType = ScenarioTextBlockStyle::Undefined;
+	if (_block.blockFormat().hasProperty(ScenarioTextBlockStyle::PropertyType)) {
+		blockType = (ScenarioTextBlockStyle::Type)_block.blockFormat().intProperty(ScenarioTextBlockStyle::PropertyType);
+	}
+	return blockType;
 }
 
 void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)

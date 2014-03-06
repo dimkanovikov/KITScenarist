@@ -24,6 +24,7 @@
 
 using namespace KeyProcessingLayer;
 using namespace BusinessLogic;
+using UserInterface::ScenarioTextEdit;
 
 
 void KeyPressHandlerFacade::prepare(QKeyEvent* _event)

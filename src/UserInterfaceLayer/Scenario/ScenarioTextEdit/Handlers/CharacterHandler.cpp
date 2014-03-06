@@ -15,6 +15,7 @@
 using namespace KeyProcessingLayer;
 using namespace DataStorageLayer;
 using namespace BusinessLogic;
+using UserInterface::ScenarioTextEdit;
 
 
 CharacterHandler::CharacterHandler(ScenarioTextEdit* _editor) :

@@ -8,6 +8,7 @@
 
 using namespace KeyProcessingLayer;
 using namespace BusinessLogic;
+using UserInterface::ScenarioTextEdit;
 
 
 PrepareHandler::PrepareHandler(ScenarioTextEdit* _editor) :

@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class TransitionHandler : public StandardKeyHandler
 	{
 	public:
-		TransitionHandler(ScenarioTextEdit* _editor);
+		TransitionHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

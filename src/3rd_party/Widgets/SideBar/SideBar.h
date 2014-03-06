@@ -7,34 +7,38 @@
 #include <QIcon>
 #include <QAction>
 
-class SideBar : public QWidget
+class SideTabBar : public QWidget
 {
 	Q_OBJECT
 
 public:
-	SideBar(QWidget *parent = 0);
-	~SideBar();
+	SideTabBar(QWidget *parent = 0);
+	~SideTabBar();
 
-	void addAction(QAction *action);
-	QAction *addAction(const QString &text, const QIcon &icon = QIcon());
+	void addTab(QAction* action);
+	QAction* addTab(const QString& text, const QIcon& icon = QIcon());
+
+	void setCurrent(int _index);
+
+	QList<QAction*> tabs() const;
 
 signals:
 	void currentChanged(int index);
 
 protected:
-	void paintEvent(QPaintEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
+	void paintEvent(QPaintEvent* event);
+	void mousePressEvent(QMouseEvent* event);
+	void mouseReleaseEvent(QMouseEvent* event);
 	QSize minimumSizeHint() const;
 
 private:
-	QAction* actionAt(const QPoint &at);
+	QAction* tabAt(const QPoint& at);
 
 private:
-	bool m_centerActions;
-	QList<QAction*> _actions;
-	QAction *_pressedAction;
-	QAction *_checkedAction;
+	bool m_centerTabs;
+	QList<QAction*> m_tabs;
+	QAction* m_pressedTab;
+	QAction* m_checkedTab;
 };
 
 #endif // SIDEBAR_H

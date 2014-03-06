@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class TimeAndPlaceHandler : public StandardKeyHandler
 	{
 	public:
-		TimeAndPlaceHandler(ScenarioTextEdit* _editor);
+		TimeAndPlaceHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

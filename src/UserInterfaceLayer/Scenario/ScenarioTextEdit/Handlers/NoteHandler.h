@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class NoteHandler : public StandardKeyHandler
 	{
 	public:
-		NoteHandler(ScenarioTextEdit* _editor);
+		NoteHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

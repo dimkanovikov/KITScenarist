@@ -3,16 +3,63 @@
 
 #include <QObject>
 
-class ScenarioNavigatorManager : public QObject
+class QLabel;
+
+namespace BusinessLogic {
+	class ScenarioModel;
+}
+
+namespace UserInterface {
+	class ScenarioNavigator;
+}
+
+namespace ManagementLayer
 {
-	Q_OBJECT
-public:
-	explicit ScenarioNavigatorManager(QObject *parent = 0);
+	/**
+	 * @brief Управляющий навигацией по сценарию
+	 */
+	class ScenarioNavigatorManager : public QObject
+	{
+		Q_OBJECT
+	public:
+		explicit ScenarioNavigatorManager(QObject* _parent, QWidget* _parentWidget);
 
-signals:
+		QWidget* view() const;
 
-public slots:
+		/**
+		 * @brief Установить модель документа сценария
+		 */
+		void setNavigationModel(BusinessLogic::ScenarioModel* _model);
 
-};
+	private slots:
+		/**
+		 * @brief Обновить информацию о модели
+		 */
+		void aboutModelUpdated();
+
+	private:
+		/**
+		 * @brief Настроить представление
+		 */
+		void initView();
+
+		/**
+		 * @brief Настроить соединения
+		 */
+		void initConnections();
+
+	private:
+
+		/**
+		 * @brief Модель сценария
+		 */
+		BusinessLogic::ScenarioModel* m_scenarioModel;
+
+		/**
+		 * @brief Дерево навигации
+		 */
+		UserInterface::ScenarioNavigator* m_navigator;
+	};
+}
 
 #endif // SCENARIONAVIGATORMANAGER_H

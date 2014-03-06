@@ -8,6 +8,8 @@
 
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
+#include <Domain/Scenario.h>
+
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QTextBlock>
@@ -31,9 +33,70 @@ ScenarioTextDocument* ScenarioDocument::document() const
 	return m_document;
 }
 
-QAbstractItemModel* ScenarioDocument::model() const
+ScenarioModel* ScenarioDocument::model() const
 {
 	return m_model;
+}
+
+int ScenarioDocument::scenesCount() const
+{
+	return m_model->scenesCount();
+}
+
+int ScenarioDocument::durationAtPosition(int _position) const
+{
+	//
+	// Определим сцену, в которой находится курсор
+	//
+	QMap<int, ScenarioModelItem*>::const_iterator iter = m_modelItems.lowerBound(_position);
+	if (iter.key() > _position) {
+		--iter;
+	}
+
+	//
+	// Запомним позицию начала сцены
+	//
+	int startPositionInLastScene = iter.key();
+
+	//
+	// Посчитаем хронометраж всех предыдущих сцен
+	//
+	int duration = 0;
+	if (iter.value()->type() == ScenarioModelItem::Scene) {
+		iter.value()->duration();
+	}
+	while (iter != m_modelItems.begin()) {
+		--iter;
+		if (iter.value()->type() == ScenarioModelItem::Scene) {
+			duration += iter.value()->duration();
+		}
+	}
+
+	//
+	// Добавим к суммарному хрономертажу хронометраж от начала сцены
+	//
+	duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
+
+	return duration;
+}
+
+int ScenarioDocument::fullDuration() const
+{
+	return m_model->fullDuration();
+}
+
+void ScenarioDocument::load(Domain::Scenario* _scenario)
+{
+	m_document->clear();
+
+	if (_scenario != 0) {
+		m_xmlHandler->xmlToScenario(0, _scenario->text());
+	}
+}
+
+QString ScenarioDocument::save() const
+{
+	return m_xmlHandler->scenarioToXml();
 }
 
 int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const
@@ -143,46 +206,8 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 	return endPosition;
 }
 
-int ScenarioDocument::durationAtPosition(int _position) const
-{
-	//
-	// Определим сцену, в которой находится курсор
-	//
-	QMap<int, ScenarioModelItem*>::const_iterator iter = m_modelItems.lowerBound(_position);
-	if (iter.key() > _position) {
-		--iter;
-	}
-
-	//
-	// Запомним позицию начала сцены
-	//
-	int startPositionInLastScene = iter.key();
-
-	//
-	// Посчитаем хронометраж всех предыдущих сцен
-	//
-	int duration = 0;
-	if (iter.value()->type() == ScenarioModelItem::Scene) {
-		iter.value()->duration();
-	}
-	while (iter != m_modelItems.begin()) {
-		--iter;
-		if (iter.value()->type() == ScenarioModelItem::Scene) {
-			duration += iter.value()->duration();
-		}
-	}
-
-	//
-	// Добавим к суммарному хрономертажу хронометраж от начала сцены
-	//
-	duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
-
-	return duration;
-}
-
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
-
 	//
 	// Если были удалены данные
 	//
@@ -501,7 +526,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 void ScenarioDocument::initConnections()
 {
 	connect(m_document, SIGNAL(contentsChange(int,int,int)),
-			this, SLOT(aboutContentsChange(int,int,int)));
+			this, SLOT(aboutContentsChange(int,int,int)), Qt::QueuedConnection);
 }
 
 void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos)

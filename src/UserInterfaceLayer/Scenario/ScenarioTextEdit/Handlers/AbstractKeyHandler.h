@@ -1,8 +1,11 @@
 #ifndef ABSTRACTKEYHANDLER_H
 #define ABSTRACTKEYHANDLER_H
 
-class ScenarioTextEdit;
 class QKeyEvent;
+
+namespace UserInterface {
+	class ScenarioTextEdit;
+}
 
 
 namespace KeyProcessingLayer
@@ -13,7 +16,7 @@ namespace KeyProcessingLayer
 	class AbstractKeyHandler
 	{
 	public:
-		explicit AbstractKeyHandler(ScenarioTextEdit* _editor);
+		explicit AbstractKeyHandler(UserInterface::ScenarioTextEdit* _editor);
 		virtual ~AbstractKeyHandler();
 
 		/**
@@ -46,13 +49,13 @@ namespace KeyProcessingLayer
 		/**
 		 * @brief Получить текстовый редактор, с которым ассоциирован данный обработчик
 		 */
-		ScenarioTextEdit* editor() const;
+		UserInterface::ScenarioTextEdit* editor() const;
 
 	private:
 		/**
 		 * @brief Текстовый редактор, с которым ассоциирован данный обработчик
 		 */
-		ScenarioTextEdit* m_editor;
+		UserInterface::ScenarioTextEdit* m_editor;
 	};
 }
 

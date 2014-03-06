@@ -70,6 +70,16 @@ namespace BusinessLogic
 		 */
 		void updateSceneNumbers();
 
+		/**
+		 * @brief Количество сцен в сценарии
+		 */
+		int scenesCount() const;
+
+		/**
+		 * @brief Суммарная длительность сценария
+		 */
+		int fullDuration() const;
+
 	private:
 		/**
 		 * @brief Получить элемент находящийся в заданном индексе
@@ -97,7 +107,17 @@ namespace BusinessLogic
 		 */
 		ScenarioXml* m_xmlHandler;
 
+		/**
+		 * @brief Указатель на последний созданный майм-объект
+		 *
+		 * Используется для контроля вставки из другого приложения
+		 */
 		mutable QMimeData* m_lastMime;
+
+		/**
+		 * @brief Счётчик количества сцен
+		 */
+		int m_scenesCount;
 	};
 }
 

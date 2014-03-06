@@ -15,7 +15,9 @@ ScenarioModel::ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler) :
 	QAbstractItemModel(parent),
 	m_rootItem(new ScenarioModelItem),
 	m_scenarioItem(new ScenarioModelItem),
-	m_xmlHandler(_xmlHandler)
+	m_xmlHandler(_xmlHandler),
+	m_lastMime(0),
+	m_scenesCount(0)
 {
 	Q_ASSERT(m_xmlHandler);
 
@@ -364,6 +366,18 @@ void ScenarioModel::updateSceneNumbers()
 	for (int itemIndex = 0; itemIndex < m_scenarioItem->childCount(); ++itemIndex) {
 		::updateSceneNumbers(m_scenarioItem->childAt(itemIndex), sceneNumber);
 	}
+
+	m_scenesCount = sceneNumber;
+}
+
+int ScenarioModel::scenesCount() const
+{
+	return m_scenesCount;
+}
+
+int ScenarioModel::fullDuration() const
+{
+	return m_rootItem->duration();
 }
 
 ScenarioModelItem* ScenarioModel::itemForIndex(const QModelIndex& _index) const

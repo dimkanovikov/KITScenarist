@@ -22,6 +22,7 @@ using namespace Domain;
 using namespace DataStorageLayer;
 using namespace KeyProcessingLayer;
 using namespace BusinessLogic;
+using UserInterface::ScenarioTextEdit;
 
 
 TimeAndPlaceHandler::TimeAndPlaceHandler(ScenarioTextEdit* _editor) :

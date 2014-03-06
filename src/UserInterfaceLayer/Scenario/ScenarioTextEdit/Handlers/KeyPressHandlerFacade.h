@@ -3,9 +3,11 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
 
-class ScenarioTextEdit;
 class QKeyEvent;
 
+namespace UserInterface {
+	class ScenarioTextEdit;
+}
 
 namespace KeyProcessingLayer
 {
@@ -59,7 +61,7 @@ namespace KeyProcessingLayer
 		bool needEnshureCursorVisible() const;
 
 	private:
-		KeyPressHandlerFacade(ScenarioTextEdit* _editor);
+		KeyPressHandlerFacade(UserInterface::ScenarioTextEdit* _editor);
 
 		/**
 		 * @brief Получить обработчик для заданного типа
@@ -67,7 +69,7 @@ namespace KeyProcessingLayer
 		AbstractKeyHandler* handlerFor(BusinessLogic::ScenarioTextBlockStyle::Type _type);
 
 	private:
-		ScenarioTextEdit* m_editor;
+		UserInterface::ScenarioTextEdit* m_editor;
 
 		PrepareHandler* m_prepareHandler;
 		PreHandler* m_preHandler;
@@ -91,7 +93,7 @@ namespace KeyProcessingLayer
 	 */
 	/** @{ */
 	public:
-		static KeyPressHandlerFacade* instance(ScenarioTextEdit* _editor);
+		static KeyPressHandlerFacade* instance(UserInterface::ScenarioTextEdit* _editor);
 
 	private:
 		static KeyPressHandlerFacade* s_instance;

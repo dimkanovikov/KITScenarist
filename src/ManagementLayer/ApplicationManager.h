@@ -3,15 +3,16 @@
 
 #include <QObject>
 
-class ScenarioTextEdit;
-class QLabel;
-class SideBar;
+class SideTabBar;
 class QStackedLayout;
-
+class QToolButton;
+class QMenu;
 
 namespace ManagementLayer
 {
 	class StartUpManager;
+	class ScenarioManager;
+
 
 	/**
 	 * @brief Управляющий приложением
@@ -63,11 +64,21 @@ namespace ManagementLayer
 		 */
 		void saveCurrentProjectInRecent();
 
+		/**
+		 * @brief Настроить текущий проект для редактирования
+		 */
+		void goToEditCurrentProject();
+
 	private:
 		/**
 		 * @brief Настроить представление
 		 */
 		void initView();
+
+		/**
+		 * @brief Сформировать меню
+		 */
+		QMenu* createMenu();
 
 		/**
 		 * @brief Настроить соединения
@@ -81,9 +92,14 @@ namespace ManagementLayer
 		QWidget* m_view;
 
 		/**
+		 * @brief Меню приложения
+		 */
+		QToolButton* m_menu;
+
+		/**
 		 * @brief Панель вкладок
 		 */
-		SideBar* m_tabs;
+		SideTabBar* m_tabs;
 
 		/**
 		 * @brief Виджеты вкладок
@@ -95,17 +111,10 @@ namespace ManagementLayer
 		 */
 		StartUpManager* m_startUpManager;
 
-
-
-		/// tests
-
-	public slots:
-		void print();
-		void updatePositionDuration();
-
-	private:
-		ScenarioTextEdit* textEdit;
-		QLabel* label;
+		/**
+		 * @brief Управляющий сценарием
+		 */
+		ScenarioManager* m_scenarioManager;
 	};
 }
 

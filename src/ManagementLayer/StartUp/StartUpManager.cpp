@@ -65,13 +65,13 @@ void StartUpManager::addRecentFile(const QString& _filePath, const QString& _pro
 	//
 	// Если в списке больше допустимого кол-ва используемых файлов удалим давно используемый
 	//
-	if (m_recentFiles.count() == MAX_RECENT_FILES_COUNT
+	if (m_recentFiles.size() >= MAX_RECENT_FILES_COUNT
 		&& !m_recentFiles.contains(_filePath)) {
-		QStringList usingDates = m_recentFilesUsing.keys();
+		QStringList usingDates = m_recentFilesUsing.values();
 		qSort(usingDates);
-		QString lastUsingProject = m_recentFilesUsing.key(usingDates.first());
-		m_recentFiles.remove(lastUsingProject);
-		m_recentFilesUsing.remove(lastUsingProject);
+		QString oldestProject = m_recentFilesUsing.key(usingDates.first());
+		m_recentFiles.remove(oldestProject);
+		m_recentFilesUsing.remove(oldestProject);
 	}
 
 	//
@@ -82,7 +82,7 @@ void StartUpManager::addRecentFile(const QString& _filePath, const QString& _pro
 	//
 	// Сохраним информацию о последнем использовании
 	//
-	m_recentFilesUsing.insert(_filePath, QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss"));
+	m_recentFilesUsing.insert(_filePath, QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz"));
 
 	//
 	// Обновим список файлов в представлении

@@ -3,20 +3,36 @@
 namespace {
 	const int ACTION_HEIGHT = 70;
 	const int ACTION_WIDTH = 90;
+
+	void convertToGrayscale (QImage& _img)
+	{
+		for (int r = 0; r < _img.height (); ++r)
+		{
+			for (int c = 0; c < _img.width (); ++c)
+			{
+				QRgb rgba = _img.pixel (c, r);
+
+				int gray = qGray  (rgba);
+				int a    = qAlpha (rgba);
+
+				_img.setPixel (c, r, qRgba (gray, gray, gray, a));
+			}
+		}
+	}
 }
 
-SideBar::SideBar(QWidget *parent)
-	: QWidget(parent), m_centerActions(false), _pressedAction(NULL), _checkedAction(NULL)
+SideTabBar::SideTabBar(QWidget *parent)
+	: QWidget(parent), m_centerTabs(false), m_pressedTab(NULL), m_checkedTab(NULL)
 {
 	setFixedWidth(ACTION_WIDTH);
 }
 
-SideBar::~SideBar()
+SideTabBar::~SideTabBar()
 {
 
 }
 
-void SideBar::paintEvent(QPaintEvent *event)
+void SideTabBar::paintEvent(QPaintEvent *event)
 {
 	QPainter p(this);
 
@@ -24,10 +40,10 @@ void SideBar::paintEvent(QPaintEvent *event)
 	p.setPen(QColor(95, 95, 95));
 	p.drawLine(event->rect().topRight(), event->rect().bottomRight());
 
-	int actions_height = _actions.size()*ACTION_HEIGHT;
+	int actions_height = m_tabs.size()*ACTION_HEIGHT;
 
-	int action_y = m_centerActions ? (event->rect().height()/2-actions_height/2) : 0;
-	foreach(QAction *action, _actions)
+	int action_y = m_centerTabs ? (event->rect().height()/2-actions_height/2) : 0;
+	foreach(QAction *action, m_tabs)
 	{
 		QRect actionRect(0, action_y, event->rect().width(), ACTION_HEIGHT);
 
@@ -42,7 +58,7 @@ void SideBar::paintEvent(QPaintEvent *event)
 
 		}
 
-		if(action == _actions.last())
+		if(action == m_tabs.last())
 		{
 			p.setPen(QColor(15, 15, 15));
 			p.drawLine(QPoint(0, actionRect.bottomLeft().y()-1), QPoint(actionRect.width(), actionRect.bottomRight().y()-1));
@@ -62,24 +78,26 @@ void SideBar::paintEvent(QPaintEvent *event)
 		int icon_size = 48;
 
 		QRect actionIconRect(0, action_y, event->rect().width(), ACTION_HEIGHT-16);
-		QImage actionImage(
-					action->icon().pixmap(
-						icon_size,
-						action->isEnabled() ? QIcon::Normal : QIcon::Disabled
-						)
-					.toImage()
-					);
-		QIcon actionIcon(QPixmap::fromImage(actionImage));
-		if(!action->isChecked()) {
+		QImage actionImage(action->icon().pixmap(icon_size).toImage());
+		// Если действие недоступно
+		if (!action->isEnabled()) {
+			convertToGrayscale(actionImage);
+		}
+		// Если действие неактивно
+		if (!action->isChecked()) {
 			p.setOpacity(0.5);
 		}
+		// Рисуем иконку
+		QIcon actionIcon(QPixmap::fromImage(actionImage));
 		actionIcon.paint(&p, actionIconRect);
 		p.setOpacity(1);
 
 
-		p.setPen(QColor(217, 217, 217));
-		if(action->isChecked())
-			p.setPen(QColor(255, 255, 255));
+		p.setPen(QColor(217, 217, 217)); // неактивный текст
+		if (action->isChecked())
+			p.setPen(QColor(255, 255, 255)); // активный текст
+		if (!action->isEnabled())
+			p.setPen(QColor(160, 160, 160)); // недоступный текст
 		QRect actionTextRect(0, action_y+actionRect.height()-23, event->rect().width(), 18);
 		p.drawText(actionTextRect, Qt::AlignCenter, action->text());
 
@@ -88,64 +106,84 @@ void SideBar::paintEvent(QPaintEvent *event)
 
 }
 
-QSize SideBar::minimumSizeHint() const
+QSize SideTabBar::minimumSizeHint() const
 {
-	return QSize(ACTION_WIDTH, _actions.size()*ACTION_HEIGHT);
+	return QSize(ACTION_WIDTH, m_tabs.size()*ACTION_HEIGHT);
 }
 
-void SideBar::addAction(QAction *action)
+void SideTabBar::addTab(QAction *action)
 {
 	action->setCheckable(true);
-	if (_actions.isEmpty()) {
+	if (m_tabs.isEmpty()) {
 		action->setChecked(true);
-		_checkedAction = action;
+		m_checkedTab = action;
 	}
-	_actions.push_back(action);
+	m_tabs.push_back(action);
 	update();
 	return;
 }
 
-QAction *SideBar::addAction(const QString &text, const QIcon &icon)
+QAction *SideTabBar::addTab(const QString &text, const QIcon &icon)
 {
 	QAction *action = new QAction(icon, text, this);
-	addAction(action);
+	addTab(action);
 	return action;
 }
 
-void SideBar::mousePressEvent(QMouseEvent *event)
+void SideTabBar::setCurrent(int _index)
 {
-	_pressedAction = actionAt(event->pos());
-	if(_pressedAction == NULL || _pressedAction == _checkedAction)
+	//
+	// Если индекс в допустимом пределе и выделено не текущая вкладка
+	//
+	if (_index < m_tabs.size()
+		&& m_tabs.indexOf(m_checkedTab) != _index) {
+		m_checkedTab->setChecked(false);
+		m_checkedTab = m_tabs.at(_index);
+		m_checkedTab->setChecked(true);
+		update();
+		emit currentChanged(_index);
+	}
+}
+
+QList<QAction*> SideTabBar::tabs() const
+{
+	return m_tabs;
+}
+
+void SideTabBar::mousePressEvent(QMouseEvent *event)
+{
+	m_pressedTab = tabAt(event->pos());
+	if(m_pressedTab == NULL || m_pressedTab == m_checkedTab)
 		return;
 	update();
 }
 
-void SideBar::mouseReleaseEvent(QMouseEvent *event)
+void SideTabBar::mouseReleaseEvent(QMouseEvent *event)
 {
-	QAction* tempAction = actionAt(event->pos());
-	if(_pressedAction != tempAction || tempAction == NULL || !tempAction->isEnabled())
+	QAction* tempAction = tabAt(event->pos());
+	if(m_pressedTab != tempAction || tempAction == NULL || !tempAction->isEnabled())
 	{
-		_pressedAction = NULL;
+		m_pressedTab = NULL;
 		return;
 	}
-	if(_checkedAction != NULL)
-		_checkedAction->setChecked(false);
-	_checkedAction = _pressedAction;
-	if(_checkedAction != NULL)
-		_checkedAction->setChecked(true);
+	if(m_checkedTab != NULL)
+		m_checkedTab->setChecked(false);
+	m_checkedTab = m_pressedTab;
+	if(m_checkedTab != NULL)
+		m_checkedTab->setChecked(true);
 	update();
-	_pressedAction = NULL;
+	m_pressedTab = NULL;
 
-	emit currentChanged(_actions.indexOf(_checkedAction));
+	emit currentChanged(m_tabs.indexOf(m_checkedTab));
 	return;
 }
 
-QAction* SideBar::actionAt(const QPoint &at)
+QAction* SideTabBar::tabAt(const QPoint &at)
 {
-	int actions_height = _actions.size()*ACTION_HEIGHT;
+	int actions_height = m_tabs.size()*ACTION_HEIGHT;
 
-	int action_y = m_centerActions ? (rect().height()/2-actions_height/2) : 0;
-	foreach(QAction *action, _actions)
+	int action_y = m_centerTabs ? (rect().height()/2-actions_height/2) : 0;
+	foreach(QAction *action, m_tabs)
 	{
 		QRect actionRect(0, action_y, rect().width(), ACTION_HEIGHT);
 		if(actionRect.contains(at))

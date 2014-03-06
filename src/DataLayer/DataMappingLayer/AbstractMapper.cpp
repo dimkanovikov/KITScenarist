@@ -234,5 +234,6 @@ void SqlExecutingQueuedThread::run()
 
 		qDebug() << queryToExecute.lastQuery();
 		qDebug() << queryToExecute.lastError();
+		qDebug() << queryToExecute.boundValues();
 	}
 }

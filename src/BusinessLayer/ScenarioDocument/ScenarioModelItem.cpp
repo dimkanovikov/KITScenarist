@@ -173,6 +173,16 @@ void ScenarioModelItem::updateParentDuration()
 	}
 }
 
+void ScenarioModelItem::clear()
+{
+	m_header.clear();
+	m_text.clear();
+	updateParentText();
+
+	m_duration = 0;
+	updateParentDuration();
+}
+
 //! Вспомогательные методы для организации работы модели
 
 void ScenarioModelItem::prependItem(ScenarioModelItem* _item)
@@ -209,6 +219,8 @@ void ScenarioModelItem::insertItem(int _index, ScenarioModelItem* _item)
 
 void ScenarioModelItem::removeItem(ScenarioModelItem* _item)
 {
+	_item->clear();
+
 	//
 	// removeOne - удаляет объект при помощи delete, так что потом самому удалять не нужно
 	//

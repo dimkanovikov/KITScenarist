@@ -8,6 +8,9 @@
 class QTextDocument;
 class QAbstractItemModel;
 
+namespace Domain {
+	class Scenario;
+}
 
 namespace BusinessLogic
 {
@@ -44,27 +47,49 @@ namespace BusinessLogic
 		/**
 		 * @brief Модель сценария
 		 */
-		QAbstractItemModel* model() const;
+		ScenarioModel* model() const;
 
 		/**
-		 * @brief Вспомогательная функция для определения позиции вставки майм-данных в документ
+		 * @brief Количество сцен в сценарии
 		 */
-		int positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const;
-
-		/**
-		 * @brief Определить начальную позицию элемента в тексте
-		 */
-		int itemStartPosition(ScenarioModelItem* _item) const;
-
-		/**
-		 * @brief Получить последнюю позицию элемента в тексте
-		 */
-		int itemEndPosition(ScenarioModelItem* _item) const;
+		int scenesCount() const;
 
 		/**
 		 * @brief Посчитать длительность сценария до указанной позиции
 		 */
 		int durationAtPosition(int _position) const;
+
+		/**
+		 * @brief Длительность всего сценария
+		 */
+		int fullDuration() const;
+
+		/**
+		 * @brief Загрузить документ из сценария
+		 */
+		void load(Domain::Scenario* _scenario);
+
+		/**
+		 * @brief Сохранить документ в строку
+		 */
+		QString save() const;
+
+	public:
+		/**
+		 * @brief Вспомогательные функции для обработчика xml
+		 *
+		 * FIXME: плохо, что эти функции являются открытыми их нужно перенести в закрытую часть класса
+		 */
+		/** @{ */
+		//! Определить позицию вставки майм-данных в документ
+		int positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const;
+
+		//! Определить начальную позицию элемента в тексте
+		int itemStartPosition(ScenarioModelItem* _item) const;
+
+		//! Получить последнюю позицию элемента в тексте
+		int itemEndPosition(ScenarioModelItem* _item) const;
+		/** @} */
 
 	private slots:
 		/**

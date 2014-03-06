@@ -16,7 +16,7 @@ namespace KeyProcessingLayer
 	class StandardKeyHandler : public AbstractKeyHandler
 	{
 	public:
-		StandardKeyHandler(ScenarioTextEdit* _editor);
+		StandardKeyHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class SceneGroupHeaderHandler : public StandardKeyHandler
 	{
 	public:
-		SceneGroupHeaderHandler(ScenarioTextEdit* _editor);
+		SceneGroupHeaderHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

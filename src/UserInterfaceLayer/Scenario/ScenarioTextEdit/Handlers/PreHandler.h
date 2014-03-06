@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class PreHandler : public StandardKeyHandler
 	{
 	public:
-		PreHandler(ScenarioTextEdit* _editor);
+		PreHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

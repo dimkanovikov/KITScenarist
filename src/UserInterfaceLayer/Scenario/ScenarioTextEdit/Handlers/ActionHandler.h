@@ -12,7 +12,7 @@ namespace KeyProcessingLayer
 	class ActionHandler : public StandardKeyHandler
 	{
 	public:
-		ActionHandler(ScenarioTextEdit* _editor);
+		ActionHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**

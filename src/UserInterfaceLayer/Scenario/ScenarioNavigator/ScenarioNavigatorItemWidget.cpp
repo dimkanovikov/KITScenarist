@@ -11,6 +11,8 @@
 #include <QPixmap>
 #include <QTime>
 
+using UserInterface::ScenarioNavigatorItemWidget;
+
 
 ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 	QWidget(parent)
