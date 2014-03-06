@@ -33,7 +33,6 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
 	m_textEditManager(new ScenarioTextEditManager(this, m_view))
 {
-	initData();
 	initView();
 	initConnections();
 }
@@ -77,12 +76,6 @@ void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 				.arg(durationToCursor)
 				.arg(durationToEnd)
 				);
-}
-
-void ScenarioManager::initData()
-{
-	m_navigatorManager->setNavigationModel(0);
-	m_textEditManager->setScenarioDocument(0);
 }
 
 void ScenarioManager::initView()

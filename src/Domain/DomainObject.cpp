@@ -102,12 +102,17 @@ bool DomainObjectsItemModel::contains(DomainObject* domainObject) const
 
 void DomainObjectsItemModel::append(DomainObject* domainObject)
 {
-	m_domainObjects.append(domainObject);
+	emit beginInsertRows(QModelIndex(), count(), count());
+	m_domainObjects.append( domainObject );
+	emit endInsertRows();
 }
 
 void DomainObjectsItemModel::remove(DomainObject* domainObject)
 {
-	m_domainObjects.removeOne(domainObject);
+	const int index = m_domainObjects.indexOf(domainObject);
+	beginRemoveRows(QModelIndex(), index, index);
+	m_domainObjects.removeOne( domainObject );
+	endRemoveRows();
 }
 
 QList<DomainObject*> DomainObjectsItemModel::domainObjects() const

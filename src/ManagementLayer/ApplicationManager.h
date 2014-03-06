@@ -12,6 +12,7 @@ namespace ManagementLayer
 {
 	class StartUpManager;
 	class ScenarioManager;
+	class CharactersManager;
 
 
 	/**
@@ -125,6 +126,11 @@ namespace ManagementLayer
 		 * @brief Управляющий сценарием
 		 */
 		ScenarioManager* m_scenarioManager;
+
+		/**
+		 * @brief Управляющий персонажами
+		 */
+		CharactersManager* m_charactersManager;
 	};
 }
 

@@ -3,16 +3,20 @@
 
 #include <QWidget>
 
-class CharactersDataEdit : public QWidget
+
+namespace UserInterface
 {
-	Q_OBJECT
-public:
-	explicit CharactersDataEdit(QWidget *parent = 0);
+	class CharactersDataEdit : public QWidget
+	{
+		Q_OBJECT
+	public:
+		explicit CharactersDataEdit(QWidget *parent = 0);
 
-signals:
+	signals:
 
-public slots:
+	public slots:
 
-};
+	};
+}
 
 #endif // CHARACTERSDATAEDIT_H

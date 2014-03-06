@@ -27,5 +27,8 @@
         <file>Icons/project_new.png</file>
         <file>Icons/project_open.png</file>
         <file>Icons/help.png</file>
+        <file>Icons/Editing/add.png</file>
+        <file>Icons/Editing/delete.png</file>
+        <file>Icons/Editing/refresh.png</file>
     </qresource>
 </RCC>

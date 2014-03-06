@@ -48,11 +48,6 @@ namespace ManagementLayer
 
 	private:
 		/**
-		 * @brief При запуске инициилизировать пустыми данными
-		 */
-		void initData();
-
-		/**
 		 * @brief Настроить представление
 		 */
 		void initView();

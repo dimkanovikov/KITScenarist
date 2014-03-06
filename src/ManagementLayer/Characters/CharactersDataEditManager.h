@@ -3,16 +3,31 @@
 
 #include <QObject>
 
-class CharactersDataEditManager : public QObject
+namespace UserInterface {
+	class CharactersDataEdit;
+}
+
+
+namespace ManagementLayer
 {
-	Q_OBJECT
-public:
-	explicit CharactersDataEditManager(QObject *parent = 0);
+	/**
+	 * @brief Управляющий данными персонажа
+	 */
+	class CharactersDataEditManager : public QObject
+	{
+		Q_OBJECT
 
-signals:
+	public:
+		explicit CharactersDataEditManager(QObject* _parent, QWidget* _parentWidget);
 
-public slots:
+		QWidget* view() const;
 
-};
+	private:
+		/**
+		 * @brief Редактор данных
+		 */
+		UserInterface::CharactersDataEdit* m_editor;
+	};
+}
 
 #endif // CHARACTERSDATAEDITMANAGER_H

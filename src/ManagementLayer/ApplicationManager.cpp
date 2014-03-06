@@ -2,6 +2,7 @@
 
 #include "StartUp/StartUpManager.h"
 #include "Scenario/ScenarioManager.h"
+#include "Characters/CharactersManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
@@ -59,7 +60,8 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_tabs(new SideTabBar(m_view)),
 	m_tabsWidgets(new QStackedLayout),
 	m_startUpManager(new StartUpManager(this, m_view)),
-	m_scenarioManager(new ScenarioManager(this, m_view))
+	m_scenarioManager(new ScenarioManager(this, m_view)),
+	m_charactersManager(new CharactersManager(this, m_view))
 {
 	initView();
 	initConnections();
@@ -365,6 +367,7 @@ void ApplicationManager::goToEditCurrentProject()
 	// Загрузить данные из файла
 	//
 	m_scenarioManager->loadCurrentProject();
+	m_charactersManager->loadCurrentProject();
 
 	//
 	// Установим заголовок
@@ -407,6 +410,7 @@ void ApplicationManager::initView()
 	//
 	m_tabsWidgets->addWidget(m_startUpManager->view());
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
+	m_tabsWidgets->addWidget(m_charactersManager->view());
 
 	//
 	// Расположим всё на форме
