@@ -25,26 +25,29 @@ namespace {
 	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
 
 	/**
-	 * @brief Отключить некоторые вкладки
+	 * @brief Неактивные при старте действия
+	 */
+	QList<QAction*> g_disableOnStartActions;
+
+	/**
+	 * @brief Отключить некоторые действия
 	 *
 	 * Используется при старте приложения, пока не загружен какой-либо проект
 	 */
-	static void disableTabs(SideTabBar* _tabBar) {
-		QList<QAction*> tabs = _tabBar->tabs();
-		foreach (QAction* tab, tabs) {
-			if (tab != tabs.first()) {
-				tab->setEnabled(false);
-			}
+	static void disableActionsOnStart() {
+		foreach (QAction* action, g_disableOnStartActions) {
+			action->setEnabled(false);
 		}
 	}
 
 	/**
-	 * @brief Активировать все вкладки
+	 * @brief Активировать отключенные при старте действия
 	 */
-	static void enableTabs(SideTabBar* _tabBar) {
-		foreach (QAction* tab, _tabBar->tabs()) {
-			tab->setEnabled(true);
+	static void enableActionsOnProjectOpen() {
+		foreach (QAction* action, g_disableOnStartActions) {
+			action->setEnabled(true);
 		}
+		g_disableOnStartActions.clear();
 	}
 }
 
@@ -356,7 +359,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Активируем вкладки
 	//
-	::enableTabs(m_tabs);
+	::enableActionsOnProjectOpen();
 
 	//
 	// Загрузить данные из файла
@@ -394,11 +397,10 @@ void ApplicationManager::initView()
 	// Настроим боковую панель
 	//
 	m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
-	m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
-	m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
-	m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
-	m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
-	::disableTabs(m_tabs);
+	g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
+	g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
+	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
+	g_disableOnStartActions << m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
 
 	//
 	// Настроим виджеты соответствующие вкладкам
@@ -422,6 +424,8 @@ void ApplicationManager::initView()
 	layout->addLayout(m_tabsWidgets);
 
 	m_view->setLayout(layout);
+
+	::disableActionsOnStart();
 }
 
 QMenu* ApplicationManager::createMenu()
@@ -434,11 +438,16 @@ QMenu* ApplicationManager::createMenu()
 	QAction* openProject = menu->addAction(tr("Open"));
 	QAction* saveProject = menu->addAction(tr("Save"));
 	QAction* saveProjectAs = menu->addAction(tr("Save As..."));
+	g_disableOnStartActions << saveProject;
+	g_disableOnStartActions << saveProjectAs;
 
+	//
+	// ... экспорт
+	//
 	QMenu* exportMenu = new QMenu(tr("Export to..."), m_menu);
 	QAction* exportToPdf = exportMenu->addAction(tr("PDF"));
 	QAction* exportToRtf = exportMenu->addAction(tr("RTF"));
-	menu->addMenu(exportMenu);
+	g_disableOnStartActions << menu->addMenu(exportMenu);
 
 	//
 	// Настроим соединения
