@@ -58,6 +58,8 @@ namespace ManagementLayer
 		void aboutUpdateDuration(int _cursorPosition);
 
 	private:
+		void initData();
+
 		/**
 		 * @brief Настроить представление
 		 */

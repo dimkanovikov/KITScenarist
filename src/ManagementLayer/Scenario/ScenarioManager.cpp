@@ -37,6 +37,7 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
 	m_textEditManager(new ScenarioTextEditManager(this, m_view))
 {
+	initData();
 	initView();
 	initConnections();
 }
@@ -46,7 +47,7 @@ QWidget* ScenarioManager::view() const
 	return m_view;
 }
 
-BusinessLogic::ScenarioDocument*ScenarioManager::scenario() const
+BusinessLogic::ScenarioDocument* ScenarioManager::scenario() const
 {
 	return m_scenario;
 }
@@ -136,6 +137,12 @@ void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 				.arg(durationToCursor)
 				.arg(durationToEnd)
 				);
+}
+
+void ScenarioManager::initData()
+{
+	m_navigatorManager->setNavigationModel(m_scenario->model());
+	m_textEditManager->setScenarioDocument(m_scenario->document());
 }
 
 void ScenarioManager::initView()

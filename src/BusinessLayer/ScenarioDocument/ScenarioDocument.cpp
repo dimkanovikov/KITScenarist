@@ -87,11 +87,33 @@ int ScenarioDocument::fullDuration() const
 
 void ScenarioDocument::load(Domain::Scenario* _scenario)
 {
-	m_document->clear();
+	//
+	// Отключаем всё от документа
+	//
+	m_document->disconnect();
 
+	//
+	// Очищаем модель и документ
+	//
+	{
+		int documentCharactersCount = m_document->characterCount();
+		aboutContentsChange(0, documentCharactersCount, 0);
+		m_document->clear();
+	}
+
+	//
+	// Загружаем сценарий
+	//
 	if (_scenario != 0) {
 		m_xmlHandler->xmlToScenario(0, _scenario->text());
+		int documentCharactersCount = m_document->characterCount();
+		aboutContentsChange(0, 0, documentCharactersCount);
 	}
+
+	//
+	// Подключаем необходимые сигналы
+	//
+	initConnections();
 }
 
 QString ScenarioDocument::save() const
@@ -526,7 +548,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 void ScenarioDocument::initConnections()
 {
 	connect(m_document, SIGNAL(contentsChange(int,int,int)),
-			this, SLOT(aboutContentsChange(int,int,int)), Qt::QueuedConnection);
+			this, SLOT(aboutContentsChange(int,int,int)));
 }
 
 void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos)
