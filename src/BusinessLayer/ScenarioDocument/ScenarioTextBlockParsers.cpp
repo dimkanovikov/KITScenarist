@@ -1,23 +1,39 @@
-#include "TimeAndPlaceParser.h"
+#include "ScenarioTextBlockParsers.h"
 
 #include <QString>
 #include <QStringList>
+#include <QRegularExpression>
+
+using namespace BusinessLogic;
 
 
-TimeAndPlaceSection TimeAndPlaceParser::section(const QString& _text)
+QString CharacterParser::name(const QString& _text)
 {
-	TimeAndPlaceSection section = SceneHeaderSectionUndefined;
+	//
+	// В блоке персонажа так же могут быть указания, что он говорит за кадром и т.п.
+	// эти указания даются в скобках
+	//
+
+	QString name = _text;
+	return name.remove(QRegularExpression("[(](.*)[)]")).simplified();
+}
+
+// ****
+
+TimeAndPlaceParser::Section TimeAndPlaceParser::section(const QString& _text)
+{
+	TimeAndPlaceParser::Section section = SectionUndefined;
 
 	if (_text.split(", ").count() == 2) {
-		section = SceneHeaderSectionScenarioDay;
+		section = SectionScenarioDay;
 	} else if (_text.split(" - ").count() == 2) {
-		section = SceneHeaderSectionTime;
+		section = SectionTime;
 	} else {
 		const int splitDotCount = _text.split(". ").count();
 		if (splitDotCount == 1) {
-			section = SceneHeaderSectionPlace;
+			section = SectionPlace;
 		} else {
-			section = SceneHeaderSectionLocation;
+			section = SectionLocation;
 		}
 	}
 

@@ -4,15 +4,19 @@
 #include "ScenarioTextEditManager.h"
 
 #include <Domain/Character.h>
+#include <Domain/Location.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+#include <DataLayer/DataStorageLayer/LocationStorage.h>
 
 #include <QWidget>
 #include <QComboBox>
@@ -97,13 +101,15 @@ void ScenarioManager::refreshCharacters()
 		cursor.movePosition(QTextCursor::NextBlock);
 		if (ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::Character) {
 			cursor.select(QTextCursor::BlockUnderCursor);
-			characters.insert(cursor.selectedText().toUpper().trimmed());
+			QString character =
+					BusinessLogic::CharacterParser::name(cursor.selectedText().toUpper().trimmed());
+			characters.insert(character);
 		}
 		cursor.movePosition(QTextCursor::EndOfBlock);
 	}
 
 	//
-	// Удалить тех, которых нет в тексте
+	// Удалить те, которых нет в тексте
 	//
 	QSet<QString> charactersToDelete;
 	foreach (DomainObject* domainObject,
@@ -123,6 +129,65 @@ void ScenarioManager::refreshCharacters()
 	foreach (const QString& character, characters) {
 		if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
 			DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
+		}
+	}
+}
+
+void ScenarioManager::aboutLocationNameChanged(const QString& _oldName, const QString& _newName)
+{
+	//
+	// Обновить тексты всех сценариев
+	//
+	QTextCursor cursor(m_scenario->document());
+	while (!cursor.isNull() && !cursor.atEnd()) {
+		cursor = m_scenario->document()->find(_oldName, cursor);
+
+		if (!cursor.isNull()
+			&& ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::TimeAndPlace) {
+			cursor.insertText(_newName);
+		}
+	}
+}
+
+void ScenarioManager::refreshLocations()
+{
+	//
+	// Найти локации во всём тексте
+	//
+	QSet<QString> locations;
+	QTextCursor cursor(m_scenario->document());
+	while (!cursor.atEnd()) {
+		cursor.movePosition(QTextCursor::NextBlock);
+		if (ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::TimeAndPlace) {
+			cursor.select(QTextCursor::BlockUnderCursor);
+			QString location =
+					BusinessLogic::TimeAndPlaceParser::locationName(cursor.selectedText().toUpper().trimmed());
+			locations.insert(location);
+		}
+		cursor.movePosition(QTextCursor::EndOfBlock);
+	}
+
+	//
+	// Удалить те, которых нет в тексте
+	//
+	QSet<QString> locationsToDelete;
+	foreach (DomainObject* domainObject,
+			 DataStorageLayer::StorageFacade::locationStorage()->all()->toList()) {
+		Location* location = dynamic_cast<Location*>(domainObject);
+		if (!locations.contains(location->name())) {
+			locationsToDelete.insert(location->name());
+		}
+	}
+	foreach (const QString& location, locationsToDelete) {
+		DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
+	}
+
+	//
+	// Добавить новых
+	//
+	foreach (const QString& location, locations) {
+		if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
+			DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
 		}
 	}
 }

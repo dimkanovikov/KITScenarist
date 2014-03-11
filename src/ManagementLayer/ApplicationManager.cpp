@@ -3,6 +3,7 @@
 #include "StartUp/StartUpManager.h"
 #include "Scenario/ScenarioManager.h"
 #include "Characters/CharactersManager.h"
+#include "Locations/LocationsManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
@@ -61,7 +62,8 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_tabsWidgets(new QStackedLayout),
 	m_startUpManager(new StartUpManager(this, m_view)),
 	m_scenarioManager(new ScenarioManager(this, m_view)),
-	m_charactersManager(new CharactersManager(this, m_view))
+	m_charactersManager(new CharactersManager(this, m_view)),
+	m_locationsManager(new LocationsManager(this, m_view))
 {
 	initView();
 	initConnections();
@@ -368,6 +370,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	m_scenarioManager->loadCurrentProject();
 	m_charactersManager->loadCurrentProject();
+	m_locationsManager->loadCurrentProject();
 
 	//
 	// Установим заголовок
@@ -411,6 +414,7 @@ void ApplicationManager::initView()
 	m_tabsWidgets->addWidget(m_startUpManager->view());
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
 	m_tabsWidgets->addWidget(m_charactersManager->view());
+	m_tabsWidgets->addWidget(m_locationsManager->view());
 
 	//
 	// Расположим всё на форме
@@ -429,6 +433,9 @@ void ApplicationManager::initView()
 
 	m_view->setLayout(layout);
 
+	//
+	// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
+	//
 	::disableActionsOnStart();
 }
 
@@ -477,4 +484,8 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
 	connect(m_charactersManager, SIGNAL(refreshCharacters()),
 			m_scenarioManager, SLOT(refreshCharacters()));
+	connect(m_locationsManager, SIGNAL(locationNameChanged(QString,QString)),
+			m_scenarioManager, SLOT(aboutLocationNameChanged(QString,QString)));
+	connect(m_locationsManager, SIGNAL(refreshLocations()),
+			m_scenarioManager, SLOT(refreshLocations()));
 }

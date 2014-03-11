@@ -1,8 +1,8 @@
 #include "CharacterHandler.h"
 
-#include "../Parsers/CharacterParser.h"
-
 #include "../ScenarioTextEdit.h"
+
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 
 #include <Domain/Character.h>
 

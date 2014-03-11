@@ -51,6 +51,16 @@ namespace ManagementLayer
 		 */
 		void refreshCharacters();
 
+		/**
+		 * @brief Изменено название локации
+		 */
+		void aboutLocationNameChanged(const QString& _oldName, const QString& _newName);
+
+		/**
+		 * @brief Пересоздать локации
+		 */
+		void refreshLocations();
+
 	private slots:
 		/**
 		 * @brief Обновить хронометраж

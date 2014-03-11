@@ -1,8 +1,8 @@
 #include "TimeAndPlaceHandler.h"
 
-#include "../Parsers/TimeAndPlaceParser.h"
-
 #include "../ScenarioTextEdit.h"
+
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 
 #include <Domain/Place.h>
 #include <Domain/Location.h>
@@ -44,7 +44,8 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
 	// ... текущая секция
-	TimeAndPlaceSection currentSection = TimeAndPlaceParser::section(cursorBackwardText);
+	TimeAndPlaceParser::Section currentSection =
+			TimeAndPlaceParser::section(cursorBackwardText);
 
 
 	//
@@ -67,7 +68,7 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 		// Дописать необходимые символы
 		//
 		switch (currentSection) {
-			case SceneHeaderSectionPlace: {
+			case TimeAndPlaceParser::SectionPlace: {
 				cursor.insertText(". ");
 				break;
 			}
@@ -246,7 +247,7 @@ void TimeAndPlaceHandler::handleOther(QKeyEvent*)
 	// ... текст до курсора
 	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
 	// ... текущая секция
-	TimeAndPlaceSection currentSection = TimeAndPlaceParser::section(cursorBackwardText);
+	TimeAndPlaceParser::Section currentSection = TimeAndPlaceParser::section(cursorBackwardText);
 
 
 	//
@@ -259,25 +260,25 @@ void TimeAndPlaceHandler::handleOther(QKeyEvent*)
 	QString sectionText;
 
 	switch (currentSection) {
-		case SceneHeaderSectionPlace: {
+		case TimeAndPlaceParser::SectionPlace: {
 			sectionModel = StorageFacade::placeStorage()->all();
 			sectionText = TimeAndPlaceParser::placeName(currentBlockText);
 			break;
 		}
 
-		case SceneHeaderSectionLocation: {
+		case TimeAndPlaceParser::SectionLocation: {
 			sectionModel = StorageFacade::locationStorage()->all();
 			sectionText = TimeAndPlaceParser::locationName(currentBlockText);
 			break;
 		}
 
-		case SceneHeaderSectionScenarioDay: {
+		case TimeAndPlaceParser::SectionScenarioDay: {
 			sectionModel = StorageFacade::scenarioDayStorage()->all();
 			sectionText = TimeAndPlaceParser::scenarioDayName(currentBlockText);
 			break;
 		}
 
-		case SceneHeaderSectionTime: {
+		case TimeAndPlaceParser::SectionTime: {
 			sectionModel = StorageFacade::timeStorage()->all();
 			sectionText = TimeAndPlaceParser::timeName(currentBlockText);
 			break;

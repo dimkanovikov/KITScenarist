@@ -14,6 +14,13 @@ QString Location::name() const
 	return m_name;
 }
 
+void Location::setName(const QString& _name)
+{
+	if (m_name != _name) {
+		m_name = _name;
+	}
+}
+
 // ****
 
 

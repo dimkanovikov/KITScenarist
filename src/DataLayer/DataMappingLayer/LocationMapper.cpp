@@ -30,6 +30,11 @@ void LocationMapper::update(Location* _location)
 	abstractUpdate(_location);
 }
 
+void LocationMapper::remove(Location* _location)
+{
+	abstractDelete(_location);
+}
+
 QString LocationMapper::findStatement(const Identifier& _id) const
 {
 	QString findStatement =

@@ -102,8 +102,6 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TransitionHandler.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Parsers/CharacterParser.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Parsers/TimeAndPlaceParser.cpp \
     3rd_party/Hunspell/affentry.cxx \
     3rd_party/Hunspell/affixmgr.cxx \
     3rd_party/Hunspell/csutil.cxx \
@@ -131,7 +129,8 @@ SOURCES += main.cpp \
     UserInterfaceLayer/StartUp/RecentFilesDelegate.cpp \
     UserInterfaceLayer/StartUp/RecentFileWidget.cpp \
     3rd_party/Widgets/SideBar/SideBar.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp \
+    BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.cpp
 
 RESOURCES += \
     Resources/Resources.qrc
@@ -224,8 +223,6 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHeaderHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TransitionHandler.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Parsers/CharacterParser.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Parsers/TimeAndPlaceParser.h \
     3rd_party/Hunspell/affentry.hxx \
     3rd_party/Hunspell/affixmgr.hxx \
     3rd_party/Hunspell/atypes.hxx \
@@ -261,7 +258,8 @@ HEADERS += \
     UserInterfaceLayer/StartUp/RecentFilesDelegate.h \
     UserInterfaceLayer/StartUp/RecentFileWidget.h \
     3rd_party/Widgets/SideBar/SideBar.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.h
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.h \
+    BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h
 
 OTHER_FILES += \
     TODO \
@@ -270,4 +268,5 @@ OTHER_FILES += \
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
-    UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui
+    UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui \
+    UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui

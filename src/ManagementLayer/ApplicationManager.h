@@ -13,6 +13,7 @@ namespace ManagementLayer
 	class StartUpManager;
 	class ScenarioManager;
 	class CharactersManager;
+	class LocationsManager;
 
 
 	/**
@@ -131,6 +132,11 @@ namespace ManagementLayer
 		 * @brief Управляющий персонажами
 		 */
 		CharactersManager* m_charactersManager;
+
+		/**
+		 * @brief Управляющий локациями
+		 */
+		LocationsManager* m_locationsManager;
 	};
 }
 
