@@ -3,16 +3,10 @@
 using namespace Domain;
 
 
-Location::Location(const Identifier& _id, Location* _parentLocation, const QString& _name) :
+Location::Location(const Identifier& _id, const QString& _name) :
 	DomainObject(_id),
-	m_parentLocation(_parentLocation),
 	m_name(_name)
 {
-}
-
-Location*Location::parentLocation() const
-{
-	return m_parentLocation;
 }
 
 QString Location::name() const

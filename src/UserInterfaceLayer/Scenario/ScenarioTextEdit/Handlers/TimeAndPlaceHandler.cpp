@@ -266,15 +266,8 @@ void TimeAndPlaceHandler::handleOther(QKeyEvent*)
 		}
 
 		case SceneHeaderSectionLocation: {
-			sectionModel = StorageFacade::locationStorage()->allMainLocations();
+			sectionModel = StorageFacade::locationStorage()->all();
 			sectionText = TimeAndPlaceParser::locationName(currentBlockText);
-			break;
-		}
-
-		case SceneHeaderSectionSubLocation: {
-			QString locationName = TimeAndPlaceParser::locationName(cursorBackwardText);
-			sectionModel = StorageFacade::locationStorage()->sublocations(locationName);
-			sectionText = TimeAndPlaceParser::sublocationName(currentBlockText);
 			break;
 		}
 
@@ -314,15 +307,13 @@ void TimeAndPlaceHandler::storeSceneParameters() const
 	QString currentBlockText = currentBlock.text();
 	// ... локация
 	QString locationName = TimeAndPlaceParser::locationName(currentBlockText);
-	// ... подлокация
-	QString sublocationName = TimeAndPlaceParser::sublocationName(currentBlockText);
 	// ... сценарный день
 	QString scenarioDayName = TimeAndPlaceParser::scenarioDayName(currentBlockText);
 
 	//
 	// Сохраняем локацию и подлокацию
 	//
-	StorageFacade::locationStorage()->storeLocationWithSublocation(locationName, sublocationName);
+	StorageFacade::locationStorage()->storeLocation(locationName);
 
 	//
 	// Сохраняем сценарный день

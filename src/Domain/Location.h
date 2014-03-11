@@ -14,12 +14,7 @@ namespace Domain
 	class Location : public DomainObject
 	{
 	public:
-		Location(const Identifier& _id, Location* _parentLocation, const QString& _name);
-
-		/**
-		 * @brief Получить родительскую локацию
-		 */
-		Location* parentLocation() const;
+		Location(const Identifier& _id, const QString& _name);
 
 		/**
 		 * @brief Получить название локации
@@ -27,11 +22,6 @@ namespace Domain
 		QString name() const;
 
 	private:
-
-		/**
-		 * @brief Родительская локация
-		 */
-		Location* m_parentLocation;
 		/**
 		 * @brief Название локации
 		 */
@@ -51,7 +41,6 @@ namespace Domain
 		enum Column {
 			Undefined,
 			Id,
-			ParentLocation,
 			Name
 		};
 

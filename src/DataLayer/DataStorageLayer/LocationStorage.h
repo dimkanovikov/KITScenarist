@@ -23,34 +23,9 @@ namespace DataStorageLayer
 		LocationsTable* all();
 
 		/**
-		 * @brief Получить все основные локации
-		 */
-		LocationsTable* allMainLocations();
-
-		/**
-		 * @brief Получить все подлокации
-		 */
-		LocationsTable* allSublocations();
-
-		/**
-		 * @brief Получить все подлокации заданной локации
-		 */
-		LocationsTable* sublocations(const QString& _locationName);
-
-		/**
 		 * @brief Сохранить основную локацию
 		 */
 		Location* storeLocation(const QString& _locationName);
-
-		/**
-		 * @brief Сохранить подлокацию для заданной локации
-		 */
-		Location* storeSublocation(Location* _parent, const QString& _sublocationName);
-
-		/**
-		 * @brief Сохранить локацию и её подлокацию
-		 */
-		void storeLocationWithSublocation(const QString& _locationName, const QString& _sublocationName);
 
 		/**
 		 * @brief Очистить хранилище
@@ -59,9 +34,6 @@ namespace DataStorageLayer
 
 	private:
 		LocationsTable* m_all;
-		LocationsTable* m_allMainLocations;
-		LocationsTable* m_allSublocations;
-		QMap<Location*, LocationsTable*> m_sublocations;
 
 	private:
 		LocationStorage();

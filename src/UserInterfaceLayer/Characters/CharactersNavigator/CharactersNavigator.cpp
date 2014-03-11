@@ -12,6 +12,7 @@ using UserInterface::CharactersNavigator;
 CharactersNavigator::CharactersNavigator(QWidget *parent) :
 	QWidget(parent),
 	m_addCharacter(new QToolButton(this)),
+	m_editCharacter(new QToolButton(this)),
 	m_removeCharacter(new QToolButton(this)),
 	m_refreshCharacters(new QToolButton(this)),
 	m_navigator(new QListView(this))
@@ -77,6 +78,7 @@ void CharactersNavigator::initView()
 	QLabel* title = new QLabel(tr("Characters"), this);
 
 	m_addCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
+	m_editCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/edit.png"));
 	m_removeCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
 	m_refreshCharacters->setIcon(QIcon(":/Graphics/Icons/Editing/refresh.png"));
 
@@ -88,6 +90,7 @@ void CharactersNavigator::initView()
 	topLayout->addWidget(title);
 	topLayout->addStretch();
 	topLayout->addWidget(m_addCharacter);
+	topLayout->addWidget(m_editCharacter);
 	topLayout->addWidget(m_removeCharacter);
 	topLayout->addWidget(m_refreshCharacters);
 
@@ -103,6 +106,7 @@ void CharactersNavigator::initView()
 void CharactersNavigator::initConnections()
 {
 	connect(m_addCharacter, SIGNAL(clicked()), this, SIGNAL(addCharacter()));
+	connect(m_editCharacter, SIGNAL(clicked()), this, SLOT(aboutEditCharacter()));
 	connect(m_navigator, SIGNAL(activated(QModelIndex)), this, SLOT(aboutEditCharacter()));
 	connect(m_removeCharacter, SIGNAL(clicked()), this, SLOT(aboutRemoveCharacter()));
 	connect(m_refreshCharacters, SIGNAL(clicked()), this, SIGNAL(refreshCharacters()));

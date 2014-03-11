@@ -128,7 +128,6 @@ void Database::createTables(QSqlDatabase& _database)
 	q_creator.exec("CREATE TABLE locations "
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-				   "parent_id INTEGER DEFAULT(NULL), "
 				   "name TEXT UNIQUE NOT NULL "
 				   "); "
 				   );
@@ -200,10 +199,6 @@ void Database::createEnums(QSqlDatabase& _database)
 					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
 					.arg(QString::fromUtf8("НАТ"))
 					);
-		q_creator.exec(
-					QString("INSERT INTO places (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("ПАВ"))
-					);
 #else
 		q_creator.exec("INSERT INTO places (id, name) VALUES (null, 'INT');");
 		q_creator.exec("INSERT INTO places (id, name) VALUES (null, 'EXT');");
@@ -220,14 +215,6 @@ void Database::createEnums(QSqlDatabase& _database)
 		q_creator.exec(
 					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
 					.arg(QString::fromUtf8("НОЧЬ"))
-					);
-		q_creator.exec(
-					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("УТРО"))
-					);
-		q_creator.exec(
-					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("ВЕЧЕР"))
 					);
 #else
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'DAY');");

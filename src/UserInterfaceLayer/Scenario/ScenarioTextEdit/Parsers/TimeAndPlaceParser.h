@@ -13,7 +13,6 @@ enum TimeAndPlaceSection {
 	SceneHeaderSectionUndefined,	 //!< Неопределённое
 	SceneHeaderSectionPlace,		 //!< МЕСТО
 	SceneHeaderSectionLocation,		 //!< ЛОКАЦИЯ
-	SceneHeaderSectionSubLocation,	 //!< ВНУТРЕННЯЯ ЛОКАЦИЯ
 	SceneHeaderSectionScenarioDay,	 //!< СЦЕНАРНЫЙ ДЕНЬ
 	SceneHeaderSectionTime			 //!< ВРЕМЯ
 };
@@ -39,11 +38,6 @@ public:
 	 * @brief Получить название локации
 	 */
 	static QString locationName(const QString& _text);
-
-	/**
-	 * @brief Получить название подлокации
-	 */
-	static QString sublocationName(const QString& _text);
 
 	/**
 	 * @brief Получить название сценарного дня

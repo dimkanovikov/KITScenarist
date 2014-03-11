@@ -6,7 +6,7 @@ using namespace DataMappingLayer;
 
 
 namespace {
-	const QString COLUMNS = " id, parent_id, name ";
+	const QString COLUMNS = " id, name ";
 	const QString TABLE_NAME = " locations ";
 }
 
@@ -50,16 +50,13 @@ QString LocationMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 {
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
-					" (id, parent_id, name) "
-					" VALUES(?, ?, ?) "
+					" (id, name) "
+					" VALUES(?, ?) "
 					);
 
 	Location* location = dynamic_cast<Location*>(_subject );
 	_insertValues.clear();
 	_insertValues.append(location->id().value());
-	_insertValues.append(DomainObject::isValid(location->parentLocation())
-						 ? QString::number(location->parentLocation()->id().value())
-						 : "null");
 	_insertValues.append(location->name());
 
 	return insertStatement;
@@ -69,17 +66,13 @@ QString LocationMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 {
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET name = ?, "
-					" parent_id = ? "
+					" SET name = ? "
 					" WHERE id = ? "
 					);
 
 	Location* location = dynamic_cast<Location*>(_subject);
 	_updateValues.clear();
 	_updateValues.append(location->name());
-	_updateValues.append(DomainObject::isValid(location->parentLocation())
-						 ? QString::number(location->parentLocation()->id().value())
-						 : "null");
 	_updateValues.append(location->id().value());
 
 	return updateStatement;
@@ -97,15 +90,9 @@ QString LocationMapper::deleteStatement(DomainObject* _subject, QVariantList& _d
 
 DomainObject* LocationMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
-	Location* parentLocation = 0;
-	bool haveParentLocation = !_record.value("parent_id").isNull();
-	if (haveParentLocation) {
-		Identifier parentLocationId(_record.value("parent_id").toInt());
-		parentLocation = find(parentLocationId);
-	}
 	QString name = _record.value("name").toString();
 
-	return new Location(_id, parentLocation, name);
+	return new Location(_id, name);
 }
 
 DomainObjectsItemModel* LocationMapper::modelInstance()

@@ -16,10 +16,8 @@ TimeAndPlaceSection TimeAndPlaceParser::section(const QString& _text)
 		const int splitDotCount = _text.split(". ").count();
 		if (splitDotCount == 1) {
 			section = SceneHeaderSectionPlace;
-		} else if (splitDotCount == 2) {
+		} else {
 			section = SceneHeaderSectionLocation;
-		} else if (splitDotCount == 3) {
-			section = SceneHeaderSectionSubLocation;
 		}
 	}
 
@@ -42,23 +40,11 @@ QString TimeAndPlaceParser::locationName(const QString& _text)
 	QString locationName;
 
 	if (_text.split(". ").count() > 1) {
-		locationName = _text.split(". ").value(1);
+		locationName = _text.mid(_text.indexOf(". ") + 2);
 		locationName = locationName.split(" - ").first();
 	}
 
 	return locationName;
-}
-
-QString TimeAndPlaceParser::sublocationName(const QString& _text)
-{
-	QString sublocationName;
-
-	if (_text.split(". ").count() > 2) {
-		sublocationName = _text.split(". ").value(2);
-		sublocationName = sublocationName.split(" - ").first();
-	}
-
-	return sublocationName;
 }
 
 QString TimeAndPlaceParser::scenarioDayName(const QString& _text)

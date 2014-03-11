@@ -657,11 +657,14 @@ void ScenarioTextEdit::initEditor()
 	setFont(PAGE_FONT);
 
 	//
-	// Создаём и настраиваем документ редактора
+	// Настраиваем документ редактора
 	//
 	document()->setDefaultFont(PAGE_FONT);
 	document()->setDocumentMargin(PAGE_MARGIN);
 
+	//
+	// Настроим стиль первого блока, если необходимо
+	//
 	QTextCursor cursor(document());
 	setTextCursor(cursor);
 	if (BusinessLogic::ScenarioTextBlockStyle::forBlock(cursor.block())

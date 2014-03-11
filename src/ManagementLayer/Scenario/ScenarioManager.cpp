@@ -79,7 +79,8 @@ void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const Q
 	while (!cursor.isNull() && !cursor.atEnd()) {
 		cursor = m_scenario->document()->find(_oldName, cursor);
 
-		if (!cursor.isNull()) {
+		if (!cursor.isNull()
+			&& ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::Character) {
 			cursor.insertText(_newName);
 		}
 	}
