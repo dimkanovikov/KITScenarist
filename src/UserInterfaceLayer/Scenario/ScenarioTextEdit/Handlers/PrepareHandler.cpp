@@ -45,7 +45,10 @@ void PrepareHandler::handleShortcut(QKeyEvent* _event)
 	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
 
 	if (pressedModifiers.testFlag(Qt::ControlModifier)
-		&& (pressedKey == Qt::Key_Left || pressedKey == Qt::Key_Right)) {
+		&& (pressedKey == Qt::Key_Left		// смещение
+			|| pressedKey == Qt::Key_Right	// --//--
+			|| pressedKey == Qt::Key_S)		// сохранить
+		) {
 		m_needSendEventToBaseClass = true;
 	} else {
 		m_needSendEventToBaseClass = false;

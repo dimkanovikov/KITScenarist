@@ -493,6 +493,7 @@ QMenu* ApplicationManager::createMenu()
 	QAction* createNewProject = menu->addAction(tr("New"));
 	QAction* openProject = menu->addAction(tr("Open"));
 	QAction* saveProject = menu->addAction(tr("Save"));
+	saveProject->setShortcut(QKeySequence::Save);
 	QAction* saveProjectAs = menu->addAction(tr("Save As..."));
 	g_disableOnStartActions << saveProject;
 	g_disableOnStartActions << saveProjectAs;
