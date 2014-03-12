@@ -45,37 +45,40 @@ int ScenarioDocument::scenesCount() const
 
 int ScenarioDocument::durationAtPosition(int _position) const
 {
-	//
-	// Определим сцену, в которой находится курсор
-	//
-	QMap<int, ScenarioModelItem*>::const_iterator iter = m_modelItems.lowerBound(_position);
-	if (iter.key() > _position) {
-		--iter;
-	}
-
-	//
-	// Запомним позицию начала сцены
-	//
-	int startPositionInLastScene = iter.key();
-
-	//
-	// Посчитаем хронометраж всех предыдущих сцен
-	//
 	int duration = 0;
-	if (iter.value()->type() == ScenarioModelItem::Scene) {
-		iter.value()->duration();
-	}
-	while (iter != m_modelItems.begin()) {
-		--iter;
-		if (iter.value()->type() == ScenarioModelItem::Scene) {
-			duration += iter.value()->duration();
-		}
-	}
 
-	//
-	// Добавим к суммарному хрономертажу хронометраж от начала сцены
-	//
-	duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
+	if (!m_modelItems.isEmpty()) {
+		//
+		// Определим сцену, в которой находится курсор
+		//
+		QMap<int, ScenarioModelItem*>::const_iterator iter = m_modelItems.lowerBound(_position);
+		if (iter.key() > _position) {
+			--iter;
+		}
+
+		//
+		// Запомним позицию начала сцены
+		//
+		int startPositionInLastScene = iter.key();
+
+		//
+		// Посчитаем хронометраж всех предыдущих сцен
+		//
+		if (iter.value()->type() == ScenarioModelItem::Scene) {
+			iter.value()->duration();
+		}
+		while (iter != m_modelItems.begin()) {
+			--iter;
+			if (iter.value()->type() == ScenarioModelItem::Scene) {
+				duration += iter.value()->duration();
+			}
+		}
+
+		//
+		// Добавим к суммарному хрономертажу хронометраж от начала сцены
+		//
+		duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
+	}
 
 	return duration;
 }
@@ -83,6 +86,18 @@ int ScenarioDocument::durationAtPosition(int _position) const
 int ScenarioDocument::fullDuration() const
 {
 	return m_model->fullDuration();
+}
+
+QModelIndex ScenarioDocument::itemIndexAtPosition(int _position) const
+{
+	ScenarioModelItem* item = itemForPosition(_position, true);
+	return m_model->indexForItem(item);
+}
+
+int ScenarioDocument::itemPositionAtIndex(const QModelIndex& _index) const
+{
+	ScenarioModelItem* item = m_model->itemForIndex(_index);
+	return itemStartPosition(item);
 }
 
 void ScenarioDocument::load(const QString& _scenario)
@@ -597,7 +612,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setDuration(itemDuration);
 }
 
-ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNear)
+ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNear) const
 {
 	ScenarioModelItem* item = m_modelItems.value(_position, 0);
 	if (item == 0) {
@@ -605,11 +620,12 @@ ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNe
 		// Если необходимо ищем ближайшего
 		//
 		if (_findNear) {
-			QMap<int, ScenarioModelItem*>::const_iterator i = m_modelItems.lowerBound(_position);
-			if (i != m_modelItems.end()) {
-				item = i.value();
-			} else if (i != m_modelItems.begin()) {
-				--i;
+			QMap<int, ScenarioModelItem*>::const_iterator i = m_modelItems.upperBound(_position);
+			if (i != m_modelItems.begin()
+				|| i != m_modelItems.end()) {
+				if (i != m_modelItems.begin()) {
+					--i;
+				}
 				item = i.value();
 			} else {
 				//

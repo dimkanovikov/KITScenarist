@@ -117,6 +117,11 @@ namespace ManagementLayer
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Настроить внешний вид
+		 */
+		void initStyleSheet();
+
 	private:
 		/**
 		 * @brief Главное окно приложения

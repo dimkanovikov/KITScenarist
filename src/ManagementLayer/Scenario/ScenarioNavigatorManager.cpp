@@ -53,6 +53,11 @@ void ScenarioNavigatorManager::reloadNavigatorSettings()
 				);
 }
 
+void ScenarioNavigatorManager::setCurrentIndex(const QModelIndex& _index)
+{
+	m_navigator->setCurrentIndex(_index);
+}
+
 void ScenarioNavigatorManager::aboutModelUpdated()
 {
 	m_navigator->setScenesCount(m_scenarioModel->scenesCount());
@@ -68,4 +73,7 @@ void ScenarioNavigatorManager::initConnections()
 		connect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
 				this, SLOT(aboutModelUpdated()));
 	}
+
+	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)),
+			this, SIGNAL(sceneChoosed(QModelIndex)), Qt::UniqueConnection);
 }

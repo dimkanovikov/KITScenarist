@@ -17,6 +17,7 @@ StartUpView::StartUpView(QWidget *parent) :
 
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
 StartUpView::~StartUpView()
@@ -94,4 +95,11 @@ void StartUpView::initConnections()
 	connect(ui->help, SIGNAL(linkActivated(QString)), this, SIGNAL(helpClicked()));
 
 	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SLOT(aboutOpenRecentFileClicked()));
+}
+
+void StartUpView::initStyleSheet()
+{
+	ui->topEmptyLabel->setProperty("inTopPanel", true);
+	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
+	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
 }

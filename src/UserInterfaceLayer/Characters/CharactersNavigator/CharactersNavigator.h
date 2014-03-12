@@ -3,9 +3,11 @@
 
 #include <QWidget>
 
+class QLabel;
 class QToolButton;
 class QListView;
 class QAbstractItemModel;
+class QSortFilterProxyModel;
 
 
 namespace UserInterface
@@ -86,7 +88,17 @@ namespace UserInterface
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Настроить внешний вид
+		 */
+		void initStyleSheet();
+
 	private:
+		/**
+		 * @brief Заголовок навигатора
+		 */
+		QLabel* m_title;
+
 		/**
 		 * @brief Кнопка добавления персонажа
 		 */
@@ -111,6 +123,11 @@ namespace UserInterface
 		 * @brief Список персонажей
 		 */
 		QListView* m_navigator;
+
+		/**
+		 * @brief Прокси модель для сортировки персонажей
+		 */
+		QSortFilterProxyModel* m_navigatorProxyModel;
 	};
 }
 

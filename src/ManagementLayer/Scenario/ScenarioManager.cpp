@@ -70,7 +70,11 @@ void ScenarioManager::loadCurrentProject()
 	//
 	Domain::Scenario* currentScenario =
 			DataStorageLayer::StorageFacade::scenarioStorage()->current();
-	m_scenario->load(currentScenario->text());
+	QString scenarioToLoad;
+	if (currentScenario != 0) {
+		scenarioToLoad = currentScenario->text();
+	}
+	m_scenario->load(scenarioToLoad);
 
 	//
 	// Установим данные для менеджеров
@@ -153,7 +157,7 @@ void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const Q
 	}
 }
 
-void ScenarioManager::refreshCharacters()
+void ScenarioManager::aboutRefreshCharacters()
 {
 	//
 	// Найти персонажей во всём тексте
@@ -212,7 +216,7 @@ void ScenarioManager::aboutLocationNameChanged(const QString& _oldName, const QS
 	}
 }
 
-void ScenarioManager::refreshLocations()
+void ScenarioManager::aboutRefreshLocations()
 {
 	//
 	// Найти локации во всём тексте
@@ -268,6 +272,18 @@ void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 				);
 }
 
+void ScenarioManager::aboutSelectItemInNavigator(int _cursorPosition)
+{
+	QModelIndex index = m_scenario->itemIndexAtPosition(_cursorPosition);
+	m_navigatorManager->setCurrentIndex(index);
+}
+
+void ScenarioManager::aboutMoveCursorToItem(const QModelIndex& _index)
+{
+	int position = m_scenario->itemPositionAtIndex(_index);
+	m_textEditManager->setCursorPosition(position);
+}
+
 void ScenarioManager::initData()
 {
 	m_navigatorManager->setNavigationModel(m_scenario->model());
@@ -277,6 +293,7 @@ void ScenarioManager::initData()
 void ScenarioManager::initView()
 {
 	m_viewSplitter = new QSplitter(m_view);
+	m_viewSplitter->setHandleWidth(1);
 	m_viewSplitter->addWidget(m_navigatorManager->view());
 	m_viewSplitter->addWidget(m_textEditManager->view());
 	m_viewSplitter->setStretchFactor(1, 1);
@@ -291,5 +308,8 @@ void ScenarioManager::initView()
 
 void ScenarioManager::initConnections()
 {
+	connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
+
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
+	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)));
 }

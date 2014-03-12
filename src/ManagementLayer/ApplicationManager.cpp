@@ -74,6 +74,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 {
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
 ApplicationManager::~ApplicationManager()
@@ -405,6 +406,11 @@ void ApplicationManager::saveCurrentProjectInRecent()
 void ApplicationManager::goToEditCurrentProject()
 {
 	//
+	// Перейти на вкладку редактирования сценария
+	//
+	m_tabs->setCurrent(1);
+
+	//
 	// Активируем вкладки
 	//
 	::enableActionsOnProjectOpen();
@@ -427,11 +433,6 @@ void ApplicationManager::goToEditCurrentProject()
 	// Добавим проект к недавно используемым
 	//
 	saveCurrentProjectInRecent();
-
-	//
-	// Перейти на вкладку редактирования сценария
-	//
-	m_tabs->setCurrent(1);
 }
 
 void ApplicationManager::initView()
@@ -439,6 +440,7 @@ void ApplicationManager::initView()
 	//
 	// Настроим меню
 	//
+	m_menu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 	m_menu->setText(tr("Menu"));
 	m_menu->setPopupMode(QToolButton::MenuButtonPopup);
 	m_menu->setMenu(createMenu());
@@ -533,12 +535,12 @@ void ApplicationManager::initConnections()
 	connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
 			m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
 	connect(m_charactersManager, SIGNAL(refreshCharacters()),
-			m_scenarioManager, SLOT(refreshCharacters()));
+			m_scenarioManager, SLOT(aboutRefreshCharacters()));
 
 	connect(m_locationsManager, SIGNAL(locationNameChanged(QString,QString)),
 			m_scenarioManager, SLOT(aboutLocationNameChanged(QString,QString)));
 	connect(m_locationsManager, SIGNAL(refreshLocations()),
-			m_scenarioManager, SLOT(refreshLocations()));
+			m_scenarioManager, SLOT(aboutRefreshLocations()));
 
 	connect(m_settingsManager, SIGNAL(textEditSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
@@ -546,4 +548,27 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutNavigatorSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(chronometrySettingsUpdated()),
 			m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
+}
+
+void ApplicationManager::initStyleSheet()
+{
+	//
+	// Загрузим стиль
+	//
+	QFile styleSheetFile(":/Interface/UI/style.qss");
+	styleSheetFile.open(QIODevice::ReadOnly);
+	QString styleSheet = styleSheetFile.readAll();
+	styleSheetFile.close();
+
+	//
+	// Установим стиль на главный виджет приложения
+	//
+	m_view->setStyleSheet(styleSheet);
+
+	//
+	// Настраиваем виджеты
+	//
+	m_menu->setProperty("inTopPanel", true);
+	m_menu->setProperty("topPanelTopBordered", true);
+	m_menu->setProperty("topPanelRightBordered", true);
 }

@@ -12,6 +12,7 @@ LocationsDataEdit::LocationsDataEdit(QWidget *parent) :
 
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
 LocationsDataEdit::~LocationsDataEdit()
@@ -54,4 +55,13 @@ void LocationsDataEdit::initConnections()
 	connect(ui->save, SIGNAL(clicked()), this, SLOT(initView()));
 	connect(ui->save, SIGNAL(clicked()), this, SIGNAL(saveLocation()));
 	connect(ui->cancel, SIGNAL(clicked()), this, SIGNAL(reloadLocation()));
+}
+
+void LocationsDataEdit::initStyleSheet()
+{
+	ui->topEmptyLabel->setProperty("inTopPanel", true);
+	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
+	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
+
+	ui->mainContainer->setProperty("mainContainer", true);
 }

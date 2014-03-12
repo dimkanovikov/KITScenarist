@@ -16,6 +16,9 @@ DEFINES += USE_RUSSIAN_DATABASE_ENUMS
 
 INCLUDEPATH += $$PWD
 
+TRANSLATIONS += \
+	Resources/Translations/Scenarist_ru.ts
+
 SOURCES += main.cpp \
     ManagementLayer/ApplicationManager.cpp \
     ManagementLayer/Scenario/ScenarioManager.cpp \
@@ -128,7 +131,11 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.cpp \
     UserInterfaceLayer/Settings/SettingsView.cpp \
-    UserInterfaceLayer/ApplicationView.cpp
+    UserInterfaceLayer/ApplicationView.cpp \
+    UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemDelegate.cpp \
+    UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemWidget.cpp \
+    UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.cpp \
+    UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.cpp
 
 RESOURCES += \
     Resources/Resources.qrc
@@ -255,7 +262,11 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.h \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h \
     UserInterfaceLayer/Settings/SettingsView.h \
-    UserInterfaceLayer/ApplicationView.h
+    UserInterfaceLayer/ApplicationView.h \
+    UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemDelegate.h \
+    UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemWidget.h \
+    UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.h \
+    UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.h
 
 OTHER_FILES += \
     TODO \

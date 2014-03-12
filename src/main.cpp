@@ -2,20 +2,21 @@
 #include <QStyleFactory>
 #include <QStyle>
 #include <QFontDatabase>
+#include <QTranslator>
 
 #include <ManagementLayer/ApplicationManager.h>
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
+	QApplication application(argc, argv);
 
 	//
 	// Настроим информацию о приложении
 	//
-	a.setOrganizationName("DimkaNovikov labs.");
-	a.setOrganizationDomain("dimkanovikov.pro");
-	a.setApplicationName("Scenarist");
-	a.setApplicationVersion("0.0.1");
+	application.setOrganizationName("DimkaNovikov labs.");
+	application.setOrganizationDomain("dimkanovikov.pro");
+	application.setApplicationName("Scenarist");
+	application.setApplicationVersion("0.0.1");
 
 	//
 	// Настроим стиль отображения внешнего вида приложения
@@ -29,8 +30,22 @@ int main(int argc, char *argv[])
 	QFontDatabase fontDatabase;
 	fontDatabase.addApplicationFont(":/Fonts/Courier New");
 
-	ManagementLayer::ApplicationManager m;
-	m.exec();
+	//
+	// Подключим файл переводов программы
+	//
+	QTranslator* russianTranslator = new QTranslator;
+	russianTranslator->load(":/Translations/Translations/Scenarist_ru.qm");
+	application.installTranslator(russianTranslator);
 
-	return a.exec();
+	//
+	// Подключим файл переводов Qt
+	//
+	QTranslator* russianQtTranslator = new QTranslator;
+	russianQtTranslator->load(":/Translations/Translations/qt_ru.qm");
+	application.installTranslator(russianQtTranslator);
+
+	ManagementLayer::ApplicationManager applicationManager;
+	applicationManager.exec();
+
+	return application.exec();
 }

@@ -12,6 +12,7 @@ CharactersDataEdit::CharactersDataEdit(QWidget *parent) :
 
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
 CharactersDataEdit::~CharactersDataEdit()
@@ -54,4 +55,13 @@ void CharactersDataEdit::initConnections()
 	connect(ui->save, SIGNAL(clicked()), this, SLOT(initView()));
 	connect(ui->save, SIGNAL(clicked()), this, SIGNAL(saveCharacter()));
 	connect(ui->cancel, SIGNAL(clicked()), this, SIGNAL(reloadCharacter()));
+}
+
+void CharactersDataEdit::initStyleSheet()
+{
+	ui->topEmptyLabel->setProperty("inTopPanel", true);
+	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
+	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
+
+	ui->mainContainer->setProperty("mainContainer", true);
 }

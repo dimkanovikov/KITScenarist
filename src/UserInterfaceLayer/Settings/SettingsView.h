@@ -82,6 +82,11 @@ namespace UserInterface
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Настроить внешний вид
+		 */
+		void initStyleSheet();
+
 	private:
 		/**
 		 * @brief Форма

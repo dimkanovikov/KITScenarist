@@ -63,6 +63,11 @@ namespace UserInterface
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Настроить внешний вид
+		 */
+		void initStyleSheet();
+
 	private:
 		Ui::CharactersDataEdit *ui;
 	};

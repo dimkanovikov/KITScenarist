@@ -113,6 +113,7 @@ namespace UserInterface
 		bool stringEndsWithAbbrev(const QString& _text);
 
 	private:
+		void initDocument(QTextDocument* _document);
 		void initEditor();
 		void initView();
 		void initConnections();

@@ -36,6 +36,17 @@ namespace ManagementLayer
 		 */
 		void reloadNavigatorSettings();
 
+		/**
+		 * @brief Установить текущий элемент
+		 */
+		void setCurrentIndex(const QModelIndex& _index);
+
+	signals:
+		/**
+		 * @brief Активирована сцена
+		 */
+		void sceneChoosed(const QModelIndex& _index);
+
 	private slots:
 		/**
 		 * @brief Обновить информацию о модели

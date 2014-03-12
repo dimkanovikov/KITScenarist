@@ -12,6 +12,7 @@ SettingsView::SettingsView(QWidget *parent) :
 
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
 SettingsView::~SettingsView()
@@ -116,6 +117,8 @@ void SettingsView::initView()
 {
 	ui->categories->setCurrentRow(0);
 	ui->categoriesWidgets->setCurrentIndex(0);
+
+	ui->splitter->setHandleWidth(1);
 }
 
 void SettingsView::initConnections()
@@ -154,4 +157,14 @@ void SettingsView::initConnections()
 			this, SIGNAL(chronometryConfigurableSecondsForParagraphDialogChanged(double)));
 	connect(ui->configurableChronometrySecondsPer50CharactersDialog, SIGNAL(valueChanged(double)),
 			this, SIGNAL(chronometryConfigurableSecondsFor50DialogChanged(double)));
+}
+
+void SettingsView::initStyleSheet()
+{
+	ui->topEmptyLabel->setProperty("inTopPanel", true);
+	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
+	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
+
+	ui->categories->setProperty("mainContainer", true);
+	ui->categoriesWidgets->setProperty("mainContainer", true);
 }

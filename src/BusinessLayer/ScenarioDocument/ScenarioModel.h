@@ -80,7 +80,6 @@ namespace BusinessLogic
 		 */
 		int fullDuration() const;
 
-	private:
 		/**
 		 * @brief Получить элемент находящийся в заданном индексе
 		 */

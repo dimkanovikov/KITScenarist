@@ -65,6 +65,16 @@ namespace BusinessLogic
 		int fullDuration() const;
 
 		/**
+		 * @brief Индекс элемента дерева в указанной позиции
+		 */
+		QModelIndex itemIndexAtPosition(int _position) const;
+
+		/**
+		 * @brief Позиция начала сцены
+		 */
+		int itemPositionAtIndex(const QModelIndex& _index) const;
+
+		/**
 		 * @brief Загрузить документ из сценария
 		 */
 		void load(const QString& _scenario);
@@ -117,7 +127,7 @@ namespace BusinessLogic
 		 * @brief Создать или получить существующий элемент для позиции в документе
 		 *		  или ближайший к позиции
 		 */
-		ScenarioModelItem* itemForPosition(int _position, bool _findNear = false);
+		ScenarioModelItem* itemForPosition(int _position, bool _findNear = false) const;
 
 	private:
 		/**

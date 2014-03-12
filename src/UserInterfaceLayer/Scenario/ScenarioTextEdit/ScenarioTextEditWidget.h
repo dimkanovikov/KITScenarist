@@ -40,6 +40,11 @@ namespace UserInterface
 		 */
 		void setUseSpellChecker(bool _use);
 
+		/**
+		 * @brief Установить позицию курсора
+		 */
+		void setCursorPosition(int _position);
+
 	signals:
 		/**
 		 * @brief Изменилась позиция курсора
@@ -78,11 +83,21 @@ namespace UserInterface
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Настроить внешний вид
+		 */
+		void initStyleSheet();
+
 	private:
 		/**
 		 * @brief Стили текста документа
 		 */
 		QComboBox* m_textStyles;
+
+		/**
+		 * @brief Префикс хронометража
+		 */
+		QLabel* m_durationTitle;
 
 		/**
 		 * @brief Хронометраж сценария

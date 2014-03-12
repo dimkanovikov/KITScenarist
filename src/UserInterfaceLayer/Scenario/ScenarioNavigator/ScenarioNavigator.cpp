@@ -19,6 +19,7 @@ ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
 {
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
 void ScenarioNavigator::setScenesCount(int _scenesCount)
@@ -31,6 +32,11 @@ void ScenarioNavigator::setModel(QAbstractItemModel* _model)
 	m_navigationTree->setModel(_model);
 }
 
+void ScenarioNavigator::setCurrentIndex(const QModelIndex& _index)
+{
+	m_navigationTree->setCurrentIndex(_index);
+}
+
 void ScenarioNavigator::setShowSceneNumber(bool _show)
 {
 	m_navigationTreeDelegate->setShowSceneNumber(_show);
@@ -38,16 +44,16 @@ void ScenarioNavigator::setShowSceneNumber(bool _show)
 
 void ScenarioNavigator::initView()
 {
-	QLabel* title = new QLabel(tr("Navigator"), this);
-	title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	m_title = new QLabel(tr("Navigator"), this);
+	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	QLabel* scenesCountTitle = new QLabel(tr("Scenes: "), this);
+	m_scenesCountTitle = new QLabel(tr("Scenes: "), this);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
-	topLayout->addWidget(title);
-	topLayout->addWidget(scenesCountTitle);
+	topLayout->addWidget(m_title);
+	topLayout->addWidget(m_scenesCountTitle);
 	topLayout->addWidget(m_scenesCount);
 
 	m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
@@ -68,5 +74,20 @@ void ScenarioNavigator::initView()
 
 void ScenarioNavigator::initConnections()
 {
+	connect(m_navigationTree, SIGNAL(activated(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
+}
 
+void ScenarioNavigator::initStyleSheet()
+{
+	m_title->setProperty("inTopPanel", true);
+	m_title->setProperty("topPanelTopBordered", true);
+
+	m_scenesCountTitle->setProperty("inTopPanel", true);
+	m_scenesCountTitle->setProperty("topPanelTopBordered", true);
+
+	m_scenesCount->setProperty("inTopPanel", true);
+	m_scenesCount->setProperty("topPanelTopBordered", true);
+	m_scenesCount->setProperty("topPanelRightBordered", true);
+
+	m_navigationTree->setProperty("mainContainer", true);
 }

@@ -1,0 +1,151 @@
+/*
+ * Общие стили для элементов верхней панели
+ */
+*[topPanelLeftBordered="true"] {
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #1c1f21;
+}
+
+*[topPanelTopBordered="true"] {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #5f5f5f;
+}
+
+*[topPanelRightBordered="true"] {
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #5f5f5f;
+}
+
+/*
+ * Основные виджеты формы
+ */
+*[mainContainer="true"] {
+	border: 0px solid black;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #1c1f21;
+}
+
+/*
+ * Текстовые метки
+ */
+QLabel[inTopPanel="true"] {
+	background: #282d31;
+	color: #d5d6d6;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	min-height: 21px;
+}
+
+/*
+ * Кнопка меню
+ */
+QToolButton[inTopPanel="true"] {
+	background: #282d31;
+	color: #d5d6d6;
+	border: 0px solid black;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #5f5f5f;
+	padding-left: 4px;
+	padding-right: 12px;
+	height: 22px;
+}
+
+QToolButton::menu-button[inTopPanel="true"] {
+	background: #282d31;
+	color: #d5d6d6;
+	border: 0px solid black;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #5f5f5f;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #5f5f5f;
+	width: 10px;
+	padding-top: 4px;
+	padding-right: 7px;
+}
+
+QToolButton::menu-arrow[inTopPanel="true"] {
+	image: url(:Interface/UI/menuarrow.png);
+}
+
+/*
+ * Выпадающий список
+ */
+QComboBox[inTopPanel="true"]  {
+	padding: 1px 18px 1px 8px;
+	min-width: 6em;
+	background: #282d31;
+	color: #d5d6d6;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+QComboBox::drop-down[inTopPanel="true"] {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 15px;
+	border-width: 0px;
+	padding-right: 4px;
+}
+
+QComboBox::down-arrow[inTopPanel="true"] {
+	image: url(:/Interface/UI/comboboxarrow.png);
+}
+
+
+QComboBox:on[inTopPanel="true"], QComboBox:off[inTopPanel="true"] {
+	color: palette(window-text);
+	background: palette(window);
+}
+
+QComboBox:on:selected[inTopPanel="true"], QComboBox:off:selected[inTopPanel="true"] {
+	color: palette(highlighted-text);
+	background: palette(highlight);
+}
+
+/*
+ * Дерево, список, редактор текста
+ */
+QTreeView, QListView, QTextEdit {
+	border: 0px solid black;
+}
+
+/*
+ * Разделитель
+ */
+QSplitter::handle {
+	background: #282d31;
+}
+
+/* Переключатель */
+QRadioButton[inTopPanel="true"] {
+	background: #282d31;
+	color: #d5d6d6;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-right: 6px;
+}
+
+QRadioButton::indicator[inTopPanel="true"] {
+	height: 0px;
+	width: 0px;
+	image: none;
+}
+
+QRadioButton:unchecked[inTopPanel="true"] {
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: #282d31;
+}
+
+QRadioButton:checked[inTopPanel="true"] {
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: #0891d6;
+}

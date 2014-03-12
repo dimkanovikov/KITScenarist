@@ -75,7 +75,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Пересоздать персонажей
 		 */
-		void refreshCharacters();
+		void aboutRefreshCharacters();
 
 		/**
 		 * @brief Изменено название локации
@@ -85,7 +85,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Пересоздать локации
 		 */
-		void refreshLocations();
+		void aboutRefreshLocations();
 
 	private slots:
 		/**
@@ -93,7 +93,20 @@ namespace ManagementLayer
 		 */
 		void aboutUpdateDuration(int _cursorPosition);
 
+		/**
+		 * @brief Выделить текущую сцену в навигаторе
+		 */
+		void aboutSelectItemInNavigator(int _cursorPosition);
+
+		/**
+		 * @brief Сместить курсор к выбранной сцене
+		 */
+		void aboutMoveCursorToItem(const QModelIndex& _index);
+
 	private:
+		/**
+		 * @brief Загрузить данные
+		 */
 		void initData();
 
 		/**

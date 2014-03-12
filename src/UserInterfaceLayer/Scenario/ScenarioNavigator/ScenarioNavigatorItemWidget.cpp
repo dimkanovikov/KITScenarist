@@ -32,7 +32,7 @@ ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 	m_description = new ElidedLabel(this);
 	m_description->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_description->setElideMode(Qt::ElideRight);
-	m_header->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+	m_description->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
 	m_timing = new QLabel(this);
 	m_timing->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);

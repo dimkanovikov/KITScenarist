@@ -33,9 +33,20 @@ namespace UserInterface
 		void setModel(QAbstractItemModel* _model);
 
 		/**
+		 * @brief Установить текущий элемент
+		 */
+		void setCurrentIndex(const QModelIndex& _index);
+
+		/**
 		 * @brief Настроить отображение номеров сцен
 		 */
 		void setShowSceneNumber(bool _show);
+
+	signals:
+		/**
+		 * @brief Активирована сцена
+		 */
+		void sceneChoosed(const QModelIndex& _index);
 
 	private:
 		/**
@@ -48,7 +59,22 @@ namespace UserInterface
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Настроить внешний вид
+		 */
+		void initStyleSheet();
+
 	private:
+		/**
+		 * @brief Заголовок навигатора
+		 */
+		QLabel* m_title;
+
+		/**
+		 * @brief Префикс счётчика сцен
+		 */
+		QLabel* m_scenesCountTitle;
+
 		/**
 		 * @brief Количество сцен в сценарии
 		 */

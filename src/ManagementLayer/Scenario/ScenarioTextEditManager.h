@@ -37,6 +37,11 @@ namespace ManagementLayer
 		void setDuration(const QString& _duration);
 
 		/**
+		 * @brief Установить позицию курсора
+		 */
+		void setCursorPosition(int _position);
+
+		/**
 		 * @brief Перезагрузить параметры текстового редактора
 		 */
 		void reloadTextEditSettings();

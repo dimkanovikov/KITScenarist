@@ -109,6 +109,7 @@ void CharactersManager::aboutRemoveCharacter(const QString& _name)
 void CharactersManager::initView()
 {
 	m_viewSplitter = new QSplitter(m_view);
+	m_viewSplitter->setHandleWidth(1);
 	m_viewSplitter->addWidget(m_navigatorManager->view());
 	m_viewSplitter->addWidget(m_dataEditManager->view());
 	m_viewSplitter->setStretchFactor(1, 1);

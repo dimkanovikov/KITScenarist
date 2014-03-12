@@ -33,4 +33,13 @@
         <file>Icons/Editing/edit.png</file>
         <file>Icons/settings_navigator.png</file>
     </qresource>
+    <qresource prefix="/Translations">
+        <file>Translations/Scenarist_ru.qm</file>
+        <file>Translations/qt_ru.qm</file>
+    </qresource>
+    <qresource prefix="/Interface">
+        <file>UI/style.qss</file>
+        <file>UI/menuarrow.png</file>
+        <file>UI/comboboxarrow.png</file>
+    </qresource>
 </RCC>
