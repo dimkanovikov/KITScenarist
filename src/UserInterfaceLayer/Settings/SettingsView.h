@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class QSplitter;
+
 namespace Ui {
 	class SettingsView;
 }
@@ -16,6 +18,11 @@ namespace UserInterface
 	public:
 		explicit SettingsView(QWidget *parent = 0);
 		~SettingsView();
+
+		/**
+		 * @brief Разделитель представления
+		 */
+		QSplitter* splitter() const;
 
 		/**
 		 * @brief Текущий тип рассчёта хронометража

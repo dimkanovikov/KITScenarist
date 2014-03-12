@@ -8,6 +8,10 @@ class QStackedLayout;
 class QToolButton;
 class QMenu;
 
+namespace UserInterface {
+	class ApplicationView;
+}
+
 namespace ManagementLayer
 {
 	class StartUpManager;
@@ -66,7 +70,22 @@ namespace ManagementLayer
 		 */
 		void aboutExportToRtf();
 
+		/**
+		 * @brief Закрыть приложение
+		 */
+		void aboutExit();
+
 	private:
+		/**
+		 * @brief Загрузить состояние окна
+		 */
+		void loadViewState();
+
+		/**
+		 * @brief Сохранить состояние окна
+		 */
+		void saveViewState();
+
 		/**
 		 * @brief Если проект был изменён, но не сохранён предложить пользователю сохранить его
 		 */
@@ -102,7 +121,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Главное окно приложения
 		 */
-		QWidget* m_view;
+		UserInterface::ApplicationView* m_view;
 
 		/**
 		 * @brief Меню приложения

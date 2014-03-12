@@ -5,6 +5,7 @@
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <QWidget>
 #include <QSplitter>
@@ -35,6 +36,38 @@ void CharactersManager::loadCurrentProject()
 {
 	m_dataEditManager->clean();
 	m_navigatorManager->loadCharacters();
+}
+
+void CharactersManager::loadViewState()
+{
+	m_viewSplitter->restoreGeometry(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/characters/geometry",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+	m_viewSplitter->restoreState(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/characters/state",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+}
+
+void CharactersManager::saveViewState()
+{
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/characters/geometry", m_viewSplitter->saveGeometry().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/characters/state", m_viewSplitter->saveState().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
 }
 
 void CharactersManager::aboutAddCharacter(const QString& _name)
@@ -75,15 +108,15 @@ void CharactersManager::aboutRemoveCharacter(const QString& _name)
 
 void CharactersManager::initView()
 {
-	QSplitter* splitter = new QSplitter(m_view);
-	splitter->addWidget(m_navigatorManager->view());
-	splitter->addWidget(m_dataEditManager->view());
-	splitter->setStretchFactor(1, 1);
+	m_viewSplitter = new QSplitter(m_view);
+	m_viewSplitter->addWidget(m_navigatorManager->view());
+	m_viewSplitter->addWidget(m_dataEditManager->view());
+	m_viewSplitter->setStretchFactor(1, 1);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
 	layout->setSpacing(0);
-	layout->addWidget(splitter);
+	layout->addWidget(m_viewSplitter);
 
 	m_view->setLayout(layout);
 }

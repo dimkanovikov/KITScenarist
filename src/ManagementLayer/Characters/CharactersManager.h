@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+class QSplitter;
+
 namespace ManagementLayer
 {
 	class CharactersNavigatorManager;
@@ -25,6 +27,16 @@ namespace ManagementLayer
 		 * @brief Загрузить данные текущего проекта
 		 */
 		void loadCurrentProject();
+
+		/**
+		 * @brief Загрузить состояние окна
+		 */
+		void loadViewState();
+
+		/**
+		 * @brief Сохранить состояние окна
+		 */
+		void saveViewState();
 
 	signals:
 		/**
@@ -69,6 +81,11 @@ namespace ManagementLayer
 		 * @brief Представление
 		 */
 		QWidget* m_view;
+
+		/**
+		 * @brief Разделитель представленя
+		 */
+		QSplitter* m_viewSplitter;
 
 		/**
 		 * @brief Управляющий списком персонажей

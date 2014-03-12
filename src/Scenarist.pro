@@ -127,7 +127,8 @@ SOURCES += main.cpp \
     3rd_party/Widgets/SideBar/SideBar.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.cpp \
-    UserInterfaceLayer/Settings/SettingsView.cpp
+    UserInterfaceLayer/Settings/SettingsView.cpp \
+    UserInterfaceLayer/ApplicationView.cpp
 
 RESOURCES += \
     Resources/Resources.qrc
@@ -253,7 +254,8 @@ HEADERS += \
     3rd_party/Widgets/SideBar/SideBar.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.h \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h \
-    UserInterfaceLayer/Settings/SettingsView.h
+    UserInterfaceLayer/Settings/SettingsView.h \
+    UserInterfaceLayer/ApplicationView.h
 
 OTHER_FILES += \
     TODO \

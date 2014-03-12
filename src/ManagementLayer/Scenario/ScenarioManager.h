@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+class QSplitter;
 class QComboBox;
 class QLabel;
 
@@ -39,6 +40,16 @@ namespace ManagementLayer
 		 * @brief Сохранить данные текущего проекта
 		 */
 		void saveCurrentProject();
+
+		/**
+		 * @brief Загрузить состояние окна
+		 */
+		void loadViewState();
+
+		/**
+		 * @brief Сохранить состояние окна
+		 */
+		void saveViewState();
 
 	public slots:
 		/**
@@ -100,6 +111,11 @@ namespace ManagementLayer
 		 * @brief Представление сценария
 		 */
 		QWidget* m_view;
+
+		/**
+		 * @brief Разделитель представленя
+		 */
+		QSplitter* m_viewSplitter;
 
 		/**
 		 * @brief Документ сценария

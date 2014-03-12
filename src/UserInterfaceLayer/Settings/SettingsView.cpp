@@ -19,6 +19,11 @@ SettingsView::~SettingsView()
 	delete ui;
 }
 
+QSplitter* SettingsView::splitter() const
+{
+	return ui->splitter;
+}
+
 int SettingsView::chronometryCurrentType() const
 {
 	int type = 0;

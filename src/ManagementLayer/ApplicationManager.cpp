@@ -13,9 +13,13 @@
 
 #include <DataLayer/Database/Database.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Widgets/SideBar/SideBar.h>
 
+#include <UserInterfaceLayer/ApplicationView.h>
+
+#include <QApplication>
 #include <QStackedLayout>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -23,6 +27,7 @@
 #include <QMenu>
 
 using namespace ManagementLayer;
+using UserInterface::ApplicationView;
 
 namespace {
 	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
@@ -57,7 +62,7 @@ namespace {
 
 ApplicationManager::ApplicationManager(QObject *parent) :
 	QObject(parent),
-	m_view(new QWidget),
+	m_view(new ApplicationView),
 	m_menu(new QToolButton(m_view)),
 	m_tabs(new SideTabBar(m_view)),
 	m_tabsWidgets(new QStackedLayout),
@@ -81,7 +86,7 @@ ApplicationManager::~ApplicationManager()
 
 void ApplicationManager::exec()
 {
-	m_view->resize(800,600);
+	loadViewState();
 	m_view->show();
 }
 
@@ -329,6 +334,43 @@ void ApplicationManager::aboutExportToRtf()
 	}
 }
 
+void ApplicationManager::aboutExit()
+{
+	saveIfNeeded();
+	saveViewState();
+	qApp->exit();
+}
+
+void ApplicationManager::loadViewState()
+{
+	m_view->restoreGeometry(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/geometry",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+
+	m_scenarioManager->loadViewState();
+	m_charactersManager->loadViewState();
+	m_locationsManager->loadViewState();
+	m_settingsManager->loadViewState();
+}
+
+void ApplicationManager::saveViewState()
+{
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/geometry", m_view->saveGeometry().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+
+	m_scenarioManager->saveViewState();
+	m_charactersManager->saveViewState();
+	m_locationsManager->saveViewState();
+	m_settingsManager->saveViewState();
+}
+
 void ApplicationManager::saveIfNeeded()
 {
 	//
@@ -478,6 +520,8 @@ QMenu* ApplicationManager::createMenu()
 
 void ApplicationManager::initConnections()
 {
+	connect(m_view, SIGNAL(wantToClose()), this, SLOT(aboutExit()));
+
 	connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
 	connect(m_tabs, SIGNAL(currentChanged(int)), m_tabsWidgets, SLOT(setCurrentIndex(int)));
 

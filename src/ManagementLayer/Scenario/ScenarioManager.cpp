@@ -89,6 +89,38 @@ void ScenarioManager::saveCurrentProject()
 	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenario->save());
 }
 
+void ScenarioManager::loadViewState()
+{
+	m_viewSplitter->restoreGeometry(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/scenario/geometry",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+	m_viewSplitter->restoreState(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/scenario/state",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+}
+
+void ScenarioManager::saveViewState()
+{
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/scenario/geometry", m_viewSplitter->saveGeometry().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/scenario/state", m_viewSplitter->saveState().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+}
+
 void ScenarioManager::aboutTextEditSettingsUpdated()
 {
 	m_textEditManager->reloadTextEditSettings();
@@ -244,15 +276,15 @@ void ScenarioManager::initData()
 
 void ScenarioManager::initView()
 {
-	QSplitter* splitter = new QSplitter(m_view);
-	splitter->addWidget(m_navigatorManager->view());
-	splitter->addWidget(m_textEditManager->view());
-	splitter->setStretchFactor(1, 1);
+	m_viewSplitter = new QSplitter(m_view);
+	m_viewSplitter->addWidget(m_navigatorManager->view());
+	m_viewSplitter->addWidget(m_textEditManager->view());
+	m_viewSplitter->setStretchFactor(1, 1);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
 	layout->setSpacing(0);
-	layout->addWidget(splitter);
+	layout->addWidget(m_viewSplitter);
 
 	m_view->setLayout(layout);
 }

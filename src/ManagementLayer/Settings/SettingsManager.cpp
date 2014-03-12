@@ -9,6 +9,8 @@
 
 #include <UserInterfaceLayer/Settings/SettingsView.h>
 
+#include <QSplitter>
+
 using ManagementLayer::SettingsManager;
 using UserInterface::SettingsView;
 
@@ -24,6 +26,38 @@ SettingsManager::SettingsManager(QObject* _parent, QWidget* _parentWidget) :
 QWidget* SettingsManager::view() const
 {
 	return m_view;
+}
+
+void SettingsManager::loadViewState()
+{
+	m_view->splitter()->restoreGeometry(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/settings/geometry",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+	m_view->splitter()->restoreState(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/settings/state",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+}
+
+void SettingsManager::saveViewState()
+{
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/settings/geometry", m_view->splitter()->saveGeometry().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/settings/state", m_view->splitter()->saveState().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
 }
 
 void SettingsManager::textSpellCheckChanged(bool _value)
