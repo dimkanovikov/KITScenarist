@@ -39,6 +39,11 @@ void ScenarioTextEditWidget::setDuration(const QString& _duration)
 	m_duration->setText(_duration);
 }
 
+void ScenarioTextEditWidget::setUseSpellChecker(bool _use)
+{
+	m_editor->setUseSpellChecker(_use);
+}
+
 void ScenarioTextEditWidget::aboutUpdateTextStyle()
 {
 	ScenarioTextBlockStyle::Type currentType = m_editor->scenarioBlockType();

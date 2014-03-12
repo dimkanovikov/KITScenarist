@@ -36,6 +36,11 @@ namespace ManagementLayer
 		 */
 		void setDuration(const QString& _duration);
 
+		/**
+		 * @brief Перезагрузить параметры текстового редактора
+		 */
+		void reloadTextEditSettings();
+
 	signals:
 		/**
 		 * @brief Изменилась позиция курсора

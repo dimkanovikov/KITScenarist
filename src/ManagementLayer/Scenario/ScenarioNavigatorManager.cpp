@@ -2,6 +2,9 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.h>
 
 #include <QLabel>
@@ -20,6 +23,7 @@ ScenarioNavigatorManager::ScenarioNavigatorManager(QObject *_parent, QWidget* _p
 {
 	initView();
 	initConnections();
+	reloadNavigatorSettings();
 }
 
 QWidget* ScenarioNavigatorManager::view() const
@@ -37,6 +41,16 @@ void ScenarioNavigatorManager::setNavigationModel(ScenarioModel* _model)
 	m_navigator->setModel(m_scenarioModel);
 
 	initConnections();
+}
+
+void ScenarioNavigatorManager::reloadNavigatorSettings()
+{
+	m_navigator->setShowSceneNumber(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/show-scenes-numbers",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 }
 
 void ScenarioNavigatorManager::aboutModelUpdated()

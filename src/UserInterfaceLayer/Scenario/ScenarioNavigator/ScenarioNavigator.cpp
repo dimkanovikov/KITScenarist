@@ -14,7 +14,8 @@ using UserInterface::ScenarioNavigatorItemDelegate;
 ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
 	QWidget(parent),
 	m_scenesCount(new QLabel(this)),
-	m_navigationTree(new QTreeView(this))
+	m_navigationTree(new QTreeView(this)),
+	m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this))
 {
 	initView();
 	initConnections();
@@ -28,6 +29,11 @@ void ScenarioNavigator::setScenesCount(int _scenesCount)
 void ScenarioNavigator::setModel(QAbstractItemModel* _model)
 {
 	m_navigationTree->setModel(_model);
+}
+
+void ScenarioNavigator::setShowSceneNumber(bool _show)
+{
+	m_navigationTreeDelegate->setShowSceneNumber(_show);
 }
 
 void ScenarioNavigator::initView()
@@ -44,7 +50,7 @@ void ScenarioNavigator::initView()
 	topLayout->addWidget(scenesCountTitle);
 	topLayout->addWidget(m_scenesCount);
 
-	m_navigationTree->setItemDelegate(new ScenarioNavigatorItemDelegate(this));
+	m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
 	m_navigationTree->setDragDropMode(QAbstractItemView::DragDrop);
 	m_navigationTree->setDragEnabled(true);
 	m_navigationTree->setDropIndicatorShown(true);

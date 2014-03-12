@@ -186,11 +186,7 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 	ScenarioModelItem* item = itemForIndex(_index);
 	switch (_role) {
 		case Qt::DisplayRole: {
-			if (item->type() == ScenarioModelItem::Scene) {
-				result = QString("%1 %2").arg(item->number()).arg(item->header());
-			} else {
-				result = item->header();
-			}
+			result = item->header();
 			break;
 		}
 
@@ -199,11 +195,9 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 			break;
 		}
 
-		case Qt::UserRole: {
-			result = item->synopsis();
-			break;
-		}
-
+		//
+		// Текст сцены
+		//
 		case Qt::UserRole + 1: {
 			if (item->type() == ScenarioModelItem::Scenario) {
 				result = item->synopsis();
@@ -213,9 +207,29 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 			break;
 		}
 
-
+		//
+		// Синопсис
+		//
 		case Qt::UserRole + 2: {
+			result = item->synopsis();
+			break;
+		}
+
+		//
+		// Длительность
+		//
+		case Qt::UserRole + 3: {
 			result = item->duration();
+			break;
+		}
+
+		//
+		// Номер сцены
+		//
+		case Qt::UserRole + 4: {
+			if (item->type() == ScenarioModelItem::Scene) {
+				result = item->number();
+			}
 			break;
 		}
 

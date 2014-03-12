@@ -85,7 +85,7 @@ int ScenarioDocument::fullDuration() const
 	return m_model->fullDuration();
 }
 
-void ScenarioDocument::load(Domain::Scenario* _scenario)
+void ScenarioDocument::load(const QString& _scenario)
 {
 	//
 	// Отключаем всё от документа
@@ -104,8 +104,8 @@ void ScenarioDocument::load(Domain::Scenario* _scenario)
 	//
 	// Загружаем сценарий
 	//
-	if (_scenario != 0) {
-		m_xmlHandler->xmlToScenario(0, _scenario->text());
+	if (!_scenario.isEmpty()) {
+		m_xmlHandler->xmlToScenario(0, _scenario);
 		int documentCharactersCount = m_document->characterCount();
 		aboutContentsChange(0, 0, documentCharactersCount);
 	}
@@ -119,6 +119,12 @@ void ScenarioDocument::load(Domain::Scenario* _scenario)
 QString ScenarioDocument::save() const
 {
 	return m_xmlHandler->scenarioToXml();
+}
+
+void ScenarioDocument::refreshDuration()
+{
+	QString scenario = save();
+	load(scenario);
 }
 
 int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const

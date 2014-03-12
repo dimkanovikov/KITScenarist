@@ -3,6 +3,7 @@
 #include "ScenarioNavigatorManager.h"
 #include "ScenarioTextEditManager.h"
 
+#include <Domain/Scenario.h>
 #include <Domain/Character.h>
 #include <Domain/Location.h>
 
@@ -58,20 +59,50 @@ BusinessLogic::ScenarioDocument* ScenarioManager::scenario() const
 
 void ScenarioManager::loadCurrentProject()
 {
+	//
+	// Очистим от предыдущих данных
+	//
 	m_navigatorManager->setNavigationModel(0);
 	m_textEditManager->setScenarioDocument(0);
 
+	//
+	// Загрузим сценарий
+	//
 	Domain::Scenario* currentScenario =
 			DataStorageLayer::StorageFacade::scenarioStorage()->current();
-	m_scenario->load(currentScenario);
+	m_scenario->load(currentScenario->text());
 
+	//
+	// Установим данные для менеджеров
+	//
 	m_navigatorManager->setNavigationModel(m_scenario->model());
 	m_textEditManager->setScenarioDocument(m_scenario->document());
+
+	//
+	// Обновим хронометраж
+	//
+	aboutUpdateDuration(0);
 }
 
 void ScenarioManager::saveCurrentProject()
 {
 	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenario->save());
+}
+
+void ScenarioManager::aboutTextEditSettingsUpdated()
+{
+	m_textEditManager->reloadTextEditSettings();
+}
+
+void ScenarioManager::aboutNavigatorSettingsUpdated()
+{
+	m_navigatorManager->reloadNavigatorSettings();
+}
+
+void ScenarioManager::aboutChronometrySettingsUpdated()
+{
+	m_scenario->refreshDuration();
+	aboutUpdateDuration(0);
 }
 
 void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const QString& _newName)
@@ -195,9 +226,9 @@ void ScenarioManager::refreshLocations()
 void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 {
 	QString durationToCursor =
-			ChronometerFacade::secondsToTime(m_scenario->durationAtPosition(_cursorPosition));
+			BusinessLogic::ChronometerFacade::secondsToTime(m_scenario->durationAtPosition(_cursorPosition));
 	QString durationToEnd =
-			ChronometerFacade::secondsToTime(m_scenario->fullDuration());
+			BusinessLogic::ChronometerFacade::secondsToTime(m_scenario->fullDuration());
 	m_textEditManager->setDuration(
 				QString("%1 | %2")
 				.arg(durationToCursor)

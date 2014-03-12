@@ -4,21 +4,27 @@
 #include "AbstractChronometer.h"
 
 
-class CharactersChronometer : public AbstractChronometer
+namespace BusinessLogic
 {
-public:
-	CharactersChronometer();
-
 	/**
-	 * @brief Наименование хронометра
+	 * @brief Расчёт хронометража по количеству символов
 	 */
-	QString name() const;
+	class CharactersChronometer : public AbstractChronometer
+	{
+	public:
+		CharactersChronometer();
 
-	/**
-	 * @brief Подсчитать длительность заданного текста определённого типа
-	 */
-	float calculateFrom(
-			BusinessLogic::ScenarioTextBlockStyle::Type _type, const QString &_text) const;
-};
+		/**
+		 * @brief Наименование хронометра
+		 */
+		QString name() const;
+
+		/**
+		 * @brief Подсчитать длительность заданного текста определённого типа
+		 */
+		float calculateFrom(
+				BusinessLogic::ScenarioTextBlockStyle::Type _type, const QString &_text) const;
+	};
+}
 
 #endif // CHARACTERSCHRONOMETER_H

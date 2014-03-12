@@ -30,13 +30,11 @@ SOURCES += main.cpp \
     ManagementLayer/Characters/CharactersManager.cpp \
     ManagementLayer/Characters/CharactersNavigatorManager.cpp \
     ManagementLayer/Settings/SettingsManager.cpp \
-    ManagementLayer/Settings/SettingsNavigatorManager.cpp \
     ManagementLayer/StartUp/StartUpManager.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEdit.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp \
     UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.cpp \
     ManagementLayer/Scenario/ScenarioDataEditManager.cpp \
-    ManagementLayer/Settings/SettingsDataEditManager.cpp \
     ManagementLayer/Project/ProjectDataEditManager.cpp \
     ManagementLayer/Locations/LocationsDataEditManager.cpp \
     ManagementLayer/Characters/CharactersDataEditManager.cpp \
@@ -48,8 +46,6 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp \
     UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp \
     UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp \
-    UserInterfaceLayer/Settings/SettingsNavigator/SettingsNavigator.cpp \
-    UserInterfaceLayer/Settings/SettingsDataEdit/SettingsDataEdit.cpp \
     BusinessLayer/ScenarioDocument/ScenarioDocument.cpp \
     BusinessLayer/ScenarioDocument/ScenarioModel.cpp \
     BusinessLayer/ScenarioDocument/ScenarioModelItem.cpp \
@@ -130,7 +126,8 @@ SOURCES += main.cpp \
     UserInterfaceLayer/StartUp/RecentFileWidget.cpp \
     3rd_party/Widgets/SideBar/SideBar.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp \
-    BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.cpp
+    BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.cpp \
+    UserInterfaceLayer/Settings/SettingsView.cpp
 
 RESOURCES += \
     Resources/Resources.qrc
@@ -149,13 +146,11 @@ HEADERS += \
     ManagementLayer/Characters/CharactersManager.h \
     ManagementLayer/Characters/CharactersNavigatorManager.h \
     ManagementLayer/Settings/SettingsManager.h \
-    ManagementLayer/Settings/SettingsNavigatorManager.h \
     ManagementLayer/StartUp/StartUpManager.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEdit.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.h \
     UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.h \
     ManagementLayer/Scenario/ScenarioDataEditManager.h \
-    ManagementLayer/Settings/SettingsDataEditManager.h \
     ManagementLayer/Project/ProjectDataEditManager.h \
     ManagementLayer/Locations/LocationsDataEditManager.h \
     ManagementLayer/Characters/CharactersDataEditManager.h \
@@ -167,8 +162,6 @@ HEADERS += \
     UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.h \
     UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.h \
     UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.h \
-    UserInterfaceLayer/Settings/SettingsNavigator/SettingsNavigator.h \
-    UserInterfaceLayer/Settings/SettingsDataEdit/SettingsDataEdit.h \
     BusinessLayer/ScenarioDocument/ScenarioDocument.h \
     BusinessLayer/ScenarioDocument/ScenarioModel.h \
     BusinessLayer/ScenarioDocument/ScenarioModelItem.h \
@@ -259,7 +252,8 @@ HEADERS += \
     UserInterfaceLayer/StartUp/RecentFileWidget.h \
     3rd_party/Widgets/SideBar/SideBar.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.h \
-    BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h
+    BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h \
+    UserInterfaceLayer/Settings/SettingsView.h
 
 OTHER_FILES += \
     TODO \
@@ -269,4 +263,5 @@ OTHER_FILES += \
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
     UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui \
-    UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui
+    UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui \
+    UserInterfaceLayer/Settings/SettingsView.ui

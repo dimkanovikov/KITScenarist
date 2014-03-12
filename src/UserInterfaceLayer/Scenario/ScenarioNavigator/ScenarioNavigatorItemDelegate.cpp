@@ -10,7 +10,8 @@ using UserInterface::ScenarioNavigatorItemWidget;
 
 ScenarioNavigatorItemDelegate::ScenarioNavigatorItemDelegate(QObject* _parent) :
 	QStyledItemDelegate(_parent),
-	m_itemWidget(new ScenarioNavigatorItemWidget)
+	m_itemWidget(new ScenarioNavigatorItemWidget),
+	m_showSceneNumber(false)
 {
 }
 
@@ -23,16 +24,34 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 {
 	QVariant icon = _index.data(Qt::DecorationRole);
 	QVariant header = _index.data(Qt::DisplayRole);
-	QVariant description = _index.data(Qt::UserRole + 1);
-	QVariant timing = _index.data(Qt::UserRole + 2);
+	QVariant sceneText = _index.data(Qt::UserRole + 1);
+	QVariant synopsys = _index.data(Qt::UserRole + 2);
+	QVariant timing = _index.data(Qt::UserRole + 3);
+	QVariant sceneNumber = _index.data(Qt::UserRole + 4);
 
 	//
 	// Установим в виджет данные
 	//
+	// ... иконку
+	//
 	m_itemWidget->setIcon(icon.value<QPixmap>());
-	m_itemWidget->setHeader(header.toString());
-	m_itemWidget->setDescription(description.toString());
+	//
+	// ... заголовок
+	//
+	if (m_showSceneNumber
+		&& !sceneNumber.isNull()) {
+		m_itemWidget->setHeader(sceneNumber.toString() + ". " + header.toString());
+	} else {
+		m_itemWidget->setHeader(header.toString());
+	}
+	//
+	// ... длительность
+	//
 	m_itemWidget->setTiming(timing.toInt());
+	//
+	// ... описание
+	//
+	m_itemWidget->setDescription(sceneText.toString());
 
 	//
 	// Получим настройки стиля
@@ -98,4 +117,11 @@ QSize ScenarioNavigatorItemDelegate::sizeHint(const QStyleOptionViewItem& _optio
 	Q_UNUSED(_index);
 
 	return m_itemWidget->minimumSizeHint();
+}
+
+void ScenarioNavigatorItemDelegate::setShowSceneNumber(bool _show)
+{
+	if (m_showSceneNumber != _show) {
+		m_showSceneNumber = _show;
+	}
 }

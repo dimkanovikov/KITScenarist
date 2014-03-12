@@ -4,6 +4,7 @@
 #include "Scenario/ScenarioManager.h"
 #include "Characters/CharactersManager.h"
 #include "Locations/LocationsManager.h"
+#include "Settings/SettingsManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
@@ -63,7 +64,8 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_startUpManager(new StartUpManager(this, m_view)),
 	m_scenarioManager(new ScenarioManager(this, m_view)),
 	m_charactersManager(new CharactersManager(this, m_view)),
-	m_locationsManager(new LocationsManager(this, m_view))
+	m_locationsManager(new LocationsManager(this, m_view)),
+	m_settingsManager(new SettingsManager(this, m_view))
 {
 	initView();
 	initConnections();
@@ -406,7 +408,7 @@ void ApplicationManager::initView()
 	g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
-	g_disableOnStartActions << m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
+	m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
 
 	//
 	// Настроим виджеты соответствующие вкладкам
@@ -415,6 +417,7 @@ void ApplicationManager::initView()
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
 	m_tabsWidgets->addWidget(m_charactersManager->view());
 	m_tabsWidgets->addWidget(m_locationsManager->view());
+	m_tabsWidgets->addWidget(m_settingsManager->view());
 
 	//
 	// Расположим всё на форме
@@ -477,15 +480,25 @@ void ApplicationManager::initConnections()
 {
 	connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
 	connect(m_tabs, SIGNAL(currentChanged(int)), m_tabsWidgets, SLOT(setCurrentIndex(int)));
+
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QString)), this, SLOT(aboutLoad(QString)));
+
 	connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
 			m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
 	connect(m_charactersManager, SIGNAL(refreshCharacters()),
 			m_scenarioManager, SLOT(refreshCharacters()));
+
 	connect(m_locationsManager, SIGNAL(locationNameChanged(QString,QString)),
 			m_scenarioManager, SLOT(aboutLocationNameChanged(QString,QString)));
 	connect(m_locationsManager, SIGNAL(refreshLocations()),
 			m_scenarioManager, SLOT(refreshLocations()));
+
+	connect(m_settingsManager, SIGNAL(textEditSettingsUpdated()),
+			m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
+	connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),
+			m_scenarioManager, SLOT(aboutNavigatorSettingsUpdated()));
+	connect(m_settingsManager, SIGNAL(chronometrySettingsUpdated()),
+			m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
 }

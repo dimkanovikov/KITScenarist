@@ -4,24 +4,30 @@
 #include "AbstractChronometer.h"
 
 
-class PagesChronometer : public AbstractChronometer
+namespace BusinessLogic
 {
-public:
-	PagesChronometer();
-
 	/**
-	 * @brief Наименование хронометра
+	 * @brief Посчёт хронометража по страницам текста
 	 */
-	QString name() const;
+	class PagesChronometer : public AbstractChronometer
+	{
+	public:
+		PagesChronometer();
 
-	/**
-	 * @brief Подсчитать длительность заданного текста определённого типа
-	 */
-	float calculateFrom(
-			BusinessLogic::ScenarioTextBlockStyle::Type _type, const QString &_text) const;
+		/**
+		 * @brief Наименование хронометра
+		 */
+		QString name() const;
 
-private:
-	int linesInText(const QString& _text, int _lineLength) const;
-};
+		/**
+		 * @brief Подсчитать длительность заданного текста определённого типа
+		 */
+		float calculateFrom(
+				BusinessLogic::ScenarioTextBlockStyle::Type _type, const QString &_text) const;
+
+	private:
+		int linesInText(const QString& _text, int _lineLength) const;
+	};
+}
 
 #endif // PAGESCHRONOMETER_H

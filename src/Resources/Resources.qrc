@@ -31,5 +31,6 @@
         <file>Icons/Editing/delete.png</file>
         <file>Icons/Editing/refresh.png</file>
         <file>Icons/Editing/edit.png</file>
+        <file>Icons/settings_navigator.png</file>
     </qresource>
 </RCC>

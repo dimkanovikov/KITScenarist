@@ -1,6 +1,10 @@
 #include "ScenarioTextEditManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
+
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.h>
 
 using ManagementLayer::ScenarioTextEditManager;
@@ -14,6 +18,7 @@ ScenarioTextEditManager::ScenarioTextEditManager(QObject* _parent, QWidget* _par
 {
 	initView();
 	initConnections();
+	reloadTextEditSettings();
 }
 
 QWidget* ScenarioTextEditManager::view() const
@@ -29,6 +34,15 @@ void ScenarioTextEditManager::setScenarioDocument(BusinessLogic::ScenarioTextDoc
 void ScenarioTextEditManager::setDuration(const QString& _duration)
 {
 	m_view->setDuration(_duration);
+}
+
+void ScenarioTextEditManager::reloadTextEditSettings()
+{
+	m_view->setUseSpellChecker(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"text-editor/spell-checking",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt());
 }
 
 void ScenarioTextEditManager::initView()

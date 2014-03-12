@@ -22,7 +22,7 @@ public slots:
 	/**
 	 * @brief Включить/выключить проверку правописания
 	 */
-	void aboutUseSpellChecker(bool _use);
+	void setUseSpellChecker(bool _use);
 
 	/**
 	 * @brief Установить язык для проверки орфографии
@@ -43,6 +43,11 @@ protected:
 	 * @brief Переопределено для добавления действий связанных с проверкой орфографии
 	 */
 	void contextMenuEvent(QContextMenuEvent* _event);
+
+	/**
+	 * @brief Пересоздание подсвечивающего класса
+	 */
+	void resetHighlighter();
 
 private slots:
 

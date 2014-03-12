@@ -9,6 +9,9 @@ class QAbstractItemModel;
 
 namespace UserInterface
 {
+	class ScenarioNavigatorItemDelegate;
+
+
 	/**
 	 * @brief Навигатор по сценарию
 	 */
@@ -28,6 +31,11 @@ namespace UserInterface
 		 * @brief Установить модель навигации
 		 */
 		void setModel(QAbstractItemModel* _model);
+
+		/**
+		 * @brief Настроить отображение номеров сцен
+		 */
+		void setShowSceneNumber(bool _show);
 
 	private:
 		/**
@@ -50,6 +58,11 @@ namespace UserInterface
 		 * @brief Дерево навигации
 		 */
 		QTreeView* m_navigationTree;
+
+		/**
+		 * @brief Делегат дерева
+		 */
+		ScenarioNavigatorItemDelegate* m_navigationTreeDelegate;
 	};
 }
 

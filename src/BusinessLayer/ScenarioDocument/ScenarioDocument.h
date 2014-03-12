@@ -67,12 +67,17 @@ namespace BusinessLogic
 		/**
 		 * @brief Загрузить документ из сценария
 		 */
-		void load(Domain::Scenario* _scenario);
+		void load(const QString& _scenario);
 
 		/**
 		 * @brief Сохранить документ в строку
 		 */
 		QString save() const;
+
+		/**
+		 * @brief Пересчитать хронометраж
+		 */
+		void refreshDuration();
 
 	public:
 		/**

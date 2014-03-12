@@ -19,6 +19,7 @@ ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 {
 	m_icon = new QLabel(this);
 	m_icon->setFixedSize(32, 32);
+	m_icon->setScaledContents(true);
 
 	m_header = new ElidedLabel(this);
 	m_header->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -26,10 +27,12 @@ ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 	headerFont.setBold(true);
 	m_header->setFont(headerFont);
 	m_header->setElideMode(Qt::ElideRight);
+	m_header->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
 	m_description = new ElidedLabel(this);
-	m_description->setElideMode(Qt::ElideRight);
 	m_description->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	m_description->setElideMode(Qt::ElideRight);
+	m_header->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
 	m_timing = new QLabel(this);
 	m_timing->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -40,7 +43,7 @@ ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->addWidget(m_header);
 	topLayout->addWidget(m_timing);
-	topLayout->setContentsMargins(QMargins(0, 4, 0, 0));
+	topLayout->setContentsMargins(QMargins());
 
 	QVBoxLayout* rightLayout = new QVBoxLayout;
 	rightLayout->addLayout(topLayout);
@@ -51,7 +54,7 @@ ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->addWidget(m_icon);
 	layout->addLayout(rightLayout);
-	layout->setContentsMargins(QMargins());
+	layout->setContentsMargins(QMargins(0, 2, 0, 2));
 
 	this->setLayout(layout);
 }
@@ -75,6 +78,6 @@ void ScenarioNavigatorItemWidget::setTiming(int _timing)
 {
 	m_timing->setText(
 				"("
-				+ ChronometerFacade::secondsToTime(_timing)
+				+ BusinessLogic::ChronometerFacade::secondsToTime(_timing)
 				+ ") ");
 }

@@ -2,7 +2,9 @@
 #include "SpellChecker.h"
 #include "SpellCheckHighlighter.h"
 
+#include <QApplication>
 #include <QContextMenuEvent>
+#include <QDir>
 #include <QMenu>
 
 
@@ -11,7 +13,8 @@ namespace {
 }
 
 SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
-	QTextEdit(_parent)
+	QTextEdit(_parent),
+	m_useSpellChecking(new QAction(tr("Spell Checking"), this))
 {
 	//
 	// Настроим проверяющего
@@ -21,17 +24,15 @@ SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 	//
 	// Настраиваем подсветку слов не прошедших проверку орфографии
 	//
-	m_spellCheckHighlighter = new SpellCheckHighlighter(document(), m_spellChecker);
-	m_spellCheckHighlighter->setUseSpellChecker(false);
+	m_spellCheckHighlighter = new SpellCheckHighlighter(0, m_spellChecker);
 
 	//
 	// Настраиваем действия контекстного меню для слов не прошедших проверку орфографии
 	//
 	// ... включить/выключить проверку орфографии
-	m_useSpellChecking = new QAction(tr("Spell Checking"), this);
 	m_useSpellChecking->setCheckable(true);
 	m_useSpellChecking->setChecked(false);
-	connect(m_useSpellChecking, SIGNAL(triggered(bool)), this, SLOT(aboutUseSpellChecker(bool)));
+	connect(m_useSpellChecking, SIGNAL(triggered(bool)), this, SLOT(setUseSpellChecker(bool)));
 	// ... игнорировать слово
 	m_ignoreWordAction = new QAction(tr("Ignore"), this);
 	connect(m_ignoreWordAction, SIGNAL(triggered()), this, SLOT(aboutIgnoreWord()));
@@ -47,7 +48,7 @@ SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 	}
 }
 
-void SpellCheckTextEdit::aboutUseSpellChecker(bool _use)
+void SpellCheckTextEdit::setUseSpellChecker(bool _use)
 {
 	m_useSpellChecking->setChecked(_use);
 	m_spellCheckHighlighter->setUseSpellChecker(_use);
@@ -68,7 +69,7 @@ void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 
 QString SpellCheckTextEdit::userDictionaryfile() const
 {
-	return QString::null;
+	return qApp->applicationDirPath() + QDir::separator() + "SpellChecker.dict";
 }
 
 void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
@@ -145,6 +146,12 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 	//
 	menu->exec(_event->globalPos());
 	delete menu;
+}
+
+void SpellCheckTextEdit::resetHighlighter()
+{
+	m_spellCheckHighlighter = new SpellCheckHighlighter(document(), m_spellChecker);
+	m_spellCheckHighlighter->setUseSpellChecker(m_useSpellChecking->isChecked());
 }
 
 void SpellCheckTextEdit::aboutIgnoreWord() const

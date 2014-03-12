@@ -42,6 +42,21 @@ namespace ManagementLayer
 
 	public slots:
 		/**
+		 * @brief Обновить параметры текстового редактора
+		 */
+		void aboutTextEditSettingsUpdated();
+
+		/**
+		 * @brief Обновить параметры навигатора
+		 */
+		void aboutNavigatorSettingsUpdated();
+
+		/**
+		 * @brief Пересчитать хронометраж
+		 */
+		void aboutChronometrySettingsUpdated();
+
+		/**
 		 * @brief Изменено имя персонажа
 		 */
 		void aboutCharacterNameChanged(const QString& _oldName, const QString& _newName);

@@ -31,6 +31,11 @@ namespace ManagementLayer
 		 */
 		void setNavigationModel(BusinessLogic::ScenarioModel* _model);
 
+		/**
+		 * @brief Перезагрузить настройки навигатора
+		 */
+		void reloadNavigatorSettings();
+
 	private slots:
 		/**
 		 * @brief Обновить информацию о модели

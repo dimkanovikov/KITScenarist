@@ -12,7 +12,6 @@ SpellCheckHighlighter::SpellCheckHighlighter(QTextDocument* _parent, SpellChecke
 	m_spellchecker(_checker),
 	m_useSpellChecker(true)
 {
-	Q_ASSERT(_parent);
 	Q_ASSERT(_checker);
 
 	//
@@ -25,7 +24,10 @@ SpellCheckHighlighter::SpellCheckHighlighter(QTextDocument* _parent, SpellChecke
 void SpellCheckHighlighter::setUseSpellChecker(bool _use)
 {
 	m_useSpellChecker = _use;
-	rehighlight();
+
+	if (document() != 0) {
+		rehighlight();
+	}
 }
 
 void SpellCheckHighlighter::highlightBlock(const QString& _text)

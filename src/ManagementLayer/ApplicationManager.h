@@ -14,6 +14,7 @@ namespace ManagementLayer
 	class ScenarioManager;
 	class CharactersManager;
 	class LocationsManager;
+	class SettingsManager;
 
 
 	/**
@@ -137,6 +138,11 @@ namespace ManagementLayer
 		 * @brief Управляющий локациями
 		 */
 		LocationsManager* m_locationsManager;
+
+		/**
+		 * @brief Управляющий настройками
+		 */
+		SettingsManager* m_settingsManager;
 	};
 }
 

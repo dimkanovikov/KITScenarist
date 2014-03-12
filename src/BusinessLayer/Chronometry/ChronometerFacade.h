@@ -5,41 +5,45 @@
 
 class QTextBlock;
 class QTextDocument;
-class AbstractChronometer;
 
-
-/**
- * @brief Фасад для доступа к рассчёту хронометража
- */
-class ChronometerFacade
+namespace BusinessLogic
 {
-public:
-	/**
-	 * @brief Вычислить хронометраж последовательности ограниченной заданными блоками
-	 */
-	static int calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock);
+	class AbstractChronometer;
+
 
 	/**
-	 * @brief Вычислить хронометраж последовательности ограниченной заданными позициями
+	 * @brief Фасад для доступа к рассчёту хронометража
 	 */
-	static int calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition);
+	class ChronometerFacade
+	{
+	public:
+		/**
+		 * @brief Вычислить хронометраж последовательности ограниченной заданными блоками
+		 */
+		static int calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock);
 
-	/**
-	 * @brief Получить строковое представление для заданного количества секунд
-	 */
-	static QString secondsToTime(int _seconds);
+		/**
+		 * @brief Вычислить хронометраж последовательности ограниченной заданными позициями
+		 */
+		static int calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition);
 
-private:
-	/**
-	 * @brief Получить необходимый для использования хронометр
-	 */
-	static AbstractChronometer* chronometer();
+		/**
+		 * @brief Получить строковое представление для заданного количества секунд
+		 */
+		static QString secondsToTime(int _seconds);
 
-private:
-	/**
-	 * @brief Текущий хронометр
-	 */
-	static AbstractChronometer* s_chronometer;
-};
+	private:
+		/**
+		 * @brief Получить необходимый для использования хронометр
+		 */
+		static AbstractChronometer* chronometer();
+
+	private:
+		/**
+		 * @brief Текущий хронометр
+		 */
+		static AbstractChronometer* s_chronometer;
+	};
+}
 
 #endif // CHRONOMETERFACADE_H

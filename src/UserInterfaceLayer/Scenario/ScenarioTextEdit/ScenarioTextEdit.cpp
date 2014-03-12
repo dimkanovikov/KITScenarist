@@ -43,6 +43,8 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 	if (_document != 0) {
 		initEditor();
 	}
+
+	resetHighlighter();
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
