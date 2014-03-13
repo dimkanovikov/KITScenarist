@@ -569,7 +569,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 void ScenarioDocument::initConnections()
 {
 	connect(m_document, SIGNAL(contentsChange(int,int,int)),
-			this, SLOT(aboutContentsChange(int,int,int)), Qt::QueuedConnection);
+			this, SLOT(aboutContentsChange(int,int,int)));
 }
 
 void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos)

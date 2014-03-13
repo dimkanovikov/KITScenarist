@@ -36,6 +36,7 @@
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
         <file>Translations/qt_ru.qm</file>
+        <file>Translations/qtbase_ru.qm</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/style.qss</file>

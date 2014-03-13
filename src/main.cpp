@@ -30,19 +30,26 @@ int main(int argc, char *argv[])
 	QFontDatabase fontDatabase;
 	fontDatabase.addApplicationFont(":/Fonts/Courier New");
 
+    //
+    // Подключим файл переводов Qt
+    //
+    QTranslator* russianQtTranslator = new QTranslator;
+    russianQtTranslator->load(":/Translations/Translations/qt_ru.qm");
+    application.installTranslator(russianQtTranslator);
+
+    //
+    // Подключим дополнительный файл переводов Qt
+    //
+    QTranslator* russianQtBaseTranslator = new QTranslator;
+    russianQtBaseTranslator->load(":/Translations/Translations/qtbase_ru.qm");
+    application.installTranslator(russianQtBaseTranslator);
+
 	//
 	// Подключим файл переводов программы
 	//
 	QTranslator* russianTranslator = new QTranslator;
 	russianTranslator->load(":/Translations/Translations/Scenarist_ru.qm");
-	application.installTranslator(russianTranslator);
-
-	//
-	// Подключим файл переводов Qt
-	//
-	QTranslator* russianQtTranslator = new QTranslator;
-	russianQtTranslator->load(":/Translations/Translations/qt_ru.qm");
-	application.installTranslator(russianQtTranslator);
+    application.installTranslator(russianTranslator);
 
 	ManagementLayer::ApplicationManager applicationManager;
 	applicationManager.exec();

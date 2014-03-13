@@ -69,11 +69,11 @@ void ScenarioNavigatorManager::initView()
 
 void ScenarioNavigatorManager::initConnections()
 {
-	if (m_scenarioModel != 0) {
-		connect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-				this, SLOT(aboutModelUpdated()));
-	}
+    if (m_scenarioModel != 0) {
+        connect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+                this, SLOT(aboutModelUpdated()));
+    }
 
-	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)),
-			this, SIGNAL(sceneChoosed(QModelIndex)), Qt::UniqueConnection);
+    connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)),
+            this, SIGNAL(sceneChoosed(QModelIndex)), Qt::UniqueConnection);
 }

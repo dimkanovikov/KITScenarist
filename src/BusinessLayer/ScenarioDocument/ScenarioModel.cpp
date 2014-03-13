@@ -275,19 +275,7 @@ bool ScenarioModel::dropMimeData(
 				// ... элемент, в который будут вкладываться данные
 				ScenarioModelItem* parentItem = itemForIndex(_parent);
 				// ... элемент, перед которым будут вкладываться данные
-				ScenarioModelItem* childItem = parentItem->childAt(_row);
-
-				//
-				// Определим элемент, после которого необходимо вставить данные
-				//
-				ScenarioModelItem* insertBeforeItem = 0;
-
-				//
-				// Если вкладывание происходит перед каким-либо структурным элементом
-				//
-				if (childItem != 0) {
-					insertBeforeItem = childItem;
-				}
+				ScenarioModelItem* insertBeforeItem = parentItem->childAt(_row);
 
 				//
 				// Если производится перемещение данных
