@@ -94,6 +94,7 @@ void CharactersNavigator::initView()
 
 	m_navigator->setAlternatingRowColors(true);
 	m_navigator->setItemDelegate(new CharactersNavigatorItemDelegate(m_navigator));
+	m_navigator->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());

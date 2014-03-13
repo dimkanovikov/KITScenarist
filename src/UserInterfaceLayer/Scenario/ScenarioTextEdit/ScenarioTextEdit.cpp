@@ -217,7 +217,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Убедимся, что курсор виден
 	//
-	if (handler->needEnshureCursorVisible()) {
+	if (handler->needEnsureCursorVisible()) {
 		ensureCursorVisible();
 	}
 }
@@ -428,21 +428,27 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	// Вставим префикс и постфикс стиля, если необходимо
 	//
 	if (newBlockStyle.hasDecoration()) {
+		//
+		// Запомним позицию курсора в блоке
+		//
 		int cursorPosition = cursor.position();
+
 		QString blockText = cursor.block().text();
-		if (!newBlockStyle.postfix().isEmpty()
+		if (!newBlockStyle.prefix().isEmpty()
 			&& !blockText.startsWith(newBlockStyle.prefix())) {
 			cursor.movePosition(QTextCursor::StartOfBlock);
 			cursor.insertText(newBlockStyle.prefix());
+
 			cursorPosition += newBlockStyle.prefix().length();
 		}
-		if (!newBlockStyle.prefix().isEmpty()
+		if (!newBlockStyle.postfix().isEmpty()
 			&& !blockText.endsWith(newBlockStyle.postfix())) {
 			cursor.movePosition(QTextCursor::EndOfBlock);
 			cursor.insertText(newBlockStyle.postfix());
 		}
+
 		cursor.setPosition(cursorPosition);
-		setTextCursor(cursor);
+		setTextCursorPrivate(cursor);
 	}
 
 	//
@@ -656,6 +662,13 @@ bool ScenarioTextEdit::stringEndsWithAbbrev(const QString& _text)
 	//
 
 	return false;
+}
+
+void ScenarioTextEdit::setTextCursorPrivate(const QTextCursor& _cursor)
+{
+	int verticalScrollValue = verticalScrollBar()->value();
+	setTextCursor(_cursor);
+	verticalScrollBar()->setValue(verticalScrollValue);
 }
 
 void ScenarioTextEdit::initDocument(QTextDocument* _document)

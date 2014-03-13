@@ -94,6 +94,7 @@ void LocationsNavigator::initView()
 
 	m_navigator->setAlternatingRowColors(true);
 	m_navigator->setItemDelegate(new LocationsNavigatorItemDelegate(m_navigator));
+	m_navigator->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());

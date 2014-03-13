@@ -62,6 +62,7 @@ void ScenarioNavigator::initView()
 	m_navigationTree->setDropIndicatorShown(true);
 	m_navigationTree->setAlternatingRowColors(true);
 	m_navigationTree->setHeaderHidden(true);
+	m_navigationTree->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());

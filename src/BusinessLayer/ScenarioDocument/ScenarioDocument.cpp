@@ -620,7 +620,7 @@ ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNe
 		// Если необходимо ищем ближайшего
 		//
 		if (_findNear) {
-			QMap<int, ScenarioModelItem*>::const_iterator i = m_modelItems.upperBound(_position);
+			QMap<int, ScenarioModelItem*>::const_iterator i = m_modelItems.lowerBound(_position);
 			if (i != m_modelItems.begin()
 				|| i != m_modelItems.end()) {
 				if (i != m_modelItems.begin()) {

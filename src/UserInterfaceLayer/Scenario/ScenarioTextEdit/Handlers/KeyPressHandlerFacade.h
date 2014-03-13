@@ -58,7 +58,7 @@ namespace KeyProcessingLayer
 		/**
 		 * @brief Нужно ли чтобы курсор был обязательно видим пользователю
 		 */
-		bool needEnshureCursorVisible() const;
+		bool needEnsureCursorVisible() const;
 
 	private:
 		KeyPressHandlerFacade(UserInterface::ScenarioTextEdit* _editor);

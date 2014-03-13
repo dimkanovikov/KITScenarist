@@ -112,6 +112,11 @@ namespace UserInterface
 		 */
 		bool stringEndsWithAbbrev(const QString& _text);
 
+		/**
+		 * @brief Своя реализация установки курсора
+		 */
+		void setTextCursorPrivate(const QTextCursor& _cursor);
+
 	private:
 		void initDocument(QTextDocument* _document);
 		void initEditor();

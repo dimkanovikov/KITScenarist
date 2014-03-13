@@ -56,7 +56,7 @@ bool KeyPressHandlerFacade::needSendEventToBaseClass() const
 	return m_prepareHandler->needSendEventToBaseClass();
 }
 
-bool KeyPressHandlerFacade::needEnshureCursorVisible() const
+bool KeyPressHandlerFacade::needEnsureCursorVisible() const
 {
 	return m_prepareHandler->needEnsureCursorVisible();
 }
