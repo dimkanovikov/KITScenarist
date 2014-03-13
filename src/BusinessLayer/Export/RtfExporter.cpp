@@ -121,33 +121,33 @@ QString RtfExporter::style(ScenarioTextBlockStyle::Type _type) const
 
 	switch (_type) {
 		case ScenarioTextBlockStyle::TimeAndPlace: {
-			style = "\\s1";
+			style = "\\s1\\f0\\caps\\fs24\\fi0\\ql";
 			break;
 		}
 
 		case ScenarioTextBlockStyle::Action: {
-			style = "\\s2";
+			style = "\\s2\\f0\\fs24\\fi0\\ql";
 			break;
 		}
 
 		case ScenarioTextBlockStyle::Character: {
-			style = "\\s3";
+			style = "\\s3\\f0\\caps\\fs24\\fi0\\li3827\\ql";
 			break;
 		}
 
 		case ScenarioTextBlockStyle::Parenthetical:
 		case ScenarioTextBlockStyle::Title: {
-			style = "\\s4";
+			style = "\\s4\\f0\\fs24\\fi0\\li3118\\ri2551\\ql";
 			break;
 		}
 
 		case ScenarioTextBlockStyle::Dialog: {
-			style = "\\s5";
+			style = "\\s5\\f0\\fs24\\fi0\\li2126\\ri2126\\ql";
 			break;
 		}
 
 		case ScenarioTextBlockStyle::Transition: {
-			style = "\\s6";
+			style = "\\s6\\f0\\caps\\fs24\\fi0\\qr";
 			break;
 		}
 
@@ -155,7 +155,7 @@ QString RtfExporter::style(ScenarioTextBlockStyle::Type _type) const
 		case ScenarioTextBlockStyle::TitleHeader:
 		case ScenarioTextBlockStyle::SceneGroupHeader:
 		case ScenarioTextBlockStyle::SceneGroupFooter: {
-			style = "\\s7";
+			style = "\\s7\\f0\\caps\\fs24\\fi0\\ql";
 			break;
 		}
 
