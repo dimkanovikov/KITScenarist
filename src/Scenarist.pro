@@ -135,10 +135,7 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemDelegate.cpp \
     UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemWidget.cpp \
     UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.cpp \
-    UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.cpp
-
-RESOURCES += \
-    Resources/Resources.qrc
+	UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -266,15 +263,23 @@ HEADERS += \
     UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemDelegate.h \
     UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemWidget.h \
     UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.h \
-    UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.h
-
-OTHER_FILES += \
-    TODO \
-    settings_keys \
-    scenario_settings_keys
+	UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
     UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui \
     UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui \
     UserInterfaceLayer/Settings/SettingsView.ui
+
+
+RESOURCES += \
+	Resources/Resources.qrc
+
+OTHER_FILES += \
+	TODO \
+	settings_keys \
+	scenario_settings_keys \
+    logo.ico \
+    Scenarist.rc
+
+RC_FILE = Scenarist.rc
