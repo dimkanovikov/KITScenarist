@@ -158,7 +158,7 @@ void ScenarioModelItem::updateParentDuration()
 	// Если есть дети - обновляем свою длительность
 	//
 	if (hasChildren()) {
-		int duration;
+		int duration = 0;
 		foreach (ScenarioModelItem* child, m_children) {
 			duration += child->duration();
 		}

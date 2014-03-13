@@ -92,9 +92,8 @@ Character* CharacterStorage::updateCharacter(const QString& _oldName, const QStr
 		// ... уведомим об обновлении
 		//
 		int indexRow = all()->toList().indexOf(characterToUpdate);
-		QModelIndex fromIndex = all()->index(indexRow, 0, QModelIndex());
-		QModelIndex toIndex = all()->index(indexRow, all()->columnCount(fromIndex), QModelIndex());
-		emit all()->dataChanged(fromIndex, toIndex);
+		QModelIndex updateIndex = all()->index(indexRow, 0, QModelIndex());
+		emit all()->dataChanged(updateIndex, updateIndex);
 	}
 
 	return characterToUpdate;

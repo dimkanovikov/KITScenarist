@@ -92,9 +92,8 @@ Location* LocationStorage::updateLocation(const QString& _oldName, const QString
 		// ... уведомим об обновлении
 		//
 		int indexRow = all()->toList().indexOf(locationToUpdate);
-		QModelIndex fromIndex = all()->index(indexRow, 0, QModelIndex());
-		QModelIndex toIndex = all()->index(indexRow, all()->columnCount(fromIndex), QModelIndex());
-		emit all()->dataChanged(fromIndex, toIndex);
+		QModelIndex updateIndex = all()->index(indexRow, 0, QModelIndex());
+		emit all()->dataChanged(updateIndex, updateIndex);
 	}
 
 	return locationToUpdate;
