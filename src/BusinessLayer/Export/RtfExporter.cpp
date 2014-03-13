@@ -175,6 +175,7 @@ QString RtfExporter::stringToUtfCode(const QString& _text) const
 	foreach (QChar character, _text)	{
 		utfCharacter.setNum(character.unicode());
 		utfCharacter.prepend("\\u");
+		utfCharacter.append("'");
 		result += utfCharacter;
 	}
 
