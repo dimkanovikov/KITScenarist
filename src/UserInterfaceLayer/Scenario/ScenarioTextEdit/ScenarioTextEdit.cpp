@@ -351,9 +351,10 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 				// ... встретилась новая группа
 				++openedGroups;
 			}
-
+			cursor.movePosition(QTextCursor::EndOfBlock);
 			cursor.movePosition(QTextCursor::NextBlock);
-		} while (!isFooterUpdated);
+		} while (!isFooterUpdated
+				 && !cursor.atEnd());
 	}
 
 	//
@@ -554,8 +555,10 @@ void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioTextBlockStyle
 				++openedGroups;
 			}
 
+			cursor.movePosition(QTextCursor::EndOfBlock);
 			cursor.movePosition(QTextCursor::NextBlock);
-		} while (!isFooterUpdated);
+		} while (!isFooterUpdated
+				 && !cursor.atEnd());
 	}
 }
 
