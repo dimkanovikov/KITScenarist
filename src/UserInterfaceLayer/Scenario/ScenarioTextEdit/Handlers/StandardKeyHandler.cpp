@@ -840,10 +840,10 @@ int StandardKeyHandler::keyCharacterToQtKey(const QString& _keyCharacter) const
 			qtKey = Qt::Key_V;
 		} else if (keyCharacter == "j"
 				   || keyCharacter == QString::fromUtf8("о")) {
-			qtKey = Qt::Key_S;
+			qtKey = Qt::Key_J;
 		} else if (keyCharacter == "u"
 				   || keyCharacter == QString::fromUtf8("г")) {
-			qtKey = Qt::Key_D;
+			qtKey = Qt::Key_U;
 		} else if (keyCharacter == "l"
 				   || keyCharacter == QString::fromUtf8("д")) {
 			qtKey = Qt::Key_L;

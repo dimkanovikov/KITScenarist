@@ -508,7 +508,7 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="121"/>
         <source>Action</source>
-        <translation>Действие</translation>
+        <translation>Описание действия</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="122"/>

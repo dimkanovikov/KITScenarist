@@ -154,6 +154,7 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
     connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
+	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutCursorPositionChanged()));
 	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
 }
 
