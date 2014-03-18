@@ -2,6 +2,11 @@
 
 #include "../ScenarioTextEdit.h"
 
+#include <Domain/Place.h>
+
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/PlaceStorage.h>
+
 #include <QKeyEvent>
 #include <QTextBlock>
 
@@ -141,5 +146,41 @@ void ActionHandler::handleTab(QKeyEvent*)
 				}
 			}
 		}
+	}
+}
+
+void ActionHandler::handleOther(QKeyEvent* _event)
+{
+	//
+	// Получим необходимые значения
+	//
+	// ... курсор в текущем положении
+	QTextCursor cursor = editor()->textCursor();
+	// ... блок текста в котором находится курсор
+	QTextBlock currentBlock = cursor.block();
+	// ... текст до курсора
+	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
+
+
+	//
+	// Обработка
+	//
+	if (cursorBackwardText.endsWith(".")
+		&& _event != 0
+		&& _event->text() == ".") {
+		//! Если нажата точка
+
+		//
+		// Если было введено какое-либо значение из списка мест (ИНТ./НАТ. и т.п.)
+		// то необходимо преобразовать блок во время и место
+		//
+		QString maybePlace = cursorBackwardText.remove(".").toUpper();
+		if (DataStorageLayer::StorageFacade::placeStorage()->hasPlace(maybePlace)) {
+			editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+		}
+	} else {
+		//! В противном случае, обрабатываем в базовом классе
+
+		StandardKeyHandler::handleOther(_event);
 	}
 }

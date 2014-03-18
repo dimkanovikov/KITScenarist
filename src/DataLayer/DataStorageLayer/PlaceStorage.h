@@ -3,6 +3,8 @@
 
 #include "StorageFacade.h"
 
+class QString;
+
 namespace Domain {
 	class Place;
 	class PlacesTable;
@@ -25,6 +27,11 @@ namespace DataStorageLayer
 		 * @brief Очистить хранилище
 		 */
 		void clear();
+
+		/**
+		 * @brief Проверить наличие заданного места
+		 */
+		bool hasPlace(const QString& _name);
 
 	private:
 		PlacesTable* m_all;

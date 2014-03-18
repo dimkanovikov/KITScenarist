@@ -25,6 +25,19 @@ void PlaceStorage::clear()
 	MapperFacade::placeMapper()->clear();
 }
 
+bool PlaceStorage::hasPlace(const QString& _name)
+{
+	bool contains = false;
+	foreach (DomainObject* domainObject, all()->toList()) {
+		Place* place = dynamic_cast<Place*>(domainObject);
+		if (place->name() == _name) {
+			contains = true;
+			break;
+		}
+	}
+	return contains;
+}
+
 PlaceStorage::PlaceStorage() :
 	m_all(0)
 {
