@@ -19,6 +19,11 @@ AbstractMapper::AbstractMapper() :
 
 AbstractMapper::~AbstractMapper()
 {
+	//
+	// Ожидаем завершения всех операций
+	//
+	m_sqlExecuter->wait();
+
 	delete m_sqlExecuter;
 	m_sqlExecuter = 0;
 }
