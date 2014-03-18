@@ -623,8 +623,6 @@ void ScenarioTextEdit::makeTextUpper(QKeyEvent* _event)
 			QString correctedText = eventText;
 			if (isFirstUpperCase) {
 				correctedText[0] = correctedText[0].toUpper();
-			} else {
-				correctedText[0] = correctedText[0].toLower();
 			}
 
 			//
