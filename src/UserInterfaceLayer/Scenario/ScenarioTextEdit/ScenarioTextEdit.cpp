@@ -230,7 +230,7 @@ void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)
 			// zoomRange > 0 - Текст увеличивается
 			// zoomRange < 0 - Текст уменьшается
 			//
-			int zoomRange = (_event->delta() / 120) * 2;
+			int zoomRange = (_event->angleDelta().y() / 120);
 			zoomIn(zoomRange);
 
 			_event->accept();
@@ -238,6 +238,26 @@ void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)
 	} else {
 		QTextEdit::wheelEvent(_event);
 	}
+}
+
+void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
+{
+	//
+	// Если в документе формат первого блока имеет отступ сверху, это приводит
+	// к некорректной прорисовке текста, это баг Qt...
+	// Поэтому приходится отлавливать этот момент и вручную корректировать
+	//
+	QTextCursor cursor(m_document);
+	if (cursor.blockFormat().topMargin() > 0) {
+		QTextBlockFormat format = cursor.blockFormat();
+		format.setTopMargin(0);
+		cursor.setBlockFormat(format);
+	}
+
+	//
+	// Прорисовка текста
+	//
+	CompletableTextEdit::paintEvent(_event);
 }
 
 void ScenarioTextEdit::dropEvent(QDropEvent* _event)
