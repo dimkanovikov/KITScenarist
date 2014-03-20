@@ -24,15 +24,22 @@ namespace DatabaseLayer
 		 */
 		static QSqlDatabase instanse();
 
+		/**
+		 * @brief Состояния базы данных
+		 */
 		enum State {
-			Null,
-			Scheme,
-			Indexes,
-			Enums,
-			Data
+			//! Новая база данных
+			EmptyFlag,
+			//! Схема создана
+			SchemeFlag,
+			//! Индексы созданы
+			IndexesFlag,
+			//! Справочники созданы
+			EnumsFlag,
+			//! Старая версия
+			OldVersionFlag
 		};
 		Q_DECLARE_FLAGS(States, State)
-
 
 	private:
 		static QString CONNECTION_NAME,

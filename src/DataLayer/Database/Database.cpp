@@ -67,11 +67,11 @@ void Database::open(QSqlDatabase& _database, const QString& _connectionName, con
 
 	Database::States states = checkState(_database);
 
-	if (!states.testFlag(Scheme))
+	if (!states.testFlag(SchemeFlag))
 		createTables(_database);
-	if (!states.testFlag(Indexes))
+	if (!states.testFlag(IndexesFlag))
 		createIndexes(_database);
-	if (!states.testFlag(Enums))
+	if (!states.testFlag(EnumsFlag))
 		createEnums(_database);
 }
 
@@ -85,20 +85,37 @@ void Database::open(QSqlDatabase& _database, const QString& _connectionName, con
 Database::States Database::checkState(QSqlDatabase& _database)
 {
 	QSqlQuery q_checker(_database);
-	Database::States states;
+	Database::States states = Database::EmptyFlag;
 
-	// Схема данных
+	//
+	// Созданы ли таблицы
+	//
 	if (q_checker.exec("SELECT COUNT(*) as size FROM sqlite_master WHERE type = 'table' ") &&
 		q_checker.next() &&
-		q_checker.record().value("size").toInt()
-		)
-		states = states | Database::Scheme;
-	// Индексы
-	if (q_checker.exec("SELECT COUNT(*) as size FROM sqlite_master WHERE type = 'index' ") &&
-		q_checker.next() &&
-		q_checker.record().value("size").toInt()
-		)
-		states = states | Database::Indexes;
+		q_checker.record().value("size").toInt()) {
+		//
+		// Все остальные проверки имеют смысл, только если проходит данная проверка
+		//
+		states = states | Database::SchemeFlag;
+
+		//
+		// Созданы ли индексы
+		//
+		if (q_checker.exec("SELECT COUNT(*) as size FROM sqlite_master WHERE type = 'index' ") &&
+			q_checker.next() &&
+			q_checker.record().value("size").toInt()) {
+			states = states | Database::IndexesFlag;
+		}
+
+		//
+		// Проверка версии
+		//
+		if (q_checker.exec("SELECT value as version FROM system_variables WHERE variable = 'application-version' ") &&
+			q_checker.next() &&
+			q_checker.record().value("version").toString() != qApp->applicationVersion()) {
+			states = states | Database::OldVersionFlag;
+		}
+	}
 
 	return states;
 }
@@ -216,9 +233,19 @@ void Database::createEnums(QSqlDatabase& _database)
 					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
 					.arg(QString::fromUtf8("НОЧЬ"))
 					);
+		q_creator.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("УТРО"))
+					);
+		q_creator.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ВЕЧЕР"))
+					);
 #else
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'DAY');");
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'NIGHT');");
+		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'MORNING');");
+		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'EVENING');");
 #endif
 	}
 
