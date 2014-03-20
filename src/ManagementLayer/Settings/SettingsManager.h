@@ -37,7 +37,7 @@ namespace ManagementLayer
 		 * @brief Обновления настроек
 		 */
 		/** @{ */
-		void textEditSettingsUpdated();
+		void scenarioEditSettingsUpdated();
 		void navigatorSettingsUpdated();
 		void chronometrySettingsUpdated();
 		/** @} */
@@ -47,7 +47,12 @@ namespace ManagementLayer
 		 * @brief Изменения параметров
 		 */
 		/** @{ */
-		void textSpellCheckChanged(bool  _value);
+		void scenarioEditSpellCheckChanged(bool  _value);
+		void scenarioEditTextColorChanged(const QColor& _value);
+		void scenarioEditBackgroundColorChanged(const QColor& _value);
+		void scenarioEditNonprintableTextColorChanged(const QColor& _value);
+		void scenarioEditFolderTextColorChanged(const QColor& _value);
+		void scenarioEditFolderBackgroundColorChanged(const QColor& _value);
 		void navigatorShowScenesNumbersChanged(bool  _value);
 		void chronometryCurrentTypeChanged();
 		void chronometryPagesSecondsChanged(int  _value);
@@ -66,6 +71,7 @@ namespace ManagementLayer
 		void storeValue(const QString& _key, int _value);
 		void storeValue(const QString& _key, double _value);
 		void storeValue(const QString& _key, const QString& _value);
+		void storeValue(const QString& _key, const QColor& _value);
 
 	private:
 		/**

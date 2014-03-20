@@ -87,7 +87,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Пересчитать хронометраж
 		 */
-		void refreshDuration();
+		void refresh();
 
 	public:
 		/**

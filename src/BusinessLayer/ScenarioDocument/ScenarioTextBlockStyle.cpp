@@ -1,6 +1,9 @@
 #include "ScenarioTextBlockStyle.h"
 #include "ScenarioTextBlockStylePrivate.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <QTextBlock>
 
 using namespace BusinessLogic;
@@ -38,6 +41,12 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 									 ScenarioTextBlockStyle::Undefined);
 	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase, true);
 	m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsCanModify, true);
+	m_pimpl->charFormat.setForeground(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/text-color",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					));
 
 	//
 	// Настроим остальные характеристики
@@ -108,32 +117,37 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 
 		case NoprintableText: {
 			m_pimpl->blockFormat.setTopMargin(15);
-			m_pimpl->charFormat.setForeground(QColor("gray"));
+			m_pimpl->charFormat.setForeground(
+						QColor(
+							DataStorageLayer::StorageFacade::settingsStorage()->value(
+								"scenario-editor/nonprintable-text-color",
+								DataStorageLayer::SettingsStorage::ApplicationSettings)
+							));
 			break;
 		}
 
-		case SceneGroupHeader: {
-			m_pimpl->blockFormat.setTopMargin(15);
-			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
-			break;
-		}
-
+		case SceneGroupHeader:
 		case SceneGroupFooter: {
 			m_pimpl->blockFormat.setTopMargin(15);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
-		case FolderHeader: {
-			m_pimpl->blockFormat.setTopMargin(15);
-			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
-			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
-			break;
-		}
-
+		case FolderHeader:
 		case FolderFooter: {
 			m_pimpl->blockFormat.setTopMargin(15);
-			m_pimpl->blockFormat.setBackground(QColor("lightGray"));
+			m_pimpl->blockFormat.setBackground(
+						QColor(
+							DataStorageLayer::StorageFacade::settingsStorage()->value(
+								"scenario-editor/folder-background-color",
+								DataStorageLayer::SettingsStorage::ApplicationSettings)
+							));
+			m_pimpl->charFormat.setForeground(
+						QColor(
+							DataStorageLayer::StorageFacade::settingsStorage()->value(
+								"scenario-editor/folder-text-color",
+								DataStorageLayer::SettingsStorage::ApplicationSettings)
+							));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}

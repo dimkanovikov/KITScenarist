@@ -41,6 +41,11 @@ namespace UserInterface
 		void setUseSpellChecker(bool _use);
 
 		/**
+		 * @brief Настроить цвета текстового редактора
+		 */
+		void setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor);
+
+		/**
 		 * @brief Установить позицию курсора
 		 */
 		void setCursorPosition(int _position);

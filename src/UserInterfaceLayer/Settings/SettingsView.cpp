@@ -1,6 +1,9 @@
 #include "SettingsView.h"
 #include "ui_SettingsView.h"
 
+#include <QColorDialog>
+#include <QSignalMapper>
+
 using UserInterface::SettingsView;
 
 
@@ -38,9 +41,34 @@ int SettingsView::chronometryCurrentType() const
 	return type;
 }
 
-void SettingsView::setTextSpellCheck(bool _value)
+void SettingsView::setScenarioEditSpellCheck(bool _value)
 {
 	ui->spellChecking->setChecked(_value);
+}
+
+void SettingsView::setScenarioEditTextColor(const QColor& _color)
+{
+	setColorFor(ui->textColor, _color);
+}
+
+void SettingsView::setScenarioEditBackgroundColor(const QColor& _color)
+{
+	setColorFor(ui->backgroundColor, _color);
+}
+
+void SettingsView::setScenarioEditNonprintableTexColor(const QColor& _color)
+{
+	setColorFor(ui->nonprintableTextColor, _color);
+}
+
+void SettingsView::setScenarioEditFolderTextColor(const QColor& _color)
+{
+	setColorFor(ui->folderTextColor, _color);
+}
+
+void SettingsView::setScenarioEditFolderBackgroundColor(const QColor& _color)
+{
+	setColorFor(ui->folderBackgroundColor, _color);
 }
 
 void SettingsView::setNavigatorShowScenesNumbers(bool _value)
@@ -113,12 +141,57 @@ void SettingsView::setChronometryConfigurableSecondsFor50Dialog(double _value)
 	ui->configurableChronometrySecondsPer50CharactersDialog->setValue(_value);
 }
 
+void SettingsView::aboutScenarioEditChooseTextColor()
+{
+	setColorFor(ui->textColor);
+	emit scenarioEditTextColorChanged(ui->textColor->palette().button().color());
+}
+
+void SettingsView::aboutScenarioEditChooseBackgroundColor()
+{
+	setColorFor(ui->backgroundColor);
+	emit scenarioEditBackgroundColorChanged(ui->backgroundColor->palette().button().color());
+}
+
+void SettingsView::aboutScenarioEditChooseNonprintableTextColor()
+{
+	setColorFor(ui->nonprintableTextColor);
+	emit scenarioEditNonprintableTextColorChanged(ui->nonprintableTextColor->palette().button().color());
+}
+
+void SettingsView::aboutScenarioEditChooseFolderTextColor()
+{
+	setColorFor(ui->folderTextColor);
+	emit scenarioEditFolderTextColorChanged(ui->folderTextColor->palette().button().color());
+}
+
+void SettingsView::aboutScenarioEditChooseFolderBackgroundColor()
+{
+	setColorFor(ui->folderBackgroundColor);
+	emit scenarioEditFolderBackgroundColorChanged(ui->folderBackgroundColor->palette().button().color());
+}
+
+void SettingsView::setColorFor(QWidget* _colorPicker)
+{
+	QColor oldColor = _colorPicker->palette().button().color();
+	QColor newColor = QColorDialog::getColor(oldColor, this);
+	if (newColor.isValid()) {
+		setColorFor(_colorPicker, newColor);
+	}
+}
+
+void SettingsView::setColorFor(QWidget* _colorPicker, const QColor& _newColor)
+{
+	_colorPicker->setStyleSheet("background-color: " + _newColor.name());
+}
+
 void SettingsView::initView()
 {
 	ui->categories->setCurrentRow(0);
 	ui->categoriesWidgets->setCurrentIndex(0);
 
 	ui->splitter->setHandleWidth(1);
+	ui->splitter->setStretchFactor(1, 1);
 }
 
 void SettingsView::initConnections()
@@ -127,6 +200,13 @@ void SettingsView::initConnections()
 	// Настроим соединения формы
 	//
 	connect(ui->categories, SIGNAL(currentRowChanged(int)), ui->categoriesWidgets, SLOT(setCurrentIndex(int)));
+	// ... выбор цвета элементов редактора сценария
+	connect(ui->textColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseTextColor()));
+	connect(ui->backgroundColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseBackgroundColor()));
+	connect(ui->nonprintableTextColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseNonprintableTextColor()));
+	connect(ui->folderTextColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseFolderTextColor()));
+	connect(ui->folderBackgroundColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseFolderBackgroundColor()));
+	// ... смена текущей системы хронометража
 	connect(ui->pagesChronometry, SIGNAL(toggled(bool)), ui->pagesChronometryGroup, SLOT(setEnabled(bool)));
 	connect(ui->charactersChronometry, SIGNAL(toggled(bool)), ui->charactersChronometryGroup, SLOT(setEnabled(bool)));
 	connect(ui->configurableChronometry, SIGNAL(toggled(bool)), ui->configurableChronometryGroup, SLOT(setEnabled(bool)));
@@ -135,7 +215,7 @@ void SettingsView::initConnections()
 	// Сигналы об изменении параметров
 	//
 	// ... текстовый редактор
-	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(textSpellCheckChanged(bool)));
+	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	// ... навигатор
 	connect(ui->showScenesNumbers, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
 	// ... хронометраж

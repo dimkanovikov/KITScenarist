@@ -136,7 +136,7 @@ QString ScenarioDocument::save() const
 	return m_xmlHandler->scenarioToXml();
 }
 
-void ScenarioDocument::refreshDuration()
+void ScenarioDocument::refresh()
 {
 	QString scenario = save();
 	load(scenario);

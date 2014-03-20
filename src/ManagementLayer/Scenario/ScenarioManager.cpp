@@ -128,6 +128,7 @@ void ScenarioManager::saveViewState()
 void ScenarioManager::aboutTextEditSettingsUpdated()
 {
 	m_textEditManager->reloadTextEditSettings();
+	m_scenario->refresh();
 }
 
 void ScenarioManager::aboutNavigatorSettingsUpdated()
@@ -137,7 +138,7 @@ void ScenarioManager::aboutNavigatorSettingsUpdated()
 
 void ScenarioManager::aboutChronometrySettingsUpdated()
 {
-	m_scenario->refreshDuration();
+	m_scenario->refresh();
 	aboutUpdateDuration(0);
 }
 

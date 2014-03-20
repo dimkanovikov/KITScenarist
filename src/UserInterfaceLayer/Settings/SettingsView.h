@@ -33,7 +33,12 @@ namespace UserInterface
 		 * @brief Установка параметров
 		 */
 		/** @{ */
-		void setTextSpellCheck(bool _value);
+		void setScenarioEditSpellCheck(bool _value);
+		void setScenarioEditTextColor(const QColor& _color);
+		void setScenarioEditBackgroundColor(const QColor& _color);
+		void setScenarioEditNonprintableTexColor(const QColor& _color);
+		void setScenarioEditFolderTextColor(const QColor& _color);
+		void setScenarioEditFolderBackgroundColor(const QColor& _color);
 
 		void setNavigatorShowScenesNumbers(bool  _value);
 
@@ -54,7 +59,12 @@ namespace UserInterface
 		 * @brief Изменения параметров
 		 */
 		/** @{ */
-		void textSpellCheckChanged(bool);
+		void scenarioEditSpellCheckChanged(bool);
+		void scenarioEditTextColorChanged(const QColor&);
+		void scenarioEditBackgroundColorChanged(const QColor&);
+		void scenarioEditNonprintableTextColorChanged(const QColor&);
+		void scenarioEditFolderTextColorChanged(const QColor&);
+		void scenarioEditFolderBackgroundColorChanged(const QColor&);
 
 		void navigatorShowScenesNumbersChanged(bool);
 		void navigatorShowScenesTextChanged(bool);
@@ -70,6 +80,29 @@ namespace UserInterface
 		void chronometryConfigurableSecondsForParagraphDialogChanged(double);
 		void chronometryConfigurableSecondsFor50DialogChanged(double);
 		/** @} */
+
+	private slots:
+		/**
+		 * @brief Выбрать цвет для параметров редактора сценария
+		 */
+		/** @{ */
+		void aboutScenarioEditChooseTextColor();
+		void aboutScenarioEditChooseBackgroundColor();
+		void aboutScenarioEditChooseNonprintableTextColor();
+		void aboutScenarioEditChooseFolderTextColor();
+		void aboutScenarioEditChooseFolderBackgroundColor();
+		/** @} */
+
+	private:
+		/**
+		 * @brief Сменить цвет для элемента вызвав диалог выбора цвета
+		 */
+		void setColorFor(QWidget* _colorPicker);
+
+		/**
+		 * @brief Установить цвет для элемента
+		 */
+		void setColorFor(QWidget* _colorPicker, const QColor& _newColor);
 
 	private:
 		/**

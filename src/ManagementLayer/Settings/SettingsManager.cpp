@@ -60,9 +60,34 @@ void SettingsManager::saveViewState()
 				);
 }
 
-void SettingsManager::textSpellCheckChanged(bool _value)
+void SettingsManager::scenarioEditSpellCheckChanged(bool _value)
 {
-	storeValue("text-editor/spell-checking", _value);
+	storeValue("scenario-editor/spell-checking", _value);
+}
+
+void SettingsManager::scenarioEditTextColorChanged(const QColor&_value)
+{
+	storeValue("scenario-editor/text-color", _value);
+}
+
+void SettingsManager::scenarioEditBackgroundColorChanged(const QColor& _value)
+{
+	storeValue("scenario-editor/background-color", _value);
+}
+
+void SettingsManager::scenarioEditNonprintableTextColorChanged(const QColor& _value)
+{
+	storeValue("scenario-editor/nonprintable-text-color", _value);
+}
+
+void SettingsManager::scenarioEditFolderTextColorChanged(const QColor& _value)
+{
+	storeValue("scenario-editor/folder-text-color", _value);
+}
+
+void SettingsManager::scenarioEditFolderBackgroundColorChanged(const QColor& _value)
+{
+	storeValue("scenario-editor/folder-background-color", _value);
 }
 
 void SettingsManager::navigatorShowScenesNumbersChanged(bool _value)
@@ -161,6 +186,12 @@ void SettingsManager::storeValue(const QString& _key, const QString& _value)
 				_key, _value, DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
+void SettingsManager::storeValue(const QString& _key, const QColor& _value)
+{
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				_key, _value.name(), DataStorageLayer::SettingsStorage::ApplicationSettings);
+}
+
 void SettingsManager::initView()
 {
 	//
@@ -170,11 +201,47 @@ void SettingsManager::initView()
 	//
 	// Настройки текстового редактора
 	//
-	m_view->setTextSpellCheck(
+	m_view->setScenarioEditSpellCheck(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"text-editor/spell-checking",
+					"scenario-editor/spell-checking",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
+				);
+	// ... цвета
+	m_view->setScenarioEditTextColor(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/text-color",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
+	m_view->setScenarioEditBackgroundColor(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/background-color",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
+	m_view->setScenarioEditNonprintableTexColor(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/nonprintable-text-color",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
+	m_view->setScenarioEditFolderTextColor(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/folder-text-color",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
+	m_view->setScenarioEditFolderBackgroundColor(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/folder-background-color",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
 				);
 
 	//
@@ -268,8 +335,15 @@ void SettingsManager::initConnections()
 	//
 	// Сохранение изменений параметров
 	//
-	connect(m_view, SIGNAL(textSpellCheckChanged(bool)), this, SLOT(textSpellCheckChanged(bool)));
+	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SLOT(scenarioEditSpellCheckChanged(bool)));
+	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SLOT(scenarioEditTextColorChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditBackgroundColorChanged(QColor)), this, SLOT(scenarioEditBackgroundColorChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorChanged(QColor)), this, SLOT(scenarioEditNonprintableTextColorChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditFolderTextColorChanged(QColor)), this, SLOT(scenarioEditFolderTextColorChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorChanged(QColor)), this, SLOT(scenarioEditFolderBackgroundColorChanged(QColor)));
+
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
+
 	connect(m_view, SIGNAL(chronometryCurrentTypeChanged()), this, SLOT(chronometryCurrentTypeChanged()));
 	connect(m_view, SIGNAL(chronometryPagesSecondsChanged(int)), this, SLOT(chronometryPagesSecondsChanged(int)));
 	connect(m_view, SIGNAL(chronometryCharactersCharactersChanged(int)), this, SLOT(chronometryCharactersCharactersChanged(int)));
@@ -290,8 +364,15 @@ void SettingsManager::initConnections()
 	//
 	// Уведомления об обновлении секции параметров
 	//
-	connect(m_view, SIGNAL(textSpellCheckChanged(bool)), this, SIGNAL(textEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditBackgroundColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditFolderTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
+
 	connect(m_view, SIGNAL(navigatorShowScenesTextChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCurrentTypeChanged()), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryPagesSecondsChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));

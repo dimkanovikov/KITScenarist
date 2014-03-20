@@ -542,7 +542,7 @@ void ApplicationManager::initConnections()
 	connect(m_locationsManager, SIGNAL(refreshLocations()),
 			m_scenarioManager, SLOT(aboutRefreshLocations()));
 
-	connect(m_settingsManager, SIGNAL(textEditSettingsUpdated()),
+	connect(m_settingsManager, SIGNAL(scenarioEditSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutNavigatorSettingsUpdated()));
