@@ -1,15 +1,19 @@
 #include "PdfExporter.h"
 
+#include <QApplication>
 #include <QString>
 #include <QPrinter>
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QTextBlock>
+#include <QPrintPreviewDialog>
 
 using namespace BusinessLogic;
 
 
-PdfExporter::PdfExporter()
+PdfExporter::PdfExporter(QObject* _parent) :
+	QObject(_parent),
+	m_documentForPrint(0)
 {
 }
 
@@ -18,11 +22,7 @@ void PdfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 	//
 	// Настроим принтер
 	//
-	QPrinter printer;
-	printer.setPaperSize(QPrinter::A4);
-	printer.setOutputFileName(_toFile);
-	printer.setOutputFormat(QPrinter::PdfFormat);
-	printer.setPageMargins(37.5, 25, 25, 12.5, QPrinter::Millimeter);
+	QPrinter* printer = preparePrinter(_toFile);
 
 	//
 	// Сформируем документ
@@ -32,18 +32,81 @@ void PdfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 	//
 	// Настроим размер страниц
 	//
-	preparedDocument->setPageSize(QSizeF(printer.pageRect().size()));
+	preparedDocument->setPageSize(QSizeF(printer->pageRect().size()));
 
 	//
 	// Печатаем документ
 	//
-	preparedDocument->print(&printer);
+	preparedDocument->print(printer);
 
 	//
 	// Освобождаем память
 	//
+	delete printer;
+	printer = 0;
 	delete preparedDocument;
 	preparedDocument = 0;
+}
+
+void PdfExporter::printPreview(QTextDocument* _document)
+{
+	//
+	// Настроим принтер
+	//
+	QPrinter* printer = preparePrinter();
+
+	//
+	// Сформируем документ
+	//
+	QTextDocument* preparedDocument = prepareDocument(_document);
+
+	//
+	// Настроим размер страниц
+	//
+	preparedDocument->setPageSize(QSizeF(printer->pageRect().size()));
+
+	//
+	// Сохраним указатель на документ для печати
+	//
+	m_documentForPrint = preparedDocument;
+
+	//
+	// Настроим диалог предварительного просмотра
+	//
+	QPrintPreviewDialog printDialog(printer, qApp->activeWindow());
+	printDialog.setWindowState( Qt::WindowMaximized );
+	connect(&printDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(aboutPrint(QPrinter*)));
+
+	//
+	// Вызываем диалог предварительного просмотра и печати
+	//
+	printDialog.exec();
+
+	//
+	// Освобождаем память
+	//
+	delete printer;
+	printer = 0;
+	m_documentForPrint = 0;
+	delete preparedDocument;
+	preparedDocument = 0;
+}
+
+void PdfExporter::aboutPrint(QPrinter* _printer)
+{
+	if (m_documentForPrint != 0) {
+		m_documentForPrint->print(_printer);
+	}
+}
+
+QPrinter* PdfExporter::preparePrinter(const QString& _forFile) const
+{
+	QPrinter* printer = new QPrinter;
+	printer->setPaperSize(QPrinter::A4);
+	printer->setOutputFileName(_forFile);
+	printer->setOutputFormat(QPrinter::PdfFormat);
+	printer->setPageMargins(37.5, 25, 25, 12.5, QPrinter::Millimeter);
+	return printer;
 }
 
 QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
@@ -52,7 +115,9 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 	// Настроим новый документ
 	//
 	QTextDocument* preparedDocument = new QTextDocument;
-	preparedDocument->setDefaultFont(_document->defaultFont());
+	QFont documentFont = _document->defaultFont();
+	documentFont.setPointSize(12);
+	preparedDocument->setDefaultFont(documentFont);
 	preparedDocument->setDocumentMargin(0);
 	preparedDocument->setIndentWidth(0);
 
@@ -104,7 +169,15 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 			//
 			// Вставить текст
 			//
-			destDocumentCursor.insertText(sourceDocumentCursor.block().text());
+			// Приходится вручную устанавливать верхний регистр для текста,
+			// т.к. при выводе в диалог предварительного просмотра эта
+			// настройка не учитывается...
+			//
+			if (charFormatForType(currentBlockType).fontCapitalization() == QFont::AllUppercase) {
+				destDocumentCursor.insertText(sourceDocumentCursor.block().text().toUpper());
+			} else {
+				destDocumentCursor.insertText(sourceDocumentCursor.block().text());
+			}
 		}
 
 		//

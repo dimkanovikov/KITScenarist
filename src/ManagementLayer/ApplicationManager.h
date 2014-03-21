@@ -71,6 +71,11 @@ namespace ManagementLayer
 		void aboutExportToRtf();
 
 		/**
+		 * @brief Предварительный просмотр и печать
+		 */
+		void aboutPrintPreview();
+
+		/**
 		 * @brief Закрыть приложение
 		 */
 		void aboutExit();

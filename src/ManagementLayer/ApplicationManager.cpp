@@ -335,6 +335,12 @@ void ApplicationManager::aboutExportToRtf()
 	}
 }
 
+void ApplicationManager::aboutPrintPreview()
+{
+	BusinessLogic::PdfExporter exporter;
+	exporter.printPreview(m_scenarioManager->scenario()->document());
+}
+
 void ApplicationManager::aboutExit()
 {
 	saveIfNeeded();
@@ -500,13 +506,16 @@ QMenu* ApplicationManager::createMenu()
 	g_disableOnStartActions << saveProject;
 	g_disableOnStartActions << saveProjectAs;
 
-	//
 	// ... экспорт
-	//
 	QMenu* exportMenu = new QMenu(tr("Export to..."), m_menu);
 	QAction* exportToPdf = exportMenu->addAction(tr("PDF"));
 	QAction* exportToRtf = exportMenu->addAction(tr("RTF"));
 	g_disableOnStartActions << menu->addMenu(exportMenu);
+
+	// ... предварительный просмотр
+	QAction* printPreview = menu->addAction(tr("Print Preview"));
+	printPreview->setShortcut(QKeySequence(Qt::Key_F12));
+	g_disableOnStartActions << printPreview;
 
 	//
 	// Настроим соединения
@@ -517,6 +526,7 @@ QMenu* ApplicationManager::createMenu()
 	connect(saveProjectAs, SIGNAL(triggered()), this, SLOT(aboutSaveAs()));
 	connect(exportToPdf, SIGNAL(triggered()), this, SLOT(aboutExportToPdf()));
 	connect(exportToRtf, SIGNAL(triggered()), this, SLOT(aboutExportToRtf()));
+	connect(printPreview, SIGNAL(triggered()), this, SLOT(aboutPrintPreview()));
 
 	return menu;
 }
