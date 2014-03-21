@@ -6,6 +6,10 @@
 ;Include Modern UI
 
   !include "MUI2.nsh"
+  
+  ; Скрипт для регистрации ассоциаций файлов
+  ; Взят отсюда http://nsis.sourceforge.net/File_Association , положить сюда "Program Files\NSIS\Include"
+  !include "FileAssociation.nsh"
 
 ;--------------------------------
 ;General
@@ -49,10 +53,14 @@
 ;--------------------------------
 ;Installer Sections
 
-Section "Dummy Section" SecDummy
+Section "App files section" SecFiles
 
-  ;ADD YOUR OWN FILES HERE...
-
+  ; Добавление программы в список установленных программ системы
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "DisplayName" "Сценарист"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "DisplayIcon" "$INSTDIR\Scenarist.exe"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "UninstallString" "$INSTDIR\Uninstall.exe"
+  
+  ; Исполняемые файлы и плагины
   SetOutPath "$INSTDIR\iconengines"
   File "${pkgdir}\iconengines\qsvgicon.dll"
 
@@ -94,6 +102,9 @@ Section "Dummy Section" SecDummy
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
+  
+  ; Регистрируем ассоциации 
+  ${registerExtension} "$INSTDIR\Scenarist.exe" ".kitsp" "Проект сценария"
 
 SectionEnd
 
@@ -116,6 +127,9 @@ SectionEnd
 
 Section "Uninstall"
 
+  ; Удалим программу из списка установленных
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist"
+  
   ; Удаляем все файлы кроме базы данных
   Delete "$INSTDIR\iconengines\*.*"
   Delete "$INSTDIR\imageformats\*.*"
@@ -137,5 +151,8 @@ Section "Uninstall"
   RMDir "$INSTDIR\printsupport"
   RMDir "$INSTDIR\sqldrivers"
   RMDir "$INSTDIR"
+  
+  ; Отменяем зарегистрированные ассоциации файлов
+  ${unregisterExtension} ".kitsp" "Проект сценария"
 
 SectionEnd
