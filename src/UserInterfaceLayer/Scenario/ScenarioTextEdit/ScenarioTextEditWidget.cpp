@@ -2,10 +2,12 @@
 
 #include "ScenarioTextEdit.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
 #include <QComboBox>
+#include <QCryptographicHash>
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -17,6 +19,16 @@ using BusinessLogic::ScenarioTextBlockStyle;
 
 namespace {
 	const int SCROLL_DELTA = 140;
+
+
+	/**
+	 * @brief Получить хэш текста
+	 */
+	static QByteArray textMd5Hash(const QString& _text) {
+		QCryptographicHash hash(QCryptographicHash::Md5);
+		hash.addData(_text.toUtf8());
+		return hash.result();
+	}
 }
 
 
@@ -36,6 +48,9 @@ void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocu
 	m_editor->disconnect();
 
 	m_editor->setScenarioDocument(_document);
+	if (_document != 0) {
+		m_lastTextMd5Hash = textMd5Hash(_document->toPlainText());
+	}
 
 	initConnections();
 }
@@ -121,11 +136,16 @@ void ScenarioTextEditWidget::aboutCursorPositionChanged()
 
 void ScenarioTextEditWidget::aboutTextChanged()
 {
-	QWidget* topWidget = m_editor;
-	while (topWidget->parentWidget() != 0) {
-		topWidget = topWidget->parentWidget();
+	QByteArray currentTextMd5Hash = textMd5Hash(m_editor->document()->toPlainText());
+	if (m_lastTextMd5Hash != currentTextMd5Hash) {
+		m_lastTextMd5Hash = currentTextMd5Hash;
+
+		QWidget* topWidget = m_editor;
+		while (topWidget->parentWidget() != 0) {
+			topWidget = topWidget->parentWidget();
+		}
+		topWidget->setWindowModified(true);
 	}
-	topWidget->setWindowModified(true);
 }
 
 void ScenarioTextEditWidget::initView()

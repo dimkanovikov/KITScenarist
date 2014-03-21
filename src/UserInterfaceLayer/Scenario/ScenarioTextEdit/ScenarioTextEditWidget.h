@@ -124,6 +124,10 @@ namespace UserInterface
 		 */
 		ScenarioTextEdit* m_editor;
 
+		/**
+		 * @brief MD5-хэш текста сценария, используется для отслеживания изменённости текста
+		 */
+		QByteArray m_lastTextMd5Hash;
 	};
 }
 
