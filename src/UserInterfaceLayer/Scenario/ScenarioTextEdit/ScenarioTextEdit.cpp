@@ -280,22 +280,17 @@ QMimeData* ScenarioTextEdit::createMimeDataFromSelection() const
 	QMimeData* mimeData = new QMimeData;
 
 	//
-	// Если выделен текст из разных блоков, поместим
-	// в буфер данные о них в специальном формате
+	// Поместим в буфер данные о тексте в специальном формате
 	//
 	{
 		QTextCursor cursor = textCursor();
 		cursor.setPosition(textCursor().selectionStart());
-		int startSelectionBlockNumber = cursor.blockNumber();
 		cursor.setPosition(textCursor().selectionEnd());
-		int endSelectionBlockNumber = cursor.blockNumber();
 
-		if (startSelectionBlockNumber != endSelectionBlockNumber) {
-			mimeData->setData(
-						ScenarioDocument::MIME_TYPE,
-						m_document->mimeFromSelection(textCursor().selectionStart(),
-													  textCursor().selectionEnd()).toUtf8());
-		}
+		mimeData->setData(
+					ScenarioDocument::MIME_TYPE,
+					m_document->mimeFromSelection(textCursor().selectionStart(),
+												  textCursor().selectionEnd()).toUtf8());
 	}
 
 	mimeData->setData("text/plain", textCursor().selectedText().toUtf8());
@@ -316,7 +311,12 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 	else if (_source->hasText()) {
 		QString textToInsert = _source->text();
 		foreach (const QString& line, textToInsert.split("\n", QString::SkipEmptyParts)) {
-			addScenarioBlock(ScenarioTextBlockStyle::NoprintableText);
+			if (textCursor().block().text().isEmpty()) {
+				changeScenarioBlockType(ScenarioTextBlockStyle::NoprintableText);
+			} else {
+				moveCursor(QTextCursor::EndOfBlock);
+				addScenarioBlock(ScenarioTextBlockStyle::NoprintableText);
+			}
 			textCursor().insertText(line.simplified());
 		}
 	}

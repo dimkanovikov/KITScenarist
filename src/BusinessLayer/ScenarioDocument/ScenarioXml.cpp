@@ -279,9 +279,13 @@ QString ScenarioXml::scenarioToXml(ScenarioModelItem* _fromItem, ScenarioModelIt
 void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 {
 	//
+	// Происходит ли обработка первого блока
+	//
+	bool firstBlockHandling = true;
+	//
 	// Необходимо ли изменить тип блока, в который вставляется текст
 	//
-	bool needChangeBlockType = false;
+	bool needChangeFirstBlockType = false;
 
 	//
 	// Если под курсором блок с текстом
@@ -290,26 +294,10 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 	cursor.setPosition(_position);
 
 	//
-	// Если вставка в начало блока
+	// Если вставка в пустой блок, то изменим его тип
 	//
-	if (cursor.atBlockStart()) {
-		//
-		// ... если блок не пуст, то вставим перед ним
-		//
-		if (!cursor.block().text().simplified().isEmpty()) {
-			cursor.insertBlock();
-			cursor.setPosition(_position);
-		}
-		needChangeBlockType = true;
-	}
-	//
-	// Иначе, если вставка в блок с текстом
-	//
-	else {
-		//
-		// ... сместим курсор в конец блока, чтобы не разрывать блок вставкой
-		//
-		cursor.movePosition(QTextCursor::EndOfBlock);
+	if (cursor.block().text().simplified().isEmpty()) {
+		needChangeFirstBlockType = true;
 	}
 
 	QXmlStreamReader reader(_xml);
@@ -355,13 +343,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 				if (tokenType != ScenarioTextBlockStyle::Undefined) {
 					ScenarioTextBlockStyle currentStyle(tokenType);
 
-					//
-					// Если необходимо сменить тип блока, то ни чего не делаем,
-					// в противном случае добавляем новый блок в документ
-					//
-					if (needChangeBlockType) {
-						needChangeBlockType = false;
-					} else {
+					if (!firstBlockHandling) {
 						cursor.insertBlock();
 					}
 
@@ -377,10 +359,24 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 					}
 
 					//
-					// Установим стиль блока
+					// Если необходимо сменить тип блока
 					//
-					cursor.setBlockCharFormat(currentStyle.charFormat());
-					cursor.setBlockFormat(currentStyle.blockFormat());
+					if ((firstBlockHandling && needChangeFirstBlockType)
+						|| !firstBlockHandling) {
+
+						//
+						// Установим стиль блока
+						//
+						cursor.setBlockCharFormat(currentStyle.charFormat());
+						cursor.setBlockFormat(currentStyle.blockFormat());
+					}
+
+					//
+					// Корректируем информацию о шаге
+					//
+					if (firstBlockHandling) {
+						firstBlockHandling = false;
+					}
 				}
 
 				break;
