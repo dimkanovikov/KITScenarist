@@ -203,7 +203,8 @@ void DialogHandler::handleOther(QKeyEvent* _event)
 		//
 		editor()->textCursor().deletePreviousChar();
 
-		if (cursorForwardText.isEmpty()) {
+		if (cursorForwardText.isEmpty()
+			&& cursorBackwardText.isEmpty()) {
 			//! Если текст пуст
 
 			//
@@ -220,7 +221,11 @@ void DialogHandler::handleOther(QKeyEvent* _event)
 			//
 			// ... оставляем пустой блок реплики
 			//
-			editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
+			// если скобка нажата в начале строки, то делаем лишь один перевод строки
+			//
+			if (cursorBackwardText != "(") {
+				editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
+			}
 			editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
 
 			//
