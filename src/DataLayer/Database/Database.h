@@ -54,6 +54,15 @@ namespace DatabaseLayer
 		static void createTables(QSqlDatabase& _database);
 		static void createIndexes(QSqlDatabase& _database);
 		static void createEnums(QSqlDatabase& _database);
+
+		static void updateDatabase(QSqlDatabase& _database);
+		/**
+		 * @brief Обновить базу данных до версии 0.0.2
+		 *
+		 * Пересоздаются справочные данные:
+		 * - добавлены новые данные в таблицу времён
+		 */
+		static void updateDatabaseTo_0_0_2(QSqlDatabase& _database);
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )

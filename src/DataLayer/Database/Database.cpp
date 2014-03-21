@@ -73,6 +73,8 @@ void Database::open(QSqlDatabase& _database, const QString& _connectionName, con
 		createIndexes(_database);
 	if (!states.testFlag(EnumsFlag))
 		createEnums(_database);
+	if (states.testFlag(OldVersionFlag))
+		updateDatabase(_database);
 }
 
 // Проверка состояния базы данных
@@ -246,6 +248,90 @@ void Database::createEnums(QSqlDatabase& _database)
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'NIGHT');");
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'MORNING');");
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'EVENING');");
+#endif
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabase(QSqlDatabase& _database)
+{
+	QSqlQuery q_checker(_database);
+
+	//
+	// Определим версию базы данных
+	//
+	q_checker.exec("SELECT value as version FROM system_variables WHERE variable = 'application-version' ");
+	q_checker.next();
+	QString databaseVersion = q_checker.record().value("version").toString();
+	int versionMajor = databaseVersion.split(".").value(0, "0").toInt();
+	int versionMinor = databaseVersion.split(".").value(1, "0").toInt();
+	int versionBuild = databaseVersion.split(".").value(2, "1").toInt();
+
+	//
+	// Вызываются необходимые процедуры обновления БД в зависимости от её версии
+	//
+	switch (versionMajor) {
+		case 0: {
+
+			switch (versionMinor) {
+				case 0: {
+
+					switch (versionBuild) {
+						case 1: {
+							updateDatabaseTo_0_0_2(_database);
+							break;
+						}
+
+						default: {
+							break;
+						}
+					}
+
+					break;
+				}
+
+				default: {
+					break;
+				}
+			}
+
+			break;
+		}
+
+		default: {
+			break;
+		}
+	}
+
+	//
+	// Обновляется версия программы
+	//
+	q_checker.exec(
+				QString("INSERT INTO system_variables VALUES ('application-version', '%1')")
+				.arg(qApp->applicationVersion())
+				);
+}
+
+void Database::updateDatabaseTo_0_0_2(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+#ifdef USE_RUSSIAN_DATABASE_ENUMS
+		q_updater.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("УТРО"))
+					);
+		q_updater.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ВЕЧЕР"))
+					);
+#else
+		q_updater.exec("INSERT INTO times (id, name) VALUES (null, 'MORNING');");
+		q_updater.exec("INSERT INTO times (id, name) VALUES (null, 'EVENING');");
 #endif
 	}
 
