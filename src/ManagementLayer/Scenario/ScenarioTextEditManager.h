@@ -52,6 +52,12 @@ namespace ManagementLayer
 		 */
 		void cursorPositionChanged(int _position);
 
+	private slots:
+		/**
+		 * @brief Реакция на изменение коэффициента масштабирования редактора сценария
+		 */
+		void aboutTextEditZoomRangeChanged(int _zoomRange);
+
 	private:
 		/**
 		 * @brief Настроить представление

@@ -50,13 +50,18 @@ void ScenarioTextEditWidget::setUseSpellChecker(bool _use)
 	m_editor->setUseSpellChecker(_use);
 }
 
-void ScenarioTextEditWidget::setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor)
+void ScenarioTextEditWidget::setTextEditBackgroundColor(const QColor& _color)
 {
 	m_editor->setStyleSheet(
 				"QAbstractScrollArea {"
-				"  background-color: " + _backgroundColor.name() + ";"
+				"  background-color: " + _color.name() + ";"
 				"}"
 				);
+}
+
+void ScenarioTextEditWidget::setTextEditZoomRange(int _zoomRange)
+{
+	m_editor->setZoomRange(_zoomRange);
 }
 
 void ScenarioTextEditWidget::setCursorPosition(int _position)
@@ -165,6 +170,7 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
 	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
+	connect(m_editor, SIGNAL(zoomRangeChanged(int)), this, SIGNAL(zoomRangeChanged(int)));
 }
 
 void ScenarioTextEditWidget::initStyleSheet()

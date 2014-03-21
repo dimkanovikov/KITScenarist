@@ -49,18 +49,27 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
 
-	m_view->setTextEditColors(
-				QColor(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-						"scenario-editor/text-color",
-						DataStorageLayer::SettingsStorage::ApplicationSettings)
-					),
+	m_view->setTextEditBackgroundColor(
 				QColor(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 						"scenario-editor/background-color",
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
 					)
 				);
+
+	m_view->setTextEditZoomRange(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"text-editor/zoom-range",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt());
+}
+
+void ScenarioTextEditManager::aboutTextEditZoomRangeChanged(int _zoomRange)
+{
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"text-editor/zoom-range",
+				QString::number(_zoomRange),
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
 void ScenarioTextEditManager::initView()
@@ -71,4 +80,5 @@ void ScenarioTextEditManager::initView()
 void ScenarioTextEditManager::initConnections()
 {
 	connect(m_view, SIGNAL(cursorPositionChanged(int)), this, SIGNAL(cursorPositionChanged(int)));
+	connect(m_view, SIGNAL(zoomRangeChanged(int)), this, SLOT(aboutTextEditZoomRangeChanged(int)));
 }

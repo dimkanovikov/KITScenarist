@@ -1,7 +1,7 @@
 #ifndef SPELLCHECKTEXTEDIT_H
 #define SPELLCHECKTEXTEDIT_H
 
-#include <QTextEdit>
+#include <3rd_party/Widgets/ZoomableTextEdit/ZoomableTextEdit.h>
 
 #include "SpellChecker.h"
 
@@ -11,7 +11,7 @@ class SpellCheckHighlighter;
 /**
  * @brief Класс текстового редактора с проверкой орфографии
  */
-class SpellCheckTextEdit : public QTextEdit
+class SpellCheckTextEdit : public ZoomableTextEdit
 {
 	Q_OBJECT
 

@@ -69,11 +69,6 @@ namespace UserInterface
 		void keyPressEvent(QKeyEvent* _event);
 
 		/**
-		 * @brief Переопределяется для реализации увеличения/уменьшения текста
-		 */
-		void wheelEvent(QWheelEvent* _event);
-
-		/**
 		 * @brief Переопределяется для корректной прорисовки текста с нестандартным форматом блоков
 		 */
 		void paintEvent(QPaintEvent* _event);

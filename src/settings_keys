@@ -6,6 +6,7 @@ scenario-editor/background-color - цвет фона
 scenario-editor/nonprintable-text-color - цвет непечатного текста
 scenario-editor/folder-text-color - цвет текста папки
 scenario-editor/folder-background-color - цвет фона папки
+scenario-editor/zoom-range - коэффициент масштабирования
 
 navigator/show-scenes-numbers - отображать номера сцен
 

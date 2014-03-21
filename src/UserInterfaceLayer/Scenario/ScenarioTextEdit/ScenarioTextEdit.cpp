@@ -56,6 +56,7 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 	}
 
 	resetHighlighter();
+	resetZoom();
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
@@ -219,24 +220,6 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	if (handler->needEnsureCursorVisible()) {
 		ensureCursorVisible();
-	}
-}
-
-void ScenarioTextEdit::wheelEvent(QWheelEvent* _event)
-{
-	if (_event->modifiers() & Qt::ControlModifier) {
-		if (_event->orientation() == Qt::Vertical) {
-			//
-			// zoomRange > 0 - Текст увеличивается
-			// zoomRange < 0 - Текст уменьшается
-			//
-			int zoomRange = (_event->angleDelta().y() / 120);
-			zoomIn(zoomRange);
-
-			_event->accept();
-		}
-	} else {
-		QTextEdit::wheelEvent(_event);
 	}
 }
 

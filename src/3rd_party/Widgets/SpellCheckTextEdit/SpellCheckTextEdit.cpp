@@ -13,7 +13,7 @@ namespace {
 }
 
 SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
-	QTextEdit(_parent),
+	ZoomableTextEdit(_parent),
 	m_useSpellChecking(new QAction(tr("Spell Checking"), this))
 {
 	//

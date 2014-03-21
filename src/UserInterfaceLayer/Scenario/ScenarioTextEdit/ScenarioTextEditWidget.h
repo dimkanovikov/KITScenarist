@@ -43,7 +43,12 @@ namespace UserInterface
 		/**
 		 * @brief Настроить цвета текстового редактора
 		 */
-		void setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor);
+		void setTextEditBackgroundColor(const QColor& _color);
+
+		/**
+		 * @brief Настроить масштабирование редактора сценария
+		 */
+		void setTextEditZoomRange(int _zoomRange);
 
 		/**
 		 * @brief Установить позицию курсора
@@ -55,6 +60,11 @@ namespace UserInterface
 		 * @brief Изменилась позиция курсора
 		 */
 		void cursorPositionChanged(int _position);
+
+		/**
+		 * @brief Изменился коэффициент масштабирования текстового редактора
+		 */
+		void zoomRangeChanged(int _zoomRange);
 
 	private slots:
 		/**
