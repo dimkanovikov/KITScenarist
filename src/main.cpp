@@ -51,8 +51,13 @@ int main(int argc, char *argv[])
 	russianTranslator->load(":/Translations/Translations/Scenarist_ru.qm");
     application.installTranslator(russianTranslator);
 
+    //
+    // Получим имя файла, который пользователь возможно хочет открыть
+    //
+    QString fileToOpen = application.arguments().value(1, QString::null);
+
 	ManagementLayer::ApplicationManager applicationManager;
-	applicationManager.exec();
+    applicationManager.exec(fileToOpen);
 
 	return application.exec();
 }

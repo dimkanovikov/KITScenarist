@@ -35,7 +35,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Запуск приложения
 		 */
-		void exec();
+        void exec(const QString& _fileToOpen);
 
 	private slots:
 		/**

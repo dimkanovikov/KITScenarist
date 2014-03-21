@@ -85,10 +85,14 @@ ApplicationManager::~ApplicationManager()
 	m_view = 0;
 }
 
-void ApplicationManager::exec()
+void ApplicationManager::exec(const QString& _fileToOpen)
 {
 	loadViewState();
 	m_view->show();
+
+    if (!_fileToOpen.isEmpty()) {
+        aboutLoad(_fileToOpen);
+    }
 }
 
 void ApplicationManager::aboutCreateNew()
