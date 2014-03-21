@@ -1,5 +1,6 @@
 #include "Database.h"
 
+#include <QStringList>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QVariant>
