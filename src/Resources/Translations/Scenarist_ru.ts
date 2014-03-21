@@ -98,84 +98,89 @@
         <translation>RTF файлы (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="384"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="390"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="385"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="391"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="430"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="436"/>
         <source>%1[*] - Scenarist</source>
         <translation>%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="444"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="450"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="451"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="457"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="452"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="458"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="453"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="459"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="454"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="460"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="455"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="461"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="495"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="501"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="496"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="502"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="497"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="503"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="499"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="505"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="506"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="510"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="507"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="511"/>
         <source>PDF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="508"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="512"/>
         <source>RTF</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="516"/>
+        <source>Print Preview</source>
+        <translation>Предпросмотр</translation>
     </message>
 </context>
 <context>
@@ -271,7 +276,7 @@
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.cpp" line="105"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.cpp" line="114"/>
         <source>Title:</source>
         <comment>ScenarioTextBlockStyle</comment>
         <translation>Титр:</translation>
@@ -305,14 +310,18 @@
     <name>SettingsView</name>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="14"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="470"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="811"/>
         <source>Dialog</source>
         <translation>Реплика</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="77"/>
         <source>Text Editor</source>
-        <translation>Редактор текста</translation>
+        <translation type="obsolete">Редактор текста</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="77"/>
+        <source>Scenario Editor</source>
+        <translation>Редактор сценария</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="86"/>
@@ -325,80 +334,110 @@
         <translation>Хронометраж</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="118"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="133"/>
+        <source>Colors</source>
+        <translation>Цвета</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="139"/>
+        <source>Text:</source>
+        <translation>Текст:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="202"/>
+        <source>Background:</source>
+        <translation>Фон:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="209"/>
+        <source>Noneprintable text:</source>
+        <translation>Непечатный текст:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="216"/>
+        <source>Folder background:</source>
+        <translation>Фон папки:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="391"/>
+        <source>Folder text:</source>
+        <translation>Текст папки:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="472"/>
         <source>Spell Checking</source>
         <translation>Проверять орфографию</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="142"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="483"/>
         <source>Show Scenes Numbers</source>
         <translation>Отображать номера сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="166"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="507"/>
         <source>Pages Chronometry</source>
         <translation>Постраничный подсчёт</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="182"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="523"/>
         <source>Page</source>
         <translation>Страница</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="189"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="259"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="530"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="600"/>
         <source>=</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="203"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="273"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="544"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="614"/>
         <source>Seconds</source>
         <translation>секунд</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="229"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="570"/>
         <source>Characters Chronometry</source>
         <translation>Посимвольный подсчёт</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="252"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="593"/>
         <source>Characters</source>
         <translation>символов</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="312"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="653"/>
         <source>Configurable Chronometry</source>
         <translation>Гибкий подсчёт</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="369"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="710"/>
         <source>Time And Place</source>
         <translation>Время и место</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="390"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="731"/>
         <source>Seconds for
 Paragraph</source>
         <translation>Секунд
 за абзац</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="408"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="434"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="444"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="749"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="775"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="785"/>
         <source>+</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="484"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="825"/>
         <source>Seconds per
 50 characters</source>
         <translation>Секунд за
 50 символов</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="495"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="836"/>
         <source>Action</source>
         <translation>Действие</translation>
     </message>
@@ -501,62 +540,62 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioTextEditWidget</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="120"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="154"/>
         <source>Time and Place</source>
         <translation>Время и место</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="121"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="155"/>
         <source>Action</source>
         <translation>Описание действия</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="122"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="156"/>
         <source>Character</source>
         <translation>Персонаж</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="123"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="157"/>
         <source>Dialog</source>
         <translation>Реплика</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="124"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="158"/>
         <source>Parethentcial</source>
         <translation>Ремарка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="125"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="159"/>
         <source>Title</source>
         <translation>Титр</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="126"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="160"/>
         <source>Note</source>
         <translation>Примечание</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="127"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="161"/>
         <source>Transition</source>
         <translation>Переход</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="128"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="162"/>
         <source>Noprintable Text</source>
         <translation>Непечатный текст</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="129"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="163"/>
         <source>Scenes Group</source>
         <translation>Группа сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="130"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="164"/>
         <source>Folder</source>
         <translation>Папка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="132"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="166"/>
         <source>Chron: </source>
         <translation>Хрон.:</translation>
     </message>
