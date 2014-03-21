@@ -125,6 +125,7 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/nonprintable-text-color", "#CAC6C3");
 	m_defaultValues.insert("scenario-editor/folder-text-color", "#FEFEFE");
 	m_defaultValues.insert("scenario-editor/folder-background-color", "#CAC6C3");
+	m_defaultValues.insert("scenario-editor/zoom-range", "0");
 	m_defaultValues.insert("chronometry/current-chronometer-type", "pages-chronometer");
 	m_defaultValues.insert("chronometry/pages/seconds", "60");
 	m_defaultValues.insert("chronometry/characters/characters", "1000");

@@ -45,7 +45,7 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 {
 	m_view->setUseSpellChecker(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"text-editor/spell-checking",
+					"scenario-editor/spell-checking",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
 
@@ -59,7 +59,7 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 
 	m_view->setTextEditZoomRange(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"text-editor/zoom-range",
+					"scenario-editor/zoom-range",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
 }
@@ -67,7 +67,7 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 void ScenarioTextEditManager::aboutTextEditZoomRangeChanged(int _zoomRange)
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"text-editor/zoom-range",
+				"scenario-editor/zoom-range",
 				QString::number(_zoomRange),
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
