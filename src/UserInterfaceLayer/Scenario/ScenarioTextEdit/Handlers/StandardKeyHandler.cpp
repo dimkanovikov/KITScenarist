@@ -422,98 +422,75 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	// ... начала
 	//
 	ScenarioTextBlockStyle topStyle(ScenarioTextBlockStyle::Undefined);
+	QTextBlock topBlock;
 	{
 		QTextCursor topCursor(editor()->document());
 		topCursor.setPosition(topCursorPosition);
 		topStyle.setType(ScenarioTextBlockStyle::forBlock(topCursor.block()));
-
-		//
-		// Если блок является заголовком - расширим выделение, сдвигая курсор влево
-		//
-		while (topStyle.isHeader()
-			   && !topCursor.atStart()) {
-			topCursor.movePosition(QTextCursor::Left);
-			topStyle.setType(ScenarioTextBlockStyle::forBlock(topCursor.block()));
-		}
-
-		topCursorPosition = topCursor.position();
+		topBlock = topCursor.block();
 	}
 	//
 	// ... и конца
 	//
 	ScenarioTextBlockStyle bottomStyle(ScenarioTextBlockStyle::Undefined);
+	QTextBlock bottomBlock;
 	{
 		QTextCursor bottomCursor(editor()->document());
 		bottomCursor.setPosition(bottomCursorPosition);
 		bottomStyle.setType(ScenarioTextBlockStyle::forBlock(bottomCursor.block()));
+		bottomBlock = bottomCursor.block();
 
-		//
-		// Если блок является заголовком - расширим выделение, сдвигая курсор вправо
-		//
-		while (bottomStyle.isHeader()
-			   && !bottomCursor.atEnd()) {
-			bottomCursor.movePosition(QTextCursor::Right);
-			bottomStyle.setType(ScenarioTextBlockStyle::forBlock(bottomCursor.block()));
-		}
 
-		bottomCursorPosition = bottomCursor.position();
 	}
 
 	//
-	// Расширить выделение, если в выделении разные блоки и в одном из них группирующий элемент
+	// Если удаление затрагивает несколько блоков или удаление происходит в заголовочном блоке,
+	// возможно понадобится расширить область выделения
 	//
-	{
-		QTextCursor topCursor(editor()->document());
-		topCursor.setPosition(topCursorPosition);
-
-		QTextCursor bottomCursor(editor()->document());
-		bottomCursor.setPosition(bottomCursorPosition);
-
+	if (topBlock != bottomBlock
+		|| topStyle.isHeader()) {
 		//
-		// Если разные блоки
+		// Если верхний блок является заголовком - расширим выделение до следующего блока, сдвигая курсор влево
 		//
-		if (topCursor.block() != bottomCursor.block()) {
-			//
-			// Если необходимо расширим верхний
-			//
-			if (topStyle.isEmbeddable()
-				&& !bottomCursor.block().text().isEmpty()) {
-				//
-				// Если блок является группирующим - расширим выделение, сдвигая курсор влево
-				//
-				while (topStyle.isEmbeddable()
-					   && !topCursor.atStart()) {
-					topCursor.movePosition(QTextCursor::Left);
-					topStyle.setType(ScenarioTextBlockStyle::forBlock(topCursor.block()));
-				}
+		if (topStyle.isHeader()
+			|| topStyle.isEmbeddable())
+		{
+			QTextCursor topCursor(editor()->document());
+			topCursor.setPosition(topCursorPosition);
 
-				topCursorPosition = topCursor.position();
-
-				if (!cursor.atStart()) {
-					++topCursorPosition;
-				}
+			while (topBlock == topCursor.block()
+				   && !topCursor.atStart()) {
+				topCursor.movePosition(QTextCursor::Left);
+				topStyle.setType(ScenarioTextBlockStyle::forBlock(topCursor.block()));
 			}
 
-			//
-			// Если необходимо расширим нижний
-			//
-			if (bottomStyle.isEmbeddable()
-				&& !topCursor.block().text().isEmpty()) {
-				//
-				// Если блок является группирующим - расширим выделение, сдвигая курсор вправо
-				//
-				while (bottomStyle.isEmbeddable()
-					   && !bottomCursor.atEnd()) {
-					bottomCursor.movePosition(QTextCursor::Right);
-					bottomStyle.setType(ScenarioTextBlockStyle::forBlock(bottomCursor.block()));
-				}
-
-				bottomCursorPosition = bottomCursor.position();
-
-				if (!bottomCursor.atEnd()) {
-					--bottomCursorPosition;
-				}
+			if (topStyle.isEmbeddable()) {
+				topCursor.movePosition(QTextCursor::Right);
 			}
+
+			topCursorPosition = topCursor.position();
+		}
+
+		//
+		// Если нижний блок является заголовком - расширим выделение, сдвигая курсор вправо
+		//
+		if (bottomStyle.isHeader()
+			|| bottomStyle.isEmbeddable())
+		{
+			QTextCursor bottomCursor(editor()->document());
+			bottomCursor.setPosition(bottomCursorPosition);
+
+			while (bottomBlock == bottomCursor.block()
+				   && !bottomCursor.atEnd()) {
+				bottomCursor.movePosition(QTextCursor::Right);
+				bottomStyle.setType(ScenarioTextBlockStyle::forBlock(bottomCursor.block()));
+			}
+
+			if (bottomStyle.isEmbeddable()) {
+				bottomCursor.movePosition(QTextCursor::Left);
+			}
+
+			bottomCursorPosition = bottomCursor.position();
 		}
 	}
 
@@ -522,32 +499,15 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	//
 	ScenarioTextBlockStyle::Type targetType = ScenarioTextBlockStyle::Undefined;
 	{
-		//
-		// Если начало документа, то время и место
-		//
-		if (topCursorPosition == 0) {
-			if (bottomCursorPosition != 1) {
-				targetType = ScenarioTextBlockStyle::TimeAndPlace;
-			}
-		}
-		//
-		// Если не начало документа
-		//
-		else {
-			QTextCursor checkCursor(editor()->document());
-			checkCursor.setPosition(topCursorPosition);
-
-			//
-			// Если блок начала выделения пуст, то стиль конечного блока
-			//
-			if (checkCursor.block().text().simplified().isEmpty()) {
-				targetType = bottomStyle.blockType();
-			}
-			//
-			// В противном случае - стиль начального блока
-			//
-			else {
+		if (topBlock == bottomBlock) {
+			targetType = topStyle.blockType();
+		} else {
+			if (!topStyle.isEmbeddable()) {
 				targetType = topStyle.blockType();
+			} else if (!bottomStyle.isEmbeddable()) {
+				targetType = bottomStyle.blockType();
+			} else {
+				targetType = ScenarioTextBlockStyle::TimeAndPlace;
 			}
 		}
 	}
@@ -614,38 +574,44 @@ QList<int> StandardKeyHandler::findGroupCountsToDelete(int _topCursorPosition, i
 	while (endSearchBlockPosition <= _bottomCursorPosition
 		   && !searchGroupsCursor.atEnd()) {
 		//
-		// Определим тип блока
+		// Для удаления группы может быть захвачен символ как сверху, так и снизу
 		//
-		ScenarioTextBlockStyle::Type currentType =
-				ScenarioTextBlockStyle::forBlock(searchGroupsCursor.block());
+		if ((searchGroupsCursor.position() - 1 >= _topCursorPosition)
+			|| (endSearchBlockPosition + 1 <= _bottomCursorPosition)) {
+			//
+			// Определим тип блока
+			//
+			ScenarioTextBlockStyle::Type currentType =
+					ScenarioTextBlockStyle::forBlock(searchGroupsCursor.block());
 
-		//
-		// Если найден блок открывающий группу, то нужно удалить закрывающий блок
-		//
-		if (currentType == ScenarioTextBlockStyle::SceneGroupHeader) {
-			++groupCountsToDelete[SCENE_GROUP_FOOTER];
-		} else if (currentType == ScenarioTextBlockStyle::FolderHeader) {
-			++groupCountsToDelete[FOLDER_FOOTER];
-		}
+			//
+			// Если найден блок открывающий группу, то нужно удалить закрывающий блок
+			//
+			if (currentType == ScenarioTextBlockStyle::SceneGroupHeader) {
+				++groupCountsToDelete[SCENE_GROUP_FOOTER];
+			} else if (currentType == ScenarioTextBlockStyle::FolderHeader) {
+				++groupCountsToDelete[FOLDER_FOOTER];
+			}
 
-		//
-		// Если найден блок закрывающий группу
-		// ... если все группы закрыты, нужно удалить предыдущую открытую
-		// ... в противном случае закрываем открытую группу
-		//
-		else if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
-			if (groupCountsToDelete.value(SCENE_GROUP_FOOTER) == 0) {
-				++groupCountsToDelete[SCENE_GROUP_HEADER];
-			}
-			else {
-				--groupCountsToDelete[SCENE_GROUP_FOOTER];
-			}
-		} else if (currentType == ScenarioTextBlockStyle::FolderFooter) {
-			if (groupCountsToDelete.value(FOLDER_FOOTER) == 0) {
-				++groupCountsToDelete[FOLDER_HEADER];
-			}
-			else {
-				--groupCountsToDelete[FOLDER_FOOTER];
+			//
+			// Если найден блок закрывающий группу
+			// ... если все группы закрыты, нужно удалить предыдущую открытую
+			// ... в противном случае закрываем открытую группу
+			//
+			else if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
+				if (groupCountsToDelete.value(SCENE_GROUP_FOOTER) == 0) {
+					++groupCountsToDelete[SCENE_GROUP_HEADER];
+				}
+				else {
+					--groupCountsToDelete[SCENE_GROUP_FOOTER];
+				}
+			} else if (currentType == ScenarioTextBlockStyle::FolderFooter) {
+				if (groupCountsToDelete.value(FOLDER_FOOTER) == 0) {
+					++groupCountsToDelete[FOLDER_HEADER];
+				}
+				else {
+					--groupCountsToDelete[FOLDER_FOOTER];
+				}
 			}
 		}
 
