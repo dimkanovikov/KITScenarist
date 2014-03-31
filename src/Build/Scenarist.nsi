@@ -25,7 +25,7 @@
   InstallDir "$PROGRAMFILES\KIT\Scenarist"
 
   ;Request application privileges for Windows Vista
-  RequestExecutionLevel user
+  RequestExecutionLevel admin
 
 ;--------------------------------
 ;Interface Settings
