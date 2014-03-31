@@ -92,7 +92,9 @@ namespace BusinessLogic
 
 	private:
 		/**
-		 * @brief Корневой элемент дерева
+		 * @brief Корневой элемент дерева, то же самое, что и m_scenarioItem
+		 *
+		 * TODO: избавиться от одного из них
 		 */
 		ScenarioModelItem* m_rootItem;
 

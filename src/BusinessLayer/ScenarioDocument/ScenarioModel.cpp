@@ -13,7 +13,7 @@ QString ScenarioModel::MIME_TYPE = "application/x-scenarist/scenario-tree";
 
 ScenarioModel::ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler) :
 	QAbstractItemModel(parent),
-	m_rootItem(new ScenarioModelItem),
+	m_rootItem(0),
 	m_scenarioItem(new ScenarioModelItem),
 	m_xmlHandler(_xmlHandler),
 	m_lastMime(0),
@@ -23,7 +23,8 @@ ScenarioModel::ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler) :
 
 	m_scenarioItem->setHeader(QObject::tr("Scenario"));
 	m_scenarioItem->setType(ScenarioModelItem::Scenario);
-	m_rootItem->appendItem(m_scenarioItem);
+	m_rootItem = m_scenarioItem;
+//	m_rootItem->appendItem(m_scenarioItem);
 }
 
 ScenarioModel::~ScenarioModel()

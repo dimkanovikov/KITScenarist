@@ -402,6 +402,17 @@ void ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelI
 	int insertPosition = m_scenario->positionToInsertMime(_insertParent, _insertBefore);
 
 	//
+	// Вставим пустой блок для нового элемента
+	//
+	QTextCursor cursor(m_scenario->document());
+	cursor.setPosition(insertPosition);
+	cursor.insertBlock();
+	//
+	// ... скорректируем позицию курсора
+	//
+	insertPosition = cursor.position();
+
+	//
 	// Вставка данных
 	//
 	xmlToScenario(insertPosition, _xml);
