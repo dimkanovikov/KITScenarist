@@ -30,7 +30,7 @@ void ZoomableTextEdit::setZoomRange(int _zoomRange)
 
 void ZoomableTextEdit::resetZoom()
 {
-	setZoomRange(m_zoomRange);
+	zoomIn(m_zoomRange);
 }
 
 void ZoomableTextEdit::wheelEvent(QWheelEvent* _event)
