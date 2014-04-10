@@ -80,6 +80,11 @@ namespace ManagementLayer
 		 */
 		void aboutExit();
 
+		/**
+		 * @brief Обновлены общие настройки приложения
+		 */
+		void aboutApplicationSettingsUpdated();
+
 	private:
 		/**
 		 * @brief Загрузить состояние окна
@@ -126,6 +131,11 @@ namespace ManagementLayer
 		 * @brief Настроить внешний вид
 		 */
 		void initStyleSheet();
+
+		/**
+		 * @brief Перезагрузить настройки приложения
+		 */
+		void reloadApplicationSettings();
 
 	private:
 		/**

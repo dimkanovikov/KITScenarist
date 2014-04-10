@@ -119,6 +119,7 @@ SettingsStorage::SettingsStorage()
 	//
 	// Настроим значения параметров по умолчанию
 	//
+	m_defaultValues.insert("application/use-dark-theme", "0");
 	m_defaultValues.insert("scenario-editor/spell-checking", "0");
 	m_defaultValues.insert("scenario-editor/text-color", "#000000");
 	m_defaultValues.insert("scenario-editor/background-color", "#FEFEFE");

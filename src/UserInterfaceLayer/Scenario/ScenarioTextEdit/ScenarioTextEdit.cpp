@@ -223,26 +223,6 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	}
 }
 
-void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
-{
-	//
-	// Если в документе формат первого блока имеет отступ сверху, это приводит
-	// к некорректной прорисовке текста, это баг Qt...
-	// Поэтому приходится отлавливать этот момент и вручную корректировать
-	//
-	QTextCursor cursor(m_document);
-	if (cursor.blockFormat().topMargin() > 0) {
-		QTextBlockFormat format = cursor.blockFormat();
-		format.setTopMargin(0);
-		cursor.setBlockFormat(format);
-	}
-
-	//
-	// Прорисовка текста
-	//
-	CompletableTextEdit::paintEvent(_event);
-}
-
 void ScenarioTextEdit::dropEvent(QDropEvent* _event)
 {
 	QTextCursor cursor = textCursor();

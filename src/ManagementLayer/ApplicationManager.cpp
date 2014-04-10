@@ -25,6 +25,8 @@
 #include <QMessageBox>
 #include <QToolButton>
 #include <QMenu>
+#include <QStyle>
+#include <QStyleFactory>
 
 using namespace ManagementLayer;
 using UserInterface::ApplicationView;
@@ -75,6 +77,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	initView();
 	initConnections();
 	initStyleSheet();
+	reloadApplicationSettings();
 }
 
 ApplicationManager::~ApplicationManager()
@@ -352,6 +355,11 @@ void ApplicationManager::aboutExit()
 	qApp->exit();
 }
 
+void ApplicationManager::aboutApplicationSettingsUpdated()
+{
+	reloadApplicationSettings();
+}
+
 void ApplicationManager::loadViewState()
 {
 	m_view->restoreGeometry(
@@ -494,6 +502,10 @@ void ApplicationManager::initView()
 	// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
 	//
 	::disableActionsOnStart();
+
+	//
+	// Настроим
+	//
 }
 
 QMenu* ApplicationManager::createMenu()
@@ -556,6 +568,8 @@ void ApplicationManager::initConnections()
 	connect(m_locationsManager, SIGNAL(refreshLocations()),
 			m_scenarioManager, SLOT(aboutRefreshLocations()));
 
+	connect(m_settingsManager, SIGNAL(applicationSettingsUpdated()),
+			this, SLOT(aboutApplicationSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(scenarioEditSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),
@@ -585,4 +599,55 @@ void ApplicationManager::initStyleSheet()
 	m_menu->setProperty("inTopPanel", true);
 	m_menu->setProperty("topPanelTopBordered", true);
 	m_menu->setProperty("topPanelRightBordered", true);
+}
+
+void ApplicationManager::reloadApplicationSettings()
+{
+	bool useDarkTheme =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/use-dark-theme",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+
+	//
+	// Настраиваем палитру и стилевые надстройки в зависимости от темы
+	//
+	QPalette palette = QStyleFactory::create("Fusion")->standardPalette();
+	QString styleSheet;
+
+	if (useDarkTheme) {
+		palette.setColor(QPalette::Window, QColor("#282D31"));
+		palette.setColor(QPalette::Base, QColor("#404040"));
+		palette.setColor(QPalette::Disabled, QPalette::Base, QColor("#333333"));
+		palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+
+		palette.setColor(QPalette::Highlight, QColor(142,45,197));
+
+		palette.setColor(QPalette::WindowText, QColor("#EBEBEB"));
+		palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#a1a1a1"));
+		palette.setColor(QPalette::Text, QColor("#EBEBEB"));
+		palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#a1a1a1"));
+
+		palette.setColor(QPalette::Button, QColor(53,53,53));
+		palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#1b1e21"));
+		palette.setColor(QPalette::ButtonText, QColor(255,255,255));
+		palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#a1a1a1"));
+
+		palette.setColor(QPalette::Link, QColor(42, 130, 218));
+
+		palette.setColor(QPalette::ToolTipText, QColor("#EBEBEB"));
+
+		styleSheet = "QToolTip { border: 1px solid palette(highlight); padding: 2px; }";
+	} else {
+		//
+		// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек
+		//
+		palette = QStyleFactory::create("Fusion")->standardPalette();
+	}
+
+	//
+	// Применяем тему
+	//
+	qApp->setPalette(palette);
+	qApp->setStyleSheet(styleSheet);
 }

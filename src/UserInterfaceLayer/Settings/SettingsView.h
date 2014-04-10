@@ -33,6 +33,8 @@ namespace UserInterface
 		 * @brief Установка параметров
 		 */
 		/** @{ */
+		void setApplicationUseDarkTheme(bool _value);
+
 		void setScenarioEditSpellCheck(bool _value);
 		void setScenarioEditTextColor(const QColor& _color);
 		void setScenarioEditBackgroundColor(const QColor& _color);
@@ -59,6 +61,8 @@ namespace UserInterface
 		 * @brief Изменения параметров
 		 */
 		/** @{ */
+		void applicationUseDarkThemeChanged(bool);
+
 		void scenarioEditSpellCheckChanged(bool);
 		void scenarioEditTextColorChanged(const QColor&);
 		void scenarioEditBackgroundColorChanged(const QColor&);

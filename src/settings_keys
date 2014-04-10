@@ -22,6 +22,7 @@ chronometry/configurable/seconds-for-every-50/action - секунд за каж�
 chronometry/configurable/seconds-for-every-50/dialog - секунд за каждые 50 символов
 
 application/geometry - состояние главного окна и его вкладок
+application/use-dark-theme - использовать тёмную тему
 application/scenario/geometry
 application/scenario/state
 application/characters/geometry

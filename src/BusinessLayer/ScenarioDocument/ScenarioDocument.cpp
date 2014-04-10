@@ -252,6 +252,20 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
 	//
+	// Если в документе формат первого блока имеет отступ сверху, это приводит
+	// к некорректной прорисовке текста, это баг Qt...
+	// Поэтому приходится отлавливать этот момент и вручную корректировать
+	//
+	if (_position == 0) {
+		QTextCursor cursor(m_document);
+		if (cursor.blockFormat().topMargin() > 0) {
+			QTextBlockFormat format = cursor.blockFormat();
+			format.setTopMargin(0);
+			cursor.setBlockFormat(format);
+		}
+	}
+
+	//
 	// Если были удалены данные
 	//
 	if (_charsRemoved > 0) {

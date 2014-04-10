@@ -37,6 +37,7 @@ namespace ManagementLayer
 		 * @brief Обновления настроек
 		 */
 		/** @{ */
+		void applicationSettingsUpdated();
 		void scenarioEditSettingsUpdated();
 		void navigatorSettingsUpdated();
 		void chronometrySettingsUpdated();
@@ -47,6 +48,7 @@ namespace ManagementLayer
 		 * @brief Изменения параметров
 		 */
 		/** @{ */
+		void applicationUseDarkThemeChanged(bool _value);
 		void scenarioEditSpellCheckChanged(bool  _value);
 		void scenarioEditTextColorChanged(const QColor& _value);
 		void scenarioEditBackgroundColorChanged(const QColor& _value);

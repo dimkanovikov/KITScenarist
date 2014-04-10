@@ -32,6 +32,9 @@
         <file>Icons/Editing/refresh.png</file>
         <file>Icons/Editing/edit.png</file>
         <file>Icons/settings_navigator.png</file>
+        <file>Icons/settings_application.png</file>
+        <file>Icons/Editing/redo.png</file>
+        <file>Icons/Editing/undo.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

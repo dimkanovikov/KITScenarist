@@ -41,6 +41,11 @@ int SettingsView::chronometryCurrentType() const
 	return type;
 }
 
+void SettingsView::setApplicationUseDarkTheme(bool _value)
+{
+	ui->useDarkTheme->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditSpellCheck(bool _value)
 {
 	ui->spellChecking->setChecked(_value);
@@ -214,6 +219,8 @@ void SettingsView::initConnections()
 	//
 	// Сигналы об изменении параметров
 	//
+	// ... приложение
+	connect(ui->useDarkTheme, SIGNAL(toggled(bool)), this, SIGNAL(applicationUseDarkThemeChanged(bool)));
 	// ... текстовый редактор
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	// ... навигатор
