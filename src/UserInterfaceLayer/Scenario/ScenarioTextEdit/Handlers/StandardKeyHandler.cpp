@@ -155,7 +155,7 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 	}
 }
 
-void StandardKeyHandler::handleDelete(QKeyEvent*)
+void StandardKeyHandler::handleDelete(QKeyEvent* _event)
 {
 	//
 	// Удаление
@@ -165,10 +165,10 @@ void StandardKeyHandler::handleDelete(QKeyEvent*)
 	//
 	// Покажем подсказку, если это возможно
 	//
-	handleOther();
+	handleOther(_event);
 }
 
-void StandardKeyHandler::handleBackspace(QKeyEvent*)
+void StandardKeyHandler::handleBackspace(QKeyEvent* _event)
 {
 	//
 	// Удаление
@@ -178,7 +178,7 @@ void StandardKeyHandler::handleBackspace(QKeyEvent*)
 	//
 	// Покажем подсказку, если это возможно
 	//
-	handleOther();
+	handleOther(_event);
 }
 
 void StandardKeyHandler::handleEscape(QKeyEvent*)

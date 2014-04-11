@@ -85,7 +85,7 @@ namespace BusinessLogic
 		QString save() const;
 
 		/**
-		 * @brief Пересчитать хронометраж
+		 * @brief Перезагрузить сценарий
 		 */
 		void refresh();
 

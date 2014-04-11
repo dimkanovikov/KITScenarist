@@ -238,7 +238,11 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 		&& document() != 0
 		&& !document()->isEmpty()
 		&& cursorRect(cursor).top() > 30) {
+		cursor.beginEditBlock();
 		cursor.setBlockFormat(cursor.blockFormat());
+		cursor.movePosition(QTextCursor::End);
+		cursor.setBlockFormat(cursor.blockFormat());
+		cursor.endEditBlock();
 	}
 
 	CompletableTextEdit::paintEvent(_event);

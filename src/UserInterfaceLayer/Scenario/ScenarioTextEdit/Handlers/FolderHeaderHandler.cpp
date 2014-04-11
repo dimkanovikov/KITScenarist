@@ -170,7 +170,7 @@ void FolderHeaderHandler::handleOther(QKeyEvent* _event)
 	// Если не было введено текста, прерываем операцию
 	//
 	if (_event == 0
-		|| _event->text().isEmpty()) {
+		|| _event->modifiers().testFlag(Qt::ControlModifier)) {
 		return;
 	}
 
