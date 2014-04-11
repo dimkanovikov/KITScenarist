@@ -41,9 +41,16 @@ namespace BusinessLogic
 		/**
 		 * @brief Загрузить сценарий из xml после заданного элемента для его родителя
 		 */
-		void xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml);
+		void xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml, bool _removeLastMime);
 
-		void removeLastMime();
+	private:
+		/**
+		 * @brief Удалить последний преобразованный в майм-данные блок текста
+		 * @return Количество удалённых символов
+		 *
+		 * Используетмя при перемещении элементов по дереву
+		 */
+		int removeLastMime();
 
 	private:
 		/**

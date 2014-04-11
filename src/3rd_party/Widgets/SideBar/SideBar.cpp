@@ -22,7 +22,7 @@ namespace {
 }
 
 SideTabBar::SideTabBar(QWidget *parent)
-	: QWidget(parent), m_centerTabs(false), m_pressedTab(NULL), m_checkedTab(NULL)
+	: QWidget(parent), m_centerTabs(false), m_pressedTab(0), m_checkedTab(0)
 {
 	setFixedWidth(ACTION_WIDTH);
 }
@@ -153,7 +153,7 @@ QList<QAction*> SideTabBar::tabs() const
 void SideTabBar::mousePressEvent(QMouseEvent *event)
 {
 	m_pressedTab = tabAt(event->pos());
-	if(m_pressedTab == NULL || m_pressedTab == m_checkedTab)
+	if(m_pressedTab == 0 || m_pressedTab == m_checkedTab)
 		return;
 	update();
 }
@@ -161,18 +161,18 @@ void SideTabBar::mousePressEvent(QMouseEvent *event)
 void SideTabBar::mouseReleaseEvent(QMouseEvent *event)
 {
 	QAction* tempAction = tabAt(event->pos());
-	if(m_pressedTab != tempAction || tempAction == NULL || !tempAction->isEnabled())
+	if(m_pressedTab != tempAction || tempAction == 0 || !tempAction->isEnabled())
 	{
-		m_pressedTab = NULL;
+		m_pressedTab = 0;
 		return;
 	}
-	if(m_checkedTab != NULL)
+	if(m_checkedTab != 0)
 		m_checkedTab->setChecked(false);
 	m_checkedTab = m_pressedTab;
-	if(m_checkedTab != NULL)
+	if(m_checkedTab != 0)
 		m_checkedTab->setChecked(true);
 	update();
-	m_pressedTab = NULL;
+	m_pressedTab = 0;
 
 	emit currentChanged(m_tabs.indexOf(m_checkedTab));
 	return;
@@ -190,5 +190,5 @@ QAction* SideTabBar::tabAt(const QPoint &at)
 			return action;
 		action_y += actionRect.height();
 	}
-	return NULL;
+	return 0;
 }

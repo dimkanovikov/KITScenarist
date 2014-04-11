@@ -392,6 +392,11 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	}
 
 	//
+	// Начинаем операцию удаления
+	//
+	cursor.beginEditBlock();
+
+	//
 	// Определим границы выделения
 	//
 	// ... верхнюю
@@ -538,6 +543,11 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	// Применим финальный стиль
 	//
 	editor()->applyScenarioTypeToBlockText(targetType);
+
+	//
+	// Завершим операцию удаления
+	//
+	cursor.endEditBlock();
 }
 
 namespace {

@@ -164,8 +164,16 @@ void FolderHeaderHandler::handleTab(QKeyEvent*)
 	}
 }
 
-void FolderHeaderHandler::handleOther(QKeyEvent*)
+void FolderHeaderHandler::handleOther(QKeyEvent* _event)
 {
+	//
+	// Если не было введено текста, прерываем операцию
+	//
+	if (_event == 0
+		|| _event->text().isEmpty()) {
+		return;
+	}
+
 	//
 	// Найти закрывающий блок и обновить его текст
 	//

@@ -288,9 +288,10 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 	bool needChangeFirstBlockType = false;
 
 	//
-	// Если под курсором блок с текстом
+	// Начинаем операцию вставки
 	//
 	QTextCursor cursor(m_scenario->document());
+	cursor.beginEditBlock();
 	cursor.setPosition(_position);
 
 	//
@@ -392,34 +393,68 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 			}
 		}
 	}
+
+	//
+	// Завершаем операцию
+	//
+	cursor.endEditBlock();
 }
 
-void ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml)
+void ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml, bool _removeLastMime)
 {
+	//
+	// Начинаем операцию вставки
+	//
+	QTextCursor cursor(m_scenario->document());
+	cursor.beginEditBlock();
+
 	//
 	// Определим позицию для вставки данных
 	//
 	int insertPosition = m_scenario->positionToInsertMime(_insertParent, _insertBefore);
 
 	//
+	// Если необходимо удалить прошлое выделение
+	//
+	if (_removeLastMime) {
+		bool needCorrectPosition = false;
+		if (m_lastMimeFrom < insertPosition) {
+			needCorrectPosition = true;
+		}
+
+		int removedSymbols = removeLastMime();
+		if (needCorrectPosition) {
+			insertPosition -= removedSymbols;
+		}
+	}
+
+	//
 	// Вставим пустой блок для нового элемента
 	//
-	QTextCursor cursor(m_scenario->document());
 	cursor.setPosition(insertPosition);
 	cursor.insertBlock();
 	//
 	// ... скорректируем позицию курсора
 	//
-	insertPosition = cursor.position();
+	if (insertPosition != 0) {
+		insertPosition = cursor.position();
+	}
 
 	//
 	// Вставка данных
 	//
 	xmlToScenario(insertPosition, _xml);
+
+	//
+	// Завершаем операцию
+	//
+	cursor.endEditBlock();
 }
 
-void ScenarioXml::removeLastMime()
+int ScenarioXml::removeLastMime()
 {
+	int removedSymbols = 0;
+
 	if (m_lastMimeFrom != m_lastMimeTo
 		&& m_lastMimeFrom < m_lastMimeTo) {
 		//
@@ -435,8 +470,12 @@ void ScenarioXml::removeLastMime()
 		cursor.setPosition(m_lastMimeFrom);
 		cursor.setPosition(m_lastMimeTo, QTextCursor::KeepAnchor);
 		cursor.removeSelectedText();
+
+		removedSymbols = m_lastMimeTo - m_lastMimeFrom;
 	}
 
 	m_lastMimeFrom = 0;
 	m_lastMimeTo = 0;
+
+	return removedSymbols;
 }

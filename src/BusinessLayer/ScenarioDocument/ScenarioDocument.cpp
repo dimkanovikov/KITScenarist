@@ -252,20 +252,6 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
 	//
-	// Если в документе формат первого блока имеет отступ сверху, это приводит
-	// к некорректной прорисовке текста, это баг Qt...
-	// Поэтому приходится отлавливать этот момент и вручную корректировать
-	//
-	if (_position == 0) {
-		QTextCursor cursor(m_document);
-		if (cursor.blockFormat().topMargin() > 0) {
-			QTextBlockFormat format = cursor.blockFormat();
-			format.setTopMargin(0);
-			cursor.setBlockFormat(format);
-		}
-	}
-
-	//
 	// Если были удалены данные
 	//
 	if (_charsRemoved > 0) {
@@ -286,7 +272,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			// Если удаляется элемент содержащий потомков, необходимо вынести потомков на уровень выше
 			//
 			if (itemToDelete->hasChildren()) {
-				for (int childIndex = 0; childIndex < itemToDelete->childCount(); ++childIndex) {
+				for (int childIndex = itemToDelete->childCount()-1; childIndex >= 0; --childIndex) {
 					m_model->insertItem(itemToDelete->childAt(childIndex), itemToDelete);
 				}
 			}

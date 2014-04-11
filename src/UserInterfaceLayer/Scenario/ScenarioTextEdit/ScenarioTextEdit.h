@@ -69,6 +69,11 @@ namespace UserInterface
 		void keyPressEvent(QKeyEvent* _event);
 
 		/**
+		 * @brief Переопределяется для корректной загрузки больших документов
+		 */
+		void paintEvent(QPaintEvent* _event);
+
+		/**
 		 * @brief Переопределяем работу с буфером обмена для использования собственного майм типа данных
 		 */
 		/** @{ */
@@ -123,6 +128,9 @@ namespace UserInterface
 		 * @brief Документ
 		 */
 		BusinessLogic::ScenarioTextDocument* m_document;
+
+
+		bool m_isInPaintEvent;
 	};
 }
 

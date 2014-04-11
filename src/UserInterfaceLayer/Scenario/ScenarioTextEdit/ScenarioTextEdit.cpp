@@ -61,6 +61,9 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
 {
+	QTextCursor cursor = textCursor();
+	cursor.beginEditBlock();
+
 	//
 	// Вставим блок
 	//
@@ -75,6 +78,8 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
 	// Уведомим о том, что стиль сменился
 	//
 	emit currentStyleChanged();
+
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blockType)
@@ -83,7 +88,8 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 		return;
 	}
 
-	textCursor().beginEditBlock();
+	QTextCursor cursor = textCursor();
+	cursor.beginEditBlock();
 
 	//
 	// Нельзя сменить стиль заголовка блока и конечных элементов групп и папок
@@ -133,12 +139,14 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 		emit currentStyleChanged();
 	}
 
-	textCursor().endEditBlock();
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type _blockType)
 {
 	QTextCursor cursor = textCursor();
+	cursor.beginEditBlock();
+
 	ScenarioTextBlockStyle newBlockStyle(_blockType);
 
 	//
@@ -153,6 +161,8 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type
 	//
 	cursor.select(QTextCursor::BlockUnderCursor);
 	cursor.setCharFormat(newBlockStyle.charFormat());
+
+	cursor.endEditBlock();
 }
 
 ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType() const
@@ -170,15 +180,10 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 
 	//
 	// Получим курсор в текущем положении
-	//
-	QTextCursor cursor = textCursor();
-
-	//
 	// Начнём блок операций
 	//
-	if (_event->key() != -1) {
-		cursor.beginEditBlock();
-	}
+	QTextCursor cursor = textCursor();
+	cursor.beginEditBlock();
 
 	//
 	// Подготовка к обработке
@@ -209,23 +214,40 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	_event->accept();
 
 	//
-	// Завершим блок операций
-	//
-	if (_event->key() != -1) {
-		cursor.endEditBlock();
-	}
-
-	//
 	// Убедимся, что курсор виден
 	//
 	if (handler->needEnsureCursorVisible()) {
 		ensureCursorVisible();
 	}
+
+	//
+	// Завершим блок операций
+	//
+	cursor.endEditBlock();
+}
+
+void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
+{
+	//
+	// Если в документе формат первого блока имеет отступ сверху, это приводит
+	// к некорректной прорисовке текста, это баг Qt...
+	// Поэтому приходится отлавливать этот момент и вручную корректировать
+	//
+	QTextCursor cursor(document());
+	if (verticalScrollBar()->value() == 0
+		&& document() != 0
+		&& !document()->isEmpty()
+		&& cursorRect(cursor).top() > 30) {
+		cursor.setBlockFormat(cursor.blockFormat());
+	}
+
+	CompletableTextEdit::paintEvent(_event);
 }
 
 void ScenarioTextEdit::dropEvent(QDropEvent* _event)
 {
 	QTextCursor cursor = textCursor();
+	cursor.beginEditBlock();
 
 	if (cursor.hasSelection()) {
 		//
@@ -243,6 +265,8 @@ void ScenarioTextEdit::dropEvent(QDropEvent* _event)
 	}
 
 	CompletableTextEdit::dropEvent(_event);
+
+	cursor.endEditBlock();
 }
 
 bool ScenarioTextEdit::canInsertFromMimeData(const QMimeData* _source) const
@@ -279,11 +303,14 @@ QMimeData* ScenarioTextEdit::createMimeDataFromSelection() const
 
 void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 {
+	QTextCursor cursor = textCursor();
+	cursor.beginEditBlock();
+
 	//
 	// Если вставляются данные в сценарном формате, то вставляем как положено
 	//
 	if (_source->formats().contains(ScenarioDocument::MIME_TYPE)) {
-		m_document->insertFromMime(textCursor().position(), _source->data(ScenarioDocument::MIME_TYPE));
+		m_document->insertFromMime(cursor.position(), _source->data(ScenarioDocument::MIME_TYPE));
 	}
 	//
 	// Если простой текст, то вставляем его, как непечатаемый текст
@@ -291,15 +318,17 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 	else if (_source->hasText()) {
 		QString textToInsert = _source->text();
 		foreach (const QString& line, textToInsert.split("\n", QString::SkipEmptyParts)) {
-			if (textCursor().block().text().isEmpty()) {
+			if (cursor.block().text().isEmpty()) {
 				changeScenarioBlockType(ScenarioTextBlockStyle::NoprintableText);
 			} else {
 				moveCursor(QTextCursor::EndOfBlock);
 				addScenarioBlock(ScenarioTextBlockStyle::NoprintableText);
 			}
-			textCursor().insertText(line.simplified());
+			cursor.insertText(line.simplified());
 		}
 	}
+
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()

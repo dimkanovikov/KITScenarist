@@ -270,6 +270,8 @@ bool ScenarioModel::dropMimeData(
 
 			case Qt::MoveAction:
 			case Qt::CopyAction: {
+
+
 				//
 				// Получим структурные элементы дерева, чтобы понять, куда вкладывать данные
 				//
@@ -281,14 +283,15 @@ bool ScenarioModel::dropMimeData(
 				//
 				// Если производится перемещение данных
 				//
+				bool removeLastMime = false;
 				if (m_lastMime == _data) {
-					m_xmlHandler->removeLastMime();
+					removeLastMime = true;
 				}
 
 				//
 				// Вставим данные
 				//
-				m_xmlHandler->xmlToScenario(parentItem, insertBeforeItem, _data->data(MIME_TYPE));
+				m_xmlHandler->xmlToScenario(parentItem, insertBeforeItem, _data->data(MIME_TYPE), removeLastMime);
 				isDropSucceed = true;
 
 				break;
