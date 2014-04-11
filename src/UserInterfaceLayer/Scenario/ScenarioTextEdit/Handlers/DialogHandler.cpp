@@ -56,8 +56,9 @@ void DialogHandler::handleEnter(QKeyEvent*)
 				//! Текст пуст
 
 				//
-				// Ни чего не делаем
+				// Меняем стиль блока на описание действия
 				//
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
 			} else {
 				//! Текст не пуст
 
@@ -73,14 +74,14 @@ void DialogHandler::handleEnter(QKeyEvent*)
 					//
 					// Перейдём к блоку персонажа
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Character);
 				} else {
 					//! Внутри блока
 
 					//
 					// Перейдём к блоку персонажа
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioTextBlockStyle::Character);
 				}
 			}
 		}
