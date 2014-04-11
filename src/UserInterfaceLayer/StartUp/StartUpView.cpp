@@ -85,6 +85,7 @@ void StartUpView::aboutOpenRecentFileClicked()
 
 void StartUpView::initView()
 {
+    ui->version->setText(QApplication::applicationVersion());
 	ui->recentFiles->setItemDelegate(new RecentFilesDelegate(ui->recentFiles));
 }
 

@@ -115,13 +115,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>340</width>
+            <width>260</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>340</width>
+            <width>260</width>
             <height>16777215</height>
            </size>
           </property>
@@ -216,6 +216,9 @@
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Preferred</enum>
+             </property>
              <property name="sizeHint" stdset="0">
               <size>
                <width>40</width>
@@ -241,19 +244,48 @@
          </widget>
         </item>
         <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="logo">
-          <property name="font">
-           <font>
-            <pointsize>22</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-            <underline>false</underline>
-           </font>
-          </property>
-          <property name="text">
-           <string>Scenarist</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="logo">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+              <underline>false</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>Scenarist</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="version">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>0.0.0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+            <property name="margin">
+             <number>3</number>
+            </property>
+            <property name="indent">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
