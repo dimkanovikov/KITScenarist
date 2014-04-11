@@ -194,10 +194,10 @@ void ScenarioTextEditWidget::initView()
 void ScenarioTextEditWidget::initConnections()
 {
 	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()), Qt::UniqueConnection);
-	connect(m_undo, SIGNAL(clicked()), m_editor, SLOT(undo()));
-	connect(m_redo, SIGNAL(clicked()), m_editor, SLOT(redo()));
-	connect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)));
-	connect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)));
+    connect(m_undo, SIGNAL(clicked()), m_editor->document(), SLOT(undo()));
+    connect(m_redo, SIGNAL(clicked()), m_editor->document(), SLOT(redo()));
+    connect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)));
+    connect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)));
 	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));

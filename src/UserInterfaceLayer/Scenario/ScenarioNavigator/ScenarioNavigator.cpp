@@ -57,9 +57,9 @@ void ScenarioNavigator::initView()
 	topLayout->addWidget(m_scenesCount);
 
 	m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
-	m_navigationTree->setDragDropMode(QAbstractItemView::DragDrop);
-	m_navigationTree->setDragEnabled(true);
-	m_navigationTree->setDropIndicatorShown(true);
+    m_navigationTree->setDragDropMode(QAbstractItemView::DragDrop);
+    m_navigationTree->setDragEnabled(true);
+    m_navigationTree->setDropIndicatorShown(true);
 	m_navigationTree->setAlternatingRowColors(true);
 	m_navigationTree->setHeaderHidden(true);
 	m_navigationTree->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
