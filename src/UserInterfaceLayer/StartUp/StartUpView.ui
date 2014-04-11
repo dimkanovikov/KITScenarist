@@ -162,12 +162,24 @@
                 <property name="pixmap">
                  <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/project_new.png</pixmap>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
                </widget>
               </item>
               <item row="0" column="1">
                <widget class="QLabel" name="createProject">
                 <property name="text">
-                 <string>&lt;a href=&quot;#&quot;&gt;Create Project&lt;/a&gt;</string>
+                 <string>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Create Project&lt;/a&gt;</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
                 </property>
                </widget>
               </item>
@@ -179,12 +191,24 @@
                 <property name="pixmap">
                  <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/project_open.png</pixmap>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
                </widget>
               </item>
               <item row="1" column="1">
                <widget class="QLabel" name="openProject">
                 <property name="text">
-                 <string>&lt;a href=&quot;#&quot;&gt;Open Project&lt;/a&gt;</string>
+                 <string>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Open Project&lt;/a&gt;</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
                 </property>
                </widget>
               </item>
@@ -196,12 +220,24 @@
                 <property name="pixmap">
                  <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
                </widget>
               </item>
               <item row="2" column="1">
                <widget class="QLabel" name="help">
                 <property name="text">
-                 <string>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot;&gt;Help&lt;/a&gt;</string>
+                 <string>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
                 </property>
                 <property name="openExternalLinks">
                  <bool>true</bool>

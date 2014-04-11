@@ -294,13 +294,13 @@
         <translation>КОНЕЦ ПАПКИ</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/FolderHeaderHandler.cpp" line="192"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/FolderHeaderHandler.cpp" line="200"/>
         <source>END OF</source>
         <comment>FolderHeader</comment>
         <translation>КОНЕЦ</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp" line="192"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp" line="200"/>
         <source>END OF</source>
         <comment>SceneGroupHeader</comment>
         <translation>КОНЕЦ</translation>
@@ -478,26 +478,43 @@ Paragraph</source>
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="170"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="173"/>
+        <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Create Project&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Создать проект&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="202"/>
+        <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Open Project&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Открыть проект&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="231"/>
+        <source>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Справка&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="311"/>
+        <source>0.0.0</source>
+        <translation></translation>
+    </message>
+    <message>
         <source>&lt;a href=&quot;#&quot;&gt;Create Project&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot;&gt;Создать проект&lt;/a&gt;</translation>
+        <translation type="obsolete">&lt;a href=&quot;#&quot;&gt;Создать проект&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="187"/>
         <source>&lt;a href=&quot;#&quot;&gt;Open Project&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot;&gt;Открыть проект&lt;/a&gt;</translation>
+        <translation type="obsolete">&lt;a href=&quot;#&quot;&gt;Открыть проект&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="204"/>
         <source>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot;&gt;Help&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot;&gt;Справка&lt;/a&gt;</translation>
+        <translation type="obsolete">&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot;&gt;Справка&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot;&gt;Help&lt;/a&gt;</source>
         <translation type="obsolete">&lt;a href=&quot;#&quot;&gt;Справка&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="254"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="295"/>
         <source>Scenarist</source>
         <translation>Сценарист</translation>
     </message>
@@ -550,62 +567,62 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioTextEditWidget</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="154"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="157"/>
         <source>Time and Place</source>
         <translation>Время и место</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="155"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="158"/>
         <source>Action</source>
         <translation>Описание действия</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="156"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="159"/>
         <source>Character</source>
         <translation>Персонаж</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="157"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="160"/>
         <source>Dialog</source>
         <translation>Реплика</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="158"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="161"/>
         <source>Parethentcial</source>
         <translation>Ремарка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="159"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="162"/>
         <source>Title</source>
         <translation>Титр</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="160"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="163"/>
         <source>Note</source>
         <translation>Примечание</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="161"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="164"/>
         <source>Transition</source>
         <translation>Переход</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="162"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="165"/>
         <source>Noprintable Text</source>
         <translation>Непечатный текст</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="163"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="166"/>
         <source>Scenes Group</source>
         <translation>Группа сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="164"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="167"/>
         <source>Folder</source>
         <translation>Папка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="166"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="172"/>
         <source>Chron: </source>
         <translation>Хрон.:</translation>
     </message>
