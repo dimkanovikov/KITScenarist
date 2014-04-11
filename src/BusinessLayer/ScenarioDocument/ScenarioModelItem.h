@@ -54,10 +54,6 @@ namespace BusinessLogic
 		 * @brief Текст элемента
 		 */
 		QString text() const;
-
-		/**
-		 * @brief Установить текст элемента
-		 */
 		void setText(const QString& _text);
 
 		/**
@@ -80,6 +76,12 @@ namespace BusinessLogic
 		 * @brief Иконка объекта
 		 */
 		QPixmap icon() const;
+
+		/**
+		 * @brief Имеется ли в элементе примечание
+		 */
+		bool hasNote() const;
+		void setHasNote(bool _hasNote);
 
 	private:
 		/**
@@ -136,6 +138,11 @@ namespace BusinessLogic
 		 * @brief Тип элемента
 		 */
 		Type m_type;
+
+		/**
+		 * @brief Имеется ли в элементе примечание
+		 */
+		bool m_hasNote;
 
 	/**
 	 * @brief Вспомогательные методы для организации работы модели

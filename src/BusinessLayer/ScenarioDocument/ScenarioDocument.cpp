@@ -602,6 +602,18 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	if (itemType == ScenarioModelItem::Scene) {
 		itemDuration = ChronometerFacade::calculate(m_document, _itemStartPos, _itemEndPos);
 	}
+	// ... содержит ли примечания
+	bool hasNote = false;
+	cursor.setPosition(_itemStartPos);
+	while (cursor.position() < _itemEndPos) {
+		cursor.movePosition(QTextCursor::EndOfBlock);
+		if (ScenarioTextBlockStyle::forBlock(cursor.block())
+			== ScenarioTextBlockStyle::NoprintableText) {
+			hasNote = true;
+			break;
+		}
+		cursor.movePosition(QTextCursor::NextBlock);
+	}
 
 	//
 	// Обновим данные элемента
@@ -610,6 +622,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setType(itemType);
 	_item->setText(itemText);
 	_item->setDuration(itemDuration);
+	_item->setHasNote(hasNote);
 }
 
 ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNear) const

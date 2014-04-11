@@ -1,5 +1,7 @@
 #include "ScenarioModelItem.h"
 
+#include <QPainter>
+
 using namespace BusinessLogic;
 
 
@@ -12,6 +14,7 @@ ScenarioModelItem::ScenarioModelItem(QUuid _uuid) :
 	m_number(0),
 	m_duration(0),
 	m_type(Scene),
+	m_hasNote(false),
 	m_parent(0)
 {
 }
@@ -120,11 +123,42 @@ QPixmap ScenarioModelItem::icon() const
 		}
 
 		default: {
+			iconPath = ":/Graphics/Icons/unknown.png";
 			break;
 		}
 	}
 
-	return QPixmap(iconPath);
+	QImage iconImage(iconPath);
+
+	//
+	// Если есть заметка, дополним иконку элемента
+	//
+	if (hasNote()) {
+		QPainter painter(&iconImage);
+		painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+
+		//
+		// Отрисовываем картинку в правом нижнем углу
+		//
+		QImage note (":/Graphics/Icons/note.png");
+		painter.drawImage(iconImage.width() - note.width(),
+						  iconImage.height() - note.height(),
+						  note);
+	}
+
+	return QPixmap::fromImage(iconImage);
+}
+
+bool ScenarioModelItem::hasNote() const
+{
+	return m_hasNote;
+}
+
+void ScenarioModelItem::setHasNote(bool _hasNote)
+{
+	if (m_hasNote != _hasNote) {
+		m_hasNote = _hasNote;
+	}
 }
 
 void ScenarioModelItem::updateParentText()

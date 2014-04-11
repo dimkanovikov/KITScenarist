@@ -35,6 +35,8 @@
         <file>Icons/settings_application.png</file>
         <file>Icons/Editing/redo.png</file>
         <file>Icons/Editing/undo.png</file>
+        <file>Icons/note.png</file>
+        <file>Icons/unknown.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
