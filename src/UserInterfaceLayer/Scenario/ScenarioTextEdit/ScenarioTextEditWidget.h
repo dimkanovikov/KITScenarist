@@ -5,6 +5,7 @@
 
 class QComboBox;
 class QLabel;
+class QToolButton;
 
 namespace BusinessLogic {
 	class ScenarioTextDocument;
@@ -108,6 +109,16 @@ namespace UserInterface
 		 * @brief Стили текста документа
 		 */
 		QComboBox* m_textStyles;
+
+		/**
+		 * @brief Кнопка отмены действия
+		 */
+		QToolButton* m_undo;
+
+		/**
+		 * @brief Кнопка повтора действия
+		 */
+		QToolButton* m_redo;
 
 		/**
 		 * @brief Префикс хронометража

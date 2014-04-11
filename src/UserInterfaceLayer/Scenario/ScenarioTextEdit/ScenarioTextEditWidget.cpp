@@ -12,6 +12,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QScrollBar>
+#include <QToolButton>
 
 using UserInterface::ScenarioTextEditWidget;
 using UserInterface::ScenarioTextEdit;
@@ -35,6 +36,8 @@ namespace {
 ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	QFrame(_parent),
 	m_textStyles(new QComboBox(this)),
+	m_undo(new QToolButton(this)),
+	m_redo(new QToolButton(this)),
 	m_duration(new QLabel(this)),
 	m_editor(new ScenarioTextEdit(this))
 {
@@ -163,6 +166,9 @@ void ScenarioTextEditWidget::initView()
 	m_textStyles->addItem(tr("Scenes Group"), ScenarioTextBlockStyle::SceneGroupHeader);
 	m_textStyles->addItem(tr("Folder"), ScenarioTextBlockStyle::FolderHeader);
 
+	m_undo->setIcon(QIcon(":/Graphics/Icons/Editing/undo.png"));
+	m_redo->setIcon(QIcon(":/Graphics/Icons/Editing/redo.png"));
+
 	m_durationTitle = new QLabel(tr("Chron: "), this);
 	m_durationTitle->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	m_durationTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -171,6 +177,8 @@ void ScenarioTextEditWidget::initView()
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
 	topLayout->addWidget(m_textStyles);
+	topLayout->addWidget(m_undo);
+	topLayout->addWidget(m_redo);
 	topLayout->addWidget(m_durationTitle);
 	topLayout->addWidget(m_duration);
 
@@ -186,6 +194,10 @@ void ScenarioTextEditWidget::initView()
 void ScenarioTextEditWidget::initConnections()
 {
 	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()), Qt::UniqueConnection);
+	connect(m_undo, SIGNAL(clicked()), m_editor, SLOT(undo()));
+	connect(m_redo, SIGNAL(clicked()), m_editor, SLOT(redo()));
+	connect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)));
+	connect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)));
 	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
@@ -198,6 +210,9 @@ void ScenarioTextEditWidget::initStyleSheet()
 	m_textStyles->setProperty("inTopPanel", true);
 	m_textStyles->setProperty("topPanelTopBordered", true);
 	m_textStyles->setProperty("topPanelRightBordered", true);
+
+	m_undo->setProperty("inTopPanel", true);
+	m_redo->setProperty("inTopPanel", true);
 
 	m_durationTitle->setProperty("inTopPanel", true);
 	m_durationTitle->setProperty("topPanelTopBordered", true);
