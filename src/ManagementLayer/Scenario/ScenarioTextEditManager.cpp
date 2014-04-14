@@ -64,6 +64,16 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 				.toInt());
 }
 
+void ScenarioTextEditManager::aboutUndo()
+{
+	m_view->aboutUndo();
+}
+
+void ScenarioTextEditManager::aboutRedo()
+{
+	m_view->aboutRedo();
+}
+
 void ScenarioTextEditManager::aboutTextEditZoomRangeChanged(int _zoomRange)
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(

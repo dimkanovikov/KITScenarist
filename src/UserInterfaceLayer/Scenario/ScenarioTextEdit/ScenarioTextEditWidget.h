@@ -56,6 +56,17 @@ namespace UserInterface
 		 */
 		void setCursorPosition(int _position);
 
+	public slots:
+		/**
+		 * @brief Отменить последнее действие
+		 */
+		void aboutUndo();
+
+		/**
+		 * @brief Повторить последнее действие
+		 */
+		void aboutRedo();
+
 	signals:
 		/**
 		 * @brief Изменилась позиция курсора

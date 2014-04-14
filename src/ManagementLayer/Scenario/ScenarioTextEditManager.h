@@ -46,11 +46,32 @@ namespace ManagementLayer
 		 */
 		void reloadTextEditSettings();
 
+	public slots:
+		/**
+		 * @brief Отменить последнее действие
+		 */
+		void aboutUndo();
+
+		/**
+		 * @brief Повторить последнее действие
+		 */
+		void aboutRedo();
+
 	signals:
 		/**
 		 * @brief Изменилась позиция курсора
 		 */
 		void cursorPositionChanged(int _position);
+
+		/**
+		 * @brief Запрос отмены действия
+		 */
+		void undoPressed();
+
+		/**
+		 * @brief Запрос повтора действия
+		 */
+		void redoPressed();
 
 	private slots:
 		/**

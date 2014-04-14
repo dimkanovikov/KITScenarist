@@ -76,4 +76,6 @@ void ScenarioNavigatorManager::initConnections()
 
     connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)),
             this, SIGNAL(sceneChoosed(QModelIndex)), Qt::UniqueConnection);
+	connect(m_navigator, SIGNAL(undoPressed()), this, SIGNAL(undoPressed()), Qt::UniqueConnection);
+	connect(m_navigator, SIGNAL(redoPressed()), this, SIGNAL(redoPressed()), Qt::UniqueConnection);
 }

@@ -47,6 +47,16 @@ namespace ManagementLayer
 		 */
 		void sceneChoosed(const QModelIndex& _index);
 
+		/**
+		 * @brief Запрос отмены действия
+		 */
+		void undoPressed();
+
+		/**
+		 * @brief Запрос повтора действия
+		 */
+		void redoPressed();
+
 	private slots:
 		/**
 		 * @brief Обновить информацию о модели

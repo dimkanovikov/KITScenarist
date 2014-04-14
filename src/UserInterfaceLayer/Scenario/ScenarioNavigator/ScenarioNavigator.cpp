@@ -6,6 +6,7 @@
 #include <QTreeView>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QKeyEvent>
 
 using UserInterface::ScenarioNavigator;
 using UserInterface::ScenarioNavigatorItemDelegate;
@@ -42,6 +43,38 @@ void ScenarioNavigator::setShowSceneNumber(bool _show)
 	m_navigationTreeDelegate->setShowSceneNumber(_show);
 }
 
+bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
+{
+	bool isEventFiltered = true;
+
+	if (_watched == m_navigationTree
+		&& _event->type() == QEvent::KeyPress) {
+		//
+		// Отлавливаем необходимую комбинацию клавиш
+		//
+		QKeyEvent* keyEvent = static_cast<QKeyEvent*>(_event);
+		QString keyCharacter = keyEvent->text();
+		if (keyEvent->modifiers().testFlag(Qt::ControlModifier)
+			&& (keyCharacter == "z"
+				|| keyCharacter == QString::fromUtf8("я"))) {
+			if (keyEvent->modifiers().testFlag(Qt::ShiftModifier)) {
+				emit redoPressed();
+			} else {
+				emit undoPressed();
+			}
+		}
+		isEventFiltered = true;
+	}
+	//
+	// В противном случае выполняется стандартная обработка
+	//
+	else {
+		isEventFiltered = QWidget::eventFilter(_watched, _event);
+	}
+
+	return isEventFiltered;
+}
+
 void ScenarioNavigator::initView()
 {
 	m_title = new QLabel(tr("Navigator"), this);
@@ -63,6 +96,8 @@ void ScenarioNavigator::initView()
 	m_navigationTree->setAlternatingRowColors(true);
 	m_navigationTree->setHeaderHidden(true);
 	m_navigationTree->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+	m_navigationTree->setSelectionMode(QAbstractItemView::ContiguousSelection);
+	m_navigationTree->installEventFilter(this);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -76,6 +111,7 @@ void ScenarioNavigator::initView()
 void ScenarioNavigator::initConnections()
 {
 	connect(m_navigationTree, SIGNAL(activated(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
+
 }
 
 void ScenarioNavigator::initStyleSheet()

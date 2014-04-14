@@ -48,6 +48,22 @@ namespace UserInterface
 		 */
 		void sceneChoosed(const QModelIndex& _index);
 
+		/**
+		 * @brief Запрос отмены действия
+		 */
+		void undoPressed();
+
+		/**
+		 * @brief Запрос повтора действия
+		 */
+		void redoPressed();
+
+	protected:
+		/**
+		 * @brief Переопределяется чтобы отлавливать нажатия Ctrl+Z и Ctrl+Shift+Z в дереве
+		 */
+		bool eventFilter(QObject* _watched, QEvent* _event);
+
 	private:
 		/**
 		 * @brief Настроить представление
