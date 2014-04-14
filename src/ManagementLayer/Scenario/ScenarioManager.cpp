@@ -166,14 +166,14 @@ void ScenarioManager::aboutRefreshCharacters()
 	QSet<QString> characters;
 	QTextCursor cursor(m_scenario->document());
 	while (!cursor.atEnd()) {
-		cursor.movePosition(QTextCursor::NextBlock);
+		cursor.movePosition(QTextCursor::EndOfBlock);
 		if (ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::Character) {
 			cursor.select(QTextCursor::BlockUnderCursor);
 			QString character =
 					BusinessLogic::CharacterParser::name(cursor.selectedText().toUpper().trimmed());
 			characters.insert(character);
 		}
-		cursor.movePosition(QTextCursor::EndOfBlock);
+		cursor.movePosition(QTextCursor::NextBlock);
 	}
 
 	//
@@ -225,14 +225,14 @@ void ScenarioManager::aboutRefreshLocations()
 	QSet<QString> locations;
 	QTextCursor cursor(m_scenario->document());
 	while (!cursor.atEnd()) {
-		cursor.movePosition(QTextCursor::NextBlock);
+		cursor.movePosition(QTextCursor::EndOfBlock);
 		if (ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::TimeAndPlace) {
 			cursor.select(QTextCursor::BlockUnderCursor);
 			QString location =
 					BusinessLogic::TimeAndPlaceParser::locationName(cursor.selectedText().toUpper().trimmed());
 			locations.insert(location);
 		}
-		cursor.movePosition(QTextCursor::EndOfBlock);
+		cursor.movePosition(QTextCursor::NextBlock);
 	}
 
 	//
