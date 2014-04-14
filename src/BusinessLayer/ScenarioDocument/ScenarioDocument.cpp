@@ -190,6 +190,109 @@ int ScenarioDocument::itemStartPosition(ScenarioModelItem* _item) const
 
 int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 {
+	int endPosition = 0;
+
+	//
+	// Для сцены просто идём до следующего начального/конечного блока
+	//
+	if (_item->type() == ScenarioModelItem::Scene) {
+		QTextCursor cursor(m_document);
+		cursor.setPosition(m_modelItems.key(_item));
+
+		//
+		// От следующего за началом элемента блока
+		//
+		cursor.movePosition(QTextCursor::EndOfBlock);
+		cursor.movePosition(QTextCursor::NextBlock);
+
+		//
+		// Пока не дошли до сигнального блока
+		//
+		ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+		while (currentType != ScenarioTextBlockStyle::TimeAndPlace
+			   && currentType != ScenarioTextBlockStyle::SceneGroupHeader
+			   && currentType != ScenarioTextBlockStyle::SceneGroupFooter
+			   && currentType != ScenarioTextBlockStyle::FolderHeader
+			   && currentType != ScenarioTextBlockStyle::FolderFooter
+			   && !cursor.atEnd()) {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			cursor.movePosition(QTextCursor::NextBlock);
+			currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+		}
+
+		//
+		// Если не конец документа, то сместимся на один символ назад,
+		// т.к. мы перешли к следующему блоку
+		//
+		if (!cursor.atEnd()) {
+			cursor.movePosition(QTextCursor::Left);
+		}
+
+		//
+		// Это и будет позиция конца элемента
+		//
+		endPosition = cursor.position();
+	}
+	//
+	// Для остальных идём до закрывающего элемента
+	//
+	else {
+		QTextCursor cursor(m_document);
+		cursor.setPosition(m_modelItems.key(_item));
+
+		//
+		// Сохраним стиль блока для последующего поиска парного элемента
+		//
+		ScenarioTextBlockStyle blockStyle(ScenarioTextBlockStyle::forBlock(cursor.block()));
+
+		//
+		// От следующего за началом элемента блока
+		//
+		cursor.movePosition(QTextCursor::NextBlock);
+		cursor.movePosition(QTextCursor::EndOfBlock);
+
+		//
+		// Счётчик открытых групп на пути к закрывающему элементу
+		//
+		int openedItems = 0;
+		//
+		// Пока не конец документа
+		//
+		ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+		while (!cursor.atEnd()) {
+			//
+			// Если встретился открывающий блок, увеличим счётчик
+			//
+			if (currentType == blockStyle.blockType()) {
+				++openedItems;
+			}
+			//
+			// Если встретился закрывающий блок, уменьшим счётчик
+			//
+			if (currentType == blockStyle.embeddableFooter()) {
+				//
+				// Если нет открытых групп, то этот блок является завершающим
+				//
+				if (openedItems == 0) {
+					break;
+				}
+				--openedItems;
+			}
+
+			cursor.movePosition(QTextCursor::NextBlock);
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+		}
+
+		//
+		// Это и будет позиция конца элемента
+		//
+		endPosition = cursor.position();
+	}
+
+	return endPosition;
+
+	/*
 	ScenarioModelItem* itemToFindPosition = 0;
 
 	//
@@ -246,7 +349,7 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 		}
 	}
 
-	return endPosition;
+	return endPosition;*/
 }
 
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
