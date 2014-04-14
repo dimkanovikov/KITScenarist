@@ -213,17 +213,17 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	_event->accept();
 
+    //
+    // Завершим блок операций
+    //
+    cursor.endEditBlock();
+
 	//
 	// Убедимся, что курсор виден
 	//
 	if (handler->needEnsureCursorVisible()) {
 		ensureCursorVisible();
-	}
-
-	//
-	// Завершим блок операций
-	//
-	cursor.endEditBlock();
+    }
 }
 
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)

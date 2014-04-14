@@ -98,20 +98,15 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	m_editor->ensureCursorVisible();
 	m_editor->setFocus();
 }
-#include <QDebug>
+
 void ScenarioTextEditWidget::aboutUndo()
-{qDebug() << "0";
-	m_editor->undo();
-//	QTextCursor cursor = m_editor->textCursor();
-//	m_editor->document()->undo(&cursor);
+{
+    m_editor->undo();
 }
 
 void ScenarioTextEditWidget::aboutRedo()
 {
-	qDebug() << "1";
-	m_editor->redo();
-//	QTextCursor cursor = m_editor->textCursor();
-//	m_editor->document()->redo(&cursor);
+    m_editor->redo();
 }
 
 void ScenarioTextEditWidget::aboutUpdateTextStyle()

@@ -42,28 +42,29 @@ void ScenarioNavigator::setShowSceneNumber(bool _show)
 {
 	m_navigationTreeDelegate->setShowSceneNumber(_show);
 }
-
+#include <QDebug>
 bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 {
-	bool isEventFiltered = true;
+    bool isEventFiltered = false;
 
 	if (_watched == m_navigationTree
-		&& _event->type() == QEvent::KeyPress) {
+        && _event->type() == QEvent::ShortcutOverride) {
 		//
 		// Отлавливаем необходимую комбинацию клавиш
 		//
 		QKeyEvent* keyEvent = static_cast<QKeyEvent*>(_event);
-		QString keyCharacter = keyEvent->text();
+        QString keyCharacter = keyEvent->text();
 		if (keyEvent->modifiers().testFlag(Qt::ControlModifier)
-			&& (keyCharacter == "z"
+            && ((Qt::Key)keyEvent->key() == Qt::Key_Z
+                || keyCharacter == "z"
 				|| keyCharacter == QString::fromUtf8("я"))) {
 			if (keyEvent->modifiers().testFlag(Qt::ShiftModifier)) {
 				emit redoPressed();
 			} else {
 				emit undoPressed();
-			}
-		}
-		isEventFiltered = true;
+            }
+            isEventFiltered = true;
+        }
 	}
 	//
 	// В противном случае выполняется стандартная обработка

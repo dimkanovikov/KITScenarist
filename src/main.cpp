@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	//
 	// Настроим стиль отображения внешнего вида приложения
 	//
-	QApplication::setStyle(QStyleFactory::create("Fusion"));
+    application.setStyle(QStyleFactory::create("Fusion"));
 	//
 	// FIXME: почему-то ссылки не меняют цвет, если обновлять палитру на лету,
 	// поэтому устанавливаю при загрузке приложения такой цвет, который подходит
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	//
 	QPalette palette = QApplication::style()->standardPalette();
 	palette.setColor(QPalette::Link, QColor("#0C6ACC"));
-	QApplication::setPalette(palette);
+    application.setPalette(palette);
 
 	//
 	// Загрузим шрифт Courier New в базу шрифтов программы, если его там ещё нет
