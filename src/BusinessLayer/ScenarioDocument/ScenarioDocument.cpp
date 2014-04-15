@@ -420,7 +420,9 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		while (removeIter.hasNext()) {
 			removeIter.next();
 			if (removeIter.key() > position) {
-				updatedItems.insert(removeIter.key() - _charsRemoved + _charsAdded, removeIter.value());
+				ScenarioModelItem* item = removeIter.value();
+				item->setPosition(removeIter.key() - _charsRemoved + _charsAdded);
+				updatedItems.insert(item->position(), item);
 				removeIter.remove();
 			}
 		}
@@ -460,7 +462,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		//
 		if (iter == m_modelItems.end()) {
 			currentItem = itemForPosition(0);
-			m_model->appendItem(currentItem);
+			m_model->addItem(currentItem);
 			m_modelItems.insert(0, currentItem);
 		}
 		//
@@ -585,7 +587,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						// Вставить в группирующий элемент
 						//
 						if (currentItem == currentParent) {
-							m_model->prependItem(newItem, currentParent);
+							m_model->addItem(newItem, currentParent);
 						}
 						//
 						// Вставить после текущего элемента
@@ -615,7 +617,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						// Вставить в группирующий элемент
 						//
 						if (currentItem == currentParent) {
-							m_model->appendItem(newItem, currentParent);
+							m_model->addItem(newItem, currentParent);
 						}
 						//
 						// Вставить после текущего элемента
@@ -753,7 +755,7 @@ ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNe
 		// В противном случае создаём новый элемент
 		//
 		else {
-			item = new ScenarioModelItem;
+			item = new ScenarioModelItem(_position);
 		}
 	}
 	return item;

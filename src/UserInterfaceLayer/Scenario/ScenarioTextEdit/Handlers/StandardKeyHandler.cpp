@@ -670,6 +670,7 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 			}
 
 			cursor.movePosition(QTextCursor::NextBlock);
+			cursor.movePosition(QTextCursor::EndOfBlock);
 		} while (groupsToDeleteCount > 0
 				 && !cursor.atEnd());
 	}
@@ -702,6 +703,7 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 			}
 
 			cursor.movePosition(QTextCursor::NextBlock);
+			cursor.movePosition(QTextCursor::EndOfBlock);
 		} while (groupsToDeleteCount > 0
 				 && !cursor.atEnd());
 	}

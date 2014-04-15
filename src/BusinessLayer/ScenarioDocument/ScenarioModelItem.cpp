@@ -9,8 +9,8 @@ namespace {
 	const int MAX_TEXT_LENGTH = 100;
 }
 
-ScenarioModelItem::ScenarioModelItem(QUuid _uuid) :
-	m_uuid(_uuid.isNull() ? QUuid::createUuid() : _uuid),
+ScenarioModelItem::ScenarioModelItem(int _position) :
+	m_position(_position),
 	m_number(0),
 	m_duration(0),
 	m_type(Scene),
@@ -24,9 +24,16 @@ ScenarioModelItem::~ScenarioModelItem()
 	qDeleteAll(m_children);
 }
 
-QUuid ScenarioModelItem::uuid() const
+int ScenarioModelItem::position() const
 {
-	return m_uuid;
+	return m_position;
+}
+
+void ScenarioModelItem::setPosition(int _position)
+{
+	if (m_position != _position) {
+		m_position = _position;
+	}
 }
 
 int ScenarioModelItem::number() const

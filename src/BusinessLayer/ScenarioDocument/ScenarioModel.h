@@ -33,9 +33,10 @@ namespace BusinessLogic
 		void prependItem(ScenarioModelItem* _item, ScenarioModelItem* _parentItem = 0);
 
 		/**
-		 * @brief Добавить элемент в конец сценария
+		 * @brief Добавить элемент в сценарий
+		 * @note Позиция вставки определяется по позиции элемента в тексте
 		 */
-		void appendItem(ScenarioModelItem* _item, ScenarioModelItem* _parentItem = 0);
+		void addItem(ScenarioModelItem* _item, ScenarioModelItem* _parentItem = 0);
 
 		/**
 		 * @brief Вставить элемент после родственика

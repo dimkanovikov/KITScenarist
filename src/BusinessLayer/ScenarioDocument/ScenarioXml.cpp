@@ -257,18 +257,13 @@ QString ScenarioXml::scenarioToXml(ScenarioModelItem* _fromItem, ScenarioModelIt
 	//
 	// ... начало
 	int startPosition = m_scenario->itemStartPosition(_fromItem);
-//	if (startPosition > 0) {
-//		--startPosition;
-//	}
 	// ... конец
 	int endPosition = m_scenario->itemEndPosition(_fromItem);
+
 	int toItemEndPosition = m_scenario->itemEndPosition(_toItem);
 	if (endPosition < toItemEndPosition) {
 		endPosition = toItemEndPosition;
 	}
-//	if (startPosition == 0) {
-//		++endPosition;
-//	}
 
 	//
 	// Сформировать xml-строку

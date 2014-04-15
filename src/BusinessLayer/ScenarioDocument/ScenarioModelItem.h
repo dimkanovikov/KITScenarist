@@ -25,13 +25,14 @@ namespace BusinessLogic
 		};
 
 	public:
-		ScenarioModelItem(QUuid _uuid = QUuid());
+		ScenarioModelItem(int _position);
 		~ScenarioModelItem();
 
 		/**
-		 * @brief Идентификатор элемента
+		 * @brief Позиция элемента
 		 */
-		QUuid uuid() const;
+		int position() const;
+		void setPosition(int _position);
 
 		/**
 		 * @brief Номер сцены
@@ -105,9 +106,9 @@ namespace BusinessLogic
 
 	private:
 		/**
-		 * @brief Идентификатор элемента
+		 * @brief Позиция элемента в тексте
 		 */
-		QUuid m_uuid;
+		int m_position;
 
 		/**
 		 * @brief Номер сцены

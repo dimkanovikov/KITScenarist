@@ -14,7 +14,7 @@ QString ScenarioModel::MIME_TYPE = "application/x-scenarist/scenario-tree";
 ScenarioModel::ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler) :
 	QAbstractItemModel(parent),
 	m_rootItem(0),
-	m_scenarioItem(new ScenarioModelItem),
+	m_scenarioItem(new ScenarioModelItem(0)),
 	m_xmlHandler(_xmlHandler),
 	m_lastMime(0),
 	m_scenesCount(0)
@@ -55,7 +55,7 @@ void ScenarioModel::prependItem(ScenarioModelItem* _item, ScenarioModelItem* _pa
 	}
 }
 
-void ScenarioModel::appendItem(ScenarioModelItem* _item, ScenarioModelItem* _parentItem)
+void ScenarioModel::addItem(ScenarioModelItem* _item, ScenarioModelItem* _parentItem)
 {
 	//
 	// Если родитель не задан им становится сам сценарий
@@ -69,10 +69,21 @@ void ScenarioModel::appendItem(ScenarioModelItem* _item, ScenarioModelItem* _par
 	//
 	if (_parentItem->rowOfChild(_item) == -1) {
 		QModelIndex parentIndex = indexForItem(_parentItem);
-		int itemRowIndex = _parentItem->childCount();
+
+		//
+		// Определим позицию вставки
+		//
+		int itemRowIndex = 0;
+		for (int childIndex = _parentItem->childCount() - 1; childIndex >= 0; --childIndex) {
+			ScenarioModelItem* child = _parentItem->childAt(childIndex);
+			if (child->position() < _item->position()) {
+				itemRowIndex = childIndex + 1;
+				break;
+			}
+		}
 
 		beginInsertRows(parentIndex, itemRowIndex, itemRowIndex);
-		_parentItem->appendItem(_item);
+		_parentItem->insertItem(itemRowIndex, _item);
 		endInsertRows();
 	}
 }
@@ -324,27 +335,42 @@ QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const
             }
         }
 
-        qSort(correctedIndexes);
-
-        QModelIndex fromIndex = correctedIndexes.first();
-        QModelIndex toIndex = correctedIndexes.last();
-
-        //
-        // Определяем элементы из которых будет состоять выделение
-        //
-        ScenarioModelItem* fromItem = itemForIndex(fromIndex);
-        ScenarioModelItem* toItem = itemForIndex(toIndex);
-        if (fromItem)
-            qDebug() << "From item: " << fromItem->header();
-        if (toItem)
-            qDebug() << "To item: " << toItem->header();
+		//
+		// Для того, чтобы запретить разрывать папки проверяем выделены ли элементы одного уровня
+		//
+		bool itemsHaveSameParent = true;
+		{
+			const QModelIndex& genericParent = correctedIndexes.first().parent();
+			foreach (const QModelIndex& index, correctedIndexes) {
+				if (index.parent() != genericParent) {
+					itemsHaveSameParent = false;
+					break;
+				}
+			}
+		}
 
 		//
-		// Сформируем данные
+		// Если выделены элементы одного уровня, то создаём майм-данные
 		//
-		mimeData->setData(
-					MIME_TYPE,
-					m_xmlHandler->scenarioToXml(fromItem, toItem).toUtf8());
+		if (itemsHaveSameParent) {
+			qSort(correctedIndexes);
+
+			QModelIndex fromIndex = correctedIndexes.first();
+			QModelIndex toIndex = correctedIndexes.last();
+
+			//
+			// Определяем элементы из которых будет состоять выделение
+			//
+			ScenarioModelItem* fromItem = itemForIndex(fromIndex);
+			ScenarioModelItem* toItem = itemForIndex(toIndex);
+
+			//
+			// Сформируем данные
+			//
+			mimeData->setData(
+						MIME_TYPE,
+						m_xmlHandler->scenarioToXml(fromItem, toItem).toUtf8());
+		}
 	}
 
 	m_lastMime = mimeData;
