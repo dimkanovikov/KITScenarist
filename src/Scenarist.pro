@@ -136,7 +136,8 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemWidget.cpp \
     UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.cpp \
 	UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.cpp \
-	3rd_party/Widgets/ZoomableTextEdit/ZoomableTextEdit.cpp
+	3rd_party/Widgets/ZoomableTextEdit/ZoomableTextEdit.cpp \
+	3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -265,7 +266,8 @@ HEADERS += \
     UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemWidget.h \
     UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.h \
 	UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.h \
-	3rd_party/Widgets/ZoomableTextEdit/ZoomableTextEdit.h
+	3rd_party/Widgets/ZoomableTextEdit/ZoomableTextEdit.h \
+	3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
