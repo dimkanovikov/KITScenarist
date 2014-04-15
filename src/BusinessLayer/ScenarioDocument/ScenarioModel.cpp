@@ -305,19 +305,39 @@ bool ScenarioModel::dropMimeData(
 
 	return isDropSucceed;
 }
-
+#include <QDebug>
 QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const
 {
 	QMimeData* mimeData = new QMimeData;
 
 	if (!_indexes.isEmpty()) {
 		//
-		// Т.к. выделение может быть только последовательным, то не переживая
-		// используем первый и последний индексы выления
+        // Выделение может быть только последовательным, но нужно учесть ситуацию, когда в выделение
+        // попадает родительский элемент и не все его дочерние элементы, поэтому просто использовать
+        // последний элемент некорректно, нужно проверить, не входит ли его родитель в выделение
 		//
 
-		ScenarioModelItem* fromItem = itemForIndex(_indexes.first());
-		ScenarioModelItem* toItem = itemForIndex(_indexes.last());
+        QModelIndexList correctedIndexes;
+        foreach (const QModelIndex& index, _indexes) {
+            if (!_indexes.contains(index.parent())) {
+                correctedIndexes.append(index);
+            }
+        }
+
+        qSort(correctedIndexes);
+
+        QModelIndex fromIndex = correctedIndexes.first();
+        QModelIndex toIndex = correctedIndexes.last();
+
+        //
+        // Определяем элементы из которых будет состоять выделение
+        //
+        ScenarioModelItem* fromItem = itemForIndex(fromIndex);
+        ScenarioModelItem* toItem = itemForIndex(toIndex);
+        if (fromItem)
+            qDebug() << "From item: " << fromItem->header();
+        if (toItem)
+            qDebug() << "To item: " << toItem->header();
 
 		//
 		// Сформируем данные

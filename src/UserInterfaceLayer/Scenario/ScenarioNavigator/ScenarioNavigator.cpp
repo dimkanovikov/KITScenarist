@@ -42,13 +42,13 @@ void ScenarioNavigator::setShowSceneNumber(bool _show)
 {
 	m_navigationTreeDelegate->setShowSceneNumber(_show);
 }
-#include <QDebug>
+
 bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 {
     bool isEventFiltered = false;
 
 	if (_watched == m_navigationTree
-        && _event->type() == QEvent::ShortcutOverride) {
+        && _event->type() == QEvent::KeyPress) {
 		//
 		// Отлавливаем необходимую комбинацию клавиш
 		//
@@ -61,7 +61,7 @@ bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 			if (keyEvent->modifiers().testFlag(Qt::ShiftModifier)) {
 				emit redoPressed();
 			} else {
-				emit undoPressed();
+                emit undoPressed();
             }
             isEventFiltered = true;
         }
