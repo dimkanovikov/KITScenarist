@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QUuid>
 #include <QTemporaryFile>
+#include <QTextDocument>
 
 
 SpellCheckHighlighter::SpellCheckHighlighter(QTextDocument* _parent, SpellChecker* _checker) :
@@ -25,7 +26,8 @@ void SpellCheckHighlighter::setUseSpellChecker(bool _use)
 {
 	m_useSpellChecker = _use;
 
-	if (document() != 0 && _use) {
+    if (document() != 0
+            && !document()->isEmpty()) {
 		rehighlight();
 	}
 }
@@ -65,16 +67,17 @@ void SpellCheckHighlighter::highlightBlock(const QString& _text)
 				//
 				// Проверяем слова длинной более одного символа
 				//
-				if (wordWithoutPunct.length() > 1) {
-					//
-					// Корректируем регистр слова
-					//
-					wordWithoutPunct = wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
+                if (wordWithoutPunct.length() > 1) {
+                    //
+                    // Корректируем регистр слова
+                    //
+                    QString wordWithoutPunctInCorrectRegister =
+                            wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
 
 					//
 					// Если слово не прошло проверку
 					//
-					if (!m_spellchecker->spellCheckWord(wordWithoutPunct)) {
+                    if (!m_spellchecker->spellCheckWord(wordWithoutPunctInCorrectRegister)) {
 						//
 						// Проходим по всем вхождения этого слова в тексте
 						//

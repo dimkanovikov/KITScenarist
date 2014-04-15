@@ -51,7 +51,9 @@ SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 void SpellCheckTextEdit::setUseSpellChecker(bool _use)
 {
 	m_useSpellChecking->setChecked(_use);
-	m_spellCheckHighlighter->setUseSpellChecker(_use);
+
+    resetHighlighter();
+//	m_spellCheckHighlighter->setUseSpellChecker(_use);
 }
 
 void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
@@ -107,10 +109,16 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 	// Если проверка правописания включена
 	//
 	if (m_useSpellChecking->isChecked()) {
+        //
+        // Корректируем регистр слова
+        //
+        QString wordWithoutPunctInCorrectRegister =
+                wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
+
 		//
 		// Если слово не проходит проверку орфографии добавим дополнительные действия в контекстное меню
 		//
-		if (!m_spellChecker->spellCheckWord(wordWithoutPunct)) {
+        if (!m_spellChecker->spellCheckWord(wordWithoutPunctInCorrectRegister)) {
 			// ... действие, перед которым вставляем дополнительные пункты
 			QStringList suggestions = m_spellChecker->suggestionsForWord(wordWithoutPunct);
 			// ... вставляем варианты
@@ -161,10 +169,16 @@ void SpellCheckTextEdit::aboutIgnoreWord() const
 	//
 	QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
 
+    //
+    // Скорректируем регистр слова
+    //
+    QString wordUnderCursorInCorrectRegister =
+            wordUnderCursor[0] + wordUnderCursor.mid(1).toLower();
+
 	//
 	// Объявляем проверяющему о том, что это слово нужно игнорировать
 	//
-	m_spellChecker->ignoreWord(wordUnderCursor);
+    m_spellChecker->ignoreWord(wordUnderCursorInCorrectRegister);
 
 	//
 	// Уберём выделение с игнорируемых слов
@@ -181,10 +195,16 @@ void SpellCheckTextEdit::aboutAddWordToUserDictionary() const
 	//
 	QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
 
+    //
+    // Скорректируем регистр слова
+    //
+    QString wordUnderCursorInCorrectRegister =
+            wordUnderCursor[0] + wordUnderCursor.mid(1).toLower();
+
 	//
 	// Объявляем проверяющему о том, что это слово нужно добавить в пользовательский словарь
 	//
-	m_spellChecker->addWordToDictionary(wordUnderCursor);
+    m_spellChecker->addWordToDictionary(wordUnderCursorInCorrectRegister);
 
 	//
 	// Уберём выделение со слов добавленных в словарь

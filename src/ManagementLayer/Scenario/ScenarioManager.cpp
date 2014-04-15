@@ -127,8 +127,9 @@ void ScenarioManager::saveViewState()
 
 void ScenarioManager::aboutTextEditSettingsUpdated()
 {
+//    m_textEditManager->reloadTextEditSettings();
 	m_scenario->refresh();
-	m_textEditManager->reloadTextEditSettings();
+    m_textEditManager->reloadTextEditSettings();
 }
 
 void ScenarioManager::aboutNavigatorSettingsUpdated()
