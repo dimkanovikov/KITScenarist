@@ -25,7 +25,7 @@ void SpellCheckHighlighter::setUseSpellChecker(bool _use)
 {
 	m_useSpellChecker = _use;
 
-	if (document() != 0) {
+	if (document() != 0 && _use) {
 		rehighlight();
 	}
 }
@@ -64,10 +64,13 @@ void SpellCheckHighlighter::highlightBlock(const QString& _text)
 
 				//
 				// Проверяем слова длинной более одного символа
-				// и не начинающиеся с символа "\"
 				//
-				if (wordWithoutPunct.length() > 1
-					&& !wordWithoutPunct.startsWith('\\')) {
+				if (wordWithoutPunct.length() > 1) {
+					//
+					// Корректируем регистр слова
+					//
+					wordWithoutPunct = wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
+
 					//
 					// Если слово не прошло проверку
 					//
