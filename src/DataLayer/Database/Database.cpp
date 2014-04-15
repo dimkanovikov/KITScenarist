@@ -230,25 +230,25 @@ void Database::createEnums(QSqlDatabase& _database)
 #ifdef USE_RUSSIAN_DATABASE_ENUMS
 		q_creator.exec(
 					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("ДЕНЬ"))
-					);
-		q_creator.exec(
-					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("НОЧЬ"))
-					);
-		q_creator.exec(
-					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
 					.arg(QString::fromUtf8("УТРО"))
+					);
+		q_creator.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ДЕНЬ"))
 					);
 		q_creator.exec(
 					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
 					.arg(QString::fromUtf8("ВЕЧЕР"))
 					);
+		q_creator.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("НОЧЬ"))
+					);
 #else
-		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'DAY');");
-		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'NIGHT');");
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'MORNING');");
+		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'DAY');");
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'EVENING');");
+		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'NIGHT');");
 #endif
 	}
 
@@ -281,7 +281,10 @@ void Database::updateDatabase(QSqlDatabase& _database)
 					switch (versionBuild) {
 						case 1: {
 							updateDatabaseTo_0_0_2(_database);
-							break;
+						}
+						case 2:
+						case 3: {
+							updateDatabaseTo_0_0_4(_database);
 						}
 
 						default: {
@@ -333,6 +336,41 @@ void Database::updateDatabaseTo_0_0_2(QSqlDatabase& _database)
 #else
 		q_updater.exec("INSERT INTO times (id, name) VALUES (null, 'MORNING');");
 		q_updater.exec("INSERT INTO times (id, name) VALUES (null, 'EVENING');");
+#endif
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_0_4(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+#ifdef USE_RUSSIAN_DATABASE_ENUMS
+		q_updater.exec(
+					QString("UPDATE times SET id = 1 WHERE name = '%1';")
+					.arg(QString::fromUtf8("УТРО"))
+					);
+		q_updater.exec(
+					QString("UPDATE times SET id = 2 WHERE name = '%1';")
+					.arg(QString::fromUtf8("ДЕНЬ"))
+					);
+		q_updater.exec(
+					QString("UPDATE times SET id = 3 WHERE name = '%1';")
+					.arg(QString::fromUtf8("ВЕЧЕР"))
+					);
+		q_updater.exec(
+					QString("UPDATE times SET id = 4 WHERE name = '%1';")
+					.arg(QString::fromUtf8("НОЧЬ"))
+					);
+#else
+		q_updater.exec("UPDATE times SET id = 1 WHERE name = 'MORNING';");
+		q_updater.exec("UPDATE times SET id = 2 WHERE name = 'DAY';");
+		q_updater.exec("UPDATE times SET id = 3 WHERE name = 'EVENING';");
+		q_updater.exec("UPDATE times SET id = 4 WHERE name = 'NIGHT';");
 #endif
 	}
 

@@ -63,6 +63,13 @@ namespace DatabaseLayer
 		 * - добавлены новые данные в таблицу времён
 		 */
 		static void updateDatabaseTo_0_0_2(QSqlDatabase& _database);
+
+		/**
+		 * @brief Обновить базу данных до версии 0.0.4
+		 *
+		 * Упорядочивание таблицы времён
+		 */
+		static void updateDatabaseTo_0_0_4(QSqlDatabase& _database);
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )

@@ -43,7 +43,7 @@ QString TimeMapper::findStatement(const Identifier& _id) const
 
 QString TimeMapper::findAllStatement() const
 {
-	return "SELECT " + COLUMNS + " FROM  " + TABLE_NAME;
+	return "SELECT " + COLUMNS + " FROM  " + TABLE_NAME + " ORDER BY id ";
 }
 
 QString TimeMapper::insertStatement(DomainObject* _subject, QVariantList& _insertValues) const
