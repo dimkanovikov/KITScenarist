@@ -1,23 +1,21 @@
 #ifndef SIMPLETEXTEDITOR_H
 #define SIMPLETEXTEDITOR_H
 
-#include <QWidget>
-
-class QTextCharFormat;
-class QTextEdit;
-class QToolBar;
+#include <QTextEdit>
 
 
 /**
  * @brief Простейший редактор текста
  */
-class SimpleTextEditor : public QWidget
+class SimpleTextEditor : public QTextEdit
 {
 	Q_OBJECT
+
 public:
 	explicit SimpleTextEditor(QWidget *parent = 0);
 
-signals:
+protected:
+	void contextMenuEvent(QContextMenuEvent* _event);
 
 private slots:
 	void textBold();
@@ -34,9 +32,6 @@ private:
 	QAction* actionTextBold;
 	QAction* actionTextUnderline;
 	QAction* actionTextItalic;
-
-	QToolBar *tb;
-	QTextEdit *textEdit;
 
 };
 

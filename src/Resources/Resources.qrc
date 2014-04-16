@@ -37,6 +37,7 @@
         <file>Icons/Editing/undo.png</file>
         <file>Icons/note.png</file>
         <file>Icons/unknown.png</file>
+        <file>Icons/Editing/red_cross.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

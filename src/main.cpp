@@ -6,6 +6,7 @@
 
 #include <ManagementLayer/ApplicationManager.h>
 
+
 int main(int argc, char *argv[])
 {
 	QApplication application(argc, argv);
@@ -16,7 +17,7 @@ int main(int argc, char *argv[])
 	application.setOrganizationName("DimkaNovikov labs.");
 	application.setOrganizationDomain("dimkanovikov.pro");
 	application.setApplicationName("Scenarist");
-    application.setApplicationVersion("0.0.4");
+	application.setApplicationVersion("0.0.5");
 
 	//
 	// Настроим стиль отображения внешнего вида приложения
@@ -64,7 +65,7 @@ int main(int argc, char *argv[])
     QString fileToOpen = application.arguments().value(1, QString::null);
 
 	ManagementLayer::ApplicationManager applicationManager;
-    applicationManager.exec(fileToOpen);
+	applicationManager.exec(fileToOpen);
 
 	return application.exec();
 }

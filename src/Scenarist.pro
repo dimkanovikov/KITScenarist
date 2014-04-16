@@ -137,7 +137,11 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.cpp \
 	UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.cpp \
 	3rd_party/Widgets/ZoomableTextEdit/ZoomableTextEdit.cpp \
-	3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp
+	3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp \
+    3rd_party/Widgets/PhotosChooser/PhotosChooser.cpp \
+    3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp \
+    3rd_party/Widgets/QLightBoxWidget/qlightboxwidget.cpp \
+    3rd_party/Widgets/PhotosChooser/PhotoPreview.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -267,7 +271,11 @@ HEADERS += \
     UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.h \
 	UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.h \
 	3rd_party/Widgets/ZoomableTextEdit/ZoomableTextEdit.h \
-	3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h
+	3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h \
+    3rd_party/Widgets/PhotosChooser/PhotosChooser.h \
+    3rd_party/Widgets/PhotosChooser/PhotoLabel.h \
+    3rd_party/Widgets/QLightBoxWidget/qlightboxwidget.h \
+    3rd_party/Widgets/PhotosChooser/PhotoPreview.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

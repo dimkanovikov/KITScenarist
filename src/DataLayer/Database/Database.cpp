@@ -148,8 +148,19 @@ void Database::createTables(QSqlDatabase& _database)
 	q_creator.exec("CREATE TABLE locations "
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-				   "name TEXT UNIQUE NOT NULL "
+				   "name TEXT UNIQUE NOT NULL, "
+				   "description TEXT DEFAULT(NULL) "
 				   "); "
+				   );
+
+	// Таблица "Фотографии локаций"
+	q_creator.exec("CREATE TABLE locations_photo "
+				   "( "
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "fk_location_id INTEGER NOT NULL, "
+				   "photo BLOB NOT NULL, "
+				   "sort_order INTEGER NOT NULL DEFAULT(0) "
+				   ")"
 				   );
 
 	// Таблица "Сценарний день"
@@ -172,8 +183,22 @@ void Database::createTables(QSqlDatabase& _database)
 	q_creator.exec("CREATE TABLE characters "
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-				   "name TEXT UNIQUE NOT NULL "
+				   "name TEXT UNIQUE NOT NULL, "
+				   "real_name TEXT DEFAULT(NULL), "
+				   "sex INTEGER DEFAULT(NULL), "
+				   "age TEXT DEFAULT(NULL), "
+				   "description TEXT DEFAULT(NULL) "
 				   "); "
+				   );
+
+	// Таблица "Фотографии персонажей"
+	q_creator.exec("CREATE TABLE characters_photo "
+				   "( "
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "fk_character_id INTEGER NOT NULL, "
+				   "photo BLOB NOT NULL, "
+				   "sort_order INTEGER NOT NULL DEFAULT(0) "
+				   ")"
 				   );
 
 	// Таблица "Текст сценария"
@@ -287,6 +312,10 @@ void Database::updateDatabase(QSqlDatabase& _database)
 							updateDatabaseTo_0_0_4(_database);
 						}
 
+						case 4: {
+							updateDatabaseTo_0_0_5(_database);
+						}
+
 						default: {
 							break;
 						}
@@ -372,6 +401,50 @@ void Database::updateDatabaseTo_0_0_4(QSqlDatabase& _database)
 		q_updater.exec("UPDATE times SET id = 3 WHERE name = 'EVENING';");
 		q_updater.exec("UPDATE times SET id = 4 WHERE name = 'NIGHT';");
 #endif
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_0_5(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Обновление таблицы локаций
+		//
+		q_updater.exec("ALTER TABLE locations ADD COLUMN description TEXT DEFAULT(NULL)");
+
+		// Таблица "Фотографии локаций"
+		q_updater.exec("CREATE TABLE locations_photo "
+					   "( "
+					   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   "fk_location_id INTEGER NOT NULL, "
+					   "photo BLOB NOT NULL, "
+					   "sort_order INTEGER NOT NULL DEFAULT(0) "
+					   ")"
+					   );
+
+		//
+		// Обновление таблицы персонажей
+		//
+		q_updater.exec("ALTER TABLE characters ADD COLUMN real_name TEXT DEFAULT(NULL)");
+		q_updater.exec("ALTER TABLE characters ADD COLUMN sex INTEGER DEFAULT(NULL)");
+		q_updater.exec("ALTER TABLE characters ADD COLUMN age TEXT DEFAULT(NULL)");
+		q_updater.exec("ALTER TABLE characters ADD COLUMN description TEXT DEFAULT(NULL)");
+
+		// Таблица "Фотографии персонажей"
+		q_updater.exec("CREATE TABLE characters_photo "
+					   "( "
+					   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   "fk_character_id INTEGER NOT NULL, "
+					   "photo BLOB NOT NULL, "
+					   "sort_order INTEGER NOT NULL DEFAULT(0) "
+					   ")"
+					   );
 	}
 
 	_database.commit();

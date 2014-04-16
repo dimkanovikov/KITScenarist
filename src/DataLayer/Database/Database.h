@@ -70,6 +70,15 @@ namespace DatabaseLayer
 		 * Упорядочивание таблицы времён
 		 */
 		static void updateDatabaseTo_0_0_4(QSqlDatabase& _database);
+
+		/**
+		 * @brief Обновить базу данных до версии 0.0.5
+		 *
+		 * Добавление информации о персонажах/локациях
+		 * - дополнительныем поля
+		 * - таблицы хранения фотографий
+		 */
+		static void updateDatabaseTo_0_0_5(QSqlDatabase& _database);
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )
