@@ -44,7 +44,7 @@ namespace UserInterface
 		/**
 		 * @brief Настроить цвета текстового редактора
 		 */
-		void setTextEditBackgroundColor(const QColor& _color);
+		void setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor);
 
 		/**
 		 * @brief Настроить масштабирование редактора сценария

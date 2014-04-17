@@ -29,6 +29,7 @@ QWidget* ScenarioTextEditManager::view() const
 void ScenarioTextEditManager::setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document)
 {
 	m_view->setScenarioDocument(_document);
+	reloadTextEditSettings();
 }
 
 void ScenarioTextEditManager::setDuration(const QString& _duration)
@@ -49,7 +50,12 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
 
-	m_view->setTextEditBackgroundColor(
+	m_view->setTextEditColors(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/text-color",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					),
 				QColor(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 						"scenario-editor/background-color",

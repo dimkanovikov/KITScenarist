@@ -68,13 +68,9 @@ void ScenarioTextEditWidget::setUseSpellChecker(bool _use)
 	m_editor->setUseSpellChecker(_use);
 }
 
-void ScenarioTextEditWidget::setTextEditBackgroundColor(const QColor& _color)
+void ScenarioTextEditWidget::setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor)
 {
-	m_editor->setStyleSheet(
-				"QAbstractScrollArea {"
-				"  background-color: " + _color.name() + ";"
-				"}"
-				);
+	m_editor->setStyleSheet(QString("QTextEdit { color: %1; background-color: %2; }").arg(_textColor.name(), _backgroundColor.name()));
 }
 
 void ScenarioTextEditWidget::setTextEditZoomRange(int _zoomRange)
