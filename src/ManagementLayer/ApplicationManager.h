@@ -4,7 +4,7 @@
 #include <QObject>
 
 class SideTabBar;
-class QStackedLayout;
+class QStackedWidget;
 class QToolButton;
 class QMenu;
 
@@ -156,7 +156,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Виджеты вкладок
 		 */
-		QStackedLayout* m_tabsWidgets;
+		QStackedWidget* m_tabsWidgets;
 
 		/**
 		 * @brief Управляющий стартовой страницей

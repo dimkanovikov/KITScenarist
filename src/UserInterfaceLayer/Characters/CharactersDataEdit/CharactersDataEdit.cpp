@@ -5,7 +5,7 @@ using UserInterface::CharactersDataEdit;
 
 
 CharactersDataEdit::CharactersDataEdit(QWidget *parent) :
-	QDialog(parent),
+	QWidget(parent),
 	ui(new Ui::CharactersDataEdit)
 {
 	ui->setupUi(this);

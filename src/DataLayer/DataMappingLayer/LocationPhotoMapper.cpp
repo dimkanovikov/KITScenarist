@@ -12,7 +12,7 @@ namespace {
 	const QString COLUMNS = " id, fk_location_id, photo, sort_order ";
 	const QString TABLE_NAME = " locations_photo ";
 
-	const char* PHOTO_FILE_FORMAT = "JPG";
+	const char* PHOTO_FILE_FORMAT = "PNG";
 	const int PHOTO_FILE_QUALITY = 100;
 
 	/**

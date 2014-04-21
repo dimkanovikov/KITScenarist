@@ -1,7 +1,7 @@
 #ifndef CHARACTERSDATAEDIT_H
 #define CHARACTERSDATAEDIT_H
 
-#include <QDialog>
+#include <QWidget>
 
 namespace Ui {
 	class CharactersDataEdit;
@@ -13,7 +13,7 @@ namespace UserInterface
 	/**
 	 * @brief Редактор данных персонажа
 	 */
-	class CharactersDataEdit : public QDialog
+	class CharactersDataEdit : public QWidget
 	{
 		Q_OBJECT
 

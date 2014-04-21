@@ -5,7 +5,7 @@ using UserInterface::LocationsDataEdit;
 
 
 LocationsDataEdit::LocationsDataEdit(QWidget *parent) :
-	QDialog(parent),
+	QWidget(parent),
 	ui(new Ui::LocationsDataEdit)
 {
 	ui->setupUi(this);

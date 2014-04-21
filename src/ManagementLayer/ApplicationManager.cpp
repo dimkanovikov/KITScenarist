@@ -20,13 +20,14 @@
 #include <UserInterfaceLayer/ApplicationView.h>
 
 #include <QApplication>
-#include <QStackedLayout>
+#include <QStackedWidget>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QToolButton>
 #include <QMenu>
 #include <QStyle>
 #include <QStyleFactory>
+#include <QVBoxLayout>
 
 using namespace ManagementLayer;
 using UserInterface::ApplicationView;
@@ -67,7 +68,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_view(new ApplicationView),
 	m_menu(new QToolButton(m_view)),
 	m_tabs(new SideTabBar(m_view)),
-	m_tabsWidgets(new QStackedLayout),
+	m_tabsWidgets(new QStackedWidget),
 	m_startUpManager(new StartUpManager(this, m_view)),
 	m_scenarioManager(new ScenarioManager(this, m_view)),
 	m_charactersManager(new CharactersManager(this, m_view)),
@@ -494,7 +495,7 @@ void ApplicationManager::initView()
 	layout->setContentsMargins(QMargins());
 	layout->setSpacing(0);
 	layout->addLayout(leftLayout);
-	layout->addLayout(m_tabsWidgets);
+	layout->addWidget(m_tabsWidgets);
 
 	m_view->setLayout(layout);
 

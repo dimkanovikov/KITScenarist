@@ -1,7 +1,7 @@
 #ifndef LOCATIONSDATAEDIT_H
 #define LOCATIONSDATAEDIT_H
 
-#include <QDialog>
+#include <QWidget>
 
 namespace Ui {
 	class LocationsDataEdit;
@@ -13,7 +13,7 @@ namespace UserInterface
 	/**
 	 * @brief Редактор данных локации
 	 */
-	class LocationsDataEdit : public QDialog
+	class LocationsDataEdit : public QWidget
 	{
 		Q_OBJECT
 
