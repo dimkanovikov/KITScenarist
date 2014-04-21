@@ -10,6 +10,7 @@ namespace DataStorageLayer
 	class ScenarioDayStorage;
 	class TimeStorage;
 	class CharacterStorage;
+	class CharacterPhotoStorage;
 	class ScenarioStorage;
 	class SettingsStorage;
 
@@ -28,6 +29,7 @@ namespace DataStorageLayer
 		static ScenarioDayStorage* scenarioDayStorage();
 		static TimeStorage* timeStorage();
 		static CharacterStorage* characterStorage();
+		static CharacterPhotoStorage* characterPhotoStorage();
 		static ScenarioStorage* scenarioStorage();
 		static SettingsStorage* settingsStorage();
 
@@ -38,6 +40,7 @@ namespace DataStorageLayer
 		static ScenarioDayStorage* s_scenarioDayStorage;
 		static TimeStorage* s_timeStorage;
 		static CharacterStorage* s_characterStorage;
+		static CharacterPhotoStorage* s_characterPhotoStorage;
 		static ScenarioStorage* s_scenarioStorage;
 		static SettingsStorage* s_settingsStorage;
 	};

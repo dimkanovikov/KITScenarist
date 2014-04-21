@@ -1,12 +1,14 @@
 #include "CharacterMapper.h"
 
+#include "CharacterPhotoMapper.h"
+
 #include <Domain/Character.h>
 
 using namespace DataMappingLayer;
 
 
 namespace {
-	const QString COLUMNS = " id, name ";
+	const QString COLUMNS = " id, name, real_name, description ";
 	const QString TABLE_NAME = " characters ";
 }
 
@@ -55,7 +57,7 @@ QString CharacterMapper::insertStatement(DomainObject* _subject, QVariantList& _
 {
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
-					" (id, name) "
+					" (id, name, real_name, description) "
 					" VALUES(?, ?) "
 					);
 
@@ -63,6 +65,8 @@ QString CharacterMapper::insertStatement(DomainObject* _subject, QVariantList& _
 	_insertValues.clear();
 	_insertValues.append(character->id().value());
 	_insertValues.append(character->name());
+	_insertValues.append(character->realName());
+	_insertValues.append(character->description());
 
 	return insertStatement;
 }
@@ -71,13 +75,17 @@ QString CharacterMapper::updateStatement(DomainObject* _subject, QVariantList& _
 {
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET name = ? "
+					" SET name = ?, "
+					" real_name = ?, "
+					" description = ? "
 					" WHERE id = ? "
 					);
 
 	Character* character = dynamic_cast<Character*>(_subject);
 	_updateValues.clear();
 	_updateValues.append(character->name());
+	_updateValues.append(character->realName());
+	_updateValues.append(character->description());
 	_updateValues.append(character->id().value());
 
 	return updateStatement;
@@ -96,8 +104,11 @@ QString CharacterMapper::deleteStatement(DomainObject* _subject, QVariantList& _
 DomainObject* CharacterMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
 	QString name = _record.value("name").toString();
+	QString realName = _record.value("real_name").toString();
+	QString description = _record.value("description").toString();
+	CharacterPhotosTable* photos = MapperFacade::characterPhotoMapper()->findAllForCharacter(_id);
 
-	return new Character(_id, name);
+	return new Character(_id, name, realName, description, photos);
 }
 
 DomainObjectsItemModel* CharacterMapper::modelInstance()

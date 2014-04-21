@@ -144,7 +144,10 @@ SOURCES += main.cpp \
     3rd_party/Widgets/PhotosChooser/PhotoPreview.cpp \
     Domain/LocationPhoto.cpp \
     DataLayer/DataMappingLayer/LocationPhotoMapper.cpp \
-    DataLayer/DataStorageLayer/LocationPhotoStorage.cpp
+    DataLayer/DataStorageLayer/LocationPhotoStorage.cpp \
+    Domain/CharacterPhoto.cpp \
+    DataLayer/DataMappingLayer/CharacterPhotoMapper.cpp \
+    DataLayer/DataStorageLayer/CharacterPhotoStorage.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -281,7 +284,10 @@ HEADERS += \
     3rd_party/Widgets/PhotosChooser/PhotoPreview.h \
     Domain/LocationPhoto.h \
     DataLayer/DataMappingLayer/LocationPhotoMapper.h \
-    DataLayer/DataStorageLayer/LocationPhotoStorage.h
+    DataLayer/DataStorageLayer/LocationPhotoStorage.h \
+    Domain/CharacterPhoto.h \
+    DataLayer/DataMappingLayer/CharacterPhotoMapper.h \
+    DataLayer/DataStorageLayer/CharacterPhotoStorage.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

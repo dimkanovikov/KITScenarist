@@ -94,11 +94,11 @@ void LocationStorage::updateLocation(Location* _location)
 void LocationStorage::removeLocation(const QString& _name)
 {
 	//
-	// Если такой персонаж есть
+	// Если такая локация есть
 	//
 	if (hasLocation(_name)) {
 		//
-		// ... найдём его
+		// ... найдём её
 		//
 		Location* locationToDelete = 0;
 		foreach (DomainObject* domainObject, all()->toList()) {

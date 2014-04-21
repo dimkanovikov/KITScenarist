@@ -24,6 +24,11 @@ namespace DataStorageLayer
 		CharactersTable* all();
 
 		/**
+		 * @brief Получить персонажа по названию
+		 */
+		Character* character(const QString& _name);
+
+		/**
 		 * @brief Сохранить персонажа
 		 */
 		Character* storeCharacter(const QString& _name);
@@ -31,7 +36,7 @@ namespace DataStorageLayer
 		/**
 		 * @brief Обновить персонажа
 		 */
-		Character* updateCharacter(const QString& _oldName, const QString& _newName);
+		void updateCharacter(Character* _character);
 
 		/**
 		 * @brief Удалить персонажа

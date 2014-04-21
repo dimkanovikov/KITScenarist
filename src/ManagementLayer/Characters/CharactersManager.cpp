@@ -79,9 +79,14 @@ void CharactersManager::aboutAddCharacter(const QString& _name)
 void CharactersManager::aboutEditCharacter(const QString& _name)
 {
 	//
+	// Найдём персонажа
+	//
+	Character* character = DataStorageLayer::StorageFacade::characterStorage()->character(_name);
+
+	//
 	// Загрузить в редактор данных данные
 	//
-	m_dataEditManager->editCharacter(_name);
+	m_dataEditManager->editCharacter(character);
 }
 
 void CharactersManager::aboutRemoveCharacter(const QString& _name)

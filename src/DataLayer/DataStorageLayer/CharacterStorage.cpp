@@ -1,9 +1,12 @@
 #include "CharacterStorage.h"
 
+#include "CharacterPhotoStorage.h"
+
 #include <DataLayer/DataMappingLayer/MapperFacade.h>
 #include <DataLayer/DataMappingLayer/CharacterMapper.h>
 
 #include <Domain/Character.h>
+#include <Domain/CharacterPhoto.h>
 
 using namespace DataStorageLayer;
 using namespace DataMappingLayer;
@@ -15,6 +18,19 @@ CharactersTable* CharacterStorage::all()
 		m_all = MapperFacade::characterMapper()->findAll();
 	}
 	return m_all;
+}
+
+Character* CharacterStorage::character(const QString& _name)
+{
+	Character* resultCharacter = 0;
+	foreach (DomainObject* domainObject, all()->toList()) {
+		Character* character = dynamic_cast<Character*>(domainObject);
+		if (character->name() == _name) {
+			resultCharacter = character;
+			break;
+		}
+	}
+	return resultCharacter;
 }
 
 Character* CharacterStorage::storeCharacter(const QString& _name)
@@ -42,7 +58,7 @@ Character* CharacterStorage::storeCharacter(const QString& _name)
 		// Если такого персонажа ещё нет, то сохраним его
 		//
 		if (!DomainObject::isValid(newCharacter)) {
-			newCharacter = new Character(Identifier(), characterName);
+			newCharacter = new Character(Identifier(), characterName, QString(), QString(), new CharacterPhotosTable);
 
 			//
 			// ... в базе данных
@@ -59,44 +75,20 @@ Character* CharacterStorage::storeCharacter(const QString& _name)
 	return newCharacter;
 }
 
-Character* CharacterStorage::updateCharacter(const QString& _oldName, const QString& _newName)
+void CharacterStorage::updateCharacter(Character* _character)
 {
-	Character* characterToUpdate = 0;
+	//
+	// Сохраним изменение в базе данных
+	//
+	MapperFacade::characterMapper()->update(_character);
+	StorageFacade::characterPhotoStorage()->store(_character);
 
 	//
-	// Если такой персонаж есть
+	// Уведомим об обновлении
 	//
-	if (hasCharacter(_oldName)) {
-		//
-		// ... найдём его
-		//
-		foreach (DomainObject* domainObject, all()->toList()) {
-			Character* character = dynamic_cast<Character*>(domainObject);
-			if (character->name() == _oldName) {
-				characterToUpdate = character;
-				break;
-			}
-		}
-
-		//
-		// ... обновим
-		//
-		characterToUpdate->setName(_newName);
-
-		//
-		// ... и сохраним изменение в базе данных
-		//
-		MapperFacade::characterMapper()->update(characterToUpdate);
-
-		//
-		// ... уведомим об обновлении
-		//
-		int indexRow = all()->toList().indexOf(characterToUpdate);
-		QModelIndex updateIndex = all()->index(indexRow, 0, QModelIndex());
-		emit all()->dataChanged(updateIndex, updateIndex);
-	}
-
-	return characterToUpdate;
+	int indexRow = all()->toList().indexOf(_character);
+	QModelIndex updateIndex = all()->index(indexRow, 0, QModelIndex());
+	emit all()->dataChanged(updateIndex, updateIndex);
 }
 
 void CharacterStorage::removeCharacter(const QString& _name)
@@ -118,8 +110,11 @@ void CharacterStorage::removeCharacter(const QString& _name)
 		}
 
 		//
-		// ... и удалим из локального списка и базы данных
+		// ... и удалим
 		//
+		// ...... фотографии
+		StorageFacade::characterPhotoStorage()->remove(characterToDelete);
+		// ...... из локального списка и базы данных
 		all()->remove(characterToDelete);
 		MapperFacade::characterMapper()->remove(characterToDelete);
 	}

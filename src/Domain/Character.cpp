@@ -1,12 +1,24 @@
 #include "Character.h"
 
+#include "CharacterPhoto.h"
+
 using namespace Domain;
 
 
-Character::Character(const Identifier& _id, const QString& _name) :
+Character::Character(
+		const Identifier& _id,
+		const QString& _name,
+		const QString& _realName,
+		const QString& _description,
+		CharacterPhotosTable* _photos
+		) :
 	DomainObject(_id),
-	m_name(_name)
+	m_name(_name),
+	m_realName(_realName),
+	m_description(_description),
+	m_photos(_photos)
 {
+	m_photos->setCharacter(this);
 }
 
 QString Character::name() const
@@ -19,6 +31,55 @@ void Character::setName(const QString& _name)
 	if (m_name != _name) {
 		m_name = _name;
 	}
+}
+
+QString Character::realName() const
+{
+	return m_realName;
+}
+
+void Character::setRealName(const QString& _realName)
+{
+	if (m_realName != _realName) {
+		m_realName = _realName;
+	}
+}
+
+QString Character::description() const
+{
+	return m_description;
+}
+
+void Character::setDescription(const QString& _description)
+{
+	if (m_description != _description) {
+		m_description = _description;
+	}
+}
+
+CharacterPhotosTable* Character::photosTable() const
+{
+	return m_photos;
+}
+
+void Character::setPhotos(const QList<QPixmap>& _photos)
+{
+	m_photos->clear();
+
+	for (int index = 0; index < _photos.count(); ++index) {
+		CharacterPhoto* newPhoto = new CharacterPhoto(Identifier(), this, _photos.value(index), index);
+		m_photos->append(newPhoto);
+	}
+}
+
+QList<QPixmap> Character::photos() const
+{
+	QList<QPixmap> photos;
+	foreach (DomainObject* domainObject, m_photos->toList()) {
+		CharacterPhoto* photo = dynamic_cast<CharacterPhoto*>(domainObject);
+		photos.insert(photo->sortOrder(), photo->photo());
+	}
+	return photos;
 }
 
 // ****

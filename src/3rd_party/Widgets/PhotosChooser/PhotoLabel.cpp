@@ -11,6 +11,8 @@
 PhotoLabel::PhotoLabel(QWidget* _parent) :
 	QLabel(_parent)
 {
+	setCursor(Qt::PointingHandCursor);
+
 	m_clearButton = new QToolButton(this);
 	m_clearButton->setIcon(QIcon(":/Graphics/Icons/Editing/red_cross.png"));
 	m_clearButton->setStyleSheet("border: none;");

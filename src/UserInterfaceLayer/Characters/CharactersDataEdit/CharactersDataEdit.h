@@ -36,6 +36,36 @@ namespace UserInterface
 		 */
 		QString name() const;
 
+		/**
+		 * @brief Установить настоящее имя персонажа
+		 */
+		void setRealName(const QString& _realName);
+
+		/**
+		 * @brief Получить настоящее имя персонажа
+		 */
+		QString realName() const;
+
+		/**
+		 * @brief Установить описание локации
+		 */
+		void setDescription(const QString& _description);
+
+		/**
+		 * @brief Получить описание локации
+		 */
+		QString description() const;
+
+		/**
+		 * @brief Установить фотографии
+		 */
+		void setPhotos(const QList<QPixmap>& _photos);
+
+		/**
+		 * @brief Получить список фотографий
+		 */
+		QList<QPixmap> photos() const;
+
 	signals:
 		/**
 		 * @brief Сохранить
@@ -49,15 +79,16 @@ namespace UserInterface
 
 	private slots:
 		/**
-		 * @brief Данные были изменены
+		 * @brief Обновить состояние кнопки сохранения
 		 */
-		void aboutDataChanged();
+		void updateSaveState();
+		
+	private:
 		/**
 		 * @brief Настроить представление
 		 */
 		void initView();
-		
-	private:
+
 		/**
 		 * @brief Настроить соединения для формы
 		 */
@@ -70,6 +101,26 @@ namespace UserInterface
 
 	private:
 		Ui::CharactersDataEdit *ui;
+
+		/**
+		 * @brief Исходное имя
+		 */
+		QString m_sourceName;
+
+		/**
+		 * @brief Исходное полное имя
+		 */
+		QString m_sourceRealName;
+
+		/**
+		 * @brief Исходное описание
+		 */
+		QString m_sourceDescription;
+
+		/**
+		 * @brief Исходные фотографии
+		 */
+		QList<QPixmap> m_sourcePhotos;
 	};
 }
 

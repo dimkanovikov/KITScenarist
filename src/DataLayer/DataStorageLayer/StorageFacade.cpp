@@ -6,6 +6,7 @@
 #include "ScenarioDayStorage.h"
 #include "TimeStorage.h"
 #include "CharacterStorage.h"
+#include "CharacterPhotoStorage.h"
 #include "ScenarioStorage.h"
 #include "SettingsStorage.h"
 
@@ -16,9 +17,11 @@ void StorageFacade::clearStorages()
 {
 	placeStorage()->clear();
 	locationStorage()->clear();
+	locationPhotoStorage()->clear();
 	scenarioDayStorage()->clear();
 	timeStorage()->clear();
 	characterStorage()->clear();
+	characterPhotoStorage()->clear();
 	scenarioStorage()->clear();
 }
 
@@ -70,6 +73,14 @@ CharacterStorage* StorageFacade::characterStorage()
 	return s_characterStorage;
 }
 
+CharacterPhotoStorage* StorageFacade::characterPhotoStorage()
+{
+	if (s_characterPhotoStorage == 0) {
+		s_characterPhotoStorage = new CharacterPhotoStorage;
+	}
+	return s_characterPhotoStorage;
+}
+
 ScenarioStorage* StorageFacade::scenarioStorage()
 {
 	if (s_scenarioStorage == 0) {
@@ -92,5 +103,6 @@ LocationPhotoStorage* StorageFacade::s_locationPhotoStorage = 0;
 ScenarioDayStorage* StorageFacade::s_scenarioDayStorage = 0;
 TimeStorage* StorageFacade::s_timeStorage = 0;
 CharacterStorage* StorageFacade::s_characterStorage = 0;
+CharacterPhotoStorage* StorageFacade::s_characterPhotoStorage = 0;
 ScenarioStorage* StorageFacade::s_scenarioStorage = 0;
 SettingsStorage* StorageFacade::s_settingsStorage = 0;

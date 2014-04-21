@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+namespace Domain {
+	class Character;
+}
+
 namespace UserInterface {
 	class CharactersDataEdit;
 }
@@ -30,7 +34,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Редактировать персонажа
 		 */
-		void editCharacter(const QString& _name);
+		void editCharacter(Domain::Character* _character);
 
 	signals:
 		/**
@@ -67,9 +71,9 @@ namespace ManagementLayer
 		UserInterface::CharactersDataEdit* m_editor;
 
 		/**
-		 * @brief Имя последнего редактируемого персонажа
+		 * @brief Персонаж для изменения
 		 */
-		QString m_characterName;
+		Domain::Character* m_character;
 	};
 }
 

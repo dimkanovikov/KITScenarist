@@ -10,6 +10,7 @@ namespace DataMappingLayer
 	class ScenarioDayMapper;
 	class TimeMapper;
 	class CharacterMapper;
+	class CharacterPhotoMapper;
 	class ScenarioMapper;
 	class SettingsMapper;
 
@@ -22,6 +23,7 @@ namespace DataMappingLayer
 		static ScenarioDayMapper* scenarioDayMapper();
 		static TimeMapper* timeMapper();
 		static CharacterMapper* characterMapper();
+		static CharacterPhotoMapper* characterPhotoMapper();
 		static ScenarioMapper* scenarioMapper();
 		static SettingsMapper* settingsMapper();
 
@@ -32,6 +34,7 @@ namespace DataMappingLayer
 		static ScenarioDayMapper* s_scenarioDayMapper;
 		static TimeMapper* s_timeMapper;
 		static CharacterMapper* s_characterMapper;
+		static CharacterPhotoMapper* s_characterPhotoMapper;
 		static ScenarioMapper* s_scenarioMapper;
 		static SettingsMapper* s_settingsMapper;
 	};

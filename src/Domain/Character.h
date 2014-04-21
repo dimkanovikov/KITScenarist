@@ -8,13 +8,20 @@
 
 namespace Domain
 {
+	class CharacterPhotosTable;
+
+
 	/**
 	 * @brief Класс персонажа сценария
 	 */
 	class Character : public DomainObject
 	{
 	public:
-		Character(const Identifier& _id, const QString& _name);
+		Character(const Identifier& _id,
+				  const QString& _name,
+				  const QString& _realName,
+				  const QString& _description,
+				  CharacterPhotosTable* _photos);
 
 		/**
 		 * @brief Получить имя персонажа
@@ -26,21 +33,72 @@ namespace Domain
 		 */
 		void setName(const QString& _name);
 
+		/**
+		 * @brief Получить настоящее имя
+		 */
+		QString realName() const;
+
+		/**
+		 * @brief Установить настоящее имя
+		 */
+		void setRealName(const QString& _realName);
+
+		/**
+		 * @brief Получить описание локации
+		 */
+		QString description() const;
+
+		/**
+		 * @brief Установить описание локации
+		 */
+		void setDescription(const QString& _description);
+
+		/**
+		 * @brief Получить фотографии локации
+		 */
+		CharacterPhotosTable* photosTable() const;
+
+		/**
+		 * @brief Установить фотографии локации
+		 */
+		void setPhotos(const QList<QPixmap>& _photos);
+
+		/**
+		 * @brief Получить фотографии локации
+		 */
+		QList<QPixmap> photos() const;
+
 	private:
 		/*
 		 * Параметры:
 		 *
 		 * История (должны быть стандартные ключи): наполняемый справочник ключ-значение [из базы данных]
-		 * Фото: список фотографий (одна главная)
 		 * Возраст (от и до): число
-		 * Описание: текст
 		 * Реквизит: : наполняемый список [из базы данных]
 		 * Группа персонажей (хорошие, плохие): наполняемый список [из базы данных]
 		 *
 		 */
 
-
+		/**
+		 * @brief Название героя
+		 */
 		QString m_name;
+
+		/**
+		 * @brief Настоящее имя героя (ФИО)
+		 */
+		QString m_realName;
+
+		/**
+		 * @brief Описание
+		 * @note Html-форматированный текст
+		 */
+		QString m_description;
+
+		/**
+		 * @brief Фотографии
+		 */
+		CharacterPhotosTable* m_photos;
 	};
 
 	// ****
