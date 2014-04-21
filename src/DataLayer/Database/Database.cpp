@@ -184,9 +184,7 @@ void Database::createTables(QSqlDatabase& _database)
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				   "name TEXT UNIQUE NOT NULL, "
-				   "real_name TEXT DEFAULT(NULL), "
-				   "sex INTEGER DEFAULT(NULL), "
-				   "age TEXT DEFAULT(NULL), "
+				   "full_name TEXT DEFAULT(NULL), "
 				   "description TEXT DEFAULT(NULL) "
 				   "); "
 				   );
@@ -431,9 +429,7 @@ void Database::updateDatabaseTo_0_0_5(QSqlDatabase& _database)
 		//
 		// Обновление таблицы персонажей
 		//
-		q_updater.exec("ALTER TABLE characters ADD COLUMN real_name TEXT DEFAULT(NULL)");
-		q_updater.exec("ALTER TABLE characters ADD COLUMN sex INTEGER DEFAULT(NULL)");
-		q_updater.exec("ALTER TABLE characters ADD COLUMN age TEXT DEFAULT(NULL)");
+		q_updater.exec("ALTER TABLE characters ADD COLUMN full_name TEXT DEFAULT(NULL)");
 		q_updater.exec("ALTER TABLE characters ADD COLUMN description TEXT DEFAULT(NULL)");
 
 		// Таблица "Фотографии персонажей"
