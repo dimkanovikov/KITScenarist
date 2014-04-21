@@ -96,7 +96,8 @@ void LocationsDataEdit::updateSaveState()
 
 void LocationsDataEdit::initView()
 {
-
+	ui->gridLayout->setColumnStretch(0, 1);
+	ui->gridLayout->setColumnStretch(1, 3);
 }
 
 void LocationsDataEdit::initConnections()

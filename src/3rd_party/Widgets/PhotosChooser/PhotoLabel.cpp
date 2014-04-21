@@ -33,7 +33,7 @@ void PhotoLabel::setPhoto(const QPixmap& _photo)
 		//
 		// Изображение должно быть чуть меньше метки, чтобы не увеличивать её размер
 		//
-		const int delta = 4;
+		const int delta = 2;
 		QSize photoSize(width() - delta, height() - delta);
 		photoToShow = QPixmap(photoSize);
 
