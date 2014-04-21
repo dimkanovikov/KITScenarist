@@ -70,7 +70,9 @@ void LocationsDataEditManager::aboutSave()
 	//
 	// Уведомим об изменении названия локации
 	//
-	emit locationNameChanged(previousName, m_location->name());
+    if (previousName != m_location->name()) {
+        emit locationNameChanged(previousName, m_location->name());
+    }
 
 	//
 	// Текущей становится обновлённая локация
