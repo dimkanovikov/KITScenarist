@@ -32,7 +32,6 @@ private:
 	QAction* actionTextBold;
 	QAction* actionTextUnderline;
 	QAction* actionTextItalic;
-
 };
 
 #endif // SIMPLETEXTEDITOR_H

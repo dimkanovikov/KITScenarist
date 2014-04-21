@@ -21,7 +21,7 @@ SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
 void SimpleTextEditor::contextMenuEvent(QContextMenuEvent* _event)
 {
 	//
-	// Сформируем стандартное контекстное меню
+	// Сформируем  контекстное меню
 	//
 	QMenu* menu = new QMenu(this);
 
@@ -72,6 +72,7 @@ void SimpleTextEditor::setupMenu()
 {
 	actionTextBold = new QAction(tr("Bold"), this);
 	actionTextBold->setShortcut(Qt::CTRL + Qt::Key_B);
+	actionTextBold->setShortcutContext(Qt::WidgetShortcut);
 	actionTextBold->setPriority(QAction::LowPriority);
 	QFont bold;
 	bold.setBold(true);
@@ -96,6 +97,13 @@ void SimpleTextEditor::setupMenu()
 	actionTextUnderline->setFont(underline);
 	connect(actionTextUnderline, SIGNAL(triggered()), this, SLOT(textUnderline()));
 	actionTextUnderline->setCheckable(true);
+
+	//
+	// Добавим действия виджету
+	//
+	this->addAction(actionTextBold);
+	this->addAction(actionTextItalic);
+	this->addAction(actionTextUnderline);
 }
 
 void SimpleTextEditor::mergeFormatOnWordOrSelection(const QTextCharFormat& format)
