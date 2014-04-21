@@ -36,6 +36,16 @@ namespace UserInterface
 		 */
 		QString name() const;
 
+		/**
+		 * @brief Установить описание локации
+		 */
+		void setDescription(const QString& _description);
+
+		/**
+		 * @brief Получить описание локации
+		 */
+		QString description() const;
+
 	signals:
 		/**
 		 * @brief Сохранить
@@ -49,15 +59,16 @@ namespace UserInterface
 
 	private slots:
 		/**
-		 * @brief Данные были изменены
+		 * @brief Обновить состояние кнопки сохранения
 		 */
-		void aboutDataChanged();
+		void updateSaveState();
+
+	private:
 		/**
 		 * @brief Настроить представление
 		 */
 		void initView();
 
-	private:
 		/**
 		 * @brief Настроить соединения для формы
 		 */
@@ -70,6 +81,16 @@ namespace UserInterface
 
 	private:
 		Ui::LocationsDataEdit *ui;
+
+		/**
+		 * @brief Исходное название
+		 */
+		QString m_sourceName;
+
+		/**
+		 * @brief Исходное описание
+		 */
+		QString m_sourceDescription;
 	};
 }
 

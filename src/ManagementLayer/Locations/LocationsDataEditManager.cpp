@@ -1,17 +1,21 @@
 #include "LocationsDataEditManager.h"
 
+#include <Domain/Location.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/LocationStorage.h>
 
 #include <UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.h>
 
+using Domain::Location;
 using ManagementLayer::LocationsDataEditManager;
 using UserInterface::LocationsDataEdit;
 
 
 LocationsDataEditManager::LocationsDataEditManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
-	m_editor(new LocationsDataEdit(_parentWidget))
+	m_editor(new LocationsDataEdit(_parentWidget)),
+	m_location(0)
 {
 	initView();
 	initConnections();
@@ -28,42 +32,54 @@ void LocationsDataEditManager::clean()
 	m_editor->setEnabled(false);
 }
 
-void LocationsDataEditManager::editLocation(const QString& _name)
+void LocationsDataEditManager::editLocation(Location* _location)
 {
-	m_locationName = _name;
+	m_location = _location;
 
-	m_editor->setEnabled(true);
-	m_editor->setName(m_locationName);
+	if (m_location != 0) {
+		m_editor->setEnabled(true);
+		m_editor->setName(m_location->name());
+		m_editor->setDescription(m_location->description());
+	} else {
+		clean();
+	}
 }
 
 void LocationsDataEditManager::aboutSave()
 {
-	QString newName = m_editor->name().toUpper();
+	//
+	// Сохраним предыдущее название локации
+	//
+	QString previousName = m_location->name();
 
 	//
-	// Если название было изменено
+	// Установим новые значения
 	//
-	if (newName != m_locationName) {
-		//
-		// ... сохраним изменения
-		//
-		DataStorageLayer::StorageFacade::locationStorage()->updateLocation(m_locationName, newName);
+	m_location->setName(m_editor->name());
+	m_location->setDescription(m_editor->description());
 
-		//
-		// ... уведомим об изменении названия локации
-		//
-		emit locationNameChanged(m_locationName, newName);
+	//
+	// Сохраним изменения
+	//
+	DataStorageLayer::StorageFacade::locationStorage()->updateLocation(m_location);
 
-		//
-		// ... текущим становится новое название
-		//
-		editLocation(newName);
-	}
+	//
+	// Уведомим об изменении названия локации
+	//
+	emit locationNameChanged(previousName, m_location->name());
+
+	//
+	// Текущей становится обновлённая локация
+	//
+	editLocation(m_location);
 }
 
 void LocationsDataEditManager::aboutDontSave()
 {
-	m_editor->setName(m_locationName);
+	//
+	// Перезагрузим исходные данных
+	//
+	editLocation(m_location);
 }
 
 void LocationsDataEditManager::initView()

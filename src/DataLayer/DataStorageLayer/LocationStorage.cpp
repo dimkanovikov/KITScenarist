@@ -17,6 +17,19 @@ LocationsTable* LocationStorage::all()
 	return m_all;
 }
 
+Location* LocationStorage::location(const QString& _name)
+{
+	Location* resultLocation = 0;
+	foreach (DomainObject* domainObject, all()->toList()) {
+		Location* location = dynamic_cast<Location*>(domainObject);
+		if (location->name() == _name) {
+			resultLocation = location;
+			break;
+		}
+	}
+	return resultLocation;
+}
+
 Location* LocationStorage::storeLocation(const QString& _locationName)
 {
 	Location* newLocation = 0;
@@ -42,7 +55,7 @@ Location* LocationStorage::storeLocation(const QString& _locationName)
 		// Если такой локации ещё нет, то сохраним её
 		//
 		if (!DomainObject::isValid(newLocation)) {
-			newLocation = new Location(Identifier(), locationName);
+			newLocation = new Location(Identifier(), locationName, QString());
 
 			//
 			// ... в базе данных
@@ -59,44 +72,19 @@ Location* LocationStorage::storeLocation(const QString& _locationName)
 	return newLocation;
 }
 
-Location* LocationStorage::updateLocation(const QString& _oldName, const QString& _newName)
+void LocationStorage::updateLocation(Location* _location)
 {
-	Location* locationToUpdate = 0;
+	//
+	// Сохраним изменение в базе данных
+	//
+	MapperFacade::locationMapper()->update(_location);
 
 	//
-	// Если такая локация есть
+	// Уведомим об обновлении
 	//
-	if (hasLocation(_oldName)) {
-		//
-		// ... найдём её
-		//
-		foreach (DomainObject* domainObject, all()->toList()) {
-			Location* location = dynamic_cast<Location*>(domainObject);
-			if (location->name() == _oldName) {
-				locationToUpdate = location;
-				break;
-			}
-		}
-
-		//
-		// ... обновим
-		//
-		locationToUpdate->setName(_newName);
-
-		//
-		// ... и сохраним изменение в базе данных
-		//
-		MapperFacade::locationMapper()->update(locationToUpdate);
-
-		//
-		// ... уведомим об обновлении
-		//
-		int indexRow = all()->toList().indexOf(locationToUpdate);
-		QModelIndex updateIndex = all()->index(indexRow, 0, QModelIndex());
-		emit all()->dataChanged(updateIndex, updateIndex);
-	}
-
-	return locationToUpdate;
+	int indexRow = all()->toList().indexOf(_location);
+	QModelIndex updateIndex = all()->index(indexRow, 0, QModelIndex());
+	emit all()->dataChanged(updateIndex, updateIndex);
 }
 
 void LocationStorage::removeLocation(const QString& _name)

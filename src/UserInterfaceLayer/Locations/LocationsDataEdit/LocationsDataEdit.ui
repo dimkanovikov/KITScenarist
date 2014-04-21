@@ -70,7 +70,7 @@
        </widget>
       </item>
       <item row="4" column="1" colspan="3">
-       <widget class="SimpleTextEditor" name="widget" native="true">
+       <widget class="SimpleTextEditor" name="description" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
           <horstretch>0</horstretch>

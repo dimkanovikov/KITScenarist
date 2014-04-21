@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+namespace Domain {
+	class Location;
+}
+
 namespace UserInterface {
 	class LocationsDataEdit;
 }
@@ -30,7 +34,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Редактировать локацию
 		 */
-		void editLocation(const QString& _name);
+		void editLocation(Domain::Location* _location);
 
 	signals:
 		/**
@@ -67,9 +71,9 @@ namespace ManagementLayer
 		UserInterface::LocationsDataEdit* m_editor;
 
 		/**
-		 * @brief Название последней редактируемой локации
+		 * @brief Локация для изменения
 		 */
-		QString m_locationName;
+		Domain::Location* m_location;
 	};
 }
 

@@ -23,6 +23,11 @@ namespace DataStorageLayer
 		LocationsTable* all();
 
 		/**
+		 * @brief Получить локацию по названию
+		 */
+		Location* location(const QString& _name);
+
+		/**
 		 * @brief Сохранить локацию
 		 */
 		Location* storeLocation(const QString& _locationName);
@@ -30,7 +35,7 @@ namespace DataStorageLayer
 		/**
 		 * @brief Обновить локацию
 		 */
-		Location* updateLocation(const QString& _oldName, const QString& _newName);
+		void updateLocation(Location* _location);
 
 		/**
 		 * @brief Удалить локацию

@@ -79,9 +79,14 @@ void LocationsManager::aboutAddLocation(const QString& _name)
 void LocationsManager::aboutEditLocation(const QString& _name)
 {
 	//
+	// Найдём локацию
+	//
+	Location* location = DataStorageLayer::StorageFacade::locationStorage()->location(_name);
+
+	//
 	// Загрузить в редактор данных данные
 	//
-	m_dataEditManager->editLocation(_name);
+	m_dataEditManager->editLocation(location);
 }
 
 void LocationsManager::aboutRemoveLocation(const QString& _name)

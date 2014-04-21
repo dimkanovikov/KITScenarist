@@ -14,7 +14,7 @@ namespace Domain
 	class Location : public DomainObject
 	{
 	public:
-		Location(const Identifier& _id, const QString& _name);
+		Location(const Identifier& _id, const QString& _name, const QString& _description);
 
 		/**
 		 * @brief Получить название локации
@@ -26,11 +26,27 @@ namespace Domain
 		 */
 		void setName(const QString& _name);
 
+		/**
+		 * @brief Получить описание локации
+		 */
+		QString description() const;
+
+		/**
+		 * @brief Установить описание локации
+		 */
+		void setDescription(const QString& _description);
+
 	private:
 		/**
 		 * @brief Название локации
 		 */
 		QString m_name;
+
+		/**
+		 * @brief Описание
+		 * @note Html-форматированный текст
+		 */
+		QString m_description;
 	};
 
 	// ****

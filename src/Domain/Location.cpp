@@ -3,9 +3,10 @@
 using namespace Domain;
 
 
-Location::Location(const Identifier& _id, const QString& _name) :
+Location::Location(const Identifier& _id, const QString& _name, const QString& _description) :
 	DomainObject(_id),
-	m_name(_name)
+	m_name(_name),
+	m_description(_description)
 {
 }
 
@@ -18,6 +19,18 @@ void Location::setName(const QString& _name)
 {
 	if (m_name != _name) {
 		m_name = _name;
+	}
+}
+
+QString Location::description() const
+{
+	return m_description;
+}
+
+void Location::setDescription(const QString& _description)
+{
+	if (m_description != _description) {
+		m_description = _description;
 	}
 }
 

@@ -6,7 +6,7 @@ using namespace DataMappingLayer;
 
 
 namespace {
-	const QString COLUMNS = " id, name ";
+	const QString COLUMNS = " id, name, description ";
 	const QString TABLE_NAME = " locations ";
 }
 
@@ -55,14 +55,15 @@ QString LocationMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 {
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
-					" (id, name) "
-					" VALUES(?, ?) "
+					" (id, name, description) "
+					" VALUES(?, ?, ?) "
 					);
 
 	Location* location = dynamic_cast<Location*>(_subject );
 	_insertValues.clear();
 	_insertValues.append(location->id().value());
 	_insertValues.append(location->name());
+	_insertValues.append(location->description());
 
 	return insertStatement;
 }
@@ -71,13 +72,15 @@ QString LocationMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 {
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET name = ? "
+					" SET name = ?, "
+					" description = ? "
 					" WHERE id = ? "
 					);
 
 	Location* location = dynamic_cast<Location*>(_subject);
 	_updateValues.clear();
 	_updateValues.append(location->name());
+	_updateValues.append(location->description());
 	_updateValues.append(location->id().value());
 
 	return updateStatement;
@@ -96,8 +99,9 @@ QString LocationMapper::deleteStatement(DomainObject* _subject, QVariantList& _d
 DomainObject* LocationMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
 	QString name = _record.value("name").toString();
+	QString description = _record.value("description").toString();
 
-	return new Location(_id, name);
+	return new Location(_id, name, description);
 }
 
 DomainObjectsItemModel* LocationMapper::modelInstance()
