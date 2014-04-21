@@ -2,6 +2,7 @@
 
 #include "PlaceMapper.h"
 #include "LocationMapper.h"
+#include "LocationPhotoMapper.h"
 #include "ScenarioDayMapper.h"
 #include "TimeMapper.h"
 #include "CharacterMapper.h"
@@ -25,6 +26,14 @@ LocationMapper* MapperFacade::locationMapper()
 		s_locationMapper = new LocationMapper;
 	}
 	return s_locationMapper;
+}
+
+LocationPhotoMapper* MapperFacade::locationPhotoMapper()
+{
+	if (s_locationPhotoMapper == 0) {
+		s_locationPhotoMapper = new LocationPhotoMapper;
+	}
+	return s_locationPhotoMapper;
 }
 
 ScenarioDayMapper* MapperFacade::scenarioDayMapper()
@@ -69,6 +78,7 @@ SettingsMapper* MapperFacade::settingsMapper()
 
 PlaceMapper* MapperFacade::s_placeMapper = 0;
 LocationMapper* MapperFacade::s_locationMapper = 0;
+LocationPhotoMapper* MapperFacade::s_locationPhotoMapper = 0;
 ScenarioDayMapper* MapperFacade::s_scenarioDayMapper = 0;
 TimeMapper* MapperFacade::s_timeMapper = 0;
 CharacterMapper* MapperFacade::s_characterMapper = 0;

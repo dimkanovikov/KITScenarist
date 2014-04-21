@@ -8,13 +8,16 @@
 
 namespace Domain
 {
+	class LocationPhotosTable;
+
+
 	/**
 	 * @brief Класс локации
 	 */
 	class Location : public DomainObject
 	{
 	public:
-		Location(const Identifier& _id, const QString& _name, const QString& _description);
+		Location(const Identifier& _id, const QString& _name, const QString& _description, LocationPhotosTable* _photos);
 
 		/**
 		 * @brief Получить название локации
@@ -36,6 +39,21 @@ namespace Domain
 		 */
 		void setDescription(const QString& _description);
 
+		/**
+		 * @brief Получить фотографии локации
+		 */
+		LocationPhotosTable* photosTable() const;
+
+		/**
+		 * @brief Установить фотографии локации
+		 */
+		void setPhotos(const QList<QPixmap>& _photos);
+
+		/**
+		 * @brief Получить фотографии локации
+		 */
+		QList<QPixmap> photos() const;
+
 	private:
 		/**
 		 * @brief Название локации
@@ -47,6 +65,11 @@ namespace Domain
 		 * @note Html-форматированный текст
 		 */
 		QString m_description;
+
+		/**
+		 * @brief Фотографии
+		 */
+		LocationPhotosTable* m_photos;
 	};
 
 	// ****

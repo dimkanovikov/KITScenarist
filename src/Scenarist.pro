@@ -141,7 +141,10 @@ SOURCES += main.cpp \
     3rd_party/Widgets/PhotosChooser/PhotosChooser.cpp \
     3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp \
     3rd_party/Widgets/QLightBoxWidget/qlightboxwidget.cpp \
-    3rd_party/Widgets/PhotosChooser/PhotoPreview.cpp
+    3rd_party/Widgets/PhotosChooser/PhotoPreview.cpp \
+    Domain/LocationPhoto.cpp \
+    DataLayer/DataMappingLayer/LocationPhotoMapper.cpp \
+    DataLayer/DataStorageLayer/LocationPhotoStorage.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -275,7 +278,10 @@ HEADERS += \
     3rd_party/Widgets/PhotosChooser/PhotosChooser.h \
     3rd_party/Widgets/PhotosChooser/PhotoLabel.h \
     3rd_party/Widgets/QLightBoxWidget/qlightboxwidget.h \
-    3rd_party/Widgets/PhotosChooser/PhotoPreview.h
+    3rd_party/Widgets/PhotosChooser/PhotoPreview.h \
+    Domain/LocationPhoto.h \
+    DataLayer/DataMappingLayer/LocationPhotoMapper.h \
+    DataLayer/DataStorageLayer/LocationPhotoStorage.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

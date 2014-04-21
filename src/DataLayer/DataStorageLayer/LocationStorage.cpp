@@ -1,9 +1,12 @@
 #include "LocationStorage.h"
 
+#include "LocationPhotoStorage.h"
+
 #include <DataLayer/DataMappingLayer/MapperFacade.h>
 #include <DataLayer/DataMappingLayer/LocationMapper.h>
 
 #include <Domain/Location.h>
+#include <Domain/LocationPhoto.h>
 
 using namespace DataStorageLayer;
 using namespace DataMappingLayer;
@@ -55,7 +58,7 @@ Location* LocationStorage::storeLocation(const QString& _locationName)
 		// Если такой локации ещё нет, то сохраним её
 		//
 		if (!DomainObject::isValid(newLocation)) {
-			newLocation = new Location(Identifier(), locationName, QString());
+			newLocation = new Location(Identifier(), locationName, QString(), new LocationPhotosTable);
 
 			//
 			// ... в базе данных
@@ -78,6 +81,7 @@ void LocationStorage::updateLocation(Location* _location)
 	// Сохраним изменение в базе данных
 	//
 	MapperFacade::locationMapper()->update(_location);
+	StorageFacade::locationPhotoStorage()->store(_location);
 
 	//
 	// Уведомим об обновлении
@@ -106,8 +110,11 @@ void LocationStorage::removeLocation(const QString& _name)
 		}
 
 		//
-		// ... и удалим из локального списка и базы данных
+		// ... и удалим
 		//
+		// ...... фотографии
+		StorageFacade::locationPhotoStorage()->remove(locationToDelete);
+		// ...... из локального списка и базы данных
 		all()->remove(locationToDelete);
 		MapperFacade::locationMapper()->remove(locationToDelete);
 	}

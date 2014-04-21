@@ -34,12 +34,15 @@ void LocationsDataEditManager::clean()
 
 void LocationsDataEditManager::editLocation(Location* _location)
 {
+	clean();
+
 	m_location = _location;
 
 	if (m_location != 0) {
 		m_editor->setEnabled(true);
 		m_editor->setName(m_location->name());
 		m_editor->setDescription(m_location->description());
+		m_editor->setPhotos(m_location->photos());
 	} else {
 		clean();
 	}
@@ -57,6 +60,7 @@ void LocationsDataEditManager::aboutSave()
 	//
 	m_location->setName(m_editor->name());
 	m_location->setDescription(m_editor->description());
+	m_location->setPhotos(m_editor->photos());
 
 	//
 	// Сохраним изменения

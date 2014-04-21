@@ -12,6 +12,7 @@ namespace Domain {
 
 using namespace Domain;
 
+
 namespace DataStorageLayer
 {
 	class LocationStorage

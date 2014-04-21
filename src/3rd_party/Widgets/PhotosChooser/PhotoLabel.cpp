@@ -56,6 +56,16 @@ void PhotoLabel::setPhoto(const QPixmap& _photo)
 	// Устанавливаем изображение
 	//
 	setPixmap(photoToShow);
+
+	//
+	// Уведомляем о смене фотографии
+	//
+	emit photoChanged();
+}
+
+QPixmap PhotoLabel::photo() const
+{
+	return m_photo;
 }
 
 void PhotoLabel::enterEvent(QEvent* _event)

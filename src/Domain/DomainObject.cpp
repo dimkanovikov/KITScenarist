@@ -105,6 +105,13 @@ bool DomainObjectsItemModel::contains(DomainObject* domainObject) const
 	return domainObjects().contains(domainObject);
 }
 
+void DomainObjectsItemModel::clear()
+{
+	for (int index = m_domainObjects.count()-1; index >= 0; --index) {
+		remove(m_domainObjects.value(index));
+	}
+}
+
 void DomainObjectsItemModel::append(DomainObject* domainObject)
 {
 	emit beginInsertRows(QModelIndex(), count(), count());

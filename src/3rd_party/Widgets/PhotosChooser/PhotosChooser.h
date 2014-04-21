@@ -18,6 +18,27 @@ class PhotosChooser : public QWidget
 public:
 	explicit PhotosChooser(QWidget* _parent = 0);
 
+	/**
+	 * @brief Установить фотографии
+	 */
+	void setPhotos(const QList<QPixmap>& _photos);
+
+	/**
+	 * @brief Список выбранных фотографий
+	 */
+	QList<QPixmap> photos() const;
+
+	/**
+	 * @brief Очистить виджет от установленных ранее фотографий
+	 */
+	void clear();
+
+signals:
+	/**
+	 * @brief Сигнал об изменении одной из фотографий
+	 */
+	void photoChanged();
+
 private slots:
 	/**
 	 * @brief Показать фотографию

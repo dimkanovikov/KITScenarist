@@ -6,6 +6,7 @@ namespace DataStorageLayer
 {
 	class PlaceStorage;
 	class LocationStorage;
+	class LocationPhotoStorage;
 	class ScenarioDayStorage;
 	class TimeStorage;
 	class CharacterStorage;
@@ -23,6 +24,7 @@ namespace DataStorageLayer
 	public:
 		static PlaceStorage* placeStorage();
 		static LocationStorage* locationStorage();
+		static LocationPhotoStorage* locationPhotoStorage();
 		static ScenarioDayStorage* scenarioDayStorage();
 		static TimeStorage* timeStorage();
 		static CharacterStorage* characterStorage();
@@ -32,6 +34,7 @@ namespace DataStorageLayer
 	private:
 		static PlaceStorage* s_placeStorage;
 		static LocationStorage* s_locationStorage;
+		static LocationPhotoStorage* s_locationPhotoStorage;
 		static ScenarioDayStorage* s_scenarioDayStorage;
 		static TimeStorage* s_timeStorage;
 		static CharacterStorage* s_characterStorage;

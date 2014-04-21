@@ -1,13 +1,22 @@
 #include "Location.h"
 
+#include "LocationPhoto.h"
+
 using namespace Domain;
 
 
-Location::Location(const Identifier& _id, const QString& _name, const QString& _description) :
+Location::Location(
+		const Identifier& _id,
+		const QString& _name,
+		const QString& _description,
+		LocationPhotosTable* _photos
+		) :
 	DomainObject(_id),
 	m_name(_name),
-	m_description(_description)
+	m_description(_description),
+	m_photos(_photos)
 {
+	_photos->setLocation(this);
 }
 
 QString Location::name() const
@@ -32,6 +41,31 @@ void Location::setDescription(const QString& _description)
 	if (m_description != _description) {
 		m_description = _description;
 	}
+}
+
+LocationPhotosTable* Location::photosTable() const
+{
+	return m_photos;
+}
+
+void Location::setPhotos(const QList<QPixmap>& _photos)
+{
+	m_photos->clear();
+
+	for (int index = 0; index < _photos.count(); ++index) {
+		LocationPhoto* newPhoto = new LocationPhoto(Identifier(), this, _photos.value(index), index);
+		m_photos->append(newPhoto);
+	}
+}
+
+QList<QPixmap> Location::photos() const
+{
+	QList<QPixmap> photos;
+	foreach (DomainObject* domainObject, m_photos->toList()) {
+		LocationPhoto* photo = dynamic_cast<LocationPhoto*>(domainObject);
+		photos.insert(photo->sortOrder(), photo->photo());
+	}
+	return photos;
 }
 
 // ****

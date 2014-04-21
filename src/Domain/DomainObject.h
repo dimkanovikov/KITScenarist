@@ -55,9 +55,11 @@ namespace Domain
 		virtual QVariant data(const QModelIndex&, int) const;
 		virtual DomainObject* itemForIndex(const QModelIndex&) const;
 		virtual QModelIndex indexForItem(DomainObject* _item) const;
+
 		QList<DomainObject*> toList() const;
 		int count() const;
 		bool contains(DomainObject*) const;
+		void clear();
 
 	public:
 		virtual void append(DomainObject*);

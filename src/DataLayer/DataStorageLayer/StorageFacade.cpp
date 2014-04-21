@@ -2,6 +2,7 @@
 
 #include "PlaceStorage.h"
 #include "LocationStorage.h"
+#include "LocationPhotoStorage.h"
 #include "ScenarioDayStorage.h"
 #include "TimeStorage.h"
 #include "CharacterStorage.h"
@@ -35,6 +36,14 @@ LocationStorage* StorageFacade::locationStorage()
 		s_locationStorage = new LocationStorage;
 	}
 	return s_locationStorage;
+}
+
+LocationPhotoStorage* StorageFacade::locationPhotoStorage()
+{
+	if (s_locationPhotoStorage == 0) {
+		s_locationPhotoStorage = new LocationPhotoStorage;
+	}
+	return s_locationPhotoStorage;
 }
 
 ScenarioDayStorage* StorageFacade::scenarioDayStorage()
@@ -79,6 +88,7 @@ SettingsStorage* StorageFacade::settingsStorage()
 
 PlaceStorage* StorageFacade::s_placeStorage = 0;
 LocationStorage* StorageFacade::s_locationStorage = 0;
+LocationPhotoStorage* StorageFacade::s_locationPhotoStorage = 0;
 ScenarioDayStorage* StorageFacade::s_scenarioDayStorage = 0;
 TimeStorage* StorageFacade::s_timeStorage = 0;
 CharacterStorage* StorageFacade::s_characterStorage = 0;

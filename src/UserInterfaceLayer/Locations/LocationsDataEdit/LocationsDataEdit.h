@@ -46,6 +46,16 @@ namespace UserInterface
 		 */
 		QString description() const;
 
+		/**
+		 * @brief Установить фотографии
+		 */
+		void setPhotos(const QList<QPixmap>& _photos);
+
+		/**
+		 * @brief Получить список фотографий
+		 */
+		QList<QPixmap> photos() const;
+
 	signals:
 		/**
 		 * @brief Сохранить
@@ -91,6 +101,11 @@ namespace UserInterface
 		 * @brief Исходное описание
 		 */
 		QString m_sourceDescription;
+
+		/**
+		 * @brief Исходные фотографии
+		 */
+		QList<QPixmap> m_sourcePhotos;
 	};
 }
 

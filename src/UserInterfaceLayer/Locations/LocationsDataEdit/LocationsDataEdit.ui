@@ -89,7 +89,7 @@
       <item row="1" column="0" rowspan="5">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="PhotosChooser" name="widget_2" native="true"/>
+         <widget class="PhotosChooser" name="photos" native="true"/>
         </item>
         <item>
          <spacer name="verticalSpacer">

@@ -21,11 +21,21 @@ public:
 	 */
 	void setPhoto(const QPixmap& _photo);
 
+	/**
+	 * @brief Получить фотографию
+	 */
+	QPixmap photo() const;
+
 signals:
 	/**
 	 * @brief Сигнал щелчка по фотографии
 	 */
 	void photoClicked(const QPixmap& _photo);
+
+	/**
+	 * @brief Фотография изменена
+	 */
+	void photoChanged();
 
 protected:
 	/**
@@ -43,6 +53,9 @@ protected:
 	 */
 	void mousePressEvent(QMouseEvent* _event);
 
+	/**
+	 * @brief Переопределяется для обновления фотографии при изменении размера виджета
+	 */
 	void resizeEvent(QResizeEvent* _event);
 
 private slots:

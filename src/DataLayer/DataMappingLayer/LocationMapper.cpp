@@ -1,5 +1,7 @@
 #include "LocationMapper.h"
 
+#include "LocationPhotoMapper.h"
+
 #include <Domain/Location.h>
 
 using namespace DataMappingLayer;
@@ -100,8 +102,9 @@ DomainObject* LocationMapper::doLoad(const Identifier& _id, const QSqlRecord& _r
 {
 	QString name = _record.value("name").toString();
 	QString description = _record.value("description").toString();
+	LocationPhotosTable* photos = MapperFacade::locationPhotoMapper()->findAllForLocation(_id);
 
-	return new Location(_id, name, description);
+	return new Location(_id, name, description, photos);
 }
 
 DomainObjectsItemModel* LocationMapper::modelInstance()
