@@ -149,3 +149,44 @@ QRadioButton:checked[inTopPanel="true"] {
 	border-bottom-style: solid;
 	border-bottom-color: #0891d6;
 }
+
+/* Табулятор */
+QTabBar[inTopPanel="true"] {
+	background-color: #282d31;
+}
+
+QTabBar::tab[inTopPanel="true"] {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #5f5f5f;
+	background: #282d31;
+	color: #d5d6d6;
+	padding-top: 4px;
+	padding-bottom: 1px;
+	padding-left: 14px;
+	padding-right: 14px;
+}
+
+QTabBar::tab:first[inTopPanel="true"] {
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #1c1f21;
+}
+
+QTabBar::tab:last[inTopPanel="true"] {
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #5f5f5f;
+}
+
+QTabBar::tab:selected[inTopPanel="true"] {
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: palette(highlight);
+}
+
+QTabBar::tab:!selected[inTopPanel="true"] {
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: #282d31;
+}
