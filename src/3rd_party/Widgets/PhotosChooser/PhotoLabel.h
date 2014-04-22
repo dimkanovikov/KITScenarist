@@ -17,6 +17,11 @@ public:
 	explicit PhotoLabel(QWidget* _parent = 0);
 
 	/**
+	 * @brief Перейти к исходному состоянию
+	 */
+	void clear();
+
+	/**
 	 * @brief Установить фотографию
 	 */
 	void setPhoto(const QPixmap& _photo);
@@ -25,6 +30,12 @@ public:
 	 * @brief Получить фотографию
 	 */
 	QPixmap photo() const;
+
+public slots:
+	/**
+	 * @brief Выбрать фотографию
+	 */
+	void aboutChoosePhoto();
 
 signals:
 	/**

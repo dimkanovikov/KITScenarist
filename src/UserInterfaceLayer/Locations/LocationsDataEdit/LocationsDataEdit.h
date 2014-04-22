@@ -71,7 +71,7 @@ namespace UserInterface
 		/**
 		 * @brief Обновить состояние кнопки сохранения
 		 */
-		void updateSaveState();
+		void updateState();
 
 	private:
 		/**

@@ -33,6 +33,17 @@ public:
 	 */
 	void clear();
 
+	/**
+	 * @brief Можно ли добавить ещё фотографию
+	 */
+	bool canAddPhoto() const;
+
+public slots:
+	/**
+	 * @brief Добавить фотографию
+	 */
+	void aboutAddPhoto();
+
 signals:
 	/**
 	 * @brief Сигнал об изменении одной из фотографий

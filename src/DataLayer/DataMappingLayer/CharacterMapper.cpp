@@ -58,7 +58,7 @@ QString CharacterMapper::insertStatement(DomainObject* _subject, QVariantList& _
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (id, name, real_name, description) "
-					" VALUES(?, ?) "
+					" VALUES(?, ?, ?, ?) "
 					);
 
 	Character* character = dynamic_cast<Character*>(_subject );

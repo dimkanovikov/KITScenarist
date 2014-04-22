@@ -16,38 +16,39 @@ PhotosChooser::PhotosChooser(QWidget* _parent) :
 	m_additionalPhoto4(new PhotoLabel(this)),
 	m_photoPreview(0)
 {
-	m_mainPhoto->setMinimumSize(144, 180);
+	m_mainPhoto->setFixedSize(150, 180);
 	connect(m_mainPhoto, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
 	connect(m_mainPhoto, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
-	m_additionalPhoto1->setMinimumSize(72, 90);
+	m_additionalPhoto1->setFixedSize(72, 90);
 	connect(m_additionalPhoto1, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
 	connect(m_additionalPhoto1, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
-	m_additionalPhoto2->setMinimumSize(72, 90);
+	m_additionalPhoto2->setFixedSize(72, 90);
 	connect(m_additionalPhoto2, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
 	connect(m_additionalPhoto2, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
-	m_additionalPhoto3->setMinimumSize(72, 90);
+	m_additionalPhoto3->setFixedSize(72, 90);
 	connect(m_additionalPhoto3, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
 	connect(m_additionalPhoto3, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
-	m_additionalPhoto4->setMinimumSize(72, 90);
+	m_additionalPhoto4->setFixedSize(72, 90);
 	connect(m_additionalPhoto4, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
 	connect(m_additionalPhoto4, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
 	QHBoxLayout* additionalLayout1 = new QHBoxLayout;
-	additionalLayout1->addWidget(m_additionalPhoto1);
-	additionalLayout1->addWidget(m_additionalPhoto2);
+	additionalLayout1->addWidget(m_additionalPhoto1, 0, Qt::AlignLeft);
+	additionalLayout1->addWidget(m_additionalPhoto2, 0, Qt::AlignLeft);
 	QHBoxLayout* additionalLayout2 = new QHBoxLayout;
-	additionalLayout2->addWidget(m_additionalPhoto3);
-	additionalLayout2->addWidget(m_additionalPhoto4);
+	additionalLayout2->addWidget(m_additionalPhoto3, 0, Qt::AlignLeft);
+	additionalLayout2->addWidget(m_additionalPhoto4, 0, Qt::AlignLeft);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins(6, 0, 6, 6));
 	layout->addWidget(m_mainPhoto, 1);
 	layout->addLayout(additionalLayout1);
 	layout->addLayout(additionalLayout2);
+	layout->addStretch();
 
 	this->setLayout(layout);
 
@@ -103,6 +104,34 @@ void PhotosChooser::clear()
 	m_additionalPhoto2->setPhoto(QPixmap());
 	m_additionalPhoto3->setPhoto(QPixmap());
 	m_additionalPhoto4->setPhoto(QPixmap());
+}
+
+bool PhotosChooser::canAddPhoto() const
+{
+	bool canAdd = true;
+	if (m_mainPhoto->isVisible()
+		&& m_additionalPhoto1->isVisible()
+		&& m_additionalPhoto2->isVisible()
+		&& m_additionalPhoto3->isVisible()
+		&& m_additionalPhoto4->isVisible()) {
+		canAdd = false;
+	}
+	return canAdd;
+}
+
+void PhotosChooser::aboutAddPhoto()
+{
+	if (!m_mainPhoto->isVisible()) {
+		m_mainPhoto->aboutChoosePhoto();
+	} else if (!m_additionalPhoto1->isVisible()) {
+		m_additionalPhoto1->aboutChoosePhoto();
+	} else if (!m_additionalPhoto2->isVisible()) {
+		m_additionalPhoto2->aboutChoosePhoto();
+	} else if (!m_additionalPhoto3->isVisible()) {
+		m_additionalPhoto3->aboutChoosePhoto();
+	} else if (!m_additionalPhoto4->isVisible()) {
+		m_additionalPhoto4->aboutChoosePhoto();
+	}
 }
 
 void PhotosChooser::showPhoto(const QPixmap& _photo)

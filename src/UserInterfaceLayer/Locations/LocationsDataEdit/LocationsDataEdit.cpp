@@ -82,30 +82,37 @@ namespace {
 	}
 }
 
-void LocationsDataEdit::updateSaveState()
+void LocationsDataEdit::updateState()
 {
+	//
+	// Обновим состояние доступности кнопки сохранения
+	//
 	bool saveEnabled = false;
 	if (name() != m_sourceName
 		|| description() != m_sourceDescription
 		|| !isEqualPixmapLists(photos(), m_sourcePhotos)) {
 		saveEnabled = true;
 	}
-
 	ui->save->setEnabled(saveEnabled);
+
+	//
+	// Обновим состояние доступности кнопки добавления фотографий
+	//
+	bool addPhotoEnabled = ui->photos->canAddPhoto();
+	ui->addPhoto->setEnabled(addPhotoEnabled);
 }
 
 void LocationsDataEdit::initView()
 {
-	ui->gridLayout->setColumnStretch(0, 1);
-	ui->gridLayout->setColumnStretch(1, 3);
 }
 
 void LocationsDataEdit::initConnections()
 {
-	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(updateSaveState()));
-	connect(ui->description, SIGNAL(textChanged()), this, SLOT(updateSaveState()));
-	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(updateSaveState()));
+	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(updateState()));
+	connect(ui->description, SIGNAL(textChanged()), this, SLOT(updateState()));
+	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(updateState()));
 
+	connect(ui->addPhoto, SIGNAL(clicked()), ui->photos, SLOT(aboutAddPhoto()));
 	connect(ui->save, SIGNAL(clicked()), this, SIGNAL(saveLocation()));
 	connect(ui->cancel, SIGNAL(clicked()), this, SIGNAL(reloadLocation()));
 }

@@ -52,6 +52,10 @@ void PhotoLabel::setPhoto(const QPixmap& _photo)
 						   (height() - scaledPhoto.height()) / 2,
 						   scaledPhoto);
 		painter.end();
+
+		show();
+	} else {
+		hide();
 	}
 
 	//
@@ -68,6 +72,18 @@ void PhotoLabel::setPhoto(const QPixmap& _photo)
 QPixmap PhotoLabel::photo() const
 {
 	return m_photo;
+}
+
+void PhotoLabel::aboutChoosePhoto()
+{
+	QString imageFile =
+			QFileDialog::getOpenFileName(this,
+										 tr("Choose image"),
+										 QString(),
+										 tr("Images (*.png *.jpeg *.jpg)"));
+	if (!imageFile.isEmpty()) {
+		setPhoto(QPixmap(imageFile));
+	}
 }
 
 void PhotoLabel::enterEvent(QEvent* _event)
@@ -99,15 +115,7 @@ void PhotoLabel::mousePressEvent(QMouseEvent* _event)
 	// Если фотография не установлена откроем диалог выбора файла для выбора фотографии
 	//
 	if (m_photo.isNull()) {
-
-		QString imageFile =
-				QFileDialog::getOpenFileName(this,
-											 tr("Choose image"),
-											 QString(),
-											 tr("Images (*.png *.jpeg *.jpg)"));
-		if (!imageFile.isEmpty()) {
-			setPhoto(QPixmap(imageFile));
-		}
+		aboutChoosePhoto();
 	}
 	//
 	// Если фотография установлена, то откроем её

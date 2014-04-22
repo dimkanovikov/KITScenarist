@@ -45,25 +45,25 @@
       </sizepolicy>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="sourceName">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Choose Character</string>
+        </property>
+        <property name="margin">
+         <number>6</number>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0" rowspan="7">
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="PhotosChooser" name="photos" native="true"/>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
+       <widget class="PhotosChooser" name="photos" native="true"/>
       </item>
       <item row="1" column="1">
        <widget class="QLabel" name="nameTitle">
@@ -105,6 +105,13 @@
       <item row="7" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
+         <widget class="QPushButton" name="addPhoto">
+          <property name="text">
+           <string>Add photo</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -139,23 +146,6 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QLabel" name="sourceName">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Choose Character</string>
-        </property>
-        <property name="margin">
-         <number>6</number>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -178,6 +168,7 @@
  <tabstops>
   <tabstop>name</tabstop>
   <tabstop>realName</tabstop>
+  <tabstop>addPhoto</tabstop>
   <tabstop>save</tabstop>
   <tabstop>cancel</tabstop>
  </tabstops>
