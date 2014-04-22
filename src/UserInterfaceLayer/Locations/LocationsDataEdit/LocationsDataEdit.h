@@ -69,7 +69,7 @@ namespace UserInterface
 
 	private slots:
 		/**
-		 * @brief Обновить состояние кнопки сохранения
+		 * @brief Обновить состояние кнопок
 		 */
 		void updateState();
 

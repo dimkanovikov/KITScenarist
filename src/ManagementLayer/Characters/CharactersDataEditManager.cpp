@@ -72,7 +72,7 @@ void CharactersDataEditManager::aboutSave()
 	//
     if (previousName != m_character->name()) {
         emit characterNameChanged(previousName, m_character->name());
-    }
+	}
 
 	//
 	// Текущим становится обновлённый персонаж

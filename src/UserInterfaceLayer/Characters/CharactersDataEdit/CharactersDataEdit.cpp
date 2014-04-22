@@ -32,7 +32,6 @@ void CharactersDataEdit::clean()
 	ui->realName->clear();
 	ui->description->clear();
 	ui->photos->clear();
-	initView();
 }
 
 void CharactersDataEdit::setName(const QString& _name)

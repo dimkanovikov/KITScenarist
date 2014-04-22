@@ -233,6 +233,8 @@ void SqlExecutingQueuedThread::executeSql(const QSqlQuery &_sqlQuery)
 
 void SqlExecutingQueuedThread::run()
 {
+	Database::instanse().transaction();
+
 	while (!m_sqlQueue.isEmpty()) {
 		QSqlQuery queryToExecute = m_sqlQueue.dequeue();
 		queryToExecute.exec();
@@ -241,4 +243,6 @@ void SqlExecutingQueuedThread::run()
 		qDebug() << queryToExecute.lastError();
 		qDebug() << queryToExecute.boundValues();
 	}
+
+	Database::instanse().commit();
 }
