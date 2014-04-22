@@ -31,6 +31,11 @@ void CharactersNavigator::setModel(QAbstractItemModel* _model)
 {
 	m_navigatorProxyModel->setSourceModel(_model);
 	m_navigator->setModel(m_navigatorProxyModel);
+
+	//
+	// Настраиваем запрос на изменение при изменении текущего элемента
+	//
+	connect(m_navigator->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(aboutEditCharacter()));
 }
 
 void CharactersNavigator::selectFirstCharacter()
@@ -118,7 +123,6 @@ void CharactersNavigator::initConnections()
 {
 	connect(m_addCharacter, SIGNAL(clicked()), this, SIGNAL(addCharacter()));
 	connect(m_editCharacter, SIGNAL(clicked()), this, SLOT(aboutEditCharacter()));
-	connect(m_navigator, SIGNAL(activated(QModelIndex)), this, SLOT(aboutEditCharacter()));
 	connect(m_removeCharacter, SIGNAL(clicked()), this, SLOT(aboutRemoveCharacter()));
 	connect(m_refreshCharacters, SIGNAL(clicked()), this, SIGNAL(refreshCharacters()));
 }

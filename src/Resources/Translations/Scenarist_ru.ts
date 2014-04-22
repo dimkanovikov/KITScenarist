@@ -24,17 +24,22 @@
         <translation>Описание:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="123"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="110"/>
+        <source>Add photo</source>
+        <translation>Добавить фото</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="130"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="136"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="143"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="152"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="58"/>
         <source>Choose Character</source>
         <translation>Выберите персонажа</translation>
     </message>
@@ -47,27 +52,32 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="142"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="58"/>
         <source>Choose Location</source>
         <translation>Выберите локацию</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="51"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="71"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="68"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="81"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="113"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="100"/>
+        <source>Add Photo</source>
+        <translation>Добавить фото</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="120"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="126"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="133"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -286,12 +296,12 @@
 <context>
     <name>PhotoLabel</name>
     <message>
-        <location filename="../../3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp" line="105"/>
+        <location filename="../../3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp" line="81"/>
         <source>Choose image</source>
         <translation>Выбор изображения</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp" line="107"/>
+        <location filename="../../3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp" line="83"/>
         <source>Images (*.png *.jpeg *.jpg)</source>
         <translation>Изображения (*.png *.jpeg *.jpg)</translation>
     </message>

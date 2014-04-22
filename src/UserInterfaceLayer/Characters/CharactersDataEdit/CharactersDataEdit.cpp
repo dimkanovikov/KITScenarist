@@ -113,8 +113,8 @@ void CharactersDataEdit::updateState()
 	//
 	// Обновим состояние доступности кнопки добавления фотографий
 	//
-	bool addPhotoEnabled = ui->photos->canAddPhoto();
-	ui->addPhoto->setEnabled(addPhotoEnabled);
+	bool addPhotoVisible = ui->photos->canAddPhoto();
+	ui->addPhoto->setVisible(addPhotoVisible);
 }
 
 void CharactersDataEdit::initView()

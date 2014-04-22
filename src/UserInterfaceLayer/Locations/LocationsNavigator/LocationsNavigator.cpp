@@ -31,6 +31,11 @@ void LocationsNavigator::setModel(QAbstractItemModel* _model)
 {
 	m_navigatorProxyModel->setSourceModel(_model);
 	m_navigator->setModel(m_navigatorProxyModel);
+
+	//
+	// Настраиваем запрос на изменение при изменении текущего элемента
+	//
+	connect(m_navigator->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(aboutEditLocation()));
 }
 
 void LocationsNavigator::selectFirstLocation()
@@ -118,7 +123,6 @@ void LocationsNavigator::initConnections()
 {
 	connect(m_addLocation, SIGNAL(clicked()), this, SIGNAL(addLocation()));
 	connect(m_editLocation, SIGNAL(clicked()), this, SLOT(aboutEditLocation()));
-	connect(m_navigator, SIGNAL(activated(QModelIndex)), this, SLOT(aboutEditLocation()));
 	connect(m_removeLocation, SIGNAL(clicked()), this, SLOT(aboutRemoveLocation()));
 	connect(m_refreshLocations, SIGNAL(clicked()), this, SIGNAL(refreshLocations()));
 }
