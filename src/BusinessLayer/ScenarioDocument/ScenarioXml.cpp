@@ -4,12 +4,14 @@
 #include "ScenarioTextDocument.h"
 #include "ScenarioModelItem.h"
 #include "ScenarioTextBlockStyle.h"
+#include "ScenarioTextBlockInfo.h"
 
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 using namespace BusinessLogic;
 
@@ -56,10 +58,11 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 	int openedGroups = 0;
 	int openedFolders = 0;
 
+	QXmlStreamWriter writer(&resultXml);
+	writer.writeStartDocument();
+	writer.writeStartElement("scenario");
 	do {
 		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
-
-		ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
 
 		//
 		// Курсор в конце текущего блока
@@ -68,35 +71,51 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 		if (cursor.atBlockEnd()
 			|| cursor.position() == _endPosition) {
 			//
+			// Текущий блок
+			//
+			QTextBlock currentBlock = cursor.block();
+
+			//
+			// Определим тип текущего блока
+			//
+			ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(currentBlock);
+
+			//
 			// Получить текст под курсором
 			//
-			QString textToSave =
-					QString("<![CDATA[%1]]>")
-					.arg(cursor.selectedText().simplified());
-
+			QString textToSave = cursor.selectedText().simplified();
 
 			//
 			// Дописать xml
 			//
 			switch (currentType) {
 				case ScenarioTextBlockStyle::TimeAndPlace: {
-					resultXml += "<time_and_place>";
-					resultXml += textToSave;
-					resultXml += "</time_and_place>";
+					writer.writeStartElement("time_and_place");
+
+					//
+					// Если это возможно сохраним информацию о сцене
+					//
+					QTextBlockUserData* blockUserData = currentBlock.userData();
+					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(blockUserData)) {
+						writer.writeAttribute("synopsis", info->synopsis());
+					}
+
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 					break;
 				}
 
 				case ScenarioTextBlockStyle::Action: {
-					resultXml += "<action>";
-					resultXml += textToSave;
-					resultXml += "</action>";
+					writer.writeStartElement("action");
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 					break;
 				}
 
 				case ScenarioTextBlockStyle::Character: {
-					resultXml += "<character>";
-					resultXml += textToSave;
-					resultXml += "</character>";
+					writer.writeStartElement("character");
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 					break;
 				}
 
@@ -109,53 +128,62 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					}
 
 					if (!textToSave.isEmpty()) {
-						resultXml += "<parenthetical>";
-						resultXml += textToSave;
-						resultXml += "</parenthetical>";
+						writer.writeStartElement("parenthetical");
+						writer.writeCDATA(textToSave);
+						writer.writeEndElement();
 					}
 					break;
 				}
 
 				case ScenarioTextBlockStyle::Dialog: {
-					resultXml += "<dialog>";
-					resultXml += textToSave;
-					resultXml += "</dialog>";
+					writer.writeStartElement("dialog");
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 					break;
 				}
 
 				case ScenarioTextBlockStyle::Transition:{
-					resultXml += "<transition>";
-					resultXml += textToSave;
-					resultXml += "</transition>";
+					writer.writeStartElement("transition");
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 					break;
 				}
 
 				case ScenarioTextBlockStyle::Note: {
-					resultXml += "<note>";
-					resultXml += textToSave;
-					resultXml += "</note>";
+					writer.writeStartElement("note");
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 					break;
 				}
 
 				case ScenarioTextBlockStyle::Title: {
-					resultXml += "<title>";
-					resultXml += textToSave;
-					resultXml += "</title>";
+					writer.writeStartElement("title");
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 					break;
 				}
 
 				case ScenarioTextBlockStyle::NoprintableText: {
-					resultXml += "<noprintable_text>";
-					resultXml += textToSave;
-					resultXml += "</noprintable_text>";
+					writer.writeStartElement("noprintable_text");
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 					break;
 				}
 
 				case ScenarioTextBlockStyle::SceneGroupHeader: {
-					resultXml += "<scene_group>";
-					resultXml += "<scene_group_header>";
-					resultXml += textToSave;
-					resultXml += "</scene_group_header>";
+					writer.writeStartElement("scene_group");
+					writer.writeStartElement("scene_group_header");
+
+					//
+					// Если это возможно сохраним информацию о сцене
+					//
+					QTextBlockUserData* blockUserData = currentBlock.userData();
+					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(blockUserData)) {
+						writer.writeAttribute("synopsis", info->synopsis());
+					}
+
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 
 					++openedGroups;
 
@@ -170,19 +198,28 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					if (openedGroups > 0) {
 						--openedGroups;
 
-						resultXml += "<scene_group_footer>";
-						resultXml += textToSave;
-						resultXml += "</scene_group_footer>";
-						resultXml += "</scene_group>";
+						writer.writeStartElement("scene_group_footer");
+						writer.writeCDATA(textToSave);
+						writer.writeEndElement();
+						writer.writeEndElement(); // scene_group
 					}
 					break;
 				}
 
 				case ScenarioTextBlockStyle::FolderHeader: {
-					resultXml += "<folder>";
-					resultXml += "<folder_header>";
-					resultXml += textToSave;
-					resultXml += "</folder_header>";
+					writer.writeStartElement("folder");
+					writer.writeStartElement("folder_header");
+
+					//
+					// Если это возможно сохраним информацию о сцене
+					//
+					QTextBlockUserData* blockUserData = currentBlock.userData();
+					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(blockUserData)) {
+						writer.writeAttribute("synopsis", info->synopsis());
+					}
+
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
 
 					++openedFolders;
 
@@ -197,10 +234,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					if (openedFolders > 0) {
 						--openedFolders;
 
-						resultXml += "<folder_footer>";
-						resultXml += textToSave;
-						resultXml += "</folder_footer>";
-						resultXml += "</folder>";
+						writer.writeStartElement("folder_footer");
+						writer.writeCDATA(textToSave);
+						writer.writeEndElement();
+						writer.writeEndElement(); // folder
 					}
 					break;
 				}
@@ -223,10 +260,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 	// Закроем открытые группы
 	//
 	while (openedGroups > 0) {
-		resultXml += "<scene_group_footer>";
-		resultXml += QObject::tr("END OF GROUP", "ScenarioXml");
-		resultXml += "</scene_group_footer>";
-		resultXml += "</scene_group>";
+		writer.writeStartElement("scene_group_footer");
+		writer.writeCDATA(QObject::tr("END OF GROUP", "ScenarioXml"));
+		writer.writeEndElement();
+		writer.writeEndElement(); // scene_group
 		--openedGroups;
 	}
 
@@ -234,18 +271,18 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 	// Закроем открытые папки
 	//
 	while (openedFolders > 0) {
-		resultXml += "<folder_footer>";
-		resultXml += QObject::tr("END OF FOLDER", "ScenarioXml");
-		resultXml += "</folder_footer>";
-		resultXml += "</folder>";
+		writer.writeStartElement("folder_footer");
+		writer.writeCDATA(QObject::tr("END OF FOLDER", "ScenarioXml"));
+		writer.writeEndElement();
+		writer.writeEndElement(); // folder
 		--openedFolders;
 	}
 
 	//
 	// Добавим корневой элемент
 	//
-	resultXml.prepend("<scenario>");
-	resultXml.append("</scenario>");
+	writer.writeEndElement(); // scenario
+	writer.writeEndDocument();
 
 	return resultXml.simplified();
 }
@@ -373,6 +410,17 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 					if (firstBlockHandling) {
 						firstBlockHandling = false;
 					}
+				}
+
+				//
+				// Если необходимо, загрузить информацию о сцене
+				//
+				if (tokenType == ScenarioTextBlockStyle::TimeAndPlace
+					|| tokenType == ScenarioTextBlockStyle::SceneGroupHeader
+					|| tokenType == ScenarioTextBlockStyle::FolderHeader) {
+					QString synopsis = reader.attributes().value("synopsis").toString();
+					ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo(synopsis);
+					cursor.block().setUserData(info);
 				}
 
 				break;

@@ -5,6 +5,7 @@
 #include "ScenarioModel.h"
 #include "ScenarioModelItem.h"
 #include "ScenarioTextBlockStyle.h"
+#include "ScenarioTextBlockInfo.h"
 
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
@@ -98,6 +99,43 @@ int ScenarioDocument::itemPositionAtIndex(const QModelIndex& _index) const
 {
 	ScenarioModelItem* item = m_model->itemForIndex(_index);
 	return itemStartPosition(item);
+}
+
+QString ScenarioDocument::itemHeaderAtPosition(int _position) const
+{
+	ScenarioModelItem* item = itemForPosition(_position, true);
+	return item->header();
+}
+
+QString ScenarioDocument::itemSynopsisAtPosition(int _position) const
+{
+	ScenarioModelItem* item = itemForPosition(_position, true);
+
+	QTextCursor cursor(m_document);
+	cursor.setPosition(item->position());
+
+	QString synopsis;
+	QTextBlockUserData* textBlockData = cursor.block().userData();
+	if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
+		synopsis = info->synopsis();
+	}
+	return synopsis;
+}
+
+void ScenarioDocument::setItemSynopsisAtPosition(int _position, const QString& _synopsis)
+{
+	ScenarioModelItem* item = itemForPosition(_position, true);
+
+	QTextCursor cursor(m_document);
+	cursor.setPosition(item->position());
+
+	QTextBlockUserData* textBlockData = cursor.block().userData();
+	ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+	if (info == 0) {
+		info = new ScenarioTextBlockInfo;
+	}
+	info->setSynopsis(_synopsis);
+	cursor.block().setUserData(info);
 }
 
 void ScenarioDocument::load(const QString& _scenario)
@@ -291,65 +329,6 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 	}
 
 	return endPosition;
-
-	/*
-	ScenarioModelItem* itemToFindPosition = 0;
-
-	//
-	// Если у элемента нет вложеных элементов
-	//
-	if (!_item->hasChildren()) {
-		//
-		// Ищем позицию перед следующим элементом
-		//
-		itemToFindPosition = _item;
-	}
-	//
-	// Если есть вложенные элементы
-	//
-	else {
-		//
-		// Ищем за последним вложенным элементом
-		//
-		itemToFindPosition = _item->childAt(_item->childCount() - 1);
-	}
-
-	const int itemToFindPositionKey = m_modelItems.key(itemToFindPosition, 0);
-	QMap<int, ScenarioModelItem*>::const_iterator itemToFindPositionIter =
-			m_modelItems.find(itemToFindPositionKey);
-
-	//
-	// Определяем позицию
-	//
-	int endPosition = 0;
-	++itemToFindPositionIter;
-	if (itemToFindPositionIter == m_modelItems.end()) {
-		endPosition = m_document->characterCount() - 1;
-	} else {
-		endPosition = itemToFindPositionIter.key() - 1;
-	}
-
-	//
-	// Если элементом является сцена, то не нужно учитывать идущие в конце её
-	// закрывающие блоки групп
-	//
-	if (_item->type() == ScenarioModelItem::Scene) {
-		QTextCursor cursor(m_document);
-		cursor.setPosition(endPosition);
-		ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
-		while ((currentType == ScenarioTextBlockStyle::SceneGroupFooter
-			   || currentType == ScenarioTextBlockStyle::FolderFooter)
-			   && !cursor.atStart()) {
-			cursor.movePosition(QTextCursor::PreviousBlock);
-			currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
-		}
-		if (!cursor.atStart()) {
-			cursor.movePosition(QTextCursor::EndOfBlock);
-			endPosition = cursor.position();
-		}
-	}
-
-	return endPosition;*/
 }
 
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)

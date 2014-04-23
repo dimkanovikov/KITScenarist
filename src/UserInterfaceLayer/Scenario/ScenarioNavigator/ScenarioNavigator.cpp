@@ -14,6 +14,8 @@ using UserInterface::ScenarioNavigatorItemDelegate;
 
 ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
 	QWidget(parent),
+	m_title(new QLabel(this)),
+	m_scenesCountTitle(new QLabel(this)),
 	m_scenesCount(new QLabel(this)),
 	m_navigationTree(new QTreeView(this)),
 	m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this))
@@ -78,10 +80,10 @@ bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 
 void ScenarioNavigator::initView()
 {
-	m_title = new QLabel(tr("Navigator"), this);
+	m_title->setText(tr("Navigator"));
 	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	m_scenesCountTitle = new QLabel(tr("Scenes: "), this);
+	m_scenesCountTitle->setText(tr("Scenes: "));
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());

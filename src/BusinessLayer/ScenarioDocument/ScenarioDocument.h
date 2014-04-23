@@ -75,6 +75,21 @@ namespace BusinessLogic
 		int itemPositionAtIndex(const QModelIndex& _index) const;
 
 		/**
+		 * @brief Заголовок сцены в позиции
+		 */
+		QString itemHeaderAtPosition(int _position) const;
+
+		/**
+		 * @brief Синопсис сцены в позиции
+		 */
+		QString itemSynopsisAtPosition(int _position) const;
+
+		/**
+		 * @brief Установить синопсис для сцены в указанной позиции курсора
+		 */
+		void setItemSynopsisAtPosition(int _position, const QString& _synopsis);
+
+		/**
 		 * @brief Загрузить документ из сценария
 		 */
 		void load(const QString& _scenario);

@@ -47,6 +47,11 @@ namespace ManagementLayer
 		 */
 		void reloadTextEditSettings();
 
+		/**
+		 * @brief Получить текущую позицию курсора
+		 */
+		int cursorPosition() const;
+
 	public slots:
 		/**
 		 * @brief Отменить последнее действие

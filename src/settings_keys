@@ -23,6 +23,8 @@ chronometry/configurable/seconds-for-every-50/dialog - секунд за каж�
 
 application/geometry - состояние главного окна и его вкладок
 application/use-dark-theme - использовать тёмную тему
+application/scenario/left/geometry
+application/scenario/left/state
 application/scenario/geometry
 application/scenario/state
 application/characters/geometry

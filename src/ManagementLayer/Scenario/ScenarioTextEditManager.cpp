@@ -75,6 +75,11 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 				.toInt());
 }
 
+int ScenarioTextEditManager::cursorPosition() const
+{
+	m_view->cursorPosition();
+}
+
 void ScenarioTextEditManager::aboutUndo()
 {
 	m_view->aboutUndo();

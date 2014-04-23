@@ -57,6 +57,11 @@ namespace UserInterface
 		void setTextEditZoomRange(int _zoomRange);
 
 		/**
+		 * @brief Получить текущую позицию курсора
+		 */
+		int cursorPosition() const;
+
+		/**
 		 * @brief Установить позицию курсора
 		 */
 		void setCursorPosition(int _position);

@@ -148,7 +148,10 @@ SOURCES += main.cpp \
     Domain/CharacterPhoto.cpp \
     DataLayer/DataMappingLayer/CharacterPhotoMapper.cpp \
     DataLayer/DataStorageLayer/CharacterPhotoStorage.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.cpp
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.cpp \
+    BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.cpp \
+	UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.cpp \
+    ManagementLayer/Scenario/ScenarioSceneSynopsisManager.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -289,7 +292,10 @@ HEADERS += \
     Domain/CharacterPhoto.h \
     DataLayer/DataMappingLayer/CharacterPhotoMapper.h \
     DataLayer/DataStorageLayer/CharacterPhotoStorage.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.h
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.h \
+    BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h \
+	UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.h \
+    ManagementLayer/Scenario/ScenarioSceneSynopsisManager.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

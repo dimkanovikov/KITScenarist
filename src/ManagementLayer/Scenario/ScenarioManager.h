@@ -16,6 +16,7 @@ namespace BusinessLogic {
 namespace ManagementLayer
 {
 	class ScenarioNavigatorManager;
+	class ScenarioSceneSynopsisManager;
 	class ScenarioTextEditManager;
 
 
@@ -96,6 +97,16 @@ namespace ManagementLayer
 		void aboutUpdateDuration(int _cursorPosition);
 
 		/**
+		 * @brief Обновить синопсис, если сменилась сцена
+		 */
+		void aboutUpdateCurrentSynopsis(int _cursorPosition);
+
+		/**
+		 * @brief Текст синопсиса текущей сцены был изменён
+		 */
+		void aboutUpdateCurrentSceneSynopsis(const QString& _synopsis);
+
+		/**
 		 * @brief Выделить текущую сцену в навигаторе
 		 */
 		void aboutSelectItemInNavigator(int _cursorPosition);
@@ -133,9 +144,12 @@ namespace ManagementLayer
 		QWidget* m_view;
 
 		/**
-		 * @brief Разделитель представленя
+		 * @brief Разделители представленя
 		 */
-		QSplitter* m_viewSplitter;
+		/** @{ */
+		QSplitter* m_mainViewSplitter;
+		QSplitter* m_leftViewSplitter;
+		/** @} */
 
 		/**
 		 * @brief Вкладки редакторов
@@ -161,6 +175,11 @@ namespace ManagementLayer
 		 * @brief Управляющий навигацией по сценарию
 		 */
 		ScenarioNavigatorManager* m_navigatorManager;
+
+		/**
+		 * @brief Управляющий синопсисом сцены
+		 */
+		ScenarioSceneSynopsisManager* m_sceneSynopsisManager;
 
 		/**
 		 * @brief Управляющий редактированием сценария

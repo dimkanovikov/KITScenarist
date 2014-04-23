@@ -85,6 +85,11 @@ void ScenarioTextEditWidget::setTextEditZoomRange(int _zoomRange)
 	m_editor->setZoomRange(_zoomRange);
 }
 
+int ScenarioTextEditWidget::cursorPosition() const
+{
+	return m_editor->textCursor().position();
+}
+
 void ScenarioTextEditWidget::setCursorPosition(int _position)
 {
 	//

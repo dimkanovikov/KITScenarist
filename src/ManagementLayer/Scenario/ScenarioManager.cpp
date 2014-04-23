@@ -1,6 +1,7 @@
 #include "ScenarioManager.h"
 
 #include "ScenarioNavigatorManager.h"
+#include "ScenarioSceneSynopsisManager.h"
 #include "ScenarioTextEditManager.h"
 
 #include <Domain/Scenario.h>
@@ -39,8 +40,11 @@ using BusinessLogic::ScenarioTextBlockStyle;
 ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new QWidget(_parentWidget)),
+	m_mainViewSplitter(new QSplitter(m_view)),
+	m_leftViewSplitter(new QSplitter(m_view)),
 	m_scenario(new ScenarioDocument(this)),
 	m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
+	m_sceneSynopsisManager(new ScenarioSceneSynopsisManager(this, m_view)),
 	m_textEditManager(new ScenarioTextEditManager(this, m_view))
 {
 	initData();
@@ -97,7 +101,24 @@ void ScenarioManager::saveCurrentProject()
 
 void ScenarioManager::loadViewState()
 {
-	m_viewSplitter->restoreGeometry(
+	m_leftViewSplitter->restoreGeometry(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/scenario/left/geometry",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+	m_leftViewSplitter->restoreState(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/scenario/left/state",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+
+	m_mainViewSplitter->restoreGeometry(
 				QByteArray::fromHex(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"application/scenario/geometry",
@@ -105,7 +126,7 @@ void ScenarioManager::loadViewState()
 					.toUtf8()
 					)
 				);
-	m_viewSplitter->restoreState(
+	m_mainViewSplitter->restoreState(
 				QByteArray::fromHex(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"application/scenario/state",
@@ -118,11 +139,20 @@ void ScenarioManager::loadViewState()
 void ScenarioManager::saveViewState()
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/geometry", m_viewSplitter->saveGeometry().toHex(),
+				"application/scenario/left/geometry", m_leftViewSplitter->saveGeometry().toHex(),
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/state", m_viewSplitter->saveState().toHex(),
+				"application/scenario/left/state", m_leftViewSplitter->saveState().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/scenario/geometry", m_mainViewSplitter->saveGeometry().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/scenario/state", m_mainViewSplitter->saveState().toHex(),
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
 }
@@ -275,6 +305,20 @@ void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 				);
 }
 
+void ScenarioManager::aboutUpdateCurrentSynopsis(int _cursorPosition)
+{
+	QString itemHeader = m_scenario->itemHeaderAtPosition(_cursorPosition);
+	m_sceneSynopsisManager->setHeader(itemHeader);
+
+	QString synopsis = m_scenario->itemSynopsisAtPosition(_cursorPosition);
+	m_sceneSynopsisManager->setSynopsis(synopsis);
+}
+
+void ScenarioManager::aboutUpdateCurrentSceneSynopsis(const QString& _synopsis)
+{
+	m_scenario->setItemSynopsisAtPosition(m_textEditManager->cursorPosition(), _synopsis);
+}
+
 void ScenarioManager::aboutSelectItemInNavigator(int _cursorPosition)
 {
 	QModelIndex index = m_scenario->itemIndexAtPosition(_cursorPosition);
@@ -320,16 +364,20 @@ void ScenarioManager::initView()
 	rightLayout->addLayout(topLayout);
 	rightLayout->addWidget(m_viewEditors, 1);
 
-	m_viewSplitter = new QSplitter(m_view);
-	m_viewSplitter->setHandleWidth(1);
-	m_viewSplitter->addWidget(m_navigatorManager->view());
-	m_viewSplitter->addWidget(rightWidget);
-	m_viewSplitter->setStretchFactor(1, 1);
+	m_leftViewSplitter->setHandleWidth(1);
+	m_leftViewSplitter->addWidget(m_navigatorManager->view());
+	m_leftViewSplitter->addWidget(m_sceneSynopsisManager->view());
+	m_leftViewSplitter->setOrientation(Qt::Vertical);
+
+	m_mainViewSplitter->setHandleWidth(1);
+	m_mainViewSplitter->addWidget(m_leftViewSplitter);
+	m_mainViewSplitter->addWidget(rightWidget);
+	m_mainViewSplitter->setStretchFactor(1, 1);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
 	layout->setSpacing(0);
-	layout->addWidget(m_viewSplitter);
+	layout->addWidget(m_mainViewSplitter);
 
 	m_view->setLayout(layout);
 }
@@ -343,12 +391,14 @@ void ScenarioManager::initConnections()
 	connect(m_navigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
 	connect(m_navigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
 
+	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SLOT(aboutUpdateCurrentSceneSynopsis(QString)));
+
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
+	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSynopsis(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
 }
 
 void ScenarioManager::initStyleSheet()
 {
 	m_viewEditorsTabs->setProperty("inTopPanel", true);
-//	rightWidget->setStyleSheet("QStackedWidget { border: none;}");
 }
