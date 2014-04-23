@@ -161,7 +161,7 @@ QTabBar::tab[inTopPanel="true"] {
 	border-top-color: #5f5f5f;
 	background: #282d31;
 	color: #d5d6d6;
-	padding-top: 4px;
+    padding-top: 2px;
 	padding-bottom: 1px;
 	padding-left: 14px;
 	padding-right: 14px;

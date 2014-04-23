@@ -77,7 +77,7 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 
 int ScenarioTextEditManager::cursorPosition() const
 {
-	m_view->cursorPosition();
+    return m_view->cursorPosition();
 }
 
 void ScenarioTextEditManager::aboutUndo()

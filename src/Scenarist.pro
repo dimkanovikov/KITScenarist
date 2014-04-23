@@ -151,7 +151,8 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.cpp \
 	UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.cpp \
-    ManagementLayer/Scenario/ScenarioSceneSynopsisManager.cpp
+    ManagementLayer/Scenario/ScenarioSceneSynopsisManager.cpp \
+    3rd_party/Widgets/TabBar/TabBar.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -295,7 +296,8 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.h \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h \
 	UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.h \
-    ManagementLayer/Scenario/ScenarioSceneSynopsisManager.h
+    ManagementLayer/Scenario/ScenarioSceneSynopsisManager.h \
+    3rd_party/Widgets/TabBar/TabBar.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

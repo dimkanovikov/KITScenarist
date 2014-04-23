@@ -20,6 +20,8 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/LocationStorage.h>
 
+#include <3rd_party/Widgets/TabBar/TabBar.h>
+
 #include <QWidget>
 #include <QComboBox>
 #include <QLabel>
@@ -339,7 +341,9 @@ void ScenarioManager::initData()
 
 void ScenarioManager::initView()
 {
-	m_viewEditorsTabs = new QTabBar(m_view);
+    m_viewEditorsTabs = new TabBar(m_view);
+    m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    m_viewEditorsTabs->setStyleSheet("background-color: red");
 	m_viewEditorsTabs->addTab(tr("Text"));
 	m_viewEditorsTabs->addTab(tr("Data"));
 

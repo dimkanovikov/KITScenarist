@@ -6,7 +6,7 @@
 class QSplitter;
 class QComboBox;
 class QLabel;
-class QTabBar;
+class TabBar;
 class QStackedWidget;
 
 namespace BusinessLogic {
@@ -154,7 +154,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Вкладки редакторов
 		 */
-		QTabBar* m_viewEditorsTabs;
+        TabBar* m_viewEditorsTabs;
 
 		/**
 		 * @brief Панели инструментов редакторов
