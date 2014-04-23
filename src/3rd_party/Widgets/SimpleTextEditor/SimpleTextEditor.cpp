@@ -1,6 +1,7 @@
 #include "SimpleTextEditor.h"
 
 #include <QAction>
+#include <QApplication>
 #include <QTextCharFormat>
 #include <QTextEdit>
 #include <QToolBar>

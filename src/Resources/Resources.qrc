@@ -1,6 +1,9 @@
 <RCC>
     <qresource prefix="/Fonts">
         <file alias="Courier New">Fonts/Courier New.otf</file>
+        <file alias="Ubuntu Bold">Fonts/Ubuntu-B.ttf</file>
+        <file alias="Ubuntu">Fonts/Ubuntu-R.ttf</file>
+        <file alias="Ubuntu Italic">Fonts/Ubuntu-RI.ttf</file>
     </qresource>
     <qresource prefix="/SpellChecking">
         <file>HunspellDictionaries/en_AU.aff</file>
