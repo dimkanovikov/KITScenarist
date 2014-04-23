@@ -21,6 +21,11 @@ ScenarioTextEditManager::ScenarioTextEditManager(QObject* _parent, QWidget* _par
 	reloadTextEditSettings();
 }
 
+QWidget* ScenarioTextEditManager::toolbar() const
+{
+	return m_view->toolbar();
+}
+
 QWidget* ScenarioTextEditManager::view() const
 {
 	return m_view;

@@ -27,6 +27,11 @@ namespace UserInterface
 		explicit ScenarioTextEditWidget(QWidget* _parent = 0);
 
 		/**
+		 * @brief Получить панель инструментов
+		 */
+		QWidget* toolbar() const;
+
+		/**
 		 * @brief Установить документ для редактирования
 		 */
 		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document);
@@ -116,6 +121,11 @@ namespace UserInterface
 		void initStyleSheet();
 
 	private:
+		/**
+		 * @brief Панель инструментов
+		 */
+		QWidget* m_toolbar;
+
 		/**
 		 * @brief Стили текста документа
 		 */

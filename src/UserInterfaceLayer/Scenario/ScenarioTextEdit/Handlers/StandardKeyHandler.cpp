@@ -457,8 +457,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 		//
 		// Если верхний блок является заголовком - расширим выделение до следующего блока, сдвигая курсор влево
 		//
-		if (topStyle.isHeader()
-			|| topStyle.isEmbeddable())
+		if (topStyle.isHeader())
 		{
 			QTextCursor topCursor(editor()->document());
 			topCursor.setPosition(topCursorPosition);
@@ -469,18 +468,13 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 				topStyle.setType(ScenarioTextBlockStyle::forBlock(topCursor.block()));
 			}
 
-			if (topStyle.isEmbeddable()) {
-				topCursor.movePosition(QTextCursor::Right);
-			}
-
 			topCursorPosition = topCursor.position();
 		}
 
 		//
 		// Если нижний блок является заголовком - расширим выделение, сдвигая курсор вправо
 		//
-		if (bottomStyle.isHeader()
-			|| bottomStyle.isEmbeddable())
+		if (bottomStyle.isHeader())
 		{
 			QTextCursor bottomCursor(editor()->document());
 			bottomCursor.setPosition(bottomCursorPosition);
@@ -491,10 +485,6 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 				bottomStyle.setType(ScenarioTextBlockStyle::forBlock(bottomCursor.block()));
 			}
 
-			if (bottomStyle.isEmbeddable()) {
-				bottomCursor.movePosition(QTextCursor::Left);
-			}
-
 			bottomCursorPosition = bottomCursor.position();
 		}
 	}
@@ -502,17 +492,15 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	//
 	// Определим стиль результирующего блока
 	//
-	ScenarioTextBlockStyle::Type targetType = ScenarioTextBlockStyle::Undefined;
+	ScenarioTextBlockStyle::Type targetType = ScenarioTextBlockStyle::TimeAndPlace;
 	{
 		if (topBlock == bottomBlock) {
 			targetType = topStyle.blockType();
 		} else {
-			if (!topStyle.isEmbeddable()) {
+			if (!topBlock.text().isEmpty()) {
 				targetType = topStyle.blockType();
-			} else if (!bottomStyle.isEmbeddable()) {
+			} else if (!bottomBlock.text().isEmpty()) {
 				targetType = bottomStyle.blockType();
-			} else {
-				targetType = ScenarioTextBlockStyle::TimeAndPlace;
 			}
 		}
 	}

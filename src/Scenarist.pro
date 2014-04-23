@@ -147,7 +147,8 @@ SOURCES += main.cpp \
     DataLayer/DataStorageLayer/LocationPhotoStorage.cpp \
     Domain/CharacterPhoto.cpp \
     DataLayer/DataMappingLayer/CharacterPhotoMapper.cpp \
-    DataLayer/DataStorageLayer/CharacterPhotoStorage.cpp
+    DataLayer/DataStorageLayer/CharacterPhotoStorage.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -287,7 +288,8 @@ HEADERS += \
     DataLayer/DataStorageLayer/LocationPhotoStorage.h \
     Domain/CharacterPhoto.h \
     DataLayer/DataMappingLayer/CharacterPhotoMapper.h \
-    DataLayer/DataStorageLayer/CharacterPhotoStorage.h
+    DataLayer/DataStorageLayer/CharacterPhotoStorage.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

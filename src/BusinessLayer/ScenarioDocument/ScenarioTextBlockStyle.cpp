@@ -117,6 +117,7 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 
 		case NoprintableText: {
 			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->blockFormat.setLeftMargin(200);
 			m_pimpl->charFormat.setForeground(
 						QColor(
 							DataStorageLayer::StorageFacade::settingsStorage()->value(

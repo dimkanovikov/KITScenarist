@@ -1,6 +1,7 @@
 #include "FolderHeaderHandler.h"
 
 #include "../ScenarioTextEdit.h"
+#include "../ScenarioTextEditHelpers.h"
 
 #include <QKeyEvent>
 #include <QTextBlock>
@@ -168,9 +169,10 @@ void FolderHeaderHandler::handleOther(QKeyEvent* _event)
 {
 	//
 	// Если не было введено текста, прерываем операцию
+	// _event->key() == -1 // событие посланное редактором текста, его необходимо обработать
 	//
 	if (_event == 0
-		|| _event->modifiers().testFlag(Qt::ControlModifier)) {
+		|| (_event->key() != -1 && _event->text().isEmpty())) {
 		return;
 	}
 
@@ -197,9 +199,7 @@ void FolderHeaderHandler::handleOther(QKeyEvent* _event)
 			if (currentType == ScenarioTextBlockStyle::FolderFooter) {
 				if (openedGroups == 0) {
 					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-					cursor.insertText(QObject::tr("END OF", "FolderHeader"));
-					cursor.insertText(" ");
-					cursor.insertText(editor()->textCursor().block().text());
+					cursor.insertText(Helpers::footerText(editor()->textCursor().block().text()));
 					isFooterUpdated = true;
 				} else {
 					--openedGroups;

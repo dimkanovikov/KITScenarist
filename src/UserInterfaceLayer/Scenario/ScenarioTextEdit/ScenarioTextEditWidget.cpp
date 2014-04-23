@@ -35,15 +35,22 @@ namespace {
 
 ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	QFrame(_parent),
+	m_toolbar(new QWidget(this)),
 	m_textStyles(new QComboBox(this)),
 	m_undo(new QToolButton(this)),
 	m_redo(new QToolButton(this)),
+	m_durationTitle(new QLabel(this)),
 	m_duration(new QLabel(this)),
 	m_editor(new ScenarioTextEdit(this))
 {
 	initView();
 	initConnections();
 	initStyleSheet();
+}
+
+QWidget* ScenarioTextEditWidget::toolbar() const
+{
+	return m_toolbar;
 }
 
 void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document)
@@ -175,11 +182,11 @@ void ScenarioTextEditWidget::initView()
 	m_undo->setIcon(QIcon(":/Graphics/Icons/Editing/undo.png"));
 	m_redo->setIcon(QIcon(":/Graphics/Icons/Editing/redo.png"));
 
-	m_durationTitle = new QLabel(tr("Chron: "), this);
+	m_durationTitle->setText(tr("Chron: "));
 	m_durationTitle->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	m_durationTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	QHBoxLayout* topLayout = new QHBoxLayout;
+	QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
 	topLayout->addWidget(m_textStyles);
@@ -191,7 +198,7 @@ void ScenarioTextEditWidget::initView()
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
 	layout->setSpacing(0);
-	layout->addLayout(topLayout);
+	layout->addWidget(m_toolbar);
 	layout->addWidget(m_editor);
 
 	setLayout(layout);

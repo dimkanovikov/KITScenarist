@@ -27,6 +27,7 @@
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QSet>
+#include <QStackedWidget>
 
 using ManagementLayer::ScenarioManager;
 using ManagementLayer::ScenarioNavigatorManager;
@@ -45,6 +46,7 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	initData();
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
 QWidget* ScenarioManager::view() const
@@ -293,10 +295,35 @@ void ScenarioManager::initData()
 
 void ScenarioManager::initView()
 {
+	m_viewEditorsTabs = new QTabBar(m_view);
+	m_viewEditorsTabs->addTab(tr("Text"));
+	m_viewEditorsTabs->addTab(tr("Data"));
+
+	m_viewEditorsToolbars = new QStackedWidget(m_view);
+	m_viewEditorsToolbars->addWidget(m_textEditManager->toolbar());
+	m_viewEditorsToolbars->addWidget(new QWidget(m_view));
+
+	m_viewEditors = new QStackedWidget(m_view);
+	m_viewEditors->addWidget(m_textEditManager->view());
+	m_viewEditors->addWidget(new QWidget(m_view));
+
+	QWidget* rightWidget = new QWidget(m_view);
+
+	QHBoxLayout* topLayout = new QHBoxLayout;
+	topLayout->setContentsMargins(QMargins());
+	topLayout->setSpacing(0);
+	topLayout->addWidget(m_viewEditorsTabs);
+	topLayout->addWidget(m_viewEditorsToolbars);
+	QVBoxLayout* rightLayout = new QVBoxLayout(rightWidget);
+	rightLayout->setContentsMargins(QMargins());
+	rightLayout->setSpacing(0);
+	rightLayout->addLayout(topLayout);
+	rightLayout->addWidget(m_viewEditors, 1);
+
 	m_viewSplitter = new QSplitter(m_view);
 	m_viewSplitter->setHandleWidth(1);
 	m_viewSplitter->addWidget(m_navigatorManager->view());
-	m_viewSplitter->addWidget(m_textEditManager->view());
+	m_viewSplitter->addWidget(rightWidget);
 	m_viewSplitter->setStretchFactor(1, 1);
 
 	QHBoxLayout* layout = new QHBoxLayout;
@@ -309,10 +336,19 @@ void ScenarioManager::initView()
 
 void ScenarioManager::initConnections()
 {
+	connect(m_viewEditorsTabs, SIGNAL(currentChanged(int)), m_viewEditorsToolbars, SLOT(setCurrentIndex(int)));
+	connect(m_viewEditorsTabs, SIGNAL(currentChanged(int)), m_viewEditors, SLOT(setCurrentIndex(int)));
+
     connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
 	connect(m_navigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
 	connect(m_navigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
 
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
+}
+
+void ScenarioManager::initStyleSheet()
+{
+	m_viewEditorsTabs->setProperty("inTopPanel", true);
+//	rightWidget->setStyleSheet("QStackedWidget { border: none;}");
 }

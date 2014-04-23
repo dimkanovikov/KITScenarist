@@ -24,6 +24,7 @@ namespace ManagementLayer
 	public:
 		explicit ScenarioTextEditManager(QObject* _parent, QWidget* _parentWidget);
 
+		QWidget* toolbar() const;
 		QWidget* view() const;
 
 		/**

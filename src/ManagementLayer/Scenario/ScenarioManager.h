@@ -6,6 +6,8 @@
 class QSplitter;
 class QComboBox;
 class QLabel;
+class QTabBar;
+class QStackedWidget;
 
 namespace BusinessLogic {
 	class ScenarioDocument;
@@ -119,6 +121,11 @@ namespace ManagementLayer
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Настроить внешний вид
+		 */
+		void initStyleSheet();
+
 	private:
 		/**
 		 * @brief Представление сценария
@@ -129,6 +136,21 @@ namespace ManagementLayer
 		 * @brief Разделитель представленя
 		 */
 		QSplitter* m_viewSplitter;
+
+		/**
+		 * @brief Вкладки редакторов
+		 */
+		QTabBar* m_viewEditorsTabs;
+
+		/**
+		 * @brief Панели инструментов редакторов
+		 */
+		QStackedWidget* m_viewEditorsToolbars;
+
+		/**
+		 * @brief Редакторы
+		 */
+		QStackedWidget* m_viewEditors;
 
 		/**
 		 * @brief Документ сценария
