@@ -283,14 +283,14 @@
 <context>
     <name>ManagementLayer::ScenarioManager</name>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="343"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="350"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="344"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="349"/>
         <source>Data</source>
-        <translation>Данные</translation>
+        <translation>Инфо</translation>
     </message>
     <message>
         <source>Synopsis</source>
@@ -337,13 +337,13 @@
         <translation>Титр:</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="246"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="264"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation>КОНЕЦ ГРУППЫ</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="257"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="275"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation>КОНЕЦ ПАПКИ</translation>
@@ -363,6 +363,34 @@
         <source>END OF</source>
         <comment>ScenarioTextEditHelpers</comment>
         <translation>КОНЕЦ</translation>
+    </message>
+</context>
+<context>
+    <name>ScenarioDataEdit</name>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="14"/>
+        <source>Form</source>
+        <translation>Форма</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="51"/>
+        <source>Name:</source>
+        <translation>Название:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="63"/>
+        <source>Synopsis:</source>
+        <translation>Синопсис:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="83"/>
+        <source>Source</source>
+        <translation>Исходный</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="93"/>
+        <source>From scenario</source>
+        <translation>Из сценария</translation>
     </message>
 </context>
 <context>
@@ -514,17 +542,17 @@ Paragraph</source>
 <context>
     <name>SimpleTextEditor</name>
     <message>
-        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="73"/>
+        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="76"/>
         <source>Bold</source>
         <translation>Жирный</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="83"/>
+        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="86"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="92"/>
+        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="95"/>
         <source>Underline</source>
         <translation>Подчёркнутый</translation>
     </message>

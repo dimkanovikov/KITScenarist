@@ -303,7 +303,8 @@ FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
     UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui \
     UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui \
-    UserInterfaceLayer/Settings/SettingsView.ui
+    UserInterfaceLayer/Settings/SettingsView.ui \
+    UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui
 
 
 RESOURCES += \

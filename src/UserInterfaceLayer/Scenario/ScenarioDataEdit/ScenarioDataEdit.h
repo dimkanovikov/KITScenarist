@@ -3,16 +3,45 @@
 
 #include <QWidget>
 
-class ScenarioDataEdit : public QWidget
+namespace Ui {
+	class ScenarioDataEdit;
+}
+
+
+namespace UserInterface
 {
-	Q_OBJECT
-public:
-	explicit ScenarioDataEdit(QWidget *parent = 0);
+	/**
+	 * @brief Редактор информации о сценарие
+	 */
+	class ScenarioDataEdit : public QWidget
+	{
+		Q_OBJECT
 
-signals:
+	public:
+		explicit ScenarioDataEdit(QWidget* _parent = 0);
+		~ScenarioDataEdit();
 
-public slots:
+		QWidget* toolbar() const;
 
-};
+	private:
+		/**
+		 * @brief Настроить представление
+		 */
+		void initView();
+
+		/**
+		 * @brief Настроить соединения
+		 */
+		void initConnections();
+
+		/**
+		 * @brief Настроить внешний вид
+		 */
+		void initStyleSheet();
+
+	private:
+		Ui::ScenarioDataEdit* ui;
+	};
+}
 
 #endif // SCENARIODATAEDIT_H

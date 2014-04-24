@@ -90,7 +90,7 @@ namespace UserInterface
 		void initStyleSheet();
 
 	private:
-		Ui::LocationsDataEdit *ui;
+		Ui::LocationsDataEdit* ui;
 
 		/**
 		 * @brief Исходное название
