@@ -13,6 +13,8 @@
 SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
 	QTextEdit(parent)
 {
+	setTabChangesFocus(true);
+
 	setupMenu();
 
 	connect(this, SIGNAL(currentCharFormatChanged(QTextCharFormat)),

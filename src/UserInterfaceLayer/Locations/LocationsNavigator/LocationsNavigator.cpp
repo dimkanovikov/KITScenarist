@@ -15,10 +15,12 @@ using UserInterface::LocationsNavigatorItemDelegate;
 
 LocationsNavigator::LocationsNavigator(QWidget *parent) :
 	QWidget(parent),
+	m_title(new QLabel(this)),
 	m_addLocation(new QToolButton(this)),
 	m_editLocation(new QToolButton(this)),
 	m_removeLocation(new QToolButton(this)),
 	m_refreshLocations(new QToolButton(this)),
+	m_endTitle(new QLabel(this)),
 	m_navigator(new QListView(this)),
 	m_navigatorProxyModel(new QSortFilterProxyModel(m_navigator))
 {
@@ -87,8 +89,9 @@ QString LocationsNavigator::selectedUserName() const
 
 void LocationsNavigator::initView()
 {
-	m_title = new QLabel(tr("Locations"), this);
+	m_title->setText(tr("Locations"));
 	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	m_endTitle->setFixedWidth(1);
 
 	m_addLocation->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_editLocation->setIcon(QIcon(":/Graphics/Icons/Editing/edit.png"));
@@ -109,6 +112,7 @@ void LocationsNavigator::initView()
 	topLayout->addWidget(m_editLocation);
 	topLayout->addWidget(m_removeLocation);
 	topLayout->addWidget(m_refreshLocations);
+	topLayout->addWidget(m_endTitle);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -131,6 +135,9 @@ void LocationsNavigator::initStyleSheet()
 {
 	m_title->setProperty("inTopPanel", true);
 	m_title->setProperty("topPanelTopBordered", true);
+	m_endTitle->setProperty("inTopPanel", true);
+	m_endTitle->setProperty("topPanelTopBordered", true);
+	m_endTitle->setProperty("topPanelRightBordered", true);
 
 	m_addLocation->setProperty("inTopPanel", true);
 	m_editLocation->setProperty("inTopPanel", true);

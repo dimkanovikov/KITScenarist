@@ -15,10 +15,12 @@ using UserInterface::CharactersNavigatorItemDelegate;
 
 CharactersNavigator::CharactersNavigator(QWidget *parent) :
 	QWidget(parent),
+	m_title(new QLabel(this)),
 	m_addCharacter(new QToolButton(this)),
 	m_editCharacter(new QToolButton(this)),
 	m_removeCharacter(new QToolButton(this)),
 	m_refreshCharacters(new QToolButton(this)),
+	m_endTitle(new QLabel(this)),
 	m_navigator(new QListView(this)),
 	m_navigatorProxyModel(new QSortFilterProxyModel(m_navigator))
 {
@@ -89,6 +91,7 @@ void CharactersNavigator::initView()
 {
 	m_title = new QLabel(tr("Characters"), this);
 	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	m_endTitle->setFixedWidth(1);
 
 	m_addCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_editCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/edit.png"));
@@ -109,6 +112,7 @@ void CharactersNavigator::initView()
 	topLayout->addWidget(m_editCharacter);
 	topLayout->addWidget(m_removeCharacter);
 	topLayout->addWidget(m_refreshCharacters);
+	topLayout->addWidget(m_endTitle);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -131,6 +135,9 @@ void CharactersNavigator::initStyleSheet()
 {
 	m_title->setProperty("inTopPanel", true);
 	m_title->setProperty("topPanelTopBordered", true);
+	m_endTitle->setProperty("inTopPanel", true);
+	m_endTitle->setProperty("topPanelTopBordered", true);
+	m_endTitle->setProperty("topPanelRightBordered", true);
 
 	m_addCharacter->setProperty("inTopPanel", true);
 	m_editCharacter->setProperty("inTopPanel", true);

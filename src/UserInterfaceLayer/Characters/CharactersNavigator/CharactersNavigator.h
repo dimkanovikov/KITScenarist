@@ -120,6 +120,11 @@ namespace UserInterface
 		QToolButton* m_refreshCharacters;
 
 		/**
+		 * @brief Окончание панели инструментов
+		 */
+		QLabel* m_endTitle;
+
+		/**
 		 * @brief Список персонажей
 		 */
 		QListView* m_navigator;

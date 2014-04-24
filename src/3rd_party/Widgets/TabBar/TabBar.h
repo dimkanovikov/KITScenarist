@@ -10,9 +10,11 @@ class TabBar : public QTabBar
 public:
     explicit TabBar(QWidget *_parent = 0);
 
+	QSize sizeHint() const;
+	QSize minimumSizeHint() const;
+
 protected:
-    QSize tabSizeHint(int _index) const;
-    QSize sizeHint() const;
+	QSize tabSizeHint(int _index) const;
 };
 
 #endif // TABBAR_H

@@ -54,7 +54,12 @@ private slots:
 	/**
 	 * @brief Показать фотографию
 	 */
-	void showPhoto(const QPixmap& _photo);
+	void aboutShowPhoto(const QPixmap& _photo);
+
+	/**
+	 * @brief Обновить состояние, при удалении или добавлении фотографий
+	 */
+	void aboutUpdateState();
 
 private:
 	/**

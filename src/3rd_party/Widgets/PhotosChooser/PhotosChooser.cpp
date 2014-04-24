@@ -17,23 +17,28 @@ PhotosChooser::PhotosChooser(QWidget* _parent) :
 	m_photoPreview(0)
 {
 	m_mainPhoto->setFixedSize(150, 180);
-	connect(m_mainPhoto, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
+	connect(m_mainPhoto, SIGNAL(photoClicked(QPixmap)), this, SLOT(aboutShowPhoto(QPixmap)));
+	connect(m_mainPhoto, SIGNAL(photoChanged()), this, SLOT(aboutUpdateState()));
 	connect(m_mainPhoto, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
 	m_additionalPhoto1->setFixedSize(72, 90);
-	connect(m_additionalPhoto1, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
+	connect(m_additionalPhoto1, SIGNAL(photoClicked(QPixmap)), this, SLOT(aboutShowPhoto(QPixmap)));
+	connect(m_additionalPhoto1, SIGNAL(photoChanged()), this, SLOT(aboutUpdateState()));
 	connect(m_additionalPhoto1, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
 	m_additionalPhoto2->setFixedSize(72, 90);
-	connect(m_additionalPhoto2, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
+	connect(m_additionalPhoto2, SIGNAL(photoClicked(QPixmap)), this, SLOT(aboutShowPhoto(QPixmap)));
+	connect(m_additionalPhoto2, SIGNAL(photoChanged()), this, SLOT(aboutUpdateState()));
 	connect(m_additionalPhoto2, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
 	m_additionalPhoto3->setFixedSize(72, 90);
-	connect(m_additionalPhoto3, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
+	connect(m_additionalPhoto3, SIGNAL(photoClicked(QPixmap)), this, SLOT(aboutShowPhoto(QPixmap)));
+	connect(m_additionalPhoto3, SIGNAL(photoChanged()), this, SLOT(aboutUpdateState()));
 	connect(m_additionalPhoto3, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
 	m_additionalPhoto4->setFixedSize(72, 90);
-	connect(m_additionalPhoto4, SIGNAL(photoClicked(QPixmap)), this, SLOT(showPhoto(QPixmap)));
+	connect(m_additionalPhoto4, SIGNAL(photoClicked(QPixmap)), this, SLOT(aboutShowPhoto(QPixmap)));
+	connect(m_additionalPhoto4, SIGNAL(photoChanged()), this, SLOT(aboutUpdateState()));
 	connect(m_additionalPhoto4, SIGNAL(photoChanged()), this, SIGNAL(photoChanged()));
 
 	QHBoxLayout* additionalLayout1 = new QHBoxLayout;
@@ -134,7 +139,7 @@ void PhotosChooser::aboutAddPhoto()
 	}
 }
 
-void PhotosChooser::showPhoto(const QPixmap& _photo)
+void PhotosChooser::aboutShowPhoto(const QPixmap& _photo)
 {
 	if (!_photo.isNull()) {
 		if (m_photoPreview == 0) {
@@ -143,4 +148,15 @@ void PhotosChooser::showPhoto(const QPixmap& _photo)
 		m_photoPreview->setImage(_photo);
 		m_photoPreview->show();
 	}
+}
+
+void PhotosChooser::aboutUpdateState()
+{
+	bool visible =
+			!m_mainPhoto->photo().isNull()
+			|| !m_additionalPhoto1->photo().isNull()
+			|| !m_additionalPhoto2->photo().isNull()
+			|| !m_additionalPhoto3->photo().isNull()
+			|| !m_additionalPhoto4->photo().isNull();
+	setVisible(visible);
 }

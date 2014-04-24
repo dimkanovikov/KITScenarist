@@ -120,6 +120,11 @@ namespace UserInterface
 		QToolButton* m_refreshLocations;
 
 		/**
+		 * @brief Окончание панели инструментов
+		 */
+		QLabel* m_endTitle;
+
+		/**
 		 * @brief Список локаций
 		 */
 		QListView* m_navigator;
