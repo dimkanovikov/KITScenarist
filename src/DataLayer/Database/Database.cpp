@@ -204,7 +204,7 @@ void Database::createTables(QSqlDatabase& _database)
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "name TEXT DEFAULT(NULL), "
-				   "synopsis TEXT DEFAULT(NULL)"
+				   "synopsis TEXT DEFAULT(NULL), "
 				   "text TEXT NOT NULL, "
 				   "is_fixed INTEGER NOT NULL DEFAULT(0), " // фиксация версии, дата и комментарий
 				   "fix_date TEXT DEFAULT(NULL), "
