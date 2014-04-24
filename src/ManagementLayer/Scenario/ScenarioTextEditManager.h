@@ -65,6 +65,11 @@ namespace ManagementLayer
 
 	signals:
 		/**
+		 * @brief Изменился текст сценария
+		 */
+		void textChanged();
+
+		/**
 		 * @brief Изменилась позиция курсора
 		 */
 		void cursorPositionChanged(int _position);

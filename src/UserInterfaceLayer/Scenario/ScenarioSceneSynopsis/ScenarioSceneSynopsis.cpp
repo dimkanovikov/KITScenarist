@@ -30,13 +30,22 @@ void ScenarioSceneSynopsis::setHeader(const QString& _header)
 void ScenarioSceneSynopsis::setSynopsis(const QString& _synopsis)
 {
 	if (m_synopsis->toHtml() != _synopsis) {
+		//
+		// Сформируем значение синопсиса, для корректности последующих сравнений
+		//
+		QTextDocument synopsisDoc;
+		synopsisDoc.setHtml(_synopsis);
+		m_sourceSynopsis = synopsisDoc.toHtml();
+
 		m_synopsis->setHtml(_synopsis);
 	}
 }
 
 void ScenarioSceneSynopsis::aboutSynopsisChanged()
 {
-	emit synopsisChanged(m_synopsis->toHtml());
+	if (m_sourceSynopsis != m_synopsis->toHtml()) {
+		emit synopsisChanged(m_synopsis->toHtml());
+	}
 }
 
 void ScenarioSceneSynopsis::initView()

@@ -61,5 +61,7 @@ void ScenarioDataEditManager::initView()
 
 void ScenarioDataEditManager::initConnections()
 {
+	connect(m_dataEdit, SIGNAL(scenarioNameChanged()), this, SIGNAL(scenarioNameChanged()));
+	connect(m_dataEdit, SIGNAL(scenarioSynopsisChanged()), this, SIGNAL(scenarioSynopsisChanged()));
 	connect(m_dataEdit, SIGNAL(buildSynopsisFromScenes()), this, SIGNAL(buildSynopsisFromScenes()));
 }

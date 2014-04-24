@@ -27,6 +27,9 @@ QWidget* ScenarioDataEdit::toolbar() const
 
 void ScenarioDataEdit::clear()
 {
+	m_sourceName.clear();
+	m_sourceSourceSynopsis = QTextDocument().toHtml();
+
 	ui->name->clear();
 	ui->sourceSynopsis->clear();
 	ui->fromScenarioSynopsis->clear();
@@ -43,6 +46,7 @@ QString ScenarioDataEdit::scenarioName() const
 
 void ScenarioDataEdit::setScenarioName(const QString& _name)
 {
+	m_sourceName = _name;
 	ui->name->setText(_name);
 }
 
@@ -53,12 +57,33 @@ QString ScenarioDataEdit::scenarioSynopsis() const
 
 void ScenarioDataEdit::setScenarioSynopsis(const QString& _synopsis)
 {
+	//
+	// Сформируем значение синопсиса, для корректности последующих сравнений
+	//
+	QTextDocument synopsisDoc;
+	synopsisDoc.setHtml(_synopsis);
+	m_sourceSourceSynopsis = synopsisDoc.toHtml();
+
 	ui->sourceSynopsis->setHtml(_synopsis);
 }
 
 void ScenarioDataEdit::setScenarioSynopsisFromScenes(const QString& _synopsis)
 {
 	ui->fromScenarioSynopsis->setHtml(_synopsis);
+}
+
+void ScenarioDataEdit::aboutNameChanged()
+{
+	if (ui->name->text() != m_sourceName) {
+		emit scenarioNameChanged();
+	}
+}
+
+void ScenarioDataEdit::aboutSourceSynopsisChanged()
+{
+	if (ui->sourceSynopsis->toHtml() != m_sourceSourceSynopsis) {
+		emit scenarioSynopsisChanged();
+	}
 }
 
 void ScenarioDataEdit::aboutCurrentSynopsisChanged()
@@ -78,6 +103,9 @@ void ScenarioDataEdit::initView()
 void ScenarioDataEdit::initConnections()
 {
 	connect(ui->isSourceSynopsis, SIGNAL(toggled(bool)), this, SLOT(aboutCurrentSynopsisChanged()));
+
+	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutNameChanged()));
+	connect(ui->sourceSynopsis, SIGNAL(textChanged()), this, SLOT(aboutSourceSynopsisChanged()));
 	connect(ui->isFromScenarioSynopsis, SIGNAL(clicked()), this, SIGNAL(buildSynopsisFromScenes()));
 }
 

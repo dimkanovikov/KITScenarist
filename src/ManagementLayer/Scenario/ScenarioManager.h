@@ -93,6 +93,11 @@ namespace ManagementLayer
 
 	private slots:
 		/**
+		 * @brief Установить статус того, что проект изменён
+		 */
+		void aboutScenarioChanged();
+
+		/**
 		 * @brief Обновить хронометраж
 		 */
 		void aboutUpdateDuration(int _cursorPosition);

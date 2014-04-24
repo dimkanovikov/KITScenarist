@@ -66,6 +66,11 @@ namespace UserInterface
 		 * @brief Редактор синопсиса
 		 */
 		SimpleTextEditor* m_synopsis;
+
+		/**
+		 * @brief Исходный текст синопсиса, используется для контроля изменений
+		 */
+		QString m_sourceSynopsis;
 	};
 }
 

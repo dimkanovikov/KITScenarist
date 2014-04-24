@@ -105,6 +105,7 @@ void ScenarioTextEditManager::initView()
 
 void ScenarioTextEditManager::initConnections()
 {
+	connect(m_view, SIGNAL(textChanged()), this, SIGNAL(textChanged()));
 	connect(m_view, SIGNAL(cursorPositionChanged(int)), this, SIGNAL(cursorPositionChanged(int)));
 	connect(m_view, SIGNAL(zoomRangeChanged(int)), this, SLOT(aboutTextEditZoomRangeChanged(int)));
 }

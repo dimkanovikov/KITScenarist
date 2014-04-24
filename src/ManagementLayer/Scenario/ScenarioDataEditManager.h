@@ -55,6 +55,16 @@ namespace ManagementLayer
 
 	signals:
 		/**
+		 * @brief Изменилось название сценария
+		 */
+		void scenarioNameChanged();
+
+		/**
+		 * @brief Изменился синопсис сценария
+		 */
+		void scenarioSynopsisChanged();
+
+		/**
 		 * @brief Запрос на построение синопсиса из сцен
 		 */
 		void buildSynopsisFromScenes();

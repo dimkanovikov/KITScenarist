@@ -55,11 +55,31 @@ namespace UserInterface
 
 	signals:
 		/**
+		 * @brief Изменилось название сценария
+		 */
+		void scenarioNameChanged();
+
+		/**
+		 * @brief Изменился синопсис сценария
+		 */
+		void scenarioSynopsisChanged();
+
+		/**
 		 * @brief Запрос на построение синопсиса из сцен
 		 */
 		void buildSynopsisFromScenes();
 
 	private slots:
+		/**
+		 * @brief Изменение текста сценария
+		 */
+		void aboutNameChanged();
+
+		/**
+		 * @brief Изменение текста синопсиса
+		 */
+		void aboutSourceSynopsisChanged();
+
 		/**
 		 * @brief Сменился текущий выбранный синопсис (с исходного на посценный или наоборот)
 		 */
@@ -83,6 +103,16 @@ namespace UserInterface
 
 	private:
 		Ui::ScenarioDataEdit* ui;
+
+		/**
+		 * @brief Исходное название сценария, используется для контроля изменений
+		 */
+		QString m_sourceName;
+
+		/**
+		 * @brief Исходный текст синопсиса, используется для контроля изменений
+		 */
+		QString m_sourceSourceSynopsis;
 	};
 }
 
