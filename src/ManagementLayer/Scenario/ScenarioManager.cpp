@@ -2,6 +2,7 @@
 
 #include "ScenarioNavigatorManager.h"
 #include "ScenarioSceneSynopsisManager.h"
+#include "ScenarioDataEditManager.h"
 #include "ScenarioTextEditManager.h"
 
 #include <Domain/Scenario.h>
@@ -34,6 +35,7 @@
 
 using ManagementLayer::ScenarioManager;
 using ManagementLayer::ScenarioNavigatorManager;
+using ManagementLayer::ScenarioDataEditManager;
 using ManagementLayer::ScenarioTextEditManager;
 using BusinessLogic::ScenarioDocument;
 using BusinessLogic::ScenarioTextBlockStyle;
@@ -47,6 +49,7 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	m_scenario(new ScenarioDocument(this)),
 	m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
 	m_sceneSynopsisManager(new ScenarioSceneSynopsisManager(this, m_view)),
+	m_dataEditManager(new ScenarioDataEditManager(this, m_view)),
 	m_textEditManager(new ScenarioTextEditManager(this, m_view))
 {
 	initData();
@@ -71,6 +74,7 @@ void ScenarioManager::loadCurrentProject()
 	// Очистим от предыдущих данных
 	//
 	m_navigatorManager->setNavigationModel(0);
+	m_dataEditManager->clear();
 	m_textEditManager->setScenarioDocument(0);
 
 	//
@@ -88,7 +92,15 @@ void ScenarioManager::loadCurrentProject()
 	// Установим данные для менеджеров
 	//
 	m_navigatorManager->setNavigationModel(m_scenario->model());
+	if (currentScenario != 0) {
+		m_dataEditManager->setScenarioName(currentScenario->name());
+		m_dataEditManager->setScenarioSynopsis(currentScenario->synopsis());
+	}
 	m_textEditManager->setScenarioDocument(m_scenario->document());
+
+	//
+	// FIXME: Обновление всех счётчиков программы - хронометраж, кол-во сцен
+	//
 
 	//
 	// Обновим хронометраж
@@ -98,7 +110,14 @@ void ScenarioManager::loadCurrentProject()
 
 void ScenarioManager::saveCurrentProject()
 {
-	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenario->save());
+	QString scenarioName = m_dataEditManager->scenarioName();
+	QString scenarioSynopsis = m_dataEditManager->scenarioSynopsis();
+	QString scenarioText = m_scenario->save();
+
+	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(
+				scenarioName,
+				scenarioSynopsis,
+				scenarioText);
 }
 
 void ScenarioManager::loadViewState()
@@ -321,6 +340,12 @@ void ScenarioManager::aboutUpdateCurrentSceneSynopsis(const QString& _synopsis)
 	m_scenario->setItemSynopsisAtPosition(m_textEditManager->cursorPosition(), _synopsis);
 }
 
+void ScenarioManager::aboutBuildSynopsisFromScenes()
+{
+	QString synopsis = m_scenario->builSynopsisFromScenes();
+	m_dataEditManager->setScenarioSynopsisFromScenes(synopsis);
+}
+
 void ScenarioManager::aboutSelectItemInNavigator(int _cursorPosition)
 {
 	QModelIndex index = m_scenario->itemIndexAtPosition(_cursorPosition);
@@ -342,26 +367,27 @@ void ScenarioManager::initData()
 void ScenarioManager::initView()
 {
     m_viewEditorsTabs = new TabBar(m_view);
-    m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    m_viewEditorsTabs->setStyleSheet("background-color: red");
-	m_viewEditorsTabs->addTab(tr("Text"));
+	m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	m_viewEditorsTabs->addTab(tr("Data"));
+	m_viewEditorsTabs->addTab(tr("Text"));
+	m_viewEditorsTabs->setMinimumSize(100,0);
 
 	m_viewEditorsToolbars = new QStackedWidget(m_view);
+	m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+	m_viewEditorsToolbars->addWidget(m_dataEditManager->toolbar());
 	m_viewEditorsToolbars->addWidget(m_textEditManager->toolbar());
-	m_viewEditorsToolbars->addWidget(new QWidget(m_view));
 
 	m_viewEditors = new QStackedWidget(m_view);
+	m_viewEditors->addWidget(m_dataEditManager->view());
 	m_viewEditors->addWidget(m_textEditManager->view());
-	m_viewEditors->addWidget(new QWidget(m_view));
 
 	QWidget* rightWidget = new QWidget(m_view);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
-	topLayout->addWidget(m_viewEditorsTabs);
 	topLayout->addWidget(m_viewEditorsToolbars);
+	topLayout->addWidget(m_viewEditorsTabs);
 	QVBoxLayout* rightLayout = new QVBoxLayout(rightWidget);
 	rightLayout->setContentsMargins(QMargins());
 	rightLayout->setSpacing(0);
@@ -396,6 +422,8 @@ void ScenarioManager::initConnections()
 	connect(m_navigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
 
 	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SLOT(aboutUpdateCurrentSceneSynopsis(QString)));
+
+	connect(m_dataEditManager, SIGNAL(buildSynopsisFromScenes()), this, SLOT(aboutBuildSynopsisFromScenes()));
 
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSynopsis(int)));

@@ -79,6 +79,15 @@ namespace DatabaseLayer
 		 * - таблицы хранения фотографий
 		 */
 		static void updateDatabaseTo_0_0_5(QSqlDatabase& _database);
+
+		/**
+		 * @brief Обновить базу данных до версии 0.1.0
+		 *
+		 * Добавление информации о сценарии
+		 * - название
+		 * - синопсис
+		 */
+		static void updateDatabaseTo_0_1_0(QSqlDatabase& _database);
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )

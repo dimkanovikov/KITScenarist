@@ -17,6 +17,7 @@ namespace ManagementLayer
 {
 	class ScenarioNavigatorManager;
 	class ScenarioSceneSynopsisManager;
+	class ScenarioDataEditManager;
 	class ScenarioTextEditManager;
 
 
@@ -107,6 +108,11 @@ namespace ManagementLayer
 		void aboutUpdateCurrentSceneSynopsis(const QString& _synopsis);
 
 		/**
+		 * @brief Собрать синопсис из сцен и установить его в редактор данных сценария
+		 */
+		void aboutBuildSynopsisFromScenes();
+
+		/**
 		 * @brief Выделить текущую сцену в навигаторе
 		 */
 		void aboutSelectItemInNavigator(int _cursorPosition);
@@ -180,6 +186,11 @@ namespace ManagementLayer
 		 * @brief Управляющий синопсисом сцены
 		 */
 		ScenarioSceneSynopsisManager* m_sceneSynopsisManager;
+
+		/**
+		 * @brief Управляющий редактированием информации о сценарие
+		 */
+		ScenarioDataEditManager* m_dataEditManager;
 
 		/**
 		 * @brief Управляющий редактированием сценария

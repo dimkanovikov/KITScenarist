@@ -30,7 +30,10 @@ Scenario* ScenarioStorage::current()
 	return currentScenario;
 }
 
-Scenario* ScenarioStorage::storeScenario(const QString& _scenarioText)
+Scenario* ScenarioStorage::storeScenario(
+		const QString& _name,
+		const QString& _synopsis,
+		const QString& _text)
 {
 	Scenario* scenario = current();
 
@@ -41,7 +44,7 @@ Scenario* ScenarioStorage::storeScenario(const QString& _scenarioText)
 		//
 		// ... создаём сценарий
 		//
-		scenario = new Scenario(Identifier(), _scenarioText);
+		scenario = new Scenario(Identifier(), _name, _synopsis, _text);
 
 		//
 		// ... сохраним сценарий в базе данных
@@ -59,9 +62,11 @@ Scenario* ScenarioStorage::storeScenario(const QString& _scenarioText)
 	//
 	else {
 		//
-		// ... обновим текст сценария
+		// ... обновим сценарий
 		//
-		scenario->setText(_scenarioText);
+		scenario->setName(_name);
+		scenario->setSynopsis(_synopsis);
+		scenario->setText(_text);
 
 		//
 		// ... зафиксируем обновлённый текст в базе данных

@@ -186,6 +186,10 @@ Identifier AbstractMapper::findNextIdentifier()
 
 DomainObject * AbstractMapper::load(const QSqlRecord& _record )
 {
+	//
+	// FIXME: Очистить от артефактов недвижимости
+	//
+
     int value   = _record.value( "id" ).toInt();
     int version = _record.value( "version" ).toInt();
 

@@ -203,8 +203,10 @@ void Database::createTables(QSqlDatabase& _database)
 	q_creator.exec("CREATE TABLE scenario "
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "name TEXT DEFAULT(NULL), "
+				   "synopsis TEXT DEFAULT(NULL)"
 				   "text TEXT NOT NULL, "
-				   "is_fixed INTEGER NOT NULL DEFAULT(0), "
+				   "is_fixed INTEGER NOT NULL DEFAULT(0), " // фиксация версии, дата и комментарий
 				   "fix_date TEXT DEFAULT(NULL), "
 				   "fix_comment TEXT DEFAULT(NULL) "
 				   ")"
@@ -296,12 +298,15 @@ void Database::updateDatabase(QSqlDatabase& _database)
 	// Вызываются необходимые процедуры обновления БД в зависимости от её версии
 	//
 	switch (versionMajor) {
+		default:
 		case 0: {
 
 			switch (versionMinor) {
+				default:
 				case 0: {
 
 					switch (versionBuild) {
+						default:
 						case 1: {
 							updateDatabaseTo_0_0_2(_database);
 						}
@@ -313,25 +318,21 @@ void Database::updateDatabase(QSqlDatabase& _database)
 						case 4: {
 							updateDatabaseTo_0_0_5(_database);
 						}
-
-						default: {
-							break;
-						}
 					}
 
-					break;
 				}
 
-				default: {
-					break;
+				case 1: {
+
+					switch (versionBuild) {
+						default:
+						case 0: {
+							updateDatabaseTo_0_1_0(_database);
+						}
+					}
 				}
 			}
 
-			break;
-		}
-
-		default: {
-			break;
 		}
 	}
 
@@ -441,6 +442,23 @@ void Database::updateDatabaseTo_0_0_5(QSqlDatabase& _database)
 					   "sort_order INTEGER NOT NULL DEFAULT(0) "
 					   ")"
 					   );
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_1_0(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Обновление таблицы сценария
+		//
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN name TEXT DEFAULT(NULL)");
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN synopsis TEXT DEFAULT(NULL)");
 	}
 
 	_database.commit();

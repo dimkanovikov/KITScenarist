@@ -23,6 +23,48 @@ namespace UserInterface
 
 		QWidget* toolbar() const;
 
+		/**
+		 * @brief Очистить от старых данных
+		 */
+		void clear();
+
+		/**
+		 * @brief Название сценария
+		 */
+		QString scenarioName() const;
+
+		/**
+		 * @brief Установить название
+		 */
+		void setScenarioName(const QString& _name);
+
+		/**
+		 * @brief Синопсис сценария
+		 */
+		QString scenarioSynopsis() const;
+
+		/**
+		 * @brief Установить синопсис
+		 */
+		void setScenarioSynopsis(const QString& _synopsis);
+
+		/**
+		 * @brief Установить синопсис собранный из сцен
+		 */
+		void setScenarioSynopsisFromScenes(const QString& _synopsis);
+
+	signals:
+		/**
+		 * @brief Запрос на построение синопсиса из сцен
+		 */
+		void buildSynopsisFromScenes();
+
+	private slots:
+		/**
+		 * @brief Сменился текущий выбранный синопсис (с исходного на посценный или наоборот)
+		 */
+		void aboutCurrentSynopsisChanged();
+
 	private:
 		/**
 		 * @brief Настроить представление

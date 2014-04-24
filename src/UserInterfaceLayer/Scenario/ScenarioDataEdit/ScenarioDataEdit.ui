@@ -50,7 +50,7 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
+     <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
        <widget class="QLabel" name="nameLabel">
         <property name="text">
@@ -84,7 +84,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QRadioButton" name="synopsisSource">
+         <widget class="QRadioButton" name="isSourceSynopsis">
           <property name="text">
            <string>Source</string>
           </property>
@@ -94,7 +94,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="synopsisFromScenario">
+         <widget class="QRadioButton" name="isFromScenarioSynopsis">
           <property name="text">
            <string>From scenario</string>
           </property>
@@ -103,13 +103,65 @@
        </layout>
       </item>
       <item row="3" column="0">
-       <widget class="SimpleTextEditor" name="synopsis" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QStackedWidget" name="synopsisStack">
+        <property name="currentIndex">
+         <number>1</number>
         </property>
+        <widget class="QWidget" name="sourceSynopsisPage">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="SimpleTextEditor" name="sourceSynopsis" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="fromScenarioSynopsisPage">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QTextEdit" name="fromScenarioSynopsis">
+            <property name="textInteractionFlags">
+             <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>

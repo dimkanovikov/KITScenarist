@@ -6,7 +6,7 @@ using namespace DataMappingLayer;
 
 
 namespace {
-	const QString COLUMNS = " id, text ";
+	const QString COLUMNS = " id, name, synopsis, text ";
 	const QString TABLE_NAME = " scenario ";
 }
 
@@ -50,13 +50,15 @@ QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 {
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
-					" (id, text) "
-					" VALUES(?, ?) "
+					" (id, name, synopsis, text) "
+					" VALUES(?, ?, ?, ?) "
 					);
 
 	Scenario* scenario = dynamic_cast<Scenario*>(_subject );
 	_insertValues.clear();
 	_insertValues.append(scenario->id().value());
+	_insertValues.append(scenario->name());
+	_insertValues.append(scenario->synopsis());
 	_insertValues.append(scenario->text());
 
 	return insertStatement;
@@ -66,12 +68,16 @@ QString ScenarioMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 {
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET text = ? "
+					" SET name = ?, "
+					" synopsis = ?, "
+					" text = ? "
 					" WHERE id = ? "
 					);
 
 	Scenario* scenario = dynamic_cast<Scenario*>(_subject);
 	_updateValues.clear();
+	_updateValues.append(scenario->name());
+	_updateValues.append(scenario->synopsis());
 	_updateValues.append(scenario->text());
 	_updateValues.append(scenario->id().value());
 
@@ -90,9 +96,11 @@ QString ScenarioMapper::deleteStatement(DomainObject* _subject, QVariantList& _d
 
 DomainObject* ScenarioMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
+	QString name = _record.value("name").toString();
+	QString synopsis = _record.value("synopsis").toString();
 	QString text = _record.value("text").toString();
 
-	return new Scenario(_id, text);
+	return new Scenario(_id, name, synopsis, text);
 }
 
 DomainObjectsItemModel* ScenarioMapper::modelInstance()
