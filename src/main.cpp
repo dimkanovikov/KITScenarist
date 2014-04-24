@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	application.setOrganizationName("DimkaNovikov labs.");
 	application.setOrganizationDomain("dimkanovikov.pro");
 	application.setApplicationName("Scenarist");
-	application.setApplicationVersion("0.0.5");
+	application.setApplicationVersion("0.1.0");
 
 	//
 	// Настроим стиль отображения внешнего вида приложения
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     application.setPalette(palette);
 
 	//
-	// Загрузим шрифты в базу шрифтов программы, если их там ещё нет
+	// Загрузим Courier New в базу шрифтов программы, если его там ещё нет
 	//
 	QFontDatabase fontDatabase;
     fontDatabase.addApplicationFont(":/Fonts/Courier New");

@@ -97,7 +97,8 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					//
 					QTextBlockUserData* blockUserData = currentBlock.userData();
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(blockUserData)) {
-						writer.writeAttribute("synopsis", info->synopsis());
+						bool htmlEscaped = true;
+						writer.writeAttribute("synopsis", info->synopsis(htmlEscaped));
 					}
 
 					writer.writeCDATA(textToSave);
@@ -179,7 +180,8 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					//
 					QTextBlockUserData* blockUserData = currentBlock.userData();
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(blockUserData)) {
-						writer.writeAttribute("synopsis", info->synopsis());
+						bool htmlEscaped = true;
+						writer.writeAttribute("synopsis", info->synopsis(htmlEscaped));
 					}
 
 					writer.writeCDATA(textToSave);
@@ -215,7 +217,8 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					//
 					QTextBlockUserData* blockUserData = currentBlock.userData();
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(blockUserData)) {
-						writer.writeAttribute("synopsis", info->synopsis());
+						bool htmlEscaped = true;
+						writer.writeAttribute("synopsis", info->synopsis(htmlEscaped));
 					}
 
 					writer.writeCDATA(textToSave);
@@ -419,7 +422,9 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 					|| tokenType == ScenarioTextBlockStyle::SceneGroupHeader
 					|| tokenType == ScenarioTextBlockStyle::FolderHeader) {
 					QString synopsis = reader.attributes().value("synopsis").toString();
-					ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo(synopsis);
+					ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
+					bool htmlEscaped = true;
+					info->setSynopsis(synopsis, htmlEscaped);
 					cursor.block().setUserData(info);
 				}
 

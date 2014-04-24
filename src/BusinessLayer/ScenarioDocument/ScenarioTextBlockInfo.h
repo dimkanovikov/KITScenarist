@@ -11,17 +11,17 @@ namespace BusinessLogic
 	class ScenarioTextBlockInfo : public QTextBlockUserData
 	{
 	public:
-		ScenarioTextBlockInfo(const QString& _synopsis = QString());
+		ScenarioTextBlockInfo();
 
 		/**
 		 * @brief Получить синопсис
 		 */
-		QString synopsis() const;
+		QString synopsis(bool htmlEscaped = false) const;
 
 		/**
 		 * @brief Установить синопсис
 		 */
-		void setSynopsis(const QString& _synopsis);
+		void setSynopsis(const QString& _synopsis, bool htmlEscaped = false);
 
 	private:
 		/**

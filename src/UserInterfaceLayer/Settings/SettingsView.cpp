@@ -248,9 +248,12 @@ void SettingsView::initConnections()
 
 void SettingsView::initStyleSheet()
 {
-	ui->topEmptyLabel->setProperty("inTopPanel", true);
-	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
-	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
+	ui->topLeftEmptyLabel->setProperty("inTopPanel", true);
+	ui->topLeftEmptyLabel->setProperty("topPanelTopBordered", true);
+	ui->topLeftEmptyLabel->setProperty("topPanelRightBordered", true);
+	ui->topRightEmptyLabel->setProperty("inTopPanel", true);
+	ui->topRightEmptyLabel->setProperty("topPanelTopBordered", true);
+	ui->topRightEmptyLabel->setProperty("topPanelRightBordered", true);
 
 	ui->categories->setProperty("mainContainer", true);
 	ui->categoriesWidgets->setProperty("mainContainer", true);

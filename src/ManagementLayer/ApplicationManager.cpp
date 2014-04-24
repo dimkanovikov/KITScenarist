@@ -638,7 +638,16 @@ void ApplicationManager::reloadApplicationSettings()
 
 		palette.setColor(QPalette::ToolTipText, QColor("#EBEBEB"));
 
-		styleSheet = "QToolTip { border: 1px solid palette(highlight); padding: 2px; }";
+		//
+		// Фон неактивного пункта меню
+		//
+		palette.setColor(QPalette::Light, QColor("#404040"));
+
+		//
+		// Для всплывающей подсказки приходится дублировать при помощи стиля,
+		// это баг стиля Fusion в Qt 5.2.1
+		//
+		styleSheet = "QToolTip { color: #EBEBEB; border: 1px solid palette(highlight); padding: 2px; }";
 	} else {
 		//
 		// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек

@@ -20,44 +20,23 @@ ScenarioSceneSynopsis::ScenarioSceneSynopsis(QWidget* _parent) :
 
 void ScenarioSceneSynopsis::setHeader(const QString& _header)
 {
-	m_title->setText(QString(" %1: %2").arg(tr("Synopsis of"), _header.toUpper()));
+	QString newHeader = _header.toUpper();
+	m_title->setText(QString(" %1: %2").arg(tr("Synopsis of"), newHeader));
+	m_title->setToolTip(newHeader);
 }
 
-namespace {
-	QString toHtmlEscaped(const QString& _text) {
-		QString escapedText = _text;
-		escapedText =
-				escapedText
-				.replace("<", "&lt;")
-				.replace(">", "&gt;")
-				.replace("\"", "&quot;");
-		return escapedText;
-	}
 
-	QString fromHtmlEscaped(const QString& _escapedText) {
-		QString text = _escapedText;
-		text =  text
-				.replace("&lt;", "<")
-				.replace("&gt;", ">")
-				.replace("&quot;", "\"");
-		return text;
-	}
-}
 
 void ScenarioSceneSynopsis::setSynopsis(const QString& _synopsis)
 {
-	if (::toHtmlEscaped(m_synopsis->toHtml()) != _synopsis) {
-		//
-		// Текст нужно преобразовать из html-последовательности
-		//
-		QString htmlSynopsis = ::fromHtmlEscaped(_synopsis);
-		m_synopsis->setHtml(htmlSynopsis);
+	if (m_synopsis->toHtml() != _synopsis) {
+		m_synopsis->setHtml(_synopsis);
 	}
 }
 
 void ScenarioSceneSynopsis::aboutSynopsisChanged()
 {
-	emit synopsisChanged(::toHtmlEscaped(m_synopsis->toHtml()));
+	emit synopsisChanged(m_synopsis->toHtml());
 }
 
 void ScenarioSceneSynopsis::initView()

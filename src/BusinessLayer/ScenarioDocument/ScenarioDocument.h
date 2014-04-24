@@ -85,9 +85,19 @@ namespace BusinessLogic
 		QString itemSynopsisAtPosition(int _position) const;
 
 		/**
+		 * @brief Синопсис сцены
+		 */
+		QString itemSynopsis(ScenarioModelItem* _item) const;
+
+		/**
 		 * @brief Установить синопсис для сцены в указанной позиции курсора
 		 */
 		void setItemSynopsisAtPosition(int _position, const QString& _synopsis);
+
+		/**
+		 * @brief Построить синопсис из синопсисов сцен
+		 */
+		QString builSynopsisFromScenes() const;
 
 		/**
 		 * @brief Загрузить документ из сценария

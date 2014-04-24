@@ -11,6 +11,7 @@
 
 #include <Domain/Scenario.h>
 
+#include <QRegularExpression>
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QTextBlock>
@@ -110,9 +111,13 @@ QString ScenarioDocument::itemHeaderAtPosition(int _position) const
 QString ScenarioDocument::itemSynopsisAtPosition(int _position) const
 {
 	ScenarioModelItem* item = itemForPosition(_position, true);
+	return itemSynopsis(item);
+}
 
+QString ScenarioDocument::itemSynopsis(ScenarioModelItem* _item) const
+{
 	QTextCursor cursor(m_document);
-	cursor.setPosition(item->position());
+	cursor.setPosition(_item->position());
 
 	QString synopsis;
 	QTextBlockUserData* textBlockData = cursor.block().userData();
@@ -136,6 +141,34 @@ void ScenarioDocument::setItemSynopsisAtPosition(int _position, const QString& _
 	}
 	info->setSynopsis(_synopsis);
 	cursor.block().setUserData(info);
+}
+
+namespace {
+	const QString EMPTY_HTML_PARAGRAPH =
+			"<p style=\"-qt-paragraph-type:empty;margin-top:0px;margin-bottom:0px;margin-left:0px;"
+			"margin-right:0px;-qt-block-indent:0;text-indent:0px;\"><br/></p>";
+}
+
+QString ScenarioDocument::builSynopsisFromScenes() const
+{
+	QString synopsis;
+
+	//
+	// Строим синопсис
+	//
+	foreach (ScenarioModelItem* item, m_modelItems.values()) {
+		QString curItemSynopsis = itemSynopsis(item);
+		synopsis.append(curItemSynopsis);
+
+		//
+		// Добавляем разделяющую строку
+		//
+		if (!curItemSynopsis.isEmpty()) {
+			synopsis.append(EMPTY_HTML_PARAGRAPH);
+		}
+	}
+
+	return synopsis;
 }
 
 void ScenarioDocument::load(const QString& _scenario)
