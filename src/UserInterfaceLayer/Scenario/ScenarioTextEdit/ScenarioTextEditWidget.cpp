@@ -96,15 +96,27 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	// Устанавливаем позицию курсора
 	//
 	QTextCursor cursor = m_editor->textCursor();
-	cursor.setPosition(_position);
-	m_editor->setTextCursor(cursor);
 
 	//
-	// Сдвигаем скрол бар, чтобы не прилипало к низу редактора
+	// Если это новая позиция
 	//
-	m_editor->verticalScrollBar()->setValue(m_editor->verticalScrollBar()->value() + SCROLL_DELTA);
-	m_editor->ensureCursorVisible();
-	m_editor->setFocus();
+	if (cursor.position() != _position) {
+		cursor.setPosition(_position);
+		m_editor->setTextCursor(cursor);
+
+		//
+		// Сдвигаем скрол бар, чтобы не прилипало к низу редактора
+		//
+		m_editor->verticalScrollBar()->setValue(m_editor->verticalScrollBar()->value() + SCROLL_DELTA);
+		m_editor->ensureCursorVisible();
+		m_editor->setFocus();
+	}
+	//
+	// Если нужно обновить в текущей позиции курсора просто имитируем отправку сигнала
+	//
+	else {
+		emit m_editor->cursorPositionChanged();
+	}
 }
 
 void ScenarioTextEditWidget::aboutUndo()

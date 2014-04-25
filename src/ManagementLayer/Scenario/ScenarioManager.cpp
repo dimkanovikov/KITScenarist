@@ -100,12 +100,9 @@ void ScenarioManager::loadCurrentProject()
 
 	//
 	// FIXME: Обновление всех счётчиков программы - хронометраж, кол-во сцен
+	//        Возврат всех окон в исходное положение - навигатор на верх, данные сценария вперёд
 	//
-
-	//
-	// Обновим хронометраж
-	//
-	aboutUpdateDuration(0);
+	m_textEditManager->setCursorPosition(0);
 }
 
 void ScenarioManager::saveCurrentProject()
