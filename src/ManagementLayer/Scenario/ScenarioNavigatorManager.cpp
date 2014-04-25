@@ -41,6 +41,10 @@ void ScenarioNavigatorManager::setNavigationModel(ScenarioModel* _model)
 	m_navigator->setModel(m_scenarioModel);
 
 	initConnections();
+
+	if (m_scenarioModel != 0) {
+		aboutModelUpdated();
+	}
 }
 
 void ScenarioNavigatorManager::reloadNavigatorSettings()

@@ -56,6 +56,11 @@ namespace UserInterface
 		 */
 		BusinessLogic::ScenarioTextBlockStyle::Type scenarioBlockType() const;
 
+		/**
+		 * @brief Своя реализация установки курсора
+		 */
+		void setTextCursorReimpl(const QTextCursor& _cursor);
+
 	signals:
 		/**
 		 * @brief Сменился стиль под курсором
@@ -111,11 +116,6 @@ namespace UserInterface
 		 * @brief Оканчивается ли строка сокращением
 		 */
 		bool stringEndsWithAbbrev(const QString& _text);
-
-		/**
-		 * @brief Своя реализация установки курсора
-		 */
-		void setTextCursorPrivate(const QTextCursor& _cursor);
 
 	private:
 		void initDocument(QTextDocument* _document);

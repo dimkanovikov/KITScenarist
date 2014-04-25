@@ -170,6 +170,13 @@ ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType() const
 	return ScenarioTextBlockStyle::forBlock(textCursor().block());
 }
 
+void ScenarioTextEdit::setTextCursorReimpl(const QTextCursor& _cursor)
+{
+	int verticalScrollValue = verticalScrollBar()->value();
+	setTextCursor(_cursor);
+	verticalScrollBar()->setValue(verticalScrollValue);
+}
+
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 {
 	//
@@ -464,7 +471,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 		}
 
 		cursor.setPosition(cursorPosition);
-		setTextCursorPrivate(cursor);
+		setTextCursorReimpl(cursor);
 	}
 
 	//
@@ -676,13 +683,6 @@ bool ScenarioTextEdit::stringEndsWithAbbrev(const QString& _text)
 	//
 
 	return false;
-}
-
-void ScenarioTextEdit::setTextCursorPrivate(const QTextCursor& _cursor)
-{
-	int verticalScrollValue = verticalScrollBar()->value();
-	setTextCursor(_cursor);
-	verticalScrollBar()->setValue(verticalScrollValue);
 }
 
 void ScenarioTextEdit::initDocument(QTextDocument* _document)

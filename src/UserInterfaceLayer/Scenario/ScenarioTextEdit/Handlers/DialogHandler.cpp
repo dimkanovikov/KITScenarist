@@ -164,7 +164,9 @@ void DialogHandler::handleTab(QKeyEvent*)
 					//
 					// ... возвращаем курсор к пустому блоку
 					//
-					editor()->moveCursor(QTextCursor::PreviousBlock);
+					cursor = editor()->textCursor();
+					cursor.movePosition(QTextCursor::PreviousBlock);
+					editor()->setTextCursorReimpl(cursor);
 
 					//
 					// ... делаем блок под курсором ремаркой
@@ -236,7 +238,9 @@ void DialogHandler::handleOther(QKeyEvent* _event)
 				//
 				// ... возвращаем курсор к пустому блоку
 				//
-				editor()->moveCursor(QTextCursor::PreviousBlock);
+				cursor = editor()->textCursor();
+				cursor.movePosition(QTextCursor::PreviousBlock);
+				editor()->setTextCursorReimpl(cursor);
 			}
 
 			//
