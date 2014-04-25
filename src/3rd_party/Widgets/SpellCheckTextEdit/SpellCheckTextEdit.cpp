@@ -158,10 +158,6 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 
 void SpellCheckTextEdit::resetHighlighter()
 {
-	if (m_spellCheckHighlighter) {
-		delete m_spellCheckHighlighter;
-		m_spellCheckHighlighter = 0;
-	}
 	m_spellCheckHighlighter = new SpellCheckHighlighter(document(), m_spellChecker);
 	m_spellCheckHighlighter->setUseSpellChecker(m_useSpellChecking->isChecked());
 }

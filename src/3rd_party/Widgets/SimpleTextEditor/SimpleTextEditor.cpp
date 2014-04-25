@@ -84,8 +84,9 @@ void SimpleTextEditor::setupMenu()
 	actionTextBold->setCheckable(true);
 
 	actionTextItalic = new QAction(tr("Italic"), this);
-	actionTextItalic->setPriority(QAction::LowPriority);
 	actionTextItalic->setShortcut(Qt::CTRL + Qt::Key_I);
+	actionTextItalic->setShortcutContext(Qt::WidgetShortcut);
+	actionTextItalic->setPriority(QAction::LowPriority);
 	QFont italic;
 	italic.setItalic(true);
 	actionTextItalic->setFont(italic);
@@ -94,6 +95,7 @@ void SimpleTextEditor::setupMenu()
 
 	actionTextUnderline = new QAction(tr("Underline"), this);
 	actionTextUnderline->setShortcut(Qt::CTRL + Qt::Key_U);
+	actionTextUnderline->setShortcutContext(Qt::WidgetShortcut);
 	actionTextUnderline->setPriority(QAction::LowPriority);
 	QFont underline;
 	underline.setUnderline(true);
@@ -104,9 +106,9 @@ void SimpleTextEditor::setupMenu()
 	//
 	// Добавим действия виджету
 	//
-	this->addAction(actionTextBold);
-	this->addAction(actionTextItalic);
-	this->addAction(actionTextUnderline);
+	addAction(actionTextBold);
+	addAction(actionTextItalic);
+	addAction(actionTextUnderline);
 }
 
 void SimpleTextEditor::mergeFormatOnWordOrSelection(const QTextCharFormat& format)

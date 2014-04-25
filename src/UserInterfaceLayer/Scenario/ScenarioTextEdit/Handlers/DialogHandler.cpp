@@ -205,7 +205,7 @@ void DialogHandler::handleOther(QKeyEvent* _event)
 		editor()->textCursor().deletePreviousChar();
 
 		if (cursorForwardText.isEmpty()
-			&& cursorBackwardText.isEmpty()) {
+			&& cursorBackwardText == "(") {
 			//! Если текст пуст
 
 			//
@@ -227,12 +227,17 @@ void DialogHandler::handleOther(QKeyEvent* _event)
 			if (cursorBackwardText != "(") {
 				editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
 			}
-			editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
+			//
+			// ... если после скобки нет текста, не добавляем новый параграф
+			//
+			if (!cursorForwardText.isEmpty()) {
+				editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
 
-			//
-			// ... возвращаем курсор к пустому блоку
-			//
-			editor()->moveCursor(QTextCursor::PreviousBlock);
+				//
+				// ... возвращаем курсор к пустому блоку
+				//
+				editor()->moveCursor(QTextCursor::PreviousBlock);
+			}
 
 			//
 			// ... делаем блок под курсором ремаркой

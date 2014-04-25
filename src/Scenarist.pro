@@ -152,7 +152,8 @@ SOURCES += main.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.cpp \
 	UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.cpp \
     ManagementLayer/Scenario/ScenarioSceneSynopsisManager.cpp \
-    3rd_party/Widgets/TabBar/TabBar.cpp
+    3rd_party/Widgets/TabBar/TabBar.cpp \
+    3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -297,7 +298,8 @@ HEADERS += \
     BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h \
 	UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.h \
     ManagementLayer/Scenario/ScenarioSceneSynopsisManager.h \
-    3rd_party/Widgets/TabBar/TabBar.h
+    3rd_party/Widgets/TabBar/TabBar.h \
+    3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

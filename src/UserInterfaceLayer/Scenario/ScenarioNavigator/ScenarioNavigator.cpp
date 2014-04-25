@@ -37,6 +37,7 @@ void ScenarioNavigator::setModel(QAbstractItemModel* _model)
 
 void ScenarioNavigator::setCurrentIndex(const QModelIndex& _index)
 {
+	m_navigationTree->clearSelection();
 	m_navigationTree->setCurrentIndex(_index);
 }
 
