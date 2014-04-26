@@ -36,16 +36,7 @@ int main(int argc, char *argv[])
 	// Загрузим Courier New в базу шрифтов программы, если его там ещё нет
 	//
 	QFontDatabase fontDatabase;
-    fontDatabase.addApplicationFont(":/Fonts/Courier New");
-
-    //
-    // Настроим шрифт для виндовс
-    //
-#ifdef Q_OS_WIN
-    QFont applicationFont = QApplication::font();
-    applicationFont.setPointSize(10);
-    QApplication::setFont(applicationFont);
-#endif
+	fontDatabase.addApplicationFont(":/Fonts/Courier New");
 
     //
     // Подключим файл переводов Qt

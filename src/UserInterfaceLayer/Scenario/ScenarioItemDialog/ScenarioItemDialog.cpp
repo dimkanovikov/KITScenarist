@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QRadioButton>
+#include <QHBoxLayout>
 #include <QVBoxLayout>
 
 using UserInterface::ScenarioItemDialog;
@@ -105,10 +106,14 @@ void ScenarioItemDialog::initView()
 	m_buttons->addButton(QDialogButtonBox::Ok);
 	m_buttons->addButton(QDialogButtonBox::Cancel);
 
+	QHBoxLayout* topLayout = new QHBoxLayout;
+	topLayout->addWidget(m_folder);
+	topLayout->addWidget(m_scenesGroup);
+	topLayout->addWidget(m_scene);
+	topLayout->addStretch();
+
 	QVBoxLayout* layout = new QVBoxLayout;
-	layout->addWidget(m_folder);
-	layout->addWidget(m_scenesGroup);
-	layout->addWidget(m_scene);
+	layout->addLayout(topLayout);
 	layout->addWidget(m_itemEditor);
 	layout->addWidget(m_buttons);
 

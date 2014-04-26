@@ -451,52 +451,58 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 void ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml, bool _removeLastMime)
 {
 	//
-	// Начинаем операцию вставки
-	//
-	QTextCursor cursor(m_scenario->document());
-	cursor.beginEditBlock();
-
-	//
 	// Определим позицию для вставки данных
 	//
 	int insertPosition = m_scenario->positionToInsertMime(_insertParent, _insertBefore);
 
 	//
-	// Если необходимо удалить прошлое выделение
+	// Если пользователь не пытается вставить данные на своё же место
 	//
-	if (_removeLastMime) {
-		bool needCorrectPosition = false;
-		if (m_lastMimeFrom < insertPosition) {
-			needCorrectPosition = true;
+	if (insertPosition != m_lastMimeFrom
+		&& insertPosition != m_lastMimeTo) {
+		//
+		// Начинаем операцию вставки
+		//
+		QTextCursor cursor(m_scenario->document());
+		cursor.beginEditBlock();
+
+		//
+		// Если необходимо удалить прошлое выделение
+		//
+		if (_removeLastMime) {
+			bool needCorrectPosition = false;
+			if (m_lastMimeFrom < insertPosition) {
+				needCorrectPosition = true;
+			}
+
+			int removedSymbols = removeLastMime();
+			if (needCorrectPosition) {
+				insertPosition -= removedSymbols;
+			}
 		}
 
-		int removedSymbols = removeLastMime();
-		if (needCorrectPosition) {
-			insertPosition -= removedSymbols;
+		//
+		// Вставим пустой блок для нового элемента
+		//
+		cursor.setPosition(insertPosition);
+		cursor.insertBlock();
+		//
+		// ... скорректируем позицию курсора
+		//
+		if (insertPosition != 0) {
+			insertPosition = cursor.position();
 		}
+
+		//
+		// Вставка данных
+		//
+		xmlToScenario(insertPosition, _xml);
+
+		//
+		// Завершаем операцию
+		//
+		cursor.endEditBlock();
 	}
-
-	//
-	// Вставим пустой блок для нового элемента
-	//
-	cursor.setPosition(insertPosition);
-	cursor.insertBlock();
-	//
-	// ... скорректируем позицию курсора
-	//
-	if (insertPosition != 0) {
-		insertPosition = cursor.position();
-	}
-
-	//
-	// Вставка данных
-	//
-	xmlToScenario(insertPosition, _xml);
-
-	//
-	// Завершаем операцию
-	//
-	cursor.endEditBlock();
 }
 
 int ScenarioXml::removeLastMime()

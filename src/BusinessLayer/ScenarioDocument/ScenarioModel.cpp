@@ -316,7 +316,7 @@ bool ScenarioModel::dropMimeData(
 
 	return isDropSucceed;
 }
-#include <QDebug>
+
 QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const
 {
 	QMimeData* mimeData = new QMimeData;
