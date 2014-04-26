@@ -43,17 +43,11 @@
 #define SYNTAXHIGHLIGHTER_H
 
 #include <QtCore/qglobal.h>
-
-#ifndef QT_NO_SYNTAXHIGHLIGHTER
-
-#include <QtCore/qobject.h>
-#include <QtGui/qtextobject.h>
+#include <QObject>
+#include <QTextObject>
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QPointer>
-
-QT_BEGIN_NAMESPACE
-
 
 class QTextDocument;
 class SyntaxHighlighterPrivate;
@@ -62,7 +56,8 @@ class QFont;
 class QColor;
 class QTextBlockUserData;
 
-class Q_GUI_EXPORT SyntaxHighlighter : public QObject
+
+class SyntaxHighlighter : public QObject
 {
 	Q_OBJECT
 
@@ -149,9 +144,5 @@ public slots:
 		q->rehighlight();
 	}
 };
-
-QT_END_NAMESPACE
-
-#endif // QT_NO_SYNTAXHIGHLIGHTER
 
 #endif // SYNTAXHIGHLIGHTER_H

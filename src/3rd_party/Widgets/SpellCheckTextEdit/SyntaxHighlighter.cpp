@@ -41,7 +41,6 @@
 
 #include "SyntaxHighlighter.h"
 
-#ifndef QT_NO_SYNTAXHIGHLIGHTER
 #include <qtextdocument.h>
 #include <qtextlayout.h>
 #include <qpointer.h>
@@ -49,8 +48,6 @@
 #include <qtextcursor.h>
 #include <qdebug.h>
 #include <qtimer.h>
-
-QT_BEGIN_NAMESPACE
 
 
 void SyntaxHighlighterPrivate::applyFormatChanges()
@@ -624,7 +621,3 @@ QTextBlock SyntaxHighlighter::currentBlock() const
 	return d->currentBlock;
 }
 
-QT_END_NAMESPACE
-
-
-#endif // QT_NO_SYNTAXHIGHLIGHTER
