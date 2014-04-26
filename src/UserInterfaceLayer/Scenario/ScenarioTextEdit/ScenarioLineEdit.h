@@ -13,12 +13,7 @@ namespace UserInterface
 		Q_OBJECT
 
 	public:
-		explicit ScenarioLineEdit(QWidget* _parent = 0);
-
-		/**
-		 * @brief Сбросить формат текста
-		 */
-		void clearCharFormat();
+        explicit ScenarioLineEdit(QWidget* _parent = 0);
 
 	protected:
 		/**
@@ -26,11 +21,18 @@ namespace UserInterface
 		 */
 		void keyPressEvent(QKeyEvent* _event);
 
+        void insertFromMimeData(const QMimeData* _source);
+
 	private slots:
 		/**
 		 * @brief Убрать переносы строк из текста
 		 */
 		void removeLineBreaks();
+
+        /**
+         * @brief Сбросить формат текста
+         */
+        void clearCharFormat();
 	};
 }
 

@@ -130,7 +130,7 @@
             <number>20</number>
            </property>
            <property name="topMargin">
-            <number>50</number>
+            <number>40</number>
            </property>
            <item row="1" column="0">
             <spacer name="verticalSpacer">

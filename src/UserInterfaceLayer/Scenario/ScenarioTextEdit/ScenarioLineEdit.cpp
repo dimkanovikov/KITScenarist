@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QKeyEvent>
+#include <QMimeData>
 
 using UserInterface::ScenarioLineEdit;
 
@@ -47,32 +48,8 @@ ScenarioLineEdit::ScenarioLineEdit(QWidget* _parent) :
 	//
 	setFont(QApplication::font());
 	document()->setDefaultFont(QApplication::font());
+    connect(this, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this, SLOT(clearCharFormat()));
 	clearCharFormat();
-}
-
-void ScenarioLineEdit::clearCharFormat()
-{
-	QTextCursor cursor = textCursor();
-
-	//
-	// Установим стиль отображения текста, как в обычном редакторе
-	//
-	QTextCharFormat format = cursor.charFormat();
-	format.setForeground(QApplication::palette().foreground());
-
-	//
-	// Обновим стили
-	//
-	cursor.setBlockCharFormat(format);
-
-	//
-	// Применим стиль текста ко всему блоку, выделив его,
-	// т.к. в блоке могут находиться фрагменты в другом стиле
-	//
-	cursor.select(QTextCursor::BlockUnderCursor);
-	cursor.setCharFormat(format);
-	cursor.clearSelection();
-	setTextCursor(cursor);
 }
 
 void ScenarioLineEdit::keyPressEvent(QKeyEvent* _event)
@@ -87,7 +64,18 @@ void ScenarioLineEdit::keyPressEvent(QKeyEvent* _event)
 		//
 	} else {
 		ScenarioTextEdit::keyPressEvent(_event);
-	}
+    }
+}
+
+void ScenarioLineEdit::insertFromMimeData(const QMimeData *_source)
+{
+    //
+    // Вставляем только в текстовом виде
+    //
+    if (_source->hasText()) {
+        QString textToInsert = _source->text().simplified();
+        insertPlainText(textToInsert);
+    }
 }
 
 void ScenarioLineEdit::removeLineBreaks()
@@ -99,4 +87,29 @@ void ScenarioLineEdit::removeLineBreaks()
 			cursor.deleteChar();
 		}
 	}
+}
+
+void ScenarioLineEdit::clearCharFormat()
+{
+    QTextCursor cursor = textCursor();
+
+    //
+    // Установим стиль отображения текста, как в обычном редакторе
+    //
+    QTextCharFormat charFormat = cursor.charFormat();
+    charFormat.setForeground(QApplication::palette().foreground());
+
+    //
+    // Обновим стили
+    //
+    cursor.setBlockCharFormat(charFormat);
+
+    //
+    // Применим стиль текста ко всему блоку, выделив его,
+    // т.к. в блоке могут находиться фрагменты в другом стиле
+    //
+    cursor.select(QTextCursor::BlockUnderCursor);
+    cursor.setCharFormat(charFormat);
+    cursor.clearSelection();
+    setTextCursor(cursor);
 }
