@@ -380,18 +380,18 @@ void ScenarioManager::initView()
 {
     m_viewEditorsTabs = new TabBar(m_view);
 	m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-	m_viewEditorsTabs->addTab(tr("Data"));
 	m_viewEditorsTabs->addTab(tr("Text"));
-	m_viewEditorsTabs->setMinimumSize(100,0);
+	m_viewEditorsTabs->addTab(tr("Data"));
+	m_viewEditorsTabs->setMinimumSize(109,0);
 
 	m_viewEditorsToolbars = new QStackedWidget(m_view);
 	m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-	m_viewEditorsToolbars->addWidget(m_dataEditManager->toolbar());
 	m_viewEditorsToolbars->addWidget(m_textEditManager->toolbar());
+	m_viewEditorsToolbars->addWidget(m_dataEditManager->toolbar());
 
 	m_viewEditors = new QStackedWidget(m_view);
-	m_viewEditors->addWidget(m_dataEditManager->view());
 	m_viewEditors->addWidget(m_textEditManager->view());
+	m_viewEditors->addWidget(m_dataEditManager->view());
 
 	QWidget* rightWidget = new QWidget(m_view);
 
