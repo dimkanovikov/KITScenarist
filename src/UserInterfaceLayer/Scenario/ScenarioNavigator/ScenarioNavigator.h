@@ -3,9 +3,10 @@
 
 #include <QWidget>
 
-class QTreeView;
-class QLabel;
 class QAbstractItemModel;
+class QLabel;
+class QToolButton;
+class QTreeView;
 
 namespace UserInterface
 {
@@ -44,9 +45,19 @@ namespace UserInterface
 
 	signals:
 		/**
+		 * @brief Запрос на добавление элемента
+		 */
+		void addItem(const QModelIndex& _itemIndex);
+
+		/**
+		 * @brief Запрос на удаление элемента
+		 */
+		void removeItem(const QModelIndex& _itemIndex);
+
+		/**
 		 * @brief Активирована сцена
 		 */
-		void sceneChoosed(const QModelIndex& _index);
+		void sceneChoosed(const QModelIndex& _sceneIndex);
 
 		/**
 		 * @brief Запрос отмены действия
@@ -63,6 +74,17 @@ namespace UserInterface
 		 * @brief Переопределяется чтобы отлавливать нажатия Ctrl+Z и Ctrl+Shift+Z в дереве
 		 */
 		bool eventFilter(QObject* _watched, QEvent* _event);
+
+	private slots:
+		/**
+		 * @brief Обработка запроса на добаление элемента
+		 */
+		void aboutAddItem();
+
+		/**
+		 * @brief Обработка запроса на удаление элемента
+		 */
+		void aboutRemoveItem();
 
 	private:
 		/**
@@ -82,11 +104,6 @@ namespace UserInterface
 
 	private:
 		/**
-		 * @brief Заголовок навигатора
-		 */
-		QLabel* m_title;
-
-		/**
 		 * @brief Префикс счётчика сцен
 		 */
 		QLabel* m_scenesCountTitle;
@@ -95,6 +112,21 @@ namespace UserInterface
 		 * @brief Количество сцен в сценарии
 		 */
 		QLabel* m_scenesCount;
+
+		/**
+		 * @brief Кнопка удаления локации
+		 */
+		QToolButton* m_addItem;
+
+		/**
+		 * @brief Кнопка обновления списка локаций
+		 */
+		QToolButton* m_removeItem;
+
+		/**
+		 * @brief Окончание панели инструментов
+		 */
+		QLabel* m_endTitle;
 
 		/**
 		 * @brief Дерево навигации

@@ -1,6 +1,7 @@
 #include "ScenarioTextEditWidget.h"
 
 #include "ScenarioTextEdit.h"
+#include "ScenarioTextEditHelpers.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
@@ -13,6 +14,7 @@
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include <QToolButton>
+#include <QTextBlock>
 
 using UserInterface::ScenarioTextEditWidget;
 using UserInterface::ScenarioTextEdit;
@@ -117,6 +119,70 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	else {
 		emit m_editor->cursorPositionChanged();
 	}
+}
+
+void ScenarioTextEditWidget::addItem(int _position, const QString& _text, int _type)
+{
+	QTextCursor cursor = m_editor->textCursor();
+	cursor.beginEditBlock();
+
+	cursor.setPosition(_position);
+	m_editor->setTextCursor(cursor);
+	ScenarioTextBlockStyle::Type type = (ScenarioTextBlockStyle::Type)_type;
+	//
+	// Если в позиции пустой блок, изменим его
+	//
+	if (cursor.block().text().isEmpty()) {
+		m_editor->changeScenarioBlockType(type);
+	}
+	//
+	// В противном случае добавим новый
+	//
+	else {
+		m_editor->addScenarioBlock(type);
+	}
+
+	//
+	// Устанавливаем текст в блок
+	//
+	m_editor->insertPlainText(_text);
+	//
+	// Если это группирующий блок, то вставим и закрывающий текст
+	//
+	if (ScenarioTextBlockStyle(type).isEmbeddableHeader()) {
+		cursor = m_editor->textCursor();
+		cursor.movePosition(QTextCursor::NextBlock);
+		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		cursor.insertText(Helpers::footerText(_text));
+	}
+
+	cursor.endEditBlock();
+}
+
+void ScenarioTextEditWidget::removeText(int _from, int _to)
+{
+	QTextCursor cursor = m_editor->textCursor();
+	cursor.beginEditBlock();
+
+	//
+	// Стираем текст
+	//
+	cursor.setPosition(_from);
+	cursor.setPosition(_to, QTextCursor::KeepAnchor);
+	cursor.removeSelectedText();
+
+	//
+	// Если остаётся пустой блок, стираем его тоже
+	//
+	if (cursor.block().text().isEmpty()) {
+		if (cursor.atStart()) {
+			cursor.deleteChar();
+		} else {
+			cursor.deletePreviousChar();
+		}
+	}
+
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEditWidget::aboutUndo()

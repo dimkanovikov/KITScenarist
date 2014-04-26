@@ -127,6 +127,16 @@ namespace ManagementLayer
 		 */
 		void aboutMoveCursorToItem(const QModelIndex& _index);
 
+		/**
+		 * @brief Добавить элемент, после заданного
+		 */
+		void aboutAddItem(const QModelIndex& _afterItemIndex, const QString& _itemHeader, int _itemType);
+
+		/**
+		 * @brief Удалить заданныё элемент
+		 */
+		void aboutRemoveItem(const QModelIndex& _itemIndex);
+
 	private:
 		/**
 		 * @brief Загрузить данные

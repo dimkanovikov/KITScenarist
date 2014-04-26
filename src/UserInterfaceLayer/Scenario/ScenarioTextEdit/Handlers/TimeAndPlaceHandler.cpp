@@ -297,27 +297,29 @@ void TimeAndPlaceHandler::handleOther(QKeyEvent*)
 
 void TimeAndPlaceHandler::storeSceneParameters() const
 {
-	//
-	// Получим необходимые значения
-	//
-	// ... курсор в текущем положении
-	QTextCursor cursor = editor()->textCursor();
-	// ... блок текста в котором находится курсор
-	QTextBlock currentBlock = cursor.block();
-	// ... текст блока
-	QString currentBlockText = currentBlock.text();
-	// ... локация
-	QString locationName = TimeAndPlaceParser::locationName(currentBlockText);
-	// ... сценарный день
-	QString scenarioDayName = TimeAndPlaceParser::scenarioDayName(currentBlockText);
+	if (editor()->storeDataWhenEditing()) {
+		//
+		// Получим необходимые значения
+		//
+		// ... курсор в текущем положении
+		QTextCursor cursor = editor()->textCursor();
+		// ... блок текста в котором находится курсор
+		QTextBlock currentBlock = cursor.block();
+		// ... текст блока
+		QString currentBlockText = currentBlock.text();
+		// ... локация
+		QString locationName = TimeAndPlaceParser::locationName(currentBlockText);
+		// ... сценарный день
+		QString scenarioDayName = TimeAndPlaceParser::scenarioDayName(currentBlockText);
 
-	//
-	// Сохраняем локацию и подлокацию
-	//
-	StorageFacade::locationStorage()->storeLocation(locationName);
+		//
+		// Сохраняем локацию и подлокацию
+		//
+		StorageFacade::locationStorage()->storeLocation(locationName);
 
-	//
-	// Сохраняем сценарный день
-	//
-	StorageFacade::scenarioDayStorage()->storeScenarioDay(scenarioDayName);
+		//
+		// Сохраняем сценарный день
+		//
+		StorageFacade::scenarioDayStorage()->storeScenarioDay(scenarioDayName);
+	}
 }

@@ -61,6 +61,16 @@ namespace UserInterface
 		 */
 		void setTextCursorReimpl(const QTextCursor& _cursor);
 
+		/**
+		 * @brief Получить значение флага сигнализирующего сохранять ли данные во время редактирования
+		 */
+		bool storeDataWhenEditing() const;
+
+		/**
+		 * @brief Установить значение флага сигнализирующего сохранять ли данные во время редактирования
+		 */
+		void setStoreDataWhenEditing(bool _store);
+
 	signals:
 		/**
 		 * @brief Сменился стиль под курсором
@@ -129,8 +139,10 @@ namespace UserInterface
 		 */
 		BusinessLogic::ScenarioTextDocument* m_document;
 
-
-		bool m_isInPaintEvent;
+		/**
+		 * @brief Необходимо ли сохранять данные при вводе
+		 */
+		bool m_storeDataWhenEditing;
 	};
 }
 

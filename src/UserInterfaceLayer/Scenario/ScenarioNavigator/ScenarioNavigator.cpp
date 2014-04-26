@@ -2,11 +2,12 @@
 
 #include "ScenarioNavigatorItemDelegate.h"
 
-#include <QLabel>
-#include <QTreeView>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QKeyEvent>
+#include <QLabel>
+#include <QToolButton>
+#include <QTreeView>
+#include <QVBoxLayout>
 
 using UserInterface::ScenarioNavigator;
 using UserInterface::ScenarioNavigatorItemDelegate;
@@ -14,9 +15,11 @@ using UserInterface::ScenarioNavigatorItemDelegate;
 
 ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
 	QWidget(parent),
-	m_title(new QLabel(this)),
 	m_scenesCountTitle(new QLabel(this)),
 	m_scenesCount(new QLabel(this)),
+	m_addItem(new QToolButton(this)),
+	m_removeItem(new QToolButton(this)),
+	m_endTitle(new QLabel(this)),
 	m_navigationTree(new QTreeView(this)),
 	m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this))
 {
@@ -79,19 +82,35 @@ bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 	return isEventFiltered;
 }
 
+void ScenarioNavigator::aboutAddItem()
+{
+	QModelIndex currentItemIndex = m_navigationTree->currentIndex();
+
+	//
+	// Тут не проверяется состояние текущего элемента, если индекс не указывает ни на
+	// какой элемент, то новый элемент создаётся в самом конце сценария, а если указывает,
+	// то новый элемент создаётся после него
+	//
+	emit addItem(currentItemIndex);
+}
+
+void ScenarioNavigator::aboutRemoveItem()
+{
+	QModelIndex currentItemIndex = m_navigationTree->currentIndex();
+	if (currentItemIndex.isValid()) {
+		emit removeItem(currentItemIndex);
+	}
+}
+
 void ScenarioNavigator::initView()
 {
-	m_title->setText(tr("Navigator"));
-	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	m_scenesCountTitle->setText(tr("Scenes:"));
+	m_scenesCount->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	m_scenesCountTitle->setText(tr("Scenes: "));
+	m_addItem->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
+	m_removeItem->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
 
-	QHBoxLayout* topLayout = new QHBoxLayout;
-	topLayout->setContentsMargins(QMargins());
-	topLayout->setSpacing(0);
-	topLayout->addWidget(m_title);
-	topLayout->addWidget(m_scenesCountTitle);
-	topLayout->addWidget(m_scenesCount);
+	m_endTitle->setFixedWidth(1);
 
 	m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
     m_navigationTree->setDragDropMode(QAbstractItemView::DragDrop);
@@ -102,6 +121,15 @@ void ScenarioNavigator::initView()
 	m_navigationTree->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	m_navigationTree->setSelectionMode(QAbstractItemView::ContiguousSelection);
 	m_navigationTree->installEventFilter(this);
+
+	QHBoxLayout* topLayout = new QHBoxLayout;
+	topLayout->setContentsMargins(QMargins());
+	topLayout->setSpacing(0);
+	topLayout->addWidget(m_scenesCountTitle);
+	topLayout->addWidget(m_scenesCount);
+	topLayout->addWidget(m_addItem);
+	topLayout->addWidget(m_removeItem);
+	topLayout->addWidget(m_endTitle);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -114,21 +142,25 @@ void ScenarioNavigator::initView()
 
 void ScenarioNavigator::initConnections()
 {
+	connect(m_addItem, SIGNAL(clicked()), this, SLOT(aboutAddItem()));
+	connect(m_removeItem, SIGNAL(clicked()), this, SLOT(aboutRemoveItem()));
 	connect(m_navigationTree, SIGNAL(activated(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
-
 }
 
 void ScenarioNavigator::initStyleSheet()
 {
-	m_title->setProperty("inTopPanel", true);
-	m_title->setProperty("topPanelTopBordered", true);
-
 	m_scenesCountTitle->setProperty("inTopPanel", true);
 	m_scenesCountTitle->setProperty("topPanelTopBordered", true);
 
 	m_scenesCount->setProperty("inTopPanel", true);
 	m_scenesCount->setProperty("topPanelTopBordered", true);
-	m_scenesCount->setProperty("topPanelRightBordered", true);
+
+	m_addItem->setProperty("inTopPanel", true);
+	m_removeItem->setProperty("inTopPanel", true);
+
+	m_endTitle->setProperty("inTopPanel", true);
+	m_endTitle->setProperty("topPanelTopBordered", true);
+	m_endTitle->setProperty("topPanelRightBordered", true);
 
 	m_navigationTree->setProperty("mainContainer", true);
 }

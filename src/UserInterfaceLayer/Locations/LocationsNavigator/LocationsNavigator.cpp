@@ -72,15 +72,15 @@ void LocationsNavigator::selectLocation(const QModelIndex& _index)
 
 void LocationsNavigator::aboutEditLocation()
 {
-	emit editLocation(selectedUserName());
+	emit editLocation(selectedLocationName());
 }
 
 void LocationsNavigator::aboutRemoveLocation()
 {
-	emit removeLocation(selectedUserName());
+	emit removeLocation(selectedLocationName());
 }
 
-QString LocationsNavigator::selectedUserName() const
+QString LocationsNavigator::selectedLocationName() const
 {
 	QModelIndex currentSelected = m_navigator->selectionModel()->currentIndex();
 	QString userName = m_navigator->model()->data(currentSelected).toString();

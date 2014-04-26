@@ -77,7 +77,17 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 
 int ScenarioTextEditManager::cursorPosition() const
 {
-    return m_view->cursorPosition();
+	return m_view->cursorPosition();
+}
+
+void ScenarioTextEditManager::addScenarioItem(int _position, const QString& _text, int _type)
+{
+	m_view->addItem(_position, _text, _type);
+}
+
+void ScenarioTextEditManager::removeScenarioText(int _from, int _to)
+{
+	m_view->removeText(_from, _to);
 }
 
 void ScenarioTextEditManager::aboutUndo()

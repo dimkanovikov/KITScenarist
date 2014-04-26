@@ -96,10 +96,16 @@ QModelIndex ScenarioDocument::itemIndexAtPosition(int _position) const
 	return m_model->indexForItem(item);
 }
 
-int ScenarioDocument::itemPositionAtIndex(const QModelIndex& _index) const
+int ScenarioDocument::itemStartPosition(const QModelIndex& _index) const
 {
 	ScenarioModelItem* item = m_model->itemForIndex(_index);
 	return itemStartPosition(item);
+}
+
+int ScenarioDocument::itemEndPosition(const QModelIndex& _index) const
+{
+	ScenarioModelItem* item = m_model->itemForIndex(_index);
+	return itemEndPosition(item);
 }
 
 QString ScenarioDocument::itemHeaderAtPosition(int _position) const

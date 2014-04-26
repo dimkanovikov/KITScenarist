@@ -177,6 +177,18 @@ void ScenarioTextEdit::setTextCursorReimpl(const QTextCursor& _cursor)
 	verticalScrollBar()->setValue(verticalScrollValue);
 }
 
+bool ScenarioTextEdit::storeDataWhenEditing() const
+{
+	return m_storeDataWhenEditing;
+}
+
+void ScenarioTextEdit::setStoreDataWhenEditing(bool _store)
+{
+	if (m_storeDataWhenEditing != _store) {
+		m_storeDataWhenEditing = _store;
+	}
+}
+
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 {
 	//

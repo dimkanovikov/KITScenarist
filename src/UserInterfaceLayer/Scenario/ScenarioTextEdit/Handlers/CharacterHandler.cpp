@@ -202,20 +202,22 @@ void CharacterHandler::handleOther(QKeyEvent*)
 
 void CharacterHandler::storeCharacter() const
 {
-	//
-	// Получим необходимые значения
-	//
-	// ... курсор в текущем положении
-	QTextCursor cursor = editor()->textCursor();
-	// ... блок текста в котором находится курсор
-	QTextBlock currentBlock = cursor.block();
-	// ... текст блока
-	QString currentBlockText = currentBlock.text();
-	// ... имя персонажа
-	QString characterName = CharacterParser::name(currentBlockText);
+	if (editor()->storeDataWhenEditing()) {
+		//
+		// Получим необходимые значения
+		//
+		// ... курсор в текущем положении
+		QTextCursor cursor = editor()->textCursor();
+		// ... блок текста в котором находится курсор
+		QTextBlock currentBlock = cursor.block();
+		// ... текст блока
+		QString currentBlockText = currentBlock.text();
+		// ... имя персонажа
+		QString characterName = CharacterParser::name(currentBlockText);
 
-	//
-	// Сохраняем персонажа
-	//
-	StorageFacade::characterStorage()->storeCharacter(characterName);
+		//
+		// Сохраняем персонажа
+		//
+		StorageFacade::characterStorage()->storeCharacter(characterName);
+	}
 }

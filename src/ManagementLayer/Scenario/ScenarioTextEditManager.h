@@ -54,6 +54,16 @@ namespace ManagementLayer
 
 	public slots:
 		/**
+		 * @brief Добавить элемент сценария в указанной позиции
+		 */
+		void addScenarioItem(int _position, const QString& _text, int _type);
+
+		/**
+		 * @brief Удалить заданный текст сценария
+		 */
+		void removeScenarioText(int _from, int _to);
+
+		/**
 		 * @brief Отменить последнее действие
 		 */
 		void aboutUndo();

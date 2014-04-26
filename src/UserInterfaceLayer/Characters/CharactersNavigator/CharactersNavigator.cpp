@@ -72,15 +72,15 @@ void CharactersNavigator::selectCharacter(const QModelIndex& _index)
 
 void CharactersNavigator::aboutEditCharacter()
 {
-	emit editCharacter(selectedUserName());
+	emit editCharacter(selectedCharacterName());
 }
 
 void CharactersNavigator::aboutRemoveCharacter()
 {
-	emit removeCharacter(selectedUserName());
+	emit removeCharacter(selectedCharacterName());
 }
 
-QString CharactersNavigator::selectedUserName() const
+QString CharactersNavigator::selectedCharacterName() const
 {
 	QModelIndex currentSelected = m_navigator->selectionModel()->currentIndex();
 	QString userName = m_navigator->model()->data(currentSelected).toString();

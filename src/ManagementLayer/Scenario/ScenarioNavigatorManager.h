@@ -11,6 +11,7 @@ namespace BusinessLogic {
 
 namespace UserInterface {
 	class ScenarioNavigator;
+	class ScenarioItemDialog;
 }
 
 namespace ManagementLayer
@@ -43,6 +44,16 @@ namespace ManagementLayer
 
 	signals:
 		/**
+		 * @brief Запрос на добавление элемента
+		 */
+		void addItem(const QModelIndex& _afterItemIndex, const QString& _itemHeader, int _itemType);
+
+		/**
+		 * @brief Запрос на удаление элемента
+		 */
+		void removeItem(const QModelIndex& _itemIndex);
+
+		/**
 		 * @brief Активирована сцена
 		 */
 		void sceneChoosed(const QModelIndex& _index);
@@ -58,6 +69,11 @@ namespace ManagementLayer
 		void redoPressed();
 
 	private slots:
+		/**
+		 * @brief Добавить элемент после выбранного
+		 */
+		void aboutAddItem(const QModelIndex& _index);
+
 		/**
 		 * @brief Обновить информацию о модели
 		 */
@@ -85,6 +101,11 @@ namespace ManagementLayer
 		 * @brief Дерево навигации
 		 */
 		UserInterface::ScenarioNavigator* m_navigator;
+
+		/**
+		 * @brief Диалог добавления элемента
+		 */
+		UserInterface::ScenarioItemDialog* m_addItemDialog;
 	};
 }
 

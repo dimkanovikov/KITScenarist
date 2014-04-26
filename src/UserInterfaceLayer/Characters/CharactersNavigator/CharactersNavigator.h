@@ -75,7 +75,7 @@ namespace UserInterface
 		/**
 		 * @brief Получить имя выделенного персонажа
 		 */
-		QString selectedUserName() const;
+		QString selectedCharacterName() const;
 
 	private:
 		/**

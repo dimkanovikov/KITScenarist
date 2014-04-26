@@ -66,6 +66,16 @@ namespace UserInterface
 		 */
 		void setCursorPosition(int _position);
 
+		/**
+		 * @brief Добавить элемент в указанной позиции с заданным текстом и типом
+		 */
+		void addItem(int _position, const QString& _text, int _type);
+
+		/**
+		 * @brief Удалить текст в заданном интервале
+		 */
+		void removeText(int _from, int _to);
+
 	public slots:
 		/**
 		 * @brief Отменить последнее действие

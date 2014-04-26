@@ -72,7 +72,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Позиция начала сцены
 		 */
-		int itemPositionAtIndex(const QModelIndex& _index) const;
+		int itemStartPosition(const QModelIndex& _index) const;
+
+		/**
+		 * @brief Позиция конца сцены
+		 */
+		int itemEndPosition(const QModelIndex& _index) const;
 
 		/**
 		 * @brief Заголовок сцены в позиции

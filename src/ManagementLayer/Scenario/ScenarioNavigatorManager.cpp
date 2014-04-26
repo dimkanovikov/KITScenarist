@@ -6,6 +6,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.h>
+#include <UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h>
 
 #include <QLabel>
 #include <QVBoxLayout>
@@ -14,12 +15,14 @@
 using ManagementLayer::ScenarioNavigatorManager;
 using BusinessLogic::ScenarioModel;
 using UserInterface::ScenarioNavigator;
+using UserInterface::ScenarioItemDialog;
 
 
 ScenarioNavigatorManager::ScenarioNavigatorManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_scenarioModel(0),
-	m_navigator(new ScenarioNavigator(_parentWidget))
+	m_navigator(new ScenarioNavigator(_parentWidget)),
+	m_addItemDialog(new ScenarioItemDialog(m_navigator))
 {
 	initView();
 	initConnections();
@@ -62,6 +65,24 @@ void ScenarioNavigatorManager::setCurrentIndex(const QModelIndex& _index)
 	m_navigator->setCurrentIndex(_index);
 }
 
+void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
+{
+	//
+	// Если пользователь действительно хочет добавить элемент
+	//
+	if (m_addItemDialog->exec() == QDialog::Accepted) {
+		QString itemHeader = m_addItemDialog->itemHeader();
+		int itemType = m_addItemDialog->itemType();
+
+		//
+		// Если задан заголовок
+		//
+		if (!itemHeader.isEmpty()) {
+			emit addItem(_index, itemHeader, itemType);
+		}
+	}
+}
+
 void ScenarioNavigatorManager::aboutModelUpdated()
 {
 	m_navigator->setScenesCount(m_scenarioModel->scenesCount());
@@ -78,6 +99,8 @@ void ScenarioNavigatorManager::initConnections()
                 this, SLOT(aboutModelUpdated()));
     }
 
+	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)), Qt::UniqueConnection);
+	connect(m_navigator, SIGNAL(removeItem(QModelIndex)), this, SIGNAL(removeItem(QModelIndex)), Qt::UniqueConnection);
     connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)),
             this, SIGNAL(sceneChoosed(QModelIndex)), Qt::UniqueConnection);
 	connect(m_navigator, SIGNAL(undoPressed()), this, SIGNAL(undoPressed()), Qt::UniqueConnection);

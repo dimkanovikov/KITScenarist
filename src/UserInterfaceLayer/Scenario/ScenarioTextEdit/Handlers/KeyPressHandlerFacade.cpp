@@ -177,17 +177,13 @@ KeyPressHandlerFacade* KeyPressHandlerFacade::instance(ScenarioTextEdit* _editor
 	// ... инициилизируем обработчик
 	// ... устанавливаем обработчику текстовый редактор
 	//
-	if (s_instance == 0) {
-		s_instance = new KeyPressHandlerFacade(_editor);
+	if (s_instance.value(_editor, 0) == 0) {
+		s_instance.insert(_editor, new KeyPressHandlerFacade(_editor));
 	}
 
-	if (s_instance->m_editor != _editor) {
-		Q_ASSERT_X(0, Q_FUNC_INFO, "Can't reinitialize KeyPressHandlerFacade");
-	}
-
-	return s_instance;
+	return s_instance.value(_editor);
 }
 
-KeyPressHandlerFacade* KeyPressHandlerFacade::s_instance = 0;
+QMap<UserInterface::ScenarioTextEdit*, KeyPressHandlerFacade*> KeyPressHandlerFacade::s_instance;
 
 // ********

@@ -153,7 +153,9 @@ SOURCES += main.cpp \
 	UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.cpp \
     ManagementLayer/Scenario/ScenarioSceneSynopsisManager.cpp \
     3rd_party/Widgets/TabBar/TabBar.cpp \
-    3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.cpp
+    3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.cpp \
+    UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -299,7 +301,9 @@ HEADERS += \
 	UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.h \
     ManagementLayer/Scenario/ScenarioSceneSynopsisManager.h \
     3rd_party/Widgets/TabBar/TabBar.h \
-    3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.h
+    3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.h \
+    UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

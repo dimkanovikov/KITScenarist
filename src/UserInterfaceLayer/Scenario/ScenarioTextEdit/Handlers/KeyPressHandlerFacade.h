@@ -3,6 +3,8 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
 
+#include <QMap>
+
 class QKeyEvent;
 
 namespace UserInterface {
@@ -96,7 +98,7 @@ namespace KeyProcessingLayer
 		static KeyPressHandlerFacade* instance(UserInterface::ScenarioTextEdit* _editor);
 
 	private:
-		static KeyPressHandlerFacade* s_instance;
+		static QMap<UserInterface::ScenarioTextEdit*, KeyPressHandlerFacade*> s_instance;
 	/** @} */
 	};
 }

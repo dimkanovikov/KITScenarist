@@ -75,7 +75,7 @@ namespace UserInterface
 		/**
 		 * @brief Получить имя выделенной локации
 		 */
-		QString selectedUserName() const;
+		QString selectedLocationName() const;
 
 	private:
 		/**

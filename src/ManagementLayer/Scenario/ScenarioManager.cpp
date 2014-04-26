@@ -366,8 +366,21 @@ void ScenarioManager::aboutSelectItemInNavigator(int _cursorPosition)
 
 void ScenarioManager::aboutMoveCursorToItem(const QModelIndex& _index)
 {
-	int position = m_scenario->itemPositionAtIndex(_index);
+	int position = m_scenario->itemStartPosition(_index);
 	m_textEditManager->setCursorPosition(position);
+}
+
+void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, const QString& _itemHeader, int _itemType)
+{
+	int position = m_scenario->itemEndPosition(_afterItemIndex);
+	m_textEditManager->addScenarioItem(position, _itemHeader, _itemType);
+}
+
+void ScenarioManager::aboutRemoveItem(const QModelIndex& _itemIndex)
+{
+	int from = m_scenario->itemStartPosition(_itemIndex);
+	int to = m_scenario->itemEndPosition(_itemIndex);
+	m_textEditManager->removeScenarioText(from, to);
 }
 
 void ScenarioManager::initData()
@@ -428,6 +441,8 @@ void ScenarioManager::initConnections()
 	connect(m_viewEditorsTabs, SIGNAL(currentChanged(int)), m_viewEditorsToolbars, SLOT(setCurrentIndex(int)));
 	connect(m_viewEditorsTabs, SIGNAL(currentChanged(int)), m_viewEditors, SLOT(setCurrentIndex(int)));
 
+	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,QString,int)), this, SLOT(aboutAddItem(QModelIndex,QString,int)));
+	connect(m_navigatorManager, SIGNAL(removeItem(QModelIndex)), this, SLOT(aboutRemoveItem(QModelIndex)));
     connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
 	connect(m_navigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
 	connect(m_navigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
