@@ -33,7 +33,15 @@ namespace ManagementLayer
 
 		QWidget* view() const;
 
+		/**
+		 * @brief Получить документ сценария
+		 */
 		BusinessLogic::ScenarioDocument* scenario() const;
+
+		/**
+		 * @brief Получить название сценария
+		 */
+		QString scenarioName() const;
 
 		/**
 		 * @brief Загрузить данные текущего проекта

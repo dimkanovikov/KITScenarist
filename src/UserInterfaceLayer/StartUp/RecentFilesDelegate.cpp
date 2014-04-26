@@ -23,7 +23,7 @@ RecentFilesDelegate::~RecentFilesDelegate()
 void RecentFilesDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& _option, const QModelIndex& _index) const
 {
 	QVariant projectName = _index.data(Qt::DisplayRole);
-	QVariant filePath = _index.data(Qt::ToolTipRole);
+	QVariant filePath = _index.data(Qt::WhatsThisRole);
 
 	//
 	// Установим в виджет данные
@@ -41,6 +41,10 @@ void RecentFilesDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& 
 	// Настраиваем размер области отрисовки
 	//
 	m_fileWidget->resize(opt.rect.size());
+	m_fileWidget->setPalette(opt.palette);
+
+	bool mouseHover = opt.rect.contains(opt.widget->mapFromGlobal(QCursor::pos()));
+	m_fileWidget->setMouseHover(mouseHover);
 
 	//
 	// Отрисовываем виджет

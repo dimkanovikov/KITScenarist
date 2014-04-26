@@ -68,6 +68,11 @@ BusinessLogic::ScenarioDocument* ScenarioManager::scenario() const
 	return m_scenario;
 }
 
+QString ScenarioManager::scenarioName() const
+{
+	return m_dataEditManager->scenarioName();
+}
+
 void ScenarioManager::loadCurrentProject()
 {
 	//

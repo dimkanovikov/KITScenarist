@@ -268,6 +268,9 @@
         </item>
         <item row="1" column="1">
          <widget class="QListView" name="recentFiles">
+          <property name="cursor" stdset="0">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: palette(window)</string>
           </property>

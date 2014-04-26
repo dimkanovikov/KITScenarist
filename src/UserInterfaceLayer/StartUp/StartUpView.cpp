@@ -56,7 +56,7 @@ void StartUpView::setRecentFiles(
 		//
 		// Путь к файлу
 		//
-		item->setData(filePath, Qt::ToolTipRole);
+		item->setData(filePath, Qt::WhatsThisRole);
 		newModel->appendRow(item);
 	}
 
@@ -64,6 +64,31 @@ void StartUpView::setRecentFiles(
 	// Устанавливаем модель
 	//
 	ui->recentFiles->setModel(newModel);
+}
+
+bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
+{
+	bool result = false;
+
+	//
+	// Когда мышка входит или покидает список недавних файлов, нужно перерисовать его,
+	// чтобы не осталось невыделенных/выделенных модулей
+	//
+	if (_watched == ui->recentFiles
+		&& (_event->type () == QEvent::Enter || _event->type () == QEvent::Leave))
+	{
+		ui->recentFiles->repaint ();
+		result = true;
+	}
+	//
+	// Для всех остальных событий используем реализацю базовового класса
+	//
+	else
+	{
+		result = QWidget::eventFilter(_watched, _event);
+	}
+
+	return result;
 }
 
 void StartUpView::aboutOpenRecentFileClicked()
@@ -75,7 +100,7 @@ void StartUpView::aboutOpenRecentFileClicked()
 	// Получим путь к файлу для загрузки
 	//
 	QString clickedFilePath =
-			recentFiles->data(currentIndex, Qt::ToolTipRole).toString();
+			recentFiles->data(currentIndex, Qt::WhatsThisRole).toString();
 
 	//
 	// Уведомляем о том, что файл выбран
@@ -86,7 +111,10 @@ void StartUpView::aboutOpenRecentFileClicked()
 void StartUpView::initView()
 {
     ui->version->setText(QApplication::applicationVersion());
+
 	ui->recentFiles->setItemDelegate(new RecentFilesDelegate(ui->recentFiles));
+	ui->recentFiles->setMouseTracking(true);
+	ui->recentFiles->installEventFilter(this);
 }
 
 void StartUpView::initConnections()

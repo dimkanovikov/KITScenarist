@@ -22,6 +22,11 @@ namespace UserInterface
 		void setProjectName(const QString& _projectName);
 		void setFilePath(const QString& _filePath);
 
+		/**
+		 * @brief Находится ли мышка над элементом
+		 */
+		void setMouseHover(bool _hover);
+
 	private:
 		/**
 		 * @brief Название проекта

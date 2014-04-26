@@ -51,6 +51,12 @@ namespace UserInterface
 		 */
 		void openRecentProjectClicked(const QString& _filePath);
 
+	protected:
+		/**
+		 * @brief Переопределяется для фиксации события когда мышка покидает виджет недавних проектов
+		 */
+		bool eventFilter(QObject* _watched, QEvent* _event);
+
 	private slots:
 		/**
 		 * @brief Пользователь выбрал один из недавних файлов для открытия

@@ -26,7 +26,7 @@ RecentFileWidget::RecentFileWidget(QWidget *parent) :
 	layout->addWidget(m_projectName);
 	layout->addWidget(m_filePath);
 	layout->addSpacing(4);
-	layout->setContentsMargins(QMargins());
+	layout->setContentsMargins(QMargins(8,2,8,2));
 
 	this->setLayout(layout);
 }
@@ -39,4 +39,19 @@ void RecentFileWidget::setProjectName(const QString& _projectName)
 void RecentFileWidget::setFilePath(const QString& _filePath)
 {
 	m_filePath->setText(_filePath);
+}
+
+void RecentFileWidget::setMouseHover(bool _hover)
+{
+	//
+	// Выделяем в случе необходимости
+	//
+
+	QString styleSheet;
+	if (_hover) {
+		styleSheet = "background-color: palette(alternate-base);";
+	} else {
+		styleSheet = "background-color: palette(window);";
+	}
+	setStyleSheet(styleSheet);
 }

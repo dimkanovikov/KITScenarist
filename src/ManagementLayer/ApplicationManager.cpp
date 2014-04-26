@@ -419,7 +419,7 @@ void ApplicationManager::saveCurrentProjectInRecent()
 	//
 	// Сохраним текущий проект в недавно использованых
 	//
-	m_startUpManager->addRecentFile(DatabaseLayer::Database::currentFile());
+	m_startUpManager->addRecentFile(DatabaseLayer::Database::currentFile(), m_scenarioManager->scenarioName());
 }
 
 void ApplicationManager::goToEditCurrentProject()
@@ -634,7 +634,7 @@ void ApplicationManager::reloadApplicationSettings()
 		palette.setColor(QPalette::ButtonText, QColor(255,255,255));
 		palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#a1a1a1"));
 
-		palette.setColor(QPalette::Link, QColor(42, 130, 218));
+		palette.setColor(QPalette::Link, QColor("#2b78da"));
 
 		palette.setColor(QPalette::ToolTipText, QColor("#EBEBEB"));
 
@@ -653,6 +653,8 @@ void ApplicationManager::reloadApplicationSettings()
 		// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек
 		//
 		palette = QStyleFactory::create("Fusion")->standardPalette();
+
+		palette.setColor(QPalette::Link, QColor("#2b78da"));
 	}
 
 	//
