@@ -22,6 +22,11 @@ namespace DataStorageLayer
 		 */
 		static void clearStorages();
 
+        /**
+         * @brief Ожидание, пока все хранители сохранят данные
+         */
+        static void waitWhileSave();
+
 	public:
 		static PlaceStorage* placeStorage();
 		static LocationStorage* locationStorage();

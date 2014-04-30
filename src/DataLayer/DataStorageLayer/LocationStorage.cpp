@@ -138,7 +138,12 @@ void LocationStorage::clear()
 	delete m_all;
 	m_all = 0;
 
-	MapperFacade::locationMapper()->clear();
+    MapperFacade::locationMapper()->clear();
+}
+
+void LocationStorage::wait()
+{
+    MapperFacade::locationMapper()->wait();
 }
 
 LocationStorage::LocationStorage() :

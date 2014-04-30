@@ -22,6 +22,11 @@ namespace DataMappingLayer
 		 */
 		void clear();
 
+        /**
+         * @brief Ожидание завершения всех операций с БД
+         */
+        void wait();
+
 	protected:
 		virtual QString findStatement(const Identifier&) const = 0;
 		virtual QString findAllStatement() const = 0;

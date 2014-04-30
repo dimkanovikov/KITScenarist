@@ -22,7 +22,19 @@ void StorageFacade::clearStorages()
 	timeStorage()->clear();
 	characterStorage()->clear();
 	characterPhotoStorage()->clear();
-	scenarioStorage()->clear();
+    scenarioStorage()->clear();
+}
+
+void StorageFacade::waitWhileSave()
+{
+    placeStorage()->wait();
+    locationStorage()->wait();
+    locationPhotoStorage()->wait();
+    scenarioDayStorage()->wait();
+    timeStorage()->wait();
+    characterStorage()->wait();
+    characterPhotoStorage()->wait();
+    scenarioStorage()->wait();
 }
 
 PlaceStorage* StorageFacade::placeStorage()

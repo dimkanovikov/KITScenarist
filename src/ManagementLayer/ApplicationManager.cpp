@@ -351,8 +351,24 @@ void ApplicationManager::aboutPrintPreview()
 
 void ApplicationManager::aboutExit()
 {
+    //
+    // Сохраняем, если необходимо
+    //
 	saveIfNeeded();
+
+    //
+    // Ожидаем завершения всех операций с БД
+    //
+    DataStorageLayer::StorageFacade::waitWhileSave();
+
+    //
+    // Сохраняем состояния виджетов
+    //
 	saveViewState();
+
+    //
+    // Выходим
+    //
 	qApp->exit();
 }
 

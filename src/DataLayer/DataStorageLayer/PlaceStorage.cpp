@@ -17,25 +17,30 @@ PlacesTable* PlaceStorage::all()
 	return m_all;
 }
 
+bool PlaceStorage::hasPlace(const QString& _name)
+{
+    bool contains = false;
+    foreach (DomainObject* domainObject, all()->toList()) {
+        Place* place = dynamic_cast<Place*>(domainObject);
+        if (place->name() == _name) {
+            contains = true;
+            break;
+        }
+    }
+    return contains;
+}
+
 void PlaceStorage::clear()
 {
 	delete m_all;
 	m_all = 0;
 
-	MapperFacade::placeMapper()->clear();
+    MapperFacade::placeMapper()->clear();
 }
 
-bool PlaceStorage::hasPlace(const QString& _name)
+void PlaceStorage::wait()
 {
-	bool contains = false;
-	foreach (DomainObject* domainObject, all()->toList()) {
-		Place* place = dynamic_cast<Place*>(domainObject);
-		if (place->name() == _name) {
-			contains = true;
-			break;
-		}
-	}
-	return contains;
+    MapperFacade::placeMapper()->wait();
 }
 
 PlaceStorage::PlaceStorage() :

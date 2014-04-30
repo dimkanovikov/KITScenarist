@@ -138,7 +138,12 @@ void CharacterStorage::clear()
 	delete m_all;
 	m_all = 0;
 
-	MapperFacade::characterMapper()->clear();
+    MapperFacade::characterMapper()->clear();
+}
+
+void CharacterStorage::wait()
+{
+    MapperFacade::characterMapper()->wait();
 }
 
 CharacterStorage::CharacterStorage() :

@@ -22,7 +22,7 @@ AbstractMapper::~AbstractMapper()
 	//
 	// Ожидаем завершения всех операций
 	//
-	m_sqlExecuter->wait();
+    wait();
 
 	delete m_sqlExecuter;
 	m_sqlExecuter = 0;
@@ -35,7 +35,12 @@ void AbstractMapper::clear()
 		domainObject = 0;
 	}
 
-	m_loadedObjectsMap.clear();
+    m_loadedObjectsMap.clear();
+}
+
+void AbstractMapper::wait()
+{
+    m_sqlExecuter->wait();
 }
 
 DomainObject * AbstractMapper::abstractFind(const Identifier& _id)

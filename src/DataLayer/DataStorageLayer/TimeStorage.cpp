@@ -22,7 +22,12 @@ void TimeStorage::clear()
 	delete m_all;
 	m_all = 0;
 
-	MapperFacade::timeMapper()->clear();
+    MapperFacade::timeMapper()->clear();
+}
+
+void TimeStorage::wait()
+{
+    MapperFacade::timeMapper()->wait();
 }
 
 TimeStorage::TimeStorage() :

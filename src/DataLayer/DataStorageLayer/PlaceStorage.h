@@ -23,15 +23,20 @@ namespace DataStorageLayer
 		 */
 		PlacesTable* all();
 
+        /**
+         * @brief Проверить наличие заданного места
+         */
+        bool hasPlace(const QString& _name);
+
 		/**
 		 * @brief Очистить хранилище
 		 */
 		void clear();
 
-		/**
-		 * @brief Проверить наличие заданного места
-		 */
-		bool hasPlace(const QString& _name);
+        /**
+         * @brief Ожидание завершения всех операций с БД
+         */
+        void wait();
 
 	private:
 		PlacesTable* m_all;
