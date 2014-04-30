@@ -46,6 +46,16 @@ void SettingsView::setApplicationUseDarkTheme(bool _value)
 	ui->useDarkTheme->setChecked(_value);
 }
 
+void SettingsView::setApplicationAutosave(bool _value)
+{
+	ui->autosave->setChecked(_value);
+}
+
+void SettingsView::setApplicationAutosaveInterval(int _value)
+{
+	ui->autosaveInterval->setValue(_value);
+}
+
 void SettingsView::setScenarioEditSpellCheck(bool _value)
 {
 	ui->spellChecking->setChecked(_value);
@@ -221,6 +231,8 @@ void SettingsView::initConnections()
 	//
 	// ... приложение
 	connect(ui->useDarkTheme, SIGNAL(toggled(bool)), this, SIGNAL(applicationUseDarkThemeChanged(bool)));
+	connect(ui->autosave, SIGNAL(toggled(bool)), this, SIGNAL(applicationAutosaveChanged(bool)));
+	connect(ui->autosaveInterval, SIGNAL(valueChanged(int)), this, SIGNAL(applicationAutosaveIntervalChanged(int)));
 	// ... текстовый редактор
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	// ... навигатор

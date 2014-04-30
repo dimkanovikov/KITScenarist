@@ -2,6 +2,7 @@
 #define APPLICATIONMANAGER_H
 
 #include <QObject>
+#include <QTimer>
 
 class SideTabBar;
 class QStackedWidget;
@@ -98,8 +99,11 @@ namespace ManagementLayer
 
 		/**
 		 * @brief Если проект был изменён, но не сохранён предложить пользователю сохранить его
+		 *
+		 * Возвращает true, если пользователь хочет (Да) или не хочет (Нет) сохранять
+		 * и false, если пользователь передумал (Отмена)
 		 */
-		void saveIfNeeded();
+		bool saveIfNeeded();
 
 		/**
 		 * @brief Сохранить текущий проект в недавно используемых
@@ -182,6 +186,11 @@ namespace ManagementLayer
 		 * @brief Управляющий настройками
 		 */
 		SettingsManager* m_settingsManager;
+
+		/**
+		 * @brief Таймер автосохранения
+		 */
+		QTimer m_autosaveTimer;
 	};
 }
 

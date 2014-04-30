@@ -7,6 +7,8 @@ scenario-editor/nonprintable-text-color - цвет непечатного тек
 scenario-editor/folder-text-color - цвет текста папки
 scenario-editor/folder-background-color - цвет фона папки
 scenario-editor/zoom-range - коэффициент масштабирования
+scenario-editor/autosave - включено ли автосохранение проекта
+scenario-editor/autosave-interval - интервал автоматического сохранения
 
 navigator/show-scenes-numbers - отображать номера сцен
 
@@ -23,15 +25,15 @@ chronometry/configurable/seconds-for-every-50/dialog - секунд за каж�
 
 application/geometry - состояние главного окна и его вкладок
 application/use-dark-theme - использовать тёмную тему
-application/scenario/left/geometry
+application/scenario/left/geometry - разделитель навигатора и окна синопсиса
 application/scenario/left/state
-application/scenario/geometry
+application/scenario/geometry - разделитель навигатора и основных редакторов
 application/scenario/state
-application/characters/geometry
+application/characters/geometry - разделитель списка персонажей и редакторов
 application/characters/state
-application/locations/geometry
+application/locations/geometry - разделитель списка локаций и редакторов
 application/locations/state
-application/settings/geometry
+application/settings/geometry - разделитель списка настроек и самих настроек
 application/settings/state
 
 application/recent-files/list/... - последние использованые файлы программы (в виде ключ - название проекта (если не задано, то имя файла без расширения), значение - путь)

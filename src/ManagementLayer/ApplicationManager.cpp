@@ -83,8 +83,6 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
 ApplicationManager::~ApplicationManager()
 {
-	saveIfNeeded();
-
 	delete m_view;
 	m_view = 0;
 }
@@ -102,53 +100,53 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 void ApplicationManager::aboutCreateNew()
 {
 	//
-	// Если нужно сохранить проект
+	// Спросить у пользователя хочет ли он сохранить проект
 	//
-	saveIfNeeded();
-
-	//
-	// Получим имя файла для нового проекта
-	//
-	QString newProjectFileName =
-			QFileDialog::getSaveFileName(
-				m_view,
-				tr("Choose file for new project"),
-				QString(),
-				tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
-				);
-
-	//
-	// Если файл выбран
-	//
-	if (!newProjectFileName.isEmpty()) {
+	if (saveIfNeeded()) {
 		//
-		// ... установим расширение, если не задано
+		// Получим имя файла для нового проекта
 		//
-		if (!newProjectFileName.endsWith(PROJECT_FILE_EXTENSION)) {
-			newProjectFileName.append(PROJECT_FILE_EXTENSION);
+		QString newProjectFileName =
+				QFileDialog::getSaveFileName(
+					m_view,
+					tr("Choose file for new project"),
+					QString(),
+					tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
+					);
+
+		//
+		// Если файл выбран
+		//
+		if (!newProjectFileName.isEmpty()) {
+			//
+			// ... установим расширение, если не задано
+			//
+			if (!newProjectFileName.endsWith(PROJECT_FILE_EXTENSION)) {
+				newProjectFileName.append(PROJECT_FILE_EXTENSION);
+			}
+
+			//
+			// ... очистим все загруженные на текущий момент данные
+			//
+			DataStorageLayer::StorageFacade::clearStorages();
+
+			//
+			// ... если файл существовал, удалим его для удаления данных в нём
+			//
+			if (QFile::exists(newProjectFileName)) {
+				QFile::remove(newProjectFileName);
+			}
+
+			//
+			// ... создаём новую базу данных в файле
+			//
+			DatabaseLayer::Database::setCurrentFile(newProjectFileName);
+
+			//
+			// ... перейдём к редактированию
+			//
+			goToEditCurrentProject();
 		}
-
-		//
-		// ... очистим все загруженные на текущий момент данные
-		//
-		DataStorageLayer::StorageFacade::clearStorages();
-
-		//
-		// ... если файл существовал, удалим его для удаления данных в нём
-		//
-		if (QFile::exists(newProjectFileName)) {
-			QFile::remove(newProjectFileName);
-		}
-
-		//
-		// ... создаём новую базу данных в файле
-		//
-		DatabaseLayer::Database::setCurrentFile(newProjectFileName);
-
-		//
-		// ... перейдём к редактированию
-		//
-		goToEditCurrentProject();
 	}
 }
 
@@ -214,19 +212,25 @@ void ApplicationManager::aboutSaveAs()
 void ApplicationManager::aboutSave()
 {
 	//
-	// Управляющие должны сохранить несохранённые данные
+	// Если какие-то данные изменены
 	//
-	m_scenarioManager->saveCurrentProject();
+	if (m_view->isWindowModified()) {
 
-	//
-	// Добавим проект к недавно используемым
-	//
-	saveCurrentProjectInRecent();
+		//
+		// Управляющие должны сохранить несохранённые данные
+		//
+		m_scenarioManager->saveCurrentProject();
 
-	//
-	// Изменим статус окна на сохранение изменений
-	//
-	m_view->setWindowModified(false);
+		//
+		// Добавим проект к недавно используемым
+		//
+		saveCurrentProjectInRecent();
+
+		//
+		// Изменим статус окна на сохранение изменений
+		//
+		m_view->setWindowModified(false);
+	}
 }
 
 void ApplicationManager::aboutLoad(const QString& _fileName)
@@ -234,44 +238,44 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 	//
 	// Если нужно сохранить проект
 	//
-	saveIfNeeded();
-
-	//
-	// Имя файла для загрузки
-	//
-	QString loadProjectFileName = _fileName;
-
-	//
-	// Если имя файла не определено, выберем его в диалоге выбора файла
-	//
-	if (loadProjectFileName.isEmpty()) {
-		loadProjectFileName =
-				QFileDialog::getOpenFileName(
-					m_view,
-					tr("Choose project file to open"),
-					QString(),
-					tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
-					);
-	}
-
-	//
-	// Если файл выбран
-	//
-	if (!loadProjectFileName.isEmpty()) {
+	if (saveIfNeeded()) {
 		//
-		// ... очистим все загруженные на текущий момент данные
+		// Имя файла для загрузки
 		//
-		DataStorageLayer::StorageFacade::clearStorages();
+		QString loadProjectFileName = _fileName;
 
 		//
-		// ... переключаемся на работу с выбранным файлом
+		// Если имя файла не определено, выберем его в диалоге выбора файла
 		//
-		DatabaseLayer::Database::setCurrentFile(loadProjectFileName);
+		if (loadProjectFileName.isEmpty()) {
+			loadProjectFileName =
+					QFileDialog::getOpenFileName(
+						m_view,
+						tr("Choose project file to open"),
+						QString(),
+						tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
+						);
+		}
 
 		//
-		// ... перейдём к редактированию
+		// Если файл выбран
 		//
-		goToEditCurrentProject();
+		if (!loadProjectFileName.isEmpty()) {
+			//
+			// ... очистим все загруженные на текущий момент данные
+			//
+			DataStorageLayer::StorageFacade::clearStorages();
+
+			//
+			// ... переключаемся на работу с выбранным файлом
+			//
+			DatabaseLayer::Database::setCurrentFile(loadProjectFileName);
+
+			//
+			// ... перейдём к редактированию
+			//
+			goToEditCurrentProject();
+		}
 	}
 }
 
@@ -354,22 +358,22 @@ void ApplicationManager::aboutExit()
     //
     // Сохраняем, если необходимо
     //
-	saveIfNeeded();
+	if (saveIfNeeded()) {
+		//
+		// Ожидаем завершения всех операций с БД
+		//
+		DataStorageLayer::StorageFacade::waitWhileSave();
 
-    //
-    // Ожидаем завершения всех операций с БД
-    //
-    DataStorageLayer::StorageFacade::waitWhileSave();
+		//
+		// Сохраняем состояния виджетов
+		//
+		saveViewState();
 
-    //
-    // Сохраняем состояния виджетов
-    //
-	saveViewState();
-
-    //
-    // Выходим
-    //
-	qApp->exit();
+		//
+		// Выходим
+		//
+		qApp->exit();
+	}
 }
 
 void ApplicationManager::aboutApplicationSettingsUpdated()
@@ -407,8 +411,10 @@ void ApplicationManager::saveViewState()
 	m_settingsManager->saveViewState();
 }
 
-void ApplicationManager::saveIfNeeded()
+bool ApplicationManager::saveIfNeeded()
 {
+	bool success = true;
+
 	//
 	// Если какие-то данные изменены
 	//
@@ -418,16 +424,23 @@ void ApplicationManager::saveIfNeeded()
 		//
 		int questionResult = QMessageBox::question(m_view, tr("Save project changes?"),
 												   tr("Project was modified. Save changes?"),
-												   QMessageBox::Yes | QMessageBox::No);
-		//
-		// ... и сохраняем, если хочет
-		//
-		if (questionResult == QMessageBox::Yes) {
-			aboutSave();
+												   QMessageBox::Cancel | QMessageBox::Yes | QMessageBox::No);
+
+		if (questionResult != QMessageBox::Cancel) {
+			//
+			// ... и сохраняем, если хочет
+			//
+			if (questionResult == QMessageBox::Yes) {
+				aboutSave();
+			} else {
+				m_view->setWindowModified(false);
+			}
 		} else {
-			m_view->setWindowModified(false);
+			success = false;
 		}
 	}
+
+	return success;
 }
 
 void ApplicationManager::saveCurrentProjectInRecent()
@@ -620,62 +633,88 @@ void ApplicationManager::initStyleSheet()
 
 void ApplicationManager::reloadApplicationSettings()
 {
+	//
+	// Внешний вид приложения
+	//
 	bool useDarkTheme =
 			DataStorageLayer::StorageFacade::settingsStorage()->value(
 				"application/use-dark-theme",
 				DataStorageLayer::SettingsStorage::ApplicationSettings)
 			.toInt();
 
-	//
-	// Настраиваем палитру и стилевые надстройки в зависимости от темы
-	//
-	QPalette palette = QStyleFactory::create("Fusion")->standardPalette();
-	QString styleSheet;
+	{
+		//
+		// Настраиваем палитру и стилевые надстройки в зависимости от темы
+		//
+		QPalette palette = QStyleFactory::create("Fusion")->standardPalette();
+		QString styleSheet;
 
-	if (useDarkTheme) {
-		palette.setColor(QPalette::Window, QColor("#282D31"));
-		palette.setColor(QPalette::Base, QColor("#404040"));
-		palette.setColor(QPalette::Disabled, QPalette::Base, QColor("#333333"));
-		palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+		if (useDarkTheme) {
+			palette.setColor(QPalette::Window, QColor("#282D31"));
+			palette.setColor(QPalette::Base, QColor("#404040"));
+			palette.setColor(QPalette::Disabled, QPalette::Base, QColor("#333333"));
+			palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
 
-		palette.setColor(QPalette::Highlight, QColor(142,45,197));
+			palette.setColor(QPalette::Highlight, QColor(142,45,197));
 
-		palette.setColor(QPalette::WindowText, QColor("#EBEBEB"));
-		palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#a1a1a1"));
-		palette.setColor(QPalette::Text, QColor("#EBEBEB"));
-		palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#a1a1a1"));
+			palette.setColor(QPalette::WindowText, QColor("#EBEBEB"));
+			palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#a1a1a1"));
+			palette.setColor(QPalette::Text, QColor("#EBEBEB"));
+			palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#a1a1a1"));
 
-		palette.setColor(QPalette::Button, QColor(53,53,53));
-		palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#1b1e21"));
-		palette.setColor(QPalette::ButtonText, QColor(255,255,255));
-		palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#a1a1a1"));
+			palette.setColor(QPalette::Button, QColor(53,53,53));
+			palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#1b1e21"));
+			palette.setColor(QPalette::ButtonText, QColor(255,255,255));
+			palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#a1a1a1"));
 
-		palette.setColor(QPalette::Link, QColor("#2b78da"));
+			palette.setColor(QPalette::Link, QColor("#2b78da"));
 
-		palette.setColor(QPalette::ToolTipText, QColor("#EBEBEB"));
+			palette.setColor(QPalette::ToolTipText, QColor("#EBEBEB"));
+
+			//
+			// Фон неактивного пункта меню
+			//
+			palette.setColor(QPalette::Light, QColor("#404040"));
+
+			//
+			// Для всплывающей подсказки приходится дублировать при помощи стиля,
+			// это баг стиля Fusion в Qt 5.2.1
+			//
+			styleSheet = "QToolTip { color: #EBEBEB; border: 1px solid palette(highlight); padding: 2px; }";
+		} else {
+			//
+			// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек
+			//
+			palette = QStyleFactory::create("Fusion")->standardPalette();
+
+			palette.setColor(QPalette::Link, QColor("#2b78da"));
+		}
 
 		//
-		// Фон неактивного пункта меню
+		// Применяем тему
 		//
-		palette.setColor(QPalette::Light, QColor("#404040"));
-
-		//
-		// Для всплывающей подсказки приходится дублировать при помощи стиля,
-		// это баг стиля Fusion в Qt 5.2.1
-		//
-		styleSheet = "QToolTip { color: #EBEBEB; border: 1px solid palette(highlight); padding: 2px; }";
-	} else {
-		//
-		// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек
-		//
-		palette = QStyleFactory::create("Fusion")->standardPalette();
-
-		palette.setColor(QPalette::Link, QColor("#2b78da"));
+		qApp->setPalette(palette);
+		qApp->setStyleSheet(styleSheet);
 	}
 
 	//
-	// Применяем тему
+	// Автосохранение
 	//
-	qApp->setPalette(palette);
-	qApp->setStyleSheet(styleSheet);
+	bool autosave =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/autosave",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	int autosaveInterval =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/autosave-interval",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+
+	m_autosaveTimer.stop();
+	m_autosaveTimer.disconnect();
+	if (autosave) {
+		connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(aboutSave()));
+		m_autosaveTimer.start(autosaveInterval * 60 * 1000); // Переводим минуты в миллисекунды
+	}
 }

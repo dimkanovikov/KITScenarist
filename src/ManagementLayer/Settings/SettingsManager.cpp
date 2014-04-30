@@ -65,6 +65,16 @@ void SettingsManager::applicationUseDarkThemeChanged(bool _value)
 	storeValue("application/use-dark-theme", _value);
 }
 
+void SettingsManager::applicationAutosaveChanged(bool _value)
+{
+	storeValue("application/autosave", _value);
+}
+
+void SettingsManager::applicationAutosaveIntervalChanged(int _value)
+{
+	storeValue("application/autosave-interval", _value);
+}
+
 void SettingsManager::scenarioEditSpellCheckChanged(bool _value)
 {
 	storeValue("scenario-editor/spell-checking", _value);
@@ -212,6 +222,18 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_view->setApplicationAutosave(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/autosave",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setApplicationAutosaveInterval(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/autosave-interval",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 
 	//
 	// Настройки текстового редактора
@@ -351,6 +373,8 @@ void SettingsManager::initConnections()
 	// Сохранение изменений параметров
 	//
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SLOT(applicationUseDarkThemeChanged(bool)));
+	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SLOT(applicationAutosaveChanged(bool)));
+	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SLOT(applicationAutosaveIntervalChanged(int)));
 
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SLOT(scenarioEditSpellCheckChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SLOT(scenarioEditTextColorChanged(QColor)));
@@ -382,6 +406,8 @@ void SettingsManager::initConnections()
 	// Уведомления об обновлении секции параметров
 	//
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(applicationSettingsUpdated()));
+	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SIGNAL(applicationSettingsUpdated()));
+	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SIGNAL(applicationSettingsUpdated()));
 
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
