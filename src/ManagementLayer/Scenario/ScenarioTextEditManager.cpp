@@ -49,6 +49,12 @@ void ScenarioTextEditManager::setCursorPosition(int _position)
 
 void ScenarioTextEditManager::reloadTextEditSettings()
 {
+	m_view->setUsePageView(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/page-view",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt());
+
 	m_view->setUseSpellChecker(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"scenario-editor/spell-checking",

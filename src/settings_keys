@@ -1,5 +1,6 @@
 В этом файле собраны все ключи к настройкам хранящимся приложением
 
+scenario-editor/page-view - используется ли режим постраничного отображения
 scenario-editor/spell-checking - включена ли проверка орфографии
 scenario-editor/text-color - цвет текста редактора сценария
 scenario-editor/background-color - цвет фона

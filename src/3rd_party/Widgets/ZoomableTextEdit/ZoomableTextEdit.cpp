@@ -4,7 +4,7 @@
 
 
 ZoomableTextEdit::ZoomableTextEdit(QWidget* _parent) :
-	QTextEdit(_parent),
+	PagesTextEdit(_parent),
 	m_zoomRange(0)
 {
 }
@@ -47,6 +47,6 @@ void ZoomableTextEdit::wheelEvent(QWheelEvent* _event)
 			_event->accept();
 		}
 	} else {
-		QTextEdit::wheelEvent(_event);
+		PagesTextEdit::wheelEvent(_event);
 	}
 }

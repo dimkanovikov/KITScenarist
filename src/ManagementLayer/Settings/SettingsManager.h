@@ -51,6 +51,7 @@ namespace ManagementLayer
 		void applicationUseDarkThemeChanged(bool _value);
 		void applicationAutosaveChanged(bool _value);
 		void applicationAutosaveIntervalChanged(int _value);
+		void scenarioEditPageViewChanged(bool  _value);
 		void scenarioEditSpellCheckChanged(bool  _value);
 		void scenarioEditTextColorChanged(const QColor& _value);
 		void scenarioEditBackgroundColorChanged(const QColor& _value);

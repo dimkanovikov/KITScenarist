@@ -75,6 +75,11 @@ void SettingsManager::applicationAutosaveIntervalChanged(int _value)
 	storeValue("application/autosave-interval", _value);
 }
 
+void SettingsManager::scenarioEditPageViewChanged(bool _value)
+{
+	storeValue("scenario-editor/page-view", _value);
+}
+
 void SettingsManager::scenarioEditSpellCheckChanged(bool _value)
 {
 	storeValue("scenario-editor/spell-checking", _value);
@@ -238,6 +243,12 @@ void SettingsManager::initView()
 	//
 	// Настройки текстового редактора
 	//
+	m_view->setScenarioEditPageView(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/page-view",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setScenarioEditSpellCheck(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"scenario-editor/spell-checking",
@@ -376,6 +387,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SLOT(applicationAutosaveChanged(bool)));
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SLOT(applicationAutosaveIntervalChanged(int)));
 
+	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SLOT(scenarioEditSpellCheckChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SLOT(scenarioEditTextColorChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditBackgroundColorChanged(QColor)), this, SLOT(scenarioEditBackgroundColorChanged(QColor)));
@@ -409,6 +421,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SIGNAL(applicationSettingsUpdated()));
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SIGNAL(applicationSettingsUpdated()));
 
+	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditBackgroundColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));

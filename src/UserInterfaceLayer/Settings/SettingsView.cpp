@@ -56,6 +56,11 @@ void SettingsView::setApplicationAutosaveInterval(int _value)
 	ui->autosaveInterval->setValue(_value);
 }
 
+void SettingsView::setScenarioEditPageView(bool _value)
+{
+	ui->pageView->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditSpellCheck(bool _value)
 {
 	ui->spellChecking->setChecked(_value);
@@ -234,6 +239,7 @@ void SettingsView::initConnections()
 	connect(ui->autosave, SIGNAL(toggled(bool)), this, SIGNAL(applicationAutosaveChanged(bool)));
 	connect(ui->autosaveInterval, SIGNAL(valueChanged(int)), this, SIGNAL(applicationAutosaveIntervalChanged(int)));
 	// ... текстовый редактор
+	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	// ... навигатор
 	connect(ui->showScenesNumbers, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));

@@ -37,6 +37,7 @@ namespace UserInterface
 		void setApplicationAutosave(bool);
 		void setApplicationAutosaveInterval(int);
 
+		void setScenarioEditPageView(bool _value);
 		void setScenarioEditSpellCheck(bool _value);
 		void setScenarioEditTextColor(const QColor& _color);
 		void setScenarioEditBackgroundColor(const QColor& _color);
@@ -67,6 +68,7 @@ namespace UserInterface
 		void applicationAutosaveChanged(bool);
 		void applicationAutosaveIntervalChanged(int);
 
+		void scenarioEditPageViewChanged(bool);
 		void scenarioEditSpellCheckChanged(bool);
 		void scenarioEditTextColorChanged(const QColor&);
 		void scenarioEditBackgroundColorChanged(const QColor&);

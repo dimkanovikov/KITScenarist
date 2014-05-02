@@ -42,6 +42,11 @@ namespace UserInterface
 		void setDuration(const QString& _duration);
 
 		/**
+		 * @brief Включить/выключить постраничное отображение
+		 */
+		void setUsePageView(bool _use);
+
+		/**
 		 * @brief Включить/выключить проверку правописания
 		 */
 		void setUseSpellChecker(bool _use);

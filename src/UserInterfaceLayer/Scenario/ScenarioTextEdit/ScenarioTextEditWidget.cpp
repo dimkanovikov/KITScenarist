@@ -72,6 +72,11 @@ void ScenarioTextEditWidget::setDuration(const QString& _duration)
 	m_duration->setText(_duration);
 }
 
+void ScenarioTextEditWidget::setUsePageView(bool _use)
+{
+	m_editor->setUsePageMode(_use);
+}
+
 void ScenarioTextEditWidget::setUseSpellChecker(bool _use)
 {
 	m_editor->setUseSpellChecker(_use);
@@ -262,6 +267,8 @@ void ScenarioTextEditWidget::initView()
 	m_durationTitle->setText(tr("Chron: "));
 	m_durationTitle->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	m_durationTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+	m_editor->setPageSize(60, 50);
 
 	QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
 	topLayout->setContentsMargins(QMargins());

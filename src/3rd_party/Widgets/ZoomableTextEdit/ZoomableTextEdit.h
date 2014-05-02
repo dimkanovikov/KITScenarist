@@ -1,13 +1,14 @@
 #ifndef ZOOMABLETEXTEDIT_H
 #define ZOOMABLETEXTEDIT_H
 
-#include <QTextEdit>
+//#include <QTextEdit>
+#include <3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h>
 
 
 /**
  * @brief Класс текстового редактора с возможностью масштабирования
  */
-class ZoomableTextEdit : public QTextEdit
+class ZoomableTextEdit : public PagesTextEdit
 {
 	Q_OBJECT
 
