@@ -229,13 +229,13 @@ void SettingsManager::initView()
 				);
 	m_view->setApplicationAutosave(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/autosave",
+                    "application/autosave",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
 	m_view->setApplicationAutosaveInterval(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/autosave-interval",
+                    "application/autosave-interval",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
