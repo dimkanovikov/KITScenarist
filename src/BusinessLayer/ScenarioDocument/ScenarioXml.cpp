@@ -121,13 +121,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 				}
 
 				case ScenarioTextBlockStyle::Parenthetical: {
-					if (textToSave.startsWith("(")) {
-						textToSave = textToSave.mid(1);
-					}
-					if (textToSave.endsWith(")")) {
-						textToSave = textToSave.left(textToSave.length()-1);
-					}
-
 					if (!textToSave.isEmpty()) {
 						writer.writeStartElement("parenthetical");
 						writer.writeCDATA(textToSave);
