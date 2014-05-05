@@ -6,7 +6,6 @@
 
 class QTextBlock;
 
-
 namespace BusinessLogic
 {
 	class ScenarioTextBlockStylePrivate;
@@ -32,7 +31,7 @@ namespace BusinessLogic
 			Note,			//!< Примечание
 			TitleHeader,	//!< Заголовок титра
 			Title,			//!< Текст титра
-			NoprintableText,		//!< Простой текст
+			NoprintableText,	//!< Простой текст
 			SceneGroupHeader,	//!< Заголовок группы сцен
 			SceneGroupFooter,	//!< Окончание группы сцен
 			FolderHeader,	//!< Заголовок папки
@@ -45,7 +44,7 @@ namespace BusinessLogic
 		enum Property {
 			PropertyType = QTextFormat::UserProperty + 1, //!< Тип блока
 			PropertyHeaderType,		//!< Тип блока заголовка
-			PropertyHeader,			//!< Текст заголовка блока (а-ля ТИТР:)
+			PropertyHeader,			//!< Текст заголовка блока (а-ля "ТИТР:")
 			PropertyPrefix,			//!< Префикс блока
 			PropertyPostfix,		//!< Постфикс блока
 			PropertyIsFirstUppercase,	//!< Необходимо ли первый символ поднимать в верхний регистр
@@ -53,7 +52,7 @@ namespace BusinessLogic
 		};
 
 	public:
-		ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType);
+		ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType, const QFont& _font = QFont());
 		~ScenarioTextBlockStyle();
 
 		/**
@@ -64,7 +63,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Сменить стиль
 		 */
-		void setType(ScenarioTextBlockStyle::Type _type);
+		void setType(ScenarioTextBlockStyle::Type _type, const QFont& _font = QFont());
 
 		/**
 		 * @brief Вид блока

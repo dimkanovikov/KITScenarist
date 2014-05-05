@@ -74,11 +74,11 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 					)
 				);
 
-	m_view->setTextEditZoomRange(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/zoom-range",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-				.toInt());
+//	m_view->setTextEditZoomRange(
+//				DataStorageLayer::StorageFacade::settingsStorage()->value(
+//					"scenario-editor/zoom-range",
+//					DataStorageLayer::SettingsStorage::ApplicationSettings)
+//				.toInt());
 }
 
 int ScenarioTextEditManager::cursorPosition() const

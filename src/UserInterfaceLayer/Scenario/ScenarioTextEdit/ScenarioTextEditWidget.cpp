@@ -268,7 +268,10 @@ void ScenarioTextEditWidget::initView()
 	m_durationTitle->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	m_durationTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	m_editor->setPageSize(60, 50);
+	//
+	// К сожалению настройка не идеальна и пришлось подбирать в ручную
+	//
+	m_editor->setPageSize(62, 58);
 
 	QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
 	topLayout->setContentsMargins(QMargins());

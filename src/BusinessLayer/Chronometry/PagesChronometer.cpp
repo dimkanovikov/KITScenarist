@@ -79,7 +79,7 @@ float PagesChronometer::calculateFrom(
 		}
 
 		default: {
-			lineLength = 58;
+			lineLength = 60;
 			break;
 		}
 	}

@@ -23,13 +23,15 @@
 using UserInterface::ScenarioTextEdit;
 using namespace BusinessLogic;
 
-namespace {
-	//
-	// Параметры стиля страницы
-	//
+namespace BusinessLogic {
+	/**
+	 * Параметры стиля страницы
+	 */
+	/** @{ */
 	const int PAGE_FONT_SIZE = 12;
 	const QFont PAGE_FONT("Courier New", PAGE_FONT_SIZE);
 	const int PAGE_MARGIN = 24;
+	/** @} */
 }
 
 
@@ -147,7 +149,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type
 	QTextCursor cursor = textCursor();
 	cursor.beginEditBlock();
 
-	ScenarioTextBlockStyle newBlockStyle(_blockType);
+	ScenarioTextBlockStyle newBlockStyle(_blockType, cursor.charFormat().font());
 
 	//
 	// Обновим стили
@@ -443,7 +445,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _blockType)
 {
 	QTextCursor cursor = textCursor();
-	ScenarioTextBlockStyle newBlockStyle(_blockType);
+	ScenarioTextBlockStyle newBlockStyle(_blockType, cursor.charFormat().font());
 
 	//
 	// Обновим стили
@@ -490,7 +492,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	// Вставим заголовок, если необходимо
 	//
 	if (newBlockStyle.hasHeader()) {
-		ScenarioTextBlockStyle headerStyle(newBlockStyle.headerType());
+		ScenarioTextBlockStyle headerStyle(newBlockStyle.headerType(), cursor.charFormat().font());
 
 		cursor.movePosition(QTextCursor::StartOfBlock);
 		cursor.insertBlock();
@@ -506,7 +508,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	// Для заголовка группы нужно создать завершение
 	//
 	if (newBlockStyle.isEmbeddableHeader()) {
-		ScenarioTextBlockStyle footerStyle(newBlockStyle.embeddableFooter());
+		ScenarioTextBlockStyle footerStyle(newBlockStyle.embeddableFooter(), cursor.charFormat().font());
 
 		//
 		// Запомним позицию курсора
@@ -533,9 +535,11 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 
 void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioTextBlockStyle::Type _blockType)
 {
+	const QFont font(textCursor().charFormat().font());
+
 	ScenarioTextBlockStyle oldBlockStyle(scenarioBlockType());
-	ScenarioTextBlockStyle newBlockHeaderStyle(_blockType);
-	ScenarioTextBlockStyle newBlockFooterStyle(newBlockHeaderStyle.embeddableFooter());
+	ScenarioTextBlockStyle newBlockHeaderStyle(_blockType, font);
+	ScenarioTextBlockStyle newBlockFooterStyle(newBlockHeaderStyle.embeddableFooter(), font);
 
 	//
 	// Сменим стиль заголовочного блока

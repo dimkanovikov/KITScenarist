@@ -62,7 +62,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Получить стиль оформления абзаца для заданного типа
 		 */
-		QTextBlockFormat blockFormatForType(ScenarioTextBlockStyle::Type _type) const;
+		QTextBlockFormat blockFormatForType(ScenarioTextBlockStyle::Type _type, const QFont& _font) const;
 
 	private:
 		/**

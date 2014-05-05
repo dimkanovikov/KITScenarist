@@ -148,11 +148,11 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 				//
 				// Если нужно сделать отступ
 				//
-				if (!sourceDocumentCursor.block().text().isEmpty()
-					&& currentBlockType != ScenarioTextBlockStyle::Dialog
-					&& currentBlockType != ScenarioTextBlockStyle::Parenthetical) {
-					destDocumentCursor.insertBlock();
-				}
+//				if (!sourceDocumentCursor.block().text().isEmpty()
+//					&& currentBlockType != ScenarioTextBlockStyle::Dialog
+//					&& currentBlockType != ScenarioTextBlockStyle::Parenthetical) {
+//					destDocumentCursor.insertBlock();
+//				}
 
 				//
 				// Вставим новый абзац для наполнения текстом
@@ -164,7 +164,7 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 			// Настроить стиль блока
 			//
 			destDocumentCursor.setCharFormat(charFormatForType(currentBlockType));
-			destDocumentCursor.setBlockFormat(blockFormatForType(currentBlockType));
+			destDocumentCursor.setBlockFormat(blockFormatForType(currentBlockType, documentFont));
 
 			//
 			// Вставить текст
@@ -214,8 +214,11 @@ QTextCharFormat PdfExporter::charFormatForType(ScenarioTextBlockStyle::Type _typ
 	return format;
 }
 
-QTextBlockFormat PdfExporter::blockFormatForType(ScenarioTextBlockStyle::Type _type) const
+QTextBlockFormat PdfExporter::blockFormatForType(ScenarioTextBlockStyle::Type _type, const QFont& _font) const
 {
+	ScenarioTextBlockStyle style(_type, _font);
+	QTextBlockFormat styleBlockFormat = style.blockFormat();
+
 	//
 	// TODO: проверить на других машинах/ОС
 	//
@@ -225,15 +228,21 @@ QTextBlockFormat PdfExporter::blockFormatForType(ScenarioTextBlockStyle::Type _t
 	//
 	// Настраиваем отступы
 	//
+	format.setTopMargin(styleBlockFormat.topMargin());
+	format.setLeftMargin(styleBlockFormat.leftMargin());
+	format.setRightMargin(styleBlockFormat.rightMargin());
+	format.setAlignment(styleBlockFormat.alignment());
+
+	/*
 	switch (_type) {
 		case ScenarioTextBlockStyle::Character: {
-			format.setLeftMargin(259);
+			format.setLeftMargin(styleBlockFormat.leftMargin());
 			break;
 		}
 
 		case ScenarioTextBlockStyle::Dialog: {
-			format.setLeftMargin(144);
-			format.setRightMargin(144);
+			format.setLeftMargin(styleBlockFormat.leftMargin());
+			format.setRightMargin(styleBlockFormat.rightMargin());
 			break;
 		}
 
@@ -252,7 +261,7 @@ QTextBlockFormat PdfExporter::blockFormatForType(ScenarioTextBlockStyle::Type _t
 		default: {
 			break;
 		}
-	}
+	}*/
 
 	return format;
 }

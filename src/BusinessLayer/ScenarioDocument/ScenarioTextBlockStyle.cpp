@@ -4,15 +4,16 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <QFontMetrics>
 #include <QTextBlock>
 
 using namespace BusinessLogic;
 
 
-ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType) :
+ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType, const QFont& _font) :
 	m_pimpl(new ScenarioTextBlockStylePrivate(ScenarioTextBlockStyle::Undefined))
 {
-	setType(_blockType);
+	setType(_blockType, _font);
 }
 
 ScenarioTextBlockStyle::~ScenarioTextBlockStyle()
@@ -29,9 +30,13 @@ ScenarioTextBlockStyle::Type ScenarioTextBlockStyle::forBlock(const QTextBlock& 
 	return blockType;
 }
 
-void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
+void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const QFont& _font)
 {
 	m_pimpl->blockType = _type;
+
+	m_pimpl->blockFormat.setTopMargin(0);
+	m_pimpl->blockFormat.setLeftMargin(0);
+	m_pimpl->blockFormat.setRightMargin(0);
 
 	//
 	// Запомним в стиле его настройки
@@ -49,30 +54,37 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 					));
 
 	//
+	// Метрика, для высчитывания отступов
+	//
+	const QFontMetrics pageFontMetrics(_font);
+	const int charWidth = pageFontMetrics.width("W");
+	const int lineHeight = pageFontMetrics.lineSpacing();
+
+	//
 	// Настроим остальные характеристики
 	//
 	switch (blockType()) {
 		case TimeAndPlace: {
-			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case Action: {
-			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
 			break;
 		}
 
 		case Character: {
-			m_pimpl->blockFormat.setTopMargin(15);
-			m_pimpl->blockFormat.setLeftMargin(200);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
+			m_pimpl->blockFormat.setLeftMargin(27 * charWidth);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case Parenthetical: {
-			m_pimpl->blockFormat.setLeftMargin(150);
-			m_pimpl->blockFormat.setRightMargin(150);
+			m_pimpl->blockFormat.setLeftMargin(22 * charWidth);
+			m_pimpl->blockFormat.setRightMargin(17 * charWidth);
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase, false);
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyPrefix, "(");
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyPostfix, ")");
@@ -80,34 +92,34 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 		}
 
 		case Dialog: {
-			m_pimpl->blockFormat.setLeftMargin(100);
-			m_pimpl->blockFormat.setRightMargin(100);
+			m_pimpl->blockFormat.setLeftMargin(15 * charWidth);
+			m_pimpl->blockFormat.setRightMargin(15 * charWidth);
 			break;
 		}
 
 		case Transition: {
-			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
 			m_pimpl->blockFormat.setAlignment(Qt::AlignRight);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case Note: {
-			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case TitleHeader: {
-			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsCanModify, false);
 			break;
 		}
 
 		case Title: {
-			m_pimpl->blockFormat.setLeftMargin(150);
-			m_pimpl->blockFormat.setRightMargin(150);
+			m_pimpl->blockFormat.setLeftMargin(22 * charWidth);
+			m_pimpl->blockFormat.setRightMargin(17 * charWidth);
 			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeaderType,
 											 ScenarioTextBlockStyle::TitleHeader);
 			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeader,
@@ -116,8 +128,8 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 		}
 
 		case NoprintableText: {
-			m_pimpl->blockFormat.setTopMargin(15);
-			m_pimpl->blockFormat.setLeftMargin(200);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
+			m_pimpl->blockFormat.setLeftMargin(27 * charWidth);
 			m_pimpl->charFormat.setForeground(
 						QColor(
 							DataStorageLayer::StorageFacade::settingsStorage()->value(
@@ -129,14 +141,14 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 
 		case SceneGroupHeader:
 		case SceneGroupFooter: {
-			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case FolderHeader:
 		case FolderFooter: {
-			m_pimpl->blockFormat.setTopMargin(15);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
 			m_pimpl->blockFormat.setBackground(
 						QColor(
 							DataStorageLayer::StorageFacade::settingsStorage()->value(

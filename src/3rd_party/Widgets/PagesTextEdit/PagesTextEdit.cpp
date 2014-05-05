@@ -84,7 +84,7 @@ void PagesTextEdit::updateInnerGeometry()
 
 		QFontMetrics fm(document()->defaultFont());
 		int pageWidth = (document()->documentMargin() * 2) + (fm.width("W") * m_charsInLine);
-		int pageHeight = (document()->documentMargin() * 2) + (fm.height() * m_linesInPage) + 2;
+		int pageHeight = (document()->documentMargin() * 2) + (fm.lineSpacing() * m_linesInPage) + 2;
 
 		documentSize = QSizeF(pageWidth, pageHeight);
 
@@ -126,7 +126,7 @@ void PagesTextEdit::paintPagesView()
 
 		QFontMetrics fm(document()->defaultFont());
 		int pageWidth = (document()->documentMargin() * 2) + (fm.width("W") * m_charsInLine);
-		int pageHeight = (document()->documentMargin() * 2) + (fm.height() * m_linesInPage) + 2;
+		int pageHeight = (document()->documentMargin() * 2) + (fm.lineSpacing() * m_linesInPage) + 2;
 
 		QPainter p(viewport());
 		QPen spacePen(palette().window(), 9);
