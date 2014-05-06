@@ -329,8 +329,14 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 		needChangeFirstBlockType = true;
 	}
 
+	//
+	// Последний использемый тип блока при обработке загружаемого текста
+	//
+	ScenarioTextBlockStyle::Type lastTokenType = ScenarioTextBlockStyle::Undefined;
+
 	QXmlStreamReader reader(_xml);
 	while (!reader.atEnd()) {
+
 		switch (reader.readNext()) {
 			case QXmlStreamReader::StartElement: {
 				//
@@ -421,11 +427,34 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 					cursor.block().setUserData(info);
 				}
 
+				//
+				// Обновим последний использовавшийся тип блока
+				//
+				lastTokenType = tokenType;
+
 				break;
 			}
 
 			case QXmlStreamReader::Characters: {
-				cursor.insertText(reader.text().toString().simplified());
+				QString textToInsert = reader.text().toString().simplified();
+
+				//
+				// Если необходимо так же вставляем префикс и постфикс стиля
+				//
+				ScenarioTextBlockStyle currentStyle(lastTokenType);
+				if (!currentStyle.prefix().isEmpty()
+					&& !textToInsert.startsWith(currentStyle.prefix())) {
+					textToInsert.prepend(currentStyle.prefix());
+				}
+				if (!currentStyle.postfix().isEmpty()
+					&& !textToInsert.startsWith(currentStyle.postfix())) {
+					textToInsert.append(currentStyle.postfix());
+				}
+
+				//
+				// Пишем сам текст
+				//
+				cursor.insertText(textToInsert);
 				break;
 			}
 

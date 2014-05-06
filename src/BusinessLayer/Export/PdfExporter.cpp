@@ -32,7 +32,11 @@ void PdfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 	//
 	// Настроим размер страниц
 	//
-	preparedDocument->setPageSize(QSizeF(printer->pageRect().size()));
+	QFontMetrics fm(preparedDocument->defaultFont());
+	int pageWidth = fm.width("W") * 60;
+	int pageHeight = fm.lineSpacing() * 50;
+	QSizeF documentSize = QSizeF(pageWidth, pageHeight);
+	preparedDocument->setPageSize(documentSize);
 
 	//
 	// Печатаем документ
@@ -63,7 +67,11 @@ void PdfExporter::printPreview(QTextDocument* _document)
 	//
 	// Настроим размер страниц
 	//
-	preparedDocument->setPageSize(QSizeF(printer->pageRect().size()));
+	QFontMetrics fm(preparedDocument->defaultFont());
+	int pageWidth = fm.width("W") * 60;
+	int pageHeight = fm.lineSpacing() * 50;
+	QSizeF documentSize = QSizeF(pageWidth, pageHeight);
+	preparedDocument->setPageSize(documentSize);
 
 	//
 	// Сохраним указатель на документ для печати

@@ -271,7 +271,7 @@ void ScenarioTextEditWidget::initView()
 	//
 	// К сожалению настройка не идеальна и пришлось подбирать в ручную
 	//
-	m_editor->setPageSize(62, 58);
+	m_editor->setPageSize(60, 50);
 
 	QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
 	topLayout->setContentsMargins(QMargins());
