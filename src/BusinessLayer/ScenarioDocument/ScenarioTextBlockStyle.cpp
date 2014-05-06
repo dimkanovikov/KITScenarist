@@ -118,6 +118,7 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const Q
 		}
 
 		case Title: {
+            m_pimpl->blockFormat.setTopMargin(lineHeight);
 			m_pimpl->blockFormat.setLeftMargin(22 * charWidth);
 			m_pimpl->blockFormat.setRightMargin(17 * charWidth);
 			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeaderType,

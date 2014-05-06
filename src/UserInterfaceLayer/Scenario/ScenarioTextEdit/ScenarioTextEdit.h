@@ -24,6 +24,11 @@ namespace UserInterface
 		explicit ScenarioTextEdit(QWidget* _parent);
 
 		/**
+		 * @brief Публичный доступ к настройке внутренних соединений
+		 */
+		void init();
+
+		/**
 		 * @brief Установить документ для редактирования
 		 */
 		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document);
@@ -97,6 +102,12 @@ namespace UserInterface
 		QMimeData* createMimeDataFromSelection() const;
 		void insertFromMimeData(const QMimeData* _source);
 		/** @} */
+
+    private slots:
+        /**
+         * @brief Обновить стили отображения всех блоков
+         */
+        void aboutUpdateBlocksFormats();
 
 	private:
 		/**

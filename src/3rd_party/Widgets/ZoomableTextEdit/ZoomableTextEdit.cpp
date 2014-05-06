@@ -20,12 +20,16 @@ void ZoomableTextEdit::setZoomRange(int _zoomRange)
 	// Обновляем коэффициент
 	//
 	m_zoomRange = _zoomRange;
-	emit zoomRangeChanged(m_zoomRange);
 
 	//
 	// Масштабируем с новым коэффициентом
 	//
 	zoomIn(m_zoomRange);
+
+	//
+	// Уведомляем о том, что коэффициент изменился
+	//
+	emit zoomRangeChanged(m_zoomRange);
 }
 
 void ZoomableTextEdit::resetZoom()

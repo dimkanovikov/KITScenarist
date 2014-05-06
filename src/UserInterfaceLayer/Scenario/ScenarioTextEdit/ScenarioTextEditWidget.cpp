@@ -303,6 +303,8 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(zoomRangeChanged(int)), this, SIGNAL(zoomRangeChanged(int)), Qt::UniqueConnection);
+
+	m_editor->init();
 }
 
 void ScenarioTextEditWidget::initStyleSheet()
