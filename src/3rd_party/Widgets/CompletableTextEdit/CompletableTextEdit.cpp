@@ -23,7 +23,7 @@ bool CompletableTextEdit::isCompleterVisible() const
 {
 	return m_completer->popup()->isVisible();
 }
-
+#include <QDebug>
 bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _completionPrefix)
 {
 	bool success = false;
@@ -62,6 +62,9 @@ bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _c
 			// ... отобразим завершателя
 			//
 			QRect rect = cursorRect();
+            qDebug() << rect.topLeft();
+            rect.moveTo(viewport()->mapTo(this, rect.topLeft()));
+            qDebug() << rect.topLeft();
 			rect.setWidth(
 						m_completer->popup()->sizeHintForColumn(0)
 						+ m_completer->popup()->verticalScrollBar()->sizeHint().width());
