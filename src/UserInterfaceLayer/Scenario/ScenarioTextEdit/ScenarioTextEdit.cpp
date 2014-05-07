@@ -36,7 +36,8 @@ namespace BusinessLogic {
 
 
 ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
-	CompletableTextEdit(_parent)
+	CompletableTextEdit(_parent),
+	m_storeDataWhenEditing(true)
 {
 	m_document = new ScenarioTextDocument(this, 0);
 	initDocument(m_document);
