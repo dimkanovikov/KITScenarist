@@ -447,7 +447,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 					textToInsert.prepend(currentStyle.prefix());
 				}
 				if (!currentStyle.postfix().isEmpty()
-					&& !textToInsert.startsWith(currentStyle.postfix())) {
+					&& !textToInsert.endsWith(currentStyle.postfix())) {
 					textToInsert.append(currentStyle.postfix());
 				}
 
