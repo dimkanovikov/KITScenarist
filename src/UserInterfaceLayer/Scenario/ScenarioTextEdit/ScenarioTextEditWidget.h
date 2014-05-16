@@ -52,6 +52,11 @@ namespace UserInterface
 		void setUseSpellChecker(bool _use);
 
 		/**
+		 * @brief Установить язык проверки орфографии
+		 */
+		void setSpellCheckLanguage(int _language);
+
+		/**
 		 * @brief Настроить цвета текстового редактора
 		 */
 		void setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor);

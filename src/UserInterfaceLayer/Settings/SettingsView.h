@@ -39,6 +39,7 @@ namespace UserInterface
 
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditSpellCheck(bool _value);
+		void setScenarioEditSpellCheckLanguage(int _value);
 		void setScenarioEditTextColor(const QColor& _color);
 		void setScenarioEditBackgroundColor(const QColor& _color);
 		void setScenarioEditNonprintableTexColor(const QColor& _color);
@@ -70,6 +71,7 @@ namespace UserInterface
 
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditSpellCheckChanged(bool);
+		void scenarioEditSpellCheckLanguageChanged(int);
 		void scenarioEditTextColorChanged(const QColor&);
 		void scenarioEditBackgroundColorChanged(const QColor&);
 		void scenarioEditNonprintableTextColorChanged(const QColor&);
@@ -93,6 +95,11 @@ namespace UserInterface
 
 	private slots:
 		/**
+		 * @brief Обработка смены языка для проверки орфографии
+		 */
+		void aboutScenarioEditSpellCheckLanguageChanged();
+
+		/**
 		 * @brief Выбрать цвет для параметров редактора сценария
 		 */
 		/** @{ */
@@ -115,6 +122,11 @@ namespace UserInterface
 		void setColorFor(QWidget* _colorPicker, const QColor& _newColor);
 
 	private:
+		/**
+		 * @brief Настроить данные формы
+		 */
+		void initData();
+
 		/**
 		 * @brief Настроить представление
 		 */

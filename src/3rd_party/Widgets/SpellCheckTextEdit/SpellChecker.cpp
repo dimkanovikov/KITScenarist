@@ -157,14 +157,14 @@ QString SpellChecker::dictionaryFilePath(
 		default:
 			filePath += "ru_RU";
 			break;
-		case EnglishAU:
-			filePath += "en_AU";
+		case RussianWithYo:
+			filePath += "ru_RU_yo";
 			break;
-		case EnglishGB:
-			filePath += "en_GB";
+		case Ukrainian:
+			filePath += "uk_UA";
 			break;
-		case EnglishUS:
-			filePath += "en_US";
+		case Belorussian:
+			filePath += "be_BY";
 			break;
 	}
 

@@ -82,6 +82,11 @@ void ScenarioTextEditWidget::setUseSpellChecker(bool _use)
 	m_editor->setUseSpellChecker(_use);
 }
 
+void ScenarioTextEditWidget::setSpellCheckLanguage(int _language)
+{
+	m_editor->setSpellCheckLanguage((SpellChecker::Language)_language);
+}
+
 void ScenarioTextEditWidget::setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor)
 {
 	m_editor->viewport()->setStyleSheet(QString("color: %1; background-color: %2;").arg(_textColor.name(), _backgroundColor.name()));

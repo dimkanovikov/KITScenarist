@@ -4,6 +4,8 @@
 #include <QColorDialog>
 #include <QSignalMapper>
 
+#include <3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h>
+
 using UserInterface::SettingsView;
 
 
@@ -13,6 +15,7 @@ SettingsView::SettingsView(QWidget *parent) :
 {
 	ui->setupUi(this);
 
+	initData();
 	initView();
 	initConnections();
 	initStyleSheet();
@@ -64,6 +67,19 @@ void SettingsView::setScenarioEditPageView(bool _value)
 void SettingsView::setScenarioEditSpellCheck(bool _value)
 {
 	ui->spellChecking->setChecked(_value);
+}
+
+void SettingsView::setScenarioEditSpellCheckLanguage(int _value)
+{
+	//
+	// Выбираем язык проверки
+	//
+	for (int index = 0; index < ui->spellCheckingLanguage->count(); ++index) {
+		if (ui->spellCheckingLanguage->itemData(index).toInt() == _value) {
+			ui->spellCheckingLanguage->setCurrentIndex(index);
+			break;
+		}
+	}
 }
 
 void SettingsView::setScenarioEditTextColor(const QColor& _color)
@@ -161,6 +177,11 @@ void SettingsView::setChronometryConfigurableSecondsFor50Dialog(double _value)
 	ui->configurableChronometrySecondsPer50CharactersDialog->setValue(_value);
 }
 
+void SettingsView::aboutScenarioEditSpellCheckLanguageChanged()
+{
+	emit scenarioEditSpellCheckLanguageChanged(ui->spellCheckingLanguage->currentData().toInt());
+}
+
 void SettingsView::aboutScenarioEditChooseTextColor()
 {
 	setColorFor(ui->textColor);
@@ -205,6 +226,14 @@ void SettingsView::setColorFor(QWidget* _colorPicker, const QColor& _newColor)
 	_colorPicker->setStyleSheet("background-color: " + _newColor.name());
 }
 
+void SettingsView::initData()
+{
+	ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
+	ui->spellCheckingLanguage->addItem(tr("Russian with Yo"), SpellChecker::RussianWithYo);
+	ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
+	ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
+}
+
 void SettingsView::initView()
 {
 	ui->categories->setCurrentRow(0);
@@ -212,6 +241,8 @@ void SettingsView::initView()
 
 	ui->splitter->setHandleWidth(1);
 	ui->splitter->setStretchFactor(1, 1);
+
+	ui->spellCheckingLanguage->setCurrentIndex(0);
 }
 
 void SettingsView::initConnections()
@@ -222,6 +253,8 @@ void SettingsView::initConnections()
 	connect(ui->categories, SIGNAL(currentRowChanged(int)), ui->categoriesWidgets, SLOT(setCurrentIndex(int)));
     // ... активация автосохранения
     connect(ui->autosave, SIGNAL(toggled(bool)), ui->autosaveInterval, SLOT(setEnabled(bool)));
+	// ... активация проверки орфографии
+	connect(ui->spellChecking, SIGNAL(toggled(bool)), ui->spellCheckingLanguage, SLOT(setEnabled(bool)));
 	// ... выбор цвета элементов редактора сценария
 	connect(ui->textColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseTextColor()));
 	connect(ui->backgroundColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseBackgroundColor()));
@@ -243,6 +276,7 @@ void SettingsView::initConnections()
 	// ... текстовый редактор
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
+	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
 	// ... навигатор
 	connect(ui->showScenesNumbers, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
 	// ... хронометраж

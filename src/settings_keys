@@ -2,6 +2,7 @@
 
 scenario-editor/page-view - используется ли режим постраничного отображения
 scenario-editor/spell-checking - включена ли проверка орфографии
+scenario-editor/spell-checking-language - язык проверки орфографии
 scenario-editor/text-color - цвет текста редактора сценария
 scenario-editor/background-color - цвет фона
 scenario-editor/nonprintable-text-color - цвет непечатного текста

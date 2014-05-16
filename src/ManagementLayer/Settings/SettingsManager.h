@@ -53,6 +53,7 @@ namespace ManagementLayer
 		void applicationAutosaveIntervalChanged(int _value);
 		void scenarioEditPageViewChanged(bool  _value);
 		void scenarioEditSpellCheckChanged(bool  _value);
+		void scenarioEditSpellCheckLanguageChanged(int _value);
 		void scenarioEditTextColorChanged(const QColor& _value);
 		void scenarioEditBackgroundColorChanged(const QColor& _value);
 		void scenarioEditNonprintableTextColorChanged(const QColor& _value);

@@ -3,14 +3,14 @@
         <file alias="Courier New">Fonts/Courier New.otf</file>
     </qresource>
     <qresource prefix="/SpellChecking">
-        <file>HunspellDictionaries/en_AU.aff</file>
-        <file>HunspellDictionaries/en_AU.dic</file>
-        <file>HunspellDictionaries/en_GB.aff</file>
-        <file>HunspellDictionaries/en_GB.dic</file>
-        <file>HunspellDictionaries/en_US.aff</file>
-        <file>HunspellDictionaries/en_US.dic</file>
         <file>HunspellDictionaries/ru_RU.aff</file>
         <file>HunspellDictionaries/ru_RU.dic</file>
+        <file>HunspellDictionaries/be_BY.aff</file>
+        <file>HunspellDictionaries/be_BY.dic</file>
+        <file>HunspellDictionaries/uk_UA.aff</file>
+        <file>HunspellDictionaries/uk_UA.dic</file>
+        <file>HunspellDictionaries/ru_RU_yo.dic</file>
+        <file>HunspellDictionaries/ru_RU_yo.aff</file>
     </qresource>
     <qresource prefix="/Graphics">
         <file>Icons/folder.png</file>

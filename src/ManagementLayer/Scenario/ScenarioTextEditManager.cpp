@@ -60,6 +60,11 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 					"scenario-editor/spell-checking",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
+	m_view->setSpellCheckLanguage(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/spell-checking-language",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt());
 
 	m_view->setTextEditColors(
 				QColor(

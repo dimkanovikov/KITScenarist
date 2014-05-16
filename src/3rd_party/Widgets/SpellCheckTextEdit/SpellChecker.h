@@ -18,9 +18,9 @@ public:
 	 */
 	enum Language {
 		Russian,
-		EnglishAU,
-		EnglishGB,
-		EnglishUS
+		RussianWithYo,
+		Ukrainian,
+		Belorussian
 	};
 
 public:
