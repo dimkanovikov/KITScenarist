@@ -60,6 +60,54 @@ namespace {
 		}
 		g_disableOnStartActions.clear();
 	}
+
+	/**
+	 * @brief Получить путь к папке проектов
+	 */
+	static QString projectsFolderPath() {
+		QString projectsFolderPath =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/project-files",
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+		if (projectsFolderPath.isEmpty()) {
+			projectsFolderPath = QDir::homePath();
+		}
+		return projectsFolderPath;
+	}
+
+	/**
+	 * @brief Сохранить путь к папке проектов
+	 */
+	static void saveProjectsFolderPath(const QString& _path) {
+		DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+					"application/project-files",
+					QFileInfo(_path).absoluteDir().absolutePath(),
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+	}
+
+	/**
+	 * @brief Получить путь к папке экспортируемых файлов
+	 */
+	static QString exportFolderPath() {
+		QString exportFolderPath =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/export-files",
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+		if (exportFolderPath.isEmpty()) {
+			exportFolderPath = QDir::homePath();
+		}
+		return exportFolderPath;
+	}
+
+	/**
+	 * @brief Сохранить путь к папке экспортируемых файлов
+	 */
+	static void saveExportFolderPath(const QString& _path) {
+		DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+					"application/export-files",
+					QFileInfo(_path).absoluteDir().absolutePath(),
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+	}
 }
 
 
@@ -110,7 +158,7 @@ void ApplicationManager::aboutCreateNew()
 				QFileDialog::getSaveFileName(
 					m_view,
 					tr("Choose file for new project"),
-					QString(),
+					projectsFolderPath(),
 					tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
 					);
 
@@ -143,6 +191,11 @@ void ApplicationManager::aboutCreateNew()
 			DatabaseLayer::Database::setCurrentFile(newProjectFileName);
 
 			//
+			// ... сохраняем путь
+			//
+			saveProjectsFolderPath(newProjectFileName);
+
+			//
 			// ... перейдём к редактированию
 			//
 			goToEditCurrentProject();
@@ -159,7 +212,7 @@ void ApplicationManager::aboutSaveAs()
 			QFileDialog::getSaveFileName(
 				m_view,
 				tr("Choose file for save project"),
-				QString(),
+				projectsFolderPath(),
 				tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
 				);
 
@@ -206,6 +259,11 @@ void ApplicationManager::aboutSaveAs()
 			//
 			aboutSave();
 		}
+
+		//
+		// ... сохраняем путь
+		//
+		saveProjectsFolderPath(saveAsProjectFileName);
 	}
 }
 
@@ -252,7 +310,7 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 					QFileDialog::getOpenFileName(
 						m_view,
 						tr("Choose project file to open"),
-						QString(),
+						projectsFolderPath(),
 						tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
 						);
 		}
@@ -270,6 +328,11 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 			// ... переключаемся на работу с выбранным файлом
 			//
 			DatabaseLayer::Database::setCurrentFile(loadProjectFileName);
+
+			//
+			// ... сохраняем путь
+			//
+			saveProjectsFolderPath(loadProjectFileName);
 
 			//
 			// ... перейдём к редактированию
@@ -290,7 +353,7 @@ void ApplicationManager::aboutExportToPdf()
 			QFileDialog::getSaveFileName(
 				m_view,
 				tr("Choose file to export scenario"),
-				QString(),
+				exportFolderPath(),
 				tr ("PDF files (*%1)").arg(PDF_EXTENSION)
 				);
 
@@ -310,6 +373,11 @@ void ApplicationManager::aboutExportToPdf()
 		//
 		BusinessLogic::PdfExporter exporter;
 		exporter.exportTo(m_scenarioManager->scenario()->document(), exportFileName);
+
+		//
+		// ... сохраним путь
+		//
+		saveExportFolderPath(exportFileName);
 	}
 }
 
@@ -324,7 +392,7 @@ void ApplicationManager::aboutExportToRtf()
 			QFileDialog::getSaveFileName(
 				m_view,
 				tr("Choose file to export scenario"),
-				QString(),
+				exportFolderPath(),
 				tr ("RTF files (*%1)").arg(RTF_EXTENSION)
 				);
 
@@ -344,6 +412,11 @@ void ApplicationManager::aboutExportToRtf()
 		//
 		BusinessLogic::RtfExporter exporter;
 		exporter.exportTo(m_scenarioManager->scenario()->document(), exportFileName);
+
+		//
+		// ... сохраним путь
+		//
+		saveExportFolderPath(exportFileName);
 	}
 }
 

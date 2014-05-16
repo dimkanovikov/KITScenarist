@@ -25,6 +25,8 @@ chronometry/configurable/seconds-for-every-50/time-and-place - секунд за
 chronometry/configurable/seconds-for-every-50/action - секунд за каждые 50 символов
 chronometry/configurable/seconds-for-every-50/dialog - секунд за каждые 50 символов
 
+application/project-files - путь к папке файлов проекта (сохранить/открыть)
+application/export-files - путь к папке экспортируемых файлов
 application/geometry - состояние главного окна и его вкладок
 application/use-dark-theme - использовать тёмную тему
 application/scenario/left/geometry - разделитель навигатора и окна синопсиса
