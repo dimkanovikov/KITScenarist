@@ -149,6 +149,11 @@ namespace BusinessLogic
 		void initConnections();
 
 		/**
+		 * @brief Отключить соединения
+		 */
+		void removeConnections();
+
+		/**
 		 * @brief Обновить элемент структуры из промежутка текста в который он входит
 		 */
 		void updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos);

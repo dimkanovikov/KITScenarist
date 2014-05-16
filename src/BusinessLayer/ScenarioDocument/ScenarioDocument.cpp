@@ -110,14 +110,20 @@ int ScenarioDocument::itemEndPosition(const QModelIndex& _index) const
 
 QString ScenarioDocument::itemHeaderAtPosition(int _position) const
 {
-	ScenarioModelItem* item = itemForPosition(_position, true);
-	return item->header();
+	QString header;
+	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+		header = item->header();
+	}
+	return header;
 }
 
 QString ScenarioDocument::itemSynopsisAtPosition(int _position) const
 {
-	ScenarioModelItem* item = itemForPosition(_position, true);
-	return itemSynopsis(item);
+	QString synopsis;
+	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+		synopsis = itemSynopsis(item);
+	}
+	return synopsis;
 }
 
 QString ScenarioDocument::itemSynopsis(ScenarioModelItem* _item) const
@@ -182,7 +188,7 @@ void ScenarioDocument::load(const QString& _scenario)
 	//
 	// Отключаем всё от документа
 	//
-	m_document->disconnect();
+	removeConnections();
 
 	//
 	// Очищаем модель и документ
@@ -693,6 +699,12 @@ void ScenarioDocument::initConnections()
 {
 	connect(m_document, SIGNAL(contentsChange(int,int,int)),
 			this, SLOT(aboutContentsChange(int,int,int)));
+}
+
+void ScenarioDocument::removeConnections()
+{
+	disconnect(m_document, SIGNAL(contentsChange(int,int,int)),
+			   this, SLOT(aboutContentsChange(int,int,int)));
 }
 
 void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos)
