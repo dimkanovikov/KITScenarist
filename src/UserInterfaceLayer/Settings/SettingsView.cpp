@@ -179,7 +179,7 @@ void SettingsView::setChronometryConfigurableSecondsFor50Dialog(double _value)
 
 void SettingsView::aboutScenarioEditSpellCheckLanguageChanged()
 {
-	emit scenarioEditSpellCheckLanguageChanged(ui->spellCheckingLanguage->currentData().toInt());
+    emit scenarioEditSpellCheckLanguageChanged(ui->spellCheckingLanguage->currentData().toInt());
 }
 
 void SettingsView::aboutScenarioEditChooseTextColor()

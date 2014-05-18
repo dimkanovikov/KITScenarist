@@ -125,7 +125,7 @@ void PagesTextEdit::paintPagesView()
 		//
 
 		QFontMetrics fm(document()->defaultFont());
-		int pageWidth = (document()->documentMargin() * 2) + (fm.width("W") * m_charsInLine);
+        int pageWidth = (document()->documentMargin() * 2) + (fm.width("W") * m_charsInLine) + 2;
 		int pageHeight = (document()->documentMargin() * 2) + (fm.lineSpacing() * m_linesInPage) + 2;
 
 		QPainter p(viewport());
@@ -161,7 +161,7 @@ void PagesTextEdit::paintPagesView()
 			// ... левая
 			p.drawLine(0, curHeight-pageHeight, 0, curHeight-8);
 			// ... правая
-			p.drawLine(pageWidth-1, curHeight-pageHeight, pageWidth-1, curHeight-8);
+            p.drawLine(pageWidth-1, curHeight-pageHeight, pageWidth-1, curHeight-8);
 
 			curHeight += pageHeight;
 		}
@@ -177,7 +177,7 @@ void PagesTextEdit::paintPagesView()
 			// ... левая
 			p.drawLine(0, curHeight-pageHeight, 0, height());
 			// ... правая
-			p.drawLine(pageWidth-1, curHeight-pageHeight, pageWidth-1, height());
+            p.drawLine(pageWidth-1, curHeight-pageHeight, pageWidth-1, height());
 		}
 	}
 }
