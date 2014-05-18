@@ -126,6 +126,16 @@ void PrepareHandler::handleDown(QKeyEvent*)
 	m_needSendEventToBaseClass = false;
 }
 
+void PrepareHandler::handlePageUp(QKeyEvent*)
+{
+	m_needSendEventToBaseClass = false;
+}
+
+void PrepareHandler::handlePageDown(QKeyEvent*)
+{
+	m_needSendEventToBaseClass = false;
+}
+
 void PrepareHandler::handleOther(QKeyEvent* _event)
 {
 	//

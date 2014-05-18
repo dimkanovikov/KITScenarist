@@ -47,6 +47,8 @@ namespace KeyProcessingLayer
 		void handleEscape(QKeyEvent* _event = 0);
 		void handleUp(QKeyEvent* _event = 0);
 		void handleDown(QKeyEvent* _event = 0);
+		void handlePageUp(QKeyEvent* _event = 0);
+		void handlePageDown(QKeyEvent* _event = 0);
 		void handleOther(QKeyEvent* _event = 0);
 		/** @} */
 

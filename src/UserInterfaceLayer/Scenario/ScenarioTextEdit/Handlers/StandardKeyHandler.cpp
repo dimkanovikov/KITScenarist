@@ -75,6 +75,23 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 			/** @} */
 
 			/**
+			 * @note Действия перемещения по тексту
+			 */
+			/** @{ */
+			case Qt::Key_Home:
+			case Qt::Key_PageUp: {
+				editor()->moveCursor(QTextCursor::Start);
+				break;
+			}
+
+			case Qt::Key_End:
+			case Qt::Key_PageDown: {
+				editor()->moveCursor(QTextCursor::End);
+				break;
+			}
+			/** @} */
+
+			/**
 			 * @note Действия смены стиля
 			 *
 				Время и место: Ctrl+Enter
@@ -358,6 +375,30 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 		cursor.endEditBlock();
 		editor()->setTextCursor(cursor);
 	}
+}
+
+void StandardKeyHandler::handlePageUp(QKeyEvent* _event)
+{
+	QTextCursor cursor = editor()->textCursor();
+	cursor.beginEditBlock();
+
+	for (int line = 0; line < 20; ++line) {
+		handleUp(_event);
+	}
+
+	cursor.endEditBlock();
+}
+
+void StandardKeyHandler::handlePageDown(QKeyEvent* _event)
+{
+	QTextCursor cursor = editor()->textCursor();
+	cursor.beginEditBlock();
+
+	for (int line = 0; line < 20; ++line) {
+		handleDown(_event);
+	}
+
+	cursor.endEditBlock();
 }
 
 void StandardKeyHandler::handleOther(QKeyEvent*)

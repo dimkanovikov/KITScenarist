@@ -89,6 +89,20 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	}
 
 	//
+	// Нажата кнопка стрелочки "Страница вниз"
+	//
+	else if (pressedKey == Qt::Key_PageDown) {
+		handlePageDown(_event);
+	}
+
+	//
+	// Нажата кнопка стрелочки "Станица вверх"
+	//
+	else if (pressedKey == Qt::Key_PageUp) {
+		handlePageUp(_event);
+	}
+
+	//
 	// Нажата любая другая клавиша
 	//
 	else {
