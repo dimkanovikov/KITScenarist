@@ -6,7 +6,7 @@ Application to write scenarios.
 Build info:
 ------------
 
-Qt 5.1 or later.
+Qt 5.2 or later.
 
 qmake
 make
