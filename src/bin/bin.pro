@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = bin libs
+SUBDIRS = Scenarist
