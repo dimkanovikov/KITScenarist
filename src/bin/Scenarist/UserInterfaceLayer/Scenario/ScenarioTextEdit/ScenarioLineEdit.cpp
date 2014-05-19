@@ -12,7 +12,8 @@ namespace {
 
 
 ScenarioLineEdit::ScenarioLineEdit(QWidget* _parent) :
-	ScenarioTextEdit(_parent)
+	ScenarioTextEdit(_parent),
+	m_inClearCharFormat(false)
 {
 	//
 	// Настраиваем документ
@@ -48,7 +49,7 @@ ScenarioLineEdit::ScenarioLineEdit(QWidget* _parent) :
 	//
 	setFont(QApplication::font());
 	document()->setDefaultFont(QApplication::font());
-    connect(this, SIGNAL(currentCharFormatChanged(QTextCharFormat)), this, SLOT(clearCharFormat()));
+	connect(document(), SIGNAL(contentsChanged()), this, SLOT(clearCharFormat()));
 	clearCharFormat();
 }
 
@@ -91,25 +92,31 @@ void ScenarioLineEdit::removeLineBreaks()
 
 void ScenarioLineEdit::clearCharFormat()
 {
-    QTextCursor cursor = textCursor();
+	if (!m_inClearCharFormat) {
+		m_inClearCharFormat = true;
 
-    //
-    // Установим стиль отображения текста, как в обычном редакторе
-    //
-    QTextCharFormat charFormat = cursor.charFormat();
-    charFormat.setForeground(QApplication::palette().foreground());
+		QTextCursor cursor = textCursor();
 
-    //
-    // Обновим стили
-    //
-    cursor.setBlockCharFormat(charFormat);
+		//
+		// Установим стиль отображения текста, как в обычном редакторе
+		//
+		QTextCharFormat charFormat = cursor.charFormat();
+		charFormat.setForeground(QApplication::palette().foreground());
 
-    //
-    // Применим стиль текста ко всему блоку, выделив его,
-    // т.к. в блоке могут находиться фрагменты в другом стиле
-    //
-    cursor.select(QTextCursor::BlockUnderCursor);
-    cursor.setCharFormat(charFormat);
-    cursor.clearSelection();
-    setTextCursor(cursor);
+		//
+		// Обновим стили
+		//
+		cursor.setBlockCharFormat(charFormat);
+
+		//
+		// Применим стиль текста ко всему блоку, выделив его,
+		// т.к. в блоке могут находиться фрагменты в другом стиле
+		//
+		cursor.select(QTextCursor::BlockUnderCursor);
+		cursor.setCharFormat(charFormat);
+		cursor.clearSelection();
+		setTextCursor(cursor);
+
+		m_inClearCharFormat = false;
+	}
 }

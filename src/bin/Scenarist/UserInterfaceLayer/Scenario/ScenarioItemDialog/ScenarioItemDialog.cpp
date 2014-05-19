@@ -89,7 +89,7 @@ void ScenarioItemDialog::aboutUpdateCurrentTextStyle()
 	//
 	// Обновим стиль текущего параграфа для редактора
 	//
-    m_itemEditor->changeScenarioBlockType(currentType);
+	m_itemEditor->changeScenarioBlockType(currentType);
 }
 
 void ScenarioItemDialog::initView()
