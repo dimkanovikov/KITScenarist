@@ -1,4 +1,4 @@
 #/bin/sh
 
 ./update_ts
-linguist ../Resources/Translations/Scenarist_ru.ts
+linguist ../bin/Scenarist/Resources/Translations/Scenarist_ru.ts

@@ -38,6 +38,8 @@
         <file>Icons/note.png</file>
         <file>Icons/unknown.png</file>
         <file>Icons/Editing/red_cross.png</file>
+        <file>Icons/Editing/search.png</file>
+        <file>Icons/Editing/format.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

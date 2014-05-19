@@ -6,6 +6,7 @@
 class QComboBox;
 class QLabel;
 class QToolButton;
+class SearchWidget;
 
 namespace BusinessLogic {
 	class ScenarioTextDocument;
@@ -97,6 +98,11 @@ namespace UserInterface
 		 */
 		void aboutRedo();
 
+		/**
+		 * @brief Показать/скрыть поле поиска
+		 */
+		void aboutShowSearch();
+
 	signals:
 		/**
 		 * @brief Изменился текст сценария
@@ -177,6 +183,16 @@ namespace UserInterface
 		QToolButton* m_redo;
 
 		/**
+		 * @brief Кнопка панели поиска
+		 */
+		QToolButton* m_search;
+
+		/**
+		 * @brief Кнопка панели быстрого форматирования
+		 */
+		QToolButton* m_fastFormat;
+
+		/**
 		 * @brief Префикс хронометража
 		 */
 		QLabel* m_durationTitle;
@@ -190,6 +206,11 @@ namespace UserInterface
 		 * @brief Собственно редактор текста
 		 */
 		ScenarioTextEdit* m_editor;
+
+		/**
+		 * @brief Виджет поиска
+		 */
+		SearchWidget* m_searchLine;
 
 		/**
 		 * @brief MD5-хэш текста сценария, используется для отслеживания изменённости текста

@@ -3,6 +3,8 @@
 #include "ScenarioTextEdit.h"
 #include "ScenarioTextEditHelpers.h"
 
+#include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
+
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
@@ -41,9 +43,12 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_textStyles(new QComboBox(this)),
 	m_undo(new QToolButton(this)),
 	m_redo(new QToolButton(this)),
+	m_search(new QToolButton(this)),
+	m_fastFormat(new QToolButton(this)),
 	m_durationTitle(new QLabel(this)),
 	m_duration(new QLabel(this)),
-	m_editor(new ScenarioTextEdit(this))
+	m_editor(new ScenarioTextEdit(this)),
+	m_searchLine(new SearchWidget(this))
 {
 	initView();
 	initConnections();
@@ -202,7 +207,15 @@ void ScenarioTextEditWidget::aboutUndo()
 
 void ScenarioTextEditWidget::aboutRedo()
 {
-    m_editor->redo();
+	m_editor->redo();
+}
+
+void ScenarioTextEditWidget::aboutShowSearch()
+{
+	m_searchLine->setVisible(m_search->isChecked());
+	if (m_searchLine->isVisible()) {
+		m_searchLine->setFocus();
+	}
 }
 
 void ScenarioTextEditWidget::aboutUpdateTextStyle()
@@ -274,6 +287,12 @@ void ScenarioTextEditWidget::initView()
 	m_undo->setIcon(QIcon(":/Graphics/Icons/Editing/undo.png"));
 	m_redo->setIcon(QIcon(":/Graphics/Icons/Editing/redo.png"));
 
+	m_search->setIcon(QIcon(":/Graphics/Icons/Editing/search.png"));
+	m_search->setCheckable(true);
+	m_search->setShortcut(QKeySequence("Ctrl+F"));
+
+	m_fastFormat->setIcon(QIcon(":/Graphics/Icons/Editing/format.png"));
+
 	m_durationTitle->setText(tr("Chron: "));
 	m_durationTitle->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	m_durationTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -283,12 +302,17 @@ void ScenarioTextEditWidget::initView()
 	//
 	m_editor->setPageSize(60, 50);
 
+	m_searchLine->setEditor(m_editor);
+	m_searchLine->hide();
+
 	QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
 	topLayout->addWidget(m_textStyles);
 	topLayout->addWidget(m_undo);
 	topLayout->addWidget(m_redo);
+	topLayout->addWidget(m_search);
+	topLayout->addWidget(m_fastFormat);
 	topLayout->addWidget(m_durationTitle);
 	topLayout->addWidget(m_duration);
 
@@ -297,6 +321,7 @@ void ScenarioTextEditWidget::initView()
 	layout->setSpacing(0);
 	layout->addWidget(m_toolbar);
 	layout->addWidget(m_editor);
+	layout->addWidget(m_searchLine);
 
 	setLayout(layout);
 }
@@ -306,6 +331,7 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()), Qt::UniqueConnection);
 	connect(m_undo, SIGNAL(clicked()), this, SLOT(aboutUndo()), Qt::UniqueConnection);
 	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()), Qt::UniqueConnection);
+	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
 	connect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()), Qt::UniqueConnection);
@@ -326,6 +352,8 @@ void ScenarioTextEditWidget::initStyleSheet()
 
 	m_undo->setProperty("inTopPanel", true);
 	m_redo->setProperty("inTopPanel", true);
+	m_search->setProperty("inTopPanel", true);
+	m_fastFormat->setProperty("inTopPanel", true);
 
 	m_durationTitle->setProperty("inTopPanel", true);
 	m_durationTitle->setProperty("topPanelTopBordered", true);

@@ -156,7 +156,8 @@ SOURCES += main.cpp \
     3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.cpp \
     UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp \
-	3rd_party/Widgets/PagesTextEdit/PagesTextEdit.cpp
+	3rd_party/Widgets/PagesTextEdit/PagesTextEdit.cpp \
+    3rd_party/Widgets/SearchWidget/SearchWidget.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -289,7 +290,8 @@ HEADERS += \
     3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.h \
     UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h \
-	3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h
+	3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h \
+    3rd_party/Widgets/SearchWidget/SearchWidget.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
