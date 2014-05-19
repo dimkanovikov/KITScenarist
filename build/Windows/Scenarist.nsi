@@ -98,6 +98,7 @@ Section "App files section" SecFiles
   File "${pkgdir}\Qt5Sql.dll"
   File "${pkgdir}\Qt5Widgets.dll"
   File "${pkgdir}\Qt5Xml.dll"
+  File "${pkgdir}\hunspell.dll"
   File "${pkgdir}\Scenarist.exe"
 
   ;Create uninstaller
