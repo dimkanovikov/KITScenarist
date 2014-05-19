@@ -134,6 +134,11 @@ namespace UserInterface
 		 */
 		void aboutTextChanged();
 
+		/**
+		 * @brief Обработка изменения стиля текста
+		 */
+		void aboutStyleChanged();
+
 	private:
 		/**
 		 * @brief Настроить представление

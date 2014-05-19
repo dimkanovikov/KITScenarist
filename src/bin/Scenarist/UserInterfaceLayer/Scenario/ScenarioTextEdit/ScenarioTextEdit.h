@@ -82,6 +82,11 @@ namespace UserInterface
 		 */
 		void currentStyleChanged();
 
+		/**
+		 * @brief Изменён стиль блока
+		 */
+		void styleChanged();
+
 	protected:
 		/**
 		 * @brief Нажатия многих клавиш обрабатываются вручную

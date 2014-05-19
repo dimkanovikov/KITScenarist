@@ -148,6 +148,8 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 	}
 
 	cursor.endEditBlock();
+
+	emit styleChanged();
 }
 
 void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type _blockType)
@@ -171,6 +173,8 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type
 	cursor.setCharFormat(newBlockStyle.charFormat());
 
 	cursor.endEditBlock();
+
+	emit styleChanged();
 }
 
 ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType() const

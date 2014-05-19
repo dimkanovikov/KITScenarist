@@ -251,6 +251,11 @@ void ScenarioTextEditWidget::aboutTextChanged()
 	}
 }
 
+void ScenarioTextEditWidget::aboutStyleChanged()
+{
+	emit textChanged();
+}
+
 void ScenarioTextEditWidget::initView()
 {
 	m_textStyles->setSizePolicy(m_textStyles->sizePolicy().horizontalPolicy(), QSizePolicy::Preferred);
@@ -307,6 +312,7 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()), Qt::UniqueConnection);
+	connect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(zoomRangeChanged(int)), this, SIGNAL(zoomRangeChanged(int)), Qt::UniqueConnection);
 
 	m_editor->init();

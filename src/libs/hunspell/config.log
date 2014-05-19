@@ -874,7 +874,7 @@ configure:16755: result: yes
 configure:16755: checking for pthread.h
 configure:16755: result: yes
 configure:16783: gcc -o conftest -g -O2   conftest.c  >&5
-/tmp/ccPhdvyS.o: In function `main':
+/tmp/cc9it1ti.o: In function `main':
 /home/dimkanovikov/dev/dimkanovikov/desktop/github-projects/Scenarist/src/libs/hunspell/conftest.c:57: undefined reference to `pthread_mutexattr_init'
 collect2: ld returned 1 exit status
 configure:16783: $? = 1
