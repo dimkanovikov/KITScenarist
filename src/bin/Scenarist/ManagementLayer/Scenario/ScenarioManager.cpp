@@ -398,8 +398,13 @@ void ScenarioManager::initView()
 {
     m_viewEditorsTabs = new TabBar(m_view);
 	m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-	m_viewEditorsTabs->addTab(tr("Text"));
-    m_viewEditorsTabs->addTab(tr("Data"));
+
+	int tabIndex = -1;
+	tabIndex = m_viewEditorsTabs->addTab(tr("Text"));
+	m_viewEditorsTabs->setTabToolTip(tabIndex, tr("Edit Scenario Text"));
+
+	tabIndex = m_viewEditorsTabs->addTab(tr("Data"));
+	m_viewEditorsTabs->setTabToolTip(tabIndex, tr("Edit Scenario Data"));
 
 	m_viewEditorsToolbars = new QStackedWidget(m_view);
 	m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);

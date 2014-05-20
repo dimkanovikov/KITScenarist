@@ -748,12 +748,6 @@ void ApplicationManager::reloadApplicationSettings()
 			// Фон неактивного пункта меню
 			//
 			palette.setColor(QPalette::Light, QColor("#404040"));
-
-			//
-			// Для всплывающей подсказки приходится дублировать при помощи стиля,
-			// это баг стиля Fusion в Qt 5.2.1
-			//
-			styleSheet = "QToolTip { color: #EBEBEB; border: 1px solid palette(highlight); padding: 2px; }";
 		} else {
 			//
 			// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек
@@ -762,6 +756,11 @@ void ApplicationManager::reloadApplicationSettings()
 
 			palette.setColor(QPalette::Link, QColor("#2b78da"));
 		}
+
+		//
+		// Для всплывающей используем универсальный стиль
+		//
+		styleSheet = "QToolTip { color: palette(window-text); border: 1px solid palette(highlight); padding: 2px; background-color: palette(window) }";
 
 		//
 		// Применяем тему

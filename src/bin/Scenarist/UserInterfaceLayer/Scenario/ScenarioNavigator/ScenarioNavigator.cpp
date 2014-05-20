@@ -106,9 +106,13 @@ void ScenarioNavigator::initView()
 {
 	m_scenesCountTitle->setText(tr("Scenes:"));
 	m_scenesCount->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	m_scenesCount->setToolTip(tr("Scenes Count"));
 
 	m_addItem->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
+	m_addItem->setToolTip(tr("Add Scenario Item After Selected"));
+
 	m_removeItem->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
+	m_removeItem->setToolTip(tr("Remove Selected Scenario Item"));
 
 	m_endTitle->setFixedWidth(1);
 

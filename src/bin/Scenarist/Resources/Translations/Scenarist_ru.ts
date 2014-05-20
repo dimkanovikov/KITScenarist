@@ -283,14 +283,24 @@
 <context>
     <name>ManagementLayer::ScenarioManager</name>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="401"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="403"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="402"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="404"/>
+        <source>Edit Scenario Text</source>
+        <translation>Редактирование текста сценария</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="406"/>
         <source>Data</source>
         <translation>Инфо</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="407"/>
+        <source>Edit Scenario Data</source>
+        <translation>Редактирование информации о сценарии</translation>
     </message>
     <message>
         <source>Synopsis</source>
@@ -626,7 +636,7 @@ Paragraph</source>
         <translation>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Справка&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="314"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="317"/>
         <source>0.0.0</source>
         <translation></translation>
     </message>
@@ -647,7 +657,7 @@ Paragraph</source>
         <translation type="obsolete">&lt;a href=&quot;#&quot;&gt;Справка&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="298"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="301"/>
         <source>Scenarist</source>
         <translation>Сценарист</translation>
     </message>
@@ -667,6 +677,26 @@ Paragraph</source>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="97"/>
+        <source>Create New Character</source>
+        <translation>Создано нового персонажа</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="100"/>
+        <source>Edit Selected Character</source>
+        <translation>Изменить выбранного персонажа</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="103"/>
+        <source>Remove Selected Character</source>
+        <translation>Удалить выбранного персонажа</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="106"/>
+        <source>Find All Characters from Scenario</source>
+        <translation>Найти всех персонажей из сценария</translation>
+    </message>
 </context>
 <context>
     <name>UserInterface::LocationsDataEdit</name>
@@ -682,6 +712,26 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="92"/>
         <source>Locations</source>
         <translation>Локации</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="97"/>
+        <source>Create New Location</source>
+        <translation>Создать новую локацию</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="100"/>
+        <source>Edit Selected Location</source>
+        <translation>Изменить выбранную локацию</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="103"/>
+        <source>Remove Selected Location</source>
+        <translation>Удалить выбранную локацию</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="106"/>
+        <source>Find All Locations From Scenario</source>
+        <translation>Найти все локации из сценария</translation>
     </message>
 </context>
 <context>
@@ -780,6 +830,21 @@ Paragraph</source>
         <source>Scenes:</source>
         <translation>Сцен:</translation>
     </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="109"/>
+        <source>Scenes Count</source>
+        <translation>Количество сцен</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="112"/>
+        <source>Add Scenario Item After Selected</source>
+        <translation>Добавить элемент сценария после выделенного</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="115"/>
+        <source>Remove Selected Scenario Item</source>
+        <translation>Удалить выделенный элемент сценария</translation>
+    </message>
 </context>
 <context>
     <name>UserInterface::ScenarioSceneSynopsis</name>
@@ -792,64 +857,94 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioTextEditWidget</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="286"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="285"/>
+        <source>Current Text Block Style</source>
+        <translation>Стиль текущего блока текста</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="287"/>
         <source>Time and Place</source>
         <translation>Время и место</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="287"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="288"/>
         <source>Action</source>
         <translation>Описание действия</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="288"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="289"/>
         <source>Character</source>
         <translation>Персонаж</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="289"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="290"/>
         <source>Dialog</source>
         <translation>Реплика</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="290"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="291"/>
         <source>Parethentcial</source>
         <translation>Ремарка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="291"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="292"/>
         <source>Title</source>
         <translation>Титр</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="292"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="293"/>
         <source>Note</source>
         <translation>Примечание</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="293"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="294"/>
         <source>Transition</source>
         <translation>Переход</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="294"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="295"/>
         <source>Noprintable Text</source>
         <translation>Непечатный текст</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="295"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="296"/>
         <source>Scenes Group</source>
         <translation>Группа сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="296"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="297"/>
         <source>Folder</source>
         <translation>Папка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="308"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="300"/>
+        <source>Undo last action (Ctrl+Z)</source>
+        <translation>Отменить последнее действие (Ctrl+Z)</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="303"/>
+        <source>Redo last action (Shift+Ctrl+Z)</source>
+        <translation>Повторить последнее действие (Shift+Ctrl+Z)</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="306"/>
+        <source>Search text (Ctrl+F)</source>
+        <translation>Поиск текста (Ctrl+F)</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="311"/>
+        <source>Text Fast Format</source>
+        <translation>Быстрое форматирование текста</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="314"/>
         <source>Chron: </source>
         <translation>Хрон.:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="318"/>
+        <source>Duration from Start to Cursor Position | Full Duration</source>
+        <translation>Хронометраж от начала до текущей позиции курсора | Полный хронометраж сценария</translation>
     </message>
 </context>
 <context>

@@ -94,9 +94,16 @@ void CharactersNavigator::initView()
 	m_endTitle->setFixedWidth(1);
 
 	m_addCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
+	m_addCharacter->setToolTip(tr("Create New Character"));
+
 	m_editCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/edit.png"));
+	m_editCharacter->setToolTip(tr("Edit Selected Character"));
+
 	m_removeCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
+	m_removeCharacter->setToolTip(tr("Remove Selected Character"));
+
 	m_refreshCharacters->setIcon(QIcon(":/Graphics/Icons/Editing/refresh.png"));
+	m_refreshCharacters->setToolTip(tr("Find All Characters from Scenario"));
 
 	m_navigatorProxyModel->sort(0);
 

@@ -94,9 +94,16 @@ void LocationsNavigator::initView()
 	m_endTitle->setFixedWidth(1);
 
 	m_addLocation->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
+	m_addLocation->setToolTip(tr("Create New Location"));
+
 	m_editLocation->setIcon(QIcon(":/Graphics/Icons/Editing/edit.png"));
+	m_editLocation->setToolTip(tr("Edit Selected Location"));
+
 	m_removeLocation->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
+	m_removeLocation->setToolTip(tr("Remove Selected Location"));
+
 	m_refreshLocations->setIcon(QIcon(":/Graphics/Icons/Editing/refresh.png"));
+	m_refreshLocations->setToolTip(tr("Find All Locations From Scenario"));
 
 	m_navigatorProxyModel->sort(0);
 

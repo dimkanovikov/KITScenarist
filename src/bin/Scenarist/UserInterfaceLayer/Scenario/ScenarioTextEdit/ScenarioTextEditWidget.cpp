@@ -282,6 +282,7 @@ void ScenarioTextEditWidget::aboutStyleChanged()
 
 void ScenarioTextEditWidget::initView()
 {
+	m_textStyles->setToolTip(tr("Current Text Block Style"));
 	m_textStyles->setSizePolicy(m_textStyles->sizePolicy().horizontalPolicy(), QSizePolicy::Preferred);
 	m_textStyles->addItem(tr("Time and Place"), ScenarioTextBlockStyle::TimeAndPlace);
 	m_textStyles->addItem(tr("Action"), ScenarioTextBlockStyle::Action);
@@ -296,18 +297,25 @@ void ScenarioTextEditWidget::initView()
 	m_textStyles->addItem(tr("Folder"), ScenarioTextBlockStyle::FolderHeader);
 
 	m_undo->setIcon(QIcon(":/Graphics/Icons/Editing/undo.png"));
+	m_undo->setToolTip(tr("Undo last action (Ctrl+Z)"));
+
 	m_redo->setIcon(QIcon(":/Graphics/Icons/Editing/redo.png"));
+	m_redo->setToolTip(tr("Redo last action (Shift+Ctrl+Z)"));
 
 	m_search->setIcon(QIcon(":/Graphics/Icons/Editing/search.png"));
+	m_search->setToolTip(tr("Search text (Ctrl+F)"));
 	m_search->setCheckable(true);
 	m_search->setShortcut(QKeySequence("Ctrl+F"));
 
 	m_fastFormat->setIcon(QIcon(":/Graphics/Icons/Editing/format.png"));
+	m_fastFormat->setToolTip(tr("Text Fast Format"));
 	m_fastFormat->setCheckable(true);
 
 	m_durationTitle->setText(tr("Chron: "));
 	m_durationTitle->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	m_durationTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 
 	//
 	// К сожалению настройка не идеальна и пришлось подбирать в ручную
