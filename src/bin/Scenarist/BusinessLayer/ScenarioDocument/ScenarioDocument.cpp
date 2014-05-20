@@ -729,7 +729,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		itemType = ScenarioModelItem::Folder;
 	}
 	// ... текст
-	cursor.movePosition(QTextCursor::EndOfBlock);
+	cursor.movePosition(QTextCursor::NextBlock);
 	cursor.setPosition(_itemEndPos, QTextCursor::KeepAnchor);
 	QString itemText = cursor.selectedText().simplified();
 	// ... длительность
