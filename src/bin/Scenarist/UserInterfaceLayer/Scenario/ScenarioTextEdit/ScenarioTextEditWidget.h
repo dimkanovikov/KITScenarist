@@ -15,6 +15,7 @@ namespace BusinessLogic {
 namespace UserInterface
 {
 	class ScenarioTextEdit;
+	class ScenarioFastFormatWidget;
 
 
 	/**
@@ -102,6 +103,11 @@ namespace UserInterface
 		 * @brief Показать/скрыть поле поиска
 		 */
 		void aboutShowSearch();
+
+		/**
+		 * @brief Показать/скрыть виджет быстрого форматирования
+		 */
+		void aboutShowFastFormat();
 
 	signals:
 		/**
@@ -211,6 +217,11 @@ namespace UserInterface
 		 * @brief Виджет поиска
 		 */
 		SearchWidget* m_searchLine;
+
+		/**
+		 * @brief Виджет быстрого форматирования текста
+		 */
+		ScenarioFastFormatWidget* m_fastFormatWidget;
 
 		/**
 		 * @brief MD5-хэш текста сценария, используется для отслеживания изменённости текста

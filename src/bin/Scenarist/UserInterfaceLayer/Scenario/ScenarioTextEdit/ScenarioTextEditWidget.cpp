@@ -2,6 +2,7 @@
 
 #include "ScenarioTextEdit.h"
 #include "ScenarioTextEditHelpers.h"
+#include "ScenarioFastFormatWidget.h"
 
 #include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
 
@@ -48,7 +49,8 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_durationTitle(new QLabel(this)),
 	m_duration(new QLabel(this)),
 	m_editor(new ScenarioTextEdit(this)),
-	m_searchLine(new SearchWidget(this))
+	m_searchLine(new SearchWidget(this)),
+	m_fastFormatWidget(new ScenarioFastFormatWidget(this))
 {
 	initView();
 	initConnections();
@@ -218,6 +220,15 @@ void ScenarioTextEditWidget::aboutShowSearch()
 	}
 }
 
+void ScenarioTextEditWidget::aboutShowFastFormat()
+{
+	m_fastFormatWidget->setVisible(m_fastFormat->isChecked());
+	if (m_fastFormatWidget->isVisible()) {
+		m_fastFormatWidget->setFocus();
+		m_fastFormatWidget->selectCurrentBlock();
+	}
+}
+
 void ScenarioTextEditWidget::aboutUpdateTextStyle()
 {
 	ScenarioTextBlockStyle::Type currentType = m_editor->scenarioBlockType();
@@ -292,6 +303,7 @@ void ScenarioTextEditWidget::initView()
 	m_search->setShortcut(QKeySequence("Ctrl+F"));
 
 	m_fastFormat->setIcon(QIcon(":/Graphics/Icons/Editing/format.png"));
+	m_fastFormat->setCheckable(true);
 
 	m_durationTitle->setText(tr("Chron: "));
 	m_durationTitle->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -305,6 +317,9 @@ void ScenarioTextEditWidget::initView()
 	m_searchLine->setEditor(m_editor);
 	m_searchLine->hide();
 
+	m_fastFormatWidget->setEditor(m_editor);
+	m_fastFormatWidget->hide();
+
 	QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
@@ -316,12 +331,16 @@ void ScenarioTextEditWidget::initView()
 	topLayout->addWidget(m_durationTitle);
 	topLayout->addWidget(m_duration);
 
-	QVBoxLayout* layout = new QVBoxLayout;
+	QVBoxLayout* mainLayout = new QVBoxLayout;
+	mainLayout->addWidget(m_toolbar);
+	mainLayout->addWidget(m_editor);
+	mainLayout->addWidget(m_searchLine);
+
+	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
 	layout->setSpacing(0);
-	layout->addWidget(m_toolbar);
-	layout->addWidget(m_editor);
-	layout->addWidget(m_searchLine);
+	layout->addLayout(mainLayout);
+	layout->addWidget(m_fastFormatWidget);
 
 	setLayout(layout);
 }
@@ -332,6 +351,7 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_undo, SIGNAL(clicked()), this, SLOT(aboutUndo()), Qt::UniqueConnection);
 	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()), Qt::UniqueConnection);
 	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
+	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
 	connect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)), Qt::UniqueConnection);
 	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()), Qt::UniqueConnection);

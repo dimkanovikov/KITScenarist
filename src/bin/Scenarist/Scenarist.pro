@@ -157,7 +157,8 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.cpp \
     UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp \
 	3rd_party/Widgets/PagesTextEdit/PagesTextEdit.cpp \
-    3rd_party/Widgets/SearchWidget/SearchWidget.cpp
+    3rd_party/Widgets/SearchWidget/SearchWidget.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -291,7 +292,8 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.h \
     UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h \
 	3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h \
-    3rd_party/Widgets/SearchWidget/SearchWidget.h
+    3rd_party/Widgets/SearchWidget/SearchWidget.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
