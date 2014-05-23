@@ -30,6 +30,12 @@ namespace UserInterface
 				const QMap<QString, QString>& _recentFiles,
 				const QMap<QString, QString>& _recentFilesUsing);
 
+	public slots:
+		/**
+		 * @brief Обновить лого, в зависимости от установленной темы
+		 */
+		void aboutUpdateLogo(bool _isDarkTheme);
+
 	signals:
 		/**
 		 * @brief Нажата кнопка создать проект

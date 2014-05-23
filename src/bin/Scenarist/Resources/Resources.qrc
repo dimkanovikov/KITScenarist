@@ -51,4 +51,8 @@
         <file>UI/menuarrow.png</file>
         <file>UI/comboboxarrow.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>Images/logo-black.png</file>
+        <file>Images/logo-white.png</file>
+    </qresource>
 </RCC>

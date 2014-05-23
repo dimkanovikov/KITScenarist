@@ -767,6 +767,11 @@ void ApplicationManager::reloadApplicationSettings()
 		//
 		qApp->setPalette(palette);
 		qApp->setStyleSheet(styleSheet);
+
+		//
+		// Обновим лого
+		//
+		m_startUpManager->aboutUpdateLogo(useDarkTheme);
 	}
 
 	//

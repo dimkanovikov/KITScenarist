@@ -66,6 +66,11 @@ void StartUpView::setRecentFiles(
 	ui->recentFiles->setModel(newModel);
 }
 
+void StartUpView::aboutUpdateLogo(bool _isDarkTheme)
+{
+	ui->logo->setPixmap(QPixmap(_isDarkTheme ? ":/Images/logo-white.png" : ":/Images/logo-black.png"));
+}
+
 bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
 {
 	bool result = false;

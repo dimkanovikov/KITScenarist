@@ -30,6 +30,12 @@ namespace ManagementLayer
 		 */
 		void addRecentFile(const QString& _filePath, const QString& _projectName = QString());
 
+	public slots:
+		/**
+		 * @brief Обновить лого, в зависимости от установленной темы
+		 */
+		void aboutUpdateLogo(bool _isDarkTheme);
+
 	signals:
 		/**
 		 * @brief Создать проект

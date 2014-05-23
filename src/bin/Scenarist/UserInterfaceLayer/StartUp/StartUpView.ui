@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>530</width>
-    <height>333</height>
+    <width>612</width>
+    <height>375</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -87,7 +87,7 @@
         </size>
        </property>
        <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
+        <enum>QFrame::NoFrame</enum>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
@@ -105,7 +105,7 @@
         <property name="verticalSpacing">
          <number>1</number>
         </property>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QWidget" name="widget" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -130,7 +130,7 @@
             <number>20</number>
            </property>
            <property name="topMargin">
-            <number>40</number>
+            <number>0</number>
            </property>
            <item row="1" column="0">
             <spacer name="verticalSpacer">
@@ -266,7 +266,7 @@
           </layout>
          </widget>
         </item>
-        <item row="1" column="1">
+        <item row="2" column="1">
          <widget class="QListView" name="recentFiles">
           <property name="cursor" stdset="0">
            <cursorShape>PointingHandCursor</cursorShape>
@@ -298,7 +298,10 @@
              </font>
             </property>
             <property name="text">
-             <string>Scenarist</string>
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../../Resources/Resources.qrc">:/Images/logo-black.png</pixmap>
             </property>
            </widget>
           </item>
@@ -328,6 +331,22 @@
            </widget>
           </item>
          </layout>
+        </item>
+        <item row="1" column="0">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>26</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
