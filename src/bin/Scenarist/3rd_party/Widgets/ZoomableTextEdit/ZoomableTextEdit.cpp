@@ -24,7 +24,21 @@ void ZoomableTextEdit::setZoomRange(int _zoomRange)
 	//
 	// Масштабируем с новым коэффициентом
 	//
-	zoomIn(m_zoomRange);
+	{
+		//
+		// ... шрифт
+		//
+		zoomIn(m_zoomRange);
+
+		//
+		// ... размер страницы
+		//
+
+
+		//
+		// ...
+		//
+	}
 
 	//
 	// Уведомляем о том, что коэффициент изменился

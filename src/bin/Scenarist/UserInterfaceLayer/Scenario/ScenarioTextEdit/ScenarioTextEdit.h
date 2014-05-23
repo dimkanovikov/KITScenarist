@@ -108,12 +108,6 @@ namespace UserInterface
 		void insertFromMimeData(const QMimeData* _source);
 		/** @} */
 
-    private slots:
-        /**
-         * @brief Обновить стили отображения всех блоков
-         */
-        void aboutUpdateBlocksFormats();
-
 	private:
 		/**
 		 * @brief Очистить текущий блок от установленного в нём типа

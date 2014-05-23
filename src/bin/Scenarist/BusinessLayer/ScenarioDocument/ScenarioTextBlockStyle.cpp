@@ -4,6 +4,8 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <3rd_party/Widgets/PagesTextEdit/PageMetrics.h>
+
 #include <QFontMetrics>
 #include <QTextBlock>
 
@@ -54,10 +56,9 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const Q
 					));
 
 	//
-	// Метрика, для высчитывания отступов
+	// Метрика, для высчитывания межстрочных отступов
 	//
 	const QFontMetrics pageFontMetrics(_font);
-	const int charWidth = pageFontMetrics.width("W");
 	const int lineHeight = pageFontMetrics.lineSpacing();
 
 	//
@@ -77,14 +78,14 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const Q
 
 		case Character: {
 			m_pimpl->blockFormat.setTopMargin(lineHeight);
-			m_pimpl->blockFormat.setLeftMargin(27 * charWidth);
+			m_pimpl->blockFormat.setLeftMargin(PageMetrics::mmToPx(67.5));
 			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
 			break;
 		}
 
 		case Parenthetical: {
-			m_pimpl->blockFormat.setLeftMargin(22 * charWidth);
-			m_pimpl->blockFormat.setRightMargin(17 * charWidth);
+			m_pimpl->blockFormat.setLeftMargin(PageMetrics::mmToPx(55));
+			m_pimpl->blockFormat.setRightMargin(PageMetrics::mmToPx(45));
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase, false);
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyPrefix, "(");
 			m_pimpl->charFormat.setProperty(ScenarioTextBlockStyle::PropertyPostfix, ")");
@@ -92,8 +93,8 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const Q
 		}
 
 		case Dialog: {
-			m_pimpl->blockFormat.setLeftMargin(15 * charWidth);
-			m_pimpl->blockFormat.setRightMargin(15 * charWidth);
+			m_pimpl->blockFormat.setLeftMargin(PageMetrics::mmToPx(37.5));
+			m_pimpl->blockFormat.setRightMargin(PageMetrics::mmToPx(37.5));
 			break;
 		}
 
@@ -119,8 +120,8 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const Q
 
 		case Title: {
             m_pimpl->blockFormat.setTopMargin(lineHeight);
-			m_pimpl->blockFormat.setLeftMargin(22 * charWidth);
-			m_pimpl->blockFormat.setRightMargin(17 * charWidth);
+			m_pimpl->blockFormat.setLeftMargin(PageMetrics::mmToPx(55));
+			m_pimpl->blockFormat.setRightMargin(PageMetrics::mmToPx(45));
 			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeaderType,
 											 ScenarioTextBlockStyle::TitleHeader);
 			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeader,
@@ -130,7 +131,7 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const Q
 
 		case NoprintableText: {
 			m_pimpl->blockFormat.setTopMargin(lineHeight);
-			m_pimpl->blockFormat.setLeftMargin(27 * charWidth);
+			m_pimpl->blockFormat.setLeftMargin(PageMetrics::mmToPx(67.5));
 			m_pimpl->charFormat.setForeground(
 						QColor(
 							DataStorageLayer::StorageFacade::settingsStorage()->value(

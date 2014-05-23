@@ -84,6 +84,12 @@ void ScenarioTextEditWidget::setDuration(const QString& _duration)
 
 void ScenarioTextEditWidget::setUsePageView(bool _use)
 {
+	QMarginsF pageMargins(5, 5, 5, 5);
+	if (_use) {
+		pageMargins = QMarginsF(37.5, 25, 25, 12.5);
+	}
+
+	m_editor->setPageMargins(pageMargins);
 	m_editor->setUsePageMode(_use);
 }
 
@@ -283,31 +289,6 @@ void ScenarioTextEditWidget::aboutStyleChanged()
 	emit textChanged();
 }
 
-namespace {
-	static void addItem(const QString& _name, const QString& _shortcut, int _type,
-						QStandardItemModel* _model) {
-		QList<QStandardItem*> items;
-
-		//
-		// Элемент первой колонки
-		//
-		QStandardItem* typeItem = new QStandardItem(_name);
-		typeItem->setData(_type, Qt::UserRole);
-		items.append(typeItem);
-
-		//
-		// Элемент второй колонки
-		//
-		QStandardItem* shortcutItem = new QStandardItem(_shortcut);
-		items.append(shortcutItem);
-
-		//
-		// Добавление в модель
-		//
-		_model->appendRow(items);
-	}
-}
-
 void ScenarioTextEditWidget::initView()
 {
 	m_textStyles->setToolTip(tr("Current Text Block Style"));
@@ -370,7 +351,7 @@ void ScenarioTextEditWidget::initView()
 	//
 	// К сожалению настройка не идеальна и пришлось подбирать в ручную
 	//
-	m_editor->setPageSize(60, 50);
+	m_editor->setPageFormat(QPageSize::A4);
 
 	m_searchLine->setEditor(m_editor);
 	m_searchLine->hide();

@@ -27,7 +27,7 @@ uname -v = #74~precise1-Ubuntu SMP Fri May 2 21:32:31 UTC 2014
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
 
-PATH: /home/dimkanovikov/Qt/5.2/5.2.1/gcc_64/bin
+PATH: /home/dimkanovikov/Qt/5.3/5.3/gcc_64/bin
 PATH: /usr/bin
 PATH: /usr/lib/lightdm/lightdm
 PATH: /usr/local/sbin
@@ -874,7 +874,7 @@ configure:16755: result: yes
 configure:16755: checking for pthread.h
 configure:16755: result: yes
 configure:16783: gcc -o conftest -g -O2   conftest.c  >&5
-/tmp/ccqYjlOH.o: In function `main':
+/tmp/ccNRHdWG.o: In function `main':
 /home/dimkanovikov/dev/dimkanovikov/desktop/github-projects/Scenarist/src/libs/hunspell/conftest.c:57: undefined reference to `pthread_mutexattr_init'
 collect2: ld returned 1 exit status
 configure:16783: $? = 1

@@ -366,23 +366,6 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
     cursor.endEditBlock();
 }
 
-void ScenarioTextEdit::aboutUpdateBlocksFormats()
-{
-	QTextCursor cursor(document());
-
-    cursor.beginEditBlock();
-
-    while (!cursor.atEnd()) {
-        ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
-        ScenarioTextBlockStyle currentStyle(currentType, cursor.charFormat().font());
-        cursor.setBlockFormat(currentStyle.blockFormat());
-        cursor.movePosition(QTextCursor::EndOfBlock);
-        cursor.movePosition(QTextCursor::NextBlock);
-    }
-
-    cursor.endEditBlock();
-}
-
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 {
 	QTextCursor cursor = textCursor();
@@ -774,9 +757,4 @@ void ScenarioTextEdit::initConnections()
 	// При перемещении курсора может меняться стиль блока
 	//
 	connect(this, SIGNAL(cursorPositionChanged()), this, SIGNAL(currentStyleChanged()), Qt::UniqueConnection);
-
-    //
-    // При изменении масштаба, нужно обновить стили отображения, чтобы учесть размер шрифта
-    //
-	connect(this, SIGNAL(zoomRangeChanged(int)), this, SLOT(aboutUpdateBlocksFormats()), Qt::UniqueConnection);
 }
