@@ -672,6 +672,14 @@ Paragraph</source>
     </message>
 </context>
 <context>
+    <name>UserInterface::ApplicationView</name>
+    <message>
+        <location filename="../../UserInterfaceLayer/ApplicationView.cpp" line="13"/>
+        <source>Scenarist</source>
+        <translation>Сценарист</translation>
+    </message>
+</context>
+<context>
     <name>UserInterface::CharactersDataEdit</name>
     <message>
         <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp" line="30"/>

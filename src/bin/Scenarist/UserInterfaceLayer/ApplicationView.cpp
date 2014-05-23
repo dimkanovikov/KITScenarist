@@ -1,6 +1,7 @@
 #include "ApplicationView.h"
 
 #include <QCloseEvent>
+#include <QIcon>
 
 using UserInterface::ApplicationView;
 
@@ -8,6 +9,8 @@ using UserInterface::ApplicationView;
 ApplicationView::ApplicationView(QWidget *_parent) :
 	QWidget(_parent)
 {
+	setWindowIcon(QIcon(":/Graphics/Icons/logo.png"));
+	setWindowTitle(tr("Scenarist"));
 }
 
 void ApplicationView::closeEvent(QCloseEvent* _event)

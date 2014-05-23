@@ -97,7 +97,7 @@
          <number>40</number>
         </property>
         <property name="topMargin">
-         <number>30</number>
+         <number>16</number>
         </property>
         <property name="rightMargin">
          <number>20</number>
@@ -317,7 +317,7 @@
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../Resources/Resources.qrc">:/Images/logo-black.png</pixmap>
+             <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Images/logo-black.png</pixmap>
             </property>
            </widget>
           </item>

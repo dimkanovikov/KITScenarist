@@ -40,6 +40,9 @@
         <file>Icons/Editing/red_cross.png</file>
         <file>Icons/Editing/search.png</file>
         <file>Icons/Editing/format.png</file>
+        <file>Icons/logo.png</file>
+        <file>Images/logo-black.png</file>
+        <file>Images/logo-white.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
@@ -50,9 +53,5 @@
         <file>UI/style.qss</file>
         <file>UI/menuarrow.png</file>
         <file>UI/comboboxarrow.png</file>
-    </qresource>
-    <qresource prefix="/">
-        <file>Images/logo-black.png</file>
-        <file>Images/logo-white.png</file>
     </qresource>
 </RCC>
