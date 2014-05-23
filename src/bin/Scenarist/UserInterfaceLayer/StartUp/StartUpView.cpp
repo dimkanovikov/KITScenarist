@@ -66,9 +66,15 @@ void StartUpView::setRecentFiles(
 	ui->recentFiles->setModel(newModel);
 }
 
-void StartUpView::aboutUpdateLogo(bool _isDarkTheme)
+void StartUpView::updateLogo(bool _isDarkTheme)
 {
 	ui->logo->setPixmap(QPixmap(_isDarkTheme ? ":/Images/logo-white.png" : ":/Images/logo-black.png"));
+}
+
+void StartUpView::setUpdateInfo(const QString& _updateInfo)
+{
+	ui->updateInfo->setText(_updateInfo);
+	ui->updateInfo->show();
 }
 
 bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
@@ -116,6 +122,8 @@ void StartUpView::aboutOpenRecentFileClicked()
 void StartUpView::initView()
 {
     ui->version->setText(QApplication::applicationVersion());
+
+	ui->updateInfo->hide();
 
 	ui->recentFiles->setItemDelegate(new RecentFilesDelegate(ui->recentFiles));
 	ui->recentFiles->setMouseTracking(true);

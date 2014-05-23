@@ -9,6 +9,8 @@ namespace UserInterface {
 	class StartUpView;
 }
 
+class QNetworkReply;
+
 
 namespace ManagementLayer
 {
@@ -63,6 +65,11 @@ namespace ManagementLayer
 		 */
 		void aboutOpenRecentProjectRequested(const QString& _filePath);
 
+		/**
+		 * @brief Загрузилась страница с информацией об обновлениях
+		 */
+		void aboutLoadUpdatesInfo(QNetworkReply* _reply);
+
 	private:
 		/**
 		 * @brief Загрузить данные
@@ -78,6 +85,11 @@ namespace ManagementLayer
 		 * @brief Настроить соединения
 		 */
 		void initConnections();
+
+		/**
+		 * @brief Проверить наличие новой версии
+		 */
+		void checkNewVersion();
 
 	private:
 		/**

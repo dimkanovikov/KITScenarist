@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql xml widgets printsupport
+QT       += core gui sql xml widgets printsupport network
 
 TARGET = Scenarist
 TEMPLATE = app

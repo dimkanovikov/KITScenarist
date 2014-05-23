@@ -5,10 +5,15 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <QApplication>
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
 
 using ManagementLayer::StartUpManager;
 using UserInterface::StartUpView;
@@ -27,6 +32,8 @@ StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	initData();
 	initView();
 	initConnections();
+
+	checkNewVersion();
 }
 
 StartUpManager::~StartUpManager()
@@ -92,7 +99,7 @@ void StartUpManager::addRecentFile(const QString& _filePath, const QString& _pro
 
 void StartUpManager::aboutUpdateLogo(bool _isDarkTheme)
 {
-	m_view->aboutUpdateLogo(_isDarkTheme);
+	m_view->updateLogo(_isDarkTheme);
 }
 
 void StartUpManager::aboutOpenRecentProjectRequested(const QString& _filePath)
@@ -130,6 +137,48 @@ void StartUpManager::aboutOpenRecentProjectRequested(const QString& _filePath)
 	}
 }
 
+void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
+{
+	if (_reply != 0) {
+		QString updatesPageData = _reply->readAll().simplified();
+
+		//
+		// Извлекаем все версии и формируем ссылку на последнюю из них
+		//
+		QRegularExpression rx_updateFiner("scenarist-setup-(\\d+.\\d+.\\d+).exe");
+		QRegularExpressionMatch match = rx_updateFiner.match(updatesPageData);
+		QList<QString> versions;
+		while (match.hasMatch()) {
+			versions.append(match.captured(1));
+			match = rx_updateFiner.match(updatesPageData, match.capturedEnd(1));
+		}
+
+		//
+		// Сортируем
+		//
+		qSort(versions);
+
+		//
+		// Извлекаем последнюю версию
+		//
+		QString maxVersion = versions.last();
+
+		//
+		// Если она больше текущей версии программы, выводим информацию
+		//
+		if (QApplication::applicationVersion() < maxVersion) {
+			QString updateInfo =
+					tr("Released version %1 "
+					   "<a href=\"http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe\" "
+					   "style=\"color:#2b78da;\">download</a> "
+					   "or <a href=\"http://dimkanovikov.pro/kit/scenarist/news.html\" "
+					   "style=\"color:#2b78da;\">read more</a>.")
+					.arg(maxVersion);
+			m_view->setUpdateInfo(updateInfo);
+		}
+	}
+}
+
 void StartUpManager::initData()
 {
 	m_recentFiles =
@@ -157,4 +206,13 @@ void StartUpManager::initConnections()
 
 	connect(m_view, SIGNAL(openRecentProjectClicked(QString)),
 			this, SLOT(aboutOpenRecentProjectRequested(QString)));
+}
+
+void StartUpManager::checkNewVersion()
+{
+	QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+	connect(manager, SIGNAL(finished(QNetworkReply*)),
+			this, SLOT(aboutLoadUpdatesInfo(QNetworkReply*)));
+
+	manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/downloads/")));
 }
