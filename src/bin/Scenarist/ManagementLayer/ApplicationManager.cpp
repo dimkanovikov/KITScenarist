@@ -527,11 +527,6 @@ void ApplicationManager::saveCurrentProjectInRecent()
 void ApplicationManager::goToEditCurrentProject()
 {
 	//
-	// Перейти на вкладку редактирования сценария
-	//
-	m_tabs->setCurrent(1);
-
-	//
 	// Активируем вкладки
 	//
 	::enableActionsOnProjectOpen();
@@ -554,6 +549,11 @@ void ApplicationManager::goToEditCurrentProject()
 	// Добавим проект к недавно используемым
 	//
 	saveCurrentProjectInRecent();
+
+	//
+	// Перейти на вкладку редактирования сценария
+	//
+	m_tabs->setCurrent(1);
 }
 
 void ApplicationManager::initView()
@@ -742,8 +742,6 @@ void ApplicationManager::reloadApplicationSettings()
 			palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#a1a1a1"));
 
 			palette.setColor(QPalette::Link, QColor("#2b78da"));
-
-			palette.setColor(QPalette::ToolTipText, QColor("#EBEBEB"));
 
 			//
 			// Фон неактивного пункта меню

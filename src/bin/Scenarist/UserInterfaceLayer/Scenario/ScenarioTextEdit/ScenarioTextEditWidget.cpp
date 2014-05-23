@@ -106,6 +106,7 @@ void ScenarioTextEditWidget::setSpellCheckLanguage(int _language)
 void ScenarioTextEditWidget::setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor)
 {
 	m_editor->viewport()->setStyleSheet(QString("color: %1; background-color: %2;").arg(_textColor.name(), _backgroundColor.name()));
+	m_editor->setStyleSheet(QString("color: %1;").arg(_textColor.name()));
 }
 
 void ScenarioTextEditWidget::setTextEditZoomRange(int _zoomRange)

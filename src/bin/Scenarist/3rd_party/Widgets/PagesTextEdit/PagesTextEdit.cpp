@@ -11,7 +11,7 @@
 PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	QTextEdit(parent),
 	m_usePageMode(false),
-	m_zoomRange(0)
+	m_zoomRange(1)
 {
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 }
@@ -101,7 +101,7 @@ void PagesTextEdit::paintEvent(QPaintEvent* _event)
 
 void PagesTextEdit::resetZoom()
 {
-//	privateZoomIn(m_zoomRange);
+	setZoomRange(1);
 }
 
 void PagesTextEdit::wheelEvent(QWheelEvent* _event)
@@ -127,7 +127,7 @@ void PagesTextEdit::updateInnerGeometry()
 	//
 	// Формируем параметры отображения
 	//
-	QSizeF documentSize(width() + verticalScrollBar()->width(), -1);
+	QSizeF documentSize(width() - verticalScrollBar()->width(), -1);
 	QMargins viewportMargins;
 	QMarginsF rootFrameMargins = m_pageMetrics.pxPageMargins();
 
@@ -188,10 +188,10 @@ void PagesTextEdit::updateVerticalScrollRange()
 	// В постраничном режиме показываем страницу целиком
 	//
 	if (m_usePageMode) {
-		verticalScrollBar()->setRange(
-					0,
-					m_pageMetrics.pxPageSize().height() * document()->pageCount()
-					- viewport()->size().height());
+		int maximumValue = m_pageMetrics.pxPageSize().height() * document()->pageCount() - viewport()->size().height();
+		if (verticalScrollBar()->maximum() != maximumValue) {
+			verticalScrollBar()->setRange(0, maximumValue);
+		}
 	}
 	//
 	// В обычном режиме просто добавляем немного дополнительной прокрутки для удобства
@@ -249,7 +249,7 @@ void PagesTextEdit::paintPagesView()
 			// ... левая
 			p.drawLine(0, curHeight-pageHeight, 0, curHeight-8);
 			// ... правая
-			p.drawLine(pageWidth-1, curHeight-pageHeight, pageWidth-1, curHeight-8);
+			p.drawLine(pageWidth, curHeight-pageHeight, pageWidth, curHeight-8);
 
 			curHeight += pageHeight;
 		}
@@ -265,7 +265,7 @@ void PagesTextEdit::paintPagesView()
 			// ... левая
 			p.drawLine(0, curHeight-pageHeight, 0, height());
 			// ... правая
-			p.drawLine(pageWidth-1, curHeight-pageHeight, pageWidth-1, height());
+			p.drawLine(pageWidth, curHeight-pageHeight, pageWidth, height());
 		}
 	}
 }
@@ -276,7 +276,7 @@ namespace {
 	 */
 	static qreal pixelsToPoints(const QPaintDevice* _device, qreal _pixels)
 	{
-		return _pixels * (qreal)72 / (qreal)_device->logicalDpiX();
+		return _pixels * (qreal)72 / (qreal)_device->logicalDpiY();
 	}
 
 	/**
@@ -340,6 +340,7 @@ void PagesTextEdit::privateZoomIn(qreal _range)
 		if (blockFormat.bottomMargin() > 0) {
 			blockFormat.setBottomMargin(scale(blockFormat.bottomMargin(), _range));
 		}
+		cursor.mergeBlockFormat(blockFormat);
 
 		//
 		// Переходим к следующему блоку

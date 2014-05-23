@@ -55,6 +55,8 @@ void ScenarioTextEdit::init()
 
 void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 {
+	resetZoom();
+
 	m_document = _document;
 	initDocument(m_document);
 	setDocument(m_document);
@@ -64,7 +66,6 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 	}
 
 	resetHighlighter();
-	resetZoom();
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
@@ -264,17 +265,17 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 	// к некорректной прорисовке текста, это баг Qt...
 	// Поэтому приходится отлавливать этот момент и вручную корректировать
 	//
-	QTextCursor cursor(document());
-	if (verticalScrollBar()->value() == 0
-		&& document() != 0
-		&& !document()->isEmpty()
-		&& cursorRect(cursor).top() > 30) {
-		cursor.beginEditBlock();
-		cursor.setBlockFormat(cursor.blockFormat());
-		cursor.movePosition(QTextCursor::End);
-		cursor.setBlockFormat(cursor.blockFormat());
-		cursor.endEditBlock();
-	}
+//	QTextCursor cursor(document());
+//	if (verticalScrollBar()->value() == 0
+//		&& document() != 0
+//		&& !document()->isEmpty()
+//		&& cursorRect(cursor).top() > 30) {
+//		cursor.beginEditBlock();
+//		cursor.setBlockFormat(cursor.blockFormat());
+//		cursor.movePosition(QTextCursor::End);
+//		cursor.setBlockFormat(cursor.blockFormat());
+//		cursor.endEditBlock();
+//	}
 
 	CompletableTextEdit::paintEvent(_event);
 }

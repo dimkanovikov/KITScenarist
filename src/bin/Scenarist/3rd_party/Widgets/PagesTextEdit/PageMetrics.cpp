@@ -59,7 +59,7 @@ QSizeF PageMetrics::mmPageSize() const
 
 QMarginsF PageMetrics::mmPageMargins() const
 {
-	return m_mmPageMargins * m_zoomRange;
+	return m_mmPageMargins;
 }
 
 QSizeF PageMetrics::pxPageSize() const

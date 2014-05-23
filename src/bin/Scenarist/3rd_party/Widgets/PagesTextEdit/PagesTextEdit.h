@@ -52,7 +52,7 @@ protected:
 	void paintEvent(QPaintEvent* _event);
 
 	/**
-	 * @brief Возобновить масштабирование
+	 * @brief Сбросить масштабирование
 	 */
 	void resetZoom();
 
