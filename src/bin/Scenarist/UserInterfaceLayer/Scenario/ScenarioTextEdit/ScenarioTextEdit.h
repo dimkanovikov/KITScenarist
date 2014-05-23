@@ -128,9 +128,12 @@ namespace UserInterface
 
 
 		/**
-		 * @brief Изменить регистр текста, если это необходимо
+		 * @brief Скорректировать введённый текст
+		 *
+		 * - изменить регистр текста, если это необходимо
+		 * - убрать лишние пробелы
 		 */
-		void makeTextUpper(QKeyEvent* _event);
+		void updateEnteredText(QKeyEvent* _event);
 
 		/**
 		 * @brief Оканчивается ли строка сокращением

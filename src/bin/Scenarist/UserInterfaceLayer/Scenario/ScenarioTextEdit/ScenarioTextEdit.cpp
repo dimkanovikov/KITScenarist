@@ -232,7 +232,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	if (handler->needSendEventToBaseClass()) {
 		SpellCheckTextEdit::keyPressEvent(_event);
-		makeTextUpper(_event);
+		updateEnteredText(_event);
 	}
 
 	//
@@ -618,7 +618,7 @@ void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioTextBlockStyle
 	}
 }
 
-void ScenarioTextEdit::makeTextUpper(QKeyEvent* _event)
+void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 {
 	//
 	// Получим значения
@@ -697,6 +697,13 @@ void ScenarioTextEdit::makeTextUpper(QKeyEvent* _event)
 				//
 				cursor.insertText(correctedText);
 				setTextCursor(cursor);
+			}
+
+			//
+			// Если была попытка ввести несколько пробелов подряд, отменяем последнее действие
+			//
+			if (cursorBackwardText.endsWith("  ")) {
+				cursor.deletePreviousChar();
 			}
 		}
 	}
