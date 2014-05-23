@@ -85,15 +85,16 @@ Section "App files section" SecFiles
   File "${pkgdir}\sqldrivers\qsqlite.dll"
 
   SetOutPath "$INSTDIR"
-  File "${pkgdir}\icudt51.dll"
-  File "${pkgdir}\icuin51.dll"
-  File "${pkgdir}\icuuc51.dll"
+  File "${pkgdir}\icudt52.dll"
+  File "${pkgdir}\icuin52.dll"
+  File "${pkgdir}\icuuc52.dll"
   File "${pkgdir}\libgcc_s_dw2-1.dll"
   File "${pkgdir}\libstdc++-6.dll"
   File "${pkgdir}\libwinpthread-1.dll"
-  File "${pkgdir}\mingwm10.dll"
+  ;File "${pkgdir}\mingwm10.dll"
   File "${pkgdir}\Qt5Core.dll"
   File "${pkgdir}\Qt5Gui.dll"
+  File "${pkgdir}\Qt5Network.dll"
   File "${pkgdir}\Qt5PrintSupport.dll"
   File "${pkgdir}\Qt5Sql.dll"
   File "${pkgdir}\Qt5Widgets.dll"
@@ -106,6 +107,9 @@ Section "App files section" SecFiles
   
   ; Регистрируем ассоциации 
   ${registerExtension} "$INSTDIR\Scenarist.exe" ".kitsp" "Проект сценария"
+  
+  ; Обновляем эксплорер
+  System::Call 'Shell32::SHChangeNotify(i 0x8000000, i 0, i 0, i 0)'
 
 SectionEnd
 
@@ -121,6 +125,7 @@ SectionEnd
 Section "Desctop Shortcut"
 
   CreateShortcut "$DESKTOP\Scenarist.lnk" "$INSTDIR\Scenarist.exe" "" "$INSTDIR\Scenarist.exe" 0
+  
 SectionEnd
 
 ;--------------------------------
