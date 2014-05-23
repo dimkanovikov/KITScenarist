@@ -729,6 +729,7 @@ void ApplicationManager::reloadApplicationSettings()
 			palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
 
 			palette.setColor(QPalette::Highlight, QColor(142,45,197));
+			palette.setColor(QPalette::HighlightedText, QColor(255,255,255));
 
 			palette.setColor(QPalette::WindowText, QColor("#EBEBEB"));
 			palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#a1a1a1"));
@@ -753,6 +754,8 @@ void ApplicationManager::reloadApplicationSettings()
 			// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек
 			//
 			palette = QStyleFactory::create("Fusion")->standardPalette();
+
+			palette.setColor(QPalette::HighlightedText, QColor(255,255,255));
 
 			palette.setColor(QPalette::Link, QColor("#2b78da"));
 		}

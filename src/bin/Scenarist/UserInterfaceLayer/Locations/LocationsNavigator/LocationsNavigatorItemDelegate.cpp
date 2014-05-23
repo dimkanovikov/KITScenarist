@@ -74,7 +74,13 @@ void LocationsNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOptio
 		}
 	}
 
+	//
+	// Устанавливаем палитру виджету и всем его детям
+	//
 	m_itemWidget->setPalette(palette);
+	foreach (QWidget* itemChild, m_itemWidget->findChildren<QWidget*>()) {
+		itemChild->setPalette(palette);
+	}
 
 	//
 	// Отрисовываем виджет
