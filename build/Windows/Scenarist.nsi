@@ -57,7 +57,7 @@ Section "App files section" SecFiles
 
   ; Добавление программы в список установленных программ системы
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "DisplayName" "Сценарист"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "DisplayIcon" "$INSTDIR\Scenarist.exe"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "DisplayIcon" "$INSTDIR\logo.ico"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "UninstallString" "$INSTDIR\Uninstall.exe"
   
   ; Исполняемые файлы и плагины
@@ -101,12 +101,13 @@ Section "App files section" SecFiles
   File "${pkgdir}\Qt5Xml.dll"
   File "${pkgdir}\hunspell.dll"
   File "${pkgdir}\Scenarist.exe"
+  File "${pkgdir}\logo.ico"
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
   ; Регистрируем ассоциации 
-  ${registerExtension} "$INSTDIR\Scenarist.exe" ".kitsp" "Проект сценария"
+  ${registerExtension} "$INSTDIR\logo.ico" ".kitsp" "Проект сценария"
   
   ; Обновляем эксплорер
   System::Call 'Shell32::SHChangeNotify(i 0x8000000, i 0, i 0, i 0)'
@@ -144,6 +145,7 @@ Section "Uninstall"
   Delete "$INSTDIR\sqldrivers\*.*"
   Delete "$INSTDIR\*.dll"
   Delete "$INSTDIR\*.exe"
+  Delete "$INSTDIR\*.ico"
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\KIT\Scenarist\*.*"
