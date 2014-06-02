@@ -12,10 +12,10 @@
 using namespace BusinessLogic;
 
 
-ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType, const QFont& _font) :
+ScenarioTextBlockStyle::ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType) :
 	m_pimpl(new ScenarioTextBlockStylePrivate(ScenarioTextBlockStyle::Undefined))
 {
-	setType(_blockType, _font);
+	setType(_blockType);
 }
 
 ScenarioTextBlockStyle::~ScenarioTextBlockStyle()
@@ -32,7 +32,7 @@ ScenarioTextBlockStyle::Type ScenarioTextBlockStyle::forBlock(const QTextBlock& 
 	return blockType;
 }
 
-void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const QFont& _font)
+void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 {
 	m_pimpl->blockType = _type;
 
@@ -56,9 +56,12 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const Q
 					));
 
 	//
-	// Метрика, для высчитывания межстрочных отступов
+	// Шрифт
 	//
-	const QFontMetrics pageFontMetrics(_font);
+	QFont font = blockFont();
+	m_pimpl->charFormat.setFont(font);
+	// ... метрика, для высчитывания межстрочных отступов
+	const QFontMetrics pageFontMetrics(font);
 	const int lineHeight = pageFontMetrics.lineSpacing();
 
 	//
@@ -171,6 +174,77 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type, const Q
 			break;
 		}
 	}
+}
+
+QFont ScenarioTextBlockStyle::blockFont() const
+{
+	//
+	// Настройки шрифта блока берутся из настроек, в зависимости от типа
+	//
+	switch (blockType()) {
+		case TimeAndPlace: {
+			break;
+		}
+
+		case Action: {
+			break;
+		}
+
+		case Character: {
+			break;
+		}
+
+		case Parenthetical: {
+			break;
+		}
+
+		case Dialog: {
+			break;
+		}
+
+		case Transition: {
+			break;
+		}
+
+		case Note: {
+			break;
+		}
+
+		case TitleHeader: {
+			break;
+		}
+
+		case Title: {
+			break;
+		}
+
+		case NoprintableText: {
+			break;
+		}
+
+		case SceneGroupHeader:
+		case SceneGroupFooter: {
+			break;
+		}
+
+		case FolderHeader:
+		case FolderFooter: {
+			break;
+		}
+
+		default: {
+			break;
+		}
+	}
+
+//	DataStorageLayer::StorageFacade::settingsStorage()->value(
+//		"scenario-editor/nonprintable-text-color",
+//		DataStorageLayer::SettingsStorage::ApplicationSettings);
+
+	//
+	// TODO: настройки шрифта
+	//
+	return QFont("Courier New", 12);
 }
 
 ScenarioTextBlockStyle::Type ScenarioTextBlockStyle::blockType() const

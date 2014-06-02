@@ -31,11 +31,6 @@ namespace UserInterface
 				const QMap<QString, QString>& _recentFilesUsing);
 
 		/**
-		 * @brief Обновить лого, в зависимости от установленной темы
-		 */
-		void updateLogo(bool _isDarkTheme);
-
-		/**
 		 * @brief Обновить информацию о доступности обновлений
 		 */
 		void setUpdateInfo(const QString& _updateInfo);

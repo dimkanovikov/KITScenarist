@@ -23,24 +23,12 @@
 using UserInterface::ScenarioTextEdit;
 using namespace BusinessLogic;
 
-namespace BusinessLogic {
-	/**
-	 * Параметры стиля страницы
-	 */
-	/** @{ */
-	const int PAGE_FONT_SIZE = 12;
-	const QFont PAGE_FONT("Courier New", PAGE_FONT_SIZE);
-	const int PAGE_MARGIN = 24;
-	/** @} */
-}
-
 
 ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	CompletableTextEdit(_parent),
 	m_storeDataWhenEditing(true)
 {
 	m_document = new ScenarioTextDocument(this, 0);
-	initDocument(m_document);
 	setDocument(m_document);
 	initEditor();
 
@@ -48,17 +36,9 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	initConnections();
 }
 
-void ScenarioTextEdit::init()
-{
-	initConnections();
-}
-
 void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 {
-	resetZoom();
-
 	m_document = _document;
-	initDocument(m_document);
 	setDocument(m_document);
 
 	if (m_document != 0) {
@@ -158,7 +138,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type
 	QTextCursor cursor = textCursor();
 	cursor.beginEditBlock();
 
-	ScenarioTextBlockStyle newBlockStyle(_blockType, cursor.charFormat().font());
+	ScenarioTextBlockStyle newBlockStyle(_blockType);
 
 	//
 	// Обновим стили
@@ -456,7 +436,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _blockType)
 {
 	QTextCursor cursor = textCursor();
-	ScenarioTextBlockStyle newBlockStyle(_blockType, cursor.charFormat().font());
+	ScenarioTextBlockStyle newBlockStyle(_blockType);
 
 	//
 	// Обновим стили
@@ -468,7 +448,8 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	// Применим стиль текста ко всему блоку, выделив его,
 	// т.к. в блоке могут находиться фрагменты в другом стиле
 	//
-	cursor.select(QTextCursor::BlockUnderCursor);
+	cursor.movePosition(QTextCursor::StartOfBlock);
+	cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 	cursor.setCharFormat(newBlockStyle.charFormat());
 	cursor.clearSelection();
 
@@ -503,7 +484,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	// Вставим заголовок, если необходимо
 	//
 	if (newBlockStyle.hasHeader()) {
-		ScenarioTextBlockStyle headerStyle(newBlockStyle.headerType(), cursor.charFormat().font());
+		ScenarioTextBlockStyle headerStyle(newBlockStyle.headerType());
 
 		cursor.movePosition(QTextCursor::StartOfBlock);
 		cursor.insertBlock();
@@ -519,7 +500,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	// Для заголовка группы нужно создать завершение
 	//
 	if (newBlockStyle.isEmbeddableHeader()) {
-		ScenarioTextBlockStyle footerStyle(newBlockStyle.embeddableFooter(), cursor.charFormat().font());
+		ScenarioTextBlockStyle footerStyle(newBlockStyle.embeddableFooter());
 
 		//
 		// Запомним позицию курсора
@@ -546,11 +527,9 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 
 void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioTextBlockStyle::Type _blockType)
 {
-	const QFont font(textCursor().charFormat().font());
-
 	ScenarioTextBlockStyle oldBlockStyle(scenarioBlockType());
-	ScenarioTextBlockStyle newBlockHeaderStyle(_blockType, font);
-	ScenarioTextBlockStyle newBlockFooterStyle(newBlockHeaderStyle.embeddableFooter(), font);
+	ScenarioTextBlockStyle newBlockHeaderStyle(_blockType);
+	ScenarioTextBlockStyle newBlockFooterStyle(newBlockHeaderStyle.embeddableFooter());
 
 	//
 	// Сменим стиль заголовочного блока
@@ -719,24 +698,8 @@ bool ScenarioTextEdit::stringEndsWithAbbrev(const QString& _text)
 	return false;
 }
 
-void ScenarioTextEdit::initDocument(QTextDocument* _document)
-{
-	if (_document != 0) {
-		//
-		// Настраиваем документ редактора
-		//
-		_document->setDefaultFont(PAGE_FONT);
-		_document->setDocumentMargin(PAGE_MARGIN);
-	}
-}
-
 void ScenarioTextEdit::initEditor()
 {
-	//
-	// Настраиваем редактор
-	//
-	setFont(PAGE_FONT);
-
 	//
 	// Настроим стиль первого блока, если необходимо
 	//

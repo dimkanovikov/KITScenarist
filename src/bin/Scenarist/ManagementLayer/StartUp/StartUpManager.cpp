@@ -97,11 +97,6 @@ void StartUpManager::addRecentFile(const QString& _filePath, const QString& _pro
 	m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
 }
 
-void StartUpManager::aboutUpdateLogo(bool _isDarkTheme)
-{
-	m_view->updateLogo(_isDarkTheme);
-}
-
 void StartUpManager::aboutOpenRecentProjectRequested(const QString& _filePath)
 {
 	//

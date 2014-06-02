@@ -5,6 +5,8 @@
 #include <QTranslator>
 
 #include <ManagementLayer/ApplicationManager.h>
+#include <QFontMetricsF>
+#include <QDebug>
 
 
 int main(int argc, char *argv[])

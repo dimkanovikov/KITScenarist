@@ -161,6 +161,8 @@ namespace UserInterface
 		 * @brief Настроить соединения
 		 */
 		void initConnections();
+		void initEditorConnections();
+		void removeEditorConnections();
 
 		/**
 		 * @brief Настроить внешний вид

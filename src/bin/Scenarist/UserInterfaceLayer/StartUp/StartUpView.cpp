@@ -66,11 +66,6 @@ void StartUpView::setRecentFiles(
 	ui->recentFiles->setModel(newModel);
 }
 
-void StartUpView::updateLogo(bool _isDarkTheme)
-{
-	ui->logo->setPixmap(QPixmap(_isDarkTheme ? ":/Graphics/Images/logo-white.png" : ":/Graphics/Images/logo-black.png"));
-}
-
 void StartUpView::setUpdateInfo(const QString& _updateInfo)
 {
 	ui->updateInfo->setText(_updateInfo);

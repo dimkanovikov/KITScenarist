@@ -6,6 +6,9 @@
 #include "PageMetrics.h"
 
 
+/**
+ * @brief Редактор текста, с возможностью постраничного отображения содержимого
+ */
 class PagesTextEdit : public QTextEdit
 {
 	Q_OBJECT
@@ -52,11 +55,6 @@ protected:
 	void paintEvent(QPaintEvent* _event);
 
 	/**
-	 * @brief Сбросить масштабирование
-	 */
-	void resetZoom();
-
-	/**
 	 * @brief Переопределяется для реализации увеличения/уменьшения текста
 	 */
 	void wheelEvent(QWheelEvent* _event);
@@ -79,11 +77,24 @@ private:
 
 	/**
 	 * @brief Собственные реализации методов масштабирования содержимого
+	 * @note Если позиции равны нулю, то обрабатывается весь документ
 	 */
 	/** @{ */
-	void privateZoomIn(qreal _range);
-	void privateZoomOut(qreal _range);
+	void privateZoomIn(qreal _range, int _startPosition = 0, int _endPosition = 0);
+	void privateZoomOut(qreal _range, int _startPosition = 0, int _endPosition = 0);
 	/** @} */
+
+private slots:
+	/**
+	 * @brief Скорректировать обработку изменения текста, для установки масштаба,
+	 * если был изменён документ
+	 */
+	void aboutUpdateZoomRangeHandling();
+
+	/**
+	 * @brief Маштабировать изменения документа
+	 */
+	void aboutUpdateZoomRange(int _position, int _charsRemoved, int _charsAdded);
 
 private:
 	/**
@@ -100,9 +111,19 @@ private:
 	PageMetrics m_pageMetrics;
 
 	/**
+	 * @brief Флаг обозначающий, что редактор находится в процессе масштабирования
+	 */
+	bool m_inZoomHandling;
+
+	/**
 	 * @brief Текущий коэффициент масштабирования
 	 */
 	int m_zoomRange;
+
+	/**
+	 * @brief Указатель на документ
+	 */
+	QTextDocument* m_document;
 };
 
 #endif // PAGESTEXTEDIT_H

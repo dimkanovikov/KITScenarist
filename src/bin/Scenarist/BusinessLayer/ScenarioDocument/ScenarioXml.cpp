@@ -376,7 +376,10 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 				// Если определён тип блока, то обработать его
 				//
 				if (tokenType != ScenarioTextBlockStyle::Undefined) {
-					ScenarioTextBlockStyle currentStyle(tokenType, cursor.charFormat().font());
+					//
+					// FIXME::UPDATE_FORMAT
+					//
+					ScenarioTextBlockStyle currentStyle(tokenType);
 
 					if (!firstBlockHandling) {
 						cursor.insertBlock();
@@ -386,7 +389,10 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 					// Если нужно добавим заголовок стиля
 					//
 					if (currentStyle.hasHeader()) {
-						ScenarioTextBlockStyle headerStyle(currentStyle.headerType(), cursor.charFormat().font());
+						//
+						// FIXME::UPDATE_FORMAT
+						//
+						ScenarioTextBlockStyle headerStyle(currentStyle.headerType());
 						cursor.setBlockCharFormat(headerStyle.charFormat());
 						cursor.setBlockFormat(headerStyle.blockFormat());
 						cursor.insertText(currentStyle.header());

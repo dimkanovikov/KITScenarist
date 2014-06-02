@@ -42,7 +42,7 @@ namespace BusinessLogic
 		 * @brief Дополнительные свойства стилей текстовых блоков
 		 */
 		enum Property {
-			PropertyType = QTextFormat::UserProperty + 1, //!< Тип блока
+			PropertyType = QTextFormat::UserProperty + 100, //!< Тип блока
 			PropertyHeaderType,		//!< Тип блока заголовка
 			PropertyHeader,			//!< Текст заголовка блока (а-ля "ТИТР:")
 			PropertyPrefix,			//!< Префикс блока
@@ -52,7 +52,7 @@ namespace BusinessLogic
 		};
 
 	public:
-		ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType, const QFont& _font = QFont());
+		ScenarioTextBlockStyle(ScenarioTextBlockStyle::Type _blockType);
 		~ScenarioTextBlockStyle();
 
 		/**
@@ -63,7 +63,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Сменить стиль
 		 */
-		void setType(ScenarioTextBlockStyle::Type _type, const QFont& _font = QFont());
+		void setType(ScenarioTextBlockStyle::Type _type);
+
+		/**
+		 * @brief Шрифт блока
+		 */
+		QFont blockFont() const;
 
 		/**
 		 * @brief Вид блока

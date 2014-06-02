@@ -172,7 +172,7 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 			// Настроить стиль блока
 			//
 			destDocumentCursor.setCharFormat(charFormatForType(currentBlockType));
-			destDocumentCursor.setBlockFormat(blockFormatForType(currentBlockType, documentFont));
+			destDocumentCursor.setBlockFormat(blockFormatForType(currentBlockType));
 
 			//
 			// Вставить текст
@@ -222,9 +222,9 @@ QTextCharFormat PdfExporter::charFormatForType(ScenarioTextBlockStyle::Type _typ
 	return format;
 }
 
-QTextBlockFormat PdfExporter::blockFormatForType(ScenarioTextBlockStyle::Type _type, const QFont& _font) const
+QTextBlockFormat PdfExporter::blockFormatForType(ScenarioTextBlockStyle::Type _type) const
 {
-	ScenarioTextBlockStyle style(_type, _font);
+	ScenarioTextBlockStyle style(_type);
 	QTextBlockFormat styleBlockFormat = style.blockFormat();
 
 	//

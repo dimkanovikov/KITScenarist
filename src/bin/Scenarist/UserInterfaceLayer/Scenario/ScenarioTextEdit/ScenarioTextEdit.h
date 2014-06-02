@@ -24,11 +24,6 @@ namespace UserInterface
 		explicit ScenarioTextEdit(QWidget* _parent);
 
 		/**
-		 * @brief Публичный доступ к настройке внутренних соединений
-		 */
-		void init();
-
-		/**
 		 * @brief Установить документ для редактирования
 		 */
 		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document);
@@ -141,7 +136,6 @@ namespace UserInterface
 		bool stringEndsWithAbbrev(const QString& _text);
 
 	private:
-		void initDocument(QTextDocument* _document);
 		void initEditor();
 		void initView();
 		void initConnections();

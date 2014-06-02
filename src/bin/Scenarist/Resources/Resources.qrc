@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/Fonts">
-        <file alias="Courier New">Fonts/Courier New.otf</file>
+        <file>Fonts/Courier New.otf</file>
+        <file alias="Courier New">Fonts/cour.ttf</file>
     </qresource>
     <qresource prefix="/SpellChecking">
         <file>HunspellDictionaries/ru_RU.aff</file>
@@ -41,8 +42,7 @@
         <file>Icons/Editing/search.png</file>
         <file>Icons/Editing/format.png</file>
         <file>Icons/logo.png</file>
-        <file>Images/logo-black.png</file>
-        <file>Images/logo-white.png</file>
+        <file>Images/logo.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

@@ -67,14 +67,14 @@ QWidget* ScenarioTextEditWidget::toolbar() const
 
 void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document)
 {
-	m_editor->disconnect();
+	removeEditorConnections();
 
 	m_editor->setScenarioDocument(_document);
 	if (_document != 0) {
 		m_lastTextMd5Hash = textMd5Hash(_document->toPlainText());
 	}
 
-	initConnections();
+	initEditorConnections();
 }
 
 void ScenarioTextEditWidget::setDuration(const QString& _duration)
@@ -387,21 +387,37 @@ void ScenarioTextEditWidget::initView()
 
 void ScenarioTextEditWidget::initConnections()
 {
-	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()), Qt::UniqueConnection);
-	connect(m_undo, SIGNAL(clicked()), this, SLOT(aboutUndo()), Qt::UniqueConnection);
-	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()), Qt::UniqueConnection);
+	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
+	connect(m_undo, SIGNAL(clicked()), this, SLOT(aboutUndo()));
+	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()));
 	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
 	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
-	connect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)), Qt::UniqueConnection);
-	connect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)), Qt::UniqueConnection);
-	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()), Qt::UniqueConnection);
-	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()), Qt::UniqueConnection);
-	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()), Qt::UniqueConnection);
-	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()), Qt::UniqueConnection);
-	connect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()), Qt::UniqueConnection);
-	connect(m_editor, SIGNAL(zoomRangeChanged(int)), this, SIGNAL(zoomRangeChanged(int)), Qt::UniqueConnection);
 
-	m_editor->init();
+	initEditorConnections();
+}
+
+void ScenarioTextEditWidget::initEditorConnections()
+{
+	connect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)));
+	connect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)));
+	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
+	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
+	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
+	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
+	connect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
+	connect(m_editor, SIGNAL(zoomRangeChanged(int)), this, SIGNAL(zoomRangeChanged(int)));
+}
+
+void ScenarioTextEditWidget::removeEditorConnections()
+{
+	disconnect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)));
+	disconnect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)));
+	disconnect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
+	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
+	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
+	disconnect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
+	disconnect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
+	disconnect(m_editor, SIGNAL(zoomRangeChanged(int)), this, SIGNAL(zoomRangeChanged(int)));
 }
 
 void ScenarioTextEditWidget::initStyleSheet()

@@ -753,6 +753,7 @@ void ApplicationManager::reloadApplicationSettings()
 			//
 			palette = QStyleFactory::create("Fusion")->standardPalette();
 
+			palette.setColor(QPalette::Highlight, QColor("#2b78da"));
 			palette.setColor(QPalette::HighlightedText, QColor(255,255,255));
 
 			palette.setColor(QPalette::Link, QColor("#2b78da"));
@@ -768,11 +769,6 @@ void ApplicationManager::reloadApplicationSettings()
 		//
 		qApp->setPalette(palette);
 		qApp->setStyleSheet(styleSheet);
-
-		//
-		// Обновим лого
-		//
-		m_startUpManager->aboutUpdateLogo(useDarkTheme);
 	}
 
 	//
