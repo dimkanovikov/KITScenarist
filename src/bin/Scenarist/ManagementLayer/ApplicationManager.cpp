@@ -762,7 +762,7 @@ void ApplicationManager::reloadApplicationSettings()
 		//
 		// Для всплывающей используем универсальный стиль
 		//
-		styleSheet = "QToolTip { color: palette(window-text); border: 1px solid palette(highlight); padding: 2px; background-color: palette(window) }";
+		styleSheet = "QToolTip { color: palette(window-text); background-color: palette(window); border: 1px solid palette(highlight); }";
 
 		//
 		// Применяем тему
