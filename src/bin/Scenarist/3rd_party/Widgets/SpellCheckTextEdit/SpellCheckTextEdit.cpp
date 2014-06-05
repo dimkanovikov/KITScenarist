@@ -6,6 +6,7 @@
 #include <QContextMenuEvent>
 #include <QDir>
 #include <QMenu>
+#include <QStandardPaths>
 
 
 namespace {
@@ -52,8 +53,7 @@ void SpellCheckTextEdit::setUseSpellChecker(bool _use)
 {
 	m_useSpellChecking->setChecked(_use);
 
-    resetHighlighter();
-//	m_spellCheckHighlighter->setUseSpellChecker(_use);
+	resetHighlighter();
 }
 
 void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
@@ -71,7 +71,10 @@ void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 
 QString SpellCheckTextEdit::userDictionaryfile() const
 {
-	return qApp->applicationDirPath() + QDir::separator() + "SpellChecker.dict";
+	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+	QString hunspellDictionariesFolderPath = appDataFolderPath + QDir::separator() + "Hunspell";
+	QString dictionaryFilePath = hunspellDictionariesFolderPath + QDir::separator() + "UserDictionary.dict";
+	return dictionaryFilePath;
 }
 
 void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)

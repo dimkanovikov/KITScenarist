@@ -5,8 +5,10 @@
 #include <QApplication>
 #include <QTextCodec>
 #include <QTextStream>
-#include <QTemporaryFile>
 #include <QStringList>
+#include <QStandardPaths>
+#include <QDir>
+#include <QFile>
 
 
 SpellChecker::SpellChecker(const QString& _userDictionaryPath) :
@@ -146,7 +148,8 @@ QString SpellChecker::dictionaryFilePath(
 	// Словари хранятся в файлах ресурсов, но для ханспела нужны реальные файлы
 	// поэтому, сохраняем файл из ресурсов на диск
 	//
-	QString filePath = ":/SpellChecking/HunspellDictionaries/";
+	const QString rcFilePath = ":/SpellChecking/HunspellDictionaries/";
+	QString fileName;
 
 	//
 	// Получим файл со словарём в зависимости от выбранного языка,
@@ -155,39 +158,57 @@ QString SpellChecker::dictionaryFilePath(
 	switch (_language) {
 		case Russian:
 		default:
-			filePath += "ru_RU";
+			fileName += "ru_RU";
 			break;
 		case RussianWithYo:
-			filePath += "ru_RU_yo";
+			fileName += "ru_RU_yo";
 			break;
 		case Ukrainian:
-			filePath += "uk_UA";
+			fileName += "uk_UA";
 			break;
 		case Belorussian:
-			filePath += "be_BY";
+			fileName += "be_BY";
 			break;
 	}
 
 	//
 	// Определим расширение файла, в зависимости от словаря
 	//
-	filePath += _dictionaryType == Affinity ? ".aff" : ".dic";
+	fileName += _dictionaryType == Affinity ? ".aff" : ".dic";
 
 	//
-	// Сохраним словарь на диск во временный файл
+	// Сохраним словарь на диск во папку программы, если такового ещё нет
 	//
-	QTemporaryFile* tempFile = new QTemporaryFile(qApp);
-	if (tempFile->open()) {
-		QFile resourseFile(filePath);
+	// ... определяемся с именем файла
+	//
+	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+	QString hunspellDictionariesFolderPath = appDataFolderPath + QDir::separator() + "Hunspell";
+	QString dictionaryFilePath = hunspellDictionariesFolderPath + QDir::separator() + fileName;
+	//
+	// ... создаём папку для пользовательских файлов
+	//
+	QDir rootFolder = QDir::root();
+	rootFolder.mkpath(hunspellDictionariesFolderPath);
+	//
+	//  создаём файл если такого ещё нет
+	//
+	if (!QFile::exists(dictionaryFilePath)) {
+		QFile resourseFile(rcFilePath + fileName);
 		resourseFile.open(QIODevice::ReadOnly);
 		//
-		tempFile->write(resourseFile.readAll());
+		QFile dictionaryFile(dictionaryFilePath);
+		dictionaryFile.open(QIODevice::WriteOnly);
+		dictionaryFile.write(resourseFile.readAll());
 		//
 		resourseFile.close();
-		tempFile->close();
+		dictionaryFile.close();
 	}
 
-	return tempFile->fileName();
+	//
+	// TODO: логирование корректности записи файла
+	//
+
+	return dictionaryFilePath;
 }
 
 void SpellChecker::addWordToChecker(const QString& _word) const
