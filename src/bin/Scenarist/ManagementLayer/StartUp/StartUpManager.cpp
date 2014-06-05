@@ -149,27 +149,32 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 		}
 
 		//
-		// Сортируем
+		// Если версии найдены
 		//
-		qSort(versions);
+		if (versions.count() > 0) {
+			//
+			// Сортируем
+			//
+			qSort(versions);
 
-		//
-		// Извлекаем последнюю версию
-		//
-		QString maxVersion = versions.last();
+			//
+			// Извлекаем последнюю версию
+			//
+			QString maxVersion = versions.last();
 
-		//
-		// Если она больше текущей версии программы, выводим информацию
-		//
-		if (QApplication::applicationVersion() < maxVersion) {
-			QString updateInfo =
-					tr("Released version %1 "
-					   "<a href=\"http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe\" "
-					   "style=\"color:#2b78da;\">download</a> "
-					   "or <a href=\"http://dimkanovikov.pro/kit/scenarist/news.html\" "
-					   "style=\"color:#2b78da;\">read more</a>.")
-					.arg(maxVersion);
-			m_view->setUpdateInfo(updateInfo);
+			//
+			// Если она больше текущей версии программы, выводим информацию
+			//
+			if (QApplication::applicationVersion() < maxVersion) {
+				QString updateInfo =
+						tr("Released version %1 "
+						   "<a href=\"http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe\" "
+						   "style=\"color:#2b78da;\">download</a> "
+						   "or <a href=\"http://dimkanovikov.pro/kit/scenarist/news.html\" "
+						   "style=\"color:#2b78da;\">read more</a>.")
+						.arg(maxVersion);
+				m_view->setUpdateInfo(updateInfo);
+			}
 		}
 	}
 }
