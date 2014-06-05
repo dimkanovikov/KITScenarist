@@ -3,6 +3,8 @@
 
 #include "StorageFacade.h"
 
+class QString;
+
 namespace Domain {
 	class Time;
 	class TimesTable;
@@ -20,6 +22,11 @@ namespace DataStorageLayer
 		 * @brief Получить все времена
 		 */
 		TimesTable* all();
+
+		/**
+		 * @brief Сохранить время
+		 */
+		Time* storeTime(const QString& _timeName);
 
 		/**
 		 * @brief Очистить хранилище

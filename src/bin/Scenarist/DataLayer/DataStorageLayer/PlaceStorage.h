@@ -23,6 +23,11 @@ namespace DataStorageLayer
 		 */
 		PlacesTable* all();
 
+		/**
+		 * @brief Сохранить место
+		 */
+		Place* storePlace(const QString& _placeName);
+
         /**
          * @brief Проверить наличие заданного места
          */

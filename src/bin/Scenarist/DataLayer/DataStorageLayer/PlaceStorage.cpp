@@ -17,6 +17,48 @@ PlacesTable* PlaceStorage::all()
 	return m_all;
 }
 
+Place* PlaceStorage::storePlace(const QString& _placeName)
+{
+	Place* newPlace = 0;
+
+	QString placeName = _placeName.toUpper().simplified();
+
+	//
+	// Если место можно сохранить
+	//
+	if (!placeName.isEmpty()) {
+		//
+		// Проверяем наличие данного места
+		//
+		foreach (DomainObject* domainObject, all()->toList()) {
+			Place* place = dynamic_cast<Place*>(domainObject);
+			if (place->name() == placeName) {
+				newPlace = place;
+				break;
+			}
+		}
+
+		//
+		// Если такого места ещё нет, то сохраним его
+		//
+		if (!DomainObject::isValid(newPlace)) {
+			newPlace = new Place(Identifier(), placeName);
+
+			//
+			// ... в базе данных
+			//
+			MapperFacade::placeMapper()->insert(newPlace);
+
+			//
+			// ... в списке
+			//
+			all()->append(newPlace);
+		}
+	}
+
+	return newPlace;
+}
+
 bool PlaceStorage::hasPlace(const QString& _name)
 {
     bool contains = false;

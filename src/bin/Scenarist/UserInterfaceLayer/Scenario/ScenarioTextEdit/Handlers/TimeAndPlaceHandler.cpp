@@ -307,19 +307,29 @@ void TimeAndPlaceHandler::storeSceneParameters() const
 		QTextBlock currentBlock = cursor.block();
 		// ... текст блока
 		QString currentBlockText = currentBlock.text();
-		// ... локация
-		QString locationName = TimeAndPlaceParser::locationName(currentBlockText);
-		// ... сценарный день
-		QString scenarioDayName = TimeAndPlaceParser::scenarioDayName(currentBlockText);
 
 		//
-		// Сохраняем локацию и подлокацию
+		// Сохраняем время
 		//
+		QString placeName = TimeAndPlaceParser::placeName(currentBlockText);
+		StorageFacade::placeStorage()->storePlace(placeName);
+
+		//
+		// Сохраняем локацию
+		//
+		QString locationName = TimeAndPlaceParser::locationName(currentBlockText);
 		StorageFacade::locationStorage()->storeLocation(locationName);
+
+		//
+		// Сохраняем место
+		//
+		QString timeName = TimeAndPlaceParser::timeName(currentBlockText);
+		StorageFacade::timeStorage()->storeTime(timeName);
 
 		//
 		// Сохраняем сценарный день
 		//
+		QString scenarioDayName = TimeAndPlaceParser::scenarioDayName(currentBlockText);
 		StorageFacade::scenarioDayStorage()->storeScenarioDay(scenarioDayName);
 	}
 }

@@ -141,18 +141,18 @@ QString ScenarioDocument::itemSynopsis(ScenarioModelItem* _item) const
 
 void ScenarioDocument::setItemSynopsisAtPosition(int _position, const QString& _synopsis)
 {
-	ScenarioModelItem* item = itemForPosition(_position, true);
+	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+		QTextCursor cursor(m_document);
+		cursor.setPosition(item->position());
 
-	QTextCursor cursor(m_document);
-	cursor.setPosition(item->position());
-
-	QTextBlockUserData* textBlockData = cursor.block().userData();
-	ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
-	if (info == 0) {
-		info = new ScenarioTextBlockInfo;
+		QTextBlockUserData* textBlockData = cursor.block().userData();
+		ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+		if (info == 0) {
+			info = new ScenarioTextBlockInfo;
+		}
+		info->setSynopsis(_synopsis);
+		cursor.block().setUserData(info);
 	}
-	info->setSynopsis(_synopsis);
-	cursor.block().setUserData(info);
 }
 
 namespace {
