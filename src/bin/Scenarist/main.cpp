@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	application.setOrganizationName("DimkaNovikov labs.");
 	application.setOrganizationDomain("dimkanovikov.pro");
 	application.setApplicationName("Scenarist");
-    application.setApplicationVersion("0.2.6");
+    application.setApplicationVersion("0.2.7");
 
 	//
 	// Настроим стиль отображения внешнего вида приложения

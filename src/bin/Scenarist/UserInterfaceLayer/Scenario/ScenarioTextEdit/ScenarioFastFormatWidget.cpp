@@ -121,9 +121,9 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	layout->addSpacing(6);
 	layout->addWidget(timeAndPlaceStyle);
 	layout->addWidget(actionStyle);
-	layout->addWidget(characterStyle);
-	layout->addWidget(parentheticalStyle);
+    layout->addWidget(characterStyle);
 	layout->addWidget(dialogStyle);
+    layout->addWidget(parentheticalStyle);
 	layout->addWidget(transitionStyle);
 	layout->addWidget(noteStyle);
 	layout->addWidget(titleStyle);
