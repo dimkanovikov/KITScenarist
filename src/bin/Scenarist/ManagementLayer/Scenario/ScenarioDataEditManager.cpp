@@ -2,13 +2,15 @@
 
 #include <UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.h>
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 using ManagementLayer::ScenarioDataEditManager;
 using UserInterface::ScenarioDataEdit;
 
 
 ScenarioDataEditManager::ScenarioDataEditManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
-	m_dataEdit(new ScenarioDataEdit(_parentWidget))
+	m_view(new ScenarioDataEdit(_parentWidget))
 {
 	initView();
 	initConnections();
@@ -16,42 +18,42 @@ ScenarioDataEditManager::ScenarioDataEditManager(QObject* _parent, QWidget* _par
 
 QWidget* ScenarioDataEditManager::toolbar() const
 {
-	return m_dataEdit->toolbar();
+	return m_view->toolbar();
 }
 
 QWidget* ScenarioDataEditManager::view() const
 {
-	return m_dataEdit;
+	return m_view;
 }
 
 void ScenarioDataEditManager::clear()
 {
-	m_dataEdit->clear();
+	m_view->clear();
 }
 
 QString ScenarioDataEditManager::scenarioName() const
 {
-	return m_dataEdit->scenarioName();
+	return m_view->scenarioName();
 }
 
 void ScenarioDataEditManager::setScenarioName(const QString& _name)
 {
-	m_dataEdit->setScenarioName(_name);
+	m_view->setScenarioName(_name);
 }
 
 QString ScenarioDataEditManager::scenarioSynopsis() const
 {
-	return m_dataEdit->scenarioSynopsis();
+	return TextEditHelper::removeDocumentTags(m_view->scenarioSynopsis());;
 }
 
 void ScenarioDataEditManager::setScenarioSynopsis(const QString& _synopsis)
 {
-	m_dataEdit->setScenarioSynopsis(_synopsis);
+	m_view->setScenarioSynopsis(_synopsis);
 }
 
 void ScenarioDataEditManager::setScenarioSynopsisFromScenes(const QString& _synopsis)
 {
-	m_dataEdit->setScenarioSynopsisFromScenes(_synopsis);
+	m_view->setScenarioSynopsisFromScenes(_synopsis);
 }
 
 void ScenarioDataEditManager::initView()
@@ -61,7 +63,7 @@ void ScenarioDataEditManager::initView()
 
 void ScenarioDataEditManager::initConnections()
 {
-	connect(m_dataEdit, SIGNAL(scenarioNameChanged()), this, SIGNAL(scenarioNameChanged()));
-	connect(m_dataEdit, SIGNAL(scenarioSynopsisChanged()), this, SIGNAL(scenarioSynopsisChanged()));
-	connect(m_dataEdit, SIGNAL(buildSynopsisFromScenes()), this, SIGNAL(buildSynopsisFromScenes()));
+	connect(m_view, SIGNAL(scenarioNameChanged()), this, SIGNAL(scenarioNameChanged()));
+	connect(m_view, SIGNAL(scenarioSynopsisChanged()), this, SIGNAL(scenarioSynopsisChanged()));
+	connect(m_view, SIGNAL(buildSynopsisFromScenes()), this, SIGNAL(buildSynopsisFromScenes()));
 }

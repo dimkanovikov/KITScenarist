@@ -154,11 +154,7 @@
            <number>0</number>
           </property>
           <item row="0" column="0">
-           <widget class="QTextEdit" name="fromScenarioSynopsis">
-            <property name="textInteractionFlags">
-             <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-            </property>
-           </widget>
+           <widget class="SimpleTextEditor" name="fromScenarioSynopsis" native="true"/>
           </item>
          </layout>
         </widget>

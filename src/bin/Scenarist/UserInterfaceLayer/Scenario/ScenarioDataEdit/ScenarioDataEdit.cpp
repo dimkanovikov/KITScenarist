@@ -97,6 +97,8 @@ void ScenarioDataEdit::aboutCurrentSynopsisChanged()
 
 void ScenarioDataEdit::initView()
 {
+	ui->fromScenarioSynopsis->setReadOnly(true);
+
 	clear();
 }
 

@@ -53,7 +53,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Редактор синопсиса
 		 */
-		UserInterface::ScenarioSceneSynopsis* m_sceneSynopsis;
+		UserInterface::ScenarioSceneSynopsis* m_view;
 	};
 }
 

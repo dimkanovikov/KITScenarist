@@ -84,7 +84,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Редактор информации о сценарие
 		 */
-		UserInterface::ScenarioDataEdit* m_dataEdit;
+		UserInterface::ScenarioDataEdit* m_view;
 
 	};
 }

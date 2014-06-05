@@ -7,6 +7,8 @@
 
 #include <UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.h>
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 using ManagementLayer::CharactersDataEditManager;
 using UserInterface::CharactersDataEdit;
 
@@ -59,7 +61,7 @@ void CharactersDataEditManager::aboutSave()
 	//
 	m_character->setName(m_editor->name());
 	m_character->setRealName(m_editor->realName());
-	m_character->setDescription(m_editor->description());
+	m_character->setDescription(TextEditHelper::removeDocumentTags(m_editor->description()));
 	m_character->setPhotos(m_editor->photos());
 
 	//

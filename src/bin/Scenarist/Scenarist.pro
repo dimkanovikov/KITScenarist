@@ -293,7 +293,8 @@ HEADERS += \
 	3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h \
     3rd_party/Widgets/SearchWidget/SearchWidget.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.h \
-    3rd_party/Widgets/PagesTextEdit/PageMetrics.h
+    3rd_party/Widgets/PagesTextEdit/PageMetrics.h \
+    3rd_party/Helpers/TextEditHelper.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

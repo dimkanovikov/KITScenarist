@@ -8,10 +8,12 @@
 #include <QVBoxLayout>
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QSettings>
 
 
 SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
-	QTextEdit(parent)
+	QTextEdit(parent),
+	m_zoomRange(0)
 {
 	setTabChangesFocus(true);
 
@@ -19,6 +21,45 @@ SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
 
 	connect(this, SIGNAL(currentCharFormatChanged(QTextCharFormat)),
 			this, SLOT(currentCharFormatChanged(QTextCharFormat)));
+
+	//
+	// Подготовить редактор к синхронизации
+	//
+	s_editors.append(this);
+	//
+	// Обновить масштаб
+	//
+	QSettings settings;
+	setZoomRange(settings.value("simple-editor/zoom-range", 0).toInt());
+}
+
+void SimpleTextEditor::setZoomRange(int _zoomRange)
+{
+	if (m_zoomRange != _zoomRange) {
+		//
+		// Отменить предыдущее масштабирование
+		//
+		zoomOut(m_zoomRange);
+
+		//
+		// Применить новое масштабирование
+		//
+		m_zoomRange = _zoomRange;
+		zoomIn(m_zoomRange);
+
+		//
+		// Для каждого редактора применить коэффициент
+		//
+		foreach (SimpleTextEditor* editor, s_editors) {
+			editor->setZoomRange(m_zoomRange);
+		}
+
+		//
+		// Сохранить значение масштаба
+		//
+		QSettings settings;
+		settings.setValue("simple-editor/zoom-range", m_zoomRange);
+	}
 }
 
 void SimpleTextEditor::contextMenuEvent(QContextMenuEvent* _event)
@@ -45,6 +86,24 @@ void SimpleTextEditor::contextMenuEvent(QContextMenuEvent* _event)
 	//
 	menu->exec(_event->globalPos());
 	delete menu;
+}
+
+void SimpleTextEditor::wheelEvent(QWheelEvent* _event)
+{
+	if (_event->modifiers() & Qt::ControlModifier) {
+		if (_event->orientation() == Qt::Vertical) {
+			//
+			// zoomRange > 0 - Текст увеличивается
+			// zoomRange < 0 - Текст уменьшается
+			//
+			int zoomRange = m_zoomRange + (_event->angleDelta().y() / 120);
+			setZoomRange(zoomRange);
+
+			_event->accept();
+		}
+	} else {
+		QTextEdit::wheelEvent(_event);
+	}
 }
 
 void SimpleTextEditor::textBold()
@@ -124,3 +183,5 @@ void SimpleTextEditor::mergeFormatOnWordOrSelection(const QTextCharFormat& forma
 	cursor.mergeCharFormat(format);
 	mergeCurrentCharFormat(format);
 }
+
+QList<SimpleTextEditor*> SimpleTextEditor::s_editors;
