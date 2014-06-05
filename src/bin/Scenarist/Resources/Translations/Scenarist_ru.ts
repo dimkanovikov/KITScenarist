@@ -320,7 +320,7 @@
         <translation>Файла &lt;b&gt;%1&lt;/b&gt; не существует. Запись будет удалена из списка недавних проектов.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="166"/>
+        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="170"/>
         <source>Released version %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
         <translation>Вышла новая версия %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
     </message>
@@ -603,17 +603,17 @@ Paragraph</source>
 <context>
     <name>SpellCheckTextEdit</name>
     <message>
-        <location filename="../../3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp" line="17"/>
+        <location filename="../../3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp" line="18"/>
         <source>Spell Checking</source>
         <translation>Проверка правописания</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp" line="37"/>
+        <location filename="../../3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp" line="38"/>
         <source>Ignore</source>
         <translation>Игнорировать</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp" line="40"/>
+        <location filename="../../3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp" line="41"/>
         <source>Add to dictionary</source>
         <translation>Добавить в словарь</translation>
     </message>
@@ -771,17 +771,25 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="58"/>
         <source>2 Character</source>
-        <translation>2 Персонаж</translation>
+        <translation>2 Герой</translation>
+    </message>
+    <message>
+        <source>3 Parenthetical</source>
+        <translation type="obsolete">3 Ремарка</translation>
+    </message>
+    <message>
+        <source>4 Dialog</source>
+        <translation type="obsolete">4 Диалог</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="66"/>
-        <source>3 Parenthetical</source>
-        <translation>3 Ремарка</translation>
+        <source>3 Dialog</source>
+        <translation>3 Диалог</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="74"/>
-        <source>4 Dialog</source>
-        <translation>4 Реплика</translation>
+        <source>4 Parenthetical</source>
+        <translation>4 Ремарка</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="82"/>

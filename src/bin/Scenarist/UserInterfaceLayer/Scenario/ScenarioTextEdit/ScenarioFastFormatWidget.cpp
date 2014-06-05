@@ -63,21 +63,21 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(characterShortcut1, SIGNAL(activated()), characterStyle, SLOT(click()));
 	connect(characterShortcut2, SIGNAL(activated()), characterStyle, SLOT(click()));
 
-	QPushButton* parentheticalStyle = new QPushButton(tr("3 Parenthetical"), this);
-	parentheticalStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Parenthetical);
-	connect(parentheticalStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
-	QShortcut* parentheticalShortcut1 = new QShortcut(Qt::Key_3, this);
-	QShortcut* parentheticalShortcut2 = new QShortcut(Qt::Key_3 + Qt::KeypadModifier, this);
-	connect(parentheticalShortcut1, SIGNAL(activated()), parentheticalStyle, SLOT(click()));
-	connect(parentheticalShortcut2, SIGNAL(activated()), parentheticalStyle, SLOT(click()));
-
-	QPushButton* dialogStyle = new QPushButton(tr("4 Dialog"), this);
+	QPushButton* dialogStyle = new QPushButton(tr("3 Dialog"), this);
 	dialogStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Dialog);
 	connect(dialogStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
-	QShortcut* dialogShortcut1 = new QShortcut(Qt::Key_4, this);
-	QShortcut* dialogShortcut2 = new QShortcut(Qt::Key_4 + Qt::KeypadModifier, this);
+	QShortcut* dialogShortcut1 = new QShortcut(Qt::Key_3, this);
+	QShortcut* dialogShortcut2 = new QShortcut(Qt::Key_3 + Qt::KeypadModifier, this);
 	connect(dialogShortcut1, SIGNAL(activated()), dialogStyle, SLOT(click()));
 	connect(dialogShortcut2, SIGNAL(activated()), dialogStyle, SLOT(click()));
+
+	QPushButton* parentheticalStyle = new QPushButton(tr("4 Parenthetical"), this);
+	parentheticalStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Parenthetical);
+	connect(parentheticalStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
+	QShortcut* parentheticalShortcut1 = new QShortcut(Qt::Key_4, this);
+	QShortcut* parentheticalShortcut2 = new QShortcut(Qt::Key_4 + Qt::KeypadModifier, this);
+	connect(parentheticalShortcut1, SIGNAL(activated()), parentheticalStyle, SLOT(click()));
+	connect(parentheticalShortcut2, SIGNAL(activated()), parentheticalStyle, SLOT(click()));
 
 	QPushButton* transitionStyle = new QPushButton(tr("5 Transition"), this);
 	transitionStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Transition);
