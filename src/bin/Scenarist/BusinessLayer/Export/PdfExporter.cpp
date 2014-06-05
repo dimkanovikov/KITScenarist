@@ -123,8 +123,7 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 	// Настроим новый документ
 	//
 	QTextDocument* preparedDocument = new QTextDocument;
-	QFont documentFont = _document->defaultFont();
-	documentFont.setPointSize(12);
+	QFont documentFont("Courier New", 12);
 	preparedDocument->setDefaultFont(documentFont);
 	preparedDocument->setDocumentMargin(0);
 	preparedDocument->setIndentWidth(0);
