@@ -26,14 +26,19 @@ void SimpleTextEditor::contextMenuEvent(QContextMenuEvent* _event)
 	//
 	// Сформируем  контекстное меню
 	//
-	QMenu* menu = new QMenu(this);
+	QMenu* menu = createStandardContextMenu();
 
 	//
 	// Добавим действия настройки стиля
 	//
-	menu->insertAction(0, actionTextBold);
-	menu->insertAction(0, actionTextItalic);
-	menu->insertAction(0, actionTextUnderline);
+	QAction* actionInsertBefore = 0;
+	if (menu->actions().count() > 0) {
+		actionInsertBefore = menu->actions().first();
+	}
+	menu->insertAction(actionInsertBefore, actionTextBold);
+	menu->insertAction(actionInsertBefore, actionTextItalic);
+	menu->insertAction(actionInsertBefore, actionTextUnderline);
+	menu->insertSeparator(actionInsertBefore);
 
 	//
 	// Покажем меню, а после очистим от него память
