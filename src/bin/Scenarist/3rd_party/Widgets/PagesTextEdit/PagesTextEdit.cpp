@@ -345,7 +345,7 @@ void PagesTextEdit::privateZoomIn(qreal _range, int _startPosition, int _endPosi
 	// * формат каждого блока
 	//
 	QTextCursor cursor(document());
-	cursor.beginEditBlock();
+	cursor.joinPreviousEditBlock();
 
 	//
 	// Обработаем позиции
