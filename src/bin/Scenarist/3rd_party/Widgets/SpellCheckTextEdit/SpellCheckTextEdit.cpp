@@ -15,7 +15,9 @@ namespace {
 
 SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 	PagesTextEdit(_parent),
-	m_useSpellChecking(new QAction(tr("Spell Checking"), this))
+	m_useSpellChecking(new QAction(tr("Spell Checking"), this)),
+	m_spellChecker(0),
+	m_spellCheckHighlighter(0)
 {
 	//
 	// Настроим проверяющего
@@ -59,15 +61,17 @@ void SpellCheckTextEdit::setUseSpellChecker(bool _use)
 
 void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 {
-	//
-	// Установим язык проверяющего
-	//
-	m_spellChecker->setSpellingLanguage(_language);
+	if (m_spellChecker->spellingLanguage() != _language) {
+		//
+		// Установим язык проверяющего
+		//
+		m_spellChecker->setSpellingLanguage(_language);
 
-	//
-	// Заново выделим слова не проходящие проверку орфографии вновь заданного языка
-	//
-	m_spellCheckHighlighter->rehighlight();
+		//
+		// Заново выделим слова не проходящие проверку орфографии вновь заданного языка
+		//
+		m_spellCheckHighlighter->rehighlight();
+	}
 }
 
 QString SpellCheckTextEdit::userDictionaryfile() const
@@ -162,7 +166,11 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 
 void SpellCheckTextEdit::resetHighlighter()
 {
-	m_spellCheckHighlighter = new SpellCheckHighlighter(document(), m_spellChecker);
+	delete m_spellCheckHighlighter;
+	m_spellCheckHighlighter = 0;
+
+	m_spellCheckHighlighter = new SpellCheckHighlighter(0, m_spellChecker);
+	m_spellCheckHighlighter->setDocument(document());
 	m_spellCheckHighlighter->setUseSpellChecker(m_useSpellChecking->isChecked());
 }
 

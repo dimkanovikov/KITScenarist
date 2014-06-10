@@ -76,6 +76,10 @@ QString ScenarioManager::scenarioName() const
 void ScenarioManager::loadCurrentProject()
 {
 	//
+	// TODO: Loading progress
+	//
+
+	//
 	// Очистим от предыдущих данных
 	//
 	m_navigatorManager->setNavigationModel(0);

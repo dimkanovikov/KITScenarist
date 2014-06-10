@@ -145,6 +145,11 @@ void SpellChecker::addWordToDictionary(const QString& _word) const
 	}
 }
 
+SpellChecker::Language SpellChecker::spellingLanguage() const
+{
+	return m_spellingLanguage;
+}
+
 QString SpellChecker::dictionaryFilePath(
 		SpellChecker::Language _language,
 		SpellChecker::DictionaryType _dictionaryType) const

@@ -59,6 +59,11 @@ public:
 	 */
 	void addWordToDictionary(const QString& _word) const;
 
+	/**
+	 * @brief Получить текущий язык проверки орфографии
+	 */
+	Language spellingLanguage() const;
+
 private:
 	/**
 	 * @brief Тип словаря

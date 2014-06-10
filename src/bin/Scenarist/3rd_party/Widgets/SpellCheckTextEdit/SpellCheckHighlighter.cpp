@@ -63,35 +63,25 @@ void SpellCheckHighlighter::highlightBlock(const QString& _text)
 				//
 				// Проверяем слова длинной более одного символа
 				//
-                if (wordWithoutPunct.length() > 1) {
-                    //
-                    // Корректируем регистр слова
-                    //
-                    QString wordWithoutPunctInCorrectRegister =
-                            wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
+				if (wordWithoutPunct.length() > 1) {
+					//
+					// Корректируем регистр слова
+					//
+					QString wordWithoutPunctInCorrectRegister =
+							wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
 
 					//
 					// Если слово не прошло проверку
 					//
-                    if (!m_spellchecker->spellCheckWord(wordWithoutPunctInCorrectRegister)) {
+					if (!m_spellchecker->spellCheckWord(wordWithoutPunctInCorrectRegister)) {
 						//
 						// Проходим по всем вхождения этого слова в тексте
 						//
-						int wordsCount = _text.count(QRegExp("\\b" + wordWithoutPunct + "\\b"));
-						int positionInText = -1;
-
-						for (int wordIndex = 0; wordIndex < wordsCount; ++wordIndex) {
-							positionInText =
-									_text.indexOf(QRegExp("\\b" + wordWithoutPunct + "\\b"),
-												  positionInText + 1);
-							//
-							// Пометим вхождение слова, как ошибочное
-							//
-							if (positionInText >= 0) {
-								setFormat(positionInText,
-										  wordWithoutPunct.length(),
-										  m_misspeledCharFormat);
-							}
+						const int wordWithoutPunctLength = wordWithoutPunct.length();
+						int positionInText = _text.indexOf(wordWithoutPunct, positionInText);
+						while (positionInText != -1) {
+							setFormat(positionInText, wordWithoutPunctLength, m_misspeledCharFormat);
+							positionInText = _text.indexOf(wordWithoutPunct, positionInText + 1);
 						}
 					}
 				}

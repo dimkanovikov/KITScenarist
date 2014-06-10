@@ -478,7 +478,7 @@ void Database::updateDatabaseTo_0_1_0(QSqlDatabase& _database)
 void Database::updateDatabaseTo_0_2_8(QSqlDatabase& _database)
 {
 	//
-	// TODO: заменить при помощи регулярок все
+	// Заменить при помощи регулярок все
 	//       font-family:'*';
 	//		 font-size:*;
 	//

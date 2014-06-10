@@ -122,8 +122,8 @@ void SyntaxHighlighterPrivate::_q_reformatBlocks(int from, int charsRemoved, int
 		// Если изменилась папка/группа не нужно пересчитывать весь текст,
 		// нужно обновить одну лишь папку/группу
 		//
-		if (charsAdded > 200
-			&& charsRemoved > 200) {
+		if (charsAdded > 300
+			&& charsRemoved > 300) {
 			//
 			// Сперва проверим начало группирующего элемента
 			//
@@ -189,8 +189,6 @@ void SyntaxHighlighterPrivate::reformatBlocks(int from, int charsRemoved, int ch
 
 void SyntaxHighlighterPrivate::reformatBlock(const QTextBlock &block)
 {
-//	Q_Q(SyntaxHighlighter);
-
 	Q_ASSERT_X(!currentBlock.isValid(), "QSyntaxHighlighter::reformatBlock()", "reFormatBlock() called recursively");
 
 	currentBlock = block;
