@@ -88,6 +88,16 @@ namespace DatabaseLayer
 		 * - синопсис
 		 */
 		static void updateDatabaseTo_0_1_0(QSqlDatabase& _database);
+
+		/**
+		 * @brief Обновить базу данных до версии 0.2.8
+		 *
+		 * Убирается информация о шрифте для
+		 * - синопсиса проекта
+		 * - информации о персонажах
+		 * - информации о локациях
+		 */
+		static void updateDatabaseTo_0_2_8(QSqlDatabase& _database);
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )

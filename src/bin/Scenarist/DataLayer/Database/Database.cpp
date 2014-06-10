@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <QTextCodec>
 #include <QApplication>
+#include <QRegularExpression>
 
 using namespace DatabaseLayer;
 
@@ -331,6 +332,16 @@ void Database::updateDatabase(QSqlDatabase& _database)
 						}
 					}
 				}
+
+				case 2: {
+
+					switch (versionBuild) {
+						default:
+						case 7: {
+							updateDatabaseTo_0_2_8(_database);
+						}
+					}
+				}
 			}
 
 		}
@@ -459,6 +470,97 @@ void Database::updateDatabaseTo_0_1_0(QSqlDatabase& _database)
 		//
 		q_updater.exec("ALTER TABLE scenario ADD COLUMN name TEXT DEFAULT(NULL)");
 		q_updater.exec("ALTER TABLE scenario ADD COLUMN synopsis TEXT DEFAULT(NULL)");
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_2_8(QSqlDatabase& _database)
+{
+	//
+	// TODO: заменить при помощи регулярок все
+	//       font-family:'*';
+	//		 font-size:*;
+	//
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		const QRegularExpression rx_fontFamilyCleaner("font-family:([^;]*);");
+		const QRegularExpression rx_fontSizeCleaner("font-size:([^;]*);");
+
+		//
+		// Персонажи
+		//
+		// ... очистим данные
+		//
+		q_updater.exec("SELECT id, description FROM characters");
+		QMap<int, QString> charactersDescriptions;
+		while (q_updater.next()) {
+			const int id = q_updater.record().value("id").toInt();
+			QString description = q_updater.record().value("description").toString();
+			description = description.remove(rx_fontFamilyCleaner);
+			description = description.remove(rx_fontSizeCleaner);
+			charactersDescriptions.insert(id, description);
+		}
+		//
+		// ... обновим данные
+		//
+		q_updater.prepare("UPDATE characters SET description = ? WHERE id = ?");
+		foreach (int id, charactersDescriptions.keys()) {
+			q_updater.addBindValue(charactersDescriptions.value(id));
+			q_updater.addBindValue(id);
+			q_updater.exec();
+		}
+
+		//
+		// Локации
+		//
+		// ... очистим данные
+		//
+		q_updater.exec("SELECT id, description FROM locations");
+		QMap<int, QString> locationsDescriptions;
+		while (q_updater.next()) {
+			const int id = q_updater.record().value("id").toInt();
+			QString description = q_updater.record().value("description").toString();
+			description = description.remove(rx_fontFamilyCleaner);
+			description = description.remove(rx_fontSizeCleaner);
+			locationsDescriptions.insert(id, description);
+		}
+		//
+		// ... обновим данные
+		//
+		q_updater.prepare("UPDATE locations SET description = ? WHERE id = ?");
+		foreach (int id, locationsDescriptions.keys()) {
+			q_updater.addBindValue(locationsDescriptions.value(id));
+			q_updater.addBindValue(id);
+			q_updater.exec();
+		}
+
+		//
+		// Синопсис сценария
+		//
+		// ... очистим данные
+		//
+		q_updater.exec("SELECT id, synopsis FROM scenario");
+		QMap<int, QString> scenarioSynopsis;
+		while (q_updater.next()) {
+			const int id = q_updater.record().value("id").toInt();
+			QString synopsis = q_updater.record().value("synopsis").toString();
+			synopsis = synopsis.remove(rx_fontFamilyCleaner);
+			synopsis = synopsis.remove(rx_fontSizeCleaner);
+			scenarioSynopsis.insert(id, synopsis);
+		}
+		//
+		// ... обновим данные
+		//
+		q_updater.prepare("UPDATE scenario SET synopsis = ? WHERE id = ?");
+		foreach (int id, scenarioSynopsis.keys()) {
+			q_updater.addBindValue(scenarioSynopsis.value(id));
+			q_updater.addBindValue(id);
+			q_updater.exec();
+		}
 	}
 
 	_database.commit();

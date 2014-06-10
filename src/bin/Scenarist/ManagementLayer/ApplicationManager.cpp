@@ -523,20 +523,26 @@ void ApplicationManager::saveCurrentProjectInRecent()
 	//
 	m_startUpManager->addRecentFile(DatabaseLayer::Database::currentFile(), m_scenarioManager->scenarioName());
 }
-
+#include <QDebug>
+#include <QDateTime>
 void ApplicationManager::goToEditCurrentProject()
 {
+	qDebug() << "1: " << QDateTime::currentDateTime().toString("hh:mm:ss:zzz");
 	//
 	// Активируем вкладки
 	//
 	::enableActionsOnProjectOpen();
+	qDebug() << "2: " << QDateTime::currentDateTime().toString("hh:mm:ss:zzz");
 
 	//
 	// Загрузить данные из файла
 	//
 	m_scenarioManager->loadCurrentProject();
+	qDebug() << "3: " << QDateTime::currentDateTime().toString("hh:mm:ss:zzz");
 	m_charactersManager->loadCurrentProject();
+	qDebug() << "4: " << QDateTime::currentDateTime().toString("hh:mm:ss:zzz");
 	m_locationsManager->loadCurrentProject();
+	qDebug() << "5: " << QDateTime::currentDateTime().toString("hh:mm:ss:zzz");
 
 	//
 	// Установим заголовок
@@ -544,16 +550,19 @@ void ApplicationManager::goToEditCurrentProject()
 	QString projectFileName = DatabaseLayer::Database::currentFile();
 	projectFileName = projectFileName.split(QDir::separator()).last();
 	m_view->setWindowTitle(tr("%1[*] - Scenarist").arg(projectFileName));
+	qDebug() << "6: " << QDateTime::currentDateTime().toString("hh:mm:ss:zzz");
 
 	//
 	// Добавим проект к недавно используемым
 	//
 	saveCurrentProjectInRecent();
+	qDebug() << "7: " << QDateTime::currentDateTime().toString("hh:mm:ss:zzz");
 
 	//
 	// Перейти на вкладку редактирования сценария
 	//
 	m_tabs->setCurrent(1);
+	qDebug() << "8: " << QDateTime::currentDateTime().toString("hh:mm:ss:zzz");
 }
 
 void ApplicationManager::initView()
