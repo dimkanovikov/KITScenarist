@@ -12,6 +12,7 @@
 
 
 SpellChecker::SpellChecker(const QString& _userDictionaryPath) :
+	m_spellingLanguage(SpellChecker::Undefined),
 	m_checker(0),
 	m_userDictionaryPath(_userDictionaryPath)
 {
@@ -29,43 +30,47 @@ SpellChecker::~SpellChecker()
 
 void SpellChecker::setSpellingLanguage(SpellChecker::Language _spellingLanguage)
 {
-	//
-	// Удаляем предыдущего проверяющего
-	//
-	delete m_checker;
-	m_checker = 0;
+	if (m_spellingLanguage != _spellingLanguage) {
+		m_spellingLanguage = _spellingLanguage;
 
-	//
-	// Получаем пути к файлам словарей
-	//
-	QString affDictionary = dictionaryFilePath(_spellingLanguage, Affinity);
-	QString dicDictionary = dictionaryFilePath(_spellingLanguage, Dictionary);
+		//
+		// Удаляем предыдущего проверяющего
+		//
+		delete m_checker;
+		m_checker = 0;
 
-	//
-	// Создаём нового проверяющего
-	//
-	m_checker = new Hunspell(affDictionary.toUtf8().constData(),
-							 dicDictionary.toUtf8().constData());
-	m_checkerTextCodec = QTextCodec::codecForName(m_checker->get_dic_encoding());
+		//
+		// Получаем пути к файлам словарей
+		//
+		QString affDictionary = dictionaryFilePath(m_spellingLanguage, Affinity);
+		QString dicDictionary = dictionaryFilePath(m_spellingLanguage, Dictionary);
 
-	//
-	// Проверяющий обязательно должен быть создан
-	//
-	Q_ASSERT(m_checker);
+		//
+		// Создаём нового проверяющего
+		//
+		m_checker = new Hunspell(affDictionary.toUtf8().constData(),
+								 dicDictionary.toUtf8().constData());
+		m_checkerTextCodec = QTextCodec::codecForName(m_checker->get_dic_encoding());
 
-	//
-	// Загружаем слова из пользовательского словаря
-	//
-	if (!m_userDictionaryPath.isNull()) {
-		QFile userDictonaryFile(m_userDictionaryPath);
-		if (userDictonaryFile.open(QIODevice::ReadOnly)) {
-			QTextStream stream(&userDictonaryFile);
-			for(QString word = stream.readLine();
-				!word.isEmpty();
-				word = stream.readLine()) {
-				addWordToChecker(word);
+		//
+		// Проверяющий обязательно должен быть создан
+		//
+		Q_ASSERT(m_checker);
+
+		//
+		// Загружаем слова из пользовательского словаря
+		//
+		if (!m_userDictionaryPath.isNull()) {
+			QFile userDictonaryFile(m_userDictionaryPath);
+			if (userDictonaryFile.open(QIODevice::ReadOnly)) {
+				QTextStream stream(&userDictonaryFile);
+				for(QString word = stream.readLine();
+					!word.isEmpty();
+					word = stream.readLine()) {
+					addWordToChecker(word);
+				}
+				userDictonaryFile.close();
 			}
-			userDictonaryFile.close();
 		}
 	}
 }

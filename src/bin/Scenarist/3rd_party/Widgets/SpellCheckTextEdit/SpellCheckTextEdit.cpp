@@ -51,9 +51,10 @@ SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 
 void SpellCheckTextEdit::setUseSpellChecker(bool _use)
 {
-	m_useSpellChecking->setChecked(_use);
-
-	resetHighlighter();
+	if (m_useSpellChecking->isChecked() != _use) {
+		m_useSpellChecking->setChecked(_use);
+		resetHighlighter();
+	}
 }
 
 void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)

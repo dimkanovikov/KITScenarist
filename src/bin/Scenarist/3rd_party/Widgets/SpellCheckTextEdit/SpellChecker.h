@@ -17,6 +17,7 @@ public:
 	 * @brief Возможные языки для проверки орфографии
 	 */
 	enum Language {
+		Undefined,
 		Russian,
 		RussianWithYo,
 		Ukrainian,
@@ -88,6 +89,11 @@ private:
 	void addWordToChecker(const QString& _word) const;
 
 private:
+	/**
+	 * @brief Текущий язык проверки орфографии
+	 */
+	Language m_spellingLanguage;
+
 	/**
 	 * @brief Объект проверяющий орфографию
 	 */
