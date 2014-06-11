@@ -14,6 +14,7 @@
 SpellChecker::SpellChecker(const QString& _userDictionaryPath) :
 	m_spellingLanguage(SpellChecker::Undefined),
 	m_checker(0),
+	m_checkerTextCodec(0),
 	m_userDictionaryPath(_userDictionaryPath)
 {
 	//
@@ -120,7 +121,7 @@ QStringList SpellChecker::suggestionsForWord(const QString& _word) const
 void SpellChecker::ignoreWord(const QString& _word) const
 {
 	//
-	// Добавим слово в словарный запас проверяющего
+	// Добавим слово в словарный запас проверяющего на текущую сессию
 	//
 	addWordToChecker(_word);
 }
@@ -137,7 +138,7 @@ void SpellChecker::addWordToDictionary(const QString& _word) const
 	//
 	if (!m_userDictionaryPath.isNull()) {
 		QFile userDictonaryFile(m_userDictionaryPath);
-		if (userDictonaryFile.open(QIODevice::Append)) {
+		if (userDictonaryFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
 			QTextStream stream(&userDictonaryFile);
 			stream << _word << "\n";
 			userDictonaryFile.close();
