@@ -45,7 +45,7 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 		initEditor();
 	}
 
-	resetHighlighter();
+	setHighlighterDocument(m_document);
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)

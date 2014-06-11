@@ -47,7 +47,7 @@ protected:
 	/**
 	 * @brief Пересоздание подсвечивающего класса
 	 */
-	void resetHighlighter();
+	void setHighlighterDocument(QTextDocument* _document);
 
 private slots:
 
@@ -89,7 +89,6 @@ private:
 	 * @brief Действия для слова не прошедшего проверку орфографии
 	 */
 	/** @{ */
-	QAction* m_useSpellChecking;
 	QAction* m_ignoreWordAction;
 	QAction* m_addWordToUserDictionaryAction;
 	QList<QAction*> m_suggestionsActions;

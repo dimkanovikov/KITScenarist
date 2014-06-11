@@ -10,12 +10,14 @@
 
 
 namespace {
+	/**
+	 * @brief Максимальное кол-во подсказок для проверки орфографии
+	 */
 	const int SUGGESTIONS_ACTIONS_MAX_COUNT = 5;
 }
 
 SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 	PagesTextEdit(_parent),
-	m_useSpellChecking(new QAction(tr("Spell Checking"), this)),
 	m_spellChecker(0),
 	m_spellCheckHighlighter(0)
 {
@@ -32,10 +34,6 @@ SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 	//
 	// Настраиваем действия контекстного меню для слов не прошедших проверку орфографии
 	//
-	// ... включить/выключить проверку орфографии
-	m_useSpellChecking->setCheckable(true);
-	m_useSpellChecking->setChecked(false);
-	connect(m_useSpellChecking, SIGNAL(triggered(bool)), this, SLOT(setUseSpellChecker(bool)));
 	// ... игнорировать слово
 	m_ignoreWordAction = new QAction(tr("Ignore"), this);
 	connect(m_ignoreWordAction, SIGNAL(triggered()), this, SLOT(aboutIgnoreWord()));
@@ -53,10 +51,7 @@ SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 
 void SpellCheckTextEdit::setUseSpellChecker(bool _use)
 {
-	if (m_useSpellChecking->isChecked() != _use) {
-		m_useSpellChecking->setChecked(_use);
-		resetHighlighter();
-	}
+	m_spellCheckHighlighter->setUseSpellChecker(_use);
 }
 
 void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
@@ -70,7 +65,7 @@ void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 		//
 		// Заново выделим слова не проходящие проверку орфографии вновь заданного языка
 		//
-		m_spellCheckHighlighter->rehighlight();
+		m_spellCheckHighlighter->setSpellChecker(m_spellChecker);
 	}
 }
 
@@ -114,48 +109,37 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 	QMenu* menu = createStandardContextMenu();
 
 	//
-	// Если проверка правописания включена
+	// Корректируем регистр слова
 	//
-	if (m_useSpellChecking->isChecked()) {
-        //
-        // Корректируем регистр слова
-        //
-        QString wordWithoutPunctInCorrectRegister =
-                wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
+	QString wordWithoutPunctInCorrectRegister =
+			wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
 
-		//
-		// Если слово не проходит проверку орфографии добавим дополнительные действия в контекстное меню
-		//
-        if (!m_spellChecker->spellCheckWord(wordWithoutPunctInCorrectRegister)) {
-			// ... действие, перед которым вставляем дополнительные пункты
-			QStringList suggestions = m_spellChecker->suggestionsForWord(wordWithoutPunct);
-			// ... вставляем варианты
-			QAction* actionInsertBefore = menu->actions().first();
-			int addedSuggestionsCount = 0;
-			foreach (const QString& suggestion, suggestions) {
-				if (addedSuggestionsCount < SUGGESTIONS_ACTIONS_MAX_COUNT) {
-					m_suggestionsActions.at(addedSuggestionsCount)->setText(suggestion);
-					menu->insertAction(actionInsertBefore, m_suggestionsActions.at(addedSuggestionsCount));
-					++addedSuggestionsCount;
-				} else {
-					break;
-				}
+	//
+	// Если слово не проходит проверку орфографии добавим дополнительные действия в контекстное меню
+	//
+	if (!m_spellChecker->spellCheckWord(wordWithoutPunctInCorrectRegister)) {
+		// ... действие, перед которым вставляем дополнительные пункты
+		QStringList suggestions = m_spellChecker->suggestionsForWord(wordWithoutPunct);
+		// ... вставляем варианты
+		QAction* actionInsertBefore = menu->actions().first();
+		int addedSuggestionsCount = 0;
+		foreach (const QString& suggestion, suggestions) {
+			if (addedSuggestionsCount < SUGGESTIONS_ACTIONS_MAX_COUNT) {
+				m_suggestionsActions.at(addedSuggestionsCount)->setText(suggestion);
+				menu->insertAction(actionInsertBefore, m_suggestionsActions.at(addedSuggestionsCount));
+				++addedSuggestionsCount;
+			} else {
+				break;
 			}
-			if (addedSuggestionsCount > 0) {
-				menu->insertSeparator(actionInsertBefore);
-			}
-			// ... вставляем дополнительные действия
-			menu->insertAction(actionInsertBefore, m_ignoreWordAction);
-			menu->insertAction(actionInsertBefore, m_addWordToUserDictionaryAction);
+		}
+		if (addedSuggestionsCount > 0) {
 			menu->insertSeparator(actionInsertBefore);
 		}
+		// ... вставляем дополнительные действия
+		menu->insertAction(actionInsertBefore, m_ignoreWordAction);
+		menu->insertAction(actionInsertBefore, m_addWordToUserDictionaryAction);
+		menu->insertSeparator(actionInsertBefore);
 	}
-
-	//
-	// Добавим пункт меню для включения/выключения проверки орфографии
-	//
-//	menu->addSeparator();
-//	menu->addAction(m_useSpellChecking);
 
 	//
 	// Покажем меню, а после очистим от него память
@@ -164,14 +148,9 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 	delete menu;
 }
 
-void SpellCheckTextEdit::resetHighlighter()
+void SpellCheckTextEdit::setHighlighterDocument(QTextDocument* _document)
 {
-	delete m_spellCheckHighlighter;
-	m_spellCheckHighlighter = 0;
-
-	m_spellCheckHighlighter = new SpellCheckHighlighter(0, m_spellChecker);
-	m_spellCheckHighlighter->setDocument(document());
-	m_spellCheckHighlighter->setUseSpellChecker(m_useSpellChecking->isChecked());
+	m_spellCheckHighlighter->setDocument(_document);
 }
 
 void SpellCheckTextEdit::aboutIgnoreWord() const
@@ -194,8 +173,6 @@ void SpellCheckTextEdit::aboutIgnoreWord() const
 
 	//
 	// Уберём выделение с игнорируемых слов
-	//
-	// TODO: может стать причиной тормозов в программе на длинных текстах
 	//
 	m_spellCheckHighlighter->rehighlight();
 }
@@ -220,8 +197,6 @@ void SpellCheckTextEdit::aboutAddWordToUserDictionary() const
 
 	//
 	// Уберём выделение со слов добавленных в словарь
-	//
-	// TODO: может стать причиной тормозов в программе на длинных текстах
 	//
 	m_spellCheckHighlighter->rehighlight();
 }

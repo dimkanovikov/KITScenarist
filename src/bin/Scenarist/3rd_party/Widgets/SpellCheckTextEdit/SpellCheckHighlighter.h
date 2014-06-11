@@ -17,6 +17,11 @@ public:
 	explicit SpellCheckHighlighter(QTextDocument* _parent, SpellChecker* _checker);
 
 	/**
+	 * @brief Установить проверяющего
+	 */
+	void setSpellChecker(SpellChecker* _checker);
+
+	/**
 	 * @brief Включить/выключить проверку орфографии
 	 */
 	void setUseSpellChecker(bool _use);
@@ -31,7 +36,7 @@ private:
 	/**
 	 * @brief Проверяющий орфографию
 	 */
-	SpellChecker* m_spellchecker;
+	SpellChecker* m_spellChecker;
 
 	/**
 	 * @brief Формат текста не прошедшего проверку орфографии
@@ -42,6 +47,11 @@ private:
 	 * @brief Использовать проверяющего
 	 */
 	bool m_useSpellChecker;
+
+	/**
+	 * @brief Слово для очистки подсветки
+	 */
+	QString m_wordForClean;
 };
 
 #endif // SPELLCHECKHIGHLIGHTER_H
