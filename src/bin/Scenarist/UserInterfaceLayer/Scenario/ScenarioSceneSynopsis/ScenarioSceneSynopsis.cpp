@@ -30,6 +30,8 @@ void ScenarioSceneSynopsis::setHeader(const QString& _header)
 void ScenarioSceneSynopsis::setSynopsis(const QString& _synopsis)
 {
 	if (m_synopsis->toHtml() != _synopsis) {
+		disconnect(m_synopsis, SIGNAL(textChanged()), this, SLOT(aboutSynopsisChanged()));
+
 		//
 		// Сформируем значение синопсиса, для корректности последующих сравнений
 		//
@@ -38,6 +40,8 @@ void ScenarioSceneSynopsis::setSynopsis(const QString& _synopsis)
 		m_sourceSynopsis = synopsisDoc.toHtml();
 
 		m_synopsis->setHtml(_synopsis);
+
+		connect(m_synopsis, SIGNAL(textChanged()), this, SLOT(aboutSynopsisChanged()));
 	}
 }
 

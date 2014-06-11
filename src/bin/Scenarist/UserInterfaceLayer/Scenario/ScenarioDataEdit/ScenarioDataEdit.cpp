@@ -27,6 +27,9 @@ QWidget* ScenarioDataEdit::toolbar() const
 
 void ScenarioDataEdit::clear()
 {
+	disconnect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutNameChanged()));
+	disconnect(ui->sourceSynopsis, SIGNAL(textChanged()), this, SLOT(aboutSourceSynopsisChanged()));
+
 	m_sourceName.clear();
 	m_sourceSourceSynopsis = QTextDocument().toHtml();
 
@@ -37,6 +40,9 @@ void ScenarioDataEdit::clear()
 	ui->synopsisStack->setCurrentWidget(ui->sourceSynopsisPage);
 
 	ui->name->setFocus();
+
+	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutNameChanged()));
+	connect(ui->sourceSynopsis, SIGNAL(textChanged()), this, SLOT(aboutSourceSynopsisChanged()));
 }
 
 QString ScenarioDataEdit::scenarioName() const
@@ -46,8 +52,12 @@ QString ScenarioDataEdit::scenarioName() const
 
 void ScenarioDataEdit::setScenarioName(const QString& _name)
 {
+	disconnect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutNameChanged()));
+
 	m_sourceName = _name;
 	ui->name->setText(_name);
+
+	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutNameChanged()));
 }
 
 QString ScenarioDataEdit::scenarioSynopsis() const
@@ -57,6 +67,8 @@ QString ScenarioDataEdit::scenarioSynopsis() const
 
 void ScenarioDataEdit::setScenarioSynopsis(const QString& _synopsis)
 {
+	disconnect(ui->sourceSynopsis, SIGNAL(textChanged()), this, SLOT(aboutSourceSynopsisChanged()));
+
 	//
 	// Сформируем значение синопсиса, для корректности последующих сравнений
 	//
@@ -65,6 +77,8 @@ void ScenarioDataEdit::setScenarioSynopsis(const QString& _synopsis)
 	m_sourceSourceSynopsis = synopsisDoc.toHtml();
 
 	ui->sourceSynopsis->setHtml(_synopsis);
+
+	connect(ui->sourceSynopsis, SIGNAL(textChanged()), this, SLOT(aboutSourceSynopsisChanged()));
 }
 
 void ScenarioDataEdit::setScenarioSynopsisFromScenes(const QString& _synopsis)

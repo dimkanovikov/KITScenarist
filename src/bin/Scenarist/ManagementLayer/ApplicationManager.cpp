@@ -339,6 +339,11 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 			//
 			goToEditCurrentProject();
 		}
+
+		//
+		// Изменим статус окна на сохранение изменений
+		//
+		m_view->setWindowModified(false);
 	}
 }
 
