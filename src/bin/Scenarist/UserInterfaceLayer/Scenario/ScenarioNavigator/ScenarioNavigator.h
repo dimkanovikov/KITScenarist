@@ -2,6 +2,7 @@
 #define SCENARIONAVIGATOR_H
 
 #include <QWidget>
+#include <QModelIndex>
 
 class QAbstractItemModel;
 class QLabel;
@@ -52,7 +53,7 @@ namespace UserInterface
 		/**
 		 * @brief Запрос на удаление элемента
 		 */
-		void removeItem(const QModelIndex& _itemIndex);
+		void removeItems(const QModelIndexList& _itemIndex);
 
 		/**
 		 * @brief Активирована сцена

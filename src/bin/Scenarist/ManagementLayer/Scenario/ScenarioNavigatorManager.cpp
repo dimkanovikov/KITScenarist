@@ -100,7 +100,7 @@ void ScenarioNavigatorManager::initConnections()
     }
 
 	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)), Qt::UniqueConnection);
-	connect(m_navigator, SIGNAL(removeItem(QModelIndex)), this, SIGNAL(removeItem(QModelIndex)), Qt::UniqueConnection);
+	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SIGNAL(removeItems(QModelIndexList)), Qt::UniqueConnection);
     connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)),
             this, SIGNAL(sceneChoosed(QModelIndex)), Qt::UniqueConnection);
 	connect(m_navigator, SIGNAL(undoPressed()), this, SIGNAL(undoPressed()), Qt::UniqueConnection);

@@ -10,6 +10,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
+#include <QApplication>
 #include <QComboBox>
 #include <QCryptographicHash>
 #include <QLabel>
@@ -206,11 +207,17 @@ void ScenarioTextEditWidget::removeText(int _from, int _to)
 	// Если остаётся пустой блок, стираем его тоже
 	//
 	if (cursor.block().text().isEmpty()) {
+		//
+		// Стирать необходимо через имитацию удаления редактором,
+		// для корректного обновления модели сцен
+		//
+		QKeyEvent* event = 0;
 		if (cursor.atStart()) {
-			cursor.deleteChar();
+			event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Delete, Qt::NoModifier);
 		} else {
-			cursor.deletePreviousChar();
+			event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier);
 		}
+		QApplication::sendEvent(m_editor, event);
 	}
 
 	cursor.endEditBlock();

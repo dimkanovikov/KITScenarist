@@ -2,6 +2,7 @@
 #define SCENARIONAVIGATORMANAGER_H
 
 #include <QObject>
+#include <QModelIndex>
 
 class QLabel;
 
@@ -51,7 +52,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Запрос на удаление элемента
 		 */
-		void removeItem(const QModelIndex& _itemIndex);
+		void removeItems(const QModelIndexList& _itemIndex);
 
 		/**
 		 * @brief Активирована сцена

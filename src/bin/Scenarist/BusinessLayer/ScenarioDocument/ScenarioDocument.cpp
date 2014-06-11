@@ -54,7 +54,8 @@ int ScenarioDocument::durationAtPosition(int _position) const
 		// Определим сцену, в которой находится курсор
 		//
 		QMap<int, ScenarioModelItem*>::const_iterator iter = m_modelItems.lowerBound(_position);
-		if (iter.key() > _position) {
+		if (iter.key() > _position
+			&& iter != m_modelItems.begin()) {
 			--iter;
 		}
 

@@ -96,9 +96,9 @@ void ScenarioNavigator::aboutAddItem()
 
 void ScenarioNavigator::aboutRemoveItem()
 {
-	QModelIndex currentItemIndex = m_navigationTree->currentIndex();
-	if (currentItemIndex.isValid()) {
-		emit removeItem(currentItemIndex);
+	QModelIndexList indexes = m_navigationTree->selectionModel()->selectedIndexes();
+	if (!indexes.isEmpty()) {
+		emit removeItems(indexes);
 	}
 }
 

@@ -2,6 +2,7 @@
 #define SCENARIOMANAGER_H
 
 #include <QObject>
+#include <QModelIndex>
 
 class QSplitter;
 class QComboBox;
@@ -143,7 +144,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Удалить заданныё элемент
 		 */
-		void aboutRemoveItem(const QModelIndex& _itemIndex);
+		void aboutRemoveItems(const QModelIndexList& _itemIndex);
 
 	private:
 		/**
