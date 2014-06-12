@@ -36,14 +36,10 @@ QWidget* ScenarioNavigatorManager::view() const
 
 void ScenarioNavigatorManager::setNavigationModel(ScenarioModel* _model)
 {
-	if (m_scenarioModel != 0) {
-		m_scenarioModel->disconnect();
-	}
+	disconnectModel();
 	m_scenarioModel = _model;
-
 	m_navigator->setModel(m_scenarioModel);
-
-	initConnections();
+	connectModel();
 
 	if (m_scenarioModel != 0) {
 		aboutModelUpdated();
@@ -94,15 +90,27 @@ void ScenarioNavigatorManager::initView()
 
 void ScenarioNavigatorManager::initConnections()
 {
-    if (m_scenarioModel != 0) {
-        connect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-                this, SLOT(aboutModelUpdated()));
-    }
+	connectModel();
 
-	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)), Qt::UniqueConnection);
-	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SIGNAL(removeItems(QModelIndexList)), Qt::UniqueConnection);
-    connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)),
-            this, SIGNAL(sceneChoosed(QModelIndex)), Qt::UniqueConnection);
-	connect(m_navigator, SIGNAL(undoPressed()), this, SIGNAL(undoPressed()), Qt::UniqueConnection);
-	connect(m_navigator, SIGNAL(redoPressed()), this, SIGNAL(redoPressed()), Qt::UniqueConnection);
+	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)));
+	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SIGNAL(removeItems(QModelIndexList)));
+	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
+	connect(m_navigator, SIGNAL(undoPressed()), this, SIGNAL(undoPressed()));
+	connect(m_navigator, SIGNAL(redoPressed()), this, SIGNAL(redoPressed()));
+}
+
+void ScenarioNavigatorManager::connectModel()
+{
+	if (m_scenarioModel != 0) {
+		connect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
+		connect(m_scenarioModel, SIGNAL(mimeDropped(int)), this, SIGNAL(sceneChoosed(int)));
+	}
+}
+
+void ScenarioNavigatorManager::disconnectModel()
+{
+	if (m_scenarioModel != 0) {
+		disconnect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
+		disconnect(m_scenarioModel, SIGNAL(mimeDropped(int)), this, SIGNAL(sceneChoosed(int)));
+	}
 }

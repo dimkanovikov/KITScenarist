@@ -58,6 +58,7 @@ namespace ManagementLayer
 		 * @brief Активирована сцена
 		 */
 		void sceneChoosed(const QModelIndex& _index);
+		void sceneChoosed(int atPosition);
 
 		/**
 		 * @brief Запрос отмены действия
@@ -90,6 +91,14 @@ namespace ManagementLayer
 		 * @brief Настроить соединения
 		 */
 		void initConnections();
+
+		/**
+		 * @brief Настроить соединения модели
+		 */
+		/** @{ */
+		void connectModel();
+		void disconnectModel();
+		/** @} */
 
 	private:
 

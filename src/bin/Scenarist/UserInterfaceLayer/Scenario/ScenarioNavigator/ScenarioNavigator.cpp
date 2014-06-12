@@ -1,6 +1,7 @@
 #include "ScenarioNavigator.h"
 
 #include "ScenarioNavigatorItemDelegate.h"
+#include "ScenarioNavigatorProxyStyle.h"
 
 #include <QHBoxLayout>
 #include <QKeyEvent>
@@ -11,6 +12,7 @@
 
 using UserInterface::ScenarioNavigator;
 using UserInterface::ScenarioNavigatorItemDelegate;
+using UserInterface::ScenarioNavigatorProxyStyle;
 
 
 ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
@@ -124,6 +126,7 @@ void ScenarioNavigator::initView()
 	m_navigationTree->setHeaderHidden(true);
 	m_navigationTree->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	m_navigationTree->setSelectionMode(QAbstractItemView::ContiguousSelection);
+	m_navigationTree->setStyle(new ScenarioNavigatorProxyStyle(m_navigationTree->style()));
 	m_navigationTree->installEventFilter(this);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;

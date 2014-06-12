@@ -134,7 +134,10 @@ namespace ManagementLayer
 		/**
 		 * @brief Сместить курсор к выбранной сцене
 		 */
+		/** @{ */
 		void aboutMoveCursorToItem(const QModelIndex& _index);
+		void aboutMoveCursorToItem(int _itemPosition);
+		/** @} */
 
 		/**
 		 * @brief Добавить элемент, после заданного

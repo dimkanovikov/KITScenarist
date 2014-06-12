@@ -91,6 +91,12 @@ namespace BusinessLogic
 		 */
 		QModelIndex indexForItem(ScenarioModelItem* _item) const;
 
+	signals:
+		/**
+		 * @brief Данные опущены в позиции
+		 */
+		void mimeDropped(int _atPosition);
+
 	private:
 		/**
 		 * @brief Корневой элемент дерева, то же самое, что и m_scenarioItem

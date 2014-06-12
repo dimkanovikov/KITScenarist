@@ -40,8 +40,9 @@ namespace BusinessLogic
 
 		/**
 		 * @brief Загрузить сценарий из xml после заданного элемента для его родителя
+		 * @return Позиция вставки
 		 */
-		void xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml, bool _removeLastMime);
+		int xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml, bool _removeLastMime);
 
 	private:
 		/**

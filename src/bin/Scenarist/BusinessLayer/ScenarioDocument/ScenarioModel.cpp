@@ -302,8 +302,9 @@ bool ScenarioModel::dropMimeData(
 				//
 				// Вставим данные
 				//
-				m_xmlHandler->xmlToScenario(parentItem, insertBeforeItem, _data->data(MIME_TYPE), removeLastMime);
+				int insertPosition = m_xmlHandler->xmlToScenario(parentItem, insertBeforeItem, _data->data(MIME_TYPE), removeLastMime);
 				isDropSucceed = true;
+				emit mimeDropped(insertPosition);
 
 				break;
 			}

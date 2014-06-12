@@ -378,6 +378,11 @@ void ScenarioManager::aboutMoveCursorToItem(const QModelIndex& _index)
 	m_textEditManager->setCursorPosition(position);
 }
 
+void ScenarioManager::aboutMoveCursorToItem(int _itemPosition)
+{
+	m_textEditManager->setCursorPosition(_itemPosition);
+}
+
 void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, const QString& _itemHeader, int _itemType)
 {
 	int position = m_scenario->itemEndPosition(_afterItemIndex);
@@ -457,6 +462,7 @@ void ScenarioManager::initConnections()
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,QString,int)), this, SLOT(aboutAddItem(QModelIndex,QString,int)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
     connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
+	connect(m_navigatorManager, SIGNAL(sceneChoosed(int)), this, SLOT(aboutMoveCursorToItem(int)));
 	connect(m_navigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
 	connect(m_navigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
 

@@ -470,7 +470,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 	cursor.endEditBlock();
 }
 
-void ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml, bool _removeLastMime)
+int ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore, const QString& _xml, bool _removeLastMime)
 {
 	//
 	// Определим позицию для вставки данных
@@ -525,6 +525,8 @@ void ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelI
 		//
 		cursor.endEditBlock();
 	}
+
+	return insertPosition;
 }
 
 int ScenarioXml::removeLastMime()
