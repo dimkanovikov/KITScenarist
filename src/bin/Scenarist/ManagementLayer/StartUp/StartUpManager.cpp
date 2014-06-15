@@ -140,7 +140,14 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 		//
 		// Извлекаем все версии и формируем ссылку на последнюю из них
 		//
+#ifdef Q_OS_WIN
 		QRegularExpression rx_updateFiner("scenarist-setup-(\\d+.\\d+.\\d+).exe");
+#elif defined Q_OS_LINUX
+		QRegularExpression rx_updateFiner("scenarist-setup-(\\d+.\\d+.\\d+)_i386.deb");
+#elif defined Q_OS_MAC
+		QRegularExpression rx_updateFiner("scenarist-setup-(\\d+.\\d+.\\d+).dmg");
+#endif
+
 		QRegularExpressionMatch match = rx_updateFiner.match(updatesPageData);
 		QList<QString> versions;
 		while (match.hasMatch()) {
@@ -167,12 +174,17 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 			//
 			if (QApplication::applicationVersion() < maxVersion) {
 				QString updateInfo =
-						tr("Released version %1 "
-						   "<a href=\"http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe\" "
-						   "style=\"color:#2b78da;\">download</a> "
-						   "or <a href=\"http://dimkanovikov.pro/kit/scenarist/news.html\" "
-						   "style=\"color:#2b78da;\">read more</a>.")
-						.arg(maxVersion);
+						tr("Released version %1 ").arg(maxVersion)
+#ifdef Q_OS_WIN
+						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-%1.exe\" "
+#elif defined Q_OS_LINUX
+						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/linux/\" "
+#elif defined Q_OS_MAC
+						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-%1.dmg\" "
+#endif
+						+ tr("style=\"color:#2b78da;\">download</a> "
+							 "or <a href=\"http://dimkanovikov.pro/kit/scenarist/news.html\" "
+							 "style=\"color:#2b78da;\">read more</a>.");
 				m_view->setUpdateInfo(updateInfo);
 			}
 		}
@@ -214,5 +226,13 @@ void StartUpManager::checkNewVersion()
 	connect(manager, SIGNAL(finished(QNetworkReply*)),
 			this, SLOT(aboutLoadUpdatesInfo(QNetworkReply*)));
 
-	manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/downloads/")));
+#ifdef Q_OS_WIN
+	manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/scenarist/downloads/windows/")));
+#elif defined Q_OS_LINUX
+	manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/scenarist/downloads/linux/")));
+#elif defined Q_OS_MAC
+	//
+	// TODO: macos updates
+	//
+#endif
 }
