@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Скрипт для запуска Редактора Пикет в отладочном режиме
+#
+#export MALLOC_CHECK_=2
+
+TOPDIR="/usr/share/KIT/Scenarist"
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TOPDIR/libs/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TOPDIR/plugins/
+$TOPDIR/Scenarist

@@ -1,0 +1,12 @@
+Package: scenarist
+Version: 0.2.9
+Provides: scenarist
+Maintainer: Dimka Novikov <to@dimkanovikov.pro>
+Architecture: amd64
+Installed-Size: 65391
+Priority: optional
+Section: text
+Homepage: http://dimkanovikov.pro/kit/scenarist
+Description: Scenarist is screenwriting software.
+ Application to write scenarios.
+
