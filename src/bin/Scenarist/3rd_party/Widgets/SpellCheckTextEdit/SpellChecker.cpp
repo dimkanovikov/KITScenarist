@@ -49,8 +49,8 @@ void SpellChecker::setSpellingLanguage(SpellChecker::Language _spellingLanguage)
 		//
 		// Создаём нового проверяющего
 		//
-		m_checker = new Hunspell(affDictionary.toUtf8().constData(),
-								 dicDictionary.toUtf8().constData());
+		m_checker = new Hunspell(affDictionary.toLocal8Bit().constData(),
+								 dicDictionary.toLocal8Bit().constData());
 		m_checkerTextCodec = QTextCodec::codecForName(m_checker->get_dic_encoding());
 
 		//
