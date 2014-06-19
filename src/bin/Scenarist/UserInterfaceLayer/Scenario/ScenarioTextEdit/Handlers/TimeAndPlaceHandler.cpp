@@ -216,10 +216,10 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 					}
 
 					//
-					// В противном случае перейдём к блоку описания действия
+					// В противном случае перейдём к блоку участников сцены
 					//
 					else {
-						handleEnter();
+						editor()->addScenarioBlock(ScenarioTextBlockStyle::SceneCharacters);
 					}
 				} else {
 					//! Внутри блока

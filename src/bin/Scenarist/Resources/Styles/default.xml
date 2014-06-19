@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<style name="Стандартный">
+  <block id="time_and_place"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="true"
+	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 />
+  <block id="scene_characters"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="true"
+	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 />
+  <block id="action"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="false"
+	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 />
+  <block id="character"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="true"
+	 alignment="left" top_space="1" left_indent="67.5" right_indent="0"
+	 />
+  <block id="parenthetical"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="false"
+	 alignment="left" top_space="0" left_indent="55" right_indent="45"
+	 />
+  <block id="dialog"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="false"
+	 alignment="left" top_space="0" left_indent="37.5" right_indent="37.5"
+	 />
+  <block id="transition"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="true"
+	 alignment="right" top_space="1" left_indent="0" right_indent="0"
+	 />
+  <block id="note"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="true"
+	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 />
+  <block id="title"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="false"
+	 alignment="left" top_space="1" left_indent="55" right_indent="45"
+	 />
+  <block id="nonprintable_text"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="false"
+	 alignment="left" top_space="1" left_indent="67.5" right_indent="0"
+	 />
+  <block id="scenes_group"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="true"
+	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 />
+  <block id="folder"
+	 font_family="Courier New" font_size="12"
+	 bold="false" italic="false" underline="false" uppercase="true"
+	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 />
+</style>

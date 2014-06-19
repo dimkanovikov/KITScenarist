@@ -43,6 +43,7 @@
         <file>Icons/Editing/format.png</file>
         <file>Icons/logo.png</file>
         <file>Images/logo.png</file>
+        <file>Icons/style.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
@@ -53,5 +54,8 @@
         <file>UI/style.qss</file>
         <file>UI/menuarrow.png</file>
         <file>UI/comboboxarrow.png</file>
+    </qresource>
+    <qresource prefix="/Styles">
+        <file>Styles/default.xml</file>
     </qresource>
 </RCC>

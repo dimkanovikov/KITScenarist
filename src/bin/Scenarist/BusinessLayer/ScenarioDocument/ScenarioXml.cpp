@@ -106,6 +106,13 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					break;
 				}
 
+				case ScenarioTextBlockStyle::SceneCharacters: {
+					writer.writeStartElement("scene_characters");
+					writer.writeCDATA(textToSave);
+					writer.writeEndElement();
+					break;
+				}
+
 				case ScenarioTextBlockStyle::Action: {
 					writer.writeStartElement("action");
 					writer.writeCDATA(textToSave);
@@ -346,6 +353,8 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 				QString tokenName = reader.name().toString();
 				if (tokenName == "time_and_place") {
 					tokenType = ScenarioTextBlockStyle::TimeAndPlace;
+				} else if (tokenName == "scene_characters") {
+					tokenType = ScenarioTextBlockStyle::SceneCharacters;
 				} else if (tokenName == "action") {
 					tokenType = ScenarioTextBlockStyle::Action;
 				} else if (tokenName == "character") {

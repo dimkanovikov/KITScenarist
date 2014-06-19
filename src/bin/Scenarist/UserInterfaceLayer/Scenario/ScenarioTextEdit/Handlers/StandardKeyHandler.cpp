@@ -96,6 +96,7 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 			 *
 				Время и место: Ctrl+Enter
 				Описание действия: Ctrl+J (на русской раскладке это Ctrl+О)
+				Участники сцены: Ctrl+E (на русской раскладке это Ctrl+У)
 				Персонаж: Ctrl+U (на русской раскладке это Ctrl+Г (герой))
 				Диалог: Ctrl+L (на русской раскладке это Ctrl+Д)
 				Ремарка: Ctrl+H (на русской раскладке это Ctrl+Р)
@@ -111,6 +112,11 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 			case Qt::Key_Enter:
 			case Qt::Key_Return: {
 				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+				break;
+			}
+
+			case Qt::Key_E: {
+				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::SceneCharacters);
 				break;
 			}
 
@@ -845,6 +851,9 @@ int StandardKeyHandler::keyCharacterToQtKey(const QString& _keyCharacter) const
 		} else if (keyCharacter == "v"
 				   || keyCharacter == QString::fromUtf8("м")) {
 			qtKey = Qt::Key_V;
+		} else if (keyCharacter == "e"
+				   || keyCharacter == QString::fromUtf8("у")) {
+			qtKey = Qt::Key_E;
 		} else if (keyCharacter == "j"
 				   || keyCharacter == QString::fromUtf8("о")) {
 			qtKey = Qt::Key_J;

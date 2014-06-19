@@ -159,7 +159,8 @@ SOURCES += main.cpp \
     3rd_party/Widgets/SearchWidget/SearchWidget.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp \
     3rd_party/Widgets/PagesTextEdit/PageMetrics.cpp \
-    UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp
+    UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -296,7 +297,8 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.h \
     3rd_party/Widgets/PagesTextEdit/PageMetrics.h \
     3rd_party/Helpers/TextEditHelper.h \
-    UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.h
+    UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -310,7 +312,6 @@ RESOURCES += \
 	Resources/Resources.qrc
 
 OTHER_FILES += \
-	TODO \
 	settings_keys \
 	scenario_settings_keys \
     logo.ico \

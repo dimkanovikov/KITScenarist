@@ -74,6 +74,12 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 			break;
 		}
 
+		case SceneCharacters: {
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
+			m_pimpl->charFormat.setFontCapitalization(QFont::AllUppercase);
+			break;
+		}
+
 		case Action: {
 			m_pimpl->blockFormat.setTopMargin(lineHeight);
 			break;
@@ -186,6 +192,10 @@ QFont ScenarioTextBlockStyle::blockFont() const
 			break;
 		}
 
+		case SceneCharacters: {
+			break;
+		}
+
 		case Action: {
 			break;
 		}
@@ -236,10 +246,6 @@ QFont ScenarioTextBlockStyle::blockFont() const
 			break;
 		}
 	}
-
-//	DataStorageLayer::StorageFacade::settingsStorage()->value(
-//		"scenario-editor/nonprintable-text-color",
-//		DataStorageLayer::SettingsStorage::ApplicationSettings);
 
 	//
 	// TODO: настройки шрифта

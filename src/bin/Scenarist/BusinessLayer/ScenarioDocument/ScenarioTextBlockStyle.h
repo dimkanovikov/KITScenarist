@@ -23,6 +23,7 @@ namespace BusinessLogic
 		enum Type {
 			Undefined,		//!< Неопределён
 			TimeAndPlace,	//!< Время - место
+			SceneCharacters,//!< Персонажи сцены
 			Action,			//!< Описание действия
 			Character,		//!< Имя героя
 			Parenthetical,	//!< Ремарка
@@ -31,7 +32,7 @@ namespace BusinessLogic
 			Note,			//!< Примечание
 			TitleHeader,	//!< Заголовок титра
 			Title,			//!< Текст титра
-			NoprintableText,	//!< Простой текст
+			NoprintableText,//!< Непечатный текст
 			SceneGroupHeader,	//!< Заголовок группы сцен
 			SceneGroupFooter,	//!< Окончание группы сцен
 			FolderHeader,	//!< Заголовок папки

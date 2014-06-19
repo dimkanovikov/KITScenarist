@@ -309,35 +309,38 @@ void ScenarioTextEditWidget::initView()
 	m_textStyles->addItem(tr("Time and Place"), ScenarioTextBlockStyle::TimeAndPlace);
 	m_textStyles->setItemData(0, tr("Ctrl+Enter"), Qt::ToolTipRole);
 
+	m_textStyles->addItem(tr("Scene Characters"), ScenarioTextBlockStyle::SceneCharacters);
+	m_textStyles->setItemData(1, tr("Ctrl+E"), Qt::ToolTipRole);
+
 	m_textStyles->addItem(tr("Action"), ScenarioTextBlockStyle::Action);
-	m_textStyles->setItemData(1, tr("Ctrl+J"), Qt::ToolTipRole);
+	m_textStyles->setItemData(2, tr("Ctrl+J"), Qt::ToolTipRole);
 
 	m_textStyles->addItem(tr("Character"), ScenarioTextBlockStyle::Character);
-	m_textStyles->setItemData(2, tr("Ctrl+U"), Qt::ToolTipRole);
+	m_textStyles->setItemData(3, tr("Ctrl+U"), Qt::ToolTipRole);
 
 	m_textStyles->addItem(tr("Dialog"), ScenarioTextBlockStyle::Dialog);
-	m_textStyles->setItemData(3, tr("Ctrl+L"), Qt::ToolTipRole);
+	m_textStyles->setItemData(4, tr("Ctrl+L"), Qt::ToolTipRole);
 
 	m_textStyles->addItem(tr("Parethentcial"), ScenarioTextBlockStyle::Parenthetical);
-	m_textStyles->setItemData(4, tr("Ctrl+H"), Qt::ToolTipRole);
+	m_textStyles->setItemData(5, tr("Ctrl+H"), Qt::ToolTipRole);
 
 	m_textStyles->addItem(tr("Title"), ScenarioTextBlockStyle::Title);
-	m_textStyles->setItemData(5, tr("Ctrl+N"), Qt::ToolTipRole);
+	m_textStyles->setItemData(6, tr("Ctrl+N"), Qt::ToolTipRole);
 
 	m_textStyles->addItem(tr("Note"), ScenarioTextBlockStyle::Note);
-	m_textStyles->setItemData(6, tr("Ctrl+P"), Qt::ToolTipRole);
+	m_textStyles->setItemData(7, tr("Ctrl+P"), Qt::ToolTipRole);
 
 	m_textStyles->addItem(tr("Transition"), ScenarioTextBlockStyle::Transition);
-	m_textStyles->setItemData(7, tr("Ctrl+G"), Qt::ToolTipRole);
+	m_textStyles->setItemData(8, tr("Ctrl+G"), Qt::ToolTipRole);
 
 	m_textStyles->addItem(tr("Noprintable Text"), ScenarioTextBlockStyle::NoprintableText);
-	m_textStyles->setItemData(8, tr("Ctrl+Y"), Qt::ToolTipRole);
+	m_textStyles->setItemData(9, tr("Ctrl+Y"), Qt::ToolTipRole);
 
 	m_textStyles->addItem(tr("Scenes Group"), ScenarioTextBlockStyle::SceneGroupHeader);
-	m_textStyles->setItemData(9, tr("Ctrl+D"), Qt::ToolTipRole);
+	m_textStyles->setItemData(10, tr("Ctrl+D"), Qt::ToolTipRole);
 
 	m_textStyles->addItem(tr("Folder"), ScenarioTextBlockStyle::FolderHeader);
-	m_textStyles->setItemData(10, tr("Ctrl+Space"), Qt::ToolTipRole);
+	m_textStyles->setItemData(11, tr("Ctrl+Space"), Qt::ToolTipRole);
 
 	m_undo->setIcon(QIcon(":/Graphics/Icons/Editing/undo.png"));
 	m_undo->setToolTip(tr("Undo last action (Ctrl+Z)"));

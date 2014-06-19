@@ -17,6 +17,7 @@ namespace KeyProcessingLayer
 	class PrepareHandler;
 	class PreHandler;
 	class TimeAndPlaceHandler;
+	class SceneCharactersHandler;
 	class ActionHandler;
 	class CharacterHandler;
 	class ParentheticalHandler;
@@ -76,6 +77,7 @@ namespace KeyProcessingLayer
 		PrepareHandler* m_prepareHandler;
 		PreHandler* m_preHandler;
 		TimeAndPlaceHandler* m_sceneHeaderHandler;
+		SceneCharactersHandler* m_sceneCharactersHandler;
 		ActionHandler* m_actionHandler;
 		CharacterHandler* m_characterHandler;
 		ParentheticalHandler* m_parentheticalHandler;
