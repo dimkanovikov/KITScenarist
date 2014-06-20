@@ -160,7 +160,8 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp \
     3rd_party/Widgets/PagesTextEdit/PageMetrics.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.cpp
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.cpp \
+    UserInterfaceLayer/Settings/StyleDialog.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -298,14 +299,16 @@ HEADERS += \
     3rd_party/Widgets/PagesTextEdit/PageMetrics.h \
     3rd_party/Helpers/TextEditHelper.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.h
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.h \
+    UserInterfaceLayer/Settings/StyleDialog.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
     UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui \
     UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui \
     UserInterfaceLayer/Settings/SettingsView.ui \
-    UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui
+    UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui \
+    UserInterfaceLayer/Settings/StyleDialog.ui
 
 
 RESOURCES += \
