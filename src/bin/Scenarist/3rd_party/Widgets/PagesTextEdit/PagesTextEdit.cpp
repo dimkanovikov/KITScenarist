@@ -12,7 +12,7 @@ namespace {
 	/**
 	 * @brief Минимальный размер коэффициэнта масштабирования
 	 */
-	const int MINIMUM_ZOOM_RANGE = -10;
+	const int MINIMUM_ZOOM_RANGE = -6;
 
 	/**
 	 * @brief Идентификатор свойства масштабирования для блока
