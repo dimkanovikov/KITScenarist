@@ -47,9 +47,10 @@ QString LocationsDataEdit::name() const
 
 void LocationsDataEdit::setDescription(const QString& _description)
 {
-	m_sourceDescription = _description;
-
 	ui->description->setHtml(_description);
+
+	m_sourceDescription = ui->description->toHtml();
+	ui->description->setHtml(m_sourceDescription);
 }
 
 QString LocationsDataEdit::description() const
@@ -119,9 +120,14 @@ void LocationsDataEdit::initConnections()
 
 void LocationsDataEdit::initStyleSheet()
 {
+	ui->addPhoto->setProperty("inTopPanel", true);
+	ui->save->setProperty("inTopPanel", true);
+	ui->cancel->setProperty("inTopPanel", true);
+
 	ui->topEmptyLabel->setProperty("inTopPanel", true);
 	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
 	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
+	ui->topEmptyLabel_2->setProperty("inTopPanel", true);
 
 	ui->mainContainer->setProperty("mainContainer", true);
 }

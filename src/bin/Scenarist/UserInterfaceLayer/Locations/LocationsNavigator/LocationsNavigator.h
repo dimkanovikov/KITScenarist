@@ -105,11 +105,6 @@ namespace UserInterface
 		QToolButton* m_addLocation;
 
 		/**
-		 * @brief Кнопка редактирования локации
-		 */
-		QToolButton* m_editLocation;
-
-		/**
 		 * @brief Кнопка удаления локации
 		 */
 		QToolButton* m_removeLocation;

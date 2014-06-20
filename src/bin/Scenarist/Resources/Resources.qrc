@@ -44,6 +44,9 @@
         <file>Icons/logo.png</file>
         <file>Images/logo.png</file>
         <file>Icons/style.png</file>
+        <file>Icons/Editing/photo.png</file>
+        <file>Icons/Editing/clear.png</file>
+        <file>Icons/Editing/save.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

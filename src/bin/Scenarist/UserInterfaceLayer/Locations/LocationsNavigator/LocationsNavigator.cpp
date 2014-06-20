@@ -17,7 +17,6 @@ LocationsNavigator::LocationsNavigator(QWidget *parent) :
 	QWidget(parent),
 	m_title(new QLabel(this)),
 	m_addLocation(new QToolButton(this)),
-	m_editLocation(new QToolButton(this)),
 	m_removeLocation(new QToolButton(this)),
 	m_refreshLocations(new QToolButton(this)),
 	m_endTitle(new QLabel(this)),
@@ -96,9 +95,6 @@ void LocationsNavigator::initView()
 	m_addLocation->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_addLocation->setToolTip(tr("Create New Location"));
 
-	m_editLocation->setIcon(QIcon(":/Graphics/Icons/Editing/edit.png"));
-	m_editLocation->setToolTip(tr("Edit Selected Location"));
-
 	m_removeLocation->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
 	m_removeLocation->setToolTip(tr("Remove Selected Location"));
 
@@ -116,7 +112,6 @@ void LocationsNavigator::initView()
 	topLayout->setSpacing(0);
 	topLayout->addWidget(m_title);
 	topLayout->addWidget(m_addLocation);
-	topLayout->addWidget(m_editLocation);
 	topLayout->addWidget(m_removeLocation);
 	topLayout->addWidget(m_refreshLocations);
 	topLayout->addWidget(m_endTitle);
@@ -133,7 +128,6 @@ void LocationsNavigator::initView()
 void LocationsNavigator::initConnections()
 {
 	connect(m_addLocation, SIGNAL(clicked()), this, SIGNAL(addLocation()));
-	connect(m_editLocation, SIGNAL(clicked()), this, SLOT(aboutEditLocation()));
 	connect(m_removeLocation, SIGNAL(clicked()), this, SLOT(aboutRemoveLocation()));
 	connect(m_refreshLocations, SIGNAL(clicked()), this, SIGNAL(refreshLocations()));
 }
@@ -147,7 +141,6 @@ void LocationsNavigator::initStyleSheet()
 	m_endTitle->setProperty("topPanelRightBordered", true);
 
 	m_addLocation->setProperty("inTopPanel", true);
-	m_editLocation->setProperty("inTopPanel", true);
 	m_removeLocation->setProperty("inTopPanel", true);
 	m_refreshLocations->setProperty("inTopPanel", true);
 

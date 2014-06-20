@@ -105,11 +105,6 @@ namespace UserInterface
 		QToolButton* m_addCharacter;
 
 		/**
-		 * @brief Кнопка редактирования персонажа
-		 */
-		QToolButton* m_editCharacter;
-
-		/**
 		 * @brief Кнопка удаления персонажа
 		 */
 		QToolButton* m_removeCharacter;

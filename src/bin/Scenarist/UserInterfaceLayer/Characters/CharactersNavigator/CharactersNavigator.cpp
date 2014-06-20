@@ -17,7 +17,6 @@ CharactersNavigator::CharactersNavigator(QWidget *parent) :
 	QWidget(parent),
 	m_title(new QLabel(this)),
 	m_addCharacter(new QToolButton(this)),
-	m_editCharacter(new QToolButton(this)),
 	m_removeCharacter(new QToolButton(this)),
 	m_refreshCharacters(new QToolButton(this)),
 	m_endTitle(new QLabel(this)),
@@ -96,9 +95,6 @@ void CharactersNavigator::initView()
 	m_addCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_addCharacter->setToolTip(tr("Create New Character"));
 
-	m_editCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/edit.png"));
-	m_editCharacter->setToolTip(tr("Edit Selected Character"));
-
 	m_removeCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
 	m_removeCharacter->setToolTip(tr("Remove Selected Character"));
 
@@ -116,7 +112,6 @@ void CharactersNavigator::initView()
 	topLayout->setSpacing(0);
 	topLayout->addWidget(m_title);
 	topLayout->addWidget(m_addCharacter);
-	topLayout->addWidget(m_editCharacter);
 	topLayout->addWidget(m_removeCharacter);
 	topLayout->addWidget(m_refreshCharacters);
 	topLayout->addWidget(m_endTitle);
@@ -133,7 +128,6 @@ void CharactersNavigator::initView()
 void CharactersNavigator::initConnections()
 {
 	connect(m_addCharacter, SIGNAL(clicked()), this, SIGNAL(addCharacter()));
-	connect(m_editCharacter, SIGNAL(clicked()), this, SLOT(aboutEditCharacter()));
 	connect(m_removeCharacter, SIGNAL(clicked()), this, SLOT(aboutRemoveCharacter()));
 	connect(m_refreshCharacters, SIGNAL(clicked()), this, SIGNAL(refreshCharacters()));
 }
@@ -147,7 +141,6 @@ void CharactersNavigator::initStyleSheet()
 	m_endTitle->setProperty("topPanelRightBordered", true);
 
 	m_addCharacter->setProperty("inTopPanel", true);
-	m_editCharacter->setProperty("inTopPanel", true);
 	m_removeCharacter->setProperty("inTopPanel", true);
 	m_refreshCharacters->setProperty("inTopPanel", true);
 

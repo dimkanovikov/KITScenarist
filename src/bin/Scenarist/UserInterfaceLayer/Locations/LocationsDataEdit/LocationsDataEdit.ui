@@ -29,14 +29,25 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0">
+   <item row="0" column="4">
     <widget class="QLabel" name="topEmptyLabel">
      <property name="text">
       <string/>
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="0" column="0">
+    <widget class="QToolButton" name="addPhoto">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../Resources/Resources.qrc">
+       <normaloff>:/Graphics/Icons/Editing/photo.png</normaloff>:/Graphics/Icons/Editing/photo.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="5">
     <widget class="QWidget" name="mainContainer" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -47,33 +58,6 @@
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="3">
-         <widget class="QPushButton" name="cancel">
-          <property name="text">
-           <string>Cancel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="addPhoto">
-          <property name="text">
-           <string>Add Photo</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QPushButton" name="save">
-          <property name="text">
-           <string>Save</string>
-          </property>
-          <property name="autoDefault">
-           <bool>true</bool>
-          </property>
-          <property name="default">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0" rowspan="2">
          <widget class="QLabel" name="sourceName">
           <property name="sizePolicy">
@@ -147,12 +131,54 @@
        </layout>
       </item>
      </layout>
-     <zorder>photos</zorder>
-     <zorder>nameTitle</zorder>
-     <zorder>name</zorder>
-     <zorder>descriptionTitle</zorder>
-     <zorder>description</zorder>
      <zorder></zorder>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QToolButton" name="cancel">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../Resources/Resources.qrc">
+       <normaloff>:/Graphics/Icons/Editing/clear.png</normaloff>:/Graphics/Icons/Editing/clear.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QToolButton" name="save">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../Resources/Resources.qrc">
+       <normaloff>:/Graphics/Icons/Editing/save.png</normaloff>:/Graphics/Icons/Editing/save.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="topEmptyLabel_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>22</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>22</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
     </widget>
    </item>
   </layout>
@@ -173,10 +199,9 @@
  </customwidgets>
  <tabstops>
   <tabstop>name</tabstop>
-  <tabstop>addPhoto</tabstop>
-  <tabstop>save</tabstop>
-  <tabstop>cancel</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

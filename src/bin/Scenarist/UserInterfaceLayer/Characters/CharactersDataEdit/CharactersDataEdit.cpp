@@ -61,9 +61,10 @@ QString CharactersDataEdit::realName() const
 
 void CharactersDataEdit::setDescription(const QString& _description)
 {
-	m_sourceDescription = _description;
-
 	ui->description->setHtml(_description);
+
+	m_sourceDescription = ui->description->toHtml();
+	ui->description->setHtml(m_sourceDescription);
 }
 
 QString CharactersDataEdit::description() const
@@ -135,9 +136,14 @@ void CharactersDataEdit::initConnections()
 
 void CharactersDataEdit::initStyleSheet()
 {
+	ui->save->setProperty("inTopPanel", true);
+	ui->addPhoto->setProperty("inTopPanel", true);
+	ui->cancel->setProperty("inTopPanel", true);
+
 	ui->topEmptyLabel->setProperty("inTopPanel", true);
 	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
 	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
+	ui->topEmptyLabel_2->setProperty("inTopPanel", true);
 
 	ui->mainContainer->setProperty("mainContainer", true);
 }
