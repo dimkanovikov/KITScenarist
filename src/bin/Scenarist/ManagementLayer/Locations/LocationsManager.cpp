@@ -7,6 +7,8 @@
 #include <DataLayer/DataStorageLayer/LocationStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <Domain/Location.h>
+
 #include <QWidget>
 #include <QSplitter>
 #include <QHBoxLayout>
@@ -68,6 +70,15 @@ void LocationsManager::saveViewState()
 				"application/locations/state", m_viewSplitter->saveState().toHex(),
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
+}
+
+void LocationsManager::saveLocations()
+{
+	foreach (Domain::DomainObject* locationObject,
+			 DataStorageLayer::StorageFacade::locationStorage()->all()->toList()) {
+		Domain::Location* location = dynamic_cast<Domain::Location*>(locationObject);
+		DataStorageLayer::StorageFacade::locationStorage()->updateLocation(location);
+	}
 }
 
 void LocationsManager::aboutAddLocation(const QString& _name)
@@ -134,5 +145,6 @@ void LocationsManager::initConnections()
 	connect(m_navigatorManager, SIGNAL(removeLocation(QString)), this, SLOT(aboutRemoveLocation(QString)));
 	connect(m_navigatorManager, SIGNAL(refreshLocations()), this, SIGNAL(refreshLocations()));
 
+	connect(m_dataEditManager, SIGNAL(locationChanged()), this, SIGNAL(locationChanged()));
 	connect(m_dataEditManager, SIGNAL(locationNameChanged(QString,QString)), this, SIGNAL(locationNameChanged(QString,QString)));
 }

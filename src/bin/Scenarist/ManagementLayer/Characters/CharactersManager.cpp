@@ -7,6 +7,8 @@
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <Domain/Character.h>
+
 #include <QWidget>
 #include <QSplitter>
 #include <QHBoxLayout>
@@ -68,6 +70,15 @@ void CharactersManager::saveViewState()
 				"application/characters/state", m_viewSplitter->saveState().toHex(),
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
+}
+
+void CharactersManager::saveCharacters()
+{
+	foreach (Domain::DomainObject* characterObject,
+			 DataStorageLayer::StorageFacade::characterStorage()->all()->toList()) {
+		Domain::Character* character = dynamic_cast<Domain::Character*>(characterObject);
+		DataStorageLayer::StorageFacade::characterStorage()->updateCharacter(character);
+	}
 }
 
 void CharactersManager::aboutAddCharacter(const QString& _name)
@@ -134,5 +145,6 @@ void CharactersManager::initConnections()
 	connect(m_navigatorManager, SIGNAL(removeCharacter(QString)), this, SLOT(aboutRemoveCharacter(QString)));
 	connect(m_navigatorManager, SIGNAL(refreshCharacters()), this, SIGNAL(refreshCharacters()));
 
+	connect(m_dataEditManager, SIGNAL(characterChanged()), this, SIGNAL(characterChanged()));
 	connect(m_dataEditManager, SIGNAL(characterNameChanged(QString,QString)), this, SIGNAL(characterNameChanged(QString,QString)));
 }

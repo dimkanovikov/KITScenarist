@@ -38,6 +38,11 @@ namespace ManagementLayer
 
 	signals:
 		/**
+		 * @brief Была изменена локация
+		 */
+		void locationChanged();
+
+		/**
 		 * @brief Было изменено название локации
 		 */
 		void locationNameChanged(const QString& _oldName, const QString& _newName);
@@ -47,11 +52,6 @@ namespace ManagementLayer
 		 * @brief Сохранить изменения
 		 */
 		void aboutSave();
-
-		/**
-		 * @brief Отменить изменения
-		 */
-		void aboutDontSave();
 
 	private:
 		/**

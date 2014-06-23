@@ -278,6 +278,8 @@ void ApplicationManager::aboutSave()
 		// Управляющие должны сохранить несохранённые данные
 		//
 		m_scenarioManager->saveCurrentProject();
+		m_charactersManager->saveCharacters();
+		m_locationsManager->saveLocations();
 
 		//
 		// Добавим проект к недавно используемым
@@ -457,6 +459,11 @@ void ApplicationManager::aboutExit()
 void ApplicationManager::aboutApplicationSettingsUpdated()
 {
 	reloadApplicationSettings();
+}
+
+void ApplicationManager::aboutProjectChanged()
+{
+	m_view->setWindowModified(true);
 }
 
 void ApplicationManager::loadViewState()
@@ -684,6 +691,10 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutNavigatorSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(chronometrySettingsUpdated()),
 			m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
+
+	connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
+	connect(m_charactersManager, SIGNAL(characterChanged()), this, SLOT(aboutProjectChanged()));
+	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
 }
 
 void ApplicationManager::initStyleSheet()

@@ -22,6 +22,8 @@ LocationsDataEdit::~LocationsDataEdit()
 
 void LocationsDataEdit::clean()
 {
+	removeConnections();
+
 	m_sourceName.clear();
 	m_sourceDescription.clear();
 	m_sourcePhotos.clear();
@@ -30,14 +32,19 @@ void LocationsDataEdit::clean()
 	ui->name->clear();
 	ui->description->clear();
 	ui->photos->clear();
+
+	initConnections();
 }
 
 void LocationsDataEdit::setName(const QString& _name)
 {
-	m_sourceName = _name;
+	removeConnections();
 
+	m_sourceName = _name;
 	ui->sourceName->setText(_name);
 	ui->name->setText(_name);
+
+	initConnections();
 }
 
 QString LocationsDataEdit::name() const
@@ -47,10 +54,13 @@ QString LocationsDataEdit::name() const
 
 void LocationsDataEdit::setDescription(const QString& _description)
 {
-	ui->description->setHtml(_description);
+	removeConnections();
 
+	ui->description->setHtml(_description);
 	m_sourceDescription = ui->description->toHtml();
 	ui->description->setHtml(m_sourceDescription);
+
+	initConnections();
 }
 
 QString LocationsDataEdit::description() const
@@ -60,9 +70,18 @@ QString LocationsDataEdit::description() const
 
 void LocationsDataEdit::setPhotos(const QList<QPixmap>& _photos)
 {
-	m_sourcePhotos = _photos;
+	removeConnections();
 
+	m_sourcePhotos = _photos;
 	ui->photos->setPhotos(_photos);
+
+	//
+	// Обновим состояние доступности кнопки добавления фотографий
+	//
+	bool addPhotoVisible = ui->photos->canAddPhoto();
+	ui->addPhoto->setVisible(addPhotoVisible);
+
+	initConnections();
 }
 
 QList<QPixmap> LocationsDataEdit::photos() const
@@ -83,18 +102,16 @@ namespace {
 	}
 }
 
-void LocationsDataEdit::updateState()
+void LocationsDataEdit::aboutLocationChanged()
 {
 	//
-	// Обновим состояние доступности кнопки сохранения
+	// Сохраним локацию, если она была изменена
 	//
-	bool saveEnabled = false;
 	if (name() != m_sourceName
 		|| description() != m_sourceDescription
 		|| !isEqualPixmapLists(photos(), m_sourcePhotos)) {
-		saveEnabled = true;
+		emit saveLocation();
 	}
-	ui->save->setEnabled(saveEnabled);
 
 	//
 	// Обновим состояние доступности кнопки добавления фотографий
@@ -105,29 +122,36 @@ void LocationsDataEdit::updateState()
 
 void LocationsDataEdit::initView()
 {
+	QFont nameFont = ui->name->font();
+	nameFont.setCapitalization(QFont::AllUppercase);
+	ui->name->setFont(nameFont);
 }
 
 void LocationsDataEdit::initConnections()
 {
-	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(updateState()));
-	connect(ui->description, SIGNAL(textChanged()), this, SLOT(updateState()));
-	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(updateState()));
+	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutLocationChanged()));
+	connect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutLocationChanged()));
+	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutLocationChanged()));
 
 	connect(ui->addPhoto, SIGNAL(clicked()), ui->photos, SLOT(aboutAddPhoto()));
-	connect(ui->save, SIGNAL(clicked()), this, SIGNAL(saveLocation()));
-	connect(ui->cancel, SIGNAL(clicked()), this, SIGNAL(reloadLocation()));
+}
+
+void LocationsDataEdit::removeConnections()
+{
+	disconnect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutLocationChanged()));
+	disconnect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutLocationChanged()));
+	disconnect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutLocationChanged()));
+
+	disconnect(ui->addPhoto, SIGNAL(clicked()), ui->photos, SLOT(aboutAddPhoto()));
 }
 
 void LocationsDataEdit::initStyleSheet()
 {
 	ui->addPhoto->setProperty("inTopPanel", true);
-	ui->save->setProperty("inTopPanel", true);
-	ui->cancel->setProperty("inTopPanel", true);
 
 	ui->topEmptyLabel->setProperty("inTopPanel", true);
 	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
 	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
-	ui->topEmptyLabel_2->setProperty("inTopPanel", true);
 
 	ui->mainContainer->setProperty("mainContainer", true);
 }

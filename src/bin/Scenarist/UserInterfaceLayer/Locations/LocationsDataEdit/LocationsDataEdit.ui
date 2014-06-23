@@ -29,25 +29,29 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="4">
-    <widget class="QLabel" name="topEmptyLabel">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
-    <widget class="QToolButton" name="addPhoto">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../Resources/Resources.qrc">
-       <normaloff>:/Graphics/Icons/Editing/photo.png</normaloff>:/Graphics/Icons/Editing/photo.png</iconset>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QToolButton" name="addPhoto">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../Resources/Resources.qrc">
+         <normaloff>:/Graphics/Icons/Editing/photo.png</normaloff>:/Graphics/Icons/Editing/photo.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="topEmptyLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="1" column="0" colspan="5">
+   <item row="1" column="0">
     <widget class="QWidget" name="mainContainer" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -109,7 +113,11 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="name"/>
+         <widget class="QLineEdit" name="name">
+          <property name="clearButtonEnabled">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item row="2" column="1">
          <widget class="QLabel" name="descriptionTitle">
@@ -132,53 +140,6 @@
       </item>
      </layout>
      <zorder></zorder>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QToolButton" name="cancel">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../Resources/Resources.qrc">
-       <normaloff>:/Graphics/Icons/Editing/clear.png</normaloff>:/Graphics/Icons/Editing/clear.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QToolButton" name="save">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../Resources/Resources.qrc">
-       <normaloff>:/Graphics/Icons/Editing/save.png</normaloff>:/Graphics/Icons/Editing/save.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="topEmptyLabel_2">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>22</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>22</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
     </widget>
    </item>
   </layout>

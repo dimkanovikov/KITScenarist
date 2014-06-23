@@ -29,23 +29,43 @@ void CharacterPhotoStorage::store(Character* _character)
 	// Сохранить новые фотографии
 	//
 	CharacterPhotosTable* newPhotos = _character->photosTable();
-	foreach (DomainObject* domainObject, newPhotos->toList()) {
-		CharacterPhoto* newPhoto = dynamic_cast<CharacterPhoto*>(domainObject);
+	if (newPhotos->count() > 0) {
+		foreach (DomainObject* domainObject, newPhotos->toList()) {
+			CharacterPhoto* newPhoto = dynamic_cast<CharacterPhoto*>(domainObject);
 
-		MapperFacade::characterPhotoMapper()->insert(newPhoto);
-		all()->append(newPhoto);
+			//
+			// Новое фото
+			//
+			if (!newPhoto->id().isValid()) {
+				MapperFacade::characterPhotoMapper()->insert(newPhoto);
+				all()->append(newPhoto);
+			}
+			//
+			// Старое фото
+			//
+			else {
+				MapperFacade::characterPhotoMapper()->update(newPhoto);
+			}
+		}
 	}
 }
 
 void CharacterPhotoStorage::remove(Character* _character)
 {
+	CharacterPhotosTable* newPhotos = _character->photosTable();
+
+	//
+	// Если не все фотографии изменились, то старые не нужно удалять
+	//
 	CharacterPhotosTable* photos =
 			MapperFacade::characterPhotoMapper()->findAllForCharacter(_character->id());
 	foreach (DomainObject* domainObject, photos->toList()) {
 		CharacterPhoto* oldPhoto = dynamic_cast<CharacterPhoto*>(domainObject);
 
-		all()->remove(oldPhoto);
-		MapperFacade::characterPhotoMapper()->remove(oldPhoto);
+		if (!newPhotos->contains(oldPhoto)) {
+			all()->remove(oldPhoto);
+			MapperFacade::characterPhotoMapper()->remove(oldPhoto);
+		}
 	}
 	delete photos;
 	photos = 0;

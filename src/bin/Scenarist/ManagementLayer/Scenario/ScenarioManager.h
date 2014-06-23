@@ -100,12 +100,13 @@ namespace ManagementLayer
 		 */
 		void aboutRefreshLocations();
 
-	private slots:
+	signals:
 		/**
-		 * @brief Установить статус того, что проект изменён
+		 * @brief Сценарий изменён
 		 */
-		void aboutScenarioChanged();
+		void scenarioChanged();
 
+	private slots:
 		/**
 		 * @brief Обновить хронометраж
 		 */

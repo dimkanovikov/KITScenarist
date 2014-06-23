@@ -86,6 +86,11 @@ namespace ManagementLayer
 		 */
 		void aboutApplicationSettingsUpdated();
 
+		/**
+		 * @brief Проект был изменён
+		 */
+		void aboutProjectChanged();
+
 	private:
 		/**
 		 * @brief Загрузить состояние окна

@@ -38,6 +38,11 @@ namespace ManagementLayer
 
 	signals:
 		/**
+		 * @brief Персонаж изменён
+		 */
+		void characterChanged();
+
+		/**
 		 * @brief Было изменено имя персонажа
 		 */
 		void characterNameChanged(const QString& _oldName, const QString& _newName);
@@ -47,11 +52,6 @@ namespace ManagementLayer
 		 * @brief Сохранить изменения
 		 */
 		void aboutSave();
-
-		/**
-		 * @brief Отменить изменения
-		 */
-		void aboutDontSave();
 
 	private:
 		/**

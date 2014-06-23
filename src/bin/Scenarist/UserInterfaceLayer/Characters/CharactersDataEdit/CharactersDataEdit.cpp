@@ -22,6 +22,8 @@ CharactersDataEdit::~CharactersDataEdit()
 
 void CharactersDataEdit::clean()
 {
+	removeConnections();
+
 	m_sourceName.clear();
 	m_sourceRealName.clear();
 	m_sourceDescription.clear();
@@ -32,14 +34,19 @@ void CharactersDataEdit::clean()
 	ui->realName->clear();
 	ui->description->clear();
 	ui->photos->clear();
+
+	initConnections();
 }
 
 void CharactersDataEdit::setName(const QString& _name)
 {
-	m_sourceName = _name;
+	removeConnections();
 
+	m_sourceName = _name;
 	ui->sourceName->setText(_name);
 	ui->name->setText(_name);
+
+	initConnections();
 }
 
 QString CharactersDataEdit::name() const
@@ -49,9 +56,12 @@ QString CharactersDataEdit::name() const
 
 void CharactersDataEdit::setRealName(const QString& _realName)
 {
-	m_sourceRealName = _realName;
+	removeConnections();
 
+	m_sourceRealName = _realName;
 	ui->realName->setText(_realName);
+
+	initConnections();
 }
 
 QString CharactersDataEdit::realName() const
@@ -61,10 +71,13 @@ QString CharactersDataEdit::realName() const
 
 void CharactersDataEdit::setDescription(const QString& _description)
 {
-	ui->description->setHtml(_description);
+	removeConnections();
 
+	ui->description->setHtml(_description);
 	m_sourceDescription = ui->description->toHtml();
 	ui->description->setHtml(m_sourceDescription);
+
+	initConnections();
 }
 
 QString CharactersDataEdit::description() const
@@ -74,9 +87,18 @@ QString CharactersDataEdit::description() const
 
 void CharactersDataEdit::setPhotos(const QList<QPixmap>& _photos)
 {
-	m_sourcePhotos = _photos;
+	removeConnections();
 
+	m_sourcePhotos = _photos;
 	ui->photos->setPhotos(_photos);
+
+	//
+	// Обновим состояние доступности кнопки добавления фотографий
+	//
+	bool addPhotoVisible = ui->photos->canAddPhoto();
+	ui->addPhoto->setVisible(addPhotoVisible);
+
+	initConnections();
 }
 
 QList<QPixmap> CharactersDataEdit::photos() const
@@ -97,19 +119,17 @@ namespace {
 	}
 }
 
-void CharactersDataEdit::updateState()
+void CharactersDataEdit::aboutCharacterChanged()
 {
 	//
-	// Обновим состояние доступности кнопки сохранения
+	// Сохраним персонаж, если изменены данные
 	//
-	bool saveEnabled = false;
 	if (name() != m_sourceName
 		|| realName() != m_sourceRealName
 		|| description() != m_sourceDescription
 		|| !isEqualPixmapLists(photos(), m_sourcePhotos)) {
-		saveEnabled = true;
+		emit saveCharacter();
 	}
-	ui->save->setEnabled(saveEnabled);
 
 	//
 	// Обновим состояние доступности кнопки добавления фотографий
@@ -120,30 +140,38 @@ void CharactersDataEdit::updateState()
 
 void CharactersDataEdit::initView()
 {
+	QFont nameFont = ui->name->font();
+	nameFont.setCapitalization(QFont::AllUppercase);
+	ui->name->setFont(nameFont);
 }
 
 void CharactersDataEdit::initConnections()
 {
-	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(updateState()));
-	connect(ui->realName, SIGNAL(textChanged(QString)), this, SLOT(updateState()));
-	connect(ui->description, SIGNAL(textChanged()), this, SLOT(updateState()));
-	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(updateState()));
+	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutCharacterChanged()));
+	connect(ui->realName, SIGNAL(textChanged(QString)), this, SLOT(aboutCharacterChanged()));
+	connect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutCharacterChanged()));
+	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutCharacterChanged()));
 
 	connect(ui->addPhoto, SIGNAL(clicked()), ui->photos, SLOT(aboutAddPhoto()));
-	connect(ui->save, SIGNAL(clicked()), this, SIGNAL(saveCharacter()));
-	connect(ui->cancel, SIGNAL(clicked()), this, SIGNAL(reloadCharacter()));
+}
+
+void CharactersDataEdit::removeConnections()
+{
+	disconnect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutCharacterChanged()));
+	disconnect(ui->realName, SIGNAL(textChanged(QString)), this, SLOT(aboutCharacterChanged()));
+	disconnect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutCharacterChanged()));
+	disconnect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutCharacterChanged()));
+
+	disconnect(ui->addPhoto, SIGNAL(clicked()), ui->photos, SLOT(aboutAddPhoto()));
 }
 
 void CharactersDataEdit::initStyleSheet()
 {
-	ui->save->setProperty("inTopPanel", true);
 	ui->addPhoto->setProperty("inTopPanel", true);
-	ui->cancel->setProperty("inTopPanel", true);
 
 	ui->topEmptyLabel->setProperty("inTopPanel", true);
 	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
 	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
-	ui->topEmptyLabel_2->setProperty("inTopPanel", true);
 
 	ui->mainContainer->setProperty("mainContainer", true);
 }

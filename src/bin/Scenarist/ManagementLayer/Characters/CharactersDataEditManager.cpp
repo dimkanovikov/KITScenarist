@@ -65,29 +65,13 @@ void CharactersDataEditManager::aboutSave()
 	m_character->setPhotos(m_editor->photos());
 
 	//
-	// Сохраним изменения
-	//
-	DataStorageLayer::StorageFacade::characterStorage()->updateCharacter(m_character);
-
-	//
 	// Уведомим об изменении названия персонажа
 	//
     if (previousName != m_character->name()) {
         emit characterNameChanged(previousName, m_character->name());
 	}
 
-	//
-	// Текущим становится обновлённый персонаж
-	//
-	editCharacter(m_character);
-}
-
-void CharactersDataEditManager::aboutDontSave()
-{
-	//
-	// Перезагрузим исходные данных
-	//
-	editCharacter(m_character);
+	emit characterChanged();
 }
 
 void CharactersDataEditManager::initView()
@@ -97,5 +81,4 @@ void CharactersDataEditManager::initView()
 void CharactersDataEditManager::initConnections()
 {
 	connect(m_editor, SIGNAL(saveCharacter()), this, SLOT(aboutSave()));
-	connect(m_editor, SIGNAL(reloadCharacter()), this, SLOT(aboutDontSave()));
 }

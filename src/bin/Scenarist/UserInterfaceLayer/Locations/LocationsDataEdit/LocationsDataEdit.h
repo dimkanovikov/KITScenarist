@@ -62,16 +62,11 @@ namespace UserInterface
 		 */
 		void saveLocation();
 
-		/**
-		 * @brief Перезагрузить
-		 */
-		void reloadLocation();
-
 	private slots:
 		/**
-		 * @brief Обновить состояние кнопок
+		 * @brief Локация изменена
 		 */
-		void updateState();
+		void aboutLocationChanged();
 
 	private:
 		/**
@@ -83,6 +78,7 @@ namespace UserInterface
 		 * @brief Настроить соединения для формы
 		 */
 		void initConnections();
+		void removeConnections();
 
 		/**
 		 * @brief Настроить внешний вид

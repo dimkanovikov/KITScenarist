@@ -318,21 +318,6 @@ void ScenarioManager::aboutRefreshLocations()
 	}
 }
 
-void ScenarioManager::aboutScenarioChanged()
-{
-	//
-	// Проходим по иерархии виджетов до самого первого
-	//
-	QWidget* topWidget = m_view;
-	while (topWidget->parentWidget() != 0) {
-		topWidget = topWidget->parentWidget();
-	}
-	//
-	// и устанавливаем ему флаг об изменении документа
-	//
-	topWidget->setWindowModified(true);
-}
-
 void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 {
 	QString durationToCursor =
@@ -477,10 +462,10 @@ void ScenarioManager::initConnections()
 	//
 	// Настраиваем отслеживание изменений документа
 	//
-	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SLOT(aboutScenarioChanged()));
-	connect(m_dataEditManager, SIGNAL(scenarioNameChanged()), this, SLOT(aboutScenarioChanged()));
-	connect(m_dataEditManager, SIGNAL(scenarioSynopsisChanged()), this, SLOT(aboutScenarioChanged()));
-	connect(m_textEditManager, SIGNAL(textChanged()), this, SLOT(aboutScenarioChanged()));
+	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SIGNAL(scenarioChanged()));
+	connect(m_dataEditManager, SIGNAL(scenarioNameChanged()), this, SIGNAL(scenarioChanged()));
+	connect(m_dataEditManager, SIGNAL(scenarioSynopsisChanged()), this, SIGNAL(scenarioChanged()));
+	connect(m_textEditManager, SIGNAL(textChanged()), this, SIGNAL(scenarioChanged()));
 }
 
 void ScenarioManager::initStyleSheet()

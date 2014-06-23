@@ -38,7 +38,17 @@ namespace ManagementLayer
 		 */
 		void saveViewState();
 
+		/**
+		 * @brief Сохранить персонажи сценария
+		 */
+		void saveCharacters();
+
 	signals:
+		/**
+		 * @brief Был изменён персонаж
+		 */
+		void characterChanged();
+
 		/**
 		 * @brief Было изменено имя персонажа
 		 */

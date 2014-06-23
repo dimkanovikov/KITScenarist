@@ -38,7 +38,17 @@ namespace ManagementLayer
 		 */
 		void saveViewState();
 
+		/**
+		 * @brief Сохранить локации проекта
+		 */
+		void saveLocations();
+
 	signals:
+		/**
+		 * @brief Была изменена локация
+		 */
+		void locationChanged();
+
 		/**
 		 * @brief Было изменено название локации
 		 */

@@ -65,29 +65,13 @@ void LocationsDataEditManager::aboutSave()
 	m_location->setPhotos(m_editor->photos());
 
 	//
-	// Сохраним изменения
-	//
-	DataStorageLayer::StorageFacade::locationStorage()->updateLocation(m_location);
-
-	//
 	// Уведомим об изменении названия локации
 	//
 	if (previousName != m_location->name()) {
 		emit locationNameChanged(previousName, m_location->name());
 	}
 
-	//
-	// Текущей становится обновлённая локация
-	//
-	editLocation(m_location);
-}
-
-void LocationsDataEditManager::aboutDontSave()
-{
-	//
-	// Перезагрузим исходные данных
-	//
-	editLocation(m_location);
+	emit locationChanged();
 }
 
 void LocationsDataEditManager::initView()
@@ -97,5 +81,4 @@ void LocationsDataEditManager::initView()
 void LocationsDataEditManager::initConnections()
 {
 	connect(m_editor, SIGNAL(saveLocation()), this, SLOT(aboutSave()));
-	connect(m_editor, SIGNAL(reloadLocation()), this, SLOT(aboutDontSave()));
 }

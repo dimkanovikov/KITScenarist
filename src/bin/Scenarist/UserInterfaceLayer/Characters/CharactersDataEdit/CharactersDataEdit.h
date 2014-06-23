@@ -72,16 +72,11 @@ namespace UserInterface
 		 */
 		void saveCharacter();
 
-		/**
-		 * @brief Перезагрузить
-		 */
-		void reloadCharacter();
-
 	private slots:
 		/**
-		 * @brief Обновить состояние кнопки сохранения
+		 * @brief Персонаж изменён
 		 */
-		void updateState();
+		void aboutCharacterChanged();
 		
 	private:
 		/**
@@ -93,6 +88,7 @@ namespace UserInterface
 		 * @brief Настроить соединения для формы
 		 */
 		void initConnections();
+		void removeConnections();
 
 		/**
 		 * @brief Настроить внешний вид

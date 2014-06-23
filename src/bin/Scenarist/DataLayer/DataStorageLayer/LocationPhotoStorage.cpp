@@ -32,20 +32,38 @@ void LocationPhotoStorage::store(Location* _location)
 	foreach (DomainObject* domainObject, newPhotos->toList()) {
 		LocationPhoto* newPhoto = dynamic_cast<LocationPhoto*>(domainObject);
 
-		MapperFacade::locationPhotoMapper()->insert(newPhoto);
-		all()->append(newPhoto);
+		//
+		// Новое фото
+		//
+		if (!newPhoto->id().isValid()) {
+			MapperFacade::locationPhotoMapper()->insert(newPhoto);
+			all()->append(newPhoto);
+		}
+		//
+		// Старое фото
+		//
+		else {
+			MapperFacade::locationPhotoMapper()->update(newPhoto);
+		}
 	}
 }
 
 void LocationPhotoStorage::remove(Location* _location)
 {
+	LocationPhotosTable* newPhotos = _location->photosTable();
+
+	//
+	// Если не все фотографии изменились, то старые не нужно удалять
+	//
 	LocationPhotosTable* photos =
 			MapperFacade::locationPhotoMapper()->findAllForLocation(_location->id());
 	foreach (DomainObject* domainObject, photos->toList()) {
 		LocationPhoto* oldPhoto = dynamic_cast<LocationPhoto*>(domainObject);
 
-		all()->remove(oldPhoto);
-		MapperFacade::locationPhotoMapper()->remove(oldPhoto);
+		if (!newPhotos->contains(oldPhoto)) {
+			all()->remove(oldPhoto);
+			MapperFacade::locationPhotoMapper()->remove(oldPhoto);
+		}
 	}
 	delete photos;
 	photos = 0;
