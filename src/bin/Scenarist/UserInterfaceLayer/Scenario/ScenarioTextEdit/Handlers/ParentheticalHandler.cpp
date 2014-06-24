@@ -1,7 +1,7 @@
 #include "ParentheticalHandler.h"
 
 #include "../ScenarioTextEdit.h"
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QKeyEvent>
 #include <QTextBlock>
@@ -14,7 +14,7 @@ using UserInterface::ScenarioTextEdit;
 ParentheticalHandler::ParentheticalHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
-	ScenarioTextBlockStyle style(ScenarioTextBlockStyle::Parenthetical);
+	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Parenthetical);
 	m_stylePrefix = style.prefix();
 	m_stylePostfix = style.postfix();
 }
@@ -81,7 +81,7 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 					//
 					cursor.movePosition(QTextCursor::EndOfBlock);
 					editor()->setTextCursor(cursor);
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
 				} else {
 					//! Внутри блока
 
@@ -99,7 +99,7 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 					// Перейдём к блоку реплики
 					//
 					editor()->setTextCursor(cursor);
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
 				}
 			}
 		}
@@ -149,7 +149,7 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 				//
 				// Меняем стиль на реплику
 				//
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Dialog);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Dialog);
 			} else {
 				//! Текст не пуст
 
@@ -169,7 +169,7 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 					//
 					cursor.movePosition(QTextCursor::EndOfBlock);
 					editor()->setTextCursor(cursor);
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
 				} else {
 					//! Внутри блока
 
@@ -245,7 +245,7 @@ void ParentheticalHandler::handleOther(QKeyEvent* _event)
 			//
 			// Переходим к блоку реплики
 			//
-			editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
+			editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
 		}
 		//
 		// Во всех остальных случаях удаляем введённую скобку

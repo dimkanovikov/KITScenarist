@@ -1,10 +1,12 @@
 #ifndef SCENARIOSTYLE_H
 #define SCENARIOSTYLE_H
 
-#include "ScenarioTextBlockStyle.h"
+#include "ScenarioStyle.h"
 
 #include <QPageSize>
+#include <QTextFormat>
 
+class QTextBlock;
 class QXmlStreamAttributes;
 
 
@@ -269,16 +271,11 @@ namespace BusinessLogic
 	{
 	public:
 		/**
-		 * @brief Получить фасад
-		 */
-		static ScenarioStyleFacade* instance();
-
-		/**
 		 * @brief Получить стиль в соответствии с заданным именем
 		 *
 		 * Если имя не задано, возвращается стандартный стиль
 		 */
-		ScenarioStyle style(const QString& _styleName = QString()) const;
+		static ScenarioStyle style(const QString& _styleName = QString());
 
 	private:
 		ScenarioStyleFacade();

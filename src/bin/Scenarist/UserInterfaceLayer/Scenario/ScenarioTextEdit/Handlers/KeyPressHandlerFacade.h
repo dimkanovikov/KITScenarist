@@ -1,7 +1,7 @@
 #ifndef KEYPRESSHANDLERFACADE_H
 #define KEYPRESSHANDLERFACADE_H
 
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QMap>
 
@@ -69,7 +69,7 @@ namespace KeyProcessingLayer
 		/**
 		 * @brief Получить обработчик для заданного типа
 		 */
-		AbstractKeyHandler* handlerFor(BusinessLogic::ScenarioTextBlockStyle::Type _type);
+		AbstractKeyHandler* handlerFor(BusinessLogic::ScenarioBlockStyle::Type _type);
 
 	private:
 		UserInterface::ScenarioTextEdit* m_editor;

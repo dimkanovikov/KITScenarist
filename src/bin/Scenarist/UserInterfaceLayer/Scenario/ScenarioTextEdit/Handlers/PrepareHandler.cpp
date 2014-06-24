@@ -1,7 +1,7 @@
 #include "PrepareHandler.h"
 
 #include "../ScenarioTextEdit.h"
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QTextBlock>
 #include <QKeyEvent>
@@ -149,14 +149,16 @@ void PrepareHandler::handleOther(QKeyEvent* _event)
 	//
 	QTextCursor topCursor(editor()->document());
 	topCursor.setPosition(qMin(cursor.selectionStart(), cursor.selectionEnd()));
-	ScenarioTextBlockStyle topStyle(ScenarioTextBlockStyle::forBlock(topCursor.block()));
+	ScenarioBlockStyle topStyle =
+			ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
 
 	//
 	// Получим стиль последнего блока в выделении
 	//
 	QTextCursor bottomCursor(editor()->document());
 	bottomCursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
-	ScenarioTextBlockStyle bottomStyle(ScenarioTextBlockStyle::forBlock(bottomCursor.block()));
+	ScenarioBlockStyle bottomStyle =
+			ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
 
 	if (!_event->text().isEmpty()) {
 		//

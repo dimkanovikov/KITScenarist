@@ -4,7 +4,7 @@
 #include "ScenarioTextDocument.h"
 #include "ScenarioModel.h"
 #include "ScenarioModelItem.h"
-#include "ScenarioTextBlockStyle.h"
+#include "ScenarioStyle.h"
 #include "ScenarioTextBlockInfo.h"
 
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
@@ -292,16 +292,16 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 		//
 		// Пока не дошли до сигнального блока
 		//
-		ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
-		while (currentType != ScenarioTextBlockStyle::TimeAndPlace
-			   && currentType != ScenarioTextBlockStyle::SceneGroupHeader
-			   && currentType != ScenarioTextBlockStyle::SceneGroupFooter
-			   && currentType != ScenarioTextBlockStyle::FolderHeader
-			   && currentType != ScenarioTextBlockStyle::FolderFooter
+		ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(cursor.block());
+		while (currentType != ScenarioBlockStyle::TimeAndPlace
+			   && currentType != ScenarioBlockStyle::SceneGroupHeader
+			   && currentType != ScenarioBlockStyle::SceneGroupFooter
+			   && currentType != ScenarioBlockStyle::FolderHeader
+			   && currentType != ScenarioBlockStyle::FolderFooter
 			   && !cursor.atEnd()) {
 			cursor.movePosition(QTextCursor::EndOfBlock);
 			cursor.movePosition(QTextCursor::NextBlock);
-			currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+			currentType = ScenarioBlockStyle::forBlock(cursor.block());
 		}
 
 		//
@@ -327,7 +327,8 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 		//
 		// Сохраним стиль блока для последующего поиска парного элемента
 		//
-		ScenarioTextBlockStyle blockStyle(ScenarioTextBlockStyle::forBlock(cursor.block()));
+		ScenarioBlockStyle blockStyle =
+				ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(cursor.block()));
 
 		//
 		// От следующего за началом элемента блока
@@ -342,12 +343,12 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 		//
 		// Пока не конец документа
 		//
-		ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+		ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(cursor.block());
 		while (!cursor.atEnd()) {
 			//
 			// Если встретился открывающий блок, увеличим счётчик
 			//
-			if (currentType == blockStyle.blockType()) {
+			if (currentType == blockStyle.type()) {
 				++openedItems;
 			}
 			//
@@ -365,7 +366,7 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 
 			cursor.movePosition(QTextCursor::NextBlock);
 			cursor.movePosition(QTextCursor::EndOfBlock);
-			currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+			currentType = ScenarioBlockStyle::forBlock(cursor.block());
 		}
 
 		//
@@ -521,32 +522,32 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			//
 			// Идём до конца элемента
 			//
-			ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::Undefined;
+			ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::Undefined;
 			do {
 				cursor.movePosition(QTextCursor::NextBlock);
 				cursor.movePosition(QTextCursor::EndOfBlock);
-				currentType = ScenarioTextBlockStyle::forBlock(cursor.block());
+				currentType = ScenarioBlockStyle::forBlock(cursor.block());
 			} while (!cursor.atEnd()
-					 && currentType != ScenarioTextBlockStyle::TimeAndPlace
-					 && currentType != ScenarioTextBlockStyle::SceneGroupHeader
-					 && currentType != ScenarioTextBlockStyle::SceneGroupFooter
-					 && currentType != ScenarioTextBlockStyle::FolderHeader
-					 && currentType != ScenarioTextBlockStyle::FolderFooter);
+					 && currentType != ScenarioBlockStyle::TimeAndPlace
+					 && currentType != ScenarioBlockStyle::SceneGroupHeader
+					 && currentType != ScenarioBlockStyle::SceneGroupFooter
+					 && currentType != ScenarioBlockStyle::FolderHeader
+					 && currentType != ScenarioBlockStyle::FolderFooter);
 
 			//
 			// Тип следующего за элементом блока
 			//
-			ScenarioTextBlockStyle::Type nextBlockType = ScenarioTextBlockStyle::Undefined;
+			ScenarioBlockStyle::Type nextBlockType = ScenarioBlockStyle::Undefined;
 			//
 			// Если не конец документа, то получить стиль следующего за элементом блока
 			// и оступить на один блок назад в виду того, что мы зашли на следующий элемент
 			//
 			if (!cursor.atEnd()
-				|| currentType == ScenarioTextBlockStyle::TimeAndPlace
-				|| currentType == ScenarioTextBlockStyle::SceneGroupHeader
-				|| currentType == ScenarioTextBlockStyle::SceneGroupFooter
-				|| currentType == ScenarioTextBlockStyle::FolderHeader
-				|| currentType == ScenarioTextBlockStyle::FolderFooter) {
+				|| currentType == ScenarioBlockStyle::TimeAndPlace
+				|| currentType == ScenarioBlockStyle::SceneGroupHeader
+				|| currentType == ScenarioBlockStyle::SceneGroupFooter
+				|| currentType == ScenarioBlockStyle::FolderHeader
+				|| currentType == ScenarioBlockStyle::FolderFooter) {
 				nextBlockType = currentType;
 				cursor.movePosition(QTextCursor::PreviousBlock);
 				cursor.movePosition(QTextCursor::EndOfBlock);
@@ -570,9 +571,9 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			{
 				QTextCursor cursorForCheck(m_document);
 				cursorForCheck.setPosition(currentItemStartPos);
-				ScenarioTextBlockStyle::Type checkType = ScenarioTextBlockStyle::forBlock(cursorForCheck.block());
-				if (checkType != ScenarioTextBlockStyle::SceneGroupFooter
-					&& checkType != ScenarioTextBlockStyle::FolderFooter) {
+				ScenarioBlockStyle::Type checkType = ScenarioBlockStyle::forBlock(cursorForCheck.block());
+				if (checkType != ScenarioBlockStyle::SceneGroupFooter
+					&& checkType != ScenarioBlockStyle::FolderFooter) {
 					updateItem(currentItem, currentItemStartPos, currentItemEndPos);
 				}
 			}
@@ -603,7 +604,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				// Действуем в зависимости от последующего за текущим элементом блока
 				//
 				switch (nextBlockType) {
-					case ScenarioTextBlockStyle::TimeAndPlace: {
+					case ScenarioBlockStyle::TimeAndPlace: {
 						//
 						// Создать новый элемент
 						//
@@ -632,8 +633,8 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						break;
 					}
 
-					case ScenarioTextBlockStyle::SceneGroupHeader:
-					case ScenarioTextBlockStyle::FolderHeader: {
+					case ScenarioBlockStyle::SceneGroupHeader:
+					case ScenarioBlockStyle::FolderHeader: {
 						//
 						// Создать новый элемент
 						//
@@ -666,8 +667,8 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						break;
 					}
 
-					case ScenarioTextBlockStyle::SceneGroupFooter:
-					case ScenarioTextBlockStyle::FolderFooter: {
+					case ScenarioBlockStyle::SceneGroupFooter:
+					case ScenarioBlockStyle::FolderFooter: {
 						//
 						// Делаем текущим родителем родителя группирующего элемента, чтобы последующие
 						// элементы уже не вкладывались, а создавались рядом
@@ -719,14 +720,14 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	QString itemHeader = cursor.block().text().simplified();
 	// ... тип
 	ScenarioModelItem::Type itemType = ScenarioModelItem::Undefined;
-	ScenarioTextBlockStyle::Type blockType = ScenarioTextBlockStyle::forBlock(cursor.block());
-	if (blockType == ScenarioTextBlockStyle::TimeAndPlace) {
+	ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
+	if (blockType == ScenarioBlockStyle::TimeAndPlace) {
 		itemType = ScenarioModelItem::Scene;
-	} else if (blockType == ScenarioTextBlockStyle::SceneGroupHeader
-			   || blockType == ScenarioTextBlockStyle::SceneGroupFooter) {
+	} else if (blockType == ScenarioBlockStyle::SceneGroupHeader
+			   || blockType == ScenarioBlockStyle::SceneGroupFooter) {
 		itemType = ScenarioModelItem::SceneGroup;
-	} else if (blockType == ScenarioTextBlockStyle::FolderHeader
-			   || blockType == ScenarioTextBlockStyle::FolderFooter) {
+	} else if (blockType == ScenarioBlockStyle::FolderHeader
+			   || blockType == ScenarioBlockStyle::FolderFooter) {
 		itemType = ScenarioModelItem::Folder;
 	}
 	// ... текст
@@ -743,8 +744,8 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	cursor.setPosition(_itemStartPos);
 	while (cursor.position() < _itemEndPos) {
 		cursor.movePosition(QTextCursor::EndOfBlock);
-		if (ScenarioTextBlockStyle::forBlock(cursor.block())
-			== ScenarioTextBlockStyle::NoprintableText) {
+		if (ScenarioBlockStyle::forBlock(cursor.block())
+			== ScenarioBlockStyle::NoprintableText) {
 			hasNote = true;
 			break;
 		}

@@ -3,7 +3,7 @@
 
 #include "AbstractExporter.h"
 
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QString>
 
@@ -29,7 +29,7 @@ namespace BusinessLogic
 		 */
 		QString header() const;
 
-		QString style(ScenarioTextBlockStyle::Type _type) const;
+		QString style(ScenarioBlockStyle::Type _type) const;
 
 		QString stringToUtfCode(const QString& _text) const;
 	};

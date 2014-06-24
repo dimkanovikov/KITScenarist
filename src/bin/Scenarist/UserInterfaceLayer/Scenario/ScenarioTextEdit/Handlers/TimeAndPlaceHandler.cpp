@@ -116,21 +116,21 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставка блока заголовка перед собой
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 
 					//
 					// Вставка блока описания действия
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 				} else {
 					//! Внутри блока
 
 					//
 					// Вставка блока описания действия
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 				}
 			}
 		}
@@ -181,7 +181,7 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 				//
 				// Если строка пуста, то сменить стиль на описание действия
 				//
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 			} else {
 				//! Текст не пуст
 
@@ -219,7 +219,7 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 					// В противном случае перейдём к блоку участников сцены
 					//
 					else {
-						editor()->addScenarioBlock(ScenarioTextBlockStyle::SceneCharacters);
+						editor()->addScenarioBlock(ScenarioBlockStyle::SceneCharacters);
 					}
 				} else {
 					//! Внутри блока

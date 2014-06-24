@@ -11,7 +11,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
@@ -38,7 +38,7 @@ using ManagementLayer::ScenarioNavigatorManager;
 using ManagementLayer::ScenarioDataEditManager;
 using ManagementLayer::ScenarioTextEditManager;
 using BusinessLogic::ScenarioDocument;
-using BusinessLogic::ScenarioTextBlockStyle;
+using BusinessLogic::ScenarioBlockStyle;
 
 
 ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
@@ -210,7 +210,7 @@ void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const Q
 		cursor = m_scenario->document()->find(_oldName, cursor);
 
 		if (!cursor.isNull()
-			&& ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::Character) {
+			&& ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
 			cursor.insertText(_newName);
 		}
 	}
@@ -225,7 +225,7 @@ void ScenarioManager::aboutRefreshCharacters()
 	QTextCursor cursor(m_scenario->document());
 	while (!cursor.atEnd()) {
 		cursor.movePosition(QTextCursor::EndOfBlock);
-		if (ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::Character) {
+		if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
 			cursor.select(QTextCursor::BlockUnderCursor);
 			QString character =
 					BusinessLogic::CharacterParser::name(cursor.selectedText().toUpper().trimmed());
@@ -269,7 +269,7 @@ void ScenarioManager::aboutLocationNameChanged(const QString& _oldName, const QS
 		cursor = m_scenario->document()->find(_oldName, cursor);
 
 		if (!cursor.isNull()
-			&& ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::TimeAndPlace) {
+			&& ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
 			cursor.insertText(_newName);
 		}
 	}
@@ -284,7 +284,7 @@ void ScenarioManager::aboutRefreshLocations()
 	QTextCursor cursor(m_scenario->document());
 	while (!cursor.atEnd()) {
 		cursor.movePosition(QTextCursor::EndOfBlock);
-		if (ScenarioTextBlockStyle::forBlock(cursor.block()) == ScenarioTextBlockStyle::TimeAndPlace) {
+		if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
 			cursor.select(QTextCursor::BlockUnderCursor);
 			QString location =
 					BusinessLogic::TimeAndPlaceParser::locationName(cursor.selectedText().toUpper().trimmed());

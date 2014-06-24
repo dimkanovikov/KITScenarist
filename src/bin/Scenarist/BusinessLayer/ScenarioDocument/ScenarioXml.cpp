@@ -3,7 +3,7 @@
 #include "ScenarioDocument.h"
 #include "ScenarioTextDocument.h"
 #include "ScenarioModelItem.h"
-#include "ScenarioTextBlockStyle.h"
+#include "ScenarioStyle.h"
 #include "ScenarioTextBlockInfo.h"
 
 #include <QTextDocument>
@@ -78,7 +78,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 			//
 			// Определим тип текущего блока
 			//
-			ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(currentBlock);
+			ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(currentBlock);
 
 			//
 			// Получить текст под курсором
@@ -89,7 +89,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 			// Дописать xml
 			//
 			switch (currentType) {
-				case ScenarioTextBlockStyle::TimeAndPlace: {
+				case ScenarioBlockStyle::TimeAndPlace: {
 					writer.writeStartElement("time_and_place");
 
 					//
@@ -106,28 +106,28 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					break;
 				}
 
-				case ScenarioTextBlockStyle::SceneCharacters: {
+				case ScenarioBlockStyle::SceneCharacters: {
 					writer.writeStartElement("scene_characters");
 					writer.writeCDATA(textToSave);
 					writer.writeEndElement();
 					break;
 				}
 
-				case ScenarioTextBlockStyle::Action: {
+				case ScenarioBlockStyle::Action: {
 					writer.writeStartElement("action");
 					writer.writeCDATA(textToSave);
 					writer.writeEndElement();
 					break;
 				}
 
-				case ScenarioTextBlockStyle::Character: {
+				case ScenarioBlockStyle::Character: {
 					writer.writeStartElement("character");
 					writer.writeCDATA(textToSave);
 					writer.writeEndElement();
 					break;
 				}
 
-				case ScenarioTextBlockStyle::Parenthetical: {
+				case ScenarioBlockStyle::Parenthetical: {
 					if (!textToSave.isEmpty()) {
 						writer.writeStartElement("parenthetical");
 						writer.writeCDATA(textToSave);
@@ -136,42 +136,42 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					break;
 				}
 
-				case ScenarioTextBlockStyle::Dialog: {
+				case ScenarioBlockStyle::Dialog: {
 					writer.writeStartElement("dialog");
 					writer.writeCDATA(textToSave);
 					writer.writeEndElement();
 					break;
 				}
 
-				case ScenarioTextBlockStyle::Transition:{
+				case ScenarioBlockStyle::Transition:{
 					writer.writeStartElement("transition");
 					writer.writeCDATA(textToSave);
 					writer.writeEndElement();
 					break;
 				}
 
-				case ScenarioTextBlockStyle::Note: {
+				case ScenarioBlockStyle::Note: {
 					writer.writeStartElement("note");
 					writer.writeCDATA(textToSave);
 					writer.writeEndElement();
 					break;
 				}
 
-				case ScenarioTextBlockStyle::Title: {
+				case ScenarioBlockStyle::Title: {
 					writer.writeStartElement("title");
 					writer.writeCDATA(textToSave);
 					writer.writeEndElement();
 					break;
 				}
 
-				case ScenarioTextBlockStyle::NoprintableText: {
+				case ScenarioBlockStyle::NoprintableText: {
 					writer.writeStartElement("noprintable_text");
 					writer.writeCDATA(textToSave);
 					writer.writeEndElement();
 					break;
 				}
 
-				case ScenarioTextBlockStyle::SceneGroupHeader: {
+				case ScenarioBlockStyle::SceneGroupHeader: {
 					writer.writeStartElement("scene_group");
 					writer.writeStartElement("scene_group_header");
 
@@ -192,7 +192,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					break;
 				}
 
-				case ScenarioTextBlockStyle::SceneGroupFooter: {
+				case ScenarioBlockStyle::SceneGroupFooter: {
 					//
 					// Закрываем группы, если были открыты, то просто корректируем счётчик,
 					// а если открытых нет, то не записываем и конец
@@ -208,7 +208,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					break;
 				}
 
-				case ScenarioTextBlockStyle::FolderHeader: {
+				case ScenarioBlockStyle::FolderHeader: {
 					writer.writeStartElement("folder");
 					writer.writeStartElement("folder_header");
 
@@ -229,7 +229,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 					break;
 				}
 
-				case ScenarioTextBlockStyle::FolderFooter: {
+				case ScenarioBlockStyle::FolderFooter: {
 					//
 					// Закрываем папки, если были открыты, то просто корректируем счётчик,
 					// а если открытых нет, то не записываем и конец
@@ -339,7 +339,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 	//
 	// Последний использемый тип блока при обработке загружаемого текста
 	//
-	ScenarioTextBlockStyle::Type lastTokenType = ScenarioTextBlockStyle::Undefined;
+	ScenarioBlockStyle::Type lastTokenType = ScenarioBlockStyle::Undefined;
 
 	QXmlStreamReader reader(_xml);
 	while (!reader.atEnd()) {
@@ -349,43 +349,15 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 				//
 				// Определить тип текущего блока
 				//
-				ScenarioTextBlockStyle::Type tokenType = ScenarioTextBlockStyle::Undefined;
+				ScenarioBlockStyle::Type tokenType = ScenarioBlockStyle::Undefined;
 				QString tokenName = reader.name().toString();
-				if (tokenName == "time_and_place") {
-					tokenType = ScenarioTextBlockStyle::TimeAndPlace;
-				} else if (tokenName == "scene_characters") {
-					tokenType = ScenarioTextBlockStyle::SceneCharacters;
-				} else if (tokenName == "action") {
-					tokenType = ScenarioTextBlockStyle::Action;
-				} else if (tokenName == "character") {
-					tokenType = ScenarioTextBlockStyle::Character;
-				} else if (tokenName == "parenthetical") {
-					tokenType = ScenarioTextBlockStyle::Parenthetical;
-				} else if (tokenName == "dialog") {
-					tokenType = ScenarioTextBlockStyle::Dialog;
-				} else if (tokenName == "transition") {
-					tokenType = ScenarioTextBlockStyle::Transition;
-				} else if (tokenName == "note") {
-					tokenType = ScenarioTextBlockStyle::Note;
-				} else if (tokenName == "title") {
-					tokenType = ScenarioTextBlockStyle::Title;
-				} else if (tokenName == "noprintable_text") {
-					tokenType = ScenarioTextBlockStyle::NoprintableText;
-				} else if (tokenName == "scene_group_header") {
-					tokenType = ScenarioTextBlockStyle::SceneGroupHeader;
-				} else if (tokenName == "scene_group_footer") {
-					tokenType = ScenarioTextBlockStyle::SceneGroupFooter;
-				} else if (tokenName == "folder_header") {
-					tokenType = ScenarioTextBlockStyle::FolderHeader;
-				} else if (tokenName == "folder_footer") {
-					tokenType = ScenarioTextBlockStyle::FolderFooter;
-				}
+				tokenType = ScenarioBlockStyle::typeForName(tokenName);
 
 				//
 				// Если определён тип блока, то обработать его
 				//
-				if (tokenType != ScenarioTextBlockStyle::Undefined) {
-					ScenarioTextBlockStyle currentStyle(tokenType);
+				if (tokenType != ScenarioBlockStyle::Undefined) {
+					ScenarioBlockStyle currentStyle = ScenarioStyleFacade::style().blockStyle(tokenType);
 
 					if (!firstBlockHandling) {
 						cursor.insertBlock();
@@ -395,7 +367,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 					// Если нужно добавим заголовок стиля
 					//
 					if (currentStyle.hasHeader()) {
-						ScenarioTextBlockStyle headerStyle(currentStyle.headerType());
+						ScenarioBlockStyle headerStyle = ScenarioStyleFacade::style().blockStyle(currentStyle.headerType());
 						cursor.setBlockCharFormat(headerStyle.charFormat());
 						cursor.setBlockFormat(headerStyle.blockFormat());
 						cursor.insertText(currentStyle.header());
@@ -426,9 +398,9 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 				//
 				// Если необходимо, загрузить информацию о сцене
 				//
-				if (tokenType == ScenarioTextBlockStyle::TimeAndPlace
-					|| tokenType == ScenarioTextBlockStyle::SceneGroupHeader
-					|| tokenType == ScenarioTextBlockStyle::FolderHeader) {
+				if (tokenType == ScenarioBlockStyle::TimeAndPlace
+					|| tokenType == ScenarioBlockStyle::SceneGroupHeader
+					|| tokenType == ScenarioBlockStyle::FolderHeader) {
 					QString synopsis = reader.attributes().value("synopsis").toString();
 					ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
 					bool htmlEscaped = true;
@@ -450,7 +422,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 				//
 				// Если необходимо так же вставляем префикс и постфикс стиля
 				//
-				ScenarioTextBlockStyle currentStyle(lastTokenType);
+				ScenarioBlockStyle currentStyle = ScenarioStyleFacade::style().blockStyle(lastTokenType);
 				if (!currentStyle.prefix().isEmpty()
 					&& !textToInsert.startsWith(currentStyle.prefix())) {
 					textToInsert.prepend(currentStyle.prefix());

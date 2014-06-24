@@ -115,8 +115,7 @@ SOURCES += main.cpp \
     3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.cpp \
     3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.cpp \
     3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
-    3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
-    BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.cpp \
+	3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemWidget.cpp \
     3rd_party/Widgets/ElidedLabel/ElidedLabel.cpp \
@@ -252,9 +251,7 @@ HEADERS += \
     3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.h \
     3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h \
     3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.h \
-    3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
-    BusinessLayer/ScenarioDocument/ScenarioTextBlockStylePrivate.h \
-    BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h \
+	3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemWidget.h \
     3rd_party/Widgets/ElidedLabel/ElidedLabel.h \

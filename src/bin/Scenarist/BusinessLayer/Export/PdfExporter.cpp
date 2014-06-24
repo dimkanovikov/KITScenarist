@@ -1,5 +1,7 @@
 #include "PdfExporter.h"
 
+#include <3rd_party/Widgets/PagesTextEdit/PageMetrics.h>
+
 #include <QApplication>
 #include <QString>
 #include <QPrinter>
@@ -67,11 +69,11 @@ void PdfExporter::printPreview(QTextDocument* _document)
 	//
 	// Настроим размер страниц
 	//
-	QFontMetrics fm(preparedDocument->defaultFont());
-	int pageWidth = fm.width("W") * 60;
-	int pageHeight = fm.lineSpacing() * 50;
-	QSizeF documentSize = QSizeF(pageWidth, pageHeight);
-	preparedDocument->setPageSize(documentSize);
+	QSizeF pageSize = QPageSize(ScenarioStyleFacade::style().pageSizeId()).size(QPageSize::Millimeter);
+	QMarginsF pageMargins = ScenarioStyleFacade::style().pageMargins();
+	QSizeF textSize(PageMetrics::mmToPx(pageSize.width() - pageMargins.left() - pageMargins.right()),
+					PageMetrics::mmToPx(pageSize.height() - pageMargins.top() - pageMargins.bottom()));
+	preparedDocument->setPageSize(textSize);
 
 	//
 	// Сохраним указатель на документ для печати
@@ -110,10 +112,14 @@ void PdfExporter::aboutPrint(QPrinter* _printer)
 QPrinter* PdfExporter::preparePrinter(const QString& _forFile) const
 {
 	QPrinter* printer = new QPrinter;
-	printer->setPaperSize(QPrinter::A4);
+	printer->setPaperSize((QPagedPaintDevice::PageSize)ScenarioStyleFacade::style().pageSizeId());
+	QMarginsF margins = ScenarioStyleFacade::style().pageMargins();
+	printer->setPageMargins(margins.left(), margins.top(), margins.right(), margins.bottom(),
+							QPrinter::Millimeter);
+
 	printer->setOutputFileName(_forFile);
 	printer->setOutputFormat(QPrinter::PdfFormat);
-	printer->setPageMargins(37.5, 25, 25, 12.5, QPrinter::Millimeter);
+
 	return printer;
 }
 
@@ -123,8 +129,6 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 	// Настроим новый документ
 	//
 	QTextDocument* preparedDocument = new QTextDocument;
-	QFont documentFont("Courier New", 12);
-	preparedDocument->setDefaultFont(documentFont);
 	preparedDocument->setDocumentMargin(0);
 	preparedDocument->setIndentWidth(0);
 
@@ -135,32 +139,23 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 	QTextCursor sourceDocumentCursor(_document);
 	QTextCursor destDocumentCursor(preparedDocument);
 
-	ScenarioTextBlockStyle::Type currentBlockType = ScenarioTextBlockStyle::Undefined;
+	ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::Undefined;
 	while (!sourceDocumentCursor.atEnd()) {
 		//
 		// Получим тип текущего блока под курсором
 		//
-		currentBlockType = ScenarioTextBlockStyle::forBlock(sourceDocumentCursor.block());
+		currentBlockType = ScenarioBlockStyle::forBlock(sourceDocumentCursor.block());
 
 		//
 		// Если блок содержит текст, который необходимо вывести на печать
 		//
-		if (currentBlockType != ScenarioTextBlockStyle::NoprintableText
-			&& currentBlockType != ScenarioTextBlockStyle::FolderHeader
-			&& currentBlockType != ScenarioTextBlockStyle::FolderFooter) {
+		if (currentBlockType != ScenarioBlockStyle::NoprintableText
+			&& currentBlockType != ScenarioBlockStyle::FolderHeader
+			&& currentBlockType != ScenarioBlockStyle::FolderFooter) {
 			//
 			// Если вставляется не первый блок текста
 			//
 			if (!sourceDocumentCursor.atStart()) {
-				//
-				// Если нужно сделать отступ
-				//
-//				if (!sourceDocumentCursor.block().text().isEmpty()
-//					&& currentBlockType != ScenarioTextBlockStyle::Dialog
-//					&& currentBlockType != ScenarioTextBlockStyle::Parenthetical) {
-//					destDocumentCursor.insertBlock();
-//				}
-
 				//
 				// Вставим новый абзац для наполнения текстом
 				//
@@ -197,78 +192,26 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 	return preparedDocument;
 }
 
-QTextCharFormat PdfExporter::charFormatForType(ScenarioTextBlockStyle::Type _type) const
+QTextCharFormat PdfExporter::charFormatForType(ScenarioBlockStyle::Type _type) const
 {
-	QTextCharFormat format;
+	QTextCharFormat format = ScenarioStyleFacade::style().blockStyle(_type).charFormat();
 
-	switch (_type) {
-		case ScenarioTextBlockStyle::TimeAndPlace:
-		case ScenarioTextBlockStyle::Character:
-		case ScenarioTextBlockStyle::Note:
-		case ScenarioTextBlockStyle::TitleHeader:
-		case ScenarioTextBlockStyle::SceneGroupHeader:
-		case ScenarioTextBlockStyle::SceneGroupFooter:
-		case ScenarioTextBlockStyle::Transition: {
-			format.setFontCapitalization(QFont::AllUppercase);
-			break;
-		}
-
-		default: {
-			break;
-		}
-	}
+	//
+	// Очищаем цвета
+	//
+	format.setForeground(Qt::black);
 
 	return format;
 }
 
-QTextBlockFormat PdfExporter::blockFormatForType(ScenarioTextBlockStyle::Type _type) const
+QTextBlockFormat PdfExporter::blockFormatForType(ScenarioBlockStyle::Type _type) const
 {
-	ScenarioTextBlockStyle style(_type);
-	QTextBlockFormat styleBlockFormat = style.blockFormat();
+	QTextBlockFormat format = ScenarioStyleFacade::style().blockStyle(_type).blockFormat();
 
 	//
-	// TODO: проверить на других машинах/ОС
+	// Очищаем цвета
 	//
-
-	QTextBlockFormat format;
-
-	//
-	// Настраиваем отступы
-	//
-	format.setTopMargin(styleBlockFormat.topMargin());
-	format.setLeftMargin(styleBlockFormat.leftMargin());
-	format.setRightMargin(styleBlockFormat.rightMargin());
-	format.setAlignment(styleBlockFormat.alignment());
-
-	/*
-	switch (_type) {
-		case ScenarioTextBlockStyle::Character: {
-			format.setLeftMargin(styleBlockFormat.leftMargin());
-			break;
-		}
-
-		case ScenarioTextBlockStyle::Dialog: {
-			format.setLeftMargin(styleBlockFormat.leftMargin());
-			format.setRightMargin(styleBlockFormat.rightMargin());
-			break;
-		}
-
-		case ScenarioTextBlockStyle::Parenthetical:
-		case ScenarioTextBlockStyle::Title: {
-			format.setLeftMargin(211);
-			format.setRightMargin(173);
-			break;
-		}
-
-		case ScenarioTextBlockStyle::Transition: {
-			format.setAlignment(Qt::AlignRight);
-			break;
-		}
-
-		default: {
-			break;
-		}
-	}*/
+	format.setBackground(Qt::white);
 
 	return format;
 }

@@ -58,7 +58,7 @@ int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPositi
 				//
 				chronometry +=
 						chronometer()->calculateFrom(
-							ScenarioTextBlockStyle::forBlock(cursor.block()),
+							ScenarioBlockStyle::forBlock(cursor.block()),
 							cursor.selectedText()
 							);
 				cursor.clearSelection();

@@ -73,14 +73,14 @@ void NoteHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставляем блок и применяем ему стиль описания действия
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 				} else {
 					//! Внутри блока
 
 					//
 					// Вставляем блок и применяем ему стиль описания действия
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 				}
 			}
 		}

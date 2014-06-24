@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QTextCharFormat>
 #include <QTextBlockFormat>
@@ -57,12 +57,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Получить стиль оформления символов для заданного типа
 		 */
-		QTextCharFormat charFormatForType(ScenarioTextBlockStyle::Type _type) const;
+		QTextCharFormat charFormatForType(ScenarioBlockStyle::Type _type) const;
 
 		/**
 		 * @brief Получить стиль оформления абзаца для заданного типа
 		 */
-		QTextBlockFormat blockFormatForType(ScenarioTextBlockStyle::Type _type) const;
+		QTextBlockFormat blockFormatForType(ScenarioBlockStyle::Type _type) const;
 
 	private:
 		/**

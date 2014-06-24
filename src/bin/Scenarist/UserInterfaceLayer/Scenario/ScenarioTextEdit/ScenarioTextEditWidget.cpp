@@ -8,7 +8,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
 #include <QApplication>
@@ -27,7 +27,7 @@
 using UserInterface::ScenarioTextEditWidget;
 using UserInterface::ScenarioTextEdit;
 using BusinessLogic::ScenarioStyleFacade;
-using BusinessLogic::ScenarioTextBlockStyle;
+using BusinessLogic::ScenarioBlockStyle;
 
 namespace {
 	const int SCROLL_DELTA = 140;
@@ -89,7 +89,7 @@ void ScenarioTextEditWidget::setUsePageView(bool _use)
 {
 	QMarginsF pageMargins(5, 5, 5, 5);
 	if (_use) {
-		pageMargins = ScenarioStyleFacade::instance()->style().pageMargins();
+		pageMargins = ScenarioStyleFacade::style().pageMargins();
 	}
 
 	m_editor->setPageMargins(pageMargins);
@@ -162,7 +162,7 @@ void ScenarioTextEditWidget::addItem(int _position, const QString& _text, int _t
 
 	cursor.setPosition(_position);
 	m_editor->setTextCursor(cursor);
-	ScenarioTextBlockStyle::Type type = (ScenarioTextBlockStyle::Type)_type;
+	ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)_type;
 	//
 	// Если в позиции пустой блок, изменим его
 	//
@@ -183,7 +183,7 @@ void ScenarioTextEditWidget::addItem(int _position, const QString& _text, int _t
 	//
 	// Если это группирующий блок, то вставим и закрывающий текст
 	//
-	if (ScenarioTextBlockStyle(type).isEmbeddableHeader()) {
+	if (ScenarioStyleFacade::style().blockStyle(type).isEmbeddableHeader()) {
 		cursor = m_editor->textCursor();
 		cursor.movePosition(QTextCursor::NextBlock);
 		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
@@ -254,18 +254,18 @@ void ScenarioTextEditWidget::aboutShowFastFormat()
 
 void ScenarioTextEditWidget::aboutUpdateTextStyle()
 {
-	ScenarioTextBlockStyle::Type currentType = m_editor->scenarioBlockType();
-	if (currentType == ScenarioTextBlockStyle::TitleHeader) {
-		currentType = ScenarioTextBlockStyle::Title;
-	} else if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
-		currentType = ScenarioTextBlockStyle::SceneGroupHeader;
-	} else if (currentType == ScenarioTextBlockStyle::FolderFooter) {
-		currentType = ScenarioTextBlockStyle::FolderHeader;
+	ScenarioBlockStyle::Type currentType = m_editor->scenarioBlockType();
+	if (currentType == ScenarioBlockStyle::TitleHeader) {
+		currentType = ScenarioBlockStyle::Title;
+	} else if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
+		currentType = ScenarioBlockStyle::SceneGroupHeader;
+	} else if (currentType == ScenarioBlockStyle::FolderFooter) {
+		currentType = ScenarioBlockStyle::FolderHeader;
 	}
 
 	for (int itemIndex = 0; itemIndex < m_textStyles->count(); ++itemIndex) {
-		ScenarioTextBlockStyle::Type itemType =
-				(ScenarioTextBlockStyle::Type)m_textStyles->itemData(itemIndex).toInt();
+		ScenarioBlockStyle::Type itemType =
+				(ScenarioBlockStyle::Type)m_textStyles->itemData(itemIndex).toInt();
 		if (itemType == currentType) {
 			m_textStyles->setCurrentIndex(itemIndex);
 			break;
@@ -275,8 +275,8 @@ void ScenarioTextEditWidget::aboutUpdateTextStyle()
 
 void ScenarioTextEditWidget::aboutChangeTextStyle()
 {
-	ScenarioTextBlockStyle::Type type =
-			(ScenarioTextBlockStyle::Type)m_textStyles->itemData(m_textStyles->currentIndex()).toInt();
+	ScenarioBlockStyle::Type type =
+			(ScenarioBlockStyle::Type)m_textStyles->itemData(m_textStyles->currentIndex()).toInt();
 
 	//
 	// Меняем стиль блока, если это возможно
@@ -308,40 +308,40 @@ void ScenarioTextEditWidget::initView()
 	m_textStyles->setToolTip(tr("Current Text Block Style"));
 	m_textStyles->setSizePolicy(m_textStyles->sizePolicy().horizontalPolicy(), QSizePolicy::Preferred);
 
-	m_textStyles->addItem(tr("Time and Place"), ScenarioTextBlockStyle::TimeAndPlace);
+	m_textStyles->addItem(tr("Time and Place"), ScenarioBlockStyle::TimeAndPlace);
 	m_textStyles->setItemData(0, tr("Ctrl+Enter"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Scene Characters"), ScenarioTextBlockStyle::SceneCharacters);
+	m_textStyles->addItem(tr("Scene Characters"), ScenarioBlockStyle::SceneCharacters);
 	m_textStyles->setItemData(1, tr("Ctrl+E"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Action"), ScenarioTextBlockStyle::Action);
+	m_textStyles->addItem(tr("Action"), ScenarioBlockStyle::Action);
 	m_textStyles->setItemData(2, tr("Ctrl+J"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Character"), ScenarioTextBlockStyle::Character);
+	m_textStyles->addItem(tr("Character"), ScenarioBlockStyle::Character);
 	m_textStyles->setItemData(3, tr("Ctrl+U"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Dialog"), ScenarioTextBlockStyle::Dialog);
+	m_textStyles->addItem(tr("Dialog"), ScenarioBlockStyle::Dialog);
 	m_textStyles->setItemData(4, tr("Ctrl+L"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Parethentcial"), ScenarioTextBlockStyle::Parenthetical);
+	m_textStyles->addItem(tr("Parethentcial"), ScenarioBlockStyle::Parenthetical);
 	m_textStyles->setItemData(5, tr("Ctrl+H"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Title"), ScenarioTextBlockStyle::Title);
+	m_textStyles->addItem(tr("Title"), ScenarioBlockStyle::Title);
 	m_textStyles->setItemData(6, tr("Ctrl+N"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Note"), ScenarioTextBlockStyle::Note);
+	m_textStyles->addItem(tr("Note"), ScenarioBlockStyle::Note);
 	m_textStyles->setItemData(7, tr("Ctrl+P"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Transition"), ScenarioTextBlockStyle::Transition);
+	m_textStyles->addItem(tr("Transition"), ScenarioBlockStyle::Transition);
 	m_textStyles->setItemData(8, tr("Ctrl+G"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Noprintable Text"), ScenarioTextBlockStyle::NoprintableText);
+	m_textStyles->addItem(tr("Noprintable Text"), ScenarioBlockStyle::NoprintableText);
 	m_textStyles->setItemData(9, tr("Ctrl+Y"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Scenes Group"), ScenarioTextBlockStyle::SceneGroupHeader);
+	m_textStyles->addItem(tr("Scenes Group"), ScenarioBlockStyle::SceneGroupHeader);
 	m_textStyles->setItemData(10, tr("Ctrl+D"), Qt::ToolTipRole);
 
-	m_textStyles->addItem(tr("Folder"), ScenarioTextBlockStyle::FolderHeader);
+	m_textStyles->addItem(tr("Folder"), ScenarioBlockStyle::FolderHeader);
 	m_textStyles->setItemData(11, tr("Ctrl+Space"), Qt::ToolTipRole);
 
 	m_undo->setIcon(QIcon(":/Graphics/Icons/Editing/undo.png"));
@@ -365,7 +365,7 @@ void ScenarioTextEditWidget::initView()
 
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 
-	m_editor->setPageFormat(ScenarioStyleFacade::instance()->style().pageSizeId());
+	m_editor->setPageFormat(ScenarioStyleFacade::style().pageSizeId());
 
 	m_searchLine->setEditor(m_editor);
 	m_searchLine->hide();

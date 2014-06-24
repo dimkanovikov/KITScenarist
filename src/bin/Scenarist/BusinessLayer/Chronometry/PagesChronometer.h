@@ -23,7 +23,7 @@ namespace BusinessLogic
 		 * @brief Подсчитать длительность заданного текста определённого типа
 		 */
 		float calculateFrom(
-				BusinessLogic::ScenarioTextBlockStyle::Type _type, const QString &_text) const;
+				BusinessLogic::ScenarioBlockStyle::Type _type, const QString &_text) const;
 
 	private:
 		int linesInText(const QString& _text, int _lineLength) const;

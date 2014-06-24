@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 class QDialogButtonBox;
 class QRadioButton;
@@ -31,7 +31,7 @@ namespace UserInterface
 		/**
 		 * @brief Получить тип элемента
 		 */
-		BusinessLogic::ScenarioTextBlockStyle::Type itemType() const;
+		BusinessLogic::ScenarioBlockStyle::Type itemType() const;
 
 		/**
 		 * @brief Получить текст

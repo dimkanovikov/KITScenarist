@@ -48,7 +48,7 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 	setHighlighterDocument(m_document);
 }
 
-void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
+void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
 {
 	QTextCursor cursor = textCursor();
 	cursor.beginEditBlock();
@@ -71,7 +71,7 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioTextBlockStyle::Type _blockType)
 	cursor.endEditBlock();
 }
 
-void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blockType)
+void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockType)
 {
 	if (scenarioBlockType() == _blockType) {
 		return;
@@ -84,9 +84,9 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 	// Нельзя сменить стиль заголовка блока и конечных элементов групп и папок
 	//
 	bool canChangeType =
-			(scenarioBlockType() != ScenarioTextBlockStyle::TitleHeader)
-			&& (scenarioBlockType() != ScenarioTextBlockStyle::SceneGroupFooter)
-			&& (scenarioBlockType() != ScenarioTextBlockStyle::FolderFooter);
+			(scenarioBlockType() != ScenarioBlockStyle::TitleHeader)
+			&& (scenarioBlockType() != ScenarioBlockStyle::SceneGroupFooter)
+			&& (scenarioBlockType() != ScenarioBlockStyle::FolderFooter);
 
 	//
 	// Если текущий вид можно сменить
@@ -97,8 +97,8 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 		//
 		closeCompleter();
 
-		ScenarioTextBlockStyle oldStyle(scenarioBlockType());
-		ScenarioTextBlockStyle newStyle(_blockType);
+		ScenarioBlockStyle oldStyle = ScenarioStyleFacade::style().blockStyle(scenarioBlockType());
+		ScenarioBlockStyle newStyle = ScenarioStyleFacade::style().blockStyle(_blockType);
 
 		//
 		// Если необходимо сменить группирующий стиль на аналогичный
@@ -133,12 +133,12 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioTextBlockStyle::Type _blo
 	emit styleChanged();
 }
 
-void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type _blockType)
+void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioBlockStyle::Type _blockType)
 {
 	QTextCursor cursor = textCursor();
 	cursor.beginEditBlock();
 
-	ScenarioTextBlockStyle newBlockStyle(_blockType);
+	ScenarioBlockStyle newBlockStyle = ScenarioStyleFacade::style().blockStyle(_blockType);
 
 	//
 	// Обновим стили
@@ -158,9 +158,9 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioTextBlockStyle::Type
 	emit styleChanged();
 }
 
-ScenarioTextBlockStyle::Type ScenarioTextEdit::scenarioBlockType() const
+ScenarioBlockStyle::Type ScenarioTextEdit::scenarioBlockType() const
 {
-	return ScenarioTextBlockStyle::forBlock(textCursor().block());
+	return ScenarioBlockStyle::forBlock(textCursor().block());
 }
 
 void ScenarioTextEdit::setTextCursorReimpl(const QTextCursor& _cursor)
@@ -341,10 +341,10 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 		QString textToInsert = _source->text();
 		foreach (const QString& line, textToInsert.split("\n", QString::SkipEmptyParts)) {
 			if (cursor.block().text().isEmpty()) {
-				changeScenarioBlockType(ScenarioTextBlockStyle::NoprintableText);
+				changeScenarioBlockType(ScenarioBlockStyle::NoprintableText);
 			} else {
 				moveCursor(QTextCursor::EndOfBlock);
-				addScenarioBlock(ScenarioTextBlockStyle::NoprintableText);
+				addScenarioBlock(ScenarioBlockStyle::NoprintableText);
 			}
 			cursor.insertText(line.simplified());
 		}
@@ -356,7 +356,7 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 {
 	QTextCursor cursor = textCursor();
-	ScenarioTextBlockStyle oldBlockStyle(scenarioBlockType());
+	ScenarioBlockStyle oldBlockStyle = ScenarioStyleFacade::style().blockStyle(scenarioBlockType());
 
 	//
 	// Удалить завершающий блок группы сцен
@@ -369,8 +369,8 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 		int openedGroups = 0;
 		bool isFooterUpdated = false;
 		do {
-			ScenarioTextBlockStyle::Type currentType =
-					ScenarioTextBlockStyle::forBlock(cursor.block());
+			ScenarioBlockStyle::Type currentType =
+					ScenarioBlockStyle::forBlock(cursor.block());
 
 			if (currentType == oldBlockStyle.embeddableFooter()) {
 				if (openedGroups == 0) {
@@ -381,7 +381,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == oldBlockStyle.blockType()) {
+			} else if (currentType == oldBlockStyle.type()) {
 				// ... встретилась новая группа
 				++openedGroups;
 			}
@@ -399,7 +399,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 		QTextCursor headerCursor = cursor;
 		headerCursor.movePosition(QTextCursor::StartOfBlock);
 		headerCursor.movePosition(QTextCursor::Left);
-		if (ScenarioTextBlockStyle::forBlock(headerCursor.block()) == oldBlockStyle.headerType()) {
+		if (ScenarioBlockStyle::forBlock(headerCursor.block()) == oldBlockStyle.headerType()) {
 			headerCursor.select(QTextCursor::BlockUnderCursor);
 			headerCursor.deleteChar();
 
@@ -439,10 +439,10 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 	}
 }
 
-void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _blockType)
+void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockType)
 {
 	QTextCursor cursor = textCursor();
-	ScenarioTextBlockStyle newBlockStyle(_blockType);
+	ScenarioBlockStyle newBlockStyle = ScenarioStyleFacade::style().blockStyle(_blockType);
 
 	//
 	// Обновим стили
@@ -490,7 +490,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	// Вставим заголовок, если необходимо
 	//
 	if (newBlockStyle.hasHeader()) {
-		ScenarioTextBlockStyle headerStyle(newBlockStyle.headerType());
+		ScenarioBlockStyle headerStyle = ScenarioStyleFacade::style().blockStyle(newBlockStyle.headerType());
 
 		cursor.movePosition(QTextCursor::StartOfBlock);
 		cursor.insertBlock();
@@ -506,7 +506,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	// Для заголовка группы нужно создать завершение
 	//
 	if (newBlockStyle.isEmbeddableHeader()) {
-		ScenarioTextBlockStyle footerStyle(newBlockStyle.embeddableFooter());
+		ScenarioBlockStyle footerStyle = ScenarioStyleFacade::style().blockStyle(newBlockStyle.embeddableFooter());
 
 		//
 		// Запомним позицию курсора
@@ -531,11 +531,11 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioTextBlockStyle::Type _bl
 	}
 }
 
-void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioTextBlockStyle::Type _blockType)
+void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioBlockStyle::Type _blockType)
 {
-	ScenarioTextBlockStyle oldBlockStyle(scenarioBlockType());
-	ScenarioTextBlockStyle newBlockHeaderStyle(_blockType);
-	ScenarioTextBlockStyle newBlockFooterStyle(newBlockHeaderStyle.embeddableFooter());
+	ScenarioBlockStyle oldBlockStyle = ScenarioStyleFacade::style().blockStyle(scenarioBlockType());
+	ScenarioBlockStyle newBlockHeaderStyle = ScenarioStyleFacade::style().blockStyle(_blockType);
+	ScenarioBlockStyle newBlockFooterStyle = ScenarioStyleFacade::style().blockStyle(newBlockHeaderStyle.embeddableFooter());
 
 	//
 	// Сменим стиль заголовочного блока
@@ -569,8 +569,8 @@ void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioTextBlockStyle
 		int openedGroups = 0;
 		bool isFooterUpdated = false;
 		do {
-			ScenarioTextBlockStyle::Type currentType =
-					ScenarioTextBlockStyle::forBlock(cursor.block());
+			ScenarioBlockStyle::Type currentType =
+					ScenarioBlockStyle::forBlock(cursor.block());
 
 			if (currentType == oldBlockStyle.embeddableFooter()) {
 				if (openedGroups == 0) {
@@ -591,7 +591,7 @@ void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioTextBlockStyle
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == oldBlockStyle.blockType()) {
+			} else if (currentType == oldBlockStyle.type()) {
 				// ... встретилась новая группа
 				++openedGroups;
 			}
@@ -629,12 +629,12 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 		// Определяем необходимость установки верхнего регистра для первого символа
 		//
 		if (cursorBackwardText == eventText
-			|| cursorBackwardText == (currentCharFormat.stringProperty(ScenarioTextBlockStyle::PropertyPrefix)
+			|| cursorBackwardText == (currentCharFormat.stringProperty(ScenarioBlockStyle::PropertyPrefix)
 									  + eventText)) {
 			//
 			// Сформируем правильное представление строки
 			//
-			bool isFirstUpperCase = currentCharFormat.boolProperty(ScenarioTextBlockStyle::PropertyIsFirstUppercase);
+			bool isFirstUpperCase = currentCharFormat.boolProperty(ScenarioBlockStyle::PropertyIsFirstUppercase);
 			QString correctedText = eventText;
 			if (isFirstUpperCase) {
 				correctedText[0] = correctedText[0].toUpper();
@@ -711,9 +711,9 @@ void ScenarioTextEdit::initEditor()
 	//
 	QTextCursor cursor(document());
 	setTextCursor(cursor);
-	if (BusinessLogic::ScenarioTextBlockStyle::forBlock(cursor.block())
-		== BusinessLogic::ScenarioTextBlockStyle::Undefined) {
-		applyScenarioTypeToBlockText(ScenarioTextBlockStyle::TimeAndPlace);
+	if (BusinessLogic::ScenarioBlockStyle::forBlock(cursor.block())
+		== BusinessLogic::ScenarioBlockStyle::Undefined) {
+		applyScenarioTypeToBlockText(ScenarioBlockStyle::TimeAndPlace);
 	}
 }
 

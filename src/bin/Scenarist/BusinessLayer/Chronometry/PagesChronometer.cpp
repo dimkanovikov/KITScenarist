@@ -17,14 +17,14 @@ QString PagesChronometer::name() const
 }
 
 float PagesChronometer::calculateFrom(
-		BusinessLogic::ScenarioTextBlockStyle::Type _type, const QString& _text) const
+		BusinessLogic::ScenarioBlockStyle::Type _type, const QString& _text) const
 {
 	//
 	// Не включаем в хронометраж непечатный текст, заголовок и окончание папки
 	//
-	if (_type == ScenarioTextBlockStyle::NoprintableText
-		|| _type == ScenarioTextBlockStyle::FolderHeader
-		|| _type == ScenarioTextBlockStyle::FolderFooter) {
+	if (_type == ScenarioBlockStyle::NoprintableText
+		|| _type == ScenarioBlockStyle::FolderHeader
+		|| _type == ScenarioBlockStyle::FolderFooter) {
 		return 0;
 	}
 
@@ -56,24 +56,24 @@ float PagesChronometer::calculateFrom(
 	int additionalLines = 1;
 
 	switch (_type) {
-		case ScenarioTextBlockStyle::Character: {
+		case ScenarioBlockStyle::Character: {
 			lineLength = 31;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Dialog: {
+		case ScenarioBlockStyle::Dialog: {
 			lineLength = 28;
 			additionalLines = 0;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Parenthetical: {
+		case ScenarioBlockStyle::Parenthetical: {
 			lineLength = 18;
 			additionalLines = 0;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Title: {
+		case ScenarioBlockStyle::Title: {
 			lineLength = 18;
 			break;
 		}

@@ -10,7 +10,7 @@
 
 using UserInterface::ScenarioItemDialog;
 using UserInterface::ScenarioLineEdit;
-using BusinessLogic::ScenarioTextBlockStyle;
+using BusinessLogic::ScenarioBlockStyle;
 
 
 ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
@@ -32,16 +32,16 @@ void ScenarioItemDialog::clearText()
 	aboutUpdateCurrentTextStyle();
 }
 
-ScenarioTextBlockStyle::Type ScenarioItemDialog::itemType() const
+ScenarioBlockStyle::Type ScenarioItemDialog::itemType() const
 {
 	//
 	// Определим выбранный стиль
 	//
-	ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::TimeAndPlace;
+	ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::TimeAndPlace;
 	if (m_folder->isChecked()) {
-		currentType = ScenarioTextBlockStyle::FolderHeader;
+		currentType = ScenarioBlockStyle::FolderHeader;
 	} else if (m_scenesGroup->isChecked()) {
-		currentType = ScenarioTextBlockStyle::SceneGroupHeader;
+		currentType = ScenarioBlockStyle::SceneGroupHeader;
 	}
 
 	return currentType;
@@ -78,12 +78,12 @@ void ScenarioItemDialog::aboutUpdateCurrentTextStyle()
 	// Для папок и групп сцен используется стиль примечания чтобы не смешивать стиль отображения
 	// и избежать возни с концами групп
 	//
-	ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::Undefined;
+	ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::Undefined;
 	if (m_folder->isChecked()
 		|| m_scenesGroup->isChecked()) {
-		currentType = ScenarioTextBlockStyle::Note;
+		currentType = ScenarioBlockStyle::Note;
 	} else {
-		currentType = ScenarioTextBlockStyle::TimeAndPlace;
+		currentType = ScenarioBlockStyle::TimeAndPlace;
 	}
 
 	//

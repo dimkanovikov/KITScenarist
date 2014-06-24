@@ -2,7 +2,7 @@
 
 #include "ScenarioTextEdit.h"
 
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QPushButton>
 #include <QShortcut>
@@ -10,7 +10,7 @@
 
 using UserInterface::ScenarioFastFormatWidget;
 using UserInterface::ScenarioTextEdit;
-using BusinessLogic::ScenarioTextBlockStyle;
+using BusinessLogic::ScenarioBlockStyle;
 
 namespace {
 	const char* STYLE_PROPERTY_KEY = "block_style";
@@ -40,7 +40,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect (goToPrevShortcut, SIGNAL(activated()), goToPrevBlock, SLOT(click()));
 
 	QPushButton* timeAndPlaceStyle = new QPushButton(tr("0 Time and Place"), this);
-	timeAndPlaceStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::TimeAndPlace);
+	timeAndPlaceStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::TimeAndPlace);
 	connect(timeAndPlaceStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* timeAndPlaceShortcut1 = new QShortcut(Qt::Key_0, this);
 	QShortcut* timeAndPlaceShortcut2 = new QShortcut(Qt::Key_0 + Qt::KeypadModifier, this);
@@ -48,7 +48,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(timeAndPlaceShortcut2, SIGNAL(activated()), timeAndPlaceStyle, SLOT(click()));
 
 	QPushButton* sceneCharactersStyle = new QPushButton(tr("1 Scene Characters"), this);
-	sceneCharactersStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::TimeAndPlace);
+	sceneCharactersStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::TimeAndPlace);
 	connect(sceneCharactersStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* sceneCharactersShortcut1 = new QShortcut(Qt::Key_1, this);
 	QShortcut* sceneCharactersShortcut2 = new QShortcut(Qt::Key_1 + Qt::KeypadModifier, this);
@@ -56,7 +56,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(sceneCharactersShortcut2, SIGNAL(activated()), sceneCharactersStyle, SLOT(click()));
 
 	QPushButton* actionStyle = new QPushButton(tr("2 Action"), this);
-	actionStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Action);
+	actionStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Action);
 	connect(actionStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* actionShortcut1 = new QShortcut(Qt::Key_2, this);
 	QShortcut* actionShortcut2 = new QShortcut(Qt::Key_2 + Qt::KeypadModifier, this);
@@ -64,7 +64,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(actionShortcut2, SIGNAL(activated()), actionStyle, SLOT(click()));
 
 	QPushButton* characterStyle = new QPushButton(tr("3 Character"), this);
-	characterStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Character);
+	characterStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Character);
 	connect(characterStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* characterShortcut1 = new QShortcut(Qt::Key_3, this);
 	QShortcut* characterShortcut2 = new QShortcut(Qt::Key_3 + Qt::KeypadModifier, this);
@@ -72,7 +72,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(characterShortcut2, SIGNAL(activated()), characterStyle, SLOT(click()));
 
 	QPushButton* dialogStyle = new QPushButton(tr("4 Dialog"), this);
-	dialogStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Dialog);
+	dialogStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Dialog);
 	connect(dialogStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* dialogShortcut1 = new QShortcut(Qt::Key_4, this);
 	QShortcut* dialogShortcut2 = new QShortcut(Qt::Key_4 + Qt::KeypadModifier, this);
@@ -80,7 +80,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(dialogShortcut2, SIGNAL(activated()), dialogStyle, SLOT(click()));
 
 	QPushButton* parentheticalStyle = new QPushButton(tr("5 Parenthetical"), this);
-	parentheticalStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Parenthetical);
+	parentheticalStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Parenthetical);
 	connect(parentheticalStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* parentheticalShortcut1 = new QShortcut(Qt::Key_5, this);
 	QShortcut* parentheticalShortcut2 = new QShortcut(Qt::Key_5 + Qt::KeypadModifier, this);
@@ -88,7 +88,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(parentheticalShortcut2, SIGNAL(activated()), parentheticalStyle, SLOT(click()));
 
 	QPushButton* transitionStyle = new QPushButton(tr("6 Transition"), this);
-	transitionStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Transition);
+	transitionStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Transition);
 	connect(transitionStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* transitionShortcut1 = new QShortcut(Qt::Key_6, this);
 	QShortcut* transitionShortcut2 = new QShortcut(Qt::Key_6 + Qt::KeypadModifier, this);
@@ -96,7 +96,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(transitionShortcut2, SIGNAL(activated()), transitionStyle, SLOT(click()));
 
 	QPushButton* noteStyle = new QPushButton(tr("7 Note"), this);
-	noteStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Note);
+	noteStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Note);
 	connect(noteStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* noteShortcut1 = new QShortcut(Qt::Key_7, this);
 	QShortcut* noteShortcut2 = new QShortcut(Qt::Key_7 + Qt::KeypadModifier, this);
@@ -104,7 +104,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(noteShortcut2, SIGNAL(activated()), noteStyle, SLOT(click()));
 
 	QPushButton* titleStyle = new QPushButton(tr("8 Title"), this);
-	titleStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::Title);
+	titleStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Title);
 	connect(titleStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* titleShortcut1 = new QShortcut(Qt::Key_8, this);
 	QShortcut* titleShortcut2 = new QShortcut(Qt::Key_8 + Qt::KeypadModifier, this);
@@ -112,7 +112,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(titleShortcut2, SIGNAL(activated()), titleStyle, SLOT(click()));
 
 	QPushButton* nonprintableTextStyle = new QPushButton(tr("9 Noprintable Text"), this);
-	nonprintableTextStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioTextBlockStyle::NoprintableText);
+	nonprintableTextStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::NoprintableText);
 	connect(nonprintableTextStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* nonprintableTextShortcut1 = new QShortcut(Qt::Key_9, this);
 	QShortcut* nonprintableTextShortcut2 = new QShortcut(Qt::Key_9 + Qt::KeypadModifier, this);
@@ -184,8 +184,8 @@ void ScenarioFastFormatWidget::goToPrevBlock()
 void ScenarioFastFormatWidget::changeStyle()
 {
 	if (QWidget* button = qobject_cast<QWidget*>(sender())) {
-		ScenarioTextBlockStyle::Type type =
-				(ScenarioTextBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt();
+		ScenarioBlockStyle::Type type =
+				(ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt();
 		if (m_editor != 0) {
 			m_editor->changeScenarioBlockType(type);
 			selectCurrentBlock();

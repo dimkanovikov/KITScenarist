@@ -41,7 +41,7 @@ void KeyPressHandlerFacade::prehandle(QKeyEvent* _event)
 void KeyPressHandlerFacade::handle(QKeyEvent* _event)
 {
 	QTextBlock currentBlock = m_editor->textCursor().block();
-	ScenarioTextBlockStyle::Type currentType = ScenarioTextBlockStyle::forBlock(currentBlock);
+	ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(currentBlock);
 	AbstractKeyHandler* currentHandler = handlerFor(currentType);
 
 	//
@@ -86,81 +86,81 @@ KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :
 	m_folderFooterHandler = new FolderFooterHandler(_editor);
 }
 
-AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioTextBlockStyle::Type _type)
+AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioBlockStyle::Type _type)
 {
 	AbstractKeyHandler* handler = 0;
 
 	switch (_type) {
-		case ScenarioTextBlockStyle::TimeAndPlace: {
+		case ScenarioBlockStyle::TimeAndPlace: {
 			handler = m_sceneHeaderHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::SceneCharacters: {
+		case ScenarioBlockStyle::SceneCharacters: {
 			handler = m_sceneCharactersHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Action: {
+		case ScenarioBlockStyle::Action: {
 			handler = m_actionHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Character: {
+		case ScenarioBlockStyle::Character: {
 			handler = m_characterHandler;
 			break;
 		}
-		case ScenarioTextBlockStyle::Parenthetical: {
+		case ScenarioBlockStyle::Parenthetical: {
 			handler = m_parentheticalHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Dialog: {
+		case ScenarioBlockStyle::Dialog: {
 			handler = m_dialogHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Transition: {
+		case ScenarioBlockStyle::Transition: {
 			handler = m_transitionHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Note: {
+		case ScenarioBlockStyle::Note: {
 			handler = m_noteHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::TitleHeader: {
+		case ScenarioBlockStyle::TitleHeader: {
 			handler = m_titleheaderHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Title: {
+		case ScenarioBlockStyle::Title: {
 			handler = m_titleHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::NoprintableText: {
+		case ScenarioBlockStyle::NoprintableText: {
 			handler = m_simpleTextHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::SceneGroupHeader: {
+		case ScenarioBlockStyle::SceneGroupHeader: {
 			handler = m_sceneGroupHeaderHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::SceneGroupFooter: {
+		case ScenarioBlockStyle::SceneGroupFooter: {
 			handler = m_sceneGroupFooterHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::FolderHeader: {
+		case ScenarioBlockStyle::FolderHeader: {
 			handler = m_folderHeaderHandler;
 			break;
 		}
 
-		case ScenarioTextBlockStyle::FolderFooter: {
+		case ScenarioBlockStyle::FolderFooter: {
 			handler = m_folderFooterHandler;
 			break;
 		}

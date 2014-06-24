@@ -54,7 +54,7 @@ void SimpleTextHandler::handleEnter(QKeyEvent*)
 		//
 		// Вставляем блок и применяем ему стиль простого текста
 		//
-		editor()->addScenarioBlock(ScenarioTextBlockStyle::NoprintableText);
+		editor()->addScenarioBlock(ScenarioBlockStyle::NoprintableText);
 	}
 }
 

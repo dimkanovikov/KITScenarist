@@ -72,7 +72,7 @@ void FolderHeaderHandler::handleEnter(QKeyEvent*)
 					cursor.movePosition(QTextCursor::Left);
 					cursor.setBlockFormat(QTextBlockFormat());
 					editor()->setTextCursor(cursor);
-					editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->changeScenarioBlockType(ScenarioBlockStyle::TimeAndPlace);
 					editor()->moveCursor(QTextCursor::Right);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
@@ -80,14 +80,14 @@ void FolderHeaderHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставить блок время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
 				} else {
 					//! Внутри блока
 
 					//
 					// Вставить блок время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
 				}
 			}
 		}
@@ -185,7 +185,7 @@ void FolderHeaderHandler::handleOther(QKeyEvent* _event)
 	//
 	// Если редактируется заголовок группы
 	//
-	if (editor()->scenarioBlockType() == ScenarioTextBlockStyle::FolderHeader) {
+	if (editor()->scenarioBlockType() == ScenarioBlockStyle::FolderHeader) {
 
 		cursor.movePosition(QTextCursor::NextBlock);
 
@@ -193,10 +193,10 @@ void FolderHeaderHandler::handleOther(QKeyEvent* _event)
 		int openedGroups = 0;
 		bool isFooterUpdated = false;
 		do {
-			ScenarioTextBlockStyle::Type currentType =
-					ScenarioTextBlockStyle::forBlock(cursor.block());
+			ScenarioBlockStyle::Type currentType =
+					ScenarioBlockStyle::forBlock(cursor.block());
 
-			if (currentType == ScenarioTextBlockStyle::FolderFooter) {
+			if (currentType == ScenarioBlockStyle::FolderFooter) {
 				if (openedGroups == 0) {
 					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 					cursor.insertText(Helpers::footerText(editor()->textCursor().block().text()));
@@ -204,7 +204,7 @@ void FolderHeaderHandler::handleOther(QKeyEvent* _event)
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == ScenarioTextBlockStyle::FolderHeader) {
+			} else if (currentType == ScenarioBlockStyle::FolderHeader) {
 				// ... встретилась новая группа
 				++openedGroups;
 			}

@@ -2,7 +2,7 @@
 #define SCENARIOTEXTEDIT_H
 
 #include <3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 namespace BusinessLogic {
 	class ScenarioTextDocument;
@@ -32,29 +32,29 @@ namespace UserInterface
 		 * @brief Вставить новый блок
 		 * @param Тип блока
 		 */
-		void addScenarioBlock(BusinessLogic::ScenarioTextBlockStyle::Type _blockType);
+		void addScenarioBlock(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 
 		/**
 		 * @brief Установить вид текущего блока
 		 * @param Тип блока
 		 */
-		void changeScenarioBlockType(BusinessLogic::ScenarioTextBlockStyle::Type _blockType);
+		void changeScenarioBlockType(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 
 		/**
 		 * @brief Применить тип блока ко всему тексту в блоке
 		 * @param Тип для применения
 		 */
-		void applyScenarioTypeToBlockText(BusinessLogic::ScenarioTextBlockStyle::Type _blockType);
+		void applyScenarioTypeToBlockText(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 
 		/**
 		 * @brief Получить вид блока
 		 */
-		BusinessLogic::ScenarioTextBlockStyle::Type scenarioBlockType(const QTextBlock& _block) const;
+		BusinessLogic::ScenarioBlockStyle::Type scenarioBlockType(const QTextBlock& _block) const;
 
 		/**
 		 * @brief Получить вид блока в котором находится курсор
 		 */
-		BusinessLogic::ScenarioTextBlockStyle::Type scenarioBlockType() const;
+		BusinessLogic::ScenarioBlockStyle::Type scenarioBlockType() const;
 
 		/**
 		 * @brief Своя реализация установки курсора
@@ -113,13 +113,13 @@ namespace UserInterface
 		 * @brief Применить заданный тип к текущему блоку редактора
 		 * @param Тип блока
 		 */
-		void applyScenarioTypeToBlock(BusinessLogic::ScenarioTextBlockStyle::Type _blockType);
+		void applyScenarioTypeToBlock(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 
 		/**
 		 * @brief Применить стиль группы к блоку группе
 		 * @param Тип для применения
 		 */
-		void applyScenarioGroupTypeToGroupBlock(BusinessLogic::ScenarioTextBlockStyle::Type _blockType);
+		void applyScenarioGroupTypeToGroupBlock(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 
 
 		/**

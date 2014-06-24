@@ -186,7 +186,7 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	// ... блока
 	//
 	m_blockFormat.setAlignment(m_align);
-	m_blockFormat.setTopMargin(QFontMetrics(m_font).lineSpacing());
+	m_blockFormat.setTopMargin(QFontMetrics(m_font).lineSpacing() * m_topSpace);
 	m_blockFormat.setLeftMargin(PageMetrics::mmToPx(m_leftMargin));
 	m_blockFormat.setRightMargin(PageMetrics::mmToPx(m_rightMargin));
 	//
@@ -333,21 +333,20 @@ void ScenarioStyle::load(const QString& _from_file)
 // ********
 // ScenarioStyleFacade
 
-ScenarioStyleFacade* ScenarioStyleFacade::instance()
+ScenarioStyle ScenarioStyleFacade::style(const QString& _styleName)
 {
+	//
+	// Если необходимо создаём одиночку
+	//
 	if (s_instance == 0) {
 		s_instance = new ScenarioStyleFacade;
 	}
-	return s_instance;
-}
 
-ScenarioStyle ScenarioStyleFacade::style(const QString& _styleName) const
-{
 	ScenarioStyle result;
 	if (_styleName.isEmpty()) {
-		result = m_styles.first();
+		result = s_instance->m_styles.first();
 	} else {
-		result = m_styles.value(_styleName);
+		result = s_instance->m_styles.value(_styleName);
 	}
 	return result;
 }

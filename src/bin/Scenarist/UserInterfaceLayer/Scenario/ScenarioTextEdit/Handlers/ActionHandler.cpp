@@ -64,14 +64,14 @@ void ActionHandler::handleEnter(QKeyEvent*)
 				//
 				// Меняем стиль на место и время
 				//
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::TimeAndPlace);
 			} else {
 				//! Текст не пуст
 
 				//
 				// Вставляем блок и применяем ему стиль описания действия
 				//
-				editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+				editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 			}
 		}
 	}
@@ -120,7 +120,7 @@ void ActionHandler::handleTab(QKeyEvent*)
 				//
 				// Если строка пуста, то сменить стиль на имя героя
 				//
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Character);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Character);
 			} else {
 				//! Текст не пуст
 
@@ -176,7 +176,7 @@ void ActionHandler::handleOther(QKeyEvent* _event)
 		//
 		QString maybePlace = cursorBackwardText.remove(".").toUpper();
 		if (DataStorageLayer::StorageFacade::placeStorage()->hasPlace(maybePlace)) {
-			editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+			editor()->changeScenarioBlockType(ScenarioBlockStyle::TimeAndPlace);
 		}
 	} else {
 		//! В противном случае, обрабатываем в базовом классе

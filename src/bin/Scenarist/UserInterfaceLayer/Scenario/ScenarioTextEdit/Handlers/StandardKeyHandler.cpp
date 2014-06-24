@@ -111,62 +111,62 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 			/** @{ */
 			case Qt::Key_Enter:
 			case Qt::Key_Return: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::TimeAndPlace);
 				break;
 			}
 
 			case Qt::Key_E: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::SceneCharacters);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::SceneCharacters);
 				break;
 			}
 
 			case Qt::Key_J: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 				break;
 			}
 
 			case Qt::Key_U: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Character);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Character);
 				break;
 			}
 
 			case Qt::Key_L: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Dialog);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Dialog);
 				break;
 			}
 
 			case Qt::Key_H: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Parenthetical);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Parenthetical);
 				break;
 			}
 
 			case Qt::Key_N: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Title);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Title);
 				break;
 			}
 
 			case Qt::Key_P: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Note);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Note);
 				break;
 			}
 
 			case Qt::Key_G: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Transition);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Transition);
 				break;
 			}
 
 			case Qt::Key_Y: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::NoprintableText);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::NoprintableText);
 				break;
 			}
 
 			case Qt::Key_D: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::SceneGroupHeader);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::SceneGroupHeader);
 				break;
 			}
 
 			case Qt::Key_Space: {
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::FolderHeader);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::FolderHeader);
 				break;
 			}
 			/** @} */
@@ -473,23 +473,23 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	//
 	// ... начала
 	//
-	ScenarioTextBlockStyle topStyle(ScenarioTextBlockStyle::Undefined);
+	ScenarioBlockStyle topStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Undefined);
 	QTextBlock topBlock;
 	{
 		QTextCursor topCursor(editor()->document());
 		topCursor.setPosition(topCursorPosition);
-		topStyle.setType(ScenarioTextBlockStyle::forBlock(topCursor.block()));
+		topStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
 		topBlock = topCursor.block();
 	}
 	//
 	// ... и конца
 	//
-	ScenarioTextBlockStyle bottomStyle(ScenarioTextBlockStyle::Undefined);
+	ScenarioBlockStyle bottomStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Undefined);
 	QTextBlock bottomBlock;
 	{
 		QTextCursor bottomCursor(editor()->document());
 		bottomCursor.setPosition(bottomCursorPosition);
-		bottomStyle.setType(ScenarioTextBlockStyle::forBlock(bottomCursor.block()));
+		bottomStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
 		bottomBlock = bottomCursor.block();
 
 
@@ -512,7 +512,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 			while (topBlock == topCursor.block()
 				   && !topCursor.atStart()) {
 				topCursor.movePosition(QTextCursor::Left);
-				topStyle.setType(ScenarioTextBlockStyle::forBlock(topCursor.block()));
+				topStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
 			}
 
 			topCursorPosition = topCursor.position();
@@ -529,7 +529,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 			while (bottomBlock == bottomCursor.block()
 				   && !bottomCursor.atEnd()) {
 				bottomCursor.movePosition(QTextCursor::Right);
-				bottomStyle.setType(ScenarioTextBlockStyle::forBlock(bottomCursor.block()));
+				bottomStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
 			}
 
 			bottomCursorPosition = bottomCursor.position();
@@ -539,15 +539,15 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	//
 	// Определим стиль результирующего блока
 	//
-	ScenarioTextBlockStyle::Type targetType = ScenarioTextBlockStyle::TimeAndPlace;
+	ScenarioBlockStyle::Type targetType = ScenarioBlockStyle::TimeAndPlace;
 	{
 		if (topBlock == bottomBlock) {
-			targetType = topStyle.blockType();
+			targetType = topStyle.type();
 		} else {
 			if (!topBlock.text().isEmpty()) {
-				targetType = topStyle.blockType();
+				targetType = topStyle.type();
 			} else if (!bottomBlock.text().isEmpty()) {
-				targetType = bottomStyle.blockType();
+				targetType = bottomStyle.type();
 			}
 		}
 	}
@@ -626,15 +626,15 @@ QList<int> StandardKeyHandler::findGroupCountsToDelete(int _topCursorPosition, i
 			//
 			// Определим тип блока
 			//
-			ScenarioTextBlockStyle::Type currentType =
-					ScenarioTextBlockStyle::forBlock(searchGroupsCursor.block());
+			ScenarioBlockStyle::Type currentType =
+					ScenarioBlockStyle::forBlock(searchGroupsCursor.block());
 
 			//
 			// Если найден блок открывающий группу, то нужно удалить закрывающий блок
 			//
-			if (currentType == ScenarioTextBlockStyle::SceneGroupHeader) {
+			if (currentType == ScenarioBlockStyle::SceneGroupHeader) {
 				++groupCountsToDelete[SCENE_GROUP_FOOTER];
-			} else if (currentType == ScenarioTextBlockStyle::FolderHeader) {
+			} else if (currentType == ScenarioBlockStyle::FolderHeader) {
 				++groupCountsToDelete[FOLDER_FOOTER];
 			}
 
@@ -643,14 +643,14 @@ QList<int> StandardKeyHandler::findGroupCountsToDelete(int _topCursorPosition, i
 			// ... если все группы закрыты, нужно удалить предыдущую открытую
 			// ... в противном случае закрываем открытую группу
 			//
-			else if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
+			else if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
 				if (groupCountsToDelete.value(SCENE_GROUP_FOOTER) == 0) {
 					++groupCountsToDelete[SCENE_GROUP_HEADER];
 				}
 				else {
 					--groupCountsToDelete[SCENE_GROUP_FOOTER];
 				}
-			} else if (currentType == ScenarioTextBlockStyle::FolderFooter) {
+			} else if (currentType == ScenarioBlockStyle::FolderFooter) {
 				if (groupCountsToDelete.value(FOLDER_FOOTER) == 0) {
 					++groupCountsToDelete[FOLDER_HEADER];
 				}
@@ -688,10 +688,10 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 		int openedGroups = 0;
 		int groupsToDeleteCount = _groupCountsToDelete.value(SCENE_GROUP_FOOTER);
 		do {
-			ScenarioTextBlockStyle::Type currentType =
-					ScenarioTextBlockStyle::forBlock(cursor.block());
+			ScenarioBlockStyle::Type currentType =
+					ScenarioBlockStyle::forBlock(cursor.block());
 
-			if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
+			if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
 				if (openedGroups == 0) {
 					cursor.select(QTextCursor::BlockUnderCursor);
 					cursor.deleteChar();
@@ -699,7 +699,7 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == ScenarioTextBlockStyle::SceneGroupHeader) {
+			} else if (currentType == ScenarioBlockStyle::SceneGroupHeader) {
 				// ... встретилась новая группа, которую не нужно удалять
 				++openedGroups;
 			}
@@ -721,10 +721,10 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 		int openedGroups = 0;
 		int groupsToDeleteCount = _groupCountsToDelete.value(FOLDER_FOOTER);
 		do {
-			ScenarioTextBlockStyle::Type currentType =
-					ScenarioTextBlockStyle::forBlock(cursor.block());
+			ScenarioBlockStyle::Type currentType =
+					ScenarioBlockStyle::forBlock(cursor.block());
 
-			if (currentType == ScenarioTextBlockStyle::FolderFooter) {
+			if (currentType == ScenarioBlockStyle::FolderFooter) {
 				if (openedGroups == 0) {
 					cursor.select(QTextCursor::BlockUnderCursor);
 					cursor.deleteChar();
@@ -732,7 +732,7 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == ScenarioTextBlockStyle::FolderHeader) {
+			} else if (currentType == ScenarioBlockStyle::FolderHeader) {
 				// ... встретилась новая группа, которую не нужно удалять
 				++openedGroups;
 			}
@@ -757,10 +757,10 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 		int openedGroups = 0;
 		int groupsToDeleteCount = _groupCountsToDelete.value(SCENE_GROUP_HEADER);
 		do {
-			ScenarioTextBlockStyle::Type currentType =
-					ScenarioTextBlockStyle::forBlock(cursor.block());
+			ScenarioBlockStyle::Type currentType =
+					ScenarioBlockStyle::forBlock(cursor.block());
 
-			if (currentType == ScenarioTextBlockStyle::SceneGroupHeader) {
+			if (currentType == ScenarioBlockStyle::SceneGroupHeader) {
 				if (openedGroups == 0) {
 					cursor.select(QTextCursor::BlockUnderCursor);
 					cursor.deleteChar();
@@ -776,7 +776,7 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
+			} else if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
 				// ... встретилась новая группа, которую не нужно удалять
 				++openedGroups;
 			}
@@ -797,10 +797,10 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 		int openedGroups = 0;
 		int groupsToDeleteCount = _groupCountsToDelete.value(FOLDER_HEADER);
 		do {
-			ScenarioTextBlockStyle::Type currentType =
-					ScenarioTextBlockStyle::forBlock(cursor.block());
+			ScenarioBlockStyle::Type currentType =
+					ScenarioBlockStyle::forBlock(cursor.block());
 
-			if (currentType == ScenarioTextBlockStyle::FolderHeader) {
+			if (currentType == ScenarioBlockStyle::FolderHeader) {
 				if (openedGroups == 0) {
 					cursor.select(QTextCursor::BlockUnderCursor);
 					cursor.deleteChar();
@@ -816,7 +816,7 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == ScenarioTextBlockStyle::FolderFooter) {
+			} else if (currentType == ScenarioBlockStyle::FolderFooter) {
 				// ... встретилась новая группа, которую не нужно удалять
 				++openedGroups;
 			}

@@ -72,7 +72,7 @@ void SceneGroupHeaderHandler::handleEnter(QKeyEvent*)
 					cursor.movePosition(QTextCursor::Left);
 					cursor.setBlockFormat(QTextBlockFormat());
 					editor()->setTextCursor(cursor);
-					editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->changeScenarioBlockType(ScenarioBlockStyle::TimeAndPlace);
 					editor()->moveCursor(QTextCursor::Right);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
@@ -80,14 +80,14 @@ void SceneGroupHeaderHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставить блок время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
 				} else {
 					//! Внутри блока
 
 					//
 					// Вставить блок время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
 				}
 			}
 		}
@@ -185,7 +185,7 @@ void SceneGroupHeaderHandler::handleOther(QKeyEvent* _event)
 	//
 	// Если редактируется заголовок группы
 	//
-	if (editor()->scenarioBlockType() == ScenarioTextBlockStyle::SceneGroupHeader) {
+	if (editor()->scenarioBlockType() == ScenarioBlockStyle::SceneGroupHeader) {
 
 		cursor.movePosition(QTextCursor::NextBlock);
 
@@ -193,10 +193,10 @@ void SceneGroupHeaderHandler::handleOther(QKeyEvent* _event)
 		int openedGroups = 0;
 		bool isFooterUpdated = false;
 		do {
-			ScenarioTextBlockStyle::Type currentType =
-					ScenarioTextBlockStyle::forBlock(cursor.block());
+			ScenarioBlockStyle::Type currentType =
+					ScenarioBlockStyle::forBlock(cursor.block());
 
-			if (currentType == ScenarioTextBlockStyle::SceneGroupFooter) {
+			if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
 				if (openedGroups == 0) {
 					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 					cursor.insertText(Helpers::footerText(editor()->textCursor().block().text()));
@@ -204,7 +204,7 @@ void SceneGroupHeaderHandler::handleOther(QKeyEvent* _event)
 				} else {
 					--openedGroups;
 				}
-			} else if (currentType == ScenarioTextBlockStyle::SceneGroupHeader) {
+			} else if (currentType == ScenarioBlockStyle::SceneGroupHeader) {
 				// ... встретилась новая группа
 				++openedGroups;
 			}

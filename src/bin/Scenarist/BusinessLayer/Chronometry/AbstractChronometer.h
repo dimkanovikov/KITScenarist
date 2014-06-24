@@ -1,7 +1,7 @@
 #ifndef ABSTRACTCHRONOMETER_H
 #define ABSTRACTCHRONOMETER_H
 
-#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 class QString;
 
@@ -25,7 +25,7 @@ namespace BusinessLogic
 		 * @brief Подсчитать длительность заданного текста определённого типа
 		 */
 		virtual float calculateFrom(
-				BusinessLogic::ScenarioTextBlockStyle::Type _type, const QString& _text) const = 0;
+				BusinessLogic::ScenarioBlockStyle::Type _type, const QString& _text) const = 0;
 	};
 }
 

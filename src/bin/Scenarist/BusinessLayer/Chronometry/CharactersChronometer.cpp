@@ -16,14 +16,14 @@ QString CharactersChronometer::name() const
 	return "characters-chronometer";
 }
 
-float CharactersChronometer::calculateFrom(BusinessLogic::ScenarioTextBlockStyle::Type _type, const QString& _text) const
+float CharactersChronometer::calculateFrom(BusinessLogic::ScenarioBlockStyle::Type _type, const QString& _text) const
 {
 	//
 	// Не включаем в хронометраж непечатный текст, заголовок и окончание папки
 	//
-	if (_type == ScenarioTextBlockStyle::NoprintableText
-		|| _type == ScenarioTextBlockStyle::FolderHeader
-		|| _type == ScenarioTextBlockStyle::FolderFooter) {
+	if (_type == ScenarioBlockStyle::NoprintableText
+		|| _type == ScenarioBlockStyle::FolderHeader
+		|| _type == ScenarioBlockStyle::FolderFooter) {
 		return 0;
 	}
 

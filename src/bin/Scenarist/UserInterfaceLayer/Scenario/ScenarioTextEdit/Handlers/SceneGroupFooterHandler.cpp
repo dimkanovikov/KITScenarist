@@ -71,7 +71,7 @@ void SceneGroupFooterHandler::handleEnter(QKeyEvent*)
 					cursor.movePosition(QTextCursor::Left);
 					cursor.setBlockFormat(QTextBlockFormat());
 					editor()->setTextCursor(cursor);
-					editor()->changeScenarioBlockType(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->changeScenarioBlockType(ScenarioBlockStyle::TimeAndPlace);
 					editor()->moveCursor(QTextCursor::Right);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
@@ -79,14 +79,14 @@ void SceneGroupFooterHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставить блок время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
 				} else {
 					//! Внутри блока
 
 					//
 					// Вставить блок время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
 				}
 			}
 		}

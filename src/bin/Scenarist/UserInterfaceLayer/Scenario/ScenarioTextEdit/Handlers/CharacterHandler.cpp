@@ -67,7 +67,7 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 				//
 				// Cменить стиль на описание действия
 				//
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 			} else {
 				//! Текст не пуст
 
@@ -82,21 +82,21 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставим блок имени героя перед собой
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Character);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Character);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 
 					//
 					// Вставить блок реплики героя
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
 				} else {
 					//! Внутри блока
 
 					//
 					// Вставить блок реплики героя
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Dialog);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
 				}
 			}
 		}
@@ -147,7 +147,7 @@ void CharacterHandler::handleTab(QKeyEvent*)
 				//
 				// Cменить стиль на описание действия
 				//
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 			} else {
 				//! Текст не пуст
 
@@ -163,7 +163,7 @@ void CharacterHandler::handleTab(QKeyEvent*)
 					//
 					// Вставить блок ремарки
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Parenthetical);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Parenthetical);
 				} else {
 					//! Внутри блока
 

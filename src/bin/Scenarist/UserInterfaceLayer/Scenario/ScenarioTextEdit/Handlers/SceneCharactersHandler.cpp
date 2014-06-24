@@ -66,7 +66,7 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 				//
 				// Cменить стиль на описание действия
 				//
-				editor()->changeScenarioBlockType(ScenarioTextBlockStyle::Action);
+				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 			} else {
 				//! Текст не пуст
 
@@ -87,14 +87,14 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставляем блок и применяем ему стиль время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 				} else {
 					//! Внутри блока
 
 					//
 					// Вставляем блок и применяем ему стиль время и место
 					//
-					editor()->addScenarioBlock(ScenarioTextBlockStyle::Action);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 				}
 			}
 		}

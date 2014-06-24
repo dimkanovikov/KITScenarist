@@ -35,26 +35,26 @@ void RtfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 		//
 		QTextCursor documentCursor(_document);
 
-		ScenarioTextBlockStyle::Type currentBlockType = ScenarioTextBlockStyle::Undefined;
+		ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::Undefined;
 		while (!documentCursor.atEnd()) {
 			//
 			// Получим тип текущего блока под курсором
 			//
-			currentBlockType = ScenarioTextBlockStyle::forBlock(documentCursor.block());
+			currentBlockType = ScenarioBlockStyle::forBlock(documentCursor.block());
 
 			//
 			// Если блок содержит текст, который необходимо вывести на печать
 			//
-			if (currentBlockType != ScenarioTextBlockStyle::NoprintableText
-				&& currentBlockType != ScenarioTextBlockStyle::FolderHeader
-				&& currentBlockType != ScenarioTextBlockStyle::FolderFooter) {
+			if (currentBlockType != ScenarioBlockStyle::NoprintableText
+				&& currentBlockType != ScenarioBlockStyle::FolderHeader
+				&& currentBlockType != ScenarioBlockStyle::FolderFooter) {
 				//
 				// Если вставляется не первый блок текста и нужно сделать отступ
 				//
 				if (!documentCursor.atStart()
 					&& !documentCursor.block().text().isEmpty()
-					&& currentBlockType != ScenarioTextBlockStyle::Dialog
-					&& currentBlockType != ScenarioTextBlockStyle::Parenthetical) {
+					&& currentBlockType != ScenarioBlockStyle::Dialog
+					&& currentBlockType != ScenarioBlockStyle::Parenthetical) {
 						rtfFile.write(EMPTY_LINE);
 				}
 
@@ -115,46 +115,46 @@ QString RtfExporter::header() const
 	return header;
 }
 
-QString RtfExporter::style(ScenarioTextBlockStyle::Type _type) const
+QString RtfExporter::style(ScenarioBlockStyle::Type _type) const
 {
 	QString style = "\\s0";
 
 	switch (_type) {
-		case ScenarioTextBlockStyle::TimeAndPlace: {
+		case ScenarioBlockStyle::TimeAndPlace: {
 			style = "\\s1\\f0\\caps\\fs24\\fi0\\ql";
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Action: {
+		case ScenarioBlockStyle::Action: {
 			style = "\\s2\\f0\\fs24\\fi0\\ql";
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Character: {
+		case ScenarioBlockStyle::Character: {
 			style = "\\s3\\f0\\caps\\fs24\\fi0\\li3827\\ql";
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Parenthetical:
-		case ScenarioTextBlockStyle::Title: {
+		case ScenarioBlockStyle::Parenthetical:
+		case ScenarioBlockStyle::Title: {
 			style = "\\s4\\f0\\fs24\\fi0\\li3118\\ri2551\\ql";
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Dialog: {
+		case ScenarioBlockStyle::Dialog: {
 			style = "\\s5\\f0\\fs24\\fi0\\li2126\\ri2126\\ql";
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Transition: {
+		case ScenarioBlockStyle::Transition: {
 			style = "\\s6\\f0\\caps\\fs24\\fi0\\qr";
 			break;
 		}
 
-		case ScenarioTextBlockStyle::Note:
-		case ScenarioTextBlockStyle::TitleHeader:
-		case ScenarioTextBlockStyle::SceneGroupHeader:
-		case ScenarioTextBlockStyle::SceneGroupFooter: {
+		case ScenarioBlockStyle::Note:
+		case ScenarioBlockStyle::TitleHeader:
+		case ScenarioBlockStyle::SceneGroupHeader:
+		case ScenarioBlockStyle::SceneGroupFooter: {
 			style = "\\s7\\f0\\caps\\fs24\\fi0\\ql";
 			break;
 		}
