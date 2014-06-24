@@ -6,6 +6,7 @@
 
 #include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
 
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockStyle.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
@@ -25,6 +26,7 @@
 
 using UserInterface::ScenarioTextEditWidget;
 using UserInterface::ScenarioTextEdit;
+using BusinessLogic::ScenarioStyleFacade;
 using BusinessLogic::ScenarioTextBlockStyle;
 
 namespace {
@@ -87,7 +89,7 @@ void ScenarioTextEditWidget::setUsePageView(bool _use)
 {
 	QMarginsF pageMargins(5, 5, 5, 5);
 	if (_use) {
-		pageMargins = QMarginsF(37.5, 25, 25, 12.5);
+		pageMargins = ScenarioStyleFacade::instance()->style().pageMargins();
 	}
 
 	m_editor->setPageMargins(pageMargins);
@@ -363,10 +365,7 @@ void ScenarioTextEditWidget::initView()
 
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 
-	//
-	// К сожалению настройка не идеальна и пришлось подбирать в ручную
-	//
-	m_editor->setPageFormat(QPageSize::A4);
+	m_editor->setPageFormat(ScenarioStyleFacade::instance()->style().pageSizeId());
 
 	m_searchLine->setEditor(m_editor);
 	m_searchLine->hide();

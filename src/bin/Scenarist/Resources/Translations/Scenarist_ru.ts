@@ -9,37 +9,34 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="116"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="110"/>
         <source>Name:</source>
         <translation>Имя:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="126"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="120"/>
         <source>Real Name:</source>
         <translation>Настоящее имя:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="136"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="130"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="73"/>
         <source>Add photo</source>
-        <translation>Добавить фото</translation>
+        <translation type="obsolete">Добавить фото</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="53"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="obsolete">Сохранить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="66"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="obsolete">Отмена</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="93"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="87"/>
         <source>Choose Character</source>
         <translation>Выберите персонажа</translation>
     </message>
@@ -52,34 +49,31 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="93"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="81"/>
         <source>Choose Location</source>
         <translation>Выберите локацию</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="123"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="111"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="133"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="125"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="60"/>
         <source>Add Photo</source>
-        <translation>Добавить фото</translation>
+        <translation type="obsolete">Добавить фото</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="67"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="obsolete">Сохранить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="53"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="obsolete">Отмена</translation>
     </message>
 </context>
 <context>
@@ -92,7 +86,7 @@
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="162"/>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="216"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="314"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="316"/>
         <source>Scenarist project files (*%1)</source>
         <translation>Файл проекта сценария (*%1)</translation>
     </message>
@@ -102,108 +96,108 @@
         <translation>Выберите файл для сохранения проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="312"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="314"/>
         <source>Choose project file to open</source>
         <translation>Выберите файл проекта для открытия</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="360"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="399"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="362"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="401"/>
         <source>Choose file to export scenario</source>
         <translation>Выберите файл для экспорта сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="362"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="364"/>
         <source>PDF files (*%1)</source>
         <translation>PDF файлы (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="401"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="403"/>
         <source>RTF files (*%1)</source>
         <translation>RTF файлы (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="503"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="510"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="504"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="511"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="551"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="558"/>
         <source>%1[*] - Scenarist</source>
         <translation>%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="570"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="577"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="577"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="584"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="578"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="585"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="579"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="586"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="580"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="587"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="581"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="588"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="625"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="632"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="626"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="633"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="627"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="634"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="629"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="636"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="634"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="641"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="635"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="642"/>
         <source>PDF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="636"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="643"/>
         <source>RTF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="640"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="647"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -211,12 +205,12 @@
 <context>
     <name>ManagementLayer::CharactersManager</name>
     <message>
-        <location filename="../../ManagementLayer/Characters/CharactersManager.cpp" line="99"/>
+        <location filename="../../ManagementLayer/Characters/CharactersManager.cpp" line="110"/>
         <source>Remove Character</source>
         <translation>Удалить персонажа</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Characters/CharactersManager.cpp" line="100"/>
+        <location filename="../../ManagementLayer/Characters/CharactersManager.cpp" line="111"/>
         <source>Are you shure to remove character?</source>
         <translation>Удалить персонаж?</translation>
     </message>
@@ -247,12 +241,12 @@
 <context>
     <name>ManagementLayer::LocationsManager</name>
     <message>
-        <location filename="../../ManagementLayer/Locations/LocationsManager.cpp" line="99"/>
+        <location filename="../../ManagementLayer/Locations/LocationsManager.cpp" line="110"/>
         <source>Remove Location</source>
         <translation>Удалить локацию</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Locations/LocationsManager.cpp" line="100"/>
+        <location filename="../../ManagementLayer/Locations/LocationsManager.cpp" line="111"/>
         <source>Are you shure to remove location?</source>
         <translation>Удалить локацию?</translation>
     </message>
@@ -283,22 +277,22 @@
 <context>
     <name>ManagementLayer::ScenarioManager</name>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="411"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="396"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="412"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="397"/>
         <source>Edit Scenario Text</source>
         <translation>Редактирование текста сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="414"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="399"/>
         <source>Data</source>
         <translation>Инфо</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="415"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="400"/>
         <source>Edit Scenario Data</source>
         <translation>Редактирование информации о сценарии</translation>
     </message>
@@ -448,7 +442,7 @@
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="14"/>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="988"/>
         <source>Dialog</source>
-        <translation>Реплика</translation>
+        <translation>Диалог</translation>
     </message>
     <message>
         <source>Text Editor</source>
@@ -902,7 +896,7 @@ Paragraph</source>
 <context>
     <name>UserInterface::CharactersDataEdit</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp" line="30"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp" line="32"/>
         <source>Choose Character</source>
         <translation>Выберите персонажа</translation>
     </message>
@@ -910,12 +904,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::CharactersNavigator</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="92"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="91"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="97"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="96"/>
         <source>Create New Character</source>
         <translation>Добавить персонаж</translation>
     </message>
@@ -924,12 +918,12 @@ Paragraph</source>
         <translation type="obsolete">Изменить выбранного персонажа</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="100"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="99"/>
         <source>Remove Selected Character</source>
         <translation>Удалить выбранный персонаж</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="103"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="102"/>
         <source>Find All Characters from Scenario</source>
         <translation>Найти всех персонажей сценария</translation>
     </message>
@@ -937,7 +931,7 @@ Paragraph</source>
 <context>
     <name>UserInterface::LocationsDataEdit</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp" line="29"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp" line="31"/>
         <source>Choose Location</source>
         <translation>Выберите локацию</translation>
     </message>
@@ -945,12 +939,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::LocationsNavigator</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="92"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="91"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="97"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="96"/>
         <source>Create New Location</source>
         <translation>Создать новую локацию</translation>
     </message>
@@ -959,12 +953,12 @@ Paragraph</source>
         <translation type="obsolete">Изменить выбранную локацию</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="100"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="99"/>
         <source>Remove Selected Location</source>
         <translation>Удалить выбранную локацию</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="103"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="102"/>
         <source>Find All Locations From Scenario</source>
         <translation>Найти все локации из сценария</translation>
     </message>

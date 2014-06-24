@@ -1,63 +1,64 @@
 <?xml version="1.0"?>
-<style name="Стандартный" description="Реккомендации Ольги Смирновой">
+<style name="Стандартный" description="Реккомендации Ольги Смирновой"
+	   page_format="A4" page_margins="37.5,25,25,12.5">
   <block id="time_and_place" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="true"
-	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 alignment="left" top_space="1" left_margin="0" right_margin="0"
 	 />
   <block id="scene_characters" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="true"
-	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 alignment="left" top_space="1" left_margin="0" right_margin="0"
 	 />
   <block id="action" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="false"
-	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 alignment="left" top_space="1" left_margin="0" right_margin="0"
 	 />
   <block id="character" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="true"
-	 alignment="left" top_space="1" left_indent="67.5" right_indent="0"
+	 alignment="left" top_space="1" left_margin="67.5" right_margin="0"
 	 />
   <block id="parenthetical" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="false"
-	 alignment="left" top_space="0" left_indent="55" right_indent="45"
+	 alignment="left" top_space="0" left_margin="55" right_margin="45"
 	 />
   <block id="dialog" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="false"
-	 alignment="left" top_space="0" left_indent="37.5" right_indent="37.5"
+	 alignment="left" top_space="0" left_margin="37.5" right_margin="37.5"
 	 />
   <block id="transition" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="true"
-	 alignment="right" top_space="1" left_indent="0" right_indent="0"
+	 alignment="right" top_space="1" left_margin="0" right_margin="0"
 	 />
   <block id="note" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="true"
-	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 alignment="left" top_space="1" left_margin="0" right_margin="0"
 	 />
   <block id="title" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="false"
-	 alignment="left" top_space="1" left_indent="55" right_indent="45"
+	 alignment="left" top_space="1" left_margin="55" right_margin="45"
 	 />
   <block id="nonprintable_text" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="false"
-	 alignment="left" top_space="1" left_indent="67.5" right_indent="0"
+	 alignment="left" top_space="1" left_margin="67.5" right_margin="0"
 	 />
   <block id="scenes_group" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="true"
-	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 alignment="left" top_space="1" left_margin="0" right_margin="0"
 	 />
   <block id="folder" active="true"
 	 font_family="Courier New" font_size="12"
 	 bold="false" italic="false" underline="false" uppercase="true"
-	 alignment="left" top_space="1" left_indent="0" right_indent="0"
+	 alignment="left" top_space="1" left_margin="0" right_margin="0"
 	 />
 </style>

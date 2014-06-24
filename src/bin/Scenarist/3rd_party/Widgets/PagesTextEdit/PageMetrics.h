@@ -22,6 +22,11 @@ public:
 	 */
 	static qreal mmToPx(qreal _mm, bool _x = true);
 
+	/**
+	 * @brief Получить размер страницы из строки
+	 */
+	static QPageSize::PageSizeId pageSizeId(const QString& _from);
+
 public:
 	PageMetrics(QPageSize::PageSizeId _pageFormat = QPageSize::A4,
 				QMarginsF _mmMargins = QMarginsF());

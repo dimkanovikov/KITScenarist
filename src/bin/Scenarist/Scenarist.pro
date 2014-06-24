@@ -161,7 +161,9 @@ SOURCES += main.cpp \
     3rd_party/Widgets/PagesTextEdit/PageMetrics.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.cpp \
-    UserInterfaceLayer/Settings/StyleDialog.cpp
+    UserInterfaceLayer/Settings/StyleDialog.cpp \
+    ManagementLayer/Settings/SettingsStylesManager.cpp \
+    BusinessLayer/ScenarioDocument/ScenarioStyle.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -300,7 +302,9 @@ HEADERS += \
     3rd_party/Helpers/TextEditHelper.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.h \
-    UserInterfaceLayer/Settings/StyleDialog.h
+    UserInterfaceLayer/Settings/StyleDialog.h \
+    ManagementLayer/Settings/SettingsStylesManager.h \
+    BusinessLayer/ScenarioDocument/ScenarioStyle.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

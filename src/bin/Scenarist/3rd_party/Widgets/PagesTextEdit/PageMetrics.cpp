@@ -13,6 +13,22 @@ qreal PageMetrics::mmToPx(qreal _mm, bool _x)
 	return ::mmToInches(_mm) * (_x ? qApp->desktop()->logicalDpiX() : qApp->desktop()->logicalDpiY());
 }
 
+QPageSize::PageSizeId PageMetrics::pageSizeId(const QString& _from)
+{
+	QPageSize::PageSizeId result = QPageSize::A4;
+
+	if (_from == "A0") result = QPageSize::A0;
+	else if (_from == "A1") result = QPageSize::A1;
+	else if (_from == "A2") result = QPageSize::A2;
+	else if (_from == "A3") result = QPageSize::A3;
+	else if (_from == "A4") result = QPageSize::A4;
+	else if (_from == "A5") result = QPageSize::A5;
+	else
+		Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Undefined page size: " + _from));
+
+	return result;
+}
+
 PageMetrics::PageMetrics(QPageSize::PageSizeId _pageFormat,
 						 QMarginsF _mmPageMargins) :
 	m_zoomRange(1)

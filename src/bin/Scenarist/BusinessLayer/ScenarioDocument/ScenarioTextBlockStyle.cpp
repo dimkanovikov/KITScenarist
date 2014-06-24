@@ -128,7 +128,7 @@ void ScenarioTextBlockStyle::setType(ScenarioTextBlockStyle::Type _type)
 		}
 
 		case Title: {
-            m_pimpl->blockFormat.setTopMargin(lineHeight);
+			m_pimpl->blockFormat.setTopMargin(lineHeight);
 			m_pimpl->blockFormat.setLeftMargin(PageMetrics::mmToPx(55));
 			m_pimpl->blockFormat.setRightMargin(PageMetrics::mmToPx(45));
 			m_pimpl->blockFormat.setProperty(ScenarioTextBlockStyle::PropertyHeaderType,
