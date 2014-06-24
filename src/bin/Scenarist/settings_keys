@@ -14,6 +14,7 @@ scenario-editor/folder-text-color - цвет текста папки
 scenario-editor/folder-background-color - цвет фона папки
 scenario-editor/autosave - включено ли автосохранение проекта
 scenario-editor/autosave-interval - интервал автоматического сохранения
+scenario-editor/current-style - стиль отображения текста в редакторе
 
 chronometry/current-chronometer-type - используемая система хронометража
 chronometry/pages/seconds - количество секунд на страницу текста

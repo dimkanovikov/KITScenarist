@@ -34,11 +34,11 @@ void PdfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 	//
 	// Настроим размер страниц
 	//
-	QFontMetrics fm(preparedDocument->defaultFont());
-	int pageWidth = fm.width("W") * 60;
-	int pageHeight = fm.lineSpacing() * 50;
-	QSizeF documentSize = QSizeF(pageWidth, pageHeight);
-	preparedDocument->setPageSize(documentSize);
+	QSizeF pageSize = QPageSize(ScenarioStyleFacade::style().pageSizeId()).size(QPageSize::Millimeter);
+	QMarginsF pageMargins = ScenarioStyleFacade::style().pageMargins();
+	QSizeF textSize(PageMetrics::mmToPx(pageSize.width() - pageMargins.left() - pageMargins.right()),
+					PageMetrics::mmToPx(pageSize.height() - pageMargins.top() - pageMargins.bottom()));
+	preparedDocument->setPageSize(textSize);
 
 	//
 	// Печатаем документ

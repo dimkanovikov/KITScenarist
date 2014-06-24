@@ -10,6 +10,7 @@
 #include <UserInterfaceLayer/Settings/SettingsView.h>
 
 #include <QSplitter>
+#include <QStandardItemModel>
 
 using ManagementLayer::SettingsManager;
 using UserInterface::SettingsView;
@@ -19,6 +20,7 @@ SettingsManager::SettingsManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new SettingsView(_parentWidget))
 {
+	initViewData();
 	initView();
 	initConnections();
 }
@@ -33,16 +35,16 @@ void SettingsManager::loadViewState()
 	m_view->splitter()->restoreGeometry(
 				QByteArray::fromHex(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/settings/geometry",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
+						"application/settings/geometry",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
 					.toUtf8()
 					)
 				);
 	m_view->splitter()->restoreState(
 				QByteArray::fromHex(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/settings/state",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
+						"application/settings/state",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
 					.toUtf8()
 					)
 				);
@@ -113,6 +115,11 @@ void SettingsManager::scenarioEditFolderTextColorChanged(const QColor& _value)
 void SettingsManager::scenarioEditFolderBackgroundColorChanged(const QColor& _value)
 {
 	storeValue("scenario-editor/folder-background-color", _value);
+}
+
+void SettingsManager::scenarioEditCurrentStyleChanged(const QString& _value)
+{
+	storeValue("scenario-editor/current-style", _value);
 }
 
 void SettingsManager::navigatorShowScenesNumbersChanged(bool _value)
@@ -217,6 +224,11 @@ void SettingsManager::storeValue(const QString& _key, const QColor& _value)
 				_key, _value.name(), DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
+void SettingsManager::initViewData()
+{
+	m_view->setStylesModel(BusinessLogic::ScenarioStyleFacade::stylesList());
+}
+
 void SettingsManager::initView()
 {
 	//
@@ -302,6 +314,13 @@ void SettingsManager::initView()
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
 					)
 				);
+	// ... текущий стиль
+	m_view->setScenarioEditCurrentStyle(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/current-style",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
+
 
 	//
 	// Настройки навигатора
@@ -406,6 +425,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorChanged(QColor)), this, SLOT(scenarioEditNonprintableTextColorChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorChanged(QColor)), this, SLOT(scenarioEditFolderTextColorChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorChanged(QColor)), this, SLOT(scenarioEditFolderBackgroundColorChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SLOT(scenarioEditCurrentStyleChanged(QString)));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
 
@@ -441,6 +461,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 

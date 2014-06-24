@@ -89,6 +89,11 @@ void RtfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 QString RtfExporter::header() const
 {
 	QString header = "\\rtf1\\ansi";
+
+	//
+	// TODO: Настройки в соответсвии со стилем
+	//
+
 	//
 	// Настройки шрифтов
 	//
@@ -117,6 +122,10 @@ QString RtfExporter::header() const
 
 QString RtfExporter::style(ScenarioBlockStyle::Type _type) const
 {
+	//
+	// TODO: Настройки в соответсвии со стилем
+	//
+
 	QString style = "\\s0";
 
 	switch (_type) {

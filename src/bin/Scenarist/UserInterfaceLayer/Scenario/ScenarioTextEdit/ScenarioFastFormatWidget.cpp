@@ -48,7 +48,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(timeAndPlaceShortcut2, SIGNAL(activated()), timeAndPlaceStyle, SLOT(click()));
 
 	QPushButton* sceneCharactersStyle = new QPushButton(tr("1 Scene Characters"), this);
-	sceneCharactersStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::TimeAndPlace);
+	sceneCharactersStyle->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::SceneCharacters);
 	connect(sceneCharactersStyle, SIGNAL(clicked()), this, SLOT(changeStyle()));
 	QShortcut* sceneCharactersShortcut1 = new QShortcut(Qt::Key_1, this);
 	QShortcut* sceneCharactersShortcut2 = new QShortcut(Qt::Key_1 + Qt::KeypadModifier, this);

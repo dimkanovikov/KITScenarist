@@ -8,7 +8,9 @@
 #include <QDir>
 #include <QFile>
 #include <QFontMetrics>
+#include <QStandardItemModel>
 #include <QStandardPaths>
+#include <QStringListModel>
 #include <QTextBlock>
 #include <QTextBlockFormat>
 #include <QTextCharFormat>
@@ -189,6 +191,7 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	m_blockFormat.setTopMargin(QFontMetrics(m_font).lineSpacing() * m_topSpace);
 	m_blockFormat.setLeftMargin(PageMetrics::mmToPx(m_leftMargin));
 	m_blockFormat.setRightMargin(PageMetrics::mmToPx(m_rightMargin));
+	m_blockFormat.setBottomMargin(0);
 	//
 	// ... текста
 	//
@@ -333,18 +336,30 @@ void ScenarioStyle::load(const QString& _from_file)
 // ********
 // ScenarioStyleFacade
 
+QStandardItemModel* ScenarioStyleFacade::stylesList()
+{
+	init();
+
+	return s_instance->m_stylesModel;
+}
+
 ScenarioStyle ScenarioStyleFacade::style(const QString& _styleName)
 {
-	//
-	// Если необходимо создаём одиночку
-	//
-	if (s_instance == 0) {
-		s_instance = new ScenarioStyleFacade;
-	}
+	init();
+
+	const QString currentStyle =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"scenario-editor/current-style",
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
 
 	ScenarioStyle result;
 	if (_styleName.isEmpty()) {
-		result = s_instance->m_styles.first();
+		if (!currentStyle.isEmpty()
+			&& s_instance->m_styles.contains(currentStyle)) {
+			result = s_instance->m_styles.value(currentStyle);
+		} else {
+			result = s_instance->m_defaultStyle;
+		}
 	} else {
 		result = s_instance->m_styles.value(_styleName);
 	}
@@ -368,16 +383,14 @@ ScenarioStyleFacade::ScenarioStyleFacade()
 	// Сохраним стиль по умолчанию, если необходимо
 	//
 	const QString defaultStylePath = stylesFolderPath + QDir::separator() + "default.xml";
-	if (!QFile::exists(defaultStylePath)) {
-		QFile defaultStyleFile(defaultStylePath);
-		if (defaultStyleFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-			QFile defaultStyleRcFile(":/Styles/Styles/default.xml");
-			if (defaultStyleRcFile.open(QIODevice::ReadOnly)) {
-				defaultStyleFile.write(defaultStyleRcFile.readAll());
-				defaultStyleRcFile.close();
-			}
-			defaultStyleFile.close();
+	QFile defaultStyleFile(defaultStylePath);
+	if (defaultStyleFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+		QFile defaultStyleRcFile(":/Styles/Styles/default.xml");
+		if (defaultStyleRcFile.open(QIODevice::ReadOnly)) {
+			defaultStyleFile.write(defaultStyleRcFile.readAll());
+			defaultStyleRcFile.close();
 		}
+		defaultStyleFile.close();
 	}
 
 	//
@@ -390,6 +403,33 @@ ScenarioStyleFacade::ScenarioStyleFacade()
 			ScenarioStyle style(styleFile.absoluteFilePath());
 			m_styles.insert(style.name(), style);
 		}
+	}
+	//
+	// ... стиль по умолчанию
+	//
+	m_defaultStyle = ScenarioStyle(defaultStylePath);
+
+	//
+	// Настроим модель стилей
+	//
+	m_stylesModel = new QStandardItemModel;
+	QStandardItem* rootItem = m_stylesModel->invisibleRootItem();
+	foreach (const ScenarioStyle& style, m_styles.values()) {
+		QList<QStandardItem*> row;
+		row << new QStandardItem(style.name());
+		row << new QStandardItem(style.description());
+
+		rootItem->appendRow(row);
+	}
+}
+
+void ScenarioStyleFacade::init()
+{
+	//
+	// Если необходимо создаём одиночку
+	//
+	if (s_instance == 0) {
+		s_instance = new ScenarioStyleFacade;
 	}
 }
 

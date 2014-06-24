@@ -3,11 +3,13 @@
 
 #include <QWidget>
 
+class QAbstractItemModel;
 class QSplitter;
 
 namespace Ui {
 	class SettingsView;
 }
+
 
 namespace UserInterface
 {
@@ -23,6 +25,11 @@ namespace UserInterface
 		 * @brief Разделитель представления
 		 */
 		QSplitter* splitter() const;
+
+		/**
+		 * @brief Установить модель стилей
+		 */
+		void setStylesModel(QAbstractItemModel* _model);
 
 		/**
 		 * @brief Текущий тип рассчёта хронометража
@@ -45,6 +52,7 @@ namespace UserInterface
 		void setScenarioEditNonprintableTexColor(const QColor& _color);
 		void setScenarioEditFolderTextColor(const QColor& _color);
 		void setScenarioEditFolderBackgroundColor(const QColor& _color);
+		void setScenarioEditCurrentStyle(const QString& _styleName);
 
 		void setNavigatorShowScenesNumbers(bool  _value);
 
@@ -77,6 +85,7 @@ namespace UserInterface
 		void scenarioEditNonprintableTextColorChanged(const QColor&);
 		void scenarioEditFolderTextColorChanged(const QColor&);
 		void scenarioEditFolderBackgroundColorChanged(const QColor&);
+		void scenarioEditCurrentStyleChanged(const QString&);
 
 		void navigatorShowScenesNumbersChanged(bool);
 		void navigatorShowScenesTextChanged(bool);

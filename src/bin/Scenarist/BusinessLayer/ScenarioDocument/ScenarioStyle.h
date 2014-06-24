@@ -6,6 +6,7 @@
 #include <QPageSize>
 #include <QTextFormat>
 
+class QStandardItemModel;
 class QTextBlock;
 class QXmlStreamAttributes;
 
@@ -214,6 +215,11 @@ namespace BusinessLogic
 		QString name() const { return m_name; }
 
 		/**
+		 * @brief Получить описание
+		 */
+		QString description() const { return m_description; }
+
+		/**
 		 * @brief Получить размер страницы
 		 */
 		QPageSize::PageSizeId pageSizeId() const { return m_pageSizeId; }
@@ -271,6 +277,11 @@ namespace BusinessLogic
 	{
 	public:
 		/**
+		 * @brief Получить список стилей
+		 */
+		static QStandardItemModel* stylesList();
+
+		/**
 		 * @brief Получить стиль в соответствии с заданным именем
 		 *
 		 * Если имя не задано, возвращается стандартный стиль
@@ -280,12 +291,23 @@ namespace BusinessLogic
 	private:
 		ScenarioStyleFacade();
 		static ScenarioStyleFacade* s_instance;
+		static void init();
 
 	private:
+		/**
+		 * @brief Стиль по умолчанию
+		 */
+		ScenarioStyle m_defaultStyle;
+
 		/**
 		 * @brief Стили сценариев
 		 */
 		QMap<QString, ScenarioStyle> m_styles;
+
+		/**
+		 * @brief Модель стилей
+		 */
+		QStandardItemModel* m_stylesModel;
 	};
 }
 

@@ -59,6 +59,7 @@ namespace ManagementLayer
 		void scenarioEditNonprintableTextColorChanged(const QColor& _value);
 		void scenarioEditFolderTextColorChanged(const QColor& _value);
 		void scenarioEditFolderBackgroundColorChanged(const QColor& _value);
+		void scenarioEditCurrentStyleChanged(const QString& _value);
 		void navigatorShowScenesNumbersChanged(bool  _value);
 		void chronometryCurrentTypeChanged();
 		void chronometryPagesSecondsChanged(int  _value);
@@ -80,6 +81,11 @@ namespace ManagementLayer
 		void storeValue(const QString& _key, const QColor& _value);
 
 	private:
+		/**
+		 * @brief Настроить данные представления
+		 */
+		void initViewData();
+
 		/**
 		 * @brief Настроить представление
 		 */

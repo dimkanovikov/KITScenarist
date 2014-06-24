@@ -31,6 +31,12 @@ QSplitter* SettingsView::splitter() const
 	return ui->splitter;
 }
 
+void SettingsView::setStylesModel(QAbstractItemModel* _model)
+{
+	ui->currentScenarioStyle->setModel(_model);
+	ui->styles->setModel(_model);
+}
+
 int SettingsView::chronometryCurrentType() const
 {
 	int type = 0;
@@ -105,6 +111,11 @@ void SettingsView::setScenarioEditFolderTextColor(const QColor& _color)
 void SettingsView::setScenarioEditFolderBackgroundColor(const QColor& _color)
 {
 	setColorFor(ui->folderBackgroundColor, _color);
+}
+
+void SettingsView::setScenarioEditCurrentStyle(const QString& _styleName)
+{
+	ui->currentScenarioStyle->setCurrentText(_styleName);
 }
 
 void SettingsView::setNavigatorShowScenesNumbers(bool _value)
@@ -277,6 +288,7 @@ void SettingsView::initConnections()
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
+	connect(ui->currentScenarioStyle, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentStyleChanged(QString)));
 	// ... навигатор
 	connect(ui->showScenesNumbers, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
 	// ... хронометраж
