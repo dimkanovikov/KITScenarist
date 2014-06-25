@@ -34,7 +34,9 @@ QSplitter* SettingsView::splitter() const
 void SettingsView::setStylesModel(QAbstractItemModel* _model)
 {
 	ui->currentScenarioStyle->setModel(_model);
+
 	ui->styles->setModel(_model);
+	ui->styles->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 }
 
 int SettingsView::chronometryCurrentType() const
