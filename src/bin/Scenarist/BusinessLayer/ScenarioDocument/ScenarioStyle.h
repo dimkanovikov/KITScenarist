@@ -78,6 +78,31 @@ namespace BusinessLogic
 		ScenarioBlockStyle::Type type() const { return m_type; }
 
 		/**
+		 * @brief Получить шрифт блока
+		 */
+		QFont font() const { return m_font; }
+
+		/**
+		 * @brief Выравнивание блока
+		 */
+		Qt::Alignment align() const { return m_align; }
+
+		/**
+		 * @brief Отступ сверху, линий
+		 */
+		int topSpace() const { return m_topSpace; }
+
+		/**
+		 * @brief Отступ слева, мм
+		 */
+		qreal leftMargin() const { return m_leftMargin; }
+
+		/**
+		 * @brief Отступ справа, мм
+		 */
+		qreal rightMargin() const { return m_rightMargin; }
+
+		/**
 		 * @brief Настройки стиля отображения блока
 		 */
 		QTextBlockFormat blockFormat() const { return m_blockFormat; }
@@ -225,7 +250,7 @@ namespace BusinessLogic
 		QPageSize::PageSizeId pageSizeId() const { return m_pageSizeId; }
 
 		/**
-		 * @brief Получить отступы страницы
+		 * @brief Получить отступы страницы в миллиметрах
 		 */
 		QMarginsF pageMargins() const { return m_pageMargins; }
 
@@ -260,7 +285,7 @@ namespace BusinessLogic
 		QPageSize::PageSizeId m_pageSizeId;
 
 		/**
-		 * @brief Поля страницы
+		 * @brief Поля страницы в миллиметрах
 		 */
 		QMarginsF m_pageMargins;
 

@@ -45,8 +45,8 @@ namespace {
 			s_typeNames.insert(ScenarioBlockStyle::TitleHeader, "title_header");
 			s_typeNames.insert(ScenarioBlockStyle::Title, "title");
 			s_typeNames.insert(ScenarioBlockStyle::NoprintableText, "noprintable_text");
-			s_typeNames.insert(ScenarioBlockStyle::SceneGroupHeader, "scene_group_header");
-			s_typeNames.insert(ScenarioBlockStyle::SceneGroupFooter, "scene_group_footer");
+			s_typeNames.insert(ScenarioBlockStyle::SceneGroupHeader, "scenes_group_header");
+			s_typeNames.insert(ScenarioBlockStyle::SceneGroupFooter, "scenes_group_footer");
 			s_typeNames.insert(ScenarioBlockStyle::FolderHeader, "folder_header");
 			s_typeNames.insert(ScenarioBlockStyle::FolderFooter, "folder_footer");
 		}

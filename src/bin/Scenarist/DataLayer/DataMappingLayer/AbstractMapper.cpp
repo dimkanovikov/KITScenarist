@@ -97,9 +97,6 @@ void AbstractMapper::abstractInsert(DomainObject* _subject)
 	// Добавим данные в базу
 	//
 	m_sqlExecuter->executeSql(q_insert);
-//	q_insert.exec();
-//	qDebug() << q_insert.lastQuery();
-//	qDebug() << q_insert.lastError();
 }
 
 void AbstractMapper::abstractUpdate(DomainObject* _subject)
@@ -128,9 +125,6 @@ void AbstractMapper::abstractUpdate(DomainObject* _subject)
 	// Обновим данные в базе
 	//
 	m_sqlExecuter->executeSql(q_update);
-//	q_update.exec();
-//	qDebug() << q_update.lastQuery();
-//	qDebug() << q_update.lastError();
 }
 
 void AbstractMapper::abstractDelete(DomainObject* _subject)
@@ -154,9 +148,6 @@ void AbstractMapper::abstractDelete(DomainObject* _subject)
 	// Удалим данные из базы
 	//
 	m_sqlExecuter->executeSql(q_delete);
-//	q_delete.exec();
-//	qDebug() << q_delete.lastQuery();
-//	qDebug() << q_delete.lastError();
 
 	//
 	// Удалим объекст из списка загруженных
