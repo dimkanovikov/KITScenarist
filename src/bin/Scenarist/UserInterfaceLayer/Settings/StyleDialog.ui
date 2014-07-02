@@ -6,15 +6,46 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>674</width>
-    <height>384</height>
+    <width>615</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Edit Scenario Style</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
+   <item row="2" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="close">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="save">
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
     <widget class="QListWidget" name="blockStyles">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -95,7 +126,7 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="1" column="1">
     <widget class="QGroupBox" name="isActive">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -177,15 +208,12 @@
         <item>
          <widget class="QLabel" name="label_6">
           <property name="text">
-           <string>Left:</string>
+           <string>Left, mm:</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="leftIndent">
-          <property name="suffix">
-           <string>mm</string>
-          </property>
           <property name="decimals">
            <number>1</number>
           </property>
@@ -197,15 +225,12 @@
         <item>
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>Right:</string>
+           <string>Right, mm:</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QDoubleSpinBox" name="rightIndent">
-          <property name="suffix">
-           <string>mm</string>
-          </property>
           <property name="decimals">
            <number>1</number>
           </property>
@@ -341,54 +366,132 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="restoreDefault">
-       <property name="text">
-        <string>Restore Default</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="reload">
-       <property name="text">
-        <string>Reload</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="close">
-       <property name="text">
-        <string>Close</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="save">
-       <property name="text">
-        <string>Save</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item row="0" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Common</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>Left:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Name:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="12">
+       <widget class="QLineEdit" name="description"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Fields, mm:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="12">
+       <widget class="QLineEdit" name="name"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Description:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QDoubleSpinBox" name="leftField">
+        <property name="decimals">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Top:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QDoubleSpinBox" name="topField">
+        <property name="decimals">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Right:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="6">
+       <widget class="QDoubleSpinBox" name="rightField">
+        <property name="decimals">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="7">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>Bottom:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="8">
+       <widget class="QDoubleSpinBox" name="bottomField">
+        <property name="decimals">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="9" colspan="4">
+       <spacer name="horizontalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>name</tabstop>
+  <tabstop>description</tabstop>
+  <tabstop>leftField</tabstop>
+  <tabstop>topField</tabstop>
+  <tabstop>rightField</tabstop>
+  <tabstop>bottomField</tabstop>
   <tabstop>blockStyles</tabstop>
   <tabstop>isActive</tabstop>
   <tabstop>fontFamily</tabstop>
@@ -401,8 +504,6 @@
   <tabstop>topSpace</tabstop>
   <tabstop>leftIndent</tabstop>
   <tabstop>rightIndent</tabstop>
-  <tabstop>restoreDefault</tabstop>
-  <tabstop>reload</tabstop>
   <tabstop>close</tabstop>
   <tabstop>save</tabstop>
  </tabstops>

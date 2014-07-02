@@ -225,6 +225,36 @@ void SettingsView::aboutScenarioEditChooseFolderBackgroundColor()
 	emit scenarioEditFolderBackgroundColorChanged(ui->folderBackgroundColor->palette().button().color());
 }
 
+void SettingsView::aboutEditStylePressed()
+{
+	if (!ui->styles->selectionModel()->selectedIndexes().isEmpty()) {
+		QModelIndex selected = ui->styles->selectionModel()->selectedIndexes().first();
+		if (selected.isValid()) {
+			emit editStylePressed(selected);
+		}
+	}
+}
+
+void SettingsView::aboutRemoveStylePressed()
+{
+	if (!ui->styles->selectionModel()->selectedIndexes().isEmpty()) {
+		QModelIndex selected = ui->styles->selectionModel()->selectedIndexes().first();
+		if (selected.isValid()) {
+			emit removeStylePressed(selected);
+		}
+	}
+}
+
+void SettingsView::aboutSaveStylePressed()
+{
+	if (!ui->styles->selectionModel()->selectedIndexes().isEmpty()) {
+		QModelIndex selected = ui->styles->selectionModel()->selectedIndexes().first();
+		if (selected.isValid()) {
+			emit saveStylePressed(selected);
+		}
+	}
+}
+
 void SettingsView::setColorFor(QWidget* _colorPicker)
 {
 	QColor oldColor = _colorPicker->palette().button().color();
@@ -312,17 +342,61 @@ void SettingsView::initConnections()
 			this, SIGNAL(chronometryConfigurableSecondsForParagraphDialogChanged(double)));
 	connect(ui->configurableChronometrySecondsPer50CharactersDialog, SIGNAL(valueChanged(double)),
 			this, SIGNAL(chronometryConfigurableSecondsFor50DialogChanged(double)));
+
+	//
+	// Библиотека стилей
+	//
+	connect(ui->newStyle, SIGNAL(clicked()), this, SIGNAL(newStylePressed()));
+	connect(ui->editStyle, SIGNAL(clicked()), this, SLOT(aboutEditStylePressed()));
+	connect(ui->removeStyle, SIGNAL(clicked()), this, SLOT(aboutRemoveStylePressed()));
+	connect(ui->loadStyle, SIGNAL(clicked()), this, SIGNAL(loadStylePressed()));
+	connect(ui->saveStyle, SIGNAL(clicked()), this, SLOT(aboutSaveStylePressed()));
 }
 
 void SettingsView::initStyleSheet()
 {
-	ui->topLeftEmptyLabel->setProperty("inTopPanel", true);
-	ui->topLeftEmptyLabel->setProperty("topPanelTopBordered", true);
-	ui->topLeftEmptyLabel->setProperty("topPanelRightBordered", true);
-	ui->topRightEmptyLabel->setProperty("inTopPanel", true);
-	ui->topRightEmptyLabel->setProperty("topPanelTopBordered", true);
-	ui->topRightEmptyLabel->setProperty("topPanelRightBordered", true);
+	//
+	// Верхние метки для заполнения пространства
+	//
+	QList<QWidget*> topEmptyList;
+	topEmptyList << ui->topLeftEmptyLabel
+				 << ui->topRightEmptyLabel_1
+				 << ui->topRightEmptyLabel_2
+				 << ui->topRightEmptyLabel_3
+				 << ui->topRightEmptyLabel_4
+				 << ui->topRightEmptyLabel_5;
 
-	ui->categories->setProperty("mainContainer", true);
-	ui->categoriesWidgets->setProperty("mainContainer", true);
+	foreach (QWidget* topEmpty, topEmptyList) {
+		topEmpty->setProperty("inTopPanel", true);
+		topEmpty->setProperty("topPanelTopBordered", true);
+		topEmpty->setProperty("topPanelRightBordered", true);
+	}
+
+	//
+	// Основные контейнеры с содержимым
+	//
+	QList<QWidget*> mainList;
+	mainList << ui->categories
+			 << ui->applicationPageWidget
+			 << ui->scenarioEditPageWidget
+			 << ui->navigatorPageWidget
+			 << ui->chronometryPageWidget
+			 << ui->stylesLibraryPageWidget;
+
+	foreach (QWidget* main, mainList) {
+		main->setProperty("mainContainer", true);
+	}
+
+	//
+	// Кнопки панели инструментов
+	//
+	QList<QWidget*> topButtonsList;
+	topButtonsList << ui->newStyle
+				   << ui->editStyle
+				   << ui->removeStyle
+				   << ui->loadStyle
+				   << ui->saveStyle;
+	foreach (QWidget* topButton, topButtonsList) {
+		topButton->setProperty("inTopPanel", true);
+	}
 }

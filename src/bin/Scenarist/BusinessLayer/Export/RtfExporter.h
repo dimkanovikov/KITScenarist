@@ -29,8 +29,14 @@ namespace BusinessLogic
 		 */
 		QString header() const;
 
+		/**
+		 * @brief RTF стиль текущего блока
+		 */
 		QString style(ScenarioBlockStyle::Type _type) const;
 
+		/**
+		 * @brief Перевести UTF-строку в коды для RTF-формата
+		 */
 		QString stringToUtfCode(const QString& _text) const;
 	};
 }

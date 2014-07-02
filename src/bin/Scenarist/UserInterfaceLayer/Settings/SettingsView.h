@@ -102,6 +102,17 @@ namespace UserInterface
 		void chronometryConfigurableSecondsFor50DialogChanged(double);
 		/** @} */
 
+		/**
+		 * @brief Библиотека стилей
+		 */
+		/** @{ */
+		void newStylePressed();
+		void editStylePressed(const QModelIndex& _styleIndex);
+		void removeStylePressed(const QModelIndex& _styleIndex);
+		void loadStylePressed();
+		void saveStylePressed(const QModelIndex& _styleIndex);
+		/** @} */
+
 	private slots:
 		/**
 		 * @brief Обработка смены языка для проверки орфографии
@@ -117,6 +128,15 @@ namespace UserInterface
 		void aboutScenarioEditChooseNonprintableTextColor();
 		void aboutScenarioEditChooseFolderTextColor();
 		void aboutScenarioEditChooseFolderBackgroundColor();
+		/** @} */
+
+		/**
+		 * @brief Библиотека стилей
+		 */
+		/** @{ */
+		void aboutEditStylePressed();
+		void aboutRemoveStylePressed();
+		void aboutSaveStylePressed();
 		/** @} */
 
 	private:

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>764</width>
-    <height>379</height>
+    <width>976</width>
+    <height>501</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -124,13 +124,6 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="topRightEmptyLabel">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="styleSheet">
           <string notr="true">#chronometryPage QGroupBox {
@@ -141,599 +134,564 @@
          <property name="currentIndex">
           <number>4</number>
          </property>
-         <widget class="QWidget" name="ApplicationPage">
-          <layout class="QGridLayout" name="gridLayout_2">
+         <widget class="QWidget" name="applicationPage">
+          <layout class="QGridLayout" name="gridLayout_9">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <item row="0" column="0">
-            <widget class="QCheckBox" name="useDarkTheme">
+            <widget class="QLabel" name="topRightEmptyLabel_1">
              <property name="text">
-              <string>Use Dark Theme</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
-              <widget class="QCheckBox" name="autosave">
-               <property name="text">
-                <string>Automatically Save Every</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="autosaveInterval">
-               <property name="minimum">
-                <number>2</number>
-               </property>
-               <property name="maximum">
-                <number>30</number>
-               </property>
-               <property name="value">
-                <number>5</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="autosaveSiffix">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Minutes</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="0" colspan="2">
-            <spacer name="verticalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>10</width>
-               <height>10</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="scenarioEditorPage">
-          <layout class="QGridLayout" name="gridLayout_7">
-           <item row="2" column="0">
-            <widget class="QGroupBox" name="groupBox">
-             <property name="title">
-              <string>Colors</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_6">
-              <item row="0" column="2" rowspan="2">
-               <spacer name="horizontalSpacer_11">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>10</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="6">
-               <widget class="QLabel" name="label_17">
-                <property name="text">
-                 <string>Noneprintable text:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="4">
-               <widget class="QToolButton" name="folderBackgroundColor">
-                <property name="minimumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="palette">
-                 <palette>
-                  <active>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>203</red>
-                      <green>199</green>
-                      <blue>196</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </active>
-                  <inactive>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>203</red>
-                      <green>199</green>
-                      <blue>196</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </inactive>
-                  <disabled>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>203</red>
-                      <green>199</green>
-                      <blue>196</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </disabled>
-                 </palette>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_15">
-                <property name="text">
-                 <string>Text:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QToolButton" name="backgroundColor">
-                <property name="minimumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="palette">
-                 <palette>
-                  <active>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
-                      <blue>255</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </active>
-                  <inactive>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
-                      <blue>255</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </inactive>
-                  <disabled>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
-                      <blue>255</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </disabled>
-                 </palette>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QLabel" name="label_19">
-                <property name="text">
-                 <string>Folder text:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QToolButton" name="textColor">
-                <property name="minimumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="palette">
-                 <palette>
-                  <active>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </active>
-                  <inactive>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </inactive>
-                  <disabled>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </disabled>
-                 </palette>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QToolButton" name="folderTextColor">
-                <property name="minimumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="palette">
-                 <palette>
-                  <active>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
-                      <blue>255</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </active>
-                  <inactive>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
-                      <blue>255</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </inactive>
-                  <disabled>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
-                      <blue>255</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </disabled>
-                 </palette>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="3">
-               <widget class="QLabel" name="label_18">
-                <property name="text">
-                 <string>Folder background:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_16">
-                <property name="text">
-                 <string>Background:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="7">
-               <widget class="QToolButton" name="nonprintableTextColor">
-                <property name="minimumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>32</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="palette">
-                 <palette>
-                  <active>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>203</red>
-                      <green>199</green>
-                      <blue>196</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </active>
-                  <inactive>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>203</red>
-                      <green>199</green>
-                      <blue>196</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </inactive>
-                  <disabled>
-                   <colorrole role="Button">
-                    <brush brushstyle="SolidPattern">
-                     <color alpha="255">
-                      <red>203</red>
-                      <green>199</green>
-                      <blue>196</blue>
-                     </color>
-                    </brush>
-                   </colorrole>
-                  </disabled>
-                 </palette>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="5" rowspan="2">
-               <spacer name="horizontalSpacer_12">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>10</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <spacer name="horizontalSpacer_9">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>7</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="4" column="1">
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>10</width>
-               <height>10</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QCheckBox" name="pageView">
-             <property name="text">
-              <string>Page View</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QCheckBox" name="spellChecking">
-               <property name="text">
-                <string>Spell Checking</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="spellCheckingLanguage"/>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_13">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-           <item row="3" column="0" colspan="2">
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <item>
-              <widget class="QLabel" name="label_20">
-               <property name="text">
-                <string>Editor Text Style:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="currentScenarioStyle"/>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_14">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="navigatorPage">
-          <layout class="QGridLayout" name="gridLayout_5">
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="showScenesNumbers">
-             <property name="text">
-              <string>Show Scenes Numbers</string>
+              <string/>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
-            <spacer name="verticalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>394</height>
-              </size>
-             </property>
-            </spacer>
+            <widget class="QWidget" name="applicationPageWidget" native="true">
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="useDarkTheme">
+                <property name="text">
+                 <string>Use Dark Theme</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QCheckBox" name="autosave">
+                  <property name="text">
+                   <string>Automatically Save Every</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="autosaveInterval">
+                  <property name="minimum">
+                   <number>2</number>
+                  </property>
+                  <property name="maximum">
+                   <number>30</number>
+                  </property>
+                  <property name="value">
+                   <number>5</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="autosaveSiffix">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Minutes</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="2" column="1">
+               <spacer name="verticalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>13</width>
+                  <height>13</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="chronometryPage">
-          <layout class="QGridLayout" name="gridLayout_4">
+         <widget class="QWidget" name="scenarioEditPage">
+          <layout class="QGridLayout" name="gridLayout_10">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <item row="0" column="0">
-            <widget class="QRadioButton" name="pagesChronometry">
+            <widget class="QLabel" name="topRightEmptyLabel_2">
              <property name="text">
-              <string>Pages Chronometry</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
+              <string/>
              </property>
             </widget>
            </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QGroupBox" name="pagesChronometryGroup">
-             <property name="title">
-              <string/>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QLabel" name="label_2">
+           <item row="1" column="0">
+            <widget class="QWidget" name="scenarioEditPageWidget" native="true">
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="0" column="0" colspan="2">
+               <widget class="QCheckBox" name="pageView">
                 <property name="text">
-                 <string>Page</string>
+                 <string>Page View</string>
                 </property>
                </widget>
               </item>
-              <item>
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>=</string>
+              <item row="1" column="0" colspan="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QCheckBox" name="spellChecking">
+                  <property name="text">
+                   <string>Spell Checking</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="spellCheckingLanguage"/>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_13">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item row="2" column="0">
+               <widget class="QGroupBox" name="groupBox">
+                <property name="title">
+                 <string>Colors</string>
                 </property>
+                <layout class="QGridLayout" name="gridLayout_6">
+                 <item row="0" column="2" rowspan="2">
+                  <spacer name="horizontalSpacer_11">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>10</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="6">
+                  <widget class="QLabel" name="label_17">
+                   <property name="text">
+                    <string>Noneprintable text:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="4">
+                  <widget class="QToolButton" name="folderBackgroundColor">
+                   <property name="minimumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>203</red>
+                         <green>199</green>
+                         <blue>196</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>203</red>
+                         <green>199</green>
+                         <blue>196</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>203</red>
+                         <green>199</green>
+                         <blue>196</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_15">
+                   <property name="text">
+                    <string>Text:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QToolButton" name="backgroundColor">
+                   <property name="minimumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>255</green>
+                         <blue>255</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>255</green>
+                         <blue>255</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>255</green>
+                         <blue>255</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QLabel" name="label_19">
+                   <property name="text">
+                    <string>Folder text:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QToolButton" name="textColor">
+                   <property name="minimumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>0</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>0</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>0</red>
+                         <green>0</green>
+                         <blue>0</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="4">
+                  <widget class="QToolButton" name="folderTextColor">
+                   <property name="minimumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>255</green>
+                         <blue>255</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>255</green>
+                         <blue>255</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>255</red>
+                         <green>255</green>
+                         <blue>255</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="3">
+                  <widget class="QLabel" name="label_18">
+                   <property name="text">
+                    <string>Folder background:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_16">
+                   <property name="text">
+                    <string>Background:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="7">
+                  <widget class="QToolButton" name="nonprintableTextColor">
+                   <property name="minimumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>32</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="palette">
+                    <palette>
+                     <active>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>203</red>
+                         <green>199</green>
+                         <blue>196</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </active>
+                     <inactive>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>203</red>
+                         <green>199</green>
+                         <blue>196</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </inactive>
+                     <disabled>
+                      <colorrole role="Button">
+                       <brush brushstyle="SolidPattern">
+                        <color alpha="255">
+                         <red>203</red>
+                         <green>199</green>
+                         <blue>196</blue>
+                        </color>
+                       </brush>
+                      </colorrole>
+                     </disabled>
+                    </palette>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="5" rowspan="2">
+                  <spacer name="horizontalSpacer_12">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>10</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
                </widget>
               </item>
-              <item>
-               <widget class="QSpinBox" name="pagesChronometrySeconds">
-                <property name="maximum">
-                 <number>100</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>Seconds</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_6">
+              <item row="2" column="1">
+               <spacer name="horizontalSpacer_9">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::MinimumExpanding</enum>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>104</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="3" column="0" colspan="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QLabel" name="label_20">
+                  <property name="text">
+                   <string>Editor Text Style:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="currentScenarioStyle"/>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_14">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item row="4" column="0">
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>0</width>
-                  <height>20</height>
+                  <width>13</width>
+                  <height>13</height>
                  </size>
                 </property>
                </spacer>
@@ -741,313 +699,50 @@
              </layout>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QRadioButton" name="charactersChronometry">
+          </layout>
+         </widget>
+         <widget class="QWidget" name="navigatorPage">
+          <layout class="QGridLayout" name="gridLayout_11">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="topRightEmptyLabel_3">
              <property name="text">
-              <string>Characters Chronometry</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0" colspan="2">
-            <widget class="QGroupBox" name="charactersChronometryGroup">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="title">
               <string/>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QSpinBox" name="charactersChronometryCharacters">
-                <property name="maximum">
-                 <number>100000</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string>Characters</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>=</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="charactersChronometrySeconds">
-                <property name="maximum">
-                 <number>1000</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>Seconds</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_7">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::MinimumExpanding</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
             </widget>
            </item>
-           <item row="3" column="2">
-            <spacer name="horizontalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="4" column="0" colspan="2">
-            <widget class="QRadioButton" name="configurableChronometry">
-             <property name="text">
-              <string>Configurable Chronometry</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0" colspan="2">
-            <widget class="QGroupBox" name="configurableChronometryGroup">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>340</width>
-               <height>150</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>340</width>
-               <height>150</height>
-              </size>
-             </property>
-             <property name="title">
-              <string/>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_3">
-              <item row="1" column="7">
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Preferred</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="3" column="3" colspan="2">
-               <widget class="QDoubleSpinBox" name="configurableChronometrySecondsForParagraphDialog">
-                <property name="decimals">
-                 <number>1</number>
+           <item row="1" column="0">
+            <widget class="QWidget" name="navigatorPageWidget" native="true">
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="showScenesNumbers">
+                <property name="text">
+                 <string>Show Scenes Numbers</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>Time And Place</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="8">
-               <widget class="QDoubleSpinBox" name="configurableChronometrySecondsPer50CharactersDialog">
-                <property name="decimals">
-                 <number>1</number>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="8">
-               <widget class="QDoubleSpinBox" name="configurableChronometrySecondsPer50CharactersTimeAndPlace">
-                <property name="decimals">
-                 <number>1</number>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2" colspan="4">
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>Seconds for
-Paragraph</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="3" colspan="2">
-               <widget class="QDoubleSpinBox" name="configurableChronometrySecondsForParagraphAction">
-                <property name="decimals">
-                 <number>1</number>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="6">
-               <widget class="QLabel" name="label_11">
-                <property name="text">
-                 <string>+</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="5">
-               <spacer name="horizontalSpacer_2">
+               <spacer name="verticalSpacer_3">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Preferred</enum>
+                 <enum>Qt::Vertical</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="1" column="6">
-               <widget class="QLabel" name="label_10">
-                <property name="text">
-                 <string>+</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="6">
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>+</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <spacer name="horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Preferred</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_9">
-                <property name="text">
-                 <string>Dialog</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="8">
-               <widget class="QDoubleSpinBox" name="configurableChronometrySecondsPer50CharactersAction">
-                <property name="decimals">
-                 <number>1</number>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="7" colspan="3">
-               <widget class="QLabel" name="label_14">
-                <property name="text">
-                 <string>Seconds per
-50 characters</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_8">
-                <property name="text">
-                 <string>Action</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="9">
-               <spacer name="horizontalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Preferred</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="1" column="3" colspan="2">
-               <widget class="QDoubleSpinBox" name="configurableChronometrySecondsForParagraphTimeAndPlace">
-                <property name="decimals">
-                 <number>1</number>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <spacer name="horizontalSpacer_8">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Preferred</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
+                  <width>20</width>
                   <height>20</height>
                  </size>
                 </property>
@@ -1056,100 +751,545 @@ Paragraph</string>
              </layout>
             </widget>
            </item>
-           <item row="6" column="1">
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="chronometryPage">
+          <layout class="QGridLayout" name="gridLayout_12">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="topRightEmptyLabel_4">
+             <property name="text">
+              <string/>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QWidget" name="chronometryPageWidget" native="true">
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="0" column="0">
+               <widget class="QRadioButton" name="pagesChronometry">
+                <property name="text">
+                 <string>Pages Chronometry</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QGroupBox" name="pagesChronometryGroup">
+                <property name="title">
+                 <string/>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="text">
+                    <string>Page</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_3">
+                   <property name="text">
+                    <string>=</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="pagesChronometrySeconds">
+                   <property name="maximum">
+                    <number>100</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_4">
+                   <property name="text">
+                    <string>Seconds</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_6">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::MinimumExpanding</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QRadioButton" name="charactersChronometry">
+                <property name="text">
+                 <string>Characters Chronometry</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0" colspan="2">
+               <widget class="QGroupBox" name="charactersChronometryGroup">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="title">
+                 <string/>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QSpinBox" name="charactersChronometryCharacters">
+                   <property name="maximum">
+                    <number>100000</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_5">
+                   <property name="text">
+                    <string>Characters</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_6">
+                   <property name="text">
+                    <string>=</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="charactersChronometrySeconds">
+                   <property name="maximum">
+                    <number>1000</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_7">
+                   <property name="text">
+                    <string>Seconds</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::MinimumExpanding</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <spacer name="horizontalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>301</width>
+                  <height>17</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="4" column="0">
+               <widget class="QRadioButton" name="configurableChronometry">
+                <property name="text">
+                 <string>Configurable Chronometry</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0" colspan="2">
+               <widget class="QGroupBox" name="configurableChronometryGroup">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>340</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>340</width>
+                  <height>150</height>
+                 </size>
+                </property>
+                <property name="title">
+                 <string/>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_3">
+                 <item row="1" column="7">
+                  <spacer name="horizontalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Preferred</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="3" column="3" colspan="2">
+                  <widget class="QDoubleSpinBox" name="configurableChronometrySecondsForParagraphDialog">
+                   <property name="decimals">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label">
+                   <property name="text">
+                    <string>Time And Place</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="8">
+                  <widget class="QDoubleSpinBox" name="configurableChronometrySecondsPer50CharactersDialog">
+                   <property name="decimals">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="8">
+                  <widget class="QDoubleSpinBox" name="configurableChronometrySecondsPer50CharactersTimeAndPlace">
+                   <property name="decimals">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2" colspan="4">
+                  <widget class="QLabel" name="label_13">
+                   <property name="text">
+                    <string>Seconds for
+Paragraph</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="3" colspan="2">
+                  <widget class="QDoubleSpinBox" name="configurableChronometrySecondsForParagraphAction">
+                   <property name="decimals">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="6">
+                  <widget class="QLabel" name="label_11">
+                   <property name="text">
+                    <string>+</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="5">
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Preferred</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="1" column="6">
+                  <widget class="QLabel" name="label_10">
+                   <property name="text">
+                    <string>+</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="6">
+                  <widget class="QLabel" name="label_12">
+                   <property name="text">
+                    <string>+</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Preferred</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_9">
+                   <property name="text">
+                    <string>Dialog</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="8">
+                  <widget class="QDoubleSpinBox" name="configurableChronometrySecondsPer50CharactersAction">
+                   <property name="decimals">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="7" colspan="3">
+                  <widget class="QLabel" name="label_14">
+                   <property name="text">
+                    <string>Seconds per
+50 characters</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_8">
+                   <property name="text">
+                    <string>Action</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="9">
+                  <spacer name="horizontalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Preferred</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="1" column="3" colspan="2">
+                  <widget class="QDoubleSpinBox" name="configurableChronometrySecondsForParagraphTimeAndPlace">
+                   <property name="decimals">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <spacer name="horizontalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Preferred</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <spacer name="verticalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>17</width>
+                  <height>37</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
            </item>
           </layout>
          </widget>
          <widget class="QWidget" name="stylesLibraryPage">
-          <layout class="QGridLayout" name="gridLayout_8">
+          <layout class="QGridLayout" name="gridLayout_13">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <property name="spacing">
+            <number>0</number>
+           </property>
            <item row="0" column="0">
-            <widget class="QPushButton" name="newStyle">
+            <widget class="QToolButton" name="newStyle">
              <property name="text">
               <string>New</string>
              </property>
+             <property name="icon">
+              <iconset resource="../../Resources/Resources.qrc">
+               <normaloff>:/Graphics/Icons/Editing/add.png</normaloff>:/Graphics/Icons/Editing/add.png</iconset>
+             </property>
             </widget>
            </item>
-           <item row="0" column="5">
-            <spacer name="horizontalSpacer_10">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>95</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="0" column="1">
-            <widget class="QPushButton" name="editStyle">
+            <widget class="QToolButton" name="editStyle">
              <property name="text">
               <string>Edit</string>
              </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="6">
-            <widget class="QTableView" name="styles">
-             <property name="editTriggers">
-              <set>QAbstractItemView::NoEditTriggers</set>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="selectionMode">
-              <enum>QAbstractItemView::SingleSelection</enum>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-             <property name="verticalScrollMode">
-              <enum>QAbstractItemView::ScrollPerPixel</enum>
-             </property>
-             <property name="sortingEnabled">
-              <bool>true</bool>
-             </property>
-             <attribute name="horizontalHeaderVisible">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>true</bool>
-             </attribute>
-             <attribute name="verticalHeaderVisible">
-              <bool>false</bool>
-             </attribute>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QPushButton" name="saveStyleAs">
-             <property name="text">
-              <string>Save As...</string>
+             <property name="icon">
+              <iconset resource="../../Resources/Resources.qrc">
+               <normaloff>:/Graphics/Icons/Editing/edit.png</normaloff>:/Graphics/Icons/Editing/edit.png</iconset>
              </property>
             </widget>
            </item>
            <item row="0" column="2">
-            <widget class="QPushButton" name="loadStyle">
+            <widget class="QToolButton" name="removeStyle">
+             <property name="text">
+              <string>Remove</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../Resources/Resources.qrc">
+               <normaloff>:/Graphics/Icons/Editing/delete.png</normaloff>:/Graphics/Icons/Editing/delete.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QToolButton" name="loadStyle">
              <property name="text">
               <string>Load</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../Resources/Resources.qrc">
+               <normaloff>:/Graphics/Icons/Editing/download.png</normaloff>:/Graphics/Icons/Editing/download.png</iconset>
              </property>
             </widget>
            </item>
            <item row="0" column="4">
-            <widget class="QPushButton" name="removeStyle">
+            <widget class="QToolButton" name="saveStyle">
              <property name="text">
-              <string>Remove</string>
+              <string>Save As...</string>
              </property>
+             <property name="icon">
+              <iconset resource="../../Resources/Resources.qrc">
+               <normaloff>:/Graphics/Icons/Editing/save.png</normaloff>:/Graphics/Icons/Editing/save.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QLabel" name="topRightEmptyLabel_5">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="6">
+            <widget class="QWidget" name="stylesLibraryPageWidget" native="true">
+             <layout class="QGridLayout" name="gridLayout_8">
+              <item row="0" column="0">
+               <widget class="QTableView" name="styles">
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="verticalScrollMode">
+                 <enum>QAbstractItemView::ScrollPerPixel</enum>
+                </property>
+                <property name="sortingEnabled">
+                 <bool>true</bool>
+                </property>
+                <attribute name="horizontalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
@@ -1189,8 +1329,7 @@ Paragraph</string>
   <tabstop>newStyle</tabstop>
   <tabstop>editStyle</tabstop>
   <tabstop>loadStyle</tabstop>
-  <tabstop>saveStyleAs</tabstop>
-  <tabstop>removeStyle</tabstop>
+  <tabstop>saveStyle</tabstop>
   <tabstop>styles</tabstop>
   <tabstop>useDarkTheme</tabstop>
   <tabstop>autosave</tabstop>
