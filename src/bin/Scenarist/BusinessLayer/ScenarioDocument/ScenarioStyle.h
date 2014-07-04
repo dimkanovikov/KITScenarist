@@ -65,7 +65,7 @@ namespace BusinessLogic
 		};
 
 	public:
-		ScenarioBlockStyle() {}
+		ScenarioBlockStyle() : m_type(Undefined) {}
 
 		/**
 		 * @brief Получить тип блока
@@ -76,6 +76,11 @@ namespace BusinessLogic
 		 * @brief Получить тип блока
 		 */
 		ScenarioBlockStyle::Type type() const { return m_type; }
+
+		/**
+		 * @brief Получить активность стиля блока
+		 */
+		bool isActive() const { return m_isActive; }
 
 		/**
 		 * @brief Получить шрифт блока
@@ -101,6 +106,36 @@ namespace BusinessLogic
 		 * @brief Отступ справа, мм
 		 */
 		qreal rightMargin() const { return m_rightMargin; }
+
+		/**
+		 * @brief Установить активность
+		 */
+		void setIsActive(bool _isActive);
+
+		/**
+		 * @brief Установить шрифт
+		 */
+		void setFont(const QFont& _font);
+
+		/**
+		 * @brief Установить выравнивание
+		 */
+		void setAlign(Qt::Alignment _align);
+
+		/**
+		 * @brief Установить отступ сверху
+		 */
+		void setTopSpace(int _topSpace);
+
+		/**
+		 * @brief Установить левый отступ
+		 */
+		void setLeftMargin(qreal _leftMargin);
+
+		/**
+		 * @brief Установить правый отступ
+		 */
+		void setRightMargin(qreal _rightMargin);
 
 		/**
 		 * @brief Настройки стиля отображения блока
@@ -258,6 +293,11 @@ namespace BusinessLogic
 		 * @brief Получить стиль блока заданного типа
 		 */
 		ScenarioBlockStyle blockStyle(ScenarioBlockStyle::Type _forType) const;
+
+		/**
+		 * @brief Установить стиль блока
+		 */
+		void setBlockStyle(const ScenarioBlockStyle& _blockStyle);
 
 	private:
 		ScenarioStyle(const QString& _from_file);

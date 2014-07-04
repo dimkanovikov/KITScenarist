@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+namespace UserInterface {
+	class StyleDialog;
+}
+
 
 namespace ManagementLayer
 {
@@ -14,7 +18,14 @@ namespace ManagementLayer
 		Q_OBJECT
 
 	public:
-		explicit SettingsStylesManager(QObject *parent = 0);
+		explicit SettingsStylesManager(QObject *parent, QWidget* _parentWidget);
+
+		/**
+		 * @brief Создать новый стиль
+		 */
+		void newStyle();
+
+
 
 		/**
 		 * @brief Получить список стилей установленных в системе
@@ -33,8 +44,11 @@ namespace ManagementLayer
 
 	signals:
 
-	public slots:
-
+	private:
+		/**
+		 * @brief Диалог редактирования стиля
+		 */
+		UserInterface::StyleDialog* m_view;
 	};
 }
 

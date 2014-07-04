@@ -73,6 +73,17 @@ namespace ManagementLayer
 		void chronometryConfigurableSecondsFor50DialogChanged(double  _value);
 		/** @} */
 
+		/**
+		 * @brief Библиотека стилей
+		 */
+		/** @{ */
+		void styleLibraryNewPressed();
+		void styleLibraryEditPressed(const QModelIndex& _styleIndex);
+		void styleLibraryRemovePressed(const QModelIndex& _styleIndex);
+		void styleLibraryLoadPressed();
+		void styleLibrarySavePressed(const QModelIndex& _styleIndex);
+		/** @} */
+
 	private:
 		void storeValue(const QString& _key, bool _value);
 		void storeValue(const QString& _key, int _value);
@@ -81,11 +92,6 @@ namespace ManagementLayer
 		void storeValue(const QString& _key, const QColor& _value);
 
 	private:
-		/**
-		 * @brief Настроить данные представления
-		 */
-		void initViewData();
-
 		/**
 		 * @brief Настроить представление
 		 */
@@ -97,6 +103,9 @@ namespace ManagementLayer
 		void initConnections();
 
 	private:
+		/**
+		 * @brief Представление
+		 */
 		UserInterface::SettingsView* m_view;
 	};
 }

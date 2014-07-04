@@ -1,4 +1,5 @@
 #include "SettingsManager.h"
+#include "SettingsStylesManager.h"
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -13,6 +14,7 @@
 #include <QStandardItemModel>
 
 using ManagementLayer::SettingsManager;
+using ManagementLayer::SettingsStylesManager;
 using UserInterface::SettingsView;
 
 
@@ -20,7 +22,6 @@ SettingsManager::SettingsManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new SettingsView(_parentWidget))
 {
-	initViewData();
 	initView();
 	initConnections();
 }
@@ -194,6 +195,32 @@ void SettingsManager::chronometryConfigurableSecondsFor50DialogChanged(double _v
 	storeValue("chronometry/configurable/seconds-for-every-50/dialog", _value);
 }
 
+void SettingsManager::styleLibraryNewPressed()
+{
+	SettingsStylesManager stylesManager(this, m_view);
+	stylesManager.newStyle();
+}
+
+void SettingsManager::styleLibraryEditPressed(const QModelIndex& _styleIndex)
+{
+
+}
+
+void SettingsManager::styleLibraryRemovePressed(const QModelIndex& _styleIndex)
+{
+
+}
+
+void SettingsManager::styleLibraryLoadPressed()
+{
+
+}
+
+void SettingsManager::styleLibrarySavePressed(const QModelIndex& _styleIndex)
+{
+
+}
+
 void SettingsManager::storeValue(const QString& _key, bool _value)
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
@@ -222,11 +249,6 @@ void SettingsManager::storeValue(const QString& _key, const QColor& _value)
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
 				_key, _value.name(), DataStorageLayer::SettingsStorage::ApplicationSettings);
-}
-
-void SettingsManager::initViewData()
-{
-	m_view->setStylesModel(BusinessLogic::ScenarioStyleFacade::stylesList());
 }
 
 void SettingsManager::initView()
@@ -406,6 +428,11 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toDouble()
 				);
+
+	//
+	// Загрузить библиотеку стилей
+	//
+	m_view->setStylesModel(BusinessLogic::ScenarioStyleFacade::stylesList());
 }
 
 void SettingsManager::initConnections()
@@ -482,4 +509,13 @@ void SettingsManager::initConnections()
 			SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50DialogChanged(double)),
 			SIGNAL(chronometrySettingsUpdated()));
+
+	//
+	// Библиотека стилей
+	//
+	connect(m_view, SIGNAL(styleLibraryNewPressed()), this, SLOT(styleLibraryNewPressed()));
+	connect(m_view, SIGNAL(styleLibraryEditPressed(QModelIndex)), this, SLOT(styleLibraryEditPressed(QModelIndex)));
+	connect(m_view, SIGNAL(styleLibraryRemovePressed(QModelIndex)), this, SLOT(styleLibraryRemovePressed(QModelIndex)));
+	connect(m_view, SIGNAL(styleLibraryLoadPressed()), this, SLOT(styleLibraryLoadPressed()));
+	connect(m_view, SIGNAL(styleLibrarySavePressed(QModelIndex)), this, SLOT(styleLibrarySavePressed(QModelIndex)));
 }

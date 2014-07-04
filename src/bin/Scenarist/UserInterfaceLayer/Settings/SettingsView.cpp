@@ -230,7 +230,7 @@ void SettingsView::aboutEditStylePressed()
 	if (!ui->styles->selectionModel()->selectedIndexes().isEmpty()) {
 		QModelIndex selected = ui->styles->selectionModel()->selectedIndexes().first();
 		if (selected.isValid()) {
-			emit editStylePressed(selected);
+			emit styleLibraryEditPressed(selected);
 		}
 	}
 }
@@ -240,7 +240,7 @@ void SettingsView::aboutRemoveStylePressed()
 	if (!ui->styles->selectionModel()->selectedIndexes().isEmpty()) {
 		QModelIndex selected = ui->styles->selectionModel()->selectedIndexes().first();
 		if (selected.isValid()) {
-			emit removeStylePressed(selected);
+			emit styleLibraryRemovePressed(selected);
 		}
 	}
 }
@@ -250,7 +250,7 @@ void SettingsView::aboutSaveStylePressed()
 	if (!ui->styles->selectionModel()->selectedIndexes().isEmpty()) {
 		QModelIndex selected = ui->styles->selectionModel()->selectedIndexes().first();
 		if (selected.isValid()) {
-			emit saveStylePressed(selected);
+			emit styleLibrarySavePressed(selected);
 		}
 	}
 }
@@ -346,10 +346,10 @@ void SettingsView::initConnections()
 	//
 	// Библиотека стилей
 	//
-	connect(ui->newStyle, SIGNAL(clicked()), this, SIGNAL(newStylePressed()));
+	connect(ui->newStyle, SIGNAL(clicked()), this, SIGNAL(styleLibraryNewPressed()));
 	connect(ui->editStyle, SIGNAL(clicked()), this, SLOT(aboutEditStylePressed()));
 	connect(ui->removeStyle, SIGNAL(clicked()), this, SLOT(aboutRemoveStylePressed()));
-	connect(ui->loadStyle, SIGNAL(clicked()), this, SIGNAL(loadStylePressed()));
+	connect(ui->loadStyle, SIGNAL(clicked()), this, SIGNAL(styleLibraryLoadPressed()));
 	connect(ui->saveStyle, SIGNAL(clicked()), this, SLOT(aboutSaveStylePressed()));
 }
 

@@ -73,6 +73,59 @@ ScenarioBlockStyle::Type ScenarioBlockStyle::forBlock(const QTextBlock& _block)
 	return blockType;
 }
 
+void ScenarioBlockStyle::setIsActive(bool _isActive)
+{
+	if (m_isActive != _isActive) {
+		m_isActive = _isActive;
+	}
+}
+
+void ScenarioBlockStyle::setFont(const QFont& _font)
+{
+	if (m_font != _font) {
+		m_font = _font;
+
+		m_charFormat.setFont(m_font);
+	}
+}
+
+void ScenarioBlockStyle::setAlign(Qt::Alignment _align)
+{
+	if (m_align != _align) {
+		m_align = _align;
+
+		m_blockFormat.setAlignment(m_align);
+		m_blockFormat.setTopMargin(QFontMetrics(m_font).lineSpacing() * m_topSpace);
+	}
+}
+
+void ScenarioBlockStyle::setTopSpace(int _topSpace)
+{
+	if (m_topSpace != _topSpace) {
+		m_topSpace = _topSpace;
+
+		m_blockFormat.setTopMargin(QFontMetrics(m_font).lineSpacing() * m_topSpace);
+	}
+}
+
+void ScenarioBlockStyle::setLeftMargin(qreal _leftMargin)
+{
+	if (m_leftMargin != _leftMargin) {
+		m_leftMargin = _leftMargin;
+
+		m_blockFormat.setLeftMargin(PageMetrics::mmToPx(m_leftMargin));
+	}
+}
+
+void ScenarioBlockStyle::setRightMargin(qreal _rightMargin)
+{
+	if (m_rightMargin != _rightMargin) {
+		m_rightMargin = _rightMargin;
+
+		m_blockFormat.setRightMargin(PageMetrics::mmToPx(m_rightMargin));
+	}
+}
+
 bool ScenarioBlockStyle::isFirstUppercase() const
 {
 	return m_charFormat.boolProperty(ScenarioBlockStyle::PropertyIsFirstUppercase);
@@ -275,6 +328,11 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 ScenarioBlockStyle ScenarioStyle::blockStyle(ScenarioBlockStyle::Type _forType) const
 {
 	return m_blockStyles.value(_forType);
+}
+
+void ScenarioStyle::setBlockStyle(const BusinessLogic::ScenarioBlockStyle& _blockStyle)
+{
+	m_blockStyles.insert(_blockStyle.type(), _blockStyle);
 }
 
 ScenarioStyle::ScenarioStyle(const QString& _from_file)

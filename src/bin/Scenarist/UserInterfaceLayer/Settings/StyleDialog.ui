@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>615</width>
+    <width>671</width>
     <height>531</height>
    </rect>
   </property>
@@ -41,90 +41,12 @@
        <property name="text">
         <string>Save</string>
        </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="QListWidget" name="blockStyles">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QListView::item {
-    height: 24px;
-}</string>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="verticalScrollMode">
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-     <item>
-      <property name="text">
-       <string>Time And Place</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Scene Characters</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Action</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Character</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Parenthetical</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Dialog</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Transition</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Note</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Title</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Nonprintable Text</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Scenes Group</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Folder</string>
-      </property>
-     </item>
-    </widget>
    </item>
    <item row="1" column="1">
     <widget class="QGroupBox" name="isActive">
@@ -141,52 +63,7 @@
       <bool>true</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0" colspan="2">
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <widget class="QCheckBox" name="bold">
-          <property name="text">
-           <string>Bold</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="italic">
-          <property name="text">
-           <string>Italic</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="underline">
-          <property name="text">
-           <string>Underline</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="uppercase">
-          <property name="text">
-           <string>Uppercase</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item row="4" column="0" colspan="2">
+      <item row="7" column="0" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <widget class="QLabel" name="label_5">
@@ -198,7 +75,7 @@
         <item>
          <widget class="QSpinBox" name="topSpace">
           <property name="maximum">
-           <number>4</number>
+           <number>3</number>
           </property>
           <property name="value">
            <number>1</number>
@@ -254,7 +131,7 @@
         </item>
        </layout>
       </item>
-      <item row="5" column="1">
+      <item row="8" column="1">
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -304,7 +181,7 @@
         </item>
        </layout>
       </item>
-      <item row="2" column="0" colspan="2">
+      <item row="5" column="0" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="label_2">
@@ -356,10 +233,38 @@
         </item>
        </layout>
       </item>
-      <item row="3" column="0" colspan="2">
+      <item row="6" column="0" colspan="2">
        <widget class="QLabel" name="label_3">
         <property name="text">
          <string>Spacing:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="underline">
+        <property name="text">
+         <string>Underline</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="italic">
+        <property name="text">
+         <string>Italic</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="bold">
+        <property name="text">
+         <string>Bold</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QCheckBox" name="uppercase">
+        <property name="text">
+         <string>Uppercase</string>
         </property>
        </widget>
       </item>
@@ -483,6 +388,30 @@
      </layout>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QListWidget" name="blockStyles">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QListView::item {
+    height: 24px;
+}</string>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Adjust</enum>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -496,10 +425,6 @@
   <tabstop>isActive</tabstop>
   <tabstop>fontFamily</tabstop>
   <tabstop>fontSize</tabstop>
-  <tabstop>bold</tabstop>
-  <tabstop>italic</tabstop>
-  <tabstop>underline</tabstop>
-  <tabstop>uppercase</tabstop>
   <tabstop>alignment</tabstop>
   <tabstop>topSpace</tabstop>
   <tabstop>leftIndent</tabstop>

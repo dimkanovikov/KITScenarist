@@ -106,11 +106,11 @@ namespace UserInterface
 		 * @brief Библиотека стилей
 		 */
 		/** @{ */
-		void newStylePressed();
-		void editStylePressed(const QModelIndex& _styleIndex);
-		void removeStylePressed(const QModelIndex& _styleIndex);
-		void loadStylePressed();
-		void saveStylePressed(const QModelIndex& _styleIndex);
+		void styleLibraryNewPressed();
+		void styleLibraryEditPressed(const QModelIndex& _styleIndex);
+		void styleLibraryRemovePressed(const QModelIndex& _styleIndex);
+		void styleLibraryLoadPressed();
+		void styleLibrarySavePressed(const QModelIndex& _styleIndex);
 		/** @} */
 
 	private slots:
