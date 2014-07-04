@@ -25,22 +25,10 @@ namespace ManagementLayer
 		 */
 		void newStyle();
 
-
-
 		/**
-		 * @brief Получить список стилей установленных в системе
+		 * @brief Изменить указанный стиль
 		 */
-		QMap<QString, QString> stylesList() const;
-
-		/**
-		 * @brief Установить стиль
-		 */
-		void setupStyle(const QString& _styleXml);
-
-		/**
-		 * @brief Получить xml-описание стиля
-		 */
-		QString styleXml(const QString& _styleName) const;
+		void editStyle(const QString& _styleName);
 
 	signals:
 

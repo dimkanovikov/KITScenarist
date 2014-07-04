@@ -13,7 +13,7 @@ qreal PageMetrics::mmToPx(qreal _mm, bool _x)
 	return ::mmToInches(_mm) * (_x ? qApp->desktop()->logicalDpiX() : qApp->desktop()->logicalDpiY());
 }
 
-QPageSize::PageSizeId PageMetrics::pageSizeId(const QString& _from)
+QPageSize::PageSizeId PageMetrics::pageSizeIdFromString(const QString& _from)
 {
 	QPageSize::PageSizeId result = QPageSize::A4;
 
@@ -25,6 +25,24 @@ QPageSize::PageSizeId PageMetrics::pageSizeId(const QString& _from)
 	else if (_from == "A5") result = QPageSize::A5;
 	else
 		Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Undefined page size: " + _from));
+
+	return result;
+}
+
+QString PageMetrics::stringFromPageSizeId(QPageSize::PageSizeId _pageSize)
+{
+	QString result;
+
+	switch (_pageSize) {
+		case QPageSize::A0: result = "A0"; break;
+		case QPageSize::A1: result = "A1"; break;
+		case QPageSize::A2: result = "A2"; break;
+		case QPageSize::A3: result = "A3"; break;
+		case QPageSize::A4: result = "A4"; break;
+		case QPageSize::A5: result = "A5"; break;
+		default:
+			Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Undefined page size: " + QString::number(_pageSize)));
+	}
 
 	return result;
 }

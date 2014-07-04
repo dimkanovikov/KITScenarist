@@ -270,6 +270,11 @@ namespace BusinessLogic
 		ScenarioStyle() {}
 
 		/**
+		 * @brief Сохранить стиль в файл
+		 */
+		void saveToFile(const QString& _filePath) const;
+
+		/**
 		 * @brief Получить название
 		 */
 		QString name() const { return m_name; }
@@ -293,6 +298,21 @@ namespace BusinessLogic
 		 * @brief Получить стиль блока заданного типа
 		 */
 		ScenarioBlockStyle blockStyle(ScenarioBlockStyle::Type _forType) const;
+
+		/**
+		 * @brief Установить наименование
+		 */
+		void setName(const QString& _name);
+
+		/**
+		 * @brief Установить описание
+		 */
+		void setDescription(const QString& _description);
+
+		/**
+		 * @brief Установить поля документа
+		 */
+		void setPageMargins(const QMarginsF& _pageMargins);
 
 		/**
 		 * @brief Установить стиль блока
@@ -347,11 +367,26 @@ namespace BusinessLogic
 		static QStandardItemModel* stylesList();
 
 		/**
+		 * @brief Проверить существование стиля с заданным именем
+		 */
+		static bool containsStyle(const QString& _styleName);
+
+		/**
 		 * @brief Получить стиль в соответствии с заданным именем
 		 *
 		 * Если имя не задано, возвращается стандартный стиль
 		 */
 		static ScenarioStyle style(const QString& _styleName = QString());
+
+		/**
+		 * @brief Сохранить стиль в библиотеке стилей
+		 */
+		static void saveStyle(const ScenarioStyle& _style);
+
+		/**
+		 * @brief Удалить стиль по заданному имены
+		 */
+		static void removeStyle(const QString& _styleName);
 
 	private:
 		ScenarioStyleFacade();

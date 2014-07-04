@@ -28,7 +28,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить стиль в диалог
 		 */
-		void setScenarioStyle(const BusinessLogic::ScenarioStyle& _style);
+		void setScenarioStyle(const BusinessLogic::ScenarioStyle& _style, bool _isNew);
 
 		/**
 		 * @brief Получить стиль настроеный в диалоге

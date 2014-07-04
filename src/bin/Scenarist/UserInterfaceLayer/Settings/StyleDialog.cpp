@@ -24,7 +24,7 @@ StyleDialog::~StyleDialog()
 	delete ui;
 }
 
-void StyleDialog::setScenarioStyle(const BusinessLogic::ScenarioStyle& _style)
+void StyleDialog::setScenarioStyle(const BusinessLogic::ScenarioStyle& _style, bool _isNew)
 {
 	//
 	// Сохраним стиль
@@ -34,8 +34,13 @@ void StyleDialog::setScenarioStyle(const BusinessLogic::ScenarioStyle& _style)
 	//
 	// Общие параметры стиля
 	//
-	ui->name->setText(m_style.name());
-	ui->description->setText(m_style.description());
+	if (_isNew) {
+		ui->name->clear();
+		ui->description->clear();
+	} else {
+		ui->name->setText(m_style.name());
+		ui->description->setText(m_style.description());
+	}
 	ui->leftField->setValue(m_style.pageMargins().left());
 	ui->topField->setValue(m_style.pageMargins().top());
 	ui->rightField->setValue(m_style.pageMargins().right());
@@ -48,6 +53,7 @@ void StyleDialog::setScenarioStyle(const BusinessLogic::ScenarioStyle& _style)
 	//
 	// ... и выберем первый из списка, для обновления интерфейса
 	//
+	ui->blockStyles->clearSelection();
 	ui->blockStyles->setCurrentIndex(ui->blockStyles->model()->index(0, 0));
 }
 
@@ -57,6 +63,20 @@ BusinessLogic::ScenarioStyle StyleDialog::scenarioStyle()
 	// Сохраним последний редактируемый стиль блока
 	//
 	aboutBlockStyleActivated(0);
+
+	//
+	// Сохраним основные параметры стиля
+	//
+	if (!ui->name->text().isEmpty()) {
+		m_style.setName(ui->name->text());
+	} else {
+		m_style.setName(tr("Unnamed Style"));
+	}
+	m_style.setDescription(ui->description->text());
+	m_style.setPageMargins(QMarginsF(ui->leftField->value(),
+									 ui->topField->value(),
+									 ui->rightField->value(),
+									 ui->bottomField->value()));
 
 	//
 	// Возвратим настроенный стиль

@@ -15,6 +15,7 @@
 
 using ManagementLayer::SettingsManager;
 using ManagementLayer::SettingsStylesManager;
+using BusinessLogic::ScenarioStyleFacade;
 using UserInterface::SettingsView;
 
 
@@ -203,12 +204,33 @@ void SettingsManager::styleLibraryNewPressed()
 
 void SettingsManager::styleLibraryEditPressed(const QModelIndex& _styleIndex)
 {
+	//
+	// Определим название стиля к изменению
+	//
+	const int STYLE_NAME_COLUMN = 0;
+	QModelIndex styleNameIndex = _styleIndex.sibling(_styleIndex.row(), STYLE_NAME_COLUMN);
+	QString styleToEditName = ScenarioStyleFacade::stylesList()->data(styleNameIndex).toString();
 
+	//
+	// Изменим стиль
+	//
+	SettingsStylesManager stylesManager(this, m_view);
+	stylesManager.editStyle(styleToEditName);
 }
 
 void SettingsManager::styleLibraryRemovePressed(const QModelIndex& _styleIndex)
 {
+	//
+	// Определим название стиля к удалению
+	//
+	const int STYLE_NAME_COLUMN = 0;
+	QModelIndex styleNameIndex = _styleIndex.sibling(_styleIndex.row(), STYLE_NAME_COLUMN);
+	QString styleToDeleteName = ScenarioStyleFacade::stylesList()->data(styleNameIndex).toString();
 
+	//
+	// Удалим стиль
+	//
+	ScenarioStyleFacade::removeStyle(styleToDeleteName);
 }
 
 void SettingsManager::styleLibraryLoadPressed()

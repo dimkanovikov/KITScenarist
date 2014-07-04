@@ -348,6 +348,7 @@ void SettingsView::initConnections()
 	//
 	connect(ui->newStyle, SIGNAL(clicked()), this, SIGNAL(styleLibraryNewPressed()));
 	connect(ui->editStyle, SIGNAL(clicked()), this, SLOT(aboutEditStylePressed()));
+	connect(ui->styles, SIGNAL(doubleClicked(QModelIndex)), this, SIGNAL(styleLibraryEditPressed(QModelIndex)));
 	connect(ui->removeStyle, SIGNAL(clicked()), this, SLOT(aboutRemoveStylePressed()));
 	connect(ui->loadStyle, SIGNAL(clicked()), this, SIGNAL(styleLibraryLoadPressed()));
 	connect(ui->saveStyle, SIGNAL(clicked()), this, SLOT(aboutSaveStylePressed()));

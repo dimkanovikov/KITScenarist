@@ -325,21 +325,6 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 // ********
 // ScenarioStyle
 
-ScenarioBlockStyle ScenarioStyle::blockStyle(ScenarioBlockStyle::Type _forType) const
-{
-	return m_blockStyles.value(_forType);
-}
-
-void ScenarioStyle::setBlockStyle(const BusinessLogic::ScenarioBlockStyle& _blockStyle)
-{
-	m_blockStyles.insert(_blockStyle.type(), _blockStyle);
-}
-
-ScenarioStyle::ScenarioStyle(const QString& _from_file)
-{
-	load(_from_file);
-}
-
 namespace {
 	/**
 	 * @brief Получить отступы из строки
@@ -351,6 +336,110 @@ namespace {
 						 margins.value(2, 0).simplified().toDouble(),
 						 margins.value(3, 0).simplified().toDouble());
 	}
+
+	/**
+	 * @brief Получить строку из отступов
+	 */
+	static QString stringFromMargins(const QMarginsF& _margins) {
+		return QString("%1,%2,%3,%4")
+				.arg(_margins.left())
+				.arg(_margins.top())
+				.arg(_margins.right())
+				.arg(_margins.bottom());
+	}
+
+	/**
+	 * @brief Преобразование разных типов в строку для записи в xml
+	 */
+	/** @{ */
+	static QString toString(bool _value)  { return _value ? "true" : "false"; }
+	static QString toString(int _value)   { return QString::number(_value); }
+	static QString toString(qreal _value) { return QString::number(_value); }
+	static QString toString(ScenarioBlockStyle::Type _value) {
+		return ScenarioBlockStyle::typeName(_value);
+	}
+	static QString toString(Qt::Alignment _value) {
+		switch (_value) {
+			default:
+			case Qt::AlignLeft:   return "left";
+			case Qt::AlignCenter: return "center";
+			case Qt::AlignRight:  return "right";
+		}
+	}
+
+	/** @} */
+}
+
+void ScenarioStyle::saveToFile(const QString& _filePath) const
+{
+	QFile styleFile(_filePath);
+	if (styleFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+		QXmlStreamWriter writer(&styleFile);
+		writer.setAutoFormatting(true);
+		writer.writeStartDocument();
+		writer.writeStartElement("style");
+		writer.writeAttribute("name", m_name);
+		writer.writeAttribute("description", m_description);
+		writer.writeAttribute("page_format", PageMetrics::stringFromPageSizeId(m_pageSizeId));
+		writer.writeAttribute("page_margins", ::stringFromMargins(m_pageMargins));
+		foreach (const ScenarioBlockStyle& blockStyle, m_blockStyles.values()) {
+			writer.writeStartElement("block");
+			writer.writeAttribute("id", ::toString(blockStyle.type()));
+			writer.writeAttribute("active", ::toString(blockStyle.isActive()));
+			writer.writeAttribute("font_family", blockStyle.font().family());
+			writer.writeAttribute("font_size", ::toString(blockStyle.font().pointSize()));
+			writer.writeAttribute("bold", ::toString(blockStyle.font().bold()));
+			writer.writeAttribute("italic", ::toString(blockStyle.font().italic()));
+			writer.writeAttribute("underline", ::toString(blockStyle.font().underline()));
+			writer.writeAttribute("uppercase", ::toString(blockStyle.font().capitalization()
+														  == QFont::AllUppercase));
+			writer.writeAttribute("alignment", ::toString(blockStyle.align()));
+			writer.writeAttribute("top_space", ::toString(blockStyle.topSpace()));
+			writer.writeAttribute("left_margin", ::toString(blockStyle.leftMargin()));
+			writer.writeAttribute("right_margin", ::toString(blockStyle.rightMargin()));
+			writer.writeEndElement(); // block
+		}
+		writer.writeEndElement(); // style
+		writer.writeEndDocument();
+
+		styleFile.close();
+	}
+}
+
+ScenarioBlockStyle ScenarioStyle::blockStyle(ScenarioBlockStyle::Type _forType) const
+{
+	return m_blockStyles.value(_forType);
+}
+
+void ScenarioStyle::setName(const QString& _name)
+{
+	if (m_name != _name) {
+		m_name = _name;
+	}
+}
+
+void ScenarioStyle::setDescription(const QString& _description)
+{
+	if (m_description != _description) {
+		m_description = _description;
+	}
+}
+
+void ScenarioStyle::setPageMargins(const QMarginsF& _pageMargins)
+{
+	if (m_pageMargins != _pageMargins) {
+		m_pageMargins = _pageMargins;
+	}
+}
+
+void ScenarioStyle::setBlockStyle(const BusinessLogic::ScenarioBlockStyle& _blockStyle)
+{
+	m_blockStyles.insert(_blockStyle.type(), _blockStyle);
+}
+
+ScenarioStyle::ScenarioStyle(const QString& _from_file)
+{
+	load(_from_file);
 }
 
 void ScenarioStyle::load(const QString& _from_file)
@@ -370,7 +459,7 @@ void ScenarioStyle::load(const QString& _from_file)
 			QXmlStreamAttributes styleAttributes = reader.attributes();
 			m_name = styleAttributes.value("name").toString();
 			m_description = styleAttributes.value("description").toString();
-			m_pageSizeId = PageMetrics::pageSizeId(styleAttributes.value("page_format").toString());
+			m_pageSizeId = PageMetrics::pageSizeIdFromString(styleAttributes.value("page_format").toString());
 			m_pageMargins = ::marginsFromString(styleAttributes.value("page_margins").toString());
 
 			//
@@ -401,6 +490,13 @@ QStandardItemModel* ScenarioStyleFacade::stylesList()
 	return s_instance->m_stylesModel;
 }
 
+bool ScenarioStyleFacade::containsStyle(const QString& _styleName)
+{
+	init();
+
+	return s_instance->m_styles.contains(_styleName);
+}
+
 ScenarioStyle ScenarioStyleFacade::style(const QString& _styleName)
 {
 	init();
@@ -422,6 +518,62 @@ ScenarioStyle ScenarioStyleFacade::style(const QString& _styleName)
 		result = s_instance->m_styles.value(_styleName);
 	}
 	return result;
+}
+
+void ScenarioStyleFacade::saveStyle(const BusinessLogic::ScenarioStyle& _style)
+{
+	init();
+
+	//
+	// Если такого стиля ещё не было раньше, то добавляем строку в модель стилей
+	//
+	if (!containsStyle(_style.name())) {
+		QStandardItem* stylesRootItem = s_instance->m_stylesModel->invisibleRootItem();
+		QList<QStandardItem*> styleRow;
+		styleRow << new QStandardItem(_style.name());
+		styleRow << new QStandardItem(_style.description());
+		stylesRootItem->appendRow(styleRow);
+	}
+	//
+	// Добавляем/обновляем стиль в библиотеке
+	//
+	s_instance->m_styles.insert(_style.name(), _style);
+
+
+	//
+	// Настроим путь к папке со стилями
+	//
+	const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+	const QString stylesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
+	const QString styleFilePath = stylesFolderPath + QDir::separator() + _style.name() + ".xml";
+	//
+	// Сохраняем стиль в файл
+	//
+	_style.saveToFile(styleFilePath);
+}
+
+void ScenarioStyleFacade::removeStyle(const QString& _styleName)
+{
+	init();
+
+	//
+	// Удалим стиль из библиотеки
+	//
+	s_instance->m_styles.remove(_styleName);
+	foreach (QStandardItem* styleItem, s_instance->m_stylesModel->findItems(_styleName)) {
+		s_instance->m_stylesModel->removeRow(styleItem->row());
+	}
+
+	//
+	// Настроим путь к папке со стилями
+	//
+	const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+	const QString stylesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
+	const QString styleFilePath = stylesFolderPath + QDir::separator() + _styleName + ".xml";
+	//
+	// Удалим файл со стилем
+	//
+	QFile::remove(styleFilePath);
 }
 
 ScenarioStyleFacade::ScenarioStyleFacade()
