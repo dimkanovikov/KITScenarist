@@ -1,5 +1,8 @@
 #include "RtfExporter.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QTextDocument>
@@ -10,9 +13,26 @@
 
 using namespace BusinessLogic;
 
-
 namespace {
+	/**
+	 * @brief Стиль экспорта
+	 */
+	static ScenarioStyle exportStyle() {
+		return ScenarioStyleFacade::style(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"export/style",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					);
+	}
+
+	/**
+	 * @brief Конец строки
+	 */
 	const char* END_OF_LINE = "\r\n";
+
+	/**
+	 * @brief Пустая RTF-строка
+	 */
 	const char* EMPTY_LINE = "\\pard\\plain\\par\r\n";
 
 	/**
@@ -182,7 +202,7 @@ RtfExporter::RtfExporter()
 
 void RtfExporter::exportTo(QTextDocument* _document, const QString& _toFile) const
 {
-	ScenarioStyle scenarioStyle = BusinessLogic::ScenarioStyleFacade::style();
+	ScenarioStyle scenarioStyle = ::exportStyle();
 
 	//
 	// Открываем документ на запись
@@ -258,7 +278,7 @@ QString RtfExporter::header() const
 	//
 	// Настройки в соответсвии со стилем
 	//
-	ScenarioStyle style = BusinessLogic::ScenarioStyleFacade::style();
+	ScenarioStyle style = ::exportStyle();
 
 	//
 	// Настройки шрифтов
@@ -296,7 +316,7 @@ QString RtfExporter::header() const
 
 QString RtfExporter::style(ScenarioBlockStyle::Type _type) const
 {
-	ScenarioStyle scenarioStyle = BusinessLogic::ScenarioStyleFacade::style();
+	ScenarioStyle scenarioStyle = ::exportStyle();
 	ScenarioBlockStyle blockStyle = scenarioStyle.blockStyle(_type);
 	return ::rtfBlockStyle(blockStyle);
 }

@@ -20,6 +20,7 @@ namespace ManagementLayer
 	class CharactersManager;
 	class LocationsManager;
 	class SettingsManager;
+	class ExportManager;
 
 
 	/**
@@ -62,14 +63,9 @@ namespace ManagementLayer
 		void aboutLoad(const QString& _fileName = QString());
 
 		/**
-		 * @brief Экспортировать в PDF
+		 * @brief Экспортировать документ
 		 */
-		void aboutExportToPdf();
-
-		/**
-		 * @brief Экспортировать в RTF
-		 */
-		void aboutExportToRtf();
+		void aboutExportTo();
 
 		/**
 		 * @brief Предварительный просмотр и печать
@@ -191,6 +187,11 @@ namespace ManagementLayer
 		 * @brief Управляющий настройками
 		 */
 		SettingsManager* m_settingsManager;
+
+		/**
+		 * @brief Управляющий экспортом
+		 */
+		ExportManager* m_exportManager;
 
 		/**
 		 * @brief Таймер автосохранения

@@ -5,7 +5,9 @@
 #include "Characters/CharactersManager.h"
 #include "Locations/LocationsManager.h"
 #include "Settings/SettingsManager.h"
+#include "Export/ExportManager.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Export/PdfExporter.h>
@@ -20,14 +22,17 @@
 #include <UserInterfaceLayer/ApplicationView.h>
 
 #include <QApplication>
-#include <QStackedWidget>
+#include <QComboBox>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QToolButton>
 #include <QMenu>
+#include <QStackedWidget>
+#include <QStandardItemModel>
 #include <QStyle>
 #include <QStyleFactory>
+#include <QToolButton>
 #include <QVBoxLayout>
+#include <QWidgetAction>
 
 using namespace ManagementLayer;
 using UserInterface::ApplicationView;
@@ -84,30 +89,6 @@ namespace {
 					QFileInfo(_path).absoluteDir().absolutePath(),
 					DataStorageLayer::SettingsStorage::ApplicationSettings);
 	}
-
-	/**
-	 * @brief Получить путь к папке экспортируемых файлов
-	 */
-	static QString exportFolderPath() {
-		QString exportFolderPath =
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/export-files",
-					DataStorageLayer::SettingsStorage::ApplicationSettings);
-		if (exportFolderPath.isEmpty()) {
-			exportFolderPath = QDir::homePath();
-		}
-		return exportFolderPath;
-	}
-
-	/**
-	 * @brief Сохранить путь к папке экспортируемых файлов
-	 */
-	static void saveExportFolderPath(const QString& _path) {
-		DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-					"application/export-files",
-					QFileInfo(_path).absoluteDir().absolutePath(),
-					DataStorageLayer::SettingsStorage::ApplicationSettings);
-	}
 }
 
 
@@ -121,7 +102,8 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_scenarioManager(new ScenarioManager(this, m_view)),
 	m_charactersManager(new CharactersManager(this, m_view)),
 	m_locationsManager(new LocationsManager(this, m_view)),
-	m_settingsManager(new SettingsManager(this, m_view))
+	m_settingsManager(new SettingsManager(this, m_view)),
+	m_exportManager(new ExportManager(this, m_view))
 {
 	initView();
 	initConnections();
@@ -349,82 +331,9 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 	}
 }
 
-void ApplicationManager::aboutExportToPdf()
+void ApplicationManager::aboutExportTo()
 {
-	const QString PDF_EXTENSION = ".pdf";
-
-	//
-	// Получим имя файла для сохранения
-	//
-	QString exportFileName =
-			QFileDialog::getSaveFileName(
-				m_view,
-				tr("Choose file to export scenario"),
-				exportFolderPath(),
-				tr ("PDF files (*%1)").arg(PDF_EXTENSION)
-				);
-
-	//
-	// Если файл выбран
-	//
-	if (!exportFileName.isEmpty()) {
-		//
-		// ... установим расширение, если не задано
-		//
-		if (!exportFileName.endsWith(PDF_EXTENSION)) {
-			exportFileName.append(PDF_EXTENSION);
-		}
-
-		//
-		// ... экспортируем сценарий
-		//
-		BusinessLogic::PdfExporter exporter;
-		exporter.exportTo(m_scenarioManager->scenario()->document(), exportFileName);
-
-		//
-		// ... сохраним путь
-		//
-		saveExportFolderPath(exportFileName);
-	}
-}
-
-void ApplicationManager::aboutExportToRtf()
-{
-	const QString RTF_EXTENSION = ".rtf";
-
-	//
-	// Получим имя файла для сохранения
-	//
-	QString exportFileName =
-			QFileDialog::getSaveFileName(
-				m_view,
-				tr("Choose file to export scenario"),
-				exportFolderPath(),
-				tr ("RTF files (*%1)").arg(RTF_EXTENSION)
-				);
-
-	//
-	// Если файл выбран
-	//
-	if (!exportFileName.isEmpty()) {
-		//
-		// ... установим расширение, если не задано
-		//
-		if (!exportFileName.endsWith(RTF_EXTENSION)) {
-			exportFileName.append(RTF_EXTENSION);
-		}
-
-		//
-		// ... экспортируем сценарий
-		//
-		BusinessLogic::RtfExporter exporter;
-		exporter.exportTo(m_scenarioManager->scenario()->document(), exportFileName);
-
-		//
-		// ... сохраним путь
-		//
-		saveExportFolderPath(exportFileName);
-	}
+	m_exportManager->exportScenario(m_scenarioManager->scenario()->document());
 }
 
 void ApplicationManager::aboutPrintPreview()
@@ -638,11 +547,9 @@ QMenu* ApplicationManager::createMenu()
 	g_disableOnStartActions << saveProjectAs;
 
 	// ... экспорт
-	QMenu* exportMenu = new QMenu(tr("Export to..."), m_menu);
-	QAction* exportToPdf = exportMenu->addAction(tr("PDF"));
-	QAction* exportToRtf = exportMenu->addAction(tr("RTF"));
-	g_disableOnStartActions << menu->addMenu(exportMenu);
-
+	menu->addSeparator();
+	QAction* exportTo = menu->addAction(tr("Export to..."));
+	g_disableOnStartActions << exportTo;
 	// ... предварительный просмотр
 	QAction* printPreview = menu->addAction(tr("Print Preview"));
 	printPreview->setShortcut(QKeySequence(Qt::Key_F12));
@@ -655,8 +562,7 @@ QMenu* ApplicationManager::createMenu()
 	connect(openProject, SIGNAL(triggered()), this, SLOT(aboutLoad()));
 	connect(saveProject, SIGNAL(triggered()), this, SLOT(aboutSave()));
 	connect(saveProjectAs, SIGNAL(triggered()), this, SLOT(aboutSaveAs()));
-	connect(exportToPdf, SIGNAL(triggered()), this, SLOT(aboutExportToPdf()));
-	connect(exportToRtf, SIGNAL(triggered()), this, SLOT(aboutExportToRtf()));
+	connect(exportTo, SIGNAL(triggered()), this, SLOT(aboutExportTo()));
 	connect(printPreview, SIGNAL(triggered()), this, SLOT(aboutPrintPreview()));
 
 	return menu;

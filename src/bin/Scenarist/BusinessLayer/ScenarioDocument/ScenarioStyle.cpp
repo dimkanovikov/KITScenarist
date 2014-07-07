@@ -52,6 +52,11 @@ namespace {
 		}
 		return s_typeNames;
 	}
+
+	/**
+	 * @brief Расширение файла стиля сценария
+	 */
+	const QString SCENARIO_STYLE_FILE_EXTENSION = "kitss";
 }
 
 QString ScenarioBlockStyle::typeName(ScenarioBlockStyle::Type _type)
@@ -545,11 +550,34 @@ void ScenarioStyleFacade::saveStyle(const BusinessLogic::ScenarioStyle& _style)
 	//
 	const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
 	const QString stylesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
-	const QString styleFilePath = stylesFolderPath + QDir::separator() + _style.name() + ".xml";
+	const QString styleFilePath =
+			stylesFolderPath + QDir::separator()
+			+ _style.name() + "." + SCENARIO_STYLE_FILE_EXTENSION;
 	//
 	// Сохраняем стиль в файл
 	//
 	_style.saveToFile(styleFilePath);
+}
+
+bool ScenarioStyleFacade::saveStyle(const QString& _styleFilePath)
+{
+	init();
+
+	//
+	// Загружаем стиль из файла
+	//
+	ScenarioStyle newStyle(_styleFilePath);
+
+	//
+	// Если загрузка произошла успешно, то добавляем его в библиотеку
+	//
+	bool styleSaved = false;
+	if (!newStyle.name().isEmpty()) {
+		saveStyle(newStyle);
+		styleSaved = true;
+	}
+
+	return styleSaved;
 }
 
 void ScenarioStyleFacade::removeStyle(const QString& _styleName)
@@ -569,7 +597,9 @@ void ScenarioStyleFacade::removeStyle(const QString& _styleName)
 	//
 	const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
 	const QString stylesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
-	const QString styleFilePath = stylesFolderPath + QDir::separator() + _styleName + ".xml";
+	const QString styleFilePath =
+			stylesFolderPath + QDir::separator()
+			+ _styleName + "." + SCENARIO_STYLE_FILE_EXTENSION;
 	//
 	// Удалим файл со стилем
 	//
@@ -592,10 +622,12 @@ ScenarioStyleFacade::ScenarioStyleFacade()
 	//
 	// Сохраним стиль по умолчанию, если необходимо
 	//
-	const QString defaultStylePath = stylesFolderPath + QDir::separator() + "default.xml";
+	const QString defaultStylePath =
+			stylesFolderPath + QDir::separator()
+			+ "default." + SCENARIO_STYLE_FILE_EXTENSION;
 	QFile defaultStyleFile(defaultStylePath);
 	if (defaultStyleFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-		QFile defaultStyleRcFile(":/Styles/Styles/default.xml");
+		QFile defaultStyleRcFile(":/Styles/Styles/default." + SCENARIO_STYLE_FILE_EXTENSION);
 		if (defaultStyleRcFile.open(QIODevice::ReadOnly)) {
 			defaultStyleFile.write(defaultStyleRcFile.readAll());
 			defaultStyleRcFile.close();
@@ -607,9 +639,8 @@ ScenarioStyleFacade::ScenarioStyleFacade()
 	// Загрузить стили
 	//
 	QDir stylesDir(stylesFolderPath);
-	const QString STYLE_FILE_SUFFIX = "xml";
 	foreach (const QFileInfo& styleFile, stylesDir.entryInfoList(QDir::Files)) {
-		if (styleFile.suffix() == STYLE_FILE_SUFFIX) {
+		if (styleFile.suffix() == SCENARIO_STYLE_FILE_EXTENSION) {
 			ScenarioStyle style(styleFile.absoluteFilePath());
 			m_styles.insert(style.name(), style);
 		}

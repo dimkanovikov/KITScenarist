@@ -381,7 +381,10 @@ namespace BusinessLogic
 		/**
 		 * @brief Сохранить стиль в библиотеке стилей
 		 */
+		/** @{ */
 		static void saveStyle(const ScenarioStyle& _style);
+		static bool saveStyle(const QString& _styleFilePath);
+		/** @} */
 
 		/**
 		 * @brief Удалить стиль по заданному имены

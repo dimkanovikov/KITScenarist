@@ -10,6 +10,7 @@
 
 #include <UserInterfaceLayer/Settings/SettingsView.h>
 
+#include <QFileDialog>
 #include <QSplitter>
 #include <QStandardItemModel>
 
@@ -17,6 +18,13 @@ using ManagementLayer::SettingsManager;
 using ManagementLayer::SettingsStylesManager;
 using BusinessLogic::ScenarioStyleFacade;
 using UserInterface::SettingsView;
+
+namespace {
+	/**
+	 * @brief Расширение файла стиля сценария
+	 */
+	const QString SCENARIO_STYLE_FILE_EXTENSION = "kitss";
+}
 
 
 SettingsManager::SettingsManager(QObject* _parent, QWidget* _parentWidget) :
@@ -235,12 +243,46 @@ void SettingsManager::styleLibraryRemovePressed(const QModelIndex& _styleIndex)
 
 void SettingsManager::styleLibraryLoadPressed()
 {
+	//
+	// Выбрать файл для загрузки
+	//
+	QString styleFilePath =
+			QFileDialog::getOpenFileName(m_view, tr("Choose file to load"), QDir::homePath(),
+				tr("Scenario Style Files (*.%1)").arg(SCENARIO_STYLE_FILE_EXTENSION));
 
+	if (!styleFilePath.isEmpty()) {
+		//
+		// Сохранить стиль в библиотеке
+		//
+		ScenarioStyleFacade::saveStyle(styleFilePath);
+	}
 }
 
 void SettingsManager::styleLibrarySavePressed(const QModelIndex& _styleIndex)
 {
+	//
+	// Определим стиль
+	//
+	const int STYLE_NAME_COLUMN = 0;
+	QModelIndex styleNameIndex = _styleIndex.sibling(_styleIndex.row(), STYLE_NAME_COLUMN);
+	QString styleToSaveName = ScenarioStyleFacade::stylesList()->data(styleNameIndex).toString();
 
+	//
+	// Выбрать файл для сохранения
+	//
+	QString styleFilePath =
+			QFileDialog::getSaveFileName(m_view, tr("Choose file to save"), QDir::homePath(),
+				tr("Scenario Style Files (*.%1)").arg(SCENARIO_STYLE_FILE_EXTENSION));
+
+	//
+	// Сохраним стиль в файл
+	//
+	if (!styleFilePath.isEmpty()) {
+		if (!styleFilePath.endsWith(SCENARIO_STYLE_FILE_EXTENSION)) {
+			styleFilePath += "." + SCENARIO_STYLE_FILE_EXTENSION;
+		}
+		ScenarioStyleFacade::style(styleToSaveName).saveToFile(styleFilePath);
+	}
 }
 
 void SettingsManager::storeValue(const QString& _key, bool _value)
@@ -275,6 +317,11 @@ void SettingsManager::storeValue(const QString& _key, const QColor& _value)
 
 void SettingsManager::initView()
 {
+	//
+	// Загрузить библиотеку стилей
+	//
+	m_view->setStylesModel(BusinessLogic::ScenarioStyleFacade::stylesList());
+
 	//
 	// Загрузить настройки
 	//
@@ -450,11 +497,6 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toDouble()
 				);
-
-	//
-	// Загрузить библиотеку стилей
-	//
-	m_view->setStylesModel(BusinessLogic::ScenarioStyleFacade::stylesList());
 }
 
 void SettingsManager::initConnections()

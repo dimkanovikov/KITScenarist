@@ -162,7 +162,9 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.cpp \
     UserInterfaceLayer/Settings/StyleDialog.cpp \
     ManagementLayer/Settings/SettingsStylesManager.cpp \
-    BusinessLayer/ScenarioDocument/ScenarioStyle.cpp
+    BusinessLayer/ScenarioDocument/ScenarioStyle.cpp \
+    ManagementLayer/Export/ExportManager.cpp \
+    UserInterfaceLayer/Export/ExportDialog.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -301,7 +303,9 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.h \
     UserInterfaceLayer/Settings/StyleDialog.h \
     ManagementLayer/Settings/SettingsStylesManager.h \
-    BusinessLayer/ScenarioDocument/ScenarioStyle.h
+    BusinessLayer/ScenarioDocument/ScenarioStyle.h \
+    ManagementLayer/Export/ExportManager.h \
+    UserInterfaceLayer/Export/ExportDialog.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -309,7 +313,8 @@ FORMS += \
     UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui \
     UserInterfaceLayer/Settings/SettingsView.ui \
     UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui \
-    UserInterfaceLayer/Settings/StyleDialog.ui
+    UserInterfaceLayer/Settings/StyleDialog.ui \
+    UserInterfaceLayer/Export/ExportDialog.ui
 
 
 RESOURCES += \

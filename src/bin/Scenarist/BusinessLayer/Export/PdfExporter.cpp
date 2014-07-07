@@ -1,5 +1,8 @@
 #include "PdfExporter.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <3rd_party/Widgets/PagesTextEdit/PageMetrics.h>
 
 #include <QApplication>
@@ -11,6 +14,19 @@
 #include <QPrintPreviewDialog>
 
 using namespace BusinessLogic;
+
+namespace {
+	/**
+	 * @brief Стиль экспорта
+	 */
+	static ScenarioStyle exportStyle() {
+		return ScenarioStyleFacade::style(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"export/style",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					);
+	}
+}
 
 
 PdfExporter::PdfExporter(QObject* _parent) :
@@ -34,8 +50,8 @@ void PdfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 	//
 	// Настроим размер страниц
 	//
-	QSizeF pageSize = QPageSize(ScenarioStyleFacade::style().pageSizeId()).size(QPageSize::Millimeter);
-	QMarginsF pageMargins = ScenarioStyleFacade::style().pageMargins();
+	QSizeF pageSize = QPageSize(::exportStyle().pageSizeId()).size(QPageSize::Millimeter);
+	QMarginsF pageMargins = ::exportStyle().pageMargins();
 	QSizeF textSize(PageMetrics::mmToPx(pageSize.width() - pageMargins.left() - pageMargins.right()),
 					PageMetrics::mmToPx(pageSize.height() - pageMargins.top() - pageMargins.bottom()));
 	preparedDocument->setPageSize(textSize);
@@ -69,8 +85,8 @@ void PdfExporter::printPreview(QTextDocument* _document)
 	//
 	// Настроим размер страниц
 	//
-	QSizeF pageSize = QPageSize(ScenarioStyleFacade::style().pageSizeId()).size(QPageSize::Millimeter);
-	QMarginsF pageMargins = ScenarioStyleFacade::style().pageMargins();
+	QSizeF pageSize = QPageSize(::exportStyle().pageSizeId()).size(QPageSize::Millimeter);
+	QMarginsF pageMargins = ::exportStyle().pageMargins();
 	QSizeF textSize(PageMetrics::mmToPx(pageSize.width() - pageMargins.left() - pageMargins.right()),
 					PageMetrics::mmToPx(pageSize.height() - pageMargins.top() - pageMargins.bottom()));
 	preparedDocument->setPageSize(textSize);
@@ -95,9 +111,9 @@ void PdfExporter::printPreview(QTextDocument* _document)
 	//
 	// Освобождаем память
 	//
+	m_documentForPrint = 0;
 	delete printer;
 	printer = 0;
-	m_documentForPrint = 0;
 	delete preparedDocument;
 	preparedDocument = 0;
 }
@@ -112,13 +128,15 @@ void PdfExporter::aboutPrint(QPrinter* _printer)
 QPrinter* PdfExporter::preparePrinter(const QString& _forFile) const
 {
 	QPrinter* printer = new QPrinter;
-	printer->setPaperSize((QPagedPaintDevice::PageSize)ScenarioStyleFacade::style().pageSizeId());
-	QMarginsF margins = ScenarioStyleFacade::style().pageMargins();
+	printer->setPaperSize((QPagedPaintDevice::PageSize)::exportStyle().pageSizeId());
+	QMarginsF margins = ::exportStyle().pageMargins();
 	printer->setPageMargins(margins.left(), margins.top(), margins.right(), margins.bottom(),
 							QPrinter::Millimeter);
 
-	printer->setOutputFileName(_forFile);
-	printer->setOutputFormat(QPrinter::PdfFormat);
+	if (!_forFile.isNull()) {
+		printer->setOutputFileName(_forFile);
+		printer->setOutputFormat(QPrinter::PdfFormat);
+	}
 
 	return printer;
 }
@@ -194,7 +212,7 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 
 QTextCharFormat PdfExporter::charFormatForType(ScenarioBlockStyle::Type _type) const
 {
-	QTextCharFormat format = ScenarioStyleFacade::style().blockStyle(_type).charFormat();
+	QTextCharFormat format = ::exportStyle().blockStyle(_type).charFormat();
 
 	//
 	// Очищаем цвета
@@ -206,7 +224,7 @@ QTextCharFormat PdfExporter::charFormatForType(ScenarioBlockStyle::Type _type) c
 
 QTextBlockFormat PdfExporter::blockFormatForType(ScenarioBlockStyle::Type _type) const
 {
-	QTextBlockFormat format = ScenarioStyleFacade::style().blockStyle(_type).blockFormat();
+	QTextBlockFormat format = ::exportStyle().blockStyle(_type).blockFormat();
 
 	//
 	// Очищаем цвета
