@@ -210,7 +210,8 @@ void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const Q
 		cursor = m_scenario->document()->find(_oldName, cursor);
 
 		if (!cursor.isNull()
-			&& ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
+			&& (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character
+				|| ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters)) {
 			cursor.insertText(_newName);
 		}
 	}
@@ -230,6 +231,13 @@ void ScenarioManager::aboutRefreshCharacters()
 			QString character =
 					BusinessLogic::CharacterParser::name(cursor.selectedText().toUpper().trimmed());
 			characters.insert(character);
+		} else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
+			cursor.select(QTextCursor::BlockUnderCursor);
+			QStringList blockCharacters = cursor.selectedText().split(",", QString::SkipEmptyParts);
+			foreach (const QString& characterName, blockCharacters) {
+				QString character = BusinessLogic::CharacterParser::name(characterName.toUpper().trimmed());
+				characters.insert(character);
+			}
 		}
 		cursor.movePosition(QTextCursor::NextBlock);
 	}

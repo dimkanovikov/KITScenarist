@@ -57,10 +57,10 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Active</string>
+      <string>Block Parameters</string>
      </property>
      <property name="checkable">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="7" column="0" colspan="2">

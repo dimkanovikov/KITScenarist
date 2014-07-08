@@ -127,115 +127,111 @@
 <context>
     <name>ManagementLayer::ApplicationManager</name>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="166"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="142"/>
         <source>Choose file for new project</source>
         <translation>Выберите файл для нового проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="168"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="222"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="322"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="144"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="198"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="298"/>
         <source>Scenarist project files (*%1)</source>
         <translation>Файл проекта сценария (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="220"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="196"/>
         <source>Choose file for save project</source>
         <translation>Выберите файл для сохранения проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="320"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="296"/>
         <source>Choose project file to open</source>
         <translation>Выберите файл проекта для открытия</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="368"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="407"/>
         <source>Choose file to export scenario</source>
-        <translation>Выберите файл для экспорта сценария</translation>
+        <translation type="obsolete">Выберите файл для экспорта сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="370"/>
         <source>PDF files (*%1)</source>
-        <translation>PDF файлы (*%1)</translation>
+        <translation type="obsolete">PDF файлы (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="409"/>
         <source>RTF files (*%1)</source>
-        <translation>RTF файлы (*%1)</translation>
+        <translation type="obsolete">RTF файлы (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="521"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="419"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="522"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="420"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="569"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="467"/>
         <source>%1[*] - Scenarist</source>
         <translation>%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="588"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="486"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="595"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="493"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="596"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="494"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="597"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="495"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="598"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="496"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="599"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="497"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="643"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="541"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="644"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="542"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="645"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="543"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="647"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="545"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="653"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="551"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="656"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="554"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -846,9 +842,8 @@ Paragraph</source>
         <translation type="obsolete">Папка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="60"/>
         <source>Active</source>
-        <translation>Включён</translation>
+        <translation type="obsolete">Включён</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="260"/>
@@ -874,6 +869,11 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="71"/>
         <source>Top, lines:</source>
         <translation>Сверху, строк:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="60"/>
+        <source>Block Parameters</source>
+        <translation>Параметры блока</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="88"/>
