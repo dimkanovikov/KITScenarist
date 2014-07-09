@@ -5,4 +5,4 @@
 # Add version update availability
 # Rename result file to choosing version and architecture
 #
-fakeroot dpkg-deb --build scenarist
+fakeroot dpkg-deb --build scenarist_i386

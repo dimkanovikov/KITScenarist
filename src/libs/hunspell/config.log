@@ -14,7 +14,7 @@ hostname = dimkanovikov
 uname -m = x86_64
 uname -r = 3.5.0-52-generic
 uname -s = Linux
-uname -v = #78~precise1-Ubuntu SMP Wed Jun 11 17:14:53 UTC 2014
+uname -v = #79~precise1-Ubuntu SMP Fri Jul 4 21:03:49 UTC 2014
 
 /usr/bin/uname -p = unknown
 /bin/uname -X     = unknown
@@ -874,7 +874,7 @@ configure:16755: result: yes
 configure:16755: checking for pthread.h
 configure:16755: result: yes
 configure:16783: gcc -o conftest -g -O2   conftest.c  >&5
-/tmp/ccXWLxcr.o: In function `main':
+/tmp/ccpY1W6s.o: In function `main':
 /home/dimkanovikov/dev/dimkanovikov/desktop/github-projects/Scenarist/src/libs/hunspell/conftest.c:57: undefined reference to `pthread_mutexattr_init'
 collect2: ld returned 1 exit status
 configure:16783: $? = 1

@@ -1,13 +1,13 @@
 Package: scenarist
-Version: 0.2.9
+Version: 0.3.0
 Provides: scenarist
 Maintainer: Dimka Novikov <to@dimkanovikov.pro>
 Architecture: i386
-Installed-Size: 65391
+Installed-Size: 80379
 Priority: optional
 Section: text
 Homepage: http://dimkanovikov.pro/kit/scenarist
-Description: Scenarist is screenwriting software.
+Description: KIT Scenarist is screenwriting software.
  КИТ Сценарист - это программа для написания сценариев, которая разрабатывается в России и 
  ориентирована на российские стандарты в области кинопроизводства.
  .
