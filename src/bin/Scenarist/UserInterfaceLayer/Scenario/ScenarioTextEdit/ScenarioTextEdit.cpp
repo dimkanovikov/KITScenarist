@@ -12,7 +12,6 @@
 #include <QAbstractTextDocumentLayout>
 #include <QTimer>
 
-#include <QDebug>
 #include <QDateTime>
 #include <QCompleter>
 #include <QStringListModel>
@@ -287,8 +286,6 @@ void ScenarioTextEdit::dropEvent(QDropEvent* _event)
 
 bool ScenarioTextEdit::canInsertFromMimeData(const QMimeData* _source) const
 {
-	qDebug() << _source->formats();
-
 	bool canInsert = false;
 	if (_source->formats().contains(ScenarioDocument::MIME_TYPE)
 		|| _source->hasText()) {
@@ -321,10 +318,6 @@ QMimeData* ScenarioTextEdit::createMimeDataFromSelection() const
 
 void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 {
-	qDebug() << _source->formats();
-	foreach (const QString& mime, _source->formats())
-		qDebug() << _source->data(mime);
-
 	QTextCursor cursor = textCursor();
 	cursor.beginEditBlock();
 

@@ -1195,6 +1195,9 @@ Paragraph</string>
            </property>
            <item row="0" column="0">
             <widget class="QToolButton" name="newStyle">
+             <property name="toolTip">
+              <string>Add Style</string>
+             </property>
              <property name="text">
               <string>New</string>
              </property>
@@ -1206,6 +1209,9 @@ Paragraph</string>
            </item>
            <item row="0" column="1">
             <widget class="QToolButton" name="editStyle">
+             <property name="toolTip">
+              <string>Edit Selected Style</string>
+             </property>
              <property name="text">
               <string>Edit</string>
              </property>
@@ -1217,6 +1223,9 @@ Paragraph</string>
            </item>
            <item row="0" column="2">
             <widget class="QToolButton" name="removeStyle">
+             <property name="toolTip">
+              <string>Delete Selected Style</string>
+             </property>
              <property name="text">
               <string>Remove</string>
              </property>
@@ -1228,6 +1237,9 @@ Paragraph</string>
            </item>
            <item row="0" column="3">
             <widget class="QToolButton" name="loadStyle">
+             <property name="toolTip">
+              <string>Load Style From File</string>
+             </property>
              <property name="text">
               <string>Load</string>
              </property>
@@ -1239,6 +1251,9 @@ Paragraph</string>
            </item>
            <item row="0" column="4">
             <widget class="QToolButton" name="saveStyle">
+             <property name="toolTip">
+              <string>Save Style To File</string>
+             </property>
              <property name="text">
               <string>Save As...</string>
              </property>

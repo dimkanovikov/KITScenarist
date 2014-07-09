@@ -33,6 +33,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="addPhoto">
+       <property name="toolTip">
+        <string>Add Image</string>
+       </property>
        <property name="text">
         <string/>
        </property>

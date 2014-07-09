@@ -9,17 +9,22 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="110"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="37"/>
+        <source>Add Image</source>
+        <translation>Добавить изображение</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="113"/>
         <source>Name:</source>
         <translation>Имя:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="120"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="123"/>
         <source>Real Name:</source>
         <translation>Настоящее имя:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="130"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="133"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
@@ -36,7 +41,7 @@
         <translation type="obsolete">Отмена</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="87"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="90"/>
         <source>Choose Character</source>
         <translation>Выберите персонажа</translation>
     </message>
@@ -75,16 +80,21 @@
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="97"/>
+        <source>Browse...</source>
+        <translation>Обзор...</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="100"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="147"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="150"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="157"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="160"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
@@ -97,17 +107,22 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="81"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="37"/>
+        <source>Add Image</source>
+        <translation>Добавить изображение</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="84"/>
         <source>Choose Location</source>
         <translation>Выберите локацию</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="111"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="114"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="125"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui" line="128"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
@@ -311,22 +326,22 @@
 <context>
     <name>ManagementLayer::ScenarioManager</name>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="396"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="404"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="397"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="405"/>
         <source>Edit Scenario Text</source>
         <translation>Редактирование текста сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="399"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="407"/>
         <source>Data</source>
         <translation>Инфо</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="400"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="408"/>
         <source>Edit Scenario Data</source>
         <translation>Редактирование информации о сценарии</translation>
     </message>
@@ -674,26 +689,51 @@ Paragraph</source>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1199"/>
+        <source>Add Style</source>
+        <translation>Добавить стиль</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1202"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1210"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1213"/>
+        <source>Edit Selected Style</source>
+        <translation>Изменить выбранный стиль</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1216"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1243"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1227"/>
+        <source>Delete Selected Style</source>
+        <translation>Удалить выбранный стиль</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1241"/>
+        <source>Load Style From File</source>
+        <translation>Загрузить стиль из файла</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1255"/>
+        <source>Save Style To File</source>
+        <translation>Сохранить стиль в файл</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1258"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1232"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1244"/>
         <source>Load</source>
         <translation>Загрузить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1221"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1230"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
