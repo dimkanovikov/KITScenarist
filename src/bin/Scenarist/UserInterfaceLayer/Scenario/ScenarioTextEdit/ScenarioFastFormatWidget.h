@@ -3,6 +3,8 @@
 
 #include <QFrame>
 
+class QToolButton;
+
 namespace UserInterface
 {
 	class ScenarioTextEdit;
@@ -32,23 +34,33 @@ namespace UserInterface
 		/**
 		 * @brief Перейти к следующему блоку
 		 */
-		void goToNextBlock();
+		void aboutGoToNextBlock();
 
 		/**
 		 * @brief Перейти к предыдущему блоку
 		 */
-		void goToPrevBlock();
+		void aboutGoToPrevBlock();
 
 		/**
 		 * @brief Сменить стиль блока
 		 */
-		void changeStyle();
+		void aboutChangeStyle();
+
+		/**
+		 * @brief Сменилась позиция курсора
+		 */
+		void aboutCurrentStyleChanged();
 
 	private:
 		/**
 		 * @brief Редактор сценария для форматирования блоков
 		 */
 		ScenarioTextEdit* m_editor;
+
+		/**
+		 * @brief Список кнопок
+		 */
+		QList<QToolButton*> m_buttons;
 	};
 }
 
