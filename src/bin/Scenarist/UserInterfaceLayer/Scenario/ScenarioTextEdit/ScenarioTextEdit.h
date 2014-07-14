@@ -47,11 +47,6 @@ namespace UserInterface
 		void applyScenarioTypeToBlockText(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 
 		/**
-		 * @brief Получить вид блока
-		 */
-		BusinessLogic::ScenarioBlockStyle::Type scenarioBlockType(const QTextBlock& _block) const;
-
-		/**
 		 * @brief Получить вид блока в котором находится курсор
 		 */
 		BusinessLogic::ScenarioBlockStyle::Type scenarioBlockType() const;

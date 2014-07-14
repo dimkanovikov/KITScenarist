@@ -79,9 +79,40 @@ void DialogHandler::handleEnter(QKeyEvent*)
 					//! Внутри блока
 
 					//
-					// Перейдём к блоку персонажа
+					// Разрываем диалог блоком персонажа, вставляя его имя
 					//
-					editor()->addScenarioBlock(ScenarioBlockStyle::Character);
+					{
+						//
+						// Найти име персонажа, кому принадлежит реплика
+						//
+						QString characterName;
+						{
+							QTextCursor cursor = editor()->textCursor();
+							QTextBlock cursorBlock = cursor.block();
+							while ((ScenarioBlockStyle::forBlock(cursorBlock) != ScenarioBlockStyle::Character
+									|| ScenarioBlockStyle::forBlock(cursorBlock) == ScenarioBlockStyle::Dialog
+									|| ScenarioBlockStyle::forBlock(cursorBlock) == ScenarioBlockStyle::Parenthetical)
+								   && !cursor.atStart()) {
+								cursor.movePosition(QTextCursor::PreviousBlock);
+								cursorBlock = cursor.block();
+							}
+
+							if (ScenarioBlockStyle::forBlock(cursorBlock) == ScenarioBlockStyle::Character) {
+								characterName = cursorBlock.text().simplified();
+							}
+						}
+
+						//
+						// Вставляем блок "герой" и добавляем имя
+						//
+						editor()->addScenarioBlock(ScenarioBlockStyle::Character);
+						editor()->insertPlainText(characterName);
+
+						//
+						// Оставшийся текст форматируем, как "диалог"
+						//
+						editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+					}
 				}
 			}
 		}
