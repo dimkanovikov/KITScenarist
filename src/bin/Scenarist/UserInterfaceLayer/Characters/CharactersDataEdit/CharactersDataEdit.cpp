@@ -1,6 +1,8 @@
 #include "CharactersDataEdit.h"
 #include "ui_CharactersDataEdit.h"
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 using UserInterface::CharactersDataEdit;
 
 
@@ -73,8 +75,7 @@ void CharactersDataEdit::setDescription(const QString& _description)
 {
 	removeConnections();
 
-	ui->description->setHtml(_description);
-	m_sourceDescription = ui->description->toHtml();
+	m_sourceDescription = _description;
 	ui->description->setHtml(m_sourceDescription);
 
 	initConnections();
@@ -82,7 +83,7 @@ void CharactersDataEdit::setDescription(const QString& _description)
 
 QString CharactersDataEdit::description() const
 {
-	return ui->description->toPlainText().isEmpty() ? QString() : ui->description->toHtml();
+	return TextEditHelper::removeDocumentTags(ui->description->toHtml());
 }
 
 void CharactersDataEdit::setPhotos(const QList<QPixmap>& _photos)

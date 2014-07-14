@@ -1,6 +1,8 @@
 #include "LocationsDataEdit.h"
 #include "ui_LocationsDataEdit.h"
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 using UserInterface::LocationsDataEdit;
 
 
@@ -56,8 +58,7 @@ void LocationsDataEdit::setDescription(const QString& _description)
 {
 	removeConnections();
 
-	ui->description->setHtml(_description);
-	m_sourceDescription = ui->description->toHtml();
+	m_sourceDescription = _description;
 	ui->description->setHtml(m_sourceDescription);
 
 	initConnections();
@@ -65,7 +66,7 @@ void LocationsDataEdit::setDescription(const QString& _description)
 
 QString LocationsDataEdit::description() const
 {
-	return ui->description->toPlainText().isEmpty() ? QString() : ui->description->toHtml();
+	return TextEditHelper::removeDocumentTags(ui->description->toHtml());
 }
 
 void LocationsDataEdit::setPhotos(const QList<QPixmap>& _photos)

@@ -7,8 +7,6 @@
 
 #include <UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.h>
 
-#include <3rd_party/Helpers/TextEditHelper.h>
-
 using Domain::Location;
 using ManagementLayer::LocationsDataEditManager;
 using UserInterface::LocationsDataEdit;
@@ -61,7 +59,7 @@ void LocationsDataEditManager::aboutSave()
 	// Установим новые значения
 	//
 	m_location->setName(m_editor->name());
-	m_location->setDescription(TextEditHelper::removeDocumentTags(m_editor->description()));
+	m_location->setDescription(m_editor->description());
 	m_location->setPhotos(m_editor->photos());
 
 	//
