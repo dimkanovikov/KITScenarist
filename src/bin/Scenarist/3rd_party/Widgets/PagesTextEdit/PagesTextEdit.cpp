@@ -2,7 +2,6 @@
 
 #include <QPainter>
 #include <QPaintEvent>
-#include <QDebug>
 #include <QScrollBar>
 #include <QTextFrame>
 #include <QTextFrameFormat>
@@ -67,6 +66,8 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	//
 	connect(this, SIGNAL(textChanged()), this, SLOT(aboutUpdateZoomRangeHandling()));
 	aboutUpdateZoomRangeHandling();
+
+	connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(aboutVerticalScrollRangeChanged(int,int)));
 }
 
 bool PagesTextEdit::usePageMode() const
@@ -255,8 +256,13 @@ void PagesTextEdit::updateVerticalScrollRange()
 	//
 	else {
 		//
-		// TODO
+		// Сбивается где-то
 		//
+		const int SCROLL_DELTA = 200;
+		int maximumValue = document()->size().height() - viewport()->size().height() + SCROLL_DELTA;
+		if (verticalScrollBar()->maximum() != maximumValue) {
+			verticalScrollBar()->setRange(0, maximumValue);
+		}
 	}
 }
 
@@ -447,4 +453,18 @@ void PagesTextEdit::aboutUpdateZoomRange(int _position, int _charsRemoved, int _
 	}
 }
 
+void PagesTextEdit::aboutVerticalScrollRangeChanged(int _minimum, int _maximum)
+{
+	Q_UNUSED(_minimum);
+
+	int scrollValue = verticalScrollBar()->value();
+
+	//
+	// Если текущая позиция прокрутки больше максимального значения,
+	// значит текстэдит сам обновил интервал, применяем собственную функцию коррекции
+	//
+	if (scrollValue > _maximum) {
+		updateVerticalScrollRange();
+	}
+}
 

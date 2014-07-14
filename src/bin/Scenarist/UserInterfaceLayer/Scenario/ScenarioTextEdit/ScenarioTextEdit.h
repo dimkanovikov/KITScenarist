@@ -71,6 +71,11 @@ namespace UserInterface
 		 */
 		void setStoreDataWhenEditing(bool _store);
 
+		/**
+		 * @brief Своя реализация проверки виден ли курсор на экране
+		 */
+		void ensureCursorVisibleReimpl();
+
 	signals:
 		/**
 		 * @brief Сменился стиль под курсором

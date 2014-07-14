@@ -144,7 +144,7 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 		//
 		cursor.setPosition(_position);
 		m_editor->setTextCursor(cursor);
-		m_editor->ensureCursorVisible();
+		m_editor->ensureCursorVisibleReimpl();
 		m_editor->setFocus();
 	}
 	//

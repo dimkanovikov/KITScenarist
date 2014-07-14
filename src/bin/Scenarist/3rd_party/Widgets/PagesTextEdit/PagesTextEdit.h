@@ -96,6 +96,11 @@ private slots:
 	 */
 	void aboutUpdateZoomRange(int _position, int _charsRemoved, int _charsAdded);
 
+	/**
+	 * @brief Изменился интервал вертикальной прокрутки
+	 */
+	void aboutVerticalScrollRangeChanged(int _minimum, int _maximum);
+
 private:
 	/**
 	 * @brief Режим отображения текста

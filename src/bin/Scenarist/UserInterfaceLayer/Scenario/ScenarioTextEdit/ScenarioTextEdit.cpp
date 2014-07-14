@@ -12,6 +12,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QTimer>
 
+#include <QApplication>
 #include <QDateTime>
 #include <QCompleter>
 #include <QStringListModel>
@@ -181,6 +182,32 @@ void ScenarioTextEdit::setStoreDataWhenEditing(bool _store)
 	}
 }
 
+void ScenarioTextEdit::ensureCursorVisibleReimpl()
+{
+	//
+	// Применяем стандартное поведение
+	//
+	ensureCursorVisible();
+
+	//
+	// Необходимо подождать, пока в приложение произойдёт перестройка размера линии прокрутки
+	// для того, чтобы иметь возможность прокрутить её ниже стандартной позиции редактора
+	//
+	QApplication::processEvents();
+
+	//
+	// Если курсор в конце документа прокручиваем ещё немного
+	//
+	{
+		const int DETECT_DELTA = 10;
+		const int SCROLL_DELTA = 120;
+		QRect cursorRect = this->cursorRect();
+		if (cursorRect.height() + cursorRect.y() + DETECT_DELTA >= viewport()->height()) {
+			verticalScrollBar()->setValue(verticalScrollBar()->value() + SCROLL_DELTA);
+		}
+	}
+}
+
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 {
 	//
@@ -233,7 +260,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	// Убедимся, что курсор виден
 	//
 	if (handler->needEnsureCursorVisible()) {
-		ensureCursorVisible();
+		ensureCursorVisibleReimpl();
     }
 }
 
