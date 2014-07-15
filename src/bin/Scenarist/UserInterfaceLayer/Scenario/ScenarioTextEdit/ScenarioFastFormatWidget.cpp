@@ -4,13 +4,45 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
+#include <QLabel>
 #include <QShortcut>
-#include <QToolButton>
 #include <QVBoxLayout>
+
+//********
+// ToolButton
+
+ToolButton::ToolButton(QWidget* _parent) :
+	QToolButton(_parent),
+	m_label(new QLabel(this))
+{
+	QToolButton::setText(QString());
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+	setCheckable(true);
+
+	QVBoxLayout* layout = new QVBoxLayout;
+	layout->setContentsMargins(8, 4, 8, 4);
+	layout->addWidget(m_label);
+	setLayout(layout);
+}
+
+void ToolButton::setText(const QString& _text)
+{
+	m_label->setText(_text);
+}
+
+QSize ToolButton::sizeHint() const
+{
+	return layout()->sizeHint();
+}
+
+//********
+// ScenarioFastFormatWidget
 
 using UserInterface::ScenarioFastFormatWidget;
 using UserInterface::ScenarioTextEdit;
 using BusinessLogic::ScenarioBlockStyle;
+using BusinessLogic::ScenarioStyle;
+using BusinessLogic::ScenarioStyleFacade;
 
 namespace {
 	/**
@@ -21,12 +53,8 @@ namespace {
 	/**
 	 * @brief Создать кнопку применения стиля
 	 */
-	QToolButton* createStyleButton(ScenarioFastFormatWidget* _parent, const QString& _text, Qt::Key _key,
-		ScenarioBlockStyle::Type _type) {
-		QToolButton* styleButton = new QToolButton(_parent);
-		styleButton->setText(_text);
-		styleButton->setCheckable(true);
-		styleButton->setProperty(STYLE_PROPERTY_KEY, _type);
+	ToolButton* createStyleButton(ScenarioFastFormatWidget* _parent, Qt::Key _key) {
+		ToolButton* styleButton = new ToolButton(_parent);
 		_parent->connect(styleButton, SIGNAL(clicked()), _parent, SLOT(aboutChangeStyle()));
 		QShortcut* timeAndPlaceShortcut1 = new QShortcut(_key, _parent);
 		QShortcut* timeAndPlaceShortcut2 = new QShortcut(_key + Qt::KeypadModifier, _parent);
@@ -56,24 +84,27 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	setProperty("fastFormatWidget", true);
 
 
-	QToolButton* goToPrevBlock = new QToolButton(this);
+	ToolButton* goToPrevBlock = new ToolButton(this);
+	goToPrevBlock->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 	goToPrevBlock->setText(tr("↑ Prev"));
 	connect(goToPrevBlock, SIGNAL(clicked()), this, SLOT(aboutGoToPrevBlock()));
 	QShortcut* goToPrevShortcut = new QShortcut(Qt::Key_Up, this);
 	connect(goToPrevShortcut, SIGNAL(activated()), goToPrevBlock, SLOT(click()));
 
-	m_buttons << ::createStyleButton(this, tr("0 Time and Place"), Qt::Key_0, ScenarioBlockStyle::TimeAndPlace);
-	m_buttons << ::createStyleButton(this, tr("1 Scene Characters"), Qt::Key_1, ScenarioBlockStyle::SceneCharacters);
-	m_buttons << ::createStyleButton(this, tr("2 Action"), Qt::Key_2, ScenarioBlockStyle::Action);
-	m_buttons << ::createStyleButton(this, tr("3 Character"), Qt::Key_3, ScenarioBlockStyle::Character);
-	m_buttons << ::createStyleButton(this, tr("4 Dialog"), Qt::Key_4, ScenarioBlockStyle::Dialog);
-	m_buttons << ::createStyleButton(this, tr("5 Parenthetical"), Qt::Key_5, ScenarioBlockStyle::Parenthetical);
-	m_buttons << ::createStyleButton(this, tr("6 Transition"), Qt::Key_6, ScenarioBlockStyle::Transition);
-	m_buttons << ::createStyleButton(this, tr("7 Note"), Qt::Key_7, ScenarioBlockStyle::Note);
-	m_buttons << ::createStyleButton(this, tr("8 Title"), Qt::Key_8, ScenarioBlockStyle::Title);
-	m_buttons << ::createStyleButton(this, tr("9 Noprintable Text"), Qt::Key_9, ScenarioBlockStyle::NoprintableText);
+	m_buttons << ::createStyleButton(this, Qt::Key_0);
+	m_buttons << ::createStyleButton(this, Qt::Key_1);
+	m_buttons << ::createStyleButton(this, Qt::Key_2);
+	m_buttons << ::createStyleButton(this, Qt::Key_3);
+	m_buttons << ::createStyleButton(this, Qt::Key_4);
+	m_buttons << ::createStyleButton(this, Qt::Key_5);
+	m_buttons << ::createStyleButton(this, Qt::Key_6);
+	m_buttons << ::createStyleButton(this, Qt::Key_7);
+	m_buttons << ::createStyleButton(this, Qt::Key_8);
+	m_buttons << ::createStyleButton(this, Qt::Key_9);
+	reinitBlockStyles();
 
-	QToolButton* goToNextBlock = new QToolButton(this);
+	ToolButton* goToNextBlock = new ToolButton(this);
+	goToNextBlock->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 	goToNextBlock->setText(tr("↓ Next"));
 	connect(goToNextBlock, SIGNAL(clicked()), this, SLOT(aboutGoToNextBlock()));
 	QShortcut* goToNextShortcut = new QShortcut(Qt::Key_Down, this);
@@ -83,7 +114,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->addWidget(goToPrevBlock);
 	layout->addSpacing(6);
-	foreach (QToolButton* button, m_buttons) {
+	foreach (ToolButton* button, m_buttons) {
 		layout->addWidget(button);
 	}
 	layout->addSpacing(6);
@@ -114,6 +145,90 @@ void ScenarioFastFormatWidget::selectCurrentBlock()
 	}
 }
 
+void ScenarioFastFormatWidget::reinitBlockStyles()
+{
+	ScenarioStyle style = ScenarioStyleFacade::style();
+
+	//
+	// Настраиваем в зависимости от доступности стиля
+	//
+	int itemIndex = 0;
+
+	if (style.blockStyle(ScenarioBlockStyle::TimeAndPlace).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 Time and Place").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::TimeAndPlace);
+		++itemIndex;
+	}
+
+	if (style.blockStyle(ScenarioBlockStyle::SceneCharacters).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 Scene Characters").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::SceneCharacters);
+		++itemIndex;
+	}
+
+	if (style.blockStyle(ScenarioBlockStyle::Action).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 Action").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Action);
+		++itemIndex;
+	}
+
+	if (style.blockStyle(ScenarioBlockStyle::Character).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 Character").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Character);
+		++itemIndex;
+	}
+
+	if (style.blockStyle(ScenarioBlockStyle::Dialog).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 Dialog").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Dialog);
+		++itemIndex;
+	}
+
+	if (style.blockStyle(ScenarioBlockStyle::Parenthetical).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 Parenthetical").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Parenthetical);
+		++itemIndex;
+	}
+
+	if (style.blockStyle(ScenarioBlockStyle::Title).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 Title").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Title);
+		++itemIndex;
+	}
+
+	if (style.blockStyle(ScenarioBlockStyle::Note).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 Note").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Note);
+		++itemIndex;
+	}
+
+	if (style.blockStyle(ScenarioBlockStyle::Transition).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 Transition").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Transition);
+		++itemIndex;
+	}
+
+	if (style.blockStyle(ScenarioBlockStyle::NoprintableText).isActive()) {
+		m_buttons.at(itemIndex)->setVisible(true);
+		m_buttons.at(itemIndex)->setText(tr("%1 NoprintableText").arg(itemIndex));
+		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::NoprintableText);
+		++itemIndex;
+	}
+
+	for (; itemIndex < m_buttons.count(); ++itemIndex) {
+		m_buttons.at(itemIndex)->setVisible(false);
+	}
+}
+
 void ScenarioFastFormatWidget::aboutGoToNextBlock()
 {
 	if (m_editor != 0) {
@@ -136,7 +251,7 @@ void ScenarioFastFormatWidget::aboutGoToPrevBlock()
 
 void ScenarioFastFormatWidget::aboutChangeStyle()
 {
-	if (QToolButton* button = qobject_cast<QToolButton*>(sender())) {
+	if (ToolButton* button = qobject_cast<ToolButton*>(sender())) {
 		ScenarioBlockStyle::Type type =
 				(ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt();
 		if (m_editor != 0) {
@@ -149,8 +264,9 @@ void ScenarioFastFormatWidget::aboutChangeStyle()
 void ScenarioFastFormatWidget::aboutCurrentStyleChanged()
 {
 	ScenarioBlockStyle::Type currentType = m_editor->scenarioBlockType();
-	foreach (QToolButton* button, m_buttons) {
+	foreach (ToolButton* button, m_buttons) {
 		button->setChecked(
 			(ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt() == currentType);
 	}
 }
+

@@ -88,6 +88,11 @@ namespace UserInterface
 		 */
 		void removeText(int _from, int _to);
 
+		/**
+		 * @brief Обновить все элементы связанные с перечнем стилей блоков стиля сценария
+		 */
+		void updateStylesElements();
+
 	public slots:
 		/**
 		 * @brief Отменить последнее действие
@@ -156,6 +161,11 @@ namespace UserInterface
 		 * @brief Настроить представление
 		 */
 		void initView();
+
+		/**
+		 * @brief Настроить выпадающий список стилей в зависимости от текущего стиля
+		 */
+		void initStylesCombo();
 
 		/**
 		 * @brief Настроить соединения

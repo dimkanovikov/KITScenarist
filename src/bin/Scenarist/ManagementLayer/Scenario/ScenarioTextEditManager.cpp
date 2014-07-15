@@ -84,6 +84,8 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 					"scenario-editor/zoom-range",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
+
+	m_view->updateStylesElements();
 }
 
 int ScenarioTextEditManager::cursorPosition() const

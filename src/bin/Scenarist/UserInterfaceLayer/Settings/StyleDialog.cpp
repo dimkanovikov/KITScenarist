@@ -93,10 +93,7 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 		//
 		// Обновим параметры стиля блока
 		//
-		// FIXME: isActive
-		//
-//		m_blockStyle.setIsActive(ui->isActive->isChecked());
-		m_blockStyle.setIsActive(true);
+		m_blockStyle.setIsActive(ui->isActive->isChecked());
 
 		QFont blockFont(ui->fontFamily->currentText(), ui->fontSize->value());
 		blockFont.setBold(ui->bold->isChecked());

@@ -2,8 +2,26 @@
 #define SCENARIOFASTFORMATWIDGET_H
 
 #include <QFrame>
+#include <QToolButton>
 
-class QToolButton;
+class QLabel;
+
+
+/**
+ * @brief Расширенный класс кнопки
+ */
+class ToolButton : public QToolButton
+{
+	Q_OBJECT
+
+public:
+	explicit ToolButton(QWidget* _parent = 0);
+	void setText(const QString& _text);
+	QSize sizeHint() const;
+
+private:
+	QLabel* m_label;
+};
 
 namespace UserInterface
 {
@@ -29,6 +47,11 @@ namespace UserInterface
 		 * @brief Выделить текущий блок под курсором
 		 */
 		void selectCurrentBlock();
+
+		/**
+		 * @brief Переформировать список быстрых форматов в соответствии с текущим стилем
+		 */
+		void reinitBlockStyles();
 
 	private slots:
 		/**
@@ -60,7 +83,7 @@ namespace UserInterface
 		/**
 		 * @brief Список кнопок
 		 */
-		QList<QToolButton*> m_buttons;
+		QList<ToolButton*> m_buttons;
 	};
 }
 
