@@ -345,6 +345,9 @@ void ScenarioTextEditWidget::initView()
 	m_durationTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
+	QFont durationFont = m_duration->font();
+	durationFont.setPointSize(durationFont.pointSize() + 1);
+	m_duration->setFont(durationFont);
 
 	m_editor->setPageFormat(ScenarioStyleFacade::style().pageSizeId());
 

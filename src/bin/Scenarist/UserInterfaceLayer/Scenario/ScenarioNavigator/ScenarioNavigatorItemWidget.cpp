@@ -36,9 +36,6 @@ ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 
 	m_timing = new QLabel(this);
 	m_timing->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	QFont timingFont = m_timing->font();
-	timingFont.setPointSize(timingFont.pointSize() - 2);
-	m_timing->setFont(timingFont);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->addWidget(m_header);
