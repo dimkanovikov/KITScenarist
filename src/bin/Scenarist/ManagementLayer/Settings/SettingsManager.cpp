@@ -493,7 +493,7 @@ void SettingsManager::initView()
 				);
 	m_view->setChronometryConfigurableSecondsFor50Dialog(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"chronometry/configurable/seconds-for-for-every-50/dialog",
+					"chronometry/configurable/seconds-for-every-50/dialog",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toDouble()
 				);
