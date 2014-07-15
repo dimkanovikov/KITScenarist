@@ -20,6 +20,7 @@ chronometry/current-chronometer-type - используемая система �
 chronometry/pages/seconds - количество секунд на страницу текста
 chronometry/characters/characters - количество символов в посимвольном хронометре
 chronometry/characters/seconds - количество секунд в посимвольном хронометре
+chronometry/characters/consider-spaces - учитывать пробелы в посимвольном хронометраже
 chronometry/configurable/seconds-for-paragraph/time-and-place - секунд за блок текста
 chronometry/configurable/seconds-for-paragraph/action - секунд за блок текста
 chronometry/configurable/seconds-for-paragraph/dialog - секунд за блок текста

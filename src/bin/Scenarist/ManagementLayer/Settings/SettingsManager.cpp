@@ -174,6 +174,11 @@ void SettingsManager::chronometryCharactersSecondsChanged(int _value)
 	storeValue("chronometry/characters/seconds", _value);
 }
 
+void SettingsManager::chronometryCharactersConsiderSpacesChanged(bool _value)
+{
+	storeValue("chronometry/characters/consider-spaces", _value);
+}
+
 void SettingsManager::chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double _value)
 {
 	storeValue("chronometry/configurable/seconds-for-paragraph/time-and-place", _value);
@@ -461,6 +466,12 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_view->setChronometryCharactersConsiderSpaces(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"chronometry/characters/consider-spaces",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setChronometryConfigurableSecondsForParagraphTimeAndPlace(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"chronometry/configurable/seconds-for-paragraph/time-and-place",
@@ -524,6 +535,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(chronometryPagesSecondsChanged(int)), this, SLOT(chronometryPagesSecondsChanged(int)));
 	connect(m_view, SIGNAL(chronometryCharactersCharactersChanged(int)), this, SLOT(chronometryCharactersCharactersChanged(int)));
 	connect(m_view, SIGNAL(chronometryCharactersSecondsChanged(int)), this, SLOT(chronometryCharactersSecondsChanged(int)));
+	connect(m_view, SIGNAL(chronometryCharactersConsiderSpaces(bool)), this, SLOT(chronometryCharactersConsiderSpacesChanged(bool)));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double)),
 			this, SLOT(chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double)));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double)),
@@ -561,6 +573,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(chronometryPagesSecondsChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCharactersCharactersChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCharactersSecondsChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
+	connect(m_view, SIGNAL(chronometryCharactersConsiderSpaces(bool)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double)),
 			SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double)),

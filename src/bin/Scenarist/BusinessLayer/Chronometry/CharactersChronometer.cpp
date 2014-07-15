@@ -29,6 +29,7 @@ float CharactersChronometer::calculateFrom(BusinessLogic::ScenarioBlockStyle::Ty
 
 	static const QString CHARACTERS_KEY = "chronometry/characters/characters";
 	static const QString SECONDS_KEY = "chronometry/characters/seconds";
+	static const QString CONSIDER_SPACES_KEY = "chronometry/characters/consider-spaces";
 
 	//
 	// Рассчитаем длительность одного символа
@@ -43,6 +44,11 @@ float CharactersChronometer::calculateFrom(BusinessLogic::ScenarioBlockStyle::Ty
 				SECONDS_KEY,
 				SettingsStorage::ApplicationSettings)
 			.toInt();
+	bool considerSpaces =
+			StorageFacade::settingsStorage()->value(
+				CONSIDER_SPACES_KEY,
+				SettingsStorage::ApplicationSettings)
+			.toInt();
 
 	const float CHARACTER_CHRON = (float)seconds / (float)characters;
 
@@ -50,6 +56,9 @@ float CharactersChronometer::calculateFrom(BusinessLogic::ScenarioBlockStyle::Ty
 	// Рассчитаем длительность текста
 	//
 	QString textForChron = _text;
+	if (!considerSpaces) {
+		textForChron = textForChron.remove(" ");
+	}
 	float textChron = textForChron.length() * CHARACTER_CHRON;
 
 	return textChron;

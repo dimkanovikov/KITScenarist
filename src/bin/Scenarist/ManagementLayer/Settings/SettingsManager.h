@@ -65,6 +65,7 @@ namespace ManagementLayer
 		void chronometryPagesSecondsChanged(int  _value);
 		void chronometryCharactersCharactersChanged(int  _value);
 		void chronometryCharactersSecondsChanged(int  _value);
+		void chronometryCharactersConsiderSpacesChanged(bool  _value);
 		void chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double  _value);
 		void chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double  _value);
 		void chronometryConfigurableSecondsForParagraphActionChanged(double  _value);

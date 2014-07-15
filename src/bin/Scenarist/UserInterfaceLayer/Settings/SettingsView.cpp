@@ -160,6 +160,11 @@ void SettingsView::setChronometryCharactersSeconds(int _value)
 	ui->charactersChronometrySeconds->setValue(_value);
 }
 
+void SettingsView::setChronometryCharactersConsiderSpaces(bool _value)
+{
+	ui->charactersChronometryConsiderSpaces->setChecked(_value);
+}
+
 void SettingsView::setChronometryConfigurableSecondsForParagraphTimeAndPlace(double _value)
 {
 	ui->configurableChronometrySecondsForParagraphTimeAndPlace->setValue(_value);
@@ -330,6 +335,7 @@ void SettingsView::initConnections()
 	connect(ui->pagesChronometrySeconds, SIGNAL(valueChanged(int)), this, SIGNAL(chronometryPagesSecondsChanged(int)));
 	connect(ui->charactersChronometryCharacters, SIGNAL(valueChanged(int)), this, SIGNAL(chronometryCharactersCharactersChanged(int)));
 	connect(ui->charactersChronometrySeconds, SIGNAL(valueChanged(int)), this, SIGNAL(chronometryCharactersSecondsChanged(int)));
+	connect(ui->charactersChronometryConsiderSpaces, SIGNAL(toggled(bool)), this, SIGNAL(chronometryCharactersConsiderSpaces(bool)));
 	connect(ui->configurableChronometrySecondsForParagraphTimeAndPlace, SIGNAL(valueChanged(double)),
 			this, SIGNAL(chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double)));
 	connect(ui->configurableChronometrySecondsPer50CharactersTimeAndPlace, SIGNAL(valueChanged(double)),

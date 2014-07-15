@@ -60,6 +60,7 @@ namespace UserInterface
 		void setChronometryPagesSeconds(int  _value);
 		void setChronometryCharactersCharacters(int  _value);
 		void setChronometryCharactersSeconds(int  _value);
+		void setChronometryCharactersConsiderSpaces(bool  _value);
 		void setChronometryConfigurableSecondsForParagraphTimeAndPlace(double  _value);
 		void setChronometryConfigurableSecondsFor50TimeAndPlace(double  _value);
 		void setChronometryConfigurableSecondsForParagraphAction(double  _value);
@@ -94,6 +95,7 @@ namespace UserInterface
 		void chronometryPagesSecondsChanged(int);
 		void chronometryCharactersCharactersChanged(int);
 		void chronometryCharactersSecondsChanged(int);
+		void chronometryCharactersConsiderSpaces(bool);
 		void chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double);
 		void chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double);
 		void chronometryConfigurableSecondsForParagraphActionChanged(double);
