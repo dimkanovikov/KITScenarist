@@ -1105,57 +1105,57 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioFastFormatWidget</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="62"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="89"/>
         <source>â Prev</source>
         <translation>↑ Предыдущий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="131"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="159"/>
         <source>%1 Time and Place</source>
         <translation>%1 Время и место</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="138"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="166"/>
         <source>%1 Scene Characters</source>
         <translation>%1 Участники сцены</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="145"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="173"/>
         <source>%1 Action</source>
         <translation>%1 Описание действия</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="152"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="180"/>
         <source>%1 Character</source>
         <translation>%1 Персонажи</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="159"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="187"/>
         <source>%1 Dialog</source>
         <translation>%1 Диалог</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="166"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="194"/>
         <source>%1 Parenthetical</source>
         <translation>%1 Ремарка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="173"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="201"/>
         <source>%1 Title</source>
         <translation>%1 Титр</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="180"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="208"/>
         <source>%1 Note</source>
         <translation>%1 Примечание</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="187"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="215"/>
         <source>%1 Transition</source>
         <translation>%1 Переход</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="194"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="222"/>
         <source>%1 NoprintableText</source>
         <translation>%1 Непечатный текст</translation>
     </message>
@@ -1236,7 +1236,7 @@ Paragraph</source>
         <translation type="obsolete">8 Непечатный текст</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="80"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="108"/>
         <source>â Next</source>
         <translation>↓ Следующий</translation>
     </message>
