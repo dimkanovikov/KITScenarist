@@ -176,7 +176,7 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 				QString updateInfo =
 						tr("Released version %1 ").arg(maxVersion)
 #ifdef Q_OS_WIN
-						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-%1.exe\" "
+						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-" + maxVersion + ".exe\" "
 #elif defined Q_OS_LINUX
 						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/linux/\" "
 #elif defined Q_OS_MAC
