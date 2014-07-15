@@ -85,7 +85,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 
 
 	ToolButton* goToPrevBlock = new ToolButton(this);
-	goToPrevBlock->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+	goToPrevBlock->setCheckable(false);
 	goToPrevBlock->setText(tr("↑ Prev"));
 	connect(goToPrevBlock, SIGNAL(clicked()), this, SLOT(aboutGoToPrevBlock()));
 	QShortcut* goToPrevShortcut = new QShortcut(Qt::Key_Up, this);
@@ -104,7 +104,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	reinitBlockStyles();
 
 	ToolButton* goToNextBlock = new ToolButton(this);
-	goToNextBlock->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+	goToNextBlock->setCheckable(false);
 	goToNextBlock->setText(tr("↓ Next"));
 	connect(goToNextBlock, SIGNAL(clicked()), this, SLOT(aboutGoToNextBlock()));
 	QShortcut* goToNextShortcut = new QShortcut(Qt::Key_Down, this);
