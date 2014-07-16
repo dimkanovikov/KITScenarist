@@ -1,7 +1,7 @@
 #include "ExportManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/Export/PdfExporter.h>
 #include <BusinessLayer/Export/RtfExporter.h>
 
@@ -25,7 +25,7 @@ ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 	initConnections();
 }
 
-void ExportManager::exportScenario(BusinessLogic::ScenarioTextDocument* _document)
+void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
 	if (m_exportDialog->exec() == QDialog::Accepted) {
 		const QString filePath = m_exportDialog->exportFilePath();
@@ -33,17 +33,44 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioTextDocument* _documen
 		if (!filePath.isEmpty()) {
 			const QFileInfo fileInfo(filePath);
 
+			//
+			// Определим экспортирующего
+			//
+			BusinessLogic::AbstractExporter* exporter = 0;
 			if (fileInfo.suffix() == "rtf") {
-				BusinessLogic::RtfExporter exporter;
-				exporter.exportTo(_document, filePath);
+				exporter = new BusinessLogic::RtfExporter;
 			} else if (fileInfo.suffix() == "pdf") {
-				BusinessLogic::PdfExporter exporter;
-				exporter.exportTo(_document, filePath);
+				exporter = new BusinessLogic::PdfExporter;
 			} else {
 				Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Unknown file extension: " + fileInfo.suffix()));
 			}
+
+			//
+			// Экспортируем документ
+			//
+			BusinessLogic::ExportParameters exportParameters;
+			exportParameters.filePath = filePath;
+			exportParameters.printTilte = m_exportDialog->printTitle();
+			exportParameters.printPagesNumbers = m_exportDialog->printPagesNumbering();
+			exportParameters.printScenesNubers = m_exportDialog->printScenesNumbering();
+			exportParameters.scenesPrefix = m_exportDialog->scenesPrefix();
+			exporter->exportTo(_scenario, exportParameters);
+			delete exporter;
+			exporter = 0;
 		}
 	}
+}
+
+void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario)
+{
+	BusinessLogic::ExportParameters exportParameters;
+	exportParameters.printTilte = m_exportDialog->printTitle();
+	exportParameters.printPagesNumbers = m_exportDialog->printPagesNumbering();
+	exportParameters.printScenesNubers = m_exportDialog->printScenesNumbering();
+	exportParameters.scenesPrefix = m_exportDialog->scenesPrefix();
+
+	BusinessLogic::PdfExporter exporter;
+	exporter.printPreview(_scenario, exportParameters);
 }
 
 void ExportManager::aboutExportStyleChanged(const QString& _styleName)

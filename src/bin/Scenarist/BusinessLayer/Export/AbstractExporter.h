@@ -1,12 +1,52 @@
 #ifndef ABSTRACTEXPORTER_H
 #define ABSTRACTEXPORTER_H
 
-class QTextDocument;
-class QString;
-
+#include <QString>
 
 namespace BusinessLogic
 {
+	class ScenarioDocument;
+
+
+	/**
+	 * @brief Параметры экспорта
+	 */
+	class ExportParameters
+	{
+	public:
+		ExportParameters() :
+			printTilte(false),
+			printPagesNumbers(false),
+			printScenesNubers(false)
+		{}
+
+		/**
+		 * @brief Путь к файлу
+		 */
+		QString filePath;
+
+		/**
+		 * @brief Печатать титульную страницу
+		 */
+		bool printTilte;
+
+		/**
+		 * @brief Печатать номера страниц
+		 */
+		bool printPagesNumbers;
+
+		/**
+		 * @brief Печатать номера сцен
+		 */
+		bool printScenesNubers;
+
+		/**
+		 * @brief Приставка сцен
+		 */
+		QString scenesPrefix;
+	};
+
+
 	/**
 	 * @brief Базовый класс экспортера
 	 */
@@ -16,7 +56,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Экспорт заданного документа в файл
 		 */
-		virtual void exportTo(QTextDocument* _document, const QString& _toFile) const = 0;
+		virtual void exportTo(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const = 0;
 	};
 }
 

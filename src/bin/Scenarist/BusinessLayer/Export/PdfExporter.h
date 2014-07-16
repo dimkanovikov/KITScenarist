@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "AbstractExporter.h"
+
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QTextCharFormat>
@@ -16,7 +18,7 @@ namespace BusinessLogic
 	/**
 	 * @brief Экспортер в PDF
 	 */
-	class PdfExporter : public QObject
+	class PdfExporter : public QObject, public AbstractExporter
 	{
 		Q_OBJECT
 
@@ -26,12 +28,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Экспорт заданного документа в указанный файл
 		 */
-		void exportTo(QTextDocument* _document, const QString& _toFile) const;
+		void exportTo(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const;
 
 		/**
 		 * @brief Предварительный просмотр и печать
 		 */
-		void printPreview(QTextDocument* _document);
+		void printPreview(ScenarioDocument* _scenario, const ExportParameters& _exportParameters);
 
 	private slots:
 		/**
@@ -52,7 +54,7 @@ namespace BusinessLogic
 		 *
 		 * @note Вызывающий получает владение над новым сформированным документом
 		 */
-		QTextDocument* prepareDocument(QTextDocument* _document) const;
+		QTextDocument* prepareDocument(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const;
 
 		/**
 		 * @brief Получить стиль оформления символов для заданного типа

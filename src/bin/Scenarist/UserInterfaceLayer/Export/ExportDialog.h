@@ -38,6 +38,26 @@ namespace UserInterface
 		 */
 		QString exportFilePath() const;
 
+		/**
+		 * @brief Печатать титульную страницу
+		 */
+		bool printTitle() const;
+
+		/**
+		 * @brief Печатать номера страниц
+		 */
+		bool printPagesNumbering() const;
+
+		/**
+		 * @brief Печатать номера сцен
+		 */
+		bool printScenesNumbering() const;
+
+		/**
+		 * @brief Приставка сцен
+		 */
+		QString scenesPrefix() const;
+
 	signals:
 		/**
 		 * @brief Сменился стиль

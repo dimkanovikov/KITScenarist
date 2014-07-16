@@ -21,7 +21,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Экспорт заданного документа в указанный файл
 		 */
-		void exportTo(QTextDocument* _document, const QString& _toFile) const;
+		void exportTo(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const;
 
 	private:
 		/**

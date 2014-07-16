@@ -1,5 +1,10 @@
 #include "PdfExporter.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
+
+#include <Domain/Scenario.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
@@ -35,17 +40,17 @@ PdfExporter::PdfExporter(QObject* _parent) :
 {
 }
 
-void PdfExporter::exportTo(QTextDocument* _document, const QString& _toFile) const
+void PdfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const
 {
 	//
 	// Настроим принтер
 	//
-	QPrinter* printer = preparePrinter(_toFile);
+	QPrinter* printer = preparePrinter(_exportParameters.filePath);
 
 	//
 	// Сформируем документ
 	//
-	QTextDocument* preparedDocument = prepareDocument(_document);
+	QTextDocument* preparedDocument = prepareDocument(_scenario, _exportParameters);
 
 	//
 	// Настроим размер страниц
@@ -70,7 +75,7 @@ void PdfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 	preparedDocument = 0;
 }
 
-void PdfExporter::printPreview(QTextDocument* _document)
+void PdfExporter::printPreview(ScenarioDocument* _scenario, const ExportParameters& _exportParameters)
 {
 	//
 	// Настроим принтер
@@ -80,7 +85,7 @@ void PdfExporter::printPreview(QTextDocument* _document)
 	//
 	// Сформируем документ
 	//
-	QTextDocument* preparedDocument = prepareDocument(_document);
+	QTextDocument* preparedDocument = prepareDocument(_scenario, _exportParameters);
 
 	//
 	// Настроим размер страниц
@@ -141,7 +146,8 @@ QPrinter* PdfExporter::preparePrinter(const QString& _forFile) const
 	return printer;
 }
 
-QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
+QTextDocument* PdfExporter::prepareDocument(ScenarioDocument* _scenario,
+	const ExportParameters& _exportParameters) const
 {
 	//
 	// Настроим новый документ
@@ -154,10 +160,91 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 	// Данные считываются из исходного документа, если необходимо преобразовываются
 	// и записываются в новый документ, который будет печататься
 	//
-	QTextCursor sourceDocumentCursor(_document);
+	QTextCursor sourceDocumentCursor(_scenario->document());
 	QTextCursor destDocumentCursor(preparedDocument);
 
+	//
+	// Формирование титульной страницы
+	//
+	{
+		QTextCharFormat titleFormat;
+		titleFormat.setFont(QFont("Courier New", 12));
+		QTextBlockFormat centerFormat;
+		centerFormat.setAlignment(Qt::AlignCenter);
+		QTextBlockFormat rightFormat;
+		rightFormat.setAlignment(Qt::AlignRight);
+		QTextBlockFormat lastBlockFormat;
+		lastBlockFormat.setPageBreakPolicy(QTextFormat::PageBreak_AlwaysAfter);
+		lastBlockFormat.merge(centerFormat);
+
+		//
+		// 12 пустых строк
+		//
+		int emptyLines = 12;
+		while ((emptyLines--) > 0) {
+			destDocumentCursor.insertBlock();
+		}
+		//
+		// Название
+		//
+		destDocumentCursor.insertBlock(centerFormat);
+		destDocumentCursor.setCharFormat(titleFormat);
+		destDocumentCursor.insertText(_scenario->scenario()->name());
+		//
+		// Доп. инфо
+		//
+		destDocumentCursor.insertBlock();
+		destDocumentCursor.insertBlock(centerFormat);
+		destDocumentCursor.setCharFormat(titleFormat);
+		destDocumentCursor.insertText(_scenario->scenario()->additionalInfo());
+		//
+		// Жанр
+		//
+		destDocumentCursor.insertBlock();
+		destDocumentCursor.insertBlock(centerFormat);
+		destDocumentCursor.setCharFormat(titleFormat);
+		destDocumentCursor.insertText(_scenario->scenario()->genre());
+		//
+		// Автор
+		//
+		destDocumentCursor.insertBlock();
+		destDocumentCursor.insertBlock(centerFormat);
+		destDocumentCursor.setCharFormat(titleFormat);
+		destDocumentCursor.insertText(_scenario->scenario()->author());
+		//
+		// 19 пустых строк
+		//
+		emptyLines = 19;
+		while ((emptyLines--) > 0) {
+			destDocumentCursor.insertBlock();
+		}
+		//
+		// Контакты
+		//
+		destDocumentCursor.insertBlock(rightFormat);
+		destDocumentCursor.setCharFormat(titleFormat);
+		destDocumentCursor.insertText(_scenario->scenario()->contacts());
+		//
+		// 1 пустых строки
+		//
+		emptyLines = 1;
+		while ((emptyLines--) > 0) {
+			destDocumentCursor.insertBlock();
+		}
+		//
+		// Год
+		//
+		destDocumentCursor.insertBlock(lastBlockFormat);
+		destDocumentCursor.setCharFormat(titleFormat);
+		destDocumentCursor.insertText(_scenario->scenario()->year());
+		destDocumentCursor.insertBlock();
+	}
+
+	//
+	// Запись текста страницы
+	//
 	ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::Undefined;
+	int currentSceneNumber = 1;
 	while (!sourceDocumentCursor.atEnd()) {
 		//
 		// Получим тип текущего блока под курсором
@@ -185,6 +272,24 @@ QTextDocument* PdfExporter::prepareDocument(QTextDocument* _document) const
 			//
 			destDocumentCursor.setCharFormat(charFormatForType(currentBlockType));
 			destDocumentCursor.setBlockFormat(blockFormatForType(currentBlockType));
+
+			//
+			// Для блока "Время и место"
+			//
+			if (currentBlockType == ScenarioBlockStyle::TimeAndPlace) {
+				//
+				// Префикс экспорта
+				//
+				destDocumentCursor.insertText(_exportParameters.scenesPrefix);
+				//
+				// Номер сцены, если необходимо
+				//
+				if (_exportParameters.printScenesNubers) {
+					QString sceneNumber = QString("%1. ").arg(currentSceneNumber);
+					destDocumentCursor.insertText(sceneNumber);
+					++currentSceneNumber;
+				}
+			}
 
 			//
 			// Вставить текст

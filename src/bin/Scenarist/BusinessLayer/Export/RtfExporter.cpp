@@ -3,7 +3,11 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+
+#include <Domain/Scenario.h>
 
 #include <QTextDocument>
 #include <QTextCursor>
@@ -200,26 +204,104 @@ RtfExporter::RtfExporter()
 {
 }
 
-void RtfExporter::exportTo(QTextDocument* _document, const QString& _toFile) const
+void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const
 {
 	ScenarioStyle scenarioStyle = ::exportStyle();
 
 	//
 	// Открываем документ на запись
 	//
-	QFile rtfFile(_toFile);
+	QFile rtfFile(_exportParameters.filePath);
 	if (rtfFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 		rtfFile.write("{");
 		rtfFile.write(header().toUtf8().data());
 		rtfFile.write(END_OF_LINE);
 
 		//
+		// Формирование титульной страницы
+		//
+		{
+			const char* CENTER_LINE = "\\pard\\plain \\s0\\f0\\qc ";
+			const char* RIGHT_LINE = "\\pard\\plain \\s0\\f0\\qr ";
+			const char* END_OF_PAGE = "\\page\r\n";
+
+			//
+			// 12 пустых строк
+			//
+			int emptyLines = 12;
+			while ((emptyLines--) > 0) {
+				rtfFile.write(EMPTY_LINE);
+			}
+			//
+			// Название
+			//
+			rtfFile.write(CENTER_LINE);
+			rtfFile.write(stringToUtfCode(_scenario->scenario()->name()).toUtf8().data());
+			rtfFile.write("\\par");
+			rtfFile.write(END_OF_LINE);
+			//
+			// Доп. инфо
+			//
+			rtfFile.write(EMPTY_LINE);
+			rtfFile.write(CENTER_LINE);
+			rtfFile.write(stringToUtfCode(_scenario->scenario()->additionalInfo()).toUtf8().data());
+			rtfFile.write("\\par");
+			rtfFile.write(END_OF_LINE);
+			//
+			// Жанр
+			//
+			rtfFile.write(EMPTY_LINE);
+			rtfFile.write(CENTER_LINE);
+			rtfFile.write(stringToUtfCode(_scenario->scenario()->genre()).toUtf8().data());
+			rtfFile.write("\\par");
+			rtfFile.write(END_OF_LINE);
+			//
+			// Автор
+			//
+			rtfFile.write(EMPTY_LINE);
+			rtfFile.write(CENTER_LINE);
+			rtfFile.write(stringToUtfCode(_scenario->scenario()->author()).toUtf8().data());
+			rtfFile.write("\\par");
+			rtfFile.write(END_OF_LINE);
+			//
+			// 19 пустых строк
+			//
+			emptyLines = 19;
+			while ((emptyLines--) > 0) {
+				rtfFile.write(EMPTY_LINE);
+			}
+			//
+			// Контакты
+			//
+			rtfFile.write(RIGHT_LINE);
+			rtfFile.write(stringToUtfCode(_scenario->scenario()->contacts()).toUtf8().data());
+			rtfFile.write("\\par");
+			rtfFile.write(END_OF_LINE);
+			//
+			// 1 пустых строки
+			//
+			emptyLines = 1;
+			while ((emptyLines--) > 0) {
+				rtfFile.write(EMPTY_LINE);
+			}
+			//
+			// Год
+			//
+			rtfFile.write(CENTER_LINE);
+			rtfFile.write(stringToUtfCode(_scenario->scenario()->year()).toUtf8().data());
+			rtfFile.write("\\par");
+			rtfFile.write(END_OF_LINE);
+			rtfFile.write(END_OF_PAGE);
+		}
+
+		//
 		// Данные считываются из исходного документа, определяется тип блока
 		// и записываются прямо в файл
 		//
-		QTextCursor documentCursor(_document);
+		QTextCursor documentCursor(_scenario->document());
 
 		ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::Undefined;
+		int currentSceneNumber = 1;
 		while (!documentCursor.atEnd()) {
 			//
 			// Получим тип текущего блока под курсором
@@ -254,6 +336,28 @@ void RtfExporter::exportTo(QTextDocument* _document, const QString& _toFile) con
 				rtfFile.write("\\pard\\plain ");
 				rtfFile.write(blockStyle.toUtf8().data());
 				rtfFile.write(" ");
+
+				//
+				// Для блока "Время и место"
+				//
+				if (currentBlockType == ScenarioBlockStyle::TimeAndPlace) {
+					//
+					// Префикс экспорта
+					//
+					rtfFile.write(stringToUtfCode(_exportParameters.scenesPrefix).toUtf8().data());
+					//
+					// Номер сцены, если необходимо
+					//
+					if (_exportParameters.printScenesNubers) {
+						QString sceneNumber = QString("%1. ").arg(currentSceneNumber);
+						rtfFile.write(stringToUtfCode(sceneNumber).toUtf8().data());
+						++currentSceneNumber;
+					}
+				}
+
+				//
+				// Сам текст блока
+				//
 				rtfFile.write(stringToUtfCode(documentCursor.block().text()).toUtf8().data());
 				rtfFile.write("\\par");
 				rtfFile.write(END_OF_LINE);

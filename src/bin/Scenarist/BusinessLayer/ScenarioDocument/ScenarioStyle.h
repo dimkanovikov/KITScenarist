@@ -65,7 +65,7 @@ namespace BusinessLogic
 		};
 
 	public:
-		ScenarioBlockStyle() : m_type(Undefined) {}
+		ScenarioBlockStyle() : m_type(Undefined), m_font(QFont("Courier New", 12)) {}
 
 		/**
 		 * @brief Получить тип блока

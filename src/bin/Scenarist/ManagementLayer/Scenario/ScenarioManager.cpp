@@ -91,11 +91,7 @@ void ScenarioManager::loadCurrentProject()
 	//
 	Domain::Scenario* currentScenario =
 			DataStorageLayer::StorageFacade::scenarioStorage()->current();
-	QString scenarioToLoad;
-	if (currentScenario != 0) {
-		scenarioToLoad = currentScenario->text();
-	}
-	m_scenario->load(scenarioToLoad);
+	m_scenario->load(currentScenario);
 
 	//
 	// Установим данные для менеджеров

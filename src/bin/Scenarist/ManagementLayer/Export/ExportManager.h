@@ -4,7 +4,7 @@
 #include <QObject>
 
 namespace BusinessLogic {
-	class ScenarioTextDocument;
+	class ScenarioDocument;
 }
 
 namespace UserInterface {
@@ -27,7 +27,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Экспортировать документ
 		 */
-		void exportScenario(BusinessLogic::ScenarioTextDocument* _document);
+		void exportScenario(BusinessLogic::ScenarioDocument* _scenario);
+
+		/**
+		 * @brief Предварительный просмотр документа
+		 */
+		void printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario);
 
 	private slots:
 		/**

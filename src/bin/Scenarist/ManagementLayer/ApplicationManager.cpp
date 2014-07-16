@@ -333,13 +333,12 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 
 void ApplicationManager::aboutExportTo()
 {
-	m_exportManager->exportScenario(m_scenarioManager->scenario()->document());
+	m_exportManager->exportScenario(m_scenarioManager->scenario());
 }
 
 void ApplicationManager::aboutPrintPreview()
 {
-	BusinessLogic::PdfExporter exporter;
-	exporter.printPreview(m_scenarioManager->scenario()->document());
+	m_exportManager->printPreviewScenario(m_scenarioManager->scenario());
 }
 
 void ApplicationManager::aboutExit()

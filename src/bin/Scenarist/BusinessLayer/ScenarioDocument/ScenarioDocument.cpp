@@ -23,6 +23,7 @@ QString ScenarioDocument::MIME_TYPE = "application/x-scenarist/scenario";
 
 ScenarioDocument::ScenarioDocument(QObject* _parent) :
 	QObject(_parent),
+	m_scenario(0),
 	m_xmlHandler(new ScenarioXml(this)),
 	m_document(new ScenarioTextDocument(this, m_xmlHandler)),
 	m_model(new ScenarioModel(this, m_xmlHandler))
@@ -184,35 +185,18 @@ QString ScenarioDocument::builSynopsisFromScenes() const
 	return synopsis;
 }
 
-void ScenarioDocument::load(const QString& _scenario)
+void ScenarioDocument::load(Domain::Scenario* _scenario)
 {
-	//
-	// Отключаем всё от документа
-	//
-	removeConnections();
+	m_scenario = _scenario;
 
-	//
-	// Очищаем модель и документ
-	//
-	{
-		int documentCharactersCount = m_document->characterCount();
-		aboutContentsChange(0, documentCharactersCount, 0);
-		m_document->clear();
+	if (m_scenario != 0) {
+		load(m_scenario->text());
 	}
+}
 
-	//
-	// Загружаем сценарий
-	//
-	if (!_scenario.isEmpty()) {
-		m_xmlHandler->xmlToScenario(0, _scenario);
-		int documentCharactersCount = m_document->characterCount();
-		aboutContentsChange(0, 0, documentCharactersCount);
-	}
-
-	//
-	// Подключаем необходимые сигналы
-	//
-	initConnections();
+Domain::Scenario*ScenarioDocument::scenario() const
+{
+	return m_scenario;
 }
 
 QString ScenarioDocument::save() const
@@ -791,4 +775,35 @@ ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNe
 		}
 	}
 	return item;
+}
+
+void ScenarioDocument::load(const QString& _scenario)
+{
+	//
+	// Отключаем всё от документа
+	//
+	removeConnections();
+
+	//
+	// Очищаем модель и документ
+	//
+	{
+		int documentCharactersCount = m_document->characterCount();
+		aboutContentsChange(0, documentCharactersCount, 0);
+		m_document->clear();
+	}
+
+	//
+	// Загружаем сценарий
+	//
+	if (!_scenario.isEmpty()) {
+		m_xmlHandler->xmlToScenario(0, _scenario);
+		int documentCharactersCount = m_document->characterCount();
+		aboutContentsChange(0, 0, documentCharactersCount);
+	}
+
+	//
+	// Подключаем необходимые сигналы
+	//
+	initConnections();
 }

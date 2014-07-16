@@ -107,7 +107,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Загрузить документ из сценария
 		 */
-		void load(const QString& _scenario);
+		void load(Domain::Scenario* _scenario);
+
+		/**
+		 * @brief Получить сценарий из которого загружен документ
+		 */
+		Domain::Scenario* scenario() const;
 
 		/**
 		 * @brief Сохранить документ в строку
@@ -164,7 +169,17 @@ namespace BusinessLogic
 		 */
 		ScenarioModelItem* itemForPosition(int _position, bool _findNear = false) const;
 
+		/**
+		 * @brief Загрузить документ из сценария
+		 */
+		void load(const QString& _scenario);
+
 	private:
+		/**
+		 * @brief Собственно сам сценарий
+		 */
+		Domain::Scenario* m_scenario;
+
 		/**
 		 * @brief Обработчик xml
 		 */

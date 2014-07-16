@@ -65,6 +65,26 @@ QString ExportDialog::exportFilePath() const
 	return ui->file->text();
 }
 
+bool ExportDialog::printTitle() const
+{
+	return ui->title->isChecked();
+}
+
+bool ExportDialog::printPagesNumbering() const
+{
+	return ui->pageNumbering->isChecked();
+}
+
+bool ExportDialog::printScenesNumbering() const
+{
+	return ui->scenesNumbering->isChecked();
+}
+
+QString ExportDialog::scenesPrefix() const
+{
+	return ui->scenesPrefix->text();
+}
+
 void ExportDialog::aboutChooseFile()
 {
 	const QString format = ui->rtf->isChecked() ? "rtf" : "pdf";
