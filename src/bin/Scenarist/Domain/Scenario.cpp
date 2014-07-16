@@ -3,14 +3,16 @@
 using namespace Domain;
 
 
-Scenario::Scenario(
-		const Identifier& _id,
-		const QString& _name,
-		const QString& _synopsis,
-		const QString& _text
-		) :
+Scenario::Scenario(const Identifier& _id, const QString& _name, const QString& _additionalInfo,
+	const QString& _genre, const QString& _author, const QString& _contacts, const QString& _year,
+	const QString& _synopsis, const QString& _text) :
 	DomainObject(_id),
 	m_name(_name),
+	m_additionalInfo(_additionalInfo),
+	m_genre(_genre),
+	m_author(_author),
+	m_contacts(_contacts),
+	m_year(_year),
 	m_synopsis(_synopsis),
 	m_text(_text)
 {
@@ -25,6 +27,66 @@ void Scenario::setName(const QString& _name)
 {
 	if (m_name != _name) {
 		m_name = _name;
+	}
+}
+
+QString Scenario::additionalInfo() const
+{
+	return m_additionalInfo;
+}
+
+void Scenario::setAdditionalInfo(const QString& _additionalInfo)
+{
+	if (m_additionalInfo != _additionalInfo) {
+		m_additionalInfo = _additionalInfo;
+	}
+}
+
+QString Scenario::genre() const
+{
+	return m_genre;
+}
+
+void Scenario::setGenre(const QString& _genre)
+{
+	if (m_genre != _genre) {
+		m_genre = _genre;
+	}
+}
+
+QString Scenario::author() const
+{
+	return m_author;
+}
+
+void Scenario::setAuthor(const QString _author)
+{
+	if (m_author != _author) {
+		m_author = _author;
+	}
+}
+
+QString Scenario::contacts() const
+{
+	return m_contacts;
+}
+
+void Scenario::setContacts(const QString& _contacts)
+{
+	if (m_contacts != _contacts) {
+		m_contacts = _contacts;
+	}
+}
+
+QString Scenario::year() const
+{
+	return m_year;
+}
+
+void Scenario::setYear(const QString& _year)
+{
+	if (m_year != _year) {
+		m_year = _year;
 	}
 }
 

@@ -200,7 +200,7 @@ void ScenarioTextEdit::ensureCursorVisibleReimpl()
 	//
 	{
 		const int DETECT_DELTA = 10;
-		const int SCROLL_DELTA = 120;
+		const int SCROLL_DELTA = 200;
 		QRect cursorRect = this->cursorRect();
 		if (cursorRect.height() + cursorRect.y() + DETECT_DELTA >= viewport()->height()) {
 			verticalScrollBar()->setValue(verticalScrollBar()->value() + SCROLL_DELTA);

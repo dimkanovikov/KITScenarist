@@ -31,12 +31,50 @@ namespace UserInterface
 		/**
 		 * @brief Название сценария
 		 */
+		/** @{ */
 		QString scenarioName() const;
+		void setScenarioName(const QString& _name);
+		/** @} */
 
 		/**
-		 * @brief Установить название
+		 * @brief Дополнительная информация
 		 */
-		void setScenarioName(const QString& _name);
+		/** @{ */
+		QString scenarioAdditionalInfo() const;
+		void setScenarioAdditionalInfo(const QString& _additionalInfo);
+		/** @} */
+
+		/**
+		 * @brief Жанр
+		 */
+		/** @{ */
+		QString scenarioGenre() const;
+		void setScenarioGenre(const QString& _genre);
+		/** @} */
+
+		/**
+		 * @brief Автор
+		 */
+		/** @{ */
+		QString scenarioAuthor() const;
+		void setScenarioAuthor(const QString _author);
+		/** @} */
+
+		/**
+		 * @brief Контактная информация
+		 */
+		/** @{ */
+		QString scenarioContacts() const;
+		void setScenarioContacts(const QString& _contacts);
+		/** @} */
+
+		/**
+		 * @brief Год
+		 */
+		/** @{ */
+		QString scenarioYear() const;
+		void setScenarioYear(const QString& _year);
+		/** @} */
 
 		/**
 		 * @brief Синопсис сценария
@@ -55,14 +93,17 @@ namespace UserInterface
 
 	signals:
 		/**
-		 * @brief Изменилось название сценария
+		 * @brief Сигралы об изменении параметров
 		 */
+		/** @{ */
 		void scenarioNameChanged();
-
-		/**
-		 * @brief Изменился синопсис сценария
-		 */
+		void scenarioAdditionalInfoChanged();
+		void scenarioGenreChanged();
+		void scenarioAuthorChanged();
+		void scenarioContactsChanged();
+		void scenarioYearChanged();
 		void scenarioSynopsisChanged();
+		/** @} */
 
 		/**
 		 * @brief Запрос на построение синопсиса из сцен
@@ -71,14 +112,17 @@ namespace UserInterface
 
 	private slots:
 		/**
-		 * @brief Изменение текста сценария
+		 * @brief Изменение параметров сценария
 		 */
+		/** @{ */
 		void aboutNameChanged();
-
-		/**
-		 * @brief Изменение текста синопсиса
-		 */
+		void aboutAdditionalInfoChanged();
+		void aboutGenreChanged();
+		void aboutAuthorChanged();
+		void aboutContactsChanged();
+		void aboutYearChanged();
 		void aboutSourceSynopsisChanged();
+		/** @} */
 
 		/**
 		 * @brief Сменился текущий выбранный синопсис (с исходного на посценный или наоборот)
@@ -105,12 +149,41 @@ namespace UserInterface
 		Ui::ScenarioDataEdit* ui;
 
 		/**
-		 * @brief Исходное название сценария, используется для контроля изменений
+		 * @brief Исходные значения используется для контроля изменений
+		 */
+
+		/**
+		 * @brief Название сценария
 		 */
 		QString m_sourceName;
 
 		/**
-		 * @brief Исходный текст синопсиса, используется для контроля изменений
+		 * @brief Дополнительная информация
+		 */
+		QString m_sourceAdditionalInfo;
+
+		/**
+		 * @brief Жанр
+		 */
+		QString m_sourceGenre;
+
+		/**
+		 * @brief Автор
+		 */
+		QString m_sourceAuthor;
+
+		/**
+		 * @brief Контакты
+		 */
+		QString m_sourceContacts;
+
+		/**
+		 * @brief Год
+		 */
+		QString m_sourceYear;
+
+		/**
+		 * @brief Текст синопсиса
 		 */
 		QString m_sourceSourceSynopsis;
 	};

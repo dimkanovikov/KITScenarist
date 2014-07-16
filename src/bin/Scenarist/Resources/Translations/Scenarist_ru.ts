@@ -338,7 +338,7 @@
     <message>
         <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="407"/>
         <source>Data</source>
-        <translation>Инфо</translation>
+        <translation>Данные</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="408"/>
@@ -484,22 +484,46 @@
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="57"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="95"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="69"/>
-        <source>Synopsis:</source>
-        <translation>Синопсис:</translation>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="105"/>
+        <source>Additional:</source>
+        <translation>Дополнительно:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="89"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="115"/>
+        <source>Genre:</source>
+        <translation>Жанр:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="125"/>
+        <source>Author:</source>
+        <translation>Автор:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="135"/>
+        <source>Contacts:</source>
+        <translation>Контакты:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="145"/>
+        <source>Year:</source>
+        <translation>Год:</translation>
+    </message>
+    <message>
+        <source>Synopsis:</source>
+        <translation type="obsolete">Синопсис:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="161"/>
         <source>Source</source>
         <translation>Исходный</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="99"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="171"/>
         <source>From scenario</source>
         <translation>Из сценария</translation>
     </message>
@@ -1105,6 +1129,19 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="102"/>
         <source>Find All Locations From Scenario</source>
         <translation>Найти все локации из сценария</translation>
+    </message>
+</context>
+<context>
+    <name>UserInterface::ScenarioDataEdit</name>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.cpp" line="225"/>
+        <source>Common</source>
+        <translation>Общее</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.cpp" line="226"/>
+        <source>Synopsis</source>
+        <translation>Синопсис</translation>
     </message>
 </context>
 <context>

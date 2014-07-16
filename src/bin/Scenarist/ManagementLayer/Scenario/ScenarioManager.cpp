@@ -103,6 +103,11 @@ void ScenarioManager::loadCurrentProject()
 	m_navigatorManager->setNavigationModel(m_scenario->model());
 	if (currentScenario != 0) {
 		m_dataEditManager->setScenarioName(currentScenario->name());
+		m_dataEditManager->setScenarioAdditionalInfo(currentScenario->additionalInfo());
+		m_dataEditManager->setScenarioGenre(currentScenario->genre());
+		m_dataEditManager->setScenarioAuthor(currentScenario->author());
+		m_dataEditManager->setScenarioContacts(currentScenario->contacts());
+		m_dataEditManager->setScenarioYear(currentScenario->year());
 		m_dataEditManager->setScenarioSynopsis(currentScenario->synopsis());
 	}
 	m_textEditManager->setScenarioDocument(m_scenario->document());
@@ -116,13 +121,17 @@ void ScenarioManager::loadCurrentProject()
 void ScenarioManager::saveCurrentProject()
 {
 	QString scenarioName = m_dataEditManager->scenarioName();
+	QString scenarioAdditionalInfo = m_dataEditManager->scenarioAdditionalInfo();
+	QString scenarioGenre = m_dataEditManager->scenarioGenre();
+	QString scenarioAuthor = m_dataEditManager->scenarioAuthor();
+	QString scenarioContacts = m_dataEditManager->scenarioContacts();
+	QString scenarioYear = m_dataEditManager->scenarioYear();
 	QString scenarioSynopsis = m_dataEditManager->scenarioSynopsis();
 	QString scenarioText = m_scenario->save();
 
-	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(
-				scenarioName,
-				scenarioSynopsis,
-				scenarioText);
+	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
+		scenarioAdditionalInfo, scenarioGenre, scenarioAuthor, scenarioContacts, scenarioYear,
+		scenarioSynopsis, scenarioText);
 }
 
 void ScenarioManager::loadViewState()
@@ -472,6 +481,11 @@ void ScenarioManager::initConnections()
 	//
 	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SIGNAL(scenarioChanged()));
 	connect(m_dataEditManager, SIGNAL(scenarioNameChanged()), this, SIGNAL(scenarioChanged()));
+	connect(m_dataEditManager, SIGNAL(scenarioAdditionalInfoChanged()), this, SIGNAL(scenarioChanged()));
+	connect(m_dataEditManager, SIGNAL(scenarioGenreChanged()), this, SIGNAL(scenarioChanged()));
+	connect(m_dataEditManager, SIGNAL(scenarioAuthorChanged()), this, SIGNAL(scenarioChanged()));
+	connect(m_dataEditManager, SIGNAL(scenarioContactsChanged()), this, SIGNAL(scenarioChanged()));
+	connect(m_dataEditManager, SIGNAL(scenarioYearChanged()), this, SIGNAL(scenarioChanged()));
 	connect(m_dataEditManager, SIGNAL(scenarioSynopsisChanged()), this, SIGNAL(scenarioChanged()));
 	connect(m_textEditManager, SIGNAL(textChanged()), this, SIGNAL(scenarioChanged()));
 }

@@ -213,6 +213,11 @@ void Database::createTables(QSqlDatabase& _database)
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "name TEXT DEFAULT(NULL), "
+				   "additional_info TEXT DEFAULT(NULL), "
+				   "genre TEXT DEFAULT(NULL), "
+				   "author TEXT DEFAULT(NULL), "
+				   "contacts TEXT DEFAULT(NULL), "
+				   "year TEXT DEFAULT(NULL), "
 				   "synopsis TEXT DEFAULT(NULL), "
 				   "text TEXT NOT NULL, "
 				   "is_fixed INTEGER NOT NULL DEFAULT(0), " // фиксация версии, дата и комментарий
@@ -600,6 +605,15 @@ void Database::updateDatabaseTo_0_3_3(QSqlDatabase& _database)
 					   "name TEXT UNIQUE NOT NULL "
 					   "); "
 					   );
+
+		//
+		// Добавление полей в таблицу сценария
+		//
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN additional_info TEXT DEFAULT(NULL)");
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN genre TEXT DEFAULT(NULL)");
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN author TEXT DEFAULT(NULL)");
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN contacts TEXT DEFAULT(NULL)");
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN year TEXT DEFAULT(NULL)");
 	}
 
 	_database.commit();

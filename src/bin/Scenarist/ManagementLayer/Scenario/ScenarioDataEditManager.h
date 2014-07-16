@@ -31,12 +31,50 @@ namespace ManagementLayer
 		/**
 		 * @brief Название сценария
 		 */
+		/** @{ */
 		QString scenarioName() const;
+		void setScenarioName(const QString& _name);
+		/** @} */
 
 		/**
-		 * @brief Установить название
+		 * @brief Дополнительная информация
 		 */
-		void setScenarioName(const QString& _name);
+		/** @{ */
+		QString scenarioAdditionalInfo() const;
+		void setScenarioAdditionalInfo(const QString& _additionalInfo);
+		/** @} */
+
+		/**
+		 * @brief Жанр
+		 */
+		/** @{ */
+		QString scenarioGenre() const;
+		void setScenarioGenre(const QString& _genre);
+		/** @} */
+
+		/**
+		 * @brief Автор
+		 */
+		/** @{ */
+		QString scenarioAuthor() const;
+		void setScenarioAuthor(const QString _author);
+		/** @} */
+
+		/**
+		 * @brief Контактная информация
+		 */
+		/** @{ */
+		QString scenarioContacts() const;
+		void setScenarioContacts(const QString& _contacts);
+		/** @} */
+
+		/**
+		 * @brief Год
+		 */
+		/** @{ */
+		QString scenarioYear() const;
+		void setScenarioYear(const QString& _year);
+		/** @} */
 
 		/**
 		 * @brief Синопсис сценария
@@ -55,14 +93,17 @@ namespace ManagementLayer
 
 	signals:
 		/**
-		 * @brief Изменилось название сценария
+		 * @brief Сигралы об изменении параметров
 		 */
+		/** @{ */
 		void scenarioNameChanged();
-
-		/**
-		 * @brief Изменился синопсис сценария
-		 */
+		void scenarioAdditionalInfoChanged();
+		void scenarioGenreChanged();
+		void scenarioAuthorChanged();
+		void scenarioContactsChanged();
+		void scenarioYearChanged();
 		void scenarioSynopsisChanged();
+		/** @} */
 
 		/**
 		 * @brief Запрос на построение синопсиса из сцен

@@ -14,46 +14,104 @@ namespace Domain
 	class Scenario : public DomainObject
 	{
 	public:
-		Scenario(const Identifier& _id,
-				 const QString& _name,
-				 const QString& _synopsis,
-				 const QString& _text);
+		Scenario(const Identifier& _id, const QString& _name, const QString& _additionalInfo,
+			const QString& _genre, const QString& _author, const QString& _contacts,
+			const QString& _year, const QString& _synopsis, const QString& _text);
 
 		/**
-		 * @brief Получить название сценария
+		 * @brief Название сценария
 		 */
+		/** @{ */
 		QString name() const;
-
-		/**
-		 * @brief Установить название сценария
-		 */
 		void setName(const QString& _name);
+		/** @} */
 
 		/**
-		 * @brief Получить синопсис сценария
+		 * @brief Дополнительная информация
 		 */
+		/** @{ */
+		QString additionalInfo() const;
+		void setAdditionalInfo(const QString& _additionalInfo);
+		/** @} */
+
+		/**
+		 * @brief Жанр
+		 */
+		/** @{ */
+		QString genre() const;
+		void setGenre(const QString& _genre);
+		/** @} */
+
+		/**
+		 * @brief Автор
+		 */
+		/** @{ */
+		QString author() const;
+		void setAuthor(const QString _author);
+		/** @} */
+
+		/**
+		 * @brief Контактная информация
+		 */
+		/** @{ */
+		QString contacts() const;
+		void setContacts(const QString& _contacts);
+		/** @} */
+
+		/**
+		 * @brief Год
+		 */
+		/** @{ */
+		QString year() const;
+		void setYear(const QString& _year);
+		/** @} */
+
+		/**
+		 * @brief Синопсис сценария
+		 */
+		/** @{ */
 		QString synopsis() const;
-
-		/**
-		 * @brief Установить синопсис сценария
-		 */
 		void setSynopsis(const QString& _synopsis);
+		/** @} */
 
 		/**
-		 * @brief Получить текст сценария
+		 * @brief Текст сценария
 		 */
+		/** @{ */
 		QString text() const;
-
-		/**
-		 * @brief Установить текст сценария
-		 */
 		void setText(const QString& _text);
+		/** @} */
 
 	private:
 		/**
 		 * @brief Название
 		 */
 		QString m_name;
+
+		/**
+		 * @brief Дополнительная информация
+		 */
+		QString m_additionalInfo;
+
+		/**
+		 * @brief Жанр
+		 */
+		QString m_genre;
+
+		/**
+		 * @brief Автор
+		 */
+		QString m_author;
+
+		/**
+		 * @brief Контакты
+		 */
+		QString m_contacts;
+
+		/**
+		 * @brief Год
+		 */
+		QString m_year;
 
 		/**
 		 * @brief Синопсис

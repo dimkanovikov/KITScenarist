@@ -255,10 +255,7 @@ void PagesTextEdit::updateVerticalScrollRange()
 	// В обычном режиме просто добавляем немного дополнительной прокрутки для удобства
 	//
 	else {
-		//
-		// Сбивается где-то
-		//
-		const int SCROLL_DELTA = 200;
+		const int SCROLL_DELTA = 800;
 		int maximumValue = document()->size().height() - viewport()->size().height() + SCROLL_DELTA;
 		if (verticalScrollBar()->maximum() != maximumValue) {
 			verticalScrollBar()->setRange(0, maximumValue);
