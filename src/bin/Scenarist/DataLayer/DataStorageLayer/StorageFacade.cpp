@@ -6,6 +6,7 @@
 #include "ScenarioDayStorage.h"
 #include "TimeStorage.h"
 #include "CharacterStorage.h"
+#include "CharacterStateStorage.h"
 #include "CharacterPhotoStorage.h"
 #include "ScenarioStorage.h"
 #include "SettingsStorage.h"
@@ -21,6 +22,7 @@ void StorageFacade::clearStorages()
 	scenarioDayStorage()->clear();
 	timeStorage()->clear();
 	characterStorage()->clear();
+	characterStateStorage()->clear();
 	characterPhotoStorage()->clear();
     scenarioStorage()->clear();
 }
@@ -33,6 +35,7 @@ void StorageFacade::waitWhileSave()
     scenarioDayStorage()->wait();
     timeStorage()->wait();
     characterStorage()->wait();
+	characterStateStorage()->wait();
     characterPhotoStorage()->wait();
     scenarioStorage()->wait();
 }
@@ -85,6 +88,14 @@ CharacterStorage* StorageFacade::characterStorage()
 	return s_characterStorage;
 }
 
+CharacterStateStorage*StorageFacade::characterStateStorage()
+{
+	if (s_characterStateStorage == 0) {
+		s_characterStateStorage = new CharacterStateStorage;
+	}
+	return s_characterStateStorage;
+}
+
 CharacterPhotoStorage* StorageFacade::characterPhotoStorage()
 {
 	if (s_characterPhotoStorage == 0) {
@@ -115,6 +126,7 @@ LocationPhotoStorage* StorageFacade::s_locationPhotoStorage = 0;
 ScenarioDayStorage* StorageFacade::s_scenarioDayStorage = 0;
 TimeStorage* StorageFacade::s_timeStorage = 0;
 CharacterStorage* StorageFacade::s_characterStorage = 0;
+CharacterStateStorage* StorageFacade::s_characterStateStorage = 0;
 CharacterPhotoStorage* StorageFacade::s_characterPhotoStorage = 0;
 ScenarioStorage* StorageFacade::s_scenarioStorage = 0;
 SettingsStorage* StorageFacade::s_settingsStorage = 0;

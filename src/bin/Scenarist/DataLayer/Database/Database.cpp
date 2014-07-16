@@ -140,7 +140,7 @@ void Database::createTables(QSqlDatabase& _database)
 	// Таблица "Место"
 	q_creator.exec("CREATE TABLE places "
 				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "name TEXT UNIQUE NOT NULL "
 				   "); "
 				   );
@@ -148,7 +148,7 @@ void Database::createTables(QSqlDatabase& _database)
 	// Таблица "Локация"
 	q_creator.exec("CREATE TABLE locations "
 				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "name TEXT UNIQUE NOT NULL, "
 				   "description TEXT DEFAULT(NULL) "
 				   "); "
@@ -167,7 +167,7 @@ void Database::createTables(QSqlDatabase& _database)
 	// Таблица "Сценарний день"
 	q_creator.exec("CREATE TABLE scenary_days "
 				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "name TEXT UNIQUE NOT NULL "
 				   "); "
 				   );
@@ -175,7 +175,7 @@ void Database::createTables(QSqlDatabase& _database)
 	// Таблица "Время"
 	q_creator.exec("CREATE TABLE times "
 				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "name TEXT UNIQUE NOT NULL "
 				   "); "
 				   );
@@ -183,10 +183,18 @@ void Database::createTables(QSqlDatabase& _database)
 	// Таблица "Персонажи"
 	q_creator.exec("CREATE TABLE characters "
 				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "name TEXT UNIQUE NOT NULL, "
 				   "real_name TEXT DEFAULT(NULL), "
 				   "description TEXT DEFAULT(NULL) "
+				   "); "
+				   );
+
+	// Таблица "Состояния персонажей"
+	q_creator.exec("CREATE TABLE character_states "
+				   "( "
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "name TEXT UNIQUE NOT NULL "
 				   "); "
 				   );
 
@@ -339,6 +347,16 @@ void Database::updateDatabase(QSqlDatabase& _database)
 						default:
 						case 7: {
 							updateDatabaseTo_0_2_8(_database);
+						}
+					}
+				}
+
+				case 3: {
+
+					switch (versionBuild) {
+						default:
+						case 2: {
+							updateDatabaseTo_0_3_3(_database);
 						}
 					}
 				}
@@ -561,6 +579,27 @@ void Database::updateDatabaseTo_0_2_8(QSqlDatabase& _database)
 			q_updater.addBindValue(id);
 			q_updater.exec();
 		}
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_3_3(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Создать таблицу состояний
+		//
+		q_updater.exec("CREATE TABLE character_states "
+					   "( "
+					   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   "name TEXT UNIQUE NOT NULL "
+					   "); "
+					   );
 	}
 
 	_database.commit();

@@ -6,6 +6,7 @@
 #include "ScenarioDayMapper.h"
 #include "TimeMapper.h"
 #include "CharacterMapper.h"
+#include "CharacterStateMapper.h"
 #include "CharacterPhotoMapper.h"
 #include "ScenarioMapper.h"
 #include "SettingsMapper.h"
@@ -61,6 +62,14 @@ CharacterMapper* MapperFacade::characterMapper()
 	return s_characterMapper;
 }
 
+CharacterStateMapper*MapperFacade::characterStateMapper()
+{
+	if (s_characterStateMapper == 0) {
+		s_characterStateMapper = new CharacterStateMapper;
+	}
+	return s_characterStateMapper;
+}
+
 CharacterPhotoMapper* MapperFacade::characterPhotoMapper()
 {
 	if (s_characterPhotoMapper == 0) {
@@ -91,6 +100,7 @@ LocationPhotoMapper* MapperFacade::s_locationPhotoMapper = 0;
 ScenarioDayMapper* MapperFacade::s_scenarioDayMapper = 0;
 TimeMapper* MapperFacade::s_timeMapper = 0;
 CharacterMapper* MapperFacade::s_characterMapper = 0;
+CharacterStateMapper* MapperFacade::s_characterStateMapper = 0;
 CharacterPhotoMapper* MapperFacade::s_characterPhotoMapper = 0;
 ScenarioMapper* MapperFacade::s_scenarioMapper = 0;
 SettingsMapper* MapperFacade::s_settingsMapper = 0;

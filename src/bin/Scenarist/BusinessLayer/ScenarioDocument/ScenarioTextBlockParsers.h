@@ -13,9 +13,31 @@ namespace BusinessLogic
 	{
 	public:
 		/**
+		 * @brief Секции блока персонаж
+		 *
+		 * @note [ИМЯ ПЕРСОНАЖА] ([СОСТОЯНИЕ])
+		 */
+		enum Section {
+			SectionUndefined, //!< Неопределённое
+			SectionName,	  //!< ИМЯ
+			SectionState	  //!< СОСТОЯНИЕ
+		};
+
+	public:
+		/**
+		 * @brief Получить секцию блока
+		 */
+		static CharacterParser::Section section(const QString& _text);
+
+		/**
 		 * @brief Получить имя персонажа
 		 */
 		static QString name(const QString& _text);
+
+		/**
+		 * @brief Получить состояние персонажа
+		 */
+		static QString state(const QString& _text);
 	};
 
 
@@ -33,7 +55,7 @@ namespace BusinessLogic
 		enum Section {
 			SectionUndefined,	 //!< Неопределённое
 			SectionPlace,		 //!< МЕСТО
-			SectionLocation,		 //!< ЛОКАЦИЯ
+			SectionLocation,	 //!< ЛОКАЦИЯ
 			SectionScenarioDay,	 //!< СЦЕНАРНЫЙ ДЕНЬ
 			SectionTime			 //!< ВРЕМЯ
 		};

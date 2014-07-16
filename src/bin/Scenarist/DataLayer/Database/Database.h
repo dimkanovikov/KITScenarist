@@ -98,6 +98,13 @@ namespace DatabaseLayer
 		 * - информации о локациях
 		 */
 		static void updateDatabaseTo_0_2_8(QSqlDatabase& _database);
+
+		/**
+		 * @brief Обновить базу данных до версии
+		 *
+		 * Добавляется таблица для состояний персонажа (ГЗК и т.п.)
+		 */
+		static void updateDatabaseTo_0_3_3(QSqlDatabase& _database);
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )

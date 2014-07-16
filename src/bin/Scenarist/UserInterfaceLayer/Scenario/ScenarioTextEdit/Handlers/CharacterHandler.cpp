@@ -5,9 +5,11 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 
 #include <Domain/Character.h>
+#include <Domain/CharacterState.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/CharacterStateStorage.h>
 
 #include <QKeyEvent>
 #include <QTextBlock>
@@ -36,6 +38,8 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
+	// ... текущая секция
+	CharacterParser::Section currentSection = CharacterParser::section(cursorBackwardText);
 
 
 	//
@@ -48,6 +52,25 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 		// Вставить выбранный вариант
 		//
 		editor()->applyCompletion();
+
+		//
+		// Обновим курсор, т.к. после автозавершения он смещается
+		//
+		cursor = editor()->textCursor();
+
+		//
+		// Дописать необходимые символы
+		//
+		switch (currentSection) {
+			case CharacterParser::SectionState: {
+				cursor.insertText(")");
+				break;
+			}
+
+			default: {
+				break;
+			}
+		}
 	} else {
 		//! Подстановщик закрыт
 
@@ -187,17 +210,43 @@ void CharacterHandler::handleOther(QKeyEvent*)
 	QTextBlock currentBlock = cursor.block();
 	// ... текст блока
 	QString currentBlockText = currentBlock.text();
+	// ... текст до курсора
+	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
+	// ... текущая секция
+	CharacterParser::Section currentSection = CharacterParser::section(cursorBackwardText);
 
 
 	//
 	// Получим модель подсказок для текущей секции и выведем пользователю
 	//
-	QAbstractItemModel* characterModel = StorageFacade::characterStorage()->all();
+	QAbstractItemModel* sectionModel = 0;
+	//
+	// ... в соответствии со введённым в секции текстом
+	//
+	QString sectionText;
+
+	switch (currentSection) {
+		case CharacterParser::SectionName: {
+			sectionModel = StorageFacade::characterStorage()->all();
+			sectionText = CharacterParser::name(currentBlockText);
+			break;
+		}
+
+		case CharacterParser::SectionState: {
+			sectionModel = StorageFacade::characterStateStorage()->all();
+			sectionText = CharacterParser::state(currentBlockText);
+			break;
+		}
+
+		default: {
+			break;
+		}
+	}
 
 	//
 	// Дополним текст
 	//
-	editor()->complete(characterModel, currentBlockText);
+	editor()->complete(sectionModel, sectionText);
 }
 
 void CharacterHandler::storeCharacter() const
@@ -214,10 +263,13 @@ void CharacterHandler::storeCharacter() const
 		QString currentBlockText = currentBlock.text();
 		// ... имя персонажа
 		QString characterName = CharacterParser::name(currentBlockText);
+		// ... состояние персонажа
+		QString characterState = CharacterParser::state(currentBlockText);
 
 		//
 		// Сохраняем персонажа
 		//
 		StorageFacade::characterStorage()->storeCharacter(characterName);
+		StorageFacade::characterStateStorage()->storeCharacterState(characterState);
 	}
 }

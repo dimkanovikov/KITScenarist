@@ -7,6 +7,19 @@
 using namespace BusinessLogic;
 
 
+CharacterParser::Section CharacterParser::section(const QString& _text)
+{
+	CharacterParser::Section section = SectionUndefined;
+
+	if (_text.split("(").count() == 2) {
+		section = SectionState;
+	} else {
+		section = SectionName;
+	}
+
+	return section;
+}
+
 QString CharacterParser::name(const QString& _text)
 {
 	//
@@ -15,7 +28,24 @@ QString CharacterParser::name(const QString& _text)
 	//
 
 	QString name = _text;
-	return name.remove(QRegularExpression("[(](.*)[)]")).simplified();
+	return name.remove(QRegularExpression("[(](.*)")).simplified();
+}
+
+QString CharacterParser::state(const QString& _text)
+{
+	//
+	// В блоке персонажа так же могут быть указания, что он говорит за кадром и т.п.
+	// эти указания даются в скобках, они нам как раз и нужны
+	//
+
+	const QRegularExpression rx_state("[(](.*)");
+	QRegularExpressionMatch match = rx_state.match(_text);
+	QString state;
+	if (match.hasMatch()) {
+		state = match.captured(0);
+		state = state.remove("(").remove(")");
+	}
+	return state;
 }
 
 // ****

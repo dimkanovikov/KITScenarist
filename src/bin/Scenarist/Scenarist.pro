@@ -164,7 +164,10 @@ SOURCES += main.cpp \
     ManagementLayer/Settings/SettingsStylesManager.cpp \
     BusinessLayer/ScenarioDocument/ScenarioStyle.cpp \
     ManagementLayer/Export/ExportManager.cpp \
-    UserInterfaceLayer/Export/ExportDialog.cpp
+    UserInterfaceLayer/Export/ExportDialog.cpp \
+    Domain/CharacterState.cpp \
+    DataLayer/DataMappingLayer/CharacterStateMapper.cpp \
+    DataLayer/DataStorageLayer/CharacterStateStorage.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -305,7 +308,10 @@ HEADERS += \
     ManagementLayer/Settings/SettingsStylesManager.h \
     BusinessLayer/ScenarioDocument/ScenarioStyle.h \
     ManagementLayer/Export/ExportManager.h \
-    UserInterfaceLayer/Export/ExportDialog.h
+    UserInterfaceLayer/Export/ExportDialog.h \
+    Domain/CharacterState.h \
+    DataLayer/DataMappingLayer/CharacterStateMapper.h \
+    DataLayer/DataStorageLayer/CharacterStateStorage.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
