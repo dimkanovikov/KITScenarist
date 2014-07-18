@@ -219,6 +219,14 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 					// В противном случае перейдём к блоку участников сцены
 					//
 					else {
+						//
+						// Сохраним параметры сцены
+						//
+						storeSceneParameters();
+
+						//
+						// А затем вставим блок
+						//
 						editor()->addScenarioBlock(ScenarioBlockStyle::SceneCharacters);
 					}
 				} else {

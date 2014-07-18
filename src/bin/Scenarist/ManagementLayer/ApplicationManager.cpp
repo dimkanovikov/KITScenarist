@@ -122,9 +122,9 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 	loadViewState();
 	m_view->show();
 
-    if (!_fileToOpen.isEmpty()) {
-        aboutLoad(_fileToOpen);
-    }
+	if (!_fileToOpen.isEmpty()) {
+		aboutLoad(_fileToOpen);
+	}
 }
 
 void ApplicationManager::aboutCreateNew()
@@ -259,9 +259,12 @@ void ApplicationManager::aboutSave()
 		//
 		// Управляющие должны сохранить несохранённые данные
 		//
+		DatabaseLayer::Database::transaction();
 		m_scenarioManager->saveCurrentProject();
 		m_charactersManager->saveCharacters();
 		m_locationsManager->saveLocations();
+		DatabaseLayer::Database::commit();
+
 
 		//
 		// Добавим проект к недавно используемым
@@ -343,15 +346,10 @@ void ApplicationManager::aboutPrintPreview()
 
 void ApplicationManager::aboutExit()
 {
-    //
-    // Сохраняем, если необходимо
-    //
+	//
+	// Сохраняем, если необходимо
+	//
 	if (saveIfNeeded()) {
-		//
-		// Ожидаем завершения всех операций с БД
-		//
-		DataStorageLayer::StorageFacade::waitWhileSave();
-
 		//
 		// Сохраняем состояния виджетов
 		//

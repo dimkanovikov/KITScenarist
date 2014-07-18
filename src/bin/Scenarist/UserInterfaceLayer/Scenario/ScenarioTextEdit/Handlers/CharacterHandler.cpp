@@ -184,6 +184,11 @@ void CharacterHandler::handleTab(QKeyEvent*)
 					//! В конце блока
 
 					//
+					// Сохраним имя персонажа
+					//
+					storeCharacter();
+
+					//
 					// Вставить блок ремарки
 					//
 					editor()->addScenarioBlock(ScenarioBlockStyle::Parenthetical);

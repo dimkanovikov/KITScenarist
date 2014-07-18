@@ -20,9 +20,19 @@ namespace DatabaseLayer
 		static QString currentFile();
 
 		/**
-		 * @brief Получить объект текущей базы данных
+		 * @brief Получить объект для выполнения запросов в БД
 		 */
-		static QSqlDatabase instanse();
+		static QSqlQuery query();
+
+		/**
+		 * @brief Запустить транзакцию, если ещё не запущена
+		 */
+		static void transaction();
+
+		/**
+		 * @brief Зафиксировать транзакцию, если она была запущена
+		 */
+		static void commit();
 
 		/**
 		 * @brief Состояния базы данных
@@ -46,6 +56,19 @@ namespace DatabaseLayer
 					   SQL_DRIVER,
 					   DATABASE_NAME;
 
+		/**
+		 * @brief Счётчик открытых транзакций
+		 */
+		static int openedTransactions;
+
+		/**
+		 * @brief Получить объект текущей базы данных
+		 */
+		static QSqlDatabase instanse();
+
+		/**
+		 * @brief Открыть соединение с базой данных
+		 */
 		static void open(QSqlDatabase& _database,
 				const QString& _connectionName,
 				const QString& _databaseName

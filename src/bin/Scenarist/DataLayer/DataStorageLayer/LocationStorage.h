@@ -53,11 +53,6 @@ namespace DataStorageLayer
 		 */
 		void clear();
 
-        /**
-         * @brief Ожидание завершения всех операций с БД
-         */
-        void wait();
-
 	private:
 		LocationsTable* m_all;
 

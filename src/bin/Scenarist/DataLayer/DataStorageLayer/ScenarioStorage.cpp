@@ -88,12 +88,7 @@ void ScenarioStorage::clear()
 	delete m_all;
 	m_all = 0;
 
-    MapperFacade::scenarioMapper()->clear();
-}
-
-void ScenarioStorage::wait()
-{
-    MapperFacade::scenarioMapper()->wait();
+	MapperFacade::scenarioMapper()->clear();
 }
 
 ScenarioStorage::ScenarioStorage() :

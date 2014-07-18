@@ -1,31 +1,20 @@
 #include "AbstractMapper.h"
 
-#include "AbstractMapperPrivate.h"
-
 #include <DataLayer/Database/Database.h>
 
+#include <QApplication>
+#include <QDebug>
+#include <QSqlError>
+#include <QSqlQuery>
 #include <QVariant>
-#include <QtSql>
 
 
 using namespace DataMappingLayer;
 using namespace DatabaseLayer;
 
 
-AbstractMapper::AbstractMapper() :
-	m_sqlExecuter(new SqlExecutingQueuedThread)
+AbstractMapper::AbstractMapper()
 {
-}
-
-AbstractMapper::~AbstractMapper()
-{
-	//
-	// Ожидаем завершения всех операций
-	//
-    wait();
-
-	delete m_sqlExecuter;
-	m_sqlExecuter = 0;
 }
 
 void AbstractMapper::clear()
@@ -35,35 +24,30 @@ void AbstractMapper::clear()
 		domainObject = 0;
 	}
 
-    m_loadedObjectsMap.clear();
-}
-
-void AbstractMapper::wait()
-{
-    m_sqlExecuter->wait();
+	m_loadedObjectsMap.clear();
 }
 
 DomainObject * AbstractMapper::abstractFind(const Identifier& _id)
 {
-    DomainObject *result = m_loadedObjectsMap.value( _id, 0 );
-    if ( !DomainObject::isValid( result ) ) {
-        result = loadObjectFromDatabase( _id );
-    }
+	DomainObject *result = m_loadedObjectsMap.value( _id, 0 );
+	if ( !DomainObject::isValid( result ) ) {
+		result = loadObjectFromDatabase( _id );
+	}
 	return result;
 }
 
 DomainObjectsItemModel * AbstractMapper::abstractFindAll(const QString& _filter)
 {
-    QSqlQuery query ( Database::instanse() );
-    query.prepare( findAllStatement() + _filter );
-    query.exec();
-    DomainObjectsItemModel * result = modelInstance();
+	QSqlQuery query = Database::query();
+	query.prepare( findAllStatement() + _filter );
+	query.exec();
+	DomainObjectsItemModel * result = modelInstance();
 	while ( query.next() ) {
-        QSqlRecord record = query.record();
-        DomainObject *domainObject = load( record );
+		QSqlRecord record = query.record();
+		DomainObject *domainObject = load( record );
 		result->append( domainObject );
-    }
-    return result;
+	}
+	return result;
 }
 
 void AbstractMapper::abstractInsert(DomainObject* _subject)
@@ -87,7 +71,7 @@ void AbstractMapper::abstractInsert(DomainObject* _subject)
 	//
 	// Сформируем запрос на добавление данных в базу
 	//
-	QSqlQuery q_insert(Database::instanse());
+	QSqlQuery q_insert = Database::query();
 	q_insert.prepare(insertQuery);
 	foreach (const QVariant& value, insertValues) {
 		q_insert.addBindValue(value);
@@ -96,14 +80,14 @@ void AbstractMapper::abstractInsert(DomainObject* _subject)
 	//
 	// Добавим данные в базу
 	//
-	m_sqlExecuter->executeSql(q_insert);
+	executeSql(q_insert);
 }
 
 void AbstractMapper::abstractUpdate(DomainObject* _subject)
 {
 	//
-    // т.к. в m_loadedObjectsMap хранится список указателей, то после обновления элементов
-    // обновлять элемент непосредственно в списке не нужно
+	// т.к. в m_loadedObjectsMap хранится список указателей, то после обновления элементов
+	// обновлять элемент непосредственно в списке не нужно
 	//
 
 	//
@@ -115,7 +99,7 @@ void AbstractMapper::abstractUpdate(DomainObject* _subject)
 	//
 	// Сформируем запрос на обновление данных в базе
 	//
-	QSqlQuery q_update(Database::instanse());
+	QSqlQuery q_update = Database::query();
 	q_update.prepare(updateQuery);
 	foreach (const QVariant& value, updateValues) {
 		q_update.addBindValue(value);
@@ -124,7 +108,7 @@ void AbstractMapper::abstractUpdate(DomainObject* _subject)
 	//
 	// Обновим данные в базе
 	//
-	m_sqlExecuter->executeSql(q_update);
+	executeSql(q_update);
 }
 
 void AbstractMapper::abstractDelete(DomainObject* _subject)
@@ -138,7 +122,7 @@ void AbstractMapper::abstractDelete(DomainObject* _subject)
 	//
 	// Сформируем запрос на удаление данных из базы
 	//
-	QSqlQuery q_delete(Database::instanse());
+	QSqlQuery q_delete = Database::query();
 	q_delete.prepare(deleteQuery);
 	foreach (const QVariant& value, deleteValues) {
 		q_delete.addBindValue(value);
@@ -147,7 +131,7 @@ void AbstractMapper::abstractDelete(DomainObject* _subject)
 	//
 	// Удалим данные из базы
 	//
-	m_sqlExecuter->executeSql(q_delete);
+	executeSql(q_delete);
 
 	//
 	// Удалим объекст из списка загруженных
@@ -159,14 +143,14 @@ void AbstractMapper::abstractDelete(DomainObject* _subject)
 
 DomainObject* AbstractMapper::loadObjectFromDatabase(const Identifier& _id)
 {
-    DomainObject *result = 0;
-    QSqlQuery query( Database::instanse() );
-    query.prepare( findStatement( _id ) );
-    query.exec();
-    query.next();
-    QSqlRecord record = query.record();
-    result = load( record );
-    return result;
+	DomainObject *result = 0;
+	QSqlQuery query = Database::query();
+	query.prepare( findStatement( _id ) );
+	query.exec();
+	query.next();
+	QSqlRecord record = query.record();
+	result = load( record );
+	return result;
 }
 
 Identifier AbstractMapper::findNextIdentifier()
@@ -177,7 +161,7 @@ Identifier AbstractMapper::findNextIdentifier()
 		--iter;
 		maxId = iter.key();
 	}
-    return maxId.next();
+	return maxId.next();
 }
 
 DomainObject * AbstractMapper::load(const QSqlRecord& _record )
@@ -186,63 +170,31 @@ DomainObject * AbstractMapper::load(const QSqlRecord& _record )
 	// FIXME: Очистить от артефактов недвижимости
 	//
 
-    int value   = _record.value( "id" ).toInt();
-    int version = _record.value( "version" ).toInt();
+	int value   = _record.value( "id" ).toInt();
+	int version = _record.value( "version" ).toInt();
 
-    if ( value == 0 )
-        return 0;
-//    Q_ASSERT_X( value != 0,
-//                "Не установлен идентификатор при выборке объектов из базы данных",
-//                findAllStatement().toUtf8() );
+	if ( value == 0 )
+		return 0;
 
-    Identifier id( value, version );
-    DomainObject *result = 0;
+	Identifier id( value, version );
+	DomainObject *result = 0;
 	// Объекты домена зависящие от объекта недвижимости - особый случай
 	bool isDependFromObject = _record.contains( "fk_object" ) && _record.contains( "fk_object_version" );
 	if ( !isDependFromObject
 		 && m_loadedObjectsMap.contains( id ) ) {
-        result = m_loadedObjectsMap.value( id );
-    } else {
-        result = doLoad( id, _record );
-        m_loadedObjectsMap.insert( id, result );
-    }
-    return result;
-}
-
-
-/**
- * Реализация поточного выполнения запросов
- */
-
-
-SqlExecutingQueuedThread::SqlExecutingQueuedThread(QObject *_parent) :
-	QThread(_parent)
-{
-}
-
-void SqlExecutingQueuedThread::executeSql(const QSqlQuery &_sqlQuery)
-{
-	m_mutex.lock();
-	m_sqlQueue.enqueue(_sqlQuery);
-	m_mutex.unlock();
-
-	if (!isRunning()) {
-		start();
+		result = m_loadedObjectsMap.value( id );
+	} else {
+		result = doLoad( id, _record );
+		m_loadedObjectsMap.insert( id, result );
 	}
+	return result;
 }
 
-void SqlExecutingQueuedThread::run()
+void AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
 {
-	Database::instanse().transaction();
-
-	while (!m_sqlQueue.isEmpty()) {
-		QSqlQuery queryToExecute = m_sqlQueue.dequeue();
-		queryToExecute.exec();
-
-		qDebug() << queryToExecute.lastQuery();
-		qDebug() << queryToExecute.lastError();
-		qDebug() << queryToExecute.boundValues();
+	if (!_sqlQuery.exec()) {
+		qDebug() << _sqlQuery.lastError();
+		qDebug() << _sqlQuery.boundValues();
+		qDebug() << _sqlQuery.lastQuery();
 	}
-
-	Database::instanse().commit();
 }

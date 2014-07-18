@@ -44,6 +44,52 @@ QString Database::currentFile()
 	return instanse().databaseName();
 }
 
+QSqlQuery Database::query()
+{
+	return QSqlQuery(instanse());
+}
+
+void Database::transaction()
+{
+	//
+	// Для первого запроса открываем транзакцию
+	//
+	if (openedTransactions == 0) {
+		instanse().transaction();
+	}
+
+	//
+	// Увеличиваем счётчик открытых транзакций
+	//
+	++openedTransactions;
+}
+
+void Database::commit()
+{
+	//
+	// Уменьшаем счётчик транзакций
+	//
+	--openedTransactions;
+
+	//
+	// При закрытии корневой транзакции фиксируем изменения в базе данных
+	//
+	if (openedTransactions == 0) {
+		instanse().commit();
+	}
+}
+
+
+//********
+// Скрытая часть
+
+
+QString Database::CONNECTION_NAME = "local_database";
+QString Database::SQL_DRIVER      = "QSQLITE";
+QString Database::DATABASE_NAME   = ":memory:";
+
+int Database::openedTransactions = 0;
+
 QSqlDatabase Database::instanse()
 {
 	QSqlDatabase database;
@@ -56,10 +102,6 @@ QSqlDatabase Database::instanse()
 
 	return database;
 }
-
-QString Database::CONNECTION_NAME = "local_database";
-QString Database::SQL_DRIVER      = "QSQLITE";
-QString Database::DATABASE_NAME   = ":memory:";
 
 void Database::open(QSqlDatabase& _database, const QString& _connectionName, const QString& _databaseName)
 {

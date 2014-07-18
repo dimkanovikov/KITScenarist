@@ -12,7 +12,7 @@ using namespace DatabaseLayer;
 
 void SettingsMapper::setValue(const QString& _key, const QString& _value)
 {
-	QSqlQuery q_loader(Database::instanse());
+	QSqlQuery q_loader = Database::query();
 	q_loader.prepare("INSERT INTO system_variables VALUES (?, ?)");
 	q_loader.addBindValue(_key);
 	q_loader.addBindValue(_value);
@@ -21,7 +21,7 @@ void SettingsMapper::setValue(const QString& _key, const QString& _value)
 
 QString SettingsMapper::value(const QString& _key)
 {
-	QSqlQuery q_loader(Database::instanse());
+	QSqlQuery q_loader = Database::query();
 	q_loader.prepare("SELECT value FROM system_variables WHERE variable = ?");
 	q_loader.addBindValue(_key);
 	q_loader.exec();

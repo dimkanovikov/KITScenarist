@@ -1,19 +1,22 @@
 #ifndef ABSTRACTMAPPER_H
 #define ABSTRACTMAPPER_H
 
-#include <Domain/Identifier.h>
 #include <Domain/DomainObject.h>
 
-#include <QHash>
+#include <QMap>
+
+//
+// Используется включение, вместо предварительного объявления, чтобы использовать в наследниках
+//
 #include <QSqlRecord>
+
+class QSqlQuery;
 
 using namespace Domain;
 
 
 namespace DataMappingLayer
 {
-	class SqlExecutingQueuedThread;
-
 	class AbstractMapper
 	{
 	public:
@@ -21,11 +24,6 @@ namespace DataMappingLayer
 		 * @brief Очистить все загруженные ранее данные
 		 */
 		void clear();
-
-        /**
-         * @brief Ожидание завершения всех операций с БД
-         */
-        void wait();
 
 	protected:
 		virtual QString findStatement(const Identifier&) const = 0;
@@ -47,7 +45,6 @@ namespace DataMappingLayer
 
 	protected:
 		AbstractMapper();
-		virtual ~AbstractMapper();
 
 	private:
 		/**
@@ -65,16 +62,16 @@ namespace DataMappingLayer
 		 */
 		DomainObject* load(const QSqlRecord& _record);
 
+		/**
+		 * @brief Выполнить запрос
+		 */
+		void executeSql(QSqlQuery& _sqlQuery);
+
 	private:
 		/**
 		 * @brief Загруженные объекты из базы данных
 		 */
 		QMap<Identifier, DomainObject*> m_loadedObjectsMap;
-
-		/**
-		 * @brief Поток для выполнения операций сохранения, обновления и удаления записей из БД
-		 */
-		SqlExecutingQueuedThread* m_sqlExecuter;
 	};
 
 }

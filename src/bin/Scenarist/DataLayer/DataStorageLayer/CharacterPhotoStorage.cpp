@@ -76,12 +76,7 @@ void CharacterPhotoStorage::clear()
 	delete m_all;
 	m_all = 0;
 
-    MapperFacade::characterPhotoMapper()->clear();
-}
-
-void CharacterPhotoStorage::wait()
-{
-    MapperFacade::characterPhotoMapper()->wait();
+	MapperFacade::characterPhotoMapper()->clear();
 }
 
 CharacterPhotoStorage::CharacterPhotoStorage() :

@@ -74,12 +74,7 @@ void LocationPhotoStorage::clear()
 	delete m_all;
 	m_all = 0;
 
-    MapperFacade::locationPhotoMapper()->clear();
-}
-
-void LocationPhotoStorage::wait()
-{
-    MapperFacade::locationPhotoMapper()->wait();
+	MapperFacade::locationPhotoMapper()->clear();
 }
 
 LocationPhotoStorage::LocationPhotoStorage() :

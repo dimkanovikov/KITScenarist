@@ -68,7 +68,6 @@ SOURCES += main.cpp \
     BusinessLayer/Chronometry/ConfigurableChronometer.cpp \
     BusinessLayer/Chronometry/PagesChronometer.cpp \
     DataLayer/Database/Database.cpp \
-    DataLayer/Database/DatabaseHelper.cpp \
     DataLayer/DataMappingLayer/AbstractMapper.cpp \
     DataLayer/DataMappingLayer/CharacterMapper.cpp \
     DataLayer/DataMappingLayer/LocationMapper.cpp \
@@ -208,7 +207,6 @@ HEADERS += \
     BusinessLayer/Chronometry/ConfigurableChronometer.h \
     BusinessLayer/Chronometry/PagesChronometer.h \
     DataLayer/Database/Database.h \
-    DataLayer/Database/DatabaseHelper.h \
     DataLayer/DataMappingLayer/AbstractMapper.h \
     DataLayer/DataMappingLayer/CharacterMapper.h \
     DataLayer/DataMappingLayer/LocationMapper.h \
@@ -265,7 +263,6 @@ HEADERS += \
     BusinessLayer/Export/RtfExporter.h \
     BusinessLayer/ScenarioDocument/ScenarioXml.h \
     BusinessLayer/ScenarioDocument/ScenarioTextDocument.h \
-    DataLayer/DataMappingLayer/AbstractMapperPrivate.h \
     UserInterfaceLayer/StartUp/StartUpView.h \
     UserInterfaceLayer/StartUp/RecentFilesDelegate.h \
     UserInterfaceLayer/StartUp/RecentFileWidget.h \

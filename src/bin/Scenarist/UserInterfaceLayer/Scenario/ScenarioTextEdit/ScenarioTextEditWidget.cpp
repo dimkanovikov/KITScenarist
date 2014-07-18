@@ -242,7 +242,7 @@ void ScenarioTextEditWidget::updateStylesElements()
 
 void ScenarioTextEditWidget::aboutUndo()
 {
-    m_editor->undo();
+	m_editor->undo();
 }
 
 void ScenarioTextEditWidget::aboutRedo()
@@ -310,6 +310,8 @@ void ScenarioTextEditWidget::aboutTextChanged()
 	QByteArray currentTextMd5Hash = textMd5Hash(m_editor->document()->toPlainText());
 	if (m_lastTextMd5Hash != currentTextMd5Hash) {
 		emit textChanged();
+
+		m_lastTextMd5Hash = currentTextMd5Hash;
 	}
 }
 
