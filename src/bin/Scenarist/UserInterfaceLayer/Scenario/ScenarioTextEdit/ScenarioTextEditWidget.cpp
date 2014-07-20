@@ -324,6 +324,7 @@ void ScenarioTextEditWidget::initView()
 {
 	m_textStyles->setToolTip(tr("Current Text Block Style"));
 	m_textStyles->setSizePolicy(m_textStyles->sizePolicy().horizontalPolicy(), QSizePolicy::Preferred);
+	m_textStyles->setMaximumHeight(26);
 
 	initStylesCombo();
 
@@ -348,7 +349,7 @@ void ScenarioTextEditWidget::initView()
 
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 	QFont durationFont = m_duration->font();
-	durationFont.setPointSize(durationFont.pointSize() + 1);
+	durationFont.setBold(true);
 	m_duration->setFont(durationFont);
 
 	m_editor->setPageFormat(ScenarioStyleFacade::style().pageSizeId());
