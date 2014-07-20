@@ -6,7 +6,7 @@ using namespace Domain;
 bool DomainObject::isValid(const DomainObject* _object)
 {
 	bool isValid = (_object != 0);
-    return isValid;
+	return isValid;
 }
 
 
@@ -26,7 +26,7 @@ DomainObject::~DomainObject()
 
 Identifier DomainObject::id() const
 {
-    return m_id;
+	return m_id;
 }
 
 void DomainObject::setId(const Identifier& _id)
@@ -34,7 +34,7 @@ void DomainObject::setId(const Identifier& _id)
 	if (!_id.isValid()
 		|| m_id != _id) {
 		m_id = _id;
-    }
+	}
 }
 
 // ****
@@ -47,37 +47,37 @@ DomainObjectsItemModel::DomainObjectsItemModel(QObject* _parent) :
 
 QModelIndex DomainObjectsItemModel::index(int _row, int _column, const QModelIndex &_parent) const
 {
-    QModelIndex resultIndex;
+	QModelIndex resultIndex;
 	if (_row < 0
 		|| _row > domainObjects().count()
 		|| _column < 0
 		|| _column > columnCount(_parent)) {
 		resultIndex = QModelIndex();
-    } else {
+	} else {
 		DomainObject* indexItem = domainObjects().value(_row);
 		resultIndex = createIndex(_row, _column, indexItem);
-    }
-    return resultIndex;
+	}
+	return resultIndex;
 }
 
 QModelIndex DomainObjectsItemModel::parent(const QModelIndex&) const
 {
-    return QModelIndex();
+	return QModelIndex();
 }
 
 int DomainObjectsItemModel::rowCount(const QModelIndex&) const
 {
-    return m_domainObjects.count();
+	return m_domainObjects.count();
 }
 
 int DomainObjectsItemModel::columnCount(const QModelIndex&) const
 {
-    return 0;
+	return 0;
 }
 
 QVariant DomainObjectsItemModel::data(const QModelIndex&, int) const
 {
-    return QVariant();
+	return QVariant();
 }
 
 DomainObject *DomainObjectsItemModel::itemForIndex(const QModelIndex &index) const
@@ -92,17 +92,28 @@ QModelIndex DomainObjectsItemModel::indexForItem(DomainObject* _item) const
 
 QList<DomainObject*> DomainObjectsItemModel::toList() const
 {
-    return domainObjects();
+	return domainObjects();
 }
 
 int DomainObjectsItemModel::count() const
 {
-    return domainObjects().count();
+	return domainObjects().count();
 }
 
 bool DomainObjectsItemModel::contains(DomainObject* domainObject) const
 {
-	return domainObjects().contains(domainObject);
+	//
+	//
+	//
+	bool contains = false;
+	foreach (DomainObject* object, domainObjects()) {
+		if (object->id() == domainObject->id()) {
+			contains = true;
+			break;
+		}
+	}
+
+	return contains;
 }
 
 void DomainObjectsItemModel::clear()
@@ -129,5 +140,5 @@ void DomainObjectsItemModel::remove(DomainObject* domainObject)
 
 QList<DomainObject*> DomainObjectsItemModel::domainObjects() const
 {
-    return m_domainObjects;
+	return m_domainObjects;
 }

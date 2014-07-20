@@ -12,7 +12,7 @@ namespace Domain
 	{
 	public:
 		Identifier();
-		Identifier( int id, int version = 1 );
+		Identifier( int id, int version = 0 );
 		virtual ~Identifier();
 
 	public:
