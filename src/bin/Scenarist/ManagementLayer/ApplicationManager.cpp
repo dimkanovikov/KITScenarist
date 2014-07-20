@@ -666,6 +666,12 @@ void ApplicationManager::reloadApplicationSettings()
 			// Фон неактивного пункта меню
 			//
 			palette.setColor(QPalette::Light, QColor("#404040"));
+			//
+			//
+			//
+			palette.setColor(QPalette::Midlight, QColor("#787878"));
+
+			styleSheet += "QToolButton:checked { background-color: palette(midlight); } ";
 		} else {
 			//
 			// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек
@@ -681,7 +687,8 @@ void ApplicationManager::reloadApplicationSettings()
 		//
 		// Для всплывающей используем универсальный стиль
 		//
-		styleSheet = "QToolTip { color: palette(window-text); background-color: palette(window); border: 1px solid palette(highlight); }";
+		styleSheet += "QToolTip { color: palette(window-text); background-color: palette(window); border: 1px solid palette(highlight); } "
+					 ;
 
 		//
 		// Применяем тему
