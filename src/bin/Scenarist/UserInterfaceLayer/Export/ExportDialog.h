@@ -82,6 +82,11 @@ namespace UserInterface
 
 	private:
 		/**
+		 * @brief
+		 */
+		void initView();
+
+		/**
 		 * @brief Настроить соединения
 		 */
 		void initConnections();

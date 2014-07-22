@@ -42,6 +42,7 @@ ExportDialog::ExportDialog(QWidget* _parent) :
 {
 	ui->setupUi(this);
 
+	initView();
 	initConnections();
 }
 
@@ -109,6 +110,12 @@ void ExportDialog::aboutChooseFile()
 void ExportDialog::aboutFileNameChanged()
 {
 	ui->exportTo->setEnabled(!ui->file->text().isEmpty());
+}
+
+void ExportDialog::initView()
+{
+	ui->label_5->hide();
+	ui->pageNumbering->hide();
 }
 
 void ExportDialog::aboutFormatChanged()
