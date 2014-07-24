@@ -166,7 +166,7 @@ QTextDocument* PdfExporter::prepareDocument(ScenarioDocument* _scenario,
 	//
 	// Формирование титульной страницы
 	//
-	{
+	/*{
 		QTextCharFormat titleFormat;
 		titleFormat.setFont(QFont("Courier New", 12));
 		QTextBlockFormat centerFormat;
@@ -189,28 +189,28 @@ QTextDocument* PdfExporter::prepareDocument(ScenarioDocument* _scenario,
 		//
 		destDocumentCursor.insertBlock(centerFormat);
 		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario()->name());
+		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->name() : "");
 		//
 		// Доп. инфо
 		//
 		destDocumentCursor.insertBlock();
 		destDocumentCursor.insertBlock(centerFormat);
 		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario()->additionalInfo());
+		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->additionalInfo() : "");
 		//
 		// Жанр
 		//
 		destDocumentCursor.insertBlock();
 		destDocumentCursor.insertBlock(centerFormat);
 		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario()->genre());
+		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->genre() : "");
 		//
 		// Автор
 		//
 		destDocumentCursor.insertBlock();
 		destDocumentCursor.insertBlock(centerFormat);
 		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario()->author());
+		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->author() : "");
 		//
 		// 19 пустых строк
 		//
@@ -223,7 +223,7 @@ QTextDocument* PdfExporter::prepareDocument(ScenarioDocument* _scenario,
 		//
 		destDocumentCursor.insertBlock(rightFormat);
 		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario()->contacts());
+		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->contacts() : "");
 		//
 		// 1 пустых строки
 		//
@@ -236,9 +236,9 @@ QTextDocument* PdfExporter::prepareDocument(ScenarioDocument* _scenario,
 		//
 		destDocumentCursor.insertBlock(lastBlockFormat);
 		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario()->year());
+		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->year() : "");
 		destDocumentCursor.insertBlock();
-	}
+	}*/
 
 	//
 	// Запись текста страницы

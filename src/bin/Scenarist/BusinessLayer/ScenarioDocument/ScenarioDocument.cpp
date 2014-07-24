@@ -194,7 +194,7 @@ void ScenarioDocument::load(Domain::Scenario* _scenario)
 	}
 }
 
-Domain::Scenario*ScenarioDocument::scenario() const
+Domain::Scenario* ScenarioDocument::scenario() const
 {
 	return m_scenario;
 }

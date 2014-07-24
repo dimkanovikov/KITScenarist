@@ -114,6 +114,9 @@ void ExportDialog::aboutFileNameChanged()
 
 void ExportDialog::initView()
 {
+	ui->label_4->hide();
+	ui->title->hide();
+
 	ui->label_5->hide();
 	ui->pageNumbering->hide();
 }

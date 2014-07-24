@@ -220,7 +220,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 		//
 		// Формирование титульной страницы
 		//
-		{
+		/*{
 			const char* CENTER_LINE = "\\pard\\plain \\s0\\f0\\qc ";
 			const char* RIGHT_LINE = "\\pard\\plain \\s0\\f0\\qr ";
 			const char* END_OF_PAGE = "\\page\r\n";
@@ -236,7 +236,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 			// Название
 			//
 			rtfFile.write(CENTER_LINE);
-			rtfFile.write(stringToUtfCode(_scenario->scenario()->name()).toUtf8().data());
+			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->name()).toUtf8().data() : "");
 			rtfFile.write("\\par");
 			rtfFile.write(END_OF_LINE);
 			//
@@ -244,7 +244,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 			//
 			rtfFile.write(EMPTY_LINE);
 			rtfFile.write(CENTER_LINE);
-			rtfFile.write(stringToUtfCode(_scenario->scenario()->additionalInfo()).toUtf8().data());
+			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->additionalInfo()).toUtf8().data() : "");
 			rtfFile.write("\\par");
 			rtfFile.write(END_OF_LINE);
 			//
@@ -252,7 +252,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 			//
 			rtfFile.write(EMPTY_LINE);
 			rtfFile.write(CENTER_LINE);
-			rtfFile.write(stringToUtfCode(_scenario->scenario()->genre()).toUtf8().data());
+			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->genre()).toUtf8().data() : "");
 			rtfFile.write("\\par");
 			rtfFile.write(END_OF_LINE);
 			//
@@ -260,7 +260,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 			//
 			rtfFile.write(EMPTY_LINE);
 			rtfFile.write(CENTER_LINE);
-			rtfFile.write(stringToUtfCode(_scenario->scenario()->author()).toUtf8().data());
+			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->author()).toUtf8().data() : "");
 			rtfFile.write("\\par");
 			rtfFile.write(END_OF_LINE);
 			//
@@ -274,7 +274,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 			// Контакты
 			//
 			rtfFile.write(RIGHT_LINE);
-			rtfFile.write(stringToUtfCode(_scenario->scenario()->contacts()).toUtf8().data());
+			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->contacts()).toUtf8().data() : "");
 			rtfFile.write("\\par");
 			rtfFile.write(END_OF_LINE);
 			//
@@ -288,11 +288,11 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 			// Год
 			//
 			rtfFile.write(CENTER_LINE);
-			rtfFile.write(stringToUtfCode(_scenario->scenario()->year()).toUtf8().data());
+			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->year()).toUtf8().data() : "");
 			rtfFile.write("\\par");
 			rtfFile.write(END_OF_LINE);
 			rtfFile.write(END_OF_PAGE);
-		}
+		}*/
 
 		//
 		// Данные считываются из исходного документа, определяется тип блока
