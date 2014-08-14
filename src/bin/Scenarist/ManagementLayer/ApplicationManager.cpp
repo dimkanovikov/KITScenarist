@@ -39,8 +39,8 @@ using UserInterface::ApplicationView;
 
 namespace {
 	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
-    const char* MAC_PROJECT_CHANGED_SUFFIX =
-            QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
+	const char* MAC_CHANGED_SUFFIX =
+			QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
 
 	/**
 	 * @brief Неактивные при старте действия
@@ -92,20 +92,22 @@ namespace {
 					DataStorageLayer::SettingsStorage::ApplicationSettings);
 	}
 
-    static void updateWindowModified(QWidget* _widget, bool _modified) {
+	static void updateWindowModified(QWidget* _widget, bool _modified) {
 #ifdef Q_OS_MAC
-        if (_modified) {
-            if (!_widget->windowTitle().endsWith(MAC_PROJECT_CHANGED_SUFFIX)) {
-                _widget->setWindowTitle(_widget->windowTitle() + MAC_PROJECT_CHANGED_SUFFIX);
-            }
-        } else {
-            if (_widget->windowTitle().endsWith(MAC_PROJECT_CHANGED_SUFFIX)) {
-                _widget->setWindowTitle(_widget->windowTitle().remove(MAC_PROJECT_CHANGED_SUFFIX));
-            }
-        }
+		static const QString suffix =
+				QApplication::translate("ManagementLayer::ApplicationManager", MAC_CHANGED_SUFFIX);
+		if (_modified) {
+			if (!_widget->windowTitle().endsWith(suffix)) {
+				_widget->setWindowTitle(_widget->windowTitle() + suffix);
+			}
+		} else {
+			if (_widget->windowTitle().endsWith(suffix)) {
+				_widget->setWindowTitle(_widget->windowTitle().remove(suffix));
+			}
+		}
 #endif
-        _widget->setWindowModified(_modified);
-    }
+		_widget->setWindowModified(_modified);
+	}
 }
 
 
@@ -291,7 +293,7 @@ void ApplicationManager::aboutSave()
 		//
 		// Изменим статус окна на сохранение изменений
 		//
-        ::updateWindowModified(m_view, false);
+		::updateWindowModified(m_view, false);
 	}
 }
 
@@ -346,8 +348,8 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 
 		//
 		// Изменим статус окна на сохранение изменений
-        //
-        ::updateWindowModified(m_view, false);
+		//
+		::updateWindowModified(m_view, false);
 	}
 }
 
@@ -386,7 +388,7 @@ void ApplicationManager::aboutApplicationSettingsUpdated()
 
 void ApplicationManager::aboutProjectChanged()
 {
-    ::updateWindowModified(m_view, true);
+	::updateWindowModified(m_view, true);
 }
 
 void ApplicationManager::loadViewState()
@@ -440,8 +442,8 @@ bool ApplicationManager::saveIfNeeded()
 			//
 			if (questionResult == QMessageBox::Yes) {
 				aboutSave();
-            } else {
-                ::updateWindowModified(m_view, false);
+			} else {
+				::updateWindowModified(m_view, false);
 			}
 		} else {
 			success = false;
@@ -479,7 +481,7 @@ void ApplicationManager::goToEditCurrentProject()
 	QString projectFileName = DatabaseLayer::Database::currentFile();
 	projectFileName = projectFileName.split(QDir::separator()).last();
 #ifdef Q_OS_MAC
-    m_view->setWindowTitle(projectFileName);
+	m_view->setWindowTitle(projectFileName);
 #else
 	m_view->setWindowTitle(tr("%1[*] - Scenarist").arg(projectFileName));
 #endif
