@@ -190,7 +190,7 @@ void ScenarioManager::saveViewState()
 
 void ScenarioManager::aboutTextEditSettingsUpdated()
 {
-	m_scenario->refresh();
+    m_scenario->refresh();
     m_textEditManager->reloadTextEditSettings();
 }
 
