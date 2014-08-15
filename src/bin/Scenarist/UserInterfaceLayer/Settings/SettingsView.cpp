@@ -197,7 +197,7 @@ void SettingsView::setChronometryConfigurableSecondsFor50Dialog(double _value)
 
 void SettingsView::aboutScenarioEditSpellCheckLanguageChanged()
 {
-    emit scenarioEditSpellCheckLanguageChanged(ui->spellCheckingLanguage->currentData().toInt());
+	emit scenarioEditSpellCheckLanguageChanged(ui->spellCheckingLanguage->currentData().toInt());
 }
 
 void SettingsView::aboutScenarioEditChooseTextColor()
@@ -291,6 +291,7 @@ void SettingsView::initView()
 	ui->splitter->setStretchFactor(1, 1);
 
 	ui->spellCheckingLanguage->setCurrentIndex(0);
+	ui->spellCheckingLanguage->setEnabled(false);
 }
 
 void SettingsView::initConnections()
@@ -299,8 +300,8 @@ void SettingsView::initConnections()
 	// Настроим соединения формы
 	//
 	connect(ui->categories, SIGNAL(currentRowChanged(int)), ui->categoriesWidgets, SLOT(setCurrentIndex(int)));
-    // ... активация автосохранения
-    connect(ui->autosave, SIGNAL(toggled(bool)), ui->autosaveInterval, SLOT(setEnabled(bool)));
+	// ... активация автосохранения
+	connect(ui->autosave, SIGNAL(toggled(bool)), ui->autosaveInterval, SLOT(setEnabled(bool)));
 	// ... активация проверки орфографии
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), ui->spellCheckingLanguage, SLOT(setEnabled(bool)));
 	// ... выбор цвета элементов редактора сценария
