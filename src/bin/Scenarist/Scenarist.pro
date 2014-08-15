@@ -329,4 +329,5 @@ OTHER_FILES += \
     logo.ico \
     Scenarist.rc
 
-RC_FILE = Scenarist.rc
+win32:RC_FILE = Scenarist.rc
+macx:ICON = logo.icns
