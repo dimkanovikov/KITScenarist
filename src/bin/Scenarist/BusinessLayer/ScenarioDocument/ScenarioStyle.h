@@ -143,9 +143,19 @@ namespace BusinessLogic
 		QTextBlockFormat blockFormat() const { return m_blockFormat; }
 
 		/**
+		 * @brief Установить цвет фона блока
+		 */
+		void setBackgroundColor(const QColor& _color);
+
+		/**
 		 * @brief Настройки шрифта блока
 		 */
 		QTextCharFormat charFormat() const { return m_charFormat; }
+
+		/**
+		 * @brief Установить цвет текста
+		 */
+		void setTextColor(const QColor& _color);
 
 		/**
 		 * @brief Первый символ заглавный
@@ -318,6 +328,11 @@ namespace BusinessLogic
 		 * @brief Установить стиль блока
 		 */
 		void setBlockStyle(const ScenarioBlockStyle& _blockStyle);
+
+		/**
+		 * @brief Обновить цвета прорисовки блоков
+		 */
+		void updateBlocksColors();
 
 	private:
 		ScenarioStyle(const QString& _from_file);

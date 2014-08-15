@@ -131,6 +131,16 @@ void ScenarioBlockStyle::setRightMargin(qreal _rightMargin)
 	}
 }
 
+void ScenarioBlockStyle::setBackgroundColor(const QColor& _color)
+{
+	m_blockFormat.setBackground(_color);
+}
+
+void ScenarioBlockStyle::setTextColor(const QColor& _color)
+{
+	m_charFormat.setForeground(_color);
+}
+
 bool ScenarioBlockStyle::isFirstUppercase() const
 {
 	return m_charFormat.boolProperty(ScenarioBlockStyle::PropertyIsFirstUppercase);
@@ -263,12 +273,6 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 									 ScenarioBlockStyle::Undefined);
 	m_charFormat.setProperty(ScenarioBlockStyle::PropertyIsFirstUppercase, true);
 	m_charFormat.setProperty(ScenarioBlockStyle::PropertyIsCanModify, true);
-	m_charFormat.setForeground(
-				QColor(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-						"scenario-editor/text-color",
-						DataStorageLayer::SettingsStorage::ApplicationSettings)
-					));
 
 	//
 	// Настроим остальные характеристики
@@ -294,30 +298,8 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 			break;
 		}
 
-		case NoprintableText: {
-			m_charFormat.setForeground(
-						QColor(
-							DataStorageLayer::StorageFacade::settingsStorage()->value(
-								"scenario-editor/nonprintable-text-color",
-								DataStorageLayer::SettingsStorage::ApplicationSettings)
-							));
-			break;
-		}
-
-		case FolderHeader:
 		case FolderFooter: {
-			m_blockFormat.setBackground(
-						QColor(
-							DataStorageLayer::StorageFacade::settingsStorage()->value(
-								"scenario-editor/folder-background-color",
-								DataStorageLayer::SettingsStorage::ApplicationSettings)
-							));
-			m_charFormat.setForeground(
-						QColor(
-							DataStorageLayer::StorageFacade::settingsStorage()->value(
-								"scenario-editor/folder-text-color",
-								DataStorageLayer::SettingsStorage::ApplicationSettings)
-							));
+			m_charFormat.setProperty(ScenarioBlockStyle::PropertyIsCanModify, false);
 			break;
 		}
 
@@ -442,6 +424,64 @@ void ScenarioStyle::setBlockStyle(const BusinessLogic::ScenarioBlockStyle& _bloc
 	m_blockStyles.insert(_blockStyle.type(), _blockStyle);
 }
 
+void ScenarioStyle::updateBlocksColors()
+{
+	//
+	// Определим цвета
+	//
+	QColor mainTextColor =
+			QColor(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/text-color",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
+	QColor noprintableTextColor =
+			QColor(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/nonprintable-text-color",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
+	QColor folderTextColor =
+			QColor(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/folder-text-color",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
+	QColor folderBackgroundColor =
+			QColor(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/folder-background-color",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
+
+	//
+	// Обновим цвета блоков
+	//
+	foreach (ScenarioBlockStyle::Type blockStyleType, m_blockStyles.keys()) {
+		ScenarioBlockStyle blockStyle = m_blockStyles.value(blockStyleType);
+		switch (blockStyleType) {
+
+			default: {
+				blockStyle.setTextColor(mainTextColor);
+				break;
+			}
+
+			case ScenarioBlockStyle::NoprintableText: {
+				blockStyle.setTextColor(noprintableTextColor);
+				break;
+			}
+
+			case ScenarioBlockStyle::FolderFooter:
+			case ScenarioBlockStyle::FolderHeader: {
+				blockStyle.setTextColor(folderTextColor);
+				blockStyle.setBackgroundColor(folderBackgroundColor);
+				break;
+			}
+		}
+		m_blockStyles.insert(blockStyleType, blockStyle);
+	}
+}
+
 ScenarioStyle::ScenarioStyle(const QString& _from_file)
 {
 	load(_from_file);
@@ -522,6 +562,9 @@ ScenarioStyle ScenarioStyleFacade::style(const QString& _styleName)
 	} else {
 		result = s_instance->m_styles.value(_styleName);
 	}
+
+	result.updateBlocksColors();
+
 	return result;
 }
 
