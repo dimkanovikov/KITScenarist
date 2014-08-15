@@ -35,15 +35,9 @@ void ScenarioTextBlockInfo::setSynopsis(const QString& _synopsis, bool htmlEscap
 	inputSynopsis = TextEditHelper::removeDocumentTags(inputSynopsis);
 
 	//
-	// Проверим не пуст ли синопсис
+	// Обновим синопсис, если он изменился
 	//
-	QString plainSynopsis = TextEditHelper::removeHtmlTags(inputSynopsis);
-
-	//
-	// Если это не пустой синопсис, да ещё и новый, то обновим
-	//
-	if (!plainSynopsis.isEmpty()
-		&& m_synopsis != inputSynopsis) {
+	if (m_synopsis != inputSynopsis) {
 		m_synopsis = inputSynopsis;
 	}
 }
