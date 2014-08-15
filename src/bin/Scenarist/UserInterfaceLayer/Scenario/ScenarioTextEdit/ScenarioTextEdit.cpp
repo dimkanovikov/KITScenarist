@@ -717,6 +717,8 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 
 bool ScenarioTextEdit::stringEndsWithAbbrev(const QString& _text)
 {
+	Q_UNUSED(_text);
+
 	//
 	// FIXME проработать словарь сокращений
 	//
