@@ -251,17 +251,17 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	_event->accept();
 
-    //
-    // Завершим блок операций
-    //
-    cursor.endEditBlock();
+	//
+	// Завершим блок операций
+	//
+	cursor.endEditBlock();
 
 	//
 	// Убедимся, что курсор виден
 	//
 	if (handler->needEnsureCursorVisible()) {
 		ensureCursorVisibleReimpl();
-    }
+	}
 }
 
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
@@ -370,7 +370,7 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 		}
 	}
 
-    cursor.endEditBlock();
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()

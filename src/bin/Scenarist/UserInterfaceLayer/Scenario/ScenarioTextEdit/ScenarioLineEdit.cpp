@@ -44,11 +44,11 @@ ScenarioLineEdit::ScenarioLineEdit(QWidget* _parent) :
 	//
 	setStoreDataWhenEditing(false);
 
+	setAddSpaceToBottom(false);
+
 	//
 	// Делаем себя похожим на обычный редактор
 	//
-	setFont(QApplication::font());
-	document()->setDefaultFont(QApplication::font());
 	connect(document(), SIGNAL(contentsChanged()), this, SLOT(clearCharFormat()));
 	clearCharFormat();
 }
@@ -65,18 +65,18 @@ void ScenarioLineEdit::keyPressEvent(QKeyEvent* _event)
 		//
 	} else {
 		ScenarioTextEdit::keyPressEvent(_event);
-    }
+	}
 }
 
 void ScenarioLineEdit::insertFromMimeData(const QMimeData *_source)
 {
-    //
-    // Вставляем только в текстовом виде
-    //
-    if (_source->hasText()) {
-        QString textToInsert = _source->text().simplified();
-        insertPlainText(textToInsert);
-    }
+	//
+	// Вставляем только в текстовом виде
+	//
+	if (_source->hasText()) {
+		QString textToInsert = _source->text().simplified();
+		insertPlainText(textToInsert);
+	}
 }
 
 void ScenarioLineEdit::removeLineBreaks()
@@ -101,21 +101,24 @@ void ScenarioLineEdit::clearCharFormat()
 		// Установим стиль отображения текста, как в обычном редакторе
 		//
 		QTextCharFormat charFormat = cursor.charFormat();
+		charFormat.setFont(QApplication::font());
 		charFormat.setForeground(QApplication::palette().foreground());
 
-		//
-		// Обновим стили
-		//
-		cursor.setBlockCharFormat(charFormat);
+		if (cursor.charFormat() != charFormat) {
+			//
+			// Обновим стили
+			//
+			cursor.setBlockCharFormat(charFormat);
 
-		//
-		// Применим стиль текста ко всему блоку, выделив его,
-		// т.к. в блоке могут находиться фрагменты в другом стиле
-		//
-		cursor.select(QTextCursor::BlockUnderCursor);
-		cursor.setCharFormat(charFormat);
-		cursor.clearSelection();
-		setTextCursor(cursor);
+			//
+			// Применим стиль текста ко всему блоку, выделив его,
+			// т.к. в блоке могут находиться фрагменты в другом стиле
+			//
+			cursor.select(QTextCursor::BlockUnderCursor);
+			cursor.setCharFormat(charFormat);
+			cursor.clearSelection();
+			setTextCursor(cursor);
+		}
 
 		m_inClearCharFormat = false;
 	}

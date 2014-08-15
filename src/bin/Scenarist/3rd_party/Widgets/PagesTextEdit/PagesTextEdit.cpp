@@ -55,6 +55,7 @@ namespace {
 PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	QTextEdit(parent),
 	m_usePageMode(false),
+	m_addBottomSpace(true),
 	m_inZoomHandling(false),
 	m_zoomRange(0),
 	m_document(0)
@@ -123,6 +124,18 @@ void PagesTextEdit::setUsePageMode(bool _use)
 {
 	if (m_usePageMode != _use) {
 		m_usePageMode = _use;
+
+		//
+		// Перерисуем себя
+		//
+		repaint();
+	}
+}
+
+void PagesTextEdit::setAddSpaceToBottom(bool _addSpace)
+{
+	if (m_addBottomSpace != _addSpace) {
+		m_addBottomSpace = _addSpace;
 
 		//
 		// Перерисуем себя
@@ -256,7 +269,9 @@ void PagesTextEdit::updateVerticalScrollRange()
 	//
 	else {
 		const int SCROLL_DELTA = 800;
-		int maximumValue = document()->size().height() - viewport()->size().height() + SCROLL_DELTA;
+		int maximumValue =
+				document()->size().height() - viewport()->size().height()
+				+ (m_addBottomSpace ? SCROLL_DELTA : 0);
 		if (verticalScrollBar()->maximum() != maximumValue) {
 			verticalScrollBar()->setRange(0, maximumValue);
 		}
@@ -314,12 +329,12 @@ void PagesTextEdit::paintPagesView()
 			p.drawLine(0, curHeight-8, pageWidth, curHeight-8);
 			// ... верхняя следующей страницы
 			if (canDrawNextPageLine) {
-                p.drawLine(0, curHeight, pageWidth, curHeight);
+				p.drawLine(0, curHeight, pageWidth, curHeight);
 			}
 			// ... левая
 			p.drawLine(0, curHeight-pageHeight, 0, curHeight-8);
 			// ... правая
-            p.drawLine(x, curHeight-pageHeight, x, curHeight-8);
+			p.drawLine(x, curHeight-pageHeight, x, curHeight-8);
 
 			curHeight += pageHeight;
 		}
@@ -335,7 +350,7 @@ void PagesTextEdit::paintPagesView()
 			// ... левая
 			p.drawLine(0, curHeight-pageHeight, 0, height());
 			// ... правая
-            p.drawLine(x, curHeight-pageHeight, x, height());
+			p.drawLine(x, curHeight-pageHeight, x, height());
 		}
 	}
 }

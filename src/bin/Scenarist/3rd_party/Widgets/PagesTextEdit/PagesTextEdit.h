@@ -42,6 +42,11 @@ public slots:
 	 */
 	void setUsePageMode(bool _use);
 
+	/**
+	 * @brief Установить значение необходимости добавления дополнительной прокрутки снизу
+	 */
+	void setAddSpaceToBottom(bool _addSpace);
+
 signals:
 	/**
 	 * @brief Изменился коэффициент масштабирования
@@ -109,6 +114,11 @@ private:
 	 * false - сплошной
 	 */
 	bool m_usePageMode;
+
+	/**
+	 * @brief Необходимо ли добавлять пространство снизу в обычном режиме
+	 */
+	bool m_addBottomSpace;
 
 	/**
 	 * @brief Метрика страницы редактора
