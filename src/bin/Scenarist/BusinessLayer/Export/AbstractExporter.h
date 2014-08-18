@@ -53,6 +53,8 @@ namespace BusinessLogic
 	class AbstractExporter
 	{
 	public:
+		virtual ~AbstractExporter() {}
+
 		/**
 		 * @brief Экспорт заданного документа в файл
 		 */
