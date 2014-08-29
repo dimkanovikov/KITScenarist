@@ -63,9 +63,8 @@ namespace {
 			s_types.insert(8, ScenarioBlockStyle::Note);
 			s_types.insert(9, ScenarioBlockStyle::TitleHeader);
 			s_types.insert(10, ScenarioBlockStyle::Title);
-			s_types.insert(11, ScenarioBlockStyle::NoprintableText);
-			s_types.insert(12, ScenarioBlockStyle::SceneGroupHeader);
-			s_types.insert(13, ScenarioBlockStyle::FolderHeader);
+			s_types.insert(11, ScenarioBlockStyle::SceneGroupHeader);
+			s_types.insert(12, ScenarioBlockStyle::SceneGroupFooter);
 		}
 		return s_types;
 	}
