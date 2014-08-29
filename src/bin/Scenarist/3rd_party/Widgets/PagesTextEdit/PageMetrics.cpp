@@ -106,6 +106,6 @@ QMarginsF PageMetrics::pxPageMargins() const
 {
 	return QMarginsF(m_pxPageMargins.left() * m_zoomRange,
 					 m_pxPageMargins.top() * m_zoomRange,
-					 m_pxPageMargins.bottom() * m_zoomRange,
-					 m_pxPageMargins.right() * m_zoomRange);
+					 m_pxPageMargins.right() * m_zoomRange,
+					 m_pxPageMargins.bottom() * m_zoomRange);
 }
