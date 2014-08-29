@@ -100,7 +100,7 @@ void ScenarioBlockStyle::setAlign(Qt::Alignment _align)
 		m_align = _align;
 
 		m_blockFormat.setAlignment(m_align);
-		m_blockFormat.setTopMargin(QFontMetrics(m_font).lineSpacing() * m_topSpace);
+		m_blockFormat.setTopMargin(QFontMetricsF(m_font).lineSpacing() * m_topSpace);
 	}
 }
 
@@ -109,7 +109,7 @@ void ScenarioBlockStyle::setTopSpace(int _topSpace)
 	if (m_topSpace != _topSpace) {
 		m_topSpace = _topSpace;
 
-		m_blockFormat.setTopMargin(QFontMetrics(m_font).lineSpacing() * m_topSpace);
+		m_blockFormat.setTopMargin(QFontMetricsF(m_font).lineSpacing() * m_topSpace);
 	}
 }
 
@@ -256,7 +256,7 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	// ... блока
 	//
 	m_blockFormat.setAlignment(m_align);
-	m_blockFormat.setTopMargin(QFontMetrics(m_font).lineSpacing() * m_topSpace);
+	m_blockFormat.setTopMargin(QFontMetricsF(m_font).lineSpacing() * m_topSpace);
 	m_blockFormat.setLeftMargin(PageMetrics::mmToPx(m_leftMargin));
 	m_blockFormat.setRightMargin(PageMetrics::mmToPx(m_rightMargin));
 	m_blockFormat.setBottomMargin(0);

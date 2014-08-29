@@ -394,6 +394,16 @@ QString RtfExporter::header() const
 	header.append("}\n");
 
 	//
+	// Настройки размера документа
+	//
+	QSizeF paperSize = QPageSize(style.pageSizeId()).size(QPageSize::Millimeter);
+	header.append(
+				QString("\\paperh%1\\paperw%2")
+				.arg(::mmToTwips(paperSize.height()))
+				.arg(::mmToTwips(paperSize.width()))
+				);
+
+	//
 	// Настройки полей документа
 	//
 	header.append(

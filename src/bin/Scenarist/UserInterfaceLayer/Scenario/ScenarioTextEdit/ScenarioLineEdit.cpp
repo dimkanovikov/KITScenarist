@@ -23,7 +23,7 @@ ScenarioLineEdit::ScenarioLineEdit(QWidget* _parent) :
 	//
 	// Настраиваем собственный размер
 	//
-	QFontMetrics metrics(document()->defaultFont());
+	QFontMetricsF metrics(document()->defaultFont());
 	int height = metrics.boundingRect("Q").height() + (DOCUMENT_MARGIN * 2);
 	setFixedHeight(height);
 

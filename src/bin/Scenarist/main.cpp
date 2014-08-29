@@ -5,10 +5,6 @@
 #include <QTranslator>
 
 #include <ManagementLayer/ApplicationManager.h>
-#include <QFontMetricsF>
-
-#include <QDebug>
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 
 int main(int argc, char *argv[])
