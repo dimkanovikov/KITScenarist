@@ -37,7 +37,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Запуск приложения
 		 */
-        void exec(const QString& _fileToOpen);
+		void exec(const QString& _fileToOpen);
 
 	private slots:
 		/**
@@ -141,6 +141,11 @@ namespace ManagementLayer
 		 * @brief Перезагрузить настройки приложения
 		 */
 		void reloadApplicationSettings();
+
+		/**
+		 * @brief Обновить заголовок окна
+		 */
+		void updateWindowTitle();
 
 	private:
 		/**

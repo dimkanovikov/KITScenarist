@@ -259,6 +259,11 @@ void ApplicationManager::aboutSaveAs()
 			// ... сохраняем изменения
 			//
 			aboutSave();
+
+			//
+			// ... обновим заголовок
+			//
+			updateWindowTitle();
 		}
 
 		//
@@ -478,13 +483,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Установим заголовок
 	//
-	QString projectFileName = DatabaseLayer::Database::currentFile();
-	projectFileName = projectFileName.split(QDir::separator()).last();
-#ifdef Q_OS_MAC
-	m_view->setWindowTitle(projectFileName);
-#else
-	m_view->setWindowTitle(tr("%1[*] - Scenarist").arg(projectFileName));
-#endif
+	updateWindowTitle();
 
 	//
 	// Добавим проект к недавно используемым
@@ -740,4 +739,15 @@ void ApplicationManager::reloadApplicationSettings()
 		connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(aboutSave()));
 		m_autosaveTimer.start(autosaveInterval * 60 * 1000); // Переводим минуты в миллисекунды
 	}
+}
+
+void ApplicationManager::updateWindowTitle()
+{
+	QString projectFileName = DatabaseLayer::Database::currentFile();
+	projectFileName = projectFileName.split(QDir::separator()).last();
+#ifdef Q_OS_MAC
+	m_view->setWindowTitle(projectFileName);
+#else
+	m_view->setWindowTitle(tr("%1[*] - Scenarist").arg(projectFileName));
+#endif
 }

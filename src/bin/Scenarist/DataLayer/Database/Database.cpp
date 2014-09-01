@@ -16,14 +16,9 @@ void Database::setCurrentFile(const QString& _databaseFileName)
 	//
 	// Если использовалась база данных, то удалим старое соединение
 	//
-	// FIXME: если удалить соединение до тех пор пока не выполнились все запросы,
-	//		  то они не смогут корректно завершиться, как отследить все ли запросы
-	//		  выполнились я пока не придумал...
-	//		  выполняются они в отдельном потоке см. SqlExecutingQueuedThread
-	//
-//	if (QSqlDatabase::contains(CONNECTION_NAME)) {
-//		QSqlDatabase::removeDatabase(CONNECTION_NAME);
-//	}
+	if (QSqlDatabase::contains(CONNECTION_NAME)) {
+		QSqlDatabase::removeDatabase(CONNECTION_NAME);
+	}
 
 	//
 	// Установим текущее имя базы данных
