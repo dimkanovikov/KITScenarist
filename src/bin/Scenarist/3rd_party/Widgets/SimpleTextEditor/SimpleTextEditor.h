@@ -3,6 +3,8 @@
 
 #include <QTextEdit>
 
+class QGestureEvent;
+
 
 /**
  * @brief Простейший редактор текста
@@ -15,6 +17,11 @@ public:
 	explicit SimpleTextEditor(QWidget *parent = 0);
 
 protected:
+    /**
+     * @brief Переопределяем для обработки жестов
+     */
+    bool event(QEvent* _event);
+
 	/**
 	 * @brief Переопределяется для добавления пунктов форматирования текста
 	 */
@@ -24,6 +31,11 @@ protected:
 	 * @brief Переопределяется для реализации увеличения/уменьшения текста
 	 */
 	void wheelEvent(QWheelEvent* _event);
+
+    /**
+     * @brief Обрабатываем жест увеличения масштаба
+     */
+    void gestureEvent(QGestureEvent* _event);
 
 private slots:
 	void textBold();
@@ -47,6 +59,11 @@ private:
 	QAction* actionTextItalic;
 
 	int m_zoomRange;
+
+    /**
+     * @brief Инерционный тормоз масштабирования при помощи жестов
+     */
+    int m_gestureZoomInertionBreak;
 
 	/**
 	 * @brief Синхронизация масштабирования всех редакторов данного типа

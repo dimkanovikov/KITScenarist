@@ -6,6 +6,9 @@
 #include "PageMetrics.h"
 
 
+class QGestureEvent;
+
+
 /**
  * @brief Редактор текста, с возможностью постраничного отображения содержимого
  */
@@ -55,6 +58,11 @@ signals:
 
 protected:
 	/**
+	 * @brief Переопределяем для обработки жестов
+	 */
+	bool event(QEvent* _event);
+
+	/**
 	 * @brief Переопределяется для корректировки документа и прорисовки оформления страниц
 	 */
 	void paintEvent(QPaintEvent* _event);
@@ -63,6 +71,11 @@ protected:
 	 * @brief Переопределяется для реализации увеличения/уменьшения текста
 	 */
 	void wheelEvent(QWheelEvent* _event);
+
+	/**
+	 * @brief Обрабатываем жест увеличения масштаба
+	 */
+	void gestureEvent(QGestureEvent* _event);
 
 private:
 	/**
@@ -134,6 +147,11 @@ private:
 	 * @brief Текущий коэффициент масштабирования
 	 */
 	int m_zoomRange;
+
+    /**
+     * @brief Инерционный тормоз масштабирования при помощи жестов
+     */
+    int m_gestureZoomInertionBreak;
 
 	/**
 	 * @brief Указатель на документ

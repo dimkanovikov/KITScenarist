@@ -1,5 +1,6 @@
 #include "PagesTextEdit.h"
 
+#include <QGestureEvent>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QScrollBar>
@@ -58,9 +59,15 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	m_addBottomSpace(true),
 	m_inZoomHandling(false),
 	m_zoomRange(0),
+    m_gestureZoomInertionBreak(0),
 	m_document(0)
 {
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+	//
+	// Отслеживаем масштабирование при помощи жеста
+	//
+    grabGesture(Qt::PinchGesture);
 
 	//
 	// Отслеживаем потенциальное изменение документа
@@ -144,6 +151,18 @@ void PagesTextEdit::setAddSpaceToBottom(bool _addSpace)
 	}
 }
 
+bool PagesTextEdit::event(QEvent* _event)
+{
+	bool result = true;
+	if (_event->type() == QEvent::Gesture) {
+		gestureEvent(static_cast<QGestureEvent*>(_event));
+	} else {
+        result = QTextEdit::event(_event);
+	}
+
+	return result;
+}
+
 void PagesTextEdit::setPageFormat(QPageSize::PageSizeId _pageFormat)
 {
 	m_pageMetrics.update(_pageFormat);
@@ -190,6 +209,43 @@ void PagesTextEdit::wheelEvent(QWheelEvent* _event)
 		}
 	} else {
 		QTextEdit::wheelEvent(_event);
+	}
+}
+
+void PagesTextEdit::gestureEvent(QGestureEvent* _event)
+{
+	if (QGesture* gesture = _event->gesture(Qt::PinchGesture)) {
+		if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
+            //
+            // При масштабировании за счёт жестов приходится немного притормаживать
+            // т.к. события приходят слишком часто и при обработке каждого события
+            // пользователю просто невозможно корректно настроить масштаб
+            //
+
+            int zoomRange = m_zoomRange;
+            if (pinch->scaleFactor() > 1) {
+                if (m_gestureZoomInertionBreak < 0) {
+                    m_gestureZoomInertionBreak = 0;
+                } else if (m_gestureZoomInertionBreak >= 8) {
+                    m_gestureZoomInertionBreak = 0;
+                    ++zoomRange;
+                } else {
+                    ++m_gestureZoomInertionBreak;
+                }
+            } else if (pinch->scaleFactor() < 1) {
+                if (m_gestureZoomInertionBreak > 0) {
+                    m_gestureZoomInertionBreak = 0;
+                } else if (m_gestureZoomInertionBreak <= -8) {
+                    m_gestureZoomInertionBreak = 0;
+                    --zoomRange;
+                } else {
+                    --m_gestureZoomInertionBreak;
+                }
+            }
+            setZoomRange(zoomRange);
+
+            _event->accept();
+		}
 	}
 }
 
