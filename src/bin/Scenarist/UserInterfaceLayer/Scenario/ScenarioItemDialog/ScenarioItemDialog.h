@@ -36,13 +36,7 @@ namespace UserInterface
 		/**
 		 * @brief Получить текст
 		 */
-		QString itemHeader() const;
-
-	public:
-		/**
-		 * @brief Переопределяется для того, чтобы открываться по центру главного виджета
-		 */
-		int exec();
+        QString itemHeader() const;
 
 	private slots:
 		/**

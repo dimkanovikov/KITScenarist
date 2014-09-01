@@ -63,9 +63,11 @@ void ScenarioNavigatorManager::setCurrentIndex(const QModelIndex& _index)
 
 void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
 {
+    m_addItemDialog->clearText();
+
 	//
 	// Если пользователь действительно хочет добавить элемент
-	//
+    //
 	if (m_addItemDialog->exec() == QDialog::Accepted) {
 		QString itemHeader = m_addItemDialog->itemHeader();
 		int itemType = m_addItemDialog->itemType();

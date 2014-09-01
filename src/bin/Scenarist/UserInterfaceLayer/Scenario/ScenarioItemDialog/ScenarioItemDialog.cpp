@@ -27,7 +27,9 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 
 void ScenarioItemDialog::clearText()
 {
-	m_itemEditor->clear();
+    QTextCursor cursor(m_itemEditor->document());
+    cursor.select(QTextCursor::Document);
+    cursor.removeSelectedText();
 
 	aboutUpdateCurrentTextStyle();
 }
@@ -49,25 +51,7 @@ ScenarioBlockStyle::Type ScenarioItemDialog::itemType() const
 
 QString ScenarioItemDialog::itemHeader() const
 {
-	return m_itemEditor->toPlainText();
-}
-
-int ScenarioItemDialog::exec()
-{
-	clearText();
-
-	//
-	// Ищем центр главного виджета приложения
-	//
-	QWidget* parent = QApplication::activeWindow();
-
-	QPoint position(
-				parent->pos().x() + ((parent->width() - width()) / 2),
-				parent->pos().y() + ((parent->height() - height()) / 2)
-				);
-	move(position);
-
-	return QDialog::exec();
+    return m_itemEditor->toPlainText();
 }
 
 void ScenarioItemDialog::aboutUpdateCurrentTextStyle()
