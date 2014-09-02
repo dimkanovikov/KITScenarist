@@ -256,8 +256,12 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	// ... блока
 	//
 	m_blockFormat.setAlignment(m_align);
-	m_blockFormat.setLineHeight(QFontMetricsF(m_font).height(), QTextBlockFormat::FixedHeight);
-	m_blockFormat.setTopMargin(QFontMetricsF(m_font).height() * m_topSpace);
+	//
+	// ... высота линии текста в разных системах рассчитывается по разному, поэтому ищем компромис
+	//
+	const qreal realLineHeight = qMax(QFontMetricsF(m_font).lineSpacing(), QFontMetricsF(m_font).height());
+	m_blockFormat.setLineHeight(realLineHeight, QTextBlockFormat::FixedHeight);
+	m_blockFormat.setTopMargin(realLineHeight * m_topSpace);
 	m_blockFormat.setLeftMargin(PageMetrics::mmToPx(m_leftMargin));
 	m_blockFormat.setRightMargin(PageMetrics::mmToPx(m_rightMargin));
 	m_blockFormat.setBottomMargin(0);
