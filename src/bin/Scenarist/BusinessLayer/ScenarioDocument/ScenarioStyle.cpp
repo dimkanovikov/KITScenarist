@@ -212,7 +212,7 @@ ScenarioBlockStyle::Type ScenarioBlockStyle::embeddableFooter() const
 
 	return footer;
 }
-
+#include <QDebug>
 ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttributes)
 {
 	//
@@ -256,7 +256,8 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	// ... блока
 	//
 	m_blockFormat.setAlignment(m_align);
-	m_blockFormat.setTopMargin(QFontMetricsF(m_font).lineSpacing() * m_topSpace);
+	m_blockFormat.setLineHeight(QFontMetricsF(m_font).height(), QTextBlockFormat::FixedHeight);
+	m_blockFormat.setTopMargin(QFontMetricsF(m_font).height() * m_topSpace);
 	m_blockFormat.setLeftMargin(PageMetrics::mmToPx(m_leftMargin));
 	m_blockFormat.setRightMargin(PageMetrics::mmToPx(m_rightMargin));
 	m_blockFormat.setBottomMargin(0);

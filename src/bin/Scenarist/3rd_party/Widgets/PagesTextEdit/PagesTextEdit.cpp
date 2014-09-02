@@ -59,7 +59,7 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	m_addBottomSpace(true),
 	m_inZoomHandling(false),
 	m_zoomRange(0),
-    m_gestureZoomInertionBreak(0),
+	m_gestureZoomInertionBreak(0),
 	m_document(0)
 {
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -67,7 +67,7 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	//
 	// Отслеживаем масштабирование при помощи жеста
 	//
-    grabGesture(Qt::PinchGesture);
+	grabGesture(Qt::PinchGesture);
 
 	//
 	// Отслеживаем потенциальное изменение документа
@@ -157,7 +157,7 @@ bool PagesTextEdit::event(QEvent* _event)
 	if (_event->type() == QEvent::Gesture) {
 		gestureEvent(static_cast<QGestureEvent*>(_event));
 	} else {
-        result = QTextEdit::event(_event);
+		result = QTextEdit::event(_event);
 	}
 
 	return result;
@@ -216,35 +216,35 @@ void PagesTextEdit::gestureEvent(QGestureEvent* _event)
 {
 	if (QGesture* gesture = _event->gesture(Qt::PinchGesture)) {
 		if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
-            //
-            // При масштабировании за счёт жестов приходится немного притормаживать
-            // т.к. события приходят слишком часто и при обработке каждого события
-            // пользователю просто невозможно корректно настроить масштаб
-            //
+			//
+			// При масштабировании за счёт жестов приходится немного притормаживать
+			// т.к. события приходят слишком часто и при обработке каждого события
+			// пользователю просто невозможно корректно настроить масштаб
+			//
 
-            int zoomRange = m_zoomRange;
-            if (pinch->scaleFactor() > 1) {
-                if (m_gestureZoomInertionBreak < 0) {
-                    m_gestureZoomInertionBreak = 0;
-                } else if (m_gestureZoomInertionBreak >= 8) {
-                    m_gestureZoomInertionBreak = 0;
-                    ++zoomRange;
-                } else {
-                    ++m_gestureZoomInertionBreak;
-                }
-            } else if (pinch->scaleFactor() < 1) {
-                if (m_gestureZoomInertionBreak > 0) {
-                    m_gestureZoomInertionBreak = 0;
-                } else if (m_gestureZoomInertionBreak <= -8) {
-                    m_gestureZoomInertionBreak = 0;
-                    --zoomRange;
-                } else {
-                    --m_gestureZoomInertionBreak;
-                }
-            }
-            setZoomRange(zoomRange);
+			int zoomRange = m_zoomRange;
+			if (pinch->scaleFactor() > 1) {
+				if (m_gestureZoomInertionBreak < 0) {
+					m_gestureZoomInertionBreak = 0;
+				} else if (m_gestureZoomInertionBreak >= 8) {
+					m_gestureZoomInertionBreak = 0;
+					++zoomRange;
+				} else {
+					++m_gestureZoomInertionBreak;
+				}
+			} else if (pinch->scaleFactor() < 1) {
+				if (m_gestureZoomInertionBreak > 0) {
+					m_gestureZoomInertionBreak = 0;
+				} else if (m_gestureZoomInertionBreak <= -8) {
+					m_gestureZoomInertionBreak = 0;
+					--zoomRange;
+				} else {
+					--m_gestureZoomInertionBreak;
+				}
+			}
+			setZoomRange(zoomRange);
 
-            _event->accept();
+			_event->accept();
 		}
 	}
 }
@@ -460,6 +460,9 @@ void PagesTextEdit::privateZoomIn(qreal _range, int _startPosition, int _endPosi
 			//
 			// ... обновим сами настройки
 			//
+			if (blockFormat.lineHeightType() == QTextBlockFormat::FixedHeight) {
+				blockFormat.setLineHeight(scale(blockFormat.lineHeight(), _range), QTextBlockFormat::FixedHeight);
+			}
 			if (blockFormat.leftMargin() > 0) {
 				blockFormat.setLeftMargin(scale(blockFormat.leftMargin(), _range));
 			}
