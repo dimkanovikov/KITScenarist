@@ -49,23 +49,6 @@ namespace BusinessLogic
 		 */
 		QPrinter* preparePrinter(const QString& _forFile = QString::null) const;
 
-		/**
-		 * @brief Подготовить документ к печати
-		 *
-		 * @note Вызывающий получает владение над новым сформированным документом
-		 */
-		QTextDocument* prepareDocument(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const;
-
-		/**
-		 * @brief Получить стиль оформления символов для заданного типа
-		 */
-		QTextCharFormat charFormatForType(ScenarioBlockStyle::Type _type) const;
-
-		/**
-		 * @brief Получить стиль оформления абзаца для заданного типа
-		 */
-		QTextBlockFormat blockFormatForType(ScenarioBlockStyle::Type _type) const;
-
 	private:
 		/**
 		 * @brief Документ для печати

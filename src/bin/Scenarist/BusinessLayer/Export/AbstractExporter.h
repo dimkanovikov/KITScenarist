@@ -3,6 +3,8 @@
 
 #include <QString>
 
+class QTextDocument;
+
 namespace BusinessLogic
 {
 	class ScenarioDocument;
@@ -59,6 +61,15 @@ namespace BusinessLogic
 		 * @brief Экспорт заданного документа в файл
 		 */
 		virtual void exportTo(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const = 0;
+
+	protected:
+		/**
+		 * @brief Сформировать из сценария документ, готовый для экспорта
+		 *
+		 * @note Вызывающий получает владение над новым сформированным документом
+		 */
+		QTextDocument* prepareDocument(const ScenarioDocument* _scenario,
+			const ExportParameters& _exportParameters) const;
 	};
 }
 

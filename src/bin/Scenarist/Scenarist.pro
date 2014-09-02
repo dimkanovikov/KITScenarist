@@ -166,7 +166,8 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Export/ExportDialog.cpp \
     Domain/CharacterState.cpp \
     DataLayer/DataMappingLayer/CharacterStateMapper.cpp \
-    DataLayer/DataStorageLayer/CharacterStateStorage.cpp
+    DataLayer/DataStorageLayer/CharacterStateStorage.cpp \
+    BusinessLayer/Export/AbstractExporter.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \

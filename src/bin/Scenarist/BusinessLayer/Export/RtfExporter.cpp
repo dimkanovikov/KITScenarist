@@ -205,8 +205,6 @@ RtfExporter::RtfExporter()
 
 void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const
 {
-	ScenarioStyle scenarioStyle = ::exportStyle();
-
 	//
 	// Открываем документ на запись
 	//
@@ -217,153 +215,43 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 		rtfFile.write(END_OF_LINE);
 
 		//
-		// Формирование титульной страницы
+		// Сформируем документ
 		//
-		/*{
-			const char* CENTER_LINE = "\\pard\\plain \\s0\\f0\\qc ";
-			const char* RIGHT_LINE = "\\pard\\plain \\s0\\f0\\qr ";
-			const char* END_OF_PAGE = "\\page\r\n";
+		QTextDocument* preparedDocument = prepareDocument(_scenario, _exportParameters);
 
-			//
-			// 12 пустых строк
-			//
-			int emptyLines = 12;
-			while ((emptyLines--) > 0) {
-				rtfFile.write(EMPTY_LINE);
-			}
-			//
-			// Название
-			//
-			rtfFile.write(CENTER_LINE);
-			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->name()).toUtf8().data() : "");
-			rtfFile.write("\\par");
-			rtfFile.write(END_OF_LINE);
-			//
-			// Доп. инфо
-			//
-			rtfFile.write(EMPTY_LINE);
-			rtfFile.write(CENTER_LINE);
-			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->additionalInfo()).toUtf8().data() : "");
-			rtfFile.write("\\par");
-			rtfFile.write(END_OF_LINE);
-			//
-			// Жанр
-			//
-			rtfFile.write(EMPTY_LINE);
-			rtfFile.write(CENTER_LINE);
-			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->genre()).toUtf8().data() : "");
-			rtfFile.write("\\par");
-			rtfFile.write(END_OF_LINE);
-			//
-			// Автор
-			//
-			rtfFile.write(EMPTY_LINE);
-			rtfFile.write(CENTER_LINE);
-			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->author()).toUtf8().data() : "");
-			rtfFile.write("\\par");
-			rtfFile.write(END_OF_LINE);
-			//
-			// 19 пустых строк
-			//
-			emptyLines = 19;
-			while ((emptyLines--) > 0) {
-				rtfFile.write(EMPTY_LINE);
-			}
-			//
-			// Контакты
-			//
-			rtfFile.write(RIGHT_LINE);
-			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->contacts()).toUtf8().data() : "");
-			rtfFile.write("\\par");
-			rtfFile.write(END_OF_LINE);
-			//
-			// 1 пустых строки
-			//
-			emptyLines = 1;
-			while ((emptyLines--) > 0) {
-				rtfFile.write(EMPTY_LINE);
-			}
-			//
-			// Год
-			//
-			rtfFile.write(CENTER_LINE);
-			rtfFile.write(_scenario->scenario() != 0 ? stringToUtfCode(_scenario->scenario()->year()).toUtf8().data() : "");
-			rtfFile.write("\\par");
-			rtfFile.write(END_OF_LINE);
-			rtfFile.write(END_OF_PAGE);
-		}*/
+		//
+		// Конвертируем документ в RTF
+		//
 
 		//
 		// Данные считываются из исходного документа, определяется тип блока
 		// и записываются прямо в файл
 		//
-		QTextCursor documentCursor(_scenario->document());
-
-		ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::Undefined;
-		int currentSceneNumber = 1;
+		QTextCursor documentCursor(preparedDocument);
 		while (!documentCursor.atEnd()) {
 			//
-			// Получим тип текущего блока под курсором
+			// Получим стиль параграфа
 			//
-			currentBlockType = ScenarioBlockStyle::forBlock(documentCursor.block());
-
-			//
-			// Если блок содержит текст, который необходимо вывести на печать
-			//
-			if (currentBlockType != ScenarioBlockStyle::NoprintableText
-				&& currentBlockType != ScenarioBlockStyle::FolderHeader
-				&& currentBlockType != ScenarioBlockStyle::FolderFooter) {
-				//
-				// Если вставляется не первый блок текста и нужно сделать отступ
-				//
-				if (!documentCursor.atStart()
-					&& !documentCursor.block().text().isEmpty()) {
-					int emptyLines = scenarioStyle.blockStyle(currentBlockType).topSpace();
-					while (emptyLines-- > 0) {
-						rtfFile.write(EMPTY_LINE);
-					}
-				}
-
-				//
-				// Определить стиль блока
-				//
-				QString blockStyle = style(currentBlockType);
-
-				//
-				// Вставить текст
-				//
-				rtfFile.write("\\pard\\plain ");
-				rtfFile.write(blockStyle.toUtf8().data());
-				rtfFile.write(" ");
-
-				//
-				// Для блока "Время и место"
-				//
-				if (currentBlockType == ScenarioBlockStyle::TimeAndPlace) {
-					//
-					// Префикс экспорта
-					//
-					rtfFile.write(stringToUtfCode(_exportParameters.scenesPrefix).toUtf8().data());
-					//
-					// Номер сцены, если необходимо
-					//
-					if (_exportParameters.printScenesNubers) {
-						QString sceneNumber = QString("%1. ").arg(currentSceneNumber);
-						rtfFile.write(stringToUtfCode(sceneNumber).toUtf8().data());
-						++currentSceneNumber;
-					}
-				}
-
-				//
-				// Сам текст блока
-				//
-				rtfFile.write(stringToUtfCode(documentCursor.block().text()).toUtf8().data());
-				rtfFile.write("\\par");
-				rtfFile.write(END_OF_LINE);
-			}
+			ScenarioBlockStyle::Type currentBlockType =
+					(ScenarioBlockStyle::Type)documentCursor.blockFormat().property(ScenarioBlockStyle::PropertyType).toInt();
+			QString blockStyle = style(currentBlockType);
 
 			//
-			// Переходим к следующему блоку
+			// ... и запишем его в документ
+			//
+			rtfFile.write("\\pard\\plain ");
+			rtfFile.write(blockStyle.toUtf8().data());
+			rtfFile.write(" ");
+
+			//
+			// Запишем параграф в документ
+			//
+			rtfFile.write(stringToUtfCode(documentCursor.block().text()).toUtf8().data());
+			rtfFile.write("\\par");
+			rtfFile.write(END_OF_LINE);
+
+			//
+			// Переходим к следующему параграфу
 			//
 			documentCursor.movePosition(QTextCursor::EndOfBlock);
 			documentCursor.movePosition(QTextCursor::NextBlock);
@@ -429,8 +317,7 @@ QString RtfExporter::header() const
 
 QString RtfExporter::style(ScenarioBlockStyle::Type _type) const
 {
-	ScenarioStyle scenarioStyle = ::exportStyle();
-	ScenarioBlockStyle blockStyle = scenarioStyle.blockStyle(_type);
+	ScenarioBlockStyle blockStyle = ::exportStyle().blockStyle(_type);
 	return ::rtfBlockStyle(blockStyle);
 }
 
