@@ -228,7 +228,10 @@ void SettingsManager::styleLibraryEditPressed(const QModelIndex& _styleIndex)
 	// Изменим стиль
 	//
 	SettingsStylesManager stylesManager(this, m_view);
-	stylesManager.editStyle(styleToEditName);
+	bool styleChanged = stylesManager.editStyle(styleToEditName);
+	if (styleChanged) {
+		emit scenarioEditSettingsUpdated();
+	}
 }
 
 void SettingsManager::styleLibraryRemovePressed(const QModelIndex& _styleIndex)
@@ -342,13 +345,13 @@ void SettingsManager::initView()
 				);
 	m_view->setApplicationAutosave(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-                    "application/autosave",
+					"application/autosave",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
 	m_view->setApplicationAutosaveInterval(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-                    "application/autosave-interval",
+					"application/autosave-interval",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
