@@ -224,6 +224,11 @@ namespace BusinessLogic
 		ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttributes);
 		friend class ScenarioStyle;
 
+		/**
+		 * @brief Обновить межстрочный интервал блока
+		 */
+		void updateLineHeight();
+
 	private:
 		/**
 		 * @brief Тип блока
