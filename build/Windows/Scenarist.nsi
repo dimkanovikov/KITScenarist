@@ -20,6 +20,7 @@
   Name "Сценарист"
   Caption "Установка программы написания сценариев"
   OutFile "scenarist-setup.exe"
+  BrandingText "DimkaNovikov labs."
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\KIT\Scenarist"

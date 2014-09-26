@@ -39,7 +39,7 @@ namespace {
 
 		return QSizeF(
 					PageMetrics::mmToPx(pageSize.width() - pageMargins.left() - pageMargins.right()),
-					PageMetrics::mmToPx(pageSize.height() - pageMargins.top() - pageMargins.bottom())
+					PageMetrics::mmToPx(pageSize.height() - pageMargins.top() - pageMargins.bottom(), false)
 					);
 	}
 
