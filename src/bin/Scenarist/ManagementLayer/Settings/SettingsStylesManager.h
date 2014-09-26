@@ -23,14 +23,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Создать новый стиль
 		 */
-		void newStyle();
+		bool newStyle();
 
 		/**
 		 * @brief Изменить указанный стиль
 		 */
-		void editStyle(const QString& _styleName);
-
-	signals:
+		bool editStyle(const QString& _styleName);
 
 	private:
 		/**

@@ -305,6 +305,8 @@ void PagesTextEdit::updateInnerGeometry()
 		rootFrameFormat.setTopMargin(rootFrameMargins.top());
 		rootFrameFormat.setRightMargin(rootFrameMargins.right());
 		rootFrameFormat.setBottomMargin(rootFrameMargins.bottom());
+		rootFrameFormat.setBorder(1);
+		rootFrameFormat.setBorderBrush(Qt::red);
 		document()->rootFrame()->setFrameFormat(rootFrameFormat);
 	}
 }

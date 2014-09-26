@@ -16,8 +16,10 @@ SettingsStylesManager::SettingsStylesManager(QObject *parent, QWidget* _parentWi
 {
 }
 
-void SettingsStylesManager::newStyle()
+bool SettingsStylesManager::newStyle()
 {
+	bool success = false;
+
 	//
 	// Настраиваем диалог настройки стиля в стандартные значения
 	//
@@ -53,11 +55,16 @@ void SettingsStylesManager::newStyle()
 		// Сохраняем новый стиль
 		//
 		ScenarioStyleFacade::saveStyle(newStyle);
+		success = true;
 	}
+
+	return success;
 }
 
-void SettingsStylesManager::editStyle(const QString& _styleName)
+bool SettingsStylesManager::editStyle(const QString& _styleName)
 {
+	bool success = false;
+
 	//
 	// Настраиваем диалог настройки стиля в стандартные значения
 	//
@@ -73,6 +80,7 @@ void SettingsStylesManager::editStyle(const QString& _styleName)
 		//
 		ScenarioStyle editedStyle = m_view->scenarioStyle();
 		ScenarioStyleFacade::saveStyle(editedStyle);
+		success = true;
 
 		//
 		// Если стиль сохраняется под новым именем, нужно удалить старый
@@ -81,4 +89,6 @@ void SettingsStylesManager::editStyle(const QString& _styleName)
 			ScenarioStyleFacade::removeStyle(_styleName);
 		}
 	}
+
+	return success;
 }
