@@ -89,8 +89,10 @@ void ScenarioBlockStyle::setFont(const QFont& _font)
 {
 	if (m_font != _font) {
 		m_font = _font;
+		m_font.setStyleStrategy(QFont::PreferAntialias);
 
 		m_charFormat.setFont(m_font);
+		updateLineHeight();
 	}
 }
 
@@ -109,7 +111,7 @@ void ScenarioBlockStyle::setTopSpace(int _topSpace)
 	if (m_topSpace != _topSpace) {
 		m_topSpace = _topSpace;
 
-		m_blockFormat.setTopMargin(QFontMetricsF(m_font).lineSpacing() * m_topSpace);
+		m_blockFormat.setTopMargin(m_blockFormat.lineHeight() * m_topSpace);
 	}
 }
 
@@ -236,6 +238,11 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	m_font.setCapitalization(_blockAttributes.value("uppercase").toString() == "true"
 							 ? QFont::AllUppercase : QFont::MixedCase);
 	//
+	// ... сглаживание
+	//
+	m_font.setStyleStrategy(QFont::PreferAntialias);
+
+	//
 	// ... расположение блока
 	//
 	QString alignment = _blockAttributes.value("alignment").toString();
@@ -256,12 +263,7 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	// ... блока
 	//
 	m_blockFormat.setAlignment(m_align);
-	//
-	// ... высота линии текста в разных системах рассчитывается по разному, поэтому ищем компромис
-	//
-	const qreal realLineHeight = qMax(QFontMetricsF(m_font).lineSpacing(), QFontMetricsF(m_font).height());
-	m_blockFormat.setLineHeight(realLineHeight, QTextBlockFormat::FixedHeight);
-	m_blockFormat.setTopMargin(realLineHeight * m_topSpace);
+	updateLineHeight();
 	m_blockFormat.setLeftMargin(PageMetrics::mmToPx(m_leftMargin));
 	m_blockFormat.setRightMargin(PageMetrics::mmToPx(m_rightMargin));
 	m_blockFormat.setBottomMargin(0);
@@ -312,6 +314,33 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 			break;
 		}
 	}
+}
+
+void ScenarioBlockStyle::updateLineHeight()
+{
+	//
+	// Высота линии текста в разных системах рассчитывается по разному, поэтому ищем компромис
+	//
+	const QFontMetricsF fontMetrics(m_font);
+	qreal realLineHeight = fontMetrics.lineSpacing();
+
+
+//	qDebug() << m_font.family() << QFontMetricsF(m_font).leading() << QFontMetricsF(m_font).lineSpacing()
+//			 << QFontMetricsF(m_font).height() << QFontMetricsF(m_font).ascent() << QFontMetricsF(m_font).descent();
+
+//	realLineHeight = qMax(fontMetrics.lineSpacing(), fontMetrics.height());
+//	realLineHeight = fontMetrics.lineSpacing();
+
+//	if (fontMetrics.leading() < 0) {
+//		realLineHeight -= 0.8 * abs(fontMetrics.leading());
+//	} else if (fontMetrics.leading() == 0) {
+//		realLineHeight -= 0.3;
+//	} else {
+//		realLineHeight += 0.2;
+//	}
+
+	m_blockFormat.setLineHeight(realLineHeight, QTextBlockFormat::FixedHeight);
+	m_blockFormat.setTopMargin(realLineHeight * m_topSpace);
 }
 
 // ********
