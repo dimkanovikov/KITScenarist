@@ -89,7 +89,6 @@ void ScenarioBlockStyle::setFont(const QFont& _font)
 {
 	if (m_font != _font) {
 		m_font = _font;
-		m_font.setStyleStrategy(QFont::PreferAntialias);
 
 		m_charFormat.setFont(m_font);
 		updateLineHeight();
@@ -214,7 +213,7 @@ ScenarioBlockStyle::Type ScenarioBlockStyle::embeddableFooter() const
 
 	return footer;
 }
-#include <QDebug>
+
 ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttributes)
 {
 	//
@@ -228,7 +227,7 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	// ... настройки шрифта
 	//
 	m_font.setFamily(_blockAttributes.value ("font_family").toString());
-	m_font.setPointSize(_blockAttributes.value("font_size").toInt());
+	m_font.setPointSizeF(_blockAttributes.value("font_size").toDouble());
 	//
 	// ... начертание
 	//
@@ -237,10 +236,6 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	m_font.setUnderline(_blockAttributes.value("underline").toString() == "true" ? true : false);
 	m_font.setCapitalization(_blockAttributes.value("uppercase").toString() == "true"
 							 ? QFont::AllUppercase : QFont::MixedCase);
-	//
-	// ... сглаживание
-	//
-	m_font.setStyleStrategy(QFont::PreferAntialias);
 
 	//
 	// ... расположение блока
@@ -319,25 +314,22 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 void ScenarioBlockStyle::updateLineHeight()
 {
 	//
-	// Высота линии текста в разных системах рассчитывается по разному, поэтому ищем компромис
+	// Qt грязно округляет высоту линии считанную из файла шрифта,
+	// поэтому восстанавливаем его при помощи следующей хитрости:
+	// 1. определяем расстояние между строк для 100пт размера шрифта
+	// 2. вычисляем расстояние мужду строк для заданного размера шрифта
 	//
-	const QFontMetricsF fontMetrics(m_font);
-	qreal realLineHeight = fontMetrics.lineSpacing();
-
-
-//	qDebug() << m_font.family() << QFontMetricsF(m_font).leading() << QFontMetricsF(m_font).lineSpacing()
-//			 << QFontMetricsF(m_font).height() << QFontMetricsF(m_font).ascent() << QFontMetricsF(m_font).descent();
-
-//	realLineHeight = qMax(fontMetrics.lineSpacing(), fontMetrics.height());
-//	realLineHeight = fontMetrics.lineSpacing();
-
-//	if (fontMetrics.leading() < 0) {
-//		realLineHeight -= 0.8 * abs(fontMetrics.leading());
-//	} else if (fontMetrics.leading() == 0) {
-//		realLineHeight -= 0.3;
-//	} else {
-//		realLineHeight += 0.2;
-//	}
+	QFont font100pt = m_font;
+	font100pt.setPointSizeF(100.0);
+	QFontInfo font100ptInfo(font100pt);
+	const QFontMetricsF font100ptMetrics(font100pt);
+	const qreal lineHeightFont100pt = (font100ptMetrics.lineSpacing() + font100ptMetrics.height()) / 2;
+	//
+	// "- 0.1" - появилось, т.к. некоторые неточности не удаётся победить даже таким костылём
+	//
+	// ... работает для большинства протестированных мною шрифтов
+	//
+	const qreal realLineHeight = lineHeightFont100pt * m_font.pointSizeF() / font100ptInfo.pointSizeF() - 0.1;
 
 	m_blockFormat.setLineHeight(realLineHeight, QTextBlockFormat::FixedHeight);
 	m_blockFormat.setTopMargin(realLineHeight * m_topSpace);
