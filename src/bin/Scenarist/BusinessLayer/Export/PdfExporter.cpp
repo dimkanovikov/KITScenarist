@@ -115,7 +115,7 @@ void PdfExporter::aboutPrint(QPrinter* _printer)
 QPrinter* PdfExporter::preparePrinter(const QString& _forFile) const
 {
 	QPrinter* printer = new QPrinter;
-	printer->setPaperSize((QPagedPaintDevice::PageSize)::exportStyle().pageSizeId());
+	printer->setPageSize(QPageSize(::exportStyle().pageSizeId()));
 	QMarginsF margins = ::exportStyle().pageMargins();
 	printer->setPageMargins(margins.left(), margins.top(), margins.right(), margins.bottom(),
 							QPrinter::Millimeter);
