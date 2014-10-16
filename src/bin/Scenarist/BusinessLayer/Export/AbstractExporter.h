@@ -33,6 +33,18 @@ namespace BusinessLogic
 		bool printTilte;
 
 		/**
+		 * @brief Информация с титульного листа
+		 */
+		/** @{ */
+		QString scenarioName;
+		QString scenarioAdditionalInfo;
+		QString scenarioGenre;
+		QString scenarioAuthor;
+		QString scenarioContacts;
+		QString scenarioYear;
+		/** @} */
+
+		/**
 		 * @brief Печатать номера страниц
 		 */
 		bool printPagesNumbers;

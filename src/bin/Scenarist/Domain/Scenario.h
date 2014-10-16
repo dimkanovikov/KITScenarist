@@ -14,9 +14,8 @@ namespace Domain
 	class Scenario : public DomainObject
 	{
 	public:
-		Scenario(const Identifier& _id, const QString& _name, const QString& _additionalInfo,
-			const QString& _genre, const QString& _author, const QString& _contacts,
-			const QString& _year, const QString& _synopsis, const QString& _text);
+		Scenario(const Identifier& _id, const QString& _name, const QString& _synopsis,
+			const QString& _text);
 
 		/**
 		 * @brief Название сценария

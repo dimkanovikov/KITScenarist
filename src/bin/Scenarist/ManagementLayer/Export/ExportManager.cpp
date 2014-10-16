@@ -5,11 +5,16 @@
 #include <BusinessLayer/Export/PdfExporter.h>
 #include <BusinessLayer/Export/RtfExporter.h>
 
+#include <DataLayer/Database/Database.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <Domain/Scenario.h>
+
 #include <UserInterfaceLayer/Export/ExportDialog.h>
 
+#include <QDir>
 #include <QFileInfo>
 #include <QStandardItemModel>
 
@@ -27,8 +32,39 @@ ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 
 void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
+	Domain::Scenario* currentScenario = _scenario->scenario();
+	//
+	// Загрузить информацию о текущем сценарии в диалог
+	//
+
+	//
+	// TODO: Загрузка настроек сохранённых для конкретного проекта
+	//
+
+	//
+	// Установка имени файла
+	//
+	QString exportFileName = currentScenario->name();
+	if (exportFileName.isEmpty()) {
+		QFileInfo fileInfo(DatabaseLayer::Database::currentFile());
+		exportFileName = fileInfo.baseName();
+	}
+	m_exportDialog->setExportFileName(exportFileName);
+
+	//
+	// Установка информации о титульном листе
+	//
+	m_exportDialog->setScenarioName(currentScenario->name());
+	m_exportDialog->setScenarioAdditionalInfo(currentScenario->additionalInfo());
+	m_exportDialog->setScenarioGenre(currentScenario->genre());
+	m_exportDialog->setScenarioAuthor(currentScenario->author());
+	m_exportDialog->setScenarioContacts(currentScenario->contacts());
+	m_exportDialog->setScenarioYear(currentScenario->year());
+
+
 	if (m_exportDialog->exec() == QDialog::Accepted) {
-		const QString filePath = m_exportDialog->exportFilePath();
+		BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
+		const QString filePath = exportParameters.filePath;
 
 		if (!filePath.isEmpty()) {
 			const QFileInfo fileInfo(filePath);
@@ -48,26 +84,57 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 			//
 			// Экспортируем документ
 			//
-			BusinessLogic::ExportParameters exportParameters;
-			exportParameters.filePath = filePath;
-			exportParameters.printTilte = m_exportDialog->printTitle();
-			exportParameters.printPagesNumbers = m_exportDialog->printPagesNumbering();
-			exportParameters.printScenesNubers = m_exportDialog->printScenesNumbering();
-			exportParameters.scenesPrefix = m_exportDialog->scenesPrefix();
 			exporter->exportTo(_scenario, exportParameters);
 			delete exporter;
 			exporter = 0;
 		}
 	}
+
+	//
+	// Сохраняем информацию о титульном листе
+	//
+	bool isTitleListDataChanged = false;
+	if (currentScenario->name() != m_exportDialog->scenarioName()) {
+		currentScenario->setName(m_exportDialog->scenarioName());
+		emit scenarioNameChanged(currentScenario->name());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->additionalInfo() != m_exportDialog->scenarioAdditionalInfo()) {
+		currentScenario->setAdditionalInfo(m_exportDialog->scenarioAdditionalInfo());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->genre() != m_exportDialog->scenarioGenre()) {
+		currentScenario->setGenre(m_exportDialog->scenarioGenre());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->author() != m_exportDialog->scenarioAuthor()) {
+		currentScenario->setAuthor(m_exportDialog->scenarioAuthor());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->contacts() != m_exportDialog->scenarioContacts()) {
+		currentScenario->setContacts(m_exportDialog->scenarioContacts());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->year() != m_exportDialog->scenarioYear()) {
+		currentScenario->setYear(m_exportDialog->scenarioYear());
+		isTitleListDataChanged = true;
+	}
+	//
+	// ... если есть изменения
+	//
+	if (isTitleListDataChanged) {
+		emit scenarioTitleListDataChanged();
+	}
 }
 
 void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
-	BusinessLogic::ExportParameters exportParameters;
-	exportParameters.printTilte = m_exportDialog->printTitle();
-	exportParameters.printPagesNumbers = m_exportDialog->printPagesNumbering();
-	exportParameters.printScenesNubers = m_exportDialog->printScenesNumbering();
-	exportParameters.scenesPrefix = m_exportDialog->scenesPrefix();
+	BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
+	//
+	// Очищаем путь к файлу, чтобы не экспортировать в файл, а дать возможность
+	// отправки документа на принтер
+	//
+	exportParameters.filePath.clear();
 
 	BusinessLogic::PdfExporter exporter;
 	exporter.printPreview(_scenario, exportParameters);

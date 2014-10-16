@@ -192,7 +192,11 @@ namespace {
 			//
 			// Для неопределённого стиля формируется простая заглушка
 			//
-			blockStyle.append("\\sbasedon222\\snext0 Normal");
+			blockStyle.append("\\sbasedon222\\snext0 ");
+
+			//
+			// Для неопределённого стиля формируется простая заглушка
+			//
 		}
 
 		return blockStyle;
@@ -232,9 +236,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 			//
 			// Получим стиль параграфа
 			//
-			ScenarioBlockStyle::Type currentBlockType =
-					(ScenarioBlockStyle::Type)documentCursor.blockFormat().property(ScenarioBlockStyle::PropertyType).toInt();
-			QString blockStyle = style(currentBlockType);
+			const QString blockStyle = style(documentCursor);
 
 			//
 			// ... и запишем его в документ
@@ -315,10 +317,86 @@ QString RtfExporter::header() const
 	return header;
 }
 
+QString RtfExporter::style(QTextCursor& _documentCursor) const
+{
+	ScenarioBlockStyle::Type currentBlockType =
+			(ScenarioBlockStyle::Type)_documentCursor.blockFormat().property(ScenarioBlockStyle::PropertyType).toInt();
+	QString blockStyle;
+	if (currentBlockType != ScenarioBlockStyle::Undefined) {
+		//
+		// Стиль для предопределённого блока текста
+		//
+		blockStyle = style(currentBlockType);
+	} else {
+		//
+		// Стиль для неопределённого блока текста
+		//
+		blockStyle = style(_documentCursor.blockFormat(), _documentCursor.charFormat());
+	}
+
+	return blockStyle;
+}
+
 QString RtfExporter::style(ScenarioBlockStyle::Type _type) const
 {
 	ScenarioBlockStyle blockStyle = ::exportStyle().blockStyle(_type);
 	return ::rtfBlockStyle(blockStyle);
+}
+
+QString RtfExporter::style(const QTextBlockFormat& _blockFormat, const QTextCharFormat& _charFormat) const
+{
+	QString blockStyle = "\\f0";
+
+	//
+	// Шрифт
+	//
+	if (_charFormat.font().capitalization() == QFont::AllUppercase) {
+		blockStyle.append("\\caps");
+	}
+	blockStyle.append(QString("\\fs%1").arg(_charFormat.font().pointSize() * 2));
+
+	//
+	// Отступы
+	//
+	blockStyle.append("\\fi0\\li0\\ri0");
+
+	//
+	// Выравнивание
+	//
+	switch (_blockFormat.alignment()) {
+		case Qt::AlignRight: {
+			blockStyle.append("\\qr");
+			break;
+		}
+
+		case Qt::AlignCenter:
+		case Qt::AlignHCenter: {
+			blockStyle.append("\\qc");
+			break;
+		}
+
+		default: {
+			blockStyle.append("\\ql");
+			break;
+		}
+	}
+
+	//
+	// Дополнительная настройка
+	//
+	if (_charFormat.font().bold()) {
+		blockStyle.append("\\b");
+	}
+	if (_charFormat.font().italic()) {
+		blockStyle.append("\\i");
+	}
+	if (_charFormat.font().underline()) {
+		blockStyle.append("\\ul");
+	}
+
+	blockStyle.append("\\sbasedon0");
+
+	return blockStyle;
 }
 
 QString RtfExporter::stringToUtfCode(const QString& _text) const

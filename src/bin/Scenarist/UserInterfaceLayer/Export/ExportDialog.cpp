@@ -25,6 +25,14 @@ namespace {
 	}
 
 	/**
+	 * @brief Получить путь к экспортируемому файлу
+	 */
+	static QString exportFilePath(const QString& _fileName) {
+		QString filePath = ::exportFolderPath() + QDir::separator() + _fileName;
+		return QDir::toNativeSeparators(filePath);
+	}
+
+	/**
 	 * @brief Сохранить путь к папке экспортируемых файлов
 	 */
 	static void saveExportFolderPath(const QString& _path) {
@@ -51,6 +59,15 @@ ExportDialog::~ExportDialog()
 	delete ui;
 }
 
+void ExportDialog::setExportFileName(const QString& _fileName)
+{
+	if (m_exportFileName != _fileName) {
+		m_exportFileName = _fileName;
+		ui->file->setText(::exportFilePath(_fileName));
+		aboutFormatChanged();
+	}
+}
+
 void ExportDialog::setStylesModel(QAbstractItemModel* _model)
 {
 	ui->styles->setModel(_model);
@@ -61,29 +78,82 @@ void ExportDialog::setCurrentStyle(const QString& _styleName)
 	ui->styles->setCurrentText(_styleName);
 }
 
-QString ExportDialog::exportFilePath() const
+QString ExportDialog::scenarioName() const
 {
-	return ui->file->text();
+	return ui->name->text();
 }
 
-bool ExportDialog::printTitle() const
+void ExportDialog::setScenarioName(const QString& _name)
 {
-	return ui->title->isChecked();
+	ui->name->setText(_name);
 }
 
-bool ExportDialog::printPagesNumbering() const
+QString ExportDialog::scenarioAdditionalInfo() const
 {
-	return ui->pageNumbering->isChecked();
+	return ui->additionalInfo->text();
 }
 
-bool ExportDialog::printScenesNumbering() const
+void ExportDialog::setScenarioAdditionalInfo(const QString& _additionalInfo)
 {
-	return ui->scenesNumbering->isChecked();
+	ui->additionalInfo->setText(_additionalInfo);
 }
 
-QString ExportDialog::scenesPrefix() const
+QString ExportDialog::scenarioGenre() const
 {
-	return ui->scenesPrefix->text();
+	return ui->genre->text();
+}
+
+void ExportDialog::setScenarioGenre(const QString& _genre)
+{
+	ui->genre->setText(_genre);
+}
+
+QString ExportDialog::scenarioAuthor() const
+{
+	return ui->author->text();
+}
+
+void ExportDialog::setScenarioAuthor(const QString _author)
+{
+	ui->author->setText(_author);
+}
+
+QString ExportDialog::scenarioContacts() const
+{
+	return ui->contacts->text();
+}
+
+void ExportDialog::setScenarioContacts(const QString& _contacts)
+{
+	ui->contacts->setText(_contacts);
+}
+
+QString ExportDialog::scenarioYear() const
+{
+	return ui->year->text();
+}
+
+void ExportDialog::setScenarioYear(const QString& _year)
+{
+	ui->year->setText(_year);
+}
+
+BusinessLogic::ExportParameters ExportDialog::exportParameters() const
+{
+	BusinessLogic::ExportParameters exportParameters;
+	exportParameters.filePath = ui->file->text();
+	exportParameters.printTilte = ui->printTitle->isChecked();
+	exportParameters.scenarioName = ui->name->text();
+	exportParameters.scenarioAdditionalInfo = ui->additionalInfo->text();
+	exportParameters.scenarioGenre = ui->genre->text();
+	exportParameters.scenarioAuthor = ui->author->text();
+	exportParameters.scenarioContacts = ui->contacts->text();
+	exportParameters.scenarioYear = ui->year->text();
+	exportParameters.printPagesNumbers = ui->pageNumbering->isChecked();
+	exportParameters.printScenesNubers = ui->scenesNumbering->isChecked();
+	exportParameters.scenesPrefix = ui->scenesPrefix->text();
+
+	return exportParameters;
 }
 
 void ExportDialog::aboutChooseFile()
@@ -91,7 +161,8 @@ void ExportDialog::aboutChooseFile()
 	const QString format = ui->rtf->isChecked() ? "rtf" : "pdf";
 	QString filePath =
 			QFileDialog::getSaveFileName(this, tr("Choose file to export scenario"),
-				::exportFolderPath(), tr ("%1 files (*%2)").arg(format.toUpper()).arg(format));
+				(!ui->file->text().isEmpty() ? ui->file->text() : ::exportFolderPath()),
+				tr ("%1 files (*%2)").arg(format.toUpper()).arg(format));
 
 	if (!filePath.isEmpty()) {
 		//
@@ -114,11 +185,10 @@ void ExportDialog::aboutFileNameChanged()
 
 void ExportDialog::initView()
 {
-	ui->label_4->hide();
-	ui->title->hide();
+	ui->additionalSettings->setCurrentWidget(ui->commonTab);
+	ui->additionalSettings->hide();
 
-	ui->label_5->hide();
-	ui->pageNumbering->hide();
+	resize(width(), sizeHint().height());
 }
 
 void ExportDialog::aboutFormatChanged()
@@ -147,6 +217,8 @@ void ExportDialog::aboutFormatChanged()
 
 void ExportDialog::initConnections()
 {
+	connect(ui->showAdditional, SIGNAL(toggled(bool)), ui->additionalSettings, SLOT(setVisible(bool)));
+
 	connect(ui->styles, SIGNAL(currentTextChanged(QString)), this, SIGNAL(currentStyleChanged(QString)));
 	connect(ui->rtf, SIGNAL(toggled(bool)), this, SLOT(aboutFormatChanged()));
 	connect(ui->pdf, SIGNAL(toggled(bool)), this, SLOT(aboutFormatChanged()));

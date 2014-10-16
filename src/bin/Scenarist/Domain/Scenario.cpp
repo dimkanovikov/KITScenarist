@@ -3,16 +3,10 @@
 using namespace Domain;
 
 
-Scenario::Scenario(const Identifier& _id, const QString& _name, const QString& _additionalInfo,
-	const QString& _genre, const QString& _author, const QString& _contacts, const QString& _year,
+Scenario::Scenario(const Identifier& _id, const QString& _name,
 	const QString& _synopsis, const QString& _text) :
 	DomainObject(_id),
 	m_name(_name),
-	m_additionalInfo(_additionalInfo),
-	m_genre(_genre),
-	m_author(_author),
-	m_contacts(_contacts),
-	m_year(_year),
 	m_synopsis(_synopsis),
 	m_text(_text)
 {

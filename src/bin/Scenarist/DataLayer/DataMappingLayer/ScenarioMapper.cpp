@@ -120,7 +120,14 @@ DomainObject* ScenarioMapper::doLoad(const Identifier& _id, const QSqlRecord& _r
 	QString synopsis = _record.value("synopsis").toString();
 	QString text = _record.value("text").toString();
 
-	return new Scenario(_id, name, additionalInfo, genre, author, contacts, year, synopsis, text);
+	Scenario* scenario = new Scenario(_id, name, synopsis, text);
+	scenario->setAdditionalInfo(additionalInfo);
+	scenario->setGenre(genre);
+	scenario->setAuthor(author);
+	scenario->setContacts(contacts);
+	scenario->setYear(year);
+
+	return scenario;
 }
 
 DomainObjectsItemModel* ScenarioMapper::modelInstance()

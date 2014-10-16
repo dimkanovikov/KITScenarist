@@ -84,76 +84,9 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="commonPage">
-      <layout class="QFormLayout" name="formLayout">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="nameLabel">
-         <property name="text">
-          <string>Name:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="name"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="nameLabel_2">
-         <property name="text">
-          <string>Additional:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="additionalInfo"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="nameLabel_3">
-         <property name="text">
-          <string>Genre:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="genre"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="nameLabel_4">
-         <property name="text">
-          <string>Author:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="author"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="nameLabel_5">
-         <property name="text">
-          <string>Contacts:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="contacts"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="nameLabel_6">
-         <property name="text">
-          <string>Year:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="year"/>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="sinopsisPage">
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0">
+       <item row="2" column="0" colspan="2">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QRadioButton" name="isSourceSynopsis">
@@ -187,7 +120,7 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="0">
+       <item row="3" column="0" colspan="2">
         <widget class="QStackedWidget" name="synopsisStack">
          <property name="currentIndex">
           <number>0</number>
@@ -245,9 +178,21 @@
          </widget>
         </widget>
        </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLineEdit" name="name"/>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Name:</string>
+         </property>
+        </widget>
+       </item>
       </layout>
       <zorder></zorder>
       <zorder>synopsisStack</zorder>
+      <zorder>name</zorder>
+      <zorder>label</zorder>
      </widget>
     </widget>
    </item>
@@ -268,12 +213,6 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>name</tabstop>
-  <tabstop>additionalInfo</tabstop>
-  <tabstop>genre</tabstop>
-  <tabstop>author</tabstop>
-  <tabstop>contacts</tabstop>
-  <tabstop>year</tabstop>
   <tabstop>isSourceSynopsis</tabstop>
   <tabstop>isFromScenarioSynopsis</tabstop>
  </tabstops>

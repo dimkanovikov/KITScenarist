@@ -32,7 +32,11 @@ namespace BusinessLogic
 		/**
 		 * @brief RTF стиль текущего блока
 		 */
+		/** @{ */
+		QString style(QTextCursor& _documentCursor) const;
 		QString style(ScenarioBlockStyle::Type _type) const;
+		QString style(const QTextBlockFormat& _blockFormat, const QTextCharFormat& _charFormat) const;
+		/** @} */
 
 		/**
 		 * @brief Перевести UTF-строку в коды для RTF-формата

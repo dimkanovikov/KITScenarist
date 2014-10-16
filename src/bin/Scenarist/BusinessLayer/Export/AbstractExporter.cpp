@@ -146,79 +146,90 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 	//
 	// Формирование титульной страницы
 	//
-	/*{
+	if (_exportParameters.printTilte) {
 		QTextCharFormat titleFormat;
 		titleFormat.setFont(QFont("Courier New", 12));
 		QTextBlockFormat centerFormat;
 		centerFormat.setAlignment(Qt::AlignCenter);
+		centerFormat.setLineHeight(18.09, QTextBlockFormat::FixedHeight);
 		QTextBlockFormat rightFormat;
 		rightFormat.setAlignment(Qt::AlignRight);
-		QTextBlockFormat lastBlockFormat;
-		lastBlockFormat.setPageBreakPolicy(QTextFormat::PageBreak_AlwaysAfter);
-		lastBlockFormat.merge(centerFormat);
+		rightFormat.setLineHeight(18.09, QTextBlockFormat::FixedHeight);
 
 		//
-		// 12 пустых строк
+		// Номер текущей строки
 		//
-		int emptyLines = 12;
-		while ((emptyLines--) > 0) {
-			destDocumentCursor.insertBlock();
+		int currentLineNumber = 0;
+
+		//
+		// Название [13 строка]
+		//
+		while ((currentLineNumber++) < 12) {
+			destDocumentCursor.insertBlock(centerFormat);
+			destDocumentCursor.setCharFormat(titleFormat);
+		}
+		destDocumentCursor.insertBlock(centerFormat);
+		destDocumentCursor.setCharFormat(titleFormat);
+		destDocumentCursor.insertText(_exportParameters.scenarioName);
+		//
+		// Доп. инфо [через одну под предыдущим]
+		//
+		if (!_exportParameters.scenarioAdditionalInfo.isEmpty()) {
+			destDocumentCursor.insertBlock(centerFormat);
+			destDocumentCursor.setCharFormat(titleFormat);
+			destDocumentCursor.insertBlock(centerFormat);
+			destDocumentCursor.setCharFormat(titleFormat);
+			destDocumentCursor.insertText(_exportParameters.scenarioAdditionalInfo);
+			currentLineNumber += 2;
 		}
 		//
-		// Название
+		// Жанр [через одну под предыдущим]
 		//
-		destDocumentCursor.insertBlock(centerFormat);
-		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->name() : "");
-		//
-		// Доп. инфо
-		//
-		destDocumentCursor.insertBlock();
-		destDocumentCursor.insertBlock(centerFormat);
-		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->additionalInfo() : "");
-		//
-		// Жанр
-		//
-		destDocumentCursor.insertBlock();
-		destDocumentCursor.insertBlock(centerFormat);
-		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->genre() : "");
-		//
-		// Автор
-		//
-		destDocumentCursor.insertBlock();
-		destDocumentCursor.insertBlock(centerFormat);
-		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->author() : "");
-		//
-		// 19 пустых строк
-		//
-		emptyLines = 19;
-		while ((emptyLines--) > 0) {
-			destDocumentCursor.insertBlock();
+		if (!_exportParameters.scenarioGenre.isEmpty()) {
+			destDocumentCursor.insertBlock(centerFormat);
+			destDocumentCursor.setCharFormat(titleFormat);
+			destDocumentCursor.insertBlock(centerFormat);
+			destDocumentCursor.setCharFormat(titleFormat);
+			destDocumentCursor.insertText(_exportParameters.scenarioGenre);
+			currentLineNumber += 2;
 		}
 		//
-		// Контакты
+		// Автор [через одну под предыдущим]
+		//
+		if (!_exportParameters.scenarioAuthor.isEmpty()) {
+			destDocumentCursor.insertBlock(centerFormat);
+			destDocumentCursor.insertBlock(centerFormat);
+			destDocumentCursor.setCharFormat(titleFormat);
+			destDocumentCursor.insertText(_exportParameters.scenarioAuthor);
+			currentLineNumber += 2;
+		}
+		//
+		// необходимое количество пустых строк до 30ой
+		//
+		while ((currentLineNumber++) < 29) {
+			destDocumentCursor.insertBlock(centerFormat);
+			destDocumentCursor.setCharFormat(titleFormat);
+		}
+		//
+		// Контакты [30 строка]
 		//
 		destDocumentCursor.insertBlock(rightFormat);
 		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->contacts() : "");
+		destDocumentCursor.insertText(_exportParameters.scenarioContacts);
+
 		//
-		// 1 пустых строки
+		// Год печатается на последней строке документа
 		//
-		emptyLines = 1;
-		while ((emptyLines--) > 0) {
+		LineType currentLineType = ::currentLine(preparedDocument);
+		while (currentLineType != LastPageLine) {
 			destDocumentCursor.insertBlock();
+			currentLineType = ::currentLine(preparedDocument);
 		}
-		//
-		// Год
-		//
-		destDocumentCursor.insertBlock(lastBlockFormat);
+		destDocumentCursor.deletePreviousChar();
+		destDocumentCursor.insertBlock(centerFormat);
 		destDocumentCursor.setCharFormat(titleFormat);
-		destDocumentCursor.insertText(_scenario->scenario() != 0 ? _scenario->scenario()->year() : "");
-		destDocumentCursor.insertBlock();
-	}*/
+		destDocumentCursor.insertText(_exportParameters.scenarioYear);
+	}
 
 
 	//

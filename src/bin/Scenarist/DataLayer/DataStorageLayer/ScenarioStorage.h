@@ -32,9 +32,7 @@ namespace DataStorageLayer
 		 * @brief Сохранить текст сценария
 		 * @param Текст сценария в формате xml
 		 */
-		Scenario* storeScenario(const QString& _name, const QString& _additionalInfo,
-			const QString& _genre, const QString& _author, const QString& _contacts,
-			const QString& _year, const QString& _synopsis, const QString& _text);
+		Scenario* storeScenario(const QString& _name, const QString& _synopsis, const QString& _text);
 
 		/**
 		 * @brief Очистить хранилище
