@@ -403,6 +403,29 @@ namespace {
 				.arg(_margins.bottom());
 	}
 
+	static Qt::Alignment alignmentFromString(const QString& _alignment) {
+		Qt::Alignment result;
+		//
+		// Если нужно преобразовать несколько условий
+		//
+		if (_alignment.contains(",")) {
+			foreach (const QString& align, _alignment.split(",")) {
+				result |= ::alignmentFromString(align);
+			}
+		}
+		//
+		// Если нужно преобразовать одно выравнивание
+		//
+		else {
+			if (_alignment == "top") result = Qt::AlignTop;
+			else if (_alignment == "bottom") result = Qt::AlignBottom;
+			else if (_alignment == "left") result = Qt::AlignLeft;
+			else if (_alignment == "center") result = Qt::AlignCenter;
+			else if (_alignment == "right") result = Qt::AlignRight;
+		}
+		return result;
+	}
+
 	/**
 	 * @brief Преобразование разных типов в строку для записи в xml
 	 */
@@ -414,12 +437,18 @@ namespace {
 		return ScenarioBlockStyle::typeName(_value);
 	}
 	static QString toString(Qt::Alignment _value) {
-		switch (_value) {
-			default:
-			case Qt::AlignLeft:   return "left";
-			case Qt::AlignCenter: return "center";
-			case Qt::AlignRight:  return "right";
-		}
+		QString result;
+
+		if (_value.testFlag(Qt::AlignTop)) result.append("top");
+		if (_value.testFlag(Qt::AlignBottom)) result.append("bottom");
+
+		if (!result.isEmpty()) result.append(",");
+
+		if (_value.testFlag(Qt::AlignLeft)) result.append("left");
+		if (_value.testFlag(Qt::AlignCenter)) result.append("center");
+		if (_value.testFlag(Qt::AlignRight)) result.append("right");
+
+		return result;
 	}
 
 	/** @} */
@@ -437,6 +466,7 @@ void ScenarioStyle::saveToFile(const QString& _filePath) const
 		writer.writeAttribute("description", m_description);
 		writer.writeAttribute("page_format", PageMetrics::stringFromPageSizeId(m_pageSizeId));
 		writer.writeAttribute("page_margins", ::stringFromMargins(m_pageMargins));
+		writer.writeAttribute("numbering_alignment", ::toString(m_numberingAlignment));
 		foreach (const ScenarioBlockStyle& blockStyle, m_blockStyles.values()) {
 			writer.writeStartElement("block");
 			writer.writeAttribute("id", ::toString(blockStyle.type()));
@@ -484,6 +514,13 @@ void ScenarioStyle::setPageMargins(const QMarginsF& _pageMargins)
 {
 	if (m_pageMargins != _pageMargins) {
 		m_pageMargins = _pageMargins;
+	}
+}
+
+void ScenarioStyle::setNumberingAlignment(Qt::Alignment _alignment)
+{
+	if (m_numberingAlignment != _alignment) {
+		m_numberingAlignment = _alignment;
 	}
 }
 
@@ -574,6 +611,12 @@ void ScenarioStyle::load(const QString& _from_file)
 			m_description = styleAttributes.value("description").toString();
 			m_pageSizeId = PageMetrics::pageSizeIdFromString(styleAttributes.value("page_format").toString());
 			m_pageMargins = ::marginsFromString(styleAttributes.value("page_margins").toString());
+			const QString numberingAlignment = styleAttributes.value("numbering_alignment").toString();
+			if (!numberingAlignment.isEmpty()) {
+				m_numberingAlignment = ::alignmentFromString(numberingAlignment);
+			} else {
+				m_numberingAlignment = Qt::AlignTop | Qt::AlignRight;
+			}
 
 			//
 			// Считываем настройки оформления блоков текста

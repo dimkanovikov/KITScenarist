@@ -310,6 +310,11 @@ namespace BusinessLogic
 		QMarginsF pageMargins() const { return m_pageMargins; }
 
 		/**
+		 * @brief Получить расположение нумерации
+		 */
+		Qt::Alignment numberingAlignment() const { return m_numberingAlignment; }
+
+		/**
 		 * @brief Получить стиль блока заданного типа
 		 */
 		ScenarioBlockStyle blockStyle(ScenarioBlockStyle::Type _forType) const;
@@ -328,6 +333,11 @@ namespace BusinessLogic
 		 * @brief Установить поля документа
 		 */
 		void setPageMargins(const QMarginsF& _pageMargins);
+
+		/**
+		 * @brief Установить расположение нумерации
+		 */
+		void setNumberingAlignment(Qt::Alignment _alignment);
 
 		/**
 		 * @brief Установить стиль блока
@@ -368,6 +378,11 @@ namespace BusinessLogic
 		 * @brief Поля страницы в миллиметрах
 		 */
 		QMarginsF m_pageMargins;
+
+		/**
+		 * @brief Расположение нумерации
+		 */
+		Qt::Alignment m_numberingAlignment;
 
 		/**
 		 * @brief Стили блоков текста
