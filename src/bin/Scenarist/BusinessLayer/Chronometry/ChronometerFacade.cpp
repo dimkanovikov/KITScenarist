@@ -116,15 +116,13 @@ AbstractChronometer* ChronometerFacade::chronometer()
 			delete s_chronometer;
 			s_chronometer = new CharactersChronometer;
 		}
-	} else if (chronometryType == CHRONOMETRY_CONFIGURABLE) {
+    } else {
 		if (s_chronometer == 0
 			|| s_chronometer->name() != CHRONOMETRY_CONFIGURABLE) {
 			delete s_chronometer;
 			s_chronometer = new ConfigurableChronometer;
 		}
-	} else {
-		Q_ASSERT(0);
-	}
+    }
 
 	return s_chronometer;
 }
