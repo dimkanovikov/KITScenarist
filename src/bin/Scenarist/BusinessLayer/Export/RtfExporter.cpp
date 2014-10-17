@@ -297,11 +297,13 @@ QString RtfExporter::header(const ExportParameters& _exportParameters) const
 	// Настройки полей документа
 	//
 	header.append(
-				QString("\\margl%1\\margr%2\\margt%3\\margb%4")
+				QString("\\margl%1\\margr%2\\margt%3\\margb%4\\headery%5\\footery%6")
 				.arg(::mmToTwips(style.pageMargins().left()))
 				.arg(::mmToTwips(style.pageMargins().right()))
 				.arg(::mmToTwips(style.pageMargins().top()))
 				.arg(::mmToTwips(style.pageMargins().bottom()))
+				.arg(::mmToTwips(style.pageMargins().top() / 2))
+				.arg(::mmToTwips(style.pageMargins().bottom() / 2))
 				);
 
 	//
@@ -339,7 +341,7 @@ QString RtfExporter::header(const ExportParameters& _exportParameters) const
 		} else {
 			header.append("\\qr");
 		}
-		header.append(" \\chpgn");
+		header.append(" \\chpgn\\par");
 		header.append("}");
 	}
 
