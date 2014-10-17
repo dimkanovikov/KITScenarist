@@ -461,9 +461,14 @@ bool ApplicationManager::saveIfNeeded()
 void ApplicationManager::saveCurrentProjectInRecent()
 {
 	//
+	// Скорректируем слэши в пути к файлу
+	//
+	const QString filePath = QDir::toNativeSeparators(DatabaseLayer::Database::currentFile());
+
+	//
 	// Сохраним текущий проект в недавно использованых
 	//
-	m_startUpManager->addRecentFile(DatabaseLayer::Database::currentFile(), m_scenarioManager->scenarioName());
+	m_startUpManager->addRecentFile(filePath, m_scenarioManager->scenarioName());
 }
 
 void ApplicationManager::goToEditCurrentProject()

@@ -42,8 +42,7 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 		//
 		// ... создаём сценарий
 		//
-		scenario =
-				new Scenario(Identifier(), _name, _synopsis, _text);
+		scenario = new Scenario(Identifier(), _name, _synopsis, _text);
 
 		//
 		// ... сохраним сценарий в базе данных

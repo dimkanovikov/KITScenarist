@@ -345,5 +345,22 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 		sourceDocumentCursor.movePosition(QTextCursor::NextBlock);
 	}
 
+	//
+	// Украсим документ
+	//
+	beautifyDocument(preparedDocument);
+
 	return preparedDocument;
+}
+
+void AbstractExporter::beautifyDocument(QTextDocument* _document) const
+{
+	QTextCursor cursor(_document);
+	while (!cursor.isNull() && !cursor.atEnd()) {
+		cursor = _document->find("...", cursor);
+
+		if (!cursor.isNull()) {
+			cursor.insertText("…");
+		}
+	}
 }

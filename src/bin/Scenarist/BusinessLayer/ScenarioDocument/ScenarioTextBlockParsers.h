@@ -2,6 +2,7 @@
 #define SCENARIOTEXTBLOCKPARSERS_H
 
 class QString;
+class QStringList;
 
 
 namespace BusinessLogic
@@ -85,6 +86,18 @@ namespace BusinessLogic
 		 * @brief Получить название времени
 		 */
 		static QString timeName(const QString& _text);
+	};
+
+	/**
+	 * @brief Парсер текста блока участники сцены
+	 */
+	class SceneCharactersParser
+	{
+	public:
+		/**
+		 * @brief Определить список участников
+		 */
+		static QStringList characters(const QString& _text);
 	};
 }
 

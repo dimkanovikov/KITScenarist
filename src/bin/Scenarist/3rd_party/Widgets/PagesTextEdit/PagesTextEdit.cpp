@@ -305,8 +305,6 @@ void PagesTextEdit::updateInnerGeometry()
 		rootFrameFormat.setTopMargin(rootFrameMargins.top());
 		rootFrameFormat.setRightMargin(rootFrameMargins.right());
 		rootFrameFormat.setBottomMargin(rootFrameMargins.bottom());
-		rootFrameFormat.setBorder(1);
-		rootFrameFormat.setBorderBrush(Qt::red);
 		document()->rootFrame()->setFrameFormat(rootFrameFormat);
 	}
 }
@@ -319,7 +317,7 @@ void PagesTextEdit::updateVerticalScrollRange()
 	if (m_usePageMode) {
 		int maximumValue = m_pageMetrics.pxPageSize().height() * document()->pageCount() - viewport()->size().height();
 		if (verticalScrollBar()->maximum() != maximumValue) {
-			verticalScrollBar()->setRange(0, maximumValue);
+			verticalScrollBar()->setMaximum(maximumValue);
 		}
 	}
 	//
@@ -331,7 +329,7 @@ void PagesTextEdit::updateVerticalScrollRange()
 				document()->size().height() - viewport()->size().height()
 				+ (m_addBottomSpace ? SCROLL_DELTA : 0);
 		if (verticalScrollBar()->maximum() != maximumValue) {
-			verticalScrollBar()->setRange(0, maximumValue);
+			verticalScrollBar()->setMaximum(maximumValue);
 		}
 	}
 }

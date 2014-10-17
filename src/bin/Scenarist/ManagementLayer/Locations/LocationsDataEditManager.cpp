@@ -50,26 +50,28 @@ void LocationsDataEditManager::editLocation(Location* _location)
 
 void LocationsDataEditManager::aboutSave()
 {
-	//
-	// Сохраним предыдущее название локации
-	//
-	QString previousName = m_location->name();
+	if (!m_editor->name().isEmpty()) {
+		//
+		// Сохраним предыдущее название локации
+		//
+		QString previousName = m_location->name();
 
-	//
-	// Установим новые значения
-	//
-	m_location->setName(m_editor->name());
-	m_location->setDescription(m_editor->description());
-	m_location->setPhotos(m_editor->photos());
+		//
+		// Установим новые значения
+		//
+		m_location->setName(m_editor->name());
+		m_location->setDescription(m_editor->description());
+		m_location->setPhotos(m_editor->photos());
 
-	//
-	// Уведомим об изменении названия локации
-	//
-	if (previousName != m_location->name()) {
-		emit locationNameChanged(previousName, m_location->name());
+		//
+		// Уведомим об изменении названия локации
+		//
+		if (previousName != m_location->name()) {
+			emit locationNameChanged(previousName, m_location->name());
+		}
+
+		emit locationChanged();
 	}
-
-	emit locationChanged();
 }
 
 void LocationsDataEditManager::initView()

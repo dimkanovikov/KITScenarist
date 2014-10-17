@@ -286,31 +286,6 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 	CompletableTextEdit::paintEvent(_event);
 }
 
-void ScenarioTextEdit::dropEvent(QDropEvent* _event)
-{
-	QTextCursor cursor = textCursor();
-	cursor.beginEditBlock();
-
-	if (cursor.hasSelection()) {
-		//
-		// Если курсор в начале блоке, нужно сместиться ещё на один символ влево,
-		// чтобы не оставлять за собой пустых блоков
-		//
-		int startCursorPosition = qMin(cursor.selectionStart(), cursor.selectionEnd());
-		int endCursorPosition = qMax(cursor.selectionStart(), cursor.selectionEnd());
-		cursor.setPosition(startCursorPosition);
-		if (cursor.atBlockStart()) {
-			cursor.movePosition(QTextCursor::Left);
-		}
-		cursor.setPosition(endCursorPosition, QTextCursor::KeepAnchor);
-		setTextCursor(cursor);
-	}
-
-	CompletableTextEdit::dropEvent(_event);
-
-	cursor.endEditBlock();
-}
-
 bool ScenarioTextEdit::canInsertFromMimeData(const QMimeData* _source) const
 {
 	bool canInsert = false;
@@ -361,16 +336,23 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 		QString textToInsert = _source->text();
 		foreach (const QString& line, textToInsert.split("\n", QString::SkipEmptyParts)) {
 			if (cursor.block().text().isEmpty()) {
-				changeScenarioBlockType(ScenarioBlockStyle::NoprintableText);
+				changeScenarioBlockType(ScenarioBlockStyle::Action);
 			} else {
 				moveCursor(QTextCursor::EndOfBlock);
-				addScenarioBlock(ScenarioBlockStyle::NoprintableText);
+				addScenarioBlock(ScenarioBlockStyle::Action);
 			}
 			cursor.insertText(line.simplified());
 		}
 	}
 
 	cursor.endEditBlock();
+}
+
+void ScenarioTextEdit::resizeEvent(QResizeEvent* _event)
+{
+	CompletableTextEdit::resizeEvent(_event);
+
+	QTimer::singleShot(10, this, SLOT(ensureCursorVisibleReimpl()));
 }
 
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()

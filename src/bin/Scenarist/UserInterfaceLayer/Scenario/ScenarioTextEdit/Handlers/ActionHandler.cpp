@@ -134,9 +134,9 @@ void ActionHandler::handleTab(QKeyEvent*)
 					//! В конце блока
 
 					//
-					// Действуем как нажатие клавиши ENTER
+					// Вставляем блок персонажа
 					//
-					handleEnter();
+					editor()->addScenarioBlock(ScenarioBlockStyle::Character);
 				} else {
 					//! Внутри блока
 

@@ -1,7 +1,6 @@
 #include "ChronometerFacade.h"
 
 #include "AbstractChronometer.h"
-#include "PagesChronometer.h"
 #include "CharactersChronometer.h"
 #include "ConfigurableChronometer.h"
 
@@ -88,7 +87,6 @@ QString ChronometerFacade::secondsToTime(int _seconds)
 AbstractChronometer* ChronometerFacade::chronometer()
 {
 	static QString CHRONOMETRY_TYPE_KEY = "chronometry/current-chronometer-type";
-	static QString CHRONOMETRY_PAGES = PagesChronometer().name();
 	static QString CHRONOMETRY_CHARACTERS = CharactersChronometer().name();
 	static QString CHRONOMETRY_CONFIGURABLE = ConfigurableChronometer().name();
 
@@ -101,7 +99,7 @@ AbstractChronometer* ChronometerFacade::chronometer()
 				CHRONOMETRY_TYPE_KEY,
 				SettingsStorage::ApplicationSettings);
 	if (chronometryType.isEmpty()) {
-		chronometryType = CHRONOMETRY_PAGES;
+		chronometryType = CHRONOMETRY_CHARACTERS;
 		StorageFacade::settingsStorage()->setValue(
 					CHRONOMETRY_TYPE_KEY,
 					chronometryType,
@@ -112,13 +110,7 @@ AbstractChronometer* ChronometerFacade::chronometer()
 	// Проверить какой используется
 	// Если нужно создать необходимый
 	//
-	if (chronometryType == CHRONOMETRY_PAGES) {
-		if (s_chronometer == 0
-			|| s_chronometer->name() != CHRONOMETRY_PAGES) {
-			delete s_chronometer;
-			s_chronometer = new PagesChronometer;
-		}
-	} else if (chronometryType == CHRONOMETRY_CHARACTERS) {
+	if (chronometryType == CHRONOMETRY_CHARACTERS) {
 		if (s_chronometer == 0
 			|| s_chronometer->name() != CHRONOMETRY_CHARACTERS) {
 			delete s_chronometer;

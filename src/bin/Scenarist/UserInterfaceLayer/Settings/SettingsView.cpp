@@ -42,12 +42,10 @@ void SettingsView::setStylesModel(QAbstractItemModel* _model)
 int SettingsView::chronometryCurrentType() const
 {
 	int type = 0;
-	if (ui->pagesChronometry->isChecked()) {
+	if (ui->charactersChronometry->isChecked()) {
 		type = 0;
-	} else if (ui->charactersChronometry->isChecked()) {
-		type = 1;
 	} else {
-		type = 2;
+		type = 1;
 	}
 	return type;
 }
@@ -129,25 +127,15 @@ void SettingsView::setChronometryCurrentType(int _value)
 {
 	switch (_value) {
 		case 0: {
-			ui->pagesChronometry->setChecked(true);;
-			break;
-		}
-
-		case 1: {
 			ui->charactersChronometry->setChecked(true);
 			break;
 		}
 
-		case 2: {
+		case 1: {
 			ui->configurableChronometry->setChecked(true);
 			break;
 		}
 	}
-}
-
-void SettingsView::setChronometryPagesSeconds(int _value)
-{
-	ui->pagesChronometrySeconds->setValue(_value);
 }
 
 void SettingsView::setChronometryCharactersCharacters(int _value)
@@ -311,7 +299,6 @@ void SettingsView::initConnections()
 	connect(ui->folderTextColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseFolderTextColor()));
 	connect(ui->folderBackgroundColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseFolderBackgroundColor()));
 	// ... смена текущей системы хронометража
-	connect(ui->pagesChronometry, SIGNAL(toggled(bool)), ui->pagesChronometryGroup, SLOT(setEnabled(bool)));
 	connect(ui->charactersChronometry, SIGNAL(toggled(bool)), ui->charactersChronometryGroup, SLOT(setEnabled(bool)));
 	connect(ui->configurableChronometry, SIGNAL(toggled(bool)), ui->configurableChronometryGroup, SLOT(setEnabled(bool)));
 
@@ -330,10 +317,8 @@ void SettingsView::initConnections()
 	// ... навигатор
 	connect(ui->showScenesNumbers, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
 	// ... хронометраж
-	connect(ui->pagesChronometry, SIGNAL(toggled(bool)), this, SIGNAL(chronometryCurrentTypeChanged()));
 	connect(ui->charactersChronometry, SIGNAL(toggled(bool)), this, SIGNAL(chronometryCurrentTypeChanged()));
 	connect(ui->configurableChronometry, SIGNAL(toggled(bool)), this, SIGNAL(chronometryCurrentTypeChanged()));
-	connect(ui->pagesChronometrySeconds, SIGNAL(valueChanged(int)), this, SIGNAL(chronometryPagesSecondsChanged(int)));
 	connect(ui->charactersChronometryCharacters, SIGNAL(valueChanged(int)), this, SIGNAL(chronometryCharactersCharactersChanged(int)));
 	connect(ui->charactersChronometrySeconds, SIGNAL(valueChanged(int)), this, SIGNAL(chronometryCharactersSecondsChanged(int)));
 	connect(ui->charactersChronometryConsiderSpaces, SIGNAL(toggled(bool)), this, SIGNAL(chronometryCharactersConsiderSpaces(bool)));

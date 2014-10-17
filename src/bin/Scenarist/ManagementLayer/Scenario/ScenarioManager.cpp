@@ -203,10 +203,37 @@ void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const Q
 	while (!cursor.isNull() && !cursor.atEnd()) {
 		cursor = m_scenario->document()->find(_oldName, cursor);
 
-		if (!cursor.isNull()
-			&& (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character
-				|| ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters)) {
-			cursor.insertText(_newName);
+		if (!cursor.isNull()) {
+			//
+			// Выделенным должно быть именно имя, а не составная часть другого имени
+			//
+			bool replaceSelection = false;
+
+			//
+			// Если мы в блоке персонажа
+			//
+			if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
+				const QString name = BusinessLogic::CharacterParser::name(cursor.block().text());
+				if (name == cursor.selectedText()) {
+					replaceSelection = true;
+				}
+			}
+			//
+			// Если в блоке участники сцены
+			//
+			else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
+				const QStringList names = BusinessLogic::SceneCharactersParser::characters(cursor.block().text());
+				if (names.contains(cursor.selectedText())) {
+					replaceSelection = true;
+				}
+			}
+
+			//
+			// Если выделено имя для замены, меняем его
+			//
+			if (replaceSelection) {
+				cursor.insertText(_newName);
+			}
 		}
 	}
 }
@@ -270,9 +297,28 @@ void ScenarioManager::aboutLocationNameChanged(const QString& _oldName, const QS
 	while (!cursor.isNull() && !cursor.atEnd()) {
 		cursor = m_scenario->document()->find(_oldName, cursor);
 
-		if (!cursor.isNull()
-			&& ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
-			cursor.insertText(_newName);
+		if (!cursor.isNull()) {
+			//
+			// Выделенным должно быть именно локация, а не составная часть другой локации
+			//
+			bool replaceSelection = false;
+
+			//
+			// Если мы в блоке персонажа
+			//
+			if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
+				const QString location = BusinessLogic::TimeAndPlaceParser::locationName(cursor.block().text());
+				if (location == cursor.selectedText()) {
+					replaceSelection = true;
+				}
+			}
+
+			//
+			// Если выделено имя для замены, меняем его
+			//
+			if (replaceSelection) {
+				cursor.insertText(_newName);
+			}
 		}
 	}
 }

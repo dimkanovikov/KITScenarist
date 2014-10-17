@@ -114,3 +114,10 @@ QString TimeAndPlaceParser::timeName(const QString& _text)
 
 	return timeName;
 }
+
+// ****
+
+QStringList SceneCharactersParser::characters(const QString& _text)
+{
+	return _text.split(", ", QString::SkipEmptyParts);
+}
