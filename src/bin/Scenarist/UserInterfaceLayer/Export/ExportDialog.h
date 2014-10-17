@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "BusinessLayer/Export/AbstractExporter.h"
+
 class QAbstractItemModel;
 
 namespace Ui {
@@ -24,6 +26,11 @@ namespace UserInterface
 		~ExportDialog();
 
 		/**
+		 * @brief Установить имя экспортируемого файла
+		 */
+		void setExportFileName(const QString& _fileName);
+
+		/**
 		 * @brief Установить модель стилей
 		 */
 		void setStylesModel(QAbstractItemModel* _model);
@@ -34,29 +41,57 @@ namespace UserInterface
 		void setCurrentStyle(const QString& _styleName);
 
 		/**
-		 * @brief Получить имя экспортируемого файла
+		 * @brief Название сценария
 		 */
-		QString exportFilePath() const;
+		/** @{ */
+		QString scenarioName() const;
+		void setScenarioName(const QString& _name);
+		/** @} */
 
 		/**
-		 * @brief Печатать титульную страницу
+		 * @brief Дополнительная информация
 		 */
-		bool printTitle() const;
+		/** @{ */
+		QString scenarioAdditionalInfo() const;
+		void setScenarioAdditionalInfo(const QString& _additionalInfo);
+		/** @} */
 
 		/**
-		 * @brief Печатать номера страниц
+		 * @brief Жанр
 		 */
-		bool printPagesNumbering() const;
+		/** @{ */
+		QString scenarioGenre() const;
+		void setScenarioGenre(const QString& _genre);
+		/** @} */
 
 		/**
-		 * @brief Печатать номера сцен
+		 * @brief Автор
 		 */
-		bool printScenesNumbering() const;
+		/** @{ */
+		QString scenarioAuthor() const;
+		void setScenarioAuthor(const QString _author);
+		/** @} */
 
 		/**
-		 * @brief Приставка сцен
+		 * @brief Контактная информация
 		 */
-		QString scenesPrefix() const;
+		/** @{ */
+		QString scenarioContacts() const;
+		void setScenarioContacts(const QString& _contacts);
+		/** @} */
+
+		/**
+		 * @brief Год
+		 */
+		/** @{ */
+		QString scenarioYear() const;
+		void setScenarioYear(const QString& _year);
+		/** @} */
+
+		/**
+		 * @brief Получить настройки экспорта
+		 */
+		BusinessLogic::ExportParameters exportParameters() const;
 
 	signals:
 		/**
@@ -93,6 +128,11 @@ namespace UserInterface
 
 	private:
 		Ui::ExportDialog* ui;
+
+		/**
+		 * @brief Имя файла для экспорта
+		 */
+		QString m_exportFileName;
 	};
 }
 

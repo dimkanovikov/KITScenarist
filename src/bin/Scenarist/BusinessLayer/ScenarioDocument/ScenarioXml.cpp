@@ -326,8 +326,8 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 	// Начинаем операцию вставки
 	//
 	QTextCursor cursor(m_scenario->document());
-	cursor.beginEditBlock();
 	cursor.setPosition(_position);
+	cursor.beginEditBlock();
 
 	//
 	// Если вставка в пустой блок, то изменим его тип

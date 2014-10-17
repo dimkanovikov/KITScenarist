@@ -66,7 +66,6 @@ SOURCES += main.cpp \
     BusinessLayer/Chronometry/CharactersChronometer.cpp \
     BusinessLayer/Chronometry/ChronometerFacade.cpp \
     BusinessLayer/Chronometry/ConfigurableChronometer.cpp \
-    BusinessLayer/Chronometry/PagesChronometer.cpp \
     DataLayer/Database/Database.cpp \
     DataLayer/DataMappingLayer/AbstractMapper.cpp \
     DataLayer/DataMappingLayer/CharacterMapper.cpp \
@@ -206,7 +205,6 @@ HEADERS += \
     BusinessLayer/Chronometry/CharactersChronometer.h \
     BusinessLayer/Chronometry/ChronometerFacade.h \
     BusinessLayer/Chronometry/ConfigurableChronometer.h \
-    BusinessLayer/Chronometry/PagesChronometer.h \
     DataLayer/Database/Database.h \
     DataLayer/DataMappingLayer/AbstractMapper.h \
     DataLayer/DataMappingLayer/CharacterMapper.h \

@@ -12,6 +12,7 @@
 
 #include <QApplication>
 #include <QString>
+#include <QPainter>
 #include <QPrinter>
 #include <QTextDocument>
 #include <QTextCursor>
@@ -30,6 +31,103 @@ namespace {
 						"export/style",
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
 					);
+	}
+
+	/**
+	 * @brief Есть ли в документе титульная страница
+	 */
+	const char* PRINT_TITLE_KEY = "print_title";
+
+	/**
+	 * @brief Необходимо ли печатать номера страниц
+	 */
+	const char* PRINT_PAGE_NUMBERS_KEY = "page_numbers";
+
+	/**
+	 * @brief Напечатать документ
+	 */
+	static void printDocument(QTextDocument* _document, QPrinter* _printer) {
+		if (_document != 0
+			&& _printer != 0) {
+
+			QRect innerRect = _printer->pageRect();
+			QRect contentRect = QRect(QPoint(0,0), _document->size().toSize());
+			QRect currentRect = QRect(QPoint(0,0), innerRect.size());
+			QPainter painter(_printer);
+			int pageNumber = 0;
+			painter.save();
+
+
+			while (currentRect.intersects(contentRect)) {
+				_document->drawContents(&painter, currentRect);
+				pageNumber++;
+				currentRect.translate(0, currentRect.height());
+				painter.restore();
+
+				//
+				// Если необходимо рисуем нумерацию страниц
+				//
+				if (_document->property(PRINT_PAGE_NUMBERS_KEY).toBool()) {
+					//
+					// Если печатается титульная страница
+					//
+					if (_document->property(PRINT_TITLE_KEY).toBool()
+						&& pageNumber == 1) {
+						//
+						// Не печатаем номер на первой странице
+						//
+					}
+					//
+					// Печатаем номера страниц
+					//
+					else {
+						painter.setFont(QFont("Courier New", 12));
+
+						//
+						// Середины верхнего и нижнего полей
+						//
+						qreal headerY = 0 - PageMetrics::mmToPx(_printer->margins().top) / 2;
+						qreal footerY = currentRect.height() + PageMetrics::mmToPx(_printer->margins().bottom) / 2;
+
+						//
+						// Области для прорисовки текста на полях
+						//
+						QRectF headerRect(0, headerY, currentRect.width(), 20);
+						QRectF footerRect(0, footerY - 20, currentRect.width(), 20);
+
+						//
+						// Определяем где положено находиться нумерации
+						//
+						QRectF numberingRect;
+						if (::exportStyle().numberingAlignment().testFlag(Qt::AlignTop)) {
+							numberingRect = headerRect;
+						} else {
+							numberingRect = footerRect;
+						}
+						Qt::Alignment numberingAlignment = Qt::AlignVCenter;
+						if (::exportStyle().numberingAlignment().testFlag(Qt::AlignLeft)) {
+							numberingAlignment |= Qt::AlignLeft;
+						} else if (::exportStyle().numberingAlignment().testFlag(Qt::AlignCenter)) {
+							numberingAlignment |= Qt::AlignCenter;
+						} else {
+							numberingAlignment |= Qt::AlignRight;
+						}
+
+						//
+						// Рисуем нумерацию в положеном месте
+						//
+						painter.drawText(numberingRect, numberingAlignment, QString::number(pageNumber));
+					}
+				}
+
+				painter.save();
+				painter.translate(0, -currentRect.height() * pageNumber);
+				if (currentRect.intersects(contentRect))
+					_printer->newPage();
+			}
+			painter.restore();
+			painter.end();
+		}
 	}
 }
 
@@ -51,11 +149,13 @@ void PdfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 	// Сформируем документ
 	//
 	QTextDocument* preparedDocument = prepareDocument(_scenario, _exportParameters);
+	preparedDocument->setProperty(PRINT_TITLE_KEY, _exportParameters.printTilte);
+	preparedDocument->setProperty(PRINT_PAGE_NUMBERS_KEY, _exportParameters.printPagesNumbers);
 
 	//
 	// Печатаем документ
 	//
-	preparedDocument->print(printer);
+	::printDocument(preparedDocument, printer);
 
 	//
 	// Освобождаем память
@@ -77,6 +177,8 @@ void PdfExporter::printPreview(ScenarioDocument* _scenario, const ExportParamete
 	// Сформируем документ
 	//
 	QTextDocument* preparedDocument = prepareDocument(_scenario, _exportParameters);
+	preparedDocument->setProperty(PRINT_TITLE_KEY, _exportParameters.printTilte);
+	preparedDocument->setProperty(PRINT_PAGE_NUMBERS_KEY, _exportParameters.printPagesNumbers);
 
 	//
 	// Сохраним указатель на документ для печати
@@ -107,9 +209,7 @@ void PdfExporter::printPreview(ScenarioDocument* _scenario, const ExportParamete
 
 void PdfExporter::aboutPrint(QPrinter* _printer)
 {
-	if (m_documentForPrint != 0) {
-		m_documentForPrint->print(_printer);
-	}
+	::printDocument(m_documentForPrint, _printer);
 }
 
 QPrinter* PdfExporter::preparePrinter(const QString& _forFile) const

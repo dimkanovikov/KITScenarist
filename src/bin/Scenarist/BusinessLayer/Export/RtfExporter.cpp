@@ -192,7 +192,11 @@ namespace {
 			//
 			// Для неопределённого стиля формируется простая заглушка
 			//
-			blockStyle.append("\\sbasedon222\\snext0 Normal");
+			blockStyle.append("\\sbasedon222\\snext0 ");
+
+			//
+			// Для неопределённого стиля формируется простая заглушка
+			//
 		}
 
 		return blockStyle;
@@ -211,7 +215,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 	QFile rtfFile(_exportParameters.filePath);
 	if (rtfFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 		rtfFile.write("{");
-		rtfFile.write(header().toUtf8().data());
+		rtfFile.write(header(_exportParameters).toUtf8().data());
 		rtfFile.write(END_OF_LINE);
 
 		//
@@ -232,9 +236,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 			//
 			// Получим стиль параграфа
 			//
-			ScenarioBlockStyle::Type currentBlockType =
-					(ScenarioBlockStyle::Type)documentCursor.blockFormat().property(ScenarioBlockStyle::PropertyType).toInt();
-			QString blockStyle = style(currentBlockType);
+			const QString blockStyle = style(documentCursor);
 
 			//
 			// ... и запишем его в документ
@@ -262,7 +264,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 	}
 }
 
-QString RtfExporter::header() const
+QString RtfExporter::header(const ExportParameters& _exportParameters) const
 {
 	QString header = "\\rtf1\\ansi";
 
@@ -295,12 +297,21 @@ QString RtfExporter::header() const
 	// Настройки полей документа
 	//
 	header.append(
-				QString("\\margl%1\\margr%2\\margt%3\\margb%4")
+				QString("\\margl%1\\margr%2\\margt%3\\margb%4\\headery%5\\footery%6")
 				.arg(::mmToTwips(style.pageMargins().left()))
 				.arg(::mmToTwips(style.pageMargins().right()))
 				.arg(::mmToTwips(style.pageMargins().top()))
 				.arg(::mmToTwips(style.pageMargins().bottom()))
+				.arg(::mmToTwips(style.pageMargins().top() / 2))
+				.arg(::mmToTwips(style.pageMargins().bottom() / 2))
 				);
+
+	//
+	// Если печатается титульная страница
+	//
+	if (_exportParameters.printTilte) {
+		header.append("\\titlepg");
+	}
 
 	//
 	// Настройки используемых стилей
@@ -312,13 +323,111 @@ QString RtfExporter::header() const
 	}
 	header.append("}");
 
+	//
+	// Номера страниц
+	//
+	if (_exportParameters.printPagesNumbers) {
+		header.append("{");
+		if (::exportStyle().numberingAlignment().testFlag(Qt::AlignTop)) {
+			header.append("\\header");
+		} else {
+			header.append("\\footer");
+		}
+		header.append("\\pard");
+		if (::exportStyle().numberingAlignment().testFlag(Qt::AlignLeft)) {
+			header.append("\\ql");
+		} else if (::exportStyle().numberingAlignment().testFlag(Qt::AlignCenter)) {
+			header.append("\\qc");
+		} else {
+			header.append("\\qr");
+		}
+		header.append(" \\chpgn\\par");
+		header.append("}");
+	}
+
 	return header;
+}
+
+QString RtfExporter::style(QTextCursor& _documentCursor) const
+{
+	ScenarioBlockStyle::Type currentBlockType =
+			(ScenarioBlockStyle::Type)_documentCursor.blockFormat().property(ScenarioBlockStyle::PropertyType).toInt();
+	QString blockStyle;
+	if (currentBlockType != ScenarioBlockStyle::Undefined) {
+		//
+		// Стиль для предопределённого блока текста
+		//
+		blockStyle = style(currentBlockType);
+	} else {
+		//
+		// Стиль для неопределённого блока текста
+		//
+		blockStyle = style(_documentCursor.blockFormat(), _documentCursor.charFormat());
+	}
+
+	return blockStyle;
 }
 
 QString RtfExporter::style(ScenarioBlockStyle::Type _type) const
 {
 	ScenarioBlockStyle blockStyle = ::exportStyle().blockStyle(_type);
 	return ::rtfBlockStyle(blockStyle);
+}
+
+QString RtfExporter::style(const QTextBlockFormat& _blockFormat, const QTextCharFormat& _charFormat) const
+{
+	QString blockStyle = "\\f0";
+
+	//
+	// Шрифт
+	//
+	if (_charFormat.font().capitalization() == QFont::AllUppercase) {
+		blockStyle.append("\\caps");
+	}
+	blockStyle.append(QString("\\fs%1").arg(_charFormat.font().pointSize() * 2));
+
+	//
+	// Отступы
+	//
+	blockStyle.append("\\fi0\\li0\\ri0");
+
+	//
+	// Выравнивание
+	//
+	switch (_blockFormat.alignment()) {
+		case Qt::AlignRight: {
+			blockStyle.append("\\qr");
+			break;
+		}
+
+		case Qt::AlignCenter:
+		case Qt::AlignHCenter: {
+			blockStyle.append("\\qc");
+			break;
+		}
+
+		default: {
+			blockStyle.append("\\ql");
+			break;
+		}
+	}
+
+	//
+	// Дополнительная настройка
+	//
+	if (_charFormat.font().bold()) {
+		blockStyle.append("\\b");
+	}
+	if (_charFormat.font().italic()) {
+		blockStyle.append("\\i");
+	}
+	if (_charFormat.font().underline()) {
+		blockStyle.append("\\ul");
+	}
+
+	blockStyle.append("\\sbasedon0");
+
+	return blockStyle;
 }
 
 QString RtfExporter::stringToUtfCode(const QString& _text) const

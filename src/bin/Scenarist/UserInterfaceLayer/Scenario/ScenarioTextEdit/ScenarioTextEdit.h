@@ -66,6 +66,7 @@ namespace UserInterface
 		 */
 		void setStoreDataWhenEditing(bool _store);
 
+	public slots:
 		/**
 		 * @brief Своя реализация проверки виден ли курсор на экране
 		 */
@@ -97,11 +98,15 @@ namespace UserInterface
 		 * @brief Переопределяем работу с буфером обмена для использования собственного майм типа данных
 		 */
 		/** @{ */
-		void dropEvent(QDropEvent* _event);
 		bool canInsertFromMimeData(const QMimeData* _source) const;
 		QMimeData* createMimeDataFromSelection() const;
 		void insertFromMimeData(const QMimeData* _source);
 		/** @} */
+
+		/**
+		 * @brief Переопределяем для возвращения указателя на экран (а то скроллинг сбивается)
+		 */
+		void resizeEvent(QResizeEvent* _event);
 
 	private:
 		/**

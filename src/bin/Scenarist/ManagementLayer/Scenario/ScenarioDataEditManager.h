@@ -37,46 +37,6 @@ namespace ManagementLayer
 		/** @} */
 
 		/**
-		 * @brief Дополнительная информация
-		 */
-		/** @{ */
-		QString scenarioAdditionalInfo() const;
-		void setScenarioAdditionalInfo(const QString& _additionalInfo);
-		/** @} */
-
-		/**
-		 * @brief Жанр
-		 */
-		/** @{ */
-		QString scenarioGenre() const;
-		void setScenarioGenre(const QString& _genre);
-		/** @} */
-
-		/**
-		 * @brief Автор
-		 */
-		/** @{ */
-		QString scenarioAuthor() const;
-		void setScenarioAuthor(const QString _author);
-		/** @} */
-
-		/**
-		 * @brief Контактная информация
-		 */
-		/** @{ */
-		QString scenarioContacts() const;
-		void setScenarioContacts(const QString& _contacts);
-		/** @} */
-
-		/**
-		 * @brief Год
-		 */
-		/** @{ */
-		QString scenarioYear() const;
-		void setScenarioYear(const QString& _year);
-		/** @} */
-
-		/**
 		 * @brief Синопсис сценария
 		 */
 		QString scenarioSynopsis() const;
@@ -97,11 +57,6 @@ namespace ManagementLayer
 		 */
 		/** @{ */
 		void scenarioNameChanged();
-		void scenarioAdditionalInfoChanged();
-		void scenarioGenreChanged();
-		void scenarioAuthorChanged();
-		void scenarioContactsChanged();
-		void scenarioYearChanged();
 		void scenarioSynopsisChanged();
 		/** @} */
 

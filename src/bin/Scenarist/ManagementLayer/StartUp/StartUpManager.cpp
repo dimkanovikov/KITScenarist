@@ -180,7 +180,7 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 #elif defined Q_OS_LINUX
 						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/linux/\" "
 #elif defined Q_OS_MAC
-                        + "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/mac/scenarist-setup-" + maxVersion + ".dmg\" "
+						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/mac/scenarist-setup-" + maxVersion + ".dmg\" "
 #endif
 						+ tr("style=\"color:#2b78da;\">download</a> "
 							 "or <a href=\"http://dimkanovikov.pro/kit/scenarist/news.html\" "
@@ -231,6 +231,6 @@ void StartUpManager::checkNewVersion()
 #elif defined Q_OS_LINUX
 	manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/scenarist/downloads/linux/")));
 #elif defined Q_OS_MAC
-    manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/scenarist/downloads/mac/")));
+	manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/scenarist/downloads/mac/")));
 #endif
 }

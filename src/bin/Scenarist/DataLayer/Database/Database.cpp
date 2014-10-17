@@ -276,6 +276,11 @@ void Database::createEnums(QSqlDatabase& _database)
 	QSqlQuery q_creator(_database);
 	_database.transaction();
 
+	// Пустой сценарий
+	{
+		q_creator.exec("INSERT INTO scenario (id, text) VALUES(null, '')");
+	}
+
 	// Версия программы
 	{
 		q_creator.exec(
@@ -325,6 +330,29 @@ void Database::createEnums(QSqlDatabase& _database)
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'DAY');");
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'EVENING');");
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'NIGHT');");
+#endif
+	}
+
+	// Справочник состояний персонажей
+	{
+#ifdef USE_RUSSIAN_DATABASE_ENUMS
+		q_creator.exec(
+					QString("INSERT INTO character_states (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ВПЗ"))
+					);
+		q_creator.exec(
+					QString("INSERT INTO character_states (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ЗК"))
+					);
+		q_creator.exec(
+					QString("INSERT INTO character_states (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ПРОД"))
+					);
+#else
+		q_creator.exec("INSERT INTO character_states (id, name) VALUES (null, 'V.O.');");
+		q_creator.exec("INSERT INTO character_states (id, name) VALUES (null, 'O.S.');");
+		q_creator.exec("INSERT INTO character_states (id, name) VALUES (null, 'O.C.');");
+		q_creator.exec("INSERT INTO character_states (id, name) VALUES (null, 'SUBTITLE');");
 #endif
 	}
 

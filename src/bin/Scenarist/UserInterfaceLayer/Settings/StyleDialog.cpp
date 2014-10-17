@@ -45,6 +45,18 @@ void StyleDialog::setScenarioStyle(const BusinessLogic::ScenarioStyle& _style, b
 	ui->topField->setValue(m_style.pageMargins().top());
 	ui->rightField->setValue(m_style.pageMargins().right());
 	ui->bottomField->setValue(m_style.pageMargins().bottom());
+	int verticalAlignIndex = 0; // по умолчанию сверху
+	if (m_style.numberingAlignment().testFlag(Qt::AlignBottom)) {
+		verticalAlignIndex = 1;
+	}
+	ui->numberingVerticalAlignment->setCurrentIndex(verticalAlignIndex);
+	int horizontalAlignIndex = 2; // по умолчанию справа
+	if (m_style.numberingAlignment().testFlag(Qt::AlignLeft)) {
+		horizontalAlignIndex = 0;
+	} else if (m_style.numberingAlignment().testFlag(Qt::AlignCenter)) {
+		horizontalAlignIndex = 1;
+	}
+	ui->numberingHorizontalAlignment->setCurrentIndex(horizontalAlignIndex);
 
 	//
 	// Очистим последний выбранный стиль блока
@@ -77,6 +89,19 @@ BusinessLogic::ScenarioStyle StyleDialog::scenarioStyle()
 									 ui->topField->value(),
 									 ui->rightField->value(),
 									 ui->bottomField->value()));
+	Qt::Alignment numberingAlignment;
+	switch (ui->numberingVerticalAlignment->currentIndex()) {
+		default:
+		case 0: numberingAlignment |= Qt::AlignTop; break;
+		case 1: numberingAlignment |= Qt::AlignBottom; break;
+	}
+	switch (ui->numberingHorizontalAlignment->currentIndex()) {
+		case 0: numberingAlignment |= Qt::AlignLeft; break;
+		case 1: numberingAlignment |= Qt::AlignCenter; break;
+		default:
+		case 2: numberingAlignment |= Qt::AlignRight;
+	}
+	m_style.setNumberingAlignment(numberingAlignment);
 
 	//
 	// Возвратим настроенный стиль

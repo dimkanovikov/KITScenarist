@@ -461,9 +461,14 @@ bool ApplicationManager::saveIfNeeded()
 void ApplicationManager::saveCurrentProjectInRecent()
 {
 	//
+	// Скорректируем слэши в пути к файлу
+	//
+	const QString filePath = QDir::toNativeSeparators(DatabaseLayer::Database::currentFile());
+
+	//
 	// Сохраним текущий проект в недавно использованых
 	//
-	m_startUpManager->addRecentFile(DatabaseLayer::Database::currentFile(), m_scenarioManager->scenarioName());
+	m_startUpManager->addRecentFile(filePath, m_scenarioManager->scenarioName());
 }
 
 void ApplicationManager::goToEditCurrentProject()
@@ -598,6 +603,9 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QString)), this, SLOT(aboutLoad(QString)));
 
+	connect(m_exportManager, SIGNAL(scenarioNameChanged(QString)),
+			m_scenarioManager, SLOT(aboutScenarioNameChanged(QString)));
+
 	connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
 			m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
 	connect(m_charactersManager, SIGNAL(refreshCharacters()),
@@ -620,6 +628,7 @@ void ApplicationManager::initConnections()
 	connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_charactersManager, SIGNAL(characterChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
+	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 }
 
 void ApplicationManager::initStyleSheet()

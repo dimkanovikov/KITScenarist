@@ -100,6 +100,11 @@ namespace ManagementLayer
 		 */
 		void aboutRefreshLocations();
 
+		/**
+		 * @brief Изменено название сценария
+		 */
+		void aboutScenarioNameChanged(const QString& _name);
+
 	signals:
 		/**
 		 * @brief Сценарий изменён
@@ -188,7 +193,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Вкладки редакторов
 		 */
-        TabBar* m_viewEditorsTabs;
+		TabBar* m_viewEditorsTabs;
 
 		/**
 		 * @brief Панели инструментов редакторов

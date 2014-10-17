@@ -34,6 +34,17 @@ namespace ManagementLayer
 		 */
 		void printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario);
 
+	signals:
+		/**
+		 * @brief Было изменено название сценария
+		 */
+		void scenarioNameChanged(const QString& _name);
+
+		/**
+		 * @brief Изменены какие-либо данные титульного листа сценария
+		 */
+		void scenarioTitleListDataChanged();
+
 	private slots:
 		/**
 		 * @brief Изменился стиль экспорта

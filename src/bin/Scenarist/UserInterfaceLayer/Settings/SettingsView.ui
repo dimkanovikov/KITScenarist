@@ -781,76 +781,29 @@
             <widget class="QWidget" name="chronometryPageWidget" native="true">
              <layout class="QGridLayout" name="gridLayout_4">
               <item row="0" column="0">
-               <widget class="QRadioButton" name="pagesChronometry">
+               <widget class="QRadioButton" name="charactersChronometry">
                 <property name="text">
-                 <string>Pages Chronometry</string>
+                 <string>Characters Chronometry</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
+              <item row="1" column="2">
+               <spacer name="horizontalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>301</width>
+                  <height>17</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
               <item row="1" column="0" colspan="2">
-               <widget class="QGroupBox" name="pagesChronometryGroup">
-                <property name="title">
-                 <string/>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout">
-                 <item>
-                  <widget class="QLabel" name="label_2">
-                   <property name="text">
-                    <string>Page</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_3">
-                   <property name="text">
-                    <string>=</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="pagesChronometrySeconds">
-                   <property name="maximum">
-                    <number>100</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_4">
-                   <property name="text">
-                    <string>Seconds</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::MinimumExpanding</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>0</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QRadioButton" name="charactersChronometry">
-                <property name="text">
-                 <string>Characters Chronometry</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0" colspan="2">
                <widget class="QGroupBox" name="charactersChronometryGroup">
                 <property name="enabled">
                  <bool>false</bool>
@@ -923,27 +876,27 @@
                 </layout>
                </widget>
               </item>
-              <item row="3" column="2">
-               <spacer name="horizontalSpacer_5">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>301</width>
-                  <height>17</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="4" column="0">
+              <item row="2" column="0">
                <widget class="QRadioButton" name="configurableChronometry">
                 <property name="text">
                  <string>Configurable Chronometry</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="0" colspan="2">
+              <item row="4" column="1">
+               <spacer name="verticalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>17</width>
+                  <height>37</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="3" column="0" colspan="2">
                <widget class="QGroupBox" name="configurableChronometryGroup">
                 <property name="enabled">
                  <bool>false</bool>
@@ -1168,19 +1121,6 @@ Paragraph</string>
                 </layout>
                </widget>
               </item>
-              <item row="6" column="1">
-               <spacer name="verticalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>17</width>
-                  <height>37</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
              </layout>
             </widget>
            </item>
@@ -1342,8 +1282,6 @@ Paragraph</string>
   <tabstop>folderBackgroundColor</tabstop>
   <tabstop>currentScenarioStyle</tabstop>
   <tabstop>showScenesNumbers</tabstop>
-  <tabstop>pagesChronometry</tabstop>
-  <tabstop>pagesChronometrySeconds</tabstop>
   <tabstop>charactersChronometry</tabstop>
   <tabstop>charactersChronometryCharacters</tabstop>
   <tabstop>charactersChronometrySeconds</tabstop>

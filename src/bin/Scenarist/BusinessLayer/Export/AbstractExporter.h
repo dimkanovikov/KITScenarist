@@ -33,6 +33,18 @@ namespace BusinessLogic
 		bool printTilte;
 
 		/**
+		 * @brief Информация с титульного листа
+		 */
+		/** @{ */
+		QString scenarioName;
+		QString scenarioAdditionalInfo;
+		QString scenarioGenre;
+		QString scenarioAuthor;
+		QString scenarioContacts;
+		QString scenarioYear;
+		/** @} */
+
+		/**
 		 * @brief Печатать номера страниц
 		 */
 		bool printPagesNumbers;
@@ -70,6 +82,14 @@ namespace BusinessLogic
 		 */
 		QTextDocument* prepareDocument(const ScenarioDocument* _scenario,
 			const ExportParameters& _exportParameters) const;
+
+	private:
+		/**
+		 * @brief Украшения документа
+		 *
+		 * Например подмена многоточий и т.п.
+		 */
+		void beautifyDocument(QTextDocument* _document) const;
 	};
 }
 

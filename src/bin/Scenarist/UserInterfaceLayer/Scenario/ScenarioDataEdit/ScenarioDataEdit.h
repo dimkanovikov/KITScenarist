@@ -37,46 +37,6 @@ namespace UserInterface
 		/** @} */
 
 		/**
-		 * @brief Дополнительная информация
-		 */
-		/** @{ */
-		QString scenarioAdditionalInfo() const;
-		void setScenarioAdditionalInfo(const QString& _additionalInfo);
-		/** @} */
-
-		/**
-		 * @brief Жанр
-		 */
-		/** @{ */
-		QString scenarioGenre() const;
-		void setScenarioGenre(const QString& _genre);
-		/** @} */
-
-		/**
-		 * @brief Автор
-		 */
-		/** @{ */
-		QString scenarioAuthor() const;
-		void setScenarioAuthor(const QString _author);
-		/** @} */
-
-		/**
-		 * @brief Контактная информация
-		 */
-		/** @{ */
-		QString scenarioContacts() const;
-		void setScenarioContacts(const QString& _contacts);
-		/** @} */
-
-		/**
-		 * @brief Год
-		 */
-		/** @{ */
-		QString scenarioYear() const;
-		void setScenarioYear(const QString& _year);
-		/** @} */
-
-		/**
 		 * @brief Синопсис сценария
 		 */
 		QString scenarioSynopsis() const;
@@ -97,11 +57,6 @@ namespace UserInterface
 		 */
 		/** @{ */
 		void scenarioNameChanged();
-		void scenarioAdditionalInfoChanged();
-		void scenarioGenreChanged();
-		void scenarioAuthorChanged();
-		void scenarioContactsChanged();
-		void scenarioYearChanged();
 		void scenarioSynopsisChanged();
 		/** @} */
 
@@ -116,11 +71,6 @@ namespace UserInterface
 		 */
 		/** @{ */
 		void aboutNameChanged();
-		void aboutAdditionalInfoChanged();
-		void aboutGenreChanged();
-		void aboutAuthorChanged();
-		void aboutContactsChanged();
-		void aboutYearChanged();
 		void aboutSourceSynopsisChanged();
 		/** @} */
 
@@ -156,31 +106,6 @@ namespace UserInterface
 		 * @brief Название сценария
 		 */
 		QString m_sourceName;
-
-		/**
-		 * @brief Дополнительная информация
-		 */
-		QString m_sourceAdditionalInfo;
-
-		/**
-		 * @brief Жанр
-		 */
-		QString m_sourceGenre;
-
-		/**
-		 * @brief Автор
-		 */
-		QString m_sourceAuthor;
-
-		/**
-		 * @brief Контакты
-		 */
-		QString m_sourceContacts;
-
-		/**
-		 * @brief Год
-		 */
-		QString m_sourceYear;
 
 		/**
 		 * @brief Текст синопсиса

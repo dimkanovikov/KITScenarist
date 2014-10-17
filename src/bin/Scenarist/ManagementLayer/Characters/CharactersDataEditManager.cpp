@@ -49,27 +49,29 @@ void CharactersDataEditManager::editCharacter(Domain::Character* _character)
 
 void CharactersDataEditManager::aboutSave()
 {
-	//
-	// Сохраним предыдущее название персонажа
-	//
-	QString previousName = m_character->name();
+	if (!m_editor->name().isEmpty()) {
+		//
+		// Сохраним предыдущее название персонажа
+		//
+		QString previousName = m_character->name();
 
-	//
-	// Установим новые значения
-	//
-	m_character->setName(m_editor->name());
-	m_character->setRealName(m_editor->realName());
-	m_character->setDescription(m_editor->description());
-	m_character->setPhotos(m_editor->photos());
+		//
+		// Установим новые значения
+		//
+		m_character->setName(m_editor->name());
+		m_character->setRealName(m_editor->realName());
+		m_character->setDescription(m_editor->description());
+		m_character->setPhotos(m_editor->photos());
 
-	//
-	// Уведомим об изменении названия персонажа
-	//
-    if (previousName != m_character->name()) {
-        emit characterNameChanged(previousName, m_character->name());
+		//
+		// Уведомим об изменении названия персонажа
+		//
+		if (previousName != m_character->name()) {
+			emit characterNameChanged(previousName, m_character->name());
+		}
+
+		emit characterChanged();
 	}
-
-	emit characterChanged();
 }
 
 void CharactersDataEditManager::initView()
