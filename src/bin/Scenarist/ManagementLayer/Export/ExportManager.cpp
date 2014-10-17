@@ -129,15 +129,8 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 
 void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
-	BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
-	//
-	// Очищаем путь к файлу, чтобы не экспортировать в файл, а дать возможность
-	// отправки документа на принтер
-	//
-	exportParameters.filePath.clear();
-
 	BusinessLogic::PdfExporter exporter;
-	exporter.printPreview(_scenario, exportParameters);
+	exporter.printPreview(_scenario, m_exportDialog->exportParameters());
 }
 
 void ExportManager::aboutExportStyleChanged(const QString& _styleName)

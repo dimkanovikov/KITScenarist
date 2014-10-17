@@ -27,7 +27,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Преамбула RTF-файла
 		 */
-		QString header() const;
+		QString header(const ExportParameters& _exportParameters) const;
 
 		/**
 		 * @brief RTF стиль текущего блока

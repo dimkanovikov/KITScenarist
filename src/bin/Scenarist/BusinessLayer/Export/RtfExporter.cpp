@@ -215,7 +215,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 	QFile rtfFile(_exportParameters.filePath);
 	if (rtfFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 		rtfFile.write("{");
-		rtfFile.write(header().toUtf8().data());
+		rtfFile.write(header(_exportParameters).toUtf8().data());
 		rtfFile.write(END_OF_LINE);
 
 		//
@@ -264,7 +264,7 @@ void RtfExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters& 
 	}
 }
 
-QString RtfExporter::header() const
+QString RtfExporter::header(const ExportParameters& _exportParameters) const
 {
 	QString header = "\\rtf1\\ansi";
 
@@ -305,6 +305,13 @@ QString RtfExporter::header() const
 				);
 
 	//
+	// Если печатается титульная страница
+	//
+	if (_exportParameters.printTilte) {
+		header.append("\\titlepg");
+	}
+
+	//
 	// Настройки используемых стилей
 	//
 	header.append("{\\stylesheet");
@@ -313,6 +320,28 @@ QString RtfExporter::header() const
 		header.append(QString("{%1;}").arg(::rtfBlockStyle(blockStyle, true)));
 	}
 	header.append("}");
+
+	//
+	// Номера страниц
+	//
+	if (_exportParameters.printPagesNumbers) {
+		header.append("{");
+		if (::exportStyle().numberingAlignment().testFlag(Qt::AlignTop)) {
+			header.append("\\header");
+		} else {
+			header.append("\\footer");
+		}
+		header.append("\\pard");
+		if (::exportStyle().numberingAlignment().testFlag(Qt::AlignLeft)) {
+			header.append("\\ql");
+		} else if (::exportStyle().numberingAlignment().testFlag(Qt::AlignCenter)) {
+			header.append("\\qc");
+		} else {
+			header.append("\\qr");
+		}
+		header.append(" \\chpgn");
+		header.append("}");
+	}
 
 	return header;
 }
