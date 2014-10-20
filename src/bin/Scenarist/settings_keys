@@ -47,3 +47,13 @@ application/settings/state
 
 application/recent-files/list/... - последние использованые файлы программы (в виде ключ - название проекта (если не задано, то имя файла без расширения), значение - путь)
 application/recent-files/using/... - даты использования последних файлов
+
+projects/[project_name] - настройки актуальные для проекта, где [project_name] - полный путь к файлу, с заменой слешей на подчёркивание
+projects/[project_name]/last-cursor-position - последняя позиция курсора
+projects/[project_name]/export - настройки экспорта
+projects/[project_name]/export/file-path - путь к файлу экспорта
+projects/[project_name]/export/style - стиль экспорта
+projects/[project_name]/export/page-numbering - нумерация страниц
+projects/[project_name]/export/scenes-numbering - нумерация сцен
+projects/[project_name]/export/scenes-prefix - приставка сцен
+projects/[project_name]/export/print-title - печатать ли титульную страницу

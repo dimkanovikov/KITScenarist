@@ -116,6 +116,11 @@ namespace ManagementLayer
 		 */
 		void goToEditCurrentProject();
 
+		/**
+		 * @brief Закрыть текущий проект
+		 */
+		void closeCurrentProject();
+
 	private:
 		/**
 		 * @brief Настроить представление

@@ -15,6 +15,11 @@ namespace DatabaseLayer
 		static void setCurrentFile(const QString& _databaseFileName);
 
 		/**
+		 * @brief Закрыть текущее соединение с базой данных
+		 */
+		static void closeCurrentFile();
+
+		/**
 		 * @brief Получить имя текущей базы данных
 		 */
 		static QString currentFile();

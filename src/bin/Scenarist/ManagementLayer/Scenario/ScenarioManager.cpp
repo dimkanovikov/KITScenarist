@@ -109,6 +109,19 @@ void ScenarioManager::loadCurrentProject()
 	m_textEditManager->setCursorPosition(0);
 }
 
+void ScenarioManager::loadCurrentProjectSettings(const QString& _projectPath)
+{
+	//
+	// Загрузим позицию курсора
+	//
+	const int lastCursorPosition =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				QString("projects/%1/last-cursor-position").arg(_projectPath),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				).toInt();
+	m_textEditManager->setCursorPosition(lastCursorPosition);
+}
+
 void ScenarioManager::saveCurrentProject()
 {
 	QString scenarioName = m_dataEditManager->scenarioName();
@@ -117,6 +130,17 @@ void ScenarioManager::saveCurrentProject()
 
 	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
 		scenarioSynopsis, scenarioText);
+}
+
+void ScenarioManager::saveCurrentProjectSettings(const QString& _projectPath)
+{
+	//
+	// Сохраним позицию курсора
+	//
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("projects/%1/last-cursor-position").arg(_projectPath),
+				QString::number(m_textEditManager->cursorPosition()),
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
 void ScenarioManager::loadViewState()

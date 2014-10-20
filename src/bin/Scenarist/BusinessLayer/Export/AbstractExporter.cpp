@@ -316,7 +316,7 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 					//
 					// Номер сцены, если необходимо
 					//
-					if (_exportParameters.printScenesNubers) {
+					if (_exportParameters.printScenesNumbers) {
 						QString sceneNumber = QString("%1. ").arg(currentSceneNumber);
 						destDocumentCursor.insertText(sceneNumber);
 						++currentSceneNumber;

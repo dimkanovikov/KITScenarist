@@ -19,13 +19,18 @@ namespace BusinessLogic
 		ExportParameters() :
 			printTilte(false),
 			printPagesNumbers(false),
-			printScenesNubers(false)
+			printScenesNumbers(false)
 		{}
 
 		/**
 		 * @brief Путь к файлу
 		 */
 		QString filePath;
+
+		/**
+		 * @brief Название стиля экспорта
+		 */
+		QString style;
 
 		/**
 		 * @brief Печатать титульную страницу
@@ -52,7 +57,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Печатать номера сцен
 		 */
-		bool printScenesNubers;
+		bool printScenesNumbers;
 
 		/**
 		 * @brief Приставка сцен

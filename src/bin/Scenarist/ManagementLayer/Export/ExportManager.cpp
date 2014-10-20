@@ -33,13 +33,6 @@ ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
 	Domain::Scenario* currentScenario = _scenario->scenario();
-	//
-	// Загрузить информацию о текущем сценарии в диалог
-	//
-
-	//
-	// TODO: Загрузка настроек сохранённых для конкретного проекта
-	//
 
 	//
 	// Установка имени файла
@@ -131,6 +124,79 @@ void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scena
 {
 	BusinessLogic::PdfExporter exporter;
 	exporter.printPreview(_scenario, m_exportDialog->exportParameters());
+}
+
+void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
+{
+	const QString projectKey = QString("projects/%1/export").arg(_projectPath);
+
+	//
+	// Загрузим параметры экспорта
+	//
+	m_exportDialog->setExportFilePath(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("%1/file-path").arg(projectKey),
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
+	m_exportDialog->setCurrentStyle(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("%1/style").arg(projectKey),
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
+	m_exportDialog->setPageNumbering(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("%1/page-numbering").arg(projectKey),
+					DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
+				);
+	m_exportDialog->setScenesNumbering(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("%1/scenes-numbering").arg(projectKey),
+					DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
+				);
+	m_exportDialog->setScenesPrefix(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("%1/scenes-prefix").arg(projectKey),
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
+	m_exportDialog->setPrintTitle(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("%1/print-title").arg(projectKey),
+					DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
+				);
+}
+
+void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
+{
+	const QString projectKey = QString("projects/%1/export").arg(_projectPath);
+
+	//
+	// Сохраним параметры экспорта
+	//
+	BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("%1/file-path").arg(projectKey),
+				exportParameters.filePath,
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("%1/style").arg(projectKey),
+				exportParameters.style,
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("%1/page-numbering").arg(projectKey),
+				exportParameters.printPagesNumbers ? "1" : "0",
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("%1/scenes-numbering").arg(projectKey),
+				exportParameters.printScenesNumbers ? "1" : "0",
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("%1/scenes-prefix").arg(projectKey),
+				exportParameters.scenesPrefix,
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("%1/print-title").arg(projectKey),
+				exportParameters.printTilte ? "1" : "0",
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
 void ExportManager::aboutExportStyleChanged(const QString& _styleName)

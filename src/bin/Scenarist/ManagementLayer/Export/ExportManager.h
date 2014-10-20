@@ -34,6 +34,16 @@ namespace ManagementLayer
 		 */
 		void printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario);
 
+		/**
+		 * @brief Загрузим настройки экспорта для текущего проекта
+		 */
+		void loadCurrentProjectSettings(const QString& _projectPath);
+
+		/**
+		 * @brief Сохраним настройки экспорта для текущего проекта
+		 */
+		void saveCurrentProjectSettings(const QString& _projectPath);
+
 	signals:
 		/**
 		 * @brief Было изменено название сценария
