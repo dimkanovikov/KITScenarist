@@ -805,9 +805,6 @@
               </item>
               <item row="1" column="0" colspan="2">
                <widget class="QGroupBox" name="charactersChronometryGroup">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
                 <property name="title">
                  <string/>
                 </property>
