@@ -23,11 +23,13 @@ void DialogHandler::handleEnter(QKeyEvent*)
 	// ... курсор в текущем положении
 	QTextCursor cursor = editor()->textCursor();
 	// ... блок текста в котором находится курсор
-	QTextBlock currentBlock = cursor.block();
-	// ... текст до курсора
-	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
-	// ... текст после курсора
-	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
+    QTextBlock currentBlock = cursor.block();
+    // ... текст блока
+    QString currentBlockText = currentBlock.text().trimmed();
+    // ... текст до курсора
+    QString cursorBackwardText = currentBlockText.left(cursor.positionInBlock());
+    // ... текст после курсора
+    QString cursorForwardText = currentBlockText.mid(cursor.positionInBlock());
 
 
 	//
