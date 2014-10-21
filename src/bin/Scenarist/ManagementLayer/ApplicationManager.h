@@ -34,10 +34,16 @@ namespace ManagementLayer
 		explicit ApplicationManager(QObject *parent = 0);
 		~ApplicationManager();
 
+    public slots:
 		/**
 		 * @brief Запуск приложения
 		 */
 		void exec(const QString& _fileToOpen);
+
+        /**
+         * @brief Открыть файл
+         */
+        void openFile(const QString& _fileToOpen);
 
 	private slots:
 		/**
