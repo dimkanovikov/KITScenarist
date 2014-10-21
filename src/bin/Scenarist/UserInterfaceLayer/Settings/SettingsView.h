@@ -56,6 +56,7 @@ namespace UserInterface
 
 		void setNavigatorShowScenesNumbers(bool  _value);
 
+		void setChronometryUsed(bool _value);
 		void setChronometryCurrentType(int _value);
 		void setChronometryCharactersCharacters(int  _value);
 		void setChronometryCharactersSeconds(int  _value);
@@ -66,6 +67,9 @@ namespace UserInterface
 		void setChronometryConfigurableSecondsFor50Action(double  _value);
 		void setChronometryConfigurableSecondsForParagraphDialog(double  _value);
 		void setChronometryConfigurableSecondsFor50Dialog(double  _value);
+
+		void setPagesCounterUsed(bool _value);
+		void setWordsCounterUsed(bool _value);
 		/** @} */
 
 	signals:
@@ -90,6 +94,7 @@ namespace UserInterface
 		void navigatorShowScenesNumbersChanged(bool);
 		void navigatorShowScenesTextChanged(bool);
 
+		void chronometryUsedChanged(bool);
 		void chronometryCurrentTypeChanged();
 		void chronometryCharactersCharactersChanged(int);
 		void chronometryCharactersSecondsChanged(int);
@@ -100,6 +105,9 @@ namespace UserInterface
 		void chronometryConfigurableSecondsFor50ActionChanged(double);
 		void chronometryConfigurableSecondsForParagraphDialogChanged(double);
 		void chronometryConfigurableSecondsFor50DialogChanged(double);
+
+		void pagesCounterUsedChanged(bool);
+		void wordsCounterUsedChanged(bool);
 		/** @} */
 
 		/**

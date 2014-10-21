@@ -16,6 +16,7 @@ scenario-editor/autosave - включено ли автосохранение п
 scenario-editor/autosave-interval - интервал автоматического сохранения
 scenario-editor/current-style - стиль отображения текста в редакторе
 
+chronometry/used - включён ли подсчёт хронометража
 chronometry/current-chronometer-type - используемая система хронометража
 chronometry/characters/characters - количество символов в посимвольном хронометре
 chronometry/characters/seconds - количество секунд в посимвольном хронометре
@@ -26,6 +27,9 @@ chronometry/configurable/seconds-for-paragraph/dialog - секунд за бло
 chronometry/configurable/seconds-for-every-50/time-and-place - секунд за каждые 50 символов
 chronometry/configurable/seconds-for-every-50/action - секунд за каждые 50 символов
 chronometry/configurable/seconds-for-every-50/dialog - секунд за каждые 50 символов
+
+counters/pages/used - включён ли счётчик страниц
+counters/words/used - включён ли счётчик слов
 
 export/style - стиль экспортируемых документов
 export/files-path - путь к папке экспортируемых файлов

@@ -654,6 +654,8 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutNavigatorSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(chronometrySettingsUpdated()),
 			m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
+	connect(m_settingsManager, SIGNAL(countersSettingsUpdated()),
+			m_scenarioManager, SLOT(aboutCountersSettingsUpdated()));
 
 	connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_charactersManager, SIGNAL(characterChanged()), this, SLOT(aboutProjectChanged()));

@@ -53,8 +53,8 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_redo(new QToolButton(this)),
 	m_search(new QToolButton(this)),
 	m_fastFormat(new QToolButton(this)),
-	m_durationTitle(new QLabel(this)),
 	m_duration(new QLabel(this)),
+	m_countersInfo(new QLabel(this)),
 	m_editor(new ScenarioTextEdit(this)),
 	m_searchLine(new SearchWidget(this)),
 	m_fastFormatWidget(new ScenarioFastFormatWidget(this))
@@ -84,6 +84,11 @@ void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocu
 void ScenarioTextEditWidget::setDuration(const QString& _duration)
 {
 	m_duration->setText(_duration);
+}
+
+void ScenarioTextEditWidget::setCountersInfo(const QString& _counters)
+{
+	m_countersInfo->setText(_counters);
 }
 
 void ScenarioTextEditWidget::setUsePageView(bool _use)
@@ -343,14 +348,9 @@ void ScenarioTextEditWidget::initView()
 	m_fastFormat->setToolTip(tr("Text Fast Format"));
 	m_fastFormat->setCheckable(true);
 
-	m_durationTitle->setText(tr("Chron: "));
-	m_durationTitle->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-	m_durationTitle->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
-	QFont durationFont = m_duration->font();
-	durationFont.setBold(true);
-	m_duration->setFont(durationFont);
+	m_duration->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	m_duration->setAlignment(Qt::AlignRight);
 
 	m_editor->setPageFormat(ScenarioStyleFacade::style().pageSizeId());
 
@@ -368,8 +368,8 @@ void ScenarioTextEditWidget::initView()
 	topLayout->addWidget(m_redo);
 	topLayout->addWidget(m_search);
 	topLayout->addWidget(m_fastFormat);
-	topLayout->addWidget(m_durationTitle);
 	topLayout->addWidget(m_duration);
+	topLayout->addWidget(m_countersInfo);
 
 	QVBoxLayout* mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(m_toolbar);
@@ -497,12 +497,12 @@ void ScenarioTextEditWidget::initStyleSheet()
 	m_search->setProperty("inTopPanel", true);
 	m_fastFormat->setProperty("inTopPanel", true);
 
-	m_durationTitle->setProperty("inTopPanel", true);
-	m_durationTitle->setProperty("topPanelTopBordered", true);
-
 	m_duration->setProperty("inTopPanel", true);
 	m_duration->setProperty("topPanelTopBordered", true);
-	m_duration->setProperty("topPanelRightBordered", true);
+
+	m_countersInfo->setProperty("inTopPanel", true);
+	m_countersInfo->setProperty("topPanelTopBordered", true);
+	m_countersInfo->setProperty("topPanelRightBordered", true);
 
 	m_editor->setProperty("mainContainer", true);
 }

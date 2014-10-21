@@ -22,7 +22,7 @@ namespace UserInterface
 		void setIcon(const QPixmap& _icon);
 		void setHeader(const QString& _header);
 		void setDescription(const QString& _description);
-		void setTiming(int _timing);
+		void setDuration(int _duration);
 
 	private:
 		/**
@@ -43,7 +43,7 @@ namespace UserInterface
 		/**
 		 * @brief Длительность
 		 */
-		QLabel* m_timing;
+		QLabel* m_duration;
 	};
 }
 

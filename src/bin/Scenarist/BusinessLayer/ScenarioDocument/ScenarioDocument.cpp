@@ -8,6 +8,7 @@
 #include "ScenarioTextBlockInfo.h"
 
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
+#include <BusinessLayer/Counters/CountersFacade.h>
 
 #include <Domain/Scenario.h>
 
@@ -90,6 +91,11 @@ int ScenarioDocument::durationAtPosition(int _position) const
 int ScenarioDocument::fullDuration() const
 {
 	return m_model->fullDuration();
+}
+
+QString ScenarioDocument::countersInfo() const
+{
+	return BusinessLogic::CountersFacade::calculateCounters(m_document);
 }
 
 QModelIndex ScenarioDocument::itemIndexAtPosition(int _position) const

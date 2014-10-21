@@ -91,6 +91,11 @@ namespace ManagementLayer
 		void aboutChronometrySettingsUpdated();
 
 		/**
+		 * @brief Обновить счётчики
+		 */
+		void aboutCountersSettingsUpdated();
+
+		/**
 		 * @brief Изменено имя персонажа
 		 */
 		void aboutCharacterNameChanged(const QString& _oldName, const QString& _newName);
@@ -126,6 +131,11 @@ namespace ManagementLayer
 		 * @brief Обновить хронометраж
 		 */
 		void aboutUpdateDuration(int _cursorPosition);
+
+		/**
+		 * @brief Обновить счётчики
+		 */
+		void aboutUpdateCounters();
 
 		/**
 		 * @brief Обновить синопсис, если сменилась сцена

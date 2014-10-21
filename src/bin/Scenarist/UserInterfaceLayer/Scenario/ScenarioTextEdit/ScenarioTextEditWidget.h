@@ -44,6 +44,11 @@ namespace UserInterface
 		void setDuration(const QString& _duration);
 
 		/**
+		 * @brief Установить значения счётчиков
+		 */
+		void setCountersInfo(const QString& _counters);
+
+		/**
 		 * @brief Включить/выключить постраничное отображение
 		 */
 		void setUsePageView(bool _use);
@@ -211,14 +216,14 @@ namespace UserInterface
 		QToolButton* m_fastFormat;
 
 		/**
-		 * @brief Префикс хронометража
-		 */
-		QLabel* m_durationTitle;
-
-		/**
 		 * @brief Хронометраж сценария
 		 */
 		QLabel* m_duration;
+
+		/**
+		 * @brief Счётчики сценария
+		 */
+		QLabel* m_countersInfo;
 
 		/**
 		 * @brief Собственно редактор текста

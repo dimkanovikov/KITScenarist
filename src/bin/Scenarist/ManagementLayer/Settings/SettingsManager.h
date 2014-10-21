@@ -41,6 +41,7 @@ namespace ManagementLayer
 		void scenarioEditSettingsUpdated();
 		void navigatorSettingsUpdated();
 		void chronometrySettingsUpdated();
+		void countersSettingsUpdated();
 		/** @} */
 
 	private slots:
@@ -51,6 +52,7 @@ namespace ManagementLayer
 		void applicationUseDarkThemeChanged(bool _value);
 		void applicationAutosaveChanged(bool _value);
 		void applicationAutosaveIntervalChanged(int _value);
+
 		void scenarioEditPageViewChanged(bool  _value);
 		void scenarioEditSpellCheckChanged(bool  _value);
 		void scenarioEditSpellCheckLanguageChanged(int _value);
@@ -60,7 +62,10 @@ namespace ManagementLayer
 		void scenarioEditFolderTextColorChanged(const QColor& _value);
 		void scenarioEditFolderBackgroundColorChanged(const QColor& _value);
 		void scenarioEditCurrentStyleChanged(const QString& _value);
+
 		void navigatorShowScenesNumbersChanged(bool  _value);
+
+		void chronometryUsedChanged(bool _value);
 		void chronometryCurrentTypeChanged();
 		void chronometryPagesSecondsChanged(int  _value);
 		void chronometryCharactersCharactersChanged(int  _value);
@@ -72,6 +77,9 @@ namespace ManagementLayer
 		void chronometryConfigurableSecondsFor50ActionChanged(double  _value);
 		void chronometryConfigurableSecondsForParagraphDialogChanged(double  _value);
 		void chronometryConfigurableSecondsFor50DialogChanged(double  _value);
+
+		void pagesCounterUsedChanged(bool _value);
+		void wordsCounterUsedChanged(bool _value);
 		/** @} */
 
 		/**

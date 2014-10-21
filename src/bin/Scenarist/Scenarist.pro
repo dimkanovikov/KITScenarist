@@ -166,7 +166,8 @@ SOURCES += main.cpp \
     Domain/CharacterState.cpp \
     DataLayer/DataMappingLayer/CharacterStateMapper.cpp \
     DataLayer/DataStorageLayer/CharacterStateStorage.cpp \
-    BusinessLayer/Export/AbstractExporter.cpp
+    BusinessLayer/Export/AbstractExporter.cpp \
+    BusinessLayer/Counters/CountersFacade.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -307,7 +308,8 @@ HEADERS += \
     UserInterfaceLayer/Export/ExportDialog.h \
     Domain/CharacterState.h \
     DataLayer/DataMappingLayer/CharacterStateMapper.h \
-    DataLayer/DataStorageLayer/CharacterStateStorage.h
+    DataLayer/DataStorageLayer/CharacterStateStorage.h \
+    BusinessLayer/Counters/CountersFacade.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

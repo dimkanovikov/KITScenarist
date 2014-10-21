@@ -16,6 +16,13 @@ using namespace DataStorageLayer;
 using namespace BusinessLogic;
 
 
+bool ChronometerFacade::chronometryUsed()
+{
+	return StorageFacade::settingsStorage()->value(
+				"chronometry/used",
+				SettingsStorage::ApplicationSettings).toInt();
+}
+
 int ChronometerFacade::calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock)
 {
 	return calculate(
@@ -26,48 +33,53 @@ int ChronometerFacade::calculate(const QTextBlock& _fromBlock, const QTextBlock&
 
 int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition)
 {
-	float chronometry = 0;
+	float chronometry = -1;
 
-	if (!_document->isEmpty()) {
-		QTextCursor cursor(_document);
-		cursor.setPosition(_fromCursorPosition);
-		bool isFirstStep = true;
-		do {
-			//
-			// Перейти к следующему, если это не первый шаг цикла
-			//
-			if (!isFirstStep) {
-				cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
-				cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-				if (cursor.position() > _toCursorPosition) {
-					cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
+	if (chronometryUsed()) {
+		chronometry = 0;
+
+		if (!_document->isEmpty()) {
+			QTextCursor cursor(_document);
+			cursor.setPosition(_fromCursorPosition);
+			bool isFirstStep = true;
+			do {
+				//
+				// Перейти к следующему, если это не первый шаг цикла
+				//
+				if (!isFirstStep) {
+					cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+					if (cursor.position() > _toCursorPosition) {
+						cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
+					}
+				} else {
+					isFirstStep = false;
+					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 				}
-			} else {
-				isFirstStep = false;
-				cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-			}
 
-			//
-			// Получить текст одного блока
-			//
-			if (cursor.atBlockEnd()
-				|| cursor.position() == _toCursorPosition) {
 				//
-				// Посчитать его хронометраж, добавив к результату
+				// Получить текст одного блока
 				//
-				chronometry +=
-						chronometer()->calculateFrom(
-							ScenarioBlockStyle::forBlock(cursor.block()),
-							cursor.selectedText()
-							);
-				cursor.clearSelection();
-			}
-		} while (!cursor.atEnd()
-				 && cursor.position() < _toCursorPosition);
+				if (cursor.atBlockEnd()
+					|| cursor.position() == _toCursorPosition) {
+					//
+					// Посчитать его хронометраж, добавив к результату
+					//
+					chronometry +=
+							chronometer()->calculateFrom(
+								ScenarioBlockStyle::forBlock(cursor.block()),
+								cursor.selectedText()
+								);
+					cursor.clearSelection();
+				}
+			} while (!cursor.atEnd()
+					 && cursor.position() < _toCursorPosition);
+		}
+
+		chronometry = qRound(chronometry);
 	}
 
-
-	return qRound(chronometry);
+	return chronometry;
 }
 
 QString ChronometerFacade::secondsToTime(int _seconds)
@@ -116,13 +128,13 @@ AbstractChronometer* ChronometerFacade::chronometer()
 			delete s_chronometer;
 			s_chronometer = new CharactersChronometer;
 		}
-    } else {
+	} else {
 		if (s_chronometer == 0
 			|| s_chronometer->name() != CHRONOMETRY_CONFIGURABLE) {
 			delete s_chronometer;
 			s_chronometer = new ConfigurableChronometer;
 		}
-    }
+	}
 
 	return s_chronometer;
 }

@@ -26,7 +26,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	QVariant header = _index.data(Qt::DisplayRole);
 	QVariant sceneText = _index.data(Qt::UserRole + 1);
 	QVariant synopsys = _index.data(Qt::UserRole + 2);
-	QVariant timing = _index.data(Qt::UserRole + 3);
+	QVariant duration = _index.data(Qt::UserRole + 3);
 	QVariant sceneNumber = _index.data(Qt::UserRole + 4);
 
 	//
@@ -47,7 +47,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// ... длительность
 	//
-	m_itemWidget->setTiming(timing.toInt());
+	m_itemWidget->setDuration(duration.toInt());
 	//
 	// ... описание
 	//
