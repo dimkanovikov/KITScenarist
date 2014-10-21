@@ -75,7 +75,7 @@ protected:
 	/**
 	 * @brief Обрабатываем жест увеличения масштаба
 	 */
-	void gestureEvent(QGestureEvent* _event);
+    void gestureEvent(QGestureEvent* _event);
 
 private:
 	/**

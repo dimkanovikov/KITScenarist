@@ -153,12 +153,12 @@ void PagesTextEdit::setAddSpaceToBottom(bool _addSpace)
 
 bool PagesTextEdit::event(QEvent* _event)
 {
-	bool result = true;
+    bool result = true;
 	if (_event->type() == QEvent::Gesture) {
-		gestureEvent(static_cast<QGestureEvent*>(_event));
-	} else {
-		result = QTextEdit::event(_event);
-	}
+        gestureEvent(static_cast<QGestureEvent*>(_event));
+    } else {
+        result = QTextEdit::event(_event);
+    }
 
 	return result;
 }
@@ -215,7 +215,7 @@ void PagesTextEdit::wheelEvent(QWheelEvent* _event)
 void PagesTextEdit::gestureEvent(QGestureEvent* _event)
 {
 	if (QGesture* gesture = _event->gesture(Qt::PinchGesture)) {
-		if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
+        if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
 			//
 			// При масштабировании за счёт жестов приходится немного притормаживать
 			// т.к. события приходят слишком часто и при обработке каждого события
@@ -223,30 +223,35 @@ void PagesTextEdit::gestureEvent(QGestureEvent* _event)
 			//
 
 			int zoomRange = m_zoomRange;
-			if (pinch->scaleFactor() > 1) {
-				if (m_gestureZoomInertionBreak < 0) {
-					m_gestureZoomInertionBreak = 0;
-				} else if (m_gestureZoomInertionBreak >= 8) {
-					m_gestureZoomInertionBreak = 0;
-					++zoomRange;
-				} else {
-					++m_gestureZoomInertionBreak;
-				}
-			} else if (pinch->scaleFactor() < 1) {
-				if (m_gestureZoomInertionBreak > 0) {
-					m_gestureZoomInertionBreak = 0;
-				} else if (m_gestureZoomInertionBreak <= -8) {
-					m_gestureZoomInertionBreak = 0;
-					--zoomRange;
-				} else {
-					--m_gestureZoomInertionBreak;
-				}
-			}
-			setZoomRange(zoomRange);
+            //
+            // Если происходит изменение масштаба
+            //
+            if (pinch->scaleFactor() != 1) {
+                if (pinch->scaleFactor() > 1) {
+                    if (m_gestureZoomInertionBreak < 0) {
+                        m_gestureZoomInertionBreak = 0;
+                    } else if (m_gestureZoomInertionBreak >= 8) {
+                        m_gestureZoomInertionBreak = 0;
+                        ++zoomRange;
+                    } else {
+                        ++m_gestureZoomInertionBreak;
+                    }
+                } else { // pinch->scaleFactor() < 1
+                    if (m_gestureZoomInertionBreak > 0) {
+                        m_gestureZoomInertionBreak = 0;
+                    } else if (m_gestureZoomInertionBreak <= -8) {
+                        m_gestureZoomInertionBreak = 0;
+                        --zoomRange;
+                    } else {
+                        --m_gestureZoomInertionBreak;
+                    }
+                }
+                setZoomRange(zoomRange);
 
-			_event->accept();
+                _event->accept();
+            }
 		}
-	}
+    }
 }
 
 void PagesTextEdit::updateInnerGeometry()
