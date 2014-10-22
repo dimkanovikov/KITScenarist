@@ -4,6 +4,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
+#include <QCheckBox>
 #include <QLabel>
 #include <QShortcut>
 #include <QVBoxLayout>
@@ -68,7 +69,8 @@ namespace {
 
 ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	QFrame(parent),
-	m_editor(0)
+	m_editor(0),
+	m_grabFocus(new QCheckBox(this))
 {
 	setFrameShape(QFrame::Box);
 	setStyleSheet("*[fastFormatWidget=\"true\"] {"
@@ -110,6 +112,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	QShortcut* goToNextShortcut = new QShortcut(Qt::Key_Down, this);
 	connect(goToNextShortcut, SIGNAL(activated()), goToNextBlock, SLOT(click()));
 
+	m_grabFocus->setText(tr("Catch focus"));
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->addWidget(goToPrevBlock);
@@ -120,6 +123,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	layout->addSpacing(6);
 	layout->addWidget(goToNextBlock);
 	layout->addStretch();
+	layout->addWidget(m_grabFocus);
 
 	setLayout(layout);
 }
@@ -236,6 +240,7 @@ void ScenarioFastFormatWidget::aboutGoToNextBlock()
 		cursor.movePosition(QTextCursor::NextBlock);
 		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 		m_editor->setTextCursor(cursor);
+		catchFocusIfNeeded();
 	}
 }
 
@@ -246,6 +251,7 @@ void ScenarioFastFormatWidget::aboutGoToPrevBlock()
 		cursor.movePosition(QTextCursor::PreviousBlock);
 		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 		m_editor->setTextCursor(cursor);
+		catchFocusIfNeeded();
 	}
 }
 
@@ -257,6 +263,7 @@ void ScenarioFastFormatWidget::aboutChangeStyle()
 		if (m_editor != 0) {
 			m_editor->changeScenarioBlockType(type);
 			selectCurrentBlock();
+			catchFocusIfNeeded();
 		}
 	}
 }
@@ -267,6 +274,16 @@ void ScenarioFastFormatWidget::aboutCurrentStyleChanged()
 	foreach (ToolButton* button, m_buttons) {
 		button->setChecked(
 			(ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt() == currentType);
+	}
+}
+
+void ScenarioFastFormatWidget::catchFocusIfNeeded()
+{
+	//
+	// Если необходимо захватим фокус
+	//
+	if (m_grabFocus->isChecked()) {
+		this->setFocus();
 	}
 }
 
