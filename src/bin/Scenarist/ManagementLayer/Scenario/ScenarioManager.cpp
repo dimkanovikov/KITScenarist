@@ -30,9 +30,10 @@
 #include <QSplitter>
 #include <QTextCursor>
 #include <QTextBlock>
+#include <QTimer>
 #include <QSet>
 #include <QStackedWidget>
-#include <QWidget>k
+#include <QWidget>
 
 using ManagementLayer::ScenarioManager;
 using ManagementLayer::ScenarioNavigatorManager;
@@ -108,6 +109,11 @@ void ScenarioManager::loadCurrentProject()
 	// Возврат всех окон в исходное положение - навигатор на верх, данные сценария вперёд
 	//
 	m_textEditManager->setCursorPosition(0);
+
+	//
+	// Обновим счётчики, когда данные полностью загрузятся
+	//
+	QTimer::singleShot(100, this, SLOT(aboutUpdateCounters()));
 }
 
 void ScenarioManager::loadCurrentProjectSettings(const QString& _projectPath)

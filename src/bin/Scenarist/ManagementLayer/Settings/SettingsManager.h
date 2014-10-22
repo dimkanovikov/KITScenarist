@@ -80,6 +80,7 @@ namespace ManagementLayer
 
 		void pagesCounterUsedChanged(bool _value);
 		void wordsCounterUsedChanged(bool _value);
+		void simbolsCounterUsedChanged(bool _value);
 		/** @} */
 
 		/**

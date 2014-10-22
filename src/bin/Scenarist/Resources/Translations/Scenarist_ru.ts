@@ -4,14 +4,19 @@
 <context>
     <name>BusinessLogic::CountersFacade</name>
     <message>
-        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="48"/>
+        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="59"/>
         <source>Pages</source>
         <translation>Страниц</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="57"/>
+        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="70"/>
         <source>Words</source>
         <translation>Слов</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="81"/>
+        <source>Simbols</source>
+        <translation>Символов</translation>
     </message>
 </context>
 <context>
@@ -413,53 +418,53 @@
 <context>
     <name>ManagementLayer::ScenarioManager</name>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="316"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="322"/>
         <source>Characters to delete</source>
         <translation>Будут удалены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="322"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="328"/>
         <source>Characters to save</source>
         <translation>Будут сохранены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="324"/>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="424"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="330"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="430"/>
         <source>Apply refreshing</source>
         <translation>Применить результаты поиска</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="415"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="421"/>
         <source>Locations to delete</source>
         <translation>Будут удалены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="421"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="427"/>
         <source>Locations to save</source>
         <translation>Будут сохранены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="456"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="462"/>
         <source>Chron.</source>
         <translation>Хрон.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="529"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="535"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="530"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="536"/>
         <source>Edit Scenario Text</source>
         <translation>Редактирование текста сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="532"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="538"/>
         <source>Data</source>
         <translation>Данные</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="533"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="539"/>
         <source>Edit Scenario Data</source>
         <translation>Редактирование информации о сценарии</translation>
     </message>
@@ -471,18 +476,18 @@
 <context>
     <name>ManagementLayer::SettingsManager</name>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="267"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="272"/>
         <source>Choose file to load</source>
         <translation>Выберите файл для загрузки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="268"/>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="292"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="273"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="297"/>
         <source>Scenario Style Files (*.%1)</source>
         <translation>Файлы стиля сценария (*.%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="291"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="296"/>
         <source>Choose file to save</source>
         <translation>Выберите файл для сохранения</translation>
     </message>
@@ -855,52 +860,62 @@ Paragraph</source>
         <translation type="vanished">Счётчик страниц [только в постраничном режиме]</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1226"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1265"/>
         <source>Add Style</source>
         <translation>Добавить стиль</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1229"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1268"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1240"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1279"/>
         <source>Edit Selected Style</source>
         <translation>Изменить выбранный стиль</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1243"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1282"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1254"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1293"/>
         <source>Delete Selected Style</source>
         <translation>Удалить выбранный стиль</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1268"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1307"/>
         <source>Load Style From File</source>
         <translation>Загрузить стиль из файла</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1282"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1321"/>
         <source>Save Style To File</source>
         <translation>Сохранить стиль в файл</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1285"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1324"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1271"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1310"/>
         <source>Load</source>
         <translation>Загрузить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1257"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1193"/>
+        <source>Simbols Counter</source>
+        <translation>Счётчик символов</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1209"/>
+        <source>Simbols without spaces | Simbols with spaces</source>
+        <translation>Символов без пробелов | Символов с пробелами</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1296"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -1641,22 +1656,22 @@ Paragraph</source>
 <context>
     <name>UserInterface::SettingsView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="282"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="287"/>
         <source>Russian</source>
         <translation>русский</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="283"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="288"/>
         <source>Russian with Yo</source>
         <translation>русский с ё</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="284"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="289"/>
         <source>Ukrainian</source>
         <translation>украинский</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="285"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="290"/>
         <source>Belorussian</source>
         <translation>белорусский</translation>
     </message>

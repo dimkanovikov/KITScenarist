@@ -70,6 +70,7 @@ namespace UserInterface
 
 		void setPagesCounterUsed(bool _value);
 		void setWordsCounterUsed(bool _value);
+		void setSimbolsCounterUsed(bool _value);
 		/** @} */
 
 	signals:
@@ -108,6 +109,7 @@ namespace UserInterface
 
 		void pagesCounterUsedChanged(bool);
 		void wordsCounterUsedChanged(bool);
+		void simbolsCounterUsedChanged(bool);
 		/** @} */
 
 		/**

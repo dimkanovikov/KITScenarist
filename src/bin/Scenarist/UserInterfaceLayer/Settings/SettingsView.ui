@@ -1157,7 +1157,7 @@ Paragraph</string>
                       </size>
                      </property>
                      <property name="cursor">
-                      <cursorShape>PointingHandCursor</cursorShape>
+                      <cursorShape>WhatsThisCursor</cursorShape>
                      </property>
                      <property name="toolTip">
                       <string>Pages Mode only</string>
@@ -1183,6 +1183,45 @@ Paragraph</string>
                   </widget>
                  </item>
                  <item row="2" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_2">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QCheckBox" name="simbolsCounter">
+                     <property name="text">
+                      <string>Simbols Counter</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_3">
+                     <property name="maximumSize">
+                      <size>
+                       <width>16</width>
+                       <height>16</height>
+                      </size>
+                     </property>
+                     <property name="cursor">
+                      <cursorShape>WhatsThisCursor</cursorShape>
+                     </property>
+                     <property name="toolTip">
+                      <string>Simbols without spaces | Simbols with spaces</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="pixmap">
+                      <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                     </property>
+                     <property name="scaledContents">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="0">
                   <spacer name="verticalSpacer_2">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
@@ -1373,10 +1412,11 @@ Paragraph</string>
   <tabstop>configurableChronometrySecondsPer50CharactersDialog</tabstop>
   <tabstop>pagesCounter</tabstop>
   <tabstop>wordsCounter</tabstop>
+  <tabstop>simbolsCounter</tabstop>
   <tabstop>editStyle</tabstop>
   <tabstop>newStyle</tabstop>
-  <tabstop>loadStyle</tabstop>
   <tabstop>removeStyle</tabstop>
+  <tabstop>loadStyle</tabstop>
   <tabstop>saveStyle</tabstop>
   <tabstop>styles</tabstop>
  </tabstops>
