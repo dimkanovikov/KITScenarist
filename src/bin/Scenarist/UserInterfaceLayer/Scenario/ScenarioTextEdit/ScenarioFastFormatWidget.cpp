@@ -258,6 +258,7 @@ void ScenarioFastFormatWidget::aboutGoToPrevBlock()
 void ScenarioFastFormatWidget::aboutChangeStyle()
 {
 	if (ToolButton* button = qobject_cast<ToolButton*>(sender())) {
+		button->setChecked(true);
 		ScenarioBlockStyle::Type type =
 				(ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt();
 		if (m_editor != 0) {

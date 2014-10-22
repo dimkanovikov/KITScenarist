@@ -413,27 +413,53 @@
 <context>
     <name>ManagementLayer::ScenarioManager</name>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="412"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="316"/>
+        <source>Characters to delete</source>
+        <translation>Будут удалены</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="322"/>
+        <source>Characters to save</source>
+        <translation>Будут сохранены</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="324"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="424"/>
+        <source>Apply refreshing</source>
+        <translation>Применить результаты поиска</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="415"/>
+        <source>Locations to delete</source>
+        <translation>Будут удалены</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="421"/>
+        <source>Locations to save</source>
+        <translation>Будут сохранены</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="456"/>
         <source>Chron.</source>
         <translation>Хрон.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="485"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="529"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="486"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="530"/>
         <source>Edit Scenario Text</source>
         <translation>Редактирование текста сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="488"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="532"/>
         <source>Data</source>
         <translation>Данные</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="489"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="533"/>
         <source>Edit Scenario Data</source>
         <translation>Редактирование информации о сценарии</translation>
     </message>
