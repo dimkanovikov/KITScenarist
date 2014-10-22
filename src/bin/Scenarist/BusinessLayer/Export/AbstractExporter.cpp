@@ -9,6 +9,7 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Widgets/PagesTextEdit/PageMetrics.h>
 
 #include <QTextBlock>
@@ -151,10 +152,14 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 		titleFormat.setFont(QFont("Courier New", 12));
 		QTextBlockFormat centerFormat;
 		centerFormat.setAlignment(Qt::AlignCenter);
-		centerFormat.setLineHeight(18.09, QTextBlockFormat::FixedHeight);
+        centerFormat.setLineHeight(
+                    TextEditHelper::fontLineHeight(titleFormat.font()),
+                    QTextBlockFormat::FixedHeight);
 		QTextBlockFormat rightFormat;
 		rightFormat.setAlignment(Qt::AlignRight);
-		rightFormat.setLineHeight(18.09, QTextBlockFormat::FixedHeight);
+        rightFormat.setLineHeight(
+                    TextEditHelper::fontLineHeight(titleFormat.font()),
+                    QTextBlockFormat::FixedHeight);
 
 		//
 		// Номер текущей строки
