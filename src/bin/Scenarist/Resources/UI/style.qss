@@ -188,24 +188,33 @@ QTabBar::tab:!selected[inTopPanel="true"] {
 	border-bottom-color: #282d31;
 }
 
-QScrollBar:vertical {
-	border: none; /*1px solid palette(dark);*/
-	background: palette(window);
-	width: 9px;    
-	margin: 0px 0px 0px 1px;
+QScrollBar {
+        border: none;
+        background: palette(window);
 }
 
-QScrollBar::handle:vertical {
-	background: palette(highlight);
+QScrollBar:horizontal {
+        height: 8px;
+        margin: 0px 1px 0px 0px;
+}
+
+QScrollBar:vertical {
+        width: 8px;
+        margin: 0px 0px 0px 1px;
+}
+
+QScrollBar::handle {
+        background: palette(dark);
 	min-height: 0px;
+        min-width: 0px;
 	border-radius: 3px;
 	border: none;
 }
 
-QScrollBar::add-line:vertical {
+QScrollBar::add-line {
 	height: 0px;
 }
 
-QScrollBar::sub-line:vertical {
+QScrollBar::sub-line {
 	height: 0px;
 }
