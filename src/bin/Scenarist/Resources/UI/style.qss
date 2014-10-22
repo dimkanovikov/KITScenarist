@@ -187,3 +187,25 @@ QTabBar::tab:!selected[inTopPanel="true"] {
 	border-bottom-style: solid;
 	border-bottom-color: #282d31;
 }
+
+QScrollBar:vertical {
+	border: none; /*1px solid palette(dark);*/
+	background: palette(window);
+	width: 9px;    
+	margin: 0px 0px 0px 1px;
+}
+
+QScrollBar::handle:vertical {
+	background: palette(highlight);
+	min-height: 0px;
+	border-radius: 3px;
+	border: none;
+}
+
+QScrollBar::add-line:vertical {
+	height: 0px;
+}
+
+QScrollBar::sub-line:vertical {
+	height: 0px;
+}
