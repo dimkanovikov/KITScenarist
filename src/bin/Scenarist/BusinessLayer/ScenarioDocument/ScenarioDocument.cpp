@@ -12,6 +12,7 @@
 
 #include <Domain/Scenario.h>
 
+#include <QCryptographicHash>
 #include <QRegularExpression>
 #include <QTextDocument>
 #include <QTextCursor>
@@ -19,6 +20,18 @@
 
 using namespace BusinessLogic;
 
+
+namespace {
+
+	/**
+	 * @brief Получить хэш текста
+	 */
+	static QByteArray textMd5Hash(const QString& _text) {
+		QCryptographicHash hash(QCryptographicHash::Md5);
+		hash.addData(_text.toUtf8());
+		return hash.result();
+	}
+}
 
 QString ScenarioDocument::MIME_TYPE = "application/x-scenarist/scenario";
 
@@ -371,6 +384,15 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
 	//
+	// Если текст документа на самом деле не изменился, ни чего не делаем
+	//
+	QString currentTextMd5Hash = textMd5Hash(m_document->toPlainText());
+	if (currentTextMd5Hash == m_lastTextMd5Hash) {
+		return;
+	}
+
+
+	//
 	// Если были удалены данные
 	//
 	if (_charsRemoved > 0) {
@@ -685,6 +707,11 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	// TODO: Обновить модель
 	//
 	m_model->dataChanged(m_model->index(0,0, QModelIndex()), m_model->index(1000, 1000, QModelIndex()));
+
+	//
+	// Сохранить md5 хэш текста документа
+	//
+	m_lastTextMd5Hash = textMd5Hash(m_document->toPlainText());
 }
 
 void ScenarioDocument::initConnections()

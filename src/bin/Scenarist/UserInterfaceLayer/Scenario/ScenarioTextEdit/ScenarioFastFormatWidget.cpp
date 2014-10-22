@@ -286,5 +286,13 @@ void ScenarioFastFormatWidget::catchFocusIfNeeded()
 	if (m_grabFocus->isChecked()) {
 		this->setFocus();
 	}
+	//
+	// Или снимем выделение, для продолжения редактирования текста
+	//
+	else {
+		if (m_editor != 0) {
+			m_editor->moveCursor(QTextCursor::Right);
+		}
+	}
 }
 

@@ -78,6 +78,26 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(aboutVerticalScrollRangeChanged(int,int)));
 }
 
+void PagesTextEdit::setPageFormat(QPageSize::PageSizeId _pageFormat)
+{
+	m_pageMetrics.update(_pageFormat);
+
+	//
+	// Перерисуем себя
+	//
+	repaint();
+}
+
+void PagesTextEdit::setPageMargins(const QMarginsF& _margins)
+{
+	m_pageMetrics.update(m_pageMetrics.pageFormat(), _margins);
+
+	//
+	// Перерисуем себя
+	//
+	repaint();
+}
+
 bool PagesTextEdit::usePageMode() const
 {
 	return m_usePageMode;
@@ -153,34 +173,14 @@ void PagesTextEdit::setAddSpaceToBottom(bool _addSpace)
 
 bool PagesTextEdit::event(QEvent* _event)
 {
-    bool result = true;
+	bool result = true;
 	if (_event->type() == QEvent::Gesture) {
-        gestureEvent(static_cast<QGestureEvent*>(_event));
-    } else {
-        result = QTextEdit::event(_event);
-    }
+		gestureEvent(static_cast<QGestureEvent*>(_event));
+	} else {
+		result = QTextEdit::event(_event);
+	}
 
 	return result;
-}
-
-void PagesTextEdit::setPageFormat(QPageSize::PageSizeId _pageFormat)
-{
-	m_pageMetrics.update(_pageFormat);
-
-	//
-	// Перерисуем себя
-	//
-	repaint();
-}
-
-void PagesTextEdit::setPageMargins(const QMarginsF& _margins)
-{
-	m_pageMetrics.update(m_pageMetrics.pageFormat(), _margins);
-
-	//
-	// Перерисуем себя
-	//
-	repaint();
 }
 
 void PagesTextEdit::paintEvent(QPaintEvent* _event)
@@ -192,6 +192,15 @@ void PagesTextEdit::paintEvent(QPaintEvent* _event)
 	paintPagesView();
 
 	QTextEdit::paintEvent(_event);
+}
+
+void PagesTextEdit::resizeEvent(QResizeEvent* _event)
+{
+	updateInnerGeometry();
+
+	updateVerticalScrollRange();
+
+	QTextEdit::resizeEvent(_event);
 }
 
 void PagesTextEdit::wheelEvent(QWheelEvent* _event)
@@ -215,7 +224,7 @@ void PagesTextEdit::wheelEvent(QWheelEvent* _event)
 void PagesTextEdit::gestureEvent(QGestureEvent* _event)
 {
 	if (QGesture* gesture = _event->gesture(Qt::PinchGesture)) {
-        if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
+		if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
 			//
 			// При масштабировании за счёт жестов приходится немного притормаживать
 			// т.к. события приходят слишком часто и при обработке каждого события
@@ -223,35 +232,35 @@ void PagesTextEdit::gestureEvent(QGestureEvent* _event)
 			//
 
 			int zoomRange = m_zoomRange;
-            //
-            // Если происходит изменение масштаба
-            //
-            if (pinch->scaleFactor() != 1) {
-                if (pinch->scaleFactor() > 1) {
-                    if (m_gestureZoomInertionBreak < 0) {
-                        m_gestureZoomInertionBreak = 0;
-                    } else if (m_gestureZoomInertionBreak >= 8) {
-                        m_gestureZoomInertionBreak = 0;
-                        ++zoomRange;
-                    } else {
-                        ++m_gestureZoomInertionBreak;
-                    }
-                } else { // pinch->scaleFactor() < 1
-                    if (m_gestureZoomInertionBreak > 0) {
-                        m_gestureZoomInertionBreak = 0;
-                    } else if (m_gestureZoomInertionBreak <= -8) {
-                        m_gestureZoomInertionBreak = 0;
-                        --zoomRange;
-                    } else {
-                        --m_gestureZoomInertionBreak;
-                    }
-                }
-                setZoomRange(zoomRange);
+			//
+			// Если происходит изменение масштаба
+			//
+			if (pinch->scaleFactor() != 1) {
+				if (pinch->scaleFactor() > 1) {
+					if (m_gestureZoomInertionBreak < 0) {
+						m_gestureZoomInertionBreak = 0;
+					} else if (m_gestureZoomInertionBreak >= 8) {
+						m_gestureZoomInertionBreak = 0;
+						++zoomRange;
+					} else {
+						++m_gestureZoomInertionBreak;
+					}
+				} else { // pinch->scaleFactor() < 1
+					if (m_gestureZoomInertionBreak > 0) {
+						m_gestureZoomInertionBreak = 0;
+					} else if (m_gestureZoomInertionBreak <= -8) {
+						m_gestureZoomInertionBreak = 0;
+						--zoomRange;
+					} else {
+						--m_gestureZoomInertionBreak;
+					}
+				}
+				setZoomRange(zoomRange);
 
-                _event->accept();
-            }
+				_event->accept();
+			}
 		}
-    }
+	}
 }
 
 void PagesTextEdit::updateInnerGeometry()

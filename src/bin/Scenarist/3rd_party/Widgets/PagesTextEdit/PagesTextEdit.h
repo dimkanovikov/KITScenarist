@@ -68,6 +68,11 @@ protected:
 	void paintEvent(QPaintEvent* _event);
 
 	/**
+	 * @brief Переопределяется, для корректного обновления размеров вьювпорта
+	 */
+	void resizeEvent(QResizeEvent* _event);
+
+	/**
 	 * @brief Переопределяется для реализации увеличения/уменьшения текста
 	 */
 	void wheelEvent(QWheelEvent* _event);
@@ -75,7 +80,7 @@ protected:
 	/**
 	 * @brief Обрабатываем жест увеличения масштаба
 	 */
-    void gestureEvent(QGestureEvent* _event);
+	void gestureEvent(QGestureEvent* _event);
 
 private:
 	/**
@@ -148,10 +153,10 @@ private:
 	 */
 	int m_zoomRange;
 
-    /**
-     * @brief Инерционный тормоз масштабирования при помощи жестов
-     */
-    int m_gestureZoomInertionBreak;
+	/**
+	 * @brief Инерционный тормоз масштабирования при помощи жестов
+	 */
+	int m_gestureZoomInertionBreak;
 
 	/**
 	 * @brief Указатель на документ

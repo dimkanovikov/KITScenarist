@@ -284,8 +284,8 @@ void SettingsView::setColorFor(QWidget* _colorPicker, const QColor& _newColor)
 
 void SettingsView::initData()
 {
-	ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
 	ui->spellCheckingLanguage->addItem(tr("Russian with Yo"), SpellChecker::RussianWithYo);
+	ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
 	ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
 	ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
 }
