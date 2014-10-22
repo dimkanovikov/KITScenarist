@@ -69,7 +69,7 @@ namespace TextEditHelper
 		plainText = plainText.remove(RX_HTML_TAGS_CLEANER);
 		plainText = plainText.simplified();
 		return plainText;
-	}
+    }
 }
 
 #endif // TEXTEDITHELPER_H
