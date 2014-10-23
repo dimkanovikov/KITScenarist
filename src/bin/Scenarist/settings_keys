@@ -16,6 +16,7 @@ scenario-editor/autosave - включено ли автосохранение п
 scenario-editor/autosave-interval - интервал автоматического сохранения
 scenario-editor/current-style - стиль отображения текста в редакторе
 
+chronometry/used - включён ли подсчёт хронометража
 chronometry/current-chronometer-type - используемая система хронометража
 chronometry/characters/characters - количество символов в посимвольном хронометре
 chronometry/characters/seconds - количество секунд в посимвольном хронометре
@@ -26,6 +27,9 @@ chronometry/configurable/seconds-for-paragraph/dialog - секунд за бло
 chronometry/configurable/seconds-for-every-50/time-and-place - секунд за каждые 50 символов
 chronometry/configurable/seconds-for-every-50/action - секунд за каждые 50 символов
 chronometry/configurable/seconds-for-every-50/dialog - секунд за каждые 50 символов
+
+counters/pages/used - включён ли счётчик страниц
+counters/words/used - включён ли счётчик слов
 
 export/style - стиль экспортируемых документов
 export/files-path - путь к папке экспортируемых файлов
@@ -47,3 +51,13 @@ application/settings/state
 
 application/recent-files/list/... - последние использованые файлы программы (в виде ключ - название проекта (если не задано, то имя файла без расширения), значение - путь)
 application/recent-files/using/... - даты использования последних файлов
+
+projects/[project_name] - настройки актуальные для проекта, где [project_name] - полный путь к файлу, с заменой слешей на подчёркивание
+projects/[project_name]/last-cursor-position - последняя позиция курсора
+projects/[project_name]/export - настройки экспорта
+projects/[project_name]/export/file-path - путь к файлу экспорта
+projects/[project_name]/export/style - стиль экспорта
+projects/[project_name]/export/page-numbering - нумерация страниц
+projects/[project_name]/export/scenes-numbering - нумерация сцен
+projects/[project_name]/export/scenes-prefix - приставка сцен
+projects/[project_name]/export/print-title - печатать ли титульную страницу

@@ -166,7 +166,9 @@ SOURCES += main.cpp \
     Domain/CharacterState.cpp \
     DataLayer/DataMappingLayer/CharacterStateMapper.cpp \
     DataLayer/DataStorageLayer/CharacterStateStorage.cpp \
-    BusinessLayer/Export/AbstractExporter.cpp
+    BusinessLayer/Export/AbstractExporter.cpp \
+    BusinessLayer/Counters/CountersFacade.cpp \
+    Application.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -307,7 +309,9 @@ HEADERS += \
     UserInterfaceLayer/Export/ExportDialog.h \
     Domain/CharacterState.h \
     DataLayer/DataMappingLayer/CharacterStateMapper.h \
-    DataLayer/DataStorageLayer/CharacterStateStorage.h
+    DataLayer/DataStorageLayer/CharacterStateStorage.h \
+    BusinessLayer/Counters/CountersFacade.h \
+    Application.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -329,4 +333,7 @@ OTHER_FILES += \
     Scenarist.rc
 
 win32:RC_FILE = Scenarist.rc
-macx:ICON = logo.icns
+macx {
+    ICON = logo.icns
+    QMAKE_INFO_PLIST = Info.plist
+}

@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/Fonts">
-        <file>Fonts/Courier New.otf</file>
         <file alias="Courier New">Fonts/cour.ttf</file>
     </qresource>
     <qresource prefix="/SpellChecking">

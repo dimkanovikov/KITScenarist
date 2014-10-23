@@ -38,6 +38,11 @@ namespace ManagementLayer
 		void setDuration(const QString& _duration);
 
 		/**
+		 * @brief Установить значения счётчиков
+		 */
+		void setCountersInfo(const QString& _counters);
+
+		/**
 		 * @brief Установить позицию курсора
 		 */
 		void setCursorPosition(int _position);

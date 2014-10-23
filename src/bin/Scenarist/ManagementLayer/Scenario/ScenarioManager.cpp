@@ -109,6 +109,19 @@ void ScenarioManager::loadCurrentProject()
 	m_textEditManager->setCursorPosition(0);
 }
 
+void ScenarioManager::loadCurrentProjectSettings(const QString& _projectPath)
+{
+	//
+	// Загрузим позицию курсора
+	//
+	const int lastCursorPosition =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				QString("projects/%1/last-cursor-position").arg(_projectPath),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				).toInt();
+	m_textEditManager->setCursorPosition(lastCursorPosition);
+}
+
 void ScenarioManager::saveCurrentProject()
 {
 	QString scenarioName = m_dataEditManager->scenarioName();
@@ -117,6 +130,17 @@ void ScenarioManager::saveCurrentProject()
 
 	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
 		scenarioSynopsis, scenarioText);
+}
+
+void ScenarioManager::saveCurrentProjectSettings(const QString& _projectPath)
+{
+	//
+	// Сохраним позицию курсора
+	//
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("projects/%1/last-cursor-position").arg(_projectPath),
+				QString::number(m_textEditManager->cursorPosition()),
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
 void ScenarioManager::loadViewState()
@@ -191,7 +215,13 @@ void ScenarioManager::aboutNavigatorSettingsUpdated()
 void ScenarioManager::aboutChronometrySettingsUpdated()
 {
 	m_scenario->refresh();
-	aboutUpdateDuration(0);
+	aboutUpdateDuration(m_textEditManager->cursorPosition());
+}
+
+void ScenarioManager::aboutCountersSettingsUpdated()
+{
+	m_scenario->refresh();
+	aboutUpdateCounters();
 }
 
 void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const QString& _newName)
@@ -373,15 +403,21 @@ void ScenarioManager::aboutScenarioNameChanged(const QString& _name)
 
 void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 {
-	QString durationToCursor =
-			BusinessLogic::ChronometerFacade::secondsToTime(m_scenario->durationAtPosition(_cursorPosition));
-	QString durationToEnd =
-			BusinessLogic::ChronometerFacade::secondsToTime(m_scenario->fullDuration());
-	m_textEditManager->setDuration(
-				QString("%1 | %2")
-				.arg(durationToCursor)
-				.arg(durationToEnd)
-				);
+	QString duration;
+	if (BusinessLogic::ChronometerFacade::chronometryUsed()) {
+		QString durationToCursor =
+				BusinessLogic::ChronometerFacade::secondsToTime(m_scenario->durationAtPosition(_cursorPosition));
+		QString durationToEnd =
+				BusinessLogic::ChronometerFacade::secondsToTime(m_scenario->fullDuration());
+		duration = QString("%1: <b>%2 | %3</b>").arg(tr("Chron.")).arg(durationToCursor).arg(durationToEnd);
+	}
+
+	m_textEditManager->setDuration(duration);
+}
+
+void ScenarioManager::aboutUpdateCounters()
+{
+	m_textEditManager->setCountersInfo(m_scenario->countersInfo());
 }
 
 void ScenarioManager::aboutUpdateCurrentSynopsis(int _cursorPosition)
@@ -511,6 +547,8 @@ void ScenarioManager::initConnections()
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSynopsis(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
+
+	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCounters()));
 
 	//
 	// Настраиваем отслеживание изменений документа

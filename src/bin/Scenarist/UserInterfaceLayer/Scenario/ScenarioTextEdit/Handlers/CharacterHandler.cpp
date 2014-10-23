@@ -34,10 +34,12 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 	QTextCursor cursor = editor()->textCursor();
 	// ... блок текста в котором находится курсор
 	QTextBlock currentBlock = cursor.block();
+    // ... текст блока
+    QString currentBlockText = currentBlock.text().trimmed();
 	// ... текст до курсора
-	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
+    QString cursorBackwardText = currentBlockText.left(cursor.positionInBlock());
 	// ... текст после курсора
-	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
+    QString cursorForwardText = currentBlockText.mid(cursor.positionInBlock());
 	// ... текущая секция
 	CharacterParser::Section currentSection = CharacterParser::section(cursorBackwardText);
 

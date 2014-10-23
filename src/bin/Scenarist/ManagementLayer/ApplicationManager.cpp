@@ -143,7 +143,12 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 
 	if (!_fileToOpen.isEmpty()) {
 		aboutLoad(_fileToOpen);
-	}
+    }
+}
+
+void ApplicationManager::openFile(const QString &_fileToOpen)
+{
+    aboutLoad(_fileToOpen);
 }
 
 void ApplicationManager::aboutCreateNew()
@@ -175,9 +180,9 @@ void ApplicationManager::aboutCreateNew()
 			}
 
 			//
-			// ... очистим все загруженные на текущий момент данные
+			// ... закроем текущий проект
 			//
-			DataStorageLayer::StorageFacade::clearStorages();
+			closeCurrentProject();
 
 			//
 			// ... если файл существовал, удалим его для удаления данных в нём
@@ -331,9 +336,9 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 		//
 		if (!loadProjectFileName.isEmpty()) {
 			//
-			// ... очистим все загруженные на текущий момент данные
+			// ... закроем текущий проект
 			//
-			DataStorageLayer::StorageFacade::clearStorages();
+			closeCurrentProject();
 
 			//
 			// ... переключаемся на работу с выбранным файлом
@@ -374,6 +379,11 @@ void ApplicationManager::aboutExit()
 	// Сохраняем, если необходимо
 	//
 	if (saveIfNeeded()) {
+		//
+		// Закроем текущий проект
+		//
+		closeCurrentProject();
+
 		//
 		// Сохраняем состояния виджетов
 		//
@@ -486,6 +496,12 @@ void ApplicationManager::goToEditCurrentProject()
 	m_locationsManager->loadCurrentProject();
 
 	//
+	// Загрузить настройки файла
+	//
+	m_scenarioManager->loadCurrentProjectSettings(DatabaseLayer::Database::currentFile());
+	m_exportManager->loadCurrentProjectSettings(DatabaseLayer::Database::currentFile());
+
+	//
 	// Установим заголовок
 	//
 	updateWindowTitle();
@@ -499,6 +515,25 @@ void ApplicationManager::goToEditCurrentProject()
 	// Перейти на вкладку редактирования сценария
 	//
 	m_tabs->setCurrent(1);
+}
+
+void ApplicationManager::closeCurrentProject()
+{
+	//
+	// Сохраним настройки закрываемого проекта
+	//
+	m_scenarioManager->saveCurrentProjectSettings(DatabaseLayer::Database::currentFile());
+	m_exportManager->saveCurrentProjectSettings(DatabaseLayer::Database::currentFile());
+
+	//
+	// Очистим все загруженные на текущий момент данные
+	//
+	DataStorageLayer::StorageFacade::clearStorages();
+
+	//
+	// Если использовалась база данных, то удалим старое соединение
+	//
+	DatabaseLayer::Database::closeCurrentFile();
 }
 
 void ApplicationManager::initView()
@@ -624,6 +659,8 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutNavigatorSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(chronometrySettingsUpdated()),
 			m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
+	connect(m_settingsManager, SIGNAL(countersSettingsUpdated()),
+			m_scenarioManager, SLOT(aboutCountersSettingsUpdated()));
 
 	connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_charactersManager, SIGNAL(characterChanged()), this, SLOT(aboutProjectChanged()));

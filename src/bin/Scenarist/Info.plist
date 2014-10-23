@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>CFBundleDisplyName</key>
+	<string>KIT Scenarist</string>
+	<key>CFBundleIconFile</key>
+	<string>logo.icns</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Created by Qt/QMake</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleExecutable</key>
+	<string>Scenarist</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.dimkanovikovlabs.Scenarist</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>kitsp</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>logo.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>KIT Scenarist project</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSIsAppleDefaultForType</key>
+			<true/>
+		</dict>
+	</array>
+</dict>
+</plist>

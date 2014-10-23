@@ -6,6 +6,7 @@
 
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QStandardPaths>
 
 using UserInterface::ExportDialog;
 
@@ -19,7 +20,7 @@ namespace {
 					"export/file-path",
 					DataStorageLayer::SettingsStorage::ApplicationSettings);
 		if (exportFolderPath.isEmpty()) {
-			exportFolderPath = QDir::homePath();
+			exportFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 		}
 		return exportFolderPath;
 	}
@@ -59,9 +60,15 @@ ExportDialog::~ExportDialog()
 	delete ui;
 }
 
+void ExportDialog::setExportFilePath(const QString& _filePath)
+{
+	ui->file->setText(_filePath);
+}
+
 void ExportDialog::setExportFileName(const QString& _fileName)
 {
-	if (m_exportFileName != _fileName) {
+	if (ui->file->text().isEmpty()
+		&& m_exportFileName != _fileName) {
 		m_exportFileName = _fileName;
 		ui->file->setText(::exportFilePath(_fileName));
 		aboutFormatChanged();
@@ -76,6 +83,26 @@ void ExportDialog::setStylesModel(QAbstractItemModel* _model)
 void ExportDialog::setCurrentStyle(const QString& _styleName)
 {
 	ui->styles->setCurrentText(_styleName);
+}
+
+void ExportDialog::setPageNumbering(bool _isChecked)
+{
+	ui->pageNumbering->setChecked(_isChecked);
+}
+
+void ExportDialog::setScenesNumbering(bool _isChecked)
+{
+	ui->scenesNumbering->setChecked(_isChecked);
+}
+
+void ExportDialog::setScenesPrefix(const QString& _prefix)
+{
+	ui->scenesPrefix->setText(_prefix);
+}
+
+void ExportDialog::setPrintTitle(bool _isChecked)
+{
+	ui->printTitle->setChecked(_isChecked);
 }
 
 QString ExportDialog::scenarioName() const
@@ -142,6 +169,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 {
 	BusinessLogic::ExportParameters exportParameters;
 	exportParameters.filePath = ui->file->text();
+	exportParameters.style = ui->styles->currentText();
 	exportParameters.printTilte = ui->printTitle->isChecked();
 	exportParameters.scenarioName = ui->name->text();
 	exportParameters.scenarioAdditionalInfo = ui->additionalInfo->text();
@@ -150,7 +178,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 	exportParameters.scenarioContacts = ui->contacts->text();
 	exportParameters.scenarioYear = ui->year->text();
 	exportParameters.printPagesNumbers = ui->pageNumbering->isChecked();
-	exportParameters.printScenesNubers = ui->scenesNumbering->isChecked();
+	exportParameters.printScenesNumbers = ui->scenesNumbering->isChecked();
 	exportParameters.scenesPrefix = ui->scenesPrefix->text();
 
 	return exportParameters;

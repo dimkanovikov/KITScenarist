@@ -123,6 +123,11 @@ void SettingsView::setNavigatorShowScenesNumbers(bool _value)
 	ui->showScenesNumbers->setChecked(_value);
 }
 
+void SettingsView::setChronometryUsed(bool _value)
+{
+	ui->chronometryGroup->setChecked(_value);
+}
+
 void SettingsView::setChronometryCurrentType(int _value)
 {
 	switch (_value) {
@@ -181,6 +186,16 @@ void SettingsView::setChronometryConfigurableSecondsForParagraphDialog(double _v
 void SettingsView::setChronometryConfigurableSecondsFor50Dialog(double _value)
 {
 	ui->configurableChronometrySecondsPer50CharactersDialog->setValue(_value);
+}
+
+void SettingsView::setPagesCounterUsed(bool _value)
+{
+	ui->pagesCounter->setChecked(_value);
+}
+
+void SettingsView::setWordsCounterUsed(bool _value)
+{
+	ui->wordsCounter->setChecked(_value);
 }
 
 void SettingsView::aboutScenarioEditSpellCheckLanguageChanged()
@@ -317,6 +332,7 @@ void SettingsView::initConnections()
 	// ... навигатор
 	connect(ui->showScenesNumbers, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
 	// ... хронометраж
+	connect(ui->chronometryGroup, SIGNAL(toggled(bool)), this, SIGNAL(chronometryUsedChanged(bool)));
 	connect(ui->charactersChronometry, SIGNAL(toggled(bool)), this, SIGNAL(chronometryCurrentTypeChanged()));
 	connect(ui->configurableChronometry, SIGNAL(toggled(bool)), this, SIGNAL(chronometryCurrentTypeChanged()));
 	connect(ui->charactersChronometryCharacters, SIGNAL(valueChanged(int)), this, SIGNAL(chronometryCharactersCharactersChanged(int)));
@@ -334,6 +350,9 @@ void SettingsView::initConnections()
 			this, SIGNAL(chronometryConfigurableSecondsForParagraphDialogChanged(double)));
 	connect(ui->configurableChronometrySecondsPer50CharactersDialog, SIGNAL(valueChanged(double)),
 			this, SIGNAL(chronometryConfigurableSecondsFor50DialogChanged(double)));
+	// ... счётчики
+	connect(ui->pagesCounter, SIGNAL(toggled(bool)), this, SIGNAL(pagesCounterUsedChanged(bool)));
+	connect(ui->wordsCounter, SIGNAL(toggled(bool)), this, SIGNAL(wordsCounterUsedChanged(bool)));
 
 	//
 	// Библиотека стилей

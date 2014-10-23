@@ -65,6 +65,11 @@ namespace BusinessLogic
 		int fullDuration() const;
 
 		/**
+		 * @brief Показания счётчиков
+		 */
+		QString countersInfo() const;
+
+		/**
 		 * @brief Индекс элемента дерева в указанной позиции
 		 */
 		QModelIndex itemIndexAtPosition(int _position) const;

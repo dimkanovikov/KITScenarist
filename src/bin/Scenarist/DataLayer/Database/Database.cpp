@@ -16,9 +16,7 @@ void Database::setCurrentFile(const QString& _databaseFileName)
 	//
 	// Если использовалась база данных, то удалим старое соединение
 	//
-	if (QSqlDatabase::contains(CONNECTION_NAME)) {
-		QSqlDatabase::removeDatabase(CONNECTION_NAME);
-	}
+	closeCurrentFile();
 
 	//
 	// Установим текущее имя базы данных
@@ -32,6 +30,13 @@ void Database::setCurrentFile(const QString& _databaseFileName)
 	// Откроем базу данных, или создадим новую
 	//
 	instanse();
+}
+
+void Database::closeCurrentFile()
+{
+	if (QSqlDatabase::contains(CONNECTION_NAME)) {
+		QSqlDatabase::removeDatabase(CONNECTION_NAME);
+	}
 }
 
 QString Database::currentFile()

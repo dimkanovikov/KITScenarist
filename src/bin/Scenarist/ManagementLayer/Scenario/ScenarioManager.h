@@ -50,9 +50,19 @@ namespace ManagementLayer
 		void loadCurrentProject();
 
 		/**
+		 * @brief Загрузить настройки текущего проекта
+		 */
+		void loadCurrentProjectSettings(const QString& _projectPath);
+
+		/**
 		 * @brief Сохранить данные текущего проекта
 		 */
 		void saveCurrentProject();
+
+		/**
+		 * @brief Сохранить настройки текущего проекта
+		 */
+		void saveCurrentProjectSettings(const QString& _projectPath);
 
 		/**
 		 * @brief Загрузить состояние окна
@@ -79,6 +89,11 @@ namespace ManagementLayer
 		 * @brief Пересчитать хронометраж
 		 */
 		void aboutChronometrySettingsUpdated();
+
+		/**
+		 * @brief Обновить счётчики
+		 */
+		void aboutCountersSettingsUpdated();
 
 		/**
 		 * @brief Изменено имя персонажа
@@ -116,6 +131,11 @@ namespace ManagementLayer
 		 * @brief Обновить хронометраж
 		 */
 		void aboutUpdateDuration(int _cursorPosition);
+
+		/**
+		 * @brief Обновить счётчики
+		 */
+		void aboutUpdateCounters();
 
 		/**
 		 * @brief Обновить синопсис, если сменилась сцена

@@ -136,6 +136,11 @@ void SettingsManager::navigatorShowScenesNumbersChanged(bool _value)
 	storeValue("navigator/show-scenes-numbers", _value);
 }
 
+void SettingsManager::chronometryUsedChanged(bool _value)
+{
+	storeValue("chronometry/used", _value);
+}
+
 void SettingsManager::chronometryCurrentTypeChanged()
 {
 	QString chronometryType;
@@ -201,6 +206,16 @@ void SettingsManager::chronometryConfigurableSecondsForParagraphDialogChanged(do
 void SettingsManager::chronometryConfigurableSecondsFor50DialogChanged(double _value)
 {
 	storeValue("chronometry/configurable/seconds-for-every-50/dialog", _value);
+}
+
+void SettingsManager::pagesCounterUsedChanged(bool _value)
+{
+	storeValue("counters/pages/used", _value);
+}
+
+void SettingsManager::wordsCounterUsedChanged(bool _value)
+{
+	storeValue("counters/words/used", _value);
 }
 
 void SettingsManager::styleLibraryNewPressed()
@@ -428,7 +443,13 @@ void SettingsManager::initView()
 	//
 	// Настройки хронометража
 	//
-
+	// ... использование
+	m_view->setChronometryUsed(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"chronometry/used",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	// ... текущая система
 	QString chronometryType =
 			DataStorageLayer::StorageFacade::settingsStorage()->value(
@@ -497,6 +518,22 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toDouble()
 				);
+
+	//
+	// Настройки счётчиков
+	//
+	m_view->setPagesCounterUsed(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"counters/pages/used",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setWordsCounterUsed(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"counters/words/used",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 }
 
 void SettingsManager::initConnections()
@@ -520,6 +557,7 @@ void SettingsManager::initConnections()
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
 
+	connect(m_view, SIGNAL(chronometryUsedChanged(bool)), this, SLOT(chronometryUsedChanged(bool)));
 	connect(m_view, SIGNAL(chronometryCurrentTypeChanged()), this, SLOT(chronometryCurrentTypeChanged()));
 	connect(m_view, SIGNAL(chronometryCharactersCharactersChanged(int)), this, SLOT(chronometryCharactersCharactersChanged(int)));
 	connect(m_view, SIGNAL(chronometryCharactersSecondsChanged(int)), this, SLOT(chronometryCharactersSecondsChanged(int)));
@@ -536,6 +574,9 @@ void SettingsManager::initConnections()
 			this, SLOT(chronometryConfigurableSecondsForParagraphDialogChanged(double)));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50DialogChanged(double)),
 			this, SLOT(chronometryConfigurableSecondsFor50DialogChanged(double)));
+
+	connect(m_view, SIGNAL(pagesCounterUsedChanged(bool)), this, SLOT(pagesCounterUsedChanged(bool)));
+	connect(m_view, SIGNAL(wordsCounterUsedChanged(bool)), this, SLOT(wordsCounterUsedChanged(bool)));
 
 	//
 	// Уведомления об обновлении секции параметров
@@ -555,8 +596,9 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
+//	connect(m_view, SIGNAL(navigatorShowScenesTextChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 
-	connect(m_view, SIGNAL(navigatorShowScenesTextChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
+	connect(m_view, SIGNAL(chronometryUsedChanged(bool)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCurrentTypeChanged()), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCharactersCharactersChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCharactersSecondsChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
@@ -573,6 +615,9 @@ void SettingsManager::initConnections()
 			SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50DialogChanged(double)),
 			SIGNAL(chronometrySettingsUpdated()));
+
+	connect(m_view, SIGNAL(pagesCounterUsedChanged(bool)), this, SIGNAL(countersSettingsUpdated()));
+	connect(m_view, SIGNAL(wordsCounterUsedChanged(bool)), this, SIGNAL(countersSettingsUpdated()));
 
 	//
 	// Библиотека стилей

@@ -34,12 +34,12 @@ ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 	m_description->setElideMode(Qt::ElideRight);
 	m_description->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
-	m_timing = new QLabel(this);
-	m_timing->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	m_duration = new QLabel(this);
+	m_duration->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->addWidget(m_header);
-	topLayout->addWidget(m_timing);
+	topLayout->addWidget(m_duration);
 	topLayout->setContentsMargins(QMargins());
 
 	QVBoxLayout* rightLayout = new QVBoxLayout;
@@ -71,10 +71,12 @@ void ScenarioNavigatorItemWidget::setDescription(const QString& _description)
 	m_description->setText(_description);
 }
 
-void ScenarioNavigatorItemWidget::setTiming(int _timing)
+void ScenarioNavigatorItemWidget::setDuration(int _duration)
 {
-	m_timing->setText(
-				"("
-				+ BusinessLogic::ChronometerFacade::secondsToTime(_timing)
-				+ ") ");
+	QString duration;
+	if (BusinessLogic::ChronometerFacade::chronometryUsed()) {
+		duration = "(" + BusinessLogic::ChronometerFacade::secondsToTime(_duration)+ ") ";
+	}
+
+	m_duration->setText(duration);
 }

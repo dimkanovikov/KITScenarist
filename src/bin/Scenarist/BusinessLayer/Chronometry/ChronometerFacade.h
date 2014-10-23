@@ -18,6 +18,11 @@ namespace BusinessLogic
 	{
 	public:
 		/**
+		 * @brief Используется ли хронометраж
+		 */
+		static bool chronometryUsed();
+
+		/**
 		 * @brief Вычислить хронометраж последовательности ограниченной заданными блоками
 		 */
 		static int calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock);
