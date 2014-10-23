@@ -23,15 +23,17 @@
 
 #include <3rd_party/Widgets/TabBar/TabBar.h>
 
-#include <QWidget>
 #include <QComboBox>
-#include <QLabel>
-#include <QSplitter>
 #include <QHBoxLayout>
+#include <QLabel>
+#include <QMessageBox>
+#include <QSplitter>
 #include <QTextCursor>
 #include <QTextBlock>
+#include <QTimer>
 #include <QSet>
 #include <QStackedWidget>
+#include <QWidget>
 
 using ManagementLayer::ScenarioManager;
 using ManagementLayer::ScenarioNavigatorManager;
@@ -107,6 +109,11 @@ void ScenarioManager::loadCurrentProject()
 	// Возврат всех окон в исходное положение - навигатор на верх, данные сценария вперёд
 	//
 	m_textEditManager->setCursorPosition(0);
+
+	//
+	// Обновим счётчики, когда данные полностью загрузятся
+	//
+	QTimer::singleShot(100, this, SLOT(aboutUpdateCounters()));
 }
 
 void ScenarioManager::loadCurrentProjectSettings(const QString& _projectPath)
@@ -294,7 +301,7 @@ void ScenarioManager::aboutRefreshCharacters()
 	}
 
 	//
-	// Удалить те, которых нет в тексте
+	// Определить персонажи, которых нет в тексте
 	//
 	QSet<QString> charactersToDelete;
 	foreach (DomainObject* domainObject,
@@ -304,16 +311,37 @@ void ScenarioManager::aboutRefreshCharacters()
 			charactersToDelete.insert(character->name());
 		}
 	}
-	foreach (const QString& character, charactersToDelete) {
-		DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(character);
-	}
 
 	//
-	// Добавить новых
+	// Спросить пользователя, хочет ли он выполнить это действие
 	//
-	foreach (const QString& character, characters) {
-		if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
-			DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
+	const QStringList deleteList = charactersToDelete.toList();
+	const QStringList saveList = characters.toList();
+	QString message;
+	if (!deleteList.isEmpty()) {
+		message.append(QString("<b>%1:</b> %2.").arg(tr("Characters to delete")).arg(deleteList.join(", ")));
+	}
+	if (!saveList.isEmpty()) {
+		if (!message.isEmpty()) {
+			message.append("<br/><br/>");
+		}
+		message.append(QString("<b>%1:</b> %2.").arg(tr("Characters to save")).arg(saveList.join(", ")));
+	}
+	if (QMessageBox::question(m_view, tr("Apply refreshing"), message) == QMessageBox::Yes) {
+		//
+		// Удалить тех, кого нет
+		//
+		foreach (const QString& character, charactersToDelete) {
+			DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(character);
+		}
+
+		//
+		// Добавить новых
+		//
+		foreach (const QString& character, characters) {
+			if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
+				DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
+			}
 		}
 	}
 }
@@ -372,7 +400,7 @@ void ScenarioManager::aboutRefreshLocations()
 	}
 
 	//
-	// Удалить те, которых нет в тексте
+	// Определить локации, которых нет в тексте
 	//
 	QSet<QString> locationsToDelete;
 	foreach (DomainObject* domainObject,
@@ -382,16 +410,38 @@ void ScenarioManager::aboutRefreshLocations()
 			locationsToDelete.insert(location->name());
 		}
 	}
-	foreach (const QString& location, locationsToDelete) {
-		DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
-	}
 
 	//
-	// Добавить новых
+	// Спросить пользователя, хочет ли он выполнить это действие
 	//
-	foreach (const QString& location, locations) {
-		if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
-			DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
+	const QStringList deleteList = locationsToDelete.toList();
+	const QStringList saveList = locations.toList();
+	QString message;
+	if (!deleteList.isEmpty()) {
+		message.append(QString("<b>%1:</b> %2.").arg(tr("Locations to delete")).arg(deleteList.join(", ")));
+	}
+	if (!saveList.isEmpty()) {
+		if (!message.isEmpty()) {
+			message.append("<br/><br/>");
+		}
+		message.append(QString("<b>%1:</b> %2.").arg(tr("Locations to save")).arg(saveList.join(", ")));
+	}
+
+	if (QMessageBox::question(m_view, tr("Apply refreshing"), message) == QMessageBox::Yes) {
+		//
+		// Удалить те, которых нет
+		//
+		foreach (const QString& location, locationsToDelete) {
+			DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
+		}
+
+		//
+		// Добавить новых
+		//
+		foreach (const QString& location, locations) {
+			if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
+				DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
+			}
 		}
 	}
 }

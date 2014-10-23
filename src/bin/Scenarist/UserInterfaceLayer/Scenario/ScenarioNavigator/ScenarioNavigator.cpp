@@ -53,26 +53,26 @@ void ScenarioNavigator::setShowSceneNumber(bool _show)
 
 bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 {
-    bool isEventFiltered = false;
+	bool isEventFiltered = false;
 
 	if (_watched == m_navigationTree
-        && _event->type() == QEvent::KeyPress) {
+		&& _event->type() == QEvent::KeyPress) {
 		//
 		// Отлавливаем необходимую комбинацию клавиш
 		//
 		QKeyEvent* keyEvent = static_cast<QKeyEvent*>(_event);
-        QString keyCharacter = keyEvent->text();
+		QString keyCharacter = keyEvent->text();
 		if (keyEvent->modifiers().testFlag(Qt::ControlModifier)
-            && ((Qt::Key)keyEvent->key() == Qt::Key_Z
-                || keyCharacter == "z"
+			&& ((Qt::Key)keyEvent->key() == Qt::Key_Z
+				|| keyCharacter == "z"
 				|| keyCharacter == QString::fromUtf8("я"))) {
 			if (keyEvent->modifiers().testFlag(Qt::ShiftModifier)) {
 				emit redoPressed();
 			} else {
-                emit undoPressed();
-            }
-            isEventFiltered = true;
-        }
+				emit undoPressed();
+			}
+			isEventFiltered = true;
+		}
 	}
 	//
 	// В противном случае выполняется стандартная обработка
@@ -119,9 +119,9 @@ void ScenarioNavigator::initView()
 	m_endTitle->setFixedWidth(1);
 
 	m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
-    m_navigationTree->setDragDropMode(QAbstractItemView::DragDrop);
-    m_navigationTree->setDragEnabled(true);
-    m_navigationTree->setDropIndicatorShown(true);
+	m_navigationTree->setDragDropMode(QAbstractItemView::DragDrop);
+	m_navigationTree->setDragEnabled(true);
+	m_navigationTree->setDropIndicatorShown(true);
 	m_navigationTree->setAlternatingRowColors(true);
 	m_navigationTree->setHeaderHidden(true);
 	m_navigationTree->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);

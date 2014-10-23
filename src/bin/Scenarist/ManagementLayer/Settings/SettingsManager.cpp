@@ -218,6 +218,11 @@ void SettingsManager::wordsCounterUsedChanged(bool _value)
 	storeValue("counters/words/used", _value);
 }
 
+void SettingsManager::simbolsCounterUsedChanged(bool _value)
+{
+	storeValue("counters/simbols/used", _value);
+}
+
 void SettingsManager::styleLibraryNewPressed()
 {
 	SettingsStylesManager stylesManager(this, m_view);
@@ -534,6 +539,12 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_view->setSimbolsCounterUsed(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"counters/simbols/used",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 }
 
 void SettingsManager::initConnections()
@@ -577,6 +588,7 @@ void SettingsManager::initConnections()
 
 	connect(m_view, SIGNAL(pagesCounterUsedChanged(bool)), this, SLOT(pagesCounterUsedChanged(bool)));
 	connect(m_view, SIGNAL(wordsCounterUsedChanged(bool)), this, SLOT(wordsCounterUsedChanged(bool)));
+	connect(m_view, SIGNAL(simbolsCounterUsedChanged(bool)), this, SLOT(simbolsCounterUsedChanged(bool)));
 
 	//
 	// Уведомления об обновлении секции параметров
@@ -618,6 +630,7 @@ void SettingsManager::initConnections()
 
 	connect(m_view, SIGNAL(pagesCounterUsedChanged(bool)), this, SIGNAL(countersSettingsUpdated()));
 	connect(m_view, SIGNAL(wordsCounterUsedChanged(bool)), this, SIGNAL(countersSettingsUpdated()));
+	connect(m_view, SIGNAL(simbolsCounterUsedChanged(bool)), this, SIGNAL(countersSettingsUpdated()));
 
 	//
 	// Библиотека стилей

@@ -5,6 +5,7 @@
 #include <QToolButton>
 
 class QLabel;
+class QCheckBox;
 
 
 /**
@@ -76,6 +77,12 @@ namespace UserInterface
 
 	private:
 		/**
+		 * @brief Захватить фокус, если необходимо
+		 */
+		void catchFocusIfNeeded();
+
+	private:
+		/**
 		 * @brief Редактор сценария для форматирования блоков
 		 */
 		ScenarioTextEdit* m_editor;
@@ -84,6 +91,11 @@ namespace UserInterface
 		 * @brief Список кнопок
 		 */
 		QList<ToolButton*> m_buttons;
+
+		/**
+		 * @brief Переключатель захвата фокуса
+		 */
+		QCheckBox* m_grabFocus;
 	};
 }
 

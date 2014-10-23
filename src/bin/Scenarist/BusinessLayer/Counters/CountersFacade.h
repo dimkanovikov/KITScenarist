@@ -28,6 +28,11 @@ namespace BusinessLogic
 		 * @brief Посчитать кол-во слов
 		 */
 		static QString wordsCounter(QTextDocument* _document);
+
+		/**
+		 * @brief Посчитать кол-во символов
+		 */
+		static QString simbolsCounter(QTextDocument* _document);
 	};
 }
 

@@ -198,6 +198,11 @@ void SettingsView::setWordsCounterUsed(bool _value)
 	ui->wordsCounter->setChecked(_value);
 }
 
+void SettingsView::setSimbolsCounterUsed(bool _value)
+{
+	ui->simbolsCounter->setChecked(_value);
+}
+
 void SettingsView::aboutScenarioEditSpellCheckLanguageChanged()
 {
 	emit scenarioEditSpellCheckLanguageChanged(ui->spellCheckingLanguage->currentData().toInt());
@@ -279,8 +284,8 @@ void SettingsView::setColorFor(QWidget* _colorPicker, const QColor& _newColor)
 
 void SettingsView::initData()
 {
-	ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
 	ui->spellCheckingLanguage->addItem(tr("Russian with Yo"), SpellChecker::RussianWithYo);
+	ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
 	ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
 	ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
 }
@@ -353,6 +358,7 @@ void SettingsView::initConnections()
 	// ... счётчики
 	connect(ui->pagesCounter, SIGNAL(toggled(bool)), this, SIGNAL(pagesCounterUsedChanged(bool)));
 	connect(ui->wordsCounter, SIGNAL(toggled(bool)), this, SIGNAL(wordsCounterUsedChanged(bool)));
+	connect(ui->simbolsCounter, SIGNAL(toggled(bool)), this, SIGNAL(simbolsCounterUsedChanged(bool)));
 
 	//
 	// Библиотека стилей

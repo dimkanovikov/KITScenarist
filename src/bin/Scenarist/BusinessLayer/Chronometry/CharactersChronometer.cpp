@@ -55,7 +55,8 @@ float CharactersChronometer::calculateFrom(BusinessLogic::ScenarioBlockStyle::Ty
 	//
 	// Рассчитаем длительность текста
 	//
-	QString textForChron = _text.simplified();
+	QString textForChron = _text;
+	textForChron = textForChron.remove("\n").simplified();
 	if (!considerSpaces) {
 		textForChron = textForChron.remove(" ");
 	}

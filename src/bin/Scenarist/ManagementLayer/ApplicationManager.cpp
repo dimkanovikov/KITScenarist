@@ -143,12 +143,12 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 
 	if (!_fileToOpen.isEmpty()) {
 		aboutLoad(_fileToOpen);
-    }
+	}
 }
 
 void ApplicationManager::openFile(const QString &_fileToOpen)
 {
-    aboutLoad(_fileToOpen);
+	aboutLoad(_fileToOpen);
 }
 
 void ApplicationManager::aboutCreateNew()
