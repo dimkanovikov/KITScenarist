@@ -1,18 +1,18 @@
 /*
-    Copyright (C)  2008, 2010  Brad Hards <bradh@frogmouth.net>
+	Copyright (C)  2008, 2010  Brad Hards <bradh@frogmouth.net>
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 2 of the License, or
-    (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Lesser General Public License as published by
+	the Free Software Foundation, either version 2 of the License, or
+	(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU Lesser General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef RTFREADER_RTFOUTPUTSTRATEGY_H
@@ -32,12 +32,12 @@
 */
 namespace RtfReader
 {
-    /**
+	/**
 	Abstract output strategy for RTF Parser
-    */
-    class AbstractRtfOutput
-    {
-      public:
+	*/
+	class AbstractRtfOutput
+	{
+	  public:
 	AbstractRtfOutput();
 	virtual ~AbstractRtfOutput();
 
@@ -282,6 +282,7 @@ namespace RtfReader
 	virtual void setFontPointSize( const int value ) = 0;
 	virtual void setFontSuperscript() = 0;
 	virtual void setFontSubscript() = 0;
+	virtual void setFontUppercase() = 0;
 	virtual void setForegroundColour( const int value ) = 0;
 	virtual void setHighlightColour( const int value ) = 0;
 	virtual void setParagraphPatternBackgroundColour( const int value ) = 0;
@@ -302,7 +303,7 @@ namespace RtfReader
 	virtual void startGroup();
 	virtual void endGroup();
 
-      private:
+	  private:
 	// The author of the document (from document meta-data, if any)
 	QString m_author;
 
@@ -371,7 +372,7 @@ namespace RtfReader
 
 	// User properties dictionary (from document meta-data, if any)
 	QHash< QString, QVariant > m_userProps;
-    };
+	};
 }
 
 #endif

@@ -50,7 +50,6 @@ INCLUDEPATH += $$PWD/../../libs/rtf-qt
 DEPENDPATH += $$PWD/../../libs/rtf-qt
 #
 
-
 INCLUDEPATH += $$PWD
 
 TRANSLATIONS += \

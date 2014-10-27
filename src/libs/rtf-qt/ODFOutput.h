@@ -1,18 +1,18 @@
 /*
-    Copyright (C)  2011 Brad Hards <bradh@frogmouth.net>
+	Copyright (C)  2011 Brad Hards <bradh@frogmouth.net>
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 2 of the License, or
-    (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Lesser General Public License as published by
+	the Free Software Foundation, either version 2 of the License, or
+	(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU Lesser General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef RTFREADER_ODFOUTPUT_H
@@ -28,15 +28,15 @@ class QXmlStreamWriter;
 
 namespace RtfReader
 {
-    struct ManifestEntry
-    {
+	struct ManifestEntry
+	{
 	QString fullPath;
 	QString mediaType;
-    };
+	};
 
-    class ODFOutput: public AbstractRtfOutput
-    {
-      public:
+	class ODFOutput: public AbstractRtfOutput
+	{
+	  public:
 	ODFOutput( const QString &odfFileName );
 
 	virtual ~ODFOutput();
@@ -67,6 +67,7 @@ namespace RtfReader
 	virtual void setFontPointSize( const int value );
 	virtual void setFontSuperscript();
 	virtual void setFontSubscript();
+	virtual void setFontUppercase();
 	virtual void setForegroundColour( const int value );
 	virtual void setHighlightColour( const int value );
 	virtual void setParagraphPatternBackgroundColour( const int value );
@@ -84,7 +85,7 @@ namespace RtfReader
 	virtual void insertFontTableEntry( FontTableEntry fontTableEntry, quint32 fontTableIndex );
 	virtual void insertStyleSheetTableEntry( quint32 stylesheetTableIndex, StyleSheetTableEntry stylesheetTableEntry );
 
-      protected:
+	  protected:
 	void addManifestEntry( const QString &fullPath, const QString &mediaType );
 	void writeManifestFile();
 	void writeMetadataElement( QXmlStreamWriter *xmlStream, const QString &nameSpace, const QString &element, const QString &value );
@@ -100,10 +101,10 @@ namespace RtfReader
 	QXmlStreamWriter		*m_settingsXML;
 	QuaZipFile			*m_styles;
 	QXmlStreamWriter		*m_stylesXML;
-	
+
 	bool				m_haveOpenTextParagraph;
 	QList<struct ManifestEntry>	m_manifestEntries;
-    };
+	};
 }
 
 #endif

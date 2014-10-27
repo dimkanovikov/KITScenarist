@@ -1,18 +1,18 @@
 /*
-    Copyright (C)  2011  Brad Hards <bradh@frogmouth.net>
+	Copyright (C)  2011  Brad Hards <bradh@frogmouth.net>
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 2 of the License, or
-    (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Lesser General Public License as published by
+	the Free Software Foundation, either version 2 of the License, or
+	(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU Lesser General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ODFOutput.h"
@@ -36,9 +36,9 @@ static const QString mimetype( "application/vnd.oasis.opendocument.text" );
 
 namespace RtfReader
 {
-    ODFOutput::ODFOutput( const QString &odfFileName ) : AbstractRtfOutput(),
+	ODFOutput::ODFOutput( const QString &odfFileName ) : AbstractRtfOutput(),
 	m_haveOpenTextParagraph( false )
-    {
+	{
 	m_odfZipFile = new QuaZip( odfFileName );
 	m_odfZipFile->open( QuaZip::mdCreate );
 	addManifestEntry( "/", "application/vnd.oasis.opendocument.text" );
@@ -100,10 +100,10 @@ namespace RtfReader
 	m_contentXML->writeAttribute( officeNamespace, QString( "version" ), QString( "1.1" ) );
 	m_contentXML->writeStartElement( officeNamespace, QString( "body" ) );
 	m_contentXML->writeStartElement( officeNamespace, QString( "text" ) );
-    }
+	}
 
-    ODFOutput::~ODFOutput()
-    {
+	ODFOutput::~ODFOutput()
+	{
 	m_contentXML->writeEndElement(); // closes "text"
 	m_contentXML->writeEndElement(); // closes "body"
 	m_contentXML->writeEndElement(); // closes "document-content"
@@ -119,36 +119,36 @@ namespace RtfReader
 	m_odfZipFile->close();
 	qDebug() << "result at zip file level:" << m_odfZipFile->getZipError();
 	delete m_odfZipFile;
-    }
+	}
 
-    void ODFOutput::writeMetadataElement( QXmlStreamWriter *xmlStream, const QString &nameSpace, const QString &element, const QString &value )
-    {
+	void ODFOutput::writeMetadataElement( QXmlStreamWriter *xmlStream, const QString &nameSpace, const QString &element, const QString &value )
+	{
 	if ( value.isEmpty() ) {
-	    return;
+		return;
 	}
 	xmlStream->writeTextElement( nameSpace, element, value );
-    }
+	}
 
-    void ODFOutput::writeMetadataElementDateTime( QXmlStreamWriter *xmlStream, const QString &nameSpace, const QString &element, const QDateTime &value )
-    {
+	void ODFOutput::writeMetadataElementDateTime( QXmlStreamWriter *xmlStream, const QString &nameSpace, const QString &element, const QDateTime &value )
+	{
 	if ( ! value.isValid() ) {
-	    return;
+		return;
 	}
 	xmlStream->writeTextElement( nameSpace, element, value.toString( Qt::ISODate ) );
-    }
-    
-    void ODFOutput::writeKeywordsMetadata( QXmlStreamWriter *xmlStream, const QString &keywords )
-    {
+	}
+
+	void ODFOutput::writeKeywordsMetadata( QXmlStreamWriter *xmlStream, const QString &keywords )
+	{
 	QStringList keywordList = keywords.split(",", QString::SkipEmptyParts);
 	for ( int i = 0; i < keywordList.count(); ++i ) {
-	    writeMetadataElement( xmlStream, metaNamespace, QString( "keyword" ), keywordList.at( i ).simplified() );
+		writeMetadataElement( xmlStream, metaNamespace, QString( "keyword" ), keywordList.at( i ).simplified() );
 	}
-    }
-    
-    void ODFOutput::writeEditingTimeMetadata( QXmlStreamWriter *xmlStream, const int editMinutes )
-    {
+	}
+
+	void ODFOutput::writeEditingTimeMetadata( QXmlStreamWriter *xmlStream, const int editMinutes )
+	{
 	if ( editMinutes == 0 ) {
-	    return;
+		return;
 	}
 	int residualHours = editMinutes / 60;
 	int minutes = editMinutes - ( 60 * residualHours );
@@ -156,10 +156,10 @@ namespace RtfReader
 	int hours = residualHours - ( 24 * days );
 	QString formattedDate = QString( "P%1DT%2H%3M0S" ).arg( days ).arg( hours ).arg( minutes );
 	writeMetadataElement(xmlStream, metaNamespace, QString( "editing-duration" ), formattedDate );
-    }
+	}
 
-    void ODFOutput::writeMetadataFile()
-    {
+	void ODFOutput::writeMetadataFile()
+	{
 	QuaZipFile *meta = new QuaZipFile( m_odfZipFile );
 
 	QuaZipNewInfo metaInfo( "meta.xml" );
@@ -193,18 +193,18 @@ namespace RtfReader
 	qDebug() << "result at meta.xml file level:" << meta->getZipError();
 	meta->close();
 	addManifestEntry( "meta.xml", "text/xml" );
-    }
- 
-    void ODFOutput::addManifestEntry( const QString &fullPath, const QString &mediaType )
-    {
+	}
+
+	void ODFOutput::addManifestEntry( const QString &fullPath, const QString &mediaType )
+	{
 	ManifestEntry entry;
 	entry.fullPath = fullPath;
 	entry.mediaType = mediaType;
 	m_manifestEntries.append( entry );
-    }
-    
-    void ODFOutput::writeManifestFile()
-    {
+	}
+
+	void ODFOutput::writeManifestFile()
+	{
 	QuaZipFile manifestFile( m_odfZipFile );
 	QuaZipNewInfo manifestInfo( "META-INF/manifest.xml" );
 	manifestInfo.externalAttr = ( 0644 << 16 );
@@ -215,235 +215,240 @@ namespace RtfReader
 	manifestXML.writeStartDocument();
 	manifestXML.writeStartElement( manifestNamespace, QString( "manifest" ) );
 	for (int i = 0; i < m_manifestEntries.count(); ++i) {
-	    manifestXML.writeStartElement( manifestNamespace, QString( "file-entry" ) );
-	    manifestXML.writeAttribute( manifestNamespace, QString( "media-type" ), m_manifestEntries[i].mediaType );
-	    manifestXML.writeAttribute( manifestNamespace, QString( "full-path" ), m_manifestEntries[i].fullPath );
-	    manifestXML.writeEndElement(); // closes "file-entry"
+		manifestXML.writeStartElement( manifestNamespace, QString( "file-entry" ) );
+		manifestXML.writeAttribute( manifestNamespace, QString( "media-type" ), m_manifestEntries[i].mediaType );
+		manifestXML.writeAttribute( manifestNamespace, QString( "full-path" ), m_manifestEntries[i].fullPath );
+		manifestXML.writeEndElement(); // closes "file-entry"
 	}
 	manifestXML.writeEndElement(); // closes "manifest" for outer scope
 	manifestXML.writeEndDocument();
 	qDebug() << "result at manifest.xml file level:" << manifestFile.getZipError();
 	manifestFile.close();
-    }
+	}
 
-    void ODFOutput::appendText( const QString &text )
-    {
+	void ODFOutput::appendText( const QString &text )
+	{
 	if ( ! m_haveOpenTextParagraph ) {
-	    m_contentXML->writeStartElement( textNamespace, QString( "p" ) );
-	    m_haveOpenTextParagraph = true;
+		m_contentXML->writeStartElement( textNamespace, QString( "p" ) );
+		m_haveOpenTextParagraph = true;
 	}
 	m_contentXML->writeCharacters( text );
-    }
+	}
 
-    void ODFOutput::insertPar()
-    {
-        if ( ! m_haveOpenTextParagraph ) {
-	    m_contentXML->writeStartElement( textNamespace, QString( "p" ) );
+	void ODFOutput::insertPar()
+	{
+		if ( ! m_haveOpenTextParagraph ) {
+		m_contentXML->writeStartElement( textNamespace, QString( "p" ) );
 	}
 	m_contentXML->writeEndElement();
 	m_haveOpenTextParagraph = false;
-    }
+	}
 
-    void ODFOutput::insertTab()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::insertTab()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::insertLeftQuote()
-    {
-        appendText( QString( QChar( 0x2018 ) ) );
-    }
+	void ODFOutput::insertLeftQuote()
+	{
+		appendText( QString( QChar( 0x2018 ) ) );
+	}
 
-    void ODFOutput::insertRightQuote()
-    {
-        appendText( QString( QChar( 0x2019 ) ) );
-    }
+	void ODFOutput::insertRightQuote()
+	{
+		appendText( QString( QChar( 0x2019 ) ) );
+	}
 
-    void ODFOutput::insertLeftDoubleQuote()
-    {
+	void ODFOutput::insertLeftDoubleQuote()
+	{
 	// TODO: figure out why this doesn't render properly
-        appendText( QString( QChar( 0x201c) ) );
-    }
+		appendText( QString( QChar( 0x201c) ) );
+	}
 
-    void ODFOutput::insertRightDoubleQuote()
-    {
+	void ODFOutput::insertRightDoubleQuote()
+	{
 	// TODO: figure out why this doesn't render properly
 	appendText( QString( QChar( 0x201d ) ) );
-    }
+	}
 
-    void ODFOutput::insertEnDash()
-    {
-        appendText( QString( QChar( 0x2013 ) ) );
-    }
+	void ODFOutput::insertEnDash()
+	{
+		appendText( QString( QChar( 0x2013 ) ) );
+	}
 
-    void ODFOutput::insertEmDash()
-    {
-        appendText( QString( QChar( 0x2014 ) ) );
-    }
+	void ODFOutput::insertEmDash()
+	{
+		appendText( QString( QChar( 0x2014 ) ) );
+	}
 
-    void ODFOutput::insertEnSpace()
-    {
-        appendText( QString( QChar( 0x2002 ) ) );
-    }
+	void ODFOutput::insertEnSpace()
+	{
+		appendText( QString( QChar( 0x2002 ) ) );
+	}
 
-    void ODFOutput::insertEmSpace()
-    {
-        appendText( QString( QChar( 0x2003 ) ) );
-    }
+	void ODFOutput::insertEmSpace()
+	{
+		appendText( QString( QChar( 0x2003 ) ) );
+	}
 
-    void ODFOutput::insertBullet()
-    {
-        appendText( QString( QChar( 0x2022 ) ) );
-    }
+	void ODFOutput::insertBullet()
+	{
+		appendText( QString( QChar( 0x2022 ) ) );
+	}
 
-    void ODFOutput::resetParagraphFormat()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::resetParagraphFormat()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setParagraphAlignmentLeft()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setParagraphAlignmentLeft()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setParagraphAlignmentCentred()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setParagraphAlignmentCentred()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setParagraphAlignmentJustified()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setParagraphAlignmentJustified()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setParagraphAlignmentRight()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setParagraphAlignmentRight()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setFirstLineIndent( const int twips )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setFirstLineIndent( const int twips )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setLeftIndent( const int twips )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setLeftIndent( const int twips )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setRightIndent( const int twips )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setRightIndent( const int twips )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setFontItalic( const int value )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setFontItalic( const int value )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setFontBold( const int value )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setFontBold( const int value )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setFontUnderline( const int value )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setFontUnderline( const int value )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setFontPointSize( const int value )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setFontPointSize( const int value )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setFontSuperscript()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setFontSuperscript()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setFontSubscript()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setFontSubscript()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setForegroundColour( const int value )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setFontUppercase()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setHighlightColour( const int value )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setForegroundColour( const int value )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setParagraphPatternBackgroundColour( const int value )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setHighlightColour( const int value )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setFont( const int fontIndex )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setParagraphPatternBackgroundColour( const int value )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setDefaultFont( const int fontIndex )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setFont( const int fontIndex )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setTextDirectionLeftToRight()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setDefaultFont( const int fontIndex )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setTextDirectionRightToLeft()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setTextDirectionLeftToRight()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::resetCharacterProperties()
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setTextDirectionRightToLeft()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::createImage( const QImage &image, const QTextImageFormat &format)
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::resetCharacterProperties()
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setPageHeight( const int pageHeight )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::createImage( const QImage &image, const QTextImageFormat &format)
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setPageWidth( const int pageWidth )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setPageHeight( const int pageHeight )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setSpaceBefore( const int value )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setPageWidth( const int pageWidth )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::setSpaceAfter( const int value )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setSpaceBefore( const int value )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::appendToColourTable( const QColor &colour )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::setSpaceAfter( const int value )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::insertFontTableEntry( FontTableEntry fontTableEntry, quint32 fontTableIndex )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::appendToColourTable( const QColor &colour )
+	{
+		/* TODO: implement this */
+	}
 
-    void ODFOutput::insertStyleSheetTableEntry( quint32 stylesheetTableIndex, StyleSheetTableEntry stylesheetTableEntry )
-    {
-        /* TODO: implement this */
-    }
+	void ODFOutput::insertFontTableEntry( FontTableEntry fontTableEntry, quint32 fontTableIndex )
+	{
+		/* TODO: implement this */
+	}
+
+	void ODFOutput::insertStyleSheetTableEntry( quint32 stylesheetTableIndex, StyleSheetTableEntry stylesheetTableEntry )
+	{
+		/* TODO: implement this */
+	}
 
 }
