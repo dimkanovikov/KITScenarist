@@ -362,6 +362,19 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 		::updateWindowModified(m_view, false);
 	}
 }
+#include <BusinessLayer/Import/RtfImporter.h>
+void ApplicationManager::aboutImport()
+{
+	//
+	// TODO:
+	//
+	BusinessLogic::RtfImporter importer;
+	BusinessLogic::ImportParameters parameters;
+	parameters.filePath = "/home/dimkanovikov/1.rtf";
+	parameters.removeScenesNumbers = false;
+	QString result = importer.importScenario(parameters);
+	m_scenarioManager->scenario()->load(result);
+}
 
 void ApplicationManager::aboutExportTo()
 {
@@ -605,8 +618,11 @@ QMenu* ApplicationManager::createMenu()
 	g_disableOnStartActions << saveProject;
 	g_disableOnStartActions << saveProjectAs;
 
-	// ... экспорт
 	menu->addSeparator();
+	// ... импорт
+	QAction* import = menu->addAction(tr("Import..."));
+	g_disableOnStartActions << import;
+	// ... экспорт
 	QAction* exportTo = menu->addAction(tr("Export to..."));
 	g_disableOnStartActions << exportTo;
 	// ... предварительный просмотр
@@ -621,6 +637,7 @@ QMenu* ApplicationManager::createMenu()
 	connect(openProject, SIGNAL(triggered()), this, SLOT(aboutLoad()));
 	connect(saveProject, SIGNAL(triggered()), this, SLOT(aboutSave()));
 	connect(saveProjectAs, SIGNAL(triggered()), this, SLOT(aboutSaveAs()));
+	connect(import, SIGNAL(triggered()), this, SLOT(aboutImport()));
 	connect(exportTo, SIGNAL(triggered()), this, SLOT(aboutExportTo()));
 	connect(printPreview, SIGNAL(triggered()), this, SLOT(aboutPrintPreview()));
 

@@ -193,7 +193,8 @@ SOURCES += main.cpp \
     DataLayer/DataStorageLayer/CharacterStateStorage.cpp \
     BusinessLayer/Export/AbstractExporter.cpp \
     BusinessLayer/Counters/CountersFacade.cpp \
-    Application.cpp
+    Application.cpp \
+    BusinessLayer/Import/RtfImporter.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -336,7 +337,9 @@ HEADERS += \
     DataLayer/DataMappingLayer/CharacterStateMapper.h \
     DataLayer/DataStorageLayer/CharacterStateStorage.h \
     BusinessLayer/Counters/CountersFacade.h \
-    Application.h
+    Application.h \
+    BusinessLayer/Import/AbstractImporter.h \
+    BusinessLayer/Import/RtfImporter.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

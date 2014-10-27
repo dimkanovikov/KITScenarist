@@ -34,16 +34,16 @@ namespace ManagementLayer
 		explicit ApplicationManager(QObject *parent = 0);
 		~ApplicationManager();
 
-    public slots:
+	public slots:
 		/**
 		 * @brief Запуск приложения
 		 */
 		void exec(const QString& _fileToOpen);
 
-        /**
-         * @brief Открыть файл
-         */
-        void openFile(const QString& _fileToOpen);
+		/**
+		 * @brief Открыть файл
+		 */
+		void openFile(const QString& _fileToOpen);
 
 	private slots:
 		/**
@@ -67,6 +67,11 @@ namespace ManagementLayer
 		 * Если имя файла не задано, то будет вызван диалог выбора файла
 		 */
 		void aboutLoad(const QString& _fileName = QString());
+
+		/**
+		 * @brief Импортировать документ
+		 */
+		void aboutImport();
 
 		/**
 		 * @brief Экспортировать документ
