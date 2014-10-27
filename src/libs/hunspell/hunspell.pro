@@ -31,7 +31,7 @@ else: win32 {
 		src/win_api/config.h \
 		src/win_api/hunspelldll.h
 
-	SOURCES += \
+    SOURCES += \
 		src/win_api/hunspelldll.cxx
 }
 

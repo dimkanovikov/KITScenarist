@@ -19,11 +19,37 @@ DEFINES += USE_RUSSIAN_DATABASE_ENUMS
 #
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../libs/hunspell/release/ -lhunspell
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libs/hunspell/debug/ -lhunspell
+else:mac: LIBS += -F$$OUT_PWD/../../libs/hunspell/ -framework hunspell
 else:unix: LIBS += -L$$OUT_PWD/../../libs/hunspell/ -lhunspell
 
 INCLUDEPATH += $$PWD/../../libs/hunspell/src
 DEPENDPATH += $$PWD/../../libs/hunspell
 #
+
+#
+# Подключаем библиотеку QUAZIP
+#
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../libs/quazip/release/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libs/quazip/debug/ -lquazip
+else:mac: LIBS += -F$$OUT_PWD/../../libs/quazip/ -framework quazip
+else:unix: LIBS += -L$$OUT_PWD/../../libs/quazip/ -lquazip
+
+INCLUDEPATH += $$PWD/../../libs/quazip
+DEPENDPATH += $$PWD/../../libs/quazip
+#
+
+#
+# Подключаем библиотеку RTF-QT
+#
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../libs/rtf-qt/release/ -lrtf-qt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libs/rtf-qt/debug/ -lrtf-qt
+else:mac: LIBS += -F$$OUT_PWD/../../libs/rtf-qt/ -framework rtf-qt
+else:unix: LIBS += -L$$OUT_PWD/../../libs/rtf-qt/ -lrtf-qt
+
+INCLUDEPATH += $$PWD/../../libs/rtf-qt
+DEPENDPATH += $$PWD/../../libs/rtf-qt
+#
+
 
 INCLUDEPATH += $$PWD
 
