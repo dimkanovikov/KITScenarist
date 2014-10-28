@@ -5,6 +5,7 @@ TEMPLATE = lib
 # Build configuration
 #
 CONFIG += qt thread warn_on
+QT -= core gui
 
 #
 # Настройка динамической линковки под Windows
