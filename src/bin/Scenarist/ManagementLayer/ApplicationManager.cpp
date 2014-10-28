@@ -5,6 +5,7 @@
 #include "Characters/CharactersManager.h"
 #include "Locations/LocationsManager.h"
 #include "Settings/SettingsManager.h"
+#include "Import/ImportManager.h"
 #include "Export/ExportManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
@@ -122,6 +123,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_charactersManager(new CharactersManager(this, m_view)),
 	m_locationsManager(new LocationsManager(this, m_view)),
 	m_settingsManager(new SettingsManager(this, m_view)),
+	m_importManager(new ImportManager(this, m_view)),
 	m_exportManager(new ExportManager(this, m_view))
 {
 	initView();
@@ -362,18 +364,10 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 		::updateWindowModified(m_view, false);
 	}
 }
-#include <BusinessLayer/Import/RtfImporter.h>
+
 void ApplicationManager::aboutImport()
 {
-	//
-	// TODO:
-	//
-	BusinessLogic::RtfImporter importer;
-	BusinessLogic::ImportParameters parameters;
-	parameters.filePath = "/home/dimkanovikov/1.rtf";
-	parameters.removeScenesNumbers = false;
-	QString result = importer.importScenario(parameters);
-	m_scenarioManager->scenario()->load(result);
+	m_importManager->importScenario(m_scenarioManager->scenario(), m_scenarioManager->cursorPosition());
 }
 
 void ApplicationManager::aboutExportTo()

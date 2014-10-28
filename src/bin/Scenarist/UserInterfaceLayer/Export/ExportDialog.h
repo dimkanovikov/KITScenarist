@@ -3,12 +3,14 @@
 
 #include <QDialog>
 
-#include "BusinessLayer/Export/AbstractExporter.h"
-
 class QAbstractItemModel;
 
 namespace Ui {
 	class ExportDialog;
+}
+
+namespace BusinessLogic {
+	class ExportParameters;
 }
 
 

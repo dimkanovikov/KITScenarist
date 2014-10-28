@@ -45,6 +45,11 @@ namespace ManagementLayer
 		QString scenarioName() const;
 
 		/**
+		 * @brief Получить текущую позицию курсора
+		 */
+		int cursorPosition() const;
+
+		/**
 		 * @brief Загрузить данные текущего проекта
 		 */
 		void loadCurrentProject();

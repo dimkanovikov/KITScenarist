@@ -75,6 +75,11 @@ QString ScenarioManager::scenarioName() const
 	return m_dataEditManager->scenarioName();
 }
 
+int ScenarioManager::cursorPosition() const
+{
+	return m_textEditManager->cursorPosition();
+}
+
 void ScenarioManager::loadCurrentProject()
 {
 	//

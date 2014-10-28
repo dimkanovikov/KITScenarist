@@ -21,6 +21,7 @@ namespace ManagementLayer
 	class LocationsManager;
 	class SettingsManager;
 	class ExportManager;
+	class ImportManager;
 
 
 	/**
@@ -208,6 +209,11 @@ namespace ManagementLayer
 		 * @brief Управляющий настройками
 		 */
 		SettingsManager* m_settingsManager;
+
+		/**
+		 * @brief Управляющий импортом
+		 */
+		ImportManager* m_importManager;
 
 		/**
 		 * @brief Управляющий экспортом

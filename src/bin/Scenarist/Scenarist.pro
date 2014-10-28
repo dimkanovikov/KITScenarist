@@ -194,7 +194,9 @@ SOURCES += main.cpp \
     BusinessLayer/Export/AbstractExporter.cpp \
     BusinessLayer/Counters/CountersFacade.cpp \
     Application.cpp \
-    BusinessLayer/Import/RtfImporter.cpp
+    BusinessLayer/Import/RtfImporter.cpp \
+    ManagementLayer/Import/ImportManager.cpp \
+    UserInterfaceLayer/Import/ImportDialog.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -339,7 +341,9 @@ HEADERS += \
     BusinessLayer/Counters/CountersFacade.h \
     Application.h \
     BusinessLayer/Import/AbstractImporter.h \
-    BusinessLayer/Import/RtfImporter.h
+    BusinessLayer/Import/RtfImporter.h \
+    ManagementLayer/Import/ImportManager.h \
+    UserInterfaceLayer/Import/ImportDialog.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -348,7 +352,8 @@ FORMS += \
     UserInterfaceLayer/Settings/SettingsView.ui \
     UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui \
     UserInterfaceLayer/Settings/StyleDialog.ui \
-    UserInterfaceLayer/Export/ExportDialog.ui
+    UserInterfaceLayer/Export/ExportDialog.ui \
+    UserInterfaceLayer/Import/ImportDialog.ui
 
 
 RESOURCES += \

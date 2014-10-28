@@ -33,7 +33,7 @@ namespace {
 		//
 		// Блок время и место определяем по словам места действия
 		//
-		if (blockText.contains(TIME_AND_PLACE_CHECKER)) {
+		if (blockText.toUpper().contains(TIME_AND_PLACE_CHECKER)) {
 			blockType = ScenarioBlockStyle::TimeAndPlace;
 		}
 		//
@@ -48,7 +48,7 @@ namespace {
 			//
 			bool uppercase =
 					charFormat.fontCapitalization() == QFont::AllUppercase
-					|| blockText == blockText.toUpper();
+					|| blockText == blockText.toUpper(); // FIXME: если в блоке только такой текст "Я." то будет ошибка
 
 			if (uppercase) {
 				//
@@ -139,6 +139,7 @@ QString RtfImporter::importScenario(const ImportParameters& _importParameters) c
 			//
 			if (blockType == ScenarioBlockStyle::TimeAndPlace
 				&& _importParameters.removeScenesNumbers){
+				blockText = blockText.toUpper();
 				QRegularExpressionMatch match = TIME_AND_PLACE_CHECKER.match(blockText);
 				if (match.hasMatch()) {
 					blockText = blockText.mid(match.capturedStart());
@@ -148,7 +149,6 @@ QString RtfImporter::importScenario(const ImportParameters& _importParameters) c
 			writer.writeCDATA(blockText);
 			writer.writeEndElement();
 		}
-
 
 		cursor.movePosition(QTextCursor::Right);
 	} while (!cursor.atEnd());

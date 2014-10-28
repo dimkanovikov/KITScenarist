@@ -32,8 +32,10 @@ counters/pages/used - включён ли счётчик страниц
 counters/words/used - включён ли счётчик слов
 counters/simbols/used - включён ли счётчик символов
 
+import/file-path - путь к папке импортируемых файлов
+
 export/style - стиль экспортируемых документов
-export/files-path - путь к папке экспортируемых файлов
+export/file-path - путь к папке экспортируемых файлов
 
 application/project-files - путь к папке файлов проекта (сохранить/открыть)
 application/export-files - путь к папке экспортируемых файлов

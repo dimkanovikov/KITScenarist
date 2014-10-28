@@ -173,7 +173,7 @@ namespace BusinessLogic
 		 *		  или ближайший к позиции
 		 */
 		ScenarioModelItem* itemForPosition(int _position, bool _findNear = false) const;
-public:
+
 		/**
 		 * @brief Загрузить документ из сценария
 		 */
