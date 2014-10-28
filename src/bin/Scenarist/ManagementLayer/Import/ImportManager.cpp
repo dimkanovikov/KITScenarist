@@ -8,6 +8,8 @@
 
 #include <UserInterfaceLayer/Import/ImportDialog.h>
 
+#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+
 using ManagementLayer::ImportManager;
 using UserInterface::ImportDialog;
 
@@ -26,6 +28,12 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 		BusinessLogic::ImportParameters importParameters = m_importDialog->importParameters();
 
 		//
+		// Покажем уведомление пользователю
+		//
+		ProgressWidget progress(m_importDialog->parentWidget());
+		progress.showProgress(tr("Import"), tr("Please wait. Import can take few minutes."));
+
+		//
 		// Получим xml-представление импортируемого сценария
 		//
 		QString importScenarioXml = BusinessLogic::RtfImporter().importScenario(importParameters);
@@ -38,7 +46,7 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 		int insertPosition = 0;
 		switch (importParameters.insertionMode) {
 			case BusinessLogic::ImportParameters::ReplaceDocument: {
-				_scenario->document()->clear();
+				_scenario->clear();
 				insertPosition = 0;
 				break;
 			}
@@ -50,7 +58,7 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 
 			default:
 			case BusinessLogic::ImportParameters::ToDocumentEnd: {
-				insertPosition = _scenario->document()->characterCount();
+				insertPosition = _scenario->document()->characterCount() - 1;
 				break;
 			}
 		}
@@ -58,6 +66,11 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 		// ... загрузим текст
 		//
 		_scenario->document()->insertFromMime(insertPosition, importScenarioXml);
+
+		//
+		// Закроем уведомление
+		//
+		progress.close();
 	}
 }
 

@@ -129,6 +129,11 @@ namespace BusinessLogic
 		 */
 		void refresh();
 
+		/**
+		 * @brief Очистить сценарий
+		 */
+		void clear();
+
 	public:
 		/**
 		 * @brief Вспомогательные функции для обработчика xml
