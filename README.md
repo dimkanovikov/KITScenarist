@@ -3,6 +3,8 @@ Scenarist
 
 Application to write scenarios.
 
+Website: http://dimkanovikov.pro/kit/scenarist
+
 Build info:
 ------------
 
