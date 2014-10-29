@@ -452,7 +452,7 @@
     <message>
         <location filename="../../ManagementLayer/Import/ImportManager.cpp" line="34"/>
         <source>Please wait. Import can take few minutes.</source>
-        <translation>Минуточку терпения. Импорт может длиться несколько минут.</translation>
+        <translation>Немного терпения. Импорт может длиться несколько минут.</translation>
     </message>
 </context>
 <context>
