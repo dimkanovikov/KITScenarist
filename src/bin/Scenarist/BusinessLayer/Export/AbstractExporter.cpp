@@ -152,14 +152,14 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 		titleFormat.setFont(QFont("Courier New", 12));
 		QTextBlockFormat centerFormat;
 		centerFormat.setAlignment(Qt::AlignCenter);
-        centerFormat.setLineHeight(
-                    TextEditHelper::fontLineHeight(titleFormat.font()),
-                    QTextBlockFormat::FixedHeight);
+		centerFormat.setLineHeight(
+					TextEditHelper::fontLineHeight(titleFormat.font()),
+					QTextBlockFormat::FixedHeight);
 		QTextBlockFormat rightFormat;
 		rightFormat.setAlignment(Qt::AlignRight);
-        rightFormat.setLineHeight(
-                    TextEditHelper::fontLineHeight(titleFormat.font()),
-                    QTextBlockFormat::FixedHeight);
+		rightFormat.setLineHeight(
+					TextEditHelper::fontLineHeight(titleFormat.font()),
+					QTextBlockFormat::FixedHeight);
 
 		//
 		// Номер текущей строки
@@ -350,22 +350,5 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 		sourceDocumentCursor.movePosition(QTextCursor::NextBlock);
 	}
 
-	//
-	// Украсим документ
-	//
-	beautifyDocument(preparedDocument);
-
 	return preparedDocument;
-}
-
-void AbstractExporter::beautifyDocument(QTextDocument* _document) const
-{
-	QTextCursor cursor(_document);
-	while (!cursor.isNull() && !cursor.atEnd()) {
-		cursor = _document->find("...", cursor);
-
-		if (!cursor.isNull()) {
-			cursor.insertText("…");
-		}
-	}
 }

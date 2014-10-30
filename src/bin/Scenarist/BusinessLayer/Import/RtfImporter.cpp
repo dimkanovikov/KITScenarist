@@ -200,7 +200,7 @@ QString RtfImporter::importScenario(const ImportParameters& _importParameters) c
 			writer.writeEndElement();
 
 			//
-			// Запомним последний стиль блока и очистим счётчик пустых строк
+			// Запомним последний стиль блока и обнулим счётчик пустых строк
 			//
 			lastBlockType = blockType;
 			emptyLines = 0;

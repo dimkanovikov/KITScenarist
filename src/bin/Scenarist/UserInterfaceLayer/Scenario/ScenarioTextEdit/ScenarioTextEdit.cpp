@@ -5,6 +5,8 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QKeyEvent>
@@ -238,7 +240,9 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	if (handler->needSendEventToBaseClass()) {
 		SpellCheckTextEdit::keyPressEvent(_event);
+
 		updateEnteredText(_event);
+		TextEditHelper::beautifyDocument(m_document);
 	}
 
 	//
