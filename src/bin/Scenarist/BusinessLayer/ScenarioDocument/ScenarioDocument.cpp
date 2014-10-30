@@ -229,6 +229,13 @@ void ScenarioDocument::refresh()
 	load(scenario);
 }
 
+void ScenarioDocument::clear()
+{
+	QTextCursor cursor(m_document);
+	cursor.select(QTextCursor::Document);
+	cursor.removeSelectedText();
+}
+
 int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const
 {
 	int insertPosition = 0;

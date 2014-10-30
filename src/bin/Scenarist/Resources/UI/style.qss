@@ -211,6 +211,10 @@ QScrollBar::handle {
 	border: none;
 }
 
+QScrollBar::handle:vertical {
+	min-height: 30px;
+}
+
 QScrollBar::add-line {
 	height: 0px;
 }

@@ -87,14 +87,6 @@ namespace BusinessLogic
 		 */
 		QTextDocument* prepareDocument(const ScenarioDocument* _scenario,
 			const ExportParameters& _exportParameters) const;
-
-	private:
-		/**
-		 * @brief Украшения документа
-		 *
-		 * Например подмена многоточий и т.п.
-		 */
-		void beautifyDocument(QTextDocument* _document) const;
 	};
 }
 

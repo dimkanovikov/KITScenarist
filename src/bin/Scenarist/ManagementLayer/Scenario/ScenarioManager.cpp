@@ -75,6 +75,11 @@ QString ScenarioManager::scenarioName() const
 	return m_dataEditManager->scenarioName();
 }
 
+int ScenarioManager::cursorPosition() const
+{
+	return m_textEditManager->cursorPosition();
+}
+
 void ScenarioManager::loadCurrentProject()
 {
 	//
@@ -261,7 +266,42 @@ void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const Q
 			else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
 				const QStringList names = BusinessLogic::SceneCharactersParser::characters(cursor.block().text());
 				if (names.contains(cursor.selectedText())) {
-					replaceSelection = true;
+					//
+					// Убедимся, что выделено именно имя, а не часть другого имени
+					//
+					QTextCursor checkCursor(cursor);
+					// ... всё ли в порядке слева
+					bool atLeftAllOk = false;
+					checkCursor.setPosition(cursor.selectionStart());
+					if (checkCursor.atBlockStart()) {
+						atLeftAllOk = true;
+					} else {
+						checkCursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
+						if (checkCursor.selectedText() == " "
+							|| checkCursor.selectedText() == ",") {
+							atLeftAllOk = true;
+						} else {
+							atLeftAllOk = false;
+						}
+					}
+					// ... всё ли в порядке справа
+					bool atRightAllOk = false;
+					checkCursor.setPosition(cursor.selectionEnd());
+					if (checkCursor.atBlockEnd()) {
+						atRightAllOk = true;
+					} else {
+						checkCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+						if (checkCursor.selectedText() == " "
+							|| checkCursor.selectedText() == ",") {
+							atRightAllOk = true;
+						} else {
+							atRightAllOk = false;
+						}
+					}
+					// ... если со всех сторон всё в порядке - заменяем
+					if (atLeftAllOk && atRightAllOk) {
+						replaceSelection = true;
+					}
 				}
 			}
 

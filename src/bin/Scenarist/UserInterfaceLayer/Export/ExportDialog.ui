@@ -25,6 +25,9 @@
      <property name="text">
       <string>Additional:</string>
      </property>
+     <property name="buddy">
+      <cstring>showAdditional</cstring>
+     </property>
     </widget>
    </item>
    <item row="0" column="0" colspan="3">
@@ -163,6 +166,9 @@
          <property name="text">
           <string>Page Numbering:</string>
          </property>
+         <property name="buddy">
+          <cstring>pageNumbering</cstring>
+         </property>
         </widget>
        </item>
        <item row="1" column="1">
@@ -183,6 +189,9 @@
          <property name="text">
           <string>Scenes Numbering:</string>
          </property>
+         <property name="buddy">
+          <cstring>scenesNumbering</cstring>
+         </property>
         </widget>
        </item>
        <item row="2" column="1">
@@ -202,6 +211,9 @@
          </property>
          <property name="text">
           <string>Scenes Prefix:</string>
+         </property>
+         <property name="buddy">
+          <cstring>scenesPrefix</cstring>
          </property>
         </widget>
        </item>
@@ -236,6 +248,9 @@
             <property name="text">
              <string>Name:</string>
             </property>
+            <property name="buddy">
+             <cstring>name</cstring>
+            </property>
            </widget>
           </item>
           <item row="0" column="1">
@@ -245,6 +260,9 @@
            <widget class="QLabel" name="nameLabel_2">
             <property name="text">
              <string>Additional:</string>
+            </property>
+            <property name="buddy">
+             <cstring>additionalInfo</cstring>
             </property>
            </widget>
           </item>
@@ -256,6 +274,9 @@
             <property name="text">
              <string>Genre:</string>
             </property>
+            <property name="buddy">
+             <cstring>genre</cstring>
+            </property>
            </widget>
           </item>
           <item row="2" column="1">
@@ -265,6 +286,9 @@
            <widget class="QLabel" name="nameLabel_4">
             <property name="text">
              <string>Author:</string>
+            </property>
+            <property name="buddy">
+             <cstring>author</cstring>
             </property>
            </widget>
           </item>
@@ -276,6 +300,9 @@
             <property name="text">
              <string>Contacts:</string>
             </property>
+            <property name="buddy">
+             <cstring>contacts</cstring>
+            </property>
            </widget>
           </item>
           <item row="4" column="1">
@@ -285,6 +312,9 @@
            <widget class="QLabel" name="nameLabel_6">
             <property name="text">
              <string>Year:</string>
+            </property>
+            <property name="buddy">
+             <cstring>year</cstring>
             </property>
            </widget>
           </item>

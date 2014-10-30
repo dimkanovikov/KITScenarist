@@ -19,10 +19,35 @@ DEFINES += USE_RUSSIAN_DATABASE_ENUMS
 #
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../libs/hunspell/release/ -lhunspell
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libs/hunspell/debug/ -lhunspell
+else:mac: LIBS += -F$$OUT_PWD/../../libs/hunspell/ -framework hunspell
 else:unix: LIBS += -L$$OUT_PWD/../../libs/hunspell/ -lhunspell
 
 INCLUDEPATH += $$PWD/../../libs/hunspell/src
 DEPENDPATH += $$PWD/../../libs/hunspell
+#
+
+#
+# Подключаем библиотеку QUAZIP
+#
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../libs/quazip/release/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libs/quazip/debug/ -lquazip
+else:mac: LIBS += -F$$OUT_PWD/../../libs/quazip/ -framework quazip
+else:unix: LIBS += -L$$OUT_PWD/../../libs/quazip/ -lquazip
+
+INCLUDEPATH += $$PWD/../../libs/quazip
+DEPENDPATH += $$PWD/../../libs/quazip
+#
+
+#
+# Подключаем библиотеку RTF-QT
+#
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../libs/rtf-qt/release/ -lrtf-qt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libs/rtf-qt/debug/ -lrtf-qt
+else:mac: LIBS += -F$$OUT_PWD/../../libs/rtf-qt/ -framework rtf-qt
+else:unix: LIBS += -L$$OUT_PWD/../../libs/rtf-qt/ -lrtf-qt
+
+INCLUDEPATH += $$PWD/../../libs/rtf-qt
+DEPENDPATH += $$PWD/../../libs/rtf-qt
 #
 
 INCLUDEPATH += $$PWD
@@ -168,7 +193,11 @@ SOURCES += main.cpp \
     DataLayer/DataStorageLayer/CharacterStateStorage.cpp \
     BusinessLayer/Export/AbstractExporter.cpp \
     BusinessLayer/Counters/CountersFacade.cpp \
-    Application.cpp
+    Application.cpp \
+    BusinessLayer/Import/RtfImporter.cpp \
+    ManagementLayer/Import/ImportManager.cpp \
+    UserInterfaceLayer/Import/ImportDialog.cpp \
+    3rd_party/Widgets/ProgressWidget/ProgressWidget.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -311,7 +340,12 @@ HEADERS += \
     DataLayer/DataMappingLayer/CharacterStateMapper.h \
     DataLayer/DataStorageLayer/CharacterStateStorage.h \
     BusinessLayer/Counters/CountersFacade.h \
-    Application.h
+    Application.h \
+    BusinessLayer/Import/AbstractImporter.h \
+    BusinessLayer/Import/RtfImporter.h \
+    ManagementLayer/Import/ImportManager.h \
+    UserInterfaceLayer/Import/ImportDialog.h \
+    3rd_party/Widgets/ProgressWidget/ProgressWidget.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -320,7 +354,8 @@ FORMS += \
     UserInterfaceLayer/Settings/SettingsView.ui \
     UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui \
     UserInterfaceLayer/Settings/StyleDialog.ui \
-    UserInterfaceLayer/Export/ExportDialog.ui
+    UserInterfaceLayer/Export/ExportDialog.ui \
+    UserInterfaceLayer/Import/ImportDialog.ui
 
 
 RESOURCES += \

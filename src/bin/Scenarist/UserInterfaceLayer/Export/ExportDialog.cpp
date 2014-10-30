@@ -1,6 +1,8 @@
 #include "ExportDialog.h"
 #include "ui_ExportDialog.h"
 
+#include <BusinessLayer/Export/AbstractExporter.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
@@ -190,7 +192,7 @@ void ExportDialog::aboutChooseFile()
 	QString filePath =
 			QFileDialog::getSaveFileName(this, tr("Choose file to export scenario"),
 				(!ui->file->text().isEmpty() ? ui->file->text() : ::exportFolderPath()),
-				tr ("%1 files (*%2)").arg(format.toUpper()).arg(format));
+				tr("%1 files (*%2)").arg(format.toUpper()).arg(format));
 
 	if (!filePath.isEmpty()) {
 		//

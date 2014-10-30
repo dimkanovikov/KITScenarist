@@ -58,6 +58,7 @@
         <file>UI/style.qss</file>
         <file>UI/menuarrow.png</file>
         <file>UI/comboboxarrow.png</file>
+        <file>UI/loader.gif</file>
     </qresource>
     <qresource prefix="/Styles">
         <file>Styles/default.kitss</file>

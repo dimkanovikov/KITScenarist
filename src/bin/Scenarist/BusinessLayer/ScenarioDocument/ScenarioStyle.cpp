@@ -58,7 +58,7 @@ namespace {
 	/**
 	 * @brief Расширение файла стиля сценария
 	 */
-    const QString SCENARIO_STYLE_FILE_EXTENSION = "kitss";
+	const QString SCENARIO_STYLE_FILE_EXTENSION = "kitss";
 }
 
 QString ScenarioBlockStyle::typeName(ScenarioBlockStyle::Type _type)
@@ -315,7 +315,7 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 
 void ScenarioBlockStyle::updateLineHeight()
 {
-    const qreal lineHeight = TextEditHelper::fontLineHeight(m_font);
+	const qreal lineHeight = TextEditHelper::fontLineHeight(m_font);
 	m_blockFormat.setLineHeight(lineHeight, QTextBlockFormat::FixedHeight);
 	m_blockFormat.setTopMargin(lineHeight * m_topSpace);
 }
@@ -717,7 +717,7 @@ ScenarioStyleFacade::ScenarioStyleFacade()
 	rootFolder.mkpath(stylesFolderPath);
 
 	//
-	// Сохраним стиль по умолчанию, если необходимо
+	// Обновим стиль по умолчанию
 	//
 	const QString defaultStylePath =
 			stylesFolderPath + QDir::separator()
@@ -739,7 +739,9 @@ ScenarioStyleFacade::ScenarioStyleFacade()
 	foreach (const QFileInfo& styleFile, stylesDir.entryInfoList(QDir::Files)) {
 		if (styleFile.suffix() == SCENARIO_STYLE_FILE_EXTENSION) {
 			ScenarioStyle style(styleFile.absoluteFilePath());
-			m_styles.insert(style.name(), style);
+			if (!m_styles.contains(style.name())) {
+				m_styles.insert(style.name(), style);
+			}
 		}
 	}
 	//

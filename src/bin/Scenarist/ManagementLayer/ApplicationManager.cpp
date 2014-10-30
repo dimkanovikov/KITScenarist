@@ -5,6 +5,7 @@
 #include "Characters/CharactersManager.h"
 #include "Locations/LocationsManager.h"
 #include "Settings/SettingsManager.h"
+#include "Import/ImportManager.h"
 #include "Export/ExportManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
@@ -122,6 +123,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_charactersManager(new CharactersManager(this, m_view)),
 	m_locationsManager(new LocationsManager(this, m_view)),
 	m_settingsManager(new SettingsManager(this, m_view)),
+	m_importManager(new ImportManager(this, m_view)),
 	m_exportManager(new ExportManager(this, m_view))
 {
 	initView();
@@ -361,6 +363,11 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 		//
 		::updateWindowModified(m_view, false);
 	}
+}
+
+void ApplicationManager::aboutImport()
+{
+	m_importManager->importScenario(m_scenarioManager->scenario(), m_scenarioManager->cursorPosition());
 }
 
 void ApplicationManager::aboutExportTo()
@@ -605,8 +612,11 @@ QMenu* ApplicationManager::createMenu()
 	g_disableOnStartActions << saveProject;
 	g_disableOnStartActions << saveProjectAs;
 
-	// ... экспорт
 	menu->addSeparator();
+	// ... импорт
+	QAction* import = menu->addAction(tr("Import..."));
+	g_disableOnStartActions << import;
+	// ... экспорт
 	QAction* exportTo = menu->addAction(tr("Export to..."));
 	g_disableOnStartActions << exportTo;
 	// ... предварительный просмотр
@@ -621,6 +631,7 @@ QMenu* ApplicationManager::createMenu()
 	connect(openProject, SIGNAL(triggered()), this, SLOT(aboutLoad()));
 	connect(saveProject, SIGNAL(triggered()), this, SLOT(aboutSave()));
 	connect(saveProjectAs, SIGNAL(triggered()), this, SLOT(aboutSaveAs()));
+	connect(import, SIGNAL(triggered()), this, SLOT(aboutImport()));
 	connect(exportTo, SIGNAL(triggered()), this, SLOT(aboutExportTo()));
 	connect(printPreview, SIGNAL(triggered()), this, SLOT(aboutPrintPreview()));
 
