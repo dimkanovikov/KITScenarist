@@ -17,7 +17,7 @@ namespace {
 	/**
 	 * @brief Регулярное выражение для определения блока "Время и место" по наличию слов места
 	 */
-	const QRegularExpression PLACE_CONTAINS_CHECKER("(INT(.| )|EXT(.| )|ИНТ(.| )|НАТ(.| )|ПАВ(.| )|ЭКСТ(.| ))");
+	const QRegularExpression PLACE_CONTAINS_CHECKER("(^|[^\\S])(INT|EXT|ИНТ|НАТ|ПАВ|ЭКСТ)[. ]");
 
 	/**
 	 * @brief Регулярное выражение для определения блока "Время и место" по началу с номера
