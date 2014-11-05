@@ -289,10 +289,13 @@ namespace RtfReader
 					if ( ! controlWord.isKnown() ) {
 						qDebug() << "*** Unrecognised control word (not in spec 1.9.1): " << token.name;
 					}
-					// qDebug() << m_debugIndent << "got controlWord: " << token.name;
-					// qDebug() << m_debugIndent << "isDestination:" << controlWord.isDestination();
-					// qDebug() << m_debugIndent << "isIgnorable:" << m_nextSymbolIsIgnorable;
-					if ( m_nextSymbolMightBeDestination && controlWord.isSupportedDestination() ) {
+
+					//
+					// Устанавливаем кодировку документа
+					//
+					if (controlWord.isDocumentEncoding()) {
+						m_tokenizer->setEncoding(token.name, token.parameter.toInt());
+					} else if ( m_nextSymbolMightBeDestination && controlWord.isSupportedDestination() ) {
 						m_nextSymbolMightBeDestination = false;
 						m_nextSymbolIsIgnorable = false;
 						changeDestination( token.name );

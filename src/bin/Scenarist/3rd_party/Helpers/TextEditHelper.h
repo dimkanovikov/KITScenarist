@@ -26,7 +26,7 @@ namespace
 			// В маке всё определяется отлично
 			//
 	#ifndef Q_OS_MAC
-			s_definedFontLineHeight.insert("Courier New", 18.09);
+			s_definedFontLineHeight.insert("Courier New", 18.1);
 			s_definedFontLineHeight.insert("Times New Roman", 18.5);
 			s_definedFontLineHeight.insert("Arial", 18.3);
 			s_definedFontLineHeight.insert("CourierCyrillic", 13.1);

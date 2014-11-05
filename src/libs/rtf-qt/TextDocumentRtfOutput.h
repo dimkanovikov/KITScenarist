@@ -34,107 +34,107 @@ namespace RtfReader
 
 	class TextDocumentRtfOutput: public AbstractRtfOutput
 	{
-	  public:
-	TextDocumentRtfOutput( QTextDocument *document );
+	public:
+		TextDocumentRtfOutput( QTextDocument *document );
 
-	virtual ~TextDocumentRtfOutput();
+		virtual ~TextDocumentRtfOutput();
 
-	virtual void startGroup();
+		virtual void startGroup();
 
-	virtual void endGroup();
+		virtual void endGroup();
 
-	virtual void appendText( const QString &text );
+		virtual void appendText( const QString &text );
 
-	virtual void insertPar();
+		virtual void insertPar();
 
-	virtual void insertTab();
+		virtual void insertTab();
 
-	virtual void insertLeftQuote();
-	virtual void insertRightQuote();
-	virtual void insertLeftDoubleQuote();
-	virtual void insertRightDoubleQuote();
+		virtual void insertLeftQuote();
+		virtual void insertRightQuote();
+		virtual void insertLeftDoubleQuote();
+		virtual void insertRightDoubleQuote();
 
-	virtual void insertEnDash();
-	virtual void insertEmDash();
+		virtual void insertEnDash();
+		virtual void insertEmDash();
 
-	virtual void insertEnSpace();
-	virtual void insertEmSpace();
+		virtual void insertEnSpace();
+		virtual void insertEmSpace();
 
-	virtual void insertBullet();
+		virtual void insertBullet();
 
-	virtual void setFontItalic( const int value );
+		virtual void setFontItalic( const int value );
 
-	virtual void setFontBold( const int value );
+		virtual void setFontBold( const int value );
 
-	virtual void setFontUnderline( const int value );
+		virtual void setFontUnderline( const int value );
 
-	virtual void setFontPointSize( const int pointSize );
+		virtual void setFontPointSize( const int pointSize );
 
-	virtual void setForegroundColour( const int colourIndex );
-	virtual void setHighlightColour( const int colourIndex );
-	virtual void setParagraphPatternBackgroundColour( const int colourIndex );
+		virtual void setForegroundColour( const int colourIndex );
+		virtual void setHighlightColour( const int colourIndex );
+		virtual void setParagraphPatternBackgroundColour( const int colourIndex );
 
-	virtual void setFont( const int fontIndex );
+		virtual void setFont( const int fontIndex );
 
-	virtual void setDefaultFont( const int fontIndex );
+		virtual void setDefaultFont( const int fontIndex );
 
-	virtual void setFontSuperscript();
-	virtual void setFontSubscript();
-	virtual void setFontUppercase();
+		virtual void setFontSuperscript();
+		virtual void setFontSubscript();
+		virtual void setFontUppercase();
 
-	virtual void setTextDirectionLeftToRight();
-	virtual void setTextDirectionRightToLeft();
+		virtual void setTextDirectionLeftToRight();
+		virtual void setTextDirectionRightToLeft();
 
-	virtual void appendToColourTable( const QColor &colour );
+		virtual void appendToColourTable( const QColor &colour );
 
-	virtual void insertFontTableEntry( FontTableEntry fontTableEntry, quint32 fontTableIndex );
-	virtual void insertStyleSheetTableEntry( quint32 stylesheetTableIndex, StyleSheetTableEntry stylesheetTableEntry );
+		virtual void insertFontTableEntry( FontTableEntry fontTableEntry, quint32 fontTableIndex );
+		virtual void insertStyleSheetTableEntry( quint32 stylesheetTableIndex, StyleSheetTableEntry stylesheetTableEntry );
 
-	virtual void resetParagraphFormat();
-	virtual void resetCharacterProperties();
+		virtual void resetParagraphFormat();
+		virtual void resetCharacterProperties();
 
-	virtual void setParagraphAlignmentLeft();
-	virtual void setParagraphAlignmentCentred();
-	virtual void setParagraphAlignmentJustified();
-	virtual void setParagraphAlignmentRight();
+		virtual void setParagraphAlignmentLeft();
+		virtual void setParagraphAlignmentCentred();
+		virtual void setParagraphAlignmentJustified();
+		virtual void setParagraphAlignmentRight();
 
-	virtual void setFirstLineIndent( const int twips );
-	virtual void setLeftIndent( const int twips );
-	virtual void setRightIndent( const int twips );
+		virtual void setFirstLineIndent( const int twips );
+		virtual void setLeftIndent( const int twips );
+		virtual void setRightIndent( const int twips );
 
-	virtual void createImage( const QImage &image, const QTextImageFormat &format );
+		virtual void createImage( const QImage &image, const QTextImageFormat &format );
 
-	virtual void setPageHeight( const int pageHeight );
-	virtual void setPageWidth( const int pageWidth );
+		virtual void setPageHeight( const int pageHeight );
+		virtual void setPageWidth( const int pageWidth );
 
-	virtual void setSpaceBefore( const int twips );
-	virtual void setSpaceAfter( const int twips );
+		virtual void setSpaceBefore( const int twips );
+		virtual void setSpaceAfter( const int twips );
 
-	  protected:
-	// The text cursor on the document being generated
-	QTextCursor *m_cursor;
+	protected:
+		// The text cursor on the document being generated
+		QTextCursor *m_cursor;
 
-	QStack<QTextCharFormat> m_textCharFormatStack;
+		QStack<QTextCharFormat> m_textCharFormatStack;
 
-	QTextBlockFormat m_paragraphFormat;
+		QTextBlockFormat m_paragraphFormat;
 
-	QList<QColor> m_colourTable;
+		QList<QColor> m_colourTable;
 
-	QHash<int, FontTableEntry> m_fontTable;
-	int m_defaultFontIndex;
+		QHash<int, FontTableEntry> m_fontTable;
+		int m_defaultFontIndex;
 
-	QHash<int, StyleSheetTableEntry> m_stylesheetTable;
+		QHash<int, StyleSheetTableEntry> m_stylesheetTable;
 
-	QTextDocument *m_document;
+		QTextDocument *m_document;
 
-	bool m_haveSetFont;
+		bool m_haveSetFont;
 
-	/**
-	  Convenience routine to convert a size in twips into pixels
-	*/
-	qreal pixelsFromTwips( const int twips );
+		/**
+		  Convenience routine to convert a size in twips into millimeters
+		*/
+		qreal mmFromTwips( const int twips );
 
-	  };
+	};
 }
 
 #endif

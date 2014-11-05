@@ -42,8 +42,6 @@ unix:!symbian {
 	OBJECTS_DIR=.obj
 	MOC_DIR=.moc
 
-    LIBS += -lz
-	
 }
 
 win32 {
@@ -78,6 +76,6 @@ symbian {
     exportheaders.sources = $$HEADERS
     exportheaders.path = quazip
     for(header, exportheaders.sources) {
-        BLD_INF_RULES.prj_exports += "$$header $$exportheaders.path/$$basename(header)"
+	BLD_INF_RULES.prj_exports += "$$header $$exportheaders.path/$$basename(header)"
     }
 }

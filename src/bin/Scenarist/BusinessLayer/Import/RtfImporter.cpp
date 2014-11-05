@@ -22,7 +22,12 @@ namespace {
 	/**
 	 * @brief Регулярное выражение для определения блока "Время и место" по началу с номера
 	 */
-	const QRegularExpression START_FROM_NUMBER_CHECKER("^(\\d{1,})[.] ");
+	const QRegularExpression START_FROM_NUMBER_CHECKER("^([\\d\\S]{1,})[.](([\\d\\S]{1,})[.]|) ");
+
+	/**
+	 * @brief Допущение для блоков, которые по идее вообще не должны иметь отступа (миллиметры)
+	 */
+	const int LEFT_MARGIN_DELTA = 20;
 
 	/**
 	 * @brief Определить тип блока в текущей позиции курсора
@@ -47,81 +52,85 @@ namespace {
 		// ... стили блока
 		const QTextBlockFormat blockFormat = _cursor.blockFormat();
 		const QTextCharFormat charFormat = _cursor.charFormat();
-		// ... текст в верхнем регистре (5 - минимальное количество знаков в строке,
-		//     иначе при таком сравнении в верхнем регистре будут считаться такие строки, как "Я."
+		// ... текст в верхнем регистре (FIXME: такие строки, как "Я.")
 		bool textIsUppercase =
 				charFormat.fontCapitalization() == QFont::AllUppercase
-				|| (blockText.size() > 5 && blockText == blockText.toUpper());
+				|| blockText == blockText.toUpper();
+		// ... блоки находящиеся в центре
+		bool isCentered = blockFormat.leftMargin() > LEFT_MARGIN_DELTA;
 
 		//
 		// Собственно определение типа
 		//
 		{
 			//
-			// Блоки текста в верхнем регистре
+			// Блоки текста посередине
 			//
-			if (textIsUppercase) {
-				//
-				// Время и место
-				// 1. текст в верхнем регистре
-				// 2. содержит ключевые сокращения места действия или начинается с номера сцены
-				//
-				if (blockTextUppercase.contains(PLACE_CONTAINS_CHECKER)
-					|| blockTextUppercase.contains(START_FROM_NUMBER_CHECKER)) {
-					blockType = ScenarioBlockStyle::TimeAndPlace;
-				}
-				//
-				// Участника сцены
-				// 1. в верхнем регистре
-				// 2. идут сразу же после времени и места
-				//
-				else if (_lastBlockType == ScenarioBlockStyle::TimeAndPlace
-						 && _prevEmptyLines == 0) {
-					blockType = ScenarioBlockStyle::SceneCharacters;
-				}
-				//
-				// Примечание
-				// 1. всё что осталось и не имеет отступов
-				// 2. выровнено по левому краю
-				//
-				else if (blockFormat.leftMargin() == 0
-						 && blockFormat.alignment() == Qt::AlignLeft) {
-					blockType = ScenarioBlockStyle::Note;
-				}
-				//
-				// Переход
-				// 1. всё что осталось и выровнено по правому краю
-				//
-				else if (blockFormat.alignment() == Qt::AlignRight) {
-					blockType = ScenarioBlockStyle::Transition;
-				}
+			if (isCentered) {
 				//
 				// Персонаж
+				// 1. В верхнем регистре
+				//
+				if (textIsUppercase && _lastBlockType != ScenarioBlockStyle::Character) {
+					blockType = ScenarioBlockStyle::Character;
+				}
+				//
+				// Ремарка
+				// 1. начинается со скобки
+				//
+				else if (blockText.startsWith("(")) {
+					blockType = ScenarioBlockStyle::Parenthetical;
+				}
+				//
+				// Реплика
 				// 1. всё что осталось
 				//
 				else {
-					blockType = ScenarioBlockStyle::Character;
+					blockType = ScenarioBlockStyle::Dialog;
 				}
+
 			}
 			//
-			// Блоки текста не в верхнем регистре
+			// Не посередине
 			//
 			else {
-				if (blockFormat.leftMargin() > 0) {
+				//
+				// Блоки текста в верхнем регистре
+				//
+				if (textIsUppercase) {
 					//
-					// Ремарка
-					// 1. имеет отступ слева
-					// 2. начинается со скобки
+					// Время и место
+					// 1. текст в верхнем регистре
+					// 2. содержит ключевые сокращения места действия или начинается с номера сцены
 					//
-					if (blockText.startsWith("(")) {
-						blockType = ScenarioBlockStyle::Parenthetical;
+					if (blockTextUppercase.contains(PLACE_CONTAINS_CHECKER)
+						|| blockTextUppercase.contains(START_FROM_NUMBER_CHECKER)) {
+						blockType = ScenarioBlockStyle::TimeAndPlace;
 					}
 					//
-					// Реплика
-					// 1. имеет отступ слева
+					// Участника сцены
+					// 1. в верхнем регистре
+					// 2. идут сразу же после времени и места
 					//
-					else {
-						blockType = ScenarioBlockStyle::Dialog;
+					else if (_lastBlockType == ScenarioBlockStyle::TimeAndPlace
+							 && _prevEmptyLines == 0) {
+						blockType = ScenarioBlockStyle::SceneCharacters;
+					}
+					//
+					// Примечание
+					// 1. всё что осталось и не имеет отступов
+					// 2. выровнено по левому краю
+					//
+					else if (blockFormat.alignment() == Qt::AlignLeft
+							 && blockFormat.leftMargin() < LEFT_MARGIN_DELTA) {
+						blockType = ScenarioBlockStyle::Note;
+					}
+					//
+					// Переход
+					// 1. всё что осталось и выровнено по правому краю
+					//
+					else if (blockFormat.alignment() == Qt::AlignRight) {
+						blockType = ScenarioBlockStyle::Transition;
 					}
 				}
 			}

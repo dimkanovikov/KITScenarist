@@ -256,31 +256,31 @@ namespace RtfReader
 
 	void TextDocumentRtfOutput::setLeftIndent( const int twips )
 	{
-		m_paragraphFormat.setLeftMargin( pixelsFromTwips( twips ) );
+		m_paragraphFormat.setLeftMargin( mmFromTwips( twips ) );
 		m_cursor->setBlockFormat( m_paragraphFormat );
 	}
 
 	void TextDocumentRtfOutput::setRightIndent( const int twips )
 	{
-		m_paragraphFormat.setRightMargin( pixelsFromTwips( twips ) );
+		m_paragraphFormat.setRightMargin( mmFromTwips( twips ) );
 		m_cursor->setBlockFormat( m_paragraphFormat );
 	}
 
 	void TextDocumentRtfOutput::setSpaceBefore( const int twips )
 	{
-		m_paragraphFormat.setTopMargin( pixelsFromTwips( twips ) );
+		m_paragraphFormat.setTopMargin( mmFromTwips( twips ) );
 		m_cursor->setBlockFormat( m_paragraphFormat );
 	}
 
 	void TextDocumentRtfOutput::setSpaceAfter( const int twips )
 	{
-		m_paragraphFormat.setBottomMargin( pixelsFromTwips( twips ) );
+		m_paragraphFormat.setBottomMargin( mmFromTwips( twips ) );
 		m_cursor->setBlockFormat( m_paragraphFormat );
 	}
 
 	void TextDocumentRtfOutput::setFirstLineIndent( const int twips )
 	{
-		m_paragraphFormat.setTextIndent( pixelsFromTwips( twips ) );
+		m_paragraphFormat.setTextIndent( mmFromTwips( twips ) );
 		m_cursor->setBlockFormat( m_paragraphFormat );
 	}
 
@@ -336,10 +336,8 @@ namespace RtfReader
 		qDebug() << "setPageWidth: " << pageWidth << " (" << pageWidth/1440.0 << ")";
 	}
 
-	qreal TextDocumentRtfOutput::pixelsFromTwips( const int twips )
+	qreal TextDocumentRtfOutput::mmFromTwips( const int twips )
 	{
-		qreal inches = twips / 1440.0;
-		qreal pixels = inches * 96.0;
-		return pixels;
+		return twips / 56.692913386;
 	}
 }
