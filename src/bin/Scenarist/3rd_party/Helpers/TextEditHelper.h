@@ -2,9 +2,9 @@
 #define TEXTEDITHELPER_H
 
 #include <QFontMetricsF>
-#include <QString>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+#include <QString>
 #include <QTextCursor>
 #include <QTextDocument>
 
@@ -149,12 +149,33 @@ namespace TextEditHelper
 	 * Например подмена многоточий и т.п.
 	 */
 	static void beautifyDocument(QTextDocument* _document) {
-		QTextCursor cursor(_document);
-		while (!cursor.isNull() && !cursor.atEnd()) {
-			cursor = _document->find("...", cursor);
+		if (_document != 0) {
+			QTextCursor cursor(_document);
+			while (!cursor.isNull() && !cursor.atEnd()) {
+				cursor = _document->find("...", cursor);
 
-			if (!cursor.isNull()) {
-				cursor.insertText("…");
+				if (!cursor.isNull()) {
+					cursor.insertText("…");
+				}
+			}
+		}
+	}
+
+	/**
+	 * @brief Украшения документа при вводе текста
+	 *
+	 * Оптимизация, чтобы не просматривать весь документ
+	 */
+	static void beautifyDocument(QTextCursor _cursor, const QString& _enteredText) {
+		if (_enteredText == ".") {
+			//
+			// Получим значения
+			//
+			// ... 3 предшествующих символа
+			_cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 3);
+
+			if (_cursor.selectedText() == "...") {
+				_cursor.insertText("…");
 			}
 		}
 	}

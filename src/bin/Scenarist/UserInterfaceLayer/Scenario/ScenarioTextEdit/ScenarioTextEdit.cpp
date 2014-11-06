@@ -48,6 +48,8 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 	}
 
 	setHighlighterDocument(m_document);
+
+	TextEditHelper::beautifyDocument(m_document);
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
@@ -242,7 +244,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 		SpellCheckTextEdit::keyPressEvent(_event);
 
 		updateEnteredText(_event);
-		TextEditHelper::beautifyDocument(m_document);
+		TextEditHelper::beautifyDocument(textCursor(), _event->text());
 	}
 
 	//
