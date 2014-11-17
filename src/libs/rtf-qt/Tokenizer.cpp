@@ -101,6 +101,10 @@ namespace RtfReader
 
 	QString Tokenizer::readCharacter(uint _codepoint) const
 	{
+		if (_codepoint == 0) {
+			return QString();
+		}
+
 		char character = _codepoint;
 		return QTextCodec::codecForName(m_encoding.toUtf8())->toUnicode(&character).at(0);
 	}

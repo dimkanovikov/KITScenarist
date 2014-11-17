@@ -94,6 +94,11 @@ void ScenarioManager::loadCurrentProject()
 	m_textEditManager->setScenarioDocument(0);
 
 	//
+	// Очистим сценарий
+	//
+	m_scenario->clear();
+
+	//
 	// Загрузим сценарий
 	//
 	Domain::Scenario* currentScenario =
@@ -431,9 +436,8 @@ void ScenarioManager::aboutRefreshLocations()
 	while (!cursor.atEnd()) {
 		cursor.movePosition(QTextCursor::EndOfBlock);
 		if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
-			cursor.select(QTextCursor::BlockUnderCursor);
 			QString location =
-					BusinessLogic::TimeAndPlaceParser::locationName(cursor.selectedText().toUpper().trimmed());
+					BusinessLogic::TimeAndPlaceParser::locationName(cursor.block().text().toUpper().trimmed());
 			locations.insert(location);
 		}
 		cursor.movePosition(QTextCursor::NextBlock);

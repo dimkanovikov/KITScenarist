@@ -50,6 +50,36 @@ namespace {
 		}
 		return result;
 	}
+
+	/**
+	 * @brief Вычислить масштабированное значение размера шрифта
+	 */
+	static qreal scaleFontPointSizeF(const QFont& _font, qreal _scaleRange)
+	{
+		//
+		// Шрифт нельзя масштабировать просто увеличив размер начертания пропорционально
+		// коэффициенту масштабирования, т.к. в разных размерах шрифт принимает разную высоту
+		// нужно масштабировать с небольшим шагом, пока не дойдём до нужной высоты
+		//
+		QFont font(_font);
+		QFontMetricsF fontMetrics(font);
+		const qreal sourceXHeight = fontMetrics.xHeight();
+		const qreal targetXHeight = ::scale(sourceXHeight, _scaleRange);
+		while (qAbs(fontMetrics.xHeight() - targetXHeight) > 0.25) {
+			//
+			// Корректировка размера
+			//
+			qreal delta = 0.05;
+			if (fontMetrics.xHeight() > targetXHeight) {
+				delta = -0.05;
+			}
+
+			font.setPointSizeF(font.pointSizeF() + delta);
+			fontMetrics = QFontMetricsF(font);
+		}
+
+		return font.pointSizeF();
+	}
 }
 
 
@@ -182,7 +212,9 @@ bool PagesTextEdit::event(QEvent* _event)
 
 	return result;
 }
-
+#include <QtGui/private/qtextdocumentlayout_p.h>
+#include <QStyleOption>
+#include <QApplication>
 void PagesTextEdit::paintEvent(QPaintEvent* _event)
 {
 	updateInnerGeometry();
@@ -192,6 +224,95 @@ void PagesTextEdit::paintEvent(QPaintEvent* _event)
 	paintPagesView();
 
 	QTextEdit::paintEvent(_event);
+return;
+
+
+
+	QPainter p(viewport());
+	qreal zoomRange = ::zoomRange(m_zoomRange);
+	p.scale(zoomRange, zoomRange);
+
+	//*********
+
+
+	const int xOffset = horizontalScrollBar()->value();
+	const int yOffset = verticalScrollBar()->value();
+
+	QRect r = _event->rect();
+	p.translate(-xOffset, -yOffset);
+	r.translate(xOffset, yOffset);
+
+	QTextDocument *doc = document();
+	QTextDocumentLayout *layout = qobject_cast<QTextDocumentLayout *>(doc->documentLayout());
+
+	// the layout might need to expand the root frame to
+	// the viewport if NoWrap is set
+	if (layout)
+		layout->setViewport(viewport()->rect());
+
+	//*********
+
+
+
+	p.save();
+	QAbstractTextDocumentLayout::PaintContext ctx;
+
+//	ctx.selections = extraSelections();
+	ctx.palette = palette();
+	ctx.cursorPosition = textCursor().position();
+//    if (d->cursorOn && d->isEnabled) {
+//        if (d->hideCursor)
+//            ctx.cursorPosition = -1;
+//        else if (d->preeditCursor != 0)
+//            ctx.cursorPosition = - (d->preeditCursor + 2);
+//        else
+//            ctx.cursorPosition = d->cursor.position();
+//    }
+
+//    if (!d->dndFeedbackCursor.isNull())
+//        ctx.cursorPosition = d->dndFeedbackCursor.position();
+//#ifdef QT_KEYPAD_NAVIGATION
+//    if (!QApplication::keypadNavigationEnabled() || d->hasEditFocus)
+//#endif
+	if (textCursor().hasSelection()) {
+		QAbstractTextDocumentLayout::Selection selection;
+		selection.cursor = textCursor();
+//        if (d->cursorIsFocusIndicator) {
+//            QStyleOption opt;
+//            opt.palette = ctx.palette;
+//            QStyleHintReturnVariant ret;
+//            QStyle *style = QApplication::style();
+//            if (widget)
+//                style = widget->style();
+//            style->styleHint(QStyle::SH_TextControl_FocusIndicatorTextCharFormat, &opt, widget, &ret);
+//            selection.format = qvariant_cast<QTextFormat>(ret.variant).toCharFormat();
+//        } else {
+			QPalette::ColorGroup cg = hasFocus() ? QPalette::Active : QPalette::Inactive;
+			selection.format.setBackground(ctx.palette.brush(cg, QPalette::Highlight));
+			selection.format.setForeground(ctx.palette.brush(cg, QPalette::HighlightedText));
+			QStyleOption opt;
+			QStyle *style = QApplication::style();
+			if (this) {
+				opt.initFrom(this);
+				style = this->style();
+			}
+			if (style->styleHint(QStyle::SH_RichText_FullWidthSelection, &opt, this))
+				selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+//        }
+		ctx.selections.append(selection);
+	}
+
+
+
+	//*****
+
+	if (r.isValid())
+		p.setClipRect(r, Qt::IntersectClip);
+	ctx.clip = r;
+
+	doc->documentLayout()->draw(&p, ctx);
+	p.restore();
+
 }
 
 void PagesTextEdit::resizeEvent(QResizeEvent* _event)
@@ -455,12 +576,13 @@ void PagesTextEdit::privateZoomIn(qreal _range, int _startPosition, int _endPosi
 		QTextBlockFormat blockFormat = cursor.blockFormat();
 		if (blockFormat.property(ZOOM_PROPERTY).toReal() != _range) {
 
+
 			//
 			// Обновляем настройки шрифта
 			//
 			QTextCharFormat blockCharFormat = cursor.charFormat();
 			QFont blockFont = blockCharFormat.font();
-			blockFont.setPointSizeF(scale(blockFont.pointSizeF(), _range));
+			blockFont.setPointSizeF(scaleFontPointSizeF(blockFont, _range));
 			blockCharFormat.setFont(blockFont);
 			cursor.setCharFormat(blockCharFormat);
 			cursor.setBlockCharFormat(blockCharFormat);

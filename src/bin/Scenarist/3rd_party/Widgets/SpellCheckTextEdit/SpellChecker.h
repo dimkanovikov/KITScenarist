@@ -4,6 +4,7 @@
 #include <QString>
 
 class Hunspell;
+class QStringList;
 class QTextCodec;
 
 

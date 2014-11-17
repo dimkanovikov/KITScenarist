@@ -22,7 +22,7 @@ namespace {
 	/**
 	 * @brief Регулярное выражение для определения блока "Время и место" по началу с номера
 	 */
-	const QRegularExpression START_FROM_NUMBER_CHECKER("^([\\d\\S]{1,})[.](([\\d\\S]{1,})[.]|) ");
+	const QRegularExpression START_FROM_NUMBER_CHECKER("^([\\d]{1,}[\\d\\S]{0,})[.](([\\d\\S]{1,})[.]|) ");
 
 	/**
 	 * @brief Допущение для блоков, которые по идее вообще не должны иметь отступа (миллиметры)
