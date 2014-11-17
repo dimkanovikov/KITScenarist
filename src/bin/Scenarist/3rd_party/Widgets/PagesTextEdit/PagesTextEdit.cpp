@@ -212,7 +212,7 @@ bool PagesTextEdit::event(QEvent* _event)
 
 	return result;
 }
-#include <QtGui/private/qtextdocumentlayout_p.h>
+//#include <QtGui/private/qtextdocumentlayout_p.h>
 #include <QStyleOption>
 #include <QApplication>
 void PagesTextEdit::paintEvent(QPaintEvent* _event)
@@ -227,7 +227,7 @@ void PagesTextEdit::paintEvent(QPaintEvent* _event)
 return;
 
 
-
+/*
 	QPainter p(viewport());
 	qreal zoomRange = ::zoomRange(m_zoomRange);
 	p.scale(zoomRange, zoomRange);
@@ -312,7 +312,7 @@ return;
 
 	doc->documentLayout()->draw(&p, ctx);
 	p.restore();
-
+*/
 }
 
 void PagesTextEdit::resizeEvent(QResizeEvent* _event)

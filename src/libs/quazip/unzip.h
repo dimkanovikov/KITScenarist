@@ -53,7 +53,12 @@ extern "C" {
 #endif
 
 #ifndef _ZLIB_H
+#include <qsystemdetection.h>
+#ifndef Q_OS_MAC
 #include <QtZlib/zlib.h>
+#else
+#include <zlib.h>
+#endif
 #endif
 
 #ifndef  _ZLIBIOAPI_H

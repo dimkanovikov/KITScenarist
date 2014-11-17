@@ -44,7 +44,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <qsystemdetection.h>
+#ifndef Q_OS_MAC
 #include <QtZlib/zlib.h>
+#else
+#include <zlib.h>
+#endif
 
 #if defined(USE_FILE32API)
 #define fopen64 fopen

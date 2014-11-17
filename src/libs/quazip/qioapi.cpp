@@ -12,7 +12,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <qsystemdetection.h>
+#ifndef Q_OS_MAC
 #include <QtZlib/zlib.h>
+#else
+#include <zlib.h>
+#endif
+
 #include "ioapi.h"
 #include "quazip_global.h"
 #include <QIODevice>
