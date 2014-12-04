@@ -34,7 +34,7 @@ namespace {
 	 *		  с указанием предыдущего типа и количества предшествующих пустых строк
 	 */
 	static ScenarioBlockStyle::Type typeForTextCursor(const QTextCursor& _cursor,
-		ScenarioBlockStyle::Type _lastBlockType, int _prevEmptyLines) {
+		ScenarioBlockStyle::Type _lastBlockType, int _prevEmptyLines, int _minLeftMargin) {
 		//
 		// Определим текст блока
 		//
@@ -57,7 +57,7 @@ namespace {
 				charFormat.fontCapitalization() == QFont::AllUppercase
 				|| blockText == blockText.toUpper();
 		// ... блоки находящиеся в центре
-		bool isCentered = blockFormat.leftMargin() > LEFT_MARGIN_DELTA;
+		bool isCentered = blockFormat.leftMargin() > LEFT_MARGIN_DELTA + _minLeftMargin;
 
 		//
 		// Собственно определение типа
@@ -122,7 +122,7 @@ namespace {
 					// 2. выровнено по левому краю
 					//
 					else if (blockFormat.alignment() == Qt::AlignLeft
-							 && blockFormat.leftMargin() < LEFT_MARGIN_DELTA) {
+							 && !isCentered) {
 						blockType = ScenarioBlockStyle::Note;
 					}
 					//
@@ -158,6 +158,25 @@ QString RtfImporter::importScenario(const ImportParameters& _importParameters) c
 	reader.close();
 
 	//
+	// Найти минимальный отступ слева для всех блоков
+	// ЗАЧЕМ: во многих программах (Final Draft, Screeviner) сделано так, что поля
+	//		  задаются за счёт оступов. Получается что и заглавие сцены и описание действия
+	//		  имеют отступы. Так вот это и будет минимальным отступом, который не будем считать
+	//
+	int minLeftMargin = 1000;
+	{
+		QTextCursor cursor(&rtfDocument);
+		while (!cursor.atEnd()) {
+			if (minLeftMargin > cursor.blockFormat().leftMargin()) {
+				minLeftMargin = cursor.blockFormat().leftMargin();
+			}
+
+			cursor.movePosition(QTextCursor::NextBlock);
+			cursor.movePosition(QTextCursor::EndOfBlock);
+		}
+	}
+
+	//
 	// Преобразовать его в xml-строку
 	//
 	QString scenarioXml;
@@ -184,7 +203,8 @@ QString RtfImporter::importScenario(const ImportParameters& _importParameters) c
 			//
 			// ... определяем тип
 			//
-			const ScenarioBlockStyle::Type blockType = ::typeForTextCursor(cursor, lastBlockType, emptyLines);
+			const ScenarioBlockStyle::Type blockType =
+					::typeForTextCursor(cursor, lastBlockType, emptyLines, minLeftMargin);
 			const QString blockTypeName = ScenarioBlockStyle::typeName(blockType);
 			QString blockText = cursor.block().text();
 
