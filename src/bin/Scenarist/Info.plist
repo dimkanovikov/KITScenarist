@@ -14,6 +14,8 @@
 	<string>Created by Qt/QMake</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.4.2</string>
 	<key>CFBundleExecutable</key>
 	<string>Scenarist</string>
 	<key>CFBundleIdentifier</key>
