@@ -50,36 +50,6 @@ namespace {
 		}
 		return result;
 	}
-
-	/**
-	 * @brief Вычислить масштабированное значение размера шрифта
-	 */
-	static qreal scaleFontPointSizeF(const QFont& _font, qreal _scaleRange)
-	{
-		//
-		// Шрифт нельзя масштабировать просто увеличив размер начертания пропорционально
-		// коэффициенту масштабирования, т.к. в разных размерах шрифт принимает разную высоту
-		// нужно масштабировать с небольшим шагом, пока не дойдём до нужной высоты
-		//
-		QFont font(_font);
-		QFontMetricsF fontMetrics(font);
-		const qreal sourceXHeight = fontMetrics.xHeight();
-		const qreal targetXHeight = ::scale(sourceXHeight, _scaleRange);
-		while (qAbs(fontMetrics.xHeight() - targetXHeight) > 0.25) {
-			//
-			// Корректировка размера
-			//
-			qreal delta = 0.05;
-			if (fontMetrics.xHeight() > targetXHeight) {
-				delta = -0.05;
-			}
-
-			font.setPointSizeF(font.pointSizeF() + delta);
-			fontMetrics = QFontMetricsF(font);
-		}
-
-		return font.pointSizeF();
-	}
 }
 
 
@@ -582,7 +552,7 @@ void PagesTextEdit::privateZoomIn(qreal _range, int _startPosition, int _endPosi
 			//
 			QTextCharFormat blockCharFormat = cursor.charFormat();
 			QFont blockFont = blockCharFormat.font();
-			blockFont.setPointSizeF(scaleFontPointSizeF(blockFont, _range));
+			blockFont.setPointSizeF(scale(blockFont.pointSizeF(), _range));
 			blockCharFormat.setFont(blockFont);
 			cursor.setCharFormat(blockCharFormat);
 			cursor.setBlockCharFormat(blockCharFormat);
