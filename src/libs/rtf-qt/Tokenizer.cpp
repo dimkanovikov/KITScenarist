@@ -106,7 +106,7 @@ namespace RtfReader
 		}
 
 		char character = _codepoint;
-		return QTextCodec::codecForName(m_encoding.toUtf8())->toUnicode(&character).at(0);
+		return QTextCodec::codecForName(encoding())->toUnicode(&character).at(0);
 	}
 
 	Token Tokenizer::fetchToken() {
@@ -142,10 +142,21 @@ namespace RtfReader
 		return token;
 	}
 
+	QByteArray Tokenizer::encoding() const
+	{
+		return m_encoding.toUtf8();
+	}
+
 	void Tokenizer::setEncoding(const QString& _name, int _value)
 	{
+		const int MACCYRILLIC = 10007;
+
 		if (_name == "ansicpg") {
-			m_encoding = QString("Windows-%1").arg(_value);
+			if (_value == MACCYRILLIC) {
+				m_encoding = "cyrillic";
+			} else {
+				m_encoding = QString("Windows-%1").arg(_value);
+			}
 		}
 	}
 }

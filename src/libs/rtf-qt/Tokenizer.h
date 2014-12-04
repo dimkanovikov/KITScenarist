@@ -30,13 +30,18 @@ namespace RtfReader
 	class Tokenizer {
 	public:
 		explicit Tokenizer(QFile* _inputDevice)
-			: m_inputDevice(_inputDevice), m_encoding("utf-8")
+			: m_inputDevice(_inputDevice), m_encoding("UTF-8")
 		{}
 
 		/**
 		 * @brief Считать блок документа
 		 */
 		Token fetchToken();
+
+		/**
+		 * @brief Получить кодировку считываемого документа
+		 */
+		QByteArray encoding() const;
 
 		/**
 		 * @brief Установить кодировку считываемого документа
