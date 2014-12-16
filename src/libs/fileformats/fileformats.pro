@@ -6,6 +6,10 @@ TEMPLATE = lib
 #
 CONFIG += qt thread warn_on
 
+mac {
+     LIBS += -lz
+}
+
 HEADERS += \
     docx_reader.h \
     docx_writer.h \
