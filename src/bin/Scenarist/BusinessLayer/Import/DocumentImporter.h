@@ -7,15 +7,15 @@
 namespace BusinessLogic
 {
 	/**
-	 * @brief Импортер RTF-документа
+	 * @brief Импортер документов
 	 */
-	class RtfImporter : public AbstractImporter
+	class DocumentImporter : public AbstractImporter
 	{
 	public:
-		RtfImporter();
+		DocumentImporter();
 
 		/**
-		 * @brief Импорт сценария из rtf-документа
+		 * @brief Импорт сценария из документа
 		 */
 		QString importScenario(const ImportParameters &_importParameters) const;
 	};

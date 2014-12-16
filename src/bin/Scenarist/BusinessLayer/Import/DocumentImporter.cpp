@@ -1,4 +1,4 @@
-#include "RtfImporter.h"
+#include "DocumentImporter.h"
 
 #include <format_manager.h>
 #include <format_reader.h>
@@ -141,20 +141,20 @@ namespace {
 }
 
 
-RtfImporter::RtfImporter()
+DocumentImporter::DocumentImporter()
 {
 }
 
-QString RtfImporter::importScenario(const ImportParameters& _importParameters) const
+QString DocumentImporter::importScenario(const ImportParameters& _importParameters) const
 {
 	//
 	// Преобразовать заданный документ в QTextDocument
 	//
-	QTextDocument rtfDocument;
-	QFile rtfFile(_importParameters.filePath);
-	rtfFile.open(QIODevice::ReadOnly);
-	FormatReader* reader = FormatManager::createReader(&rtfFile);
-	reader->read(&rtfFile, &rtfDocument);
+	QTextDocument documentForImport;
+	QFile documentFile(_importParameters.filePath);
+	documentFile.open(QIODevice::ReadOnly);
+	FormatReader* reader = FormatManager::createReader(&documentFile);
+	reader->read(&documentFile, &documentForImport);
 
 	//
 	// Найти минимальный отступ слева для всех блоков
@@ -164,7 +164,7 @@ QString RtfImporter::importScenario(const ImportParameters& _importParameters) c
 	//
 	int minLeftMargin = 1000;
 	{
-		QTextCursor cursor(&rtfDocument);
+		QTextCursor cursor(&documentForImport);
 		while (!cursor.atEnd()) {
 			if (minLeftMargin > cursor.blockFormat().leftMargin()) {
 				minLeftMargin = cursor.blockFormat().leftMargin();
@@ -179,7 +179,7 @@ QString RtfImporter::importScenario(const ImportParameters& _importParameters) c
 	// Преобразовать его в xml-строку
 	//
 	QString scenarioXml;
-	QTextCursor cursor(&rtfDocument);
+	QTextCursor cursor(&documentForImport);
 
 	QXmlStreamWriter writer(&scenarioXml);
 	writer.writeStartDocument();

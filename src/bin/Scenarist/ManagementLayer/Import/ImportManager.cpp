@@ -2,7 +2,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
-#include <BusinessLayer/Import/RtfImporter.h>
+#include <BusinessLayer/Import/DocumentImporter.h>
 
 #include <Domain/Scenario.h>
 
@@ -36,7 +36,7 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 		//
 		// Получим xml-представление импортируемого сценария
 		//
-		QString importScenarioXml = BusinessLogic::RtfImporter().importScenario(importParameters);
+		QString importScenarioXml = BusinessLogic::DocumentImporter().importScenario(importParameters);
 
 		//
 		// Загрузим импортируемый текст в сценарий

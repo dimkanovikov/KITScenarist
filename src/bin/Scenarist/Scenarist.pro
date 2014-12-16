@@ -180,10 +180,10 @@ SOURCES += main.cpp \
     BusinessLayer/Export/AbstractExporter.cpp \
     BusinessLayer/Counters/CountersFacade.cpp \
     Application.cpp \
-    BusinessLayer/Import/RtfImporter.cpp \
     ManagementLayer/Import/ImportManager.cpp \
     UserInterfaceLayer/Import/ImportDialog.cpp \
-    3rd_party/Widgets/ProgressWidget/ProgressWidget.cpp
+    3rd_party/Widgets/ProgressWidget/ProgressWidget.cpp \
+    BusinessLayer/Import/DocumentImporter.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -328,10 +328,10 @@ HEADERS += \
     BusinessLayer/Counters/CountersFacade.h \
     Application.h \
     BusinessLayer/Import/AbstractImporter.h \
-    BusinessLayer/Import/RtfImporter.h \
     ManagementLayer/Import/ImportManager.h \
     UserInterfaceLayer/Import/ImportDialog.h \
-    3rd_party/Widgets/ProgressWidget/ProgressWidget.h
+    3rd_party/Widgets/ProgressWidget/ProgressWidget.h \
+    BusinessLayer/Import/DocumentImporter.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
