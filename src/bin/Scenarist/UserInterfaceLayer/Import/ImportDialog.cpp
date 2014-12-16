@@ -1,6 +1,8 @@
 #include "ImportDialog.h"
 #include "ui_ImportDialog.h"
 
+#include <format_manager.h>
+
 #include <BusinessLayer/Import/AbstractImporter.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
@@ -71,10 +73,9 @@ BusinessLogic::ImportParameters ImportDialog::importParameters() const
 
 void ImportDialog::aboutChooseFile()
 {
-	const QString format = "rtf";
 	QString filePath =
 			QFileDialog::getOpenFileName(this, tr("Choose file to import"),
-				::importFolderPath(), tr("%1 files (*%2)").arg(format.toUpper()).arg(format));
+				::importFolderPath(), FormatManager::filters().join(";;"));
 
 	if (!filePath.isEmpty()) {
 		//

@@ -1,9 +1,9 @@
 #include "RtfImporter.h"
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <format_manager.h>
+#include <format_reader.h>
 
-#include <rtfreader.h>
-#include <TextDocumentRtfOutput.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QRegularExpression>
 #include <QTextBlock>
@@ -151,11 +151,10 @@ QString RtfImporter::importScenario(const ImportParameters& _importParameters) c
 	// Преобразовать заданный документ в QTextDocument
 	//
 	QTextDocument rtfDocument;
-	RtfReader::TextDocumentRtfOutput output(&rtfDocument);
-	RtfReader::Reader reader;
-	reader.open(_importParameters.filePath);
-	reader.parseTo(&output);
-	reader.close();
+	QFile rtfFile(_importParameters.filePath);
+	rtfFile.open(QIODevice::ReadOnly);
+	FormatReader* reader = FormatManager::createReader(&rtfFile);
+	reader->read(&rtfFile, &rtfDocument);
 
 	//
 	// Найти минимальный отступ слева для всех блоков

@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS = hunspell quazip rtf-qt
+SUBDIRS = hunspell quazip rtf-qt fileformats

@@ -47,6 +47,17 @@ INCLUDEPATH += $$PWD/../../libs/rtf-qt
 DEPENDPATH += $$PWD/../../libs/rtf-qt
 #
 
+#
+# Подключаем библиотеку fileformats
+#
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../libs/fileformats/release/ -lfileformats
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libs/fileformats/debug/ -lfileformats
+else:unix: LIBS += -L$$OUT_PWD/../../libs/fileformats/ -lfileformats
+
+INCLUDEPATH += $$PWD/../../libs/fileformats
+DEPENDPATH += $$PWD/../../libs/fileformats
+#
+
 INCLUDEPATH += $$PWD
 
 TRANSLATIONS += \
