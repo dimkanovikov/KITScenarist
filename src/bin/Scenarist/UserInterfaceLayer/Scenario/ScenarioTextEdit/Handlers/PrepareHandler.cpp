@@ -14,7 +14,8 @@ using UserInterface::ScenarioTextEdit;
 PrepareHandler::PrepareHandler(ScenarioTextEdit* _editor) :
 	AbstractKeyHandler(_editor),
 	m_needSendEventToBaseClass(true),
-	m_needEnsureCursorVisible(true)
+	m_needEnsureCursorVisible(true),
+	m_needAcceptEvent(true)
 {
 }
 
@@ -28,10 +29,16 @@ bool PrepareHandler::needEnsureCursorVisible() const
 	return m_needEnsureCursorVisible;
 }
 
+bool PrepareHandler::needAcceptEvent() const
+{
+	return m_needAcceptEvent;
+}
+
 void PrepareHandler::prepareForHandle()
 {
 	m_needSendEventToBaseClass = true;
 	m_needEnsureCursorVisible = true;
+	m_needAcceptEvent = true;
 }
 
 void PrepareHandler::handleShortcut(QKeyEvent* _event)
@@ -174,5 +181,12 @@ void PrepareHandler::handleOther(QKeyEvent* _event)
 	//
 	if (_event->key() == Qt::Key_Shift) {
 		m_needEnsureCursorVisible = false;
+	}
+
+	//
+	// Если нажата F5, то отправляем событие в родительский виджет
+	//
+	if (_event->key() == Qt::Key_F5) {
+		m_needAcceptEvent = false;
 	}
 }

@@ -63,6 +63,11 @@ namespace KeyProcessingLayer
 		 */
 		bool needEnsureCursorVisible() const;
 
+		/**
+		 * @brief Нужно ли пометить событие, как выполненное или отправить вверх по иерархии окон
+		 */
+		bool needAcceptEvent() const;
+
 	private:
 		KeyPressHandlerFacade(UserInterface::ScenarioTextEdit* _editor);
 

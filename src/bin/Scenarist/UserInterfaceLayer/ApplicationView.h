@@ -21,7 +21,20 @@ namespace UserInterface
 		 */
 		void wantToClose();
 
+		/**
+		 * @brief Переход в полноэкранный режим
+		 */
+		void wantFullscreen();
+
 	protected:
+		/**
+		 * @brief Переопределяется для входа выхода из полноэкранного режима
+		 */
+		void keyPressEvent(QKeyEvent* _event);
+
+		/**
+		 * @brief Переопределяется для отлавливания события закрытия приложения
+		 */
 		void closeEvent(QCloseEvent* _event);
 	};
 }

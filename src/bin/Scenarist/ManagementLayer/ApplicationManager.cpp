@@ -413,6 +413,19 @@ void ApplicationManager::aboutProjectChanged()
 	::updateWindowModified(m_view, true);
 }
 
+void ApplicationManager::aboutShowFullscreen()
+{
+	if (m_view->isFullScreen()) {
+		m_view->showNormal();
+		m_menu->show();
+		m_tabs->show();
+	} else {
+		m_view->showFullScreen();
+		m_menu->hide();
+		m_tabs->hide();
+	}
+}
+
 void ApplicationManager::loadViewState()
 {
 	m_view->restoreGeometry(
@@ -641,6 +654,7 @@ QMenu* ApplicationManager::createMenu()
 void ApplicationManager::initConnections()
 {
 	connect(m_view, SIGNAL(wantToClose()), this, SLOT(aboutExit()));
+	connect(m_view, SIGNAL(wantFullscreen()), this, SLOT(aboutShowFullscreen()));
 
 	connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
 	connect(m_tabs, SIGNAL(currentChanged(int)), m_tabsWidgets, SLOT(setCurrentIndex(int)));

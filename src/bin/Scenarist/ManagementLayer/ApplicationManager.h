@@ -99,6 +99,11 @@ namespace ManagementLayer
 		 */
 		void aboutProjectChanged();
 
+		/**
+		 * @brief Включить/выключить полноэкранный режим
+		 */
+		void aboutShowFullscreen();
+
 	private:
 		/**
 		 * @brief Загрузить состояние окна

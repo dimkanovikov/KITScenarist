@@ -25,6 +25,11 @@ namespace KeyProcessingLayer
 		bool needEnsureCursorVisible() const;
 
 		/**
+		 * @brief Нужно ли пометить событие, как выполненное или отправить вверх по иерархии окон
+		 */
+		bool needAcceptEvent() const;
+
+		/**
 		 * @brief Изменилась ли структура сценария
 		 */
 		bool structureChanged() const;
@@ -57,6 +62,7 @@ namespace KeyProcessingLayer
 	private:
 		bool m_needSendEventToBaseClass;
 		bool m_needEnsureCursorVisible;
+		bool m_needAcceptEvent;
 	};
 }
 
