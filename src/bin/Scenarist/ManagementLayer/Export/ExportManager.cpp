@@ -2,8 +2,9 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
-#include <BusinessLayer/Export/PdfExporter.h>
+#include <BusinessLayer/Export/DocxExporter.h>
 #include <BusinessLayer/Export/RtfExporter.h>
+#include <BusinessLayer/Export/PdfExporter.h>
 
 #include <DataLayer/Database/Database.h>
 
@@ -66,7 +67,9 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 			// Определим экспортирующего
 			//
 			BusinessLogic::AbstractExporter* exporter = 0;
-			if (fileInfo.suffix() == "rtf") {
+			if (fileInfo.suffix() == "docx") {
+				exporter = new BusinessLogic::DocxExporter;
+			} else if (fileInfo.suffix() == "rtf") {
 				exporter = new BusinessLogic::RtfExporter;
 			} else if (fileInfo.suffix() == "pdf") {
 				exporter = new BusinessLogic::PdfExporter;

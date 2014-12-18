@@ -183,7 +183,8 @@ SOURCES += main.cpp \
     ManagementLayer/Import/ImportManager.cpp \
     UserInterfaceLayer/Import/ImportDialog.cpp \
     3rd_party/Widgets/ProgressWidget/ProgressWidget.cpp \
-    BusinessLayer/Import/DocumentImporter.cpp
+    BusinessLayer/Import/DocumentImporter.cpp \
+    BusinessLayer/Export/DocxExporter.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -331,7 +332,8 @@ HEADERS += \
     ManagementLayer/Import/ImportManager.h \
     UserInterfaceLayer/Import/ImportDialog.h \
     3rd_party/Widgets/ProgressWidget/ProgressWidget.h \
-    BusinessLayer/Import/DocumentImporter.h
+    BusinessLayer/Import/DocumentImporter.h \
+    BusinessLayer/Export/DocxExporter.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

@@ -75,12 +75,22 @@
    <item row="1" column="2">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
+      <widget class="QRadioButton" name="docx">
+       <property name="text">
+        <string>DOCX</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QRadioButton" name="rtf">
        <property name="text">
         <string>RTF</string>
        </property>
        <property name="checked">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -389,6 +399,9 @@
      <property name="text">
       <string>Format:</string>
      </property>
+     <property name="buddy">
+      <cstring>docx</cstring>
+     </property>
     </widget>
    </item>
    <item row="4" column="0">
@@ -409,6 +422,7 @@
  <tabstops>
   <tabstop>file</tabstop>
   <tabstop>browseFile</tabstop>
+  <tabstop>docx</tabstop>
   <tabstop>rtf</tabstop>
   <tabstop>pdf</tabstop>
   <tabstop>showAdditional</tabstop>

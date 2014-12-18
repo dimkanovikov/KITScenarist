@@ -16,10 +16,8 @@ HEADERS += \
     format_manager.h \
     format_reader.h \
     odt_reader.h \
-    odt_writer.h \
     rtf_reader.h \
     rtf_tokenizer.h \
-    rtf_writer.h \
     txt_reader.h \
     qtzip/qtzipreader.h \
     qtzip/QtZipReader \
@@ -31,9 +29,7 @@ SOURCES += \
     docx_writer.cpp \
     format_manager.cpp \
     odt_reader.cpp \
-    odt_writer.cpp \
     rtf_reader.cpp \
     rtf_tokenizer.cpp \
-    rtf_writer.cpp \
     txt_reader.cpp \
     qtzip/qtzip.cpp

@@ -65,6 +65,14 @@ ExportDialog::~ExportDialog()
 void ExportDialog::setExportFilePath(const QString& _filePath)
 {
 	ui->file->setText(_filePath);
+	QFileInfo fileInfo(_filePath);
+	if (fileInfo.suffix() == "docx") {
+		ui->docx->setChecked(true);
+	} else if (fileInfo.suffix() == "rtf") {
+		ui->rtf->setChecked(true);
+	} else {
+		ui->pdf->setChecked(true);
+	}
 }
 
 void ExportDialog::setExportFileName(const QString& _fileName)
@@ -188,7 +196,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 
 void ExportDialog::aboutChooseFile()
 {
-	const QString format = ui->rtf->isChecked() ? "rtf" : "pdf";
+	const QString format = ui->docx->isChecked() ? "docx" : (ui->rtf->isChecked() ? "rtf" : "pdf");
 	QString filePath =
 			QFileDialog::getSaveFileName(this, tr("Choose file to export scenario"),
 				(!ui->file->text().isEmpty() ? ui->file->text() : ::exportFolderPath()),
@@ -223,7 +231,7 @@ void ExportDialog::initView()
 
 void ExportDialog::aboutFormatChanged()
 {
-	const QString format = ui->rtf->isChecked() ? "rtf" : "pdf";
+	const QString format = ui->docx->isChecked() ? "docx" : (ui->rtf->isChecked() ? "rtf" : "pdf");
 	QString filePath = ui->file->text();
 
 	//
@@ -250,6 +258,7 @@ void ExportDialog::initConnections()
 	connect(ui->showAdditional, SIGNAL(toggled(bool)), ui->additionalSettings, SLOT(setVisible(bool)));
 
 	connect(ui->styles, SIGNAL(currentTextChanged(QString)), this, SIGNAL(currentStyleChanged(QString)));
+	connect(ui->docx, SIGNAL(toggled(bool)), this, SLOT(aboutFormatChanged()));
 	connect(ui->rtf, SIGNAL(toggled(bool)), this, SLOT(aboutFormatChanged()));
 	connect(ui->pdf, SIGNAL(toggled(bool)), this, SLOT(aboutFormatChanged()));
 	connect(ui->browseFile, SIGNAL(clicked()), this, SLOT(aboutChooseFile()));
