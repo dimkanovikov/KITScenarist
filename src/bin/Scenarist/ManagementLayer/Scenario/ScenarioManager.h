@@ -8,6 +8,7 @@ class QSplitter;
 class QComboBox;
 class QLabel;
 class TabBar;
+class QToolButton;
 class QStackedWidget;
 
 namespace BusinessLogic {
@@ -131,6 +132,11 @@ namespace ManagementLayer
 		 */
 		void scenarioChanged();
 
+		/**
+		 * @brief Перейти в полноэкранный режим
+		 */
+		void showFullscreen();
+
 	private slots:
 		/**
 		 * @brief Обновить хронометраж
@@ -219,6 +225,11 @@ namespace ManagementLayer
 		 * @brief Вкладки редакторов
 		 */
 		TabBar* m_viewEditorsTabs;
+
+		/**
+		 * @brief Кнопка перехода в полноэкранный режим
+		 */
+		QToolButton* m_showFullscreen;
 
 		/**
 		 * @brief Панели инструментов редакторов

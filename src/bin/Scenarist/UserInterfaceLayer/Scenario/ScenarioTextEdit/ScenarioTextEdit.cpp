@@ -255,9 +255,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Событие дошло по назначению
 	//
-	if (handler->needAcceptEvent()) {
-		_event->accept();
-	}
+	_event->accept();
 
 	//
 	// Завершим блок операций

@@ -31,6 +31,7 @@
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QTimer>
+#include <QToolButton>
 #include <QSet>
 #include <QStackedWidget>
 #include <QWidget>
@@ -41,6 +42,22 @@ using ManagementLayer::ScenarioDataEditManager;
 using ManagementLayer::ScenarioTextEditManager;
 using BusinessLogic::ScenarioDocument;
 using BusinessLogic::ScenarioBlockStyle;
+
+namespace {
+	/**
+	 * @brief Сформировать платформозависимый шорткат
+	 */
+	static QString makeShortcut(const QString& _shortcut) {
+		return QKeySequence(_shortcut).toString(QKeySequence::NativeText);
+	}
+
+	/**
+	 * @brief Сформиовать платформозависимую подсказку
+	 */
+	static QString makeToolTip(const QString& _text, const QString& _shortcut) {
+		return QString("%1 (%2)").arg(_text).arg(makeShortcut(_shortcut));
+	}
+}
 
 
 ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
@@ -591,6 +608,11 @@ void ScenarioManager::initView()
 	m_viewEditors->addWidget(m_textEditManager->view());
 	m_viewEditors->addWidget(m_dataEditManager->view());
 
+	m_showFullscreen = new QToolButton(m_view);
+	m_showFullscreen->setIcon(QIcon(":/Graphics/Icons/Editing/fullscreen.png"));
+	m_showFullscreen->setToolTip(::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
+	m_showFullscreen->setShortcut(QKeySequence("F5"));
+
 	QWidget* rightWidget = new QWidget(m_view);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
@@ -598,6 +620,7 @@ void ScenarioManager::initView()
 	topLayout->setSpacing(0);
 	topLayout->addWidget(m_viewEditorsToolbars);
 	topLayout->addWidget(m_viewEditorsTabs);
+	topLayout->addWidget(m_showFullscreen);
 	QVBoxLayout* rightLayout = new QVBoxLayout(rightWidget);
 	rightLayout->setContentsMargins(QMargins());
 	rightLayout->setSpacing(0);
@@ -627,6 +650,8 @@ void ScenarioManager::initConnections()
 	connect(m_viewEditorsTabs, SIGNAL(currentChanged(int)), m_viewEditorsToolbars, SLOT(setCurrentIndex(int)));
 	connect(m_viewEditorsTabs, SIGNAL(currentChanged(int)), m_viewEditors, SLOT(setCurrentIndex(int)));
 
+	connect(m_showFullscreen, SIGNAL(clicked()), this, SIGNAL(showFullscreen()));
+
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,QString,int)), this, SLOT(aboutAddItem(QModelIndex,QString,int)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
 	connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
@@ -641,7 +666,6 @@ void ScenarioManager::initConnections()
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSynopsis(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
-
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCounters()));
 
 	//
@@ -656,4 +680,8 @@ void ScenarioManager::initConnections()
 void ScenarioManager::initStyleSheet()
 {
 	m_viewEditorsTabs->setProperty("inTopPanel", true);
+
+	m_showFullscreen->setProperty("inTopPanel", true);
+	m_showFullscreen->setProperty("topPanelTopBordered", true);
+	m_showFullscreen->setProperty("topPanelRightBordered", true);
 }

@@ -420,9 +420,10 @@ void ApplicationManager::aboutShowFullscreen()
 		m_menu->show();
 		m_tabs->show();
 	} else {
-		m_view->showFullScreen();
+		m_tabsWidgets->setCurrentWidget(m_scenarioManager->view());
 		m_menu->hide();
 		m_tabs->hide();
+		m_view->showFullScreen();
 	}
 }
 
@@ -654,7 +655,6 @@ QMenu* ApplicationManager::createMenu()
 void ApplicationManager::initConnections()
 {
 	connect(m_view, SIGNAL(wantToClose()), this, SLOT(aboutExit()));
-	connect(m_view, SIGNAL(wantFullscreen()), this, SLOT(aboutShowFullscreen()));
 
 	connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
 	connect(m_tabs, SIGNAL(currentChanged(int)), m_tabsWidgets, SLOT(setCurrentIndex(int)));
@@ -663,8 +663,7 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QString)), this, SLOT(aboutLoad(QString)));
 
-	connect(m_exportManager, SIGNAL(scenarioNameChanged(QString)),
-			m_scenarioManager, SLOT(aboutScenarioNameChanged(QString)));
+	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
 
 	connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
 			m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
@@ -686,6 +685,9 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(countersSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutCountersSettingsUpdated()));
+
+	connect(m_exportManager, SIGNAL(scenarioNameChanged(QString)),
+			m_scenarioManager, SLOT(aboutScenarioNameChanged(QString)));
 
 	connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_charactersManager, SIGNAL(characterChanged()), this, SLOT(aboutProjectChanged()));

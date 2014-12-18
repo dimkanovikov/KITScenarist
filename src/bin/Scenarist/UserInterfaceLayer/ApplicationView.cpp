@@ -13,23 +13,6 @@ ApplicationView::ApplicationView(QWidget *_parent) :
 	setWindowTitle(tr("Scenarist"));
 }
 
-void ApplicationView::keyPressEvent(QKeyEvent* _event)
-{
-	//
-	// Для клавиши F5 вызываем отображение в полноэкранном режиме
-	//
-	if (_event->key() == Qt::Key_F5) {
-		_event->ignore();
-		emit wantFullscreen();
-	}
-	//
-	// Остальные клавиши обрабатываем в штатном режиме
-	//
-	else {
-		QWidget::keyPressEvent(_event);
-	}
-}
-
 void ApplicationView::closeEvent(QCloseEvent* _event)
 {
 	//
