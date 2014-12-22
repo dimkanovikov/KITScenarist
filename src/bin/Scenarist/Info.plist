@@ -19,7 +19,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Scenarist</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.dimkanovikovlabs.Scenarist</string>
+	<string>com.dimkanovikov.Scenarist</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
