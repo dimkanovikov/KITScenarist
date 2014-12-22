@@ -86,9 +86,9 @@ Section "App files section" SecFiles
   File "${pkgdir}\sqldrivers\qsqlite.dll"
 
   SetOutPath "$INSTDIR"
-  File "${pkgdir}\icudt52.dll"
-  File "${pkgdir}\icuin52.dll"
-  File "${pkgdir}\icuuc52.dll"
+  File "${pkgdir}\icudt53.dll"
+  File "${pkgdir}\icuin53.dll"
+  File "${pkgdir}\icuuc53.dll"
   File "${pkgdir}\libgcc_s_dw2-1.dll"
   File "${pkgdir}\libstdc++-6.dll"
   File "${pkgdir}\libwinpthread-1.dll"
