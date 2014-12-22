@@ -73,67 +73,72 @@
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="26"/>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="262"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="272"/>
         <source>Additional:</source>
         <translation>Дополнительно:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="129"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="80"/>
+        <source>DOCX</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="139"/>
         <source>Common</source>
         <translation>Общее</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="144"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="154"/>
         <source>Style:</source>
         <translation>Стиль:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="231"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="241"/>
         <source>Title List</source>
         <translation>Титульная страница</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="237"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="247"/>
         <source>Print</source>
         <translation>Печатать</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="249"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="259"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="275"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="285"/>
         <source>Genre:</source>
         <translation>Жанр:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="288"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="298"/>
         <source>Author:</source>
         <translation>Автор:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="301"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="311"/>
         <source>Contacts:</source>
         <translation>Контакты:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="314"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="324"/>
         <source>Year:</source>
         <translation>Год:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="390"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="400"/>
         <source>Format:</source>
         <translation>Формат:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="80"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="90"/>
         <source>RTF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="90"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="100"/>
         <source>PDF</source>
         <translation></translation>
     </message>
@@ -142,17 +147,17 @@
         <translation type="vanished">Титульная страница:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="167"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="177"/>
         <source>Page Numbering:</source>
         <translation>Нумерация страниц:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="190"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="200"/>
         <source>Scenes Numbering:</source>
         <translation>Нумерация сцен:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="213"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="223"/>
         <source>Scenes Prefix:</source>
         <translation>Приставка сцен:</translation>
     </message>
@@ -176,12 +181,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="362"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="372"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="372"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="382"/>
         <source>Export</source>
         <translation>Экспортировать</translation>
     </message>
@@ -326,82 +331,82 @@
         <translation> - изменён</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="457"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="471"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="458"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="472"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="808"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="824"/>
         <source>%1[*] - Scenarist</source>
         <translation>%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="552"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="566"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="559"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="573"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="560"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="574"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="561"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="575"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="562"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="576"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="563"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="577"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="607"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="621"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="608"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="622"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="609"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="623"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="611"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="625"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="617"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="631"/>
         <source>Import...</source>
         <translation>Импорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="620"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="634"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="623"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="637"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -494,55 +499,60 @@
 <context>
     <name>ManagementLayer::ScenarioManager</name>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="327"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="384"/>
         <source>Characters to delete</source>
         <translation>Будут удалены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="333"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="390"/>
         <source>Characters to save</source>
         <translation>Будут сохранены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="335"/>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="435"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="392"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="491"/>
         <source>Apply refreshing</source>
         <translation>Применить результаты поиска</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="426"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="482"/>
         <source>Locations to delete</source>
         <translation>Будут удалены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="432"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="488"/>
         <source>Locations to save</source>
         <translation>Будут сохранены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="467"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="523"/>
         <source>Chron.</source>
         <translation>Хрон.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="540"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="596"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="541"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="597"/>
         <source>Edit Scenario Text</source>
         <translation>Редактирование текста сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="543"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="599"/>
         <source>Data</source>
         <translation>Данные</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="544"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="600"/>
         <source>Edit Scenario Data</source>
         <translation>Редактирование информации о сценарии</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="613"/>
+        <source>On/off Fullscreen Mode</source>
+        <translation>Включить/выключить полноэкранный режим</translation>
     </message>
     <message>
         <source>Synopsis</source>
@@ -1333,12 +1343,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::ExportDialog</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="193"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="201"/>
         <source>Choose file to export scenario</source>
         <translation>Выберите файл для экспорта сценария</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="195"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="203"/>
         <source>%1 files (*%2)</source>
         <translation>%1 файлы (*%2)</translation>
     </message>
@@ -1346,14 +1356,13 @@ Paragraph</source>
 <context>
     <name>UserInterface::ImportDialog</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="76"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="77"/>
         <source>Choose file to import</source>
         <translation>Выберите файл для импорта</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="77"/>
         <source>%1 files (*%2)</source>
-        <translation>%1 файлы (*%2)</translation>
+        <translation type="vanished">%1 файлы (*%2)</translation>
     </message>
 </context>
 <context>

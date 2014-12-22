@@ -24,13 +24,13 @@ class FormatReader;
 
 #include <QCoreApplication>
 #include <QString>
+
 class QIODevice;
 class QStringList;
 
+
 class FormatManager
 {
-	Q_DECLARE_TR_FUNCTIONS(FormatManager)
-
 public:
 	static FormatReader* createReader(QIODevice* device, const QString& type = QString());
 	static QString filter(const QString& type);

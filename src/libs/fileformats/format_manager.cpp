@@ -68,13 +68,13 @@ FormatReader* FormatManager::createReader(QIODevice* device, const QString& type
 QString FormatManager::filter(const QString& type)
 {
 	if (type == "odt") {
-		return tr("OpenDocument Text") + QLatin1String(" (*.odt)");
+		return QCoreApplication::translate("FormatManager", "OpenDocument Text") + QLatin1String(" (*.odt)");
 	} else if (type == "docx") {
-		return tr("Office Open XML") + QLatin1String(" (*.docx)");
+		return QCoreApplication::translate("FormatManager", "Office Open XML") + QLatin1String(" (*.docx)");
 	} else if (type == "rtf") {
-		return tr("Rich Text Format") + QLatin1String(" (*.rtf)");
+		return QCoreApplication::translate("FormatManager", "Rich Text Format") + QLatin1String(" (*.rtf)");
 	} else if ((type == "txt") || (type == "text")) {
-		return tr("Plain Text") + QLatin1String(" (*.txt *.text)");
+		return QCoreApplication::translate("FormatManager", "Plain Text") + QLatin1String(" (*.txt *.text)");
 	} else {
 		return QString();
 	}
@@ -89,7 +89,7 @@ QStringList FormatManager::filters(const QString& type)
 			<< filter("docx")
 			<< filter("rtf")
 			<< filter("txt")
-			<< (tr("All Files") + QLatin1String(" (*)"));
+			<< (QCoreApplication::translate("FormatManager", "All Files") + QLatin1String(" (*)"));
 
 	QStringList result = default_filters;
 	if (!type.isEmpty()) {
@@ -103,7 +103,7 @@ QStringList FormatManager::filters(const QString& type)
 			result.move(4, 0);
 		}
 	} else {
-		result.prepend(tr("All Supported Files") + QLatin1String(" (*.docx *.odt *.rtf *.txt *.text)"));
+		result.prepend(QCoreApplication::translate("FormatManager", "All Supported Files") + QLatin1String(" (*.docx *.odt *.rtf *.txt *.text)"));
 	}
 	return result;
 }
