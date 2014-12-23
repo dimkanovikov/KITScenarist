@@ -840,16 +840,20 @@ int StandardKeyHandler::keyCharacterToQtKey(const QString& _keyCharacter) const
 			|| keyCharacter == QString::fromUtf8("ф")) {
 			qtKey = Qt::Key_A;
 		} else if (keyCharacter == "z"
-				   || keyCharacter == QString::fromUtf8("я")) {
+				   || keyCharacter == QString::fromUtf8("я")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_Z;
 		} else if (keyCharacter == "x"
-				   || keyCharacter == QString::fromUtf8("ч")) {
+				   || keyCharacter == QString::fromUtf8("ч")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_X;
 		} else if (keyCharacter == "c"
-				   || keyCharacter == QString::fromUtf8("с")) {
+				   || keyCharacter == QString::fromUtf8("с")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_C;
 		} else if (keyCharacter == "v"
-				   || keyCharacter == QString::fromUtf8("м")) {
+				   || keyCharacter == QString::fromUtf8("м")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_V;
 		} else if (keyCharacter == "e"
 				   || keyCharacter == QString::fromUtf8("у")) {
