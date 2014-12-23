@@ -415,11 +415,28 @@ void ApplicationManager::aboutProjectChanged()
 
 void ApplicationManager::aboutShowFullscreen()
 {
+	const char* IS_MAXIMIZED_PROPERTY = "isMaximized";
+
 	if (m_view->isFullScreen()) {
-		m_view->showNormal();
+		//
+		// Возвращаемся в состояние предшествовавшее полноэкранному режиму
+		//
+		if (m_view->property(IS_MAXIMIZED_PROPERTY).toBool()) {
+			m_view->showMaximized();
+		} else {
+			m_view->showNormal();
+		}
 		m_menu->show();
 		m_tabs->show();
 	} else {
+		//
+		// Сохраним состояние окна перед переходом в полноэкранный режим
+		//
+		m_view->setProperty(IS_MAXIMIZED_PROPERTY, m_view->windowState().testFlag(Qt::WindowMaximized));
+
+		//
+		// Переходим в полноэкранный режим
+		//
 		m_tabsWidgets->setCurrentWidget(m_scenarioManager->view());
 		m_menu->hide();
 		m_tabs->hide();
