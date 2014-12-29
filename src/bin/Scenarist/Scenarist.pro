@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui gui-private sql xml widgets printsupport network
+QT       += core gui sql xml widgets printsupport network
 
 TARGET = Scenarist
 TEMPLATE = app
@@ -37,9 +37,6 @@ DEPENDPATH += $$PWD/../../libs/fileformats
 #
 
 INCLUDEPATH += $$PWD
-
-TRANSLATIONS += \
-	Resources/Translations/Scenarist_ru.ts
 
 SOURCES += main.cpp \
     ManagementLayer/ApplicationManager.cpp \
@@ -184,7 +181,8 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Import/ImportDialog.cpp \
     3rd_party/Widgets/ProgressWidget/ProgressWidget.cpp \
     BusinessLayer/Import/DocumentImporter.cpp \
-    BusinessLayer/Export/DocxExporter.cpp
+    BusinessLayer/Export/DocxExporter.cpp \
+    3rd_party/Widgets/ScalableWrapper/ScalableWrapper.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -333,7 +331,8 @@ HEADERS += \
     UserInterfaceLayer/Import/ImportDialog.h \
     3rd_party/Widgets/ProgressWidget/ProgressWidget.h \
     BusinessLayer/Import/DocumentImporter.h \
-    BusinessLayer/Export/DocxExporter.h
+    BusinessLayer/Export/DocxExporter.h \
+    3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

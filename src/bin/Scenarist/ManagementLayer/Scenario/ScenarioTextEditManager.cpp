@@ -88,7 +88,7 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"scenario-editor/zoom-range",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
-				.toInt());
+				.toDouble());
 
 	m_view->updateStylesElements();
 }
@@ -118,7 +118,7 @@ void ScenarioTextEditManager::aboutRedo()
 	m_view->aboutRedo();
 }
 
-void ScenarioTextEditManager::aboutTextEditZoomRangeChanged(int _zoomRange)
+void ScenarioTextEditManager::aboutTextEditZoomRangeChanged(qreal _zoomRange)
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
 				"scenario-editor/zoom-range",
@@ -135,5 +135,5 @@ void ScenarioTextEditManager::initConnections()
 {
 	connect(m_view, SIGNAL(textChanged()), this, SIGNAL(textChanged()));
 	connect(m_view, SIGNAL(cursorPositionChanged(int)), this, SIGNAL(cursorPositionChanged(int)));
-	connect(m_view, SIGNAL(zoomRangeChanged(int)), this, SLOT(aboutTextEditZoomRangeChanged(int)));
+	connect(m_view, SIGNAL(zoomRangeChanged(qreal)), this, SLOT(aboutTextEditZoomRangeChanged(qreal)));
 }

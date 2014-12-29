@@ -4,6 +4,7 @@
 #include "ScenarioTextEditHelpers.h"
 #include "ScenarioFastFormatWidget.h"
 
+#include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
@@ -70,6 +71,7 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_duration(new QLabel(this)),
 	m_countersInfo(new QLabel(this)),
 	m_editor(new ScenarioTextEdit(this)),
+	m_editorWrapper(new ScalableWrapper(m_editor, this)),
 	m_searchLine(new SearchWidget(this)),
 	m_fastFormatWidget(new ScenarioFastFormatWidget(this))
 {
@@ -132,9 +134,9 @@ void ScenarioTextEditWidget::setTextEditColors(const QColor& _textColor, const Q
 	m_editor->setStyleSheet(QString("#scenarioEditor { color: %1; }").arg(_textColor.name()));
 }
 
-void ScenarioTextEditWidget::setTextEditZoomRange(int _zoomRange)
+void ScenarioTextEditWidget::setTextEditZoomRange(qreal _zoomRange)
 {
-	m_editor->setZoomRange(_zoomRange);
+	m_editorWrapper->setZoomRange(_zoomRange);
 }
 
 int ScenarioTextEditWidget::cursorPosition() const
@@ -388,7 +390,7 @@ void ScenarioTextEditWidget::initView()
 
 	QVBoxLayout* mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(m_toolbar);
-	mainLayout->addWidget(m_editor);
+	mainLayout->addWidget(m_editorWrapper);
 	mainLayout->addWidget(m_searchLine);
 
 	QHBoxLayout* layout = new QHBoxLayout;
@@ -486,7 +488,7 @@ void ScenarioTextEditWidget::initEditorConnections()
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
 	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
 	connect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
-	connect(m_editor, SIGNAL(zoomRangeChanged(int)), this, SIGNAL(zoomRangeChanged(int)));
+	connect(m_editorWrapper, SIGNAL(zoomRangeChanged(qreal)), this, SIGNAL(zoomRangeChanged(qreal)));
 }
 
 void ScenarioTextEditWidget::removeEditorConnections()
@@ -498,7 +500,7 @@ void ScenarioTextEditWidget::removeEditorConnections()
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
 	disconnect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
 	disconnect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
-	disconnect(m_editor, SIGNAL(zoomRangeChanged(int)), this, SIGNAL(zoomRangeChanged(int)));
+	disconnect(m_editorWrapper, SIGNAL(zoomRangeChanged(qreal)), this, SIGNAL(zoomRangeChanged(qreal)));
 }
 
 void ScenarioTextEditWidget::initStyleSheet()

@@ -1,81 +1,23 @@
 #include "PagesTextEdit.h"
 
-#include <QGestureEvent>
 #include <QPainter>
-#include <QPaintEvent>
 #include <QScrollBar>
 #include <QTextFrame>
-#include <QTextFrameFormat>
-
-
-namespace {
-	/**
-	 * @brief Минимальный размер коэффициэнта масштабирования
-	 */
-	const int MINIMUM_ZOOM_RANGE = -6;
-
-	/**
-	 * @brief Идентификатор свойства масштабирования для блока
-	 */
-	const int ZOOM_PROPERTY = QTextFormat::UserProperty + 1;
-
-	/**
-	 * @brief Определить коэффициент масштабирования
-	 */
-	static qreal zoomRange(int _range)
-	{
-		return (qreal)(_range + 10) / 10;
-	}
-
-	/**
-	 * @brief Перевести пиксели в поинты
-	 */
-	static qreal pixelsToPoints(const QPaintDevice* _device, qreal _pixels)
-	{
-		return _pixels * (qreal)72 / (qreal)_device->logicalDpiY();
-	}
-
-	/**
-	 * @brief Вычислить масштабированное значение
-	 */
-	static qreal scale(qreal _source, qreal _scaleRange)
-	{
-		qreal result = _source;
-		if (_scaleRange > 0) {
-			result = _source * _scaleRange;
-		} else if (_scaleRange < 0) {
-			result = _source / _scaleRange * -1;
-		} else {
-			Q_ASSERT_X(0, "scale", "scale to zero range");
-		}
-		return result;
-	}
-}
 
 
 PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	QTextEdit(parent),
 	m_usePageMode(false),
 	m_addBottomSpace(true),
-	m_inZoomHandling(false),
-	m_zoomRange(0),
-	m_gestureZoomInertionBreak(0),
 	m_document(0)
 {
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
 	//
-	// Отслеживаем масштабирование при помощи жеста
+	// Ручная настройка интервала прокрутки
 	//
-	grabGesture(Qt::PinchGesture);
-
-	//
-	// Отслеживаем потенциальное изменение документа
-	//
-	connect(this, SIGNAL(textChanged()), this, SLOT(aboutUpdateZoomRangeHandling()));
-	aboutUpdateZoomRangeHandling();
-
-	connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)), this, SLOT(aboutVerticalScrollRangeChanged(int,int)));
+	connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)),
+		this, SLOT(aboutVerticalScrollRangeChanged(int,int)));
 }
 
 void PagesTextEdit::setPageFormat(QPageSize::PageSizeId _pageFormat)
@@ -103,50 +45,6 @@ bool PagesTextEdit::usePageMode() const
 	return m_usePageMode;
 }
 
-void PagesTextEdit::setZoomRange(int _zoomRange)
-{
-	m_inZoomHandling = true;
-
-	//
-	// Возможно лишь двукратное уменьшение масштаба
-	//
-	if (_zoomRange < MINIMUM_ZOOM_RANGE) return;
-
-	//
-	// Отменяем предыдущее мастштабирование
-	//
-	qreal zoomRange = ::zoomRange(m_zoomRange);
-	privateZoomOut(zoomRange);
-
-	//
-	// Обновляем коэффициент
-	//
-	m_zoomRange = _zoomRange;
-	zoomRange = ::zoomRange(m_zoomRange);
-
-	//
-	// Масштабируем с новым коэффициентом
-	//
-	{
-		//
-		// ... шрифт
-		//
-		privateZoomIn(zoomRange);
-
-		//
-		// ... документ
-		//
-		m_pageMetrics.zoomIn(zoomRange);
-	}
-
-	//
-	// Уведомляем о том, что коэффициент изменился
-	//
-	emit zoomRangeChanged(m_zoomRange);
-
-	m_inZoomHandling = false;
-}
-
 void PagesTextEdit::setUsePageMode(bool _use)
 {
 	if (m_usePageMode != _use) {
@@ -171,20 +69,6 @@ void PagesTextEdit::setAddSpaceToBottom(bool _addSpace)
 	}
 }
 
-bool PagesTextEdit::event(QEvent* _event)
-{
-	bool result = true;
-	if (_event->type() == QEvent::Gesture) {
-		gestureEvent(static_cast<QGestureEvent*>(_event));
-	} else {
-		result = QTextEdit::event(_event);
-	}
-
-	return result;
-}
-//#include <QtGui/private/qtextdocumentlayout_p.h>
-#include <QStyleOption>
-#include <QApplication>
 void PagesTextEdit::paintEvent(QPaintEvent* _event)
 {
 	updateInnerGeometry();
@@ -194,95 +78,6 @@ void PagesTextEdit::paintEvent(QPaintEvent* _event)
 	paintPagesView();
 
 	QTextEdit::paintEvent(_event);
-return;
-
-
-/*
-	QPainter p(viewport());
-	qreal zoomRange = ::zoomRange(m_zoomRange);
-	p.scale(zoomRange, zoomRange);
-
-	//*********
-
-
-	const int xOffset = horizontalScrollBar()->value();
-	const int yOffset = verticalScrollBar()->value();
-
-	QRect r = _event->rect();
-	p.translate(-xOffset, -yOffset);
-	r.translate(xOffset, yOffset);
-
-	QTextDocument *doc = document();
-	QTextDocumentLayout *layout = qobject_cast<QTextDocumentLayout *>(doc->documentLayout());
-
-	// the layout might need to expand the root frame to
-	// the viewport if NoWrap is set
-	if (layout)
-		layout->setViewport(viewport()->rect());
-
-	//*********
-
-
-
-	p.save();
-	QAbstractTextDocumentLayout::PaintContext ctx;
-
-//	ctx.selections = extraSelections();
-	ctx.palette = palette();
-	ctx.cursorPosition = textCursor().position();
-//    if (d->cursorOn && d->isEnabled) {
-//        if (d->hideCursor)
-//            ctx.cursorPosition = -1;
-//        else if (d->preeditCursor != 0)
-//            ctx.cursorPosition = - (d->preeditCursor + 2);
-//        else
-//            ctx.cursorPosition = d->cursor.position();
-//    }
-
-//    if (!d->dndFeedbackCursor.isNull())
-//        ctx.cursorPosition = d->dndFeedbackCursor.position();
-//#ifdef QT_KEYPAD_NAVIGATION
-//    if (!QApplication::keypadNavigationEnabled() || d->hasEditFocus)
-//#endif
-	if (textCursor().hasSelection()) {
-		QAbstractTextDocumentLayout::Selection selection;
-		selection.cursor = textCursor();
-//        if (d->cursorIsFocusIndicator) {
-//            QStyleOption opt;
-//            opt.palette = ctx.palette;
-//            QStyleHintReturnVariant ret;
-//            QStyle *style = QApplication::style();
-//            if (widget)
-//                style = widget->style();
-//            style->styleHint(QStyle::SH_TextControl_FocusIndicatorTextCharFormat, &opt, widget, &ret);
-//            selection.format = qvariant_cast<QTextFormat>(ret.variant).toCharFormat();
-//        } else {
-			QPalette::ColorGroup cg = hasFocus() ? QPalette::Active : QPalette::Inactive;
-			selection.format.setBackground(ctx.palette.brush(cg, QPalette::Highlight));
-			selection.format.setForeground(ctx.palette.brush(cg, QPalette::HighlightedText));
-			QStyleOption opt;
-			QStyle *style = QApplication::style();
-			if (this) {
-				opt.initFrom(this);
-				style = this->style();
-			}
-			if (style->styleHint(QStyle::SH_RichText_FullWidthSelection, &opt, this))
-				selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-//        }
-		ctx.selections.append(selection);
-	}
-
-
-
-	//*****
-
-	if (r.isValid())
-		p.setClipRect(r, Qt::IntersectClip);
-	ctx.clip = r;
-
-	doc->documentLayout()->draw(&p, ctx);
-	p.restore();
-*/
 }
 
 void PagesTextEdit::resizeEvent(QResizeEvent* _event)
@@ -292,66 +87,6 @@ void PagesTextEdit::resizeEvent(QResizeEvent* _event)
 	updateVerticalScrollRange();
 
 	QTextEdit::resizeEvent(_event);
-}
-
-void PagesTextEdit::wheelEvent(QWheelEvent* _event)
-{
-	if (_event->modifiers() & Qt::ControlModifier) {
-		if (_event->orientation() == Qt::Vertical) {
-			//
-			// zoomRange > 0 - Текст увеличивается
-			// zoomRange < 0 - Текст уменьшается
-			//
-			int zoomRange = m_zoomRange + (_event->angleDelta().y() / 120);
-			setZoomRange(zoomRange);
-
-			_event->accept();
-		}
-	} else {
-		QTextEdit::wheelEvent(_event);
-	}
-}
-
-void PagesTextEdit::gestureEvent(QGestureEvent* _event)
-{
-	if (QGesture* gesture = _event->gesture(Qt::PinchGesture)) {
-		if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
-			//
-			// При масштабировании за счёт жестов приходится немного притормаживать
-			// т.к. события приходят слишком часто и при обработке каждого события
-			// пользователю просто невозможно корректно настроить масштаб
-			//
-
-			int zoomRange = m_zoomRange;
-			//
-			// Если происходит изменение масштаба
-			//
-			if (pinch->scaleFactor() != 1) {
-				if (pinch->scaleFactor() > 1) {
-					if (m_gestureZoomInertionBreak < 0) {
-						m_gestureZoomInertionBreak = 0;
-					} else if (m_gestureZoomInertionBreak >= 8) {
-						m_gestureZoomInertionBreak = 0;
-						++zoomRange;
-					} else {
-						++m_gestureZoomInertionBreak;
-					}
-				} else { // pinch->scaleFactor() < 1
-					if (m_gestureZoomInertionBreak > 0) {
-						m_gestureZoomInertionBreak = 0;
-					} else if (m_gestureZoomInertionBreak <= -8) {
-						m_gestureZoomInertionBreak = 0;
-						--zoomRange;
-					} else {
-						--m_gestureZoomInertionBreak;
-					}
-				}
-				setZoomRange(zoomRange);
-
-				_event->accept();
-			}
-		}
-	}
 }
 
 void PagesTextEdit::updateInnerGeometry()
@@ -513,120 +248,6 @@ void PagesTextEdit::paintPagesView()
 			// ... правая
 			p.drawLine(x, curHeight-pageHeight, x, height());
 		}
-	}
-}
-
-void PagesTextEdit::privateZoomIn(qreal _range, int _startPosition, int _endPosition)
-{
-	//
-	// Нужно увеличить в _range раз
-	// * шрифт каждого блока
-	// * формат каждого блока
-	//
-	QTextCursor cursor(document());
-	cursor.joinPreviousEditBlock();
-
-	//
-	// Обработаем позиции
-	//
-	cursor.setPosition(_startPosition);
-	if (_endPosition == 0) {
-		_endPosition = document()->characterCount() - 1;
-	}
-
-	do {
-		//
-		// Выделим редактируемый блок текста
-		//
-		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-
-		//
-		// Если масштаб текущего блока ещё не настроен
-		//
-		QTextBlockFormat blockFormat = cursor.blockFormat();
-		if (blockFormat.property(ZOOM_PROPERTY).toReal() != _range) {
-
-
-			//
-			// Обновляем настройки шрифта
-			//
-			QTextCharFormat blockCharFormat = cursor.charFormat();
-			QFont blockFont = blockCharFormat.font();
-			blockFont.setPointSizeF(scale(blockFont.pointSizeF(), _range));
-			blockCharFormat.setFont(blockFont);
-			cursor.setCharFormat(blockCharFormat);
-			cursor.setBlockCharFormat(blockCharFormat);
-
-			//
-			// Обновляем настройки позиционирования
-			//
-			// ... сохраним настройку масштабирования
-			//
-			blockFormat.setProperty(ZOOM_PROPERTY, _range);
-			//
-			// ... обновим сами настройки
-			//
-			if (blockFormat.lineHeightType() == QTextBlockFormat::FixedHeight) {
-				blockFormat.setLineHeight(scale(blockFormat.lineHeight(), _range), QTextBlockFormat::FixedHeight);
-			}
-			if (blockFormat.leftMargin() > 0) {
-				blockFormat.setLeftMargin(scale(blockFormat.leftMargin(), _range));
-			}
-			if (blockFormat.topMargin() > 0) {
-				blockFormat.setTopMargin(scale(blockFormat.topMargin(), _range));
-			}
-			if (blockFormat.rightMargin() > 0) {
-				blockFormat.setRightMargin(scale(blockFormat.rightMargin(), _range));
-			}
-			if (blockFormat.bottomMargin() > 0) {
-				blockFormat.setBottomMargin(scale(blockFormat.bottomMargin(), _range));
-			}
-			cursor.setBlockFormat(blockFormat);
-		}
-
-		//
-		// Переходим к следующему блоку
-		//
-		cursor.movePosition(QTextCursor::NextBlock);
-	} while (cursor.position() < _endPosition
-			 && !cursor.atEnd());
-
-	cursor.endEditBlock();
-}
-
-void PagesTextEdit::privateZoomOut(qreal _range, int _startPosition, int _endPosition)
-{
-	privateZoomIn(-_range, _startPosition, _endPosition);
-}
-
-void PagesTextEdit::aboutUpdateZoomRangeHandling()
-{
-	//
-	// Если изменился документ, то нужно перепривязать сигнал обновления масштаба
-	//
-	if (document() != 0 && m_document != document()) {
-		//
-		// Обновим документ
-		//
-		m_document = document();
-		connect(m_document, SIGNAL(contentsChange(int,int,int)), this, SLOT(aboutUpdateZoomRange(int,int,int)));
-
-		//
-		// Обновим масштаб документа
-		//
-		privateZoomIn(::zoomRange(m_zoomRange));
-	}
-}
-
-void PagesTextEdit::aboutUpdateZoomRange(int _position, int _charsRemoved, int _charsAdded)
-{
-	Q_UNUSED(_charsRemoved);
-
-	if (!m_inZoomHandling) {
-		//
-		// Обновим масштаб изменённого текста
-		//
-		privateZoomIn(::zoomRange(m_zoomRange), _position, _position + _charsAdded);
 	}
 }
 

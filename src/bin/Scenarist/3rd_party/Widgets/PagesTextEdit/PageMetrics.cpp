@@ -47,9 +47,7 @@ QString PageMetrics::stringFromPageSizeId(QPageSize::PageSizeId _pageSize)
 	return result;
 }
 
-PageMetrics::PageMetrics(QPageSize::PageSizeId _pageFormat,
-						 QMarginsF _mmPageMargins) :
-	m_zoomRange(1)
+PageMetrics::PageMetrics(QPageSize::PageSizeId _pageFormat, QMarginsF _mmPageMargins)
 {
 	update(_pageFormat, _mmPageMargins);
 }
@@ -76,11 +74,6 @@ void PageMetrics::update(QPageSize::PageSizeId _pageFormat, QMarginsF _mmPageMar
 					  );
 }
 
-void PageMetrics::zoomIn(qreal _zoomRange)
-{
-	m_zoomRange = _zoomRange;
-}
-
 QPageSize::PageSizeId PageMetrics::pageFormat() const
 {
 	return m_pageFormat;
@@ -98,14 +91,14 @@ QMarginsF PageMetrics::mmPageMargins() const
 
 QSizeF PageMetrics::pxPageSize() const
 {
-	return QSizeF(m_pxPageSize.width() * m_zoomRange,
-				  m_pxPageSize.height() * m_zoomRange);
+	return QSizeF(m_pxPageSize.width(),
+				  m_pxPageSize.height());
 }
 
 QMarginsF PageMetrics::pxPageMargins() const
 {
-	return QMarginsF(m_pxPageMargins.left() * m_zoomRange,
-					 m_pxPageMargins.top() * m_zoomRange,
-					 m_pxPageMargins.right() * m_zoomRange,
-					 m_pxPageMargins.bottom() * m_zoomRange);
+	return QMarginsF(m_pxPageMargins.left(),
+					 m_pxPageMargins.top(),
+					 m_pxPageMargins.right(),
+					 m_pxPageMargins.bottom());
 }

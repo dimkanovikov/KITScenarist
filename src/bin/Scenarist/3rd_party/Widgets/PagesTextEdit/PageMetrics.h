@@ -33,21 +33,12 @@ public:
 	static QString stringFromPageSizeId(QPageSize::PageSizeId _pageSize);
 
 public:
-	PageMetrics(QPageSize::PageSizeId _pageFormat = QPageSize::A4,
-				QMarginsF _mmMargins = QMarginsF());
+	PageMetrics(QPageSize::PageSizeId _pageFormat = QPageSize::A4, QMarginsF _mmMargins = QMarginsF());
 
 	/**
 	 * @brief Обновить метрики
 	 */
-	void update(QPageSize::PageSizeId _pageFormat,
-				QMarginsF _mmPageMargins = QMarginsF());
-
-	/**
-	 * @brief Масштабирование метрик
-	 *
-	 * Учитывается только для пиксельных значений
-	 */
-	void zoomIn(qreal _zoomRange);
+	void update(QPageSize::PageSizeId _pageFormat, QMarginsF _mmPageMargins = QMarginsF());
 
 	/**
 	 * @brief Методы доступа к параметрам страницы
@@ -81,11 +72,6 @@ private:
 	QSizeF m_pxPageSize;
 	QMarginsF m_pxPageMargins;
 	/** @} */
-
-	/**
-	 * @brief Коэффициент масштабирования
-	 */
-	qreal m_zoomRange;
 
 };
 

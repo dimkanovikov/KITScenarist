@@ -6,9 +6,6 @@
 #include "PageMetrics.h"
 
 
-class QGestureEvent;
-
-
 /**
  * @brief Редактор текста, с возможностью постраничного отображения содержимого
  */
@@ -34,11 +31,6 @@ public:
 	 */
 	bool usePageMode() const;
 
-	/**
-	 * @brief Установить коэффициент масштабирования
-	 */
-	void setZoomRange(int _zoomRange);
-
 public slots:
 	/**
 	 * @brief Установить режим отображения текста
@@ -50,18 +42,7 @@ public slots:
 	 */
 	void setAddSpaceToBottom(bool _addSpace);
 
-signals:
-	/**
-	 * @brief Изменился коэффициент масштабирования
-	 */
-	void zoomRangeChanged(int);
-
 protected:
-	/**
-	 * @brief Переопределяем для обработки жестов
-	 */
-	bool event(QEvent* _event);
-
 	/**
 	 * @brief Переопределяется для корректировки документа и прорисовки оформления страниц
 	 */
@@ -71,16 +52,6 @@ protected:
 	 * @brief Переопределяется, для корректного обновления размеров вьювпорта
 	 */
 	void resizeEvent(QResizeEvent* _event);
-
-	/**
-	 * @brief Переопределяется для реализации увеличения/уменьшения текста
-	 */
-	void wheelEvent(QWheelEvent* _event);
-
-	/**
-	 * @brief Обрабатываем жест увеличения масштаба
-	 */
-	void gestureEvent(QGestureEvent* _event);
 
 private:
 	/**
@@ -98,27 +69,7 @@ private:
 	 */
 	void paintPagesView();
 
-	/**
-	 * @brief Собственные реализации методов масштабирования содержимого
-	 * @note Если позиции равны нулю, то обрабатывается весь документ
-	 */
-	/** @{ */
-	void privateZoomIn(qreal _range, int _startPosition = 0, int _endPosition = 0);
-	void privateZoomOut(qreal _range, int _startPosition = 0, int _endPosition = 0);
-	/** @} */
-
 private slots:
-	/**
-	 * @brief Скорректировать обработку изменения текста, для установки масштаба,
-	 * если был изменён документ
-	 */
-	void aboutUpdateZoomRangeHandling();
-
-	/**
-	 * @brief Маштабировать изменения документа
-	 */
-	void aboutUpdateZoomRange(int _position, int _charsRemoved, int _charsAdded);
-
 	/**
 	 * @brief Изменился интервал вертикальной прокрутки
 	 */
@@ -142,21 +93,6 @@ private:
 	 * @brief Метрика страницы редактора
 	 */
 	PageMetrics m_pageMetrics;
-
-	/**
-	 * @brief Флаг обозначающий, что редактор находится в процессе масштабирования
-	 */
-	bool m_inZoomHandling;
-
-	/**
-	 * @brief Текущий коэффициент масштабирования
-	 */
-	int m_zoomRange;
-
-	/**
-	 * @brief Инерционный тормоз масштабирования при помощи жестов
-	 */
-	int m_gestureZoomInertionBreak;
 
 	/**
 	 * @brief Указатель на документ

@@ -103,7 +103,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Реакция на изменение коэффициента масштабирования редактора сценария
 		 */
-		void aboutTextEditZoomRangeChanged(int _zoomRange);
+		void aboutTextEditZoomRangeChanged(qreal _zoomRange);
 
 	private:
 		/**

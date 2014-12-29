@@ -6,6 +6,7 @@
 class QComboBox;
 class QLabel;
 class QToolButton;
+class ScalableWrapper;
 class SearchWidget;
 
 namespace BusinessLogic {
@@ -71,7 +72,7 @@ namespace UserInterface
 		/**
 		 * @brief Настроить масштабирование редактора сценария
 		 */
-		void setTextEditZoomRange(int _zoomRange);
+		void setTextEditZoomRange(qreal _zoomRange);
 
 		/**
 		 * @brief Получить текущую позицию курсора
@@ -133,7 +134,7 @@ namespace UserInterface
 		/**
 		 * @brief Изменился коэффициент масштабирования текстового редактора
 		 */
-		void zoomRangeChanged(int _zoomRange);
+		void zoomRangeChanged(qreal _zoomRange);
 
 	private slots:
 		/**
@@ -229,6 +230,11 @@ namespace UserInterface
 		 * @brief Собственно редактор текста
 		 */
 		ScenarioTextEdit* m_editor;
+
+		/**
+		 * @brief Обёртка редактора, позволяющая его масштабировать
+		 */
+		ScalableWrapper* m_editorWrapper;
 
 		/**
 		 * @brief Виджет поиска
