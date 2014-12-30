@@ -62,7 +62,8 @@ namespace {
 	 * @brief Получить стиль оформления абзаца для заданного типа
 	 */
 	static QTextBlockFormat blockFormatForType(ScenarioBlockStyle::Type _type) {
-		QTextBlockFormat format = ::exportStyle().blockStyle(_type).blockFormat();
+		ScenarioBlockStyle style = ::exportStyle().blockStyle(_type);
+		QTextBlockFormat format = style.blockFormat();
 
 		//
 		// Очищаем цвета
@@ -70,10 +71,16 @@ namespace {
 		format.setBackground(Qt::white);
 
 		//
-		// Убираем горизонтальные отступы
+		// Оставляем только реальные отступы (отступы в строках будут преобразованы в пустые строки)
 		//
-		format.setTopMargin(0);
-		format.setBottomMargin(0);
+		int topMargin = 0;
+		int bottomMargin = 0;
+		if (style.hasVerticalSpacingInMM()) {
+			topMargin = PageMetrics::mmToPx(style.topMargin());
+			bottomMargin = PageMetrics::mmToPx(style.bottomMargin());
+		}
+		format.setTopMargin(topMargin);
+		format.setBottomMargin(bottomMargin);
 
 		return format;
 	}
@@ -242,6 +249,14 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 	//
 	ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::Undefined;
 	int currentSceneNumber = 1;
+	//
+	// Кол-во пустых строк после предыдущего блока с текстом. Отслеживаем их, для случая, когда
+	// подряд идут два блока у первого из которых есть отступ снизу, а у второго сверху. В таком
+	// случае отступ должен не суммироваться, а стать наибольшим из имеющихся. Например у верхнего
+	// отступ снизу 2 строки, а у нижнего отступ сверху 1 строка, отступ между ними должен быть
+	// 2 строки.
+	//
+	int lastEmptyLines = 0;
 	while (!sourceDocumentCursor.atEnd()) {
 		//
 		// Получим тип текущего блока под курсором
@@ -272,6 +287,17 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 				LineType currentLineType = ::currentLine(preparedDocument);
 				if (currentLineType == MiddlePageLine) {
 					int emptyLines = exportStyle.blockStyle(currentBlockType).topSpace();
+					//
+					// Корректируем кол-во вставляемых строк в зависимости от предыдущего блока
+					//
+					if (lastEmptyLines > 0) {
+						if (lastEmptyLines > emptyLines) {
+							emptyLines = 0;
+						} else {
+							emptyLines -= lastEmptyLines;
+						}
+					}
+
 					//
 					// ... выполняется до тех пор, пока не будут вставлены все строки,
 					//	   или не будет достигнут конец страницы
@@ -339,6 +365,34 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 					destDocumentCursor.insertText(sourceDocumentCursor.block().text().toUpper());
 				} else {
 					destDocumentCursor.insertText(sourceDocumentCursor.block().text());
+				}
+			}
+
+			//
+			// После текста, так же возможно следует сделать отступы
+			//
+			{
+				LineType currentLineType = ::currentLine(preparedDocument);
+				if (currentLineType == MiddlePageLine) {
+					int emptyLines = exportStyle.blockStyle(currentBlockType).bottomSpace();
+					//
+					// ... сохраним кол-во пустых строк в последнем блоке
+					//
+					lastEmptyLines = emptyLines;
+					//
+					// ... выполняется до тех пор, пока не будут вставлены все строки,
+					//	   или не будет достигнут конец страницы
+					//
+					while (emptyLines-- > 0
+						   && currentLineType == MiddlePageLine) {
+						//
+						// ... вставим линию и настроим её стиль
+						//
+						destDocumentCursor.insertBlock();
+						destDocumentCursor.setBlockFormat(blockFormat);
+						destDocumentCursor.setCharFormat(charFormat);
+						currentLineType = ::currentLine(preparedDocument);
+					}
 				}
 			}
 		}

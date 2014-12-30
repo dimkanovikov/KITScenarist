@@ -91,7 +91,7 @@ namespace {
 			//
 			// ... разрешаем перенос абзацев между страницами и висячие строки
 			//
-			blockStyle.append("<w:widowControl w:val=\"0\"/><w:autoSpaceDE w:val=\"0\"/><w:autoSpaceDN w:val=\"0\"/><w:adjustRightInd w:val=\"0\"/><w:spacing w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\"/>");
+			blockStyle.append("<w:widowControl w:val=\"0\"/><w:autoSpaceDE w:val=\"0\"/><w:autoSpaceDN w:val=\"0\"/><w:adjustRightInd w:val=\"0\"/>");
 			//
 			// ... отступы
 			//
@@ -99,6 +99,44 @@ namespace {
 				QString("<w:ind w:left=\"%1\" w:right=\"%2\"/>")
 				.arg(::mmToTwips(_style.leftMargin()))
 				.arg(::mmToTwips(_style.rightMargin()))
+				);
+			//
+			// ... интервалы
+			//
+			blockStyle.append(
+				QString("<w:spacing w:before=\"%1\" w:after=\"%2\" ")
+				.arg(::mmToTwips(_style.topMargin()))
+				.arg(::mmToTwips(_style.bottomMargin()))
+				);
+			// ... межстрочный
+			int lineSpacing = 240;
+			QString lineSpacingType = "auto";
+			switch (_style.lineSpacing()) {
+				default:
+				case ScenarioBlockStyle::SingleLineSpacing: {
+					break;
+				}
+
+				case ScenarioBlockStyle::OneAndHalfLineSpacing: {
+					lineSpacing = 360;
+					break;
+				}
+
+				case ScenarioBlockStyle::DoubleLineSpacing: {
+					lineSpacing = 480;
+					break;
+				}
+
+				case ScenarioBlockStyle::FixedLineSpacing: {
+					lineSpacing = ::mmToTwips(_style.lineSpacingValue());
+					lineSpacingType = "exact";
+					break;
+				}
+			}
+			blockStyle.append(
+				QString("w:line=\"%1\" w:lineRule=\"%2\"/>")
+				.arg(lineSpacing)
+				.arg(lineSpacingType)
 				);
 			//
 			// ... выравнивание

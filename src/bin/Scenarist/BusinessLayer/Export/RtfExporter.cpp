@@ -143,6 +143,33 @@ namespace {
 			blockStyle.append("\\fi0");
 			blockStyle.append(QString("\\li%1").arg(::mmToTwips(_style.leftMargin())));
 			blockStyle.append(QString("\\ri%1").arg(::mmToTwips(_style.rightMargin())));
+			blockStyle.append(QString("\\sb%1").arg(::mmToTwips(_style.topMargin())));
+			blockStyle.append(QString("\\sa%1").arg(::mmToTwips(_style.bottomMargin())));
+
+			//
+			// Межстрочный интервал
+			//
+			switch (_style.lineSpacing()) {
+				default:
+				case ScenarioBlockStyle::SingleLineSpacing: {
+					break;
+				}
+
+				case ScenarioBlockStyle::OneAndHalfLineSpacing: {
+					blockStyle.append("\\sl360\\slmult1");
+					break;
+				}
+
+				case ScenarioBlockStyle::DoubleLineSpacing: {
+					blockStyle.append("\\sl480\\slmult1");
+					break;
+				}
+
+				case ScenarioBlockStyle::FixedLineSpacing: {
+					blockStyle.append(QString("\\sl-%1\\slmult0").arg(::mmToTwips(_style.lineSpacingValue())));
+					break;
+				}
+			}
 
 			//
 			// Выравнивание

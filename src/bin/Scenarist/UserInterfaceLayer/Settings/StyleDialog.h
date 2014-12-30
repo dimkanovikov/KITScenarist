@@ -41,6 +41,16 @@ namespace UserInterface
 		 */
 		void aboutBlockStyleActivated(QListWidgetItem* _item);
 
+		/**
+		 * @brief Изменился тип отступов
+		 */
+		void aboutSpacingTypeChanged();
+
+		/**
+		 * @brief Сменился межстрочный интервал
+		 */
+		void aboutLineSpacingChanged();
+
 	private:
 		/**
 		 * @brief Настроить представление

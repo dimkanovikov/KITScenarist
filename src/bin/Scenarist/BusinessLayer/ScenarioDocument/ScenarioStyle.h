@@ -64,6 +64,16 @@ namespace BusinessLogic
 			PropertyIsCanModify		//!< Редактируемый ли блок
 		};
 
+		/**
+		 * @brief Виды межстрочных интервалов
+		 */
+		enum LineSpacing {
+			SingleLineSpacing,
+			OneAndHalfLineSpacing,
+			DoubleLineSpacing,
+			FixedLineSpacing
+		};
+
 	public:
 		ScenarioBlockStyle() : m_type(Undefined), m_font(QFont("Courier New", 12)) {}
 
@@ -98,14 +108,44 @@ namespace BusinessLogic
 		int topSpace() const { return m_topSpace; }
 
 		/**
+		 * @brief Отступ снизу, линий
+		 */
+		int bottomSpace() const { return m_bottomSpace; }
+
+		/**
 		 * @brief Отступ слева, мм
 		 */
 		qreal leftMargin() const { return m_leftMargin; }
 
 		/**
+		 * @brief Отступ сверху, мм
+		 */
+		qreal topMargin() const { return m_topMargin; }
+
+		/**
 		 * @brief Отступ справа, мм
 		 */
 		qreal rightMargin() const { return m_rightMargin; }
+
+		/**
+		 * @brief Отступ снизу, мм
+		 */
+		qreal bottomMargin() const { return m_bottomMargin; }
+
+		/**
+		 * @brief Заданы ли отступы в блоке в мм [true], или в линиях [false]
+		 */
+		bool hasVerticalSpacingInMM() const { return m_topMargin != 0 || m_bottomMargin != 0; }
+
+		/**
+		 * @brief Межстрочный интервал
+		 */
+		LineSpacing lineSpacing() const { return m_lineSpacing; }
+
+		/**
+		 * @brief Значение межстрочного интервала для FixedLineSpacing, мм
+		 */
+		qreal lineSpacingValue() const { return m_lineSpacingValue; }
 
 		/**
 		 * @brief Установить активность
@@ -123,19 +163,44 @@ namespace BusinessLogic
 		void setAlign(Qt::Alignment _align);
 
 		/**
-		 * @brief Установить отступ сверху
+		 * @brief Установить отступ сверху, линий
 		 */
 		void setTopSpace(int _topSpace);
 
 		/**
-		 * @brief Установить левый отступ
+		 * @brief Установить отступ сверху, линий
+		 */
+		void setBottomSpace(int _bottomSpace);
+
+		/**
+		 * @brief Установить левый отступ, мм
 		 */
 		void setLeftMargin(qreal _leftMargin);
 
 		/**
-		 * @brief Установить правый отступ
+		 * @brief Установить верхний отступ, мм
+		 */
+		void setTopMargin(qreal _topMargin);
+
+		/**
+		 * @brief Установить правый отступ, мм
 		 */
 		void setRightMargin(qreal _rightMargin);
+
+		/**
+		 * @brief Установить нижний отступ, мм
+		 */
+		void setBottomMargin(qreal _bottomMargin);
+
+		/**
+		 * @brief Установить межстрочный интервал
+		 */
+		void setLineSpacing(LineSpacing _lineSpacing);
+
+		/**
+		 * @brief Значение межстрочного интервала для FixedLineSpacing, мм
+		 */
+		void setLineSpacingValue(qreal _value);
 
 		/**
 		 * @brief Настройки стиля отображения блока
@@ -229,6 +294,16 @@ namespace BusinessLogic
 		 */
 		void updateLineHeight();
 
+		/**
+		 * @brief Обновить верхний отступ
+		 */
+		void updateTopMargin();
+
+		/**
+		 * @brief Обновить нижний отступ
+		 */
+		void updateBottomMargin();
+
 	private:
 		/**
 		 * @brief Тип блока
@@ -256,14 +331,39 @@ namespace BusinessLogic
 		int m_topSpace;
 
 		/**
+		 * @brief Отступ снизу, линий
+		 */
+		int m_bottomSpace;
+
+		/**
 		 * @brief Отступ слева, мм
 		 */
 		qreal m_leftMargin;
 
 		/**
+		 * @brief Отступ сверху, мм
+		 */
+		qreal m_topMargin;
+
+		/**
 		 * @brief Отступ справа, мм
 		 */
 		qreal m_rightMargin;
+
+		/**
+		 * @brief Отступ снизу, мм
+		 */
+		qreal m_bottomMargin;
+
+		/**
+		 * @brief Межстрочный интервал
+		 */
+		LineSpacing m_lineSpacing;
+
+		/**
+		 * @brief Значение межстрочного интервала для FixedLineSpacing, мм
+		 */
+		qreal m_lineSpacingValue;
 
 		/**
 		 * @brief Формат блока

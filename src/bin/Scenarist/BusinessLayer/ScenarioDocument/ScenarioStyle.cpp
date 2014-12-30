@@ -86,6 +86,20 @@ namespace {
 		}
 		return result;
 	}
+
+	/**
+	 * @brief Получить межстрочный интервал из строки
+	 */
+	static ScenarioBlockStyle::LineSpacing lineSpacingFromString(const QString& _lineSpacing) {
+		ScenarioBlockStyle::LineSpacing result = ScenarioBlockStyle::SingleLineSpacing;
+
+		if (_lineSpacing == "single") result = ScenarioBlockStyle::SingleLineSpacing;
+		else if (_lineSpacing == "oneandhalf") result = ScenarioBlockStyle::OneAndHalfLineSpacing;
+		else if (_lineSpacing == "double") result = ScenarioBlockStyle::DoubleLineSpacing;
+		else if (_lineSpacing == "fixed") result = ScenarioBlockStyle::FixedLineSpacing;
+
+		return result;
+	}
 }
 
 QString ScenarioBlockStyle::typeName(ScenarioBlockStyle::Type _type)
@@ -139,7 +153,16 @@ void ScenarioBlockStyle::setTopSpace(int _topSpace)
 	if (m_topSpace != _topSpace) {
 		m_topSpace = _topSpace;
 
-		m_blockFormat.setTopMargin(m_blockFormat.lineHeight() * m_topSpace);
+		updateTopMargin();
+	}
+}
+
+void ScenarioBlockStyle::setBottomSpace(int _bottomSpace)
+{
+	if (m_bottomSpace != _bottomSpace) {
+		m_bottomSpace = _bottomSpace;
+
+		updateBottomMargin();
 	}
 }
 
@@ -152,12 +175,48 @@ void ScenarioBlockStyle::setLeftMargin(qreal _leftMargin)
 	}
 }
 
+void ScenarioBlockStyle::setTopMargin(qreal _topMargin)
+{
+	if (m_topMargin != _topMargin) {
+		m_topMargin = _topMargin;
+
+		updateTopMargin();
+	}
+}
+
 void ScenarioBlockStyle::setRightMargin(qreal _rightMargin)
 {
 	if (m_rightMargin != _rightMargin) {
 		m_rightMargin = _rightMargin;
 
 		m_blockFormat.setRightMargin(PageMetrics::mmToPx(m_rightMargin));
+	}
+}
+
+void ScenarioBlockStyle::setBottomMargin(qreal _bottomMargin)
+{
+	if (m_bottomMargin != _bottomMargin) {
+		m_bottomMargin = _bottomMargin;
+
+		updateBottomMargin();
+	}
+}
+
+void ScenarioBlockStyle::setLineSpacing(ScenarioBlockStyle::LineSpacing _lineSpacing)
+{
+	if (m_lineSpacing != _lineSpacing) {
+		m_lineSpacing = _lineSpacing;
+
+		updateLineHeight();
+	}
+}
+
+void ScenarioBlockStyle::setLineSpacingValue(qreal _value)
+{
+	if (m_lineSpacingValue != _value) {
+		m_lineSpacingValue = _value;
+
+		updateLineHeight();
 	}
 }
 
@@ -271,8 +330,13 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	//
 	m_align = ::alignmentFromString(_blockAttributes.value("alignment").toString());
 	m_topSpace = _blockAttributes.value("top_space").toInt();
+	m_bottomSpace = _blockAttributes.value("bottom_space").toInt();
 	m_leftMargin = _blockAttributes.value("left_margin").toDouble();
+	m_topMargin = _blockAttributes.value("top_margin").toDouble();
 	m_rightMargin = _blockAttributes.value("right_margin").toDouble();
+	m_bottomMargin = _blockAttributes.value("bottom_margin").toDouble();
+	m_lineSpacing = ::lineSpacingFromString(_blockAttributes.value("line_spacing").toString());
+	m_lineSpacingValue = _blockAttributes.value("line_spacing_value").toDouble();
 
 	//
 	// Настроим форматы
@@ -280,10 +344,9 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	// ... блока
 	//
 	m_blockFormat.setAlignment(m_align);
-	updateLineHeight();
 	m_blockFormat.setLeftMargin(PageMetrics::mmToPx(m_leftMargin));
 	m_blockFormat.setRightMargin(PageMetrics::mmToPx(m_rightMargin));
-	m_blockFormat.setBottomMargin(0);
+	updateLineHeight();
 	//
 	// ... текста
 	//
@@ -335,9 +398,46 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 
 void ScenarioBlockStyle::updateLineHeight()
 {
-	const qreal lineHeight = TextEditHelper::fontLineHeight(m_font);
+	qreal lineHeight = TextEditHelper::fontLineHeight(m_font);;
+	switch (m_lineSpacing) {
+		case FixedLineSpacing: {
+			lineHeight = PageMetrics::mmToPx(m_lineSpacingValue);
+			break;
+		}
+
+		case DoubleLineSpacing: {
+			lineHeight *= 2;
+			break;
+		}
+
+		case OneAndHalfLineSpacing: {
+			lineHeight *= 1.5;
+			break;
+		}
+
+		case SingleLineSpacing:
+		default: {
+			break;
+		}
+	}
 	m_blockFormat.setLineHeight(lineHeight, QTextBlockFormat::FixedHeight);
-	m_blockFormat.setTopMargin(lineHeight * m_topSpace);
+
+	updateTopMargin();
+	updateBottomMargin();
+}
+
+void ScenarioBlockStyle::updateTopMargin()
+{
+	m_blockFormat.setTopMargin(
+		m_blockFormat.lineHeight() * m_topSpace + PageMetrics::mmToPx(m_topMargin)
+		);
+}
+
+void ScenarioBlockStyle::updateBottomMargin()
+{
+	m_blockFormat.setBottomMargin(
+		m_blockFormat.lineHeight() * m_bottomSpace + PageMetrics::mmToPx(m_bottomMargin)
+		);
 }
 
 // ********
@@ -391,7 +491,19 @@ namespace {
 
 		return result;
 	}
+	static QString toString(ScenarioBlockStyle::LineSpacing _value) {
+		QString result;
 
+		switch (_value) {
+			default:
+			case ScenarioBlockStyle::SingleLineSpacing: result = "single"; break;
+			case ScenarioBlockStyle::OneAndHalfLineSpacing: result = "oneandhalf"; break;
+			case ScenarioBlockStyle::DoubleLineSpacing: result = "double"; break;
+			case ScenarioBlockStyle::FixedLineSpacing: result = "fixed"; break;
+		}
+
+		return result;
+	}
 	/** @} */
 }
 
@@ -421,8 +533,13 @@ void ScenarioStyle::saveToFile(const QString& _filePath) const
 														  == QFont::AllUppercase));
 			writer.writeAttribute("alignment", ::toString(blockStyle.align()));
 			writer.writeAttribute("top_space", ::toString(blockStyle.topSpace()));
+			writer.writeAttribute("bottom_space", ::toString(blockStyle.bottomSpace()));
 			writer.writeAttribute("left_margin", ::toString(blockStyle.leftMargin()));
+			writer.writeAttribute("top_margin", ::toString(blockStyle.topMargin()));
 			writer.writeAttribute("right_margin", ::toString(blockStyle.rightMargin()));
+			writer.writeAttribute("bottom_margin", ::toString(blockStyle.bottomMargin()));
+			writer.writeAttribute("line_spacing", ::toString(blockStyle.lineSpacing()));
+			writer.writeAttribute("line_spacing_value", ::toString(blockStyle.lineSpacingValue()));
 			writer.writeEndElement(); // block
 		}
 		writer.writeEndElement(); // style

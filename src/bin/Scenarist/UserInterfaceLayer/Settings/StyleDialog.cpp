@@ -138,8 +138,22 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 		m_blockStyle.setAlign(align);
 
 		m_blockStyle.setTopSpace(ui->topSpace->value());
+		m_blockStyle.setBottomSpace(ui->bottomSpace->value());
 		m_blockStyle.setLeftMargin(ui->leftIndent->value());
+		m_blockStyle.setTopMargin(ui->topIndent->value());
 		m_blockStyle.setRightMargin(ui->rightIndent->value());
+		m_blockStyle.setBottomMargin(ui->bottomIndent->value());
+
+		ScenarioBlockStyle::LineSpacing lineSpacing;
+		switch (ui->lineSpacing->currentIndex()) {
+			default:
+			case 0: lineSpacing = ScenarioBlockStyle::SingleLineSpacing; break;
+			case 1: lineSpacing = ScenarioBlockStyle::OneAndHalfLineSpacing; break;
+			case 2: lineSpacing = ScenarioBlockStyle::DoubleLineSpacing; break;
+			case 3: lineSpacing = ScenarioBlockStyle::FixedLineSpacing; break;
+		}
+		m_blockStyle.setLineSpacing(lineSpacing);
+		m_blockStyle.setLineSpacingValue(ui->lineSpacingValue->value());
 
 		//
 		// Сохраним стиль блока в стиле сценария
@@ -155,8 +169,13 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 			footerBlockStyle.setFont(m_blockStyle.font());
 			footerBlockStyle.setAlign(m_blockStyle.align());
 			footerBlockStyle.setTopSpace(m_blockStyle.topSpace());
+			footerBlockStyle.setBottomSpace(m_blockStyle.bottomSpace());
 			footerBlockStyle.setLeftMargin(m_blockStyle.leftMargin());
+			footerBlockStyle.setTopMargin(m_blockStyle.topMargin());
 			footerBlockStyle.setRightMargin(m_blockStyle.rightMargin());
+			footerBlockStyle.setBottomMargin(m_blockStyle.bottomMargin());
+			footerBlockStyle.setLineSpacing(m_blockStyle.lineSpacing());
+			footerBlockStyle.setLineSpacingValue(m_blockStyle.lineSpacingValue());
 
 			//
 			// Сохраним стиль завершающего блока в стиле сценария
@@ -195,8 +214,31 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 		}
 		ui->alignment->setCurrentIndex(alignIndex);
 		ui->topSpace->setValue(activatedBlockStyle.topSpace());
+		ui->bottomSpace->setValue(activatedBlockStyle.bottomSpace());
 		ui->leftIndent->setValue(activatedBlockStyle.leftMargin());
+		ui->topIndent->setValue(activatedBlockStyle.topMargin());
 		ui->rightIndent->setValue(activatedBlockStyle.rightMargin());
+		ui->bottomIndent->setValue(activatedBlockStyle.bottomMargin());
+		//
+		// Настроим текущий тип вертикальных отступов блока
+		//
+		{
+			if (activatedBlockStyle.hasVerticalSpacingInMM()) {
+				ui->spacingType->setCurrentIndex(1);
+			} else {
+				ui->spacingType->setCurrentIndex(0);
+			}
+		}
+		int lineSpacingIndex = 0;
+		switch (activatedBlockStyle.lineSpacing()) {
+			default:
+			case ScenarioBlockStyle::SingleLineSpacing: lineSpacingIndex = 0; break;
+			case ScenarioBlockStyle::OneAndHalfLineSpacing: lineSpacingIndex = 1; break;
+			case ScenarioBlockStyle::DoubleLineSpacing: lineSpacingIndex = 2; break;
+			case ScenarioBlockStyle::FixedLineSpacing: lineSpacingIndex = 3; break;
+		}
+		ui->lineSpacing->setCurrentIndex(lineSpacingIndex);
+		ui->lineSpacingValue->setValue(activatedBlockStyle.lineSpacingValue());
 
 		//
 		// Запомним стиль блока
@@ -209,6 +251,53 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 	else {
 		m_blockStyle = m_style.blockStyle(ScenarioBlockStyle::Undefined);
 	}
+}
+
+void StyleDialog::aboutSpacingTypeChanged()
+{
+	const int LINE_SPACING_INDEX = 0;
+
+	//
+	// Настраиваем верхний и нижний отступы
+	//
+	// ... линиями
+	//
+	if (ui->spacingType->currentIndex() == LINE_SPACING_INDEX) {
+		ui->topSpace->show();
+		ui->bottomSpace->show();
+
+		ui->topIndent->hide();
+		ui->topIndent->setValue(0);
+		ui->bottomIndent->hide();
+		ui->bottomIndent->setValue(0);
+	}
+	//
+	// ... в миллиметрах
+	//
+	else {
+		ui->topIndent->show();
+		ui->bottomIndent->show();
+
+		ui->topSpace->hide();
+		ui->topSpace->setValue(0);
+		ui->bottomSpace->hide();
+		ui->bottomSpace->setValue(0);
+	}
+}
+
+void StyleDialog::aboutLineSpacingChanged()
+{
+	//
+	// Делаем активной возможность настройки точного межстрочного интервала, если необходимо
+	//
+	const int FIXED_LINE_SPACING_INDEX = 3;
+	bool isEnabled = false;
+	if (ui->lineSpacing->currentIndex() == FIXED_LINE_SPACING_INDEX) {
+		isEnabled = true;
+	}
+
+	ui->lineSpacingValueLabel->setEnabled(isEnabled);
+	ui->lineSpacingValue->setEnabled(isEnabled);
 }
 
 void StyleDialog::initView()
@@ -236,12 +325,19 @@ void StyleDialog::initView()
 	QStringListModel* fontsModel = new QStringListModel(ui->fontFamily);
 	fontsModel->setStringList(QFontDatabase().families());
 	ui->fontFamily->setModel(fontsModel);
+
+	//
+	// Предварительная настройка типа вертикальных отступов
+	//
+	aboutSpacingTypeChanged();
 }
 
 void StyleDialog::initConnections()
 {
 	connect(ui->blockStyles, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
 			this, SLOT(aboutBlockStyleActivated(QListWidgetItem*)));
+	connect(ui->spacingType, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutSpacingTypeChanged()));
+	connect(ui->lineSpacing, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutLineSpacingChanged()));
 
 	connect(ui->close, SIGNAL(clicked()), this, SLOT(reject()));
 	connect(ui->save, SIGNAL(clicked()), this, SLOT(accept()));
