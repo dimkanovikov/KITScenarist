@@ -59,6 +59,33 @@ namespace {
 	 * @brief Расширение файла стиля сценария
 	 */
 	const QString SCENARIO_STYLE_FILE_EXTENSION = "kitss";
+
+	/**
+	 * @brief Получить выравнивание из строки
+	 */
+	static Qt::Alignment alignmentFromString(const QString& _alignment) {
+		Qt::Alignment result;
+		//
+		// Если нужно преобразовать несколько условий
+		//
+		if (_alignment.contains(",")) {
+			foreach (const QString& align, _alignment.split(",")) {
+				result |= ::alignmentFromString(align);
+			}
+		}
+		//
+		// Если нужно преобразовать одно выравнивание
+		//
+		else {
+			if (_alignment == "top") result = Qt::AlignTop;
+			else if (_alignment == "bottom") result = Qt::AlignBottom;
+			else if (_alignment == "left") result = Qt::AlignLeft;
+			else if (_alignment == "center") result = Qt::AlignCenter;
+			else if (_alignment == "right") result = Qt::AlignRight;
+			else if (_alignment == "justify") result = Qt::AlignJustify;
+		}
+		return result;
+	}
 }
 
 QString ScenarioBlockStyle::typeName(ScenarioBlockStyle::Type _type)
@@ -242,14 +269,7 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	//
 	// ... расположение блока
 	//
-	QString alignment = _blockAttributes.value("alignment").toString();
-	if (alignment == "left") {
-		m_align = Qt::AlignLeft;
-	} else if (alignment == "center") {
-		m_align = Qt::AlignCenter;
-	} else {
-		m_align = Qt::AlignRight;
-	}
+	m_align = ::alignmentFromString(_blockAttributes.value("alignment").toString());
 	m_topSpace = _blockAttributes.value("top_space").toInt();
 	m_leftMargin = _blockAttributes.value("left_margin").toDouble();
 	m_rightMargin = _blockAttributes.value("right_margin").toDouble();
@@ -346,29 +366,6 @@ namespace {
 				.arg(_margins.bottom());
 	}
 
-	static Qt::Alignment alignmentFromString(const QString& _alignment) {
-		Qt::Alignment result;
-		//
-		// Если нужно преобразовать несколько условий
-		//
-		if (_alignment.contains(",")) {
-			foreach (const QString& align, _alignment.split(",")) {
-				result |= ::alignmentFromString(align);
-			}
-		}
-		//
-		// Если нужно преобразовать одно выравнивание
-		//
-		else {
-			if (_alignment == "top") result = Qt::AlignTop;
-			else if (_alignment == "bottom") result = Qt::AlignBottom;
-			else if (_alignment == "left") result = Qt::AlignLeft;
-			else if (_alignment == "center") result = Qt::AlignCenter;
-			else if (_alignment == "right") result = Qt::AlignRight;
-		}
-		return result;
-	}
-
 	/**
 	 * @brief Преобразование разных типов в строку для записи в xml
 	 */
@@ -390,6 +387,7 @@ namespace {
 		if (_value.testFlag(Qt::AlignLeft)) result.append("left");
 		if (_value.testFlag(Qt::AlignCenter)) result.append("center");
 		if (_value.testFlag(Qt::AlignRight)) result.append("right");
+		if (_value.testFlag(Qt::AlignJustify)) result.append("justify");
 
 		return result;
 	}

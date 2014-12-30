@@ -110,8 +110,14 @@ namespace {
 					break;
 				}
 
+				case Qt::AlignCenter:
 				case Qt::AlignHCenter: {
 					blockStyle.append("center");
+					break;
+				}
+
+				case Qt::AlignJustify: {
+					blockStyle.append("both");
 					break;
 				}
 
@@ -219,6 +225,11 @@ namespace {
 
 				case Qt::AlignRight: {
 					documentXml.append("<w:jc w:val=\"right\"/>");
+					break;
+				}
+
+				case Qt::AlignJustify: {
+					documentXml.append("<w:jc w:val=\"both\"/>");
 					break;
 				}
 

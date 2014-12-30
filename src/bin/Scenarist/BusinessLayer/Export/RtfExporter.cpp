@@ -153,8 +153,14 @@ namespace {
 					break;
 				}
 
+				case Qt::AlignCenter:
 				case Qt::AlignHCenter: {
 					blockStyle.append("\\qc");
+					break;
+				}
+
+				case Qt::AlignJustify: {
+					blockStyle.append("\\qj");
 					break;
 				}
 
@@ -403,6 +409,11 @@ QString RtfExporter::style(const QTextBlockFormat& _blockFormat, const QTextChar
 		case Qt::AlignCenter:
 		case Qt::AlignHCenter: {
 			blockStyle.append("\\qc");
+			break;
+		}
+
+		case Qt::AlignJustify: {
+			blockStyle.append("\\qj");
 			break;
 		}
 

@@ -133,6 +133,7 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 			case 0: align = Qt::AlignLeft; break;
 			case 1: align = Qt::AlignCenter; break;
 			case 2: align = Qt::AlignRight; break;
+			case 3: align = Qt::AlignJustify; break;
 		}
 		m_blockStyle.setAlign(align);
 
@@ -190,6 +191,7 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 			case Qt::AlignLeft: alignIndex = 0; break;
 			case Qt::AlignCenter: alignIndex = 1; break;
 			case Qt::AlignRight: alignIndex = 2; break;
+			case Qt::AlignJustify: alignIndex = 3; break;
 		}
 		ui->alignment->setCurrentIndex(alignIndex);
 		ui->topSpace->setValue(activatedBlockStyle.topSpace());
