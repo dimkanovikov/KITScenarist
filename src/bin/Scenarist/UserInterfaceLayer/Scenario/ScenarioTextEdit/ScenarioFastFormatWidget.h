@@ -75,6 +75,11 @@ namespace UserInterface
 		 */
 		void aboutCurrentStyleChanged();
 
+		/**
+		 * @brief Сменилось значение отлавливания курсора
+		 */
+		void aboutGrabCursorChanged(bool _catch);
+
 	private:
 		/**
 		 * @brief Захватить фокус, если необходимо

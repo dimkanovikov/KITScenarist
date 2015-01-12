@@ -113,6 +113,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	connect(goToNextShortcut, SIGNAL(activated()), goToNextBlock, SLOT(click()));
 
 	m_grabFocus->setText(tr("Catch focus"));
+	connect(m_grabFocus, SIGNAL(toggled(bool)), this, SLOT(aboutGrabCursorChanged(bool)));
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->addWidget(goToPrevBlock);
@@ -278,6 +279,14 @@ void ScenarioFastFormatWidget::aboutCurrentStyleChanged()
 	}
 }
 
+void ScenarioFastFormatWidget::aboutGrabCursorChanged(bool _catch)
+{
+	if (_catch) {
+		selectCurrentBlock();
+	}
+	catchFocusIfNeeded();
+}
+
 void ScenarioFastFormatWidget::catchFocusIfNeeded()
 {
 	//
@@ -291,7 +300,10 @@ void ScenarioFastFormatWidget::catchFocusIfNeeded()
 	//
 	else {
 		if (m_editor != 0) {
-			m_editor->moveCursor(QTextCursor::Right);
+			QTextCursor cursor = m_editor->textCursor();
+			cursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
+			m_editor->setTextCursor(cursor);
+			m_editor->setFocus();
 		}
 	}
 }
