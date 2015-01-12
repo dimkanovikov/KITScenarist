@@ -56,7 +56,7 @@ TimeAndPlaceParser::Section TimeAndPlaceParser::section(const QString& _text)
 
 	if (_text.split(", ").count() == 2) {
 		section = SectionScenarioDay;
-	} else if (_text.split(" - ").count() == 2) {
+	} else if (_text.split(" - ").count() >= 2) {
 		section = SectionTime;
 	} else {
 		const int splitDotCount = _text.split(". ").count();
@@ -87,7 +87,8 @@ QString TimeAndPlaceParser::locationName(const QString& _text)
 
 	if (_text.split(". ").count() > 1) {
 		locationName = _text.mid(_text.indexOf(". ") + 2);
-		locationName = locationName.split(" - ").first();
+		const QString suffix = locationName.split(" - ").last();
+		locationName = locationName.remove(" - " + suffix);
 	}
 
 	return locationName;
@@ -108,7 +109,7 @@ QString TimeAndPlaceParser::timeName(const QString& _text)
 {
 	QString timeName;
 
-	if (_text.split(" - ").count() == 2) {
+	if (_text.split(" - ").count() >= 2) {
 		timeName = _text.split(" - ").last().split(",").first();
 	}
 
