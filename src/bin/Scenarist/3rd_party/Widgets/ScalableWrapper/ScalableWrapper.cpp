@@ -310,8 +310,11 @@ void ScalableWrapper::updateTextEditSize()
 
 void ScalableWrapper::scaleTextEdit()
 {
+	const qreal DEFAULT_ZOOM_RANGE = 1.0;
 	const qreal MINIMUM_ZOOM_RANGE = 0.5;
-	if (m_zoomRange < MINIMUM_ZOOM_RANGE) {
+	if (m_zoomRange <= 0) {
+		m_zoomRange = DEFAULT_ZOOM_RANGE;
+	} else if (m_zoomRange < MINIMUM_ZOOM_RANGE) {
 		m_zoomRange = MINIMUM_ZOOM_RANGE;
 	}
 	m_editorProxy->setScale(m_zoomRange);
