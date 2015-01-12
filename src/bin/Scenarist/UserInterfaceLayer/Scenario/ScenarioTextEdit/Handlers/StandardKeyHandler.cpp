@@ -28,7 +28,9 @@ void StandardKeyHandler::handleShortcut(QKeyEvent* _event)
 		// Получим код нажатой кнопки
 		//
 		Qt::Key realKey = (Qt::Key)keyCharacterToQtKey(_event->text());
-		if (realKey == Qt::Key_unknown) {
+		if ((Qt::Key)_event->key() == Qt::Key_Enter
+			|| (Qt::Key)_event->key() == Qt::Key_Return
+			|| realKey == Qt::Key_unknown) {
 			realKey = (Qt::Key)_event->key();
 		}
 
@@ -856,34 +858,44 @@ int StandardKeyHandler::keyCharacterToQtKey(const QString& _keyCharacter) const
 				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_V;
 		} else if (keyCharacter == "e"
-				   || keyCharacter == QString::fromUtf8("у")) {
+				   || keyCharacter == QString::fromUtf8("у")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_E;
 		} else if (keyCharacter == "j"
-				   || keyCharacter == QString::fromUtf8("о")) {
+				   || keyCharacter == QString::fromUtf8("о")
+				   || keyCharacter == QString::fromUtf8("\n")) {
 			qtKey = Qt::Key_J;
 		} else if (keyCharacter == "u"
-				   || keyCharacter == QString::fromUtf8("г")) {
+				   || keyCharacter == QString::fromUtf8("г")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_U;
 		} else if (keyCharacter == "l"
-				   || keyCharacter == QString::fromUtf8("д")) {
+				   || keyCharacter == QString::fromUtf8("д")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_L;
 		} else if (keyCharacter == "h"
-				   || keyCharacter == QString::fromUtf8("р")) {
+				   || keyCharacter == QString::fromUtf8("р")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_H;
 		} else if (keyCharacter == "n"
-				   || keyCharacter == QString::fromUtf8("т")) {
+				   || keyCharacter == QString::fromUtf8("т")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_N;
 		} else if (keyCharacter == "p"
-				   || keyCharacter == QString::fromUtf8("з")) {
+				   || keyCharacter == QString::fromUtf8("з")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_P;
 		} else if (keyCharacter == "g"
-				   || keyCharacter == QString::fromUtf8("п")) {
+				   || keyCharacter == QString::fromUtf8("п")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_G;
 		} else if (keyCharacter == "d"
-				   || keyCharacter == QString::fromUtf8("в")) {
+				   || keyCharacter == QString::fromUtf8("в")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_D;
 		} else if (keyCharacter == "y"
-				   || keyCharacter == QString::fromUtf8("н")) {
+				   || keyCharacter == QString::fromUtf8("н")
+				   || keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_Y;
 		}
 	}
