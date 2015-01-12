@@ -80,7 +80,7 @@ void PhotoLabel::aboutChoosePhoto()
 			QFileDialog::getOpenFileName(this,
 										 tr("Choose image"),
 										 QString(),
-										 tr("Images (*.png *.jpeg *.jpg)"));
+										 tr("Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)"));
 	if (!imageFile.isEmpty()) {
 		setPhoto(QPixmap(imageFile));
 	}
