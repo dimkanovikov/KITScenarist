@@ -4,6 +4,7 @@
 #include "StorageFacade.h"
 
 class QString;
+class QStringList;
 
 namespace Domain {
 	class Character;
@@ -42,6 +43,7 @@ namespace DataStorageLayer
 		 * @brief Удалить персонажа
 		 */
 		void removeCharacter(const QString& _name);
+		void removeCharacters(const QStringList& _names);
 
 		/**
 		 * @brief Проверить наличие заданного персонажа

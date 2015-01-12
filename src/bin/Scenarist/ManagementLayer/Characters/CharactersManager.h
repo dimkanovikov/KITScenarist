@@ -73,7 +73,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Удалить персонажа
 		 */
-		void aboutRemoveCharacter(const QString& _name);
+		void aboutRemoveCharacters(const QStringList& _names);
 
 	private:
 		/**

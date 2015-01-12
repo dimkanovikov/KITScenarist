@@ -76,6 +76,6 @@ void CharactersNavigatorManager::initConnections()
 {
 	connect(m_navigator, SIGNAL(addCharacter()), this, SLOT(aboutAddCharacter()));
 	connect(m_navigator, SIGNAL(editCharacter(QString)), this, SIGNAL(editCharacter(QString)));
-	connect(m_navigator, SIGNAL(removeCharacter(QString)), this, SIGNAL(removeCharacter(QString)));
+	connect(m_navigator, SIGNAL(removeCharacters(QStringList)), this, SIGNAL(removeCharacters(QStringList)));
 	connect(m_navigator, SIGNAL(refreshCharacters()), this, SIGNAL(refreshCharacters()));
 }

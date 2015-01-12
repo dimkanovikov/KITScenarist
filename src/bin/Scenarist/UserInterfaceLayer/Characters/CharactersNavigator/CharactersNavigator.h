@@ -53,7 +53,7 @@ namespace UserInterface
 		/**
 		 * @brief Удалить персонажа
 		 */
-		void removeCharacter(const QString& _name);
+		void removeCharacters(const QStringList& _names);
 
 		/**
 		 * @brief Обновить список персонажей
@@ -69,13 +69,13 @@ namespace UserInterface
 		/**
 		 * @brief Обработчик нажатия кнопки удаления персонажа
 		 */
-		void aboutRemoveCharacter();
+		void aboutRemoveCharacters();
 
 	private:
 		/**
-		 * @brief Получить имя выделенного персонажа
+		 * @brief Получить имена выделенных персонажей
 		 */
-		QString selectedCharacterName() const;
+		QStringList selectedCharactersNames() const;
 
 	private:
 		/**

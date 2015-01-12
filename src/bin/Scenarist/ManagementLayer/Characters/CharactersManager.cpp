@@ -100,20 +100,20 @@ void CharactersManager::aboutEditCharacter(const QString& _name)
 	m_dataEditManager->editCharacter(character);
 }
 
-void CharactersManager::aboutRemoveCharacter(const QString& _name)
+void CharactersManager::aboutRemoveCharacters(const QStringList& _names)
 {
 	//
 	// Если пользователь серьёзно намерен удалить персонажа
 	//
 	if (QMessageBox::question(
 			m_view,
-			tr("Remove Character"),
-			tr("Are you shure to remove character?"),
+			tr("Remove Characters"),
+			tr("Are you shure to remove selected characters?"),
 			QMessageBox::Yes | QMessageBox::No) == 	QMessageBox::Yes) {
 		//
 		// ... удалим его
 		//
-		DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(_name);
+		DataStorageLayer::StorageFacade::characterStorage()->removeCharacters(_names);
 
 		//
 		// ... очистим редактор
@@ -142,7 +142,7 @@ void CharactersManager::initConnections()
 {
 	connect(m_navigatorManager, SIGNAL(addCharacter(QString)), this, SLOT(aboutAddCharacter(QString)));
 	connect(m_navigatorManager, SIGNAL(editCharacter(QString)), this, SLOT(aboutEditCharacter(QString)));
-	connect(m_navigatorManager, SIGNAL(removeCharacter(QString)), this, SLOT(aboutRemoveCharacter(QString)));
+	connect(m_navigatorManager, SIGNAL(removeCharacters(QStringList)), this, SLOT(aboutRemoveCharacters(QStringList)));
 	connect(m_navigatorManager, SIGNAL(refreshCharacters()), this, SIGNAL(refreshCharacters()));
 
 	connect(m_dataEditManager, SIGNAL(characterChanged()), this, SIGNAL(characterChanged()));

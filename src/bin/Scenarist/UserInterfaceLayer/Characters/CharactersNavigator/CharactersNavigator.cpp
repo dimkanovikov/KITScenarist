@@ -36,7 +36,8 @@ void CharactersNavigator::setModel(QAbstractItemModel* _model)
 	//
 	// Настраиваем запрос на изменение при изменении текущего элемента
 	//
-	connect(m_navigator->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(aboutEditCharacter()));
+	connect(m_navigator->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+		this, SLOT(aboutEditCharacter()));
 }
 
 void CharactersNavigator::selectFirstCharacter()
@@ -71,19 +72,24 @@ void CharactersNavigator::selectCharacter(const QModelIndex& _index)
 
 void CharactersNavigator::aboutEditCharacter()
 {
-	emit editCharacter(selectedCharacterName());
+	QStringList selectedCharacters = selectedCharactersNames();
+	if (!selectedCharacters.isEmpty()) {
+		emit editCharacter(selectedCharacters.first());
+	}
 }
 
-void CharactersNavigator::aboutRemoveCharacter()
+void CharactersNavigator::aboutRemoveCharacters()
 {
-	emit removeCharacter(selectedCharacterName());
+	emit removeCharacters(selectedCharactersNames());
 }
 
-QString CharactersNavigator::selectedCharacterName() const
+QStringList CharactersNavigator::selectedCharactersNames() const
 {
-	QModelIndex currentSelected = m_navigator->selectionModel()->currentIndex();
-	QString userName = m_navigator->model()->data(currentSelected).toString();
-	return userName;
+	QStringList charactersNames;
+	foreach (QModelIndex characterIndex, m_navigator->selectionModel()->selectedIndexes()) {
+		charactersNames.append(m_navigatorProxyModel->data(characterIndex).toString());
+	}
+	return charactersNames;
 }
 
 void CharactersNavigator::initView()
@@ -106,6 +112,7 @@ void CharactersNavigator::initView()
 	m_navigator->setAlternatingRowColors(true);
 	m_navigator->setItemDelegate(new CharactersNavigatorItemDelegate(m_navigator));
 	m_navigator->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+	m_navigator->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());
@@ -128,7 +135,7 @@ void CharactersNavigator::initView()
 void CharactersNavigator::initConnections()
 {
 	connect(m_addCharacter, SIGNAL(clicked()), this, SIGNAL(addCharacter()));
-	connect(m_removeCharacter, SIGNAL(clicked()), this, SLOT(aboutRemoveCharacter()));
+	connect(m_removeCharacter, SIGNAL(clicked()), this, SLOT(aboutRemoveCharacters()));
 	connect(m_refreshCharacters, SIGNAL(clicked()), this, SIGNAL(refreshCharacters()));
 }
 

@@ -120,6 +120,13 @@ void CharacterStorage::removeCharacter(const QString& _name)
 	}
 }
 
+void CharacterStorage::removeCharacters(const QStringList& _names)
+{
+	foreach (const QString& name, _names) {
+		removeCharacter(name);
+	}
+}
+
 bool CharacterStorage::hasCharacter(const QString& _name)
 {
 	bool contains = false;

@@ -31,7 +31,7 @@ namespace ManagementLayer
 		 * @brief Выделить персонажа
 		 */
 		void chooseCharacter(const QString& _name);
-		
+
 	signals:
 		/**
 		 * @brief Добавить персонажа
@@ -46,13 +46,13 @@ namespace ManagementLayer
 		/**
 		 * @brief Удалить персонажа
 		 */
-		void removeCharacter(const QString& _name);
+		void removeCharacters(const QStringList& _names);
 
 		/**
 		 * @brief Обновить список персонажей
 		 */
 		void refreshCharacters();
-		
+
 	private slots:
 		/**
 		 * @brief Предобработчик добавления персонажа
