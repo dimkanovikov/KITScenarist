@@ -1,12 +1,38 @@
 #include "CompletableTextEdit.h"
 
-#include <QCompleter>
 #include <QAbstractItemView>
+#include <QCompleter>
+#include <QEvent>
 #include <QScrollBar>
+
+namespace {
+	//
+	// NOTE: При переходе от обычного редактора к обёртке масштабирования, дополняльщик
+	//		 стал показываться и скрываться через раз после нажатия клавиш. А всё дело в том,
+	//		 что его стандартное таково, что если виджет потерял фокус, то всплывающий список
+	//		 принудительно скрывается. Приходится применять мини хак.
+	//
+	class MyCompleter : public QCompleter
+	{
+	public:
+		explicit MyCompleter(QObject* _p = 0) : QCompleter(_p) {}
+
+	protected:
+		bool eventFilter(QObject *o, QEvent *e) {
+			//
+			// Проверяем тип события, чтобы не войти в бесконечную рекурсию
+			//
+			if (e->type() != QEvent::FocusIn && widget()) {
+				widget()->setFocus();
+			}
+			return QCompleter::eventFilter(o,e);
+		}
+	};
+}
 
 
 CompletableTextEdit::CompletableTextEdit(QWidget* _parent) :
-	SpellCheckTextEdit(_parent), m_completer(new QCompleter(this))
+	SpellCheckTextEdit(_parent), m_completer(new MyCompleter(this))
 {
 	m_completer->setWidget(this);
 	m_completer->setWrapAround(false);
@@ -62,6 +88,7 @@ bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _c
 			//
 			QRect rect = cursorRect();
 			rect.moveTo(viewport()->mapTo(this, rect.topLeft()));
+			rect.setX(rect.x() + verticalScrollBar()->width());
 			rect.setWidth(
 						m_completer->popup()->sizeHintForColumn(0)
 						+ m_completer->popup()->verticalScrollBar()->sizeHint().width());
