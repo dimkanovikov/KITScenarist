@@ -80,7 +80,7 @@ void OdtReader::readData(QIODevice* device)
 	// Close archive
 	zip.close();
 
-	QCoreApplication::processEvents();
+	QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 }
 
 //-----------------------------------------------------------------------------
@@ -395,7 +395,7 @@ void OdtReader::readParagraph(int level)
 	readText();
 	m_in_block = false;
 
-	QCoreApplication::processEvents();
+	QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 }
 
 //-----------------------------------------------------------------------------

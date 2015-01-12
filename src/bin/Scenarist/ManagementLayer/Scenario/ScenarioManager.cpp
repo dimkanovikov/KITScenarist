@@ -100,10 +100,6 @@ int ScenarioManager::cursorPosition() const
 void ScenarioManager::loadCurrentProject()
 {
 	//
-	// TODO: Loading progress
-	//
-
-	//
 	// Очистим от предыдущих данных
 	//
 	m_navigatorManager->setNavigationModel(0);

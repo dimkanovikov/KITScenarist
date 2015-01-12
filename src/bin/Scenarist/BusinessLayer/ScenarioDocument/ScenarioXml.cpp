@@ -6,6 +6,7 @@
 #include "ScenarioStyle.h"
 #include "ScenarioTextBlockInfo.h"
 
+#include <QApplication>
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QTextBlock>
@@ -343,6 +344,10 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 
 	QXmlStreamReader reader(_xml);
 	while (!reader.atEnd()) {
+		//
+		// Даём возможность выполниться графическим операциям
+		//
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
 		switch (reader.readNext()) {
 			case QXmlStreamReader::StartElement: {

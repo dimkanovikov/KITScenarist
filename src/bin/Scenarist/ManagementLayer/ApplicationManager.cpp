@@ -19,6 +19,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Widgets/SideBar/SideBar.h>
+#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
 
 #include <UserInterfaceLayer/ApplicationView.h>
 
@@ -522,6 +523,12 @@ void ApplicationManager::saveCurrentProjectInRecent()
 void ApplicationManager::goToEditCurrentProject()
 {
 	//
+	// Покажем уведомление пользователю
+	//
+	ProgressWidget progress(m_view);
+	progress.showProgress(tr("Loading Scenario"), tr("Please wait. Loading can take few minutes."));
+
+	//
 	// Активируем вкладки
 	//
 	::enableActionsOnProjectOpen();
@@ -553,6 +560,11 @@ void ApplicationManager::goToEditCurrentProject()
 	// Перейти на вкладку редактирования сценария
 	//
 	m_tabs->setCurrent(1);
+
+	//
+	// Закроем уведомление
+	//
+	progress.close();
 }
 
 void ApplicationManager::closeCurrentProject()

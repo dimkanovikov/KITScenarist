@@ -197,7 +197,7 @@ void ScenarioTextEdit::ensureCursorVisibleReimpl()
 	// Необходимо подождать, пока в приложение произойдёт перестройка размера линии прокрутки
 	// для того, чтобы иметь возможность прокрутить её ниже стандартной позиции редактора
 	//
-	QApplication::processEvents();
+	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
 	//
 	// Если курсор в конце документа прокручиваем ещё немного
