@@ -35,7 +35,6 @@ CompletableTextEdit::CompletableTextEdit(QWidget* _parent) :
 	SpellCheckTextEdit(_parent), m_completer(new MyCompleter(this))
 {
 	m_completer->setWidget(this);
-	m_completer->setWrapAround(false);
 	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(applyCompletion(QString)));
 }
 
