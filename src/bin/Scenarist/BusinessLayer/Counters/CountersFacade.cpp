@@ -1,15 +1,59 @@
 #include "CountersFacade.h"
 
+#include "Counter.h"
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <QApplication>
+#include <QTextCursor>
 #include <QTextDocument>
 
 using BusinessLogic::CountersFacade;
+using BusinessLogic::Counter;
 
 
-QString CountersFacade::calculateCounters(QTextDocument* _document)
+Counter CountersFacade::calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition)
+{
+	//
+	// Проверить какие счётчики необходимо рассчитать
+	//
+	bool calculateWords =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"counters/words/used",
+				DataStorageLayer::SettingsStorage::ApplicationSettings).toInt();
+	bool calculateCharacters =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"counters/simbols/used",
+				DataStorageLayer::SettingsStorage::ApplicationSettings).toInt();
+
+	Counter counter;
+	//
+	// Рассчитываем, если необходимо
+	//
+	if (calculateWords || calculateCharacters) {
+		//
+		// Определим текст, который необходимо обсчитать
+		//
+		QTextCursor cursor(_document);
+		cursor.setPosition(_fromCursorPosition);
+		cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
+		const QString text = cursor.selectedText().replace("\n", "").simplified();
+
+		if (calculateWords) {
+			counter.setWords(wordsCount(text));
+		}
+
+		if (calculateCharacters) {
+			counter.setCharactersWithSpaces(charactersWithSpacesCount(text));
+			counter.setCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
+		}
+	}
+
+	return counter;
+}
+
+QString CountersFacade::countersInfo(int pageCount, const BusinessLogic::Counter& _counter)
 {
 	//
 	// Проверить какие счётчики необходимо рассчитать
@@ -22,7 +66,7 @@ QString CountersFacade::calculateCounters(QTextDocument* _document)
 			DataStorageLayer::StorageFacade::settingsStorage()->value(
 				"counters/words/used",
 				DataStorageLayer::SettingsStorage::ApplicationSettings).toInt();
-	bool calculateSimbols =
+	bool calculateCharacters =
 			DataStorageLayer::StorageFacade::settingsStorage()->value(
 				"counters/simbols/used",
 				DataStorageLayer::SettingsStorage::ApplicationSettings).toInt();
@@ -31,53 +75,58 @@ QString CountersFacade::calculateCounters(QTextDocument* _document)
 	//
 	QString result;
 	if (calculatePages) {
-		result.append(pagesCounter(_document));
+		result.append(pageInfo(pageCount));
 	}
 
 	if (calculateWords) {
 		if (!result.isEmpty()) {
 			result.append(" ");
 		}
-		result.append(wordsCounter(_document));
+		result.append(wordsInfo(_counter.words()));
 	}
 
-	if (calculateSimbols) {
+	if (calculateCharacters) {
 		if (!result.isEmpty()) {
 			result.append(" ");
 		}
-		result.append(simbolsCounter(_document));
+		result.append(charactersInfo(_counter.charactersWithSpaces(), _counter.charactersWithoutSpaces()));
 	}
 
 	return result;
 }
 
-QString CountersFacade::pagesCounter(QTextDocument* _document)
+int CountersFacade::wordsCount(const QString& _text)
 {
-	QString result;
-	if (_document->pageSize().height() > 0) {
-		result = QString(" %1: <b>%2</b>")
-				 .arg(QApplication::translate("BusinessLogic::CountersFacade", "Pages"))
-				 .arg(_document->pageCount());
-	}
-	return result;
+	return _text.split(" ", QString::SkipEmptyParts).count();
 }
 
-QString CountersFacade::wordsCounter(QTextDocument* _document)
+int CountersFacade::charactersWithSpacesCount(const QString& _text)
 {
-	const int wordsCount =
-			_document->toPlainText().simplified().split(" ", QString::SkipEmptyParts).count();
+	return _text.size();
+}
+
+int CountersFacade::charactersWithoutSpacesCount(const QString& _text)
+{
+	return QString(_text).replace(" ", "").size();
+}
+
+QString CountersFacade::pageInfo(int _count)
+{
+	return QString(" %1: <b>%2</b>")
+			.arg(QApplication::translate("BusinessLogic::CountersFacade", "Pages"))
+			.arg(_count);
+}
+
+QString CountersFacade::wordsInfo(int _count)
+{
 	return QString(" %1: <b>%2</b>")
 			.arg(QApplication::translate("BusinessLogic::CountersFacade", "Words"))
-			.arg(wordsCount);
+			.arg(_count);
 }
 
-QString CountersFacade::simbolsCounter(QTextDocument* _document)
+QString CountersFacade::charactersInfo(int _countWithSpaces, int _countWithoutSpaces)
 {
-	QString documentText = _document->toPlainText().remove("\n").simplified();
-	const int simbolsWithSpacesCount = documentText.size();
-	documentText = documentText.remove(" ");
-	const int simbolsWithoutSpacesCount = documentText.size();
 	return QString(" %1: <b>%2 | %3</b>")
 			.arg(QApplication::translate("BusinessLogic::CountersFacade", "Simbols"))
-			.arg(simbolsWithoutSpacesCount).arg(simbolsWithSpacesCount);
+			.arg(_countWithoutSpaces).arg(_countWithSpaces);
 }

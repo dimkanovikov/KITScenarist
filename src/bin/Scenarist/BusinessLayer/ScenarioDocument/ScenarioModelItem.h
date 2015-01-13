@@ -1,6 +1,8 @@
 #ifndef SCENARIOMODELITEM_H
 #define SCENARIOMODELITEM_H
 
+#include <BusinessLayer/Counters/Counter.h>
+
 #include <QUuid>
 #include <QPixmap>
 
@@ -61,10 +63,6 @@ namespace BusinessLogic
 		 * @brief Длительность элемента
 		 */
 		int duration() const;
-
-		/**
-		 * @brief Установить длительность
-		 */
 		void setDuration(int _duration);
 
 		/**
@@ -84,6 +82,12 @@ namespace BusinessLogic
 		bool hasNote() const;
 		void setHasNote(bool _hasNote);
 
+		/**
+		 * @brief Количество слов элемента
+		 */
+		Counter counter() const;
+		void setCounter(const Counter& _counter);
+
 	private:
 		/**
 		 * @brief Обновить текст элемента
@@ -98,6 +102,13 @@ namespace BusinessLogic
 		 * @note Для элементов группирующих в себе подэлементы
 		 */
 		void updateParentDuration();
+
+		/**
+		 * @brief Обновить счётчики
+		 *
+		 * @note Для элементов группирующих в себе подэлементы
+		 */
+		void updateParentCounter();
 
 		/**
 		 * @brief Очистить элемент
@@ -144,6 +155,11 @@ namespace BusinessLogic
 		 * @brief Имеется ли в элементе примечание
 		 */
 		bool m_hasNote;
+
+		/**
+		 * @brief Счётчик слов и сиволов
+		 */
+		Counter m_counter;
 
 	/**
 	 * @brief Вспомогательные методы для организации работы модели

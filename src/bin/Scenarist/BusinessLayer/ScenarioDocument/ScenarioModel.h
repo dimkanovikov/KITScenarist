@@ -1,6 +1,8 @@
 #ifndef SCENARIOMODEL_H
 #define SCENARIOMODEL_H
 
+#include <BusinessLayer/Counters/Counter.h>
+
 #include <QAbstractItemModel>
 
 
@@ -79,7 +81,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Суммарная длительность сценария
 		 */
-		int fullDuration() const;
+		int duration() const;
+
+		/**
+		 * @brief Суммарный счётчик сценария
+		 */
+		Counter counter() const;
 
 		/**
 		 * @brief Получить элемент находящийся в заданном индексе

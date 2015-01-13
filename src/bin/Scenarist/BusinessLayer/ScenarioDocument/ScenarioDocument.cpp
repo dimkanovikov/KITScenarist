@@ -103,12 +103,13 @@ int ScenarioDocument::durationAtPosition(int _position) const
 
 int ScenarioDocument::fullDuration() const
 {
-	return m_model->fullDuration();
+	return m_model->duration();
 }
 
 QString ScenarioDocument::countersInfo() const
 {
-	return BusinessLogic::CountersFacade::calculateCounters(m_document);
+	const int pageCount = m_document->pageCount();
+	return BusinessLogic::CountersFacade::countersInfo(pageCount, m_model->counter());
 }
 
 QModelIndex ScenarioDocument::itemIndexAtPosition(int _position) const
@@ -775,6 +776,8 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		}
 		cursor.movePosition(QTextCursor::NextBlock);
 	}
+	// ... счётчик слов и символов
+	Counter counter = CountersFacade::calculate(m_document, _itemStartPos, _itemEndPos);
 
 	//
 	// Обновим данные элемента
@@ -784,6 +787,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setText(itemText);
 	_item->setDuration(itemDuration);
 	_item->setHasNote(hasNote);
+	_item->setCounter(counter);
 }
 
 ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNear) const

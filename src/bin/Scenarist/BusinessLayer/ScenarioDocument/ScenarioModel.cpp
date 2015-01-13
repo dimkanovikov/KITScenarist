@@ -324,17 +324,17 @@ QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const
 
 	if (!_indexes.isEmpty()) {
 		//
-        // Выделение может быть только последовательным, но нужно учесть ситуацию, когда в выделение
-        // попадает родительский элемент и не все его дочерние элементы, поэтому просто использовать
-        // последний элемент некорректно, нужно проверить, не входит ли его родитель в выделение
+		// Выделение может быть только последовательным, но нужно учесть ситуацию, когда в выделение
+		// попадает родительский элемент и не все его дочерние элементы, поэтому просто использовать
+		// последний элемент некорректно, нужно проверить, не входит ли его родитель в выделение
 		//
 
-        QModelIndexList correctedIndexes;
-        foreach (const QModelIndex& index, _indexes) {
-            if (!_indexes.contains(index.parent())) {
-                correctedIndexes.append(index);
-            }
-        }
+		QModelIndexList correctedIndexes;
+		foreach (const QModelIndex& index, _indexes) {
+			if (!_indexes.contains(index.parent())) {
+				correctedIndexes.append(index);
+			}
+		}
 
 		//
 		// Для того, чтобы запретить разрывать папки проверяем выделены ли элементы одного уровня
@@ -428,9 +428,14 @@ int ScenarioModel::scenesCount() const
 	return m_scenesCount;
 }
 
-int ScenarioModel::fullDuration() const
+int ScenarioModel::duration() const
 {
 	return m_rootItem->duration();
+}
+
+Counter ScenarioModel::counter() const
+{
+	return m_rootItem->counter();
 }
 
 ScenarioModelItem* ScenarioModel::itemForIndex(const QModelIndex& _index) const

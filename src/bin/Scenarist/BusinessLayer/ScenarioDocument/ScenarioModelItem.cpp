@@ -168,6 +168,19 @@ void ScenarioModelItem::setHasNote(bool _hasNote)
 	}
 }
 
+Counter ScenarioModelItem::counter() const
+{
+	return m_counter;
+}
+
+void ScenarioModelItem::setCounter(const Counter& _counter)
+{
+	if (m_counter != _counter) {
+		m_counter = _counter;
+		updateParentCounter();
+	}
+}
+
 void ScenarioModelItem::updateParentText()
 {
 	//
@@ -211,6 +224,33 @@ void ScenarioModelItem::updateParentDuration()
 	//
 	if (hasParent()) {
 		parent()->updateParentDuration();
+	}
+}
+
+void ScenarioModelItem::updateParentCounter()
+{
+	//
+	// Если есть дети - обновляем свои счётчики
+	//
+	if (hasChildren()) {
+		Counter counter;
+		foreach (ScenarioModelItem* child, m_children) {
+			counter.setWords(counter.words() + child->counter().words());
+			counter.setCharactersWithSpaces(
+				counter.charactersWithSpaces() + child->counter().charactersWithSpaces()
+				);
+			counter.setCharactersWithoutSpaces(
+				counter.charactersWithoutSpaces() + child->counter().charactersWithoutSpaces()
+				);
+		}
+		setCounter(counter);
+	}
+
+	//
+	// Обновляем родителя
+	//
+	if (hasParent()) {
+		parent()->updateParentCounter();
 	}
 }
 

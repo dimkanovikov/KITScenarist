@@ -334,7 +334,8 @@ HEADERS += \
     BusinessLayer/Import/DocumentImporter.h \
     BusinessLayer/Export/DocxExporter.h \
     3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h \
-    BusinessLayer/Chronometry/PagesChronometer.h
+    BusinessLayer/Chronometry/PagesChronometer.h \
+    BusinessLayer/Counters/Counter.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

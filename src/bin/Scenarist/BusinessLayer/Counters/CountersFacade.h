@@ -7,6 +7,8 @@ class QTextDocument;
 
 namespace BusinessLogic
 {
+	class Counter;
+
 	/**
 	 * @brief Фасад для доступа к рассчёту статистики
 	 */
@@ -14,25 +16,62 @@ namespace BusinessLogic
 	{
 	public:
 		/**
+		 * @brief Рассчитать значения в заданном промежутке документа
+		 */
+		static Counter calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition);
+
+
+
+
+
+
+
+
+		/**
 		 * @brief Расчитать исформацию для заданного документа
 		 */
-		static QString calculateCounters(QTextDocument* _document);
+		static QString countersInfo(int pageCount, const Counter& _counter);
+
 
 	private:
 		/**
+		 * @brief Посчитать кол-во слов
+		 */
+		static int wordsCount(const QString& _text);
+
+		/**
+		 * @brief Посчитать кол-во символов с пробелами
+		 */
+		static int charactersWithSpacesCount(const QString& _text);
+
+		/**
+		 * @brief Посчитать кол-во символов без пробелов
+		 */
+		static int charactersWithoutSpacesCount(const QString& _text);
+
+
+
+
+
+
+
+
+
+
+		/**
 		 * @brief Посчитать количество страниц
 		 */
-		static QString pagesCounter(QTextDocument* _document);
+		static QString pageInfo(int _count);
 
 		/**
 		 * @brief Посчитать кол-во слов
 		 */
-		static QString wordsCounter(QTextDocument* _document);
+		static QString wordsInfo(int _count);
 
 		/**
 		 * @brief Посчитать кол-во символов
 		 */
-		static QString simbolsCounter(QTextDocument* _document);
+		static QString charactersInfo(int _countWithSpaces, int _countWithoutSpaces);
 	};
 }
 
