@@ -113,6 +113,31 @@ void SettingsView::setScenarioEditFolderBackgroundColor(const QColor& _color)
 	setColorFor(ui->folderBackgroundColor, _color);
 }
 
+void SettingsView::setScenarioEditTextColorDark(const QColor& _color)
+{
+	setColorFor(ui->textColorDark, _color);
+}
+
+void SettingsView::setScenarioEditBackgroundColorDark(const QColor& _color)
+{
+	setColorFor(ui->backgroundColorDark, _color);
+}
+
+void SettingsView::setScenarioEditNonprintableTexColorDark(const QColor& _color)
+{
+	setColorFor(ui->nonprintableTextColorDark, _color);
+}
+
+void SettingsView::setScenarioEditFolderTextColorDark(const QColor& _color)
+{
+	setColorFor(ui->folderTextColorDark, _color);
+}
+
+void SettingsView::setScenarioEditFolderBackgroundColorDark(const QColor& _color)
+{
+	setColorFor(ui->folderBackgroundColorDark, _color);
+}
+
 void SettingsView::setScenarioEditCurrentStyle(const QString& _styleName)
 {
 	ui->currentScenarioStyle->setCurrentText(_styleName);
@@ -208,6 +233,15 @@ void SettingsView::aboutScenarioEditSpellCheckLanguageChanged()
 	emit scenarioEditSpellCheckLanguageChanged(ui->spellCheckingLanguage->currentData().toInt());
 }
 
+void SettingsView::aboutColorThemeChanged()
+{
+	if (ui->lightTheme->isChecked()) {
+		ui->colors->setCurrentWidget(ui->lightThemeColors);
+	} else {
+		ui->colors->setCurrentWidget(ui->darkThemeColors);
+	}
+}
+
 void SettingsView::aboutScenarioEditChooseTextColor()
 {
 	setColorFor(ui->textColor);
@@ -236,6 +270,36 @@ void SettingsView::aboutScenarioEditChooseFolderBackgroundColor()
 {
 	setColorFor(ui->folderBackgroundColor);
 	emit scenarioEditFolderBackgroundColorChanged(ui->folderBackgroundColor->palette().button().color());
+}
+
+void SettingsView::aboutScenarioEditChooseTextColorDark()
+{
+	setColorFor(ui->textColorDark);
+	emit scenarioEditTextColorDarkChanged(ui->textColorDark->palette().button().color());
+}
+
+void SettingsView::aboutScenarioEditChooseBackgroundColorDark()
+{
+	setColorFor(ui->backgroundColorDark);
+	emit scenarioEditBackgroundColorDarkChanged(ui->backgroundColorDark->palette().button().color());
+}
+
+void SettingsView::aboutScenarioEditChooseNonprintableTextColorDark()
+{
+	setColorFor(ui->nonprintableTextColorDark);
+	emit scenarioEditNonprintableTextColorDarkChanged(ui->nonprintableTextColorDark->palette().button().color());
+}
+
+void SettingsView::aboutScenarioEditChooseFolderTextColorDark()
+{
+	setColorFor(ui->folderTextColorDark);
+	emit scenarioEditFolderTextColorDarkChanged(ui->folderTextColorDark->palette().button().color());
+}
+
+void SettingsView::aboutScenarioEditChooseFolderBackgroundColorDark()
+{
+	setColorFor(ui->folderBackgroundColorDark);
+	emit scenarioEditFolderBackgroundColorDarkChanged(ui->folderBackgroundColorDark->palette().button().color());
 }
 
 void SettingsView::aboutEditStylePressed()
@@ -300,6 +364,9 @@ void SettingsView::initView()
 
 	ui->spellCheckingLanguage->setCurrentIndex(0);
 	ui->spellCheckingLanguage->setEnabled(false);
+
+	ui->lightTheme->setChecked(true);
+	aboutColorThemeChanged();
 }
 
 void SettingsView::initConnections()
@@ -312,12 +379,19 @@ void SettingsView::initConnections()
 	connect(ui->autosave, SIGNAL(toggled(bool)), ui->autosaveInterval, SLOT(setEnabled(bool)));
 	// ... активация проверки орфографии
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), ui->spellCheckingLanguage, SLOT(setEnabled(bool)));
+	// ... смена текущей цветовой темы
+	connect(ui->lightTheme, SIGNAL(toggled(bool)), this, SLOT(aboutColorThemeChanged()));
 	// ... выбор цвета элементов редактора сценария
 	connect(ui->textColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseTextColor()));
 	connect(ui->backgroundColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseBackgroundColor()));
 	connect(ui->nonprintableTextColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseNonprintableTextColor()));
 	connect(ui->folderTextColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseFolderTextColor()));
 	connect(ui->folderBackgroundColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseFolderBackgroundColor()));
+	connect(ui->textColorDark, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseTextColorDark()));
+	connect(ui->backgroundColorDark, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseBackgroundColorDark()));
+	connect(ui->nonprintableTextColorDark, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseNonprintableTextColorDark()));
+	connect(ui->folderTextColorDark, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseFolderTextColorDark()));
+	connect(ui->folderBackgroundColorDark, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseFolderBackgroundColorDark()));
 	// ... смена текущей системы хронометража
 	connect(ui->charactersChronometry, SIGNAL(toggled(bool)), ui->charactersChronometryGroup, SLOT(setEnabled(bool)));
 	connect(ui->configurableChronometry, SIGNAL(toggled(bool)), ui->configurableChronometryGroup, SLOT(setEnabled(bool)));

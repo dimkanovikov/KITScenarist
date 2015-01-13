@@ -52,6 +52,11 @@ namespace UserInterface
 		void setScenarioEditNonprintableTexColor(const QColor& _color);
 		void setScenarioEditFolderTextColor(const QColor& _color);
 		void setScenarioEditFolderBackgroundColor(const QColor& _color);
+		void setScenarioEditTextColorDark(const QColor& _color);
+		void setScenarioEditBackgroundColorDark(const QColor& _color);
+		void setScenarioEditNonprintableTexColorDark(const QColor& _color);
+		void setScenarioEditFolderTextColorDark(const QColor& _color);
+		void setScenarioEditFolderBackgroundColorDark(const QColor& _color);
 		void setScenarioEditCurrentStyle(const QString& _styleName);
 
 		void setNavigatorShowScenesNumbers(bool  _value);
@@ -90,6 +95,11 @@ namespace UserInterface
 		void scenarioEditNonprintableTextColorChanged(const QColor&);
 		void scenarioEditFolderTextColorChanged(const QColor&);
 		void scenarioEditFolderBackgroundColorChanged(const QColor&);
+		void scenarioEditTextColorDarkChanged(const QColor&);
+		void scenarioEditBackgroundColorDarkChanged(const QColor&);
+		void scenarioEditNonprintableTextColorDarkChanged(const QColor&);
+		void scenarioEditFolderTextColorDarkChanged(const QColor&);
+		void scenarioEditFolderBackgroundColorDarkChanged(const QColor&);
 		void scenarioEditCurrentStyleChanged(const QString&);
 
 		void navigatorShowScenesNumbersChanged(bool);
@@ -130,6 +140,11 @@ namespace UserInterface
 		void aboutScenarioEditSpellCheckLanguageChanged();
 
 		/**
+		 * @brief Сменилась выбранная цветовая схема
+		 */
+		void aboutColorThemeChanged();
+
+		/**
 		 * @brief Выбрать цвет для параметров редактора сценария
 		 */
 		/** @{ */
@@ -138,6 +153,11 @@ namespace UserInterface
 		void aboutScenarioEditChooseNonprintableTextColor();
 		void aboutScenarioEditChooseFolderTextColor();
 		void aboutScenarioEditChooseFolderBackgroundColor();
+		void aboutScenarioEditChooseTextColorDark();
+		void aboutScenarioEditChooseBackgroundColorDark();
+		void aboutScenarioEditChooseNonprintableTextColorDark();
+		void aboutScenarioEditChooseFolderTextColorDark();
+		void aboutScenarioEditChooseFolderBackgroundColorDark();
 		/** @} */
 
 		/**

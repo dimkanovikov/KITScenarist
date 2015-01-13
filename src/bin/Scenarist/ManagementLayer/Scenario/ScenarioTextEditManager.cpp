@@ -71,15 +71,24 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
 
+	//
+	// Цветовая схема
+	//
+	const bool useDarkTheme =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/use-dark-theme",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	const QString colorSuffix = useDarkTheme ? "-dark" : "";
 	m_view->setTextEditColors(
 				QColor(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
-						"scenario-editor/text-color",
+						"scenario-editor/text-color" + colorSuffix,
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
 					),
 				QColor(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
-						"scenario-editor/background-color",
+						"scenario-editor/background-color" + colorSuffix,
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
 					)
 				);

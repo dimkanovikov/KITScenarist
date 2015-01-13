@@ -126,6 +126,31 @@ void SettingsManager::scenarioEditFolderBackgroundColorChanged(const QColor& _va
 	storeValue("scenario-editor/folder-background-color", _value);
 }
 
+void SettingsManager::scenarioEditTextColorDarkChanged(const QColor&_value)
+{
+	storeValue("scenario-editor/text-color-dark", _value);
+}
+
+void SettingsManager::scenarioEditBackgroundColorDarkChanged(const QColor& _value)
+{
+	storeValue("scenario-editor/background-color-dark", _value);
+}
+
+void SettingsManager::scenarioEditNonprintableTextColorDarkChanged(const QColor& _value)
+{
+	storeValue("scenario-editor/nonprintable-text-color-dark", _value);
+}
+
+void SettingsManager::scenarioEditFolderTextColorDarkChanged(const QColor& _value)
+{
+	storeValue("scenario-editor/folder-text-color-dark", _value);
+}
+
+void SettingsManager::scenarioEditFolderBackgroundColorDarkChanged(const QColor& _value)
+{
+	storeValue("scenario-editor/folder-background-color-dark", _value);
+}
+
 void SettingsManager::scenarioEditCurrentStyleChanged(const QString& _value)
 {
 	storeValue("scenario-editor/current-style", _value);
@@ -427,6 +452,41 @@ void SettingsManager::initView()
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
 					)
 				);
+	m_view->setScenarioEditTextColorDark(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/text-color-dark",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
+	m_view->setScenarioEditBackgroundColorDark(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/background-color-dark",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
+	m_view->setScenarioEditNonprintableTexColorDark(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/nonprintable-text-color-dark",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
+	m_view->setScenarioEditFolderTextColorDark(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/folder-text-color-dark",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
+	m_view->setScenarioEditFolderBackgroundColorDark(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"scenario-editor/folder-background-color-dark",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
 	// ... текущий стиль
 	m_view->setScenarioEditCurrentStyle(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
@@ -564,6 +624,11 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorChanged(QColor)), this, SLOT(scenarioEditNonprintableTextColorChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorChanged(QColor)), this, SLOT(scenarioEditFolderTextColorChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorChanged(QColor)), this, SLOT(scenarioEditFolderBackgroundColorChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditTextColorDarkChanged(QColor)), this, SLOT(scenarioEditTextColorDarkChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditBackgroundColorDarkChanged(QColor)), this, SLOT(scenarioEditBackgroundColorDarkChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorDarkChanged(QColor)), this, SLOT(scenarioEditNonprintableTextColorDarkChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditFolderTextColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderTextColorDarkChanged(QColor)));
+	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderBackgroundColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SLOT(scenarioEditCurrentStyleChanged(QString)));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
@@ -597,6 +662,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SIGNAL(applicationSettingsUpdated()));
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SIGNAL(applicationSettingsUpdated()));
 
+	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckLanguageChanged(int)), this, SIGNAL(scenarioEditSettingsUpdated()));
@@ -605,6 +671,11 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditTextColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditBackgroundColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditFolderTextColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));

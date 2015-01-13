@@ -590,30 +590,40 @@ void ScenarioStyle::setBlockStyle(const BusinessLogic::ScenarioBlockStyle& _bloc
 void ScenarioStyle::updateBlocksColors()
 {
 	//
+	// Цветовая схема
+	//
+	const bool useDarkTheme =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/use-dark-theme",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	const QString colorSuffix = useDarkTheme ? "-dark" : "";
+
+	//
 	// Определим цвета
 	//
 	QColor mainTextColor =
 			QColor(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/text-color",
+					"scenario-editor/text-color" + colorSuffix,
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
 	QColor noprintableTextColor =
 			QColor(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/nonprintable-text-color",
+					"scenario-editor/nonprintable-text-color" + colorSuffix,
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
 	QColor folderTextColor =
 			QColor(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/folder-text-color",
+					"scenario-editor/folder-text-color" + colorSuffix,
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
 	QColor folderBackgroundColor =
 			QColor(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/folder-background-color",
+					"scenario-editor/folder-background-color" + colorSuffix,
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
 
