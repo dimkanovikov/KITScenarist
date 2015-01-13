@@ -5,6 +5,8 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
+#include <3rd_party/Widgets/PagesTextEdit/PageMetrics.h>
+
 #include <QRegularExpression>
 #include <QTextBlock>
 #include <QTextCursor>
@@ -25,9 +27,14 @@ namespace {
 	const QRegularExpression START_FROM_NUMBER_CHECKER("^([\\d]{1,}[\\d\\S]{0,})[.](([\\d\\S]{1,})[.]|) ");
 
 	/**
-	 * @brief Допущение для блоков, которые по идее вообще не должны иметь отступа (миллиметры)
+	 * @brief Допущение для блоков, которые по идее вообще не должны иметь отступа в пикселях (20 мм)
 	 */
-	const int LEFT_MARGIN_DELTA = 20;
+	const int LEFT_MARGIN_DELTA = 75;
+
+	/**
+	 * @brief Некоторые программы выравнивают текст при помощи пробелов
+	 */
+	const QString OLD_SCHOOL_CENTERING_PREFIX = "                    ";
 
 	/**
 	 * @brief Определить тип блока в текущей позиции курсора
@@ -57,7 +64,10 @@ namespace {
 				charFormat.fontCapitalization() == QFont::AllUppercase
 				|| blockText == blockText.toUpper();
 		// ... блоки находящиеся в центре
-		bool isCentered = blockFormat.leftMargin() > LEFT_MARGIN_DELTA + _minLeftMargin;
+		bool isCentered =
+				(blockFormat.leftMargin() > LEFT_MARGIN_DELTA + _minLeftMargin)
+				|| (blockFormat.alignment() == Qt::AlignCenter)
+				|| blockText.startsWith(OLD_SCHOOL_CENTERING_PREFIX);
 
 		//
 		// Собственно определение типа

@@ -191,7 +191,7 @@ RtfReader::RtfReader() :
 		functions.set("pard", &RtfReader::resetBlockFormatting);
 		functions.set("plain", &RtfReader::resetTextFormatting);
 
-		functions.set("qc", &RtfReader::setBlockAlignment, Qt::AlignHCenter);
+		functions.set("qc", &RtfReader::setBlockAlignment, Qt::AlignCenter);
 		functions.set("qj", &RtfReader::setBlockAlignment, Qt::AlignJustify);
 		functions.set("ql", &RtfReader::setBlockAlignment, Qt::AlignLeft | Qt::AlignAbsolute);
 		functions.set("qr", &RtfReader::setBlockAlignment, Qt::AlignRight | Qt::AlignAbsolute);
