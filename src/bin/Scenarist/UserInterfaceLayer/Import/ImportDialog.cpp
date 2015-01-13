@@ -68,6 +68,8 @@ BusinessLogic::ImportParameters ImportDialog::importParameters() const
 	} else {
 		importParameters.insertionMode = BusinessLogic::ImportParameters::ToDocumentEnd;
 	}
+	importParameters.findCharactersAndLocations = ui->findCharactersAndLocations->isChecked();
+
 	return importParameters;
 }
 

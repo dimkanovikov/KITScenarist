@@ -215,7 +215,7 @@ QString DocumentImporter::importScenario(const ImportParameters& _importParamete
 			const ScenarioBlockStyle::Type blockType =
 					::typeForTextCursor(cursor, lastBlockType, emptyLines, minLeftMargin);
 			const QString blockTypeName = ScenarioBlockStyle::typeName(blockType);
-			QString blockText = cursor.block().text();
+			QString blockText = cursor.block().text().simplified();
 
 			//
 			// ... запишем данные в строку

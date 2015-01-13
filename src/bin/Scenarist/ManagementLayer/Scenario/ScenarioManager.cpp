@@ -338,25 +338,7 @@ void ScenarioManager::aboutRefreshCharacters()
 	//
 	// Найти персонажей во всём тексте
 	//
-	QSet<QString> characters;
-	QTextCursor cursor(m_scenario->document());
-	while (!cursor.atEnd()) {
-		cursor.movePosition(QTextCursor::EndOfBlock);
-		if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
-			cursor.select(QTextCursor::BlockUnderCursor);
-			QString character =
-					BusinessLogic::CharacterParser::name(cursor.selectedText().toUpper().trimmed());
-			characters.insert(character);
-		} else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
-			cursor.select(QTextCursor::BlockUnderCursor);
-			QStringList blockCharacters = cursor.selectedText().split(",", QString::SkipEmptyParts);
-			foreach (const QString& characterName, blockCharacters) {
-				QString character = BusinessLogic::CharacterParser::name(characterName.toUpper().trimmed());
-				characters.insert(character);
-			}
-		}
-		cursor.movePosition(QTextCursor::NextBlock);
-	}
+	QSet<QString> characters = QSet<QString>::fromList(m_scenario->findCharacters());
 
 	//
 	// Определить персонажи, которых нет в тексте
@@ -444,17 +426,7 @@ void ScenarioManager::aboutRefreshLocations()
 	//
 	// Найти локации во всём тексте
 	//
-	QSet<QString> locations;
-	QTextCursor cursor(m_scenario->document());
-	while (!cursor.atEnd()) {
-		cursor.movePosition(QTextCursor::EndOfBlock);
-		if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
-			QString location =
-					BusinessLogic::TimeAndPlaceParser::locationName(cursor.block().text().toUpper().trimmed());
-			locations.insert(location);
-		}
-		cursor.movePosition(QTextCursor::NextBlock);
-	}
+	QSet<QString> locations = QSet<QString>::fromList(m_scenario->findLocations());
 
 	//
 	// Определить локации, которых нет в тексте

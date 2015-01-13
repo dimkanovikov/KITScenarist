@@ -14,7 +14,8 @@ namespace BusinessLogic
 	public:
 		ImportParameters() :
 			removeScenesNumbers(true),
-			insertionMode(ReplaceDocument)
+			insertionMode(ReplaceDocument),
+			findCharactersAndLocations(true)
 		{}
 
 		/**
@@ -40,6 +41,11 @@ namespace BusinessLogic
 		 * @brief Способ вставки импортируемого текста в сценарий
 		 */
 		InsertionMode insertionMode;
+
+		/**
+		 * @brief Искать ли персонажей и локации
+		 */
+		bool findCharactersAndLocations;
 	};
 
 	/**

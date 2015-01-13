@@ -6,6 +6,7 @@
 #include "ScenarioModelItem.h"
 #include "ScenarioStyle.h"
 #include "ScenarioTextBlockInfo.h"
+#include "ScenarioTextBlockParsers.h"
 
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 #include <BusinessLayer/Counters/CountersFacade.h>
@@ -22,7 +23,6 @@ using namespace BusinessLogic;
 
 
 namespace {
-
 	/**
 	 * @brief Получить хэш текста
 	 */
@@ -235,6 +235,54 @@ void ScenarioDocument::clear()
 	QTextCursor cursor(m_document);
 	cursor.select(QTextCursor::Document);
 	cursor.removeSelectedText();
+}
+
+QStringList ScenarioDocument::findCharacters() const
+{
+	//
+	// Найти персонажей во всём тексте
+	//
+	QSet<QString> characters;
+	QTextCursor cursor(document());
+	while (!cursor.atEnd()) {
+		cursor.movePosition(QTextCursor::EndOfBlock);
+		if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
+			cursor.select(QTextCursor::BlockUnderCursor);
+			QString character =
+					BusinessLogic::CharacterParser::name(cursor.selectedText().toUpper().trimmed());
+			characters.insert(character);
+		} else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
+			cursor.select(QTextCursor::BlockUnderCursor);
+			QStringList blockCharacters = cursor.selectedText().split(",", QString::SkipEmptyParts);
+			foreach (const QString& characterName, blockCharacters) {
+				QString character = BusinessLogic::CharacterParser::name(characterName.toUpper().trimmed());
+				characters.insert(character);
+			}
+		}
+		cursor.movePosition(QTextCursor::NextBlock);
+	}
+
+	return characters.toList();
+}
+
+QStringList ScenarioDocument::findLocations() const
+{
+	//
+	// Найти локации во всём тексте
+	//
+	QSet<QString> locations;
+	QTextCursor cursor(document());
+	while (!cursor.atEnd()) {
+		cursor.movePosition(QTextCursor::EndOfBlock);
+		if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
+			QString location =
+					BusinessLogic::TimeAndPlaceParser::locationName(cursor.block().text().toUpper().trimmed());
+			locations.insert(location);
+		}
+		cursor.movePosition(QTextCursor::NextBlock);
+	}
+
+	return locations.toList();
 }
 
 int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const

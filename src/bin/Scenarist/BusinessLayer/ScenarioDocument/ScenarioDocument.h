@@ -134,6 +134,16 @@ namespace BusinessLogic
 		 */
 		void clear();
 
+		/**
+		 * @brief Найти всех персонажей сценария
+		 */
+		QStringList findCharacters() const;
+
+		/**
+		 * @brief Найти все локации сценария
+		 */
+		QStringList findLocations() const;
+
 	public:
 		/**
 		 * @brief Вспомогательные функции для обработчика xml

@@ -1,14 +1,22 @@
 #include "ImportManager.h"
 
+#include <Domain/Scenario.h>
+#include <Domain/Character.h>
+#include <Domain/Location.h>
+
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Import/DocumentImporter.h>
 
-#include <Domain/Scenario.h>
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/LocationStorage.h>
 
 #include <UserInterfaceLayer/Import/ImportDialog.h>
 
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+
+#include <QSet>
 
 using ManagementLayer::ImportManager;
 using UserInterface::ImportDialog;
@@ -66,6 +74,81 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 		// ... загрузим текст
 		//
 		_scenario->document()->insertFromMime(insertPosition, importScenarioXml);
+
+		//
+		// ... в случае необходимости определяем локации и персонажей
+		//
+		{
+			//
+			// Персонажи
+			//
+			{
+				QSet<QString> characters = QSet<QString>::fromList(_scenario->findCharacters());
+
+				//
+				// Определить персонажи, которых нет в тексте
+				//
+				QSet<QString> charactersToDelete;
+				foreach (DomainObject* domainObject,
+						 DataStorageLayer::StorageFacade::characterStorage()->all()->toList()) {
+					Character* character = dynamic_cast<Character*>(domainObject);
+					if (!characters.contains(character->name())) {
+						charactersToDelete.insert(character->name());
+					}
+				}
+
+				//
+				// Удалить тех, кого нет
+				//
+				foreach (const QString& character, charactersToDelete) {
+					DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(character);
+				}
+
+				//
+				// Добавить новых
+				//
+				foreach (const QString& character, characters) {
+					if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
+						DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
+					}
+				}
+			}
+
+			//
+			// Локации
+			//
+			{
+				QSet<QString> locations = QSet<QString>::fromList(_scenario->findLocations());
+
+				//
+				// Определить локации, которых нет в тексте
+				//
+				QSet<QString> locationsToDelete;
+				foreach (DomainObject* domainObject,
+						 DataStorageLayer::StorageFacade::locationStorage()->all()->toList()) {
+					Location* location = dynamic_cast<Location*>(domainObject);
+					if (!locations.contains(location->name())) {
+						locationsToDelete.insert(location->name());
+					}
+				}
+
+				//
+				// Удалить те, которых нет
+				//
+				foreach (const QString& location, locationsToDelete) {
+					DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
+				}
+
+				//
+				// Добавить новых
+				//
+				foreach (const QString& location, locations) {
+					if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
+						DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
+					}
+				}
+			}
+		}
 
 		//
 		// Закроем уведомление

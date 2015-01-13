@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>474</width>
-    <height>283</height>
+    <height>337</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -76,7 +76,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -146,6 +146,23 @@
      </layout>
     </widget>
    </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Find characters and locations:</string>
+     </property>
+     <property name="buddy">
+      <cstring>removeScenesNumbers</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QCheckBox" name="findCharactersAndLocations">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -155,6 +172,7 @@
   <tabstop>replaceScenario</tabstop>
   <tabstop>currentCursorPosition</tabstop>
   <tabstop>endOfScenario</tabstop>
+  <tabstop>findCharactersAndLocations</tabstop>
   <tabstop>cancel</tabstop>
   <tabstop>importTo</tabstop>
  </tabstops>
