@@ -4,6 +4,7 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <BusinessLayer/Chronometry/PagesChronometer.h>
 #include <BusinessLayer/Chronometry/CharactersChronometer.h>
 #include <BusinessLayer/Chronometry/ConfigurableChronometer.h>
 
@@ -171,11 +172,16 @@ void SettingsManager::chronometryCurrentTypeChanged()
 	QString chronometryType;
 	switch (m_view->chronometryCurrentType()) {
 		case 0: {
-			chronometryType = BusinessLogic::CharactersChronometer().name();
+			chronometryType = BusinessLogic::PagesChronometer().name();
 			break;
 		}
 
 		case 1: {
+			chronometryType = BusinessLogic::CharactersChronometer().name();
+			break;
+		}
+
+		case 2: {
 			chronometryType = BusinessLogic::ConfigurableChronometer().name();
 			break;
 		}
@@ -521,14 +527,22 @@ void SettingsManager::initView()
 				"chronometry/current-chronometer-type",
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
 	int chronometryTypeValue = 0;
-	if (chronometryType == BusinessLogic::CharactersChronometer().name()) {
+	if (chronometryType == BusinessLogic::PagesChronometer().name()) {
 		chronometryTypeValue = 0;
-	} else {
+	} else if (chronometryType == BusinessLogic::CharactersChronometer().name()) {
 		chronometryTypeValue = 1;
+	} else {
+		chronometryTypeValue = 2;
 	}
 	m_view->setChronometryCurrentType(chronometryTypeValue);
 
 	// ... параметры систем
+	m_view->setChronometryPagesSeconds(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"chronometry/pages/seconds",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setChronometryCharactersCharacters(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"chronometry/characters/characters",
@@ -635,6 +649,7 @@ void SettingsManager::initConnections()
 
 	connect(m_view, SIGNAL(chronometryUsedChanged(bool)), this, SLOT(chronometryUsedChanged(bool)));
 	connect(m_view, SIGNAL(chronometryCurrentTypeChanged()), this, SLOT(chronometryCurrentTypeChanged()));
+	connect(m_view, SIGNAL(chronometryPagesSecondsChanged(int)), this, SLOT(chronometryPagesSecondsChanged(int)));
 	connect(m_view, SIGNAL(chronometryCharactersCharactersChanged(int)), this, SLOT(chronometryCharactersCharactersChanged(int)));
 	connect(m_view, SIGNAL(chronometryCharactersSecondsChanged(int)), this, SLOT(chronometryCharactersSecondsChanged(int)));
 	connect(m_view, SIGNAL(chronometryCharactersConsiderSpaces(bool)), this, SLOT(chronometryCharactersConsiderSpacesChanged(bool)));
@@ -683,6 +698,7 @@ void SettingsManager::initConnections()
 
 	connect(m_view, SIGNAL(chronometryUsedChanged(bool)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCurrentTypeChanged()), this, SIGNAL(chronometrySettingsUpdated()));
+	connect(m_view, SIGNAL(chronometryPagesSecondsChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCharactersCharactersChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCharactersSecondsChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCharactersConsiderSpaces(bool)), this, SIGNAL(chronometrySettingsUpdated()));

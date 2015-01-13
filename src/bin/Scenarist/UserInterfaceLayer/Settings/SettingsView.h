@@ -63,6 +63,7 @@ namespace UserInterface
 
 		void setChronometryUsed(bool _value);
 		void setChronometryCurrentType(int _value);
+		void setChronometryPagesSeconds(int  _value);
 		void setChronometryCharactersCharacters(int  _value);
 		void setChronometryCharactersSeconds(int  _value);
 		void setChronometryCharactersConsiderSpaces(bool  _value);
@@ -107,6 +108,7 @@ namespace UserInterface
 
 		void chronometryUsedChanged(bool);
 		void chronometryCurrentTypeChanged();
+		void chronometryPagesSecondsChanged(int);
 		void chronometryCharactersCharactersChanged(int);
 		void chronometryCharactersSecondsChanged(int);
 		void chronometryCharactersConsiderSpaces(bool);

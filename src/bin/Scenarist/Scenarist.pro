@@ -182,7 +182,8 @@ SOURCES += main.cpp \
     3rd_party/Widgets/ProgressWidget/ProgressWidget.cpp \
     BusinessLayer/Import/DocumentImporter.cpp \
     BusinessLayer/Export/DocxExporter.cpp \
-    3rd_party/Widgets/ScalableWrapper/ScalableWrapper.cpp
+    3rd_party/Widgets/ScalableWrapper/ScalableWrapper.cpp \
+    BusinessLayer/Chronometry/PagesChronometer.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -332,7 +333,8 @@ HEADERS += \
     3rd_party/Widgets/ProgressWidget/ProgressWidget.h \
     BusinessLayer/Import/DocumentImporter.h \
     BusinessLayer/Export/DocxExporter.h \
-    3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h
+    3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h \
+    BusinessLayer/Chronometry/PagesChronometer.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
