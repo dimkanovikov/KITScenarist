@@ -64,6 +64,8 @@ private:
 	void setBlockDirection(qint32 value);
 	void setBlockRightIndent(qint32 value);
 	void setBlockLeftIndent(qint32 value);
+	void setBlockTopIndent(qint32 value);
+	void setBlockBottomIndent(qint32 value);
 	void setTextBold(qint32 value);
 	void setTextItalic(qint32 value);
 	void setTextStrikeOut(qint32 value);

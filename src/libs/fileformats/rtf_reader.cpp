@@ -198,6 +198,8 @@ RtfReader::RtfReader() :
 
 		functions.set("ri", &RtfReader::setBlockRightIndent);
 		functions.set("li", &RtfReader::setBlockLeftIndent);
+		functions.set("sb", &RtfReader::setBlockTopIndent);
+		functions.set("sa", &RtfReader::setBlockBottomIndent);
 
 		functions.set("ltrpar", &RtfReader::setBlockDirection, Qt::LeftToRight);
 		functions.set("rtlpar", &RtfReader::setBlockDirection, Qt::RightToLeft);
@@ -512,6 +514,18 @@ void RtfReader::setBlockRightIndent(qint32 value)
 void RtfReader::setBlockLeftIndent(qint32 value)
 {
 	m_state.block_format.setLeftMargin(::pixelsFromTwips(value));
+	m_cursor.mergeBlockFormat(m_state.block_format);
+}
+
+void RtfReader::setBlockTopIndent(qint32 value)
+{
+	m_state.block_format.setTopMargin(::pixelsFromTwips(value));
+	m_cursor.mergeBlockFormat(m_state.block_format);
+}
+
+void RtfReader::setBlockBottomIndent(qint32 value)
+{
+	m_state.block_format.setBottomMargin(::pixelsFromTwips(value));
 	m_cursor.mergeBlockFormat(m_state.block_format);
 }
 

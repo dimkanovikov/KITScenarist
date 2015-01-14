@@ -8,6 +8,8 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Import/DocumentImporter.h>
 
+#include <DataLayer/Database/Database.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
 #include <DataLayer/DataStorageLayer/LocationStorage.h>
@@ -16,6 +18,7 @@
 
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
 
+#include <QApplication>
 #include <QSet>
 
 using ManagementLayer::ImportManager;
@@ -100,18 +103,22 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 				//
 				// Удалить тех, кого нет
 				//
+				DatabaseLayer::Database::transaction();
 				foreach (const QString& character, charactersToDelete) {
 					DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(character);
 				}
+				DatabaseLayer::Database::commit();
 
 				//
 				// Добавить новых
 				//
+				DatabaseLayer::Database::transaction();
 				foreach (const QString& character, characters) {
 					if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
 						DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
 					}
 				}
+				DatabaseLayer::Database::commit();
 			}
 
 			//
@@ -135,18 +142,22 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 				//
 				// Удалить те, которых нет
 				//
+				DatabaseLayer::Database::transaction();
 				foreach (const QString& location, locationsToDelete) {
 					DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
 				}
+				DatabaseLayer::Database::commit();
 
 				//
 				// Добавить новых
 				//
+				DatabaseLayer::Database::transaction();
 				foreach (const QString& location, locations) {
 					if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
 						DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
 					}
 				}
+				DatabaseLayer::Database::commit();
 			}
 		}
 

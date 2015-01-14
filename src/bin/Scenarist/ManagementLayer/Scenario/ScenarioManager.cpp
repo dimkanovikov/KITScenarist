@@ -15,6 +15,8 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
+#include <DataLayer/Database/Database.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
@@ -371,18 +373,22 @@ void ScenarioManager::aboutRefreshCharacters()
 		//
 		// Удалить тех, кого нет
 		//
+		DatabaseLayer::Database::transaction();
 		foreach (const QString& character, charactersToDelete) {
 			DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(character);
 		}
+		DatabaseLayer::Database::commit();
 
 		//
 		// Добавить новых
 		//
+		DatabaseLayer::Database::transaction();
 		foreach (const QString& character, characters) {
 			if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
 				DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
 			}
 		}
+		DatabaseLayer::Database::commit();
 	}
 }
 
@@ -460,18 +466,22 @@ void ScenarioManager::aboutRefreshLocations()
 		//
 		// Удалить те, которых нет
 		//
+		DatabaseLayer::Database::transaction();
 		foreach (const QString& location, locationsToDelete) {
 			DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
 		}
+		DatabaseLayer::Database::commit();
 
 		//
 		// Добавить новых
 		//
+		DatabaseLayer::Database::transaction();
 		foreach (const QString& location, locations) {
 			if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
 				DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
 			}
 		}
+		DatabaseLayer::Database::commit();
 	}
 }
 

@@ -4,6 +4,7 @@
 #include <format_reader.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 
 #include <3rd_party/Widgets/PagesTextEdit/PageMetrics.h>
 
@@ -121,9 +122,11 @@ namespace {
 					// Участника сцены
 					// 1. в верхнем регистре
 					// 2. идут сразу же после времени и места
+					// 3. не имеют сверху отступа
 					//
 					else if (_lastBlockType == ScenarioBlockStyle::TimeAndPlace
-							 && _prevEmptyLines == 0) {
+							 && _prevEmptyLines == 0
+							 && blockFormat.topMargin() == 0) {
 						blockType = ScenarioBlockStyle::SceneCharacters;
 					}
 					//
@@ -147,6 +150,57 @@ namespace {
 		}
 
 		return blockType;
+	}
+
+	/**
+	 * @brief Шум, который может встречаться в тексте
+	 */
+	const QString NOISE("([.]|[,]|[:]|[ ]|[-]){1,}");
+
+	/**
+	 * @brief Регулярное выражение для удаления мусора в начале текста
+	 */
+	const QRegularExpression NOISE_AT_START("^" + NOISE);
+
+	/**
+	 * @brief Регулярное выражение для удаления мусора в конце текста
+	 */
+	const QRegularExpression NOISE_AT_END(NOISE + "$");
+
+	/**
+	 * @brief Очистка блоков от мусора и их корректировки
+	 */
+	static QString clearBlockText(ScenarioBlockStyle::Type _blockType, const QString& _blockText) {
+		QString result = _blockText;
+		//
+		// Для блока времени и места:
+		// * всевозможные "инт - " меняем на "инт. "
+		// * убираем точки в конце названия локации
+		//
+		if (_blockType == ScenarioBlockStyle::TimeAndPlace) {
+			const QString location = BusinessLogic::TimeAndPlaceParser::locationName(_blockText);
+			QString clearLocation = location.simplified();
+			clearLocation.remove(NOISE_AT_START);
+			clearLocation.remove(NOISE_AT_END);
+			if (location != clearLocation) {
+				result = result.replace(location, clearLocation);
+			}
+		}
+
+		//
+		// Для персонажей
+		// * убираем точки в конце
+		//
+		else if (_blockType == ScenarioBlockStyle::Character) {
+			const QString name = BusinessLogic::CharacterParser::name(_blockText);
+			QString clearName = name.simplified();
+			clearName.remove(NOISE_AT_END);
+			if (name != clearName) {
+				result = result.replace(name, clearName);
+			}
+		}
+
+		return result;
 	}
 }
 
@@ -234,6 +288,14 @@ QString DocumentImporter::importScenario(const ImportParameters& _importParamete
 				}
 			}
 
+			//
+			// Выполняем корректировки
+			//
+			blockText = ::clearBlockText(blockType, blockText);
+
+			//
+			// Пишем текст
+			//
 			writer.writeCDATA(blockText);
 			writer.writeEndElement();
 

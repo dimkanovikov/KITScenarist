@@ -320,7 +320,7 @@ void DocxReader::readParagraph()
 
 void DocxReader::readParagraphProperties(Style& style, bool allowstyles)
 {
-	int left_indent = 0, right_indent = 0, indent = 0;
+	int left_indent = 0, right_indent = 0, indent = 0, top_indent = 0, bottom_indent = 0;
 	while (m_xml.readNextStartElement()) {
 		QStringRef value = m_xml.attributes().value("w:val");
 		if (m_xml.qualifiedName() == "w:jc") {
@@ -352,6 +352,12 @@ void DocxReader::readParagraphProperties(Style& style, bool allowstyles)
 				style.block_format.setIndent(indent);
 				left_indent = right_indent = 0;
 			}
+		} else if (m_xml.qualifiedName() == "w:spacing") {
+			// ECMA-376 1st edition, ECMA-376 2nd edition transitional, ISO/IEC 29500 transitional
+			top_indent = ::pixelsFromTwips(m_xml.attributes().value("w:before").toString().toInt());
+			style.block_format.setTopMargin(top_indent);
+			bottom_indent = ::pixelsFromTwips(m_xml.attributes().value("w:after").toString().toInt());
+			style.block_format.setBottomMargin(bottom_indent);
 		} else if (m_xml.qualifiedName() == "w:textDirection") {
 			if (value == "rl") {
 				style.block_format.setLayoutDirection(Qt::RightToLeft);
