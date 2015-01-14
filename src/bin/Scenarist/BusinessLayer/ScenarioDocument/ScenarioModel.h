@@ -4,6 +4,7 @@
 #include <BusinessLayer/Counters/Counter.h>
 
 #include <QAbstractItemModel>
+#include <QSortFilterProxyModel>
 
 
 namespace BusinessLogic
@@ -24,6 +25,17 @@ namespace BusinessLogic
 		 * @brief Майм-тип данных дерева сценария
 		 */
 		static QString MIME_TYPE;
+
+		/**
+		 * @brief Индексы ролей с данными в модели
+		 */
+		enum DataRoles {
+			SceneTextIndex = Qt::UserRole + 1,
+			SynopsisIndex,
+			DurationIndex,
+			SceneNumberIndex,
+			VisibilityIndex
+		};
 
 	public:
 		explicit ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler);
@@ -49,6 +61,11 @@ namespace BusinessLogic
 		 * @brief Удалить элемент
 		 */
 		void removeItem(ScenarioModelItem* _item);
+
+		/**
+		 * @brief Обновить элемент
+		 */
+		void updateItem(ScenarioModelItem* _item);
 
 		/**
 		 * @brief Реализация древовидной модели
@@ -133,6 +150,21 @@ namespace BusinessLogic
 		 * @brief Счётчик количества сцен
 		 */
 		int m_scenesCount;
+	};
+
+	/**
+	 * @brief Класс фильтрующий модель
+	 */
+	class ScenarioModelFiltered : public QSortFilterProxyModel
+	{
+	public:
+		ScenarioModelFiltered(QObject* _parent = 0) : QSortFilterProxyModel(_parent) {}
+
+	protected:
+		/**
+		 * @brief Переопределяем фильтр для сокрытия не нужных элементов
+		 */
+		bool filterAcceptsRow(int _sourceRow, const QModelIndex& _sourceParent) const;
 	};
 }
 

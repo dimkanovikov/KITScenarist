@@ -116,6 +116,16 @@ void ScenarioModel::removeItem(ScenarioModelItem* _item)
 	endRemoveRows();
 }
 
+void ScenarioModel::updateItem(ScenarioModelItem* _item)
+{
+	//
+	// Если элемент уже в списке, то обновим, в противном случае просто игнорируем
+	//
+	if (_item->parent() != 0) {
+		emit dataChanged(indexForItem(_item), indexForItem(_item));
+	}
+}
+
 QModelIndex ScenarioModel::index(int _row, int _column, const QModelIndex& _parent) const
 {
 	QModelIndex resultIndex;
@@ -210,7 +220,7 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		//
 		// Текст сцены
 		//
-		case Qt::UserRole + 1: {
+		case SceneTextIndex: {
 			if (item->type() == ScenarioModelItem::Scenario) {
 				result = item->synopsis();
 			} else {
@@ -222,7 +232,7 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		//
 		// Синопсис
 		//
-		case Qt::UserRole + 2: {
+		case SynopsisIndex: {
 			result = item->synopsis();
 			break;
 		}
@@ -230,7 +240,7 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		//
 		// Длительность
 		//
-		case Qt::UserRole + 3: {
+		case DurationIndex: {
 			result = item->duration();
 			break;
 		}
@@ -238,10 +248,18 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		//
 		// Номер сцены
 		//
-		case Qt::UserRole + 4: {
+		case SceneNumberIndex: {
 			if (item->type() == ScenarioModelItem::Scene) {
 				result = item->number();
 			}
+			break;
+		}
+
+		//
+		// Видимость элемента
+		//
+		case VisibilityIndex: {
+			result = !(item->type() == ScenarioModelItem::Undefined);
 			break;
 		}
 
@@ -473,4 +491,12 @@ QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 	}
 
 	return index(row, 0, parent);
+}
+
+
+bool ScenarioModelFiltered::filterAcceptsRow(int _sourceRow, const QModelIndex& _sourceParent) const
+{
+	QModelIndex index = sourceModel()->index(_sourceRow, 0, _sourceParent);
+	bool visible = sourceModel()->data(index, ScenarioModel::VisibilityIndex).toBool();
+	return visible;
 }

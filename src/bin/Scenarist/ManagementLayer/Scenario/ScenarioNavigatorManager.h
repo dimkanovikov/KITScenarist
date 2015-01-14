@@ -8,6 +8,7 @@ class QLabel;
 
 namespace BusinessLogic {
 	class ScenarioModel;
+	class ScenarioModelFiltered;
 }
 
 namespace UserInterface {
@@ -52,7 +53,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Запрос на удаление элемента
 		 */
-		void removeItems(const QModelIndexList& _itemIndex);
+		void removeItems(const QModelIndexList& _indexes);
 
 		/**
 		 * @brief Активирована сцена
@@ -75,6 +76,16 @@ namespace ManagementLayer
 		 * @brief Добавить элемент после выбранного
 		 */
 		void aboutAddItem(const QModelIndex& _index);
+
+		/**
+		 * @brief Удалить выбранные элементы
+		 */
+		void aboutRemoveItems(const QModelIndexList& _indexes);
+
+		/**
+		 * @brief Выбрана сцена
+		 */
+		void aboutSceneChoosed(const QModelIndex& _index);
 
 		/**
 		 * @brief Обновить информацию о модели
@@ -106,6 +117,11 @@ namespace ManagementLayer
 		 * @brief Модель сценария
 		 */
 		BusinessLogic::ScenarioModel* m_scenarioModel;
+
+		/**
+		 * @brief Прокси для модели сценирия
+		 */
+		BusinessLogic::ScenarioModelFiltered* m_scenarioModelProxy;
 
 		/**
 		 * @brief Дерево навигации

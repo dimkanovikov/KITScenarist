@@ -14,6 +14,7 @@
 
 using ManagementLayer::ScenarioNavigatorManager;
 using BusinessLogic::ScenarioModel;
+using BusinessLogic::ScenarioModelFiltered;
 using UserInterface::ScenarioNavigator;
 using UserInterface::ScenarioItemDialog;
 
@@ -21,6 +22,7 @@ using UserInterface::ScenarioItemDialog;
 ScenarioNavigatorManager::ScenarioNavigatorManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_scenarioModel(0),
+	m_scenarioModelProxy(new ScenarioModelFiltered(this)),
 	m_navigator(new ScenarioNavigator(_parentWidget)),
 	m_addItemDialog(new ScenarioItemDialog(m_navigator))
 {
@@ -38,7 +40,8 @@ void ScenarioNavigatorManager::setNavigationModel(ScenarioModel* _model)
 {
 	disconnectModel();
 	m_scenarioModel = _model;
-	m_navigator->setModel(m_scenarioModel);
+	m_scenarioModelProxy->setSourceModel(m_scenarioModel);
+	m_navigator->setModel(m_scenarioModelProxy);
 	connectModel();
 
 	if (m_scenarioModel != 0) {
@@ -58,16 +61,16 @@ void ScenarioNavigatorManager::reloadNavigatorSettings()
 
 void ScenarioNavigatorManager::setCurrentIndex(const QModelIndex& _index)
 {
-	m_navigator->setCurrentIndex(_index);
+	m_navigator->setCurrentIndex(m_scenarioModelProxy->mapFromSource(_index));
 }
 
 void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
 {
-    m_addItemDialog->clearText();
+	m_addItemDialog->clearText();
 
 	//
 	// Если пользователь действительно хочет добавить элемент
-    //
+	//
 	if (m_addItemDialog->exec() == QDialog::Accepted) {
 		QString itemHeader = m_addItemDialog->itemHeader();
 		int itemType = m_addItemDialog->itemType();
@@ -76,9 +79,23 @@ void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
 		// Если задан заголовок
 		//
 		if (!itemHeader.isEmpty()) {
-			emit addItem(_index, itemHeader, itemType);
+			emit addItem(m_scenarioModelProxy->mapToSource(_index), itemHeader, itemType);
 		}
 	}
+}
+
+void ScenarioNavigatorManager::aboutRemoveItems(const QModelIndexList& _indexes)
+{
+	QModelIndexList removeIndexes;
+	foreach (const QModelIndex& index, _indexes) {
+		removeIndexes.append(m_scenarioModelProxy->mapToSource(index));
+	}
+	emit removeItems(removeIndexes);
+}
+
+void ScenarioNavigatorManager::aboutSceneChoosed(const QModelIndex& _index)
+{
+	emit sceneChoosed(m_scenarioModelProxy->mapToSource(_index));
 }
 
 void ScenarioNavigatorManager::aboutModelUpdated()
@@ -95,8 +112,8 @@ void ScenarioNavigatorManager::initConnections()
 	connectModel();
 
 	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)));
-	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SIGNAL(removeItems(QModelIndexList)));
-	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
+	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
+	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutSceneChoosed(QModelIndex)));
 	connect(m_navigator, SIGNAL(undoPressed()), this, SIGNAL(undoPressed()));
 	connect(m_navigator, SIGNAL(redoPressed()), this, SIGNAL(redoPressed()));
 }
@@ -104,7 +121,7 @@ void ScenarioNavigatorManager::initConnections()
 void ScenarioNavigatorManager::connectModel()
 {
 	if (m_scenarioModel != 0) {
-		connect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
+		connect(m_scenarioModelProxy, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
 		connect(m_scenarioModel, SIGNAL(mimeDropped(int)), this, SIGNAL(sceneChoosed(int)));
 	}
 }
@@ -112,7 +129,7 @@ void ScenarioNavigatorManager::connectModel()
 void ScenarioNavigatorManager::disconnectModel()
 {
 	if (m_scenarioModel != 0) {
-		disconnect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
+		disconnect(m_scenarioModelProxy, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
 		disconnect(m_scenarioModel, SIGNAL(mimeDropped(int)), this, SIGNAL(sceneChoosed(int)));
 	}
 }

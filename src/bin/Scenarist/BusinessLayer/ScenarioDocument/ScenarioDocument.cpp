@@ -643,6 +643,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				if (checkType != ScenarioBlockStyle::SceneGroupFooter
 					&& checkType != ScenarioBlockStyle::FolderFooter) {
 					updateItem(currentItem, currentItemStartPos, currentItemEndPos);
+					m_model->updateItem(currentItem);
 				}
 			}
 
@@ -650,7 +651,8 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			// Определим родителя если ещё не определён
 			//
 			if (currentParent == 0) {
-				if (currentItem->type() == ScenarioModelItem::Scene) {
+				if (currentItem->type() == ScenarioModelItem::Scene
+					|| currentItem->type() == ScenarioModelItem::Undefined) {
 					currentParent = currentItem->parent();
 				} else {
 					currentParent = currentItem;
@@ -758,11 +760,6 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	}
 
 	m_model->updateSceneNumbers();
-
-	//
-	// TODO: Обновить модель
-	//
-	m_model->dataChanged(m_model->index(0,0, QModelIndex()), m_model->index(1000, 1000, QModelIndex()));
 
 	//
 	// Сохранить md5 хэш текста документа

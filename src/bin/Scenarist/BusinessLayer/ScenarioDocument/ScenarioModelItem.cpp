@@ -6,7 +6,7 @@ using namespace BusinessLogic;
 
 
 namespace {
-	const int MAX_TEXT_LENGTH = 100;
+	const int MAX_TEXT_LENGTH = 200;
 }
 
 ScenarioModelItem::ScenarioModelItem(int _position) :
