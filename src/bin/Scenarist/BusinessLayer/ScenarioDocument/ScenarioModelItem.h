@@ -52,6 +52,7 @@ namespace BusinessLogic
 		 * @brief Описание элемента
 		 */
 		QString synopsis() const;
+		void setSynopsis(const QString& _synopsis);
 
 		/**
 		 * @brief Текст элемента

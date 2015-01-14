@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QPainter>
 #include <QResizeEvent>
+#include <QTextLayout>
 
 //---------------------------------------------------------------------
 
@@ -41,7 +42,28 @@ void ElidedLabel::setText(const QString &txt) {
 //---------------------------------------------------------------------
 
 void ElidedLabel::cacheElidedText(int w) {
-	cachedElidedText = fontMetrics().elidedText(text(), elideMode_, w, Qt::TextShowMnemonic);
+	//
+	// Определяем необходимую для сокращения ширину текста в зависимости от количества строк
+	//
+	QTextLayout textLayout(text());
+	int widthUsed = 0;
+	int lineCount = 0;
+	textLayout.beginLayout();
+	const int LINE_LIMIT = height() / fontMetrics().height();
+
+	while (++lineCount < LINE_LIMIT) {
+		QTextLine line = textLayout.createLine();
+		if (!line.isValid())
+			break;
+
+		line.setLineWidth(w);
+		widthUsed += line.naturalTextWidth();
+	}
+	textLayout.endLayout();
+
+	widthUsed += w;
+
+	cachedElidedText = fontMetrics().elidedText(text(), elideMode_, widthUsed, Qt::TextShowMnemonic);
 }
 
 //---------------------------------------------------------------------
@@ -61,7 +83,7 @@ void ElidedLabel::paintEvent(QPaintEvent *e) {
 		p.drawText(0, 0,
 				   geometry().width(),
 				   geometry().height(),
-				   alignment(),
+				   alignment() | Qt::TextWordWrap,
 				   cachedElidedText);
 	}
 }

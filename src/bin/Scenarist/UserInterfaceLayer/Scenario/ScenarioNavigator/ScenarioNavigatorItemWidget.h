@@ -24,6 +24,19 @@ namespace UserInterface
 		void setDescription(const QString& _description);
 		void setDuration(int _duration);
 
+		/**
+		 * @brief Вид отображения виджета
+		 */
+		enum Type {
+			OnlyHeader,
+			HeaderAndDescription
+		};
+
+		/**
+		 * @brief Установить вид отображения
+		 */
+		void setType(Type _type, int _descriptionHeight = 0);
+
 	private:
 		/**
 		 * @brief Значёк элемента

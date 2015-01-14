@@ -162,6 +162,21 @@ void SettingsManager::navigatorShowScenesNumbersChanged(bool _value)
 	storeValue("navigator/show-scenes-numbers", _value);
 }
 
+void SettingsManager::navigatorShowSceneDescriptionChanged(bool _value)
+{
+	storeValue("navigator/show-scene-description", _value);
+}
+
+void SettingsManager::navigatorSceneDescriptionIsSceneTextChanged(bool _value)
+{
+	storeValue("navigator/scene-description-is-scene-text", _value);
+}
+
+void SettingsManager::navigatorSceneDescriptionHeightChanged(int _value)
+{
+	storeValue("navigator/scene-description-height", _value);
+}
+
 void SettingsManager::chronometryUsedChanged(bool _value)
 {
 	storeValue("chronometry/used", _value);
@@ -510,6 +525,24 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_view->setNavigatorShowSceneDescription(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/show-scene-description",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setNavigatorSceneDescriptionIsSceneText(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/scene-description-is-scene-text",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setNavigatorSceneDescriptionHeight(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/scene-description-height",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 
 	//
 	// Настройки хронометража
@@ -646,6 +679,9 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SLOT(scenarioEditCurrentStyleChanged(QString)));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
+	connect(m_view, SIGNAL(navigatorShowSceneDescriptionChanged(bool)), this, SLOT(navigatorShowSceneDescriptionChanged(bool)));
+	connect(m_view, SIGNAL(navigatorSceneDescriptionIsSceneTextChanged(bool)), this, SLOT(navigatorSceneDescriptionIsSceneTextChanged(bool)));
+	connect(m_view, SIGNAL(navigatorSceneDescriptionHeightChanged(int)), this, SLOT(navigatorSceneDescriptionHeightChanged(int)));
 
 	connect(m_view, SIGNAL(chronometryUsedChanged(bool)), this, SLOT(chronometryUsedChanged(bool)));
 	connect(m_view, SIGNAL(chronometryCurrentTypeChanged()), this, SLOT(chronometryCurrentTypeChanged()));
@@ -694,7 +730,9 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
-//	connect(m_view, SIGNAL(navigatorShowScenesTextChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
+	connect(m_view, SIGNAL(navigatorShowSceneDescriptionChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
+	connect(m_view, SIGNAL(navigatorSceneDescriptionIsSceneTextChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
+	connect(m_view, SIGNAL(navigatorSceneDescriptionHeightChanged(int)), this, SIGNAL(navigatorSettingsUpdated()));
 
 	connect(m_view, SIGNAL(chronometryUsedChanged(bool)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCurrentTypeChanged()), this, SIGNAL(chronometrySettingsUpdated()));

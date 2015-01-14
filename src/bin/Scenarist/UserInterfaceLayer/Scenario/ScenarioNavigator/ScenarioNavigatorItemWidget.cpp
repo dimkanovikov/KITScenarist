@@ -28,14 +28,17 @@ ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 	m_header->setFont(headerFont);
 	m_header->setElideMode(Qt::ElideRight);
 	m_header->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+	m_header->setFixedHeight(m_header->fontMetrics().height());
 
 	m_description = new ElidedLabel(this);
 	m_description->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_description->setElideMode(Qt::ElideRight);
-	m_description->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+	m_description->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+	m_description->setWordWrap(true);
 
 	m_duration = new QLabel(this);
 	m_duration->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	m_duration->setFixedHeight(m_duration->fontMetrics().height());
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->addWidget(m_header);
@@ -49,7 +52,7 @@ ScenarioNavigatorItemWidget::ScenarioNavigatorItemWidget(QWidget *parent) :
 	rightLayout->setSpacing(1);
 
 	QHBoxLayout* layout = new QHBoxLayout;
-	layout->addWidget(m_icon);
+	layout->addWidget(m_icon, 0, Qt::AlignTop);
 	layout->addLayout(rightLayout);
 	layout->setContentsMargins(QMargins(0, 2, 0, 2));
 
@@ -79,4 +82,30 @@ void ScenarioNavigatorItemWidget::setDuration(int _duration)
 	}
 
 	m_duration->setText(duration);
+}
+
+void ScenarioNavigatorItemWidget::setType(Type _type, int _descriptionHeight)
+{
+	switch (_type) {
+		case OnlyHeader: {
+			m_icon->setFixedSize(20, 20);
+			m_description->hide();
+			break;
+		}
+
+		case HeaderAndDescription: {
+			m_icon->setFixedSize(32, 32);
+			m_description->show();
+			m_description->setFixedHeight(m_description->fontMetrics().height() * _descriptionHeight);
+			break;
+		}
+
+		default:
+			break;
+	}
+
+	//
+	// Скорректируем размер
+	//
+	resize(sizeHint());
 }

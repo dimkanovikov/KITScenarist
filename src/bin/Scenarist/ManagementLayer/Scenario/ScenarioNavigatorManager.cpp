@@ -51,9 +51,31 @@ void ScenarioNavigatorManager::setNavigationModel(ScenarioModel* _model)
 
 void ScenarioNavigatorManager::reloadNavigatorSettings()
 {
+	//
+	// Сбросим представление
+	//
+	m_navigator->resetView();
 	m_navigator->setShowSceneNumber(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"navigator/show-scenes-numbers",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_navigator->setShowSceneDescription(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/show-scene-description",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_navigator->setSceneDescriptionIsSceneText(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/scene-description-is-scene-text",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_navigator->setSceneDescriptionHeight(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/scene-description-height",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);

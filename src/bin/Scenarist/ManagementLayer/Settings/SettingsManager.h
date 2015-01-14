@@ -69,6 +69,9 @@ namespace ManagementLayer
 		void scenarioEditCurrentStyleChanged(const QString& _value);
 
 		void navigatorShowScenesNumbersChanged(bool  _value);
+		void navigatorShowSceneDescriptionChanged(bool _value);
+		void navigatorSceneDescriptionIsSceneTextChanged(bool _value);
+		void navigatorSceneDescriptionHeightChanged(int _value);
 
 		void chronometryUsedChanged(bool _value);
 		void chronometryCurrentTypeChanged();

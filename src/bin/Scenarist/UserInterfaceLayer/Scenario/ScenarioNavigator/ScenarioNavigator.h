@@ -44,6 +44,29 @@ namespace UserInterface
 		 */
 		void setShowSceneNumber(bool _show);
 
+		/**
+		 * @brief Настроить отображение примечания сцен
+		 */
+		void setShowSceneDescription(bool _show);
+
+		/**
+		 * @brief Настроить что отображать в примечании к сцене, её текст (true) или синопсис (false)
+		 */
+		void setSceneDescriptionIsSceneText(bool _isSceneText);
+
+		/**
+		 * @brief Настроить высоту поля примечания
+		 */
+		void setSceneDescriptionHeight(int _height);
+
+		/**
+		 * @brief Пересоздать делегат отображения элементов в навигаторе
+		 * @note Приходится именно пересоздавать навигатор, т.к. другого рабочего способа для
+		 *		 обновления делегата не нашёл. Проблемы возникают при изменении размера виджета,
+		 *		 который рисует делегат
+		 */
+		void resetView();
+
 	signals:
 		/**
 		 * @brief Запрос на добавление элемента
@@ -138,6 +161,7 @@ namespace UserInterface
 		 * @brief Делегат дерева
 		 */
 		ScenarioNavigatorItemDelegate* m_navigationTreeDelegate;
+		ScenarioNavigatorItemDelegate* m_navigationTreeDelegateCopy;
 	};
 }
 

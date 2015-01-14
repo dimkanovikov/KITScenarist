@@ -1,23 +1,32 @@
 В этом файле собраны все ключи к настройкам хранящимся приложением
 
 navigator/show-scenes-numbers - отображать номера сцен
+navigator/show-scene-description - отображать примечание к сцене
+navigator/scene-description-is-scene-text - примечанием к сцене является текст сцены (true) или синопсис сцены (false)
+navigator/scene-description-height - высота примечания к сцене
 
 simple-editor/zoom-range - коэффициент масштабирования всех редакторов
 
 scenario-editor/page-view - используется ли режим постраничного отображения
 scenario-editor/spell-checking - включена ли проверка орфографии
 scenario-editor/spell-checking-language - язык проверки орфографии
-scenario-editor/text-color - цвет текста редактора сценария
-scenario-editor/background-color - цвет фона
-scenario-editor/nonprintable-text-color - цвет непечатного текста
-scenario-editor/folder-text-color - цвет текста папки
-scenario-editor/folder-background-color - цвет фона папки
+scenario-editor/text-color - цвет текста редактора сценария для светлой темы
+scenario-editor/background-color - цвет фона для светлой темы
+scenario-editor/nonprintable-text-color - цвет непечатного текста для светлой темы
+scenario-editor/folder-text-color - цвет текста папки для светлой темы
+scenario-editor/folder-background-color - цвет фона папки для светлой темы
+scenario-editor/text-color-dark - цвет текста редактора сценария для тёмной темы
+scenario-editor/background-color-dark - цвет фона для тёмной темы
+scenario-editor/nonprintable-text-color-dark - цвет непечатного текста для тёмной темы
+scenario-editor/folder-text-color-dark - цвет текста папки для тёмной темы
+scenario-editor/folder-background-color-dark - цвет фона папки для тёмной темы
 scenario-editor/autosave - включено ли автосохранение проекта
 scenario-editor/autosave-interval - интервал автоматического сохранения
 scenario-editor/current-style - стиль отображения текста в редакторе
 
 chronometry/used - включён ли подсчёт хронометража
 chronometry/current-chronometer-type - используемая система хронометража
+chronometry/pages/seconds - количество секунд на одной странице
 chronometry/characters/characters - количество символов в посимвольном хронометре
 chronometry/characters/seconds - количество секунд в посимвольном хронометре
 chronometry/characters/consider-spaces - учитывать пробелы в посимвольном хронометраже

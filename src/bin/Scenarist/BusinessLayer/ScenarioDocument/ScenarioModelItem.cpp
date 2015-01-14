@@ -66,6 +66,13 @@ QString ScenarioModelItem::synopsis() const
 	return m_synopsis;
 }
 
+void ScenarioModelItem::setSynopsis(const QString& _synopsis)
+{
+	if (m_synopsis != _synopsis) {
+		m_synopsis = _synopsis;
+	}
+}
+
 QString ScenarioModelItem::text() const
 {
 	return m_text;

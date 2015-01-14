@@ -122,7 +122,8 @@ void ScenarioModel::updateItem(ScenarioModelItem* _item)
 	// Если элемент уже в списке, то обновим, в противном случае просто игнорируем
 	//
 	if (_item->parent() != 0) {
-		emit dataChanged(indexForItem(_item), indexForItem(_item));
+		const QModelIndex indexForUpdate = indexForItem(_item);
+		emit dataChanged(indexForUpdate, indexForUpdate);
 	}
 }
 
@@ -493,6 +494,7 @@ QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 	return index(row, 0, parent);
 }
 
+// ********
 
 bool ScenarioModelFiltered::filterAcceptsRow(int _sourceRow, const QModelIndex& _sourceParent) const
 {

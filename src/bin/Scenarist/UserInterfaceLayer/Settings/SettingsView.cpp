@@ -150,6 +150,25 @@ void SettingsView::setNavigatorShowScenesNumbers(bool _value)
 	ui->showScenesNumbers->setChecked(_value);
 }
 
+void SettingsView::setNavigatorShowSceneDescription(bool _value)
+{
+	ui->showSceneDescription->setChecked(_value);
+}
+
+void SettingsView::setNavigatorSceneDescriptionIsSceneText(bool _value)
+{
+	if (_value) {
+		ui->sceneDescriptionIsSceneText->setChecked(true);
+	} else {
+		ui->sceneDescriptionIsSceneSynopsis->setChecked(true);
+	}
+}
+
+void SettingsView::setNavigatorSceneDescriptionHeight(int _value)
+{
+	ui->sceneDescriptionHeight->setValue(_value);
+}
+
 void SettingsView::setChronometryUsed(bool _value)
 {
 	ui->chronometryGroup->setChecked(_value);
@@ -423,6 +442,9 @@ void SettingsView::initConnections()
 	connect(ui->currentScenarioStyle, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentStyleChanged(QString)));
 	// ... навигатор
 	connect(ui->showScenesNumbers, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
+	connect(ui->showSceneDescription, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowSceneDescriptionChanged(bool)));
+	connect(ui->sceneDescriptionIsSceneText, SIGNAL(toggled(bool)), this, SIGNAL(navigatorSceneDescriptionIsSceneTextChanged(bool)));
+	connect(ui->sceneDescriptionHeight, SIGNAL(valueChanged(int)), this, SIGNAL(navigatorSceneDescriptionHeightChanged(int)));
 	// ... хронометраж
 	connect(ui->chronometryGroup, SIGNAL(toggled(bool)), this, SIGNAL(chronometryUsedChanged(bool)));
 	connect(ui->pagesChronometry, SIGNAL(toggled(bool)), this, SIGNAL(chronometryCurrentTypeChanged()));

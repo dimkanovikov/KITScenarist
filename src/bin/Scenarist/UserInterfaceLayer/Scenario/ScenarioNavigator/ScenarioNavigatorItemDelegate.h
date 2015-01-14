@@ -23,9 +23,20 @@ namespace UserInterface
 		QSize sizeHint(const QStyleOptionViewItem& _option, const QModelIndex& _index) const;
 
 		/**
-		 * @brief Настроить отображение номера сцены
+		 * @brief Настроить способ отображения
 		 */
+		/** @{ */
 		void setShowSceneNumber(bool _show);
+		void setShowSceneDescription(bool _show);
+		void setSceneDescriptionIsSceneText(bool _isSceneText);
+		void setSceneDescriptionHeight(int _height);
+		/** @} */
+
+	private:
+		/**
+		 * @brief Обновить отображение виджета
+		 */
+		void updateWidgetView();
 
 	private:
 		/**
@@ -37,6 +48,21 @@ namespace UserInterface
 		 * @brief Отображать номер сцены
 		 */
 		bool m_showSceneNumber;
+
+		/**
+		 * @brief Отображать описание сцены
+		 */
+		bool m_showSceneDescription;
+
+		/**
+		 * @brief Описанием сцены является текст сцены (true) или синопсис (false)
+		 */
+		bool m_sceneDescriptionIsSceneText;
+
+		/**
+		 * @brief Высота поля для отображения описания сцены
+		 */
+		int m_sceneDescriptionHeight;
 	};
 }
 

@@ -59,7 +59,10 @@ namespace UserInterface
 		void setScenarioEditFolderBackgroundColorDark(const QColor& _color);
 		void setScenarioEditCurrentStyle(const QString& _styleName);
 
-		void setNavigatorShowScenesNumbers(bool  _value);
+		void setNavigatorShowScenesNumbers(bool _value);
+		void setNavigatorShowSceneDescription(bool _value);
+		void setNavigatorSceneDescriptionIsSceneText(bool _value);
+		void setNavigatorSceneDescriptionHeight(int _value);
 
 		void setChronometryUsed(bool _value);
 		void setChronometryCurrentType(int _value);
@@ -104,7 +107,9 @@ namespace UserInterface
 		void scenarioEditCurrentStyleChanged(const QString&);
 
 		void navigatorShowScenesNumbersChanged(bool);
-		void navigatorShowScenesTextChanged(bool);
+		void navigatorShowSceneDescriptionChanged(bool);
+		void navigatorSceneDescriptionIsSceneTextChanged(bool);
+		void navigatorSceneDescriptionHeightChanged(int);
 
 		void chronometryUsedChanged(bool);
 		void chronometryCurrentTypeChanged();

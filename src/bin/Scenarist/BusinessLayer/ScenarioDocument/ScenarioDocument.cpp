@@ -164,6 +164,17 @@ QString ScenarioDocument::itemSynopsis(ScenarioModelItem* _item) const
 void ScenarioDocument::setItemSynopsisAtPosition(int _position, const QString& _synopsis)
 {
 	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+		//
+		// Установить синопсис в элемент
+		//
+		QTextDocument synopsisDoc;
+		synopsisDoc.setHtml(_synopsis);
+		item->setSynopsis(synopsisDoc.toPlainText().simplified());
+		m_model->updateItem(item);
+
+		//
+		// Установить синопсис в документ
+		//
 		QTextCursor cursor(m_document);
 		cursor.setPosition(item->position());
 
@@ -804,6 +815,10 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	cursor.movePosition(QTextCursor::NextBlock);
 	cursor.setPosition(_itemEndPos, QTextCursor::KeepAnchor);
 	QString itemText = cursor.selectedText().simplified();
+	// ... синопсис
+	QTextDocument doc;
+	doc.setHtml(itemSynopsis(_item));
+	QString synopsis = doc.toPlainText().simplified();
 	// ... длительность
 	int itemDuration = 0;
 	if (itemType == ScenarioModelItem::Scene) {
@@ -830,6 +845,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setHeader(itemHeader);
 	_item->setType(itemType);
 	_item->setText(itemText);
+	_item->setSynopsis(synopsis);
 	_item->setDuration(itemDuration);
 	_item->setHasNote(hasNote);
 	_item->setCounter(counter);

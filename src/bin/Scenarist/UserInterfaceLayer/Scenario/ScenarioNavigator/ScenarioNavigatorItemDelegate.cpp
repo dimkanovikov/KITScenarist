@@ -1,6 +1,8 @@
 #include "ScenarioNavigatorItemDelegate.h"
 #include "ScenarioNavigatorItemWidget.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
+
 #include <QApplication>
 #include <QPainter>
 
@@ -11,7 +13,10 @@ using UserInterface::ScenarioNavigatorItemWidget;
 ScenarioNavigatorItemDelegate::ScenarioNavigatorItemDelegate(QObject* _parent) :
 	QStyledItemDelegate(_parent),
 	m_itemWidget(new ScenarioNavigatorItemWidget),
-	m_showSceneNumber(false)
+	m_showSceneNumber(false),
+	m_showSceneDescription(true),
+	m_sceneDescriptionIsSceneText(true),
+	m_sceneDescriptionHeight(1)
 {
 }
 
@@ -22,12 +27,15 @@ ScenarioNavigatorItemDelegate::~ScenarioNavigatorItemDelegate()
 
 void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& _option, const QModelIndex& _index) const
 {
+	//
+	// Получим данные
+	//
 	QVariant icon = _index.data(Qt::DecorationRole);
 	QVariant header = _index.data(Qt::DisplayRole);
-	QVariant sceneText = _index.data(Qt::UserRole + 1);
-	QVariant synopsys = _index.data(Qt::UserRole + 2);
-	QVariant duration = _index.data(Qt::UserRole + 3);
-	QVariant sceneNumber = _index.data(Qt::UserRole + 4);
+	QVariant sceneText = _index.data(BusinessLogic::ScenarioModel::SceneTextIndex);
+	QVariant synopsys = _index.data(BusinessLogic::ScenarioModel::SynopsisIndex);
+	QVariant duration = _index.data(BusinessLogic::ScenarioModel::DurationIndex);
+	QVariant sceneNumber = _index.data(BusinessLogic::ScenarioModel::SceneNumberIndex);
 
 	//
 	// Установим в виджет данные
@@ -51,7 +59,11 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// ... описание
 	//
-	m_itemWidget->setDescription(sceneText.toString());
+	if (m_sceneDescriptionIsSceneText) {
+		m_itemWidget->setDescription(sceneText.toString());
+	} else {
+		m_itemWidget->setDescription(synopsys.toString());
+	}
 
 	//
 	// Получим настройки стиля
@@ -130,4 +142,43 @@ void ScenarioNavigatorItemDelegate::setShowSceneNumber(bool _show)
 	if (m_showSceneNumber != _show) {
 		m_showSceneNumber = _show;
 	}
+}
+
+void ScenarioNavigatorItemDelegate::setShowSceneDescription(bool _show)
+{
+	if (m_showSceneDescription != _show) {
+		m_showSceneDescription = _show;
+
+		updateWidgetView();
+	}
+}
+
+void ScenarioNavigatorItemDelegate::setSceneDescriptionIsSceneText(bool _isSceneText)
+{
+	if (m_sceneDescriptionIsSceneText != _isSceneText) {
+		m_sceneDescriptionIsSceneText = _isSceneText;
+	}
+}
+
+void ScenarioNavigatorItemDelegate::setSceneDescriptionHeight(int _height)
+{
+	if (m_sceneDescriptionHeight != _height) {
+		m_sceneDescriptionHeight = _height;
+
+		updateWidgetView();
+	}
+}
+
+void ScenarioNavigatorItemDelegate::updateWidgetView()
+{
+	//
+	// Настроим виджет
+	//
+	ScenarioNavigatorItemWidget::Type widgetType =
+			m_showSceneDescription
+			? ScenarioNavigatorItemWidget::HeaderAndDescription
+			: ScenarioNavigatorItemWidget::OnlyHeader;
+	m_itemWidget->setType(widgetType, m_sceneDescriptionHeight);
+
+
 }

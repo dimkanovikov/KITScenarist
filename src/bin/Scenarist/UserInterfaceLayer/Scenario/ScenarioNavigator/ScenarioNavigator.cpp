@@ -23,7 +23,8 @@ ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
 	m_removeItem(new QToolButton(this)),
 	m_endTitle(new QLabel(this)),
 	m_navigationTree(new QTreeView(this)),
-	m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this))
+	m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this)),
+	m_navigationTreeDelegateCopy(new ScenarioNavigatorItemDelegate(this))
 {
 	initView();
 	initConnections();
@@ -49,6 +50,29 @@ void ScenarioNavigator::setCurrentIndex(const QModelIndex& _index)
 void ScenarioNavigator::setShowSceneNumber(bool _show)
 {
 	m_navigationTreeDelegate->setShowSceneNumber(_show);
+}
+
+void ScenarioNavigator::setShowSceneDescription(bool _show)
+{
+	m_navigationTreeDelegate->setShowSceneDescription(_show);
+}
+
+void ScenarioNavigator::setSceneDescriptionIsSceneText(bool _isSceneText)
+{
+	m_navigationTreeDelegate->setSceneDescriptionIsSceneText(_isSceneText);
+}
+
+void ScenarioNavigator::setSceneDescriptionHeight(int _height)
+{
+	m_navigationTreeDelegate->setSceneDescriptionHeight(_height);
+}
+
+void ScenarioNavigator::resetView()
+{
+	m_navigationTree->setItemDelegate(0);
+	delete m_navigationTreeDelegate;
+	m_navigationTreeDelegate = new ScenarioNavigatorItemDelegate(this);
+	m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
 }
 
 bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
