@@ -4,6 +4,7 @@
 #include <QGraphicsProxyWidget>
 #include <QMenu>
 #include <QScrollBar>
+#include <QShortcut>
 #include <QTextEdit>
 
 
@@ -28,6 +29,9 @@ ScalableWrapper::ScalableWrapper(QTextEdit* _editor, QWidget* _parent) :
 	//
 	// Предварительная настройка редактора текста
 	//
+	// FIXME: непонятно как быть с предком, у встраиваемого виджета не должно быть родителя,
+	//		  но как в таком случае освобождать память?
+	//
 	m_editor->setParent(0);
 	m_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	m_editor->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -51,6 +55,14 @@ ScalableWrapper::ScalableWrapper(QTextEdit* _editor, QWidget* _parent) :
 	// Синхронизация значения ролика в обе стороны
 	//
 	setupScrollingSynchronization(true);
+
+	//
+	// Добавляем возможность масштабирования при помощи комбинаций Ctrl +/-
+	//
+	QShortcut* zoomInShortcut = new QShortcut(QKeySequence("Ctrl++"), this);
+	connect(zoomInShortcut, SIGNAL(activated()), this, SLOT(zoomIn()));
+	QShortcut* zoomOutShortcut = new QShortcut(QKeySequence("Ctrl+-"), this);
+	connect(zoomOutShortcut, SIGNAL(activated()), this, SLOT(zoomOut()));
 }
 
 QTextEdit* ScalableWrapper::editor() const
@@ -66,6 +78,16 @@ void ScalableWrapper::setZoomRange(qreal _zoomRange)
 
 		scaleTextEdit();
 	}
+}
+
+void ScalableWrapper::zoomIn()
+{
+	setZoomRange(m_zoomRange + 0.1);
+}
+
+void ScalableWrapper::zoomOut()
+{
+	setZoomRange(m_zoomRange - 0.1);
 }
 
 bool ScalableWrapper::event(QEvent* _event)
@@ -310,11 +332,8 @@ void ScalableWrapper::updateTextEditSize()
 
 void ScalableWrapper::scaleTextEdit()
 {
-	const qreal DEFAULT_ZOOM_RANGE = 1.0;
 	const qreal MINIMUM_ZOOM_RANGE = 0.5;
-	if (m_zoomRange <= 0) {
-		m_zoomRange = DEFAULT_ZOOM_RANGE;
-	} else if (m_zoomRange < MINIMUM_ZOOM_RANGE) {
+	if (m_zoomRange < MINIMUM_ZOOM_RANGE) {
 		m_zoomRange = MINIMUM_ZOOM_RANGE;
 	}
 	m_editorProxy->setScale(m_zoomRange);

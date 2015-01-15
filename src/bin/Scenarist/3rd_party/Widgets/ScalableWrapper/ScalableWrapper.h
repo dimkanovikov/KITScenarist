@@ -27,6 +27,17 @@ public:
 	 */
 	void setZoomRange(qreal _zoomRange);
 
+public slots:
+	/**
+	 * @brief Увеличить масштаб
+	 */
+	void zoomIn();
+
+	/**
+	 * @brief Уменьшить масштаб
+	 */
+	void zoomOut();
+
 signals:
 	/**
 	 * @brief Изменился коэффициент масштабирования
