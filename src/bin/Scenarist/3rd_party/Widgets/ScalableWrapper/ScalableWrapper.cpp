@@ -97,6 +97,14 @@ bool ScalableWrapper::event(QEvent* _event)
 		gestureEvent(static_cast<QGestureEvent*>(_event));
 	} else {
 		result = QGraphicsView::event(_event);
+
+		//
+		// Переустанавливаем фокус в редактор, иначе в нём пропадает курсор
+		//
+		if (_event->type() == QEvent::FocusIn) {
+			m_editor->clearFocus();
+			m_editor->setFocus();
+		}
 	}
 
 	return result;

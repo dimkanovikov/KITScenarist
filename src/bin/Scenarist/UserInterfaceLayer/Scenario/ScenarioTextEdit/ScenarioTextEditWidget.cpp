@@ -179,7 +179,7 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 		cursor.setPosition(_position);
 		m_editor->setTextCursor(cursor);
 		m_editor->ensureCursorVisibleReimpl();
-		m_editor->setFocus();
+		m_editorWrapper->setFocus();
 	}
 	//
 	// Если нужно обновить в текущей позиции курсора просто имитируем отправку сигнала
@@ -330,7 +330,7 @@ void ScenarioTextEditWidget::aboutChangeTextStyle()
 	// Меняем стиль блока, если это возможно
 	//
 	m_editor->changeScenarioBlockType(type);
-	m_editor->setFocus();
+	m_editorWrapper->setFocus();
 }
 
 void ScenarioTextEditWidget::aboutCursorPositionChanged()
