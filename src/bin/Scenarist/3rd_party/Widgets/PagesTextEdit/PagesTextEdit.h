@@ -42,6 +42,16 @@ public slots:
 	 */
 	void setAddSpaceToBottom(bool _addSpace);
 
+	/**
+	 * @brief Установить значение необходимости отображения номеров страниц
+	 */
+	void setShowPageNumbers(bool _show);
+
+	/**
+	 * @brief Установить место отображения номеров страниц
+	 */
+	void setPageNumbersAlignment(Qt::Alignment _align);
+
 protected:
 	/**
 	 * @brief Переопределяется для корректировки документа и прорисовки оформления страниц
@@ -69,6 +79,16 @@ private:
 	 */
 	void paintPagesView();
 
+	/**
+	 * @brief Нарисовать номера страниц
+	 */
+	void paintPageNumbers();
+
+	/**
+	 * @brief Нарисовать номер страницы с заданными парамтерами расположения
+	 */
+	void paintPageNumber(QPainter* _painter, const QRectF& _rect, bool _isHeader, int _number);
+
 private slots:
 	/**
 	 * @brief Изменился интервал вертикальной прокрутки
@@ -90,14 +110,19 @@ private:
 	bool m_addBottomSpace;
 
 	/**
+	 * @brief Необходимо ли показывать номера страниц
+	 */
+	bool m_showPageNumbers;
+
+	/**
+	 * @brief Где показывать номера страниц
+	 */
+	Qt::Alignment m_pageNumbersAlignment;
+
+	/**
 	 * @brief Метрика страницы редактора
 	 */
 	PageMetrics m_pageMetrics;
-
-	/**
-	 * @brief Указатель на документ
-	 */
-	QTextDocument* m_document;
 };
 
 #endif // PAGESTEXTEDIT_H

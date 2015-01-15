@@ -9,7 +9,8 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	QTextEdit(parent),
 	m_usePageMode(false),
 	m_addBottomSpace(true),
-	m_document(0)
+	m_showPageNumbers(true),
+	m_pageNumbersAlignment(Qt::AlignTop | Qt::AlignRight)
 {
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
@@ -69,6 +70,30 @@ void PagesTextEdit::setAddSpaceToBottom(bool _addSpace)
 	}
 }
 
+void PagesTextEdit::setShowPageNumbers(bool _show)
+{
+	if (m_showPageNumbers != _show) {
+		m_showPageNumbers = _show;
+
+		//
+		// Перерисуем себя
+		//
+		repaint();
+	}
+}
+
+void PagesTextEdit::setPageNumbersAlignment(Qt::Alignment _align)
+{
+	if (m_pageNumbersAlignment != _align) {
+		m_pageNumbersAlignment = _align;
+
+		//
+		// Перерисуем себя
+		//
+		repaint();
+	}
+}
+
 void PagesTextEdit::paintEvent(QPaintEvent* _event)
 {
 	updateInnerGeometry();
@@ -76,6 +101,8 @@ void PagesTextEdit::paintEvent(QPaintEvent* _event)
 	updateVerticalScrollRange();
 
 	paintPagesView();
+
+	paintPageNumbers();
 
 	QTextEdit::paintEvent(_event);
 }
@@ -110,15 +137,27 @@ void PagesTextEdit::updateInnerGeometry()
 		//
 		// Рассчитываем отступы для viewport
 		//
+		const int DEFAULT_TOP_MARGIN = 20;
+		const int DEFAULT_BOTTOM_MARGIN = 20;
 		if (width() > pageWidth) {
+			//
+			// Нижний оступ может быть больше минимального значения, для случая,
+			// когда весь документ и даже больше помещается на экране
+			//
+			int bottomViewportMargin = DEFAULT_TOP_MARGIN;
+			int documentHeight = pageHeight * document()->pageCount();
+			if ((height() - documentHeight) > (DEFAULT_TOP_MARGIN + DEFAULT_BOTTOM_MARGIN)) {
+				bottomViewportMargin = height() - documentHeight - DEFAULT_TOP_MARGIN;
+			}
+
 			viewportMargins =
 					QMargins(
 						(width() - pageWidth - verticalScrollBar()->width() - 2)/2,
-						20,
+						DEFAULT_TOP_MARGIN,
 						(width() - pageWidth - verticalScrollBar()->width() - 2)/2,
-						20);
+						bottomViewportMargin);
 		} else {
-			viewportMargins = QMargins(0, 20, 0, 20);
+			viewportMargins = QMargins(0, DEFAULT_TOP_MARGIN, 0, DEFAULT_BOTTOM_MARGIN);
 		}
 	}
 
@@ -199,7 +238,7 @@ void PagesTextEdit::paintPagesView()
 		//
 		// Корректируем позицию правой границы
 		//
-		int x = pageWidth - (width() % 2 == 0 ? 1 : 0);
+		int x = pageWidth - (width() % 2 == 0 ? 0 : 1);
 
 		//
 		// Нарисовать верхнюю границу
@@ -210,7 +249,7 @@ void PagesTextEdit::paintPagesView()
 			p.drawLine(0, curHeight - pageHeight, pageWidth, curHeight - pageHeight);
 		}
 
-		while (curHeight < height()) {
+		while (curHeight <= height()) {
 			//
 			// Фон разрыва страниц
 			//
@@ -247,6 +286,116 @@ void PagesTextEdit::paintPagesView()
 			p.drawLine(0, curHeight-pageHeight, 0, height());
 			// ... правая
 			p.drawLine(x, curHeight-pageHeight, x, height());
+		}
+	}
+}
+
+void PagesTextEdit::paintPageNumbers()
+{
+	//
+	// Номера страниц рисуются только тогда, когда редактор находится в постраничном режиме,
+	// если заданы поля и включена опция отображения номеров
+	//
+	if (m_usePageMode && !m_pageMetrics.pxPageMargins().isNull() && m_showPageNumbers) {
+		//
+		// Нарисовать номера страниц
+		//
+
+		QSizeF pageSize(m_pageMetrics.pxPageSize());
+		QMarginsF pageMargins(m_pageMetrics.pxPageMargins());
+
+		QPainter p(viewport());
+		p.setFont(document()->defaultFont());
+		p.setPen(QPen(palette().text(), 1));
+
+		//
+		// Текущие высота и ширина которые отображаются на экране
+		//
+		qreal curHeight = pageSize.height() - (verticalScrollBar()->value() % (int)pageSize.height());
+
+		//
+		// Смещения для полей, чтобы не прижимать цифры к краю
+		//
+		qreal leftDelta = pageMargins.left() / 2.;
+		qreal rightDelta = pageMargins.right() / 2.;
+		//
+		// Начало поля должно учитывать смещение полосы прокрутки
+		//
+		qreal leftMarginPosition = leftDelta - horizontalScrollBar()->value();
+		//
+		// Итоговая ширина поля
+		//
+		qreal marginWidth = pageSize.width() - leftDelta - rightDelta;
+
+		//
+		// Необходимо ли рисовать верхнуюю границу следующей страницы
+		//
+		bool canDrawNextPageTop = verticalScrollBar()->value() != verticalScrollBar()->maximum();
+		//
+		// Номер первой видимой на экране страницы
+		//
+		int pageNumber = verticalScrollBar()->value() / pageSize.height() + 1;
+
+		//
+		// Верхнее поле первой страницы на экране, когда не видно предыдущей страницы
+		//
+		if (curHeight - pageMargins.top() >= 0) {
+			QRectF topMarginRect(leftMarginPosition, curHeight - pageSize.height(), marginWidth, pageMargins.top());
+			paintPageNumber(&p, topMarginRect, true, pageNumber);
+		}
+
+		//
+		// Для всех видимых страниц
+		//
+		while (curHeight < height()) {
+			//
+			// Определить прямоугольник нижнего поля
+			//
+			QRect bottomMarginRect(leftMarginPosition, curHeight - pageMargins.bottom(), marginWidth, pageMargins.bottom());
+			paintPageNumber(&p, bottomMarginRect, false, pageNumber);
+
+			//
+			// Переход к следующей странице
+			//
+			++pageNumber;
+
+			//
+			// Определить прямоугольник верхнего поля следующей страницы
+			//
+			if (canDrawNextPageTop) {
+				QRect topMarginRect(leftMarginPosition, curHeight, marginWidth, pageMargins.top());
+				paintPageNumber(&p, topMarginRect, true, pageNumber);
+			}
+
+			curHeight += pageSize.height();
+		}
+	}
+}
+
+void PagesTextEdit::paintPageNumber(QPainter* _painter, const QRectF& _rect, bool _isHeader, int _number)
+{
+	//
+	// Верхнее поле
+	//
+	if (_isHeader) {
+		//
+		// Если нумерация рисуется в верхнем поле
+		//
+		if (m_pageNumbersAlignment.testFlag(Qt::AlignTop)) {
+			_painter->drawText(_rect, Qt::AlignVCenter | (m_pageNumbersAlignment ^ Qt::AlignTop),
+				QString::number(_number));
+		}
+	}
+	//
+	// Нижнее поле
+	//
+	else {
+		//
+		// Если нумерация рисуется в нижнем поле
+		//
+		if (m_pageNumbersAlignment.testFlag(Qt::AlignBottom)) {
+			_painter->drawText(_rect, Qt::AlignVCenter | (m_pageNumbersAlignment ^ Qt::AlignBottom),
+				QString::number(_number));
 		}
 	}
 }

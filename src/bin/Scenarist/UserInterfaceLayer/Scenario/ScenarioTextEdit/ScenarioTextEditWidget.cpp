@@ -109,13 +109,25 @@ void ScenarioTextEditWidget::setCountersInfo(const QString& _counters)
 
 void ScenarioTextEditWidget::setUsePageView(bool _use)
 {
+	//
+	// Установка постраничного режима так же тянет за собой ряд настроек
+	//
 	QMarginsF pageMargins(5, 5, 5, 5);
+	Qt::Alignment pageNumbersAlign;
 	if (_use) {
 		pageMargins = ScenarioStyleFacade::style().pageMargins();
+		pageNumbersAlign = ScenarioStyleFacade::style().numberingAlignment();
 	}
 
-	m_editor->setPageMargins(pageMargins);
 	m_editor->setUsePageMode(_use);
+	m_editor->setPageMargins(pageMargins);
+	m_editor->setPageNumbersAlignment(pageNumbersAlign);
+
+	//
+	// В дополнение установим шрифт по умолчанию для документа (шрифтом будет рисоваться нумерация)
+	//
+	m_editor->document()->setDefaultFont(
+		ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Action).font());
 }
 
 void ScenarioTextEditWidget::setUseSpellChecker(bool _use)

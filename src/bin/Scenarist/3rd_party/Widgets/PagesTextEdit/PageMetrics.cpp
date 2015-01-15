@@ -23,6 +23,7 @@ QPageSize::PageSizeId PageMetrics::pageSizeIdFromString(const QString& _from)
 	else if (_from == "A3") result = QPageSize::A3;
 	else if (_from == "A4") result = QPageSize::A4;
 	else if (_from == "A5") result = QPageSize::A5;
+	else if (_from == "A6") result = QPageSize::A6;
 	else
 		Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Undefined page size: " + _from));
 
@@ -40,6 +41,7 @@ QString PageMetrics::stringFromPageSizeId(QPageSize::PageSizeId _pageSize)
 		case QPageSize::A3: result = "A3"; break;
 		case QPageSize::A4: result = "A4"; break;
 		case QPageSize::A5: result = "A5"; break;
+		case QPageSize::A6: result = "A6"; break;
 		default:
 			Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Undefined page size: " + QString::number(_pageSize)));
 	}
