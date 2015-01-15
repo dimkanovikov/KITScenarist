@@ -226,10 +226,6 @@ namespace {
 			// Для неопределённого стиля формируется простая заглушка
 			//
 			blockStyle.append("\\sbasedon222\\snext0 ");
-
-			//
-			// Для неопределённого стиля формируется простая заглушка
-			//
 		}
 
 		return blockStyle;
@@ -343,7 +339,7 @@ QString RtfExporter::header(const ExportParameters& _exportParameters) const
 	// Если печатается титульная страница
 	//
 	if (_exportParameters.printTilte) {
-		header.append("\\titlepg");
+		header.append("\\titlepg\\pgnrestart\\pgnstarts0");
 	}
 
 	//

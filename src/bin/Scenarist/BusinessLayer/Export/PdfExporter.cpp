@@ -114,9 +114,12 @@ namespace {
 						}
 
 						//
-						// Рисуем нумерацию в положеном месте
+						// Рисуем нумерацию в положеном месте (отнимаем единицу, т.к. нумерация
+						// должна следовать с единицы для первой страницы текста сценария)
 						//
-						painter.drawText(numberingRect, numberingAlignment, QString::number(pageNumber));
+						int titleDelta = _document->property(PRINT_TITLE_KEY).toBool() ? -1 : 0;
+						painter.drawText(numberingRect, numberingAlignment,
+							QString::number(pageNumber + titleDelta));
 					}
 				}
 

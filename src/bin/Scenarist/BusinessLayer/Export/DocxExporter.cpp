@@ -548,10 +548,15 @@ void DocxExporter::writeDocument(QtZipWriter* _zip, ScenarioDocument* _scenario,
 		documentXml.append("<w:titlePg/>");
 	}
 	//
+	// ... нумерация страниц
+	//
+	int pageNumbersStartFrom = _exportParameters.printTilte ? 0 : 1;
+	documentXml.append(
+		QString("<w:pgNumType w:fmt=\"decimal\" w:start=\"%1\"/>").arg(pageNumbersStartFrom));
+	//
 	// ... конец блока настроек страницы
 	//
 	documentXml.append(
-			"<w:pgNumType w:fmt=\"decimal\"/>"
 			"<w:textDirection w:val=\"lrTb\"/>"
 		"</w:sectPr>"
 		);
@@ -563,89 +568,3 @@ void DocxExporter::writeDocument(QtZipWriter* _zip, ScenarioDocument* _scenario,
 	//
 	_zip->addFile(QString::fromLatin1("word/document.xml"), documentXml.toUtf8());
 }
-
-/*
-QString DocxExporter::header(const ExportParameters& _exportParameters) const
-{
-	QString header = "\\rtf1\\ansi";
-
-	//
-	// Настройки в соответсвии со стилем
-	//
-	ScenarioStyle style = ::exportStyle();
-
-	//
-	// Настройки шрифтов
-	//
-	header.append("{\\fonttbl");
-	foreach (int blockNumber, ::blockTypes().keys()) {
-		ScenarioBlockStyle blockStyle = style.blockStyle(::blockTypes().value(blockNumber));
-		header.append(::rtfBlockFont(blockStyle));
-	}
-	header.append("}\n");
-
-	//
-	// Настройки размера документа
-	//
-	QSizeF paperSize = QPageSize(style.pageSizeId()).size(QPageSize::Millimeter);
-	header.append(
-				QString("\\paperh%1\\paperw%2")
-				.arg(::mmToTwips(paperSize.height()))
-				.arg(::mmToTwips(paperSize.width()))
-				);
-
-	//
-	// Настройки полей документа
-	//
-	header.append(
-				QString("\\margl%1\\margr%2\\margt%3\\margb%4\\headery%5\\footery%6")
-				.arg(::mmToTwips(style.pageMargins().left()))
-				.arg(::mmToTwips(style.pageMargins().right()))
-				.arg(::mmToTwips(style.pageMargins().top()))
-				.arg(::mmToTwips(style.pageMargins().bottom()))
-				.arg(::mmToTwips(style.pageMargins().top() / 2))
-				.arg(::mmToTwips(style.pageMargins().bottom() / 2))
-				);
-
-	//
-	// Если печатается титульная страница
-	//
-	if (_exportParameters.printTilte) {
-		header.append("\\titlepg");
-	}
-
-	//
-	// Настройки используемых стилей
-	//
-	header.append("{\\stylesheet");
-	foreach (int blockNumber, ::blockTypes().keys()) {
-		ScenarioBlockStyle blockStyle = style.blockStyle(::blockTypes().value(blockNumber));
-		header.append(QString("{%1;}").arg(::docxBlockStyle(blockStyle, true)));
-	}
-	header.append("}");
-
-	//
-	// Номера страниц
-	//
-	if (_exportParameters.printPagesNumbers) {
-		header.append("{");
-		if (::exportStyle().numberingAlignment().testFlag(Qt::AlignTop)) {
-			header.append("\\header");
-		} else {
-			header.append("\\footer");
-		}
-		header.append("\\pard");
-		if (::exportStyle().numberingAlignment().testFlag(Qt::AlignLeft)) {
-			header.append("\\ql");
-		} else if (::exportStyle().numberingAlignment().testFlag(Qt::AlignCenter)) {
-			header.append("\\qc");
-		} else {
-			header.append("\\qr");
-		}
-		header.append(" \\chpgn\\par");
-		header.append("}");
-	}
-
-	return header;
-}
-*/
