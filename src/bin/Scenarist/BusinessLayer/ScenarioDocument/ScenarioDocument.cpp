@@ -451,15 +451,6 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
 	//
-	// Если текст документа на самом деле не изменился, ни чего не делаем
-	//
-	QString currentTextMd5Hash = textMd5Hash(m_document->toPlainText());
-	if (currentTextMd5Hash == m_lastTextMd5Hash) {
-		return;
-	}
-
-
-	//
 	// Если были удалены данные
 	//
 	if (_charsRemoved > 0) {
@@ -771,11 +762,6 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	}
 
 	m_model->updateSceneNumbers();
-
-	//
-	// Сохранить md5 хэш текста документа
-	//
-	m_lastTextMd5Hash = textMd5Hash(m_document->toPlainText());
 }
 
 void ScenarioDocument::initConnections()
