@@ -314,18 +314,13 @@ void PagesTextEdit::paintPageNumbers()
 		qreal curHeight = pageSize.height() - (verticalScrollBar()->value() % (int)pageSize.height());
 
 		//
-		// Смещения для полей, чтобы не прижимать цифры к краю
-		//
-		qreal leftDelta = pageMargins.left() / 2.;
-		qreal rightDelta = pageMargins.right() / 2.;
-		//
 		// Начало поля должно учитывать смещение полосы прокрутки
 		//
-		qreal leftMarginPosition = leftDelta - horizontalScrollBar()->value();
+		qreal leftMarginPosition = pageMargins.left() - horizontalScrollBar()->value();
 		//
 		// Итоговая ширина поля
 		//
-		qreal marginWidth = pageSize.width() - leftDelta - rightDelta;
+		qreal marginWidth = pageSize.width() - pageMargins.left() - pageMargins.right();
 
 		//
 		// Необходимо ли рисовать верхнуюю границу следующей страницы

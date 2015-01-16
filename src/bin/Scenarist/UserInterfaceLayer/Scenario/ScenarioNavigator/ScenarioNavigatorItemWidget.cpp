@@ -89,12 +89,18 @@ void ScenarioNavigatorItemWidget::setType(Type _type, int _descriptionHeight)
 	switch (_type) {
 		case OnlyHeader: {
 			m_icon->setFixedSize(20, 20);
+			QFont headerFont = m_header->font();
+			headerFont.setBold(false);
+			m_header->setFont(headerFont);
 			m_description->hide();
 			break;
 		}
 
 		case HeaderAndDescription: {
 			m_icon->setFixedSize(32, 32);
+			QFont headerFont = m_header->font();
+			headerFont.setBold(true);
+			m_header->setFont(headerFont);
 			m_description->show();
 			m_description->setFixedHeight(m_description->fontMetrics().height() * _descriptionHeight);
 			break;

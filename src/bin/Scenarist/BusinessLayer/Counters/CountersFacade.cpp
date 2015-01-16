@@ -38,14 +38,21 @@ Counter CountersFacade::calculate(QTextDocument* _document, int _fromCursorPosit
 		QTextCursor cursor(_document);
 		cursor.setPosition(_fromCursorPosition);
 		cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
-		const QString text = cursor.selectedText().replace("\n", "").simplified();
+		QString text = cursor.selectedText();
 
 		if (calculateWords) {
-			counter.setWords(wordsCount(text));
+			counter.setWords(wordsCount(text.simplified()));
 		}
 
 		if (calculateCharacters) {
+			//
+			// Когда текст получаем из QTextCursor'а, то строки в нём разделяются не \n,
+			// а UTF-символом разрыва параграфов
+			//
+			static const QChar paragraphSeparator(8233);
+			text = text.remove(paragraphSeparator);
 			counter.setCharactersWithSpaces(charactersWithSpacesCount(text));
+			text = text.simplified();
 			counter.setCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
 		}
 	}

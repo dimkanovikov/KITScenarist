@@ -57,7 +57,7 @@ float PagesChronometer::calculateFrom(
 
 	switch (_type) {
 		case ScenarioBlockStyle::SceneCharacters: {
-			lineLength = 60;
+			lineLength = 58;
 			additionalLines = 0;
 			break;
 		}
@@ -85,7 +85,7 @@ float PagesChronometer::calculateFrom(
 		}
 
 		default: {
-			lineLength = 60;
+			lineLength = 58;
 			break;
 		}
 	}
