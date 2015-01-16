@@ -154,6 +154,13 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 		}
 		m_blockStyle.setLineSpacing(lineSpacing);
 		m_blockStyle.setLineSpacingValue(ui->lineSpacingValue->value());
+		if (ui->framingBrackets->isChecked()) {
+			m_blockStyle.setPrefix("(");
+			m_blockStyle.setPostfix(")");
+		} else {
+			m_blockStyle.setPrefix("");
+			m_blockStyle.setPostfix("");
+		}
 
 		//
 		// Сохраним стиль блока в стиле сценария
@@ -239,6 +246,12 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 		}
 		ui->lineSpacing->setCurrentIndex(lineSpacingIndex);
 		ui->lineSpacingValue->setValue(activatedBlockStyle.lineSpacingValue());
+
+		//
+		// Настроим возможность обрамления скобками
+		//
+		ui->framingBrackets->setEnabled(activatedType == ScenarioBlockStyle::SceneCharacters);
+		ui->framingBrackets->setChecked(activatedBlockStyle.hasDecoration());
 
 		//
 		// Запомним стиль блока

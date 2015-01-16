@@ -241,11 +241,13 @@ namespace BusinessLogic
 		 * @brief Префикс стиля
 		 */
 		QString prefix() const;
+		void setPrefix(const QString& _prefix);
 
 		/**
 		 * @brief Постфикс стиля
 		 */
 		QString postfix() const;
+		void setPostfix(const QString& _postfix);
 
 		/**
 		 * @brief Имеет ли стиль заголовок

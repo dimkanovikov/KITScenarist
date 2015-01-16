@@ -264,7 +264,7 @@ QStringList ScenarioDocument::findCharacters() const
 			characters.insert(character);
 		} else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
 			cursor.select(QTextCursor::BlockUnderCursor);
-			QStringList blockCharacters = cursor.selectedText().split(",", QString::SkipEmptyParts);
+			QStringList blockCharacters = BusinessLogic::SceneCharactersParser::characters(cursor.selectedText());
 			foreach (const QString& characterName, blockCharacters) {
 				QString character = BusinessLogic::CharacterParser::name(characterName.toUpper().trimmed());
 				characters.insert(character);

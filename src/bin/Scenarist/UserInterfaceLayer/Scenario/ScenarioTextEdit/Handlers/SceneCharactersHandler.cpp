@@ -2,12 +2,15 @@
 
 #include "../ScenarioTextEdit.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
+
 #include <Domain/Character.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
 
 #include <QKeyEvent>
+#include <QRegularExpression>
 #include <QStringListModel>
 #include <QTextBlock>
 
@@ -35,7 +38,10 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
-
+	// ... префикс и постфикс стиля
+	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::SceneCharacters);
+	QString stylePrefix = style.prefix();
+	QString stylePostfix = style.postfix();
 
 	//
 	// Обработка
@@ -59,8 +65,8 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 		} else {
 			//! Нет выделения
 
-			if (cursorBackwardText.isEmpty()
-				&& cursorForwardText.isEmpty()) {
+			if ((cursorBackwardText.isEmpty() && cursorForwardText.isEmpty())
+				|| (cursorBackwardText + cursorForwardText == stylePrefix + stylePostfix)) {
 				//! Текст пуст
 
 				//
@@ -75,25 +81,42 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 				//
 				storeCharacters();
 
-				if (cursorBackwardText.isEmpty()) {
+				if (cursorBackwardText.isEmpty()
+					|| cursorBackwardText == stylePrefix) {
 					//! В начале блока
 
 					//
 					// Ни чего не делаем
 					//
-				} else if (cursorForwardText.isEmpty()) {
+				} else if (cursorForwardText.isEmpty()
+						   || cursorForwardText == stylePostfix) {
 					//! В конце блока
 
 					//
-					// Вставляем блок и применяем ему стиль время и место
+					// Перейдём к блоку действия
 					//
+					cursor.movePosition(QTextCursor::EndOfBlock);
+					editor()->setTextCursor(cursor);
 					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 				} else {
 					//! Внутри блока
 
 					//
-					// Вставляем блок и применяем ему стиль время и место
+					// Переместим обрамление в правильное место
 					//
+					cursor.movePosition(QTextCursor::EndOfBlock);
+					if (cursorForwardText.endsWith(stylePostfix)) {
+						for (int deleteReplays = stylePostfix.length(); deleteReplays > 0; --deleteReplays) {
+							cursor.deletePreviousChar();
+						}
+					}
+					cursor = editor()->textCursor();
+					cursor.insertText(stylePostfix);
+
+					//
+					// Перейдём к блоку действия
+					//
+					editor()->setTextCursor(cursor);
 					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 				}
 			}
@@ -124,6 +147,10 @@ void SceneCharactersHandler::handleOther(QKeyEvent*)
 	if (!cursorBackwardTextToComma.split(", ").isEmpty()) {
 		cursorBackwardTextToComma = cursorBackwardTextToComma.split(", ").last();
 	}
+	// ... уберём префикс
+	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::SceneCharacters);
+	QString stylePrefix = style.prefix();
+	cursorBackwardTextToComma.remove(QRegularExpression(QString("^[%1]").arg(stylePrefix)));
 
 	//
 	// Получим модель подсказок для текущей секции и выведем пользователю
@@ -169,7 +196,7 @@ void SceneCharactersHandler::storeCharacters() const
 		// ... текст блока
 		QString currentBlockText = currentBlock.text();
 		// ... персонажы
-		QStringList enteredCharacters = currentBlockText.split(", ");
+		QStringList enteredCharacters = SceneCharactersParser::characters(currentBlockText);
 
 		foreach (const QString& character, enteredCharacters) {
 			//

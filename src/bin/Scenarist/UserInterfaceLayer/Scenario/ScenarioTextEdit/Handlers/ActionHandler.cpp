@@ -128,8 +128,9 @@ void ActionHandler::handleTab(QKeyEvent*)
 					//! В начале блока
 
 					//
-					// Ни чего не делаем
+					// Меняем на блок персонажа
 					//
+					editor()->changeScenarioBlockType(ScenarioBlockStyle::Character);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 

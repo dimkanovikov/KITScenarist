@@ -85,7 +85,7 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockTy
 	cursor.beginEditBlock();
 
 	//
-	// Нельзя сменить стиль заголовка блока и конечных элементов групп и папок
+	// Нельзя сменить стиль заголовка титра и конечных элементов групп и папок
 	//
 	bool canChangeType =
 			(scenarioBlockType() != ScenarioBlockStyle::TitleHeader)

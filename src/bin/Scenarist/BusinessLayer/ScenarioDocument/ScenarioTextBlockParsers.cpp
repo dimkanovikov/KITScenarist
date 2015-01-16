@@ -1,5 +1,7 @@
 #include "ScenarioTextBlockParsers.h"
 
+#include "ScenarioStyle.h"
+
 #include <QString>
 #include <QStringList>
 #include <QRegularExpression>
@@ -121,5 +123,16 @@ QString TimeAndPlaceParser::timeName(const QString& _text)
 
 QStringList SceneCharactersParser::characters(const QString& _text)
 {
-	return _text.split(", ", QString::SkipEmptyParts);
+	QString characters = _text;
+
+	//
+	// Удалим потенциальные приставку и окончание
+	//
+	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::SceneCharacters);
+	QString stylePrefix = style.prefix();
+	QString stylePostfix = style.postfix();
+	characters.remove(QRegularExpression(QString("^[%1]").arg(stylePrefix)));
+	characters.remove(QRegularExpression(QString("[%1]$").arg(stylePostfix)));
+
+	return characters.split(", ", QString::SkipEmptyParts);
 }

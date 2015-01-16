@@ -14,9 +14,6 @@ using UserInterface::ScenarioTextEdit;
 ParentheticalHandler::ParentheticalHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
-	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Parenthetical);
-	m_stylePrefix = style.prefix();
-	m_stylePostfix = style.postfix();
 }
 
 void ParentheticalHandler::handleEnter(QKeyEvent*)
@@ -32,6 +29,10 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
+	// ... префикс и постфикс стиля
+	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Parenthetical);
+	QString stylePrefix = style.prefix();
+	QString stylePostfix = style.postfix();
 
 
 	//
@@ -56,7 +57,7 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 			//! Нет выделения
 
 			if ((cursorBackwardText.isEmpty() && cursorForwardText.isEmpty())
-				|| (cursorBackwardText + cursorForwardText == m_stylePrefix + m_stylePostfix)) {
+				|| (cursorBackwardText + cursorForwardText == stylePrefix + stylePostfix)) {
 				//! Текст пуст
 
 				//
@@ -66,14 +67,14 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 				//! Текст не пуст
 
 				if (cursorBackwardText.isEmpty()
-					|| cursorBackwardText == m_stylePrefix) {
+					|| cursorBackwardText == stylePrefix) {
 					//! В начале блока
 
 					//
 					// Ни чего не делаем
 					//
 				} else if (cursorForwardText.isEmpty()
-						   || cursorForwardText == m_stylePostfix) {
+						   || cursorForwardText == stylePostfix) {
 					//! В конце блока
 
 					//
@@ -89,11 +90,13 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 					// Переместим обрамление в правильное место
 					//
 					cursor.movePosition(QTextCursor::EndOfBlock);
-					for (int deleteReplays = m_stylePostfix.length(); deleteReplays > 0; --deleteReplays) {
-						cursor.deletePreviousChar();
+					if (cursorForwardText.endsWith(stylePostfix)) {
+						for (int deleteReplays = stylePostfix.length(); deleteReplays > 0; --deleteReplays) {
+							cursor.deletePreviousChar();
+						}
 					}
 					cursor = editor()->textCursor();
-					cursor.insertText(m_stylePostfix);
+					cursor.insertText(stylePostfix);
 
 					//
 					// Перейдём к блоку реплики
@@ -119,6 +122,10 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
+	// ... префикс и постфикс стиля
+	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Parenthetical);
+	QString stylePrefix = style.prefix();
+	QString stylePostfix = style.postfix();
 
 
 	//
@@ -143,7 +150,7 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 			//! Нет выделения
 
 			if ((cursorBackwardText.isEmpty() && cursorForwardText.isEmpty())
-				|| (cursorBackwardText + cursorForwardText == m_stylePrefix + m_stylePostfix)) {
+				|| (cursorBackwardText + cursorForwardText == stylePrefix + stylePostfix)) {
 				//! Текст пуст
 
 				//
@@ -154,14 +161,14 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 				//! Текст не пуст
 
 				if (cursorBackwardText.isEmpty()
-					|| cursorBackwardText == m_stylePrefix) {
+					|| cursorBackwardText == stylePrefix) {
 					//! В начале блока
 
 					//
 					// Ни чего не делаем
 					//
 				} else if (cursorForwardText.isEmpty()
-						   || cursorForwardText == m_stylePostfix) {
+						   || cursorForwardText == stylePostfix) {
 					//! В конце блока
 
 					//

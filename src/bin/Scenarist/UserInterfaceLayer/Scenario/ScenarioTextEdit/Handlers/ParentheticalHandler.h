@@ -25,10 +25,6 @@ namespace KeyProcessingLayer
 		void handleTab(QKeyEvent* _event = 0);
 		void handleOther(QKeyEvent* _event = 0);
 		/** @} */
-
-	private:
-		QString m_stylePrefix;
-		QString m_stylePostfix;
 	};
 }
 

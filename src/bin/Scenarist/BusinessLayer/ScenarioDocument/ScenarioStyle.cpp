@@ -250,9 +250,23 @@ QString ScenarioBlockStyle::prefix() const
 	return m_charFormat.stringProperty(ScenarioBlockStyle::PropertyPrefix);
 }
 
+void ScenarioBlockStyle::setPrefix(const QString& _prefix)
+{
+	if (prefix() != _prefix) {
+		m_charFormat.setProperty(ScenarioBlockStyle::PropertyPrefix, _prefix);
+	}
+}
+
 QString ScenarioBlockStyle::postfix() const
 {
 	return m_charFormat.stringProperty(ScenarioBlockStyle::PropertyPostfix);
+}
+
+void ScenarioBlockStyle::setPostfix(const QString& _postfix)
+{
+	if (postfix() != _postfix) {
+		m_charFormat.setProperty(ScenarioBlockStyle::PropertyPostfix, _postfix);
+	}
 }
 
 bool ScenarioBlockStyle::hasHeader() const
@@ -310,7 +324,7 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	// ... тип блока и его активность в стиле
 	//
 	m_type = typeForName(_blockAttributes.value ("id").toString ());
-	m_isActive = _blockAttributes.value ("active").toString () == "true" ? true : false;
+	m_isActive = _blockAttributes.value ("active").toString () == "true";
 	//
 	// ... настройки шрифта
 	//
@@ -319,9 +333,9 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	//
 	// ... начертание
 	//
-	m_font.setBold(_blockAttributes.value("bold").toString() == "true" ? true : false);
-	m_font.setItalic(_blockAttributes.value("italic").toString() == "true" ? true : false);
-	m_font.setUnderline(_blockAttributes.value("underline").toString() == "true" ? true : false);
+	m_font.setBold(_blockAttributes.value("bold").toString() == "true");
+	m_font.setItalic(_blockAttributes.value("italic").toString() == "true");
+	m_font.setUnderline(_blockAttributes.value("underline").toString() == "true");
 	m_font.setCapitalization(_blockAttributes.value("uppercase").toString() == "true"
 							 ? QFont::AllUppercase : QFont::MixedCase);
 
@@ -367,6 +381,9 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	switch (m_type) {
 		case Parenthetical: {
 			m_charFormat.setProperty(ScenarioBlockStyle::PropertyIsFirstUppercase, false);
+			//
+			// Стандартное обрамление
+			//
 			m_charFormat.setProperty(ScenarioBlockStyle::PropertyPrefix, "(");
 			m_charFormat.setProperty(ScenarioBlockStyle::PropertyPostfix, ")");
 			break;
@@ -393,6 +410,17 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 		default: {
 			break;
 		}
+	}
+	//
+	// ... обрамление блока
+	//
+	const QString prefix = _blockAttributes.value("prefix").toString();
+	if (!prefix.isEmpty()) {
+		m_charFormat.setProperty(ScenarioBlockStyle::PropertyPrefix, prefix);
+	}
+	const QString postfix = _blockAttributes.value("postfix").toString();
+	if (!postfix.isEmpty()) {
+		m_charFormat.setProperty(ScenarioBlockStyle::PropertyPostfix, postfix);
 	}
 }
 
@@ -540,6 +568,8 @@ void ScenarioStyle::saveToFile(const QString& _filePath) const
 			writer.writeAttribute("bottom_margin", ::toString(blockStyle.bottomMargin()));
 			writer.writeAttribute("line_spacing", ::toString(blockStyle.lineSpacing()));
 			writer.writeAttribute("line_spacing_value", ::toString(blockStyle.lineSpacingValue()));
+			writer.writeAttribute("prefix", blockStyle.prefix());
+			writer.writeAttribute("postfix", blockStyle.postfix());
 			writer.writeEndElement(); // block
 		}
 		writer.writeEndElement(); // style
