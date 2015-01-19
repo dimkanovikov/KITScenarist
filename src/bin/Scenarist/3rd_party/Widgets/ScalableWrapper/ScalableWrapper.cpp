@@ -96,9 +96,28 @@ void ScalableWrapper::zoomOut()
 bool ScalableWrapper::event(QEvent* _event)
 {
 	bool result = true;
+	//
+	// Определяем особый обработчик для жестов
+	//
 	if (_event->type() == QEvent::Gesture) {
 		gestureEvent(static_cast<QGestureEvent*>(_event));
-	} else {
+	}
+	//
+	// Для событий showEvent и paintEvent отключаем синхронизацию полос прокрутки,
+	// т.к. в стандартной реализации QGraphicsView они сбиваются для нас
+	//
+	else if (_event->type() == QEvent::Show
+			 || _event->type() == QEvent::Paint) {
+		setupScrollingSynchronization(false);
+
+		result = QGraphicsView::event(_event);
+
+		setupScrollingSynchronization(true);
+	}
+	//
+	// Прочие стандартные обработчики событий
+	//
+	else {
 		result = QGraphicsView::event(_event);
 
 		//
