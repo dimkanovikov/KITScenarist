@@ -378,7 +378,7 @@ void ScenarioTextEditWidget::initView()
 
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 	m_duration->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-	m_duration->setAlignment(Qt::AlignRight);
+	m_duration->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
 	m_editor->setObjectName("scenarioEditor");
 	m_editor->setPageFormat(ScenarioStyleFacade::style().pageSizeId());
