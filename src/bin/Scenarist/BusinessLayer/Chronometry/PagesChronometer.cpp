@@ -122,7 +122,6 @@ int PagesChronometer::linesInText(const QString& _text, int _lineLength) const
 		//
 		if (currentPosition == 0) {
 			linesCount = _text.length() / _lineLength + ((_text.length() % _lineLength > 0) ? 1 : 0);
-			break;
 		}
 	}
 

@@ -7,6 +7,15 @@
 
 //---------------------------------------------------------------------
 
+namespace {
+	/**
+	 * @brief Используется для подсчёта строк в блоках
+	 */
+	static QTextLayout TEXT_LAYOUT;
+}
+
+//---------------------------------------------------------------------
+
 ElidedLabel::ElidedLabel(QWidget *parent, Qt::WindowFlags f)
 	: QLabel(parent, f)
 	, elideMode_(Qt::ElideRight)
@@ -42,9 +51,6 @@ void ElidedLabel::setText(const QString &txt) {
 //---------------------------------------------------------------------
 
 void ElidedLabel::cacheElidedText(int w) {
-	//
-	// Вручную
-	//
 	const int LINE_LIMIT = height() / fontMetrics().height();
 
 	//
@@ -60,22 +66,21 @@ void ElidedLabel::cacheElidedText(int w) {
 		//
 		// Определяем необходимую для сокращения ширину текста в зависимости от количества строк
 		//
-		static QTextLayout textLayout;
-		textLayout.setText(text());
+		TEXT_LAYOUT.setText(text());
 		int widthUsed = 0;
 		int lineCount = 0;
-		textLayout.beginLayout();
+		TEXT_LAYOUT.beginLayout();
 		const int LINE_LIMIT = height() / fontMetrics().height();
 
 		while (++lineCount < LINE_LIMIT) {
-			QTextLine line = textLayout.createLine();
+			QTextLine line = TEXT_LAYOUT.createLine();
 			if (!line.isValid())
 				break;
 
 			line.setLineWidth(w);
 			widthUsed += line.naturalTextWidth();
 		}
-		textLayout.endLayout();
+		TEXT_LAYOUT.endLayout();
 
 		widthUsed += w;
 
