@@ -839,7 +839,8 @@ int StandardKeyHandler::keyCharacterToQtKey(const QString& _keyCharacter) const
 	if (_keyCharacter.length() == 1) {
 		QString keyCharacter = _keyCharacter.toLower();
 		if (keyCharacter == "a"
-			|| keyCharacter == QString::fromUtf8("ф")) {
+			|| keyCharacter == QString::fromUtf8("ф")
+			|| keyCharacter == QString::fromUtf8("")) {
 			qtKey = Qt::Key_A;
 		} else if (keyCharacter == "z"
 				   || keyCharacter == QString::fromUtf8("я")
