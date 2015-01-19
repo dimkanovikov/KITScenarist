@@ -17,6 +17,15 @@ namespace {
 	public:
 		explicit MyCompleter(QObject* _p = 0) : QCompleter(_p) {}
 
+		/**
+		 * @brief Переопределяется для отображения подсказки по глобальной координате
+		 *		  левого верхнего угла области для отображения
+		 */
+		void completeReimpl(const QRect& _rect) {
+			complete(_rect);
+			popup()->move(_rect.topLeft());
+		}
+
 	protected:
 		bool eventFilter(QObject *o, QEvent *e) {
 			//
@@ -86,12 +95,15 @@ bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _c
 			// ... отобразим завершателя
 			//
 			QRect rect = cursorRect();
-			rect.moveTo(viewport()->mapTo(this, rect.topLeft()));
-			rect.setX(rect.x() + verticalScrollBar()->width());
+			rect.moveTo(mapToGlobal(viewport()->mapToParent(rect.topLeft())));
+			rect.moveLeft(rect.left() + verticalScrollBar()->width());
+			rect.moveTop(rect.top() + QFontMetricsF(currentCharFormat().font()).height());
 			rect.setWidth(
-						m_completer->popup()->sizeHintForColumn(0)
-						+ m_completer->popup()->verticalScrollBar()->sizeHint().width());
-			m_completer->complete(rect);
+				m_completer->popup()->sizeHintForColumn(0)
+				+ m_completer->popup()->verticalScrollBar()->sizeHint().width());
+
+			MyCompleter* myCompleter = static_cast<MyCompleter*>(m_completer);
+			myCompleter->completeReimpl(rect);
 
 			success = true;
 		}

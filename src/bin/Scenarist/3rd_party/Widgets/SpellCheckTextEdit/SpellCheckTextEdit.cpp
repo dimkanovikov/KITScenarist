@@ -69,20 +69,12 @@ void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 	}
 }
 
-QString SpellCheckTextEdit::userDictionaryfile() const
-{
-	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-	QString hunspellDictionariesFolderPath = appDataFolderPath + QDir::separator() + "Hunspell";
-	QString dictionaryFilePath = hunspellDictionariesFolderPath + QDir::separator() + "UserDictionary.dict";
-	return dictionaryFilePath;
-}
-
-void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
+QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos)
 {
 	//
 	// Запомним позицию курсора
 	//
-	m_lastCursorPosition = _event->pos();
+	m_lastCursorPosition = _pos;
 
 	//
 	// Определим слово под курсором
@@ -141,11 +133,26 @@ void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
 		menu->insertSeparator(actionInsertBefore);
 	}
 
+	return menu;
+}
+
+QString SpellCheckTextEdit::userDictionaryfile() const
+{
+	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+	QString hunspellDictionariesFolderPath = appDataFolderPath + QDir::separator() + "Hunspell";
+	QString dictionaryFilePath = hunspellDictionariesFolderPath + QDir::separator() + "UserDictionary.dict";
+	return dictionaryFilePath;
+}
+
+void SpellCheckTextEdit::contextMenuEvent(QContextMenuEvent* _event)
+{
+	QMenu* contextMenu = createContextMenu(_event->pos());
+
 	//
 	// Покажем меню, а после очистим от него память
 	//
-	menu->exec(_event->globalPos());
-	delete menu;
+	contextMenu->exec(_event->globalPos());
+	delete contextMenu;
 }
 
 void SpellCheckTextEdit::setHighlighterDocument(QTextDocument* _document)
@@ -160,16 +167,16 @@ void SpellCheckTextEdit::aboutIgnoreWord() const
 	//
 	QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
 
-    //
-    // Скорректируем регистр слова
-    //
-    QString wordUnderCursorInCorrectRegister =
-            wordUnderCursor[0] + wordUnderCursor.mid(1).toLower();
+	//
+	// Скорректируем регистр слова
+	//
+	QString wordUnderCursorInCorrectRegister =
+			wordUnderCursor[0] + wordUnderCursor.mid(1).toLower();
 
 	//
 	// Объявляем проверяющему о том, что это слово нужно игнорировать
 	//
-    m_spellChecker->ignoreWord(wordUnderCursorInCorrectRegister);
+	m_spellChecker->ignoreWord(wordUnderCursorInCorrectRegister);
 
 	//
 	// Уберём выделение с игнорируемых слов
@@ -184,16 +191,16 @@ void SpellCheckTextEdit::aboutAddWordToUserDictionary() const
 	//
 	QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
 
-    //
-    // Скорректируем регистр слова
-    //
-    QString wordUnderCursorInCorrectRegister =
-            wordUnderCursor[0] + wordUnderCursor.mid(1).toLower();
+	//
+	// Скорректируем регистр слова
+	//
+	QString wordUnderCursorInCorrectRegister =
+			wordUnderCursor[0] + wordUnderCursor.mid(1).toLower();
 
 	//
 	// Объявляем проверяющему о том, что это слово нужно добавить в пользовательский словарь
 	//
-    m_spellChecker->addWordToDictionary(wordUnderCursorInCorrectRegister);
+	m_spellChecker->addWordToDictionary(wordUnderCursorInCorrectRegister);
 
 	//
 	// Уберём выделение со слов добавленных в словарь

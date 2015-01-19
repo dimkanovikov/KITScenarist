@@ -234,11 +234,15 @@ void PagesTextEdit::paintPagesView()
 		//
 		// Необходимо ли рисовать верхнуюю границу следующей страницы
 		//
-		bool canDrawNextPageLine = verticalScrollBar()->value() != verticalScrollBar()->maximum();
+		const bool canDrawNextPageLine = verticalScrollBar()->value() != verticalScrollBar()->maximum();
 		//
 		// Корректируем позицию правой границы
 		//
-		int x = pageWidth - (width() % 2 == 0 ? 0 : 1);
+		const int x = pageWidth - (width() % 2 == 0 ? 0 : 1);
+		//
+		// Смещение по горизонтали, если есть полоса прокрутки
+		//
+		const int horizontalDelta = horizontalScrollBar()->value();
 
 		//
 		// Нарисовать верхнюю границу
@@ -267,9 +271,9 @@ void PagesTextEdit::paintPagesView()
 				p.drawLine(0, curHeight, pageWidth, curHeight);
 			}
 			// ... левая
-			p.drawLine(0, curHeight-pageHeight, 0, curHeight-8);
+			p.drawLine(0 - horizontalDelta, curHeight - pageHeight, 0 - horizontalDelta, curHeight - 8);
 			// ... правая
-			p.drawLine(x, curHeight-pageHeight, x, curHeight-8);
+			p.drawLine(x - horizontalDelta, curHeight - pageHeight, x - horizontalDelta, curHeight - 8);
 
 			curHeight += pageHeight;
 		}
@@ -283,9 +287,9 @@ void PagesTextEdit::paintPagesView()
 			//
 			p.setPen(borderPen);
 			// ... левая
-			p.drawLine(0, curHeight-pageHeight, 0, height());
+			p.drawLine(0 - horizontalDelta, curHeight-pageHeight, 0 - horizontalDelta, height());
 			// ... правая
-			p.drawLine(x, curHeight-pageHeight, x, height());
+			p.drawLine(x - horizontalDelta, curHeight-pageHeight, x - horizontalDelta, height());
 		}
 	}
 }

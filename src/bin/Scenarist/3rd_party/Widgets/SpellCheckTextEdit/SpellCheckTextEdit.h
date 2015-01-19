@@ -30,6 +30,12 @@ public slots:
 	 */
 	void setSpellCheckLanguage(SpellChecker::Language _language);
 
+	/**
+	 * @brief Создать контекстное меню
+	 * @note Управление памятью передаётся вызывающему метод
+	 */
+	QMenu* createContextMenu(const QPoint& _pos);
+
 protected:
 	/**
 	 * @brief Получить путь к файлу с пользовательским словарём

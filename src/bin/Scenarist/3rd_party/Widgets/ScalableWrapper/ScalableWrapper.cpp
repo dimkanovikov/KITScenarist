@@ -1,5 +1,7 @@
 #include "ScalableWrapper.h"
 
+#include <3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h>
+
 #include <QGestureEvent>
 #include <QGraphicsProxyWidget>
 #include <QMenu>
@@ -8,7 +10,7 @@
 #include <QTextEdit>
 
 
-ScalableWrapper::ScalableWrapper(QTextEdit* _editor, QWidget* _parent) :
+ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) :
 	QGraphicsView(_parent),
 	m_scene(new QGraphicsScene),
 	m_editor(_editor),
@@ -33,6 +35,7 @@ ScalableWrapper::ScalableWrapper(QTextEdit* _editor, QWidget* _parent) :
 	//		  но как в таком случае освобождать память?
 	//
 	m_editor->setParent(0);
+	m_editor->setContextMenuPolicy(Qt::PreventContextMenu);
 	m_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	m_editor->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	m_editor->installEventFilter(this);
@@ -65,7 +68,7 @@ ScalableWrapper::ScalableWrapper(QTextEdit* _editor, QWidget* _parent) :
 	connect(zoomOutShortcut, SIGNAL(activated()), this, SLOT(zoomOut()));
 }
 
-QTextEdit* ScalableWrapper::editor() const
+SpellCheckTextEdit* ScalableWrapper::editor() const
 {
 	return m_editor;
 }
@@ -122,8 +125,8 @@ void ScalableWrapper::paintEvent(QPaintEvent* _event)
 
 	setupScrollingSynchronization(false);
 
-	int verticalValue = verticalScrollBar()->value();
-	int horizontalValue = horizontalScrollBar()->value();
+	int verticalValue = m_editor->verticalScrollBar()->value();
+	int horizontalValue = m_editor->horizontalScrollBar()->value();
 
 	verticalScrollBar()->setValue(0);
 	horizontalScrollBar()->setValue(0);
@@ -236,17 +239,21 @@ void ScalableWrapper::gestureEvent(QGestureEvent* _event)
 bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 {
 	bool needShowMenu = false;
+	QPoint cursorPos = QCursor::pos();
 	switch (_event->type()) {
-		case QEvent::MouseButtonPress: {
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(_event);
-			if (mouseEvent->button() == Qt::RightButton) {
-				needShowMenu = true;
-			}
+		case QEvent::ContextMenu: {
+			QContextMenuEvent* contextMenuEvent = static_cast<QContextMenuEvent*>(_event);
+			cursorPos = m_editor->viewport()->mapFromGlobal(contextMenuEvent->globalPos());
+			needShowMenu = true;
 			break;
 		}
 
-		case QEvent::ContextMenu: {
-			needShowMenu = true;
+		case QEvent::MouseButtonPress: {
+			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(_event);
+			if (mouseEvent->button() == Qt::RightButton) {
+				cursorPos = m_editor->viewport()->mapFromGlobal(mouseEvent->globalPos());
+				needShowMenu = true;
+			}
 			break;
 		}
 
@@ -262,7 +269,7 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 	// предварительно вернув ему 100% масштаб
 	//
 	if (needShowMenu) {
-		QMenu* menu = m_editor->createStandardContextMenu();
+		QMenu* menu = m_editor->createContextMenu(cursorPos);
 		QGraphicsProxyWidget* menuProxy = m_editorProxy->createProxyForChildWidget(menu);
 
 		const qreal antiZoom = 1. / m_zoomRange;

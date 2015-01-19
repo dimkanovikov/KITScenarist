@@ -4,7 +4,7 @@
 #include <QGraphicsView>
 
 class QGestureEvent;
-class QTextEdit;
+class SpellCheckTextEdit;
 
 
 /**
@@ -15,12 +15,12 @@ class ScalableWrapper : public QGraphicsView
 	Q_OBJECT
 
 public:
-	explicit ScalableWrapper(QTextEdit* _editor, QWidget* _parent = 0);
+	explicit ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent = 0);
 
 	/**
 	 * @brief Получить редактор, вокруг которого построена обёртка
 	 */
-	QTextEdit* editor() const;
+	SpellCheckTextEdit* editor() const;
 
 	/**
 	 * @brief Установить коэффициент масштабирование
@@ -95,7 +95,7 @@ private:
 	/**
 	 * @brief Указатель на сам редактор
 	 */
-	QTextEdit* m_editor;
+	SpellCheckTextEdit* m_editor;
 
 	/**
 	 * @brief Графическое представление редактора
