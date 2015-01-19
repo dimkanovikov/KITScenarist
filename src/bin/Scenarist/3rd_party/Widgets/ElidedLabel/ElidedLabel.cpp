@@ -43,27 +43,44 @@ void ElidedLabel::setText(const QString &txt) {
 
 void ElidedLabel::cacheElidedText(int w) {
 	//
-	// Определяем необходимую для сокращения ширину текста в зависимости от количества строк
+	// Вручную
 	//
-	QTextLayout textLayout(text());
-	int widthUsed = 0;
-	int lineCount = 0;
-	textLayout.beginLayout();
 	const int LINE_LIMIT = height() / fontMetrics().height();
 
-	while (++lineCount < LINE_LIMIT) {
-		QTextLine line = textLayout.createLine();
-		if (!line.isValid())
-			break;
-
-		line.setLineWidth(w);
-		widthUsed += line.naturalTextWidth();
+	//
+	// Одна строка
+	//
+	if (LINE_LIMIT == 1) {
+		cachedElidedText = fontMetrics().elidedText(text(), elideMode_, w, Qt::TextShowMnemonic);
 	}
-	textLayout.endLayout();
+	//
+	// Много строк
+	//
+	else {
+		//
+		// Определяем необходимую для сокращения ширину текста в зависимости от количества строк
+		//
+		static QTextLayout textLayout;
+		textLayout.setText(text());
+		int widthUsed = 0;
+		int lineCount = 0;
+		textLayout.beginLayout();
+		const int LINE_LIMIT = height() / fontMetrics().height();
 
-	widthUsed += w;
+		while (++lineCount < LINE_LIMIT) {
+			QTextLine line = textLayout.createLine();
+			if (!line.isValid())
+				break;
 
-	cachedElidedText = fontMetrics().elidedText(text(), elideMode_, widthUsed, Qt::TextShowMnemonic);
+			line.setLineWidth(w);
+			widthUsed += line.naturalTextWidth();
+		}
+		textLayout.endLayout();
+
+		widthUsed += w;
+
+		cachedElidedText = fontMetrics().elidedText(text(), elideMode_, widthUsed, Qt::TextShowMnemonic);
+	}
 }
 
 //---------------------------------------------------------------------
