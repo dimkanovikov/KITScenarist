@@ -35,7 +35,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить вид отображения
 		 */
-		void setType(Type _type, int _descriptionHeight = 0);
+		void setType(Type _type, int _descriptionHeight = 1);
 
 	private:
 		/**

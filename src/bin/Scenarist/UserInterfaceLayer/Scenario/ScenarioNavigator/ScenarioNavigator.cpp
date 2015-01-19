@@ -71,6 +71,8 @@ void ScenarioNavigator::resetView()
 {
 	m_navigationTree->setItemDelegate(0);
 	delete m_navigationTreeDelegate;
+	m_navigationTreeDelegate = 0;
+
 	m_navigationTreeDelegate = new ScenarioNavigatorItemDelegate(this);
 	m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
 }
