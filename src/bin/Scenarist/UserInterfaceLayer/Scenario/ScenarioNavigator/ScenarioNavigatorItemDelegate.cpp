@@ -59,10 +59,12 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// ... описание
 	//
-	if (m_sceneDescriptionIsSceneText) {
-		m_itemWidget->setDescription(sceneText.toString());
-	} else {
-		m_itemWidget->setDescription(synopsys.toString());
+	if (m_showSceneDescription) {
+		if (m_sceneDescriptionIsSceneText) {
+			m_itemWidget->setDescription(sceneText.toString());
+		} else {
+			m_itemWidget->setDescription(synopsys.toString());
+		}
 	}
 
 	//
@@ -179,6 +181,4 @@ void ScenarioNavigatorItemDelegate::updateWidgetView()
 			? ScenarioNavigatorItemWidget::HeaderAndDescription
 			: ScenarioNavigatorItemWidget::OnlyHeader;
 	m_itemWidget->setType(widgetType, m_sceneDescriptionHeight);
-
-
 }
