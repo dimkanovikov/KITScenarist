@@ -41,6 +41,7 @@
 
 #include "SyntaxHighlighter.h"
 
+#include "qapplication.h"
 #include <qtextdocument.h>
 #include <qtextlayout.h>
 #include <qpointer.h>
@@ -174,7 +175,19 @@ void SyntaxHighlighterPrivate::reformatBlocks(int from, int charsRemoved, int ch
 
 	bool forceHighlightOfNextBlock = false;
 
+	int processEventsCounter = 0;
+	const int COUNTER_LIMIT = 3;
 	while (block.isValid() && (block.position() < endPosition || forceHighlightOfNextBlock)) {
+		//
+		// Даём выполниться накопившимсяы событиям через каждые COUNTER_LIMIT абзацев
+		//
+		if (processEventsCounter == COUNTER_LIMIT) {
+			QApplication::processEvents();
+			processEventsCounter = 0;
+		} else {
+			++processEventsCounter;
+		}
+
 		const int stateBeforeHighlight = block.userState();
 
 		reformatBlock(block);
