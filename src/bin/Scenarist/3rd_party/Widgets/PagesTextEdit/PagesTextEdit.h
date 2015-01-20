@@ -65,9 +65,9 @@ protected:
 
 private:
 	/**
-	 * @brief Обновить внутреннюю геометрию
+	 * @brief Обновить отступы вьювпорта
 	 */
-	void updateInnerGeometry();
+	void updateViewportMargins();
 
 	/**
 	 * @brief Обновить интервал вертикальной прокрутки
@@ -95,7 +95,24 @@ private slots:
 	 */
 	void aboutVerticalScrollRangeChanged(int _minimum, int _maximum);
 
+	/**
+	 * @brief Проверка смены документа
+	 */
+	void aboutDocumentChanged();
+
+	/**
+	 * @brief Обновить геометрию документа
+	 * @note Стандартная реализация QTextEdit такова, что она всё время сбрасывает установленный
+	 *		 размер документа, что приводит к нежелательным последствиям
+	 */
+	void aboutUpdateDocumentGeometry();
+
 private:
+	/**
+	 * @brief Ссылка на текущий документ
+	 */
+	QTextDocument* m_document;
+
 	/**
 	 * @brief Режим отображения текста
 	 *

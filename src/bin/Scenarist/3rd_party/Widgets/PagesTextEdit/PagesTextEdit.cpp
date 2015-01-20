@@ -1,18 +1,25 @@
 #include "PagesTextEdit.h"
 
+#include <QAbstractTextDocumentLayout>
 #include <QPainter>
 #include <QScrollBar>
 #include <QTextFrame>
 
-
 PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	QTextEdit(parent),
+	m_document(0),
 	m_usePageMode(false),
 	m_addBottomSpace(true),
 	m_showPageNumbers(true),
 	m_pageNumbersAlignment(Qt::AlignTop | Qt::AlignRight)
 {
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+	//
+	// Настраиваем проверку смены документа
+	//
+	aboutDocumentChanged();
+	connect(this, SIGNAL(textChanged()), this, SLOT(aboutDocumentChanged()));
 
 	//
 	// Ручная настройка интервала прокрутки
@@ -96,8 +103,6 @@ void PagesTextEdit::setPageNumbersAlignment(Qt::Alignment _align)
 
 void PagesTextEdit::paintEvent(QPaintEvent* _event)
 {
-	updateInnerGeometry();
-
 	updateVerticalScrollRange();
 
 	paintPagesView();
@@ -109,21 +114,19 @@ void PagesTextEdit::paintEvent(QPaintEvent* _event)
 
 void PagesTextEdit::resizeEvent(QResizeEvent* _event)
 {
-	updateInnerGeometry();
+	updateViewportMargins();
 
 	updateVerticalScrollRange();
 
 	QTextEdit::resizeEvent(_event);
 }
 
-void PagesTextEdit::updateInnerGeometry()
+void PagesTextEdit::updateViewportMargins()
 {
 	//
 	// Формируем параметры отображения
 	//
-	QSizeF documentSize(width() - verticalScrollBar()->width(), -1);
 	QMargins viewportMargins;
-	QMarginsF rootFrameMargins = m_pageMetrics.pxPageMargins();
 
 	if (m_usePageMode) {
 		//
@@ -132,60 +135,54 @@ void PagesTextEdit::updateInnerGeometry()
 
 		int pageWidth = m_pageMetrics.pxPageSize().width();
 		int pageHeight = m_pageMetrics.pxPageSize().height();
-		documentSize = QSizeF(pageWidth, pageHeight);
 
 		//
 		// Рассчитываем отступы для viewport
 		//
 		const int DEFAULT_TOP_MARGIN = 20;
 		const int DEFAULT_BOTTOM_MARGIN = 20;
-		if (width() > pageWidth) {
+		{
+			int leftMargin = 0;
+			int rightMargin = 0;
+
+			//
+			// Если ширина редактора больше ширины страницы документа, расширим боковые отступы
+			//
+			if (width() > pageWidth) {
+				const int BORDERS_WIDTH = 4;
+				const int VERTICAL_SCROLLBAR_WIDTH =
+						verticalScrollBar()->isVisible() ? verticalScrollBar()->width() : 0;
+				// ... ширина рамки вьюпорта и самого редактора
+				leftMargin = rightMargin =
+						(width() - pageWidth - VERTICAL_SCROLLBAR_WIDTH - BORDERS_WIDTH) / 2;
+			}
+
+			int topMargin = DEFAULT_TOP_MARGIN;
+
 			//
 			// Нижний оступ может быть больше минимального значения, для случая,
 			// когда весь документ и даже больше помещается на экране
 			//
-			int bottomViewportMargin = DEFAULT_TOP_MARGIN;
+			int bottomMargin = DEFAULT_BOTTOM_MARGIN;
 			int documentHeight = pageHeight * document()->pageCount();
 			if ((height() - documentHeight) > (DEFAULT_TOP_MARGIN + DEFAULT_BOTTOM_MARGIN)) {
-				bottomViewportMargin = height() - documentHeight - DEFAULT_TOP_MARGIN;
+				const int BORDERS_HEIGHT = 2;
+				const int HORIZONTAL_SCROLLBAR_HEIGHT =
+						horizontalScrollBar()->isVisible() ? horizontalScrollBar()->height() : 0;
+				bottomMargin =
+					height() - documentHeight - HORIZONTAL_SCROLLBAR_HEIGHT - DEFAULT_TOP_MARGIN - BORDERS_HEIGHT;
 			}
 
-			viewportMargins =
-					QMargins(
-						(width() - pageWidth - verticalScrollBar()->width() - 2)/2,
-						DEFAULT_TOP_MARGIN,
-						(width() - pageWidth - verticalScrollBar()->width() - 2)/2,
-						bottomViewportMargin);
-		} else {
-			viewportMargins = QMargins(0, DEFAULT_TOP_MARGIN, 0, DEFAULT_BOTTOM_MARGIN);
+			//
+			// Настроим сами отступы
+			//
+			viewportMargins = QMargins(leftMargin, topMargin, rightMargin, bottomMargin);
 		}
-	}
-
-	//
-	// Применяем параметры отображения
-	//
-
-	if (document()->documentMargin() != 0) {
-		document()->setDocumentMargin(0);
-	}
-
-	if (document()->pageSize() != documentSize) {
-		document()->setPageSize(documentSize);
 	}
 
 	setViewportMargins(viewportMargins);
 
-	QTextFrameFormat rootFrameFormat = document()->rootFrame()->frameFormat();
-	if (rootFrameFormat.leftMargin() != rootFrameMargins.left()
-		|| rootFrameFormat.topMargin() != rootFrameMargins.top()
-		|| rootFrameFormat.rightMargin() != rootFrameMargins.right()
-		|| rootFrameFormat.bottomMargin() != rootFrameMargins.bottom()) {
-		rootFrameFormat.setLeftMargin(rootFrameMargins.left());
-		rootFrameFormat.setTopMargin(rootFrameMargins.top());
-		rootFrameFormat.setRightMargin(rootFrameMargins.right());
-		rootFrameFormat.setBottomMargin(rootFrameMargins.bottom());
-		document()->rootFrame()->setFrameFormat(rootFrameFormat);
-	}
+	aboutUpdateDocumentGeometry();
 }
 
 void PagesTextEdit::updateVerticalScrollRange()
@@ -194,7 +191,10 @@ void PagesTextEdit::updateVerticalScrollRange()
 	// В постраничном режиме показываем страницу целиком
 	//
 	if (m_usePageMode) {
-		int maximumValue = m_pageMetrics.pxPageSize().height() * document()->pageCount() - viewport()->size().height();
+
+		const int pageHeight = m_pageMetrics.pxPageSize().height();
+		const int documentHeight = pageHeight * document()->pageCount();
+		const int maximumValue = documentHeight - viewport()->height();
 		if (verticalScrollBar()->maximum() != maximumValue) {
 			verticalScrollBar()->setMaximum(maximumValue);
 		}
@@ -232,13 +232,9 @@ void PagesTextEdit::paintPagesView()
 
 		qreal curHeight = pageHeight - (verticalScrollBar()->value() % (int)pageHeight);
 		//
-		// Необходимо ли рисовать верхнуюю границу следующей страницы
-		//
-		const bool canDrawNextPageLine = verticalScrollBar()->value() != verticalScrollBar()->maximum();
-		//
 		// Корректируем позицию правой границы
 		//
-		const int x = pageWidth - (width() % 2 == 0 ? 0 : 1);
+		const int x = pageWidth + (width() % 2 == 0 ? 2 : 1);
 		//
 		// Смещение по горизонтали, если есть полоса прокрутки
 		//
@@ -250,7 +246,7 @@ void PagesTextEdit::paintPagesView()
 		if (curHeight - pageHeight >= 0) {
 			p.setPen(borderPen);
 			// ... верхняя
-			p.drawLine(0, curHeight - pageHeight, pageWidth, curHeight - pageHeight);
+			p.drawLine(0, curHeight - pageHeight, x, curHeight - pageHeight);
 		}
 
 		while (curHeight <= height()) {
@@ -265,11 +261,9 @@ void PagesTextEdit::paintPagesView()
 			//
 			p.setPen(borderPen);
 			// ... нижняя
-			p.drawLine(0, curHeight-8, pageWidth, curHeight-8);
+			p.drawLine(0, curHeight-8, x, curHeight-8);
 			// ... верхняя следующей страницы
-			if (canDrawNextPageLine) {
-				p.drawLine(0, curHeight, pageWidth, curHeight);
-			}
+			p.drawLine(0, curHeight, x, curHeight);
 			// ... левая
 			p.drawLine(0 - horizontalDelta, curHeight - pageHeight, 0 - horizontalDelta, curHeight - 8);
 			// ... правая
@@ -327,10 +321,6 @@ void PagesTextEdit::paintPageNumbers()
 		qreal marginWidth = pageSize.width() - pageMargins.left() - pageMargins.right();
 
 		//
-		// Необходимо ли рисовать верхнуюю границу следующей страницы
-		//
-		bool canDrawNextPageTop = verticalScrollBar()->value() != verticalScrollBar()->maximum();
-		//
 		// Номер первой видимой на экране страницы
 		//
 		int pageNumber = verticalScrollBar()->value() / pageSize.height() + 1;
@@ -361,10 +351,8 @@ void PagesTextEdit::paintPageNumbers()
 			//
 			// Определить прямоугольник верхнего поля следующей страницы
 			//
-			if (canDrawNextPageTop) {
-				QRect topMarginRect(leftMarginPosition, curHeight, marginWidth, pageMargins.top());
-				paintPageNumber(&p, topMarginRect, true, pageNumber);
-			}
+			QRect topMarginRect(leftMarginPosition, curHeight, marginWidth, pageMargins.top());
+			paintPageNumber(&p, topMarginRect, true, pageNumber);
 
 			curHeight += pageSize.height();
 		}
@@ -403,6 +391,12 @@ void PagesTextEdit::aboutVerticalScrollRangeChanged(int _minimum, int _maximum)
 {
 	Q_UNUSED(_minimum);
 
+	//
+	// Обновим отступы вьюпорта
+	//
+	updateViewportMargins();
+
+
 	int scrollValue = verticalScrollBar()->value();
 
 	//
@@ -411,6 +405,62 @@ void PagesTextEdit::aboutVerticalScrollRangeChanged(int _minimum, int _maximum)
 	//
 	if (scrollValue > _maximum) {
 		updateVerticalScrollRange();
+	}
+}
+
+void PagesTextEdit::aboutDocumentChanged()
+{
+	if (m_document != document()) {
+		m_document = document();
+
+		//
+		// Настраиваем проверку смены размера документа
+		//
+		connect(document()->documentLayout(), SIGNAL(update()), this, SLOT(aboutUpdateDocumentGeometry()));
+	}
+}
+
+void PagesTextEdit::aboutUpdateDocumentGeometry()
+{
+	//
+	// Определим размер документа
+	//
+	QSizeF documentSize(width() - verticalScrollBar()->width(), -1);
+	if (m_usePageMode) {
+		int pageWidth = m_pageMetrics.pxPageSize().width();
+		int pageHeight = m_pageMetrics.pxPageSize().height();
+		documentSize = QSizeF(pageWidth, pageHeight);
+	}
+
+	//
+	// Обновим размер документа
+	//
+	if (document()->pageSize() != documentSize) {
+		document()->setPageSize(documentSize);
+	}
+
+	//
+	// Заодно и отступы настроим
+	//
+	// ... у документа уберём их
+	//
+	if (document()->documentMargin() != 0) {
+		document()->setDocumentMargin(0);
+	}
+	//
+	// ... и настроим поля документа
+	//
+	QMarginsF rootFrameMargins = m_pageMetrics.pxPageMargins();
+	QTextFrameFormat rootFrameFormat = document()->rootFrame()->frameFormat();
+	if (rootFrameFormat.leftMargin() != rootFrameMargins.left()
+		|| rootFrameFormat.topMargin() != rootFrameMargins.top()
+		|| rootFrameFormat.rightMargin() != rootFrameMargins.right()
+		|| rootFrameFormat.bottomMargin() != rootFrameMargins.bottom()) {
+		rootFrameFormat.setLeftMargin(rootFrameMargins.left());
+		rootFrameFormat.setTopMargin(rootFrameMargins.top());
+		rootFrameFormat.setRightMargin(rootFrameMargins.right());
+		rootFrameFormat.setBottomMargin(rootFrameMargins.bottom());
+		document()->rootFrame()->setFrameFormat(rootFrameFormat);
 	}
 }
 
