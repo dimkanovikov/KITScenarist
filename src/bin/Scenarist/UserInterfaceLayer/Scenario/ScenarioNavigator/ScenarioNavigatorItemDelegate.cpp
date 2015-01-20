@@ -1,18 +1,15 @@
 #include "ScenarioNavigatorItemDelegate.h"
-#include "ScenarioNavigatorItemWidget.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
+#include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
-#include <QApplication>
 #include <QPainter>
 
 using UserInterface::ScenarioNavigatorItemDelegate;
-using UserInterface::ScenarioNavigatorItemWidget;
 
 
 ScenarioNavigatorItemDelegate::ScenarioNavigatorItemDelegate(QObject* _parent) :
 	QStyledItemDelegate(_parent),
-	m_itemWidget(new ScenarioNavigatorItemWidget),
 	m_showSceneNumber(false),
 	m_showSceneDescription(true),
 	m_sceneDescriptionIsSceneText(true),
@@ -22,51 +19,10 @@ ScenarioNavigatorItemDelegate::ScenarioNavigatorItemDelegate(QObject* _parent) :
 
 ScenarioNavigatorItemDelegate::~ScenarioNavigatorItemDelegate()
 {
-	delete m_itemWidget;
 }
 
 void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& _option, const QModelIndex& _index) const
 {
-	//
-	// Получим данные
-	//
-	QVariant icon = _index.data(Qt::DecorationRole);
-	QVariant header = _index.data(Qt::DisplayRole);
-	QVariant sceneText = _index.data(BusinessLogic::ScenarioModel::SceneTextIndex);
-	QVariant synopsys = _index.data(BusinessLogic::ScenarioModel::SynopsisIndex);
-	QVariant duration = _index.data(BusinessLogic::ScenarioModel::DurationIndex);
-	QVariant sceneNumber = _index.data(BusinessLogic::ScenarioModel::SceneNumberIndex);
-
-	//
-	// Установим в виджет данные
-	//
-	// ... иконку
-	//
-	m_itemWidget->setIcon(icon.value<QPixmap>());
-	//
-	// ... заголовок
-	//
-	if (m_showSceneNumber
-		&& !sceneNumber.isNull()) {
-		m_itemWidget->setHeader(sceneNumber.toString() + ". " + header.toString());
-	} else {
-		m_itemWidget->setHeader(header.toString());
-	}
-	//
-	// ... длительность
-	//
-	m_itemWidget->setDuration(duration.toInt());
-	//
-	// ... описание
-	//
-	if (m_showSceneDescription) {
-		if (m_sceneDescriptionIsSceneText) {
-			m_itemWidget->setDescription(sceneText.toString());
-		} else {
-			m_itemWidget->setDescription(synopsys.toString());
-		}
-	}
-
 	//
 	// Получим настройки стиля
 	//
@@ -74,22 +30,23 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	initStyleOption(&opt, _index);
 
 	//
-	// Настраиваем размер области отрисовки
+	// Рисуем ручками
 	//
-	m_itemWidget->resize(opt.rect.size());
+	_painter->save();
+	_painter->setRenderHint(QPainter::Antialiasing, true);
 
 	//
-	// Настраиваем палитру отображения
+	// Определим кисти
 	//
-	QPalette palette;
-
+	QBrush backgroundBrush = opt.palette.background();
+	QBrush textBrush = opt.palette.text();
 	//
-	// Для выделенного объекта
+	// ... для выделенных элементов
 	//
 	if(opt.state.testFlag(QStyle::State_Selected))
 	{
-		palette.setBrush(QPalette::Window, qApp->palette().brush(QPalette::Highlight));
-		palette.setBrush(QPalette::WindowText, qApp->palette().brush(QPalette::HighlightedText));
+		backgroundBrush = opt.palette.highlight();
+		textBrush = opt.palette.highlightedText();
 	}
 	//
 	// ... для остальных
@@ -101,32 +58,99 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		//
 		if(opt.features.testFlag(QStyleOptionViewItemV2::Alternate))
 		{
-			palette.setBrush(QPalette::Window, qApp->palette().brush(QPalette::AlternateBase));
-			palette.setBrush(QPalette::WindowText, qApp->palette().brush(QPalette::WindowText));
+			backgroundBrush = opt.palette.alternateBase();
+			textBrush = opt.palette.windowText();
 		}
 		else
 		{
-			palette.setBrush(QPalette::Window, qApp->palette().brush(QPalette::Base));
-			palette.setBrush(QPalette::WindowText, qApp->palette().brush(QPalette::WindowText));
+			backgroundBrush = opt.palette.base();
+			textBrush = opt.palette.windowText();
 		}
 	}
 
 	//
-	// Устанавливаем палитру виджету и всем его детям
+	// Рисуем
 	//
-	m_itemWidget->setPalette(palette);
-	foreach (QWidget* itemChild, m_itemWidget->findChildren<QWidget*>()) {
-		itemChild->setPalette(palette);
-	}
-
+	const int MARGIN = 2;
+	const int RIGHT_MARGIN = 12;
+	const int ITEMS_SPACING = 4;
+	const int TEXT_LINE_HEIGHT = _painter->fontMetrics().height();
 	//
-	// Отрисовываем виджет
+	// ... фон
 	//
-	_painter->save();
-	_painter->setRenderHint(QPainter::Antialiasing, true);
+	_painter->fillRect(opt.rect, backgroundBrush);
+	//
+	// Меняем координаты, чтобы рисовать было удобнее
+	//
 	_painter->translate(opt.rect.topLeft());
-
-	m_itemWidget->render(_painter);
+	//
+	// ... иконка
+	//
+	const int iconSize = m_showSceneDescription ? 32 : 20;
+	const QRect iconRect(MARGIN, MARGIN, iconSize, iconSize);
+	const QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
+	_painter->drawPixmap(iconRect, icon);
+	//
+	// ... длительность
+	//
+	const int duration = _index.data(BusinessLogic::ScenarioModel::DurationIndex).toInt();
+	const QString chronometry =
+			BusinessLogic::ChronometerFacade::chronometryUsed()
+			? "(" + BusinessLogic::ChronometerFacade::secondsToTime(duration)+ ") "
+			: "";
+	const int chronometryRectWidth = _painter->fontMetrics().width(chronometry);
+	const QRect chronometryRect(
+		opt.rect.right() - chronometryRectWidth - ITEMS_SPACING - RIGHT_MARGIN,
+		MARGIN,
+		chronometryRectWidth,
+		TEXT_LINE_HEIGHT
+		);
+	_painter->drawText(chronometryRect, chronometry);
+	//
+	// ... заголовок
+	//
+	_painter->setPen(textBrush.color());
+	QFont headerFont = _painter->font();
+	headerFont.setBold(m_showSceneDescription ? true : false);
+	_painter->setFont(headerFont);
+	const QRect headerRect(
+		iconRect.right() + ITEMS_SPACING,
+		MARGIN,
+		chronometryRect.left() - iconRect.right() - ITEMS_SPACING*2,
+		TEXT_LINE_HEIGHT
+		);
+	QString header = _index.data(Qt::DisplayRole).toString().toUpper();
+	if (m_showSceneNumber) {
+		//
+		// Если нужно добавляем номер сцены
+		//
+		QVariant sceneNumber = _index.data(BusinessLogic::ScenarioModel::SceneNumberIndex);
+		if (!sceneNumber.isNull()) {
+			header = sceneNumber.toString() + ". " + header;
+		}
+	}
+	header = _painter->fontMetrics().elidedText(header, Qt::ElideRight, headerRect.width());
+	_painter->drawText(headerRect, header);
+	//
+	// ... описание
+	//
+	if (m_showSceneDescription) {
+		_painter->setPen(textBrush.color());
+		QFont descriptionFont = _painter->font();
+		descriptionFont.setBold(false);
+		_painter->setFont(descriptionFont);
+		const QRect descriptionRect(
+			headerRect.left(),
+			headerRect.bottom() + ITEMS_SPACING,
+			chronometryRect.right() - headerRect.left(),
+			TEXT_LINE_HEIGHT * m_sceneDescriptionHeight
+			);
+		const QString descriptionText =
+				m_sceneDescriptionIsSceneText
+				? _index.data(BusinessLogic::ScenarioModel::SceneTextIndex).toString()
+				: _index.data(BusinessLogic::ScenarioModel::SynopsisIndex).toString();
+		_painter->drawText(descriptionRect, Qt::TextWordWrap, descriptionText);
+	}
 
 	_painter->restore();
 }
@@ -136,7 +160,20 @@ QSize ScenarioNavigatorItemDelegate::sizeHint(const QStyleOptionViewItem& _optio
 	Q_UNUSED(_option);
 	Q_UNUSED(_index);
 
-	return m_itemWidget->minimumSizeHint();
+	//
+	// Размер составляется из лейблов
+	// строка на заголовок и m_sceneDescriptionHeight строк на описание
+	// + отступы 3 сверху + 3 снизу + 2 между текстом
+	//
+	int lines = 1;
+	int additionalHeight = 3 + 3;
+	if (m_showSceneDescription) {
+		lines += m_sceneDescriptionHeight;
+		additionalHeight += 2;
+	}
+	const int height = _option.fontMetrics.height() * lines + additionalHeight;
+	const int width = 50;
+	return QSize(width, height);
 }
 
 void ScenarioNavigatorItemDelegate::setShowSceneNumber(bool _show)
@@ -150,8 +187,6 @@ void ScenarioNavigatorItemDelegate::setShowSceneDescription(bool _show)
 {
 	if (m_showSceneDescription != _show) {
 		m_showSceneDescription = _show;
-
-		updateWidgetView();
 	}
 }
 
@@ -166,19 +201,5 @@ void ScenarioNavigatorItemDelegate::setSceneDescriptionHeight(int _height)
 {
 	if (m_sceneDescriptionHeight != _height) {
 		m_sceneDescriptionHeight = _height;
-
-		updateWidgetView();
 	}
-}
-
-void ScenarioNavigatorItemDelegate::updateWidgetView()
-{
-	//
-	// Настроим виджет
-	//
-	ScenarioNavigatorItemWidget::Type widgetType =
-			m_showSceneDescription
-			? ScenarioNavigatorItemWidget::HeaderAndDescription
-			: ScenarioNavigatorItemWidget::OnlyHeader;
-	m_itemWidget->setType(widgetType, m_sceneDescriptionHeight);
 }

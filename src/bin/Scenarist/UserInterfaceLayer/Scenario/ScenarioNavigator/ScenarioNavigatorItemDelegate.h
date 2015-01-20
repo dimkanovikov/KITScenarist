@@ -6,8 +6,6 @@
 
 namespace UserInterface
 {
-	class ScenarioNavigatorItemWidget;
-
 	/**
 	 * @brief Делегат для отрисовки элементов навигатора
 	 */
@@ -39,11 +37,6 @@ namespace UserInterface
 		void updateWidgetView();
 
 	private:
-		/**
-		 * @brief Виджет для отрисовки элементов навигатора
-		 */
-		ScenarioNavigatorItemWidget* m_itemWidget;
-
 		/**
 		 * @brief Отображать номер сцены
 		 */

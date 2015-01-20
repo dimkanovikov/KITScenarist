@@ -123,7 +123,6 @@ SOURCES += main.cpp \
     3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
 	3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
-    UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemWidget.cpp \
     3rd_party/Widgets/ElidedLabel/ElidedLabel.cpp \
     BusinessLayer/Export/PdfExporter.cpp \
     BusinessLayer/Export/RtfExporter.cpp \
@@ -272,7 +271,6 @@ HEADERS += \
     3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.h \
 	3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
-    UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemWidget.h \
     3rd_party/Widgets/ElidedLabel/ElidedLabel.h \
     BusinessLayer/Export/AbstractExporter.h \
     BusinessLayer/Export/PdfExporter.h \
