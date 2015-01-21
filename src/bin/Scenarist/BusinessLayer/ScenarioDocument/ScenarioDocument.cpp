@@ -74,28 +74,30 @@ int ScenarioDocument::durationAtPosition(int _position) const
 			--iter;
 		}
 
-		//
-		// Запомним позицию начала сцены
-		//
-		int startPositionInLastScene = iter.key();
+        if (iter.value() != 0) {
+            //
+            // Запомним позицию начала сцены
+            //
+            int startPositionInLastScene = iter.key();
 
-		//
-		// Посчитаем хронометраж всех предыдущих сцен
-		//
-		if (iter.value()->type() == ScenarioModelItem::Scene) {
-			iter.value()->duration();
-		}
-		while (iter != m_modelItems.begin()) {
-			--iter;
-			if (iter.value()->type() == ScenarioModelItem::Scene) {
-				duration += iter.value()->duration();
-			}
-		}
+            //
+            // Посчитаем хронометраж всех предыдущих сцен
+            //
+            if (iter.value()->type() == ScenarioModelItem::Scene) {
+                iter.value()->duration();
+            }
+            while (iter != m_modelItems.begin()) {
+                --iter;
+                if (iter.value()->type() == ScenarioModelItem::Scene) {
+                    duration += iter.value()->duration();
+                }
+            }
 
-		//
-		// Добавим к суммарному хрономертажу хронометраж от начала сцены
-		//
-		duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
+            //
+            // Добавим к суммарному хрономертажу хронометраж от начала сцены
+            //
+            duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
+        }
 	}
 
 	return duration;

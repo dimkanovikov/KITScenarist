@@ -30,6 +30,12 @@ install_name_tool -change /Users/macuser/Qt/5.4/clang_64/lib/QtCore.framework/Ve
 install_name_tool -change /Users/macuser/Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/5/QtGui ../Release/bin/Scenarist/Scenarist.app/Contents/Frameworks/libfileformats.1.dylib 
 
 #
+# Скопируем в него системные файлы
+#
+cp ../../src/bin/Scenarist/info.plist ../Release/bin/Scenarist/Scenarist.app/Contents/
+cp ../../src/bin/Scenarist/logo.icns ../Release/bin/Scenarist/Scenarist.app/Contents/Resources/
+
+#
 # скопируем app-файл в текущую папку
 #
 cp -R ../Release/bin/Scenarist/Scenarist.app ./Scenarist.app
