@@ -6,7 +6,7 @@ using namespace BusinessLogic;
 
 
 namespace {
-	const int MAX_TEXT_LENGTH = 200;
+	const int MAX_TEXT_LENGTH = 300;
 }
 
 ScenarioModelItem::ScenarioModelItem(int _position) :
@@ -80,7 +80,7 @@ QString ScenarioModelItem::text() const
 
 void ScenarioModelItem::setText(const QString& _text)
 {
-	if (m_text != _text) {
+	if (m_text.isEmpty() || !_text.startsWith(m_text)) {
 		m_text = _text.left(MAX_TEXT_LENGTH);
 		updateParentText();
 	}
@@ -197,7 +197,7 @@ void ScenarioModelItem::updateParentText()
 		QString text;
 		foreach (ScenarioModelItem* child, m_children) {
 			text += child->header() + " " + child->text() + " ";
-			if (text.length() > 100) {
+			if (text.length() > MAX_TEXT_LENGTH) {
 				text = text.left(MAX_TEXT_LENGTH);
 				break;
 			}

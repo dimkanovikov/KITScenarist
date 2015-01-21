@@ -87,7 +87,8 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	// ... иконка
 	//
 	const int iconSize = m_showSceneDescription ? 32 : 20;
-	const QRect iconRect(MARGIN, MARGIN, iconSize, iconSize);
+	const int iconTopMargin = m_showSceneDescription ? MARGIN*2 : MARGIN;
+	const QRect iconRect(MARGIN, iconTopMargin, iconSize, iconSize);
 	const QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
 	_painter->drawPixmap(iconRect, icon);
 	//
