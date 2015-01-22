@@ -168,16 +168,19 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	//
 	if (cursor.position() != _position) {
 		//
-		// Прокручиваем вниз, чтобы курсор стоял в верху экрана
-		//
-		cursor.movePosition(QTextCursor::End);
-		m_editor->verticalScrollBar()->setValue(m_editor->verticalScrollBar()->maximum());
-
-		//
 		// Устанавливаем реальную позицию
 		//
 		cursor.setPosition(_position);
 		m_editor->setTextCursor(cursor);
+		m_editor->ensureCursorVisibleReimpl();
+		//
+		// Прокручиваем вниз, чтобы курсор стоял в верху экрана
+		//
+		m_editor->verticalScrollBar()->setValue(m_editor->verticalScrollBar()->maximum());
+
+		//
+		// Возвращаем курсор в поле зрения
+		//
 		m_editor->ensureCursorVisibleReimpl();
 		m_editorWrapper->setFocus();
 	}
