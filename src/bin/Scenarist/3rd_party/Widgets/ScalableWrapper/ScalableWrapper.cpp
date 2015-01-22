@@ -62,8 +62,10 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	//
 	// Добавляем возможность масштабирования при помощи комбинаций Ctrl +/-
 	//
-	QShortcut* zoomInShortcut = new QShortcut(QKeySequence("Ctrl++"), this);
-	connect(zoomInShortcut, SIGNAL(activated()), this, SLOT(zoomIn()));
+	QShortcut* zoomInShortcut1 = new QShortcut(QKeySequence("Ctrl++"), this);
+	connect(zoomInShortcut1, SIGNAL(activated()), this, SLOT(zoomIn()));
+	QShortcut* zoomInShortcut2 = new QShortcut(QKeySequence("Ctrl+="), this);
+	connect(zoomInShortcut2, SIGNAL(activated()), this, SLOT(zoomIn()));
 	QShortcut* zoomOutShortcut = new QShortcut(QKeySequence("Ctrl+-"), this);
 	connect(zoomOutShortcut, SIGNAL(activated()), this, SLOT(zoomOut()));
 }
