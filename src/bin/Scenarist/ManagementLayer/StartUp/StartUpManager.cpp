@@ -10,6 +10,7 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QMutableMapIterator>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QRegularExpression>
@@ -191,6 +192,23 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 	}
 }
 
+void StartUpManager::aboutRefreshRecentFiles()
+{
+	//
+	// Удаляем все несуществующие файлы
+	//
+	QMutableMapIterator<QString, QString> checker(m_recentFiles);
+	while (checker.hasNext()) {
+		checker.next();
+		if (!QFile::exists(checker.key())) {
+			m_recentFilesUsing.remove(checker.key());
+			checker.remove();
+		}
+	}
+
+	m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
+}
+
 void StartUpManager::initData()
 {
 	m_recentFiles =
@@ -207,7 +225,7 @@ void StartUpManager::initData()
 
 void StartUpManager::initView()
 {
-	m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
+	aboutRefreshRecentFiles();
 }
 
 void StartUpManager::initConnections()
@@ -218,6 +236,7 @@ void StartUpManager::initConnections()
 
 	connect(m_view, SIGNAL(openRecentProjectClicked(QString)),
 			this, SLOT(aboutOpenRecentProjectRequested(QString)));
+	connect(m_view, SIGNAL(refreshRecentFiles()), this, SLOT(aboutRefreshRecentFiles()));
 }
 
 void StartUpManager::checkNewVersion()

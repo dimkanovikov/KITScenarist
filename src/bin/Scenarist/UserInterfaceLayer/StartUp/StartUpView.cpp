@@ -116,7 +116,7 @@ void StartUpView::aboutOpenRecentFileClicked()
 
 void StartUpView::initView()
 {
-    ui->version->setText(QApplication::applicationVersion());
+	ui->version->setText(QApplication::applicationVersion());
 
 	ui->updateInfo->hide();
 
@@ -132,6 +132,7 @@ void StartUpView::initConnections()
 	connect(ui->help, SIGNAL(linkActivated(QString)), this, SIGNAL(helpClicked()));
 
 	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SLOT(aboutOpenRecentFileClicked()));
+	connect(ui->refreshRecentFiles, SIGNAL(clicked()), this, SIGNAL(refreshRecentFiles()));
 }
 
 void StartUpView::initStyleSheet()

@@ -64,6 +64,11 @@ namespace ManagementLayer
 		 */
 		void aboutLoadUpdatesInfo(QNetworkReply* _reply);
 
+		/**
+		 * @brief Обновить список недавних файлов, удаляя несуществующие
+		 */
+		void aboutRefreshRecentFiles();
+
 	private:
 		/**
 		 * @brief Загрузить данные

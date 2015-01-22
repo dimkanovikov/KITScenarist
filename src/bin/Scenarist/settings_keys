@@ -62,8 +62,8 @@ application/locations/state
 application/settings/geometry - разделитель списка настроек и самих настроек
 application/settings/state
 
-application/recent-files/list/... - последние использованые файлы программы (в виде ключ - название проекта (если не задано, то имя файла без расширения), значение - путь)
-application/recent-files/using/... - даты использования последних файлов
+application/recent-files/list/... - последние использованые файлы программы (в виде ключ - путь, значение - название проекта (если не задано, то имя файла без расширения))
+application/recent-files/using/... - даты использования последних файлов (путь, дата)
 
 projects/[project_name] - настройки актуальные для проекта, где [project_name] - полный путь к файлу, с заменой слешей на подчёркивание
 projects/[project_name]/last-cursor-position - последняя позиция курсора

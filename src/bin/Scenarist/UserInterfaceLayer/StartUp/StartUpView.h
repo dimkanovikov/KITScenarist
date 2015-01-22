@@ -56,6 +56,11 @@ namespace UserInterface
 		 */
 		void openRecentProjectClicked(const QString& _filePath);
 
+		/**
+		 * @brief Нажата кнопка обновления недавних файлов
+		 */
+		void refreshRecentFiles();
+
 	protected:
 		/**
 		 * @brief Переопределяется для фиксации события когда мышка покидает виджет недавних проектов
