@@ -122,13 +122,25 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("application/use-dark-theme", "0");
 	m_defaultValues.insert("application/autosave", "1");
 	m_defaultValues.insert("application/autosave-interval", "5");
+
+	m_defaultValues.insert("navigator/show-scene-description", "1");
+	m_defaultValues.insert("navigator/scene-description-is-scene-text", "1");
+	m_defaultValues.insert("navigator/scene-description-height", "1");
+
+	m_defaultValues.insert("scenario-editor/zoom-range", "1");
 	m_defaultValues.insert("scenario-editor/spell-checking", "0");
 	m_defaultValues.insert("scenario-editor/text-color", "#000000");
 	m_defaultValues.insert("scenario-editor/background-color", "#FEFEFE");
-	m_defaultValues.insert("scenario-editor/nonprintable-text-color", "#CAC6C3");
+	m_defaultValues.insert("scenario-editor/nonprintable-text-color", "#0AC139");
 	m_defaultValues.insert("scenario-editor/folder-text-color", "#FEFEFE");
 	m_defaultValues.insert("scenario-editor/folder-background-color", "#CAC6C3");
+	m_defaultValues.insert("scenario-editor/text-color-dark", "#EBEBEB");
+	m_defaultValues.insert("scenario-editor/background-color-dark", "#3D3D3D");
+	m_defaultValues.insert("scenario-editor/nonprintable-text-color-dark", "#0AC139");
+	m_defaultValues.insert("scenario-editor/folder-text-color-dark", "#EBEBEB");
+	m_defaultValues.insert("scenario-editor/folder-background-color-dark", "#8D2DC4");
 	m_defaultValues.insert("scenario-editor/zoom-range", "0");
+
 	m_defaultValues.insert("chronometry/current-chronometer-type", "pages-chronometer");
 	m_defaultValues.insert("chronometry/pages/seconds", "60");
 	m_defaultValues.insert("chronometry/characters/characters", "1000");

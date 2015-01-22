@@ -7,6 +7,7 @@ navigator/scene-description-height - высота примечания к сце
 
 simple-editor/zoom-range - коэффициент масштабирования всех редакторов
 
+scenario-editor/zoom-range - коэффициент масштабирования редактора сценария
 scenario-editor/page-view - используется ли режим постраничного отображения
 scenario-editor/spell-checking - включена ли проверка орфографии
 scenario-editor/spell-checking-language - язык проверки орфографии
