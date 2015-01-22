@@ -36,10 +36,14 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	_painter->setRenderHint(QPainter::Antialiasing, true);
 
 	//
-	// Определим кисти
+	// Определим кисти и шрифты
 	//
 	QBrush backgroundBrush = opt.palette.background();
 	QBrush textBrush = opt.palette.text();
+	QFont headerFont = opt.font;
+	headerFont.setBold(m_showSceneDescription ? true : false);
+	QFont textFont = opt.font;
+	textFont.setBold(false);
 	//
 	// ... для выделенных элементов
 	//
@@ -74,7 +78,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	const int MARGIN = 2;
 	const int RIGHT_MARGIN = 12;
 	const int ITEMS_SPACING = 4;
-	const int TEXT_LINE_HEIGHT = _painter->fontMetrics().height();
+	const int TEXT_LINE_HEIGHT = opt.fontMetrics.height();
 	//
 	// ... фон
 	//
@@ -92,14 +96,19 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	const QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
 	_painter->drawPixmap(iconRect, icon);
 	//
+	// ... текстовая часть
+	//
+	_painter->setPen(textBrush.color());
+	//
 	// ... длительность
 	//
+	_painter->setFont(textFont);
 	const int duration = _index.data(BusinessLogic::ScenarioModel::DurationIndex).toInt();
 	const QString chronometry =
 			BusinessLogic::ChronometerFacade::chronometryUsed()
 			? "(" + BusinessLogic::ChronometerFacade::secondsToTime(duration)+ ") "
 			: "";
-	const int chronometryRectWidth = _painter->fontMetrics().width(chronometry);
+	const int chronometryRectWidth = opt.fontMetrics.width(chronometry);
 	const QRect chronometryRect(
 		opt.rect.right() - chronometryRectWidth - ITEMS_SPACING - RIGHT_MARGIN,
 		MARGIN,
@@ -110,9 +119,6 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// ... заголовок
 	//
-	_painter->setPen(textBrush.color());
-	QFont headerFont = _painter->font();
-	headerFont.setBold(m_showSceneDescription ? true : false);
 	_painter->setFont(headerFont);
 	const QRect headerRect(
 		iconRect.right() + ITEMS_SPACING,
@@ -130,16 +136,13 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 			header = sceneNumber.toString() + ". " + header;
 		}
 	}
-	header = _painter->fontMetrics().elidedText(header, Qt::ElideRight, headerRect.width());
+	header = opt.fontMetrics.elidedText(header, Qt::ElideRight, headerRect.width());
 	_painter->drawText(headerRect, header);
 	//
 	// ... описание
 	//
 	if (m_showSceneDescription) {
-		_painter->setPen(textBrush.color());
-		QFont descriptionFont = _painter->font();
-		descriptionFont.setBold(false);
-		_painter->setFont(descriptionFont);
+		_painter->setFont(textFont);
 		const QRect descriptionRect(
 			headerRect.left(),
 			headerRect.bottom() + ITEMS_SPACING,
