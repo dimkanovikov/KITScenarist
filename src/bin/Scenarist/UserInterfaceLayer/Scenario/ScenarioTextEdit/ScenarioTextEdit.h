@@ -66,6 +66,16 @@ namespace UserInterface
 		 */
 		void setStoreDataWhenEditing(bool _store);
 
+		/**
+		 * @brief Показываются ли в редакторе номера сцен
+		 */
+		bool showSceneNumbers() const;
+
+		/**
+		 * @brief Установить значение необходимости отображать номера сцен
+		 */
+		void setShowSceneNumbers(bool _show);
+
 	public slots:
 		/**
 		 * @brief Своя реализация проверки виден ли курсор на экране
@@ -155,6 +165,11 @@ namespace UserInterface
 		 * @brief Необходимо ли сохранять данные при вводе
 		 */
 		bool m_storeDataWhenEditing;
+
+		/**
+		 * @brief Отображать ли номер сцен
+		 */
+		bool m_showSceneNumbers;
 	};
 }
 

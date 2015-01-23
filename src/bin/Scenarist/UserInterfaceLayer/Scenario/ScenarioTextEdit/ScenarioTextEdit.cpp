@@ -4,23 +4,25 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
 
 #include <3rd_party/Helpers/TextEditHelper.h>
 
-#include <QTextCursor>
-#include <QTextBlock>
-#include <QKeyEvent>
-#include <QWheelEvent>
-#include <QAbstractTextDocumentLayout>
-#include <QTimer>
 
+#include <QAbstractItemView>
+#include <QAbstractTextDocumentLayout>
 #include <QApplication>
 #include <QDateTime>
 #include <QCompleter>
-#include <QStringListModel>
-#include <QAbstractItemView>
-#include <QScrollBar>
+#include <QKeyEvent>
 #include <QMimeData>
+#include <QPainter>
+#include <QScrollBar>
+#include <QStringListModel>
+#include <QTextBlock>
+#include <QTextCursor>
+#include <QTimer>
+#include <QWheelEvent>
 
 using UserInterface::ScenarioTextEdit;
 using namespace BusinessLogic;
@@ -28,7 +30,8 @@ using namespace BusinessLogic;
 
 ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	CompletableTextEdit(_parent),
-	m_storeDataWhenEditing(true)
+	m_storeDataWhenEditing(true),
+	m_showSceneNumbers(false)
 {
 	m_document = new ScenarioTextDocument(this, 0);
 	setDocument(m_document);
@@ -186,6 +189,18 @@ void ScenarioTextEdit::setStoreDataWhenEditing(bool _store)
 	}
 }
 
+bool ScenarioTextEdit::showSceneNumbers() const
+{
+	return m_showSceneNumbers;
+}
+
+void ScenarioTextEdit::setShowSceneNumbers(bool _show)
+{
+	if (m_showSceneNumbers != _show) {
+		m_showSceneNumbers = _show;
+	}
+}
+
 void ScenarioTextEdit::ensureCursorVisibleReimpl()
 {
 	//
@@ -273,6 +288,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 {
 	//
+	// FIXME:
 	// Если в документе формат первого блока имеет отступ сверху, это приводит
 	// к некорректной прорисовке текста, это баг Qt...
 	// Поэтому приходится отлавливать этот момент и вручную корректировать
@@ -290,6 +306,61 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 //	}
 
 	CompletableTextEdit::paintEvent(_event);
+
+	//
+	// Прорисовка номеров сцен, если необходимо
+	//
+	if (m_showSceneNumbers) {
+		//
+		// Определить область прорисовки номеров
+		//
+		const int left = 0;
+		const int right = document()->rootFrame()->frameFormat().leftMargin() - 10;
+
+
+		QPainter painter(viewport());
+		painter.setFont(document()->defaultFont());
+
+
+		QTextBlock block = document()->begin();
+		const QRectF viewportGeometry = viewport()->geometry();
+		const int leftDelta = -horizontalScrollBar()->value();
+
+		QTextCursor cursor(document());
+		while (block.isValid()) {
+			if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::TimeAndPlace) {
+				cursor.setPosition(block.position());
+				QRect cursorR = cursorRect(cursor);
+
+				//
+				// Курсор на экране
+				//
+				// ... ниже верхней границы
+				if ((cursorR.top() > 0 || cursorR.bottom() > 0)
+					// ... и выше нижней
+					&& cursorR.top() < viewportGeometry.bottom()) {
+
+					//
+					// Определим номер сцены
+					//
+					QTextBlockUserData* textBlockData = block.userData();
+					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
+						const QString sceneNumber = QString::number(info->sceneNumber()) + ".";
+
+						//
+						// Определим область для отрисовки и выведем номер сцены в редактор
+						//
+						QPointF topLeft(left + leftDelta, cursorR.top());
+						QPointF bottomRight(right + leftDelta, cursorR.bottom());
+						QRectF rect(topLeft, bottomRight);
+						painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, sceneNumber);
+					}
+				}
+			}
+
+			block = block.next();
+		}
+	}
 }
 
 bool ScenarioTextEdit::canInsertFromMimeData(const QMimeData* _source) const

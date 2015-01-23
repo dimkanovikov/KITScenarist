@@ -11,7 +11,7 @@ namespace {
 
 ScenarioModelItem::ScenarioModelItem(int _position) :
 	m_position(_position),
-	m_number(0),
+	m_sceneNumber(0),
 	m_duration(0),
 	m_type(Scene),
 	m_hasNote(false),
@@ -36,15 +36,15 @@ void ScenarioModelItem::setPosition(int _position)
 	}
 }
 
-int ScenarioModelItem::number() const
+int ScenarioModelItem::sceneNumber() const
 {
-	return m_number;
+	return m_sceneNumber;
 }
 
-void ScenarioModelItem::setNumber(int _number)
+void ScenarioModelItem::setSceneNumber(int _number)
 {
-	if (m_number != _number) {
-		m_number = _number;
+	if (m_sceneNumber != _number) {
+		m_sceneNumber = _number;
 	}
 }
 

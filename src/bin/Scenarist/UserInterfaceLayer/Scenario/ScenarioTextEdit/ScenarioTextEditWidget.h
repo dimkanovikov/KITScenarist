@@ -50,6 +50,11 @@ namespace UserInterface
 		void setCountersInfo(const QString& _counters);
 
 		/**
+		 * @brief Включить/выключить отображение номеров сцен
+		 */
+		void setShowScenesNumbers(bool _show);
+
+		/**
 		 * @brief Включить/выключить постраничное отображение
 		 */
 		void setUsePageView(bool _use);

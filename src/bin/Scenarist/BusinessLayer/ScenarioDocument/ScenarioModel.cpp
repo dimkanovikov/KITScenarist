@@ -251,7 +251,7 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		//
 		case SceneNumberIndex: {
 			if (item->type() == ScenarioModelItem::Scene) {
-				result = item->number();
+				result = item->sceneNumber();
 			}
 			break;
 		}
@@ -419,7 +419,7 @@ namespace {
 		// Если элемент сцена, то обновим номер
 		//
 		if (_item->type() == ScenarioModelItem::Scene) {
-			_item->setNumber(++_sceneNumberCounter);
+			_item->setSceneNumber(++_sceneNumberCounter);
 		}
 		//
 		// В противном случае обновим детей элемента

@@ -67,6 +67,11 @@ void SettingsView::setApplicationAutosaveInterval(int _value)
 	ui->autosaveInterval->setValue(_value);
 }
 
+void SettingsView::setScenarioEditShowScenesNumbers(bool _value)
+{
+	ui->showScenesNumbersInEditor->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditPageView(bool _value)
 {
 	ui->pageView->setChecked(_value);
@@ -147,7 +152,7 @@ void SettingsView::setScenarioEditCurrentStyle(const QString& _styleName)
 
 void SettingsView::setNavigatorShowScenesNumbers(bool _value)
 {
-	ui->showScenesNumbers->setChecked(_value);
+	ui->showScenesNumbersInNavigator->setChecked(_value);
 }
 
 void SettingsView::setNavigatorShowSceneDescription(bool _value)
@@ -436,12 +441,13 @@ void SettingsView::initConnections()
 	connect(ui->autosave, SIGNAL(toggled(bool)), this, SIGNAL(applicationAutosaveChanged(bool)));
 	connect(ui->autosaveInterval, SIGNAL(valueChanged(int)), this, SIGNAL(applicationAutosaveIntervalChanged(int)));
 	// ... текстовый редактор
+	connect(ui->showScenesNumbersInEditor, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)));
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
 	connect(ui->currentScenarioStyle, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentStyleChanged(QString)));
 	// ... навигатор
-	connect(ui->showScenesNumbers, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
+	connect(ui->showScenesNumbersInNavigator, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
 	connect(ui->showSceneDescription, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowSceneDescriptionChanged(bool)));
 	connect(ui->sceneDescriptionIsSceneText, SIGNAL(toggled(bool)), this, SIGNAL(navigatorSceneDescriptionIsSceneTextChanged(bool)));
 	connect(ui->sceneDescriptionHeight, SIGNAL(valueChanged(int)), this, SIGNAL(navigatorSceneDescriptionHeightChanged(int)));

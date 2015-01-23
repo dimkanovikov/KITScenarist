@@ -14,6 +14,16 @@ namespace BusinessLogic
 		ScenarioTextBlockInfo();
 
 		/**
+		 * @brief Получить номер сцены
+		 */
+		int sceneNumber() const;
+
+		/**
+		 * @brief Установить номер сцены
+		 */
+		void setSceneNumber(int _number);
+
+		/**
 		 * @brief Получить синопсис
 		 */
 		QString synopsis(bool htmlEscaped = false) const;
@@ -24,6 +34,11 @@ namespace BusinessLogic
 		void setSynopsis(const QString& _synopsis, bool htmlEscaped = false);
 
 	private:
+		/**
+		 * @brief Номер сцены
+		 */
+		int m_sceneNumber;
+
 		/**
 		 * @brief Текст синопсиса
 		 */

@@ -190,6 +190,11 @@ namespace BusinessLogic
 		ScenarioModelItem* itemForPosition(int _position, bool _findNear = false) const;
 
 		/**
+		 * @brief Обновить номера сцен в блоках информации документа
+		 */
+		void updateDocumentScenesNumbers();
+
+		/**
 		 * @brief Загрузить документ из сценария
 		 */
 		void load(const QString& _scenario);

@@ -87,6 +87,11 @@ void SettingsManager::applicationAutosaveIntervalChanged(int _value)
 	storeValue("application/autosave-interval", _value);
 }
 
+void SettingsManager::scenarioEditShowScenesNumbersChanged(bool _value)
+{
+	storeValue("scenario-editor/show-scenes-numbers", _value);
+}
+
 void SettingsManager::scenarioEditPageViewChanged(bool _value)
 {
 	storeValue("scenario-editor/page-view", _value);
@@ -419,6 +424,12 @@ void SettingsManager::initView()
 	//
 	// Настройки текстового редактора
 	//
+	m_view->setScenarioEditShowScenesNumbers(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/show-scenes-numbers",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setScenarioEditPageView(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"scenario-editor/page-view",
@@ -663,6 +674,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SLOT(applicationAutosaveChanged(bool)));
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SLOT(applicationAutosaveIntervalChanged(int)));
 
+	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SLOT(scenarioEditSpellCheckChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckLanguageChanged(int)), this, SLOT(scenarioEditSpellCheckLanguageChanged(int)));
@@ -714,6 +726,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SIGNAL(applicationSettingsUpdated()));
 
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckLanguageChanged(int)), this, SIGNAL(scenarioEditSettingsUpdated()));

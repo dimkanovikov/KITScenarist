@@ -107,12 +107,17 @@ void ScenarioTextEditWidget::setCountersInfo(const QString& _counters)
 	m_countersInfo->setText(_counters);
 }
 
+void ScenarioTextEditWidget::setShowScenesNumbers(bool _show)
+{
+	m_editor->setShowSceneNumbers(_show);
+}
+
 void ScenarioTextEditWidget::setUsePageView(bool _use)
 {
 	//
 	// Установка постраничного режима так же тянет за собой ряд настроек
 	//
-	QMarginsF pageMargins(5, 5, 5, 5);
+	QMarginsF pageMargins(15, 5, 5, 5);
 	Qt::Alignment pageNumbersAlign;
 	if (_use) {
 		pageMargins = ScenarioStyleFacade::style().pageMargins();

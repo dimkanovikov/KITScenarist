@@ -126,7 +126,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -247,7 +247,7 @@
            <item row="1" column="0">
             <widget class="QWidget" name="scenarioEditPageWidget" native="true">
              <layout class="QGridLayout" name="gridLayout_7">
-              <item row="5" column="0" colspan="2">
+              <item row="6" column="0" colspan="2">
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <item>
                  <widget class="QLabel" name="label_20">
@@ -274,7 +274,7 @@
                 </item>
                </layout>
               </item>
-              <item row="6" column="0">
+              <item row="7" column="0">
                <spacer name="verticalSpacer">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -287,7 +287,7 @@
                 </property>
                </spacer>
               </item>
-              <item row="1" column="0" colspan="2">
+              <item row="2" column="0" colspan="2">
                <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <item>
                  <widget class="QCheckBox" name="spellChecking">
@@ -314,14 +314,14 @@
                 </item>
                </layout>
               </item>
-              <item row="0" column="0" colspan="2">
+              <item row="1" column="0" colspan="2">
                <widget class="QCheckBox" name="pageView">
                 <property name="text">
                  <string>Page View</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="1" rowspan="2">
+              <item row="3" column="1" rowspan="2">
                <spacer name="horizontalSpacer_9">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
@@ -334,7 +334,7 @@
                 </property>
                </spacer>
               </item>
-              <item row="2" column="0">
+              <item row="3" column="0">
                <layout class="QVBoxLayout" name="verticalLayout_3">
                 <property name="spacing">
                  <number>0</number>
@@ -1155,6 +1155,13 @@
                 </item>
                </layout>
               </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="showScenesNumbersInEditor">
+                <property name="text">
+                 <string>Show Scenes Numbers</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -1188,7 +1195,7 @@
             <widget class="QWidget" name="navigatorPageWidget" native="true">
              <layout class="QGridLayout" name="gridLayout_5">
               <item row="0" column="0">
-               <widget class="QCheckBox" name="showScenesNumbers">
+               <widget class="QCheckBox" name="showScenesNumbersInNavigator">
                 <property name="text">
                  <string>Show Scenes Numbers</string>
                 </property>
@@ -2079,7 +2086,7 @@ Paragraph</string>
   <tabstop>loadStyle</tabstop>
   <tabstop>removeStyle</tabstop>
   <tabstop>saveStyle</tabstop>
-  <tabstop>showScenesNumbers</tabstop>
+  <tabstop>showScenesNumbersInNavigator</tabstop>
   <tabstop>styles</tabstop>
   <tabstop>useDarkTheme</tabstop>
   <tabstop>folderBackgroundColor</tabstop>

@@ -44,6 +44,7 @@ namespace UserInterface
 		void setApplicationAutosave(bool);
 		void setApplicationAutosaveInterval(int);
 
+		void setScenarioEditShowScenesNumbers(bool _value);
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditSpellCheck(bool _value);
 		void setScenarioEditSpellCheckLanguage(int _value);
@@ -91,6 +92,7 @@ namespace UserInterface
 		void applicationAutosaveChanged(bool);
 		void applicationAutosaveIntervalChanged(int);
 
+		void scenarioEditShowScenesNumbersChanged(bool);
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditSpellCheckChanged(bool);
 		void scenarioEditSpellCheckLanguageChanged(int);

@@ -53,6 +53,7 @@ namespace ManagementLayer
 		void applicationAutosaveChanged(bool _value);
 		void applicationAutosaveIntervalChanged(int _value);
 
+		void scenarioEditShowScenesNumbersChanged(bool  _value);
 		void scenarioEditPageViewChanged(bool  _value);
 		void scenarioEditSpellCheckChanged(bool  _value);
 		void scenarioEditSpellCheckLanguageChanged(int _value);

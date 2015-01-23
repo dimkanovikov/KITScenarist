@@ -74,30 +74,30 @@ int ScenarioDocument::durationAtPosition(int _position) const
 			--iter;
 		}
 
-        if (iter.value() != 0) {
-            //
-            // Запомним позицию начала сцены
-            //
-            int startPositionInLastScene = iter.key();
+		if (iter.value() != 0) {
+			//
+			// Запомним позицию начала сцены
+			//
+			int startPositionInLastScene = iter.key();
 
-            //
-            // Посчитаем хронометраж всех предыдущих сцен
-            //
-            if (iter.value()->type() == ScenarioModelItem::Scene) {
-                iter.value()->duration();
-            }
-            while (iter != m_modelItems.begin()) {
-                --iter;
-                if (iter.value()->type() == ScenarioModelItem::Scene) {
-                    duration += iter.value()->duration();
-                }
-            }
+			//
+			// Посчитаем хронометраж всех предыдущих сцен
+			//
+			if (iter.value()->type() == ScenarioModelItem::Scene) {
+				iter.value()->duration();
+			}
+			while (iter != m_modelItems.begin()) {
+				--iter;
+				if (iter.value()->type() == ScenarioModelItem::Scene) {
+					duration += iter.value()->duration();
+				}
+			}
 
-            //
-            // Добавим к суммарному хрономертажу хронометраж от начала сцены
-            //
-            duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
-        }
+			//
+			// Добавим к суммарному хрономертажу хронометраж от начала сцены
+			//
+			duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
+		}
 	}
 
 	return duration;
@@ -764,6 +764,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	}
 
 	m_model->updateSceneNumbers();
+	updateDocumentScenesNumbers();
 }
 
 void ScenarioDocument::initConnections()
@@ -868,6 +869,32 @@ ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNe
 		}
 	}
 	return item;
+}
+
+void ScenarioDocument::updateDocumentScenesNumbers()
+{
+	//
+	// Проходим документ и обновляем номера сцен
+	//
+	QTextBlock block = document()->begin();
+	while (block.isValid()) {
+		if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::TimeAndPlace) {
+			if (ScenarioModelItem* item = itemForPosition(block.position())) {
+				//
+				// Обновим данные документа
+				//
+				QTextBlockUserData* textBlockData = block.userData();
+				ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+				if (info == 0) {
+					info = new ScenarioTextBlockInfo;
+				}
+				info->setSceneNumber(item->sceneNumber());
+				block.setUserData(info);
+			}
+		}
+
+		block = block.next();
+	}
 }
 
 void ScenarioDocument::load(const QString& _scenario)

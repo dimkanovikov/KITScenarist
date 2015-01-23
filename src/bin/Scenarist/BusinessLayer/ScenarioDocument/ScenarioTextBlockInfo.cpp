@@ -6,7 +6,20 @@ using namespace BusinessLogic;
 
 
 ScenarioTextBlockInfo::ScenarioTextBlockInfo()
+	: m_sceneNumber(0)
 {
+}
+
+int ScenarioTextBlockInfo::sceneNumber() const
+{
+	return m_sceneNumber;
+}
+
+void ScenarioTextBlockInfo::setSceneNumber(int _number)
+{
+	if (m_sceneNumber != _number) {
+		m_sceneNumber = _number;
+	}
 }
 
 QString ScenarioTextBlockInfo::synopsis(bool htmlEscaped) const

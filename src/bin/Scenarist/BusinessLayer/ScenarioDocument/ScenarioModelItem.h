@@ -39,8 +39,8 @@ namespace BusinessLogic
 		/**
 		 * @brief Номер сцены
 		 */
-		int number() const;
-		void setNumber(int _number);
+		int sceneNumber() const;
+		void setSceneNumber(int _number);
 
 		/**
 		 * @brief Заголовок элемента
@@ -125,7 +125,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Номер сцены
 		 */
-		int m_number;
+		int m_sceneNumber;
 
 		/**
 		 * @brief Заголовок элемента
