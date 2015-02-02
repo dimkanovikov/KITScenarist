@@ -25,6 +25,7 @@ using UserInterface::ExportDialog;
 
 ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
+	m_currentScenario(0),
 	m_exportDialog(new ExportDialog(_parentWidget))
 {
 	initView();
@@ -33,7 +34,8 @@ ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 
 void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
-	Domain::Scenario* currentScenario = _scenario->scenario();
+	m_currentScenario = _scenario;
+	Domain::Scenario* currentScenario = m_currentScenario->scenario();
 
 	//
 	// Установка имени файла
@@ -121,6 +123,8 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 	if (isTitleListDataChanged) {
 		emit scenarioTitleListDataChanged();
 	}
+
+	m_currentScenario = 0;
 }
 
 void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario)
@@ -140,6 +144,11 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					QString("%1/file-path").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
+	m_exportDialog->setCheckPageBreaks(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("%1/check-page-breaks").arg(projectKey),
+					DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
 				);
 	m_exportDialog->setCurrentStyle(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
@@ -181,6 +190,10 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
 				exportParameters.filePath,
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("%1/check-page-breaks").arg(projectKey),
+				exportParameters.checkPageBreaks ? "1" : "0",
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
 				QString("%1/style").arg(projectKey),
 				exportParameters.style,
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
@@ -205,7 +218,12 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
 void ExportManager::aboutExportStyleChanged(const QString& _styleName)
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue("export/style", _styleName,
-		DataStorageLayer::SettingsStorage::ApplicationSettings);
+																 DataStorageLayer::SettingsStorage::ApplicationSettings);
+}
+
+void ExportManager::aboutPrintPreview()
+{
+	printPreviewScenario(m_currentScenario);
 }
 
 void ExportManager::initView()
@@ -229,4 +247,5 @@ void ExportManager::initConnections()
 {
 	connect(m_exportDialog, SIGNAL(currentStyleChanged(QString)),
 			this, SLOT(aboutExportStyleChanged(QString)));
+	connect(m_exportDialog, SIGNAL(printPreview()), this, SLOT(aboutPrintPreview()));
 }

@@ -70,6 +70,7 @@ projects/[project_name] - настройки актуальные для про�
 projects/[project_name]/last-cursor-position - последняя позиция курсора
 projects/[project_name]/export - настройки экспорта
 projects/[project_name]/export/file-path - путь к файлу экспорта
+projects/[project_name]/export/check-page-breaks - проверять ошибки разрыва страниц
 projects/[project_name]/export/style - стиль экспорта
 projects/[project_name]/export/page-numbering - нумерация страниц
 projects/[project_name]/export/scenes-numbering - нумерация сцен

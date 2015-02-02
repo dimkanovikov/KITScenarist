@@ -61,6 +61,11 @@ namespace ManagementLayer
 		 */
 		void aboutExportStyleChanged(const QString& _styleName);
 
+		/**
+		 * @brief Запрос предварительного просмотра из самого диалога
+		 */
+		void aboutPrintPreview();
+
 	private:
 		/**
 		 * @brief Настроить представление
@@ -73,6 +78,11 @@ namespace ManagementLayer
 		void initConnections();
 
 	private:
+		/**
+		 * @brief Текущий экспортируемый сценарий
+		 */
+		BusinessLogic::ScenarioDocument* m_currentScenario;
+
 		/**
 		 * @brief Диалог экспорта
 		 */

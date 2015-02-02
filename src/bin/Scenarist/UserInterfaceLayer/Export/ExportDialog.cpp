@@ -85,6 +85,11 @@ void ExportDialog::setExportFileName(const QString& _fileName)
 	}
 }
 
+void ExportDialog::setCheckPageBreaks(bool _check)
+{
+	ui->checkPageBreaks->setChecked(_check);
+}
+
 void ExportDialog::setStylesModel(QAbstractItemModel* _model)
 {
 	ui->styles->setModel(_model);
@@ -179,6 +184,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 {
 	BusinessLogic::ExportParameters exportParameters;
 	exportParameters.filePath = ui->file->text();
+	exportParameters.checkPageBreaks = ui->checkPageBreaks->isChecked();
 	exportParameters.style = ui->styles->currentText();
 	exportParameters.printTilte = ui->printTitle->isChecked();
 	exportParameters.scenarioName = ui->name->text();
@@ -265,5 +271,6 @@ void ExportDialog::initConnections()
 	connect(ui->file, SIGNAL(textChanged(QString)), this, SLOT(aboutFileNameChanged()));
 
 	connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reject()));
+	connect(ui->printPreview, SIGNAL(clicked()), this, SIGNAL(printPreview()));
 	connect(ui->exportTo, SIGNAL(clicked()), this, SLOT(accept()));
 }
