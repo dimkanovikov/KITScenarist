@@ -137,10 +137,15 @@ namespace {
 	}
 
 	/**
-	 * @brief Определить количество строк до конца страницы
+	 * @brief Оптимизированная версия подсчёта кол-ва строк до конца страницы
 	 */
 	static int linesToEndOfPage(QTextDocument* _inDocument, const QTextBlockFormat& _blockFormat,
-		const QTextCharFormat& _charFormat) {
+		const QTextCharFormat& _charFormat, const int _blockLines) {
+		//
+		// Минимальное количество строк для проверки
+		//
+		const int MINIMUM_LINES_FOR_CHECK = 3;
+
 		int result = 0;
 
 		//
@@ -148,9 +153,27 @@ namespace {
 		//
 		QTextCursor cursor(_inDocument);
 		cursor.movePosition(QTextCursor::End);
-		while (::currentLine(_inDocument, _blockFormat, _charFormat) != LastPageLine) {
+		// ... количество страниц в исходном документе
+		const int documentPagesCount = _inDocument->pageCount();
+		// ... верхняя граница количества строк для проверки
+		const int checkLimit =
+				(_blockLines < MINIMUM_LINES_FOR_CHECK) ? MINIMUM_LINES_FOR_CHECK : _blockLines;
+		// ... тип текущей линии
+		LineType type = UndefinedLine;
+
+		while (type != LastPageLine
+			   && result <= checkLimit) {
+
 			::insertLine(cursor, _blockFormat, _charFormat);
 			++result;
+
+			if (documentPagesCount == _inDocument->pageCount()) {
+				type = MiddlePageLine;
+			} else {
+				type = LastPageLine;
+				cursor.deletePreviousChar();
+				--result;
+			}
 		}
 
 		//
@@ -799,8 +822,8 @@ namespace {
 		//
 		// Посчитаем сколько строк до конца страницы и сколько строк в блоке
 		//
-		const int linesToEndOfPage = ::linesToEndOfPage(preparedDocument, blockFormat, charFormat);
 		const int blockLines = ::linesOfText(preparedDocument, blockFormat, charFormat, _sourceDocumentCursor.block().text());
+		const int linesToEndOfPage = ::linesToEndOfPage(preparedDocument, blockFormat, charFormat, blockLines);
 
 		//
 		// Для блоков "Время и место" и "Группа сцен"
