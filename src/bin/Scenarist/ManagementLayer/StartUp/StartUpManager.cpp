@@ -245,8 +245,18 @@ void StartUpManager::checkNewVersion()
 	connect(manager, SIGNAL(finished(QNetworkReply*)),
 			this, SLOT(aboutLoadUpdatesInfo(QNetworkReply*)));
 
+	//
+	// Сформируем uuid для приложения, по которому будем идентифицировать данного пользователя
+	//
+	QString uuid
+			= DataStorageLayer::SettingsStorage::value(
+				  "application/uuid", DataStorageLayer::SettingsStorage::ApplicationSettings);
+	DataStorageLayer::SettingsStorage::setValue(
+		"application/uuid", uuid, DataStorageLayer::SettingsStorage::ApplicationSettings);
+
+
 	QString url
-			= QString("http://dimkanovikov.pro/kit/scenarist/app_updates.php?utm_source=%1&utm_medium=%2")
+			= QString("http://dimkanovikov.pro/kit/scenarist/app_updates.php?system_type=%1&system_name=%2&uuid=%3")
 			  .arg(
 #ifdef Q_OS_WIN
 				  "windows"
@@ -256,7 +266,9 @@ void StartUpManager::checkNewVersion()
 				  "mac"
 #endif
 				  )
-			  .arg(QString(QSysInfo::prettyProductName().toUtf8().toPercentEncoding()));
+			  .arg(QString(QSysInfo::prettyProductName().toUtf8().toPercentEncoding()))
+			  .arg(uuid);
 
-	manager->get(QNetworkRequest(QUrl(url)));
+	QNetworkRequest request = QNetworkRequest(QUrl(url));
+	manager->get(request);
 }
