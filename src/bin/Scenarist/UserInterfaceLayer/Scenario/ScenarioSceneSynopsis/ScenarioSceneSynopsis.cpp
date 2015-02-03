@@ -21,7 +21,7 @@ ScenarioSceneSynopsis::ScenarioSceneSynopsis(QWidget* _parent) :
 void ScenarioSceneSynopsis::setHeader(const QString& _header)
 {
 	QString newHeader = _header.toUpper();
-	m_title->setText(QString(" %1: %2").arg(tr("Synopsis of"), newHeader));
+	m_title->setText(QString(" %1: %2").arg(tr("Notes of"), newHeader));
 	m_title->setToolTip(newHeader);
 }
 
