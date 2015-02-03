@@ -316,25 +316,25 @@ void Database::createEnums(QSqlDatabase& _database)
 #ifdef USE_RUSSIAN_DATABASE_ENUMS
 		q_creator.exec(
 					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("УТРО"))
-					);
-		q_creator.exec(
-					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
 					.arg(QString::fromUtf8("ДЕНЬ"))
-					);
-		q_creator.exec(
-					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
-					.arg(QString::fromUtf8("ВЕЧЕР"))
 					);
 		q_creator.exec(
 					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
 					.arg(QString::fromUtf8("НОЧЬ"))
 					);
+		q_creator.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("УТРО"))
+					);
+		q_creator.exec(
+					QString("INSERT INTO times (id, name) VALUES (null, '%1');")
+					.arg(QString::fromUtf8("ВЕЧЕР"))
+					);
 #else
-		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'MORNING');");
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'DAY');");
-		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'EVENING');");
 		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'NIGHT');");
+		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'MORNING');");
+		q_creator.exec("INSERT INTO times (id, name) VALUES (null, 'EVENING');");
 #endif
 	}
 
