@@ -560,6 +560,29 @@
     </message>
 </context>
 <context>
+    <name>ManagementLayer::ExportManager</name>
+    <message>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="68"/>
+        <source>Export</source>
+        <translation>Экспорт</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="68"/>
+        <source>Please wait. Export can take few minutes.</source>
+        <translation>Немного терпения. Экспорт может длиться несколько минут.</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="149"/>
+        <source>Print Preview</source>
+        <translation>Предпросмотр</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="149"/>
+        <source>Please wait. Preparing document to preview can take few minutes.</source>
+        <translation>Немного терпения. Подготовка сценария к предпросмотру может длиться несколько минут.</translation>
+    </message>
+</context>
+<context>
     <name>ManagementLayer::ImportManager</name>
     <message>
         <location filename="../../ManagementLayer/Import/ImportManager.cpp" line="45"/>
@@ -1857,22 +1880,22 @@ Paragraph</source>
         <translation type="obsolete">Сцен: </translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="135"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="137"/>
         <source>Scenes:</source>
         <translation>Сцен:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="137"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="139"/>
         <source>Scenes Count</source>
         <translation>Количество сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="140"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="142"/>
         <source>Add Scenario Item After Selected</source>
         <translation>Добавить элемент сценария после выделенного</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="143"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="145"/>
         <source>Remove Selected Scenario Item</source>
         <translation>Удалить выделенный элемент сценария</translation>
     </message>

@@ -990,6 +990,8 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 	//
 	int lastEmptyLines = 0;
 	while (!sourceDocumentCursor.atEnd()) {
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+
 		//
 		// Получим тип текущего блока под курсором
 		//

@@ -15,6 +15,8 @@
 
 #include <UserInterfaceLayer/Export/ExportDialog.h>
 
+#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+
 #include <QDir>
 #include <QFileInfo>
 #include <QStandardItemModel>
@@ -59,6 +61,12 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 
 
 	if (m_exportDialog->exec() == QDialog::Accepted) {
+		//
+		// Покажем уведомление пользователю
+		//
+		ProgressWidget progress(m_exportDialog->parentWidget());
+		progress.showProgress(tr("Export"), tr("Please wait. Export can take few minutes."));
+
 		BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
 		const QString filePath = exportParameters.filePath;
 
@@ -86,6 +94,11 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 			delete exporter;
 			exporter = 0;
 		}
+
+		//
+		// Закроем уведомление
+		//
+		progress.close();
 	}
 
 	//
@@ -129,8 +142,19 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 
 void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
+	//
+	// Покажем уведомление пользователю
+	//
+	ProgressWidget progress(m_exportDialog->parentWidget());
+	progress.showProgress(tr("Print Preview"), tr("Please wait. Preparing document to preview can take few minutes."));
+
 	BusinessLogic::PdfExporter exporter;
 	exporter.printPreview(_scenario, m_exportDialog->exportParameters());
+
+	//
+	// Закроем уведомление
+	//
+	progress.close();
 }
 
 void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
@@ -223,7 +247,15 @@ void ExportManager::aboutExportStyleChanged(const QString& _styleName)
 
 void ExportManager::aboutPrintPreview()
 {
+	//
+	// Закрывать диалоговое окно нельзя, поэтому прячем его за границами экрана,
+	// а потом возвращаем на место
+	//
+	const QPoint POSITION_OUT_OF_SCREEN(10000, 10000);
+	QPoint lastPos = m_exportDialog->pos();
+	m_exportDialog->move(POSITION_OUT_OF_SCREEN);
 	printPreviewScenario(m_currentScenario);
+	m_exportDialog->move(lastPos);
 }
 
 void ExportManager::initView()
