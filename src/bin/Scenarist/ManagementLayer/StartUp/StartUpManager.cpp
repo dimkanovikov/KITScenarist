@@ -245,11 +245,18 @@ void StartUpManager::checkNewVersion()
 	connect(manager, SIGNAL(finished(QNetworkReply*)),
 			this, SLOT(aboutLoadUpdatesInfo(QNetworkReply*)));
 
+	QString url
+			= QString("http://dimkanovikov.pro/kit/scenarist/app_updates.php?utm_source=%1&utm_medium=%2")
+			  .arg(
 #ifdef Q_OS_WIN
-	manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/scenarist/downloads/windows/")));
+				  "windows"
 #elif defined Q_OS_LINUX
-	manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/scenarist/downloads/linux/")));
+				  "linux"
 #elif defined Q_OS_MAC
-	manager->get(QNetworkRequest(QUrl("http://dimkanovikov.pro/kit/scenarist/downloads/mac/")));
+				  "mac"
 #endif
+				  )
+			  .arg(QString(QSysInfo::prettyProductName().toUtf8().toPercentEncoding()));
+
+	manager->get(QNetworkRequest(QUrl(url)));
 }
