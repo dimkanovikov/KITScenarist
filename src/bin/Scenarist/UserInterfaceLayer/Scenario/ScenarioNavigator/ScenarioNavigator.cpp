@@ -43,8 +43,10 @@ void ScenarioNavigator::setModel(QAbstractItemModel* _model)
 
 void ScenarioNavigator::setCurrentIndex(const QModelIndex& _index)
 {
-	m_navigationTree->clearSelection();
-	m_navigationTree->setCurrentIndex(_index);
+	if (!m_navigationTree->selectionModel()->selectedIndexes().contains(_index)) {
+		m_navigationTree->clearSelection();
+		m_navigationTree->setCurrentIndex(_index);
+	}
 }
 
 void ScenarioNavigator::setShowSceneNumber(bool _show)
@@ -177,7 +179,7 @@ void ScenarioNavigator::initConnections()
 {
 	connect(m_addItem, SIGNAL(clicked()), this, SLOT(aboutAddItem()));
 	connect(m_removeItem, SIGNAL(clicked()), this, SLOT(aboutRemoveItem()));
-	connect(m_navigationTree, SIGNAL(activated(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
+	connect(m_navigationTree, SIGNAL(clicked(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
 }
 
 void ScenarioNavigator::initStyleSheet()
