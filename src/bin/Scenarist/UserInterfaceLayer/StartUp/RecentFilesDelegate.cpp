@@ -43,7 +43,11 @@ void RecentFilesDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& 
 	m_fileWidget->resize(opt.rect.size());
 	m_fileWidget->setPalette(opt.palette);
 
-	bool mouseHover = opt.rect.contains(opt.widget->mapFromGlobal(QCursor::pos()));
+	QPoint cursorPos = opt.widget->mapFromGlobal(QCursor::pos());
+	QRect itemRect = opt.rect;
+	itemRect.setHeight(itemRect.height()-2);
+
+	bool mouseHover = itemRect.contains(cursorPos);
 	m_fileWidget->setMouseHover(mouseHover);
 
 	//
