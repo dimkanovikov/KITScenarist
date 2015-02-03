@@ -108,10 +108,12 @@ int PagesChronometer::linesInText(const QString& _text, int _lineLength) const
 	//
 	const int textLength = _text.length();
 	int currentPosition = _lineLength;
+	int lastCurrentPosition = 0;
 	int linesCount = 1;
 	while (currentPosition < textLength) {
 		if (_text.at(currentPosition) == ' ') {
 			++linesCount;
+			lastCurrentPosition = currentPosition;
 			currentPosition += _lineLength;
 		} else {
 			--currentPosition;
@@ -120,8 +122,9 @@ int PagesChronometer::linesInText(const QString& _text, int _lineLength) const
 		//
 		// Ставим предохранитель на случай длинных слов, которые превышают допустимую ширину блока
 		//
-		if (currentPosition == 0) {
+		if (currentPosition == lastCurrentPosition) {
 			linesCount = _text.length() / _lineLength + ((_text.length() % _lineLength > 0) ? 1 : 0);
+			break;
 		}
 	}
 
