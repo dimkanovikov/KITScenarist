@@ -50,6 +50,7 @@
         <file>Icons/browse.png</file>
         <file>Icons/Editing/fullscreen.png</file>
         <file>Icons/Editing/refresh_green.png</file>
+        <file>Icons/Editing/accept_green.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
