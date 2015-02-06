@@ -1,6 +1,7 @@
 #include "AcceptebleLineEdit.h"
 
 #include <QKeyEvent>
+#include <QMessageBox>
 #include <QStyle>
 #include <QToolButton>
 
@@ -24,6 +25,10 @@ AcceptebleLineEdit::AcceptebleLineEdit(QWidget* _parent) :
 	m_reject->hide();
 	connect(m_reject, SIGNAL(clicked()), this, SLOT(rejectText()));
 
+	//
+	// По умолчанию в вопросу будет говориться, что текст изменён
+	//
+	m_questionPrefix = tr("Text");
 
 	//
 	// При смене текста обновляем видимость элементов
@@ -33,14 +38,24 @@ AcceptebleLineEdit::AcceptebleLineEdit(QWidget* _parent) :
 
 void AcceptebleLineEdit::setAcceptedText(const QString& _text)
 {
-	if (m_acceptedText != _text) {
-		m_acceptedText = _text;
-		setText(_text);
+	m_acceptedText = _text;
+	setText(_text);
+}
+
+void AcceptebleLineEdit::setQuestionPrefix(const QString& _prefix)
+{
+	if (m_questionPrefix != _prefix) {
+		m_questionPrefix = _prefix;
 	}
 }
 
-void AcceptebleLineEdit::resizeEvent(QResizeEvent*)
+void AcceptebleLineEdit::resizeEvent(QResizeEvent* _event)
 {
+	QLineEdit::resizeEvent(_event);
+
+	//
+	// Корректируем положение кнопок
+	//
 	const QSize acceptSizeHint = m_accept->sizeHint();
 	const QSize rejectSizeHint = m_reject->sizeHint();
 	const int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
@@ -76,13 +91,30 @@ void AcceptebleLineEdit::keyPressEvent(QKeyEvent* _event)
 	}
 }
 
+void AcceptebleLineEdit::focusOutEvent(QFocusEvent* _event)
+{
+	if (m_acceptedText != text()) {
+		const QString question = tr("was changed from \"%1\" to \"%2\". Apply changes?").arg(m_acceptedText, text());
+		if (QMessageBox::question(this, tr("Apply changes"),
+				QString("%1 %2").arg(m_questionPrefix).arg(question))
+			== QMessageBox::Yes) {
+			acceptText();
+		} else {
+			rejectText();
+		}
+	}
+
+	QLineEdit::focusOutEvent(_event);
+}
+
 void AcceptebleLineEdit::acceptText()
 {
 	if (m_acceptedText != text()) {
+		const QString oldText = m_acceptedText;
 		m_acceptedText = text();
 		updateButtonsVisibility();
 
-		emit textAccepted(m_acceptedText);
+		emit textAccepted(m_acceptedText, oldText);
 	}
 }
 

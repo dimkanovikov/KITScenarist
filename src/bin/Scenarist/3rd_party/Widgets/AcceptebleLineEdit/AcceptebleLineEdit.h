@@ -21,11 +21,16 @@ public:
 	 */
 	void setAcceptedText(const QString& _text);
 
+	/**
+	 * @brief Установить приставку вопроса о применении текста
+	 */
+	void setQuestionPrefix(const QString& _prefix);
+
 signals:
 	/**
 	 * @brief Зафиксирован новый текст
 	 */
-	void textAccepted(const QString& _text);
+	void textAccepted(const QString& _newText, const QString& _oldText);
 
 	/**
 	 * @brief Все изменения отменены
@@ -36,12 +41,17 @@ protected:
 	/**
 	 * @brief Переопределяется для позиционирования кнопок применить/отмена
 	 */
-	void resizeEvent(QResizeEvent*);
+	void resizeEvent(QResizeEvent*_event);
 
 	/**
 	 * @brief Переопределяется, для того чтобы повесить события на ENTER/ESC
 	 */
 	void keyPressEvent(QKeyEvent* _event);
+
+	/**
+	 * @brief Переопределяется, для вопроса о фиксации/отмене изменения текста
+	 */
+	void focusOutEvent(QFocusEvent* _event);
 
 private slots:
 	/**
@@ -74,6 +84,11 @@ private:
 	 * @brief Применённый текст
 	 */
 	QString m_acceptedText;
+
+	/**
+	 * @brief Приставка вопроса о применении, отмене изменений
+	 */
+	QString m_questionPrefix;
 };
 
 #endif // ACCEPTEBLELINEEDIT_H
