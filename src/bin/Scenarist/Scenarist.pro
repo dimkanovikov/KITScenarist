@@ -182,7 +182,8 @@ SOURCES += main.cpp \
     BusinessLayer/Import/DocumentImporter.cpp \
     BusinessLayer/Export/DocxExporter.cpp \
     3rd_party/Widgets/ScalableWrapper/ScalableWrapper.cpp \
-    BusinessLayer/Chronometry/PagesChronometer.cpp
+    BusinessLayer/Chronometry/PagesChronometer.cpp \
+    3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -333,7 +334,8 @@ HEADERS += \
     BusinessLayer/Export/DocxExporter.h \
     3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h \
     BusinessLayer/Chronometry/PagesChronometer.h \
-    BusinessLayer/Counters/Counter.h
+    BusinessLayer/Counters/Counter.h \
+    3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

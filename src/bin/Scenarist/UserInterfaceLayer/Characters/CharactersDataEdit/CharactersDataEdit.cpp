@@ -26,7 +26,6 @@ void CharactersDataEdit::clean()
 {
 	removeConnections();
 
-	m_sourceName.clear();
 	m_sourceRealName.clear();
 	m_sourceDescription.clear();
 	m_sourcePhotos.clear();
@@ -42,13 +41,8 @@ void CharactersDataEdit::clean()
 
 void CharactersDataEdit::setName(const QString& _name)
 {
-	removeConnections();
-
-	m_sourceName = _name;
 	ui->sourceName->setText(_name);
-	ui->name->setText(_name);
-
-	initConnections();
+	ui->name->setAcceptedText(_name);
 }
 
 QString CharactersDataEdit::name() const
@@ -123,14 +117,9 @@ namespace {
 void CharactersDataEdit::aboutCharacterChanged()
 {
 	//
-	// Сохраним персонаж, если изменены данные
+	// Сохраним персонаж
 	//
-	if (name() != m_sourceName
-		|| realName() != m_sourceRealName
-		|| description() != m_sourceDescription
-		|| !isEqualPixmapLists(photos(), m_sourcePhotos)) {
-		emit saveCharacter();
-	}
+	emit saveCharacter();
 
 	//
 	// Обновим состояние доступности кнопки добавления фотографий
@@ -144,11 +133,12 @@ void CharactersDataEdit::initView()
 	QFont nameFont = ui->name->font();
 	nameFont.setCapitalization(QFont::AllUppercase);
 	ui->name->setFont(nameFont);
+	ui->name->setQuestionPrefix(tr("Character name"));
 }
 
 void CharactersDataEdit::initConnections()
 {
-	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutCharacterChanged()));
+	connect(ui->name, SIGNAL(textAccepted(QString,QString)), this, SLOT(aboutCharacterChanged()));
 	connect(ui->realName, SIGNAL(textChanged(QString)), this, SLOT(aboutCharacterChanged()));
 	connect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutCharacterChanged()));
 	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutCharacterChanged()));
@@ -158,7 +148,7 @@ void CharactersDataEdit::initConnections()
 
 void CharactersDataEdit::removeConnections()
 {
-	disconnect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutCharacterChanged()));
+	disconnect(ui->name, SIGNAL(textAccepted(QString,QString)), this, SLOT(aboutCharacterChanged()));
 	disconnect(ui->realName, SIGNAL(textChanged(QString)), this, SLOT(aboutCharacterChanged()));
 	disconnect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutCharacterChanged()));
 	disconnect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutCharacterChanged()));

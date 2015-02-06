@@ -77,7 +77,7 @@ namespace UserInterface
 		 * @brief Персонаж изменён
 		 */
 		void aboutCharacterChanged();
-		
+
 	private:
 		/**
 		 * @brief Настроить представление
@@ -97,11 +97,6 @@ namespace UserInterface
 
 	private:
 		Ui::CharactersDataEdit *ui;
-
-		/**
-		 * @brief Исходное имя
-		 */
-		QString m_sourceName;
 
 		/**
 		 * @brief Исходное полное имя

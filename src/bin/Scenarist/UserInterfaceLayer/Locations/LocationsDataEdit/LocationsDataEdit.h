@@ -89,11 +89,6 @@ namespace UserInterface
 		Ui::LocationsDataEdit* ui;
 
 		/**
-		 * @brief Исходное название
-		 */
-		QString m_sourceName;
-
-		/**
 		 * @brief Исходное описание
 		 */
 		QString m_sourceDescription;

@@ -120,7 +120,7 @@ SettingsStorage::SettingsStorage()
 	//
 	// Настроим значения параметров по умолчанию
 	//
-	m_defaultValues.insert("application/uuid", QUuid::createUuid());
+	m_defaultValues.insert("application/uuid", QUuid::createUuid().toString());
 	m_defaultValues.insert("application/use-dark-theme", "0");
 	m_defaultValues.insert("application/autosave", "1");
 	m_defaultValues.insert("application/autosave-interval", "5");

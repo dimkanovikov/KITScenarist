@@ -115,7 +115,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="name"/>
+         <widget class="AcceptebleLineEdit" name="name"/>
         </item>
         <item row="2" column="1">
          <widget class="QLabel" name="realNameTitle">
@@ -163,6 +163,11 @@
    <extends>QWidget</extends>
    <header location="global">3rd_party/Widgets/PhotosChooser/PhotosChooser.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AcceptebleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

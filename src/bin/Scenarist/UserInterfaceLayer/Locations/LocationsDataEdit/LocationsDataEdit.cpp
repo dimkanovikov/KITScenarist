@@ -26,7 +26,6 @@ void LocationsDataEdit::clean()
 {
 	removeConnections();
 
-	m_sourceName.clear();
 	m_sourceDescription.clear();
 	m_sourcePhotos.clear();
 
@@ -40,13 +39,8 @@ void LocationsDataEdit::clean()
 
 void LocationsDataEdit::setName(const QString& _name)
 {
-	removeConnections();
-
-	m_sourceName = _name;
 	ui->sourceName->setText(_name);
-	ui->name->setText(_name);
-
-	initConnections();
+	ui->name->setAcceptedText(_name);
 }
 
 QString LocationsDataEdit::name() const
@@ -106,13 +100,9 @@ namespace {
 void LocationsDataEdit::aboutLocationChanged()
 {
 	//
-	// Сохраним локацию, если она была изменена
+	// Сохраним локацию
 	//
-	if (name() != m_sourceName
-		|| description() != m_sourceDescription
-		|| !isEqualPixmapLists(photos(), m_sourcePhotos)) {
-		emit saveLocation();
-	}
+	emit saveLocation();
 
 	//
 	// Обновим состояние доступности кнопки добавления фотографий
@@ -126,11 +116,12 @@ void LocationsDataEdit::initView()
 	QFont nameFont = ui->name->font();
 	nameFont.setCapitalization(QFont::AllUppercase);
 	ui->name->setFont(nameFont);
+	ui->name->setQuestionPrefix(tr("Location"));
 }
 
 void LocationsDataEdit::initConnections()
 {
-	connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutLocationChanged()));
+	connect(ui->name, SIGNAL(textAccepted(QString,QString)), this, SLOT(aboutLocationChanged()));
 	connect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutLocationChanged()));
 	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutLocationChanged()));
 
@@ -139,7 +130,7 @@ void LocationsDataEdit::initConnections()
 
 void LocationsDataEdit::removeConnections()
 {
-	disconnect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(aboutLocationChanged()));
+	disconnect(ui->name, SIGNAL(textAccepted(QString,QString)), this, SLOT(aboutLocationChanged()));
 	disconnect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutLocationChanged()));
 	disconnect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutLocationChanged()));
 

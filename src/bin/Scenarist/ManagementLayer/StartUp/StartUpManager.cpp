@@ -249,9 +249,9 @@ void StartUpManager::checkNewVersion()
 	// Сформируем uuid для приложения, по которому будем идентифицировать данного пользователя
 	//
 	QString uuid
-			= DataStorageLayer::SettingsStorage::value(
+			= DataStorageLayer::StorageFacade::settingsStorage()->value(
 				  "application/uuid", DataStorageLayer::SettingsStorage::ApplicationSettings);
-	DataStorageLayer::SettingsStorage::setValue(
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
 		"application/uuid", uuid, DataStorageLayer::SettingsStorage::ApplicationSettings);
 
 
