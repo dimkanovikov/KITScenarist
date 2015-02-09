@@ -183,7 +183,8 @@ SOURCES += main.cpp \
     BusinessLayer/Export/DocxExporter.cpp \
     3rd_party/Widgets/ScalableWrapper/ScalableWrapper.cpp \
     BusinessLayer/Chronometry/PagesChronometer.cpp \
-    3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.cpp
+    3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.cpp \
+    3rd_party/Delegates/ComboBoxItemDelegate/ComboBoxItemDelegate.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -335,7 +336,8 @@ HEADERS += \
     3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h \
     BusinessLayer/Chronometry/PagesChronometer.h \
     BusinessLayer/Counters/Counter.h \
-    3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h
+    3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h \
+    3rd_party/Delegates/ComboBoxItemDelegate/ComboBoxItemDelegate.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

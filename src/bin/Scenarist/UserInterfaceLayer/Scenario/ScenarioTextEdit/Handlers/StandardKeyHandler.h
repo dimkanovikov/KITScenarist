@@ -3,6 +3,8 @@
 
 #include "AbstractKeyHandler.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+
 #include <QList>
 
 class QString;
@@ -19,6 +21,15 @@ namespace KeyProcessingLayer
 		StandardKeyHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
+		/**
+		 * @brief Получить стиль блока к которому переходить
+		 * TODO: вынести из этого класса, чтобы не работать с настройками из интерфейса
+		 */
+		/** @{ */
+		static BusinessLogic::ScenarioBlockStyle::Type jumpForTab(BusinessLogic::ScenarioBlockStyle::Type _blockType);
+		static BusinessLogic::ScenarioBlockStyle::Type jumpForEnter(BusinessLogic::ScenarioBlockStyle::Type _blockType);
+		/** @} */
+
 		/**
 		 * @brief Реализация интерфейса AbstractKeyHandler
 		 */

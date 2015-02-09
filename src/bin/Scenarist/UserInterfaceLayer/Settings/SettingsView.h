@@ -5,6 +5,7 @@
 
 class QAbstractItemModel;
 class QSplitter;
+class TabBar;
 
 namespace Ui {
 	class SettingsView;
@@ -25,6 +26,11 @@ namespace UserInterface
 		 * @brief Разделитель представления
 		 */
 		QSplitter* splitter() const;
+
+		/**
+		 * @brief Установить модель алгоритма смены блоков
+		 */
+		void setBlocksJumpsModel(QAbstractItemModel* _model, QAbstractItemModel* _modelForDelegate);
 
 		/**
 		 * @brief Установить модель стилей
@@ -107,6 +113,7 @@ namespace UserInterface
 		void scenarioEditFolderTextColorDarkChanged(const QColor&);
 		void scenarioEditFolderBackgroundColorDarkChanged(const QColor&);
 		void scenarioEditCurrentStyleChanged(const QString&);
+		void scenarioEditBlockJumpChanged(const QString& _block, const QString& _tab, const QString& _enter);
 
 		void navigatorShowScenesNumbersChanged(bool);
 		void navigatorShowSceneDescriptionChanged(bool);
@@ -152,6 +159,11 @@ namespace UserInterface
 		 * @brief Сменилась выбранная цветовая схема
 		 */
 		void aboutColorThemeChanged();
+
+		/**
+		 * @brief Сменился блок в настройках переходов
+		 */
+		void aboutBlockJumpChanged(const QModelIndex& _topLeft, const QModelIndex& _bottomRight);
 
 		/**
 		 * @brief Выбрать цвет для параметров редактора сценария
@@ -215,6 +227,11 @@ namespace UserInterface
 		 * @brief Форма
 		 */
 		Ui::SettingsView *ui;
+
+		/**
+		 * @brief Переключатель вкладок для настроек редактора сценария
+		 */
+		TabBar* m_scenarioEditorTabs;
 	};
 }
 

@@ -6,6 +6,7 @@
 #include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Widgets/PagesTextEdit/PageMetrics.h>
 
+#include <QApplication>
 #include <QDir>
 #include <QFile>
 #include <QFontInfo>
@@ -56,6 +57,32 @@ namespace {
 	}
 
 	/**
+	 * @brief Получить карту типов и их текстовых отображений в красивом виде
+	 */
+	static QMap<ScenarioBlockStyle::Type, QString> beautifyTypeNames() {
+		static QMap<ScenarioBlockStyle::Type, QString> s_beautifyTypeNames;
+		if (s_beautifyTypeNames.isEmpty()) {
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Undefined, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Undefined"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::TimeAndPlace, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Time and Place"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneCharacters, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Characters"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Action, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Action"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Character, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Character"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Parenthetical, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Parenthetical"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Dialog, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Dialog"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Transition, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Transition"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Note, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Note"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::TitleHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Title Header"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Title, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Title"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::NoprintableText, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Noprintable Text"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneGroupHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Group"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneGroupFooter, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Group Footer"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::FolderHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Folder"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::FolderFooter, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Folder Footer"));
+		}
+		return s_beautifyTypeNames;
+	}
+
+	/**
 	 * @brief Расширение файла стиля сценария
 	 */
 	const QString SCENARIO_STYLE_FILE_EXTENSION = "kitss";
@@ -102,14 +129,14 @@ namespace {
 	}
 }
 
-QString ScenarioBlockStyle::typeName(ScenarioBlockStyle::Type _type)
+QString ScenarioBlockStyle::typeName(ScenarioBlockStyle::Type _type, bool _beautify)
 {
-	return ::typeNames().value(_type);
+	return _beautify ? ::beautifyTypeNames().value(_type) : ::typeNames().value(_type);
 }
 
-ScenarioBlockStyle::Type ScenarioBlockStyle::typeForName(const QString& _typeName)
+ScenarioBlockStyle::Type ScenarioBlockStyle::typeForName(const QString& _typeName, bool _beautify)
 {
-	return ::typeNames().key(_typeName);
+	return _beautify ? ::beautifyTypeNames().key(_typeName) : ::typeNames().key(_typeName);
 }
 
 ScenarioBlockStyle::Type ScenarioBlockStyle::forBlock(const QTextBlock& _block)

@@ -82,7 +82,8 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 					//
 					cursor.movePosition(QTextCursor::EndOfBlock);
 					editor()->setTextCursor(cursor);
-					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+//					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Parenthetical));
 				} else {
 					//! Внутри блока
 
@@ -176,7 +177,8 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 					//
 					cursor.movePosition(QTextCursor::EndOfBlock);
 					editor()->setTextCursor(cursor);
-					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+//					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Parenthetical));
 				} else {
 					//! Внутри блока
 

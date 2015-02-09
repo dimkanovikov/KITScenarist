@@ -123,7 +123,8 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставка блока описания действия
 					//
-					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
+//					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
+					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::TimeAndPlace));
 				} else {
 					//! Внутри блока
 
@@ -227,7 +228,8 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 						//
 						// А затем вставим блок
 						//
-						editor()->addScenarioBlock(ScenarioBlockStyle::SceneCharacters);
+//						editor()->addScenarioBlock(ScenarioBlockStyle::SceneCharacters);
+						editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::TimeAndPlace));
 					}
 				} else {
 					//! Внутри блока

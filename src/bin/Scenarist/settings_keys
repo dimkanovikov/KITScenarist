@@ -25,6 +25,31 @@ scenario-editor/folder-background-color-dark - цвет фона папки дл
 scenario-editor/autosave - включено ли автосохранение проекта
 scenario-editor/autosave-interval - интервал автоматического сохранения
 scenario-editor/current-style - стиль отображения текста в редакторе
+scenario-editor/styles-jumping/... - к каким блокам переходить редактору сценария
+scenario-editor/styles-jumping/from-time-and-place-by-tab
+scenario-editor/styles-jumping/from-time-and-place-by-enter
+scenario-editor/styles-jumping/from-scene-characters-by-tab
+scenario-editor/styles-jumping/from-scene-characters-by-enter
+scenario-editor/styles-jumping/from-action-by-tab
+scenario-editor/styles-jumping/from-action-by-enter
+scenario-editor/styles-jumping/from-character-by-tab
+scenario-editor/styles-jumping/from-character-by-enter
+scenario-editor/styles-jumping/from-dialog-by-tab
+scenario-editor/styles-jumping/from-dialog-by-enter
+scenario-editor/styles-jumping/from-parenthetical-by-tab
+scenario-editor/styles-jumping/from-parenthetical-by-enter
+scenario-editor/styles-jumping/from-title-by-tab
+scenario-editor/styles-jumping/from-title-by-enter
+scenario-editor/styles-jumping/from-note-by-tab
+scenario-editor/styles-jumping/from-note-by-enter
+scenario-editor/styles-jumping/from-transition-by-tab
+scenario-editor/styles-jumping/from-transition-by-enter
+scenario-editor/styles-jumping/from-nonprintable-by-tab
+scenario-editor/styles-jumping/from-nonprintable-by-enter
+scenario-editor/styles-jumping/from-scenes-group-by-tab
+scenario-editor/styles-jumping/from-scenes-group-by-enter
+scenario-editor/styles-jumping/from-folder-by-tab
+scenario-editor/styles-jumping/from-folder-by-enter
 
 chronometry/used - включён ли подсчёт хронометража
 chronometry/current-chronometer-type - используемая система хронометража

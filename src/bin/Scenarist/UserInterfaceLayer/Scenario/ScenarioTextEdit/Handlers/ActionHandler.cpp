@@ -71,7 +71,8 @@ void ActionHandler::handleEnter(QKeyEvent*)
 				//
 				// Вставляем блок и применяем ему стиль описания действия
 				//
-				editor()->addScenarioBlock(ScenarioBlockStyle::Action);
+//				editor()->addScenarioBlock(ScenarioBlockStyle::Action);
+				editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Action));
 			}
 		}
 	}
@@ -137,7 +138,8 @@ void ActionHandler::handleTab(QKeyEvent*)
 					//
 					// Вставляем блок персонажа
 					//
-					editor()->addScenarioBlock(ScenarioBlockStyle::Character);
+//					editor()->addScenarioBlock(ScenarioBlockStyle::Character);
+					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Action));
 				} else {
 					//! Внутри блока
 

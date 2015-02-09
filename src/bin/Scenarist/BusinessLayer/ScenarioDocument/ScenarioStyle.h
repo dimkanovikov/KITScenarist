@@ -44,12 +44,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Получить название типа
 		 */
-		static QString typeName(ScenarioBlockStyle::Type _type);
+		static QString typeName(ScenarioBlockStyle::Type _type, bool _beautify = false);
 
 		/**
 		 * @brief Получить тип по названию
 		 */
-		static ScenarioBlockStyle::Type typeForName(const QString& _typeName);
+		static ScenarioBlockStyle::Type typeForName(const QString& _typeName, bool _beautify = false);
 
 		/**
 		 * @brief Дополнительные свойства стилей текстовых блоков

@@ -2,6 +2,9 @@
 
 #include "../ScenarioTextEdit.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <QKeyEvent>
 #include <QTextBlock>
 
@@ -13,6 +16,28 @@ using UserInterface::ScenarioTextEdit;
 StandardKeyHandler::StandardKeyHandler(ScenarioTextEdit* _editor) :
 	AbstractKeyHandler(_editor)
 {
+}
+
+ScenarioBlockStyle::Type StandardKeyHandler::jumpForTab(ScenarioBlockStyle::Type _blockType)
+{
+	const QString typeShortName = ScenarioBlockStyle::typeName(_blockType);
+	int jumpForTab =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				QString("scenario-editor/styles-jumping/from-%1-by-tab").arg(typeShortName),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				).toInt();
+	return (ScenarioBlockStyle::Type)jumpForTab;
+}
+
+ScenarioBlockStyle::Type StandardKeyHandler::jumpForEnter(ScenarioBlockStyle::Type _blockType)
+{
+	const QString typeShortName = ScenarioBlockStyle::typeName(_blockType);
+	int jumpForEnter =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				QString("scenario-editor/styles-jumping/from-%1-by-enter").arg(typeShortName),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				).toInt();
+	return (ScenarioBlockStyle::Type)jumpForEnter;
 }
 
 void StandardKeyHandler::handleShortcut(QKeyEvent* _event)

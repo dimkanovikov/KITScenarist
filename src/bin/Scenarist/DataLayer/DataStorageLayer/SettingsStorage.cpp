@@ -3,12 +3,15 @@
 #include <DataLayer/DataMappingLayer/MapperFacade.h>
 #include <DataLayer/DataMappingLayer/SettingsMapper.h>
 
+#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+
 #include <QSettings>
 #include <QStringList>
 #include <QUuid>
 
 using namespace DataStorageLayer;
 using namespace DataMappingLayer;
+using namespace BusinessLogic;
 
 
 void SettingsStorage::setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace)
@@ -142,6 +145,32 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/folder-text-color-dark", "#EBEBEB");
 	m_defaultValues.insert("scenario-editor/folder-background-color-dark", "#8D2DC4");
 	m_defaultValues.insert("scenario-editor/zoom-range", "0");
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-time_and_place-by-tab", QString::number(ScenarioBlockStyle::SceneCharacters));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-time_and_place-by-enter", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_characters-by-tab", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_characters-by-enter", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-action-by-tab", QString::number(ScenarioBlockStyle::Character));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-action-by-enter", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-character-by-tab", QString::number(ScenarioBlockStyle::Parenthetical));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-character-by-enter", QString::number(ScenarioBlockStyle::Dialog));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-dialog-by-tab", QString::number(ScenarioBlockStyle::Parenthetical));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-dialog-by-enter", QString::number(ScenarioBlockStyle::Character));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-parenthetical-by-tab", QString::number(ScenarioBlockStyle::Dialog));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-parenthetical-by-enter", QString::number(ScenarioBlockStyle::Dialog));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-transition-by-tab", QString::number(ScenarioBlockStyle::TimeAndPlace));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-transition-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-note-by-tab", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-note-by-enter", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-title-by-tab", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-title-by-enter", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-noprintable_text-by-tab", QString::number(ScenarioBlockStyle::NoprintableText));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-noprintable_text-by-enter", QString::number(ScenarioBlockStyle::NoprintableText));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_group_header-by-tab", QString::number(ScenarioBlockStyle::TimeAndPlace));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_group_header-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-folder_header-by-tab", QString::number(ScenarioBlockStyle::TimeAndPlace));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-folder_header-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
+
+
 
 	m_defaultValues.insert("chronometry/current-chronometer-type", "pages-chronometer");
 	m_defaultValues.insert("chronometry/pages/seconds", "60");

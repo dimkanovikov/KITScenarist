@@ -68,6 +68,7 @@ namespace ManagementLayer
 		void scenarioEditFolderTextColorDarkChanged(const QColor& _value);
 		void scenarioEditFolderBackgroundColorDarkChanged(const QColor& _value);
 		void scenarioEditCurrentStyleChanged(const QString& _value);
+		void scenarioEditBlockJumpChanged(const QString& _block, const QString& _tab, const QString& _enter);
 
 		void navigatorShowScenesNumbersChanged(bool  _value);
 		void navigatorShowSceneDescriptionChanged(bool _value);

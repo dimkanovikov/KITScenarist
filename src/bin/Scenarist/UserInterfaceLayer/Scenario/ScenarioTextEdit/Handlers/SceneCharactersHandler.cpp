@@ -97,7 +97,8 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 					//
 					cursor.movePosition(QTextCursor::EndOfBlock);
 					editor()->setTextCursor(cursor);
-					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
+//					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
+					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::SceneCharacters));
 				} else {
 					//! Внутри блока
 

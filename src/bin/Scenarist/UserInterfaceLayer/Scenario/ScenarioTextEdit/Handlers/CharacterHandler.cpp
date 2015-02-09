@@ -34,12 +34,12 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 	QTextCursor cursor = editor()->textCursor();
 	// ... блок текста в котором находится курсор
 	QTextBlock currentBlock = cursor.block();
-    // ... текст блока
-    QString currentBlockText = currentBlock.text().trimmed();
+	// ... текст блока
+	QString currentBlockText = currentBlock.text().trimmed();
 	// ... текст до курсора
-    QString cursorBackwardText = currentBlockText.left(cursor.positionInBlock());
+	QString cursorBackwardText = currentBlockText.left(cursor.positionInBlock());
 	// ... текст после курсора
-    QString cursorForwardText = currentBlockText.mid(cursor.positionInBlock());
+	QString cursorForwardText = currentBlockText.mid(cursor.positionInBlock());
 	// ... текущая секция
 	CharacterParser::Section currentSection = CharacterParser::section(cursorBackwardText);
 
@@ -114,7 +114,8 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставить блок реплики героя
 					//
-					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+//					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Character));
 				} else {
 					//! Внутри блока
 
@@ -193,7 +194,8 @@ void CharacterHandler::handleTab(QKeyEvent*)
 					//
 					// Вставить блок ремарки
 					//
-					editor()->addScenarioBlock(ScenarioBlockStyle::Parenthetical);
+//					editor()->addScenarioBlock(ScenarioBlockStyle::Parenthetical);
+					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Character));
 				} else {
 					//! Внутри блока
 

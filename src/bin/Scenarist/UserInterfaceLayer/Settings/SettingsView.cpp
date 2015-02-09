@@ -5,13 +5,17 @@
 #include <QSignalMapper>
 
 #include <3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h>
+#include <3rd_party/Widgets/TabBar/TabBar.h>
+
+#include <3rd_party/Delegates/ComboBoxItemDelegate/ComboBoxItemDelegate.h>
 
 using UserInterface::SettingsView;
 
 
 SettingsView::SettingsView(QWidget *parent) :
 	QWidget(parent),
-	ui(new Ui::SettingsView)
+	ui(new Ui::SettingsView),
+	m_scenarioEditorTabs(new TabBar(this))
 {
 	ui->setupUi(this);
 
@@ -29,6 +33,30 @@ SettingsView::~SettingsView()
 QSplitter* SettingsView::splitter() const
 {
 	return ui->splitter;
+}
+
+void SettingsView::setBlocksJumpsModel(QAbstractItemModel* _model, QAbstractItemModel* _modelForDelegate)
+{
+	ui->scenarioEditBlockJumpsTable->setModel(_model);
+	connect(_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutBlockJumpChanged(QModelIndex,QModelIndex)));
+
+	//
+	// Настроим делегат
+	//
+	const int NAMES_COLUMN = 0;
+	const int TAB_ACTION_COLUMN = 1;
+	const int ENTER_ACTION_COLUMN = 2;
+	//
+	// ... при необходимости удалим старый делегат
+	//
+	if (ui->scenarioEditBlockJumpsTable->itemDelegateForColumn(NAMES_COLUMN)
+		!= ui->scenarioEditBlockJumpsTable->itemDelegateForColumn(TAB_ACTION_COLUMN)) {
+		ui->scenarioEditBlockJumpsTable->itemDelegateForColumn(TAB_ACTION_COLUMN)->deleteLater();
+	}
+
+	ComboBoxItemDelegate* delegate = new ComboBoxItemDelegate(ui->scenarioEditBlockJumpsTable, _modelForDelegate);
+	ui->scenarioEditBlockJumpsTable->setItemDelegateForColumn(TAB_ACTION_COLUMN, delegate);
+	ui->scenarioEditBlockJumpsTable->setItemDelegateForColumn(ENTER_ACTION_COLUMN, delegate);
 }
 
 void SettingsView::setStylesModel(QAbstractItemModel* _model)
@@ -278,6 +306,23 @@ void SettingsView::aboutColorThemeChanged()
 	}
 }
 
+void SettingsView::aboutBlockJumpChanged(const QModelIndex& _topLeft, const QModelIndex& _bottomRight)
+{
+	Q_UNUSED(_topLeft);
+
+	if (_bottomRight.isValid()) {
+		const int NAMES_COLUMN = 0;
+		const int TAB_ACTION_COLUMN = 1;
+		const int ENTER_ACTION_COLUMN = 2;
+
+		const QString blockName = _bottomRight.sibling(_bottomRight.row(), NAMES_COLUMN).data().toString();
+		const QString actionForTabName = _bottomRight.sibling(_bottomRight.row(), TAB_ACTION_COLUMN).data().toString();
+		const QString actionForEnterName = _bottomRight.sibling(_bottomRight.row(), ENTER_ACTION_COLUMN).data().toString();
+
+		emit scenarioEditBlockJumpChanged(blockName, actionForTabName, actionForEnterName);
+	}
+}
+
 void SettingsView::aboutScenarioEditChooseTextColor()
 {
 	setColorFor(ui->textColor);
@@ -403,6 +448,15 @@ void SettingsView::initView()
 
 	ui->lightTheme->setChecked(true);
 	aboutColorThemeChanged();
+
+	m_scenarioEditorTabs->addTab(tr("Common"));
+	m_scenarioEditorTabs->addTab(tr("Blocks Jumps"));
+	m_scenarioEditorTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+	ui->scenarioEditPageLayout->addWidget(m_scenarioEditorTabs, 0, 0);
+	ui->scenarioEditPageLayout->addWidget(ui->topRightEmptyLabel_2, 0, 1);
+	ui->ScenarioEditPageStack->setCurrentIndex(0);
+
+	ui->scenarioEditBlockJumpsTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 void SettingsView::initConnections()
@@ -417,6 +471,8 @@ void SettingsView::initConnections()
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), ui->spellCheckingLanguage, SLOT(setEnabled(bool)));
 	// ... смена текущей цветовой темы
 	connect(ui->lightTheme, SIGNAL(toggled(bool)), this, SLOT(aboutColorThemeChanged()));
+	// ... смена вкладок страницы настройки редактора сценария
+	connect(m_scenarioEditorTabs, SIGNAL(currentChanged(int)), ui->ScenarioEditPageStack, SLOT(setCurrentIndex(int)));
 	// ... выбор цвета элементов редактора сценария
 	connect(ui->textColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseTextColor()));
 	connect(ui->backgroundColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseBackgroundColor()));
@@ -534,4 +590,9 @@ void SettingsView::initStyleSheet()
 	foreach (QWidget* topButton, topButtonsList) {
 		topButton->setProperty("inTopPanel", true);
 	}
+
+	//
+	// Вкладки
+	//
+	m_scenarioEditorTabs->setProperty("inTopPanel", true);
 }
