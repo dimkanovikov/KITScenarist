@@ -319,7 +319,6 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 
 
 		QPainter painter(viewport());
-		painter.setFont(document()->defaultFont());
 
 
 		QTextBlock block = document()->begin();
@@ -353,6 +352,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 						QPointF topLeft(left + leftDelta, cursorR.top());
 						QPointF bottomRight(right + leftDelta, cursorR.bottom());
 						QRectF rect(topLeft, bottomRight);
+						painter.setFont(cursor.charFormat().font());
 						painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, sceneNumber);
 					}
 				}
