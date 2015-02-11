@@ -262,10 +262,6 @@ void ScenarioManager::loadCurrentProject()
 		m_dataEditManager->setScenarioName(currentScenario->name());
 		m_dataEditManager->setScenarioSynopsis(currentScenario->synopsis());
 	}
-	//
-	// ... устанавливаем в редактор вначале черновик, чтобы создать в нём первый блок
-	//
-	m_textEditManager->setScenarioDocument(m_scenarioDraft->document());
 	m_textEditManager->setScenarioDocument(m_scenario->document());
 
 	//

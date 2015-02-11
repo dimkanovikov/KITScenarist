@@ -497,7 +497,9 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	//
 	// Сместить позиции всех сохранённых в кэше элементов после текущего на _charsRemoved и _charsAdded
 	//
-	{
+	// ... исключаем ситуацию повторного сигнала загрузки документа
+	//
+	if (_charsAdded != m_document->characterCount()) {
 		int position = _position;
 
 		//
