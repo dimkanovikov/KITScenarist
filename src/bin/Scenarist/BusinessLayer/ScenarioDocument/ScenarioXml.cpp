@@ -19,8 +19,8 @@ using namespace BusinessLogic;
 
 ScenarioXml::ScenarioXml(ScenarioDocument* _scenario) :
 	m_scenario(_scenario),
-	m_lastMimeFrom(0),
-	m_lastMimeTo(0)
+	m_lastMimeFrom(-1),
+	m_lastMimeTo(-1)
 {
 	Q_ASSERT(m_scenario);
 }
@@ -538,8 +538,8 @@ int ScenarioXml::removeLastMime()
 		removedSymbols = m_lastMimeTo - m_lastMimeFrom;
 	}
 
-	m_lastMimeFrom = 0;
-	m_lastMimeTo = 0;
+	m_lastMimeFrom = -1;
+	m_lastMimeTo = -1;
 
 	return removedSymbols;
 }

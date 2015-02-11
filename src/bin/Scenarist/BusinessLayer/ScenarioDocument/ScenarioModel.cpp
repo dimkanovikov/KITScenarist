@@ -301,7 +301,6 @@ bool ScenarioModel::dropMimeData(
 			case Qt::MoveAction:
 			case Qt::CopyAction: {
 
-
 				//
 				// Получим структурные элементы дерева, чтобы понять, куда вкладывать данные
 				//

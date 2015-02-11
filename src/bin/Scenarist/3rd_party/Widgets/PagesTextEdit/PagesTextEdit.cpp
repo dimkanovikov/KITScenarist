@@ -108,6 +108,17 @@ void PagesTextEdit::setWatermark(const QString& _watermark)
 		m_watermark = _watermark;
 
 		//
+		// Размножим водяной знак
+		//
+		m_watermarkMulti.clear();
+		if (!m_watermark.isEmpty()) {
+			for (int reply = 0; reply < 5; ++reply) {
+				m_watermarkMulti.append(m_watermark);
+				m_watermarkMulti.append("     ");
+			}
+		}
+
+		//
 		// Перерисуем себя
 		//
 		repaint();
@@ -404,26 +415,9 @@ void PagesTextEdit::paintPageNumber(QPainter* _painter, const QRectF& _rect, boo
 
 void PagesTextEdit::paintWatermark()
 {
-	//
-	// Определим цвет водяного знака
-	//
-//	QColor watermarkColor(viewport()->palette().background().color());
-//	if (viewport()->styleSheet().contains("background-color")) {
-//		const QString colorName = viewport()->styleSheet().remove(QRegularExpression("(.*)background-color[:]")).remove(QRegularExpression("[;](.*)")).simplified();
-//		watermarkColor = QColor(colorName);
-//	}
-//	if (watermarkColor != watermarkColor.lighter(200)) {
-//		watermarkColor = watermarkColor.lighter(200);
-//	} else {
-//		watermarkColor = watermarkColor.darker(130);
-//	}
-//	qDebug() << watermarkColor;
-
-
-
 	if (!m_watermark.isEmpty()) {
 		QColor watermarkColor = QColor("#C9C5C2");
-		watermarkColor.setAlpha(100);
+		watermarkColor.setAlpha(50);
 
 		//
 		// Рисуем водяные знаки
@@ -431,7 +425,8 @@ void PagesTextEdit::paintWatermark()
 		QPainter painter(viewport());
 		painter.setFont(QFont("Sans", 58, QFont::Black));
 		painter.setPen(watermarkColor);
-		painter.drawText(viewport()->rect(), Qt::AlignCenter, m_watermark);
+		painter.rotate(45);
+		painter.drawText(0, 0, m_watermarkMulti);
 	}
 }
 

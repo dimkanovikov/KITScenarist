@@ -262,6 +262,7 @@ void Database::createTables(QSqlDatabase& _database)
 				   "year TEXT DEFAULT(NULL), "
 				   "synopsis TEXT DEFAULT(NULL), "
 				   "text TEXT NOT NULL, "
+				   "is_draft INTEGER NOT NULL DEFAULT(0), " // чистовик - 0, черновик - 1
 				   "is_fixed INTEGER NOT NULL DEFAULT(0), " // фиксация версии, дата и комментарий
 				   "fix_date TEXT DEFAULT(NULL), "
 				   "fix_comment TEXT DEFAULT(NULL) "
@@ -281,9 +282,10 @@ void Database::createEnums(QSqlDatabase& _database)
 	QSqlQuery q_creator(_database);
 	_database.transaction();
 
-	// Пустой сценарий
+	// Пустой сценарий и черновик
 	{
 		q_creator.exec("INSERT INTO scenario (id, text) VALUES(null, '')");
+		q_creator.exec("INSERT INTO scenario (id, text, is_draft) VALUES(null, '', 1)");
 	}
 
 	// Версия программы
@@ -435,6 +437,15 @@ void Database::updateDatabase(QSqlDatabase& _database)
 						}
 					}
 				}
+
+				case 4:
+
+					switch (versionBuild) {
+						default:
+						case 4: {
+							updateDatabaseTo_0_4_5(_database);
+						}
+					}
 			}
 
 		}
@@ -684,6 +695,27 @@ void Database::updateDatabaseTo_0_3_3(QSqlDatabase& _database)
 		q_updater.exec("ALTER TABLE scenario ADD COLUMN author TEXT DEFAULT(NULL)");
 		q_updater.exec("ALTER TABLE scenario ADD COLUMN contacts TEXT DEFAULT(NULL)");
 		q_updater.exec("ALTER TABLE scenario ADD COLUMN year TEXT DEFAULT(NULL)");
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_4_5(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Добавление поля в таблицу сценария
+		//
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN is_draft INTEGER NOT NULL DEFAULT(0)");
+
+		//
+		// Добавление самого черновика
+		//
+		q_updater.exec("INSERT INTO scenario (id, text, is_draft) VALUES(null, '', 1)");
 	}
 
 	_database.commit();

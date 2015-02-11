@@ -67,6 +67,11 @@ namespace UserInterface
 		 */
 		void resetView();
 
+		/**
+		 * @brief Установить флаг, что навигатор работает с черновиком
+		 */
+		void setIsDraft(bool _isDraft);
+
 	signals:
 		/**
 		 * @brief Запрос на добавление элемента
@@ -77,6 +82,16 @@ namespace UserInterface
 		 * @brief Запрос на удаление элемента
 		 */
 		void removeItems(const QModelIndexList& _itemIndex);
+
+		/**
+		 * @brief Показать/скрыть заметки к сцене
+		 */
+		void showHideDraft();
+
+		/**
+		 * @brief Показать/скрыть заметки к сцене
+		 */
+		void showHideNote();
 
 		/**
 		 * @brief Активирована сцена
@@ -128,6 +143,11 @@ namespace UserInterface
 
 	private:
 		/**
+		 * @brief Заголовок корзины
+		 */
+		QLabel* m_draftTitle;
+
+		/**
 		 * @brief Префикс счётчика сцен
 		 */
 		QLabel* m_scenesCountTitle;
@@ -148,6 +168,21 @@ namespace UserInterface
 		QToolButton* m_removeItem;
 
 		/**
+		 * @brief Разделитель панели инструментов
+		 */
+		QLabel* m_middleTitle;
+
+		/**
+		 * @brief Кнопка отображения/сокрытия черновика
+		 */
+		QToolButton* m_showDraft;
+
+		/**
+		 * @brief Кнопка отображения/сокрытия примечания к сцене
+		 */
+		QToolButton* m_showNote;
+
+		/**
 		 * @brief Окончание панели инструментов
 		 */
 		QLabel* m_endTitle;
@@ -161,7 +196,6 @@ namespace UserInterface
 		 * @brief Делегат дерева
 		 */
 		ScenarioNavigatorItemDelegate* m_navigationTreeDelegate;
-		ScenarioNavigatorItemDelegate* m_navigationTreeDelegateCopy;
 	};
 }
 

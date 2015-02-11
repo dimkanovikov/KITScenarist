@@ -6,7 +6,7 @@ using namespace DataMappingLayer;
 
 
 namespace {
-	const QString COLUMNS = " id, name, additional_info, genre, author, contacts, year, synopsis, text ";
+	const QString COLUMNS = " id, name, additional_info, genre, author, contacts, year, synopsis, text, is_draft ";
 	const QString TABLE_NAME = " scenario ";
 }
 
@@ -50,8 +50,8 @@ QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 {
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
-					" (id, name, additional_info, genre, author, contacts, year, synopsis, text) "
-					" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) "
+					" (id, name, additional_info, genre, author, contacts, year, synopsis, text, is_draft) "
+					" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
 					);
 
 	Scenario* scenario = dynamic_cast<Scenario*>(_subject );
@@ -65,6 +65,7 @@ QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 	_insertValues.append(scenario->year());
 	_insertValues.append(scenario->synopsis());
 	_insertValues.append(scenario->text());
+	_insertValues.append(scenario->isDraft() ? "1" : "0");
 
 	return insertStatement;
 }
@@ -80,7 +81,8 @@ QString ScenarioMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 					" contacts = ?, "
 					" year = ?, "
 					" synopsis = ?, "
-					" text = ? "
+					" text = ?, "
+					" is_draft = ? "
 					" WHERE id = ? "
 					);
 
@@ -94,6 +96,7 @@ QString ScenarioMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 	_updateValues.append(scenario->year());
 	_updateValues.append(scenario->synopsis());
 	_updateValues.append(scenario->text());
+	_updateValues.append(scenario->isDraft() ? "1" : "0");
 	_updateValues.append(scenario->id().value());
 
 	return updateStatement;
@@ -119,6 +122,7 @@ DomainObject* ScenarioMapper::doLoad(const Identifier& _id, const QSqlRecord& _r
 	QString year = _record.value("year").toString();
 	QString synopsis = _record.value("synopsis").toString();
 	QString text = _record.value("text").toString();
+	bool isDraft = _record.value("is_draft").toInt();
 
 	Scenario* scenario = new Scenario(_id, name, synopsis, text);
 	scenario->setAdditionalInfo(additionalInfo);
@@ -126,6 +130,7 @@ DomainObject* ScenarioMapper::doLoad(const Identifier& _id, const QSqlRecord& _r
 	scenario->setAuthor(author);
 	scenario->setContacts(contacts);
 	scenario->setYear(year);
+	scenario->setIsDraft(isDraft);
 
 	return scenario;
 }

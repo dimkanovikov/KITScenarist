@@ -30,7 +30,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Установить документ для редактирования
 		 */
-		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document);
+		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document, bool _isDraft = false);
 
 		/**
 		 * @brief Установить хронометраж

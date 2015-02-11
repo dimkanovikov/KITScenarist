@@ -155,6 +155,7 @@ private:
 	 * @brief Водяной знак
 	 */
 	QString m_watermark;
+	QString m_watermarkMulti;
 };
 
 #endif // PAGESTEXTEDIT_H

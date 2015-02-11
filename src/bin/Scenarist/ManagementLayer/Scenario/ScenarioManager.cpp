@@ -40,6 +40,7 @@
 
 using ManagementLayer::ScenarioManager;
 using ManagementLayer::ScenarioNavigatorManager;
+using ManagementLayer::ScenarioSceneSynopsisManager;
 using ManagementLayer::ScenarioDataEditManager;
 using ManagementLayer::ScenarioTextEditManager;
 using BusinessLogic::ScenarioDocument;
@@ -59,6 +60,129 @@ namespace {
 	static QString makeToolTip(const QString& _text, const QString& _shortcut) {
 		return QString("%1 (%2)").arg(_text).arg(makeShortcut(_shortcut));
 	}
+
+	/**
+	 * @brief Ключ для хранения атрибута последнего размера сплитера
+	 */
+	const char* SPLITTER_LAST_SIZES = "last_sizes";
+
+	/**
+	 * @brief Ключ для доступа к черновику сценария
+	 */
+	const bool IS_DRAFT = true;
+
+	/**
+	 * @brief Обновить текст сценария для нового имени персонажа
+	 */
+	static void updateScenarioForNewCharacterName(ScenarioDocument* _scenario,
+		const QString _oldName, const QString& _newName) {
+
+		QTextCursor cursor(_scenario->document());
+		while (!cursor.isNull() && !cursor.atEnd()) {
+			cursor = _scenario->document()->find(_oldName, cursor);
+
+			if (!cursor.isNull()) {
+				//
+				// Выделенным должно быть именно имя, а не составная часть другого имени
+				//
+				bool replaceSelection = false;
+
+				//
+				// Если мы в блоке персонажа
+				//
+				if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
+					const QString name = BusinessLogic::CharacterParser::name(cursor.block().text());
+					if (name == cursor.selectedText()) {
+						replaceSelection = true;
+					}
+				}
+				//
+				// Если в блоке участники сцены
+				//
+				else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
+					const QStringList names = BusinessLogic::SceneCharactersParser::characters(cursor.block().text());
+					if (names.contains(cursor.selectedText())) {
+						//
+						// Убедимся, что выделено именно имя, а не часть другого имени
+						//
+						QTextCursor checkCursor(cursor);
+						// ... всё ли в порядке слева
+						bool atLeftAllOk = false;
+						checkCursor.setPosition(cursor.selectionStart());
+						if (checkCursor.atBlockStart()) {
+							atLeftAllOk = true;
+						} else {
+							checkCursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
+							if (checkCursor.selectedText() == " "
+								|| checkCursor.selectedText() == ",") {
+								atLeftAllOk = true;
+							} else {
+								atLeftAllOk = false;
+							}
+						}
+						// ... всё ли в порядке справа
+						bool atRightAllOk = false;
+						checkCursor.setPosition(cursor.selectionEnd());
+						if (checkCursor.atBlockEnd()) {
+							atRightAllOk = true;
+						} else {
+							checkCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+							if (checkCursor.selectedText() == " "
+								|| checkCursor.selectedText() == ",") {
+								atRightAllOk = true;
+							} else {
+								atRightAllOk = false;
+							}
+						}
+						// ... если со всех сторон всё в порядке - заменяем
+						if (atLeftAllOk && atRightAllOk) {
+							replaceSelection = true;
+						}
+					}
+				}
+
+				//
+				// Если выделено имя для замены, меняем его
+				//
+				if (replaceSelection) {
+					cursor.insertText(_newName);
+				}
+			}
+		}
+	}
+
+	static void updateScenarioForNewLocationName(ScenarioDocument* _scenario,
+		const QString& _oldName, const QString& _newName) {
+
+		QTextCursor cursor(_scenario->document());
+		while (!cursor.isNull() && !cursor.atEnd()) {
+			cursor = _scenario->document()->find(_oldName, cursor);
+
+			if (!cursor.isNull()) {
+				//
+				// Выделенным должно быть именно локация, а не составная часть другой локации
+				//
+				bool replaceSelection = false;
+
+				//
+				// Если мы в блоке персонажа
+				//
+				if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
+					const QString location = BusinessLogic::TimeAndPlaceParser::locationName(cursor.block().text());
+					if (location == cursor.selectedText()) {
+						replaceSelection = true;
+					}
+				}
+
+				//
+				// Если выделено имя для замены, меняем его
+				//
+				if (replaceSelection) {
+					cursor.insertText(_newName);
+				}
+			}
+		}
+	}
 }
 
 
@@ -66,12 +190,16 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new QWidget(_parentWidget)),
 	m_mainViewSplitter(new QSplitter(m_view)),
-	m_leftViewSplitter(new QSplitter(m_view)),
+	m_draftViewSplitter(new QSplitter(m_view)),
+	m_noteViewSplitter(new QSplitter(m_view)),
 	m_scenario(new ScenarioDocument(this)),
+	m_scenarioDraft(new ScenarioDocument(this)),
 	m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
+	m_draftNavigatorManager(new ScenarioNavigatorManager(this, m_view, IS_DRAFT)),
 	m_sceneSynopsisManager(new ScenarioSceneSynopsisManager(this, m_view)),
 	m_dataEditManager(new ScenarioDataEditManager(this, m_view)),
-	m_textEditManager(new ScenarioTextEditManager(this, m_view))
+	m_textEditManager(new ScenarioTextEditManager(this, m_view)),
+	m_workModeIsDraft(false)
 {
 	initData();
 	initView();
@@ -105,6 +233,7 @@ void ScenarioManager::loadCurrentProject()
 	// Очистим от предыдущих данных
 	//
 	m_navigatorManager->setNavigationModel(0);
+	m_draftNavigatorManager->setNavigationModel(0);
 	m_dataEditManager->clear();
 	m_textEditManager->setScenarioDocument(0);
 
@@ -112,6 +241,7 @@ void ScenarioManager::loadCurrentProject()
 	// Очистим сценарий
 	//
 	m_scenario->clear();
+	m_scenarioDraft->clear();
 
 	//
 	// Загрузим сценарий
@@ -119,15 +249,23 @@ void ScenarioManager::loadCurrentProject()
 	Domain::Scenario* currentScenario =
 			DataStorageLayer::StorageFacade::scenarioStorage()->current();
 	m_scenario->load(currentScenario);
+	Domain::Scenario* currentScenarioDraft =
+			DataStorageLayer::StorageFacade::scenarioStorage()->current(IS_DRAFT);
+	m_scenarioDraft->load(currentScenarioDraft);
 
 	//
 	// Установим данные для менеджеров
 	//
 	m_navigatorManager->setNavigationModel(m_scenario->model());
+	m_draftNavigatorManager->setNavigationModel(m_scenarioDraft->model());
 	if (currentScenario != 0) {
 		m_dataEditManager->setScenarioName(currentScenario->name());
 		m_dataEditManager->setScenarioSynopsis(currentScenario->synopsis());
 	}
+	//
+	// ... устанавливаем в редактор вначале черновик, чтобы создать в нём первый блок
+	//
+	m_textEditManager->setScenarioDocument(m_scenarioDraft->document());
 	m_textEditManager->setScenarioDocument(m_scenario->document());
 
 	//
@@ -156,12 +294,22 @@ void ScenarioManager::loadCurrentProjectSettings(const QString& _projectPath)
 
 void ScenarioManager::saveCurrentProject()
 {
-	QString scenarioName = m_dataEditManager->scenarioName();
-	QString scenarioSynopsis = m_dataEditManager->scenarioSynopsis();
-	QString scenarioText = m_scenario->save();
+	const QString scenarioName = m_dataEditManager->scenarioName();
+	const QString scenarioSynopsis = m_dataEditManager->scenarioSynopsis();
 
+	//
+	// Сохраняем сценарий
+	//
+	const QString scenarioText = m_scenario->save();
 	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
 		scenarioSynopsis, scenarioText);
+
+	//
+	// Сохраняем черновик
+	//
+	const QString scenarioDraftText = m_scenarioDraft->save();
+	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
+		scenarioSynopsis, scenarioDraftText, IS_DRAFT);
 }
 
 void ScenarioManager::saveCurrentProjectSettings(const QString& _projectPath)
@@ -177,7 +325,24 @@ void ScenarioManager::saveCurrentProjectSettings(const QString& _projectPath)
 
 void ScenarioManager::loadViewState()
 {
-	m_leftViewSplitter->restoreGeometry(
+	m_draftViewSplitter->restoreGeometry(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/scenario/draft/geometry",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+	m_draftViewSplitter->restoreState(
+				QByteArray::fromHex(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/scenario/draft/state",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+					.toUtf8()
+					)
+				);
+
+	m_noteViewSplitter->restoreGeometry(
 				QByteArray::fromHex(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"application/scenario/left/geometry",
@@ -185,7 +350,7 @@ void ScenarioManager::loadViewState()
 					.toUtf8()
 					)
 				);
-	m_leftViewSplitter->restoreState(
+	m_noteViewSplitter->restoreState(
 				QByteArray::fromHex(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"application/scenario/left/state",
@@ -215,11 +380,20 @@ void ScenarioManager::loadViewState()
 void ScenarioManager::saveViewState()
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/left/geometry", m_leftViewSplitter->saveGeometry().toHex(),
+				"application/scenario/draft/geometry", m_draftViewSplitter->saveGeometry().toHex(),
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/left/state", m_leftViewSplitter->saveState().toHex(),
+				"application/scenario/draft/state", m_draftViewSplitter->saveState().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/scenario/left/geometry", m_noteViewSplitter->saveGeometry().toHex(),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				"application/scenario/left/state", m_noteViewSplitter->saveState().toHex(),
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
 
@@ -236,23 +410,27 @@ void ScenarioManager::saveViewState()
 void ScenarioManager::aboutTextEditSettingsUpdated()
 {
 	m_scenario->refresh();
+	m_scenarioDraft->refresh();
 	m_textEditManager->reloadTextEditSettings();
 }
 
 void ScenarioManager::aboutNavigatorSettingsUpdated()
 {
 	m_navigatorManager->reloadNavigatorSettings();
+	m_draftNavigatorManager->reloadNavigatorSettings();
 }
 
 void ScenarioManager::aboutChronometrySettingsUpdated()
 {
 	m_scenario->refresh();
+	m_scenarioDraft->refresh();
 	aboutUpdateDuration(m_textEditManager->cursorPosition());
 }
 
 void ScenarioManager::aboutCountersSettingsUpdated()
 {
 	m_scenario->refresh();
+	m_scenarioDraft->refresh();
 	aboutUpdateCounters();
 }
 
@@ -261,78 +439,8 @@ void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const Q
 	//
 	// Обновить тексты всех сценариев
 	//
-	QTextCursor cursor(m_scenario->document());
-	while (!cursor.isNull() && !cursor.atEnd()) {
-		cursor = m_scenario->document()->find(_oldName, cursor);
-
-		if (!cursor.isNull()) {
-			//
-			// Выделенным должно быть именно имя, а не составная часть другого имени
-			//
-			bool replaceSelection = false;
-
-			//
-			// Если мы в блоке персонажа
-			//
-			if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
-				const QString name = BusinessLogic::CharacterParser::name(cursor.block().text());
-				if (name == cursor.selectedText()) {
-					replaceSelection = true;
-				}
-			}
-			//
-			// Если в блоке участники сцены
-			//
-			else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
-				const QStringList names = BusinessLogic::SceneCharactersParser::characters(cursor.block().text());
-				if (names.contains(cursor.selectedText())) {
-					//
-					// Убедимся, что выделено именно имя, а не часть другого имени
-					//
-					QTextCursor checkCursor(cursor);
-					// ... всё ли в порядке слева
-					bool atLeftAllOk = false;
-					checkCursor.setPosition(cursor.selectionStart());
-					if (checkCursor.atBlockStart()) {
-						atLeftAllOk = true;
-					} else {
-						checkCursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
-						if (checkCursor.selectedText() == " "
-							|| checkCursor.selectedText() == ",") {
-							atLeftAllOk = true;
-						} else {
-							atLeftAllOk = false;
-						}
-					}
-					// ... всё ли в порядке справа
-					bool atRightAllOk = false;
-					checkCursor.setPosition(cursor.selectionEnd());
-					if (checkCursor.atBlockEnd()) {
-						atRightAllOk = true;
-					} else {
-						checkCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
-						if (checkCursor.selectedText() == " "
-							|| checkCursor.selectedText() == ",") {
-							atRightAllOk = true;
-						} else {
-							atRightAllOk = false;
-						}
-					}
-					// ... если со всех сторон всё в порядке - заменяем
-					if (atLeftAllOk && atRightAllOk) {
-						replaceSelection = true;
-					}
-				}
-			}
-
-			//
-			// Если выделено имя для замены, меняем его
-			//
-			if (replaceSelection) {
-				cursor.insertText(_newName);
-			}
-		}
-	}
+	::updateScenarioForNewCharacterName(m_scenario, _oldName, _newName);
+	::updateScenarioForNewCharacterName(m_scenarioDraft, _oldName, _newName);
 }
 
 void ScenarioManager::aboutRefreshCharacters()
@@ -341,6 +449,7 @@ void ScenarioManager::aboutRefreshCharacters()
 	// Найти персонажей во всём тексте
 	//
 	QSet<QString> characters = QSet<QString>::fromList(m_scenario->findCharacters());
+	characters.unite(QSet<QString>::fromList(m_scenarioDraft->findCharacters()));
 
 	//
 	// Определить персонажи, которых нет в тексте
@@ -397,34 +506,8 @@ void ScenarioManager::aboutLocationNameChanged(const QString& _oldName, const QS
 	//
 	// Обновить тексты всех сценариев
 	//
-	QTextCursor cursor(m_scenario->document());
-	while (!cursor.isNull() && !cursor.atEnd()) {
-		cursor = m_scenario->document()->find(_oldName, cursor);
-
-		if (!cursor.isNull()) {
-			//
-			// Выделенным должно быть именно локация, а не составная часть другой локации
-			//
-			bool replaceSelection = false;
-
-			//
-			// Если мы в блоке персонажа
-			//
-			if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
-				const QString location = BusinessLogic::TimeAndPlaceParser::locationName(cursor.block().text());
-				if (location == cursor.selectedText()) {
-					replaceSelection = true;
-				}
-			}
-
-			//
-			// Если выделено имя для замены, меняем его
-			//
-			if (replaceSelection) {
-				cursor.insertText(_newName);
-			}
-		}
-	}
+	::updateScenarioForNewLocationName(m_scenario, _oldName, _newName);
+	::updateScenarioForNewLocationName(m_scenarioDraft, _oldName, _newName);
 }
 
 void ScenarioManager::aboutRefreshLocations()
@@ -433,6 +516,7 @@ void ScenarioManager::aboutRefreshLocations()
 	// Найти локации во всём тексте
 	//
 	QSet<QString> locations = QSet<QString>::fromList(m_scenario->findLocations());
+	locations.unite(QSet<QString>::fromList(m_scenarioDraft->findLocations()));
 
 	//
 	// Определить локации, которых нет в тексте
@@ -495,9 +579,9 @@ void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 	QString duration;
 	if (BusinessLogic::ChronometerFacade::chronometryUsed()) {
 		QString durationToCursor =
-				BusinessLogic::ChronometerFacade::secondsToTime(m_scenario->durationAtPosition(_cursorPosition));
+				BusinessLogic::ChronometerFacade::secondsToTime(workingScenario()->durationAtPosition(_cursorPosition));
 		QString durationToEnd =
-				BusinessLogic::ChronometerFacade::secondsToTime(m_scenario->fullDuration());
+				BusinessLogic::ChronometerFacade::secondsToTime(workingScenario()->fullDuration());
 		duration = QString("%1: <b>%2 | %3</b>").arg(tr("Chron.")).arg(durationToCursor).arg(durationToEnd);
 	}
 
@@ -506,21 +590,21 @@ void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 
 void ScenarioManager::aboutUpdateCounters()
 {
-	m_textEditManager->setCountersInfo(m_scenario->countersInfo());
+	m_textEditManager->setCountersInfo(workingScenario()->countersInfo());
 }
 
 void ScenarioManager::aboutUpdateCurrentSynopsis(int _cursorPosition)
 {
-	QString itemHeader = m_scenario->itemHeaderAtPosition(_cursorPosition);
+	QString itemHeader = workingScenario()->itemHeaderAtPosition(_cursorPosition);
 	m_sceneSynopsisManager->setHeader(itemHeader);
 
-	QString synopsis = m_scenario->itemSynopsisAtPosition(_cursorPosition);
+	QString synopsis = workingScenario()->itemSynopsisAtPosition(_cursorPosition);
 	m_sceneSynopsisManager->setSynopsis(synopsis);
 }
 
 void ScenarioManager::aboutUpdateCurrentSceneSynopsis(const QString& _synopsis)
 {
-	m_scenario->setItemSynopsisAtPosition(m_textEditManager->cursorPosition(), _synopsis);
+	workingScenario()->setItemSynopsisAtPosition(m_textEditManager->cursorPosition(), _synopsis);
 }
 
 void ScenarioManager::aboutBuildSynopsisFromScenes()
@@ -531,37 +615,95 @@ void ScenarioManager::aboutBuildSynopsisFromScenes()
 
 void ScenarioManager::aboutSelectItemInNavigator(int _cursorPosition)
 {
-	QModelIndex index = m_scenario->itemIndexAtPosition(_cursorPosition);
-	m_navigatorManager->setCurrentIndex(index);
+	QModelIndex index = workingScenario()->itemIndexAtPosition(_cursorPosition);
+
+	if (!m_workModeIsDraft) {
+		m_navigatorManager->setCurrentIndex(index);
+	} else {
+		m_draftNavigatorManager->setCurrentIndex(index);
+	}
 }
 
 void ScenarioManager::aboutMoveCursorToItem(const QModelIndex& _index)
 {
-	int position = m_scenario->itemStartPosition(_index);
+	setWorkingMode(sender());
+
+	const int position = workingScenario()->itemStartPosition(_index);
 	m_textEditManager->setCursorPosition(position);
 }
 
 void ScenarioManager::aboutMoveCursorToItem(int _itemPosition)
 {
+	setWorkingMode(sender());
+
 	m_textEditManager->setCursorPosition(_itemPosition);
 }
 
 void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, const QString& _itemHeader, int _itemType)
 {
-	int position = m_scenario->itemEndPosition(_afterItemIndex);
+	setWorkingMode(sender());
+
+	const int position = workingScenario()->itemEndPosition(_afterItemIndex);
 	m_textEditManager->addScenarioItem(position, _itemHeader, _itemType);
 }
 
 void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
 {
-	int from = m_scenario->itemStartPosition(_indexes.first());
-	int to = m_scenario->itemEndPosition(_indexes.last());
+	setWorkingMode(sender());
+
+	const int from = workingScenario()->itemStartPosition(_indexes.first());
+	const int to = workingScenario()->itemEndPosition(_indexes.last());
 	m_textEditManager->removeScenarioText(from, to);
+}
+
+void ScenarioManager::aboutShowHideDraft()
+{
+	//
+	// Показать примечания, если скрыты
+	//
+	if (m_draftViewSplitter->sizes().last() == 0) {
+		if (m_draftViewSplitter->property(SPLITTER_LAST_SIZES).isNull()) {
+			int splitterHeight = m_draftViewSplitter->height();
+			m_draftViewSplitter->setSizes(QList<int>() << splitterHeight * 2/3 << splitterHeight * 1/3);
+		} else {
+			m_draftViewSplitter->setSizes(m_draftViewSplitter->property(SPLITTER_LAST_SIZES).value<QList<int> >());
+		}
+	}
+	//
+	// Скрыть примечания
+	//
+	else {
+		m_draftViewSplitter->setProperty(SPLITTER_LAST_SIZES, QVariant::fromValue<QList<int> >(m_draftViewSplitter->sizes()));
+		m_draftViewSplitter->setSizes(QList<int>() << 1 << 0);
+	}
+}
+
+void ScenarioManager::aboutShowHideNote()
+{
+	//
+	// Показать примечания, если скрыты
+	//
+	if (m_noteViewSplitter->sizes().last() == 0) {
+		if (m_noteViewSplitter->property(SPLITTER_LAST_SIZES).isNull()) {
+			int splitterHeight = m_noteViewSplitter->height();
+			m_noteViewSplitter->setSizes(QList<int>() << splitterHeight * 2/3 << splitterHeight * 1/3);
+		} else {
+			m_noteViewSplitter->setSizes(m_noteViewSplitter->property(SPLITTER_LAST_SIZES).value<QList<int> >());
+		}
+	}
+	//
+	// Скрыть примечания
+	//
+	else {
+		m_noteViewSplitter->setProperty(SPLITTER_LAST_SIZES, QVariant::fromValue<QList<int> >(m_noteViewSplitter->sizes()));
+		m_noteViewSplitter->setSizes(QList<int>() << 1 << 0);
+	}
 }
 
 void ScenarioManager::initData()
 {
 	m_navigatorManager->setNavigationModel(m_scenario->model());
+	m_draftNavigatorManager->setNavigationModel(m_scenarioDraft->model());
 	m_textEditManager->setScenarioDocument(m_scenario->document());
 }
 
@@ -605,13 +747,18 @@ void ScenarioManager::initView()
 	rightLayout->addLayout(topLayout);
 	rightLayout->addWidget(m_viewEditors, 1);
 
-	m_leftViewSplitter->setHandleWidth(1);
-	m_leftViewSplitter->addWidget(m_navigatorManager->view());
-	m_leftViewSplitter->addWidget(m_sceneSynopsisManager->view());
-	m_leftViewSplitter->setOrientation(Qt::Vertical);
+	m_draftViewSplitter->setHandleWidth(1);
+	m_draftViewSplitter->addWidget(m_navigatorManager->view());
+	m_draftViewSplitter->addWidget(m_draftNavigatorManager->view());
+	m_draftViewSplitter->setOrientation(Qt::Vertical);
+
+	m_noteViewSplitter->setHandleWidth(1);
+	m_noteViewSplitter->addWidget(m_draftViewSplitter);
+	m_noteViewSplitter->addWidget(m_sceneSynopsisManager->view());
+	m_noteViewSplitter->setOrientation(Qt::Vertical);
 
 	m_mainViewSplitter->setHandleWidth(1);
-	m_mainViewSplitter->addWidget(m_leftViewSplitter);
+	m_mainViewSplitter->addWidget(m_noteViewSplitter);
 	m_mainViewSplitter->addWidget(rightWidget);
 	m_mainViewSplitter->setStretchFactor(1, 1);
 
@@ -632,10 +779,19 @@ void ScenarioManager::initConnections()
 
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,QString,int)), this, SLOT(aboutAddItem(QModelIndex,QString,int)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
+	connect(m_navigatorManager, SIGNAL(showHideDraft()), this, SLOT(aboutShowHideDraft()));
+	connect(m_navigatorManager, SIGNAL(showHideNote()), this, SLOT(aboutShowHideNote()));
 	connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
 	connect(m_navigatorManager, SIGNAL(sceneChoosed(int)), this, SLOT(aboutMoveCursorToItem(int)));
 	connect(m_navigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
 	connect(m_navigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
+
+	connect(m_draftNavigatorManager, SIGNAL(addItem(QModelIndex,QString,int)), this, SLOT(aboutAddItem(QModelIndex,QString,int)));
+	connect(m_draftNavigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
+	connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
+	connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(int)), this, SLOT(aboutMoveCursorToItem(int)));
+	connect(m_draftNavigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
+	connect(m_draftNavigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
 
 	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SLOT(aboutUpdateCurrentSceneSynopsis(QString)));
 
@@ -662,4 +818,26 @@ void ScenarioManager::initStyleSheet()
 	m_showFullscreen->setProperty("inTopPanel", true);
 	m_showFullscreen->setProperty("topPanelTopBordered", true);
 	m_showFullscreen->setProperty("topPanelRightBordered", true);
+}
+
+void ScenarioManager::setWorkingMode(QObject* _sender)
+{
+	if (ScenarioNavigatorManager* manager = qobject_cast<ScenarioNavigatorManager*>(_sender)) {
+		const bool workingMode = manager == m_draftNavigatorManager;
+
+		if (m_workModeIsDraft != workingMode) {
+			m_workModeIsDraft = workingMode;
+
+			if (!m_workModeIsDraft) {
+				m_textEditManager->setScenarioDocument(m_scenario->document());
+			} else {
+				m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
+			}
+		}
+	}
+}
+
+BusinessLogic::ScenarioDocument* ScenarioManager::workingScenario() const
+{
+	return m_workModeIsDraft ? m_scenarioDraft : m_scenario;
 }

@@ -31,10 +31,12 @@ QWidget* ScenarioTextEditManager::view() const
 	return m_view;
 }
 
-void ScenarioTextEditManager::setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document)
+void ScenarioTextEditManager::setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document, bool _isDraft)
 {
-	m_view->setScenarioDocument(_document);
-	reloadTextEditSettings();
+	if (m_view->scenarioDocument() != _document) {
+		m_view->setScenarioDocument(_document, _isDraft);
+		reloadTextEditSettings();
+	}
 }
 
 void ScenarioTextEditManager::setDuration(const QString& _duration)

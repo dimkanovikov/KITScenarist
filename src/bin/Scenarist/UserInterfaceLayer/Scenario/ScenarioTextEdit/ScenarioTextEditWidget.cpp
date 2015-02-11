@@ -85,11 +85,17 @@ QWidget* ScenarioTextEditWidget::toolbar() const
 	return m_toolbar;
 }
 
-void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document)
+BusinessLogic::ScenarioTextDocument* ScenarioTextEditWidget::scenarioDocument() const
+{
+	return qobject_cast<BusinessLogic::ScenarioTextDocument*>(m_editor->document());
+}
+
+void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document, bool _isDraft)
 {
 	removeEditorConnections();
 
 	m_editor->setScenarioDocument(_document);
+	m_editor->setWatermark(_isDraft ? tr("DRAFT") : QString::null);
 	if (_document != 0) {
 		m_lastTextMd5Hash = textMd5Hash(_document->toPlainText());
 	}
@@ -283,12 +289,12 @@ void ScenarioTextEditWidget::updateStylesElements()
 
 void ScenarioTextEditWidget::aboutUndo()
 {
-	m_editor->undo();
+	m_editor->document()->undo();
 }
 
 void ScenarioTextEditWidget::aboutRedo()
 {
-	m_editor->redo();
+	m_editor->document()->redo();
 }
 
 void ScenarioTextEditWidget::aboutShowSearch()

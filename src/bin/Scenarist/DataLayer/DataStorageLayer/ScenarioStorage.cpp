@@ -17,23 +17,26 @@ ScenariosTable* ScenarioStorage::all()
 	return m_all;
 }
 
-Scenario* ScenarioStorage::current()
+Scenario* ScenarioStorage::current(bool _isDraft)
 {
-	//
-	// TODO: fix to real find current scenario
-	//
-
 	Scenario* currentScenario = 0;
 	if (all()->count() > 0) {
-		currentScenario = dynamic_cast<Scenario*>(all()->toList().first());
+		foreach (DomainObject* domainObject, all()->toList()) {
+			if (Scenario* scenario = dynamic_cast<Scenario*>(domainObject)) {
+				if (scenario->isDraft() == _isDraft) {
+					currentScenario = scenario;
+					break;
+				}
+			}
+		}
 	}
 	return currentScenario;
 }
 
 Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _synopsis,
-	const QString& _text)
+	const QString& _text, bool _isDraft)
 {
-	Scenario* scenario = current();
+	Scenario* scenario = current(_isDraft);
 
 	//
 	// Если сценарий сохраняется в первый раз
@@ -43,6 +46,7 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 		// ... создаём сценарий
 		//
 		scenario = new Scenario(Identifier(), _name, _synopsis, _text);
+		scenario->setIsDraft(_isDraft);
 
 		//
 		// ... сохраним сценарий в базе данных

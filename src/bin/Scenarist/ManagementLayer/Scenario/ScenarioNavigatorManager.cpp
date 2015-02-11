@@ -19,12 +19,13 @@ using UserInterface::ScenarioNavigator;
 using UserInterface::ScenarioItemDialog;
 
 
-ScenarioNavigatorManager::ScenarioNavigatorManager(QObject *_parent, QWidget* _parentWidget) :
+ScenarioNavigatorManager::ScenarioNavigatorManager(QObject *_parent, QWidget* _parentWidget, bool _isDraft) :
 	QObject(_parent),
 	m_scenarioModel(0),
 	m_scenarioModelProxy(new ScenarioModelFiltered(this)),
 	m_navigator(new ScenarioNavigator(_parentWidget)),
-	m_addItemDialog(new ScenarioItemDialog(m_navigator))
+	m_addItemDialog(new ScenarioItemDialog(m_navigator)),
+	m_isDraft(_isDraft)
 {
 	initView();
 	initConnections();
@@ -127,6 +128,7 @@ void ScenarioNavigatorManager::aboutModelUpdated()
 
 void ScenarioNavigatorManager::initView()
 {
+	m_navigator->setIsDraft(m_isDraft);
 }
 
 void ScenarioNavigatorManager::initConnections()
@@ -135,6 +137,8 @@ void ScenarioNavigatorManager::initConnections()
 
 	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)));
 	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
+	connect(m_navigator, SIGNAL(showHideDraft()), this, SIGNAL(showHideDraft()));
+	connect(m_navigator, SIGNAL(showHideNote()), this, SIGNAL(showHideNote()));
 	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutSceneChoosed(QModelIndex)));
 	connect(m_navigator, SIGNAL(undoPressed()), this, SIGNAL(undoPressed()));
 	connect(m_navigator, SIGNAL(redoPressed()), this, SIGNAL(redoPressed()));

@@ -17,14 +17,17 @@ using UserInterface::ScenarioNavigatorProxyStyle;
 
 ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
 	QWidget(parent),
+	m_draftTitle(new QLabel(this)),
 	m_scenesCountTitle(new QLabel(this)),
 	m_scenesCount(new QLabel(this)),
 	m_addItem(new QToolButton(this)),
 	m_removeItem(new QToolButton(this)),
+	m_middleTitle(new QLabel(this)),
+	m_showDraft(new QToolButton(this)),
+	m_showNote(new QToolButton(this)),
 	m_endTitle(new QLabel(this)),
 	m_navigationTree(new QTreeView(this)),
-	m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this)),
-	m_navigationTreeDelegateCopy(new ScenarioNavigatorItemDelegate(this))
+	m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this))
 {
 	initView();
 	initConnections();
@@ -77,6 +80,16 @@ void ScenarioNavigator::resetView()
 
 	m_navigationTreeDelegate = new ScenarioNavigatorItemDelegate(this);
 	m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
+}
+
+void ScenarioNavigator::setIsDraft(bool _isDraft)
+{
+	m_draftTitle->setVisible(_isDraft);
+	m_scenesCountTitle->setVisible(!_isDraft);
+	m_scenesCount->setVisible(!_isDraft);
+	m_middleTitle->setVisible(!_isDraft);
+	m_showDraft->setVisible(!_isDraft);
+	m_showNote->setVisible(!_isDraft);
 }
 
 bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
@@ -134,6 +147,8 @@ void ScenarioNavigator::aboutRemoveItem()
 
 void ScenarioNavigator::initView()
 {
+	m_draftTitle->setText(tr("Draft:"));
+
 	m_scenesCountTitle->setText(tr("Scenes:"));
 	m_scenesCount->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_scenesCount->setToolTip(tr("Scenes Count"));
@@ -143,6 +158,14 @@ void ScenarioNavigator::initView()
 
 	m_removeItem->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
 	m_removeItem->setToolTip(tr("Remove Selected Scenario Item"));
+
+	m_middleTitle->setFixedWidth(1);
+
+	m_showDraft->setIcon(QIcon(":/Graphics/Icons/Editing/draft.png"));
+	m_showDraft->setToolTip(tr("Show/hide draft"));
+
+	m_showNote->setIcon(QIcon(":/Graphics/Icons/Editing/note.png"));
+	m_showNote->setToolTip(tr("Show/hide scene note"));
 
 	m_endTitle->setFixedWidth(1);
 
@@ -160,10 +183,14 @@ void ScenarioNavigator::initView()
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
+	topLayout->addWidget(m_draftTitle);
 	topLayout->addWidget(m_scenesCountTitle);
 	topLayout->addWidget(m_scenesCount);
 	topLayout->addWidget(m_addItem);
 	topLayout->addWidget(m_removeItem);
+	topLayout->addWidget(m_middleTitle);
+	topLayout->addWidget(m_showDraft);
+	topLayout->addWidget(m_showNote);
 	topLayout->addWidget(m_endTitle);
 
 	QVBoxLayout* layout = new QVBoxLayout;
@@ -179,11 +206,16 @@ void ScenarioNavigator::initConnections()
 {
 	connect(m_addItem, SIGNAL(clicked()), this, SLOT(aboutAddItem()));
 	connect(m_removeItem, SIGNAL(clicked()), this, SLOT(aboutRemoveItem()));
+	connect(m_showDraft, SIGNAL(clicked()), this, SIGNAL(showHideDraft()));
+	connect(m_showNote, SIGNAL(clicked()), this, SIGNAL(showHideNote()));
 	connect(m_navigationTree, SIGNAL(clicked(QModelIndex)), this, SIGNAL(sceneChoosed(QModelIndex)));
 }
 
 void ScenarioNavigator::initStyleSheet()
 {
+	m_draftTitle->setProperty("inTopPanel", true);
+	m_draftTitle->setProperty("topPanelTopBordered", true);
+
 	m_scenesCountTitle->setProperty("inTopPanel", true);
 	m_scenesCountTitle->setProperty("topPanelTopBordered", true);
 
@@ -192,6 +224,13 @@ void ScenarioNavigator::initStyleSheet()
 
 	m_addItem->setProperty("inTopPanel", true);
 	m_removeItem->setProperty("inTopPanel", true);
+
+	m_middleTitle->setProperty("inTopPanel", true);
+	m_middleTitle->setProperty("topPanelTopBordered", true);
+	m_middleTitle->setProperty("topPanelRightBordered", true);
+
+	m_showDraft->setProperty("inTopPanel", true);
+	m_showNote->setProperty("inTopPanel", true);
 
 	m_endTitle->setProperty("inTopPanel", true);
 	m_endTitle->setProperty("topPanelTopBordered", true);

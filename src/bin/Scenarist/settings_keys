@@ -78,6 +78,8 @@ application/project-files - путь к папке файлов проекта (
 application/export-files - путь к папке экспортируемых файлов
 application/geometry - состояние главного окна и его вкладок
 application/use-dark-theme - использовать тёмную тему
+application/scenario/draft/geometry - разделитель навигатора и окна черновика
+application/scenario/draft/state
 application/scenario/left/geometry - разделитель навигатора и окна синопсиса
 application/scenario/left/state
 application/scenario/geometry - разделитель навигатора и основных редакторов

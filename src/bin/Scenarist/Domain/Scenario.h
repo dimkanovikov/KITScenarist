@@ -81,6 +81,14 @@ namespace Domain
 		void setText(const QString& _text);
 		/** @} */
 
+		/**
+		 * @brief Является ли сценарий черновиком
+		 */
+		/** @{ */
+		bool isDraft() const;
+		void setIsDraft(bool _isDraft);
+		/** @} */
+
 	private:
 		/**
 		 * @brief Название
@@ -121,6 +129,11 @@ namespace Domain
 		 * @brief Текст сценария
 		 */
 		QString m_text;
+
+		/**
+		 * @brief Является ли сценарий черновиком
+		 */
+		bool m_isDraft;
 	};
 
 	// ****

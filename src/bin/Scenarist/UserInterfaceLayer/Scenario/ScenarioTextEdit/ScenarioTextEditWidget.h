@@ -35,9 +35,14 @@ namespace UserInterface
 		QWidget* toolbar() const;
 
 		/**
+		 * @brief Получить текущий редактируемый документ
+		 */
+		BusinessLogic::ScenarioTextDocument* scenarioDocument() const;
+
+		/**
 		 * @brief Установить документ для редактирования
 		 */
-		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document);
+		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document, bool _isDraft = false);
 
 		/**
 		 * @brief Установить хронометраж

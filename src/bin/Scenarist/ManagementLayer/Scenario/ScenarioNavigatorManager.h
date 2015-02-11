@@ -24,8 +24,9 @@ namespace ManagementLayer
 	class ScenarioNavigatorManager : public QObject
 	{
 		Q_OBJECT
+
 	public:
-		explicit ScenarioNavigatorManager(QObject* _parent, QWidget* _parentWidget);
+		explicit ScenarioNavigatorManager(QObject* _parent, QWidget* _parentWidget, bool _isDraft = false);
 
 		QWidget* view() const;
 
@@ -54,6 +55,16 @@ namespace ManagementLayer
 		 * @brief Запрос на удаление элемента
 		 */
 		void removeItems(const QModelIndexList& _indexes);
+
+		/**
+		 * @brief Показать/скрыть заметки к сцене
+		 */
+		void showHideDraft();
+
+		/**
+		 * @brief Показать/скрыть заметки к сцене
+		 */
+		void showHideNote();
 
 		/**
 		 * @brief Активирована сцена
@@ -112,7 +123,6 @@ namespace ManagementLayer
 		/** @} */
 
 	private:
-
 		/**
 		 * @brief Модель сценария
 		 */
@@ -132,6 +142,11 @@ namespace ManagementLayer
 		 * @brief Диалог добавления элемента
 		 */
 		UserInterface::ScenarioItemDialog* m_addItemDialog;
+
+		/**
+		 * @brief Является ли навигатором по черновику
+		 */
+		bool m_isDraft;
 	};
 }
 

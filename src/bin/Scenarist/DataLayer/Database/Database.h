@@ -128,12 +128,21 @@ namespace DatabaseLayer
 		static void updateDatabaseTo_0_2_8(QSqlDatabase& _database);
 
 		/**
-		 * @brief Обновить базу данных до версии
+		 * @brief Обновить базу данных до версии 0.3.3
 		 *
 		 * - добавляется таблица для состояний персонажа (ГЗК и т.п.)
 		 * - добавляются поля для расширенной информации по сценарию
 		 */
 		static void updateDatabaseTo_0_3_3(QSqlDatabase& _database);
+
+		/**
+		 * @brief Обновить базу данных до версии 0.4.5
+		 *
+		 * - добавление поля is_draft для сценария
+		 * - добавление самого черновика для проекта сценария
+		 */
+		static void updateDatabaseTo_0_4_5(QSqlDatabase& _database);
+
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )

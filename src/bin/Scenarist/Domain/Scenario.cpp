@@ -8,7 +8,8 @@ Scenario::Scenario(const Identifier& _id, const QString& _name,
 	DomainObject(_id),
 	m_name(_name),
 	m_synopsis(_synopsis),
-	m_text(_text)
+	m_text(_text),
+	m_isDraft(false)
 {
 }
 
@@ -105,6 +106,18 @@ void Scenario::setText(const QString& _text)
 {
 	if (m_text != _text) {
 		m_text = _text;
+	}
+}
+
+bool Scenario::isDraft() const
+{
+	return m_isDraft;
+}
+
+void Scenario::setIsDraft(bool _isDraft)
+{
+	if (m_isDraft != _isDraft) {
+		m_isDraft = _isDraft;
 	}
 }
 

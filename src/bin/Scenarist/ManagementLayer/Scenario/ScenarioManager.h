@@ -186,6 +186,16 @@ namespace ManagementLayer
 		 */
 		void aboutRemoveItems(const QModelIndexList& _itemIndex);
 
+		/**
+		 * @brief Показать/скрыть заметки к сцене
+		 */
+		void aboutShowHideDraft();
+
+		/**
+		 * @brief Показать/скрыть заметки к сцене
+		 */
+		void aboutShowHideNote();
+
 	private:
 		/**
 		 * @brief Загрузить данные
@@ -207,6 +217,16 @@ namespace ManagementLayer
 		 */
 		void initStyleSheet();
 
+		/**
+		 * @brief Изменить текущий режим работы в зависимости от испустившего сигнал навигатора
+		 */
+		void setWorkingMode(QObject* _sender);
+
+		/**
+		 * @brief Получить документ сценария в соответсвии с режимом работы
+		 */
+		BusinessLogic::ScenarioDocument* workingScenario() const;
+
 	private:
 		/**
 		 * @brief Представление сценария
@@ -218,7 +238,8 @@ namespace ManagementLayer
 		 */
 		/** @{ */
 		QSplitter* m_mainViewSplitter;
-		QSplitter* m_leftViewSplitter;
+		QSplitter* m_draftViewSplitter;
+		QSplitter* m_noteViewSplitter;
 		/** @} */
 
 		/**
@@ -247,9 +268,19 @@ namespace ManagementLayer
 		BusinessLogic::ScenarioDocument* m_scenario;
 
 		/**
+		 * @brief Документ черновика сценария
+		 */
+		BusinessLogic::ScenarioDocument* m_scenarioDraft;
+
+		/**
 		 * @brief Управляющий навигацией по сценарию
 		 */
 		ScenarioNavigatorManager* m_navigatorManager;
+
+		/**
+		 * @brief Управляющий навигацией по черновику сценария
+		 */
+		ScenarioNavigatorManager* m_draftNavigatorManager;
 
 		/**
 		 * @brief Управляющий синопсисом сцены
@@ -265,6 +296,11 @@ namespace ManagementLayer
 		 * @brief Управляющий редактированием сценария
 		 */
 		ScenarioTextEditManager* m_textEditManager;
+
+		/**
+		 * @brief Текущий рабочий режим
+		 */
+		bool m_workModeIsDraft;
 	};
 }
 

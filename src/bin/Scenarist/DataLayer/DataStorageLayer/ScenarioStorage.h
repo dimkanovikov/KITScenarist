@@ -26,13 +26,14 @@ namespace DataStorageLayer
 		/**
 		 * @brief Получить текущую версию сценария
 		 */
-		Scenario* current();
+		Scenario* current(bool _isDraft = false);
 
 		/**
 		 * @brief Сохранить текст сценария
 		 * @param Текст сценария в формате xml
 		 */
-		Scenario* storeScenario(const QString& _name, const QString& _synopsis, const QString& _text);
+		Scenario* storeScenario(const QString& _name, const QString& _synopsis,
+			const QString& _text, bool _isDraft = false);
 
 		/**
 		 * @brief Очистить хранилище
