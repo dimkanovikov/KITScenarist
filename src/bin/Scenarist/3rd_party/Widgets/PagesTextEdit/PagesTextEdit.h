@@ -52,6 +52,11 @@ public slots:
 	 */
 	void setPageNumbersAlignment(Qt::Alignment _align);
 
+	/**
+	 * @brief Установить водяной знак
+	 */
+	void setWatermark(const QString& _watermark);
+
 protected:
 	/**
 	 * @brief Переопределяется для корректировки документа и прорисовки оформления страниц
@@ -88,6 +93,11 @@ private:
 	 * @brief Нарисовать номер страницы с заданными парамтерами расположения
 	 */
 	void paintPageNumber(QPainter* _painter, const QRectF& _rect, bool _isHeader, int _number);
+
+	/**
+	 * @brief Нарисовать водяной знак
+	 */
+	void paintWatermark();
 
 private slots:
 	/**
@@ -140,6 +150,11 @@ private:
 	 * @brief Метрика страницы редактора
 	 */
 	PageMetrics m_pageMetrics;
+
+	/**
+	 * @brief Водяной знак
+	 */
+	QString m_watermark;
 };
 
 #endif // PAGESTEXTEDIT_H

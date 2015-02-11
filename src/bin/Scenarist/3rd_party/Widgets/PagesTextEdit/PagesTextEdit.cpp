@@ -2,6 +2,7 @@
 
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
+#include <QRegularExpression>
 #include <QScrollBar>
 #include <QTextFrame>
 
@@ -101,6 +102,18 @@ void PagesTextEdit::setPageNumbersAlignment(Qt::Alignment _align)
 	}
 }
 
+void PagesTextEdit::setWatermark(const QString& _watermark)
+{
+	if (m_watermark != _watermark) {
+		m_watermark = _watermark;
+
+		//
+		// Перерисуем себя
+		//
+		repaint();
+	}
+}
+
 void PagesTextEdit::paintEvent(QPaintEvent* _event)
 {
 	updateVerticalScrollRange();
@@ -108,6 +121,8 @@ void PagesTextEdit::paintEvent(QPaintEvent* _event)
 	paintPagesView();
 
 	paintPageNumbers();
+
+	paintWatermark();
 
 	QTextEdit::paintEvent(_event);
 }
@@ -384,6 +399,39 @@ void PagesTextEdit::paintPageNumber(QPainter* _painter, const QRectF& _rect, boo
 			_painter->drawText(_rect, Qt::AlignVCenter | (m_pageNumbersAlignment ^ Qt::AlignBottom),
 				QString::number(_number));
 		}
+	}
+}
+
+void PagesTextEdit::paintWatermark()
+{
+	//
+	// Определим цвет водяного знака
+	//
+//	QColor watermarkColor(viewport()->palette().background().color());
+//	if (viewport()->styleSheet().contains("background-color")) {
+//		const QString colorName = viewport()->styleSheet().remove(QRegularExpression("(.*)background-color[:]")).remove(QRegularExpression("[;](.*)")).simplified();
+//		watermarkColor = QColor(colorName);
+//	}
+//	if (watermarkColor != watermarkColor.lighter(200)) {
+//		watermarkColor = watermarkColor.lighter(200);
+//	} else {
+//		watermarkColor = watermarkColor.darker(130);
+//	}
+//	qDebug() << watermarkColor;
+
+
+
+	if (!m_watermark.isEmpty()) {
+		QColor watermarkColor = QColor("#C9C5C2");
+		watermarkColor.setAlpha(100);
+
+		//
+		// Рисуем водяные знаки
+		//
+		QPainter painter(viewport());
+		painter.setFont(QFont("Sans", 58, QFont::Black));
+		painter.setPen(watermarkColor);
+		painter.drawText(viewport()->rect(), Qt::AlignCenter, m_watermark);
 	}
 }
 
