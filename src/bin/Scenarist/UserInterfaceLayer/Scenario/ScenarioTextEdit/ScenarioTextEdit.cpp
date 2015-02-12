@@ -407,7 +407,7 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 		m_document->insertFromMime(cursor.position(), _source->data(ScenarioDocument::MIME_TYPE));
 	}
 	//
-	// Если простой текст, то вставляем его, как непечатаемый текст
+	// Если простой текст, то вставляем его, как описание действия
 	//
 	else if (_source->hasText()) {
 		QString textToInsert = _source->text();

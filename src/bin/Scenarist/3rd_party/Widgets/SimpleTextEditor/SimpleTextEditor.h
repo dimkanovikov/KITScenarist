@@ -17,10 +17,10 @@ public:
 	explicit SimpleTextEditor(QWidget *parent = 0);
 
 protected:
-    /**
-     * @brief Переопределяем для обработки жестов
-     */
-    bool event(QEvent* _event);
+	/**
+	 * @brief Переопределяем для обработки жестов
+	 */
+	bool event(QEvent* _event);
 
 	/**
 	 * @brief Переопределяется для добавления пунктов форматирования текста
@@ -32,10 +32,15 @@ protected:
 	 */
 	void wheelEvent(QWheelEvent* _event);
 
-    /**
-     * @brief Обрабатываем жест увеличения масштаба
-     */
-    void gestureEvent(QGestureEvent* _event);
+	/**
+	 * @brief Обрабатываем жест увеличения масштаба
+	 */
+	void gestureEvent(QGestureEvent* _event);
+
+	/**
+	 * @brief Вставляется только простой текст
+	 */
+	void insertFromMimeData(const QMimeData* _source);
 
 private slots:
 	void textBold();
@@ -60,10 +65,10 @@ private:
 
 	int m_zoomRange;
 
-    /**
-     * @brief Инерционный тормоз масштабирования при помощи жестов
-     */
-    int m_gestureZoomInertionBreak;
+	/**
+	 * @brief Инерционный тормоз масштабирования при помощи жестов
+	 */
+	int m_gestureZoomInertionBreak;
 
 	/**
 	 * @brief Синхронизация масштабирования всех редакторов данного типа

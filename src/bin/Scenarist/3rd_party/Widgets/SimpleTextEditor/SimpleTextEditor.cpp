@@ -8,18 +8,19 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 #include <QMenu>
+#include <QMimeData>
 #include <QContextMenuEvent>
 #include <QSettings>
 
 
 SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
 	QTextEdit(parent),
-    m_zoomRange(0),
-    m_gestureZoomInertionBreak(0)
+	m_zoomRange(0),
+	m_gestureZoomInertionBreak(0)
 {
 	setTabChangesFocus(true);
 
-    grabGesture(Qt::PinchGesture);
+	grabGesture(Qt::PinchGesture);
 
 	setupMenu();
 
@@ -34,19 +35,19 @@ SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
 	// Обновить масштаб
 	//
 	QSettings settings;
-    setZoomRange(settings.value("simple-editor/zoom-range", 0).toInt());
+	setZoomRange(settings.value("simple-editor/zoom-range", 0).toInt());
 }
 
 bool SimpleTextEditor::event(QEvent *_event)
 {
-    bool result = true;
-    if (_event->type() == QEvent::Gesture) {
-        gestureEvent(static_cast<QGestureEvent*>(_event));
-    } else {
-        result = QTextEdit::event(_event);
-    }
+	bool result = true;
+	if (_event->type() == QEvent::Gesture) {
+		gestureEvent(static_cast<QGestureEvent*>(_event));
+	} else {
+		result = QTextEdit::event(_event);
+	}
 
-    return result;
+	return result;
 }
 
 void SimpleTextEditor::setZoomRange(int _zoomRange)
@@ -119,44 +120,54 @@ void SimpleTextEditor::wheelEvent(QWheelEvent* _event)
 		}
 	} else {
 		QTextEdit::wheelEvent(_event);
-    }
+	}
 }
 
 void SimpleTextEditor::gestureEvent(QGestureEvent *_event)
 {
-    if (QGesture* gesture = _event->gesture(Qt::PinchGesture)) {
-        if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
-            //
-            // При масштабировании за счёт жестов приходится немного притормаживать
-            // т.к. события приходят слишком часто и при обработке каждого события
-            // пользователю просто невозможно корректно настроить масштаб
-            //
+	if (QGesture* gesture = _event->gesture(Qt::PinchGesture)) {
+		if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
+			//
+			// При масштабировании за счёт жестов приходится немного притормаживать
+			// т.к. события приходят слишком часто и при обработке каждого события
+			// пользователю просто невозможно корректно настроить масштаб
+			//
 
-            int zoomRange = m_zoomRange;
-            if (pinch->scaleFactor() > 1) {
-                if (m_gestureZoomInertionBreak < 0) {
-                    m_gestureZoomInertionBreak = 0;
-                } else if (m_gestureZoomInertionBreak >= 8) {
-                    m_gestureZoomInertionBreak = 0;
-                    ++zoomRange;
-                } else {
-                    ++m_gestureZoomInertionBreak;
-                }
-            } else if (pinch->scaleFactor() < 1) {
-                if (m_gestureZoomInertionBreak > 0) {
-                    m_gestureZoomInertionBreak = 0;
-                } else if (m_gestureZoomInertionBreak <= -8) {
-                    m_gestureZoomInertionBreak = 0;
-                    --zoomRange;
-                } else {
-                    --m_gestureZoomInertionBreak;
-                }
-            }
-            setZoomRange(zoomRange);
+			int zoomRange = m_zoomRange;
+			if (pinch->scaleFactor() > 1) {
+				if (m_gestureZoomInertionBreak < 0) {
+					m_gestureZoomInertionBreak = 0;
+				} else if (m_gestureZoomInertionBreak >= 8) {
+					m_gestureZoomInertionBreak = 0;
+					++zoomRange;
+				} else {
+					++m_gestureZoomInertionBreak;
+				}
+			} else if (pinch->scaleFactor() < 1) {
+				if (m_gestureZoomInertionBreak > 0) {
+					m_gestureZoomInertionBreak = 0;
+				} else if (m_gestureZoomInertionBreak <= -8) {
+					m_gestureZoomInertionBreak = 0;
+					--zoomRange;
+				} else {
+					--m_gestureZoomInertionBreak;
+				}
+			}
+			setZoomRange(zoomRange);
 
-            _event->accept();
-        }
-    }
+			_event->accept();
+		}
+	}
+}
+
+void SimpleTextEditor::insertFromMimeData(const QMimeData* _source)
+{
+	//
+	// Если простой текст, то вставляем его, как описание действия
+	//
+	if (_source->hasText()) {
+		textCursor().insertText(_source->text());
+	}
 }
 
 void SimpleTextEditor::textBold()
