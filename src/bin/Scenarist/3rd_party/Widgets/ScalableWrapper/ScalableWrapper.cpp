@@ -15,7 +15,7 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	m_scene(new QGraphicsScene),
 	m_editor(_editor),
 	m_zoomRange(1),
-	m_gestureZoomInertionBreak(0)
+    m_gestureZoomInertionBreak(0)
 {
 	//
 	// Отслеживаем жесты
@@ -163,9 +163,9 @@ void ScalableWrapper::paintEvent(QPaintEvent* _event)
 void ScalableWrapper::wheelEvent(QWheelEvent* _event)
 {
 #ifdef Q_OS_MAC
-	const qreal ANGLE_DIVIDER = 2.;
+    const qreal ANGLE_DIVIDER = 2.;
 #else
-	const qreal ANGLE_DIVIDER = 120.;
+    const qreal ANGLE_DIVIDER = 120.;
 #endif
 	const qreal ZOOM_COEFFICIENT_DIVIDER = 10.;
 
@@ -185,26 +185,10 @@ void ScalableWrapper::wheelEvent(QWheelEvent* _event)
 		}
 	}
 	//
-	// В противном случае эмулируем прокрутку редактора
+    // В противном случае прокручиваем редактор
 	//
 	else {
-		switch (_event->orientation()) {
-			case Qt::Horizontal: {
-				const int scrollDelta = _event->angleDelta().x() / ANGLE_DIVIDER;
-				horizontalScrollBar()->setValue(
-							horizontalScrollBar()->value()
-							- scrollDelta * horizontalScrollBar()->singleStep());
-				break;
-			}
-
-			case Qt::Vertical: {
-				const int scrollDelta = _event->angleDelta().y() / ANGLE_DIVIDER;
-				verticalScrollBar()->setValue(
-							verticalScrollBar()->value()
-							- scrollDelta * verticalScrollBar()->singleStep());
-				break;
-			}
-		}
+        QGraphicsView::wheelEvent(_event);
 	}
 }
 

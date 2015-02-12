@@ -110,7 +110,7 @@ private:
 	/**
 	 * @brief Инерционный тормоз масштабирования при помощи жестов
 	 */
-	int m_gestureZoomInertionBreak;
+    int m_gestureZoomInertionBreak;
 
 	/**
 	 * @brief Вспомогательный элемент, посредством которого настраивается размер полос прокрутки
