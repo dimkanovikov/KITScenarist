@@ -1,6 +1,8 @@
 #ifndef APPLICATIONMANAGER_H
 #define APPLICATIONMANAGER_H
 
+#include <3rd_party/Helpers/BackupHelper.h>
+
 #include <QObject>
 #include <QTimer>
 
@@ -229,6 +231,11 @@ namespace ManagementLayer
 		 * @brief Таймер автосохранения
 		 */
 		QTimer m_autosaveTimer;
+
+		/**
+		 * @brief Помощник резервного копирования
+		 */
+		BackupHelper m_backupHelper;
 	};
 }
 

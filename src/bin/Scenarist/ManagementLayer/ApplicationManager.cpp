@@ -307,6 +307,11 @@ void ApplicationManager::aboutSave()
 		// Изменим статус окна на сохранение изменений
 		//
 		::updateWindowModified(m_view, false);
+
+		//
+		// Если необходимо создадим резервную копию закрываемого файла
+		//
+		m_backupHelper.saveBackup(DatabaseLayer::Database::currentFile());
 	}
 }
 
@@ -841,6 +846,21 @@ void ApplicationManager::reloadApplicationSettings()
 		connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(aboutSave()));
 		m_autosaveTimer.start(autosaveInterval * 60 * 1000); // Переводим минуты в миллисекунды
 	}
+
+	//
+	// Создание резервных копий
+	//
+	bool saveBackups =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/save-backups",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	const QString saveBackupsFolder =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/save-backups-folder",
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+	m_backupHelper.setIsActive(saveBackups);
+	m_backupHelper.setBackupDir(saveBackupsFolder);
 }
 
 void ApplicationManager::updateWindowTitle()

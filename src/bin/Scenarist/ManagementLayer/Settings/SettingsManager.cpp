@@ -137,6 +137,16 @@ void SettingsManager::applicationAutosaveIntervalChanged(int _value)
 	storeValue("application/autosave-interval", _value);
 }
 
+void SettingsManager::applicationSaveBackupsChanged(bool _value)
+{
+	storeValue("application/save-backups", _value);
+}
+
+void SettingsManager::applicationSaveBackupsFolderChanged(const QString& _value)
+{
+	storeValue("application/save-backups-folder", _value);
+}
+
 void SettingsManager::scenarioEditShowScenesNumbersChanged(bool _value)
 {
 	storeValue("scenario-editor/show-scenes-numbers", _value);
@@ -487,6 +497,17 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_view->setApplicationSaveBackups(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/save-backups",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setApplicationSaveBackupsFolder(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/save-backups-folder",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				);
 
 	//
 	// Настройки текстового редактора
@@ -760,6 +781,8 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SLOT(applicationUseDarkThemeChanged(bool)));
 	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SLOT(applicationAutosaveChanged(bool)));
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SLOT(applicationAutosaveIntervalChanged(int)));
+	connect(m_view, SIGNAL(applicationSaveBackupsChanged(bool)), this, SLOT(applicationSaveBackupsChanged(bool)));
+	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SLOT(applicationSaveBackupsFolderChanged(QString)));
 
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
@@ -812,6 +835,8 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(applicationSettingsUpdated()));
 	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SIGNAL(applicationSettingsUpdated()));
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SIGNAL(applicationSettingsUpdated()));
+	connect(m_view, SIGNAL(applicationSaveBackupsChanged(bool)), this, SIGNAL(applicationSettingsUpdated()));
+	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SIGNAL(applicationSettingsUpdated()));
 
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), SIGNAL(scenarioEditSettingsUpdated()));

@@ -49,6 +49,8 @@ namespace UserInterface
 		void setApplicationUseDarkTheme(bool _value);
 		void setApplicationAutosave(bool);
 		void setApplicationAutosaveInterval(int);
+		void setApplicationSaveBackups(bool _save);
+		void setApplicationSaveBackupsFolder(const QString& _folder);
 
 		void setScenarioEditShowScenesNumbers(bool _value);
 		void setScenarioEditPageView(bool _value);
@@ -97,6 +99,8 @@ namespace UserInterface
 		void applicationUseDarkThemeChanged(bool);
 		void applicationAutosaveChanged(bool);
 		void applicationAutosaveIntervalChanged(int);
+		void applicationSaveBackupsChanged(bool);
+		void applicationSaveBackupsFolderChanged(const QString&);
 
 		void scenarioEditShowScenesNumbersChanged(bool);
 		void scenarioEditPageViewChanged(bool);
@@ -159,6 +163,11 @@ namespace UserInterface
 		 * @brief Сменилась выбранная цветовая схема
 		 */
 		void aboutColorThemeChanged();
+
+		/**
+		 * @brief Запрос на открытие диалога выбора папки сохранения резервных копий
+		 */
+		void aboutBrowseSaveBackupsFolder();
 
 		/**
 		 * @brief Сменился блок в настройках переходов

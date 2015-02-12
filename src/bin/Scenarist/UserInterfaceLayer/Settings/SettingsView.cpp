@@ -2,6 +2,7 @@
 #include "ui_SettingsView.h"
 
 #include <QColorDialog>
+#include <QFileDialog>
 #include <QSignalMapper>
 
 #include <3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h>
@@ -93,6 +94,16 @@ void SettingsView::setApplicationAutosave(bool _value)
 void SettingsView::setApplicationAutosaveInterval(int _value)
 {
 	ui->autosaveInterval->setValue(_value);
+}
+
+void SettingsView::setApplicationSaveBackups(bool _save)
+{
+	ui->saveBackups->setChecked(_save);
+}
+
+void SettingsView::setApplicationSaveBackupsFolder(const QString& _folder)
+{
+	ui->saveBackupsFolder->setText(_folder);
 }
 
 void SettingsView::setScenarioEditShowScenesNumbers(bool _value)
@@ -306,6 +317,16 @@ void SettingsView::aboutColorThemeChanged()
 	}
 }
 
+void SettingsView::aboutBrowseSaveBackupsFolder()
+{
+	const QString folder =
+			QFileDialog::getExistingDirectory(this, tr("Choose backups saving folder"),
+				ui->saveBackupsFolder->text(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	if (!folder.isEmpty()) {
+		ui->saveBackupsFolder->setText(folder);
+	}
+}
+
 void SettingsView::aboutBlockJumpChanged(const QModelIndex& _topLeft, const QModelIndex& _bottomRight)
 {
 	Q_UNUSED(_topLeft);
@@ -471,6 +492,8 @@ void SettingsView::initConnections()
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), ui->spellCheckingLanguage, SLOT(setEnabled(bool)));
 	// ... смена текущей цветовой темы
 	connect(ui->lightTheme, SIGNAL(toggled(bool)), this, SLOT(aboutColorThemeChanged()));
+	// ... выбор папки сохранения резервных копий
+	connect(ui->browseBackupFolder, SIGNAL(clicked()), this, SLOT(aboutBrowseSaveBackupsFolder()));
 	// ... смена вкладок страницы настройки редактора сценария
 	connect(m_scenarioEditorTabs, SIGNAL(currentChanged(int)), ui->ScenarioEditPageStack, SLOT(setCurrentIndex(int)));
 	// ... выбор цвета элементов редактора сценария
@@ -496,6 +519,8 @@ void SettingsView::initConnections()
 	connect(ui->useDarkTheme, SIGNAL(toggled(bool)), this, SIGNAL(applicationUseDarkThemeChanged(bool)));
 	connect(ui->autosave, SIGNAL(toggled(bool)), this, SIGNAL(applicationAutosaveChanged(bool)));
 	connect(ui->autosaveInterval, SIGNAL(valueChanged(int)), this, SIGNAL(applicationAutosaveIntervalChanged(int)));
+	connect(ui->saveBackups, SIGNAL(toggled(bool)), this, SIGNAL(applicationSaveBackupsChanged(bool)));
+	connect(ui->saveBackupsFolder, SIGNAL(textChanged(QString)), this, SIGNAL(applicationSaveBackupsFolderChanged(QString)));
 	// ... текстовый редактор
 	connect(ui->showScenesNumbersInEditor, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)));
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));

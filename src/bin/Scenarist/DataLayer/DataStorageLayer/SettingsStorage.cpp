@@ -6,6 +6,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
 #include <QSettings>
+#include <QStandardPaths>
 #include <QStringList>
 #include <QUuid>
 
@@ -127,6 +128,9 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("application/use-dark-theme", "0");
 	m_defaultValues.insert("application/autosave", "1");
 	m_defaultValues.insert("application/autosave-interval", "5");
+	m_defaultValues.insert("application/save-backups", "0");
+	m_defaultValues.insert("application/save-backups-folder",
+		QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
 
 	m_defaultValues.insert("navigator/show-scene-description", "1");
 	m_defaultValues.insert("navigator/scene-description-is-scene-text", "1");
@@ -169,7 +173,6 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_group_header-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-folder_header-by-tab", QString::number(ScenarioBlockStyle::TimeAndPlace));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-folder_header-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
-
 
 
 	m_defaultValues.insert("chronometry/current-chronometer-type", "pages-chronometer");

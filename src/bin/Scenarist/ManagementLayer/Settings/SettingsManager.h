@@ -52,6 +52,8 @@ namespace ManagementLayer
 		void applicationUseDarkThemeChanged(bool _value);
 		void applicationAutosaveChanged(bool _value);
 		void applicationAutosaveIntervalChanged(int _value);
+		void applicationSaveBackupsChanged(bool _value);
+		void applicationSaveBackupsFolderChanged(const QString& _value);
 
 		void scenarioEditShowScenesNumbersChanged(bool  _value);
 		void scenarioEditPageViewChanged(bool  _value);
