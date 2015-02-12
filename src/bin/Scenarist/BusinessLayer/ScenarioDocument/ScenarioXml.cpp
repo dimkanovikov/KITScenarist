@@ -373,8 +373,9 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 					//
 					if (currentStyle.hasHeader()) {
 						ScenarioBlockStyle headerStyle = ScenarioStyleFacade::style().blockStyle(currentStyle.headerType());
-						cursor.setBlockCharFormat(headerStyle.charFormat());
 						cursor.setBlockFormat(headerStyle.blockFormat());
+						cursor.setBlockCharFormat(headerStyle.charFormat());
+						cursor.setCharFormat(headerStyle.charFormat());
 						cursor.insertText(currentStyle.header());
 						cursor.insertBlock();
 					}
@@ -388,8 +389,9 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 						//
 						// Установим стиль блока
 						//
-						cursor.setBlockCharFormat(currentStyle.charFormat());
 						cursor.setBlockFormat(currentStyle.blockFormat());
+						cursor.setBlockCharFormat(currentStyle.charFormat());
+						cursor.setCharFormat(currentStyle.charFormat());
 					}
 
 					//
