@@ -63,6 +63,7 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Parenthetical));
 			} else {
 				//! Текст не пуст
 
@@ -157,7 +158,8 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 				//
 				// Меняем стиль на реплику
 				//
-				editor()->changeScenarioBlockType(ScenarioBlockStyle::Dialog);
+//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Dialog);
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Parenthetical));
 			} else {
 				//! Текст не пуст
 

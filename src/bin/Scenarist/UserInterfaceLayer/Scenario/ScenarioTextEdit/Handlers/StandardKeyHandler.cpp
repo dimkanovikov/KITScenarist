@@ -12,6 +12,36 @@ using namespace KeyProcessingLayer;
 using namespace BusinessLogic;
 using UserInterface::ScenarioTextEdit;
 
+namespace {
+	/**
+	 * @brief Получить тип перехода/смены в зависимости от заданных параметров
+	 */
+	static ScenarioBlockStyle::Type actionFor(bool _tab, bool _jump, ScenarioBlockStyle::Type _blockType) {
+		const QString settingsKey =
+				QString("scenario-editor/styles-%1/from-%2-by-%3")
+				.arg(_jump ? "jumping" : "changing")
+				.arg(ScenarioBlockStyle::typeName(_blockType))
+				.arg(_tab ? "tab" : "enter");
+
+		int result =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					settingsKey, DataStorageLayer::SettingsStorage::ApplicationSettings
+					).toInt();
+
+		return (ScenarioBlockStyle::Type)result;
+	}
+
+	/**
+	 * @brief Вспомогательные константы для использования с функцией actionFor
+	 */
+	/** @{ */
+	const bool TAB = true;
+	const bool ENTER = false;
+	const bool JUMP = true;
+	const bool CHANGE = false;
+	/** @} */
+}
+
 
 StandardKeyHandler::StandardKeyHandler(ScenarioTextEdit* _editor) :
 	AbstractKeyHandler(_editor)
@@ -20,24 +50,22 @@ StandardKeyHandler::StandardKeyHandler(ScenarioTextEdit* _editor) :
 
 ScenarioBlockStyle::Type StandardKeyHandler::jumpForTab(ScenarioBlockStyle::Type _blockType)
 {
-	const QString typeShortName = ScenarioBlockStyle::typeName(_blockType);
-	int jumpForTab =
-			DataStorageLayer::StorageFacade::settingsStorage()->value(
-				QString("scenario-editor/styles-jumping/from-%1-by-tab").arg(typeShortName),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				).toInt();
-	return (ScenarioBlockStyle::Type)jumpForTab;
+	return ::actionFor(TAB, JUMP, _blockType);
 }
 
 ScenarioBlockStyle::Type StandardKeyHandler::jumpForEnter(ScenarioBlockStyle::Type _blockType)
 {
-	const QString typeShortName = ScenarioBlockStyle::typeName(_blockType);
-	int jumpForEnter =
-			DataStorageLayer::StorageFacade::settingsStorage()->value(
-				QString("scenario-editor/styles-jumping/from-%1-by-enter").arg(typeShortName),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				).toInt();
-	return (ScenarioBlockStyle::Type)jumpForEnter;
+	return ::actionFor(ENTER, JUMP, _blockType);
+}
+
+ScenarioBlockStyle::Type StandardKeyHandler::changeForTab(ScenarioBlockStyle::Type _blockType)
+{
+	return ::actionFor(TAB, CHANGE, _blockType);
+}
+
+ScenarioBlockStyle::Type StandardKeyHandler::changeForEnter(ScenarioBlockStyle::Type _blockType)
+{
+	return ::actionFor(ENTER, CHANGE, _blockType);
 }
 
 void StandardKeyHandler::handleShortcut(QKeyEvent* _event)

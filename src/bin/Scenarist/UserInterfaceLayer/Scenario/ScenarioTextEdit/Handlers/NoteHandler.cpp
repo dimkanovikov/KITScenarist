@@ -58,6 +58,7 @@ void NoteHandler::handleEnter(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Note));
 			} else {
 				//! Текст не пуст
 
@@ -131,6 +132,7 @@ void NoteHandler::handleTab(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Note));
 			} else {
 				//! Текст не пуст
 

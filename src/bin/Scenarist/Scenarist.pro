@@ -185,7 +185,9 @@ SOURCES += main.cpp \
     BusinessLayer/Chronometry/PagesChronometer.cpp \
     3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.cpp \
     3rd_party/Delegates/ComboBoxItemDelegate/ComboBoxItemDelegate.cpp \
-    3rd_party/Helpers/BackupHelper.cpp
+    3rd_party/Helpers/BackupHelper.cpp \
+    3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.cpp \
+    3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -339,7 +341,9 @@ HEADERS += \
     BusinessLayer/Counters/Counter.h \
     3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h \
     3rd_party/Delegates/ComboBoxItemDelegate/ComboBoxItemDelegate.h \
-    3rd_party/Helpers/BackupHelper.h
+    3rd_party/Helpers/BackupHelper.h \
+    3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h \
+    3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

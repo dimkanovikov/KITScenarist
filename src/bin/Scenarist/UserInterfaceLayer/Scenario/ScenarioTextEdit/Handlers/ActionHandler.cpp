@@ -64,7 +64,8 @@ void ActionHandler::handleEnter(QKeyEvent*)
 				//
 				// Меняем стиль на место и время
 				//
-				editor()->changeScenarioBlockType(ScenarioBlockStyle::TimeAndPlace);
+//				editor()->changeScenarioBlockType(ScenarioBlockStyle::TimeAndPlace);
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Action));
 			} else {
 				//! Текст не пуст
 
@@ -121,7 +122,8 @@ void ActionHandler::handleTab(QKeyEvent*)
 				//
 				// Если строка пуста, то сменить стиль на имя героя
 				//
-				editor()->changeScenarioBlockType(ScenarioBlockStyle::Character);
+//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Character);
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Action));
 			} else {
 				//! Текст не пуст
 

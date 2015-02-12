@@ -72,7 +72,8 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 				//
 				// Cменить стиль на описание действия
 				//
-				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::SceneCharacters));
 			} else {
 				//! Текст не пуст
 

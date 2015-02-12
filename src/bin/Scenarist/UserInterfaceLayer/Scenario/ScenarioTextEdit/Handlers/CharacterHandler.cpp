@@ -92,7 +92,8 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 				//
 				// Cменить стиль на описание действия
 				//
-				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Character));
 			} else {
 				//! Текст не пуст
 
@@ -173,7 +174,8 @@ void CharacterHandler::handleTab(QKeyEvent*)
 				//
 				// Cменить стиль на описание действия
 				//
-				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Character));
 			} else {
 				//! Текст не пуст
 

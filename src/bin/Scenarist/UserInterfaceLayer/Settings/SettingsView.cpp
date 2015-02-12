@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QSignalMapper>
 
+#include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h>
 #include <3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
 
@@ -12,11 +13,25 @@
 
 using UserInterface::SettingsView;
 
+namespace {
+	/**
+	 * @brief Индексы столбцов в табице смены типа
+	 */
+	/** @{ */
+	const int NAMES_COLUMN = 0;
+	const int JUMP_TAB_COLUMN = 1;
+	const int JUMP_ENTER_COLUMN = 2;
+	const int CHANGE_TAB_COLUMN = 3;
+	const int CHANGE_ENTER_COLUMN = 4;
+	/** @} */
+}
+
 
 SettingsView::SettingsView(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::SettingsView),
-	m_scenarioEditorTabs(new TabBar(this))
+	m_scenarioEditorTabs(new TabBar(this)),
+	m_jumpsTableHeader(new HierarchicalHeaderView(Qt::Horizontal, this))
 {
 	ui->setupUi(this);
 
@@ -44,20 +59,20 @@ void SettingsView::setBlocksJumpsModel(QAbstractItemModel* _model, QAbstractItem
 	//
 	// Настроим делегат
 	//
-	const int NAMES_COLUMN = 0;
-	const int TAB_ACTION_COLUMN = 1;
-	const int ENTER_ACTION_COLUMN = 2;
+
 	//
 	// ... при необходимости удалим старый делегат
 	//
 	if (ui->scenarioEditBlockJumpsTable->itemDelegateForColumn(NAMES_COLUMN)
-		!= ui->scenarioEditBlockJumpsTable->itemDelegateForColumn(TAB_ACTION_COLUMN)) {
-		ui->scenarioEditBlockJumpsTable->itemDelegateForColumn(TAB_ACTION_COLUMN)->deleteLater();
+		!= ui->scenarioEditBlockJumpsTable->itemDelegateForColumn(JUMP_TAB_COLUMN)) {
+		ui->scenarioEditBlockJumpsTable->itemDelegateForColumn(JUMP_TAB_COLUMN)->deleteLater();
 	}
 
 	ComboBoxItemDelegate* delegate = new ComboBoxItemDelegate(ui->scenarioEditBlockJumpsTable, _modelForDelegate);
-	ui->scenarioEditBlockJumpsTable->setItemDelegateForColumn(TAB_ACTION_COLUMN, delegate);
-	ui->scenarioEditBlockJumpsTable->setItemDelegateForColumn(ENTER_ACTION_COLUMN, delegate);
+	ui->scenarioEditBlockJumpsTable->setItemDelegateForColumn(JUMP_TAB_COLUMN, delegate);
+	ui->scenarioEditBlockJumpsTable->setItemDelegateForColumn(JUMP_ENTER_COLUMN, delegate);
+	ui->scenarioEditBlockJumpsTable->setItemDelegateForColumn(CHANGE_TAB_COLUMN, delegate);
+	ui->scenarioEditBlockJumpsTable->setItemDelegateForColumn(CHANGE_ENTER_COLUMN, delegate);
 }
 
 void SettingsView::setStylesModel(QAbstractItemModel* _model)
@@ -332,15 +347,13 @@ void SettingsView::aboutBlockJumpChanged(const QModelIndex& _topLeft, const QMod
 	Q_UNUSED(_topLeft);
 
 	if (_bottomRight.isValid()) {
-		const int NAMES_COLUMN = 0;
-		const int TAB_ACTION_COLUMN = 1;
-		const int ENTER_ACTION_COLUMN = 2;
-
 		const QString blockName = _bottomRight.sibling(_bottomRight.row(), NAMES_COLUMN).data().toString();
-		const QString actionForTabName = _bottomRight.sibling(_bottomRight.row(), TAB_ACTION_COLUMN).data().toString();
-		const QString actionForEnterName = _bottomRight.sibling(_bottomRight.row(), ENTER_ACTION_COLUMN).data().toString();
+		const QString jumpForTabName = _bottomRight.sibling(_bottomRight.row(), JUMP_TAB_COLUMN).data().toString();
+		const QString jumpForEnterName = _bottomRight.sibling(_bottomRight.row(), JUMP_ENTER_COLUMN).data().toString();
+		const QString changeForTabName = _bottomRight.sibling(_bottomRight.row(), CHANGE_TAB_COLUMN).data().toString();
+		const QString changeForEnterName = _bottomRight.sibling(_bottomRight.row(), CHANGE_ENTER_COLUMN).data().toString();
 
-		emit scenarioEditBlockJumpChanged(blockName, actionForTabName, actionForEnterName);
+		emit scenarioEditBlockJumpChanged(blockName, jumpForTabName, jumpForEnterName, changeForTabName, changeForEnterName);
 	}
 }
 
@@ -477,7 +490,8 @@ void SettingsView::initView()
 	ui->scenarioEditPageLayout->addWidget(ui->topRightEmptyLabel_2, 0, 1);
 	ui->ScenarioEditPageStack->setCurrentIndex(0);
 
-	ui->scenarioEditBlockJumpsTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+	m_jumpsTableHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
+	ui->scenarioEditBlockJumpsTable->setHorizontalHeader(m_jumpsTableHeader);
 }
 
 void SettingsView::initConnections()

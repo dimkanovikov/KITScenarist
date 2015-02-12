@@ -173,6 +173,31 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_group_header-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-folder_header-by-tab", QString::number(ScenarioBlockStyle::TimeAndPlace));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-folder_header-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
+	//
+	m_defaultValues.insert("scenario-editor/styles-changing/from-time_and_place-by-tab", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-time_and_place-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-scene_characters-by-tab", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-scene_characters-by-enter", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-action-by-tab", QString::number(ScenarioBlockStyle::Character));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-action-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-character-by-tab", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-character-by-enter", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-dialog-by-tab", QString::number(ScenarioBlockStyle::Parenthetical));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-dialog-by-enter", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-parenthetical-by-tab", QString::number(ScenarioBlockStyle::Dialog));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-parenthetical-by-enter", QString::number(ScenarioBlockStyle::Parenthetical));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-transition-by-tab", QString::number(ScenarioBlockStyle::Transition));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-transition-by-enter", QString::number(ScenarioBlockStyle::Transition));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-note-by-tab", QString::number(ScenarioBlockStyle::Note));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-note-by-enter", QString::number(ScenarioBlockStyle::Note));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-title-by-tab", QString::number(ScenarioBlockStyle::Title));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-title-by-enter", QString::number(ScenarioBlockStyle::Title));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-noprintable_text-by-tab", QString::number(ScenarioBlockStyle::NoprintableText));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-noprintable_text-by-enter", QString::number(ScenarioBlockStyle::NoprintableText));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-scene_group_header-by-tab", QString::number(ScenarioBlockStyle::SceneGroupHeader));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-scene_group_header-by-enter", QString::number(ScenarioBlockStyle::SceneGroupHeader));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-folder_header-by-tab", QString::number(ScenarioBlockStyle::FolderHeader));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-folder_header-by-enter", QString::number(ScenarioBlockStyle::FolderHeader));
 
 
 	m_defaultValues.insert("chronometry/current-chronometer-type", "pages-chronometer");

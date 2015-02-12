@@ -58,6 +58,7 @@ void TitleHandler::handleEnter(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Title));
 			} else {
 				//! Текст не пуст
 
@@ -131,6 +132,7 @@ void TitleHandler::handleTab(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Title));
 			} else {
 				//! Текст не пуст
 

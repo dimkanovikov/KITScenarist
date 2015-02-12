@@ -58,6 +58,7 @@ void TransitionHandler::handleEnter(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Transition));
 			} else {
 				//! Текст не пуст
 
@@ -131,6 +132,7 @@ void TransitionHandler::handleTab(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Transition));
 			} else {
 				//! Текст не пуст
 

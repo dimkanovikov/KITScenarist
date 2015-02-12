@@ -60,7 +60,8 @@ void DialogHandler::handleEnter(QKeyEvent*)
 				//
 				// Меняем стиль блока на описание действия
 				//
-				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Dialog));
 			} else {
 				//! Текст не пуст
 
@@ -165,7 +166,8 @@ void DialogHandler::handleTab(QKeyEvent*)
 				//
 				// Меняем стиль на ремарку
 				//
-				editor()->changeScenarioBlockType(ScenarioBlockStyle::Parenthetical);
+//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Parenthetical);
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Dialog));
 			} else {
 				//! Текст не пуст
 

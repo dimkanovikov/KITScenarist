@@ -59,6 +59,7 @@ void FolderHeaderHandler::handleEnter(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::FolderHeader));
 			} else {
 				//! Текст не пуст
 
@@ -138,6 +139,7 @@ void FolderHeaderHandler::handleTab(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::FolderHeader));
 			} else {
 				//! Текст не пуст
 

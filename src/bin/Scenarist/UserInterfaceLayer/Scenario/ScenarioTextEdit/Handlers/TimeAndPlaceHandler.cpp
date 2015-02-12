@@ -100,8 +100,9 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 				//! Текст пуст
 
 				//
-				// Ни чего не делаем
+				// Меняем в соответствии с настройками
 				//
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::TimeAndPlace));
 			} else {
 				//! Текст не пуст
 
@@ -182,7 +183,8 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 				//
 				// Если строка пуста, то сменить стиль на описание действия
 				//
-				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::TimeAndPlace));
 			} else {
 				//! Текст не пуст
 

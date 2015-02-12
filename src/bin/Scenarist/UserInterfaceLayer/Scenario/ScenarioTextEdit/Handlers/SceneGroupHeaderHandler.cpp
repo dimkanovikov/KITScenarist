@@ -59,6 +59,7 @@ void SceneGroupHeaderHandler::handleEnter(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::SceneGroupHeader));
 			} else {
 				//! Текст не пуст
 
@@ -138,6 +139,7 @@ void SceneGroupHeaderHandler::handleTab(QKeyEvent*)
 				//
 				// Ни чего не делаем
 				//
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::SceneGroupHeader));
 			} else {
 				//! Текст не пуст
 

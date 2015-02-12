@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class QAbstractItemModel;
+class HierarchicalHeaderView;
 class QSplitter;
 class TabBar;
 
@@ -117,7 +118,8 @@ namespace UserInterface
 		void scenarioEditFolderTextColorDarkChanged(const QColor&);
 		void scenarioEditFolderBackgroundColorDarkChanged(const QColor&);
 		void scenarioEditCurrentStyleChanged(const QString&);
-		void scenarioEditBlockJumpChanged(const QString& _block, const QString& _tab, const QString& _enter);
+		void scenarioEditBlockJumpChanged(const QString& _block, const QString& _tab,
+			const QString& _enter, const QString& _changeTab, const QString& _changeEnter);
 
 		void navigatorShowScenesNumbersChanged(bool);
 		void navigatorShowSceneDescriptionChanged(bool);
@@ -241,6 +243,11 @@ namespace UserInterface
 		 * @brief Переключатель вкладок для настроек редактора сценария
 		 */
 		TabBar* m_scenarioEditorTabs;
+
+		/**
+		 * @brief Шапка таблицы переходов между блоками
+		 */
+		HierarchicalHeaderView* m_jumpsTableHeader;
 	};
 }
 

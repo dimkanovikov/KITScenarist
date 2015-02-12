@@ -28,6 +28,8 @@ namespace KeyProcessingLayer
 		/** @{ */
 		static BusinessLogic::ScenarioBlockStyle::Type jumpForTab(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 		static BusinessLogic::ScenarioBlockStyle::Type jumpForEnter(BusinessLogic::ScenarioBlockStyle::Type _blockType);
+		static BusinessLogic::ScenarioBlockStyle::Type changeForTab(BusinessLogic::ScenarioBlockStyle::Type _blockType);
+		static BusinessLogic::ScenarioBlockStyle::Type changeForEnter(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 		/** @} */
 
 		/**

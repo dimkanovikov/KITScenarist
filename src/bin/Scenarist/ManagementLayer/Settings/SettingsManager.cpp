@@ -10,6 +10,9 @@
 
 #include <UserInterfaceLayer/Settings/SettingsView.h>
 
+#include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h>
+#include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h>
+
 #include <QFileDialog>
 #include <QSplitter>
 #include <QStandardItemModel>
@@ -44,11 +47,23 @@ namespace {
 					QString("scenario-editor/styles-jumping/from-%1-by-enter").arg(typeShortName),
 					DataStorageLayer::SettingsStorage::ApplicationSettings
 					).toInt();
+		int changeForTab =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("scenario-editor/styles-changing/from-%1-by-tab").arg(typeShortName),
+					DataStorageLayer::SettingsStorage::ApplicationSettings
+					).toInt();
+		int changeForEnter =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("scenario-editor/styles-changing/from-%1-by-enter").arg(typeShortName),
+					DataStorageLayer::SettingsStorage::ApplicationSettings
+					).toInt();
 
 		QList<QStandardItem*> result;
 		result << new QStandardItem(ScenarioBlockStyle::typeName(_forType, BEAUTIFY_NAME))
 			   << new QStandardItem(ScenarioBlockStyle::typeName((ScenarioBlockStyle::Type)jumpForTab, BEAUTIFY_NAME))
-			   << new QStandardItem(ScenarioBlockStyle::typeName((ScenarioBlockStyle::Type)jumpForEnter, BEAUTIFY_NAME));
+			   << new QStandardItem(ScenarioBlockStyle::typeName((ScenarioBlockStyle::Type)jumpForEnter, BEAUTIFY_NAME))
+			   << new QStandardItem(ScenarioBlockStyle::typeName((ScenarioBlockStyle::Type)changeForTab, BEAUTIFY_NAME))
+			   << new QStandardItem(ScenarioBlockStyle::typeName((ScenarioBlockStyle::Type)changeForEnter, BEAUTIFY_NAME));
 		result.first()->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		return result;
 	}
@@ -56,10 +71,10 @@ namespace {
 	/**
 	 * @brief Сформировать таблицу переходов между блоками
 	 */
-	static QAbstractItemModel* blocksJumpsModel() {
+	static QAbstractItemModel* blocksJumpsModel(QObject* _parent) {
 		const int ROWS_COUNT = 0;
-		const int COLUMNS_COUNT = 3;
-		QStandardItemModel* blocksJumpsModel = new QStandardItemModel(ROWS_COUNT, COLUMNS_COUNT);
+		const int COLUMNS_COUNT = 5;
+		QStandardItemModel* blocksJumpsModel = new QStandardItemModel(ROWS_COUNT, COLUMNS_COUNT, _parent);
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::TimeAndPlace));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneCharacters));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Action));
@@ -222,21 +237,26 @@ void SettingsManager::scenarioEditCurrentStyleChanged(const QString& _value)
 	storeValue("scenario-editor/current-style", _value);
 }
 
-void SettingsManager::scenarioEditBlockJumpChanged(const QString& _block, const QString& _tab, const QString& _enter)
+void SettingsManager::scenarioEditBlockJumpChanged(const QString& _block, const QString& _jumpTab,
+	const QString& _jumpEnter, const QString& _changeTab, const QString& _changeEnter)
 {
 	//
 	// Переведём имена в значения блоков ScenarioBlockStyle::Type
 	//
 	const bool BEAUTIFY_NAME = true;
 	ScenarioBlockStyle::Type block = ScenarioBlockStyle::typeForName(_block, BEAUTIFY_NAME);
-	ScenarioBlockStyle::Type tab = ScenarioBlockStyle::typeForName(_tab, BEAUTIFY_NAME);
-	ScenarioBlockStyle::Type enter = ScenarioBlockStyle::typeForName(_enter, BEAUTIFY_NAME);
+	ScenarioBlockStyle::Type jumpTab = ScenarioBlockStyle::typeForName(_jumpTab, BEAUTIFY_NAME);
+	ScenarioBlockStyle::Type jumpEnter = ScenarioBlockStyle::typeForName(_jumpEnter, BEAUTIFY_NAME);
+	ScenarioBlockStyle::Type changeTab = ScenarioBlockStyle::typeForName(_changeTab, BEAUTIFY_NAME);
+	ScenarioBlockStyle::Type changeEnter = ScenarioBlockStyle::typeForName(_changeEnter, BEAUTIFY_NAME);
 
 	//
 	// Сохраним параметры
 	//
-	storeValue(QString("scenario-editor/styles-jumping/from-%1-by-tab").arg(ScenarioBlockStyle::typeName(block)), tab);
-	storeValue(QString("scenario-editor/styles-jumping/from-%1-by-enter").arg(ScenarioBlockStyle::typeName(block)), enter);
+	storeValue(QString("scenario-editor/styles-jumping/from-%1-by-tab").arg(ScenarioBlockStyle::typeName(block)), jumpTab);
+	storeValue(QString("scenario-editor/styles-jumping/from-%1-by-enter").arg(ScenarioBlockStyle::typeName(block)), jumpEnter);
+	storeValue(QString("scenario-editor/styles-changing/from-%1-by-tab").arg(ScenarioBlockStyle::typeName(block)), changeTab);
+	storeValue(QString("scenario-editor/styles-changing/from-%1-by-enter").arg(ScenarioBlockStyle::typeName(block)), changeEnter);
 }
 
 void SettingsManager::navigatorShowScenesNumbersChanged(bool _value)
@@ -613,25 +633,42 @@ void SettingsManager::initView()
 					"scenario-editor/current-style",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
-	// ... модель переходов между блоками
-	QAbstractItemModel* blocksJumpsModel = ::blocksJumpsModel();
-	blocksJumpsModel->setParent(this);
-	blocksJumpsModel->setHeaderData(0, Qt::Horizontal, tr("Block Name"));
-	blocksJumpsModel->setHeaderData(1, Qt::Horizontal, tr("Jump on Tab"));
-	blocksJumpsModel->setHeaderData(2, Qt::Horizontal, tr("Jump on Enter"));
+	// ... модель переходов между блоками, её заголовок и делегат
+	QStandardItemModel* blockJumpsHeaderModel = new QStandardItemModel(this);
+	{
+		QStandardItem * columnAfterText = new QStandardItem(tr("Jump after text in block"));
+		{
+			columnAfterText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("By Tab")));
+			columnAfterText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("By Enter")));
+		}
+		QStandardItem * columnEmptyText = new QStandardItem(tr("Change empty block"));
+		{
+			columnEmptyText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("By Tab")));
+			columnEmptyText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("By Enter")));
+		}
+
+		blockJumpsHeaderModel->setItem(0, 0, new QStandardItem(tr("Block Name")));
+		blockJumpsHeaderModel->setItem(0, 1, columnAfterText);
+		blockJumpsHeaderModel->setItem(0, 2, columnEmptyText);
+	}
+	HierarchicalTableModel* blocksJumpsModel = new HierarchicalTableModel(this);
+	blocksJumpsModel->setSourceModel(::blocksJumpsModel(this));
+	blocksJumpsModel->setHorizontalHeaderModel(blockJumpsHeaderModel);
 	QStringList delegateModel;
-	const bool BEAUTIFY_NAME = true;
-	delegateModel << ScenarioBlockStyle::typeName(ScenarioBlockStyle::TimeAndPlace, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneCharacters, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Action, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Character, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Parenthetical, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Dialog, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Transition, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Note, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Title, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneGroupHeader, BEAUTIFY_NAME)
-				  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::FolderHeader, BEAUTIFY_NAME);
+	{
+		const bool BEAUTIFY_NAME = true;
+		delegateModel << ScenarioBlockStyle::typeName(ScenarioBlockStyle::TimeAndPlace, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneCharacters, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Action, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Character, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Parenthetical, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Dialog, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Transition, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Note, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Title, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneGroupHeader, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::FolderHeader, BEAUTIFY_NAME);
+	}
 	m_view->setBlocksJumpsModel(blocksJumpsModel, new QStringListModel(delegateModel, this));
 
 
@@ -799,7 +836,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderTextColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderBackgroundColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SLOT(scenarioEditCurrentStyleChanged(QString)));
-	connect(m_view, SIGNAL(scenarioEditBlockJumpChanged(QString,QString,QString)), this, SLOT(scenarioEditBlockJumpChanged(QString,QString,QString)));
+	connect(m_view, SIGNAL(scenarioEditBlockJumpChanged(QString,QString,QString,QString,QString)), this, SLOT(scenarioEditBlockJumpChanged(QString,QString,QString,QString,QString)));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
 	connect(m_view, SIGNAL(navigatorShowSceneDescriptionChanged(bool)), this, SLOT(navigatorShowSceneDescriptionChanged(bool)));
