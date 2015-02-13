@@ -77,6 +77,11 @@ namespace ManagementLayer
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Загрузить в диалог настройки экспорта
+		 */
+		void initExportDialog(BusinessLogic::ScenarioDocument* _scenario);
+
 	private:
 		/**
 		 * @brief Текущий экспортируемый сценарий

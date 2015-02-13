@@ -37,28 +37,7 @@ ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
 	m_currentScenario = _scenario;
-	Domain::Scenario* currentScenario = m_currentScenario->scenario();
-
-	//
-	// Установка имени файла
-	//
-	QString exportFileName = currentScenario->name();
-	if (exportFileName.isEmpty()) {
-		QFileInfo fileInfo(DatabaseLayer::Database::currentFile());
-		exportFileName = fileInfo.baseName();
-	}
-	m_exportDialog->setExportFileName(exportFileName);
-
-	//
-	// Установка информации о титульном листе
-	//
-	m_exportDialog->setScenarioName(currentScenario->name());
-	m_exportDialog->setScenarioAdditionalInfo(currentScenario->additionalInfo());
-	m_exportDialog->setScenarioGenre(currentScenario->genre());
-	m_exportDialog->setScenarioAuthor(currentScenario->author());
-	m_exportDialog->setScenarioContacts(currentScenario->contacts());
-	m_exportDialog->setScenarioYear(currentScenario->year());
-
+	initExportDialog(m_currentScenario);
 
 	if (m_exportDialog->exec() == QDialog::Accepted) {
 		//
@@ -104,6 +83,7 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 	//
 	// Сохраняем информацию о титульном листе
 	//
+	Domain::Scenario* currentScenario = m_currentScenario->scenario();
 	bool isTitleListDataChanged = false;
 	if (currentScenario->name() != m_exportDialog->scenarioName()) {
 		currentScenario->setName(m_exportDialog->scenarioName());
@@ -142,6 +122,8 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 
 void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
+	initExportDialog(_scenario);
+
 	//
 	// Покажем уведомление пользователю
 	//
@@ -280,4 +262,29 @@ void ExportManager::initConnections()
 	connect(m_exportDialog, SIGNAL(currentStyleChanged(QString)),
 			this, SLOT(aboutExportStyleChanged(QString)));
 	connect(m_exportDialog, SIGNAL(printPreview()), this, SLOT(aboutPrintPreview()));
+}
+
+void ExportManager::initExportDialog(BusinessLogic::ScenarioDocument* _scenario)
+{
+	Domain::Scenario* currentScenario = _scenario->scenario();
+
+	//
+	// Установка имени файла
+	//
+	QString exportFileName = currentScenario->name();
+	if (exportFileName.isEmpty()) {
+		QFileInfo fileInfo(DatabaseLayer::Database::currentFile());
+		exportFileName = fileInfo.baseName();
+	}
+	m_exportDialog->setExportFileName(exportFileName);
+
+	//
+	// Установка информации о титульном листе
+	//
+	m_exportDialog->setScenarioName(currentScenario->name());
+	m_exportDialog->setScenarioAdditionalInfo(currentScenario->additionalInfo());
+	m_exportDialog->setScenarioGenre(currentScenario->genre());
+	m_exportDialog->setScenarioAuthor(currentScenario->author());
+	m_exportDialog->setScenarioContacts(currentScenario->contacts());
+	m_exportDialog->setScenarioYear(currentScenario->year());
 }
