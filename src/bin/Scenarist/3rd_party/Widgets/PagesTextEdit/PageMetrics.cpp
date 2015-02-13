@@ -2,6 +2,8 @@
 
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QScreen>
+#include <QFontMetrics>
 
 
 namespace {
@@ -10,7 +12,16 @@ namespace {
 
 qreal PageMetrics::mmToPx(qreal _mm, bool _x)
 {
-	return ::mmToInches(_mm) * (_x ? qApp->desktop()->logicalDpiX() : qApp->desktop()->logicalDpiY());
+	//
+	// FIXME: 5 - это магическое число выведеное из замеров ширины текста в разных системах
+	//		  нужно сделать это по человечески. Как ворд это делает???????
+	//
+	return ::mmToInches(_mm) *
+			(_x ? qApp->primaryScreen()->logicalDotsPerInchX()
+#ifdef Q_OS_WIN
+				  + 5
+#endif
+				: qApp->primaryScreen()->logicalDotsPerInchY());
 }
 
 QPageSize::PageSizeId PageMetrics::pageSizeIdFromString(const QString& _from)
