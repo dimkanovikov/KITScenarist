@@ -152,7 +152,7 @@ void ScenarioNavigatorManager::initConnections()
 void ScenarioNavigatorManager::connectModel()
 {
 	if (m_scenarioModel != 0) {
-		connect(m_scenarioModelProxy, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
+		connect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
 		connect(m_scenarioModel, SIGNAL(mimeDropped(int)), this, SIGNAL(sceneChoosed(int)));
 	}
 }
@@ -160,7 +160,7 @@ void ScenarioNavigatorManager::connectModel()
 void ScenarioNavigatorManager::disconnectModel()
 {
 	if (m_scenarioModel != 0) {
-		disconnect(m_scenarioModelProxy, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
+		disconnect(m_scenarioModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(aboutModelUpdated()));
 		disconnect(m_scenarioModel, SIGNAL(mimeDropped(int)), this, SIGNAL(sceneChoosed(int)));
 	}
 }

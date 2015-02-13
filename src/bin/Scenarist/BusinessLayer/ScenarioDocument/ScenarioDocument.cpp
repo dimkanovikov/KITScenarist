@@ -774,6 +774,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 
 	m_model->updateSceneNumbers();
 	updateDocumentScenesNumbers();
+
 }
 
 void ScenarioDocument::initConnections()

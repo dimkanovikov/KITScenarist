@@ -439,6 +439,12 @@ void ScenarioModel::updateSceneNumbers()
 	}
 
 	m_scenesCount = sceneNumber;
+
+	//
+	// Сигналим, о том, что модель обновилась
+	//
+	const QModelIndex rootIndex = indexForItem(m_rootItem);
+	emit dataChanged(rootIndex, rootIndex);
 }
 
 int ScenarioModel::scenesCount() const
