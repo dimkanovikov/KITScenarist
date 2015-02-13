@@ -72,6 +72,11 @@ namespace UserInterface
 		 */
 		void setIsDraft(bool _isDraft);
 
+		/**
+		 * @brief Убрать выделение
+		 */
+		void clearSelection();
+
 	signals:
 		/**
 		 * @brief Запрос на добавление элемента

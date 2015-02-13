@@ -87,6 +87,11 @@ void ScenarioNavigatorManager::setCurrentIndex(const QModelIndex& _index)
 	m_navigator->setCurrentIndex(m_scenarioModelProxy->mapFromSource(_index));
 }
 
+void ScenarioNavigatorManager::clearSelection()
+{
+	m_navigator->clearSelection();
+}
+
 void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
 {
 	m_addItemDialog->clearText();

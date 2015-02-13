@@ -92,6 +92,11 @@ void ScenarioNavigator::setIsDraft(bool _isDraft)
 	m_showNote->setVisible(!_isDraft);
 }
 
+void ScenarioNavigator::clearSelection()
+{
+	m_navigationTree->selectionModel()->clearSelection();
+}
+
 bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 {
 	bool isEventFiltered = false;

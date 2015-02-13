@@ -819,15 +819,17 @@ void ScenarioManager::initStyleSheet()
 void ScenarioManager::setWorkingMode(QObject* _sender)
 {
 	if (ScenarioNavigatorManager* manager = qobject_cast<ScenarioNavigatorManager*>(_sender)) {
-		const bool workingMode = manager == m_draftNavigatorManager;
+		const bool workingModeIsDraft = manager == m_draftNavigatorManager;
 
-		if (m_workModeIsDraft != workingMode) {
-			m_workModeIsDraft = workingMode;
+		if (m_workModeIsDraft != workingModeIsDraft) {
+			m_workModeIsDraft = workingModeIsDraft;
 
 			if (!m_workModeIsDraft) {
 				m_textEditManager->setScenarioDocument(m_scenario->document());
+				m_draftNavigatorManager->clearSelection();
 			} else {
 				m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
+				m_navigatorManager->clearSelection();
 			}
 		}
 	}

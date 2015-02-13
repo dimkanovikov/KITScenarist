@@ -45,6 +45,11 @@ namespace ManagementLayer
 		 */
 		void setCurrentIndex(const QModelIndex& _index);
 
+		/**
+		 * @brief Снять выделение
+		 */
+		void clearSelection();
+
 	signals:
 		/**
 		 * @brief Запрос на добавление элемента

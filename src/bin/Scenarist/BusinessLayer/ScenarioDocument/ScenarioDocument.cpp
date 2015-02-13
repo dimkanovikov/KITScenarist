@@ -453,6 +453,13 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
 	//
+	// Прерываем ситуация, когда в редактор помещается документ, но для него уже создана модель
+	//
+	if (_charsRemoved == _charsAdded && !m_modelItems.isEmpty()) {
+		return;
+	}
+
+	//
 	// Если были удалены данные
 	//
 	if (_charsRemoved > 0) {
