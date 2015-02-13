@@ -233,7 +233,7 @@ void ExportManager::aboutPrintPreview()
 	// Закрывать диалоговое окно нельзя, поэтому прячем его за границами экрана,
 	// а потом возвращаем на место
 	//
-	const QPoint POSITION_OUT_OF_SCREEN(10000, 10000);
+    const QPoint POSITION_OUT_OF_SCREEN(10000, 10000);
 	QPoint lastPos = m_exportDialog->pos();
 	m_exportDialog->move(POSITION_OUT_OF_SCREEN);
 	printPreviewScenario(m_currentScenario);

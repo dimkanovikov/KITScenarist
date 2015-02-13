@@ -17,6 +17,12 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	m_zoomRange(1),
     m_gestureZoomInertionBreak(0)
 {
+    //
+    // Настраиваем лучшее опции прорисовки
+    //
+    setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+
 	//
 	// Отслеживаем жесты
 	//
