@@ -10,6 +10,7 @@
 
 #include <3rd_party/Widgets/PagesTextEdit/PageMetrics.h>
 
+#include <QAbstractTextDocumentLayout>
 #include <QApplication>
 #include <QString>
 #include <QPainter>
@@ -44,92 +45,177 @@ namespace {
 	const char* PRINT_PAGE_NUMBERS_KEY = "page_numbers";
 
 	/**
-	 * @brief Напечатать документ
+	 * @brief Напечатать страницу документа
+	 * @note Адаптация функции QTextDocument.cpp::anonymous::printPage
 	 */
-	static void printDocument(QTextDocument* _document, QPrinter* _printer) {
-		if (_document != 0
-			&& _printer != 0) {
+	static void printPage(int _pageNumber, QPainter* _painter, const QTextDocument* _document,
+		const QRectF& _body, const QPagedPaintDevice::Margins& _margins)
+	{
+		const int pageYPos = (_pageNumber - 1) * _body.height();
 
-			QRect innerRect = _printer->pageRect();
-			QRect contentRect = QRect(QPoint(0,0), _document->size().toSize());
-			QRect currentRect = QRect(QPoint(0,0), innerRect.size());
-			QPainter painter(_printer);
-			int pageNumber = 0;
-			painter.save();
+		_painter->save();
+		_painter->translate(_body.left(), _body.top() - pageYPos);
+		QRectF currentPageRect(0, pageYPos, _body.width(), _body.height());
+		QAbstractTextDocumentLayout *layout = _document->documentLayout();
+		QAbstractTextDocumentLayout::PaintContext ctx;
+		_painter->setClipRect(currentPageRect);
+		ctx.clip = currentPageRect;
+		// don't use the system palette text as default text color, on HP/UX
+		// for example that's white, and white text on white paper doesn't
+		// look that nice
+		ctx.palette.setColor(QPalette::Text, Qt::black);
+		layout->draw(_painter, ctx);
 
-
-			while (currentRect.intersects(contentRect)) {
-				_document->drawContents(&painter, currentRect);
-				pageNumber++;
-				currentRect.translate(0, currentRect.height());
-				painter.restore();
+		//
+		// Если необходимо рисуем нумерацию страниц
+		//
+		if (_document->property(PRINT_PAGE_NUMBERS_KEY).toBool()) {
+			//
+			// Если печатается титульная страница
+			//
+			if (_document->property(PRINT_TITLE_KEY).toBool()
+				&& _pageNumber == 1) {
+				//
+				// Не печатаем номер на первой странице
+				//
+			}
+			//
+			// Печатаем номера страниц
+			//
+			else {
+				_painter->save();
+				_painter->setFont(QFont("Courier New", 12));
 
 				//
-				// Если необходимо рисуем нумерацию страниц
+				// Середины верхнего и нижнего полей
 				//
-				if (_document->property(PRINT_PAGE_NUMBERS_KEY).toBool()) {
-					//
-					// Если печатается титульная страница
-					//
-					if (_document->property(PRINT_TITLE_KEY).toBool()
-						&& pageNumber == 1) {
-						//
-						// Не печатаем номер на первой странице
-						//
-					}
-					//
-					// Печатаем номера страниц
-					//
-					else {
-						painter.setFont(QFont("Courier New", 12));
+				qreal headerY = pageYPos - PageMetrics::mmToPx(_margins.top) / 2;
+				qreal footerY = pageYPos + currentPageRect.height() + PageMetrics::mmToPx(_margins.bottom) / 2;
 
-						//
-						// Середины верхнего и нижнего полей
-						//
-						qreal headerY = 0 - PageMetrics::mmToPx(_printer->margins().top) / 2;
-						qreal footerY = currentRect.height() + PageMetrics::mmToPx(_printer->margins().bottom) / 2;
+				//
+				// Области для прорисовки текста на полях
+				//
+				QRectF headerRect(0, headerY, currentPageRect.width(), 20);
+				QRectF footerRect(0, footerY - 20, currentPageRect.width(), 20);
 
-						//
-						// Области для прорисовки текста на полях
-						//
-						QRectF headerRect(0, headerY, currentRect.width(), 20);
-						QRectF footerRect(0, footerY - 20, currentRect.width(), 20);
-
-						//
-						// Определяем где положено находиться нумерации
-						//
-						QRectF numberingRect;
-						if (::exportStyle().numberingAlignment().testFlag(Qt::AlignTop)) {
-							numberingRect = headerRect;
-						} else {
-							numberingRect = footerRect;
-						}
-						Qt::Alignment numberingAlignment = Qt::AlignVCenter;
-						if (::exportStyle().numberingAlignment().testFlag(Qt::AlignLeft)) {
-							numberingAlignment |= Qt::AlignLeft;
-						} else if (::exportStyle().numberingAlignment().testFlag(Qt::AlignCenter)) {
-							numberingAlignment |= Qt::AlignCenter;
-						} else {
-							numberingAlignment |= Qt::AlignRight;
-						}
-
-						//
-						// Рисуем нумерацию в положеном месте (отнимаем единицу, т.к. нумерация
-						// должна следовать с единицы для первой страницы текста сценария)
-						//
-						int titleDelta = _document->property(PRINT_TITLE_KEY).toBool() ? -1 : 0;
-						painter.drawText(numberingRect, numberingAlignment,
-							QString::number(pageNumber + titleDelta));
-					}
+				//
+				// Определяем где положено находиться нумерации
+				//
+				QRectF numberingRect;
+				if (::exportStyle().numberingAlignment().testFlag(Qt::AlignTop)) {
+					numberingRect = headerRect;
+				} else {
+					numberingRect = footerRect;
+				}
+				Qt::Alignment numberingAlignment = Qt::AlignVCenter;
+				if (::exportStyle().numberingAlignment().testFlag(Qt::AlignLeft)) {
+					numberingAlignment |= Qt::AlignLeft;
+				} else if (::exportStyle().numberingAlignment().testFlag(Qt::AlignCenter)) {
+					numberingAlignment |= Qt::AlignCenter;
+				} else {
+					numberingAlignment |= Qt::AlignRight;
 				}
 
-				painter.save();
-				painter.translate(0, -currentRect.height() * pageNumber);
-				if (currentRect.intersects(contentRect))
-					_printer->newPage();
+				//
+				// Рисуем нумерацию в положеном месте (отнимаем единицу, т.к. нумерация
+				// должна следовать с единицы для первой страницы текста сценария)
+				//
+				int titleDelta = _document->property(PRINT_TITLE_KEY).toBool() ? -1 : 0;
+				_painter->setClipRect(numberingRect);
+				_painter->drawText(numberingRect, numberingAlignment,
+								 QString::number(_pageNumber + titleDelta));
+				_painter->restore();
 			}
-			painter.restore();
-			painter.end();
+		}
+		_painter->restore();
+	}
+
+	/**
+	 * @brief Напечатать документ
+	 * @note Адаптация функции QTextDocument::print
+	 */
+	static void printDocument(QTextDocument* _document, QPrinter* _printer)
+	{
+		QPainter painter(_printer);
+		// Check that there is a valid device to print to.
+		if (!painter.isActive())
+			return;
+		QScopedPointer<QTextDocument> clonedDoc;
+		(void)_document->documentLayout(); // make sure that there is a layout
+		QRectF body = QRectF(QPointF(0, 0), _document->pageSize());
+
+		{
+			qreal sourceDpiX = painter.device()->logicalDpiX();
+			qreal sourceDpiY = sourceDpiX;
+			QPaintDevice *dev = _document->documentLayout()->paintDevice();
+			if (dev) {
+				sourceDpiX = dev->logicalDpiX();
+				sourceDpiY = dev->logicalDpiY();
+			}
+			const qreal dpiScaleX = qreal(_printer->logicalDpiX()) / sourceDpiX;
+			const qreal dpiScaleY = qreal(_printer->logicalDpiY()) / sourceDpiY;
+			// scale to dpi
+			painter.scale(dpiScaleX, dpiScaleY);
+			QSizeF scaledPageSize = _document->pageSize();
+			scaledPageSize.rwidth() *= dpiScaleX;
+			scaledPageSize.rheight() *= dpiScaleY;
+			const QSizeF printerPageSize(_printer->pageRect().size());
+			// scale to page
+			painter.scale(printerPageSize.width() / scaledPageSize.width(),
+					printerPageSize.height() / scaledPageSize.height());
+		}
+
+		int docCopies;
+		int pageCopies;
+		if (_printer->collateCopies() == true){
+			docCopies = 1;
+			pageCopies = _printer->supportsMultipleCopies() ? 1 : _printer->copyCount();
+		} else {
+			docCopies = _printer->supportsMultipleCopies() ? 1 : _printer->copyCount();
+			pageCopies = 1;
+		}
+		int fromPage = _printer->fromPage();
+		int toPage = _printer->toPage();
+		bool ascending = true;
+		if (fromPage == 0 && toPage == 0) {
+			fromPage = 1;
+			toPage = _document->pageCount();
+		}
+		// paranoia check
+		fromPage = qMax(1, fromPage);
+		toPage = qMin(_document->pageCount(), toPage);
+		if (toPage < fromPage) {
+			// if the user entered a page range outside the actual number
+			// of printable pages, just return
+			return;
+		}
+		if (_printer->pageOrder() == QPrinter::LastPageFirst) {
+			int tmp = fromPage;
+			fromPage = toPage;
+			toPage = tmp;
+			ascending = false;
+		}
+		for (int i = 0; i < docCopies; ++i) {
+			int page = fromPage;
+			while (true) {
+				for (int j = 0; j < pageCopies; ++j) {
+					if (_printer->printerState() == QPrinter::Aborted
+						|| _printer->printerState() == QPrinter::Error)
+						return;
+					printPage(page, &painter, _document, body, _printer->margins());
+					if (j < pageCopies - 1)
+						_printer->newPage();
+				}
+				if (page == toPage)
+					break;
+				if (ascending)
+					++page;
+				else
+					--page;
+				_printer->newPage();
+			}
+			if ( i < docCopies - 1)
+				_printer->newPage();
 		}
 	}
 }

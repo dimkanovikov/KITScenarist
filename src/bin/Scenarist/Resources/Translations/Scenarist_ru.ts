@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name></name>
+    <message>
+        <source>(MORE)</source>
+        <translation type="vanished">ДАЛЬШЕ</translation>
+    </message>
+    <message>
+        <source> (cont&apos;d)</source>
+        <translation type="vanished"> (ПРОД.)</translation>
+    </message>
+</context>
+<context>
     <name>AcceptebleLineEdit</name>
     <message>
         <location filename="../../3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.cpp" line="31"/>
@@ -22,14 +33,29 @@
 <context>
     <name>BusinessLogic::AbstarctExporter</name>
     <message>
+        <source>(MORE)</source>
+        <translation type="vanished">ДАЛЬШЕ</translation>
+    </message>
+    <message>
+        <source> (cont&apos;d)</source>
+        <translation type="vanished"> (ПРОД.)</translation>
+    </message>
+    <message>
+        <source>(cont&apos;d)</source>
+        <translation type="vanished">(ПРОД.)</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::AbstractExporter</name>
+    <message>
         <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="237"/>
         <source>(MORE)</source>
         <translation>ДАЛЬШЕ</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="238"/>
-        <source>(cont&apos;d)</source>
-        <translation>(ПРОД.)</translation>
+        <source> (cont&apos;d)</source>
+        <translation> (ПРОД.)</translation>
     </message>
 </context>
 <context>
@@ -1373,17 +1399,17 @@ Paragraph</source>
 <context>
     <name>SimpleTextEditor</name>
     <message>
-        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="193"/>
+        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="204"/>
         <source>Bold</source>
         <translation>Жирный</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="203"/>
+        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="214"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="213"/>
+        <location filename="../../3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp" line="224"/>
         <source>Underline</source>
         <translation>Подчёркнутый</translation>
     </message>

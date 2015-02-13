@@ -234,8 +234,8 @@ namespace {
 	/**
 	 * @brief Вспомогательные слова на разрывах реплик
 	 */
-	const QString DIALOG_BREAK = QApplication::translate("BusinessLogic::AbstarctExporter", "(MORE)");
-	const QString DIALOG_CONTINUED = " " + QApplication::translate("BusinessLogic::AbstarctExporter", "(cont'd)");
+	static const char* DIALOG_BREAK = QT_TRANSLATE_NOOP("BusinessLogic::AbstractExporter", "(MORE)");
+	static const char* DIALOG_CONTINUED = QT_TRANSLATE_NOOP("BusinessLogic::AbstractExporter", " (cont'd)");
 
 	/**
 	 * @brief Разбить текст по предложениям
@@ -446,7 +446,7 @@ namespace {
 				// ... вставляем строку ДАЛЬШЕ
 				//
 				::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
-				_destDocumentCursor.insertText(DIALOG_BREAK);
+				_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_BREAK));
 				//
 				// ... вставляем блок персонажа
 				//
@@ -455,7 +455,7 @@ namespace {
 				//
 				// ... и приписку (ПРОД.)
 				//
-				_destDocumentCursor.insertText(DIALOG_CONTINUED);
+				_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_CONTINUED));
 			}
 		}
 	}
@@ -509,7 +509,7 @@ namespace {
 			//
 			// ... и приписку (ПРОД.)
 			//
-			_sourceDocumentCursor.insertText(DIALOG_CONTINUED);
+			_sourceDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_CONTINUED));
 
 			//
 			// ... возвращаем целевой курсор к блоку реплики
@@ -583,7 +583,7 @@ namespace {
 					::insertLine(_destDocumentCursor,
 						::blockFormatForType(ScenarioBlockStyle::Parenthetical),
 						::charFormatForType(ScenarioBlockStyle::Parenthetical));
-					_destDocumentCursor.insertText(DIALOG_BREAK);
+					_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_BREAK));
 					--insertLines;
 				}
 
@@ -625,7 +625,7 @@ namespace {
 						::blockFormatForType(ScenarioBlockStyle::Character),
 						::charFormatForType(ScenarioBlockStyle::Character));
 					_destDocumentCursor.insertText(prevBlock.text().toUpper());
-					_destDocumentCursor.insertText(DIALOG_CONTINUED);
+					_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_CONTINUED));
 
 					//
 					// ... переводим курсор в конец
@@ -674,7 +674,7 @@ namespace {
 							::insertLine(_destDocumentCursor,
 								::blockFormatForType(ScenarioBlockStyle::Parenthetical),
 								::charFormatForType(ScenarioBlockStyle::Parenthetical));
-							_destDocumentCursor.insertText(DIALOG_BREAK);
+							_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_BREAK));
 
 							//
 							// ... идём до следующей страницы
@@ -702,7 +702,7 @@ namespace {
 								::blockFormatForType(ScenarioBlockStyle::Character),
 								::charFormatForType(ScenarioBlockStyle::Character));
 							_destDocumentCursor.insertText(prevBlock.text().toUpper());
-							_destDocumentCursor.insertText(DIALOG_CONTINUED);
+							_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_CONTINUED));
 						}
 						//
 						// ... перенос, совместно с ремаркой и именем персонажа
@@ -760,7 +760,7 @@ namespace {
 								::insertLine(_destDocumentCursor,
 									::blockFormatForType(ScenarioBlockStyle::Parenthetical),
 									::charFormatForType(ScenarioBlockStyle::Parenthetical));
-								_destDocumentCursor.insertText(DIALOG_BREAK);
+								_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_BREAK));
 								--insertLines;
 							}
 
