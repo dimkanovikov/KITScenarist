@@ -292,7 +292,7 @@ namespace {
 		//
 		// ... вставляем пустую строку, чтобы перейти на следующую страницу
 		//
-		if (_linesToEndOfPage <= 1) {
+		if (_linesToEndOfPage == 1) {
 			::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
 		}
 	}
