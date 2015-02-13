@@ -317,7 +317,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 	//
 	// Происходит ли обработка первого блока
 	//
-	bool firstBlockHandling = true;
+    bool firstBlockHandling = true;
 	//
 	// Необходимо ли изменить тип блока, в который вставляется текст
 	//
