@@ -15,13 +15,13 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	m_scene(new QGraphicsScene),
 	m_editor(_editor),
 	m_zoomRange(1),
-    m_gestureZoomInertionBreak(0)
+	m_gestureZoomInertionBreak(0)
 {
-    //
-    // Настраиваем лучшее опции прорисовки
-    //
-    setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+	//
+	// Настраиваем лучшее опции прорисовки
+	//
+	setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+//	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
 	//
 	// Отслеживаем жесты
@@ -169,9 +169,9 @@ void ScalableWrapper::paintEvent(QPaintEvent* _event)
 void ScalableWrapper::wheelEvent(QWheelEvent* _event)
 {
 #ifdef Q_OS_MAC
-    const qreal ANGLE_DIVIDER = 2.;
+	const qreal ANGLE_DIVIDER = 2.;
 #else
-    const qreal ANGLE_DIVIDER = 120.;
+	const qreal ANGLE_DIVIDER = 120.;
 #endif
 	const qreal ZOOM_COEFFICIENT_DIVIDER = 10.;
 
@@ -191,10 +191,10 @@ void ScalableWrapper::wheelEvent(QWheelEvent* _event)
 		}
 	}
 	//
-    // В противном случае прокручиваем редактор
+	// В противном случае прокручиваем редактор
 	//
 	else {
-        QGraphicsView::wheelEvent(_event);
+		QGraphicsView::wheelEvent(_event);
 	}
 }
 
@@ -289,6 +289,9 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 
 		menu->exec();
 		delete menu;
+
+		m_editor->clearFocus();
+		m_editor->setFocus();
 
 		//
 		// Событие перехвачено

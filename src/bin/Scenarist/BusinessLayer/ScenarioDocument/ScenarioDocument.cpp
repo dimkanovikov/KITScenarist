@@ -455,7 +455,8 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	//
 	// Прерываем ситуация, когда в редактор помещается документ, но для него уже создана модель
 	//
-	if (_charsRemoved == _charsAdded && !m_modelItems.isEmpty()) {
+	if (_position == 0 && _charsRemoved == _charsAdded
+		&& _charsAdded == m_document->characterCount() && !m_modelItems.isEmpty()) {
 		return;
 	}
 

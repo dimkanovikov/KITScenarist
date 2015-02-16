@@ -308,11 +308,11 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 	CompletableTextEdit::paintEvent(_event);
 
 	//
-	// Прорисовка номеров сцен, если необходимо
+	// Прорисовка дополнительных элементов редактора
 	//
-	if (m_showSceneNumbers) {
+	{
 		//
-		// Определить область прорисовки номеров
+		// Определить область прорисовки слева от текста
 		//
 		const int left = 0;
 		const int right = document()->rootFrame()->frameFormat().leftMargin() - 10;
@@ -320,14 +320,18 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 
 		QPainter painter(viewport());
 
-
 		QTextBlock block = document()->begin();
 		const QRectF viewportGeometry = viewport()->geometry();
 		const int leftDelta = -horizontalScrollBar()->value();
 
 		QTextCursor cursor(document());
 		while (block.isValid()) {
-			if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::TimeAndPlace) {
+			//
+			// Ситль текущего блока
+			//
+			const ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(block);
+
+			{
 				cursor.setPosition(block.position());
 				QRect cursorR = cursorRect(cursor);
 
@@ -340,20 +344,41 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 					&& cursorR.top() < viewportGeometry.bottom()) {
 
 					//
-					// Определим номер сцены
+					// Прорисовка символа пустой строки
 					//
-					QTextBlockUserData* textBlockData = block.userData();
-					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
-						const QString sceneNumber = QString::number(info->sceneNumber()) + ".";
-
+					if (block.text().isEmpty()
+						&& blockType != ScenarioBlockStyle::TimeAndPlace) {
 						//
-						// Определим область для отрисовки и выведем номер сцены в редактор
+						// Определим область для отрисовки и выведем символ в редактор
 						//
 						QPointF topLeft(left + leftDelta, cursorR.top());
 						QPointF bottomRight(right + leftDelta, cursorR.bottom());
 						QRectF rect(topLeft, bottomRight);
 						painter.setFont(cursor.charFormat().font());
-						painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, sceneNumber);
+						painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, "» ");
+					}
+
+					//
+					// Прорисовка номеров сцен, если необходимо
+					//
+					if (m_showSceneNumbers
+						&& blockType == ScenarioBlockStyle::TimeAndPlace) {
+						//
+						// Определим номер сцены
+						//
+						QTextBlockUserData* textBlockData = block.userData();
+						if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
+							const QString sceneNumber = QString::number(info->sceneNumber()) + ".";
+
+							//
+							// Определим область для отрисовки и выведем номер сцены в редактор
+							//
+							QPointF topLeft(left + leftDelta, cursorR.top());
+							QPointF bottomRight(right + leftDelta, cursorR.bottom());
+							QRectF rect(topLeft, bottomRight);
+							painter.setFont(cursor.charFormat().font());
+							painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, sceneNumber);
+						}
 					}
 				}
 			}
