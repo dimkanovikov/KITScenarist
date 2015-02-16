@@ -19,8 +19,8 @@ using namespace BusinessLogic;
 
 ScenarioXml::ScenarioXml(ScenarioDocument* _scenario) :
 	m_scenario(_scenario),
-	m_lastMimeFrom(-1),
-	m_lastMimeTo(-1)
+	m_lastMimeFrom(0),
+	m_lastMimeTo(0)
 {
 	Q_ASSERT(m_scenario);
 }
@@ -317,7 +317,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 	//
 	// Происходит ли обработка первого блока
 	//
-    bool firstBlockHandling = true;
+	bool firstBlockHandling = true;
 	//
 	// Необходимо ли изменить тип блока, в который вставляется текст
 	//
@@ -468,8 +468,9 @@ int ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelIt
 	//
 	// Если пользователь не пытается вставить данные на своё же место
 	//
-	if (insertPosition != m_lastMimeFrom
-		&& insertPosition != m_lastMimeTo) {
+	if (m_scenario->document()->isEmpty()
+		|| (insertPosition != m_lastMimeFrom
+			&& insertPosition != m_lastMimeTo)) {
 		//
 		// Начинаем операцию вставки
 		//

@@ -83,39 +83,7 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 	//
 	// Сохраняем информацию о титульном листе
 	//
-	Domain::Scenario* currentScenario = m_currentScenario->scenario();
-	bool isTitleListDataChanged = false;
-	if (currentScenario->name() != m_exportDialog->scenarioName()) {
-		currentScenario->setName(m_exportDialog->scenarioName());
-		emit scenarioNameChanged(currentScenario->name());
-		isTitleListDataChanged = true;
-	}
-	if (currentScenario->additionalInfo() != m_exportDialog->scenarioAdditionalInfo()) {
-		currentScenario->setAdditionalInfo(m_exportDialog->scenarioAdditionalInfo());
-		isTitleListDataChanged = true;
-	}
-	if (currentScenario->genre() != m_exportDialog->scenarioGenre()) {
-		currentScenario->setGenre(m_exportDialog->scenarioGenre());
-		isTitleListDataChanged = true;
-	}
-	if (currentScenario->author() != m_exportDialog->scenarioAuthor()) {
-		currentScenario->setAuthor(m_exportDialog->scenarioAuthor());
-		isTitleListDataChanged = true;
-	}
-	if (currentScenario->contacts() != m_exportDialog->scenarioContacts()) {
-		currentScenario->setContacts(m_exportDialog->scenarioContacts());
-		isTitleListDataChanged = true;
-	}
-	if (currentScenario->year() != m_exportDialog->scenarioYear()) {
-		currentScenario->setYear(m_exportDialog->scenarioYear());
-		isTitleListDataChanged = true;
-	}
-	//
-	// ... если есть изменения
-	//
-	if (isTitleListDataChanged) {
-		emit scenarioTitleListDataChanged();
-	}
+	saveTitleListInfo(m_currentScenario);
 
 	m_currentScenario = 0;
 }
@@ -230,10 +198,15 @@ void ExportManager::aboutExportStyleChanged(const QString& _styleName)
 void ExportManager::aboutPrintPreview()
 {
 	//
+	// Сохраняем информацию о титульном листе
+	//
+	saveTitleListInfo(m_currentScenario);
+
+	//
 	// Закрывать диалоговое окно нельзя, поэтому прячем его за границами экрана,
 	// а потом возвращаем на место
 	//
-    const QPoint POSITION_OUT_OF_SCREEN(10000, 10000);
+	const QPoint POSITION_OUT_OF_SCREEN(10000, 10000);
 	QPoint lastPos = m_exportDialog->pos();
 	m_exportDialog->move(POSITION_OUT_OF_SCREEN);
 	printPreviewScenario(m_currentScenario);
@@ -287,4 +260,44 @@ void ExportManager::initExportDialog(BusinessLogic::ScenarioDocument* _scenario)
 	m_exportDialog->setScenarioAuthor(currentScenario->author());
 	m_exportDialog->setScenarioContacts(currentScenario->contacts());
 	m_exportDialog->setScenarioYear(currentScenario->year());
+}
+
+void ExportManager::saveTitleListInfo(BusinessLogic::ScenarioDocument* _scenario)
+{
+	//
+	// Сохраняем информацию о титульном листе
+	//
+	Domain::Scenario* currentScenario = _scenario->scenario();
+	bool isTitleListDataChanged = false;
+	if (currentScenario->name() != m_exportDialog->scenarioName()) {
+		currentScenario->setName(m_exportDialog->scenarioName());
+		emit scenarioNameChanged(currentScenario->name());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->additionalInfo() != m_exportDialog->scenarioAdditionalInfo()) {
+		currentScenario->setAdditionalInfo(m_exportDialog->scenarioAdditionalInfo());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->genre() != m_exportDialog->scenarioGenre()) {
+		currentScenario->setGenre(m_exportDialog->scenarioGenre());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->author() != m_exportDialog->scenarioAuthor()) {
+		currentScenario->setAuthor(m_exportDialog->scenarioAuthor());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->contacts() != m_exportDialog->scenarioContacts()) {
+		currentScenario->setContacts(m_exportDialog->scenarioContacts());
+		isTitleListDataChanged = true;
+	}
+	if (currentScenario->year() != m_exportDialog->scenarioYear()) {
+		currentScenario->setYear(m_exportDialog->scenarioYear());
+		isTitleListDataChanged = true;
+	}
+	//
+	// ... если есть изменения
+	//
+	if (isTitleListDataChanged) {
+		emit scenarioTitleListDataChanged();
+	}
 }

@@ -262,8 +262,8 @@ void ScenarioManager::loadCurrentProject()
 		m_dataEditManager->setScenarioName(currentScenario->name());
 		m_dataEditManager->setScenarioSynopsis(currentScenario->synopsis());
 	}
-    m_textEditManager->setScenarioDocument(m_scenarioDraft->document());
-    m_textEditManager->setScenarioDocument(m_scenario->document());
+	m_textEditManager->setScenarioDocument(m_scenarioDraft->document());
+	m_textEditManager->setScenarioDocument(m_scenario->document());
 
 	//
 	// Возврат всех окон в исходное положение - навигатор на верх, данные сценария вперёд
@@ -832,6 +832,8 @@ void ScenarioManager::setWorkingMode(QObject* _sender)
 				m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
 				m_navigatorManager->clearSelection();
 			}
+
+			emit scenarioChanged();
 		}
 	}
 }

@@ -82,6 +82,11 @@ namespace ManagementLayer
 		 */
 		void initExportDialog(BusinessLogic::ScenarioDocument* _scenario);
 
+		/**
+		 * @brief Сохранить информацию о титульном листе, если изменилась
+		 */
+		void saveTitleListInfo(BusinessLogic::ScenarioDocument* _scenario);
+
 	private:
 		/**
 		 * @brief Текущий экспортируемый сценарий

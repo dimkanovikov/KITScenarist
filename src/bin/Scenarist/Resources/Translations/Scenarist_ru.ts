@@ -220,12 +220,12 @@
         <translation>Экспортировать сценарий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="240"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="319"/>
         <source>Additional:</source>
         <translation>Дополнительно:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="327"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="351"/>
         <source>DOCX</source>
         <translation></translation>
     </message>
@@ -275,32 +275,62 @@
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="253"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="237"/>
+        <source>Scenario name.</source>
+        <translation>Название сценария.</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="244"/>
         <source>Genre:</source>
         <translation>Жанр:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="266"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="254"/>
+        <source>Scenario genre.</source>
+        <translation>Жанр сценария.</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="261"/>
         <source>Author:</source>
         <translation>Автор:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="279"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="271"/>
+        <source>Scenario author.</source>
+        <translation>Автор сценария.</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="278"/>
         <source>Contacts:</source>
         <translation>Контакты:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="292"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="288"/>
+        <source>Contacts.</source>
+        <translation>Контакты.</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="295"/>
         <source>Year:</source>
         <translation>Год:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="390"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="305"/>
+        <source>Scenario wirting year.</source>
+        <translation>Год написания сценария.</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="312"/>
+        <source>Additional info about scenario.</source>
+        <translation>Дополнительная информация (оригинальный сценарий, экранизация и т.п.).</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="414"/>
         <source>Check page breaks</source>
         <translation>Корректировать текст на разрывах страниц</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="406"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="430"/>
         <source>Checking page breaks can increase scenario page numbers.</source>
         <translation>Корректировка текста на разрывах страниц может привести к увеличению кол-ва страниц сценария.</translation>
     </message>
@@ -310,12 +340,12 @@
         <translation>Формат:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="337"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="361"/>
         <source>RTF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="347"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="371"/>
         <source>PDF</source>
         <translation></translation>
     </message>
@@ -689,22 +719,22 @@
 <context>
     <name>ManagementLayer::ExportManager</name>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="68"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="47"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="68"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="47"/>
         <source>Please wait. Export can take few minutes.</source>
         <translation>Немного терпения. Экспорт может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="149"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="99"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="149"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="99"/>
         <source>Please wait. Preparing document to preview can take few minutes.</source>
         <translation>Немного терпения. Подготовка сценария к предпросмотру может длиться несколько минут.</translation>
     </message>
@@ -761,58 +791,58 @@
 <context>
     <name>ManagementLayer::ScenarioManager</name>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="469"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="470"/>
         <source>Characters to delete</source>
         <translation>Будут удалены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="475"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="476"/>
         <source>Characters to save</source>
         <translation>Будут сохранены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="477"/>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="545"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="478"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="546"/>
         <source>Apply refreshing</source>
         <translation>Применить результаты поиска</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="536"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="537"/>
         <source>Locations to delete</source>
         <translation>Будут удалены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="542"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="543"/>
         <source>Locations to save</source>
         <translation>Будут сохранены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="581"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="582"/>
         <source>Chron.</source>
         <translation>Хрон.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="712"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="713"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="713"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="714"/>
         <source>Edit Scenario Text</source>
         <translation>Редактирование текста сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="715"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="716"/>
         <source>Data</source>
         <translation>Данные</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="716"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="717"/>
         <source>Edit Scenario Data</source>
         <translation>Редактирование информации о сценарии</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="729"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="730"/>
         <source>On/off Fullscreen Mode</source>
         <translation>Включить/выключить полноэкранный режим</translation>
     </message>
@@ -2067,37 +2097,37 @@ Paragraph</source>
         <translation type="obsolete">Сцен: </translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="150"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="155"/>
         <source>Draft:</source>
         <translation>Черновик:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="152"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="157"/>
         <source>Scenes:</source>
         <translation>Сцен:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="154"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="159"/>
         <source>Scenes Count</source>
         <translation>Количество сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="157"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="162"/>
         <source>Add Scenario Item After Selected</source>
         <translation>Добавить элемент сценария после выделенного</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="160"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="165"/>
         <source>Remove Selected Scenario Item</source>
         <translation>Удалить выделенный элемент сценария</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="165"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="170"/>
         <source>Show/hide draft</source>
         <translation>Скрыть/показать черновик</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="168"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="173"/>
         <source>Show/hide scene note</source>
         <translation>Скрыть/показать заметки к сцене</translation>
     </message>

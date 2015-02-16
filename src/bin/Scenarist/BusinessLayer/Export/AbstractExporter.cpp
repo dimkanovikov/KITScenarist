@@ -924,15 +924,6 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 		::insertLine(destDocumentCursor, centerFormat, titleFormat);
 		destDocumentCursor.insertText(_exportParameters.scenarioName);
 		//
-		// Доп. инфо [через одну под предыдущим]
-		//
-		if (!_exportParameters.scenarioAdditionalInfo.isEmpty()) {
-			::insertLine(destDocumentCursor, centerFormat, titleFormat);
-			::insertLine(destDocumentCursor, centerFormat, titleFormat);
-			destDocumentCursor.insertText(_exportParameters.scenarioAdditionalInfo);
-			currentLineNumber += 2;
-		}
-		//
 		// Жанр [через одну под предыдущим]
 		//
 		if (!_exportParameters.scenarioGenre.isEmpty()) {
@@ -948,6 +939,15 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 			::insertLine(destDocumentCursor, centerFormat, titleFormat);
 			::insertLine(destDocumentCursor, centerFormat, titleFormat);
 			destDocumentCursor.insertText(_exportParameters.scenarioAuthor);
+			currentLineNumber += 2;
+		}
+		//
+		// Доп. инфо [через одну под предыдущим]
+		//
+		if (!_exportParameters.scenarioAdditionalInfo.isEmpty()) {
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+			destDocumentCursor.insertText(_exportParameters.scenarioAdditionalInfo);
 			currentLineNumber += 2;
 		}
 		//

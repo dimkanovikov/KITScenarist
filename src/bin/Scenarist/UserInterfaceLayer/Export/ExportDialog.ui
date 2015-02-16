@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>474</width>
-    <height>550</height>
+    <height>562</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -232,20 +232,11 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="name"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="nameLabel_2">
-            <property name="text">
-             <string>Additional:</string>
-            </property>
-            <property name="buddy">
-             <cstring>additionalInfo</cstring>
+           <widget class="QLineEdit" name="name">
+            <property name="toolTip">
+             <string>Scenario name.</string>
             </property>
            </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="additionalInfo"/>
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="nameLabel_3">
@@ -258,7 +249,11 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLineEdit" name="genre"/>
+           <widget class="QLineEdit" name="genre">
+            <property name="toolTip">
+             <string>Scenario genre.</string>
+            </property>
+           </widget>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="nameLabel_4">
@@ -271,9 +266,13 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="author"/>
+           <widget class="QLineEdit" name="author">
+            <property name="toolTip">
+             <string>Scenario author.</string>
+            </property>
+           </widget>
           </item>
-          <item row="4" column="0">
+          <item row="6" column="0">
            <widget class="QLabel" name="nameLabel_5">
             <property name="text">
              <string>Contacts:</string>
@@ -283,10 +282,14 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="contacts"/>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="contacts">
+            <property name="toolTip">
+             <string>Contacts.</string>
+            </property>
+           </widget>
           </item>
-          <item row="5" column="0">
+          <item row="7" column="0">
            <widget class="QLabel" name="nameLabel_6">
             <property name="text">
              <string>Year:</string>
@@ -296,8 +299,29 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="year"/>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="year">
+            <property name="toolTip">
+             <string>Scenario wirting year.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="additionalInfo">
+            <property name="toolTip">
+             <string>Additional info about scenario.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="nameLabel_2">
+            <property name="text">
+             <string>Additional:</string>
+            </property>
+            <property name="buddy">
+             <cstring>additionalInfo</cstring>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -439,6 +463,7 @@
   <tabstop>docx</tabstop>
   <tabstop>rtf</tabstop>
   <tabstop>pdf</tabstop>
+  <tabstop>checkPageBreaks</tabstop>
   <tabstop>showAdditional</tabstop>
   <tabstop>additionalSettings</tabstop>
   <tabstop>styles</tabstop>
@@ -447,12 +472,13 @@
   <tabstop>scenesPrefix</tabstop>
   <tabstop>printTitle</tabstop>
   <tabstop>name</tabstop>
-  <tabstop>additionalInfo</tabstop>
   <tabstop>genre</tabstop>
   <tabstop>author</tabstop>
+  <tabstop>additionalInfo</tabstop>
   <tabstop>contacts</tabstop>
   <tabstop>year</tabstop>
   <tabstop>cancel</tabstop>
+  <tabstop>printPreview</tabstop>
   <tabstop>exportTo</tabstop>
  </tabstops>
  <resources>

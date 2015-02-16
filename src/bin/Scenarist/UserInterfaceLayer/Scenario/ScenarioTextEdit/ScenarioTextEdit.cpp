@@ -346,8 +346,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 					//
 					// Прорисовка символа пустой строки
 					//
-					if (block.text().isEmpty()
-						&& blockType != ScenarioBlockStyle::TimeAndPlace) {
+					if (block.text().simplified().isEmpty()) {
 						//
 						// Определим область для отрисовки и выведем символ в редактор
 						//
@@ -357,27 +356,31 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 						painter.setFont(cursor.charFormat().font());
 						painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, "» ");
 					}
-
 					//
-					// Прорисовка номеров сцен, если необходимо
+					// Остальные декорации
 					//
-					if (m_showSceneNumbers
-						&& blockType == ScenarioBlockStyle::TimeAndPlace) {
+					else {
 						//
-						// Определим номер сцены
+						// Прорисовка номеров сцен, если необходимо
 						//
-						QTextBlockUserData* textBlockData = block.userData();
-						if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
-							const QString sceneNumber = QString::number(info->sceneNumber()) + ".";
+						if (m_showSceneNumbers
+							&& blockType == ScenarioBlockStyle::TimeAndPlace) {
+							//
+							// Определим номер сцены
+							//
+							QTextBlockUserData* textBlockData = block.userData();
+							if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
+								const QString sceneNumber = QString::number(info->sceneNumber()) + ".";
 
-							//
-							// Определим область для отрисовки и выведем номер сцены в редактор
-							//
-							QPointF topLeft(left + leftDelta, cursorR.top());
-							QPointF bottomRight(right + leftDelta, cursorR.bottom());
-							QRectF rect(topLeft, bottomRight);
-							painter.setFont(cursor.charFormat().font());
-							painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, sceneNumber);
+								//
+								// Определим область для отрисовки и выведем номер сцены в редактор
+								//
+								QPointF topLeft(left + leftDelta, cursorR.top());
+								QPointF bottomRight(right + leftDelta, cursorR.bottom());
+								QRectF rect(topLeft, bottomRight);
+								painter.setFont(cursor.charFormat().font());
+								painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, sceneNumber);
+							}
 						}
 					}
 				}
