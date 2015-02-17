@@ -256,7 +256,8 @@ void StartUpManager::checkNewVersion()
 
 
 	QString url
-			= QString("http://dimkanovikov.pro/kit/scenarist/app_updates.php?system_type=%1&system_name=%2&uuid=%3")
+			= QString("http://dimkanovikov.pro/kit/scenarist/app_updates.php?"
+					  "system_type=%1&system_name=%2&uuid=%3&application_version=%4")
 			  .arg(
 #ifdef Q_OS_WIN
 				  "windows"
@@ -267,7 +268,8 @@ void StartUpManager::checkNewVersion()
 #endif
 				  )
 			  .arg(QString(QSysInfo::prettyProductName().toUtf8().toPercentEncoding()))
-			  .arg(uuid);
+			  .arg(uuid)
+			  .arg(QApplication::applicationVersion());
 
 	QNetworkRequest request = QNetworkRequest(QUrl(url));
 	manager->get(request);
