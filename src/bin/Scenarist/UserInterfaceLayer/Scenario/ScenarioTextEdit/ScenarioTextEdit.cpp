@@ -27,6 +27,14 @@
 using UserInterface::ScenarioTextEdit;
 using namespace BusinessLogic;
 
+namespace {
+	/**
+	 * @brief Флаг для перерисовки текста редактора при первом отображении
+	 * @note см. paintEvent для детальной информации
+	 */
+	static bool s_firstRepaintUpdate = true;
+}
+
 
 ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	CompletableTextEdit(_parent),
@@ -288,24 +296,30 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 {
 	//
-	// FIXME:
 	// Если в документе формат первого блока имеет отступ сверху, это приводит
 	// к некорректной прорисовке текста, это баг Qt...
 	// Поэтому приходится отлавливать этот момент и вручную корректировать
 	//
-//	QTextCursor cursor(document());
-//	if (verticalScrollBar()->value() == 0
-//		&& document() != 0
-//		&& !document()->isEmpty()
-//		&& cursorRect(cursor).top() > 30) {
-//		cursor.beginEditBlock();
-//		cursor.setBlockFormat(cursor.blockFormat());
-//		cursor.movePosition(QTextCursor::End);
-//		cursor.setBlockFormat(cursor.blockFormat());
-//		cursor.endEditBlock();
-//	}
+	if (isVisible() && s_firstRepaintUpdate) {
+		s_firstRepaintUpdate = false;
+
+		QTextCursor cursor(document());
+		if (verticalScrollBar()->value() == 0
+			&& document() != 0
+			&& !document()->isEmpty()
+			&& cursorRect(cursor).top() > 30) {
+			cursor.beginEditBlock();
+			cursor.setBlockFormat(cursor.blockFormat());
+			cursor.movePosition(QTextCursor::End);
+			cursor.setBlockFormat(cursor.blockFormat());
+			cursor.endEditBlock();
+		}
+		document()->undo();
+	}
+
 
 	CompletableTextEdit::paintEvent(_event);
+
 
 	//
 	// Прорисовка дополнительных элементов редактора
