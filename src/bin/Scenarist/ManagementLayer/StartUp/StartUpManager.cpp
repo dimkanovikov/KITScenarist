@@ -179,7 +179,11 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 #ifdef Q_OS_WIN
 						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-" + maxVersion + ".exe\" "
 #elif defined Q_OS_LINUX
-						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/linux/\" "
+#ifdef Q_PROCESSOR_X86_64
+						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/linux/scenarist-setup-" + maxVersion + "_amd64.deb\" "
+#else
+						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/linux/scenarist-setup-" + maxVersion + "_i386.deb\" "
+#endif
 #elif defined Q_OS_MAC
 						+ "<a href=\"http://dimkanovikov.pro/kit/scenarist/downloads/mac/scenarist-setup-" + maxVersion + ".dmg\" "
 #endif
