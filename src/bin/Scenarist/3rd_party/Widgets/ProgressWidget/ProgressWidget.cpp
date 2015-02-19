@@ -1,5 +1,6 @@
 #include "ProgressWidget.h"
 
+#include <QApplication>
 #include <QGridLayout>
 #include <QLabel>
 #include <QMovie>
@@ -36,4 +37,10 @@ void ProgressWidget::showProgress(const QString& _title, const QString& _descrip
 	m_description->setText(_description);
 
 	show();
+}
+
+void ProgressWidget::finish()
+{
+	close();
+	QApplication::alert(parentWidget());
 }

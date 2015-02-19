@@ -77,7 +77,7 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 		//
 		// Закроем уведомление
 		//
-		progress.close();
+		progress.finish();
 	}
 
 	//
@@ -104,7 +104,7 @@ void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scena
 	//
 	// Закроем уведомление
 	//
-	progress.close();
+	progress.finish();
 }
 
 void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)

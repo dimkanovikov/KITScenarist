@@ -569,7 +569,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Закроем уведомление
 	//
-	progress.close();
+	progress.finish();
 }
 
 void ApplicationManager::closeCurrentProject()

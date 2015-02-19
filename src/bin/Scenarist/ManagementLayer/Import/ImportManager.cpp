@@ -164,7 +164,7 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 		//
 		// Закроем уведомление
 		//
-		progress.close();
+		progress.finish();
 	}
 }
 

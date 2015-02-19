@@ -21,6 +21,11 @@ public:
 	 */
 	void showProgress(const QString& _title, const QString& _description);
 
+	/**
+	 * @brief Скрыть виджет и просигнализировать пользователю, о том, что операция завершилась
+	 */
+	void finish();
+
 private:
 	/**
 	 * @brief Заголовок
