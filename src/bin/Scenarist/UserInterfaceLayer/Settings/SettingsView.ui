@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>832</width>
-    <height>504</height>
+    <width>878</width>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -126,7 +126,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>4</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -1498,31 +1498,31 @@
            </item>
            <item row="1" column="0">
             <widget class="QWidget" name="chronometryPageWidget" native="true">
-             <layout class="QGridLayout" name="gridLayout_16">
+             <layout class="QGridLayout" name="gridLayout_15">
+              <item row="0" column="2">
+               <widget class="QWidget" name="widget_2" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>1</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="1">
                <widget class="QGroupBox" name="countersGroup">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="title">
                  <string>Counters</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_15">
-                 <item row="3" column="0">
-                  <spacer name="verticalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
+                <layout class="QGridLayout" name="gridLayout_4">
                  <item row="2" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout_2">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
                    <item>
                     <widget class="QCheckBox" name="simbolsCounter">
                      <property name="text">
@@ -1557,18 +1557,8 @@
                    </item>
                   </layout>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QCheckBox" name="wordsCounter">
-                   <property name="text">
-                    <string>Words Counter</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="0">
                   <layout class="QHBoxLayout" name="horizontalLayout">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
                    <item>
                     <widget class="QCheckBox" name="pagesCounter">
                      <property name="text">
@@ -1603,21 +1593,28 @@
                    </item>
                   </layout>
                  </item>
+                 <item row="1" column="0">
+                  <widget class="QCheckBox" name="wordsCounter">
+                   <property name="text">
+                    <string>Words Counter</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <spacer name="verticalSpacer_5">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
                 </layout>
                </widget>
-              </item>
-              <item row="0" column="2">
-               <spacer name="horizontalSpacer_5">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
               <item row="0" column="0">
                <widget class="QGroupBox" name="chronometryGroup">
@@ -1627,29 +1624,206 @@
                 <property name="checkable">
                  <bool>true</bool>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_4">
-                 <item row="5" column="0">
-                  <widget class="QGroupBox" name="configurableChronometryGroup">
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                   <item>
+                    <widget class="QRadioButton" name="pagesChronometry">
+                     <property name="text">
+                      <string>Pages Chronometry</string>
+                     </property>
+                     <property name="checked">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_29">
+                     <property name="maximumSize">
+                      <size>
+                       <width>16</width>
+                       <height>16</height>
+                      </size>
+                     </property>
+                     <property name="cursor">
+                      <cursorShape>WhatsThisCursor</cursorShape>
+                     </property>
+                     <property name="toolTip">
+                      <string>For standard style and compatible</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="pixmap">
+                      <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                     </property>
+                     <property name="scaledContents">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_18">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="pagesChronometryGroup">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="title">
+                    <string/>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_8">
+                    <item>
+                     <widget class="QLabel" name="label_4">
+                      <property name="text">
+                       <string>Page</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_27">
+                      <property name="text">
+                       <string>=</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="pagesChronometrySeconds">
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_28">
+                      <property name="text">
+                       <string>Seconds</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_6">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::MinimumExpanding</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>0</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="charactersChronometry">
+                   <property name="text">
+                    <string>Characters Chronometry</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="charactersChronometryGroup">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
+                   <property name="title">
+                    <string/>
                    </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>340</width>
-                     <height>150</height>
-                    </size>
+                   <layout class="QGridLayout" name="gridLayout_14">
+                    <item row="0" column="0">
+                     <widget class="QSpinBox" name="charactersChronometryCharacters">
+                      <property name="maximum">
+                       <number>100000</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QLabel" name="label_6">
+                      <property name="text">
+                       <string>=</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="3">
+                     <widget class="QSpinBox" name="charactersChronometrySeconds">
+                      <property name="maximum">
+                       <number>1000</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="4">
+                     <widget class="QLabel" name="label_7">
+                      <property name="text">
+                       <string>Seconds</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="1">
+                     <widget class="QLabel" name="label_5">
+                      <property name="text">
+                       <string>Characters</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0" colspan="7">
+                     <widget class="QCheckBox" name="charactersChronometryConsiderSpaces">
+                      <property name="text">
+                       <string>Consider Spaces</string>
+                      </property>
+                      <property name="checked">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="5" colspan="2">
+                     <spacer name="horizontalSpacer_7">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::MinimumExpanding</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>0</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="configurableChronometry">
+                   <property name="text">
+                    <string>Configurable Chronometry</string>
                    </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>340</width>
-                     <height>150</height>
-                    </size>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="configurableChronometryGroup">
+                   <property name="enabled">
+                    <bool>false</bool>
                    </property>
                    <property name="title">
                     <string/>
@@ -1853,210 +2027,18 @@ Paragraph</string>
                    </layout>
                   </widget>
                  </item>
-                 <item row="3" column="0">
-                  <widget class="QGroupBox" name="charactersChronometryGroup">
-                   <property name="title">
-                    <string/>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_14">
-                    <item row="0" column="0">
-                     <widget class="QSpinBox" name="charactersChronometryCharacters">
-                      <property name="maximum">
-                       <number>100000</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="2">
-                     <widget class="QLabel" name="label_6">
-                      <property name="text">
-                       <string>=</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="3">
-                     <widget class="QSpinBox" name="charactersChronometrySeconds">
-                      <property name="maximum">
-                       <number>1000</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="4">
-                     <widget class="QLabel" name="label_7">
-                      <property name="text">
-                       <string>Seconds</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1">
-                     <widget class="QLabel" name="label_5">
-                      <property name="text">
-                       <string>Characters</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0" colspan="7">
-                     <widget class="QCheckBox" name="charactersChronometryConsiderSpaces">
-                      <property name="text">
-                       <string>Consider Spaces</string>
-                      </property>
-                      <property name="checked">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="5" colspan="2">
-                     <spacer name="horizontalSpacer_7">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::MinimumExpanding</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>0</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QRadioButton" name="charactersChronometry">
-                   <property name="text">
-                    <string>Characters Chronometry</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QGroupBox" name="pagesChronometryGroup">
-                   <property name="title">
-                    <string/>
-                   </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_7">
-                    <item>
-                     <widget class="QLabel" name="label_4">
-                      <property name="text">
-                       <string>Page</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_27">
-                      <property name="text">
-                       <string>=</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="pagesChronometrySeconds">
-                      <property name="maximum">
-                       <number>100</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_28">
-                      <property name="text">
-                       <string>Seconds</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_6">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::MinimumExpanding</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>0</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QRadioButton" name="configurableChronometry">
-                   <property name="text">
-                    <string>Configurable Chronometry</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <layout class="QHBoxLayout" name="horizontalLayout_8">
-                   <item>
-                    <widget class="QRadioButton" name="pagesChronometry">
-                     <property name="text">
-                      <string>Pages Chronometry</string>
-                     </property>
-                     <property name="checked">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_29">
-                     <property name="maximumSize">
-                      <size>
-                       <width>16</width>
-                       <height>16</height>
-                      </size>
-                     </property>
-                     <property name="cursor">
-                      <cursorShape>WhatsThisCursor</cursorShape>
-                     </property>
-                     <property name="toolTip">
-                      <string>For standard style and compatible</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="pixmap">
-                      <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
-                     </property>
-                     <property name="scaledContents">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_18">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
-                 </item>
                 </layout>
                </widget>
               </item>
               <item row="1" column="0">
-               <spacer name="verticalSpacer_5">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+               <widget class="QWidget" name="widget" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>1</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -2240,7 +2222,6 @@ Paragraph</string>
   <tabstop>chronometryGroup</tabstop>
   <tabstop>pagesChronometry</tabstop>
   <tabstop>pagesChronometrySeconds</tabstop>
-  <tabstop>charactersChronometry</tabstop>
   <tabstop>charactersChronometryCharacters</tabstop>
   <tabstop>charactersChronometrySeconds</tabstop>
   <tabstop>charactersChronometryConsiderSpaces</tabstop>

@@ -35,6 +35,16 @@ private slots:
 	 */
 	void aboutFindPrev();
 
+	/**
+	 * @brief Заменить текущий и перейти к следующему
+	 */
+	void aboutReplaceOne();
+
+	/**
+	 * @brief Заменить все
+	 */
+	void aboutReplaceAll();
+
 private:
 	/**
 	 * @brief Поиск текста в заданном направлении
@@ -48,6 +58,11 @@ private:
 	QTextEdit* m_editor;
 
 	/**
+	 * @brief Поле для ввода искомого текста
+	 */
+	QLineEdit* m_searchText;
+
+	/**
 	 * @brief Перейти к предыдущему совпадению
 	 */
 	QPushButton* m_prevMatch;
@@ -58,9 +73,19 @@ private:
 	QPushButton* m_nextMatch;
 
 	/**
-	 * @brief Поле для ввода искомого текста
+	 * @brief Поле для ввода текста замены
 	 */
-	QLineEdit* m_searchText;
+	QLineEdit* m_replaceText;
+
+	/**
+	 * @brief Кнопка замены текущего совпадение и перехода к следующему
+	 */
+	QPushButton* m_replaceOne;
+
+	/**
+	 * @brief Кнопка замены всех совпадений
+	 */
+	QPushButton* m_replaceAll;
 
 	/**
 	 * @brief Последний искомый текст
