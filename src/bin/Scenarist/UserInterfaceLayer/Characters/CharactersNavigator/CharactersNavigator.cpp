@@ -104,7 +104,8 @@ void CharactersNavigator::initView()
 	m_addCharacter->setToolTip(tr("Create New Character"));
 
 	m_removeCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
-	m_removeCharacter->setToolTip(tr("Remove Selected Character"));
+	m_removeCharacter->setToolTip(tr("Remove Selected Character") + " (Del)");
+	m_removeCharacter->setShortcut(QKeySequence("Delete"));
 
 	m_refreshCharacters->setIcon(QIcon(":/Graphics/Icons/Editing/refresh.png"));
 	m_refreshCharacters->setToolTip(tr("Find All Characters from Scenario"));

@@ -98,7 +98,8 @@ void LocationsNavigator::initView()
 	m_addLocation->setToolTip(tr("Create New Location"));
 
 	m_removeLocation->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
-	m_removeLocation->setToolTip(tr("Remove Selected Location"));
+	m_removeLocation->setToolTip(tr("Remove Selected Location") + " (Del)");
+	m_removeLocation->setShortcut(QKeySequence("Delete"));
 
 	m_refreshLocations->setIcon(QIcon(":/Graphics/Icons/Editing/refresh.png"));
 	m_refreshLocations->setToolTip(tr("Find All Locations From Scenario"));
