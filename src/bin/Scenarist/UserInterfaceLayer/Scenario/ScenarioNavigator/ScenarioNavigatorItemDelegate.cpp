@@ -75,10 +75,11 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// Рисуем
 	//
+	const int TREE_INDICATOR_WIDTH = 18;
 	const int MARGIN = 2;
 	const int RIGHT_MARGIN = 12;
 	const int ITEMS_SPACING = 4;
-	const int TEXT_LINE_HEIGHT = opt.fontMetrics.height();
+	const int TEXT_LINE_HEIGHT = _painter->fontMetrics().height();
 	//
 	// ... фон
 	//
@@ -108,9 +109,9 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 			BusinessLogic::ChronometerFacade::chronometryUsed()
 			? "(" + BusinessLogic::ChronometerFacade::secondsToTime(duration)+ ") "
 			: "";
-	const int chronometryRectWidth = opt.fontMetrics.width(chronometry);
+	const int chronometryRectWidth = _painter->fontMetrics().width(chronometry);
 	const QRect chronometryRect(
-		opt.rect.right() - chronometryRectWidth - ITEMS_SPACING - RIGHT_MARGIN,
+		TREE_INDICATOR_WIDTH + opt.rect.width() - chronometryRectWidth - ITEMS_SPACING - RIGHT_MARGIN,
 		MARGIN,
 		chronometryRectWidth,
 		TEXT_LINE_HEIGHT
@@ -136,7 +137,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 			header = sceneNumber.toString() + ". " + header;
 		}
 	}
-	header = opt.fontMetrics.elidedText(header, Qt::ElideRight, headerRect.width());
+	header = _painter->fontMetrics().elidedText(header, Qt::ElideRight, headerRect.width());
 	_painter->drawText(headerRect, header);
 	//
 	// ... описание
