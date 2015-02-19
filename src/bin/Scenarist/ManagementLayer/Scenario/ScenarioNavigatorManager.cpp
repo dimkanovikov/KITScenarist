@@ -92,6 +92,16 @@ void ScenarioNavigatorManager::clearSelection()
 	m_navigator->clearSelection();
 }
 
+void ScenarioNavigatorManager::setDraftVisible(bool _visible)
+{
+	m_navigator->setDraftVisible(_visible);
+}
+
+void ScenarioNavigatorManager::setNoteVisible(bool _visible)
+{
+	m_navigator->setNoteVisible(_visible);
+}
+
 void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
 {
 	m_addItemDialog->clearText();

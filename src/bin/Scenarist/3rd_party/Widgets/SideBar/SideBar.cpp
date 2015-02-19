@@ -36,7 +36,7 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 {
 	QPainter p(this);
 
-	p.fillRect(event->rect(), QBrush(QColor(32, 37, 41)));
+	p.fillRect(event->rect(), QBrush(QColor(64, 66, 68)));
 	p.setPen(QColor(95, 95, 95));
 	p.drawLine(event->rect().topRight(), event->rect().bottomRight());
 
@@ -50,8 +50,8 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 
 		if(action->isChecked())
 		{
-			p.setOpacity(0.5);
-			p.fillRect(actionRect, QColor(19, 19, 19));
+//			p.setOpacity(0.5);
+			p.fillRect(actionRect, QColor(38, 40, 42));
 			p.setPen(QColor(9, 9, 9));
 			p.drawLine(actionRect.topLeft(), actionRect.topRight());
 			p.setOpacity(1);
@@ -85,7 +85,7 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 		}
 		// Если действие неактивно
 		if (!action->isChecked()) {
-			p.setOpacity(0.5);
+			p.setOpacity(0.4);
 		}
 		// Рисуем иконку
 		QIcon actionIcon(QPixmap::fromImage(actionImage));

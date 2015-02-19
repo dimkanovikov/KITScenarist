@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QModelIndex>
 
+class FlatButton;
 class QAbstractItemModel;
 class QLabel;
-class QToolButton;
 class QTreeView;
 
 namespace UserInterface
@@ -76,6 +76,16 @@ namespace UserInterface
 		 * @brief Убрать выделение
 		 */
 		void clearSelection();
+
+		/**
+		 * @brief Установить видимость черновика
+		 */
+		void setDraftVisible(bool _visible);
+
+		/**
+		 * @brief Установить видимость заметок
+		 */
+		void setNoteVisible(bool _visible);
 
 	signals:
 		/**
@@ -165,12 +175,12 @@ namespace UserInterface
 		/**
 		 * @brief Кнопка удаления локации
 		 */
-		QToolButton* m_addItem;
+		FlatButton* m_addItem;
 
 		/**
 		 * @brief Кнопка обновления списка локаций
 		 */
-		QToolButton* m_removeItem;
+		FlatButton* m_removeItem;
 
 		/**
 		 * @brief Разделитель панели инструментов
@@ -180,12 +190,12 @@ namespace UserInterface
 		/**
 		 * @brief Кнопка отображения/сокрытия черновика
 		 */
-		QToolButton* m_showDraft;
+		FlatButton* m_showDraft;
 
 		/**
 		 * @brief Кнопка отображения/сокрытия примечания к сцене
 		 */
-		QToolButton* m_showNote;
+		FlatButton* m_showNote;
 
 		/**
 		 * @brief Окончание панели инструментов

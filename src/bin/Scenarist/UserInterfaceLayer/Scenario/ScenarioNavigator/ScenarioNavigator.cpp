@@ -3,10 +3,11 @@
 #include "ScenarioNavigatorItemDelegate.h"
 #include "ScenarioNavigatorProxyStyle.h"
 
+#include <3rd_party/Widgets/FlatButton/FlatButton.h>
+
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
-#include <QToolButton>
 #include <QTreeView>
 #include <QVBoxLayout>
 
@@ -20,11 +21,11 @@ ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
 	m_draftTitle(new QLabel(this)),
 	m_scenesCountTitle(new QLabel(this)),
 	m_scenesCount(new QLabel(this)),
-	m_addItem(new QToolButton(this)),
-	m_removeItem(new QToolButton(this)),
+	m_addItem(new FlatButton(this)),
+	m_removeItem(new FlatButton(this)),
 	m_middleTitle(new QLabel(this)),
-	m_showDraft(new QToolButton(this)),
-	m_showNote(new QToolButton(this)),
+	m_showDraft(new FlatButton(this)),
+	m_showNote(new FlatButton(this)),
 	m_endTitle(new QLabel(this)),
 	m_navigationTree(new QTreeView(this)),
 	m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this))
@@ -97,6 +98,18 @@ void ScenarioNavigator::clearSelection()
 	m_navigationTree->selectionModel()->clearSelection();
 }
 
+void ScenarioNavigator::setDraftVisible(bool _visible)
+{
+	m_showDraft->setChecked(_visible);
+	m_showDraft->repaint();
+}
+
+void ScenarioNavigator::setNoteVisible(bool _visible)
+{
+	m_showNote->setChecked(_visible);
+	m_showNote->repaint();
+}
+
 bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 {
 	bool isEventFiltered = false;
@@ -158,19 +171,21 @@ void ScenarioNavigator::initView()
 	m_scenesCount->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_scenesCount->setToolTip(tr("Scenes Count"));
 
-	m_addItem->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
+	m_addItem->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_addItem->setToolTip(tr("Add Scenario Item After Selected"));
 
-	m_removeItem->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
+	m_removeItem->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
 	m_removeItem->setToolTip(tr("Remove Selected Scenario Item"));
 
 	m_middleTitle->setFixedWidth(1);
 
-	m_showDraft->setIcon(QIcon(":/Graphics/Icons/Editing/draft.png"));
+	m_showDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"));
 	m_showDraft->setToolTip(tr("Show/hide draft"));
+	m_showDraft->setCheckable(true);
 
-	m_showNote->setIcon(QIcon(":/Graphics/Icons/Editing/note.png"));
+	m_showNote->setIcons(QIcon(":/Graphics/Icons/Editing/note.png"));
 	m_showNote->setToolTip(tr("Show/hide scene note"));
+	m_showNote->setCheckable(true);
 
 	m_endTitle->setFixedWidth(1);
 

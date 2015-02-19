@@ -776,7 +776,7 @@ void ApplicationManager::reloadApplicationSettings()
 			palette.setColor(QPalette::Disabled, QPalette::Base, QColor("#333333"));
 			palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
 
-			palette.setColor(QPalette::Highlight, QColor(142,45,197));
+			palette.setColor(QPalette::Highlight, QColor("#2b78da"));
 			palette.setColor(QPalette::HighlightedText, QColor(255,255,255));
 
 			palette.setColor(QPalette::WindowText, QColor("#EBEBEB"));

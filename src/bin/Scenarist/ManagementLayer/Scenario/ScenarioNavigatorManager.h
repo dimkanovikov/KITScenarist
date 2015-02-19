@@ -50,6 +50,16 @@ namespace ManagementLayer
 		 */
 		void clearSelection();
 
+		/**
+		 * @brief Установить видимость черновика
+		 */
+		void setDraftVisible(bool _visible);
+
+		/**
+		 * @brief Установить видимость заметок
+		 */
+		void setNoteVisible(bool _visible);
+
 	signals:
 		/**
 		 * @brief Запрос на добавление элемента

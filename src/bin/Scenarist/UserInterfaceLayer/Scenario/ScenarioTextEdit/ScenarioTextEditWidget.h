@@ -3,9 +3,9 @@
 
 #include <QFrame>
 
+class FlatButton;
 class QComboBox;
 class QLabel;
-class QToolButton;
 class ScalableWrapper;
 class SearchWidget;
 
@@ -209,22 +209,22 @@ namespace UserInterface
 		/**
 		 * @brief Кнопка отмены действия
 		 */
-		QToolButton* m_undo;
+		FlatButton* m_undo;
 
 		/**
 		 * @brief Кнопка повтора действия
 		 */
-		QToolButton* m_redo;
+		FlatButton* m_redo;
 
 		/**
 		 * @brief Кнопка панели поиска
 		 */
-		QToolButton* m_search;
+		FlatButton* m_search;
 
 		/**
 		 * @brief Кнопка панели быстрого форматирования
 		 */
-		QToolButton* m_fastFormat;
+		FlatButton* m_fastFormat;
 
 		/**
 		 * @brief Хронометраж сценария

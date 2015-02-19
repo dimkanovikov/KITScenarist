@@ -126,7 +126,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>0</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -2081,7 +2081,7 @@ Paragraph</string>
             <number>0</number>
            </property>
            <item row="0" column="0">
-            <widget class="QToolButton" name="newStyle">
+            <widget class="FlatButton" name="newStyle">
              <property name="toolTip">
               <string>Add Style</string>
              </property>
@@ -2095,7 +2095,7 @@ Paragraph</string>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QToolButton" name="editStyle">
+            <widget class="FlatButton" name="editStyle">
              <property name="toolTip">
               <string>Edit Selected Style</string>
              </property>
@@ -2109,7 +2109,7 @@ Paragraph</string>
             </widget>
            </item>
            <item row="0" column="2">
-            <widget class="QToolButton" name="removeStyle">
+            <widget class="FlatButton" name="removeStyle">
              <property name="toolTip">
               <string>Delete Selected Style</string>
              </property>
@@ -2123,7 +2123,7 @@ Paragraph</string>
             </widget>
            </item>
            <item row="0" column="3">
-            <widget class="QToolButton" name="loadStyle">
+            <widget class="FlatButton" name="loadStyle">
              <property name="toolTip">
               <string>Load Style From File</string>
              </property>
@@ -2137,7 +2137,7 @@ Paragraph</string>
             </widget>
            </item>
            <item row="0" column="4">
-            <widget class="QToolButton" name="saveStyle">
+            <widget class="FlatButton" name="saveStyle">
              <property name="toolTip">
               <string>Save Style To File</string>
              </property>
@@ -2204,6 +2204,13 @@ Paragraph</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FlatButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>categories</tabstop>
   <tabstop>useDarkTheme</tabstop>

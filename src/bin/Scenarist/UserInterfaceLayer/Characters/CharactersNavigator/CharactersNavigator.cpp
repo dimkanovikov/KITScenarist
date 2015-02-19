@@ -2,6 +2,8 @@
 
 #include "CharactersNavigatorItemDelegate.h"
 
+#include <3rd_party/Widgets/FlatButton/FlatButton.h>
+
 #include <QLabel>
 #include <QToolButton>
 #include <QListView>
@@ -16,9 +18,9 @@ using UserInterface::CharactersNavigatorItemDelegate;
 CharactersNavigator::CharactersNavigator(QWidget *parent) :
 	QWidget(parent),
 	m_title(new QLabel(this)),
-	m_addCharacter(new QToolButton(this)),
-	m_removeCharacter(new QToolButton(this)),
-	m_refreshCharacters(new QToolButton(this)),
+	m_addCharacter(new FlatButton(this)),
+	m_removeCharacter(new FlatButton(this)),
+	m_refreshCharacters(new FlatButton(this)),
 	m_endTitle(new QLabel(this)),
 	m_navigator(new QListView(this)),
 	m_navigatorProxyModel(new QSortFilterProxyModel(m_navigator))

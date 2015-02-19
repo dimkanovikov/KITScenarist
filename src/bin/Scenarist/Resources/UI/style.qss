@@ -33,18 +33,18 @@
  * Текстовые метки
  */
 QLabel[inTopPanel="true"] {
-	background: #282d31;
+	background: #404244;
 	color: #d5d6d6;
 	padding-top: 2px;
 	padding-bottom: 2px;
-	min-height: 21px;
+	min-height: 25px;
 }
 
 /*
  * Кнопка меню
  */
 QToolButton[inTopPanel="true"] {
-	background: #282d31;
+	background: #404244;
 	color: #d5d6d6;
 	border: 0px solid black;
 	border-top-width: 1px;
@@ -52,11 +52,11 @@ QToolButton[inTopPanel="true"] {
 	border-top-color: #5f5f5f;
 	padding-left: 4px;
 	padding-right: 4px;
-	height: 22px;
+	height: 26px;
 }
 
 QToolButton::menu-button[inTopPanel="true"] {
-	background: #282d31;
+	background: #404244;
 	color: #d5d6d6;
 	border: 0px solid black;
 	border-top-width: 1px;
@@ -66,7 +66,7 @@ QToolButton::menu-button[inTopPanel="true"] {
 	border-right-style: solid;
 	border-right-color: #5f5f5f;
 	width: 10px;
-	padding-top: 4px;
+	padding-top: 6px;
 	padding-right: 7px;
 }
 
@@ -80,10 +80,8 @@ QToolButton::menu-arrow[inTopPanel="true"] {
 QComboBox[inTopPanel="true"]  {
 	padding: 1px 18px 1px 8px;
 	min-width: 6em;
-	background: #282d31;
+	background: #404244;
 	color: #d5d6d6;
-	padding-top: 2px;
-	padding-bottom: 2px;
 }
 
 QComboBox::drop-down[inTopPanel="true"] {
@@ -113,14 +111,14 @@ QComboBox:on:selected[inTopPanel="true"], QComboBox:off:selected[inTopPanel="tru
  * Разделитель
  */
 QSplitter::handle {
-	background: #282d31;
+	background: #404244;
 }
 
 /*
  * Переключатель
  */
 QRadioButton[inTopPanel="true"] {
-	background: #282d31;
+	background: #404244;
 	color: #d5d6d6;
 	padding-top: 2px;
 	padding-bottom: 2px;
@@ -136,7 +134,7 @@ QRadioButton::indicator[inTopPanel="true"] {
 QRadioButton:unchecked[inTopPanel="true"] {
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
-	border-bottom-color: #282d31;
+	border-bottom-color: #404244;
 }
 
 QRadioButton:checked[inTopPanel="true"] {
@@ -149,16 +147,16 @@ QRadioButton:checked[inTopPanel="true"] {
  * Табулятор
  */
 QTabBar[inTopPanel="true"] {
-	background-color: #282d31;
+	background-color: #404244;
 }
 
 QTabBar::tab[inTopPanel="true"] {
 	border-top-width: 1px;
 	border-top-style: solid;
 	border-top-color: #5f5f5f;
-	background: #282d31;
+	background: #404244;
 	color: #d5d6d6;
-    padding-top: 2px;
+	padding-top: 4px;
 	padding-bottom: 1px;
 	padding-left: 7px;
 	padding-right: 7px;
@@ -185,7 +183,7 @@ QTabBar::tab:selected[inTopPanel="true"] {
 QTabBar::tab:!selected[inTopPanel="true"] {
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
-	border-bottom-color: #282d31;
+	border-bottom-color: #404244;
 }
 
 QScrollBar {

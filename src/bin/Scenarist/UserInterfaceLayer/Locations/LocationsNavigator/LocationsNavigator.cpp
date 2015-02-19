@@ -2,6 +2,8 @@
 
 #include "LocationsNavigatorItemDelegate.h"
 
+#include <3rd_party/Widgets/FlatButton/FlatButton.h>
+
 #include <QLabel>
 #include <QToolButton>
 #include <QListView>
@@ -16,9 +18,9 @@ using UserInterface::LocationsNavigatorItemDelegate;
 LocationsNavigator::LocationsNavigator(QWidget *parent) :
 	QWidget(parent),
 	m_title(new QLabel(this)),
-	m_addLocation(new QToolButton(this)),
-	m_removeLocation(new QToolButton(this)),
-	m_refreshLocations(new QToolButton(this)),
+	m_addLocation(new FlatButton(this)),
+	m_removeLocation(new FlatButton(this)),
+	m_refreshLocations(new FlatButton(this)),
 	m_endTitle(new QLabel(this)),
 	m_navigator(new QListView(this)),
 	m_navigatorProxyModel(new QSortFilterProxyModel(m_navigator))

@@ -22,12 +22,14 @@ void FlatButton::enterEvent(QEvent* _event)
 {
 	QToolButton::enterEvent(_event);
 
-	if (!m_hoverIcon.isNull()) {
-		const bool isHoverIcon = isEnabled();
-		setIcon(isHoverIcon ? m_hoverIcon : m_icon);
-	} else if (!m_checkedIcon.isNull()) {
-		const bool isCheckedIcon = isEnabled() && isChecked();
-		setIcon(isCheckedIcon ? m_checkedIcon : m_icon);
+	if (!m_icon.isNull()) {
+		if (!m_hoverIcon.isNull()) {
+			const bool isHoverIcon = isEnabled();
+			setIcon(isHoverIcon ? m_hoverIcon : m_icon);
+		} else if (!m_checkedIcon.isNull()) {
+			const bool isCheckedIcon = isEnabled() && isChecked();
+			setIcon(isCheckedIcon ? m_checkedIcon : m_icon);
+		}
 	}
 }
 
@@ -35,13 +37,17 @@ void FlatButton::leaveEvent(QEvent* _event)
 {
 	QToolButton::leaveEvent(_event);
 
-	const bool isCheckedIcon = !m_checkedIcon.isNull() && isEnabled() && isChecked();
-	setIcon(isCheckedIcon ? m_checkedIcon : m_icon);
+	if (!m_icon.isNull()) {
+		const bool isCheckedIcon = !m_checkedIcon.isNull() && isEnabled() && isChecked();
+		setIcon(isCheckedIcon ? m_checkedIcon : m_icon);
+	}
 }
 
 void FlatButton::aboutUpdateIcon()
 {
-	const bool isCheckedIcon = !m_checkedIcon.isNull() && isEnabled() && isChecked();
-	setIcon(isCheckedIcon ? m_checkedIcon : m_icon);
+	if (!m_icon.isNull()) {
+		const bool isCheckedIcon = !m_checkedIcon.isNull() && isEnabled() && isChecked();
+		setIcon(isCheckedIcon ? m_checkedIcon : m_icon);
+	}
 }
 

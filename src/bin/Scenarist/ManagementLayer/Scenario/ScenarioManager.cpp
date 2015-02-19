@@ -23,6 +23,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/LocationStorage.h>
 
+#include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
 
 #include <QComboBox>
@@ -33,7 +34,6 @@
 #include <QTextCursor>
 #include <QTextBlock>
 #include <QTimer>
-#include <QToolButton>
 #include <QSet>
 #include <QStackedWidget>
 #include <QWidget>
@@ -338,6 +338,8 @@ void ScenarioManager::loadViewState()
 					.toUtf8()
 					)
 				);
+	const bool draftInvisible = m_draftViewSplitter->sizes().last() == 0;
+	m_navigatorManager->setDraftVisible(!draftInvisible);
 
 	m_noteViewSplitter->restoreGeometry(
 				QByteArray::fromHex(
@@ -355,6 +357,8 @@ void ScenarioManager::loadViewState()
 					.toUtf8()
 					)
 				);
+	const bool noteInvisible = m_noteViewSplitter->sizes().last() == 0;
+	m_navigatorManager->setNoteVisible(!noteInvisible);
 
 	m_mainViewSplitter->restoreGeometry(
 				QByteArray::fromHex(
@@ -372,6 +376,10 @@ void ScenarioManager::loadViewState()
 					.toUtf8()
 					)
 				);
+
+	if (m_mainViewSplitter->opaqueResize()) {
+		m_mainViewSplitter->setOpaqueResize(false);
+	}
 }
 
 void ScenarioManager::saveViewState()
@@ -655,10 +663,12 @@ void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
 
 void ScenarioManager::aboutShowHideDraft()
 {
+	const bool draftInvisible = m_draftViewSplitter->sizes().last() == 0;
+
 	//
 	// Показать примечания, если скрыты
 	//
-	if (m_draftViewSplitter->sizes().last() == 0) {
+	if (draftInvisible) {
 		if (m_draftViewSplitter->property(SPLITTER_LAST_SIZES).isNull()) {
 			int splitterHeight = m_draftViewSplitter->height();
 			m_draftViewSplitter->setSizes(QList<int>() << splitterHeight * 2/3 << splitterHeight * 1/3);
@@ -673,14 +683,18 @@ void ScenarioManager::aboutShowHideDraft()
 		m_draftViewSplitter->setProperty(SPLITTER_LAST_SIZES, QVariant::fromValue<QList<int> >(m_draftViewSplitter->sizes()));
 		m_draftViewSplitter->setSizes(QList<int>() << 1 << 0);
 	}
+
+	m_navigatorManager->setDraftVisible(draftInvisible);
 }
 
 void ScenarioManager::aboutShowHideNote()
 {
+	const bool noteInvisible = m_noteViewSplitter->sizes().last() == 0;
+
 	//
 	// Показать примечания, если скрыты
 	//
-	if (m_noteViewSplitter->sizes().last() == 0) {
+	if (noteInvisible) {
 		if (m_noteViewSplitter->property(SPLITTER_LAST_SIZES).isNull()) {
 			int splitterHeight = m_noteViewSplitter->height();
 			m_noteViewSplitter->setSizes(QList<int>() << splitterHeight * 2/3 << splitterHeight * 1/3);
@@ -695,6 +709,8 @@ void ScenarioManager::aboutShowHideNote()
 		m_noteViewSplitter->setProperty(SPLITTER_LAST_SIZES, QVariant::fromValue<QList<int> >(m_noteViewSplitter->sizes()));
 		m_noteViewSplitter->setSizes(QList<int>() << 1 << 0);
 	}
+
+	m_navigatorManager->setNoteVisible(noteInvisible);
 }
 
 void ScenarioManager::initData()
@@ -725,10 +741,12 @@ void ScenarioManager::initView()
 	m_viewEditors->addWidget(m_textEditManager->view());
 	m_viewEditors->addWidget(m_dataEditManager->view());
 
-	m_showFullscreen = new QToolButton(m_view);
-	m_showFullscreen->setIcon(QIcon(":/Graphics/Icons/Editing/fullscreen.png"));
+	m_showFullscreen = new FlatButton(m_view);
+	m_showFullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"), QIcon(),
+		QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
 	m_showFullscreen->setToolTip(::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
 	m_showFullscreen->setShortcut(QKeySequence("F5"));
+	m_showFullscreen->setCheckable(true);
 
 	QWidget* rightWidget = new QWidget(m_view);
 
@@ -758,6 +776,7 @@ void ScenarioManager::initView()
 	m_mainViewSplitter->addWidget(m_noteViewSplitter);
 	m_mainViewSplitter->addWidget(rightWidget);
 	m_mainViewSplitter->setStretchFactor(1, 1);
+	m_mainViewSplitter->setOpaqueResize(false);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());

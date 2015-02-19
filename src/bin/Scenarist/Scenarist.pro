@@ -187,7 +187,8 @@ SOURCES += main.cpp \
     3rd_party/Delegates/ComboBoxItemDelegate/ComboBoxItemDelegate.cpp \
     3rd_party/Helpers/BackupHelper.cpp \
     3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.cpp \
-    3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.cpp
+    3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.cpp \
+    3rd_party/Widgets/FlatButton/FlatButton.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -343,7 +344,8 @@ HEADERS += \
     3rd_party/Delegates/ComboBoxItemDelegate/ComboBoxItemDelegate.h \
     3rd_party/Helpers/BackupHelper.h \
     3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h \
-    3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h
+    3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h \
+    3rd_party/Widgets/FlatButton/FlatButton.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

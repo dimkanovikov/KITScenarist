@@ -32,7 +32,7 @@
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QToolButton" name="addPhoto">
+      <widget class="FlatButton" name="addPhoto">
        <property name="toolTip">
         <string>Add Image</string>
        </property>
@@ -168,6 +168,11 @@
    <class>AcceptebleLineEdit</class>
    <extends>QLineEdit</extends>
    <header location="global">3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FlatButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

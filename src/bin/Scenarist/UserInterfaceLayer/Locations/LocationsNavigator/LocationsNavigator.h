@@ -3,8 +3,8 @@
 
 #include <QWidget>
 
+class FlatButton;
 class QLabel;
-class QToolButton;
 class QListView;
 class QAbstractItemModel;
 class QSortFilterProxyModel;
@@ -102,17 +102,17 @@ namespace UserInterface
 		/**
 		 * @brief Кнопка добавления локации
 		 */
-		QToolButton* m_addLocation;
+		FlatButton* m_addLocation;
 
 		/**
 		 * @brief Кнопка удаления локации
 		 */
-		QToolButton* m_removeLocation;
+		FlatButton* m_removeLocation;
 
 		/**
 		 * @brief Кнопка обновления списка локаций
 		 */
-		QToolButton* m_refreshLocations;
+		FlatButton* m_refreshLocations;
 
 		/**
 		 * @brief Окончание панели инструментов

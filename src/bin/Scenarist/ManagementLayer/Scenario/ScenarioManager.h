@@ -4,12 +4,12 @@
 #include <QObject>
 #include <QModelIndex>
 
+class FlatButton;
 class QSplitter;
 class QComboBox;
 class QLabel;
-class TabBar;
-class QToolButton;
 class QStackedWidget;
+class TabBar;
 
 namespace BusinessLogic {
 	class ScenarioDocument;
@@ -250,7 +250,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Кнопка перехода в полноэкранный режим
 		 */
-		QToolButton* m_showFullscreen;
+		FlatButton* m_showFullscreen;
 
 		/**
 		 * @brief Панели инструментов редакторов
