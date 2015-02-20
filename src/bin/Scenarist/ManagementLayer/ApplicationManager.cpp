@@ -798,9 +798,8 @@ void ApplicationManager::reloadApplicationSettings()
 			//
 			//
 			//
-			palette.setColor(QPalette::Midlight, QColor("#787878"));
-
-			styleSheet += "QToolButton:checked { background-color: palette(midlight); } ";
+			palette.setColor(QPalette::Midlight, QColor("#696765"));
+			palette.setColor(QPalette::Shadow, QColor("#1c2023"));
 		} else {
 			//
 			// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек
@@ -811,6 +810,8 @@ void ApplicationManager::reloadApplicationSettings()
 			palette.setColor(QPalette::HighlightedText, QColor(255,255,255));
 
 			palette.setColor(QPalette::Link, QColor("#2b78da"));
+
+			palette.setColor(QPalette::Shadow, palette.midlight().color());
 		}
 
 		//

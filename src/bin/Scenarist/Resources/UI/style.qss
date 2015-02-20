@@ -202,7 +202,7 @@ QScrollBar:vertical {
 }
 
 QScrollBar::handle {
-	background: palette(dark);
+	background: palette(mid);
 	min-height: 0px;
 	min-width: 0px;
 	border-radius: 4px;
@@ -219,4 +219,17 @@ QScrollBar::add-line {
 
 QScrollBar::sub-line {
 	height: 0px;
+}
+
+
+QPushButton, ToolButton {
+	border-radius: 3px;
+	border: 1px solid palette(shadow);
+	background-color: palette(button);
+	padding: 3px 8px 3px 8px;
+	min-width: 60px;
+}
+
+QPushButton:checked, QPushButton:pressed, ToolButton:checked, ToolButton:pressed {
+	background-color: palette(midlight);
 }

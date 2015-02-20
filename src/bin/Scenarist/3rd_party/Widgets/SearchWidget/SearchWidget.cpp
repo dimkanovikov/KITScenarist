@@ -23,20 +23,26 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 				  "  border-top-style: solid; "
 				  "  border-top-color: palette(dark);"
 				  "}"
+				  "*[middle=\"true\"] { border-left: 0; border-radius: 0; min-width: 20px; }"
+				  "*[last=\"true\"] { border-left: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; min-width: 20px; }"
 				  );
 	setProperty("searchWidget", true);
+	m_prevMatch->setProperty("middle", true);
+	m_nextMatch->setProperty("last", true);
+	m_replaceOne->setProperty("middle", true);
+	m_replaceAll->setProperty("last", true);
 
 	setFocusProxy(m_searchText);
 	connect(m_searchText, SIGNAL(textChanged(QString)), this, SLOT(aboutFindNext()));
 	connect(m_searchText, SIGNAL(returnPressed()), this, SLOT(aboutFindNext()));
 	m_searchText->setPlaceholderText(tr("Find..."));
 
-	m_prevMatch->setMaximumWidth(30);
+	m_prevMatch->setFixedWidth(20);
 	m_prevMatch->setText("◀");
 	m_prevMatch->setShortcut(QKeySequence("Shift+F3"));
 	connect(m_prevMatch, SIGNAL(clicked()), this, SLOT(aboutFindPrev()));
 
-	m_nextMatch->setMaximumWidth(30);
+	m_nextMatch->setFixedWidth(20);
 	m_nextMatch->setText("▶");
 	m_nextMatch->setShortcut(QKeySequence("F3"));
 	connect(m_nextMatch, SIGNAL(clicked()), this, SLOT(aboutFindNext()));
@@ -46,11 +52,12 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	m_replaceOne->setText(tr("Replace"));
 	connect(m_replaceOne, SIGNAL(clicked()), this, SLOT(aboutReplaceOne()));
 
+	m_replaceAll->setFixedWidth(40);
 	m_replaceAll->setText(tr("All"));
 	connect(m_replaceAll, SIGNAL(clicked()), this, SLOT(aboutReplaceAll()));
 
 	QHBoxLayout* layout = new QHBoxLayout;
-	layout->setSpacing(1);
+	layout->setSpacing(0);
 	layout->addWidget(m_searchText);
 	layout->addWidget(m_prevMatch);
 	layout->addWidget(m_nextMatch);
