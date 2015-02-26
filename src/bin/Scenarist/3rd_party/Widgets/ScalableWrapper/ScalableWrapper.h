@@ -110,12 +110,7 @@ private:
 	/**
 	 * @brief Инерционный тормоз масштабирования при помощи жестов
 	 */
-    int m_gestureZoomInertionBreak;
-
-	/**
-	 * @brief Вспомогательный элемент, посредством которого настраивается размер полос прокрутки
-	 */
-	QGraphicsRectItem* m_rect;
+	int m_gestureZoomInertionBreak;
 };
 
 #endif // SCALABLEWRAPPER_H

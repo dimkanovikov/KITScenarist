@@ -19,6 +19,7 @@
 #include <QPainter>
 #include <QScrollBar>
 #include <QStringListModel>
+#include <QStyleHints>
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QTimer>
@@ -38,6 +39,8 @@ namespace {
 
 ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	CompletableTextEdit(_parent),
+	m_mouseClicks(0),
+	m_lastMouseClickTime(0),
 	m_storeDataWhenEditing(true),
 	m_showSceneNumbers(false)
 {
@@ -61,6 +64,8 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 	setHighlighterDocument(m_document);
 
 	TextEditHelper::beautifyDocument(m_document);
+
+	s_firstRepaintUpdate = true;
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
@@ -405,6 +410,35 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 	}
 }
 
+void ScenarioTextEdit::mousePressEvent(QMouseEvent* _event)
+{
+	//
+	// Событие о клике приходит на 1, 3, 5 и т.д. кликов
+	//
+
+	const qint64 curMouseClickTime = QDateTime::currentMSecsSinceEpoch();
+	const qint64 timeDelta = curMouseClickTime - m_lastMouseClickTime;
+	if (timeDelta <= (QApplication::styleHints()->mouseDoubleClickInterval() * 2)) {
+		m_mouseClicks += 2;
+	} else {
+		m_mouseClicks = 1;
+	}
+	m_lastMouseClickTime = curMouseClickTime;
+
+	//
+	// Тройной клик обрабатываем самостоятельно
+	//
+	if (m_mouseClicks == 3) {
+		QTextCursor cursor = textCursor();
+		cursor.movePosition(QTextCursor::StartOfBlock);
+		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		setTextCursor(cursor);
+		_event->accept();
+	} else {
+		CompletableTextEdit::mousePressEvent(_event);
+	}
+}
+
 bool ScenarioTextEdit::canInsertFromMimeData(const QMimeData* _source) const
 {
 	bool canInsert = false;
@@ -472,6 +506,8 @@ void ScenarioTextEdit::resizeEvent(QResizeEvent* _event)
 	CompletableTextEdit::resizeEvent(_event);
 
 	QTimer::singleShot(10, this, SLOT(ensureCursorVisibleReimpl()));
+
+	s_firstRepaintUpdate = true;
 }
 
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()

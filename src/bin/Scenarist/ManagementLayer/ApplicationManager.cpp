@@ -266,6 +266,7 @@ void ApplicationManager::aboutSaveAs()
 			//
 			// ... сохраняем изменения
 			//
+			m_view->setWindowModified(true);
 			aboutSave();
 
 			//

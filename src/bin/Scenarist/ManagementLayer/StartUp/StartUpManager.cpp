@@ -269,12 +269,14 @@ void StartUpManager::checkNewVersion()
 				  "linux"
 #elif defined Q_OS_MAC
 				  "mac"
+#else
+				  QSysInfo::kernelType()
 #endif
 				  )
-			  .arg(QString(QSysInfo::prettyProductName().toUtf8().toPercentEncoding()))
+			  .arg(QSysInfo::prettyProductName())
 			  .arg(uuid)
 			  .arg(QApplication::applicationVersion());
 
-	QNetworkRequest request = QNetworkRequest(QUrl(url));
+	QNetworkRequest request = QNetworkRequest(QUrl(url.toUtf8().toPercentEncoding()));
 	manager->get(request);
 }

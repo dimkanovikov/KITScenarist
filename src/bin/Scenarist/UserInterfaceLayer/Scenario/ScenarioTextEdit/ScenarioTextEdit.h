@@ -105,6 +105,11 @@ namespace UserInterface
 		void paintEvent(QPaintEvent* _event);
 
 		/**
+		 * @brief Переопределяется для обработки тройного клика
+		 */
+		void mousePressEvent(QMouseEvent* _event);
+
+		/**
 		 * @brief Переопределяем работу с буфером обмена для использования собственного майм типа данных
 		 */
 		/** @{ */
@@ -160,6 +165,16 @@ namespace UserInterface
 		 * @brief Документ
 		 */
 		BusinessLogic::ScenarioTextDocument* m_document;
+
+		/**
+		 * @brief Количеств
+		 */
+		int m_mouseClicks;
+
+		/**
+		 * @brief Время последнего клика мышки, мс
+		 */
+		qint64 m_lastMouseClickTime;
 
 		/**
 		 * @brief Необходимо ли сохранять данные при вводе
