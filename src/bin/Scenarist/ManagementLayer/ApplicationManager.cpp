@@ -772,7 +772,7 @@ void ApplicationManager::reloadApplicationSettings()
 		QString styleSheet;
 
 		if (useDarkTheme) {
-			palette.setColor(QPalette::Window, QColor("#282D31"));
+			palette.setColor(QPalette::Window, QColor("#26282a"));
 			palette.setColor(QPalette::Base, QColor("#404040"));
 			palette.setColor(QPalette::Disabled, QPalette::Base, QColor("#333333"));
 			palette.setColor(QPalette::AlternateBase, QColor(53,53,53));

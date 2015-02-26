@@ -477,6 +477,20 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 	cursor.beginEditBlock();
 
 	//
+	// Если есть выделение, удаляем выделенный текст
+	//
+	if (cursor.hasSelection()) {
+		//
+		// Запомним стиль блока начала выделения
+		//
+		QTextCursor helper = cursor;
+		helper.setPosition(cursor.selectionStart());
+		ScenarioBlockStyle::Type type = ScenarioBlockStyle::forBlock(helper.block());
+		cursor.deleteChar();
+		changeScenarioBlockType(type);
+	}
+
+	//
 	// Если вставляются данные в сценарном формате, то вставляем как положено
 	//
 	if (_source->formats().contains(ScenarioDocument::MIME_TYPE)) {
