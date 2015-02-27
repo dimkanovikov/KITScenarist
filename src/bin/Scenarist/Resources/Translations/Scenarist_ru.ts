@@ -550,7 +550,7 @@
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="171"/>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="225"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="338"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="339"/>
         <source>Scenarist project files (*%1)</source>
         <translation>Файл проекта сценария (*%1)</translation>
     </message>
@@ -560,7 +560,7 @@
         <translation>Выберите файл для сохранения проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="336"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="337"/>
         <source>Choose project file to open</source>
         <translation>Выберите файл проекта для открытия</translation>
     </message>
@@ -582,92 +582,92 @@
         <translation> - изменён</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="494"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="495"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="495"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="496"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="874"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="875"/>
         <source>%1[*] - Scenarist</source>
         <translation>%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="600"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="601"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="534"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="535"/>
         <source>Loading Scenario</source>
         <translation>Загрузка сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="534"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="535"/>
         <source>Please wait. Loading can take few minutes.</source>
         <translation>Немного терпения. Загрузка может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="607"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="608"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="608"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="609"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="609"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="610"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="610"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="611"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="611"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="612"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="655"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="656"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="656"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="657"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="657"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="658"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="659"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="660"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="665"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="666"/>
         <source>Import...</source>
         <translation>Импорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="668"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="669"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="671"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="672"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -1099,22 +1099,37 @@
         <translation type="vanished">Следующее</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="38"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="40"/>
         <source>Find...</source>
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="50"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="48"/>
+        <source>Case Sensitive</source>
+        <translation>Учитывать регистр</translation>
+    </message>
+    <message>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="53"/>
+        <source>Find Prev</source>
+        <translation>Найти предыдущее совпадение</translation>
+    </message>
+    <message>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="59"/>
+        <source>Find Next</source>
+        <translation>Найти следующее совпадение</translation>
+    </message>
+    <message>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="62"/>
         <source>Replace with...</source>
         <translation>Заменить на...</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="52"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="64"/>
         <source>Replace</source>
         <translation>Заменить</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="56"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="68"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
