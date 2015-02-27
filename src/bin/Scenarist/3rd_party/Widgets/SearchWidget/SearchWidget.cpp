@@ -10,6 +10,7 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	QFrame(_parent),
 	m_editor(0),
 	m_searchText(new QLineEdit(this)),
+	m_caseSensitive(new QPushButton(this)),
 	m_prevMatch(new QPushButton(this)),
 	m_nextMatch(new QPushButton(this)),
 	m_replaceText(new QLineEdit(this)),
@@ -27,6 +28,7 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 				  "*[last=\"true\"] { border-left: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; min-width: 20px; }"
 				  );
 	setProperty("searchWidget", true);
+	m_caseSensitive->setProperty("middle", true);
 	m_prevMatch->setProperty("middle", true);
 	m_nextMatch->setProperty("last", true);
 	m_replaceOne->setProperty("middle", true);
@@ -37,14 +39,24 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	connect(m_searchText, SIGNAL(returnPressed()), this, SLOT(aboutFindNext()));
 	m_searchText->setPlaceholderText(tr("Find..."));
 
+	m_caseSensitive->setFixedWidth(20);
+	m_caseSensitive->setCheckable(true);
+	m_caseSensitive->setText("Aa");
+	QFont caseSensitiveFont = m_caseSensitive->font();
+	caseSensitiveFont.setItalic(true);
+	m_caseSensitive->setFont(caseSensitiveFont);
+	m_caseSensitive->setToolTip(tr("Case Sensitive"));
+
 	m_prevMatch->setFixedWidth(20);
 	m_prevMatch->setText("◀");
 	m_prevMatch->setShortcut(QKeySequence("Shift+F3"));
+	m_prevMatch->setToolTip(tr("Find Prev"));
 	connect(m_prevMatch, SIGNAL(clicked()), this, SLOT(aboutFindPrev()));
 
 	m_nextMatch->setFixedWidth(20);
 	m_nextMatch->setText("▶");
 	m_nextMatch->setShortcut(QKeySequence("F3"));
+	m_nextMatch->setToolTip(tr("Find Next"));
 	connect(m_nextMatch, SIGNAL(clicked()), this, SLOT(aboutFindNext()));
 
 	m_replaceText->setPlaceholderText(tr("Replace with..."));
@@ -59,6 +71,7 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setSpacing(0);
 	layout->addWidget(m_searchText);
+	layout->addWidget(m_caseSensitive);
 	layout->addWidget(m_prevMatch);
 	layout->addWidget(m_nextMatch);
 	layout->addSpacing(16);
@@ -137,6 +150,12 @@ void SearchWidget::findText(bool _backward)
 		QTextDocument::FindFlags findFlags;
 		if (_backward) {
 			findFlags |= QTextDocument::FindBackward;
+		}
+		//
+		// Учёт регистра
+		//
+		if (m_caseSensitive->isChecked()) {
+			findFlags |= QTextDocument::FindCaseSensitively;
 		}
 
 		//

@@ -63,6 +63,11 @@ private:
 	QLineEdit* m_searchText;
 
 	/**
+	 * @brief Искать с учётом регистра или без
+	 */
+	QPushButton* m_caseSensitive;
+
+	/**
 	 * @brief Перейти к предыдущему совпадению
 	 */
 	QPushButton* m_prevMatch;
