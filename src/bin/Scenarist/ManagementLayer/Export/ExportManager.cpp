@@ -203,14 +203,11 @@ void ExportManager::aboutPrintPreview()
 	saveTitleListInfo(m_currentScenario);
 
 	//
-	// Закрывать диалоговое окно нельзя, поэтому прячем его за границами экрана,
-	// а потом возвращаем на место
+	// Закрывать диалоговое окно нельзя, поэтому прячем его
 	//
-	const QPoint POSITION_OUT_OF_SCREEN(10000, 10000);
-	QPoint lastPos = m_exportDialog->pos();
-	m_exportDialog->move(POSITION_OUT_OF_SCREEN);
+	m_exportDialog->setWindowOpacity(0);
 	printPreviewScenario(m_currentScenario);
-	m_exportDialog->move(lastPos);
+	m_exportDialog->setWindowOpacity(1);
 }
 
 void ExportManager::initView()

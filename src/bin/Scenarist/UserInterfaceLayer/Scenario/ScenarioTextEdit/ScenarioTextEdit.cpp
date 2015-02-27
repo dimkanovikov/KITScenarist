@@ -318,8 +318,8 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 			cursor.movePosition(QTextCursor::End);
 			cursor.setBlockFormat(cursor.blockFormat());
 			cursor.endEditBlock();
+			document()->undo();
 		}
-		document()->undo();
 	}
 
 
@@ -501,11 +501,18 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 	//
 	else if (_source->hasText()) {
 		QString textToInsert = _source->text();
+		bool isFirstLine = true;
 		foreach (const QString& line, textToInsert.split("\n", QString::SkipEmptyParts)) {
-			if (cursor.block().text().isEmpty()) {
-				changeScenarioBlockType(ScenarioBlockStyle::Action);
-			} else {
-				moveCursor(QTextCursor::EndOfBlock);
+			//
+			// Первую строку вставляем в текущий блок
+			//
+			if (isFirstLine) {
+				isFirstLine = false;
+			}
+			//
+			// А для всех остальных создаём блок описания действия
+			//
+			else {
 				addScenarioBlock(ScenarioBlockStyle::Action);
 			}
 			cursor.insertText(line.simplified());

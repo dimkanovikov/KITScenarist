@@ -33,8 +33,7 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	//
 	// Нажата клавиша "Control" в сочетании с какой-либо другой
 	//
-	if (pressedModifiers.testFlag(Qt::ControlModifier)
-		&& pressedKey != Qt::Key_Control) {
+	if (pressedModifiers.testFlag(Qt::ControlModifier)) {
 		handleShortcut(_event);
 	}
 
