@@ -2,9 +2,11 @@
 
 #include <3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h>
 
+#include <QApplication>
 #include <QGestureEvent>
 #include <QGraphicsProxyWidget>
 #include <QMenu>
+#include <QScreen>
 #include <QScrollBar>
 #include <QShortcut>
 #include <QTextEdit>
@@ -286,6 +288,24 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 		const qreal antiZoom = 1. / m_zoomRange;
 		menuProxy->setScale(antiZoom);
 		menuProxy->setPos(QCursor::pos());
+
+		//
+		// Если меню вываливается за экран, корректируем его позицию
+		//
+		QRectF menuRect(QCursor::pos(), menu->sizeHint());
+		//
+		// ... по вертикали
+		//
+		if (menuRect.bottom() > QApplication::primaryScreen()->size().height()) {
+			menuRect.moveBottom(menuRect.top());
+		}
+		//
+		// ... по горизонтали
+		//
+		if (menuRect.right() > QApplication::primaryScreen()->size().width()) {
+			menuRect.moveRight(menuRect.left());
+		}
+		menuProxy->setPos(menuRect.topLeft());
 
 		menu->exec();
 		delete menu;

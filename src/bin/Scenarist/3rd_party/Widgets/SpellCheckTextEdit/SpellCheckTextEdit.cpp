@@ -77,60 +77,62 @@ QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos)
 	m_lastCursorPosition = _pos;
 
 	//
-	// Определим слово под курсором
-	//
-	QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
-
-	//
-	// Убираем знаки препинания окружающие слово
-	//
-	QString wordWithoutPunct = wordUnderCursor.trimmed();
-	while (!wordWithoutPunct.isEmpty()
-		   && (wordWithoutPunct.at(0).isPunct()
-			   || wordWithoutPunct.at(wordWithoutPunct.length()-1).isPunct())) {
-		if (wordWithoutPunct.at(0).isPunct()) {
-			wordWithoutPunct = wordWithoutPunct.mid(1);
-		} else {
-			wordWithoutPunct = wordWithoutPunct.left(wordWithoutPunct.length()-1);
-		}
-	}
-
-	//
 	// Сформируем стандартное контекстное меню
 	//
 	QMenu* menu = createStandardContextMenu();
 
-	//
-	// Корректируем регистр слова
-	//
-	QString wordWithoutPunctInCorrectRegister =
-			wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
+	if (m_spellCheckHighlighter->useSpellChecker()) {
+		//
+		// Определим слово под курсором
+		//
+		QString wordUnderCursor = wordOnPosition(m_lastCursorPosition);
 
-	//
-	// Если слово не проходит проверку орфографии добавим дополнительные действия в контекстное меню
-	//
-	if (!m_spellChecker->spellCheckWord(wordWithoutPunctInCorrectRegister)) {
-		// ... действие, перед которым вставляем дополнительные пункты
-		QStringList suggestions = m_spellChecker->suggestionsForWord(wordWithoutPunct);
-		// ... вставляем варианты
-		QAction* actionInsertBefore = menu->actions().first();
-		int addedSuggestionsCount = 0;
-		foreach (const QString& suggestion, suggestions) {
-			if (addedSuggestionsCount < SUGGESTIONS_ACTIONS_MAX_COUNT) {
-				m_suggestionsActions.at(addedSuggestionsCount)->setText(suggestion);
-				menu->insertAction(actionInsertBefore, m_suggestionsActions.at(addedSuggestionsCount));
-				++addedSuggestionsCount;
+		//
+		// Убираем знаки препинания окружающие слово
+		//
+		QString wordWithoutPunct = wordUnderCursor.trimmed();
+		while (!wordWithoutPunct.isEmpty()
+			   && (wordWithoutPunct.at(0).isPunct()
+				   || wordWithoutPunct.at(wordWithoutPunct.length()-1).isPunct())) {
+			if (wordWithoutPunct.at(0).isPunct()) {
+				wordWithoutPunct = wordWithoutPunct.mid(1);
 			} else {
-				break;
+				wordWithoutPunct = wordWithoutPunct.left(wordWithoutPunct.length()-1);
 			}
 		}
-		if (addedSuggestionsCount > 0) {
+
+		//
+		// Корректируем регистр слова
+		//
+		QString wordWithoutPunctInCorrectRegister =
+				wordWithoutPunct[0] + wordWithoutPunct.mid(1).toLower();
+
+		//
+		// Если слово не проходит проверку орфографии добавим дополнительные действия в контекстное меню
+		//
+		if (!m_spellChecker->spellCheckWord(wordWithoutPunctInCorrectRegister)) {
+			// ... действие, перед которым вставляем дополнительные пункты
+			QStringList suggestions = m_spellChecker->suggestionsForWord(wordWithoutPunct);
+			// ... вставляем варианты
+			QAction* actionInsertBefore = menu->actions().first();
+			int addedSuggestionsCount = 0;
+			foreach (const QString& suggestion, suggestions) {
+				if (addedSuggestionsCount < SUGGESTIONS_ACTIONS_MAX_COUNT) {
+					m_suggestionsActions.at(addedSuggestionsCount)->setText(suggestion);
+					menu->insertAction(actionInsertBefore, m_suggestionsActions.at(addedSuggestionsCount));
+					++addedSuggestionsCount;
+				} else {
+					break;
+				}
+			}
+			if (addedSuggestionsCount > 0) {
+				menu->insertSeparator(actionInsertBefore);
+			}
+			// ... вставляем дополнительные действия
+			menu->insertAction(actionInsertBefore, m_ignoreWordAction);
+			menu->insertAction(actionInsertBefore, m_addWordToUserDictionaryAction);
 			menu->insertSeparator(actionInsertBefore);
 		}
-		// ... вставляем дополнительные действия
-		menu->insertAction(actionInsertBefore, m_ignoreWordAction);
-		menu->insertAction(actionInsertBefore, m_addWordToUserDictionaryAction);
-		menu->insertSeparator(actionInsertBefore);
 	}
 
 	return menu;

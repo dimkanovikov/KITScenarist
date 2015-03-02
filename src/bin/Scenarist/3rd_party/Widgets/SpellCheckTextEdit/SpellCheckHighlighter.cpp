@@ -38,6 +38,11 @@ void SpellCheckHighlighter::setUseSpellChecker(bool _use)
 	}
 }
 
+bool SpellCheckHighlighter::useSpellChecker() const
+{
+	return m_useSpellChecker;
+}
+
 void SpellCheckHighlighter::highlightBlock(const QString& _text)
 {
 	if (m_useSpellChecker) {

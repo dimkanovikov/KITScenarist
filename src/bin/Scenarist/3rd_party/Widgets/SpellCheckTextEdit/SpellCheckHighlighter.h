@@ -26,6 +26,11 @@ public:
 	 */
 	void setUseSpellChecker(bool _use);
 
+	/**
+	 * @brief Включена ли проверка орфографии
+	 */
+	bool useSpellChecker() const;
+
 protected:
 	/**
 	 * @brief Подсветить текст не прошедший проверку орфографии
