@@ -34,27 +34,6 @@ void PrepareHandler::prepareForHandle()
 	m_needEnsureCursorVisible = true;
 }
 
-void PrepareHandler::handleShortcut(QKeyEvent* _event)
-{
-	//
-	// Получим необходимые переменные
-	//
-	// ... нажатая клавиша
-	Qt::Key pressedKey = (Qt::Key)_event->key();
-	// ... зажатые управляющие клавиши
-	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
-
-	if (pressedModifiers.testFlag(Qt::ControlModifier)
-		&& (pressedKey == Qt::Key_Left		// смещение
-			|| pressedKey == Qt::Key_Right	// --//--
-			|| pressedKey == Qt::Key_S)		// сохранить
-		) {
-		m_needSendEventToBaseClass = true;
-	} else {
-		m_needSendEventToBaseClass = false;
-	}
-}
-
 void PrepareHandler::handleEnter(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;

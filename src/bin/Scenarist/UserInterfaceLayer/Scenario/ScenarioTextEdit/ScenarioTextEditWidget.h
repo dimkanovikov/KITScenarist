@@ -109,6 +109,11 @@ namespace UserInterface
 		 */
 		void updateStylesElements();
 
+		/**
+		 * @brief Обновить горячие клавиши смены блоков
+		 */
+		void updateShortcuts();
+
 	public slots:
 		/**
 		 * @brief Отменить последнее действие
@@ -182,6 +187,7 @@ namespace UserInterface
 		 * @brief Настроить выпадающий список стилей в зависимости от текущего стиля
 		 */
 		void initStylesCombo();
+		void updateStylesCombo();
 
 		/**
 		 * @brief Настроить соединения

@@ -36,6 +36,11 @@ namespace {
 	static QList<QStandardItem*> blocksJumpsModelRow(ScenarioBlockStyle::Type _forType) {
 
 		const QString typeShortName = ScenarioBlockStyle::typeName(_forType);
+		const QString shortcut =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					QString("scenario-editor/shortcuts/%1").arg(typeShortName),
+					DataStorageLayer::SettingsStorage::ApplicationSettings
+					);
 		const bool BEAUTIFY_NAME = true;
 		int jumpForTab =
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
@@ -60,6 +65,7 @@ namespace {
 
 		QList<QStandardItem*> result;
 		result << new QStandardItem(ScenarioBlockStyle::typeName(_forType, BEAUTIFY_NAME))
+			   << new QStandardItem(shortcut)
 			   << new QStandardItem(ScenarioBlockStyle::typeName((ScenarioBlockStyle::Type)jumpForTab, BEAUTIFY_NAME))
 			   << new QStandardItem(ScenarioBlockStyle::typeName((ScenarioBlockStyle::Type)jumpForEnter, BEAUTIFY_NAME))
 			   << new QStandardItem(ScenarioBlockStyle::typeName((ScenarioBlockStyle::Type)changeForTab, BEAUTIFY_NAME))
@@ -73,7 +79,7 @@ namespace {
 	 */
 	static QAbstractItemModel* blocksJumpsModel(QObject* _parent) {
 		const int ROWS_COUNT = 0;
-		const int COLUMNS_COUNT = 5;
+		const int COLUMNS_COUNT = 6;
 		QStandardItemModel* blocksJumpsModel = new QStandardItemModel(ROWS_COUNT, COLUMNS_COUNT, _parent);
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::TimeAndPlace));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneCharacters));
@@ -237,7 +243,7 @@ void SettingsManager::scenarioEditCurrentStyleChanged(const QString& _value)
 	storeValue("scenario-editor/current-style", _value);
 }
 
-void SettingsManager::scenarioEditBlockJumpChanged(const QString& _block, const QString& _jumpTab,
+void SettingsManager::scenarioEditBlockSettingsChanged(const QString& _block, const QString& _shortcut, const QString& _jumpTab,
 	const QString& _jumpEnter, const QString& _changeTab, const QString& _changeEnter)
 {
 	//
@@ -253,6 +259,7 @@ void SettingsManager::scenarioEditBlockJumpChanged(const QString& _block, const 
 	//
 	// Сохраним параметры
 	//
+	storeValue(QString("scenario-editor/shortcuts/%1").arg(ScenarioBlockStyle::typeName(block)), _shortcut);
 	storeValue(QString("scenario-editor/styles-jumping/from-%1-by-tab").arg(ScenarioBlockStyle::typeName(block)), jumpTab);
 	storeValue(QString("scenario-editor/styles-jumping/from-%1-by-enter").arg(ScenarioBlockStyle::typeName(block)), jumpEnter);
 	storeValue(QString("scenario-editor/styles-changing/from-%1-by-tab").arg(ScenarioBlockStyle::typeName(block)), changeTab);
@@ -648,8 +655,9 @@ void SettingsManager::initView()
 		}
 
 		blockJumpsHeaderModel->setItem(0, 0, new QStandardItem(tr("Block Name")));
-		blockJumpsHeaderModel->setItem(0, 1, columnAfterText);
-		blockJumpsHeaderModel->setItem(0, 2, columnEmptyText);
+		blockJumpsHeaderModel->setItem(0, 1, new QStandardItem(tr("Shortcut")));
+		blockJumpsHeaderModel->setItem(0, 2, columnAfterText);
+		blockJumpsHeaderModel->setItem(0, 3, columnEmptyText);
 	}
 	HierarchicalTableModel* blocksJumpsModel = new HierarchicalTableModel(this);
 	blocksJumpsModel->setSourceModel(::blocksJumpsModel(this));
@@ -669,7 +677,7 @@ void SettingsManager::initView()
 					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneGroupHeader, BEAUTIFY_NAME)
 					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::FolderHeader, BEAUTIFY_NAME);
 	}
-	m_view->setBlocksJumpsModel(blocksJumpsModel, new QStringListModel(delegateModel, this));
+	m_view->setBlocksSettingsModel(blocksJumpsModel, new QStringListModel(delegateModel, this));
 
 
 	//
@@ -836,7 +844,8 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderTextColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderBackgroundColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SLOT(scenarioEditCurrentStyleChanged(QString)));
-	connect(m_view, SIGNAL(scenarioEditBlockJumpChanged(QString,QString,QString,QString,QString)), this, SLOT(scenarioEditBlockJumpChanged(QString,QString,QString,QString,QString)));
+	connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)),
+			this, SLOT(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
 	connect(m_view, SIGNAL(navigatorShowSceneDescriptionChanged(bool)), this, SLOT(navigatorShowSceneDescriptionChanged(bool)));
@@ -891,6 +900,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 	connect(m_view, SIGNAL(navigatorShowSceneDescriptionChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));

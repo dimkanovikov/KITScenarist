@@ -34,7 +34,6 @@ namespace KeyProcessingLayer
 		 * @brief Необходимые действия при нажатии конкретной клавиши/сочетания
 		 */
 		/** @{ */
-		virtual void handleShortcut(QKeyEvent* _event = 0) = 0;
 		virtual void handleEnter(QKeyEvent* _event = 0) = 0;
 		virtual void handleTab(QKeyEvent* _event = 0) = 0;
 		virtual void handleDelete(QKeyEvent* _event = 0) = 0;

@@ -19,7 +19,6 @@ namespace KeyProcessingLayer
 	 * @brief Реализация интерфейса AbstractKeyHandler
 	 */
 		/** @{ */
-		void handleShortcut(QKeyEvent* = 0) {}
 		void handleEnter(QKeyEvent* = 0) {}
 		void handleTab(QKeyEvent* = 0) {}
 		void handleBackspace(QKeyEvent* = 0) {}

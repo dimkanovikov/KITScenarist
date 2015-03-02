@@ -36,7 +36,6 @@ namespace KeyProcessingLayer
 		 * @brief Реализация интерфейса AbstractKeyHandler
 		 */
 		/** @{ */
-		void handleShortcut(QKeyEvent* _event = 0);
 		void handleDelete(QKeyEvent* _event = 0);
 		void handleBackspace(QKeyEvent* _event = 0);
 		void handleEscape(QKeyEvent* _event = 0);
@@ -79,11 +78,6 @@ namespace KeyProcessingLayer
 		 */
 		void removeGroupsPairs(int _cursorPosition,
 							   const QList<int>& _groupCountsToDelete);
-
-		/**
-		 * @brief Преобразовать текст в значение клавиши
-		 */
-		int keyCharacterToQtKey(const QString& _keyCharacter) const;
 	};
 }
 

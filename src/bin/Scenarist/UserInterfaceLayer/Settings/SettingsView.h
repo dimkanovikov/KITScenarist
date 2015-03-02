@@ -31,7 +31,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить модель алгоритма смены блоков
 		 */
-		void setBlocksJumpsModel(QAbstractItemModel* _model, QAbstractItemModel* _modelForDelegate);
+		void setBlocksSettingsModel(QAbstractItemModel* _model, QAbstractItemModel* _modelForDelegate);
 
 		/**
 		 * @brief Установить модель стилей
@@ -118,8 +118,9 @@ namespace UserInterface
 		void scenarioEditFolderTextColorDarkChanged(const QColor&);
 		void scenarioEditFolderBackgroundColorDarkChanged(const QColor&);
 		void scenarioEditCurrentStyleChanged(const QString&);
-		void scenarioEditBlockJumpChanged(const QString& _block, const QString& _tab,
-			const QString& _enter, const QString& _changeTab, const QString& _changeEnter);
+		void scenarioEditBlockSettingsChanged(const QString& _block, const QString& _shortcut,
+			const QString& _tab, const QString& _enter, const QString& _changeTab,
+			const QString& _changeEnter);
 
 		void navigatorShowScenesNumbersChanged(bool);
 		void navigatorShowSceneDescriptionChanged(bool);

@@ -10,9 +10,11 @@ namespace BusinessLogic {
 
 class QCompleter;
 
-
 namespace UserInterface
 {
+	class ShortcutsManager;
+
+
 	/**
 	 * @brief Текстовый редактор сценария
 	 */
@@ -75,6 +77,16 @@ namespace UserInterface
 		 * @brief Установить значение необходимости отображать номера сцен
 		 */
 		void setShowSceneNumbers(bool _show);
+
+		/**
+		 * @brief Обновить сочетания клавиш для переходов между блоками
+		 */
+		void updateShortcuts();
+
+		/**
+		 * @brief Получить сочетание смены для блока
+		 */
+		QString shortcut(BusinessLogic::ScenarioBlockStyle::Type _forType) const;
 
 	public slots:
 		/**
@@ -185,6 +197,11 @@ namespace UserInterface
 		 * @brief Отображать ли номер сцен
 		 */
 		bool m_showSceneNumbers;
+
+		/**
+		 * @brief Управляющий шорткатами
+		 */
+		ShortcutsManager* m_shortcutsManager;
 	};
 }
 

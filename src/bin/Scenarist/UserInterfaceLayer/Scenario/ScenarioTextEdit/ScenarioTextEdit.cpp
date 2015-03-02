@@ -1,4 +1,5 @@
 #include "ScenarioTextEdit.h"
+#include "ScenarioTextEditPrivate.h"
 
 #include "Handlers/KeyPressHandlerFacade.h"
 
@@ -26,6 +27,7 @@
 #include <QWheelEvent>
 
 using UserInterface::ScenarioTextEdit;
+using UserInterface::ShortcutsManager;
 using namespace BusinessLogic;
 
 namespace {
@@ -42,7 +44,8 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	m_mouseClicks(0),
 	m_lastMouseClickTime(0),
 	m_storeDataWhenEditing(true),
-	m_showSceneNumbers(false)
+	m_showSceneNumbers(false),
+	m_shortcutsManager(new ShortcutsManager(this))
 {
 	m_document = new ScenarioTextDocument(this, 0);
 	setDocument(m_document);
@@ -212,6 +215,16 @@ void ScenarioTextEdit::setShowSceneNumbers(bool _show)
 	if (m_showSceneNumbers != _show) {
 		m_showSceneNumbers = _show;
 	}
+}
+
+void ScenarioTextEdit::updateShortcuts()
+{
+	m_shortcutsManager->update();
+}
+
+QString ScenarioTextEdit::shortcut(ScenarioBlockStyle::Type _forType) const
+{
+	return m_shortcutsManager->shortcut(_forType);
 }
 
 void ScenarioTextEdit::ensureCursorVisibleReimpl()
@@ -906,6 +919,8 @@ void ScenarioTextEdit::initView()
 	const int MINIMUM_HEIGHT = 100;
 
 	setMinimumSize(MINIMUM_WIDTH, MINIMUM_HEIGHT);
+
+	updateShortcuts();
 }
 
 void ScenarioTextEdit::initConnections()

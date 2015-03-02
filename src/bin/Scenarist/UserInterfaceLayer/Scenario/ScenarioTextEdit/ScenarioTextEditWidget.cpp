@@ -4,6 +4,7 @@
 #include "ScenarioTextEditHelpers.h"
 #include "ScenarioFastFormatWidget.h"
 
+#include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
@@ -42,20 +43,6 @@ namespace {
 		QCryptographicHash hash(QCryptographicHash::Md5);
 		hash.addData(_text.toUtf8());
 		return hash.result();
-	}
-
-	/**
-	 * @brief Сформировать платформозависимый шорткат
-	 */
-	static QString makeShortcut(const QString& _shortcut) {
-		return QKeySequence(_shortcut).toString(QKeySequence::NativeText);
-	}
-
-	/**
-	 * @brief Сформиовать платформозависимую подсказку
-	 */
-	static QString makeToolTip(const QString& _text, const QString& _shortcut) {
-		return QString("%1 (%2)").arg(_text).arg(makeShortcut(_shortcut));
 	}
 }
 
@@ -287,6 +274,12 @@ void ScenarioTextEditWidget::updateStylesElements()
 	m_fastFormatWidget->reinitBlockStyles();
 }
 
+void ScenarioTextEditWidget::updateShortcuts()
+{
+	m_editor->updateShortcuts();
+	updateStylesCombo();
+}
+
 void ScenarioTextEditWidget::aboutUndo()
 {
 	m_editor->document()->undo();
@@ -375,13 +368,13 @@ void ScenarioTextEditWidget::initView()
 	initStylesCombo();
 
 	m_undo->setIcons(QIcon(":/Graphics/Icons/Editing/undo.png"));
-	m_undo->setToolTip(::makeToolTip(tr("Undo last action"), "Ctrl+Z"));
+	m_undo->setToolTip(ShortcutHelper::makeToolTip(tr("Undo last action"), "Ctrl+Z"));
 
 	m_redo->setIcons(QIcon(":/Graphics/Icons/Editing/redo.png"));
-	m_redo->setToolTip(::makeToolTip(tr("Redo last action"), "Shift+Ctrl+Z"));
+	m_redo->setToolTip(ShortcutHelper::makeToolTip(tr("Redo last action"), "Shift+Ctrl+Z"));
 
 	m_search->setIcons(QIcon(":/Graphics/Icons/Editing/search.png"));
-	m_search->setToolTip(::makeToolTip(tr("Search text"), "Ctrl+F"));
+	m_search->setToolTip(ShortcutHelper::makeToolTip(tr("Search text"), "Ctrl+F"));
 	m_search->setCheckable(true);
 	m_search->setShortcut(QKeySequence("Ctrl+F"));
 
@@ -430,66 +423,64 @@ void ScenarioTextEditWidget::initView()
 void ScenarioTextEditWidget::initStylesCombo()
 {
 	ScenarioStyle style = ScenarioStyleFacade::style();
-	int itemIndex = 0;
 
 	if (style.blockStyle(ScenarioBlockStyle::TimeAndPlace).isActive()) {
 		m_textStyles->addItem(tr("Time and Place"), ScenarioBlockStyle::TimeAndPlace);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+Return"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::SceneCharacters).isActive()) {
 		m_textStyles->addItem(tr("Scene Characters"), ScenarioBlockStyle::SceneCharacters);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+E"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::Action).isActive()) {
 		m_textStyles->addItem(tr("Action"), ScenarioBlockStyle::Action);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+J"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::Character).isActive()) {
 		m_textStyles->addItem(tr("Character"), ScenarioBlockStyle::Character);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+U"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::Dialog).isActive()) {
 		m_textStyles->addItem(tr("Dialog"), ScenarioBlockStyle::Dialog);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+L"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::Parenthetical).isActive()) {
 		m_textStyles->addItem(tr("Parethentcial"), ScenarioBlockStyle::Parenthetical);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+H"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::Title).isActive()) {
 		m_textStyles->addItem(tr("Title"), ScenarioBlockStyle::Title);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+N"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::Note).isActive()) {
 		m_textStyles->addItem(tr("Note"), ScenarioBlockStyle::Note);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+P"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::Transition).isActive()) {
 		m_textStyles->addItem(tr("Transition"), ScenarioBlockStyle::Transition);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+G"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::NoprintableText).isActive()) {
 		m_textStyles->addItem(tr("Noprintable Text"), ScenarioBlockStyle::NoprintableText);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+Y"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::SceneGroupHeader).isActive()) {
 		m_textStyles->addItem(tr("Scenes Group"), ScenarioBlockStyle::SceneGroupHeader);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+D"), Qt::ToolTipRole);
 	}
 
 	if (style.blockStyle(ScenarioBlockStyle::FolderHeader).isActive()) {
 		m_textStyles->addItem(tr("Folder"), ScenarioBlockStyle::FolderHeader);
-		m_textStyles->setItemData(itemIndex++, ::makeShortcut("Ctrl+Space"), Qt::ToolTipRole);
+	}
+
+	updateStylesCombo();
+}
+
+void ScenarioTextEditWidget::updateStylesCombo()
+{
+	for (int index = 0; index < m_textStyles->count(); ++index) {
+		ScenarioBlockStyle::Type blockType =
+				(ScenarioBlockStyle::Type)m_textStyles->itemData(index).toInt();
+		m_textStyles->setItemData(index, m_editor->shortcut(blockType), Qt::ToolTipRole);
 	}
 }
 

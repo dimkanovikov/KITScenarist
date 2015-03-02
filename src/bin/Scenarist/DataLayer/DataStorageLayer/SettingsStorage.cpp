@@ -5,6 +5,8 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
 
+#include <3rd_party/Helpers/ShortcutHelper.h>
+
 #include <QSettings>
 #include <QStandardPaths>
 #include <QStringList>
@@ -149,6 +151,18 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/folder-text-color-dark", "#EBEBEB");
 	m_defaultValues.insert("scenario-editor/folder-background-color-dark", "#8D2DC4");
 	m_defaultValues.insert("scenario-editor/zoom-range", "0");
+	//
+	m_defaultValues.insert("scenario-editor/shortcuts/time_and_place", ShortcutHelper::makeShortcut("Ctrl+Return"));
+	m_defaultValues.insert("scenario-editor/shortcuts/scene_characters", ShortcutHelper::makeShortcut("Ctrl+E"));
+	m_defaultValues.insert("scenario-editor/shortcuts/action", ShortcutHelper::makeShortcut("Ctrl+J"));
+	m_defaultValues.insert("scenario-editor/shortcuts/character", ShortcutHelper::makeShortcut("Ctrl+U"));
+	m_defaultValues.insert("scenario-editor/shortcuts/dialog", ShortcutHelper::makeShortcut("Ctrl+L"));
+	m_defaultValues.insert("scenario-editor/shortcuts/parenthetical", ShortcutHelper::makeShortcut("Ctrl+H"));
+	m_defaultValues.insert("scenario-editor/shortcuts/transition", ShortcutHelper::makeShortcut("Ctrl+G"));
+	m_defaultValues.insert("scenario-editor/shortcuts/note", ShortcutHelper::makeShortcut("Ctrl+P"));
+	m_defaultValues.insert("scenario-editor/shortcuts/title", ShortcutHelper::makeShortcut("Ctrl+N"));
+	m_defaultValues.insert("scenario-editor/shortcuts/scene_group_header", ShortcutHelper::makeShortcut("Ctrl+D"));
+	m_defaultValues.insert("scenario-editor/shortcuts/folder_header", ShortcutHelper::makeShortcut("Ctrl+Space"));
 	//
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-time_and_place-by-tab", QString::number(ScenarioBlockStyle::SceneCharacters));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-time_and_place-by-enter", QString::number(ScenarioBlockStyle::Action));

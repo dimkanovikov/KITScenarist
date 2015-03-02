@@ -23,6 +23,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/LocationStorage.h>
 
+#include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
 
@@ -47,19 +48,6 @@ using BusinessLogic::ScenarioDocument;
 using BusinessLogic::ScenarioBlockStyle;
 
 namespace {
-	/**
-	 * @brief Сформировать платформозависимый шорткат
-	 */
-	static QString makeShortcut(const QString& _shortcut) {
-		return QKeySequence(_shortcut).toString(QKeySequence::NativeText);
-	}
-
-	/**
-	 * @brief Сформиовать платформозависимую подсказку
-	 */
-	static QString makeToolTip(const QString& _text, const QString& _shortcut) {
-		return QString("%1 (%2)").arg(_text).arg(makeShortcut(_shortcut));
-	}
 
 	/**
 	 * @brief Ключ для хранения атрибута последнего размера сплитера
@@ -744,7 +732,7 @@ void ScenarioManager::initView()
 	m_showFullscreen = new FlatButton(m_view);
 	m_showFullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"), QIcon(),
 		QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
-	m_showFullscreen->setToolTip(::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
+	m_showFullscreen->setToolTip(ShortcutHelper::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
 	m_showFullscreen->setShortcut(QKeySequence("F5"));
 	m_showFullscreen->setCheckable(true);
 

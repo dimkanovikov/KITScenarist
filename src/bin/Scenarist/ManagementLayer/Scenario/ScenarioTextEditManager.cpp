@@ -106,6 +106,7 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 				.toDouble());
 
 	m_view->updateStylesElements();
+	m_view->updateShortcuts();
 }
 
 int ScenarioTextEditManager::cursorPosition() const

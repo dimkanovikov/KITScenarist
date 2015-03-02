@@ -26,20 +26,22 @@ QWidget* ComboBoxItemDelegate::createEditor(QWidget* parent, const QStyleOptionV
 
 void ComboBoxItemDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
-	QString value = index.model()->data(index, Qt::EditRole).toString();
+	const QString value = index.model()->data(index, Qt::EditRole).toString();
 
-	QComboBox* comboBox = static_cast<QComboBox*>(editor);
+	QComboBox* comboBox = qobject_cast<QComboBox*>(editor);
 	comboBox->setCurrentText(value);
 }
 
 void ComboBoxItemDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
-	QComboBox *comboBox = static_cast<QComboBox*>(editor);
-	QString value = comboBox->currentText();
+	QComboBox *comboBox = qobject_cast<QComboBox*>(editor);
+	const QString value = comboBox->currentText();
 	model->setData(index, value, Qt::EditRole);
 }
 
 void ComboBoxItemDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+	Q_UNUSED(index);
+
 	editor->setGeometry(option.rect);
 }
