@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>878</width>
-    <height>544</height>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -107,7 +107,7 @@
          </item>
          <item>
           <property name="text">
-           <string>Styles Library</string>
+           <string>Templates Library</string>
           </property>
           <property name="icon">
            <iconset resource="../../Resources/Resources.qrc">
@@ -325,7 +325,7 @@
            <item row="1" column="0" colspan="2">
             <widget class="QStackedWidget" name="ScenarioEditPageStack">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="scenarioEditCommon">
               <layout class="QGridLayout" name="gridLayout_10">
@@ -1240,7 +1240,7 @@
                     <item>
                      <widget class="QLabel" name="label_20">
                       <property name="text">
-                       <string>Editor Text Style:</string>
+                       <string>Editor Text Template:</string>
                       </property>
                      </widget>
                     </item>
@@ -1649,7 +1649,7 @@
                       <cursorShape>WhatsThisCursor</cursorShape>
                      </property>
                      <property name="toolTip">
-                      <string>For standard style and compatible</string>
+                      <string>For standard template and compatible</string>
                      </property>
                      <property name="text">
                       <string/>
@@ -2065,7 +2065,7 @@ Paragraph</string>
            <item row="0" column="0">
             <widget class="FlatButton" name="newStyle">
              <property name="toolTip">
-              <string>Add Style</string>
+              <string>Add Template</string>
              </property>
              <property name="text">
               <string>New</string>
@@ -2079,7 +2079,7 @@ Paragraph</string>
            <item row="0" column="1">
             <widget class="FlatButton" name="editStyle">
              <property name="toolTip">
-              <string>Edit Selected Style</string>
+              <string>Edit Selected Template</string>
              </property>
              <property name="text">
               <string>Edit</string>
@@ -2093,7 +2093,7 @@ Paragraph</string>
            <item row="0" column="2">
             <widget class="FlatButton" name="removeStyle">
              <property name="toolTip">
-              <string>Delete Selected Style</string>
+              <string>Delete Selected Template</string>
              </property>
              <property name="text">
               <string>Remove</string>
@@ -2107,7 +2107,7 @@ Paragraph</string>
            <item row="0" column="3">
             <widget class="FlatButton" name="loadStyle">
              <property name="toolTip">
-              <string>Load Style From File</string>
+              <string>Load Template From File</string>
              </property>
              <property name="text">
               <string>Load</string>
@@ -2121,7 +2121,7 @@ Paragraph</string>
            <item row="0" column="4">
             <widget class="FlatButton" name="saveStyle">
              <property name="toolTip">
-              <string>Save Style To File</string>
+              <string>Save Template To File</string>
              </property>
              <property name="text">
               <string>Save As...</string>

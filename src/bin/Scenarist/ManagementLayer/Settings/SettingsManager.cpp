@@ -418,7 +418,7 @@ void SettingsManager::styleLibraryLoadPressed()
 	//
 	QString styleFilePath =
 			QFileDialog::getOpenFileName(m_view, tr("Choose file to load"), QDir::homePath(),
-				tr("Scenario Style Files (*.%1)").arg(SCENARIO_STYLE_FILE_EXTENSION));
+				tr("Scenario Template Files (*.%1)").arg(SCENARIO_STYLE_FILE_EXTENSION));
 
 	if (!styleFilePath.isEmpty()) {
 		//
@@ -442,7 +442,7 @@ void SettingsManager::styleLibrarySavePressed(const QModelIndex& _styleIndex)
 	//
 	QString styleFilePath =
 			QFileDialog::getSaveFileName(m_view, tr("Choose file to save"), QDir::homePath(),
-				tr("Scenario Style Files (*.%1)").arg(SCENARIO_STYLE_FILE_EXTENSION));
+				tr("Scenario Template Files (*.%1)").arg(SCENARIO_STYLE_FILE_EXTENSION));
 
 	//
 	// Сохраним стиль в файл

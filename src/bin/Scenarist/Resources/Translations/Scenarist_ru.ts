@@ -220,12 +220,17 @@
         <translation>Экспортировать сценарий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="319"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="154"/>
+        <source>Template:</source>
+        <translation>Шаблон:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="309"/>
         <source>Additional:</source>
         <translation>Дополнительно:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="351"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="354"/>
         <source>DOCX</source>
         <translation></translation>
     </message>
@@ -245,9 +250,8 @@
         <translation>Предпросмотр</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="154"/>
         <source>Style:</source>
-        <translation>Стиль:</translation>
+        <translation type="vanished">Стиль:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="194"/>
@@ -305,32 +309,31 @@
         <translation>Контакты:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="288"/>
         <source>Contacts.</source>
-        <translation>Контакты.</translation>
+        <translation type="vanished">Контакты.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="295"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="285"/>
         <source>Year:</source>
         <translation>Год:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="305"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="295"/>
         <source>Scenario wirting year.</source>
         <translation>Год написания сценария.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="312"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="302"/>
         <source>Additional info about scenario.</source>
         <translation>Дополнительная информация (оригинальный сценарий, экранизация и т.п.).</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="414"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="417"/>
         <source>Check page breaks</source>
         <translation>Корректировать текст на разрывах страниц</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="430"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="433"/>
         <source>Checking page breaks can increase scenario page numbers.</source>
         <translation>Корректировка текста на разрывах страниц может привести к увеличению кол-ва страниц сценария.</translation>
     </message>
@@ -340,12 +343,12 @@
         <translation>Формат:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="361"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="364"/>
         <source>RTF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="371"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="374"/>
         <source>PDF</source>
         <translation></translation>
     </message>
@@ -859,10 +862,14 @@
         <translation>Выберите файл для загрузки</translation>
     </message>
     <message>
+        <source>Scenario Style Files (*.%1)</source>
+        <translation type="vanished">Файлы стиля сценария (*.%1)</translation>
+    </message>
+    <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="421"/>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="445"/>
-        <source>Scenario Style Files (*.%1)</source>
-        <translation>Файлы стиля сценария (*.%1)</translation>
+        <source>Scenario Template Files (*.%1)</source>
+        <translation>Файлы шаблона сценария (*.%1)</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="444"/>
@@ -1162,6 +1169,11 @@
         <translation>Навигатор</translation>
     </message>
     <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="110"/>
+        <source>Templates Library</source>
+        <translation>Библиотека шаблонов</translation>
+    </message>
+    <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="226"/>
         <source>Save Backups</source>
         <translation>Создавать резервные копии</translation>
@@ -1192,6 +1204,11 @@
         <translation>тёмной темы</translation>
     </message>
     <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1243"/>
+        <source>Editor Text Template:</source>
+        <translation>Шаблон оформления текста:</translation>
+    </message>
+    <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1374"/>
         <source>Show scene description</source>
         <translation>Отображать описание сцены</translation>
@@ -1215,6 +1232,31 @@
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1622"/>
         <source>Chronometry</source>
         <translation>Хронометраж</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2068"/>
+        <source>Add Template</source>
+        <translation>Добавить шаблон</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2082"/>
+        <source>Edit Selected Template</source>
+        <translation>Изменить выбранный шаблон</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2096"/>
+        <source>Delete Selected Template</source>
+        <translation>Удалить выбранный шаблон</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2110"/>
+        <source>Load Template From File</source>
+        <translation>Загрузить шаблон из файла</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2124"/>
+        <source>Save Template To File</source>
+        <translation>Сохранить шаблон в файл</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="161"/>
@@ -1276,14 +1318,12 @@
         <translation>Постраничный вид</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="110"/>
         <source>Styles Library</source>
-        <translation>Библиотека стилей</translation>
+        <translation type="vanished">Библиотека стилей</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1243"/>
         <source>Editor Text Style:</source>
-        <translation>Стиль оформления текста:</translation>
+        <translation type="vanished">Стиль оформления текста:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1207"/>
@@ -1295,6 +1335,11 @@
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1633"/>
         <source>Pages Chronometry</source>
         <translation>Постраничный подсчёт</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1652"/>
+        <source>For standard template and compatible</source>
+        <translation>Для стандартного шаблона и совместимых</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1692"/>
@@ -1394,9 +1439,8 @@ Paragraph</source>
         <translation type="vanished">Счётчик страниц [только в постраничном режиме]</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2068"/>
         <source>Add Style</source>
-        <translation>Добавить стиль</translation>
+        <translation type="vanished">Добавить стиль</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2071"/>
@@ -1404,9 +1448,8 @@ Paragraph</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2082"/>
         <source>Edit Selected Style</source>
-        <translation>Изменить выбранный стиль</translation>
+        <translation type="vanished">Изменить выбранный стиль</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2085"/>
@@ -1414,19 +1457,16 @@ Paragraph</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2096"/>
         <source>Delete Selected Style</source>
-        <translation>Удалить выбранный стиль</translation>
+        <translation type="vanished">Удалить выбранный стиль</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2110"/>
         <source>Load Style From File</source>
-        <translation>Загрузить стиль из файла</translation>
+        <translation type="vanished">Загрузить стиль из файла</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2124"/>
         <source>Save Style To File</source>
-        <translation>Сохранить стиль в файл</translation>
+        <translation type="vanished">Сохранить стиль в файл</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2127"/>
@@ -1449,9 +1489,8 @@ Paragraph</source>
         <translation>Символов без пробелов | Символов с пробелами</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1652"/>
         <source>For standard style and compatible</source>
-        <translation>Для стандартного стиля и совместимых</translation>
+        <translation type="vanished">Для стандартного стиля и совместимых</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2099"/>
@@ -1563,9 +1602,8 @@ Paragraph</source>
         <translation type="obsolete">Время и место</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="14"/>
         <source>Edit Scenario Style</source>
-        <translation>Настройка стиля сценария</translation>
+        <translation type="vanished">Настройка стиля сценария</translation>
     </message>
     <message>
         <source>Scene Characters</source>
@@ -1730,6 +1768,11 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="286"/>
         <source>Line spacing:</source>
         <translation>Межстрочный интервал:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="14"/>
+        <source>Edit Scenario Template</source>
+        <translation>Настройка шаблона сценария</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="294"/>

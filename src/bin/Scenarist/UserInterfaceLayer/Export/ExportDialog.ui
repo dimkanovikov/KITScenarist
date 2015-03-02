@@ -151,7 +151,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Style:</string>
+          <string>Template:</string>
          </property>
         </widget>
        </item>
