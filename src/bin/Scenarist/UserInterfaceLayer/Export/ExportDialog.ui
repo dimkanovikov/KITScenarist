@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>474</width>
-    <height>562</height>
+    <height>615</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -277,19 +277,9 @@
             <property name="text">
              <string>Contacts:</string>
             </property>
-            <property name="buddy">
-             <cstring>contacts</cstring>
-            </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="contacts">
-            <property name="toolTip">
-             <string>Contacts.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
+          <item row="8" column="0">
            <widget class="QLabel" name="nameLabel_6">
             <property name="text">
              <string>Year:</string>
@@ -299,7 +289,7 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
+          <item row="8" column="1">
            <widget class="QLineEdit" name="year">
             <property name="toolTip">
              <string>Scenario wirting year.</string>
@@ -320,6 +310,19 @@
             </property>
             <property name="buddy">
              <cstring>additionalInfo</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QPlainTextEdit" name="contacts">
+            <property name="tabChangesFocus">
+             <bool>true</bool>
+            </property>
+            <property name="lineWrapMode">
+             <enum>QPlainTextEdit::NoWrap</enum>
+            </property>
+            <property name="backgroundVisible">
+             <bool>false</bool>
             </property>
            </widget>
           </item>

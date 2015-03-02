@@ -162,12 +162,12 @@ void ExportDialog::setScenarioAuthor(const QString _author)
 
 QString ExportDialog::scenarioContacts() const
 {
-	return ui->contacts->text();
+	return ui->contacts->toPlainText();
 }
 
 void ExportDialog::setScenarioContacts(const QString& _contacts)
 {
-	ui->contacts->setText(_contacts);
+	ui->contacts->setPlainText(_contacts);
 }
 
 QString ExportDialog::scenarioYear() const
@@ -191,7 +191,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 	exportParameters.scenarioAdditionalInfo = ui->additionalInfo->text();
 	exportParameters.scenarioGenre = ui->genre->text();
 	exportParameters.scenarioAuthor = ui->author->text();
-	exportParameters.scenarioContacts = ui->contacts->text();
+	exportParameters.scenarioContacts = ui->contacts->toPlainText();
 	exportParameters.scenarioYear = ui->year->text();
 	exportParameters.printPagesNumbers = ui->pageNumbering->isChecked();
 	exportParameters.printScenesNumbers = ui->scenesNumbering->isChecked();
