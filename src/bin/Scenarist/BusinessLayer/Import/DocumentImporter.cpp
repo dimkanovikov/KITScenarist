@@ -28,9 +28,9 @@ namespace {
 	const QRegularExpression START_FROM_NUMBER_CHECKER("^([\\d]{1,}[\\d\\S]{0,})[.](([\\d\\S]{1,})[.]|) ");
 
 	/**
-	 * @brief Допущение для блоков, которые по идее вообще не должны иметь отступа в пикселях (20 мм)
+	 * @brief Допущение для блоков, которые по идее вообще не должны иметь отступа в пикселях (16 мм)
 	 */
-	const int LEFT_MARGIN_DELTA = 75;
+	const int LEFT_MARGIN_DELTA = 60;
 
 	/**
 	 * @brief Некоторые программы выравнивают текст при помощи пробелов
@@ -134,7 +134,7 @@ namespace {
 					// 1. всё что осталось и не имеет отступов
 					// 2. выровнено по левому краю
 					//
-					else if (blockFormat.alignment() == Qt::AlignLeft
+					else if (blockFormat.alignment().testFlag(Qt::AlignLeft)
 							 && !isCentered) {
 						blockType = ScenarioBlockStyle::Note;
 					}
@@ -142,7 +142,7 @@ namespace {
 					// Переход
 					// 1. всё что осталось и выровнено по правому краю
 					//
-					else if (blockFormat.alignment() == Qt::AlignRight) {
+					else if (blockFormat.alignment().testFlag(Qt::AlignRight)) {
 						blockType = ScenarioBlockStyle::Transition;
 					}
 				}

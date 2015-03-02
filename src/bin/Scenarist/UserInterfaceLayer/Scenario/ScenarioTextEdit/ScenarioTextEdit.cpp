@@ -331,7 +331,6 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 			cursor.movePosition(QTextCursor::End);
 			cursor.setBlockFormat(cursor.blockFormat());
 			cursor.endEditBlock();
-			document()->undo();
 		}
 	}
 
@@ -431,7 +430,7 @@ void ScenarioTextEdit::mousePressEvent(QMouseEvent* _event)
 
 	const qint64 curMouseClickTime = QDateTime::currentMSecsSinceEpoch();
 	const qint64 timeDelta = curMouseClickTime - m_lastMouseClickTime;
-	if (timeDelta <= (QApplication::styleHints()->mouseDoubleClickInterval() * 2)) {
+	if (timeDelta <= (QApplication::styleHints()->mouseDoubleClickInterval())) {
 		m_mouseClicks += 2;
 	} else {
 		m_mouseClicks = 1;
