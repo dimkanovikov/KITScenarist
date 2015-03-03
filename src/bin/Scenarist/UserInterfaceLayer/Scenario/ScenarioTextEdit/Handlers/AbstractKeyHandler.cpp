@@ -27,11 +27,22 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	//
 	// ... нажатая кнопка
 	Qt::Key pressedKey = (Qt::Key)_event->key();
+	// ... зажатые управляющие клавиши
+	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
+
+	//
+	// Нажата клавиша "Control" в сочетании с какой-либо другой
+	//
+	if (pressedModifiers.testFlag(Qt::ControlModifier)) {
+		//
+		// Ни чего не делаем, обработкой сочетаний клавиш занимаются ответственные за это классы
+		//
+	}
 
 	//
 	// Нажата клавиша "Enter"
 	//
-	if (pressedKey == Qt::Key_Enter
+	else if (pressedKey == Qt::Key_Enter
 			 || pressedKey == Qt::Key_Return) {
 		handleEnter(_event);
 	}
