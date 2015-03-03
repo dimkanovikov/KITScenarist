@@ -48,13 +48,25 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	m_caseSensitive->setToolTip(tr("Case Sensitive"));
 
 	m_prevMatch->setFixedWidth(20);
-	m_prevMatch->setText("◀");
+	m_prevMatch->setText(
+#ifdef Q_OS_WIN
+				QSysInfo::windowsVersion() == SysInfo::WV_XP ? "◄" : "◀"
+#else
+				"◀"
+#endif
+				);
 	m_prevMatch->setShortcut(QKeySequence("Shift+F3"));
 	m_prevMatch->setToolTip(tr("Find Prev"));
 	connect(m_prevMatch, SIGNAL(clicked()), this, SLOT(aboutFindPrev()));
 
 	m_nextMatch->setFixedWidth(20);
-	m_nextMatch->setText("▶");
+	m_nextMatch->setText(
+#ifdef Q_OS_WIN
+				QSysInfo::windowsVersion() == SysInfo::WV_XP ? "►" : "▶"
+#else
+				"▶"
+#endif
+				);
 	m_nextMatch->setShortcut(QKeySequence("F3"));
 	m_nextMatch->setToolTip(tr("Find Next"));
 	connect(m_nextMatch, SIGNAL(clicked()), this, SLOT(aboutFindNext()));
