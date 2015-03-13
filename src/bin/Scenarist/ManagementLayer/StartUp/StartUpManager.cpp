@@ -258,25 +258,33 @@ void StartUpManager::checkNewVersion()
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
 		"application/uuid", uuid, DataStorageLayer::SettingsStorage::ApplicationSettings);
 
+	//
+	// Построим ссылку, чтобы учитывать запрос на проверку обновлений
+	//
+	QString url = QString("http://kitscenarist.ru/api/app_updates.php");
 
-	QString url
-			= QString("http://dimkanovikov.pro/kit/scenarist/app_updates.php?"
-					  "system_type=%1&system_name=%2&uuid=%3&application_version=%4")
-			  .arg(
+	url.append("?system_type=");
+	url.append(
 #ifdef Q_OS_WIN
-				  "windows"
+				"windows"
 #elif defined Q_OS_LINUX
-				  "linux"
+				"linux"
 #elif defined Q_OS_MAC
-				  "mac"
+				"mac"
 #else
-				  QSysInfo::kernelType()
+				QSysInfo::kernelType()
 #endif
-				  )
-			  .arg(QSysInfo::prettyProductName())
-			  .arg(uuid)
-			  .arg(QApplication::applicationVersion());
+				);
 
-	QNetworkRequest request = QNetworkRequest(QUrl(url.toUtf8().toPercentEncoding()));
+	url.append("&system_name=");
+	url.append(QSysInfo::prettyProductName().toUtf8().toPercentEncoding());
+
+	url.append("&uuid=");
+	url.append(uuid);
+
+	url.append("&application_version=");
+	url.append(QApplication::applicationVersion());
+
+	QNetworkRequest request = QNetworkRequest(QUrl(url));
 	manager->get(request);
 }

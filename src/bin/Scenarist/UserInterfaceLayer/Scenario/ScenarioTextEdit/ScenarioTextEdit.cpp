@@ -322,16 +322,11 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 		s_firstRepaintUpdate = false;
 
 		QTextCursor cursor(document());
-		if (verticalScrollBar()->value() == 0
-			&& document() != 0
-			&& !document()->isEmpty()
-			&& cursorRect(cursor).top() > 30) {
-			cursor.beginEditBlock();
-			cursor.setBlockFormat(cursor.blockFormat());
-			cursor.movePosition(QTextCursor::End);
-			cursor.setBlockFormat(cursor.blockFormat());
-			cursor.endEditBlock();
-		}
+		cursor.beginEditBlock();
+		cursor.setBlockFormat(cursor.blockFormat());
+		cursor.movePosition(QTextCursor::End);
+		cursor.setBlockFormat(cursor.blockFormat());
+		cursor.endEditBlock();
 	}
 
 

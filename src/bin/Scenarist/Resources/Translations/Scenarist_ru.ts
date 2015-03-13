@@ -1092,12 +1092,12 @@
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="94"/>
         <source>Source</source>
-        <translation>Исходный</translation>
+        <translation>Синопсис</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="104"/>
         <source>From scenario</source>
-        <translation>Из сценария</translation>
+        <translation>Собрать описания сцен в единый документ</translation>
     </message>
 </context>
 <context>
@@ -1121,27 +1121,27 @@
         <translation>Учитывать регистр</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="53"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="59"/>
         <source>Find Prev</source>
         <translation>Найти предыдущее совпадение</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="59"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="71"/>
         <source>Find Next</source>
         <translation>Найти следующее совпадение</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="62"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="74"/>
         <source>Replace with...</source>
         <translation>Заменить на...</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="64"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="76"/>
         <source>Replace</source>
         <translation>Заменить</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="68"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="80"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
@@ -1562,8 +1562,12 @@ Paragraph</source>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="336"/>
+        <source>&lt;a href=&quot;http://kitscenarist.ru/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;http://kitscenarist.ru/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Как пользоваться программой?&lt;/a&gt;</translation>
+    </message>
+    <message>
         <source>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Как пользоваться программой?&lt;/a&gt;</translation>
+        <translation type="vanished">&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Как пользоваться программой?&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="140"/>
@@ -2222,7 +2226,7 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.cpp" line="24"/>
         <source>Notes of</source>
-        <translation>Заметки</translation>
+        <translation>Описание сцены</translation>
     </message>
 </context>
 <context>

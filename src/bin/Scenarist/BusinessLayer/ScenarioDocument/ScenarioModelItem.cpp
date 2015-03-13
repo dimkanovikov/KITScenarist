@@ -80,8 +80,9 @@ QString ScenarioModelItem::text() const
 
 void ScenarioModelItem::setText(const QString& _text)
 {
-	if (m_text.isEmpty() || !_text.startsWith(m_text)) {
-		m_text = _text.left(MAX_TEXT_LENGTH);
+	const QString newText = _text.left(MAX_TEXT_LENGTH);
+	if (m_text != newText) {
+		m_text = newText;
 		updateParentText();
 	}
 }

@@ -455,10 +455,21 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	//
 	// Прерываем ситуация, когда в редактор помещается документ, но для него уже создана модель
 	//
+	const QByteArray currentTextMd5Hash = ::textMd5Hash(m_document->toPlainText());
 	if (_position == 0 && _charsRemoved == _charsAdded
 		&& _charsAdded == m_document->characterCount() && !m_modelItems.isEmpty()) {
-		return;
+		//
+		// ... на самом ли деле текст изменился?
+		//
+		if (currentTextMd5Hash == m_lastTextMd5Hash) {
+			return;
+		}
 	}
+
+	//
+	// Сохранить md5 хэш текста документа
+	//
+	m_lastTextMd5Hash = currentTextMd5Hash;
 
 	//
 	// Если были удалены данные

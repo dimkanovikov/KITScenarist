@@ -189,7 +189,6 @@
         </widget>
        </item>
       </layout>
-      <zorder></zorder>
       <zorder>synopsisStack</zorder>
       <zorder>name</zorder>
       <zorder>label</zorder>

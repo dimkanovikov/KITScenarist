@@ -333,7 +333,7 @@
               <item row="2" column="1">
                <widget class="QLabel" name="help">
                 <property name="text">
-                 <string>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</string>
+                 <string>&lt;a href=&quot;http://kitscenarist.ru/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
