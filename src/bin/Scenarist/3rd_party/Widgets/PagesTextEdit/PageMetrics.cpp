@@ -13,7 +13,7 @@ qreal PageMetrics::mmToPx(qreal _mm, bool _x)
 	// высотой 4,8мм и шириной 2,53мм
 	//
 	const QFontMetricsF courierNewMetrics(QFont("Courier New", 12));
-	return _x ? ((courierNewMetrics.width("W") * _mm) / 2.53)
+    return _x ? ((courierNewMetrics.width("W") * _mm) / 2.53)
 			  : ((courierNewMetrics.lineSpacing() * _mm) / 4.8);
 }
 
