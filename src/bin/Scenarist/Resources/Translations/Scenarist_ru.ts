@@ -48,12 +48,12 @@
 <context>
     <name>BusinessLogic::AbstractExporter</name>
     <message>
-        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="237"/>
+        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="235"/>
         <source>(MORE)</source>
         <translation>ДАЛЬШЕ</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="238"/>
+        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="236"/>
         <source> (cont&apos;d)</source>
         <translation> (ПРОД.)</translation>
     </message>
@@ -1226,7 +1226,7 @@
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1395"/>
         <source>Scene synopsis</source>
-        <translation>Синопсис сцены</translation>
+        <translation>Описание сцены</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1419"/>
@@ -2214,7 +2214,7 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="187"/>
         <source>Show/hide scene note</source>
-        <translation>Скрыть/показать заметки к сцене</translation>
+        <translation>Скрыть/показать описание сцены</translation>
     </message>
 </context>
 <context>
