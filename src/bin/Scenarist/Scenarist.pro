@@ -13,7 +13,7 @@ TEMPLATE = app
 # Отключаем предупреждения о статических функциях и переменных
 # не используемых в собственных заголовочных файлах
 #
-gcc:QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
+QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 
 #
 # Для создания предустановленных справочников на русском языке
