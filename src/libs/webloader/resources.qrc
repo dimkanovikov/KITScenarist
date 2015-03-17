@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>QFreeDesktopMime/mimetypes.xml</file>
+    </qresource>
+</RCC>

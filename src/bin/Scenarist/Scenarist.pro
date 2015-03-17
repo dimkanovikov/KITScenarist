@@ -196,7 +196,8 @@ SOURCES += main.cpp \
     3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.cpp \
     3rd_party/Widgets/FlatButton/FlatButton.cpp \
     3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditPrivate.cpp
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditPrivate.cpp \
+    ManagementLayer/Synchronization/SynchronizationManager.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -356,7 +357,8 @@ HEADERS += \
     3rd_party/Widgets/FlatButton/FlatButton.h \
     3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.h \
     3rd_party/Helpers/ShortcutHelper.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditPrivate.h
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditPrivate.h \
+    ManagementLayer/Synchronization/SynchronizationManager.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

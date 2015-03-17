@@ -47,6 +47,8 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	m_showSceneNumbers(false),
 	m_shortcutsManager(new ShortcutsManager(this))
 {
+	setAttribute(Qt::WA_KeyCompression);
+
 	m_document = new ScenarioTextDocument(this, 0);
 	setDocument(m_document);
 	initEditor();
