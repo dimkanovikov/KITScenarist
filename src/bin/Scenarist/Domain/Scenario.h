@@ -3,6 +3,7 @@
 
 #include "DomainObject.h"
 
+#include <QDateTime>
 #include <QString>
 
 
@@ -15,7 +16,7 @@ namespace Domain
 	{
 	public:
 		Scenario(const Identifier& _id, const QString& _name, const QString& _synopsis,
-			const QString& _text);
+			const QString& _text, const QDateTime& _versionStartDatetime, const QDateTime& _versionEndDatetime);
 
 		/**
 		 * @brief Название сценария
@@ -89,6 +90,16 @@ namespace Domain
 		void setIsDraft(bool _isDraft);
 		/** @} */
 
+		/**
+		 * @brief Временные метки, начала и конца сессии работы над сценарием
+		 */
+		/** @{ */
+		QDateTime versionStartDatetime() const;
+		void setVersionStartDatetime(const QDateTime& _datetime);
+		QDateTime versionEndDatetime() const;
+		void setVersionEndDatetime(const QDateTime& _datetime);
+		/** @} */
+
 	private:
 		/**
 		 * @brief Название
@@ -134,6 +145,14 @@ namespace Domain
 		 * @brief Является ли сценарий черновиком
 		 */
 		bool m_isDraft;
+
+		/**
+		 * @brief Временные метки, начала и конца сессии работы над сценарием
+		 */
+		/** @{ */
+		QDateTime m_versionStartDatetime;
+		QDateTime m_versionEndDatetime;
+		/** @} */
 	};
 
 	// ****

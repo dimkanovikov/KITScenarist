@@ -4,12 +4,14 @@ using namespace Domain;
 
 
 Scenario::Scenario(const Identifier& _id, const QString& _name,
-	const QString& _synopsis, const QString& _text) :
+	const QString& _synopsis, const QString& _text, const QDateTime& _versionStartDatetime, const QDateTime& _versionEndDatetime) :
 	DomainObject(_id),
 	m_name(_name),
 	m_synopsis(_synopsis),
 	m_text(_text),
-	m_isDraft(false)
+	m_isDraft(false),
+	m_versionStartDatetime(_versionStartDatetime),
+	m_versionEndDatetime(_versionEndDatetime)
 {
 }
 
@@ -118,6 +120,30 @@ void Scenario::setIsDraft(bool _isDraft)
 {
 	if (m_isDraft != _isDraft) {
 		m_isDraft = _isDraft;
+	}
+}
+
+QDateTime Scenario::versionStartDatetime() const
+{
+	return m_versionStartDatetime;
+}
+
+void Scenario::setVersionStartDatetime(const QDateTime& _datetime)
+{
+	if (m_versionStartDatetime != _datetime) {
+		m_versionStartDatetime = _datetime;
+	}
+}
+
+QDateTime Scenario::versionEndDatetime() const
+{
+	return m_versionEndDatetime;
+}
+
+void Scenario::setVersionEndDatetime(const QDateTime& _datetime)
+{
+	if (m_versionEndDatetime != _datetime) {
+		m_versionEndDatetime = _datetime;
 	}
 }
 

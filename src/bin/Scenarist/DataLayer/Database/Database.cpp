@@ -1,12 +1,13 @@
 #include "Database.h"
 
+#include <QApplication>
+#include <QDateTime>
+#include <QRegularExpression>
 #include <QStringList>
 #include <QSqlQuery>
 #include <QSqlRecord>
-#include <QVariant>
 #include <QTextCodec>
-#include <QApplication>
-#include <QRegularExpression>
+#include <QVariant>
 
 using namespace DatabaseLayer;
 
@@ -109,15 +110,15 @@ void Database::open(QSqlDatabase& _database, const QString& _connectionName, con
 	_database.setDatabaseName(_databaseName);
 	_database.open();
 
-	Database::States states = checkState(_database);
+//	Database::States states = checkState(_database);
 
-	if (!states.testFlag(SchemeFlag))
-		createTables(_database);
-	if (!states.testFlag(IndexesFlag))
-		createIndexes(_database);
-	if (!states.testFlag(EnumsFlag))
-		createEnums(_database);
-	if (states.testFlag(OldVersionFlag))
+//	if (!states.testFlag(SchemeFlag))
+//		createTables(_database);
+//	if (!states.testFlag(IndexesFlag))
+//		createIndexes(_database);
+//	if (!states.testFlag(EnumsFlag))
+//		createEnums(_database);
+//	if (states.testFlag(OldVersionFlag))
 		updateDatabase(_database);
 }
 
@@ -262,10 +263,9 @@ void Database::createTables(QSqlDatabase& _database)
 				   "year TEXT DEFAULT(NULL), "
 				   "synopsis TEXT DEFAULT(NULL), "
 				   "text TEXT NOT NULL, "
-				   "is_draft INTEGER NOT NULL DEFAULT(0), " // чистовик - 0, черновик - 1
-				   "is_fixed INTEGER NOT NULL DEFAULT(0), " // фиксация версии, дата и комментарий
-				   "fix_date TEXT DEFAULT(NULL), "
-				   "fix_comment TEXT DEFAULT(NULL) "
+				   "is_draft INTEGER NOT NULL DEFAULT(0), "
+				   "version_start_datetime TEXT NOT NULL, "
+				   "version_end_datetime TEXT NOT NULL "
 				   ")"
 				   );
 
@@ -284,8 +284,17 @@ void Database::createEnums(QSqlDatabase& _database)
 
 	// Пустой сценарий и черновик
 	{
-		q_creator.exec("INSERT INTO scenario (id, text) VALUES(null, '')");
-		q_creator.exec("INSERT INTO scenario (id, text, is_draft) VALUES(null, '', 1)");
+		const QString dateTime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
+		q_creator.exec(
+			QString("INSERT INTO scenario (id, text, version_start_datetime, version_end_datetime) "
+					"VALUES(null, '', '%1', '%1')")
+					.arg(dateTime)
+					);
+		q_creator.exec(
+			QString("INSERT INTO scenario (id, text, is_draft, version_start_datetime, version_end_datetime) "
+					"VALUES(null, '', 1, '%1', '%1')")
+					.arg(dateTime)
+					);
 	}
 
 	// Версия программы
@@ -383,71 +392,57 @@ void Database::updateDatabase(QSqlDatabase& _database)
 	//
 	// Вызываются необходимые процедуры обновления БД в зависимости от её версии
 	//
-	switch (versionMajor) {
-		default:
-		case 0: {
-
-			switch (versionMinor) {
-				default:
-				case 0: {
-
-					switch (versionBuild) {
-						default:
-						case 1: {
-							updateDatabaseTo_0_0_2(_database);
-						}
-						case 2:
-						case 3: {
-							updateDatabaseTo_0_0_4(_database);
-						}
-
-						case 4: {
-							updateDatabaseTo_0_0_5(_database);
-						}
-					}
-
-				}
-
-				case 1: {
-
-					switch (versionBuild) {
-						default:
-						case 0: {
-							updateDatabaseTo_0_1_0(_database);
-						}
-					}
-				}
-
-				case 2: {
-
-					switch (versionBuild) {
-						default:
-						case 7: {
-							updateDatabaseTo_0_2_8(_database);
-						}
-					}
-				}
-
-				case 3: {
-
-					switch (versionBuild) {
-						default:
-						case 2: {
-							updateDatabaseTo_0_3_3(_database);
-						}
-					}
-				}
-
-				case 4:
-
-					switch (versionBuild) {
-						default:
-						case 4: {
-							updateDatabaseTo_0_4_5(_database);
-						}
-					}
+	// 0.X.X
+	//
+	if (versionMajor <= 0) {
+		//
+		// 0.0.X
+		//
+		if (versionMinor <= 0) {
+			if (versionBuild <= 1) {
+				updateDatabaseTo_0_0_2(_database);
 			}
-
+			if (versionBuild <= 3) {
+				updateDatabaseTo_0_0_4(_database);
+			}
+			if (versionBuild <= 4) {
+				updateDatabaseTo_0_0_5(_database);
+			}
+		}
+		//
+		// 0.1.X
+		//
+		if (versionMinor <= 1) {
+			if (versionBuild <= 0) {
+				updateDatabaseTo_0_1_0(_database);
+			}
+		}
+		//
+		// 0.2.X
+		//
+		if (versionMinor <= 2) {
+			if (versionBuild <= 7) {
+				updateDatabaseTo_0_2_8(_database);
+			}
+		}
+		//
+		// 0.3.X
+		//
+		if (versionMinor <= 3) {
+			if (versionBuild <= 2) {
+				updateDatabaseTo_0_3_3(_database);
+			}
+		}
+		//
+		// 0.4.X
+		//
+		if (versionMinor <= 4) {
+			if (versionBuild <= 4) {
+				updateDatabaseTo_0_4_5(_database);
+			}
+			if (versionBuild <= 9) {
+				updateDatabaseTo_0_5_0(_database);
+			}
 		}
 	}
 
@@ -716,6 +711,30 @@ void Database::updateDatabaseTo_0_4_5(QSqlDatabase& _database)
 		// Добавление самого черновика
 		//
 		q_updater.exec("INSERT INTO scenario (id, text, is_draft) VALUES(null, '', 1)");
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Добавляем новые столбцы
+		//
+		const QString defaultDateTime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
+		q_updater.exec(
+			QString("ALTER TABLE scenario ADD COLUMN version_start_datetime TEXT NOT NULL DEFAULT('%1')")
+					.arg(defaultDateTime)
+					);
+		q_updater.exec(
+			QString("ALTER TABLE scenario ADD COLUMN version_end_datetime TEXT NOT NULL DEFAULT('%1')")
+					.arg(defaultDateTime)
+					);
 	}
 
 	_database.commit();

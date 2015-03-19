@@ -143,6 +143,14 @@ namespace DatabaseLayer
 		 */
 		static void updateDatabaseTo_0_4_5(QSqlDatabase& _database);
 
+		/**
+		 * @brief Обновить базу данных до версии 0.5.0
+		 *
+		 * - добавляются поля version_start_datetime и version_end_datetime для сценария
+		 * - для текущего сценария им присваивается дата и время его первого открытия в новой версии
+		 */
+		static void updateDatabaseTo_0_5_0(QSqlDatabase& _database);
+
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )

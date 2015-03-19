@@ -1,5 +1,7 @@
 #include "SynchronizationManager.h"
 
+#include <WebLoader.h>
+
 #include <QTimer>
 
 using ManagementLayer::SynchronizationManager;

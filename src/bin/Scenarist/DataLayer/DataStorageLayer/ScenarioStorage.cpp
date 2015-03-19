@@ -12,7 +12,7 @@ using namespace DataMappingLayer;
 ScenariosTable* ScenarioStorage::all()
 {
 	if (m_all == 0) {
-		m_all = MapperFacade::scenarioMapper()->findAll();
+		m_all = MapperFacade::scenarioMapper()->findLast();
 	}
 	return m_all;
 }
@@ -37,6 +37,7 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 	const QString& _text, bool _isDraft)
 {
 	Scenario* scenario = current(_isDraft);
+	const QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
 
 	//
 	// Если сценарий сохраняется в первый раз
@@ -45,7 +46,7 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 		//
 		// ... создаём сценарий
 		//
-		scenario = new Scenario(Identifier(), _name, _synopsis, _text);
+		scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime);
 		scenario->setIsDraft(_isDraft);
 
 		//
@@ -63,17 +64,41 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 	// Если сценарий уже был сохранён
 	//
 	else {
-		//
-		// ... обновим сценарий
-		//
-		scenario->setName(_name);
-		scenario->setSynopsis(_synopsis);
-		scenario->setText(_text);
 
 		//
-		// ... зафиксируем обновлённый текст в базе данных
+		// Если с момента открытия сессии сценария прошло более, чем MAX_HOURS_FOR_SESSION,
+		// тогда создаём новую версию сценария
 		//
-		MapperFacade::scenarioMapper()->update(scenario);
+		const int MAX_HOURS_FOR_SESSION = 3;
+		if (scenario->versionStartDatetime().addSecs(MAX_HOURS_FOR_SESSION * 60 * 60) < currentDateTime) {
+			//
+			// ... создаём новую версию сценария
+			//
+			scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime);
+			scenario->setIsDraft(_isDraft);
+
+			//
+			// ... сохраняем её
+			//
+			MapperFacade::scenarioMapper()->insert(scenario);
+		}
+		//
+		// В противном случае обновляем последнюю версию
+		//
+		else {
+			//
+			// ... обновим сценарий
+			//
+			scenario->setName(_name);
+			scenario->setSynopsis(_synopsis);
+			scenario->setText(_text);
+			scenario->setVersionEndDatetime(currentDateTime);
+
+			//
+			// ... зафиксируем обновлённый текст в базе данных
+			//
+			MapperFacade::scenarioMapper()->update(scenario);
+		}
 	}
 
 	return scenario;

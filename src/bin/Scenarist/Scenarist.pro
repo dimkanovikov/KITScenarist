@@ -42,6 +42,17 @@ INCLUDEPATH += $$PWD/../../libs/fileformats
 DEPENDPATH += $$PWD/../../libs/fileformats
 #
 
+#
+# Подключаем библилотеку WebLoader
+#
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../libs/webloader/release/ -lwebloader
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../libs/webloader/debug/ -lwebloader
+else:unix: LIBS += -L$$OUT_PWD/../../libs/webloader/ -lwebloader
+
+INCLUDEPATH += $$PWD/../../libs/webloader
+DEPENDPATH += $$PWD/../../libs/webloader
+#
+
 INCLUDEPATH += $$PWD
 
 SOURCES += main.cpp \
@@ -385,3 +396,4 @@ macx {
     ICON = logo.icns
     QMAKE_INFO_PLIST = Info.plist
 }
+
