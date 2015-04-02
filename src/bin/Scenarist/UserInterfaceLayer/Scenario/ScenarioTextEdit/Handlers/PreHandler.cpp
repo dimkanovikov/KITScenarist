@@ -35,14 +35,14 @@ void PreHandler::handleOther(QKeyEvent* _event)
 	//
 	QTextCursor topCursor(editor()->document());
 	topCursor.setPosition(qMin(cursor.selectionStart(), cursor.selectionEnd()));
-	ScenarioBlockStyle topStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
+	ScenarioBlockStyle topStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
 
 	//
 	// Получим стиль последнего блока в выделении
 	//
 	QTextCursor bottomCursor(editor()->document());
 	bottomCursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
-	ScenarioBlockStyle bottomStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
+	ScenarioBlockStyle bottomStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
 
 	//
 	// Не все стили можно редактировать

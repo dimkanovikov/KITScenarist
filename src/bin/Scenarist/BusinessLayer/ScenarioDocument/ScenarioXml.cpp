@@ -3,7 +3,7 @@
 #include "ScenarioDocument.h"
 #include "ScenarioTextDocument.h"
 #include "ScenarioModelItem.h"
-#include "ScenarioStyle.h"
+#include "ScenarioTemplate.h"
 #include "ScenarioTextBlockInfo.h"
 
 #include <QApplication>
@@ -362,7 +362,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 				// Если определён тип блока, то обработать его
 				//
 				if (tokenType != ScenarioBlockStyle::Undefined) {
-					ScenarioBlockStyle currentStyle = ScenarioStyleFacade::style().blockStyle(tokenType);
+					ScenarioBlockStyle currentStyle = ScenarioTemplateFacade::getTemplate().blockStyle(tokenType);
 
 					if (!firstBlockHandling) {
 						cursor.insertBlock();
@@ -372,7 +372,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 					// Если нужно добавим заголовок стиля
 					//
 					if (currentStyle.hasHeader()) {
-						ScenarioBlockStyle headerStyle = ScenarioStyleFacade::style().blockStyle(currentStyle.headerType());
+						ScenarioBlockStyle headerStyle = ScenarioTemplateFacade::getTemplate().blockStyle(currentStyle.headerType());
 						cursor.setBlockFormat(headerStyle.blockFormat());
 						cursor.setBlockCharFormat(headerStyle.charFormat());
 						cursor.setCharFormat(headerStyle.charFormat());
@@ -429,7 +429,7 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 				//
 				// Если необходимо так же вставляем префикс и постфикс стиля
 				//
-				ScenarioBlockStyle currentStyle = ScenarioStyleFacade::style().blockStyle(lastTokenType);
+				ScenarioBlockStyle currentStyle = ScenarioTemplateFacade::getTemplate().blockStyle(lastTokenType);
 				if (!currentStyle.prefix().isEmpty()
 					&& !textToInsert.startsWith(currentStyle.prefix())) {
 					textToInsert.prepend(currentStyle.prefix());

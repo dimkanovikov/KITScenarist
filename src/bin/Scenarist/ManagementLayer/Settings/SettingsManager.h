@@ -69,7 +69,7 @@ namespace ManagementLayer
 		void scenarioEditNonprintableTextColorDarkChanged(const QColor& _value);
 		void scenarioEditFolderTextColorDarkChanged(const QColor& _value);
 		void scenarioEditFolderBackgroundColorDarkChanged(const QColor& _value);
-		void scenarioEditCurrentStyleChanged(const QString& _value);
+		void scenarioEditCurrentTemplateChanged(const QString& _value);
 		void scenarioEditBlockSettingsChanged(const QString& _block, const QString& _shortcut,
 			const QString& _tab, const QString& _enter, const QString& _changeTab,
 			const QString& _changeEnter);
@@ -98,14 +98,14 @@ namespace ManagementLayer
 		/** @} */
 
 		/**
-		 * @brief Библиотека стилей
+		 * @brief Библиотека шаблонов
 		 */
 		/** @{ */
-		void styleLibraryNewPressed();
-		void styleLibraryEditPressed(const QModelIndex& _styleIndex);
-		void styleLibraryRemovePressed(const QModelIndex& _styleIndex);
-		void styleLibraryLoadPressed();
-		void styleLibrarySavePressed(const QModelIndex& _styleIndex);
+		void templateLibraryNewPressed();
+		void templateLibraryEditPressed(const QModelIndex& _templateIndex);
+		void templateLibraryRemovePressed(const QModelIndex& _templateIndex);
+		void templateLibraryLoadPressed();
+		void templateLibrarySavePressed(const QModelIndex& _templateIndex);
 		/** @} */
 
 	private:

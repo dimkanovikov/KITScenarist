@@ -1,7 +1,7 @@
 #include "ParentheticalHandler.h"
 
 #include "../ScenarioTextEdit.h"
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 #include <QKeyEvent>
 #include <QTextBlock>
@@ -30,7 +30,7 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
 	// ... префикс и постфикс стиля
-	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Parenthetical);
+	ScenarioBlockStyle style = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::Parenthetical);
 	QString stylePrefix = style.prefix();
 	QString stylePostfix = style.postfix();
 
@@ -125,7 +125,7 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
 	// ... префикс и постфикс стиля
-	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Parenthetical);
+	ScenarioBlockStyle style = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::Parenthetical);
 	QString stylePrefix = style.prefix();
 	QString stylePostfix = style.postfix();
 

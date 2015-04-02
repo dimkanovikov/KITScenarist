@@ -8,7 +8,7 @@
 #include "Import/ImportManager.h"
 #include "Export/ExportManager.h"
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Export/PdfExporter.h>

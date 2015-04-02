@@ -1,7 +1,7 @@
 #ifndef KEYPRESSHANDLERFACADE_H
 #define KEYPRESSHANDLERFACADE_H
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 #include <QMap>
 

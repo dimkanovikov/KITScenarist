@@ -122,8 +122,8 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockTy
 		//
 		closeCompleter();
 
-		ScenarioBlockStyle oldStyle = ScenarioStyleFacade::style().blockStyle(scenarioBlockType());
-		ScenarioBlockStyle newStyle = ScenarioStyleFacade::style().blockStyle(_blockType);
+		ScenarioBlockStyle oldStyle = ScenarioTemplateFacade::getTemplate().blockStyle(scenarioBlockType());
+		ScenarioBlockStyle newStyle = ScenarioTemplateFacade::getTemplate().blockStyle(_blockType);
 
 		//
 		// Если необходимо сменить группирующий стиль на аналогичный
@@ -163,7 +163,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioBlockStyle::Type _bl
 	QTextCursor cursor = textCursor();
 	cursor.beginEditBlock();
 
-	ScenarioBlockStyle newBlockStyle = ScenarioStyleFacade::style().blockStyle(_blockType);
+	ScenarioBlockStyle newBlockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(_blockType);
 
 	//
 	// Обновим стили
@@ -543,7 +543,7 @@ void ScenarioTextEdit::resizeEvent(QResizeEvent* _event)
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 {
 	QTextCursor cursor = textCursor();
-	ScenarioBlockStyle oldBlockStyle = ScenarioStyleFacade::style().blockStyle(scenarioBlockType());
+	ScenarioBlockStyle oldBlockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(scenarioBlockType());
 
 	//
 	// Удалить завершающий блок группы сцен
@@ -629,7 +629,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockType)
 {
 	QTextCursor cursor = textCursor();
-	ScenarioBlockStyle newBlockStyle = ScenarioStyleFacade::style().blockStyle(_blockType);
+	ScenarioBlockStyle newBlockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(_blockType);
 
 	//
 	// Обновим стили
@@ -677,7 +677,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 	// Вставим заголовок, если необходимо
 	//
 	if (newBlockStyle.hasHeader()) {
-		ScenarioBlockStyle headerStyle = ScenarioStyleFacade::style().blockStyle(newBlockStyle.headerType());
+		ScenarioBlockStyle headerStyle = ScenarioTemplateFacade::getTemplate().blockStyle(newBlockStyle.headerType());
 
 		cursor.movePosition(QTextCursor::StartOfBlock);
 		cursor.insertBlock();
@@ -693,7 +693,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 	// Для заголовка группы нужно создать завершение
 	//
 	if (newBlockStyle.isEmbeddableHeader()) {
-		ScenarioBlockStyle footerStyle = ScenarioStyleFacade::style().blockStyle(newBlockStyle.embeddableFooter());
+		ScenarioBlockStyle footerStyle = ScenarioTemplateFacade::getTemplate().blockStyle(newBlockStyle.embeddableFooter());
 
 		//
 		// Запомним позицию курсора
@@ -720,9 +720,9 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 
 void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioBlockStyle::Type _blockType)
 {
-	ScenarioBlockStyle oldBlockStyle = ScenarioStyleFacade::style().blockStyle(scenarioBlockType());
-	ScenarioBlockStyle newBlockHeaderStyle = ScenarioStyleFacade::style().blockStyle(_blockType);
-	ScenarioBlockStyle newBlockFooterStyle = ScenarioStyleFacade::style().blockStyle(newBlockHeaderStyle.embeddableFooter());
+	ScenarioBlockStyle oldBlockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(scenarioBlockType());
+	ScenarioBlockStyle newBlockHeaderStyle = ScenarioTemplateFacade::getTemplate().blockStyle(_blockType);
+	ScenarioBlockStyle newBlockFooterStyle = ScenarioTemplateFacade::getTemplate().blockStyle(newBlockHeaderStyle.embeddableFooter());
 
 	//
 	// Сменим стиль заголовочного блока

@@ -1,5 +1,5 @@
 #include "SettingsManager.h"
-#include "SettingsStylesManager.h"
+#include "SettingsTemplatesManager.h"
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -19,16 +19,16 @@
 #include <QStringListModel>
 
 using ManagementLayer::SettingsManager;
-using ManagementLayer::SettingsStylesManager;
-using BusinessLogic::ScenarioStyleFacade;
+using ManagementLayer::SettingsTemplatesManager;
+using BusinessLogic::ScenarioTemplateFacade;
 using BusinessLogic::ScenarioBlockStyle;
 using UserInterface::SettingsView;
 
 namespace {
 	/**
-	 * @brief Расширение файла стиля сценария
+	 * @brief Расширение файла шаблона сценария
 	 */
-	const QString SCENARIO_STYLE_FILE_EXTENSION = "kitss";
+	const QString SCENARIO_TEMPLATE_FILE_EXTENSION = "kitss";
 
 	/**
 	 * @brief Сформировать строку таблицы переходов между блоками для заданного типа
@@ -238,7 +238,7 @@ void SettingsManager::scenarioEditFolderBackgroundColorDarkChanged(const QColor&
 	storeValue("scenario-editor/folder-background-color-dark", _value);
 }
 
-void SettingsManager::scenarioEditCurrentStyleChanged(const QString& _value)
+void SettingsManager::scenarioEditCurrentTemplateChanged(const QString& _value)
 {
 	storeValue("scenario-editor/current-style", _value);
 }
@@ -378,87 +378,87 @@ void SettingsManager::simbolsCounterUsedChanged(bool _value)
 	storeValue("counters/simbols/used", _value);
 }
 
-void SettingsManager::styleLibraryNewPressed()
+void SettingsManager::templateLibraryNewPressed()
 {
-	SettingsStylesManager stylesManager(this, m_view);
-	stylesManager.newStyle();
+	SettingsTemplatesManager templatesManager(this, m_view);
+	templatesManager.newTemplate();
 }
 
-void SettingsManager::styleLibraryEditPressed(const QModelIndex& _styleIndex)
+void SettingsManager::templateLibraryEditPressed(const QModelIndex& _templateIndex)
 {
 	//
-	// Определим название стиля к изменению
+	// Определим название шаблона к изменению
 	//
-	const int STYLE_NAME_COLUMN = 0;
-	QModelIndex styleNameIndex = _styleIndex.sibling(_styleIndex.row(), STYLE_NAME_COLUMN);
-	QString styleToEditName = ScenarioStyleFacade::stylesList()->data(styleNameIndex).toString();
+	const int TEMPLATE_NAME_COLUMN = 0;
+	QModelIndex templateeNameIndex = _templateIndex.sibling(_templateIndex.row(), TEMPLATE_NAME_COLUMN);
+	QString templateToEditName = ScenarioTemplateFacade::templatesList()->data(templateeNameIndex).toString();
 
 	//
-	// Изменим стиль
+	// Изменим шаблон
 	//
-	SettingsStylesManager stylesManager(this, m_view);
-	bool styleChanged = stylesManager.editStyle(styleToEditName);
-	if (styleChanged) {
+	SettingsTemplatesManager templatesManager(this, m_view);
+	bool templateChanged = templatesManager.editTemplate(templateToEditName);
+	if (templateChanged) {
 		emit scenarioEditSettingsUpdated();
 	}
 }
 
-void SettingsManager::styleLibraryRemovePressed(const QModelIndex& _styleIndex)
+void SettingsManager::templateLibraryRemovePressed(const QModelIndex& _templateIndex)
 {
 	//
-	// Определим название стиля к удалению
+	// Определим название шаблона к удалению
 	//
-	const int STYLE_NAME_COLUMN = 0;
-	QModelIndex styleNameIndex = _styleIndex.sibling(_styleIndex.row(), STYLE_NAME_COLUMN);
-	QString styleToDeleteName = ScenarioStyleFacade::stylesList()->data(styleNameIndex).toString();
+	const int TEMPLATE_NAME_COLUMN = 0;
+	QModelIndex templateNameIndex = _templateIndex.sibling(_templateIndex.row(), TEMPLATE_NAME_COLUMN);
+	QString templateToDeleteName = ScenarioTemplateFacade::templatesList()->data(templateNameIndex).toString();
 
 	//
-	// Удалим стиль
+	// Удалим шаблон
 	//
-	ScenarioStyleFacade::removeStyle(styleToDeleteName);
+	ScenarioTemplateFacade::removeTemplate(templateToDeleteName);
 }
 
-void SettingsManager::styleLibraryLoadPressed()
+void SettingsManager::templateLibraryLoadPressed()
 {
 	//
 	// Выбрать файл для загрузки
 	//
-	QString styleFilePath =
+	QString templateFilePath =
 			QFileDialog::getOpenFileName(m_view, tr("Choose file to load"), QDir::homePath(),
-				tr("Scenario Template Files (*.%1)").arg(SCENARIO_STYLE_FILE_EXTENSION));
+				tr("Scenario Template Files (*.%1)").arg(SCENARIO_TEMPLATE_FILE_EXTENSION));
 
-	if (!styleFilePath.isEmpty()) {
+	if (!templateFilePath.isEmpty()) {
 		//
-		// Сохранить стиль в библиотеке
+		// Сохранить шаблон в библиотеке
 		//
-		ScenarioStyleFacade::saveStyle(styleFilePath);
+		ScenarioTemplateFacade::saveTemplate(templateFilePath);
 	}
 }
 
-void SettingsManager::styleLibrarySavePressed(const QModelIndex& _styleIndex)
+void SettingsManager::templateLibrarySavePressed(const QModelIndex& _templateIndex)
 {
 	//
-	// Определим стиль
+	// Определим шаблон
 	//
-	const int STYLE_NAME_COLUMN = 0;
-	QModelIndex styleNameIndex = _styleIndex.sibling(_styleIndex.row(), STYLE_NAME_COLUMN);
-	QString styleToSaveName = ScenarioStyleFacade::stylesList()->data(styleNameIndex).toString();
+	const int TEMPLATE_NAME_COLUMN = 0;
+	QModelIndex templateNameIndex = _templateIndex.sibling(_templateIndex.row(), TEMPLATE_NAME_COLUMN);
+	QString templateToSaveName = ScenarioTemplateFacade::templatesList()->data(templateNameIndex).toString();
 
 	//
 	// Выбрать файл для сохранения
 	//
-	QString styleFilePath =
+	QString templateFilePath =
 			QFileDialog::getSaveFileName(m_view, tr("Choose file to save"), QDir::homePath(),
-				tr("Scenario Template Files (*.%1)").arg(SCENARIO_STYLE_FILE_EXTENSION));
+				tr("Scenario Template Files (*.%1)").arg(SCENARIO_TEMPLATE_FILE_EXTENSION));
 
 	//
-	// Сохраним стиль в файл
+	// Сохраним шаблон в файл
 	//
-	if (!styleFilePath.isEmpty()) {
-		if (!styleFilePath.endsWith(SCENARIO_STYLE_FILE_EXTENSION)) {
-			styleFilePath += "." + SCENARIO_STYLE_FILE_EXTENSION;
+	if (!templateFilePath.isEmpty()) {
+		if (!templateFilePath.endsWith(SCENARIO_TEMPLATE_FILE_EXTENSION)) {
+			templateFilePath += "." + SCENARIO_TEMPLATE_FILE_EXTENSION;
 		}
-		ScenarioStyleFacade::style(styleToSaveName).saveToFile(styleFilePath);
+		ScenarioTemplateFacade::getTemplate(templateToSaveName).saveToFile(templateFilePath);
 	}
 }
 
@@ -495,9 +495,9 @@ void SettingsManager::storeValue(const QString& _key, const QColor& _value)
 void SettingsManager::initView()
 {
 	//
-	// Загрузить библиотеку стилей
+	// Загрузить библиотеку шаблонов
 	//
-	m_view->setStylesModel(BusinessLogic::ScenarioStyleFacade::stylesList());
+	m_view->setTemplatesModel(BusinessLogic::ScenarioTemplateFacade::templatesList());
 
 	//
 	// Загрузить настройки
@@ -634,8 +634,8 @@ void SettingsManager::initView()
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
 					)
 				);
-	// ... текущий стиль
-	m_view->setScenarioEditCurrentStyle(
+	// ... текущий шаблон
+	m_view->setScenarioEditCurrentTemplate(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"scenario-editor/current-style",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
@@ -843,7 +843,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorDarkChanged(QColor)), this, SLOT(scenarioEditNonprintableTextColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderTextColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderBackgroundColorDarkChanged(QColor)));
-	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SLOT(scenarioEditCurrentStyleChanged(QString)));
+	connect(m_view, SIGNAL(scenarioEditCurrentTemplateChanged(QString)), this, SLOT(scenarioEditCurrentTemplateChanged(QString)));
 	connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)),
 			this, SLOT(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)));
 
@@ -899,7 +899,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditNonprintableTextColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
-	connect(m_view, SIGNAL(scenarioEditCurrentStyleChanged(QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditCurrentTemplateChanged(QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
@@ -933,9 +933,9 @@ void SettingsManager::initConnections()
 	//
 	// Библиотека стилей
 	//
-	connect(m_view, SIGNAL(styleLibraryNewPressed()), this, SLOT(styleLibraryNewPressed()));
-	connect(m_view, SIGNAL(styleLibraryEditPressed(QModelIndex)), this, SLOT(styleLibraryEditPressed(QModelIndex)));
-	connect(m_view, SIGNAL(styleLibraryRemovePressed(QModelIndex)), this, SLOT(styleLibraryRemovePressed(QModelIndex)));
-	connect(m_view, SIGNAL(styleLibraryLoadPressed()), this, SLOT(styleLibraryLoadPressed()));
-	connect(m_view, SIGNAL(styleLibrarySavePressed(QModelIndex)), this, SLOT(styleLibrarySavePressed(QModelIndex)));
+	connect(m_view, SIGNAL(templateLibraryNewPressed()), this, SLOT(templateLibraryNewPressed()));
+	connect(m_view, SIGNAL(templateLibraryEditPressed(QModelIndex)), this, SLOT(templateLibraryEditPressed(QModelIndex)));
+	connect(m_view, SIGNAL(templateLibraryRemovePressed(QModelIndex)), this, SLOT(templateLibraryRemovePressed(QModelIndex)));
+	connect(m_view, SIGNAL(templateLibraryLoadPressed()), this, SLOT(templateLibraryLoadPressed()));
+	connect(m_view, SIGNAL(templateLibrarySavePressed(QModelIndex)), this, SLOT(templateLibrarySavePressed(QModelIndex)));
 }

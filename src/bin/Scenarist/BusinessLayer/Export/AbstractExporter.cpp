@@ -1,7 +1,7 @@
 #include "AbstractExporter.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 
 #include <Domain/Scenario.h>
@@ -23,8 +23,8 @@ namespace {
 	/**
 	 * @brief Стиль экспорта
 	 */
-	static ScenarioStyle exportStyle() {
-		return ScenarioStyleFacade::style(
+	static ScenarioTemplate exportStyle() {
+		return ScenarioTemplateFacade::getTemplate(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 						"export/style",
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
@@ -35,7 +35,7 @@ namespace {
 	 * @brief Определить размер страницы документа
 	 */
 	static QSizeF documentSize() {
-		ScenarioStyle exportStyle = ::exportStyle();
+		ScenarioTemplate exportStyle = ::exportStyle();
 		QSizeF pageSize = QPageSize(exportStyle.pageSizeId()).size(QPageSize::Millimeter);
 		QMarginsF pageMargins = exportStyle.pageMargins();
 
@@ -101,7 +101,7 @@ namespace {
 	 */
 	static void insertLine(QTextCursor& _cursor, const QTextBlockFormat& _blockFormat,
 		const QTextCharFormat& _charFormat) {
-        _cursor.insertBlock(_blockFormat, _charFormat);
+		_cursor.insertBlock(_blockFormat, _charFormat);
 	}
 
 	/**
@@ -487,37 +487,16 @@ namespace {
 		//
 		// ... проверяем необходимость обработать последующую ремарку или реплику
 		//
-		if (_blockLines == _linesToEndOfPage
-			&& (nextBlockType == ScenarioBlockStyle::Parenthetical
-				|| nextBlockType == ScenarioBlockStyle::Dialog)) {
-			//
-			// ... ищем персонажа
-			//
-			QTextCursor characterCursor = _sourceDocumentCursor;
-			while (ScenarioBlockStyle::forBlock(characterCursor.block()) != ScenarioBlockStyle::Character) {
-				characterCursor.movePosition(QTextCursor::PreviousBlock);
-			}
-
-			//
-			// ... вставляем имя персонажа после текущего блока, перед ремаркой
-			//
-			_sourceDocumentCursor.movePosition(QTextCursor::EndOfBlock);
-			::insertLine(_sourceDocumentCursor, characterCursor.blockFormat(), characterCursor.charFormat());
-			_sourceDocumentCursor.insertText(characterCursor.block().text().toUpper());
-			//
-			// ... и приписку (ПРОД.)
-			//
-			_sourceDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_CONTINUED));
-
-			//
-			// ... возвращаем целевой курсор к блоку реплики
-			//
-			_sourceDocumentCursor.movePosition(QTextCursor::PreviousBlock);
-		}
+		const bool nextDialogOrParentheticalOnNewPage =
+				_blockLines == _linesToEndOfPage
+				&& (nextBlockType == ScenarioBlockStyle::Parenthetical
+					|| nextBlockType == ScenarioBlockStyle::Dialog	);
 		//
-		// ... если не влезает до конца страницы, разорвать блок
+		// ... и случай, если не влезает до конца страницы, разорвать блок
 		//
-		else if (_blockLines > _linesToEndOfPage) {
+		const bool blockDontFitInPageEnd = _blockLines > _linesToEndOfPage;
+		if (nextDialogOrParentheticalOnNewPage || blockDontFitInPageEnd) {
+
 			const int MINIMUM_LINES_AT_PAGE_END = 2;
 			//
 			// ... если занимает меньше двух строк, то переносим полностью
@@ -867,7 +846,7 @@ namespace {
 QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDocument* _scenario,
 		const ExportParameters& _exportParameters) const
 {
-	ScenarioStyle exportStyle = ::exportStyle();
+	ScenarioTemplate exportStyle = ::exportStyle();
 
 	//
 	// Настроим новый документ
@@ -879,7 +858,7 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 	//
 	// Настроим размер страниц
 	//
-    preparedDocument->setPageSize(::documentSize());
+	preparedDocument->setPageSize(::documentSize());
 
 	//
 	// Данные считываются из исходного документа, если необходимо преобразовываются,
@@ -901,75 +880,75 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 		centerFormat.setAlignment(Qt::AlignCenter);
 		centerFormat.setLineHeight(
 					TextEditHelper::fontLineHeight(titleFormat.font()),
-                    QTextBlockFormat::FixedHeight);
+					QTextBlockFormat::FixedHeight);
 		QTextBlockFormat rightFormat;
-        rightFormat.setAlignment(Qt::AlignRight);
-        rightFormat.setLineHeight(
-                    TextEditHelper::fontLineHeight(titleFormat.font()),
-                    QTextBlockFormat::FixedHeight);
-        //
-        // Номер текущей строки
-        //
-        int currentLineNumber = 1;
-        destDocumentCursor.setBlockFormat(rightFormat);
-        destDocumentCursor.setCharFormat(titleFormat);
+		rightFormat.setAlignment(Qt::AlignRight);
+		rightFormat.setLineHeight(
+					TextEditHelper::fontLineHeight(titleFormat.font()),
+					QTextBlockFormat::FixedHeight);
+		//
+		// Номер текущей строки
+		//
+		int currentLineNumber = 1;
+		destDocumentCursor.setBlockFormat(rightFormat);
+		destDocumentCursor.setCharFormat(titleFormat);
 
-        //
-        // Название [13 строка]
-        //
-        while ((currentLineNumber++) < 12) {
-            ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-        }
-        ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-        destDocumentCursor.insertText(_exportParameters.scenarioName);
-        //
-        // Жанр [через одну под предыдущим]
-        //
-        if (!_exportParameters.scenarioGenre.isEmpty()) {
-            ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-            ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-            destDocumentCursor.insertText(_exportParameters.scenarioGenre);
-            currentLineNumber += 2;
-        }
-        //
-        // Автор [через одну под предыдущим]
-        //
-        if (!_exportParameters.scenarioAuthor.isEmpty()) {
-            ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-            ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-            destDocumentCursor.insertText(_exportParameters.scenarioAuthor);
-            currentLineNumber += 2;
-        }
-        //
-        // Доп. инфо [через одну под предыдущим]
-        //
-        if (!_exportParameters.scenarioAdditionalInfo.isEmpty()) {
-            ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-            ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-            destDocumentCursor.insertText(_exportParameters.scenarioAdditionalInfo);
-            currentLineNumber += 2;
-        }
-        //
-        // необходимое количество пустых строк до 30ой
-        //
-        while ((currentLineNumber++) < 29) {
-            ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-        }
-        //
-        // Контакты [30 строка]
-        //
-        ::insertLine(destDocumentCursor, rightFormat, titleFormat);
-        destDocumentCursor.insertText(_exportParameters.scenarioContacts);
+		//
+		// Название [13 строка]
+		//
+		while ((currentLineNumber++) < 12) {
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+		}
+		::insertLine(destDocumentCursor, centerFormat, titleFormat);
+		destDocumentCursor.insertText(_exportParameters.scenarioName);
+		//
+		// Жанр [через одну под предыдущим]
+		//
+		if (!_exportParameters.scenarioGenre.isEmpty()) {
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+			destDocumentCursor.insertText(_exportParameters.scenarioGenre);
+			currentLineNumber += 2;
+		}
+		//
+		// Автор [через одну под предыдущим]
+		//
+		if (!_exportParameters.scenarioAuthor.isEmpty()) {
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+			destDocumentCursor.insertText(_exportParameters.scenarioAuthor);
+			currentLineNumber += 2;
+		}
+		//
+		// Доп. инфо [через одну под предыдущим]
+		//
+		if (!_exportParameters.scenarioAdditionalInfo.isEmpty()) {
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+			destDocumentCursor.insertText(_exportParameters.scenarioAdditionalInfo);
+			currentLineNumber += 2;
+		}
+		//
+		// необходимое количество пустых строк до 30ой
+		//
+		while ((currentLineNumber++) < 29) {
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+		}
+		//
+		// Контакты [30 строка]
+		//
+		::insertLine(destDocumentCursor, rightFormat, titleFormat);
+		destDocumentCursor.insertText(_exportParameters.scenarioContacts);
 
 		//
 		// Год печатается на последней строке документа
 		//
 		LineType currentLineType = ::currentLine(preparedDocument, centerFormat, titleFormat);
-        while (currentLineType != LastPageLine) {
-            ++currentLineNumber;
-            ::insertLine(destDocumentCursor, centerFormat, titleFormat);
-            currentLineType = ::currentLine(preparedDocument, centerFormat, titleFormat);
-        }
+		while (currentLineType != LastPageLine) {
+			++currentLineNumber;
+			::insertLine(destDocumentCursor, centerFormat, titleFormat);
+			currentLineType = ::currentLine(preparedDocument, centerFormat, titleFormat);
+		}
 		destDocumentCursor.insertText(_exportParameters.scenarioYear);
 	}
 

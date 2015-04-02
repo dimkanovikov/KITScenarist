@@ -9,9 +9,9 @@
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
 #include <QApplication>
@@ -28,8 +28,8 @@
 
 using UserInterface::ScenarioTextEditWidget;
 using UserInterface::ScenarioTextEdit;
-using BusinessLogic::ScenarioStyleFacade;
-using BusinessLogic::ScenarioStyle;
+using BusinessLogic::ScenarioTemplateFacade;
+using BusinessLogic::ScenarioTemplate;
 using BusinessLogic::ScenarioBlockStyle;
 
 namespace {
@@ -113,8 +113,8 @@ void ScenarioTextEditWidget::setUsePageView(bool _use)
 	QMarginsF pageMargins(15, 5, 5, 5);
 	Qt::Alignment pageNumbersAlign;
 	if (_use) {
-		pageMargins = ScenarioStyleFacade::style().pageMargins();
-		pageNumbersAlign = ScenarioStyleFacade::style().numberingAlignment();
+		pageMargins = ScenarioTemplateFacade::getTemplate().pageMargins();
+		pageNumbersAlign = ScenarioTemplateFacade::getTemplate().numberingAlignment();
 	}
 
 	m_editor->setUsePageMode(_use);
@@ -125,7 +125,7 @@ void ScenarioTextEditWidget::setUsePageView(bool _use)
 	// В дополнение установим шрифт по умолчанию для документа (шрифтом будет рисоваться нумерация)
 	//
 	m_editor->document()->setDefaultFont(
-		ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Action).font());
+		ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::Action).font());
 }
 
 void ScenarioTextEditWidget::setUseSpellChecker(bool _use)
@@ -218,7 +218,7 @@ void ScenarioTextEditWidget::addItem(int _position, const QString& _text, int _t
 	//
 	// Если это группирующий блок, то вставим и закрывающий текст
 	//
-	if (ScenarioStyleFacade::style().blockStyle(type).isEmbeddableHeader()) {
+	if (ScenarioTemplateFacade::getTemplate().blockStyle(type).isEmbeddableHeader()) {
 		cursor = m_editor->textCursor();
 		cursor.movePosition(QTextCursor::NextBlock);
 		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
@@ -387,7 +387,7 @@ void ScenarioTextEditWidget::initView()
 	m_duration->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
 	m_editor->setObjectName("scenarioEditor");
-	m_editor->setPageFormat(ScenarioStyleFacade::style().pageSizeId());
+	m_editor->setPageFormat(ScenarioTemplateFacade::getTemplate().pageSizeId());
 
 	m_searchLine->setEditor(m_editor);
 	m_searchLine->hide();
@@ -422,7 +422,7 @@ void ScenarioTextEditWidget::initView()
 
 void ScenarioTextEditWidget::initStylesCombo()
 {
-	ScenarioStyle style = ScenarioStyleFacade::style();
+	ScenarioTemplate style = ScenarioTemplateFacade::getTemplate();
 
 	if (style.blockStyle(ScenarioBlockStyle::TimeAndPlace).isActive()) {
 		m_textStyles->addItem(tr("Time and Place"), ScenarioBlockStyle::TimeAndPlace);

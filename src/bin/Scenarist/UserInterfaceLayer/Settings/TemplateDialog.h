@@ -1,39 +1,39 @@
-#ifndef STYLEDIALOG_H
-#define STYLEDIALOG_H
+#ifndef TEMPLATEDIALOG_H
+#define TEMPLATEDIALOG_H
 
 #include <QDialog>
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 class QListWidgetItem;
 
 namespace Ui {
-	class StyleDialog;
+	class TemplateDialog;
 }
 
 
 namespace UserInterface
 {
 	/**
-	 * @brief Диалог редактирования стиля
+	 * @brief Диалог редактирования шаблона
 	 */
-	class StyleDialog : public QDialog
+	class TemplateDialog : public QDialog
 	{
 		Q_OBJECT
 
 	public:
-		explicit StyleDialog(QWidget *parent = 0);
-		~StyleDialog();
+		explicit TemplateDialog(QWidget *parent = 0);
+		~TemplateDialog();
 
 		/**
-		 * @brief Установить стиль в диалог
+		 * @brief Установить шаблон в диалог
 		 */
-		void setScenarioStyle(const BusinessLogic::ScenarioStyle& _style, bool _isNew);
+		void setScenarioTemplate(const BusinessLogic::ScenarioTemplate& _template, bool _isNew);
 
 		/**
-		 * @brief Получить стиль настроеный в диалоге
+		 * @brief Получить шаблон настроеный в диалоге
 		 */
-		BusinessLogic::ScenarioStyle scenarioStyle();
+		BusinessLogic::ScenarioTemplate scenarioTemplate();
 
 	private slots:
 		/**
@@ -66,12 +66,12 @@ namespace UserInterface
 		/**
 		 * @brief Интерфейс
 		 */
-		Ui::StyleDialog *ui;
+		Ui::TemplateDialog *ui;
 
 		/**
-		 * @brief Текущий стиль
+		 * @brief Текущий шаблон
 		 */
-		BusinessLogic::ScenarioStyle m_style;
+		BusinessLogic::ScenarioTemplate m_template;
 
 		/**
 		 * @brief Текущий стиль блока
@@ -80,4 +80,4 @@ namespace UserInterface
 	};
 }
 
-#endif // STYLEDIALOG_H
+#endif // TEMPLATEDIALOG_H

@@ -3,7 +3,7 @@
 #include <format_manager.h>
 #include <format_reader.h>
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 
 #include <3rd_party/Widgets/PagesTextEdit/PageMetrics.h>

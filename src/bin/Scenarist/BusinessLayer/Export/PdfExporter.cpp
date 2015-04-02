@@ -26,8 +26,8 @@ namespace {
 	/**
 	 * @brief Стиль экспорта
 	 */
-	static ScenarioStyle exportStyle() {
-		return ScenarioStyleFacade::style(
+	static ScenarioTemplate exportStyle() {
+		return ScenarioTemplateFacade::getTemplate(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 						"export/style",
 						DataStorageLayer::SettingsStorage::ApplicationSettings)

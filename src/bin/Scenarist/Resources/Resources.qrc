@@ -66,7 +66,7 @@
         <file>UI/comboboxarrow.png</file>
         <file>UI/loader.gif</file>
     </qresource>
-    <qresource prefix="/Styles">
-        <file>Styles/default.kitss</file>
+    <qresource prefix="/Templates">
+        <file>Templates/default.kitss</file>
     </qresource>
 </RCC>

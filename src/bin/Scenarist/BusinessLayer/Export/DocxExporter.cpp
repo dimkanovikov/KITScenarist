@@ -7,7 +7,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 #include <Domain/Scenario.h>
 
@@ -23,8 +23,8 @@ namespace {
 	/**
 	 * @brief Стиль экспорта
 	 */
-	static ScenarioStyle exportStyle() {
-		return ScenarioStyleFacade::style(
+	static ScenarioTemplate exportStyle() {
+		return ScenarioTemplateFacade::getTemplate(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 						"export/style",
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
@@ -406,7 +406,7 @@ void DocxExporter::writeStyles(QtZipWriter* _zip) const
 	//
 	// Настройки в соответсвии со стилем
 	//
-	ScenarioStyle style = ::exportStyle();
+	ScenarioTemplate style = ::exportStyle();
 	foreach (int blockNumber, ::blockTypes().keys()) {
 		ScenarioBlockStyle blockStyle = style.blockStyle(::blockTypes().value(blockNumber));
 		styleXml.append(::docxBlockStyle(blockStyle));
@@ -510,7 +510,7 @@ void DocxExporter::writeDocument(QtZipWriter* _zip, ScenarioDocument* _scenario,
 	//
 	// В конце идёт блок настроек страницы
 	//
-	ScenarioStyle style = ::exportStyle();
+	ScenarioTemplate style = ::exportStyle();
 	documentXml.append("<w:sectPr>");
 	//
 	// ... колонтитулы

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>StyleDialog</class>
- <widget class="QDialog" name="StyleDialog">
+ <class>TemplateDialog</class>
+ <widget class="QDialog" name="TemplateDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -548,9 +548,6 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="editable">
-           <bool>true</bool>
           </property>
           <item>
            <property name="text">

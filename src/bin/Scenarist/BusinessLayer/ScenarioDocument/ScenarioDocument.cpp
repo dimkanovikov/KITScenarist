@@ -4,7 +4,7 @@
 #include "ScenarioTextDocument.h"
 #include "ScenarioModel.h"
 #include "ScenarioModelItem.h"
-#include "ScenarioStyle.h"
+#include "ScenarioTemplate.h"
 #include "ScenarioTextBlockInfo.h"
 #include "ScenarioTextBlockParsers.h"
 
@@ -400,7 +400,7 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 		// Сохраним стиль блока для последующего поиска парного элемента
 		//
 		ScenarioBlockStyle blockStyle =
-				ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(cursor.block()));
+				ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(cursor.block()));
 
 		//
 		// От следующего за началом элемента блока

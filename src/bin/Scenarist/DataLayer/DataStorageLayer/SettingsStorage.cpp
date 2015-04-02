@@ -3,7 +3,7 @@
 #include <DataLayer/DataMappingLayer/MapperFacade.h>
 #include <DataLayer/DataMappingLayer/SettingsMapper.h>
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 #include <3rd_party/Helpers/ShortcutHelper.h>
 

@@ -325,7 +325,7 @@
            <item row="1" column="0" colspan="2">
             <widget class="QStackedWidget" name="ScenarioEditPageStack">
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="scenarioEditCommon">
               <layout class="QGridLayout" name="gridLayout_10">
@@ -1245,7 +1245,7 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QComboBox" name="currentScenarioStyle"/>
+                     <widget class="QComboBox" name="currentScenarioTemplate"/>
                     </item>
                     <item>
                      <spacer name="horizontalSpacer_14">
@@ -2045,7 +2045,7 @@ Paragraph</string>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="stylesLibraryPage">
+         <widget class="QWidget" name="templatesLibraryPage">
           <layout class="QGridLayout" name="gridLayout_13">
            <property name="leftMargin">
             <number>0</number>
@@ -2063,7 +2063,7 @@ Paragraph</string>
             <number>0</number>
            </property>
            <item row="0" column="0">
-            <widget class="FlatButton" name="newStyle">
+            <widget class="FlatButton" name="newTemplate">
              <property name="toolTip">
               <string>Add Template</string>
              </property>
@@ -2077,7 +2077,7 @@ Paragraph</string>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="FlatButton" name="editStyle">
+            <widget class="FlatButton" name="editTemplate">
              <property name="toolTip">
               <string>Edit Selected Template</string>
              </property>
@@ -2091,7 +2091,7 @@ Paragraph</string>
             </widget>
            </item>
            <item row="0" column="2">
-            <widget class="FlatButton" name="removeStyle">
+            <widget class="FlatButton" name="removeTemplate">
              <property name="toolTip">
               <string>Delete Selected Template</string>
              </property>
@@ -2105,7 +2105,7 @@ Paragraph</string>
             </widget>
            </item>
            <item row="0" column="3">
-            <widget class="FlatButton" name="loadStyle">
+            <widget class="FlatButton" name="loadTemplate">
              <property name="toolTip">
               <string>Load Template From File</string>
              </property>
@@ -2119,7 +2119,7 @@ Paragraph</string>
             </widget>
            </item>
            <item row="0" column="4">
-            <widget class="FlatButton" name="saveStyle">
+            <widget class="FlatButton" name="saveTemplate">
              <property name="toolTip">
               <string>Save Template To File</string>
              </property>
@@ -2140,10 +2140,10 @@ Paragraph</string>
             </widget>
            </item>
            <item row="1" column="0" colspan="6">
-            <widget class="QWidget" name="stylesLibraryPageWidget" native="true">
+            <widget class="QWidget" name="templatesLibraryPageWidget" native="true">
              <layout class="QGridLayout" name="gridLayout_8">
               <item row="0" column="0">
-               <widget class="QTableView" name="styles">
+               <widget class="QTableView" name="templates">
                 <property name="editTriggers">
                  <set>QAbstractItemView::NoEditTriggers</set>
                 </property>
@@ -2212,7 +2212,7 @@ Paragraph</string>
   <tabstop>folderTextColorDark</tabstop>
   <tabstop>folderBackgroundColorDark</tabstop>
   <tabstop>nonprintableTextColorDark</tabstop>
-  <tabstop>currentScenarioStyle</tabstop>
+  <tabstop>currentScenarioTemplate</tabstop>
   <tabstop>scenarioEditBlockSettingsTable</tabstop>
   <tabstop>showScenesNumbersInNavigator</tabstop>
   <tabstop>showSceneDescription</tabstop>
@@ -2236,15 +2236,15 @@ Paragraph</string>
   <tabstop>wordsCounter</tabstop>
   <tabstop>simbolsCounter</tabstop>
   <tabstop>nonprintableTextColor</tabstop>
-  <tabstop>newStyle</tabstop>
-  <tabstop>loadStyle</tabstop>
-  <tabstop>removeStyle</tabstop>
-  <tabstop>saveStyle</tabstop>
-  <tabstop>styles</tabstop>
+  <tabstop>newTemplate</tabstop>
+  <tabstop>loadTemplate</tabstop>
+  <tabstop>removeTemplate</tabstop>
+  <tabstop>saveTemplate</tabstop>
+  <tabstop>templates</tabstop>
   <tabstop>folderTextColor</tabstop>
   <tabstop>backgroundColor</tabstop>
   <tabstop>folderBackgroundColor</tabstop>
-  <tabstop>editStyle</tabstop>
+  <tabstop>editTemplate</tabstop>
   <tabstop>textColor</tabstop>
  </tabstops>
  <resources>

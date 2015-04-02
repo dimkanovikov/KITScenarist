@@ -36,7 +36,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить модель стилей
 		 */
-		void setStylesModel(QAbstractItemModel* _model);
+		void setTemplatesModel(QAbstractItemModel* _model);
 
 		/**
 		 * @brief Текущий тип рассчёта хронометража
@@ -67,7 +67,7 @@ namespace UserInterface
 		void setScenarioEditNonprintableTexColorDark(const QColor& _color);
 		void setScenarioEditFolderTextColorDark(const QColor& _color);
 		void setScenarioEditFolderBackgroundColorDark(const QColor& _color);
-		void setScenarioEditCurrentStyle(const QString& _styleName);
+		void setScenarioEditCurrentTemplate(const QString& _styleName);
 
 		void setNavigatorShowScenesNumbers(bool _value);
 		void setNavigatorShowSceneDescription(bool _value);
@@ -117,7 +117,7 @@ namespace UserInterface
 		void scenarioEditNonprintableTextColorDarkChanged(const QColor&);
 		void scenarioEditFolderTextColorDarkChanged(const QColor&);
 		void scenarioEditFolderBackgroundColorDarkChanged(const QColor&);
-		void scenarioEditCurrentStyleChanged(const QString&);
+		void scenarioEditCurrentTemplateChanged(const QString&);
 		void scenarioEditBlockSettingsChanged(const QString& _block, const QString& _shortcut,
 			const QString& _tab, const QString& _enter, const QString& _changeTab,
 			const QString& _changeEnter);
@@ -149,11 +149,11 @@ namespace UserInterface
 		 * @brief Библиотека стилей
 		 */
 		/** @{ */
-		void styleLibraryNewPressed();
-		void styleLibraryEditPressed(const QModelIndex& _styleIndex);
-		void styleLibraryRemovePressed(const QModelIndex& _styleIndex);
-		void styleLibraryLoadPressed();
-		void styleLibrarySavePressed(const QModelIndex& _styleIndex);
+		void templateLibraryNewPressed();
+		void templateLibraryEditPressed(const QModelIndex& _templateIndex);
+		void templateLibraryRemovePressed(const QModelIndex& _templateIndex);
+		void templateLibraryLoadPressed();
+		void templateLibrarySavePressed(const QModelIndex& _templateIndex);
 		/** @} */
 
 	private slots:
@@ -194,12 +194,12 @@ namespace UserInterface
 		/** @} */
 
 		/**
-		 * @brief Библиотека стилей
+		 * @brief Библиотека шаблонов
 		 */
 		/** @{ */
-		void aboutEditStylePressed();
-		void aboutRemoveStylePressed();
-		void aboutSaveStylePressed();
+		void aboutEditTemplatePressed();
+		void aboutRemoveTemplatePressed();
+		void aboutSaveTemplatePressed();
 		/** @} */
 
 	private:

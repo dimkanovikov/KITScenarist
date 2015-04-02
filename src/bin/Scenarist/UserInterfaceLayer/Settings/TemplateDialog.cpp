@@ -1,17 +1,17 @@
-#include "StyleDialog.h"
-#include "ui_StyleDialog.h"
+#include "TemplateDialog.h"
+#include "ui_TemplateDialog.h"
 
 #include <QFontDatabase>
 #include <QStringListModel>
 
 using BusinessLogic::ScenarioBlockStyle;
-using BusinessLogic::ScenarioStyle;
-using UserInterface::StyleDialog;
+using BusinessLogic::ScenarioTemplate;
+using UserInterface::TemplateDialog;
 
 
-StyleDialog::StyleDialog(QWidget *parent) :
+TemplateDialog::TemplateDialog(QWidget *parent) :
 	QDialog(parent),
-	ui(new Ui::StyleDialog)
+	ui(new Ui::TemplateDialog)
 {
 	ui->setupUi(this);
 
@@ -19,41 +19,41 @@ StyleDialog::StyleDialog(QWidget *parent) :
 	initConnections();
 }
 
-StyleDialog::~StyleDialog()
+TemplateDialog::~TemplateDialog()
 {
 	delete ui;
 }
 
-void StyleDialog::setScenarioStyle(const BusinessLogic::ScenarioStyle& _style, bool _isNew)
+void TemplateDialog::setScenarioTemplate(const BusinessLogic::ScenarioTemplate& _template, bool _isNew)
 {
 	//
-	// Сохраним стиль
+	// Сохраним шаблон
 	//
-	m_style = _style;
+	m_template = _template;
 
 	//
-	// Общие параметры стиля
+	// Общие параметры шаблона
 	//
 	if (_isNew) {
 		ui->name->clear();
 		ui->description->clear();
 	} else {
-		ui->name->setText(m_style.name());
-		ui->description->setText(m_style.description());
+		ui->name->setText(m_template.name());
+		ui->description->setText(m_template.description());
 	}
-	ui->leftField->setValue(m_style.pageMargins().left());
-	ui->topField->setValue(m_style.pageMargins().top());
-	ui->rightField->setValue(m_style.pageMargins().right());
-	ui->bottomField->setValue(m_style.pageMargins().bottom());
+	ui->leftField->setValue(m_template.pageMargins().left());
+	ui->topField->setValue(m_template.pageMargins().top());
+	ui->rightField->setValue(m_template.pageMargins().right());
+	ui->bottomField->setValue(m_template.pageMargins().bottom());
 	int verticalAlignIndex = 0; // по умолчанию сверху
-	if (m_style.numberingAlignment().testFlag(Qt::AlignBottom)) {
+	if (m_template.numberingAlignment().testFlag(Qt::AlignBottom)) {
 		verticalAlignIndex = 1;
 	}
 	ui->numberingVerticalAlignment->setCurrentIndex(verticalAlignIndex);
 	int horizontalAlignIndex = 2; // по умолчанию справа
-	if (m_style.numberingAlignment().testFlag(Qt::AlignLeft)) {
+	if (m_template.numberingAlignment().testFlag(Qt::AlignLeft)) {
 		horizontalAlignIndex = 0;
-	} else if (m_style.numberingAlignment().testFlag(Qt::AlignCenter)) {
+	} else if (m_template.numberingAlignment().testFlag(Qt::AlignCenter)) {
 		horizontalAlignIndex = 1;
 	}
 	ui->numberingHorizontalAlignment->setCurrentIndex(horizontalAlignIndex);
@@ -61,7 +61,7 @@ void StyleDialog::setScenarioStyle(const BusinessLogic::ScenarioStyle& _style, b
 	//
 	// Очистим последний выбранный стиль блока
 	//
-	m_blockStyle = m_style.blockStyle(ScenarioBlockStyle::Undefined);
+	m_blockStyle = m_template.blockStyle(ScenarioBlockStyle::Undefined);
 	//
 	// ... и выберем первый из списка, для обновления интерфейса
 	//
@@ -69,7 +69,7 @@ void StyleDialog::setScenarioStyle(const BusinessLogic::ScenarioStyle& _style, b
 	ui->blockStyles->setCurrentIndex(ui->blockStyles->model()->index(0, 0));
 }
 
-BusinessLogic::ScenarioStyle StyleDialog::scenarioStyle()
+BusinessLogic::ScenarioTemplate TemplateDialog::scenarioTemplate()
 {
 	//
 	// Сохраним последний редактируемый стиль блока
@@ -77,15 +77,15 @@ BusinessLogic::ScenarioStyle StyleDialog::scenarioStyle()
 	aboutBlockStyleActivated(0);
 
 	//
-	// Сохраним основные параметры стиля
+	// Сохраним основные параметры шаблона
 	//
 	if (!ui->name->text().isEmpty()) {
-		m_style.setName(ui->name->text());
+		m_template.setName(ui->name->text());
 	} else {
-		m_style.setName(tr("Unnamed Style"));
+		m_template.setName(tr("Unnamed Template"));
 	}
-	m_style.setDescription(ui->description->text());
-	m_style.setPageMargins(QMarginsF(ui->leftField->value(),
+	m_template.setDescription(ui->description->text());
+	m_template.setPageMargins(QMarginsF(ui->leftField->value(),
 									 ui->topField->value(),
 									 ui->rightField->value(),
 									 ui->bottomField->value()));
@@ -101,15 +101,15 @@ BusinessLogic::ScenarioStyle StyleDialog::scenarioStyle()
 		default:
 		case 2: numberingAlignment |= Qt::AlignRight;
 	}
-	m_style.setNumberingAlignment(numberingAlignment);
+	m_template.setNumberingAlignment(numberingAlignment);
 
 	//
-	// Возвратим настроенный стиль
+	// Возвратим настроенный шаблон
 	//
-	return m_style;
+	return m_template;
 }
 
-void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
+void TemplateDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 {
 	//
 	// Сохраним предыдущие настройки стиля блока
@@ -163,15 +163,15 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 		}
 
 		//
-		// Сохраним стиль блока в стиле сценария
+		// Сохраним стиль блока в шаблоне сценария
 		//
-		m_style.setBlockStyle(m_blockStyle);
+		m_template.setBlockStyle(m_blockStyle);
 
 		//
 		// Для группы сцен и папки, сохраняем так же и завершающий блок
 		//
 		if (m_blockStyle.isEmbeddableHeader()) {
-			ScenarioBlockStyle footerBlockStyle = m_style.blockStyle(m_blockStyle.embeddableFooter());
+			ScenarioBlockStyle footerBlockStyle = m_template.blockStyle(m_blockStyle.embeddableFooter());
 			footerBlockStyle.setIsActive(m_blockStyle.isActive());
 			footerBlockStyle.setFont(m_blockStyle.font());
 			footerBlockStyle.setAlign(m_blockStyle.align());
@@ -185,9 +185,9 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 			footerBlockStyle.setLineSpacingValue(m_blockStyle.lineSpacingValue());
 
 			//
-			// Сохраним стиль завершающего блока в стиле сценария
+			// Сохраним стиль завершающего блока в шаблоне сценария
 			//
-			m_style.setBlockStyle(footerBlockStyle);
+			m_template.setBlockStyle(footerBlockStyle);
 		}
 	}
 
@@ -199,7 +199,7 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 		// Получим стиль активированного блока
 		//
 		ScenarioBlockStyle::Type activatedType = (ScenarioBlockStyle::Type)_item->type();
-		ScenarioBlockStyle activatedBlockStyle = m_style.blockStyle(activatedType);
+		ScenarioBlockStyle activatedBlockStyle = m_template.blockStyle(activatedType);
 
 		//
 		// Настроим представление
@@ -262,11 +262,11 @@ void StyleDialog::aboutBlockStyleActivated(QListWidgetItem* _item)
 	// Если не задан элемент, сбросим последний сохранённый стиль блока
 	//
 	else {
-		m_blockStyle = m_style.blockStyle(ScenarioBlockStyle::Undefined);
+		m_blockStyle = m_template.blockStyle(ScenarioBlockStyle::Undefined);
 	}
 }
 
-void StyleDialog::aboutSpacingTypeChanged()
+void TemplateDialog::aboutSpacingTypeChanged()
 {
 	const int LINE_SPACING_INDEX = 0;
 
@@ -298,7 +298,7 @@ void StyleDialog::aboutSpacingTypeChanged()
 	}
 }
 
-void StyleDialog::aboutLineSpacingChanged()
+void TemplateDialog::aboutLineSpacingChanged()
 {
 	//
 	// Делаем активной возможность настройки точного межстрочного интервала, если необходимо
@@ -313,7 +313,7 @@ void StyleDialog::aboutLineSpacingChanged()
 	ui->lineSpacingValue->setEnabled(isEnabled);
 }
 
-void StyleDialog::initView()
+void TemplateDialog::initView()
 {
 	//
 	// Формируем модель стилей блоков (она для всех стилей едина)
@@ -345,7 +345,7 @@ void StyleDialog::initView()
 	aboutSpacingTypeChanged();
 }
 
-void StyleDialog::initConnections()
+void TemplateDialog::initConnections()
 {
 	connect(ui->blockStyles, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
 			this, SLOT(aboutBlockStyleActivated(QListWidgetItem*)));

@@ -80,12 +80,12 @@ void SettingsView::setBlocksSettingsModel(QAbstractItemModel* _model, QAbstractI
 	ui->scenarioEditBlockSettingsTable->setItemDelegateForColumn(CHANGE_ENTER_COLUMN, delegate);
 }
 
-void SettingsView::setStylesModel(QAbstractItemModel* _model)
+void SettingsView::setTemplatesModel(QAbstractItemModel* _model)
 {
-	ui->currentScenarioStyle->setModel(_model);
+	ui->currentScenarioTemplate->setModel(_model);
 
-	ui->styles->setModel(_model);
-	ui->styles->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+	ui->templates->setModel(_model);
+	ui->templates->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 }
 
 int SettingsView::chronometryCurrentType() const
@@ -204,9 +204,9 @@ void SettingsView::setScenarioEditFolderBackgroundColorDark(const QColor& _color
 	setColorFor(ui->folderBackgroundColorDark, _color);
 }
 
-void SettingsView::setScenarioEditCurrentStyle(const QString& _styleName)
+void SettingsView::setScenarioEditCurrentTemplate(const QString& _templateName)
 {
-	ui->currentScenarioStyle->setCurrentText(_styleName);
+	ui->currentScenarioTemplate->setCurrentText(_templateName);
 }
 
 void SettingsView::setNavigatorShowScenesNumbers(bool _value)
@@ -424,32 +424,32 @@ void SettingsView::aboutScenarioEditChooseFolderBackgroundColorDark()
 	emit scenarioEditFolderBackgroundColorDarkChanged(ui->folderBackgroundColorDark->palette().button().color());
 }
 
-void SettingsView::aboutEditStylePressed()
+void SettingsView::aboutEditTemplatePressed()
 {
-	if (!ui->styles->selectionModel()->selectedIndexes().isEmpty()) {
-		QModelIndex selected = ui->styles->selectionModel()->selectedIndexes().first();
+	if (!ui->templates->selectionModel()->selectedIndexes().isEmpty()) {
+		QModelIndex selected = ui->templates->selectionModel()->selectedIndexes().first();
 		if (selected.isValid()) {
-			emit styleLibraryEditPressed(selected);
+			emit templateLibraryEditPressed(selected);
 		}
 	}
 }
 
-void SettingsView::aboutRemoveStylePressed()
+void SettingsView::aboutRemoveTemplatePressed()
 {
-	if (!ui->styles->selectionModel()->selectedIndexes().isEmpty()) {
-		QModelIndex selected = ui->styles->selectionModel()->selectedIndexes().first();
+	if (!ui->templates->selectionModel()->selectedIndexes().isEmpty()) {
+		QModelIndex selected = ui->templates->selectionModel()->selectedIndexes().first();
 		if (selected.isValid()) {
-			emit styleLibraryRemovePressed(selected);
+			emit templateLibraryRemovePressed(selected);
 		}
 	}
 }
 
-void SettingsView::aboutSaveStylePressed()
+void SettingsView::aboutSaveTemplatePressed()
 {
-	if (!ui->styles->selectionModel()->selectedIndexes().isEmpty()) {
-		QModelIndex selected = ui->styles->selectionModel()->selectedIndexes().first();
+	if (!ui->templates->selectionModel()->selectedIndexes().isEmpty()) {
+		QModelIndex selected = ui->templates->selectionModel()->selectedIndexes().first();
 		if (selected.isValid()) {
-			emit styleLibrarySavePressed(selected);
+			emit templateLibrarySavePressed(selected);
 		}
 	}
 }
@@ -547,7 +547,7 @@ void SettingsView::initConnections()
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
-	connect(ui->currentScenarioStyle, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentStyleChanged(QString)));
+	connect(ui->currentScenarioTemplate, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentTemplateChanged(QString)));
 	// ... навигатор
 	connect(ui->showScenesNumbersInNavigator, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
 	connect(ui->showSceneDescription, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowSceneDescriptionChanged(bool)));
@@ -582,12 +582,12 @@ void SettingsView::initConnections()
 	//
 	// Библиотека стилей
 	//
-	connect(ui->newStyle, SIGNAL(clicked()), this, SIGNAL(styleLibraryNewPressed()));
-	connect(ui->editStyle, SIGNAL(clicked()), this, SLOT(aboutEditStylePressed()));
-	connect(ui->styles, SIGNAL(doubleClicked(QModelIndex)), this, SIGNAL(styleLibraryEditPressed(QModelIndex)));
-	connect(ui->removeStyle, SIGNAL(clicked()), this, SLOT(aboutRemoveStylePressed()));
-	connect(ui->loadStyle, SIGNAL(clicked()), this, SIGNAL(styleLibraryLoadPressed()));
-	connect(ui->saveStyle, SIGNAL(clicked()), this, SLOT(aboutSaveStylePressed()));
+	connect(ui->newTemplate, SIGNAL(clicked()), this, SIGNAL(templateLibraryNewPressed()));
+	connect(ui->editTemplate, SIGNAL(clicked()), this, SLOT(aboutEditTemplatePressed()));
+	connect(ui->templates, SIGNAL(doubleClicked(QModelIndex)), this, SIGNAL(templateLibraryEditPressed(QModelIndex)));
+	connect(ui->removeTemplate, SIGNAL(clicked()), this, SLOT(aboutRemoveTemplatePressed()));
+	connect(ui->loadTemplate, SIGNAL(clicked()), this, SIGNAL(templateLibraryLoadPressed()));
+	connect(ui->saveTemplate, SIGNAL(clicked()), this, SLOT(aboutSaveTemplatePressed()));
 }
 
 void SettingsView::initStyleSheet()
@@ -618,7 +618,7 @@ void SettingsView::initStyleSheet()
 			 << ui->scenarioEditPageWidget
 			 << ui->navigatorPageWidget
 			 << ui->chronometryPageWidget
-			 << ui->stylesLibraryPageWidget;
+			 << ui->templatesLibraryPageWidget;
 
 	foreach (QWidget* main, mainList) {
 		main->setProperty("mainContainer", true);
@@ -628,11 +628,11 @@ void SettingsView::initStyleSheet()
 	// Кнопки панели инструментов
 	//
 	QList<QWidget*> topButtonsList;
-	topButtonsList << ui->newStyle
-				   << ui->editStyle
-				   << ui->removeStyle
-				   << ui->loadStyle
-				   << ui->saveStyle;
+	topButtonsList << ui->newTemplate
+				   << ui->editTemplate
+				   << ui->removeTemplate
+				   << ui->loadTemplate
+				   << ui->saveTemplate;
 	foreach (QWidget* topButton, topButtonsList) {
 		topButton->setProperty("inTopPanel", true);
 	}

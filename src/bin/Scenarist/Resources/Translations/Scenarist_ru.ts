@@ -50,7 +50,7 @@
     <message>
         <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="235"/>
         <source>(MORE)</source>
-        <translation>ДАЛЬШЕ</translation>
+        <translation>(ДАЛЬШЕ)</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="236"/>
@@ -79,82 +79,82 @@
 <context>
     <name>BusinessLogic::ScenarioBlockStyle</name>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="65"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="65"/>
         <source>Undefined</source>
         <translation>Неопределён</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="66"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="66"/>
         <source>Time and Place</source>
         <translation>Время и место</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="67"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="67"/>
         <source>Scene Characters</source>
         <translation>Участники сцены</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="68"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="68"/>
         <source>Action</source>
         <translation>Действие</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="69"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="69"/>
         <source>Character</source>
         <translation>Герой</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="70"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="70"/>
         <source>Parenthetical</source>
         <translation>Ремарка</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="71"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="71"/>
         <source>Dialog</source>
         <translation>Диалог</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="72"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="72"/>
         <source>Transition</source>
         <translation>Переход</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="73"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="73"/>
         <source>Note</source>
         <translation>Примечание</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="74"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="74"/>
         <source>Title Header</source>
         <translation>Заголовок титра</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="75"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="75"/>
         <source>Title</source>
         <translation>Титр</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="76"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="76"/>
         <source>Noprintable Text</source>
         <translation>Непечатный текст</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="77"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="77"/>
         <source>Scene Group</source>
         <translation>Группа сцен</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="78"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="78"/>
         <source>Scene Group Footer</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="79"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="79"/>
         <source>Folder</source>
         <translation>Папка</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="80"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="80"/>
         <source>Folder Footer</source>
         <translation></translation>
     </message>
@@ -920,7 +920,14 @@
 <context>
     <name>ManagementLayer::SettingsStylesManager</name>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsStylesManager.cpp" line="27"/>
+        <source>Default</source>
+        <translation type="vanished">Стандартный</translation>
+    </message>
+</context>
+<context>
+    <name>ManagementLayer::SettingsTemplatesManager</name>
+    <message>
+        <location filename="../../ManagementLayer/Settings/SettingsTemplatesManager.cpp" line="27"/>
         <source>Default</source>
         <translation>Стандартный</translation>
     </message>
@@ -1034,7 +1041,7 @@
         <translation>КОНЕЦ</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioStyle.cpp" line="428"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="428"/>
         <source>Title:</source>
         <comment>ScenarioBlockStyle</comment>
         <translation>Титр:</translation>
@@ -1659,43 +1666,36 @@ Paragraph</source>
         <translation type="obsolete">Папка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="268"/>
         <source>Active</source>
-        <translation>Включён</translation>
+        <translation type="vanished">Включён</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="277"/>
         <source>Bold</source>
-        <translation>Жирный</translation>
+        <translation type="vanished">Жирный</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="615"/>
         <source>Italic</source>
-        <translation>Курсив</translation>
+        <translation type="vanished">Курсив</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="362"/>
         <source>Spacing</source>
-        <translation>Отступы:</translation>
+        <translation type="vanished">Отступы:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="457"/>
         <source>mm:</source>
-        <translation>мм:</translation>
+        <translation type="vanished">мм:</translation>
     </message>
     <message>
         <source>Lines:</source>
         <translation type="vanished">Линий:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="355"/>
         <source>Underline</source>
-        <translation>Подчёркнутый</translation>
+        <translation type="vanished">Подчёркнутый</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="608"/>
         <source>Uppercase</source>
-        <translation>Верхний регистр</translation>
+        <translation type="vanished">Верхний регистр</translation>
     </message>
     <message>
         <source>Top, lines:</source>
@@ -1714,165 +1714,319 @@ Paragraph</source>
         <translation type="vanished">Справа, мм:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="20"/>
         <source>Common</source>
-        <translation>Общие настройки</translation>
+        <translation type="vanished">Общие настройки</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="55"/>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="464"/>
         <source>Left:</source>
-        <translation>Слева:</translation>
+        <translation type="vanished">Слева:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="26"/>
         <source>Name:</source>
-        <translation>Название:</translation>
+        <translation type="vanished">Название:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="46"/>
         <source>Fields, mm:</source>
-        <translation>Поля, мм:</translation>
+        <translation type="vanished">Поля, мм:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="36"/>
         <source>Description:</source>
-        <translation>Описание:</translation>
+        <translation type="vanished">Описание:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="75"/>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="382"/>
         <source>Top:</source>
-        <translation>Сверху:</translation>
+        <translation type="vanished">Сверху:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="115"/>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="413"/>
         <source>Bottom:</source>
-        <translation>Снизу:</translation>
+        <translation type="vanished">Снизу:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="95"/>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="481"/>
         <source>Right:</source>
-        <translation>Справа:</translation>
+        <translation type="vanished">Справа:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="503"/>
         <source>Font:</source>
-        <translation>Шрифт:</translation>
+        <translation type="vanished">Шрифт:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="523"/>
-        <source>pt</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="369"/>
         <source>Lines</source>
-        <translation>Линий:</translation>
+        <translation type="vanished">Линий:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="374"/>
         <source>mm</source>
-        <translation>мм:</translation>
+        <translation type="vanished">мм:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="286"/>
         <source>Line spacing:</source>
-        <translation>Межстрочный интервал:</translation>
+        <translation type="vanished">Межстрочный интервал:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="14"/>
         <source>Edit Scenario Template</source>
-        <translation>Настройка шаблона сценария</translation>
+        <translation type="vanished">Настройка шаблона сценария</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="294"/>
         <source>Single</source>
-        <translation>одинарный</translation>
+        <translation type="vanished">одинарный</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="299"/>
         <source>One and Half</source>
-        <translation>полуторный</translation>
+        <translation type="vanished">полуторный</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="304"/>
         <source>Double</source>
-        <translation>двойной</translation>
+        <translation type="vanished">двойной</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="309"/>
         <source>Fixed</source>
-        <translation>фиксированный</translation>
+        <translation type="vanished">фиксированный</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="320"/>
         <source>value, mm</source>
-        <translation>значение, мм</translation>
+        <translation type="vanished">значение, мм</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="540"/>
         <source>Alignment:</source>
-        <translation>Выравнивание:</translation>
+        <translation type="vanished">Выравнивание:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="625"/>
         <source>Framing brackets</source>
-        <translation>Обрамлять скобками</translation>
+        <translation type="vanished">Обрамлять скобками</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="192"/>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="557"/>
         <source>Left</source>
-        <translation>по левому краю</translation>
+        <translation type="vanished">по левому краю</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="197"/>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="562"/>
         <source>Center</source>
-        <translation>по центру</translation>
+        <translation type="vanished">по центру</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="202"/>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="567"/>
         <source>Right</source>
-        <translation>по правому краю</translation>
+        <translation type="vanished">по правому краю</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="572"/>
         <source>Justify</source>
-        <translation>по ширине</translation>
+        <translation type="vanished">по ширине</translation>
     </message>
     <message>
         <source>Spacing:</source>
         <translation type="vanished">Отступы:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="150"/>
+        <source>Numbering:</source>
+        <translation type="vanished">Номера страниц:</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="vanished">вверху</translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="vanished">внизу</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="vanished">Закрыть</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="vanished">Сохранить</translation>
+    </message>
+</context>
+<context>
+    <name>TemplateDialog</name>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="14"/>
+        <source>Edit Scenario Template</source>
+        <translation>Настройка шаблона сценария</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="20"/>
+        <source>Common</source>
+        <translation>Общее</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="26"/>
+        <source>Name:</source>
+        <translation>Название:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="36"/>
+        <source>Description:</source>
+        <translation>Описание:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="46"/>
+        <source>Fields, mm:</source>
+        <translation>Поля, мм:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="55"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="464"/>
+        <source>Left:</source>
+        <translation>Слева:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="75"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="382"/>
+        <source>Top:</source>
+        <translation>Сверху:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="95"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="481"/>
+        <source>Right:</source>
+        <translation>Справа:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="115"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="413"/>
+        <source>Bottom:</source>
+        <translation>Снизу:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="150"/>
         <source>Numbering:</source>
         <translation>Номера страниц:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="169"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="169"/>
         <source>Top</source>
         <translation>вверху</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="174"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="174"/>
         <source>Bottom</source>
         <translation>внизу</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="243"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="192"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="554"/>
+        <source>Left</source>
+        <translation>по левому краю</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="197"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="559"/>
+        <source>Center</source>
+        <translation>по центру</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="202"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="564"/>
+        <source>Right</source>
+        <translation>по правому краю</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="243"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.ui" line="250"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="250"/>
         <source>Save</source>
         <translation>Сохранить</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="268"/>
+        <source>Active</source>
+        <translation>Включён</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="277"/>
+        <source>Bold</source>
+        <translation>Жирный</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="286"/>
+        <source>Line spacing:</source>
+        <translation>Межстрочный интервал:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="294"/>
+        <source>Single</source>
+        <translation>одинарный</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="299"/>
+        <source>One and Half</source>
+        <translation>полуторный</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="304"/>
+        <source>Double</source>
+        <translation>двойной</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="309"/>
+        <source>Fixed</source>
+        <translation>фиксированный</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="320"/>
+        <source>value, mm</source>
+        <translation>значение, мм</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="355"/>
+        <source>Underline</source>
+        <translation>Подчёркнутый</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="362"/>
+        <source>Spacing</source>
+        <translation>Отступы:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="369"/>
+        <source>Lines</source>
+        <translation>Линий:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="374"/>
+        <source>mm</source>
+        <translation>мм:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="457"/>
+        <source>mm:</source>
+        <translation>мм:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="503"/>
+        <source>Font:</source>
+        <translation>Шрифт:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="523"/>
+        <source>pt</source>
+        <translation>пт</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="540"/>
+        <source>Alignment:</source>
+        <translation>Выравнивание:</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="569"/>
+        <source>Justify</source>
+        <translation>по ширине</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="605"/>
+        <source>Uppercase</source>
+        <translation>Верхний регистр</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="612"/>
+        <source>Italic</source>
+        <translation>Курсив</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="622"/>
+        <source>Framing brackets</source>
+        <translation>Обрамлять скобками</translation>
     </message>
 </context>
 <context>
@@ -2412,74 +2566,141 @@ Paragraph</source>
         <translation type="obsolete">Стиль сценария</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="85"/>
         <source>Unnamed Style</source>
-        <translation>Стиль без названия</translation>
+        <translation type="vanished">Стиль без названия</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="321"/>
+        <source>Time And Place</source>
+        <translation type="vanished">Время и место</translation>
+    </message>
+    <message>
+        <source>Scene Characters</source>
+        <translation type="vanished">Участники сцены</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation type="vanished">Действие</translation>
+    </message>
+    <message>
+        <source>Character</source>
+        <translation type="vanished">Герой</translation>
+    </message>
+    <message>
+        <source>Parenthetical</source>
+        <translation type="vanished">Ремарка</translation>
+    </message>
+    <message>
+        <source>Dialog</source>
+        <translation type="vanished">Диалог</translation>
+    </message>
+    <message>
+        <source>Transition</source>
+        <translation type="vanished">Переход</translation>
+    </message>
+    <message>
+        <source>Note</source>
+        <translation type="vanished">Примечание</translation>
+    </message>
+    <message>
+        <source>Title Header</source>
+        <translation type="vanished">Заголовок титра</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="vanished">Титр</translation>
+    </message>
+    <message>
+        <source>Noprintable Text</source>
+        <translation type="vanished">Непечатный текст</translation>
+    </message>
+    <message>
+        <source>Scene Group</source>
+        <translation type="vanished">Группа сцен</translation>
+    </message>
+    <message>
+        <source>Folder</source>
+        <translation type="vanished">Папка</translation>
+    </message>
+</context>
+<context>
+    <name>UserInterface::TemplateDialog</name>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="85"/>
+        <source>Unnamed Template</source>
+        <translation>Шаблон без названия</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="321"/>
         <source>Time And Place</source>
         <translation>Время и место</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="322"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="322"/>
         <source>Scene Characters</source>
         <translation>Участники сцены</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="323"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="323"/>
         <source>Action</source>
         <translation>Действие</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="324"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="324"/>
         <source>Character</source>
         <translation>Герой</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="325"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="325"/>
         <source>Parenthetical</source>
         <translation>Ремарка</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="326"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="326"/>
         <source>Dialog</source>
         <translation>Диалог</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="327"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="327"/>
         <source>Transition</source>
         <translation>Переход</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="328"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="328"/>
         <source>Note</source>
         <translation>Примечание</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="329"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="329"/>
         <source>Title Header</source>
         <translation>Заголовок титра</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="330"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="330"/>
         <source>Title</source>
         <translation>Титр</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="331"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="331"/>
         <source>Noprintable Text</source>
         <translation>Непечатный текст</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="332"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="332"/>
         <source>Scene Group</source>
         <translation>Группа сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/StyleDialog.cpp" line="333"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="333"/>
         <source>Folder</source>
         <translation>Папка</translation>
+    </message>
+</context>
+<context>
+    <name>WebLoader</name>
+    <message>
+        <location filename="../../../../libs/webloader/WebLoader.cpp" line="234"/>
+        <source>Sorry, we have some error while loading. Error is: %1</source>
+        <translation></translation>
     </message>
 </context>
 </TS>

@@ -363,23 +363,23 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	//
 	// ... начала
 	//
-	ScenarioBlockStyle topStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Undefined);
+	ScenarioBlockStyle topStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::Undefined);
 	QTextBlock topBlock;
 	{
 		QTextCursor topCursor(editor()->document());
 		topCursor.setPosition(topCursorPosition);
-		topStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
+		topStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
 		topBlock = topCursor.block();
 	}
 	//
 	// ... и конца
 	//
-	ScenarioBlockStyle bottomStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::Undefined);
+	ScenarioBlockStyle bottomStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::Undefined);
 	QTextBlock bottomBlock;
 	{
 		QTextCursor bottomCursor(editor()->document());
 		bottomCursor.setPosition(bottomCursorPosition);
-		bottomStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
+		bottomStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
 		bottomBlock = bottomCursor.block();
 
 
@@ -402,7 +402,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 			while (topBlock == topCursor.block()
 				   && !topCursor.atStart()) {
 				topCursor.movePosition(QTextCursor::Left);
-				topStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
+				topStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
 			}
 
 			topCursorPosition = topCursor.position();
@@ -419,7 +419,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 			while (bottomBlock == bottomCursor.block()
 				   && !bottomCursor.atEnd()) {
 				bottomCursor.movePosition(QTextCursor::Right);
-				bottomStyle = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
+				bottomStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
 			}
 
 			bottomCursorPosition = bottomCursor.position();

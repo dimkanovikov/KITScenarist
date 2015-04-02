@@ -39,7 +39,7 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
 	// ... префикс и постфикс стиля
-	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::SceneCharacters);
+	ScenarioBlockStyle style = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::SceneCharacters);
 	QString stylePrefix = style.prefix();
 	QString stylePostfix = style.postfix();
 
@@ -150,7 +150,7 @@ void SceneCharactersHandler::handleOther(QKeyEvent*)
 		cursorBackwardTextToComma = cursorBackwardTextToComma.split(", ").last();
 	}
 	// ... уберём префикс
-	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::SceneCharacters);
+	ScenarioBlockStyle style = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::SceneCharacters);
 	QString stylePrefix = style.prefix();
 	cursorBackwardTextToComma.remove(QRegularExpression(QString("^[%1]").arg(stylePrefix)));
 

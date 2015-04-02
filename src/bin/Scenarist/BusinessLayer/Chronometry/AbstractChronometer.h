@@ -1,7 +1,7 @@
 #ifndef ABSTRACTCHRONOMETER_H
 #define ABSTRACTCHRONOMETER_H
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 class QString;
 

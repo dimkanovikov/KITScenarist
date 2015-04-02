@@ -1,6 +1,6 @@
 #include "ScenarioTextBlockParsers.h"
 
-#include "ScenarioStyle.h"
+#include "ScenarioTemplate.h"
 
 #include <QString>
 #include <QStringList>
@@ -128,7 +128,7 @@ QStringList SceneCharactersParser::characters(const QString& _text)
 	//
 	// Удалим потенциальные приставку и окончание
 	//
-	ScenarioBlockStyle style = ScenarioStyleFacade::style().blockStyle(ScenarioBlockStyle::SceneCharacters);
+	ScenarioBlockStyle style = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::SceneCharacters);
 	QString stylePrefix = style.prefix();
 	QString stylePostfix = style.postfix();
 	characters.remove(QRegularExpression(QString("^[%1]").arg(stylePrefix)));

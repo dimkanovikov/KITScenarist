@@ -1,4 +1,4 @@
-#include "ScenarioStyle.h"
+#include "ScenarioTemplate.h"
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -20,8 +20,8 @@
 #include <QXmlStreamReader>
 
 using BusinessLogic::ScenarioBlockStyle;
-using BusinessLogic::ScenarioStyle;
-using BusinessLogic::ScenarioStyleFacade;
+using BusinessLogic::ScenarioTemplate;
+using BusinessLogic::ScenarioTemplateFacade;
 
 using BusinessLogic::ScenarioBlockStyle;
 
@@ -85,7 +85,7 @@ namespace {
 	/**
 	 * @brief Расширение файла стиля сценария
 	 */
-	const QString SCENARIO_STYLE_FILE_EXTENSION = "kitss";
+	const QString SCENARIO_TEMPLATE_FILE_EXTENSION = "kitss";
 
 	/**
 	 * @brief Получить выравнивание из строки
@@ -496,7 +496,7 @@ void ScenarioBlockStyle::updateBottomMargin()
 }
 
 // ********
-// ScenarioStyle
+// ScenarioTemplate
 
 namespace {
 	/**
@@ -562,11 +562,11 @@ namespace {
 	/** @} */
 }
 
-void ScenarioStyle::saveToFile(const QString& _filePath) const
+void ScenarioTemplate::saveToFile(const QString& _filePath) const
 {
-	QFile styleFile(_filePath);
-	if (styleFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-		QXmlStreamWriter writer(&styleFile);
+	QFile templateFile(_filePath);
+	if (templateFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+		QXmlStreamWriter writer(&templateFile);
 		writer.setAutoFormatting(true);
 		writer.writeStartDocument();
 		writer.writeStartElement("style");
@@ -602,49 +602,49 @@ void ScenarioStyle::saveToFile(const QString& _filePath) const
 		writer.writeEndElement(); // style
 		writer.writeEndDocument();
 
-		styleFile.close();
+		templateFile.close();
 	}
 }
 
-ScenarioBlockStyle ScenarioStyle::blockStyle(ScenarioBlockStyle::Type _forType) const
+ScenarioBlockStyle ScenarioTemplate::blockStyle(ScenarioBlockStyle::Type _forType) const
 {
 	return m_blockStyles.value(_forType);
 }
 
-void ScenarioStyle::setName(const QString& _name)
+void ScenarioTemplate::setName(const QString& _name)
 {
 	if (m_name != _name) {
 		m_name = _name;
 	}
 }
 
-void ScenarioStyle::setDescription(const QString& _description)
+void ScenarioTemplate::setDescription(const QString& _description)
 {
 	if (m_description != _description) {
 		m_description = _description;
 	}
 }
 
-void ScenarioStyle::setPageMargins(const QMarginsF& _pageMargins)
+void ScenarioTemplate::setPageMargins(const QMarginsF& _pageMargins)
 {
 	if (m_pageMargins != _pageMargins) {
 		m_pageMargins = _pageMargins;
 	}
 }
 
-void ScenarioStyle::setNumberingAlignment(Qt::Alignment _alignment)
+void ScenarioTemplate::setNumberingAlignment(Qt::Alignment _alignment)
 {
 	if (m_numberingAlignment != _alignment) {
 		m_numberingAlignment = _alignment;
 	}
 }
 
-void ScenarioStyle::setBlockStyle(const BusinessLogic::ScenarioBlockStyle& _blockStyle)
+void ScenarioTemplate::setBlockStyle(const BusinessLogic::ScenarioBlockStyle& _blockStyle)
 {
 	m_blockStyles.insert(_blockStyle.type(), _blockStyle);
 }
 
-void ScenarioStyle::updateBlocksColors()
+void ScenarioTemplate::updateBlocksColors()
 {
 	//
 	// Цветовая схема
@@ -712,14 +712,14 @@ void ScenarioStyle::updateBlocksColors()
 	}
 }
 
-ScenarioStyle::ScenarioStyle(const QString& _from_file)
+ScenarioTemplate::ScenarioTemplate(const QString& _fromFile)
 {
-	load(_from_file);
+	load(_fromFile);
 }
 
-void ScenarioStyle::load(const QString& _from_file)
+void ScenarioTemplate::load(const QString& _fromFile)
 {
-	QFile xmlData(_from_file);
+	QFile xmlData(_fromFile);
 	if (xmlData.open(QIODevice::ReadOnly)) {
 		QXmlStreamReader reader(&xmlData);
 
@@ -729,14 +729,14 @@ void ScenarioStyle::load(const QString& _from_file)
 		if (reader.readNextStartElement() && (reader.name() == "style"))
 		{
 			//
-			// Считываем атрибуты стиля
+			// Считываем атрибуты шаблона
 			//
-			QXmlStreamAttributes styleAttributes = reader.attributes();
-			m_name = styleAttributes.value("name").toString();
-			m_description = styleAttributes.value("description").toString();
-			m_pageSizeId = PageMetrics::pageSizeIdFromString(styleAttributes.value("page_format").toString());
-			m_pageMargins = ::marginsFromString(styleAttributes.value("page_margins").toString());
-			const QString numberingAlignment = styleAttributes.value("numbering_alignment").toString();
+			QXmlStreamAttributes templateAttributes = reader.attributes();
+			m_name = templateAttributes.value("name").toString();
+			m_description = templateAttributes.value("description").toString();
+			m_pageSizeId = PageMetrics::pageSizeIdFromString(templateAttributes.value("page_format").toString());
+			m_pageMargins = ::marginsFromString(templateAttributes.value("page_margins").toString());
+			const QString numberingAlignment = templateAttributes.value("numbering_alignment").toString();
 			if (!numberingAlignment.isEmpty()) {
 				m_numberingAlignment = ::alignmentFromString(numberingAlignment);
 			} else {
@@ -762,41 +762,41 @@ void ScenarioStyle::load(const QString& _from_file)
 }
 
 // ********
-// ScenarioStyleFacade
+// ScenarioTemplateFacade
 
-QStandardItemModel* ScenarioStyleFacade::stylesList()
+QStandardItemModel* ScenarioTemplateFacade::templatesList()
 {
 	init();
 
-	return s_instance->m_stylesModel;
+	return s_instance->m_templatesModel;
 }
 
-bool ScenarioStyleFacade::containsStyle(const QString& _styleName)
+bool ScenarioTemplateFacade::containsTemplate(const QString& _templateName)
 {
 	init();
 
-	return s_instance->m_styles.contains(_styleName);
+	return s_instance->m_templates.contains(_templateName);
 }
 
-ScenarioStyle ScenarioStyleFacade::style(const QString& _styleName)
+ScenarioTemplate ScenarioTemplateFacade::getTemplate(const QString& _templateName)
 {
 	init();
 
-	const QString currentStyle =
+	const QString currentTemplate =
 			DataStorageLayer::StorageFacade::settingsStorage()->value(
 				"scenario-editor/current-style",
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
 
-	ScenarioStyle result;
-	if (_styleName.isEmpty()) {
-		if (!currentStyle.isEmpty()
-			&& s_instance->m_styles.contains(currentStyle)) {
-			result = s_instance->m_styles.value(currentStyle);
+	ScenarioTemplate result;
+	if (_templateName.isEmpty()) {
+		if (!currentTemplate.isEmpty()
+			&& s_instance->m_templates.contains(currentTemplate)) {
+			result = s_instance->m_templates.value(currentTemplate);
 		} else {
-			result = s_instance->m_defaultStyle;
+			result = s_instance->m_defaultTemplate;
 		}
 	} else {
-		result = s_instance->m_styles.value(_styleName);
+		result = s_instance->m_templates.value(_templateName);
 	}
 
 	result.updateBlocksColors();
@@ -804,155 +804,155 @@ ScenarioStyle ScenarioStyleFacade::style(const QString& _styleName)
 	return result;
 }
 
-void ScenarioStyleFacade::saveStyle(const BusinessLogic::ScenarioStyle& _style)
+void ScenarioTemplateFacade::saveTemplate(const BusinessLogic::ScenarioTemplate& _template)
 {
 	init();
 
 	//
-	// Если такого стиля ещё не было раньше, то добавляем строку в модель стилей
+	// Если такого шаблона ещё не было раньше, то добавляем строку в модель шаблонов
 	//
-	if (!containsStyle(_style.name())) {
-		QStandardItem* stylesRootItem = s_instance->m_stylesModel->invisibleRootItem();
-		QList<QStandardItem*> styleRow;
-		styleRow << new QStandardItem(_style.name());
-		styleRow << new QStandardItem(_style.description());
-		stylesRootItem->appendRow(styleRow);
+	if (!containsTemplate(_template.name())) {
+		QStandardItem* stylesRootItem = s_instance->m_templatesModel->invisibleRootItem();
+		QList<QStandardItem*> templateRow;
+		templateRow << new QStandardItem(_template.name());
+		templateRow << new QStandardItem(_template.description());
+		stylesRootItem->appendRow(templateRow);
 	}
 	//
-	// Добавляем/обновляем стиль в библиотеке
+	// Добавляем/обновляем шаблон в библиотеке
 	//
-	s_instance->m_styles.insert(_style.name(), _style);
+	s_instance->m_templates.insert(_template.name(), _template);
 
 
 	//
-	// Настроим путь к папке со стилями
+	// Настроим путь к папке с шаблонами
 	//
 	const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-	const QString stylesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
-	const QString styleFilePath =
-			stylesFolderPath + QDir::separator()
-			+ _style.name() + "." + SCENARIO_STYLE_FILE_EXTENSION;
+	const QString templatesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
+	const QString templateFilePath =
+			templatesFolderPath + QDir::separator()
+			+ _template.name() + "." + SCENARIO_TEMPLATE_FILE_EXTENSION;
 	//
-	// Сохраняем стиль в файл
+	// Сохраняем шаблон в файл
 	//
-	_style.saveToFile(styleFilePath);
+	_template.saveToFile(templateFilePath);
 }
 
-bool ScenarioStyleFacade::saveStyle(const QString& _styleFilePath)
+bool ScenarioTemplateFacade::saveTemplate(const QString& _templateFilePath)
 {
 	init();
 
 	//
-	// Загружаем стиль из файла
+	// Загружаем шаблон из файла
 	//
-	ScenarioStyle newStyle(_styleFilePath);
+	ScenarioTemplate newTemplate(_templateFilePath);
 
 	//
 	// Если загрузка произошла успешно, то добавляем его в библиотеку
 	//
-	bool styleSaved = false;
-	if (!newStyle.name().isEmpty()) {
-		saveStyle(newStyle);
-		styleSaved = true;
+	bool templateSaved = false;
+	if (!newTemplate.name().isEmpty()) {
+		saveTemplate(newTemplate);
+		templateSaved = true;
 	}
 
-	return styleSaved;
+	return templateSaved;
 }
 
-void ScenarioStyleFacade::removeStyle(const QString& _styleName)
+void ScenarioTemplateFacade::removeTemplate(const QString& _templateName)
 {
 	init();
 
 	//
-	// Удалим стиль из библиотеки
+	// Удалим шаблон из библиотеки
 	//
-	s_instance->m_styles.remove(_styleName);
-	foreach (QStandardItem* styleItem, s_instance->m_stylesModel->findItems(_styleName)) {
-		s_instance->m_stylesModel->removeRow(styleItem->row());
+	s_instance->m_templates.remove(_templateName);
+	foreach (QStandardItem* templateItem, s_instance->m_templatesModel->findItems(_templateName)) {
+		s_instance->m_templatesModel->removeRow(templateItem->row());
 	}
 
 	//
-	// Настроим путь к папке со стилями
+	// Настроим путь к папке с шаблонами
 	//
 	const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-	const QString stylesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
-	const QString styleFilePath =
-			stylesFolderPath + QDir::separator()
-			+ _styleName + "." + SCENARIO_STYLE_FILE_EXTENSION;
+	const QString templatesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
+	const QString templateFilePath =
+			templatesFolderPath + QDir::separator()
+			+ _templateName + "." + SCENARIO_TEMPLATE_FILE_EXTENSION;
 	//
-	// Удалим файл со стилем
+	// Удалим файл с шаблоном
 	//
-	QFile::remove(styleFilePath);
+	QFile::remove(templateFilePath);
 }
 
-ScenarioStyleFacade::ScenarioStyleFacade()
+ScenarioTemplateFacade::ScenarioTemplateFacade()
 {
 	//
-	// Настроим путь к папке со стилями
+	// Настроим путь к папке с шаблонами
 	//
 	const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-	const QString stylesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
+	const QString templatesFolderPath = appDataFolderPath + QDir::separator() + "Styles";
 	//
 	// ... создаём папку для пользовательских файлов
 	//
 	QDir rootFolder = QDir::root();
-	rootFolder.mkpath(stylesFolderPath);
+	rootFolder.mkpath(templatesFolderPath);
 
 	//
-	// Обновим стиль по умолчанию
+	// Обновим шаблон по умолчанию
 	//
-	const QString defaultStylePath =
-			stylesFolderPath + QDir::separator()
-			+ "default." + SCENARIO_STYLE_FILE_EXTENSION;
-	QFile defaultStyleFile(defaultStylePath);
-	if (defaultStyleFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-		QFile defaultStyleRcFile(":/Styles/Styles/default." + SCENARIO_STYLE_FILE_EXTENSION);
-		if (defaultStyleRcFile.open(QIODevice::ReadOnly)) {
-			defaultStyleFile.write(defaultStyleRcFile.readAll());
-			defaultStyleRcFile.close();
+	const QString defaultTemplatePath =
+			templatesFolderPath + QDir::separator()
+			+ "default." + SCENARIO_TEMPLATE_FILE_EXTENSION;
+	QFile defaultTemplateFile(defaultTemplatePath);
+	if (defaultTemplateFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+		QFile defaultTemplateRcFile(":/Templates/Templates/default." + SCENARIO_TEMPLATE_FILE_EXTENSION);
+		if (defaultTemplateRcFile.open(QIODevice::ReadOnly)) {
+			defaultTemplateFile.write(defaultTemplateRcFile.readAll());
+			defaultTemplateRcFile.close();
 		}
-		defaultStyleFile.close();
+		defaultTemplateFile.close();
 	}
 
 	//
-	// Загрузить стили
+	// Загрузить шаблоны
 	//
-	QDir stylesDir(stylesFolderPath);
-	foreach (const QFileInfo& styleFile, stylesDir.entryInfoList(QDir::Files)) {
-		if (styleFile.suffix() == SCENARIO_STYLE_FILE_EXTENSION) {
-			ScenarioStyle style(styleFile.absoluteFilePath());
-			if (!m_styles.contains(style.name())) {
-				m_styles.insert(style.name(), style);
+	QDir templatesDir(templatesFolderPath);
+	foreach (const QFileInfo& templateFile, templatesDir.entryInfoList(QDir::Files)) {
+		if (templateFile.suffix() == SCENARIO_TEMPLATE_FILE_EXTENSION) {
+			ScenarioTemplate templateObj(templateFile.absoluteFilePath());
+			if (!m_templates.contains(templateObj.name())) {
+				m_templates.insert(templateObj.name(), templateObj);
 			}
 		}
 	}
 	//
-	// ... стиль по умолчанию
+	// ... шаблон по умолчанию
 	//
-	m_defaultStyle = ScenarioStyle(defaultStylePath);
+	m_defaultTemplate = ScenarioTemplate(defaultTemplatePath);
 
 	//
-	// Настроим модель стилей
+	// Настроим модель шаблонов
 	//
-	m_stylesModel = new QStandardItemModel;
-	QStandardItem* rootItem = m_stylesModel->invisibleRootItem();
-	foreach (const ScenarioStyle& style, m_styles.values()) {
+	m_templatesModel = new QStandardItemModel;
+	QStandardItem* rootItem = m_templatesModel->invisibleRootItem();
+	foreach (const ScenarioTemplate& templateObj, m_templates.values()) {
 		QList<QStandardItem*> row;
-		row << new QStandardItem(style.name());
-		row << new QStandardItem(style.description());
+		row << new QStandardItem(templateObj.name());
+		row << new QStandardItem(templateObj.description());
 
 		rootItem->appendRow(row);
 	}
 }
 
-void ScenarioStyleFacade::init()
+void ScenarioTemplateFacade::init()
 {
 	//
 	// Если необходимо создаём одиночку
 	//
 	if (s_instance == 0) {
-		s_instance = new ScenarioStyleFacade;
+		s_instance = new ScenarioTemplateFacade;
 	}
 }
 
-ScenarioStyleFacade* ScenarioStyleFacade::s_instance = 0;
+ScenarioTemplateFacade* ScenarioTemplateFacade::s_instance = 0;

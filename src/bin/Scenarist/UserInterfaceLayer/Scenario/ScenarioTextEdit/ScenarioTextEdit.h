@@ -2,7 +2,7 @@
 #define SCENARIOTEXTEDIT_H
 
 #include <3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 namespace BusinessLogic {
 	class ScenarioTextDocument;

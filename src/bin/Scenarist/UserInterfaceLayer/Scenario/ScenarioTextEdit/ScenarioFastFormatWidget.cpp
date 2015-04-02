@@ -2,7 +2,7 @@
 
 #include "ScenarioTextEdit.h"
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 #include <QCheckBox>
 #include <QLabel>
@@ -42,8 +42,8 @@ QSize ToolButton::sizeHint() const
 using UserInterface::ScenarioFastFormatWidget;
 using UserInterface::ScenarioTextEdit;
 using BusinessLogic::ScenarioBlockStyle;
-using BusinessLogic::ScenarioStyle;
-using BusinessLogic::ScenarioStyleFacade;
+using BusinessLogic::ScenarioTemplate;
+using BusinessLogic::ScenarioTemplateFacade;
 
 namespace {
 	/**
@@ -152,7 +152,7 @@ void ScenarioFastFormatWidget::selectCurrentBlock()
 
 void ScenarioFastFormatWidget::reinitBlockStyles()
 {
-	ScenarioStyle style = ScenarioStyleFacade::style();
+	ScenarioTemplate style = ScenarioTemplateFacade::getTemplate();
 
 	//
 	// Настраиваем в зависимости от доступности стиля

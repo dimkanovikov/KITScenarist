@@ -1,6 +1,6 @@
 #include "ExportManager.h"
 
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/Export/DocxExporter.h>
 #include <BusinessLayer/Export/RtfExporter.h>
@@ -215,7 +215,7 @@ void ExportManager::initView()
 	//
 	// Загрузить библиотеку стилей
 	//
-	m_exportDialog->setStylesModel(BusinessLogic::ScenarioStyleFacade::stylesList());
+	m_exportDialog->setStylesModel(BusinessLogic::ScenarioTemplateFacade::templatesList());
 
 	//
 	// Загрузить настройки

@@ -1,7 +1,5 @@
-#ifndef SCENARIOSTYLE_H
-#define SCENARIOSTYLE_H
-
-#include "ScenarioStyle.h"
+#ifndef SCENARIOTEMPLATE_H
+#define SCENARIOTEMPLATE_H
 
 #include <QPageSize>
 #include <QTextFormat>
@@ -289,7 +287,7 @@ namespace BusinessLogic
 		 * @brief Инициилизация возможна только в классе стиля сценария
 		 */
 		ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttributes);
-		friend class ScenarioStyle;
+		friend class ScenarioTemplate;
 
 		/**
 		 * @brief Обновить межстрочный интервал блока
@@ -379,15 +377,15 @@ namespace BusinessLogic
 	};
 
 	/**
-	 * @brief Класс стиля сценария
+	 * @brief Класс шаблона сценария
 	 */
-	class ScenarioStyle
+	class ScenarioTemplate
 	{
 	public:
-		ScenarioStyle() {}
+		ScenarioTemplate() {}
 
 		/**
-		 * @brief Сохранить стиль в файл
+		 * @brief Сохранить шаблон в файл
 		 */
 		void saveToFile(const QString& _filePath) const;
 
@@ -452,13 +450,13 @@ namespace BusinessLogic
 		void updateBlocksColors();
 
 	private:
-		ScenarioStyle(const QString& _from_file);
-		friend class ScenarioStyleFacade;
+		ScenarioTemplate(const QString& _fromFile);
+		friend class ScenarioTemplateFacade;
 
 		/**
-		 * @brief Загрузить стиль из файла
+		 * @brief Загрузить шаблон из файла
 		 */
-		void load(const QString& _from_file);
+		void load(const QString& _fromFile);
 
 	private:
 		/**
@@ -493,62 +491,62 @@ namespace BusinessLogic
 	};
 
 	/**
-	 * @brief Фасад доступа к стилям сценария
+	 * @brief Фасад доступа к шаблонам сценария
 	 */
-	class ScenarioStyleFacade
+	class ScenarioTemplateFacade
 	{
 	public:
 		/**
-		 * @brief Получить список стилей
+		 * @brief Получить список шаблонов
 		 */
-		static QStandardItemModel* stylesList();
+		static QStandardItemModel* templatesList();
 
 		/**
-		 * @brief Проверить существование стиля с заданным именем
+		 * @brief Проверить существование шаблона с заданным именем
 		 */
-		static bool containsStyle(const QString& _styleName);
+		static bool containsTemplate(const QString& _templateName);
 
 		/**
-		 * @brief Получить стиль в соответствии с заданным именем
+		 * @brief Получить шаблон в соответствии с заданным именем
 		 *
-		 * Если имя не задано, возвращается стандартный стиль
+		 * Если имя не задано, возвращается стандартный шаблон
 		 */
-		static ScenarioStyle style(const QString& _styleName = QString());
+		static ScenarioTemplate getTemplate(const QString& _templateName = QString());
 
 		/**
-		 * @brief Сохранить стиль в библиотеке стилей
+		 * @brief Сохранить стиль в библиотеке шаблонов
 		 */
 		/** @{ */
-		static void saveStyle(const ScenarioStyle& _style);
-		static bool saveStyle(const QString& _styleFilePath);
+		static void saveTemplate(const ScenarioTemplate& _template);
+		static bool saveTemplate(const QString& _templateFilePath);
 		/** @} */
 
 		/**
-		 * @brief Удалить стиль по заданному имены
+		 * @brief Удалить шаблон по заданному имены
 		 */
-		static void removeStyle(const QString& _styleName);
+		static void removeTemplate(const QString& _templateName);
 
 	private:
-		ScenarioStyleFacade();
-		static ScenarioStyleFacade* s_instance;
+		ScenarioTemplateFacade();
+		static ScenarioTemplateFacade* s_instance;
 		static void init();
 
 	private:
 		/**
-		 * @brief Стиль по умолчанию
+		 * @brief Шаблон по умолчанию
 		 */
-		ScenarioStyle m_defaultStyle;
+		ScenarioTemplate m_defaultTemplate;
 
 		/**
-		 * @brief Стили сценариев
+		 * @brief Шаблоны сценариев
 		 */
-		QMap<QString, ScenarioStyle> m_styles;
+		QMap<QString, ScenarioTemplate> m_templates;
 
 		/**
-		 * @brief Модель стилей
+		 * @brief Модель шаблонов
 		 */
-		QStandardItemModel* m_stylesModel;
+		QStandardItemModel* m_templatesModel;
 	};
 }
 
-#endif // SCENARIOSTYLE_H
+#endif // SCENARIOTEMPLATE_H

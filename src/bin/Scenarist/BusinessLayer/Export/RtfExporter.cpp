@@ -5,7 +5,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
-#include <BusinessLayer/ScenarioDocument/ScenarioStyle.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 #include <Domain/Scenario.h>
 
@@ -21,8 +21,8 @@ namespace {
 	/**
 	 * @brief Стиль экспорта
 	 */
-	static ScenarioStyle exportStyle() {
-		return ScenarioStyleFacade::style(
+	static ScenarioTemplate exportStyle() {
+		return ScenarioTemplateFacade::getTemplate(
 					DataStorageLayer::StorageFacade::settingsStorage()->value(
 						"export/style",
 						DataStorageLayer::SettingsStorage::ApplicationSettings)
@@ -300,7 +300,7 @@ QString RtfExporter::header(const ExportParameters& _exportParameters) const
 	//
 	// Настройки в соответсвии со стилем
 	//
-	ScenarioStyle style = ::exportStyle();
+	ScenarioTemplate style = ::exportStyle();
 
 	//
 	// Настройки шрифтов

@@ -182,9 +182,6 @@ SOURCES += main.cpp \
     3rd_party/Widgets/PagesTextEdit/PageMetrics.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.cpp \
-    UserInterfaceLayer/Settings/StyleDialog.cpp \
-    ManagementLayer/Settings/SettingsStylesManager.cpp \
-    BusinessLayer/ScenarioDocument/ScenarioStyle.cpp \
     ManagementLayer/Export/ExportManager.cpp \
     UserInterfaceLayer/Export/ExportDialog.cpp \
     Domain/CharacterState.cpp \
@@ -208,7 +205,10 @@ SOURCES += main.cpp \
     3rd_party/Widgets/FlatButton/FlatButton.cpp \
     3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditPrivate.cpp \
-    ManagementLayer/Synchronization/SynchronizationManager.cpp
+    ManagementLayer/Synchronization/SynchronizationManager.cpp \
+    UserInterfaceLayer/Settings/TemplateDialog.cpp \
+    ManagementLayer/Settings/SettingsTemplatesManager.cpp \
+    BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -341,9 +341,6 @@ HEADERS += \
     3rd_party/Helpers/TextEditHelper.h \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.h \
-    UserInterfaceLayer/Settings/StyleDialog.h \
-    ManagementLayer/Settings/SettingsStylesManager.h \
-    BusinessLayer/ScenarioDocument/ScenarioStyle.h \
     ManagementLayer/Export/ExportManager.h \
     UserInterfaceLayer/Export/ExportDialog.h \
     Domain/CharacterState.h \
@@ -369,7 +366,10 @@ HEADERS += \
     3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.h \
     3rd_party/Helpers/ShortcutHelper.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditPrivate.h \
-    ManagementLayer/Synchronization/SynchronizationManager.h
+    ManagementLayer/Synchronization/SynchronizationManager.h \
+    UserInterfaceLayer/Settings/TemplateDialog.h \
+    ManagementLayer/Settings/SettingsTemplatesManager.h \
+    BusinessLayer/ScenarioDocument/ScenarioTemplate.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -377,9 +377,9 @@ FORMS += \
     UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui \
     UserInterfaceLayer/Settings/SettingsView.ui \
     UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui \
-    UserInterfaceLayer/Settings/StyleDialog.ui \
     UserInterfaceLayer/Export/ExportDialog.ui \
-    UserInterfaceLayer/Import/ImportDialog.ui
+    UserInterfaceLayer/Import/ImportDialog.ui \
+    UserInterfaceLayer/Settings/TemplateDialog.ui
 
 
 RESOURCES += \
