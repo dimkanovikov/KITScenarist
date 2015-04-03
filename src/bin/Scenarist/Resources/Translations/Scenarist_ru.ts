@@ -544,26 +544,64 @@
     </message>
 </context>
 <context>
+    <name>LoginDialog</name>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.ui" line="14"/>
+        <source>Authorization</source>
+        <translation>Авторизация</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.ui" line="20"/>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.ui" line="30"/>
+        <source>User name</source>
+        <translation>Имя пользователя</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.ui" line="40"/>
+        <source>Login</source>
+        <translation>Войти</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.ui" line="56"/>
+        <source>&lt;a href=&quot;http://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Registration&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;http://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Зарегистрироваться&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.ui" line="76"/>
+        <source>Remember me</source>
+        <translation>Запомнить меня</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.ui" line="92"/>
+        <source>Error message</source>
+        <translation>Сообщение об ошибке</translation>
+    </message>
+</context>
+<context>
     <name>ManagementLayer::ApplicationManager</name>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="169"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="174"/>
         <source>Choose file for new project</source>
         <translation>Выберите файл для нового проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="171"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="225"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="339"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="176"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="230"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="344"/>
         <source>Scenarist project files (*%1)</source>
         <translation>Файл проекта сценария (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="223"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="228"/>
         <source>Choose file for save project</source>
         <translation>Выберите файл для сохранения проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="337"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="342"/>
         <source>Choose project file to open</source>
         <translation>Выберите файл проекта для открытия</translation>
     </message>
@@ -580,97 +618,97 @@
         <translation type="obsolete">RTF файлы (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="45"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="46"/>
         <source> - changed</source>
         <translation> - изменён</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="495"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="500"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="496"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="501"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="875"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="889"/>
         <source>%1[*] - Scenarist</source>
         <translation>%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="601"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="606"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="535"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="540"/>
         <source>Loading Scenario</source>
         <translation>Загрузка сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="535"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="540"/>
         <source>Please wait. Loading can take few minutes.</source>
         <translation>Немного терпения. Загрузка может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="608"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="613"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="609"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="614"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="610"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="615"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="611"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="616"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="612"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="617"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="656"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="661"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="657"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="662"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="658"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="663"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="660"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="665"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="666"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="671"/>
         <source>Import...</source>
         <translation>Импорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="669"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="674"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="672"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="677"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -878,25 +916,41 @@
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="646"/>
-        <source>Jump after text in block</source>
-        <translation>Переход после блока с текстом</translation>
+        <source>Press in paragraph&apos;s end</source>
+        <translation>Курсор в конце абзаца с текстом</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="648"/>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="653"/>
-        <source>By Tab</source>
-        <translation>По Tab</translation>
+        <source>Tab</source>
+        <translation>Tab</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="649"/>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="654"/>
-        <source>By Enter</source>
-        <translation>По Enter</translation>
+        <source>Enter</source>
+        <translation>Enter</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="651"/>
+        <source>Press in empty paragraph</source>
+        <translation>Курсор в пустом абзаце</translation>
+    </message>
+    <message>
+        <source>Jump after text in block</source>
+        <translation type="vanished">Переход после блока с текстом</translation>
+    </message>
+    <message>
+        <source>By Tab</source>
+        <translation type="vanished">По Tab</translation>
+    </message>
+    <message>
+        <source>By Enter</source>
+        <translation type="vanished">По Enter</translation>
+    </message>
+    <message>
         <source>Change empty block</source>
-        <translation>Смена пустого блока</translation>
+        <translation type="vanished">Смена пустого блока</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="657"/>
@@ -935,22 +989,22 @@
 <context>
     <name>ManagementLayer::StartUpManager</name>
     <message>
-        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="112"/>
+        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="152"/>
         <source>Can&apos;t open choosed file</source>
         <translation>Не удалось открыть выбранный файл</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="113"/>
+        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="153"/>
         <source>File &lt;b&gt;%1&lt;/b&gt; isn&apos;t exist. File will be removed from recent list.</source>
         <translation>Файла &lt;b&gt;%1&lt;/b&gt; не существует. Запись будет удалена из списка недавних проектов.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="178"/>
+        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="218"/>
         <source>Released version %1 </source>
         <translation>Вышла новая версия %1 </translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="190"/>
+        <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="230"/>
         <source>style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;http://kitscenarist.ru/history.html&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
         <translation>style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;http://kitscenarist.ru/history.html&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
     </message>
@@ -973,6 +1027,25 @@
     <message>
         <source>Released version %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
         <translation type="obsolete">Вышла новая версия %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
+    </message>
+</context>
+<context>
+    <name>ManagementLayer::SynchronizationManager</name>
+    <message>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="79"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="168"/>
+        <source>Authorizing</source>
+        <translation>Авторизация</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="79"/>
+        <source>Checking correction of user name and password.</source>
+        <translation>Проверка корректности введённых имени пользователя и пароля.</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="168"/>
+        <source>Close working session.</source>
+        <translation>Закрытие рабочего соединения.</translation>
     </message>
 </context>
 <context>
@@ -1557,22 +1630,42 @@ Paragraph</source>
         <translation>Форма</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="187"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="340"/>
+        <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Login&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Авторизация&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="356"/>
+        <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Logout&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Выйти&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="449"/>
         <source>Update recent projects list</source>
         <translation>Обновить список недавно используемых проектов.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="291"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="385"/>
         <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Create Project&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Создать новый проект&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="320"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="198"/>
+        <source>Projects from local computer</source>
+        <translation>Проекты на компьютере</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="208"/>
+        <source>Projects from kitscenarist.ru</source>
+        <translation>Проекты на kitscenarist.ru</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="279"/>
         <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Open Project&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Открыть проект&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="336"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="321"/>
         <source>&lt;a href=&quot;http://kitscenarist.ru/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://kitscenarist.ru/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Как пользоваться программой?&lt;/a&gt;</translation>
     </message>
@@ -1581,12 +1674,12 @@ Paragraph</source>
         <translation type="vanished">&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Как пользоваться программой?&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="140"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="143"/>
         <source>0.0.0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="158"/>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="161"/>
         <source>Released version 0.0.0 &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
         <translation>Вышла новая версия 0.0.0 &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
     </message>
@@ -2405,9 +2498,8 @@ Paragraph</source>
         <translation>Повторить последнее действие</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="377"/>
         <source>Search text</source>
-        <translation>Поиск текста</translation>
+        <translation type="vanished">Поиск текста</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="428"/>
@@ -2440,6 +2532,11 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="85"/>
         <source>DRAFT</source>
         <translation>ЧЕРНОВИК</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="377"/>
+        <source>Search and Replace</source>
+        <translation>Поиск и замена</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="440"/>
@@ -2551,12 +2648,24 @@ Paragraph</source>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="494"/>
+        <source>Shortcuts Settings</source>
+        <translation>Настройки горячих клавиш</translation>
+    </message>
+    <message>
         <source>Blocks Settings</source>
-        <translation>Параметры блоков текста</translation>
+        <translation type="vanished">Параметры блоков текста</translation>
     </message>
     <message>
         <source>Blocks Jumps</source>
         <translation type="vanished">Переходы между блоками</translation>
+    </message>
+</context>
+<context>
+    <name>UserInterface::StartUpView</name>
+    <message>
+        <location filename="../../UserInterfaceLayer/StartUp/StartUpView.cpp" line="81"/>
+        <source>Logout</source>
+        <translation>Выйти</translation>
     </message>
 </context>
 <context>

@@ -35,7 +35,22 @@ namespace UserInterface
 		 */
 		void setUpdateInfo(const QString& _updateInfo);
 
+		/**
+		 * @brief Установить информацию о том, авторизован пользователь или нет
+		 */
+		void setUserLogged(bool isLogged, const QString& _userName = QString::null);
+
 	signals:
+		/**
+		 * @brief Нажата кнопка войти
+		 */
+		void loginClicked();
+
+		/**
+		 * @brief Нажата кнопка выйти
+		 */
+		void logoutClicked();
+
 		/**
 		 * @brief Нажата кнопка создать проект
 		 */

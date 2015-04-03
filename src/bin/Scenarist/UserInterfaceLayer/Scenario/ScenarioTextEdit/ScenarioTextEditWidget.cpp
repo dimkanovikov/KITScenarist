@@ -374,7 +374,7 @@ void ScenarioTextEditWidget::initView()
 	m_redo->setToolTip(ShortcutHelper::makeToolTip(tr("Redo last action"), "Shift+Ctrl+Z"));
 
 	m_search->setIcons(QIcon(":/Graphics/Icons/Editing/search.png"));
-	m_search->setToolTip(ShortcutHelper::makeToolTip(tr("Search text"), "Ctrl+F"));
+	m_search->setToolTip(ShortcutHelper::makeToolTip(tr("Search and Replace"), "Ctrl+F"));
 	m_search->setCheckable(true);
 	m_search->setShortcut(QKeySequence("Ctrl+F"));
 

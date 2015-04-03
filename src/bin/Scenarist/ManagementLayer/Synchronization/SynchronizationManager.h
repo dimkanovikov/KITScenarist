@@ -14,75 +14,118 @@ namespace ManagementLayer
 		Q_OBJECT
 
 	public:
-		explicit SynchronizationManager(QObject* _parent = 0);
+		explicit SynchronizationManager(QObject* _parent, QWidget* _parentView);
 
 		/**
-		 * @brief Авторизация
+		 * @brief Авторизоваться используя сохранённые параметры авторизации
 		 */
-		/** @{ */
-		bool logIn(const QString& _login, const QString& _password);
-		bool logOut() { return true; }
-		/** @} */
+		void login();
+
+	public slots:
+		/**
+		 * @brief Авторизоваться
+		 */
+		void aboutLogin(const QString& _userName, const QString& _password, bool _rememberUser);
 
 		/**
-		 * @brief Получить список синхронизируемых проектов
-		 * @note Тут должны быть как собственные, так и те, к которым предоставлен доступ
+		 * @brief Закрыть авторизацию
 		 */
-		void projectsList() {}
-
-		/**
-		 * @brief Синхронизировать проект
-		 */
-		void syncProject() {}
-
-		/**
-		 * @brief Передать управляющему "слепок" с изменениями
-		 */
-		void appendChanges() {}
-
-		/**
-		 * @brief Передать управляющему позицию курсора
-		 */
-		void setCursorPosition(int _position);
+		void aboutLogout();
 
 	signals:
 		/**
-		 * @brief Обновить информацию о курсорах
+		 * @brief Авторизация пройдена успешно
 		 */
-		void updateCursors();
+		void loginAccepted(const QString& _userName);
 
 		/**
-		 * @brief Применить изменения принятые от сервера
+		 * @brief Авторизация не пройдена
 		 */
-		void applyChanges();
-
-	private slots:
-		/**
-		 * @brief Оправить изменения на сервер
-		 */
-		void aboutSendChangesToServer() {}
+		void loginNotAccepted(const QString& _userName, const QString& _password, bool _rememberUser, const QString& _error);
 
 		/**
-		 * @brief Получены изменения от сервера
+		 * @brief Авторизация закрыта
 		 */
-		void aboutGetChangesFromServer() {}
+		void logoutAccepted();
 
 	private:
 		/**
-		 * @brief Авторизован ли пользователь в данный момент
+		 * @brief Указатель на главную форму приложения
 		 */
-		bool isLogged() const { return true; }
+		QWidget* m_view;
 
 		/**
-		 * @brief Настроить соединения
+		 * @brief Ключ сессии
 		 */
-		void initConnections();
+		QString m_sessionKey;
 
-	private:
-		/**
-		 * @brief Позиция курсора
-		 */
-		int m_cursorPosition;
+
+
+
+
+		//
+		// Пока не используемые функции
+		//
+
+//		/**
+//		 * @brief Получить список синхронизируемых проектов
+//		 * @note Тут должны быть как собственные, так и те, к которым предоставлен доступ
+//		 */
+//		void projectsList() {}
+
+//		/**
+//		 * @brief Синхронизировать проект
+//		 */
+//		void syncProject() {}
+
+//		/**
+//		 * @brief Передать управляющему "слепок" с изменениями
+//		 */
+//		void appendChanges() {}
+
+//		/**
+//		 * @brief Передать управляющему позицию курсора
+//		 */
+//		void setCursorPosition(int _position);
+
+//	signals:
+//		/**
+//		 * @brief Обновить информацию о курсорах
+//		 */
+//		void updateCursors();
+
+//		/**
+//		 * @brief Применить изменения принятые от сервера
+//		 */
+//		void applyChanges();
+
+//	private slots:
+//		/**
+//		 * @brief Оправить изменения на сервер
+//		 */
+//		void aboutSendChangesToServer() {}
+
+//		/**
+//		 * @brief Получены изменения от сервера
+//		 */
+//		void aboutGetChangesFromServer() {}
+
+//	private:
+//		/**
+//		 * @brief Авторизован ли пользователь в данный момент
+//		 */
+//		bool isLogged() const { return true; }
+
+//		/**
+//		 * @brief Настроить соединения
+//		 */
+//		void initConnections();
+
+//	private:
+//		/**
+//		 * @brief Позиция курсора
+//		 */
+//		int m_cursorPosition;
 	};
 }
 

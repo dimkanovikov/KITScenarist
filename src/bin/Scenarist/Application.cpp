@@ -25,14 +25,6 @@ Application::Application(int& _argc, char** _argv) :
 	// Настроим стиль отображения внешнего вида приложения
 	//
 	setStyle(QStyleFactory::create("Fusion"));
-	//
-	// FIXME: почему-то ссылки не меняют цвет, если обновлять палитру на лету,
-	// поэтому устанавливаю при загрузке приложения такой цвет, который подходит
-	// к обеим темам
-	//
-	QPalette palette = QApplication::style()->standardPalette();
-	palette.setColor(QPalette::Link, QColor("#0C6ACC"));
-	setPalette(palette);
 
 	//
 	// Загрузим Courier New в базу шрифтов программы, если его там ещё нет

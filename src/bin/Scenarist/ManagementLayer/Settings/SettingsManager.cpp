@@ -643,15 +643,15 @@ void SettingsManager::initView()
 	// ... модель переходов между блоками, её заголовок и делегат
 	QStandardItemModel* blockJumpsHeaderModel = new QStandardItemModel(this);
 	{
-		QStandardItem * columnAfterText = new QStandardItem(tr("Jump after text in block"));
+		QStandardItem * columnAfterText = new QStandardItem(tr("Press in paragraph's end"));
 		{
-			columnAfterText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("By Tab")));
-			columnAfterText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("By Enter")));
+			columnAfterText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("Tab")));
+			columnAfterText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("Enter")));
 		}
-		QStandardItem * columnEmptyText = new QStandardItem(tr("Change empty block"));
+		QStandardItem * columnEmptyText = new QStandardItem(tr("Press in empty paragraph"));
 		{
-			columnEmptyText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("By Tab")));
-			columnEmptyText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("By Enter")));
+			columnEmptyText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("Tab")));
+			columnEmptyText->appendColumn(QList<QStandardItem*>() << new QStandardItem(tr("Enter")));
 		}
 
 		blockJumpsHeaderModel->setItem(0, 0, new QStandardItem(tr("Block Name")));

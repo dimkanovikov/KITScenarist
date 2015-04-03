@@ -208,7 +208,8 @@ SOURCES += main.cpp \
     ManagementLayer/Synchronization/SynchronizationManager.cpp \
     UserInterfaceLayer/Settings/TemplateDialog.cpp \
     ManagementLayer/Settings/SettingsTemplatesManager.cpp \
-    BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp
+    BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp \
+    UserInterfaceLayer/StartUp/LoginDialog.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -369,7 +370,9 @@ HEADERS += \
     ManagementLayer/Synchronization/SynchronizationManager.h \
     UserInterfaceLayer/Settings/TemplateDialog.h \
     ManagementLayer/Settings/SettingsTemplatesManager.h \
-    BusinessLayer/ScenarioDocument/ScenarioTemplate.h
+    BusinessLayer/ScenarioDocument/ScenarioTemplate.h \
+    UserInterfaceLayer/StartUp/LoginDialog.h \
+    3rd_party/Helpers/PasswordStorage.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -379,7 +382,8 @@ FORMS += \
     UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui \
     UserInterfaceLayer/Export/ExportDialog.ui \
     UserInterfaceLayer/Import/ImportDialog.ui \
-    UserInterfaceLayer/Settings/TemplateDialog.ui
+    UserInterfaceLayer/Settings/TemplateDialog.ui \
+    UserInterfaceLayer/StartUp/LoginDialog.ui
 
 
 RESOURCES += \

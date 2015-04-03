@@ -491,7 +491,7 @@ void SettingsView::initView()
 	aboutColorThemeChanged();
 
 	m_scenarioEditorTabs->addTab(tr("Common"));
-	m_scenarioEditorTabs->addTab(tr("Blocks Settings"));
+	m_scenarioEditorTabs->addTab(tr("Shortcuts Settings"));
 	m_scenarioEditorTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 	ui->scenarioEditPageLayout->addWidget(m_scenarioEditorTabs, 0, 0);
 	ui->scenarioEditPageLayout->addWidget(ui->topRightEmptyLabel_2, 0, 1);

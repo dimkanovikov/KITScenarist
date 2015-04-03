@@ -32,7 +32,33 @@ namespace ManagementLayer
 		 */
 		void addRecentFile(const QString& _filePath, const QString& _projectName = QString());
 
+	public slots:
+		/**
+		 * @brief Пользователь с заданным именем успешно авторизован на сервере
+		 */
+		void aboutUserLogged(const QString& _userName);
+
+		/**
+		 * @brief Попробовать повторно авторизоваться, после неудачной попытки
+		 */
+		void aboutRetryLogin(const QString& _userName, const QString& _password, bool _rememberUser, const QString& _error);
+
+		/**
+		 * @brief Пользователь закрыл авторизацию
+		 */
+		void aboutUserUnlogged();
+
 	signals:
+		/**
+		 * @brief Пользователь хочет авторизоваться
+		 */
+		void loginRequested(const QString& _userName, const QString& _password, bool _rememberUser);
+
+		/**
+		 * @brief Пользователь хочет выйти
+		 */
+		void logoutRequested();
+
 		/**
 		 * @brief Создать проект
 		 */
@@ -54,6 +80,11 @@ namespace ManagementLayer
 		void openRecentProjectRequested(const QString& _filePath);
 
 	private slots:
+		/**
+		 * @brief Нажата кнопка войти
+		 */
+		void aboutLoginClicked();
+
 		/**
 		 * @brief Выбран один из недавних файлов для открытия
 		 */

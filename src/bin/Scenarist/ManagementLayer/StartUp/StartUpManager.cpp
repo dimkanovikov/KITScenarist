@@ -1,6 +1,7 @@
 #include "StartUpManager.h"
 
 #include <UserInterfaceLayer/StartUp/StartUpView.h>
+#include <UserInterfaceLayer/StartUp/LoginDialog.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -18,6 +19,7 @@
 
 using ManagementLayer::StartUpManager;
 using UserInterface::StartUpView;
+using UserInterface::LoginDialog;
 
 namespace {
 	const int MAX_RECENT_FILES_COUNT = 7;
@@ -96,6 +98,44 @@ void StartUpManager::addRecentFile(const QString& _filePath, const QString& _pro
 	// Обновим список файлов в представлении
 	//
 	m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
+}
+
+void StartUpManager::aboutUserLogged(const QString& _userName)
+{
+	const bool isLogged = true;
+	m_view->setUserLogged(isLogged, _userName);
+}
+
+void StartUpManager::aboutRetryLogin(const QString& _userName, const QString& _password, bool _rememberUser, const QString& _error)
+{
+	//
+	// Показать диалог авторизации
+	//
+	LoginDialog loginDialog(m_view);
+	loginDialog.setUserName(_userName);
+	loginDialog.setPassword(_password);
+	loginDialog.setRememberUser(_rememberUser);
+	loginDialog.setError(_error);
+	if (loginDialog.exec() == QDialog::Accepted) {
+		emit loginRequested(loginDialog.userName(), loginDialog.password(), loginDialog.rememberUser());
+	}
+}
+
+void StartUpManager::aboutUserUnlogged()
+{
+	const bool isLogged = false;
+	m_view->setUserLogged(isLogged);
+}
+
+void StartUpManager::aboutLoginClicked()
+{
+	//
+	// Показать диалог авторизации
+	//
+	LoginDialog loginDialog(m_view);
+	if (loginDialog.exec() == QDialog::Accepted) {
+		emit loginRequested(loginDialog.userName(), loginDialog.password(), loginDialog.rememberUser());
+	}
 }
 
 void StartUpManager::aboutOpenRecentProjectRequested(const QString& _filePath)
@@ -234,6 +274,8 @@ void StartUpManager::initView()
 
 void StartUpManager::initConnections()
 {
+	connect(m_view, SIGNAL(loginClicked()), this, SLOT(aboutLoginClicked()));
+	connect(m_view, SIGNAL(logoutClicked()), this, SIGNAL(logoutRequested()));
 	connect(m_view, SIGNAL(createProjectClicked()), this, SIGNAL(createProjectRequested()));
 	connect(m_view, SIGNAL(openProjectClicked()), this, SIGNAL(openProjectRequested()));
 	connect(m_view, SIGNAL(helpClicked()), this, SIGNAL(helpRequested()));

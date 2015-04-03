@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>646</width>
-    <height>375</height>
+    <width>730</width>
+    <height>462</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -105,6 +105,9 @@
         <property name="verticalSpacing">
          <number>1</number>
         </property>
+        <item row="1" column="1">
+         <widget class="QWidget" name="widget_3" native="true"/>
+        </item>
         <item row="0" column="0" colspan="2">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -181,62 +184,47 @@
           </property>
          </spacer>
         </item>
-        <item row="3" column="2">
-         <widget class="QToolButton" name="refreshRecentFiles">
-          <property name="toolTip">
-           <string>Update recent projects list</string>
+        <item row="3" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
           </property>
-          <property name="text">
-           <string/>
+          <property name="bottomMargin">
+           <number>8</number>
           </property>
-          <property name="icon">
-           <iconset resource="../../Resources/Resources.qrc">
-            <normaloff>:/Graphics/Icons/Editing/refresh_green.png</normaloff>:/Graphics/Icons/Editing/refresh_green.png</iconset>
-          </property>
-          <property name="autoRaise">
-           <bool>true</bool>
-          </property>
-         </widget>
+          <item>
+           <widget class="QRadioButton" name="localProjects">
+            <property name="text">
+             <string>Projects from local computer</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="remoteProjects">
+            <property name="text">
+             <string>Projects from kitscenarist.ru</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
-        <item row="4" column="2">
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="3" column="1" rowspan="2">
-         <widget class="QListView" name="recentFiles">
-          <property name="cursor" stdset="0">
-           <cursorShape>PointingHandCursor</cursorShape>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: palette(window)</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="verticalScrollBarPolicy">
-           <enum>Qt::ScrollBarAsNeeded</enum>
-          </property>
-          <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
-          </property>
-          <property name="verticalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
-          </property>
-          <property name="horizontalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" rowspan="2">
+        <item row="3" column="0" rowspan="3">
          <widget class="QWidget" name="widget" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -272,49 +260,20 @@
               </sizepolicy>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
-              <item row="1" column="0">
-               <widget class="QLabel" name="openProjectIcon">
+              <item row="5" column="0">
+               <widget class="QLabel" name="loginIcon">
                 <property name="text">
                  <string/>
                 </property>
                 <property name="pixmap">
-                 <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/project_open.png</pixmap>
+                 <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/login.png</pixmap>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="createProject">
-                <property name="text">
-                 <string>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Create Project&lt;/a&gt;</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                </property>
-                <property name="margin">
-                 <number>0</number>
-                </property>
-                <property name="indent">
-                 <number>-1</number>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="createProjectIcon">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="pixmap">
-                 <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/project_new.png</pixmap>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
+              <item row="3" column="1">
                <widget class="QLabel" name="openProject">
                 <property name="text">
                  <string>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Open Project&lt;/a&gt;</string>
@@ -330,7 +289,33 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
+              <item row="4" column="0">
+               <widget class="QLabel" name="helpIcon">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="openProjectIcon">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/project_open.png</pixmap>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
                <widget class="QLabel" name="help">
                 <property name="text">
                  <string>&lt;a href=&quot;http://kitscenarist.ru/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</string>
@@ -349,13 +334,74 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="helpIcon">
+              <item row="5" column="1">
+               <widget class="QLabel" name="login">
+                <property name="text">
+                 <string>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Login&lt;/a&gt;</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLabel" name="logout">
+                <property name="text">
+                 <string>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Logout&lt;/a&gt;</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="logoutIcon">
                 <property name="text">
                  <string/>
                 </property>
                 <property name="pixmap">
-                 <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                 <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/logout.png</pixmap>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" rowspan="3">
+               <widget class="QLabel" name="createProject">
+                <property name="text">
+                 <string>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Create Project&lt;/a&gt;</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" rowspan="3">
+               <widget class="QLabel" name="createProjectIcon">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/project_new.png</pixmap>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -396,6 +442,61 @@
            </item>
           </layout>
          </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QToolButton" name="refreshRecentFiles">
+          <property name="toolTip">
+           <string>Update recent projects list</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../../Resources/Resources.qrc">
+            <normaloff>:/Graphics/Icons/Editing/refresh_green.png</normaloff>:/Graphics/Icons/Editing/refresh_green.png</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1" rowspan="2">
+         <widget class="QListView" name="recentFiles">
+          <property name="cursor" stdset="0">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: palette(window)</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAsNeeded</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="verticalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>

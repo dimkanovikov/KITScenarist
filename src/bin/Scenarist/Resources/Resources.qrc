@@ -54,6 +54,8 @@
         <file>Icons/Editing/draft.png</file>
         <file>Icons/Editing/note.png</file>
         <file>Icons/Editing/fullscreen_active.png</file>
+        <file>Icons/login.png</file>
+        <file>Icons/logout.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

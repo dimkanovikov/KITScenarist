@@ -72,6 +72,15 @@ void StartUpView::setUpdateInfo(const QString& _updateInfo)
 	ui->updateInfo->show();
 }
 
+void StartUpView::setUserLogged(bool isLogged, const QString& _userName)
+{
+	ui->loginIcon->setVisible(!isLogged);
+	ui->login->setVisible(!isLogged);
+	ui->logoutIcon->setVisible(isLogged);
+	ui->logout->setVisible(isLogged);
+	ui->logout->setText(QString("<a href=\"#\" style=\"color:#2b78da;\">%1</a> %2").arg(tr("Logout")).arg(_userName));
+}
+
 bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
 {
 	bool result = false;
@@ -120,6 +129,9 @@ void StartUpView::initView()
 
 	ui->updateInfo->hide();
 
+	ui->logoutIcon->hide();
+	ui->logout->hide();
+
 	ui->recentFiles->setItemDelegate(new RecentFilesDelegate(ui->recentFiles));
 	ui->recentFiles->setMouseTracking(true);
 	ui->recentFiles->installEventFilter(this);
@@ -127,6 +139,8 @@ void StartUpView::initView()
 
 void StartUpView::initConnections()
 {
+	connect(ui->login, SIGNAL(linkActivated(QString)), this, SIGNAL(loginClicked()));
+	connect(ui->logout, SIGNAL(linkActivated(QString)), this, SIGNAL(logoutClicked()));
 	connect(ui->createProject, SIGNAL(linkActivated(QString)), this, SIGNAL(createProjectClicked()));
 	connect(ui->openProject, SIGNAL(linkActivated(QString)), this, SIGNAL(openProjectClicked()));
 	connect(ui->help, SIGNAL(linkActivated(QString)), this, SIGNAL(helpClicked()));
@@ -140,4 +154,7 @@ void StartUpView::initStyleSheet()
 	ui->topEmptyLabel->setProperty("inTopPanel", true);
 	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
 	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
+
+	ui->localProjects->setProperty("inStartUpView", true);
+	ui->remoteProjects->setProperty("inStartUpView", true);
 }
