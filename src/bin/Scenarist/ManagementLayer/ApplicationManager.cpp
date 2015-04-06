@@ -1,5 +1,6 @@
 #include "ApplicationManager.h"
 
+#include "Project/ProjectsManager.h"
 #include "StartUp/StartUpManager.h"
 #include "Scenario/ScenarioManager.h"
 #include "Characters/CharactersManager.h"
@@ -703,6 +704,7 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
+	connect(m_startUpManager, SIGNAL(refreshRemoteProjectsRequested()), m_synchronizationManager, SLOT(aboutLoadProjects()));
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QString)), this, SLOT(aboutLoad(QString)));
 
 	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
@@ -742,6 +744,8 @@ void ApplicationManager::initConnections()
 			m_startUpManager, SLOT(aboutRetryLogin(QString,QString,bool,QString)));
 	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
 			m_startUpManager, SLOT(aboutUserUnlogged()));
+	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded()),
+			m_startUpManager, SLOT(aboutRemoteProjectsLoaded()));
 }
 
 void ApplicationManager::initStyleSheet()

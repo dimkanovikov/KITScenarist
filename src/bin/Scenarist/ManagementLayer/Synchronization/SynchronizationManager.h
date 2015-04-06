@@ -32,6 +32,11 @@ namespace ManagementLayer
 		 */
 		void aboutLogout();
 
+		/**
+		 * @brief Загрузить список доступных проектов
+		 */
+		void aboutLoadProjects();
+
 	signals:
 		/**
 		 * @brief Авторизация пройдена успешно
@@ -47,6 +52,22 @@ namespace ManagementLayer
 		 * @brief Авторизация закрыта
 		 */
 		void logoutAccepted();
+
+		/**
+		 * @brief Список доступных проектов получен
+		 */
+		void remoteProjectsLoaded();
+
+		/**
+		 * @brief Не удалось получить список доступных проектов
+		 */
+		void remoteProjectsNotLoaded(const QString& _error);
+
+	private:
+		/**
+		 * @brief Настроить соединения
+		 */
+		void initConnections();
 
 	private:
 		/**
@@ -115,11 +136,6 @@ namespace ManagementLayer
 //		 * @brief Авторизован ли пользователь в данный момент
 //		 */
 //		bool isLogged() const { return true; }
-
-//		/**
-//		 * @brief Настроить соединения
-//		 */
-//		void initConnections();
 
 //	private:
 //		/**

@@ -61,11 +61,8 @@ SOURCES += main.cpp \
     ManagementLayer/Scenario/ScenarioTextEditManager.cpp \
     ManagementLayer/Scenario/ScenarioNavigatorManager.cpp \
     ManagementLayer/Scenario/ScenarioCardsManager.cpp \
-    ManagementLayer/Project/ProjectNavigatorManager.cpp \
-    ManagementLayer/Project/ProjectCardsManager.cpp \
     ManagementLayer/Locations/LocationsNavigatorManager.cpp \
     ManagementLayer/Locations/LocationsManager.cpp \
-    ManagementLayer/Project/ProjectManager.cpp \
     ManagementLayer/Characters/CharactersManager.cpp \
     ManagementLayer/Characters/CharactersNavigatorManager.cpp \
     ManagementLayer/Settings/SettingsManager.cpp \
@@ -74,7 +71,6 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp \
     UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.cpp \
     ManagementLayer/Scenario/ScenarioDataEditManager.cpp \
-    ManagementLayer/Project/ProjectDataEditManager.cpp \
     ManagementLayer/Locations/LocationsDataEditManager.cpp \
     ManagementLayer/Characters/CharactersDataEditManager.cpp \
     UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.cpp \
@@ -209,7 +205,9 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Settings/TemplateDialog.cpp \
     ManagementLayer/Settings/SettingsTemplatesManager.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp \
-    UserInterfaceLayer/StartUp/LoginDialog.cpp
+    UserInterfaceLayer/StartUp/LoginDialog.cpp \
+    ManagementLayer/Project/ProjectsManager.cpp \
+    ManagementLayer/Project/Project.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -217,11 +215,8 @@ HEADERS += \
     ManagementLayer/Scenario/ScenarioTextEditManager.h \
     ManagementLayer/Scenario/ScenarioNavigatorManager.h \
     ManagementLayer/Scenario/ScenarioCardsManager.h \
-    ManagementLayer/Project/ProjectNavigatorManager.h \
-    ManagementLayer/Project/ProjectCardsManager.h \
     ManagementLayer/Locations/LocationsNavigatorManager.h \
     ManagementLayer/Locations/LocationsManager.h \
-    ManagementLayer/Project/ProjectManager.h \
     ManagementLayer/Characters/CharactersManager.h \
     ManagementLayer/Characters/CharactersNavigatorManager.h \
     ManagementLayer/Settings/SettingsManager.h \
@@ -230,7 +225,6 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.h \
     UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.h \
     ManagementLayer/Scenario/ScenarioDataEditManager.h \
-    ManagementLayer/Project/ProjectDataEditManager.h \
     ManagementLayer/Locations/LocationsDataEditManager.h \
     ManagementLayer/Characters/CharactersDataEditManager.h \
     UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.h \
@@ -372,7 +366,9 @@ HEADERS += \
     ManagementLayer/Settings/SettingsTemplatesManager.h \
     BusinessLayer/ScenarioDocument/ScenarioTemplate.h \
     UserInterfaceLayer/StartUp/LoginDialog.h \
-    3rd_party/Helpers/PasswordStorage.h
+    3rd_party/Helpers/PasswordStorage.h \
+    ManagementLayer/Project/ProjectsManager.h \
+    ManagementLayer/Project/Project.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

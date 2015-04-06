@@ -48,6 +48,11 @@ namespace ManagementLayer
 		 */
 		void aboutUserUnlogged();
 
+		/**
+		 * @brief Загружен список проектов доступных из облака
+		 */
+		void aboutRemoteProjectsLoaded();
+
 	signals:
 		/**
 		 * @brief Пользователь хочет авторизоваться
@@ -75,6 +80,11 @@ namespace ManagementLayer
 		void helpRequested();
 
 		/**
+		 * @brief Обновить список проектов из облака
+		 */
+		void refreshRemoteProjectsRequested();
+
+		/**
 		 * @brief Выбран один из недавних файлов для открытия
 		 */
 		void openRecentProjectRequested(const QString& _filePath);
@@ -88,7 +98,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Выбран один из недавних файлов для открытия
 		 */
-		void aboutOpenRecentProjectRequested(const QString& _filePath);
+		void aboutOpenRecentProjectRequested(const QModelIndex& _projectIndex);
 
 		/**
 		 * @brief Загрузилась страница с информацией об обновлениях
@@ -98,7 +108,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Обновить список недавних файлов, удаляя несуществующие
 		 */
-		void aboutRefreshRecentFiles();
+		void aboutRefreshProjects();
 
 	private:
 		/**

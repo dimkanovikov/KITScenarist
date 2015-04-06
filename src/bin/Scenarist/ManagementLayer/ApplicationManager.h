@@ -17,6 +17,7 @@ namespace UserInterface {
 
 namespace ManagementLayer
 {
+	class ProjectsManager;
 	class StartUpManager;
 	class ScenarioManager;
 	class CharactersManager;

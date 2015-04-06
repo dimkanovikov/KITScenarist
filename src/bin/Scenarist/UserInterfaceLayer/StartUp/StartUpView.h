@@ -26,9 +26,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить недавно использованные файлы
 		 */
-		void setRecentFiles(
-				const QMap<QString, QString>& _recentFiles,
-				const QMap<QString, QString>& _recentFilesUsing);
+		void setRecentProjects(QAbstractItemModel* _recentProjectsModel);
 
 		/**
 		 * @brief Обновить информацию о доступности обновлений
@@ -39,6 +37,11 @@ namespace UserInterface
 		 * @brief Установить информацию о том, авторизован пользователь или нет
 		 */
 		void setUserLogged(bool isLogged, const QString& _userName = QString::null);
+
+		/**
+		 * @brief Установить список доступных проектов
+		 */
+		void setRemoteProjects(QAbstractItemModel* _remoteProjectsModel);
 
 	signals:
 		/**
@@ -67,9 +70,9 @@ namespace UserInterface
 		void helpClicked();
 
 		/**
-		 * @brief Выбран один из недавних файлов для открытия
+		 * @brief Выбран один из недавно используемых проектов для открытия
 		 */
-		void openRecentProjectClicked(const QString& _filePath);
+		void openRecentProjectClicked(const QModelIndex& _projectIndex);
 
 		/**
 		 * @brief Нажата кнопка обновления недавних файлов
@@ -84,9 +87,9 @@ namespace UserInterface
 
 	private slots:
 		/**
-		 * @brief Пользователь выбрал один из недавних файлов для открытия
+		 * @brief Пользователь сменил источник отображаемых проектов
 		 */
-		void aboutOpenRecentFileClicked();
+		void aboutFilesSourceChanged();
 
 	private:
 		/**

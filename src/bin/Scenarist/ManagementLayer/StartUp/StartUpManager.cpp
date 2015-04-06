@@ -1,5 +1,7 @@
 #include "StartUpManager.h"
 
+#include <ManagementLayer/Project/ProjectsManager.h>
+
 #include <UserInterfaceLayer/StartUp/StartUpView.h>
 #include <UserInterfaceLayer/StartUp/LoginDialog.h>
 
@@ -18,11 +20,12 @@
 #include <QRegularExpressionMatch>
 
 using ManagementLayer::StartUpManager;
+using ManagementLayer::ProjectsManager;
 using UserInterface::StartUpView;
 using UserInterface::LoginDialog;
 
 namespace {
-	const int MAX_RECENT_FILES_COUNT = 7;
+	const int MAX_RECENT_FILES_COUNT = 10;
 	const QString RECENT_FILES_LIST_SETTINGS_KEY = "application/recent-files/list";
 	const QString RECENT_FILES_USING_SETTINGS_KEY = "application/recent-files/using";
 }
@@ -97,7 +100,8 @@ void StartUpManager::addRecentFile(const QString& _filePath, const QString& _pro
 	//
 	// Обновим список файлов в представлении
 	//
-	m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
+	ProjectsManager::setRecentProjects(m_recentFiles, m_recentFilesUsing);
+	m_view->setRecentProjects(ProjectsManager::recentProjects());
 }
 
 void StartUpManager::aboutUserLogged(const QString& _userName)
@@ -127,6 +131,11 @@ void StartUpManager::aboutUserUnlogged()
 	m_view->setUserLogged(isLogged);
 }
 
+void StartUpManager::aboutRemoteProjectsLoaded()
+{
+	m_view->setRemoteProjects(ProjectsManager::remoteProjects());
+}
+
 void StartUpManager::aboutLoginClicked()
 {
 	//
@@ -138,38 +147,41 @@ void StartUpManager::aboutLoginClicked()
 	}
 }
 
-void StartUpManager::aboutOpenRecentProjectRequested(const QString& _filePath)
+void StartUpManager::aboutOpenRecentProjectRequested(const QModelIndex& _projectIndex)
 {
+	const QString projectPath = ProjectsManager::recentProjectPath(_projectIndex);
+
 	//
 	// Если выбранного файла не существует
 	//
-	if (!QFile::exists(_filePath)) {
+	if (!QFile::exists(projectPath)) {
 		//
 		// ... уведомим об этом пользователя
 		//
 		QMessageBox::information(
 					m_view,
 					tr("Can't open choosed file"),
-					tr("File <b>%1</b> isn't exist. File will be removed from recent list.").arg(_filePath),
+					tr("File <b>%1</b> isn't exist. File will be removed from recent list.").arg(projectPath),
 					QMessageBox::Ok
 					);
 
 		//
 		// ... удалим его из списка
 		//
-		m_recentFiles.remove(_filePath);
-		m_recentFilesUsing.remove(_filePath);
+		m_recentFiles.remove(projectPath);
+		m_recentFilesUsing.remove(projectPath);
 
 		//
 		// ... обновим список файлов в представлении
 		//
-		m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
+		ProjectsManager::setRecentProjects(m_recentFiles, m_recentFilesUsing);
+		m_view->setRecentProjects(ProjectsManager::recentProjects());
 	}
 	//
 	// Если выбранный файл существует, испускаем соответствующий сигнал
 	//
 	else {
-		emit openRecentProjectRequested(_filePath);
+		emit openRecentProjectRequested(projectPath);
 	}
 }
 
@@ -236,21 +248,32 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 	}
 }
 
-void StartUpManager::aboutRefreshRecentFiles()
+void StartUpManager::aboutRefreshProjects()
 {
 	//
-	// Удаляем все несуществующие файлы
+	// Локальные
 	//
-	QMutableMapIterator<QString, QString> checker(m_recentFiles);
-	while (checker.hasNext()) {
-		checker.next();
-		if (!QFile::exists(checker.key())) {
-			m_recentFilesUsing.remove(checker.key());
-			checker.remove();
+	{
+		//
+		// Удаляем все несуществующие файлы
+		//
+		QMutableMapIterator<QString, QString> checker(m_recentFiles);
+		while (checker.hasNext()) {
+			checker.next();
+			if (!QFile::exists(checker.key())) {
+				m_recentFilesUsing.remove(checker.key());
+				checker.remove();
+			}
 		}
+
+		ProjectsManager::setRecentProjects(m_recentFiles, m_recentFilesUsing);
+		m_view->setRecentProjects(ProjectsManager::recentProjects());
 	}
 
-	m_view->setRecentFiles(m_recentFiles, m_recentFilesUsing);
+	//
+	// C сервиса
+	//
+	emit refreshRemoteProjectsRequested();
 }
 
 void StartUpManager::initData()
@@ -269,7 +292,7 @@ void StartUpManager::initData()
 
 void StartUpManager::initView()
 {
-	aboutRefreshRecentFiles();
+	aboutRefreshProjects();
 }
 
 void StartUpManager::initConnections()
@@ -280,9 +303,9 @@ void StartUpManager::initConnections()
 	connect(m_view, SIGNAL(openProjectClicked()), this, SIGNAL(openProjectRequested()));
 	connect(m_view, SIGNAL(helpClicked()), this, SIGNAL(helpRequested()));
 
-	connect(m_view, SIGNAL(openRecentProjectClicked(QString)),
-			this, SLOT(aboutOpenRecentProjectRequested(QString)));
-	connect(m_view, SIGNAL(refreshRecentFiles()), this, SLOT(aboutRefreshRecentFiles()));
+	connect(m_view, SIGNAL(openRecentProjectClicked(QModelIndex)),
+			this, SLOT(aboutOpenRecentProjectRequested(QModelIndex)));
+	connect(m_view, SIGNAL(refreshRecentFiles()), this, SLOT(aboutRefreshProjects()));
 }
 
 void StartUpManager::checkNewVersion()

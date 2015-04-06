@@ -25,9 +25,7 @@ StartUpView::~StartUpView()
 	delete ui;
 }
 
-void StartUpView::setRecentFiles(
-		const QMap<QString, QString>& _recentFiles,
-		const QMap<QString, QString>& _recentFilesUsing)
+void StartUpView::setRecentProjects(QAbstractItemModel* _recentProjectsModel)
 {
 	//
 	// Если в списке была установлена модель, удалим её
@@ -40,30 +38,10 @@ void StartUpView::setRecentFiles(
 	}
 
 	//
-	// Создаём новую модель
+	// Установим новую модель
 	//
-	QStandardItemModel* newModel = new QStandardItemModel(ui->recentFiles);
-	QStringList usingDates = _recentFilesUsing.values();
-	qSort(usingDates.begin(), usingDates.end(), qGreater<QString>());
-	foreach (const QString& usingDate, usingDates) {
-		QString filePath = _recentFilesUsing.key(usingDate);
-		QStandardItem* item = new QStandardItem;
-
-		//
-		// Название проекта
-		//
-		item->setData(_recentFiles.value(filePath), Qt::DisplayRole);
-		//
-		// Путь к файлу
-		//
-		item->setData(filePath, Qt::WhatsThisRole);
-		newModel->appendRow(item);
-	}
-
-	//
-	// Устанавливаем модель
-	//
-	ui->recentFiles->setModel(newModel);
+	_recentProjectsModel->setParent(ui->recentFiles);
+	ui->recentFiles->setModel(_recentProjectsModel);
 }
 
 void StartUpView::setUpdateInfo(const QString& _updateInfo)
@@ -79,6 +57,30 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName)
 	ui->logoutIcon->setVisible(isLogged);
 	ui->logout->setVisible(isLogged);
 	ui->logout->setText(QString("<a href=\"#\" style=\"color:#2b78da;\">%1</a> %2").arg(tr("Logout")).arg(_userName));
+	ui->remoteProjects->setVisible(isLogged);
+
+	if (!isLogged && ui->remoteProjects->isChecked()) {
+		ui->localProjects->setChecked(true);
+	}
+}
+
+void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
+{
+	//
+	// Если в списке была установлена модель, удалим её
+	//
+	if (ui->remoteFiles->model() != 0) {
+		QAbstractItemModel* oldModel = ui->remoteFiles->model();
+		ui->remoteFiles->setModel(0);
+		delete oldModel;
+		oldModel = 0;
+	}
+
+	//
+	// Установим новую модель
+	//
+	_remoteProjectsModel->setParent(ui->remoteFiles);
+	ui->remoteFiles->setModel(_remoteProjectsModel);
 }
 
 bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
@@ -89,10 +91,14 @@ bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
 	// Когда мышка входит или покидает список недавних файлов, нужно перерисовать его,
 	// чтобы не осталось невыделенных/выделенных модулей
 	//
-	if (_watched == ui->recentFiles
+	if ((_watched == ui->recentFiles || _watched == ui->remoteFiles)
 		&& (_event->type () == QEvent::Enter || _event->type () == QEvent::Leave))
 	{
-		ui->recentFiles->repaint ();
+		if (_watched == ui->recentFiles) {
+			ui->recentFiles->repaint();
+		} else {
+			ui->remoteFiles->repaint();
+		}
 		result = true;
 	}
 	//
@@ -106,21 +112,13 @@ bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
 	return result;
 }
 
-void StartUpView::aboutOpenRecentFileClicked()
+void StartUpView::aboutFilesSourceChanged()
 {
-	QModelIndex currentIndex = ui->recentFiles->currentIndex();
-	QAbstractItemModel* recentFiles = ui->recentFiles->model();
-
-	//
-	// Получим путь к файлу для загрузки
-	//
-	QString clickedFilePath =
-			recentFiles->data(currentIndex, Qt::WhatsThisRole).toString();
-
-	//
-	// Уведомляем о том, что файл выбран
-	//
-	emit openRecentProjectClicked(clickedFilePath);
+	if (ui->localProjects->isChecked()) {
+		ui->filesSouces->setCurrentWidget(ui->recentFilesPage);
+	} else {
+		ui->filesSouces->setCurrentWidget(ui->remoteFilesPage);
+	}
 }
 
 void StartUpView::initView()
@@ -132,9 +130,16 @@ void StartUpView::initView()
 	ui->logoutIcon->hide();
 	ui->logout->hide();
 
+	ui->remoteProjects->hide();
+
+	ui->filesSouces->setCurrentWidget(ui->recentFilesPage);
+
 	ui->recentFiles->setItemDelegate(new RecentFilesDelegate(ui->recentFiles));
 	ui->recentFiles->setMouseTracking(true);
 	ui->recentFiles->installEventFilter(this);
+	ui->remoteFiles->setItemDelegate(new RecentFilesDelegate(ui->remoteFiles));
+	ui->remoteFiles->setMouseTracking(true);
+	ui->remoteFiles->installEventFilter(this);
 }
 
 void StartUpView::initConnections()
@@ -145,7 +150,8 @@ void StartUpView::initConnections()
 	connect(ui->openProject, SIGNAL(linkActivated(QString)), this, SIGNAL(openProjectClicked()));
 	connect(ui->help, SIGNAL(linkActivated(QString)), this, SIGNAL(helpClicked()));
 
-	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SLOT(aboutOpenRecentFileClicked()));
+	connect(ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
+	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRecentProjectClicked(QModelIndex)));
 	connect(ui->refreshRecentFiles, SIGNAL(clicked()), this, SIGNAL(refreshRecentFiles()));
 }
 

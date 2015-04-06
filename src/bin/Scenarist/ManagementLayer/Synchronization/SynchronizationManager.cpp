@@ -1,5 +1,7 @@
 #include "SynchronizationManager.h"
 
+#include <ManagementLayer/Project/ProjectsManager.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
@@ -12,6 +14,7 @@
 #include <QXmlStreamReader>
 
 using ManagementLayer::SynchronizationManager;
+using ManagementLayer::ProjectsManager;
 using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
 
@@ -22,6 +25,7 @@ namespace {
 	/** @{ */
 	const QUrl URL_LOGIN = QUrl("http://kitscenarist.ru/api/account/login/");
 	const QUrl URL_LOGOUT = QUrl("http://kitscenarist.ru/api/account/logout/");
+	const QUrl URL_PROJECTS = QUrl("http://kitscenarist.ru/api/projects/");
 	/** @} */
 
 	/**
@@ -39,7 +43,7 @@ SynchronizationManager::SynchronizationManager(QObject* _parent, QWidget* _paren
 	QObject(_parent),
 	m_view(_parentView)
 {
-	//	initConnections();
+	initConnections();
 }
 
 void SynchronizationManager::login()
@@ -122,11 +126,6 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	}
 
 	//
-	// Закрываем уведомление для пользователя
-	//
-	progress.finish();
-
-	//
 	// Если авторизация прошла
 	//
 	if (success) {
@@ -156,6 +155,11 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	} else {
 		emit loginNotAccepted(_userName, _password, _rememberUser, errorMessage);
 	}
+
+	//
+	// Закрываем уведомление для пользователя
+	//
+	progress.finish();
 }
 
 void SynchronizationManager::aboutLogout()
@@ -198,6 +202,73 @@ void SynchronizationManager::aboutLogout()
 
 		emit logoutAccepted();
 	}
+}
+
+void SynchronizationManager::aboutLoadProjects()
+{
+	//
+	// Информация для пользователя
+	//
+	ProgressWidget progress(m_view);
+	progress.showProgress(tr("Loading"), tr("Loading projects list from remote server."));
+
+	//
+	// Получаем список проектов
+	//
+	WebLoader loader;
+	loader.setRequestMethod(WebLoader::Post);
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	QByteArray response = loader.loadSync(URL_PROJECTS);
+
+	//
+	// Считываем результат
+	//
+	QXmlStreamReader responseReader(response);
+	//
+	// Успешно ли завершилось получение
+	//
+	bool success = false;
+	QString errorMessage;
+	while (!responseReader.atEnd()) {
+		responseReader.readNext();
+		if (responseReader.name().toString() == "status") {
+			success = responseReader.attributes().value("result").toString() == "true";
+
+			//
+			// Считываем проекты
+			//
+			if (success) {
+				ProjectsManager::setRemoteProjects(response);
+				break;
+			}
+			//
+			// Если получить список проектов не удалось, считываем сообщение об ошибке
+			//
+			else {
+				errorMessage = responseReader.attributes().value("error").toString();
+				break;
+			}
+		}
+	}
+
+	//
+	// Если проекты получены
+	//
+	if (success) {
+		emit remoteProjectsLoaded();
+	} else {
+		emit remoteProjectsNotLoaded(errorMessage);
+	}
+
+	//
+	// Закрываем уведомление для пользователя
+	//
+	progress.finish();
+}
+
+void SynchronizationManager::initConnections()
+{
+	connect(this, SIGNAL(loginAccepted(QString)), this, SLOT(aboutLoadProjects()));
 }
 
 
