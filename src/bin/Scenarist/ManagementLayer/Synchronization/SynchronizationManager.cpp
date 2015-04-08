@@ -51,30 +51,26 @@ void SynchronizationManager::login()
 	//
 	// Авторизуемся, если параметры сохранены
 	//
-	bool authParamsStored =
-			StorageFacade::settingsStorage()->value(
-				"application/save-user-name-and-password",
-				SettingsStorage::ApplicationSettings
-				).toInt();
-	if (authParamsStored) {
-		const QString login =
-				PasswordStorage::load(
-					StorageFacade::settingsStorage()->value(
-						"application/user-name",
-						SettingsStorage::ApplicationSettings)
-					);
-		const QString password =
-				PasswordStorage::load(
-					StorageFacade::settingsStorage()->value(
-						"application/password",
-						SettingsStorage::ApplicationSettings),
-					login
-					);
-		aboutLogin(login, password, authParamsStored);
+	const QString login =
+			PasswordStorage::load(
+				StorageFacade::settingsStorage()->value(
+					"application/user-name",
+					SettingsStorage::ApplicationSettings)
+				);
+	const QString password =
+			PasswordStorage::load(
+				StorageFacade::settingsStorage()->value(
+					"application/password",
+					SettingsStorage::ApplicationSettings),
+				login
+				);
+
+	if (!login.isEmpty() && !password.isEmpty()) {
+		aboutLogin(login, password);
 	}
 }
 
-void SynchronizationManager::aboutLogin(const QString& _userName, const QString& _password, bool _rememberUser)
+void SynchronizationManager::aboutLogin(const QString& _userName, const QString& _password)
 {
 	//
 	// Информация для пользователя
@@ -137,23 +133,17 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 		// ... и о пользователе
 		//
 		StorageFacade::settingsStorage()->setValue(
-			"application/save-user-name-and-password",
-			_rememberUser ? "1" : "0",
+			"application/user-name",
+			PasswordStorage::save(_userName),
 			SettingsStorage::ApplicationSettings);
-		if (_rememberUser) {
-			StorageFacade::settingsStorage()->setValue(
-				"application/user-name",
-				PasswordStorage::save(_userName),
-				SettingsStorage::ApplicationSettings);
-			StorageFacade::settingsStorage()->setValue(
-				"application/password",
-				PasswordStorage::save(_password, _userName),
-				SettingsStorage::ApplicationSettings);
-		}
+		StorageFacade::settingsStorage()->setValue(
+			"application/password",
+			PasswordStorage::save(_password, _userName),
+			SettingsStorage::ApplicationSettings);
 
 		emit loginAccepted(_userName);
 	} else {
-		emit loginNotAccepted(_userName, _password, _rememberUser, errorMessage);
+		emit loginNotAccepted(_userName, _password, errorMessage);
 	}
 
 	//
@@ -182,10 +172,6 @@ void SynchronizationManager::aboutLogout()
 		//
 		// Удаляем сохранённые значения, если они были
 		//
-		StorageFacade::settingsStorage()->setValue(
-			"application/save-user-name-and-password",
-			QString::null,
-			SettingsStorage::ApplicationSettings);
 		StorageFacade::settingsStorage()->setValue(
 			"application/user-name",
 			QString::null,

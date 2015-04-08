@@ -11,6 +11,7 @@
 #include <QFile>
 #include <QFontInfo>
 #include <QFontMetrics>
+#include <QStandardItem>
 #include <QStandardItemModel>
 #include <QStandardPaths>
 #include <QStringListModel>
@@ -940,6 +941,15 @@ ScenarioTemplateFacade::ScenarioTemplateFacade()
 		QList<QStandardItem*> row;
 		row << new QStandardItem(templateObj.name());
 		row << new QStandardItem(templateObj.description());
+
+		//
+		// Отключаем возможность редактирования стандартного шаблона
+		//
+		bool isEditable = true;
+		if (templateObj.name() == m_defaultTemplate.name()) {
+			isEditable = false;
+		}
+		row.first()->setData(isEditable, Qt::UserRole);
 
 		rootItem->appendRow(row);
 	}

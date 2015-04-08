@@ -128,7 +128,7 @@ SettingsStorage::SettingsStorage()
 	//
 	m_defaultValues.insert("application/uuid", QUuid::createUuid().toString());
 	m_defaultValues.insert("application/use-dark-theme", "0");
-	m_defaultValues.insert("application/autosave", "1");
+	m_defaultValues.insert("application/autosave", "0");
 	m_defaultValues.insert("application/autosave-interval", "5");
 	m_defaultValues.insert("application/save-backups", "0");
 	m_defaultValues.insert("application/save-backups-folder",

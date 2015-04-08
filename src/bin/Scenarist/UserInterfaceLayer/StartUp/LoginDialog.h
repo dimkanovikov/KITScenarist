@@ -38,14 +38,6 @@ namespace UserInterface
 		/** @} */
 
 		/**
-		 * @brief Установлен ли флажок "Запомнить меня"
-		 */
-		/** @{ */
-		bool rememberUser() const;
-		void setRememberUser(bool _rememberUser);
-		/** @} */
-
-		/**
 		 * @brief Установить сообщение об ошибке
 		 */
 		void setError(const QString& _error);

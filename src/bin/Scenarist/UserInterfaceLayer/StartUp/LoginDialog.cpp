@@ -39,16 +39,6 @@ void LoginDialog::setPassword(const QString& _password)
 	ui->password->setText(_password);
 }
 
-bool LoginDialog::rememberUser() const
-{
-	return ui->rememberMe->isChecked();
-}
-
-void LoginDialog::setRememberUser(bool _rememberUser)
-{
-	ui->rememberMe->setChecked(_rememberUser);
-}
-
 void LoginDialog::setError(const QString& _error)
 {
 	ui->error->setText(_error);

@@ -41,7 +41,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Попробовать повторно авторизоваться, после неудачной попытки
 		 */
-		void aboutRetryLogin(const QString& _userName, const QString& _password, bool _rememberUser, const QString& _error);
+		void aboutRetryLogin(const QString& _userName, const QString& _password, const QString& _error);
 
 		/**
 		 * @brief Пользователь закрыл авторизацию
@@ -57,7 +57,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Пользователь хочет авторизоваться
 		 */
-		void loginRequested(const QString& _userName, const QString& _password, bool _rememberUser);
+		void loginRequested(const QString& _userName, const QString& _password);
 
 		/**
 		 * @brief Пользователь хочет выйти

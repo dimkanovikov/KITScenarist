@@ -25,7 +25,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Авторизоваться
 		 */
-		void aboutLogin(const QString& _userName, const QString& _password, bool _rememberUser);
+		void aboutLogin(const QString& _userName, const QString& _password);
 
 		/**
 		 * @brief Закрыть авторизацию
@@ -46,7 +46,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Авторизация не пройдена
 		 */
-		void loginNotAccepted(const QString& _userName, const QString& _password, bool _rememberUser, const QString& _error);
+		void loginNotAccepted(const QString& _userName, const QString& _password, const QString& _error);
 
 		/**
 		 * @brief Авторизация закрыта

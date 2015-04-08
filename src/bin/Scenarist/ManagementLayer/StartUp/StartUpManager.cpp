@@ -110,7 +110,7 @@ void StartUpManager::aboutUserLogged(const QString& _userName)
 	m_view->setUserLogged(isLogged, _userName);
 }
 
-void StartUpManager::aboutRetryLogin(const QString& _userName, const QString& _password, bool _rememberUser, const QString& _error)
+void StartUpManager::aboutRetryLogin(const QString& _userName, const QString& _password, const QString& _error)
 {
 	//
 	// Показать диалог авторизации
@@ -118,10 +118,9 @@ void StartUpManager::aboutRetryLogin(const QString& _userName, const QString& _p
 	LoginDialog loginDialog(m_view);
 	loginDialog.setUserName(_userName);
 	loginDialog.setPassword(_password);
-	loginDialog.setRememberUser(_rememberUser);
 	loginDialog.setError(_error);
 	if (loginDialog.exec() == QDialog::Accepted) {
-		emit loginRequested(loginDialog.userName(), loginDialog.password(), loginDialog.rememberUser());
+		emit loginRequested(loginDialog.userName(), loginDialog.password());
 	}
 }
 
@@ -143,7 +142,7 @@ void StartUpManager::aboutLoginClicked()
 	//
 	LoginDialog loginDialog(m_view);
 	if (loginDialog.exec() == QDialog::Accepted) {
-		emit loginRequested(loginDialog.userName(), loginDialog.password(), loginDialog.rememberUser());
+		emit loginRequested(loginDialog.userName(), loginDialog.password());
 	}
 }
 

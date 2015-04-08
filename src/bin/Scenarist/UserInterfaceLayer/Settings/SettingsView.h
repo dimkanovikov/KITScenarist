@@ -200,6 +200,7 @@ namespace UserInterface
 		void aboutEditTemplatePressed();
 		void aboutRemoveTemplatePressed();
 		void aboutSaveTemplatePressed();
+		void aboutApplyTemplatePressed();
 		/** @} */
 
 	private:

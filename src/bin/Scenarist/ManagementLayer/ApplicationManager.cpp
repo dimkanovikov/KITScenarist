@@ -700,7 +700,7 @@ void ApplicationManager::initConnections()
 	connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
 	connect(m_tabs, SIGNAL(currentChanged(int)), m_tabsWidgets, SLOT(setCurrentIndex(int)));
 
-	connect(m_startUpManager, SIGNAL(loginRequested(QString,QString,bool)), m_synchronizationManager, SLOT(aboutLogin(QString,QString,bool)));
+	connect(m_startUpManager, SIGNAL(loginRequested(QString,QString)), m_synchronizationManager, SLOT(aboutLogin(QString,QString)));
 	connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
@@ -740,8 +740,8 @@ void ApplicationManager::initConnections()
 
 	connect(m_synchronizationManager, SIGNAL(loginAccepted(QString)),
 			m_startUpManager, SLOT(aboutUserLogged(QString)));
-	connect(m_synchronizationManager, SIGNAL(loginNotAccepted(QString,QString,bool,QString)),
-			m_startUpManager, SLOT(aboutRetryLogin(QString,QString,bool,QString)));
+	connect(m_synchronizationManager, SIGNAL(loginNotAccepted(QString,QString,QString)),
+			m_startUpManager, SLOT(aboutRetryLogin(QString,QString,QString)));
 	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
 			m_startUpManager, SLOT(aboutUserUnlogged()));
 	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded()),

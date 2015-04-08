@@ -428,7 +428,11 @@ void SettingsView::aboutEditTemplatePressed()
 {
 	if (!ui->templates->selectionModel()->selectedIndexes().isEmpty()) {
 		QModelIndex selected = ui->templates->selectionModel()->selectedIndexes().first();
-		if (selected.isValid()) {
+		//
+		// Если индекс корректен и его можно изменять
+		//
+		if (selected.isValid()
+			&& selected.data(Qt::UserRole).toBool()) {
 			emit templateLibraryEditPressed(selected);
 		}
 	}
@@ -450,6 +454,17 @@ void SettingsView::aboutSaveTemplatePressed()
 		QModelIndex selected = ui->templates->selectionModel()->selectedIndexes().first();
 		if (selected.isValid()) {
 			emit templateLibrarySavePressed(selected);
+		}
+	}
+}
+
+void SettingsView::aboutApplyTemplatePressed()
+{
+	if (!ui->templates->selectionModel()->selectedIndexes().isEmpty()) {
+		QModelIndex selected = ui->templates->selectionModel()->selectedIndexes().first();
+		if (selected.isValid()) {
+			const QString templateName = selected.data().toString();
+			ui->currentScenarioTemplate->setCurrentText(templateName);
 		}
 	}
 }
@@ -584,10 +599,11 @@ void SettingsView::initConnections()
 	//
 	connect(ui->newTemplate, SIGNAL(clicked()), this, SIGNAL(templateLibraryNewPressed()));
 	connect(ui->editTemplate, SIGNAL(clicked()), this, SLOT(aboutEditTemplatePressed()));
-	connect(ui->templates, SIGNAL(doubleClicked(QModelIndex)), this, SIGNAL(templateLibraryEditPressed(QModelIndex)));
+	connect(ui->templates, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(aboutEditTemplatePressed()));
 	connect(ui->removeTemplate, SIGNAL(clicked()), this, SLOT(aboutRemoveTemplatePressed()));
 	connect(ui->loadTemplate, SIGNAL(clicked()), this, SIGNAL(templateLibraryLoadPressed()));
 	connect(ui->saveTemplate, SIGNAL(clicked()), this, SLOT(aboutSaveTemplatePressed()));
+	connect(ui->applyTemplate, SIGNAL(clicked()), this, SLOT(aboutApplyTemplatePressed()));
 }
 
 void SettingsView::initStyleSheet()
@@ -601,13 +617,15 @@ void SettingsView::initStyleSheet()
 				 << ui->topRightEmptyLabel_2
 				 << ui->topRightEmptyLabel_3
 				 << ui->topRightEmptyLabel_4
-				 << ui->topRightEmptyLabel_5;
+				 << ui->topRightEmptyLabel_5
+				 << ui->topRightEmptyLabel_7;
 
 	foreach (QWidget* topEmpty, topEmptyList) {
 		topEmpty->setProperty("inTopPanel", true);
 		topEmpty->setProperty("topPanelTopBordered", true);
 		topEmpty->setProperty("topPanelRightBordered", true);
 	}
+	ui->topRightEmptyLabel_7->setProperty("topPanelRightBordered", false);
 
 	//
 	// Основные контейнеры с содержимым
@@ -632,7 +650,8 @@ void SettingsView::initStyleSheet()
 				   << ui->editTemplate
 				   << ui->removeTemplate
 				   << ui->loadTemplate
-				   << ui->saveTemplate;
+				   << ui->saveTemplate
+				   << ui->applyTemplate;
 	foreach (QWidget* topButton, topButtonsList) {
 		topButton->setProperty("inTopPanel", true);
 	}
