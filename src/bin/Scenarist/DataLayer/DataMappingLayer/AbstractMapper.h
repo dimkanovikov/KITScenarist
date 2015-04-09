@@ -4,10 +4,6 @@
 #include <Domain/DomainObject.h>
 
 #include <QMap>
-
-//
-// Используется включение, вместо предварительного объявления, чтобы использовать в наследниках
-//
 #include <QSqlRecord>
 
 class QSqlQuery;

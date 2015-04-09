@@ -79,7 +79,7 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 			//
 			// ... создаём новую версию сценария
 			//
-			scenario = new Scenario(scenario->id().next(), _name, _synopsis, _text, currentDateTime, currentDateTime, _comment);
+			scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime, _comment);
 			scenario->setIsDraft(_isDraft);
 
 			//

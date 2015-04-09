@@ -2,7 +2,10 @@
 
 #include <DataLayer/Database/Database.h>
 
+#include <3rd_party/Helpers/QVariantMapWriter.h>
+
 #include <QApplication>
+#include <QDateTime>
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -192,9 +195,37 @@ DomainObject * AbstractMapper::load(const QSqlRecord& _record )
 
 void AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
 {
+	//
+	// Если запрос завершился с ошибкой, выводим отладочную информацию
+	//
 	if (!_sqlQuery.exec()) {
 		qDebug() << _sqlQuery.lastError();
-		qDebug() << _sqlQuery.boundValues();
 		qDebug() << _sqlQuery.lastQuery();
+		qDebug() << _sqlQuery.boundValues();
+	}
+	//
+	// Если всё завершилось успешно сохраняем запрос и данные в таблицу истории запросов
+	//
+	else {
+		QSqlQuery q_history(_sqlQuery);
+		q_history.prepare("INSERT INTO _database_history (query, query_values, datetime) VALUES(?, ?, ?);");
+		//
+		// ... запрос
+		//
+		q_history.addBindValue(_sqlQuery.lastQuery());
+		//
+		// ... данные
+		//
+		const QString valueString = QVariantMapWriter::mapToDataString(_sqlQuery.boundValues());
+		q_history.addBindValue(valueString);
+		//
+		// ... время выполнения
+		//
+		q_history.addBindValue(QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss"));
+
+		//
+		// Сохраняем данные
+		//
+		q_history.exec();
 	}
 }

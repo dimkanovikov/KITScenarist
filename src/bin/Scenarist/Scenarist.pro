@@ -368,7 +368,8 @@ HEADERS += \
     UserInterfaceLayer/StartUp/LoginDialog.h \
     3rd_party/Helpers/PasswordStorage.h \
     ManagementLayer/Project/ProjectsManager.h \
-    ManagementLayer/Project/Project.h
+    ManagementLayer/Project/Project.h \
+    3rd_party/Helpers/QVariantMapWriter.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

@@ -148,6 +148,7 @@ namespace DatabaseLayer
 		 *
 		 * - добавляются поля version_start_datetime и version_end_datetime для сценария
 		 * - для текущего сценария им присваивается дата и время его первого открытия в новой версии
+		 * - создаётся таблица для хранения всех операций над БД
 		 */
 		static void updateDatabaseTo_0_5_0(QSqlDatabase& _database);
 

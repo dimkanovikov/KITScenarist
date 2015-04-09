@@ -172,6 +172,16 @@ void Database::createTables(QSqlDatabase& _database)
 	QSqlQuery q_creator(_database);
 	_database.transaction();
 
+	// Таблица с историей запросов
+	q_creator.exec("CREATE TABLE _database_history "
+				   "( "
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "query TEXT NOT NULL, "
+				   "query_values TEXT NOT NULL, "
+				   "datetime TEXT NOT NULL "
+				   "); "
+				   );
+
 	// Таблица системных переменных
 	q_creator.exec("CREATE TABLE system_variables "
 				   "( "
@@ -737,6 +747,18 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 					.arg(defaultDateTime)
 					);
 		q_updater.exec("ALTER TABLE scenario ADD COLUMN version_comment TEXT DEFAULT(NULL)");
+
+		//
+		// Создаём таблицу для хранения всех запросов
+		//
+		q_updater.exec("CREATE TABLE _database_history "
+					   "( "
+					   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   "query TEXT NOT NULL, "
+					   "query_values TEXT NOT NULL, "
+					   "datetime TEXT NOT NULL "
+					   "); "
+					   );
 	}
 
 	_database.commit();

@@ -241,6 +241,12 @@ void SynchronizationManager::aboutLoadProjects()
 	// Если проекты получены
 	//
 	if (success) {
+		//
+		// Сохраняем список проектов для работы в автономном режиме
+		//
+		StorageFacade::settingsStorage()->setValue(
+			"application/remote-projects", response.toBase64(), SettingsStorage::ApplicationSettings);
+
 		emit remoteProjectsLoaded();
 	} else {
 		emit remoteProjectsNotLoaded(errorMessage);
