@@ -3,7 +3,7 @@
 
 #include "StorageFacade.h"
 
-class QString;
+#include <QString>
 
 namespace Domain {
 	class Scenario;
@@ -33,7 +33,7 @@ namespace DataStorageLayer
 		 * @param Текст сценария в формате xml
 		 */
 		Scenario* storeScenario(const QString& _name, const QString& _synopsis,
-			const QString& _text, bool _isDraft = false);
+			const QString& _text, bool _isDraft = false, const QString& _comment = QString::null);
 
 		/**
 		 * @brief Очистить хранилище

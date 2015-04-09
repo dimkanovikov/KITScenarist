@@ -16,7 +16,8 @@ namespace Domain
 	{
 	public:
 		Scenario(const Identifier& _id, const QString& _name, const QString& _synopsis,
-			const QString& _text, const QDateTime& _versionStartDatetime, const QDateTime& _versionEndDatetime);
+			const QString& _text, const QDateTime& _versionStartDatetime,
+			const QDateTime& _versionEndDatetime, const QString& _versionComment);
 
 		/**
 		 * @brief Название сценария
@@ -100,6 +101,14 @@ namespace Domain
 		void setVersionEndDatetime(const QDateTime& _datetime);
 		/** @} */
 
+		/**
+		 * @brief Комментарий к фиксируемой версии сценария
+		 */
+		/** @{ */
+		QString versionComment() const;
+		void setVersionCOmment(const QString& _comment);
+		/** @} */
+
 	private:
 		/**
 		 * @brief Название
@@ -153,6 +162,11 @@ namespace Domain
 		QDateTime m_versionStartDatetime;
 		QDateTime m_versionEndDatetime;
 		/** @} */
+
+		/**
+		 * @brief Комментарий к фиксируемой версии сценария
+		 */
+		QString m_versionComment;
 	};
 
 	// ****

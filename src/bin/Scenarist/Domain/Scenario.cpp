@@ -4,14 +4,16 @@ using namespace Domain;
 
 
 Scenario::Scenario(const Identifier& _id, const QString& _name,
-	const QString& _synopsis, const QString& _text, const QDateTime& _versionStartDatetime, const QDateTime& _versionEndDatetime) :
+	const QString& _synopsis, const QString& _text, const QDateTime& _versionStartDatetime,
+	const QDateTime& _versionEndDatetime, const QString& _versionComment) :
 	DomainObject(_id),
 	m_name(_name),
 	m_synopsis(_synopsis),
 	m_text(_text),
 	m_isDraft(false),
 	m_versionStartDatetime(_versionStartDatetime),
-	m_versionEndDatetime(_versionEndDatetime)
+	m_versionEndDatetime(_versionEndDatetime),
+	m_versionComment(_versionComment)
 {
 }
 
@@ -144,6 +146,18 @@ void Scenario::setVersionEndDatetime(const QDateTime& _datetime)
 {
 	if (m_versionEndDatetime != _datetime) {
 		m_versionEndDatetime = _datetime;
+	}
+}
+
+QString Scenario::versionComment() const
+{
+	return m_versionComment;
+}
+
+void Scenario::setVersionCOmment(const QString& _comment)
+{
+	if (m_versionComment != _comment) {
+		m_versionComment = _comment;
 	}
 }
 

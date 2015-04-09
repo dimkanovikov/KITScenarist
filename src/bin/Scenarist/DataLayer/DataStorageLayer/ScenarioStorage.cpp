@@ -34,7 +34,7 @@ Scenario* ScenarioStorage::current(bool _isDraft)
 }
 
 Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _synopsis,
-	const QString& _text, bool _isDraft)
+	const QString& _text, bool _isDraft, const QString& _comment)
 {
 	Scenario* scenario = current(_isDraft);
 	const QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
@@ -46,7 +46,7 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 		//
 		// ... создаём сценарий
 		//
-		scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime);
+		scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime, _comment);
 		scenario->setIsDraft(_isDraft);
 
 		//
@@ -66,15 +66,17 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 	else {
 
 		//
+		// Если сценарий сохраняется с новым комментарием, или
 		// Если с момента открытия сессии сценария прошло более, чем MAX_HOURS_FOR_SESSION,
 		// тогда создаём новую версию сценария
 		//
 		const int MAX_HOURS_FOR_SESSION = 3;
-		if (scenario->versionStartDatetime().addSecs(MAX_HOURS_FOR_SESSION * 60 * 60) < currentDateTime) {
+		if (scenario->versionComment() != _comment
+			|| scenario->versionStartDatetime().addSecs(MAX_HOURS_FOR_SESSION * 60 * 60) < currentDateTime) {
 			//
 			// ... создаём новую версию сценария
 			//
-			scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime);
+			scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime, _comment);
 			scenario->setIsDraft(_isDraft);
 
 			//

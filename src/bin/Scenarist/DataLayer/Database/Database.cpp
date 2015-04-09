@@ -110,15 +110,15 @@ void Database::open(QSqlDatabase& _database, const QString& _connectionName, con
 	_database.setDatabaseName(_databaseName);
 	_database.open();
 
-//	Database::States states = checkState(_database);
+	Database::States states = checkState(_database);
 
-//	if (!states.testFlag(SchemeFlag))
-//		createTables(_database);
-//	if (!states.testFlag(IndexesFlag))
-//		createIndexes(_database);
-//	if (!states.testFlag(EnumsFlag))
-//		createEnums(_database);
-//	if (states.testFlag(OldVersionFlag))
+	if (!states.testFlag(SchemeFlag))
+		createTables(_database);
+	if (!states.testFlag(IndexesFlag))
+		createIndexes(_database);
+	if (!states.testFlag(EnumsFlag))
+		createEnums(_database);
+	if (states.testFlag(OldVersionFlag))
 		updateDatabase(_database);
 }
 
@@ -265,7 +265,8 @@ void Database::createTables(QSqlDatabase& _database)
 				   "text TEXT NOT NULL, "
 				   "is_draft INTEGER NOT NULL DEFAULT(0), "
 				   "version_start_datetime TEXT NOT NULL, "
-				   "version_end_datetime TEXT NOT NULL "
+				   "version_end_datetime TEXT NOT NULL, "
+				   "version_comment TEXT DEFAULT(NULL) "
 				   ")"
 				   );
 
@@ -735,6 +736,7 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 			QString("ALTER TABLE scenario ADD COLUMN version_end_datetime TEXT NOT NULL DEFAULT('%1')")
 					.arg(defaultDateTime)
 					);
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN version_comment TEXT DEFAULT(NULL)");
 	}
 
 	_database.commit();

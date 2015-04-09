@@ -7,7 +7,8 @@ using namespace DataMappingLayer;
 
 namespace {
 	const QString COLUMNS = " id, name, additional_info, genre, author, contacts, year, synopsis, "
-							"text, is_draft, version_start_datetime, version_end_datetime ";
+							"text, is_draft, version_start_datetime, version_end_datetime, "
+							"version_comment ";
 	const QString TABLE_NAME = " scenario ";
 }
 
@@ -58,7 +59,7 @@ QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (" + COLUMNS + ") "
-					" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+					" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
 					);
 
 	Scenario* scenario = dynamic_cast<Scenario*>(_subject );
@@ -75,6 +76,7 @@ QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 	_insertValues.append(scenario->isDraft() ? "1" : "0");
 	_insertValues.append(scenario->versionStartDatetime().toString("yyyy-MM-dd hh:mm:ss"));
 	_insertValues.append(scenario->versionEndDatetime().toString("yyyy-MM-dd hh:mm:ss"));
+	_insertValues.append(scenario->versionComment());
 
 	return insertStatement;
 }
@@ -93,7 +95,8 @@ QString ScenarioMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 					" text = ?, "
 					" is_draft = ?, "
 					" version_start_datetime = ?, "
-					" version_end_datetime = ? "
+					" version_end_datetime = ?, "
+					" version_comment = ? "
 					" WHERE id = ? "
 					);
 
@@ -110,6 +113,7 @@ QString ScenarioMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 	_updateValues.append(scenario->isDraft() ? "1" : "0");
 	_updateValues.append(scenario->versionStartDatetime().toString("yyyy-MM-dd hh:mm:ss"));
 	_updateValues.append(scenario->versionEndDatetime().toString("yyyy-MM-dd hh:mm:ss"));
+	_updateValues.append(scenario->versionComment());
 	_updateValues.append(scenario->id().value());
 
 	return updateStatement;
@@ -138,8 +142,9 @@ DomainObject* ScenarioMapper::doLoad(const Identifier& _id, const QSqlRecord& _r
 	bool isDraft = _record.value("is_draft").toInt();
 	QDateTime versionStartDate = _record.value("version_start_datetime").toDateTime();
 	QDateTime versionEndDate = _record.value("version_end_datetime").toDateTime();
+	QString versionComment = _record.value("version_comment").toString();
 
-	Scenario* scenario = new Scenario(_id, name, synopsis, text, versionStartDate, versionEndDate);
+	Scenario* scenario = new Scenario(_id, name, synopsis, text, versionStartDate, versionEndDate, versionComment);
 	scenario->setAdditionalInfo(additionalInfo);
 	scenario->setGenre(genre);
 	scenario->setAuthor(author);
