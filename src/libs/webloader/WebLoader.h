@@ -80,6 +80,7 @@ public:
 
 	QUrl url() const;
 	QString lastError() const;
+	QString lastErrorDetails() const;
 
 signals:
 	/*!
@@ -138,6 +139,8 @@ private slots:
 	  */
 	void downloadError( QNetworkReply::NetworkError networkError );
 
+	void downloadSslErrors(const QList<QSslError>& _errors);
+
 
 //*****************************************************************************
 // Методы доступа к данным класса, а так же вспомогательные
@@ -159,6 +162,7 @@ private:
 	void setDownloadedData( QByteArray data );
 
 	void setLastError( QString errorText );
+	void setLastErrorDetails(const QString& _details);
 
 // Данные класса
 private:
@@ -169,6 +173,7 @@ private:
 	bool m_isNeedRedirect;
 	QByteArray m_downloadedData;
 	QString m_lastError;
+	QString m_lastErrorDetails;
 };
 
 #endif // WEBLOADER_H

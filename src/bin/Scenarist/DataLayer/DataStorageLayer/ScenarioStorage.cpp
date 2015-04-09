@@ -71,12 +71,15 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 		// тогда создаём новую версию сценария
 		//
 		const int MAX_HOURS_FOR_SESSION = 3;
+		QDateTime nextVersionStartDatetime =
+				scenario->versionStartDatetime().addSecs(MAX_HOURS_FOR_SESSION * 60 * 60);
+		nextVersionStartDatetime.setUtcOffset(0);
 		if (scenario->versionComment() != _comment
-			|| scenario->versionStartDatetime().addSecs(MAX_HOURS_FOR_SESSION * 60 * 60) < currentDateTime) {
+			|| nextVersionStartDatetime < currentDateTime) {
 			//
 			// ... создаём новую версию сценария
 			//
-			scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime, _comment);
+			scenario = new Scenario(scenario->id().next(), _name, _synopsis, _text, currentDateTime, currentDateTime, _comment);
 			scenario->setIsDraft(_isDraft);
 
 			//

@@ -22,6 +22,13 @@ Project::Role Project::roleFromString(const QString& _role)
 	return _role == "owner" ? Owner : (_role == "redactor" ? Redactor : Commentator);
 }
 
+Project::Project() :
+	m_type(Invalid),
+	m_id(0),
+	m_role(Owner)
+{
+}
+
 Project::Project(Type _type, const QString& _name, const QString& _path,
 	const QDateTime& _lastEditDatetime, int _id, const QString& _owner, Role _role) :
 	m_type(_type),
@@ -35,7 +42,7 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 
 }
 
-QString Project::name() const
+QString Project::displayName() const
 {
 	QString result = m_name;
 	if (m_type == Remote) {
@@ -45,7 +52,7 @@ QString Project::name() const
 	return result;
 }
 
-QString Project::path() const
+QString Project::displayPath() const
 {
 	QString result = m_path;
 	if (m_type == Remote) {
@@ -53,4 +60,9 @@ QString Project::path() const
 	}
 
 	return result;
+}
+
+QString Project::path() const
+{
+	return m_path;
 }

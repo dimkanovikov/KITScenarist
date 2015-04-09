@@ -42,22 +42,12 @@ QAbstractItemModel* ProjectsManager::recentProjects()
 	QStandardItemModel* recentProjectsModel = new QStandardItemModel;
 	foreach (const Project& project, s_recentProjects) {
 		QStandardItem* item = new QStandardItem;
-		item->setData(project.name(), Qt::DisplayRole);
-		item->setData(project.path(), Qt::WhatsThisRole);
+		item->setData(project.displayName(), Qt::DisplayRole);
+		item->setData(project.displayPath(), Qt::WhatsThisRole);
 		recentProjectsModel->appendRow(item);
 	}
 
 	return recentProjectsModel;
-}
-
-QString ProjectsManager::recentProjectPath(const QModelIndex& _index)
-{
-	QString path;
-	if (s_recentProjects.size() > _index.row()) {
-		path = s_recentProjects.at(_index.row()).path();
-	}
-
-	return path;
 }
 
 void ProjectsManager::setRemoteProjects(const QString& _xml)
@@ -94,13 +84,32 @@ QAbstractItemModel* ProjectsManager::remoteProjects()
 	QStandardItemModel* remoteProjectsModel = new QStandardItemModel;
 	foreach (const Project& project, s_remoteProjects) {
 		QStandardItem* item = new QStandardItem;
-		item->setData(project.name(), Qt::DisplayRole);
-		item->setData(project.path(), Qt::WhatsThisRole);
+		item->setData(project.displayName(), Qt::DisplayRole);
+		item->setData(project.displayPath(), Qt::WhatsThisRole);
 		remoteProjectsModel->appendRow(item);
 	}
 
 	return remoteProjectsModel;
 }
 
+void ProjectsManager::setCurrentProject(const QModelIndex& _index, bool _isRemote)
+{
+	if (_isRemote) {
+		if (s_remoteProjects.size() > _index.row()) {
+			s_currentProject = s_remoteProjects.at(_index.row());
+		}
+	} else {
+		if (s_recentProjects.size() > _index.row()) {
+			s_currentProject = s_recentProjects.at(_index.row());
+		}
+	}
+}
+
+const ManagementLayer::Project&ProjectsManager::currentProject()
+{
+	return s_currentProject;
+}
+
 QList<Project> ProjectsManager::s_recentProjects;
 QList<Project> ProjectsManager::s_remoteProjects;
+Project ProjectsManager::s_currentProject;

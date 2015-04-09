@@ -37,6 +37,11 @@ QLightBoxWidget::QLightBoxWidget(QWidget* _parent, bool _folowToHeadWidget) :
 	setVisible(false);
 }
 
+QLightBoxWidget::~QLightBoxWidget()
+{
+	parent()->removeEventFilter(this);
+}
+
 bool QLightBoxWidget::eventFilter(QObject* _object, QEvent* _event)
 {
 	//

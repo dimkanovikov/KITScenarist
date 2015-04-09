@@ -245,7 +245,7 @@ void ApplicationManager::aboutSaveAs()
 		//
 		// ... если пользователь хочет просто пересохранить проект
 		//
-		if (saveAsProjectFileName == DatabaseLayer::Database::currentFile()) {
+		if (saveAsProjectFileName == ProjectsManager::currentProject().path()) {
 			aboutSave();
 		}
 		//
@@ -262,7 +262,7 @@ void ApplicationManager::aboutSaveAs()
 			//
 			// ... скопируем текущую базу в указанный файл
 			//
-			QFile::copy(DatabaseLayer::Database::currentFile(), saveAsProjectFileName);
+			QFile::copy(ProjectsManager::currentProject().path(), saveAsProjectFileName);
 
 			//
 			// ... переключаемся на использование другого файла
@@ -272,8 +272,8 @@ void ApplicationManager::aboutSaveAs()
 			//
 			// ... сохраняем изменения
 			//
-			m_view->setWindowModified(true);
 			aboutSave();
+			m_view->setWindowModified(true);
 
 			//
 			// ... обновим заголовок
@@ -318,7 +318,7 @@ void ApplicationManager::aboutSave()
 		//
 		// Если необходимо создадим резервную копию закрываемого файла
 		//
-		m_backupHelper.saveBackup(DatabaseLayer::Database::currentFile());
+		m_backupHelper.saveBackup(ProjectsManager::currentProject().path());
 	}
 }
 
@@ -524,7 +524,7 @@ void ApplicationManager::saveCurrentProjectInRecent()
 	//
 	// Скорректируем слэши в пути к файлу
 	//
-	const QString filePath = QDir::toNativeSeparators(DatabaseLayer::Database::currentFile());
+	const QString filePath = QDir::toNativeSeparators(ProjectsManager::currentProject().path());
 
 	//
 	// Сохраним текущий проект в недавно использованых
@@ -555,8 +555,8 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Загрузить настройки файла
 	//
-	m_scenarioManager->loadCurrentProjectSettings(DatabaseLayer::Database::currentFile());
-	m_exportManager->loadCurrentProjectSettings(DatabaseLayer::Database::currentFile());
+	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
+	m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 
 	//
 	// Установим заголовок
@@ -584,8 +584,8 @@ void ApplicationManager::closeCurrentProject()
 	//
 	// Сохраним настройки закрываемого проекта
 	//
-	m_scenarioManager->saveCurrentProjectSettings(DatabaseLayer::Database::currentFile());
-	m_exportManager->saveCurrentProjectSettings(DatabaseLayer::Database::currentFile());
+	m_scenarioManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+	m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 
 	//
 	// Очистим все загруженные на текущий момент данные
@@ -885,7 +885,7 @@ void ApplicationManager::reloadApplicationSettings()
 
 void ApplicationManager::updateWindowTitle()
 {
-	QString projectFileName = DatabaseLayer::Database::currentFile();
+	QString projectFileName = ProjectsManager::currentProject().path();
 	projectFileName = projectFileName.split(QDir::separator()).last();
 #ifdef Q_OS_MAC
 	m_view->setWindowTitle(projectFileName);

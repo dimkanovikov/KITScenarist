@@ -1,5 +1,7 @@
 #include "ExportManager.h"
 
+#include <ManagementLayer/Project/ProjectsManager.h>
+
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/Export/DocxExporter.h>
@@ -22,6 +24,7 @@
 #include <QStandardItemModel>
 
 using ManagementLayer::ExportManager;
+using ManagementLayer::ProjectsManager;
 using UserInterface::ExportDialog;
 
 
@@ -243,7 +246,7 @@ void ExportManager::initExportDialog(BusinessLogic::ScenarioDocument* _scenario)
 	//
 	QString exportFileName = currentScenario->name();
 	if (exportFileName.isEmpty()) {
-		QFileInfo fileInfo(DatabaseLayer::Database::currentFile());
+		QFileInfo fileInfo(ProjectsManager::currentProject().path());
 		exportFileName = fileInfo.baseName();
 	}
 	m_exportDialog->setExportFileName(exportFileName);

@@ -13,6 +13,7 @@ class QLightBoxWidget : public QWidget
 
 public:
 	explicit QLightBoxWidget(QWidget* _parent, bool _folowToHeadWidget = false);
+	~QLightBoxWidget();
 
 protected:
 	/**

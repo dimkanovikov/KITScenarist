@@ -65,8 +65,8 @@ void WebLoader::loadAsync( QUrl urlToLoad, QUrl referer )
 
 QByteArray WebLoader::loadSync(QUrl urlToLoad, QUrl referer)
 {
-	request()->setUrlToLoad( urlToLoad );
-	request()->setUrlReferer  ( referer );
+	request()->setUrlToLoad(urlToLoad);
+	request()->setUrlReferer(referer);
 
 	QEventLoop loop;
 	connect(this, SIGNAL(finished()), &loop, SLOT(quit()));
@@ -121,6 +121,8 @@ void WebLoader::run()
 				 this,    SLOT(downloadProgress(qint64,qint64)) );
 		connect( reply, SIGNAL(error(QNetworkReply::NetworkError)),
 				 this,    SLOT(downloadError(QNetworkReply::NetworkError)) );
+		connect(reply, SIGNAL(sslErrors(QList<QSslError>)),
+				this, SLOT(downloadSslErrors(QList<QSslError>)));
 
 
 		exec(); // входим в поток обработки событий, ожидая завершения отработки networkManager'а
@@ -240,6 +242,19 @@ void WebLoader::downloadError( QNetworkReply::NetworkError networkError )
 	}
 }
 
+void WebLoader::downloadSslErrors(const QList<QSslError>& _errors)
+{
+	QString fullError;
+	foreach (const QSslError& error, _errors) {
+		if (!fullError.isEmpty()) {
+			fullError.append("\n");
+		}
+		fullError.append(error.errorString());
+	}
+
+	setLastErrorDetails(fullError);
+}
+
 
 //*****************************************************************************
 // Методы доступа к данным класса, а так же вспомогательные
@@ -307,8 +322,20 @@ QString WebLoader::lastError() const
 	return m_lastError;
 }
 
+QString WebLoader::lastErrorDetails() const
+{
+	return m_lastErrorDetails;
+}
+
 void WebLoader::setLastError(QString errorText)
 {
 	if ( m_lastError != errorText )
 		m_lastError = errorText;
+}
+
+void WebLoader::setLastErrorDetails(const QString& _details)
+{
+	if (m_lastErrorDetails != _details) {
+		m_lastErrorDetails = _details;
+	}
 }

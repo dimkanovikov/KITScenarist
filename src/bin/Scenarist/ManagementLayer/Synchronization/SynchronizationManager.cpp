@@ -122,6 +122,11 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	}
 
 	//
+	// Закрываем уведомление для пользователя
+	//
+	progress.finish();
+
+	//
 	// Если авторизация прошла
 	//
 	if (success) {
@@ -145,11 +150,6 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	} else {
 		emit loginNotAccepted(_userName, _password, errorMessage);
 	}
-
-	//
-	// Закрываем уведомление для пользователя
-	//
-	progress.finish();
 }
 
 void SynchronizationManager::aboutLogout()

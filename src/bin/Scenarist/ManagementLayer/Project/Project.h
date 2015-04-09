@@ -17,6 +17,7 @@ namespace ManagementLayer
 		 * @brief Тип проекта
 		 */
 		enum Type {
+			Invalid,
 			Local,
 			Remote
 		};
@@ -41,14 +42,20 @@ namespace ManagementLayer
 		static Role roleFromString(const QString& _role);
 
 	public:
+		Project();
 		Project(Type _type, const QString& _name, const QString& _path,
 			const QDateTime& _lastEditDatetime, int _id = 0, const QString& _owner = QString::null,
 			Role _role = Owner);
 
 		/**
-		 * @brief Название проекта
+		 * @brief Отображаемое название проекта
 		 */
-		QString name() const;
+		QString displayName() const;
+
+		/**
+		 * @brief Отображаемый путь к проекту
+		 */
+		QString displayPath() const;
 
 		/**
 		 * @brief Путь к проекту

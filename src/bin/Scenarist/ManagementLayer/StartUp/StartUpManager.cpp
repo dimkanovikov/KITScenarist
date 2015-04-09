@@ -148,7 +148,9 @@ void StartUpManager::aboutLoginClicked()
 
 void StartUpManager::aboutOpenRecentProjectRequested(const QModelIndex& _projectIndex)
 {
-	const QString projectPath = ProjectsManager::recentProjectPath(_projectIndex);
+	const bool isLocal = false;
+	ProjectsManager::setCurrentProject(_projectIndex, isLocal);
+	const QString projectPath = ProjectsManager::currentProject().path();
 
 	//
 	// Если выбранного файла не существует
