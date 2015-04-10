@@ -1,8 +1,21 @@
 #include "Project.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
+#include <3rd_party/Helpers/PasswordStorage.h>
+
 #include <QApplication>
+#include <QDir>
+#include <QStandardPaths>
 
 using ManagementLayer::Project;
+using DataStorageLayer::StorageFacade;
+using DataStorageLayer::SettingsStorage;
+
+namespace {
+	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
+}
 
 
 QString Project::roleToString(Project::Role _role)
@@ -39,7 +52,32 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 	m_owner(_owner),
 	m_role(_role)
 {
-
+	//
+	// Сформируем путь к файлам проектов из облака
+	//
+	if (m_type == Remote) {
+		//
+		// Настроим путь к папке с проектами для текущего пользователя
+		//
+		const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+		const QString login =
+				PasswordStorage::load(
+					StorageFacade::settingsStorage()->value(
+						"application/user-name",
+						SettingsStorage::ApplicationSettings)
+					);
+		const QString remoteProjectsFolderPath =
+				QString("%1%4%2%4%3").arg(appDataFolderPath).arg("Projects").arg(login).arg(QDir::separator());
+		//
+		// ... создаём папку для пользовательских файлов
+		//
+		QDir rootFolder = QDir::root();
+		rootFolder.mkpath(remoteProjectsFolderPath);
+		//
+		// ... формируем путь к файлу проекта
+		//
+		m_path = remoteProjectsFolderPath + QDir::separator() + m_name + PROJECT_FILE_EXTENSION;
+	}
 }
 
 QString Project::displayName() const
@@ -56,7 +94,8 @@ QString Project::displayPath() const
 {
 	QString result = m_path;
 	if (m_type == Remote) {
-		result = QString("http://kitscenarist.ru/%1/%2.kitsp").arg(m_owner).arg(m_name);
+		result = QString("http://kitscenarist.ru/%1/%2%3")
+				 .arg(m_owner).arg(m_name).arg(PROJECT_FILE_EXTENSION);
 	}
 
 	return result;

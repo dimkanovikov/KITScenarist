@@ -16,12 +16,12 @@ namespace ManagementLayer
 	public:
 		explicit SynchronizationManager(QObject* _parent, QWidget* _parentView);
 
+	public slots:
 		/**
 		 * @brief Авторизоваться используя сохранённые параметры авторизации
 		 */
 		void login();
 
-	public slots:
 		/**
 		 * @brief Авторизоваться
 		 */
@@ -68,6 +68,12 @@ namespace ManagementLayer
 		 * @brief Настроить соединения
 		 */
 		void initConnections();
+
+		/**
+		 * @brief Заблокировать ненадолго выполнение функции
+		 * @note Применяется для того, чтобы интерфейс не моргал
+		 */
+		void sleepALittle();
 
 	private:
 		/**

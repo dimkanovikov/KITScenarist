@@ -10,6 +10,7 @@
 
 #include <WebLoader.h>
 
+#include <QEventLoop>
 #include <QTimer>
 #include <QXmlStreamReader>
 
@@ -124,6 +125,7 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	//
 	// Закрываем уведомление для пользователя
 	//
+	sleepALittle();
 	progress.finish();
 
 	//
@@ -184,6 +186,7 @@ void SynchronizationManager::aboutLogout()
 		//
 		// Закрываем уведомление для пользователя
 		//
+		sleepALittle();
 		progress.finish();
 
 		emit logoutAccepted();
@@ -255,12 +258,20 @@ void SynchronizationManager::aboutLoadProjects()
 	//
 	// Закрываем уведомление для пользователя
 	//
+	sleepALittle();
 	progress.finish();
 }
 
 void SynchronizationManager::initConnections()
 {
 	connect(this, SIGNAL(loginAccepted(QString)), this, SLOT(aboutLoadProjects()));
+}
+
+void SynchronizationManager::sleepALittle()
+{
+	QEventLoop loop;
+	QTimer::singleShot(2000, &loop, SLOT(quit()));
+	loop.exec();
 }
 
 

@@ -136,7 +136,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
 	reloadApplicationSettings();
 
-	m_synchronizationManager->login();
+	QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
 }
 
 ApplicationManager::~ApplicationManager()
