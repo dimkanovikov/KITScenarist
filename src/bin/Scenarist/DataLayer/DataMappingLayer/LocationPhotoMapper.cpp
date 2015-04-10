@@ -3,6 +3,8 @@
 #include <Domain/Location.h>
 #include <Domain/LocationPhoto.h>
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
 #include <QBuffer>
 
 using namespace DataMappingLayer;
@@ -11,29 +13,6 @@ using namespace DataMappingLayer;
 namespace {
 	const QString COLUMNS = " id, fk_location_id, photo, sort_order ";
 	const QString TABLE_NAME = " locations_photo ";
-
-	const char* PHOTO_FILE_FORMAT = "PNG";
-	const int PHOTO_FILE_QUALITY = 100;
-
-	/**
-	 * @brief Сохранение фотографии в массив байт
-	 */
-	static QByteArray bytesFromPhoto(const QPixmap& _photo) {
-		QByteArray photoData;
-		QBuffer photoBuffer(&photoData);
-		photoBuffer.open(QIODevice::WriteOnly);
-		_photo.save(&photoBuffer, PHOTO_FILE_FORMAT, PHOTO_FILE_QUALITY);
-		return photoData;
-	}
-
-	/**
-	 * @brief Загрузить фото из массива байт
-	 */
-	static QPixmap photoFromBytes(const QByteArray& _bytes) {
-		QPixmap photo;
-		photo.loadFromData(_bytes);
-		return photo;
-	}
 }
 
 LocationPhoto* LocationPhotoMapper::find(const Identifier& _id)
@@ -99,7 +78,7 @@ QString LocationPhotoMapper::insertStatement(DomainObject* _subject, QVariantLis
 	_insertValues.clear();
 	_insertValues.append(photo->id().value());
 	_insertValues.append(photo->location()->id().value());
-	_insertValues.append(bytesFromPhoto(photo->photo()));
+	_insertValues.append(ImageHelper::bytesFromImage(photo->photo()));
 	_insertValues.append(photo->sortOrder());
 
 	return insertStatement;
@@ -118,7 +97,7 @@ QString LocationPhotoMapper::updateStatement(DomainObject* _subject, QVariantLis
 	LocationPhoto* photo = dynamic_cast<LocationPhoto*>(_subject);
 	_updateValues.clear();
 	_updateValues.append(photo->location()->id().value());
-	_updateValues.append(bytesFromPhoto(photo->photo()));
+	_updateValues.append(ImageHelper::bytesFromImage(photo->photo()));
 	_updateValues.append(photo->sortOrder());
 	_updateValues.append(photo->id().value());
 
@@ -142,7 +121,7 @@ DomainObject* LocationPhotoMapper::doLoad(const Identifier& _id, const QSqlRecor
 	// связывание фотографий с локациями осуществляется посредством метода findAllForLocation
 	//
 	Location* location = 0;
-	QPixmap photo = photoFromBytes(_record.value("photo").toByteArray());
+	QPixmap photo = ImageHelper::imageFromBytes(_record.value("photo").toByteArray());
 	int sortOrder = _record.value("sort_order").toInt();
 
 	return new LocationPhoto(_id, location, photo, sortOrder);

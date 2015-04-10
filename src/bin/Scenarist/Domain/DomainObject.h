@@ -20,6 +20,9 @@ namespace Domain
 		Deleted = 6
 	};
 
+	/**
+	 * @brief Абстрактный объект предметной области
+	 */
 	class DomainObject
 	{
 	public:
@@ -34,8 +37,31 @@ namespace Domain
 		Identifier id() const;
 		void setId(const Identifier& _id);
 
+		/**
+		 * @brief Сохранены ли изменения объекта
+		 */
+		bool isChangesStored() const;
+
+		/**
+		 * @brief Изменения сохранены
+		 */
+		void changesStored();
+
+		/**
+		 * @brief Изменения не сохранены
+		 */
+		void changesNotStored();
+
 	private:
+		/**
+		 * @brief Идентификатор объекта
+		 */
 		Identifier m_id;
+
+		/**
+		 * @brief Флаг изменений объекта
+		 */
+		bool m_isChangesStored;
 	};
 
 	//******

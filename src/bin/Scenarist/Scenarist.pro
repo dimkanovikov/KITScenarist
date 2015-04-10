@@ -369,7 +369,8 @@ HEADERS += \
     3rd_party/Helpers/PasswordStorage.h \
     ManagementLayer/Project/ProjectsManager.h \
     ManagementLayer/Project/Project.h \
-    3rd_party/Helpers/QVariantMapWriter.h
+    3rd_party/Helpers/QVariantMapWriter.h \
+    3rd_party/Helpers/ImageHelper.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

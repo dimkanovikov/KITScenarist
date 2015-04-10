@@ -97,7 +97,12 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 			scenario->setName(_name);
 			scenario->setSynopsis(_synopsis);
 			scenario->setText(_text);
-			scenario->setVersionEndDatetime(currentDateTime);
+			//
+			// Если были реальные изменения, то устанавливаем дату их сохранения
+			//
+			if (!scenario->isChangesStored()) {
+				scenario->setVersionEndDatetime(currentDateTime);
+			}
 
 			//
 			// ... зафиксируем обновлённый текст в базе данных

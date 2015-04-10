@@ -26,6 +26,8 @@ void Scenario::setName(const QString& _name)
 {
 	if (m_name != _name) {
 		m_name = _name;
+
+		changesNotStored();
 	}
 }
 
@@ -38,6 +40,8 @@ void Scenario::setAdditionalInfo(const QString& _additionalInfo)
 {
 	if (m_additionalInfo != _additionalInfo) {
 		m_additionalInfo = _additionalInfo;
+
+		changesNotStored();
 	}
 }
 
@@ -50,6 +54,8 @@ void Scenario::setGenre(const QString& _genre)
 {
 	if (m_genre != _genre) {
 		m_genre = _genre;
+
+		changesNotStored();
 	}
 }
 
@@ -62,6 +68,8 @@ void Scenario::setAuthor(const QString _author)
 {
 	if (m_author != _author) {
 		m_author = _author;
+
+		changesNotStored();
 	}
 }
 
@@ -74,6 +82,8 @@ void Scenario::setContacts(const QString& _contacts)
 {
 	if (m_contacts != _contacts) {
 		m_contacts = _contacts;
+
+		changesNotStored();
 	}
 }
 
@@ -86,6 +96,8 @@ void Scenario::setYear(const QString& _year)
 {
 	if (m_year != _year) {
 		m_year = _year;
+
+		changesNotStored();
 	}
 }
 
@@ -98,6 +110,8 @@ void Scenario::setSynopsis(const QString& _synopsis)
 {
 	if (m_synopsis != _synopsis) {
 		m_synopsis = _synopsis;
+
+		changesNotStored();
 	}
 }
 
@@ -110,6 +124,8 @@ void Scenario::setText(const QString& _text)
 {
 	if (m_text != _text) {
 		m_text = _text;
+
+		changesNotStored();
 	}
 }
 
@@ -122,6 +138,8 @@ void Scenario::setIsDraft(bool _isDraft)
 {
 	if (m_isDraft != _isDraft) {
 		m_isDraft = _isDraft;
+
+		changesNotStored();
 	}
 }
 
@@ -134,6 +152,8 @@ void Scenario::setVersionStartDatetime(const QDateTime& _datetime)
 {
 	if (m_versionStartDatetime != _datetime) {
 		m_versionStartDatetime = _datetime;
+
+		changesNotStored();
 	}
 }
 
@@ -146,6 +166,8 @@ void Scenario::setVersionEndDatetime(const QDateTime& _datetime)
 {
 	if (m_versionEndDatetime != _datetime) {
 		m_versionEndDatetime = _datetime;
+
+		changesNotStored();
 	}
 }
 
@@ -154,10 +176,12 @@ QString Scenario::versionComment() const
 	return m_versionComment;
 }
 
-void Scenario::setVersionCOmment(const QString& _comment)
+void Scenario::setVersionComment(const QString& _comment)
 {
 	if (m_versionComment != _comment) {
 		m_versionComment = _comment;
+
+		changesNotStored();
 	}
 }
 

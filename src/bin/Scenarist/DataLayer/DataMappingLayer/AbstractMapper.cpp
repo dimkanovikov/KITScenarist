@@ -89,29 +89,39 @@ void AbstractMapper::abstractInsert(DomainObject* _subject)
 void AbstractMapper::abstractUpdate(DomainObject* _subject)
 {
 	//
-	// т.к. в m_loadedObjectsMap хранится список указателей, то после обновления элементов
-	// обновлять элемент непосредственно в списке не нужно
+	// Если есть не сохранённые изменения
 	//
+	if (!_subject->isChangesStored()) {
+		//
+		// т.к. в m_loadedObjectsMap хранится список указателей, то после обновления элементов
+		// обновлять элемент непосредственно в списке не нужно
+		//
 
-	//
-	// Получим данные для формирования запроса на их обновление
-	//
-	QVariantList updateValues;
-	QString updateQuery = updateStatement(_subject, updateValues);
+		//
+		// Получим данные для формирования запроса на их обновление
+		//
+		QVariantList updateValues;
+		QString updateQuery = updateStatement(_subject, updateValues);
 
-	//
-	// Сформируем запрос на обновление данных в базе
-	//
-	QSqlQuery q_update = Database::query();
-	q_update.prepare(updateQuery);
-	foreach (const QVariant& value, updateValues) {
-		q_update.addBindValue(value);
+		//
+		// Сформируем запрос на обновление данных в базе
+		//
+		QSqlQuery q_update = Database::query();
+		q_update.prepare(updateQuery);
+		foreach (const QVariant& value, updateValues) {
+			q_update.addBindValue(value);
+		}
+
+		//
+		// Обновим данные в базе
+		//
+		executeSql(q_update);
+
+		//
+		// Изменения сохранены
+		//
+		_subject->changesStored();
 	}
-
-	//
-	// Обновим данные в базе
-	//
-	executeSql(q_update);
 }
 
 void AbstractMapper::abstractDelete(DomainObject* _subject)
@@ -167,29 +177,17 @@ Identifier AbstractMapper::findNextIdentifier()
 	return maxId.next();
 }
 
-DomainObject * AbstractMapper::load(const QSqlRecord& _record )
+DomainObject* AbstractMapper::load(const QSqlRecord& _record )
 {
-	//
-	// FIXME: Очистить от артефактов недвижимости
-	//
+	DomainObject* result = 0;
 
-	int value   = _record.value( "id" ).toInt();
-	int version = _record.value( "version" ).toInt();
-
-	if ( value == 0 )
-		return 0;
-
-	Identifier id( value, version );
-	DomainObject *result = 0;
-	// Объекты домена зависящие от объекта недвижимости - особый случай
-	bool isDependFromObject = _record.contains( "fk_object" ) && _record.contains( "fk_object_version" );
-	if ( !isDependFromObject
-		 && m_loadedObjectsMap.contains( id ) ) {
-		result = m_loadedObjectsMap.value( id );
-	} else {
-		result = doLoad( id, _record );
-		m_loadedObjectsMap.insert( id, result );
+	int idValue = _record.value("id").toInt();
+	if (idValue != 0) {
+		Identifier id(idValue);
+		result = doLoad(id, _record);
+		m_loadedObjectsMap.insert(id, result);
 	}
+
 	return result;
 }
 

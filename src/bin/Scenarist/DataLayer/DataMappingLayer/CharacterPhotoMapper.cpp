@@ -3,6 +3,8 @@
 #include <Domain/Character.h>
 #include <Domain/CharacterPhoto.h>
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
 #include <QBuffer>
 
 using namespace DataMappingLayer;
@@ -11,29 +13,6 @@ using namespace DataMappingLayer;
 namespace {
 	const QString COLUMNS = " id, fk_character_id, photo, sort_order ";
 	const QString TABLE_NAME = " characters_photo ";
-
-	const char* PHOTO_FILE_FORMAT = "PNG";
-	const int PHOTO_FILE_QUALITY = 100;
-
-	/**
-	 * @brief Сохранение фотографии в массив байт
-	 */
-	static QByteArray bytesFromPhoto(const QPixmap& _photo) {
-		QByteArray photoData;
-		QBuffer photoBuffer(&photoData);
-		photoBuffer.open(QIODevice::WriteOnly);
-		_photo.save(&photoBuffer, PHOTO_FILE_FORMAT, PHOTO_FILE_QUALITY);
-		return photoData;
-	}
-
-	/**
-	 * @brief Загрузить фото из массива байт
-	 */
-	static QPixmap photoFromBytes(const QByteArray& _bytes) {
-		QPixmap photo;
-		photo.loadFromData(_bytes);
-		return photo;
-	}
 }
 
 CharacterPhoto* CharacterPhotoMapper::find(const Identifier& _id)
@@ -99,7 +78,7 @@ QString CharacterPhotoMapper::insertStatement(DomainObject* _subject, QVariantLi
 	_insertValues.clear();
 	_insertValues.append(photo->id().value());
 	_insertValues.append(photo->character()->id().value());
-	_insertValues.append(bytesFromPhoto(photo->photo()));
+	_insertValues.append(ImageHelper::bytesFromImage(photo->photo()));
 	_insertValues.append(photo->sortOrder());
 
 	return insertStatement;
@@ -118,7 +97,7 @@ QString CharacterPhotoMapper::updateStatement(DomainObject* _subject, QVariantLi
 	CharacterPhoto* photo = dynamic_cast<CharacterPhoto*>(_subject);
 	_updateValues.clear();
 	_updateValues.append(photo->character()->id().value());
-	_updateValues.append(bytesFromPhoto(photo->photo()));
+	_updateValues.append(ImageHelper::bytesFromImage(photo->photo()));
 	_updateValues.append(photo->sortOrder());
 	_updateValues.append(photo->id().value());
 
@@ -142,7 +121,7 @@ DomainObject* CharacterPhotoMapper::doLoad(const Identifier& _id, const QSqlReco
 	// связывание фотографий с локациями осуществляется посредством метода findAllForCharacter
 	//
 	Character* character = 0;
-	QPixmap photo = photoFromBytes(_record.value("photo").toByteArray());
+	QPixmap photo = ImageHelper::imageFromBytes(_record.value("photo").toByteArray());
 	int sortOrder = _record.value("sort_order").toInt();
 
 	return new CharacterPhoto(_id, character, photo, sortOrder);

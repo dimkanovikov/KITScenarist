@@ -28,6 +28,8 @@ void Location::setName(const QString& _name)
 {
 	if (m_name != _name) {
 		m_name = _name;
+
+		changesNotStored();
 	}
 }
 
@@ -40,6 +42,8 @@ void Location::setDescription(const QString& _description)
 {
 	if (m_description != _description) {
 		m_description = _description;
+
+		changesNotStored();
 	}
 }
 
@@ -56,6 +60,8 @@ void Location::setPhotos(const QList<QPixmap>& _photos)
 		LocationPhoto* newPhoto = new LocationPhoto(Identifier(), this, _photos.value(index), index);
 		m_photos->append(newPhoto);
 	}
+
+	changesNotStored();
 }
 
 QList<QPixmap> Location::photos() const

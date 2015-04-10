@@ -27,6 +27,8 @@ void LocationPhoto::setLocation(Location* _location)
 {
 	if (m_location != _location) {
 		m_location = _location;
+
+		changesNotStored();
 	}
 }
 
@@ -38,6 +40,8 @@ QPixmap LocationPhoto::photo() const
 void LocationPhoto::setPhoto(const QPixmap& _photo)
 {
 	m_photo = _photo;
+
+	changesNotStored();
 }
 
 int LocationPhoto::sortOrder() const
@@ -49,6 +53,8 @@ void LocationPhoto::setSortOrder(int _sortOrder)
 {
 	if (m_sortOrder != _sortOrder) {
 		m_sortOrder = _sortOrder;
+
+		changesNotStored();
 	}
 }
 

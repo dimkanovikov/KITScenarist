@@ -30,6 +30,8 @@ void Character::setName(const QString& _name)
 {
 	if (m_name != _name) {
 		m_name = _name;
+
+		changesNotStored();
 	}
 }
 
@@ -42,6 +44,8 @@ void Character::setRealName(const QString& _realName)
 {
 	if (m_realName != _realName) {
 		m_realName = _realName;
+
+		changesNotStored();
 	}
 }
 
@@ -54,6 +58,8 @@ void Character::setDescription(const QString& _description)
 {
 	if (m_description != _description) {
 		m_description = _description;
+
+		changesNotStored();
 	}
 }
 
@@ -70,6 +76,8 @@ void Character::setPhotos(const QList<QPixmap>& _photos)
 		CharacterPhoto* newPhoto = new CharacterPhoto(Identifier(), this, _photos.value(index), index);
 		m_photos->append(newPhoto);
 	}
+
+	changesNotStored();
 }
 
 QList<QPixmap> Character::photos() const

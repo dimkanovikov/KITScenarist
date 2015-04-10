@@ -11,12 +11,14 @@ bool DomainObject::isValid(const DomainObject* _object)
 
 
 DomainObject::DomainObject() :
-	m_id(Identifier())
+	m_id(Identifier()),
+	m_isChangesStored(false)
 {
 }
 
 DomainObject::DomainObject(Identifier _id) :
-	m_id(_id)
+	m_id(_id),
+	m_isChangesStored(_id.isValid() ? true : false)
 {
 }
 
@@ -35,6 +37,21 @@ void DomainObject::setId(const Identifier& _id)
 		|| m_id != _id) {
 		m_id = _id;
 	}
+}
+
+bool DomainObject::isChangesStored() const
+{
+	return m_isChangesStored;
+}
+
+void DomainObject::changesStored()
+{
+	m_isChangesStored = true;
+}
+
+void DomainObject::changesNotStored()
+{
+	m_isChangesStored = false;
 }
 
 // ****

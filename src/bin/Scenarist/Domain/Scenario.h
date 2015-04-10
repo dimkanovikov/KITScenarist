@@ -106,7 +106,7 @@ namespace Domain
 		 */
 		/** @{ */
 		QString versionComment() const;
-		void setVersionCOmment(const QString& _comment);
+		void setVersionComment(const QString& _comment);
 		/** @} */
 
 	private:

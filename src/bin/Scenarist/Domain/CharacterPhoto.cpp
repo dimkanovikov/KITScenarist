@@ -27,6 +27,8 @@ void CharacterPhoto::setCharacter(Character* _character)
 {
 	if (m_character != _character) {
 		m_character = _character;
+
+		changesNotStored();
 	}
 }
 
@@ -38,6 +40,8 @@ QPixmap CharacterPhoto::photo() const
 void CharacterPhoto::setPhoto(const QPixmap& _photo)
 {
 	m_photo = _photo;
+
+	changesNotStored();
 }
 
 int CharacterPhoto::sortOrder() const
@@ -49,6 +53,8 @@ void CharacterPhoto::setSortOrder(int _sortOrder)
 {
 	if (m_sortOrder != _sortOrder) {
 		m_sortOrder = _sortOrder;
+
+		changesNotStored();
 	}
 }
 
