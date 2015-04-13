@@ -121,6 +121,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_menu(new QToolButton(m_view)),
 	m_tabs(new SideTabBar(m_view)),
 	m_tabsWidgets(new QStackedWidget),
+	m_projectsManager(new ProjectsManager(this)),
 	m_startUpManager(new StartUpManager(this, m_view)),
 	m_scenarioManager(new ScenarioManager(this, m_view)),
 	m_charactersManager(new CharactersManager(this, m_view)),
@@ -133,6 +134,8 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	initView();
 	initConnections();
 	initStyleSheet();
+
+	aboutUpdateProjectsList();
 
 	reloadApplicationSettings();
 
@@ -158,6 +161,12 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 void ApplicationManager::openFile(const QString &_fileToOpen)
 {
 	aboutLoad(_fileToOpen);
+}
+
+void ApplicationManager::aboutUpdateProjectsList()
+{
+	m_startUpManager->setRecentProjects(m_projectsManager->recentProjects());
+	m_startUpManager->setRemoteProjects(m_projectsManager->remoteProjects());
 }
 
 void ApplicationManager::aboutCreateNew()
@@ -201,9 +210,9 @@ void ApplicationManager::aboutCreateNew()
 			}
 
 			//
-			// ... создаём новую базу данных в файле
+			// ... создаём новую базу данных в файле и делаем её текущим проектом
 			//
-			DatabaseLayer::Database::setCurrentFile(newProjectFileName);
+			m_projectsManager->setCurrentProject(newProjectFileName);
 
 			//
 			// ... сохраняем путь
@@ -294,7 +303,6 @@ void ApplicationManager::aboutSave()
 	// Если какие-то данные изменены
 	//
 	if (m_view->isWindowModified()) {
-
 		//
 		// Управляющие должны сохранить несохранённые данные
 		//
@@ -303,12 +311,6 @@ void ApplicationManager::aboutSave()
 		m_charactersManager->saveCharacters();
 		m_locationsManager->saveLocations();
 		DatabaseLayer::Database::commit();
-
-
-		//
-		// Добавим проект к недавно используемым
-		//
-		saveCurrentProjectInRecent();
 
 		//
 		// Изменим статус окна на сохранение изменений
@@ -358,7 +360,7 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 			//
 			// ... переключаемся на работу с выбранным файлом
 			//
-			DatabaseLayer::Database::setCurrentFile(loadProjectFileName);
+			m_projectsManager->setCurrentProject(loadProjectFileName);
 
 			//
 			// ... сохраняем путь
@@ -375,6 +377,53 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 		// Изменим статус окна на сохранение изменений
 		//
 		::updateWindowModified(m_view, false);
+	}
+}
+
+void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
+{
+	//
+	// Если нужно сохранить проект
+	//
+	if (saveIfNeeded()) {
+		//
+		// ... закроем текущий проект
+		//
+		closeCurrentProject();
+
+		//
+		// ... переключаемся на работу с выбранным файлом
+		//
+		m_projectsManager->setCurrentProject(_projectIndex);
+
+		//
+		// ... перейдём к редактированию
+		//
+		goToEditCurrentProject();
+	}
+}
+
+void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
+{
+	//
+	// Если нужно сохранить проект
+	//
+	if (saveIfNeeded()) {
+		//
+		// ... закроем текущий проект
+		//
+		closeCurrentProject();
+
+		//
+		// ... переключаемся на работу с выбранным файлом
+		//
+		const bool isRemote = false;
+		m_projectsManager->setCurrentProject(_projectIndex, isRemote);
+
+		//
+		// ... перейдём к редактированию
+		//
+		goToEditCurrentProject();
 	}
 }
 
@@ -525,19 +574,6 @@ bool ApplicationManager::saveIfNeeded()
 	return success;
 }
 
-void ApplicationManager::saveCurrentProjectInRecent()
-{
-	//
-	// Скорректируем слэши в пути к файлу
-	//
-	const QString filePath = QDir::toNativeSeparators(ProjectsManager::currentProject().path());
-
-	//
-	// Сохраним текущий проект в недавно использованых
-	//
-	m_startUpManager->addRecentFile(filePath, m_scenarioManager->scenarioName());
-}
-
 void ApplicationManager::goToEditCurrentProject()
 {
 	//
@@ -570,9 +606,9 @@ void ApplicationManager::goToEditCurrentProject()
 	updateWindowTitle();
 
 	//
-	// Добавим проект к недавно используемым
+	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
-	saveCurrentProjectInRecent();
+	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
 
 	//
 	// Перейти на вкладку редактирования сценария
@@ -602,6 +638,11 @@ void ApplicationManager::closeCurrentProject()
 	// Если использовалась база данных, то удалим старое соединение
 	//
 	DatabaseLayer::Database::closeCurrentFile();
+
+	//
+	// Информируем управляющего проектами, что текущий проект закрыт
+	//
+	m_projectsManager->closeCurrentProject();
 }
 
 void ApplicationManager::initView()
@@ -706,12 +747,17 @@ void ApplicationManager::initConnections()
 	connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
 	connect(m_tabs, SIGNAL(currentChanged(int)), m_tabsWidgets, SLOT(setCurrentIndex(int)));
 
+	connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
+	connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
+
 	connect(m_startUpManager, SIGNAL(loginRequested(QString,QString)), m_synchronizationManager, SLOT(aboutLogin(QString,QString)));
 	connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
-	connect(m_startUpManager, SIGNAL(refreshRemoteProjectsRequested()), m_synchronizationManager, SLOT(aboutLoadProjects()));
-	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QString)), this, SLOT(aboutLoad(QString)));
+	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_projectsManager, SLOT(refreshProjects()));
+	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_synchronizationManager, SLOT(aboutLoadProjects()));
+	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRecent(QModelIndex)));
+	connect(m_startUpManager, SIGNAL(openRemoteProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRemote(QModelIndex)));
 
 	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
 
@@ -750,8 +796,8 @@ void ApplicationManager::initConnections()
 			m_startUpManager, SLOT(aboutRetryLogin(QString,QString,QString)));
 	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
 			m_startUpManager, SLOT(aboutUserUnlogged()));
-	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded()),
-			m_startUpManager, SLOT(aboutRemoteProjectsLoaded()));
+	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
+			m_projectsManager, SLOT(setRemoteProjects(QString)));
 }
 
 void ApplicationManager::initStyleSheet()

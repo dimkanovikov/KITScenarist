@@ -9,6 +9,7 @@ namespace UserInterface {
 	class StartUpView;
 }
 
+class QAbstractItemModel;
 class QNetworkReply;
 
 
@@ -23,14 +24,8 @@ namespace ManagementLayer
 
 	public:
 		explicit StartUpManager(QObject* _parent, QWidget* _parentWidget);
-		~StartUpManager();
 
 		QWidget* view() const;
-
-		/**
-		 * @brief Добавить недавно открытый файл в список
-		 */
-		void addRecentFile(const QString& _filePath, const QString& _projectName = QString());
 
 	public slots:
 		/**
@@ -49,9 +44,14 @@ namespace ManagementLayer
 		void aboutUserUnlogged();
 
 		/**
-		 * @brief Загружен список проектов доступных из облака
+		 * @brief Установить список недавно используемых проектов
 		 */
-		void aboutRemoteProjectsLoaded();
+		void setRecentProjects(QAbstractItemModel* _model);
+
+		/**
+		 * @brief Установить список проектов из облака
+		 */
+		void setRemoteProjects(QAbstractItemModel* _model);
 
 	signals:
 		/**
@@ -82,12 +82,17 @@ namespace ManagementLayer
 		/**
 		 * @brief Обновить список проектов из облака
 		 */
-		void refreshRemoteProjectsRequested();
+		void refreshProjectsRequested();
 
 		/**
 		 * @brief Выбран один из недавних файлов для открытия
 		 */
-		void openRecentProjectRequested(const QString& _filePath);
+		void openRecentProjectRequested(const QModelIndex& _recentProjectIndex);
+
+		/**
+		 * @brief Выбран один из проектов из облака для открытия
+		 */
+		void openRemoteProjectRequested(const QModelIndex& _remoteProjectIndex);
 
 	private slots:
 		/**
@@ -96,30 +101,11 @@ namespace ManagementLayer
 		void aboutLoginClicked();
 
 		/**
-		 * @brief Выбран один из недавних файлов для открытия
-		 */
-		void aboutOpenRecentProjectRequested(const QModelIndex& _projectIndex);
-
-		/**
 		 * @brief Загрузилась страница с информацией об обновлениях
 		 */
 		void aboutLoadUpdatesInfo(QNetworkReply* _reply);
 
-		/**
-		 * @brief Обновить список недавних файлов, удаляя несуществующие
-		 */
-		void aboutRefreshProjects();
-
 	private:
-		/**
-		 * @brief Загрузить данные
-		 */
-		void initData();
-
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView();
 
 		/**
 		 * @brief Настроить соединения
@@ -136,22 +122,6 @@ namespace ManagementLayer
 		 * @brief Представление для стартовой страницы
 		 */
 		UserInterface::StartUpView* m_view;
-
-		/**
-		 * @brief Недавно используемые файлы проектов
-		 *
-		 * key - путь к файлу проекта
-		 * value - название проекта
-		 */
-		QMap<QString, QString> m_recentFiles;
-
-		/**
-		 * @brief Порядок использования недавних файлов
-		 *
-		 * key - путь к файлу проекта
-		 * value - последнее использование
-		 */
-		QMap<QString, QString> m_recentFilesUsing;
 	};
 }
 

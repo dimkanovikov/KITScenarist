@@ -56,7 +56,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Список доступных проектов получен
 		 */
-		void remoteProjectsLoaded();
+		void remoteProjectsLoaded(const QString& _projectsXml);
 
 		/**
 		 * @brief Не удалось получить список доступных проектов

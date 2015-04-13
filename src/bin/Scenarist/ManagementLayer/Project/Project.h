@@ -48,9 +48,22 @@ namespace ManagementLayer
 			Role _role = Owner);
 
 		/**
+		 * @brief Тип проекта
+		 */
+		Type type() const;
+
+		/**
 		 * @brief Отображаемое название проекта
 		 */
 		QString displayName() const;
+
+		/**
+		 * @brief Название проекта
+		 */
+		/** @{ */
+		QString name() const;
+		void setName(const QString& _name);
+		/** @} */
 
 		/**
 		 * @brief Отображаемый путь к проекту
@@ -61,6 +74,14 @@ namespace ManagementLayer
 		 * @brief Путь к проекту
 		 */
 		QString path() const;
+
+		/**
+		 * @brief Дата и время последнего изменения проекта
+		 */
+		/** @{ */
+		QDateTime lastEditDatetime() const;
+		void setLastEditDatetime(const QDateTime& _datetime);
+		/** @} */
 
 	private:
 		/**
@@ -98,6 +119,11 @@ namespace ManagementLayer
 		 */
 		Role m_role;
 	};
+
+	/**
+	 * @brief Сравнить два проекта
+	 */
+	bool operator==(const Project& _lhs, const Project& _rhs);
 }
 
 #endif // PROJECT_H

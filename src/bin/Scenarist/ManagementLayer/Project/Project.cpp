@@ -80,6 +80,11 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 	}
 }
 
+Project::Type Project::type() const
+{
+	return m_type;
+}
+
 QString Project::displayName() const
 {
 	QString result = m_name;
@@ -88,6 +93,18 @@ QString Project::displayName() const
 	}
 
 	return result;
+}
+
+QString Project::name() const
+{
+	return m_name;
+}
+
+void Project::setName(const QString& _name)
+{
+	if (m_name != _name) {
+		m_name = _name;
+	}
 }
 
 QString Project::displayPath() const
@@ -104,4 +121,22 @@ QString Project::displayPath() const
 QString Project::path() const
 {
 	return m_path;
+}
+
+QDateTime Project::lastEditDatetime() const
+{
+	return m_lastEditDatetime;
+}
+
+void Project::setLastEditDatetime(const QDateTime& _datetime)
+{
+	if (m_lastEditDatetime != _datetime) {
+		m_lastEditDatetime = _datetime;
+	}
+}
+
+
+bool ManagementLayer::operator==(const ManagementLayer::Project& _lhs, const ManagementLayer::Project& _rhs)
+{
+	return _lhs.path() == _rhs.path();
 }

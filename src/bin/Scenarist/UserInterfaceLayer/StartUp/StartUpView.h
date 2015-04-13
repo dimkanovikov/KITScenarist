@@ -75,9 +75,14 @@ namespace UserInterface
 		void openRecentProjectClicked(const QModelIndex& _projectIndex);
 
 		/**
+		 * @brief Выбран один из проектов из облака для открытия
+		 */
+		void openRemoteProjectClicked(const QModelIndex& _projectIndex);
+
+		/**
 		 * @brief Нажата кнопка обновления недавних файлов
 		 */
-		void refreshRecentFiles();
+		void refreshProjects();
 
 	protected:
 		/**

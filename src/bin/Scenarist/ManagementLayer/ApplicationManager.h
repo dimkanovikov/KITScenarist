@@ -52,6 +52,11 @@ namespace ManagementLayer
 
 	private slots:
 		/**
+		 * @brief Обновить списки проектов на стартовой странице
+		 */
+		void aboutUpdateProjectsList();
+
+		/**
 		 * @brief Создать новый
 		 */
 		void aboutCreateNew();
@@ -72,6 +77,14 @@ namespace ManagementLayer
 		 * Если имя файла не задано, то будет вызван диалог выбора файла
 		 */
 		void aboutLoad(const QString& _fileName = QString());
+
+		/**
+		 * @brief Загрузить из списка
+		 */
+		/** @{ */
+		void aboutLoadFromRecent(const QModelIndex& _projectIndex);
+		void aboutLoadFromRemote(const QModelIndex& _projectIndex);
+		/** @} */
 
 		/**
 		 * @brief Импортировать документ
@@ -126,11 +139,6 @@ namespace ManagementLayer
 		 * и false, если пользователь передумал (Отмена)
 		 */
 		bool saveIfNeeded();
-
-		/**
-		 * @brief Сохранить текущий проект в недавно используемых
-		 */
-		void saveCurrentProjectInRecent();
 
 		/**
 		 * @brief Настроить текущий проект для редактирования
@@ -193,6 +201,11 @@ namespace ManagementLayer
 		 * @brief Виджеты вкладок
 		 */
 		QStackedWidget* m_tabsWidgets;
+
+		/**
+		 * @brief Управляющий проектами
+		 */
+		ProjectsManager* m_projectsManager;
 
 		/**
 		 * @brief Управляющий стартовой страницей

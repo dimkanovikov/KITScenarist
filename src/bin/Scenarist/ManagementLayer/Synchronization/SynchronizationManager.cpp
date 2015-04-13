@@ -224,10 +224,9 @@ void SynchronizationManager::aboutLoadProjects()
 			success = responseReader.attributes().value("result").toString() == "true";
 
 			//
-			// Считываем проекты
+			// Ни чего не делаем, отправим проекты в конце функции с сигналом
 			//
 			if (success) {
-				ProjectsManager::setRemoteProjects(response);
 				break;
 			}
 			//
@@ -250,7 +249,7 @@ void SynchronizationManager::aboutLoadProjects()
 		StorageFacade::settingsStorage()->setValue(
 			"application/remote-projects", response.toBase64(), SettingsStorage::ApplicationSettings);
 
-		emit remoteProjectsLoaded();
+		emit remoteProjectsLoaded(response);
 	} else {
 		emit remoteProjectsNotLoaded(errorMessage);
 	}

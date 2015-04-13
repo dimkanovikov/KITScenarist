@@ -152,7 +152,8 @@ void StartUpView::initConnections()
 
 	connect(ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
 	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRecentProjectClicked(QModelIndex)));
-	connect(ui->refreshRecentFiles, SIGNAL(clicked()), this, SIGNAL(refreshRecentFiles()));
+	connect(ui->remoteFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRemoteProjectClicked(QModelIndex)));
+	connect(ui->refreshProjects, SIGNAL(clicked()), this, SIGNAL(refreshProjects()));
 }
 
 void StartUpView::initStyleSheet()

@@ -24,84 +24,19 @@ using ManagementLayer::ProjectsManager;
 using UserInterface::StartUpView;
 using UserInterface::LoginDialog;
 
-namespace {
-	const int MAX_RECENT_FILES_COUNT = 10;
-	const QString RECENT_FILES_LIST_SETTINGS_KEY = "application/recent-files/list";
-	const QString RECENT_FILES_USING_SETTINGS_KEY = "application/recent-files/using";
-}
-
 
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new StartUpView(_parentWidget))
 {
-	initData();
-	initView();
 	initConnections();
 
 	checkNewVersion();
 }
 
-StartUpManager::~StartUpManager()
-{
-	//
-	// Сохраним последние используемые файлы приложения
-	//
-	DataStorageLayer::StorageFacade::settingsStorage()->setValues(
-				m_recentFiles,
-				RECENT_FILES_LIST_SETTINGS_KEY,
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValues(
-				m_recentFilesUsing,
-				RECENT_FILES_USING_SETTINGS_KEY,
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-}
-
 QWidget* StartUpManager::view() const
 {
 	return m_view;
-}
-
-void StartUpManager::addRecentFile(const QString& _filePath, const QString& _projectName)
-{
-	//
-	// Определим название проекта, если оно не задано
-	//
-	QString projectName = _projectName;
-	if (projectName.isEmpty()) {
-		QFileInfo fileInfo(_filePath);
-		projectName = fileInfo.baseName();
-	}
-
-	//
-	// Если в списке больше допустимого кол-ва используемых файлов удалим давно используемый
-	//
-	if (m_recentFiles.size() >= MAX_RECENT_FILES_COUNT
-		&& !m_recentFiles.contains(_filePath)) {
-		QStringList usingDates = m_recentFilesUsing.values();
-		qSort(usingDates);
-		QString oldestProject = m_recentFilesUsing.key(usingDates.first());
-		m_recentFiles.remove(oldestProject);
-		m_recentFilesUsing.remove(oldestProject);
-	}
-
-	//
-	// Добавим файл в список
-	//
-	m_recentFiles.insert(_filePath, projectName);
-
-	//
-	// Сохраним информацию о последнем использовании
-	//
-	m_recentFilesUsing.insert(_filePath, QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz"));
-
-	//
-	// Обновим список файлов в представлении
-	//
-	ProjectsManager::setRecentProjects(m_recentFiles, m_recentFilesUsing);
-	m_view->setRecentProjects(ProjectsManager::recentProjects());
 }
 
 void StartUpManager::aboutUserLogged(const QString& _userName)
@@ -130,9 +65,14 @@ void StartUpManager::aboutUserUnlogged()
 	m_view->setUserLogged(isLogged);
 }
 
-void StartUpManager::aboutRemoteProjectsLoaded()
+void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
 {
-	m_view->setRemoteProjects(ProjectsManager::remoteProjects());
+	m_view->setRecentProjects(_model);
+}
+
+void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
+{
+	m_view->setRemoteProjects(_model);
 }
 
 void StartUpManager::aboutLoginClicked()
@@ -143,46 +83,6 @@ void StartUpManager::aboutLoginClicked()
 	LoginDialog loginDialog(m_view);
 	if (loginDialog.exec() == QDialog::Accepted) {
 		emit loginRequested(loginDialog.userName(), loginDialog.password());
-	}
-}
-
-void StartUpManager::aboutOpenRecentProjectRequested(const QModelIndex& _projectIndex)
-{
-	const bool isLocal = false;
-	ProjectsManager::setCurrentProject(_projectIndex, isLocal);
-	const QString projectPath = ProjectsManager::currentProject().path();
-
-	//
-	// Если выбранного файла не существует
-	//
-	if (!QFile::exists(projectPath)) {
-		//
-		// ... уведомим об этом пользователя
-		//
-		QMessageBox::information(
-					m_view,
-					tr("Can't open choosed file"),
-					tr("File <b>%1</b> isn't exist. File will be removed from recent list.").arg(projectPath),
-					QMessageBox::Ok
-					);
-
-		//
-		// ... удалим его из списка
-		//
-		m_recentFiles.remove(projectPath);
-		m_recentFilesUsing.remove(projectPath);
-
-		//
-		// ... обновим список файлов в представлении
-		//
-		ProjectsManager::setRecentProjects(m_recentFiles, m_recentFilesUsing);
-		m_view->setRecentProjects(ProjectsManager::recentProjects());
-	}
-	//
-	// Если выбранный файл существует, испускаем соответствующий сигнал
-	//
-	else {
-		emit openRecentProjectRequested(projectPath);
 	}
 }
 
@@ -249,53 +149,6 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 	}
 }
 
-void StartUpManager::aboutRefreshProjects()
-{
-	//
-	// Локальные
-	//
-	{
-		//
-		// Удаляем все несуществующие файлы
-		//
-		QMutableMapIterator<QString, QString> checker(m_recentFiles);
-		while (checker.hasNext()) {
-			checker.next();
-			if (!QFile::exists(checker.key())) {
-				m_recentFilesUsing.remove(checker.key());
-				checker.remove();
-			}
-		}
-
-		ProjectsManager::setRecentProjects(m_recentFiles, m_recentFilesUsing);
-		m_view->setRecentProjects(ProjectsManager::recentProjects());
-	}
-
-	//
-	// C сервиса
-	//
-	emit refreshRemoteProjectsRequested();
-}
-
-void StartUpManager::initData()
-{
-	m_recentFiles =
-			DataStorageLayer::StorageFacade::settingsStorage()->values(
-				RECENT_FILES_LIST_SETTINGS_KEY,
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-	m_recentFilesUsing =
-			DataStorageLayer::StorageFacade::settingsStorage()->values(
-				RECENT_FILES_USING_SETTINGS_KEY,
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-}
-
-void StartUpManager::initView()
-{
-	aboutRefreshProjects();
-}
-
 void StartUpManager::initConnections()
 {
 	connect(m_view, SIGNAL(loginClicked()), this, SLOT(aboutLoginClicked()));
@@ -305,8 +158,10 @@ void StartUpManager::initConnections()
 	connect(m_view, SIGNAL(helpClicked()), this, SIGNAL(helpRequested()));
 
 	connect(m_view, SIGNAL(openRecentProjectClicked(QModelIndex)),
-			this, SLOT(aboutOpenRecentProjectRequested(QModelIndex)));
-	connect(m_view, SIGNAL(refreshRecentFiles()), this, SLOT(aboutRefreshProjects()));
+			this, SIGNAL(openRecentProjectRequested(QModelIndex)));
+	connect(m_view, SIGNAL(openRemoteProjectClicked(QModelIndex)),
+			this, SIGNAL(openRemoteProjectRequested(QModelIndex)));
+	connect(m_view, SIGNAL(refreshProjects()), this, SIGNAL(refreshProjectsRequested()));
 }
 
 void StartUpManager::checkNewVersion()
