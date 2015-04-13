@@ -25,10 +25,10 @@ ProgressWidget::ProgressWidget(QWidget* _parent) :
 
 	QGridLayout* layout = new QGridLayout;
 	layout->setRowStretch(0, 1);
-	layout->setColumnStretch(0, 2);
+	layout->setColumnStretch(0, 5);
 	layout->addWidget(progress, 1, 1, 2, 1, Qt::AlignCenter);
 	layout->addWidget(m_title, 1, 2, Qt::AlignLeft);
-	layout->setColumnStretch(3, 1);
+	layout->setColumnStretch(3, 4);
 	layout->addWidget(m_description, 2, 2, Qt::AlignLeft | Qt::AlignTop);
 	layout->setRowMinimumHeight(2, 50);
 

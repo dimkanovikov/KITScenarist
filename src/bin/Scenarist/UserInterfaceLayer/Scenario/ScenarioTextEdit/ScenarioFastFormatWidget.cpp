@@ -5,39 +5,11 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 #include <QCheckBox>
-#include <QLabel>
+#include <QPainter>
+#include <QPushButton>
 #include <QShortcut>
 #include <QVBoxLayout>
 
-//********
-// ToolButton
-
-ToolButton::ToolButton(QWidget* _parent) :
-	QToolButton(_parent),
-	m_label(new QLabel(this))
-{
-	QToolButton::setText(QString());
-	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-	setCheckable(true);
-
-	QVBoxLayout* layout = new QVBoxLayout;
-	layout->setContentsMargins(8, 4, 8, 4);
-	layout->addWidget(m_label);
-	setLayout(layout);
-}
-
-void ToolButton::setText(const QString& _text)
-{
-	m_label->setText(_text);
-}
-
-QSize ToolButton::sizeHint() const
-{
-	return layout()->sizeHint();
-}
-
-//********
-// ScenarioFastFormatWidget
 
 using UserInterface::ScenarioFastFormatWidget;
 using UserInterface::ScenarioTextEdit;
@@ -54,8 +26,10 @@ namespace {
 	/**
 	 * @brief Создать кнопку применения стиля
 	 */
-	ToolButton* createStyleButton(ScenarioFastFormatWidget* _parent, Qt::Key _key) {
-		ToolButton* styleButton = new ToolButton(_parent);
+	QPushButton* createStyleButton(ScenarioFastFormatWidget* _parent, Qt::Key _key) {
+		QPushButton* styleButton = new QPushButton(_parent);
+		styleButton->setCheckable(true);
+
 		_parent->connect(styleButton, SIGNAL(clicked()), _parent, SLOT(aboutChangeStyle()));
 		QShortcut* timeAndPlaceShortcut1 = new QShortcut(_key, _parent);
 		QShortcut* timeAndPlaceShortcut2 = new QShortcut(_key + Qt::KeypadModifier, _parent);
@@ -86,7 +60,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	setProperty("fastFormatWidget", true);
 
 
-	ToolButton* goToPrevBlock = new ToolButton(this);
+	QPushButton* goToPrevBlock = new QPushButton(this);
 	goToPrevBlock->setCheckable(false);
 	goToPrevBlock->setText(tr("↑ Prev"));
 	connect(goToPrevBlock, SIGNAL(clicked()), this, SLOT(aboutGoToPrevBlock()));
@@ -105,7 +79,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	m_buttons << ::createStyleButton(this, Qt::Key_9);
 	reinitBlockStyles();
 
-	ToolButton* goToNextBlock = new ToolButton(this);
+	QPushButton* goToNextBlock = new QPushButton(this);
 	goToNextBlock->setCheckable(false);
 	goToNextBlock->setText(tr("↓ Next"));
 	connect(goToNextBlock, SIGNAL(clicked()), this, SLOT(aboutGoToNextBlock()));
@@ -118,7 +92,7 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->addWidget(goToPrevBlock);
 	layout->addSpacing(6);
-	foreach (ToolButton* button, m_buttons) {
+	foreach (QPushButton* button, m_buttons) {
 		layout->addWidget(button);
 	}
 	layout->addSpacing(6);
@@ -258,7 +232,7 @@ void ScenarioFastFormatWidget::aboutGoToPrevBlock()
 
 void ScenarioFastFormatWidget::aboutChangeStyle()
 {
-	if (ToolButton* button = qobject_cast<ToolButton*>(sender())) {
+	if (QPushButton* button = qobject_cast<QPushButton*>(sender())) {
 		button->setChecked(true);
 		ScenarioBlockStyle::Type type =
 				(ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt();
@@ -273,7 +247,7 @@ void ScenarioFastFormatWidget::aboutChangeStyle()
 void ScenarioFastFormatWidget::aboutCurrentStyleChanged()
 {
 	ScenarioBlockStyle::Type currentType = m_editor->scenarioBlockType();
-	foreach (ToolButton* button, m_buttons) {
+	foreach (QPushButton* button, m_buttons) {
 		button->setChecked(
 			(ScenarioBlockStyle::Type)button->property(STYLE_PROPERTY_KEY).toInt() == currentType);
 	}
@@ -307,4 +281,5 @@ void ScenarioFastFormatWidget::catchFocusIfNeeded()
 		}
 	}
 }
+
 

@@ -57,6 +57,10 @@
         <file>Icons/login.png</file>
         <file>Icons/logout.png</file>
         <file>Icons/Editing/checkmark.png</file>
+        <file>Icons/Editing/draft_active.png</file>
+        <file>Icons/Editing/search_active.png</file>
+        <file>Icons/Editing/note_active.png</file>
+        <file>Icons/Editing/format_active.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

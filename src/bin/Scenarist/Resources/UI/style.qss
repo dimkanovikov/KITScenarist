@@ -221,28 +221,21 @@ QScrollBar::sub-line {
 	height: 0px;
 }
 
-
-QPushButton, ToolButton {
-	/*border-radius: 3px;*/
-	border: 1px solid palette(shadow);
-	background-color: palette(button);
-	padding: 3px 8px 3px 8px;
-	min-width: 60px;
-}
-
-QPushButton:checked, QPushButton:pressed, ToolButton:checked, ToolButton:pressed {
-	background-color: palette(midlight);
-}
-
 QRadioButton[inStartUpView="true"] {
 	spacing: 0px;
 	padding: 2px 8px 2px 8px;
-	border: 1px solid palette(shadow);
-	background-color: palette(button);
+	background-color: palette(window);
+	border: 1px solid palette(midlight);
+}
+
+QRadioButton[inStartUpView="true"]:!checked:hover {
+	background-color: palette(midlight);
 }
 
 QRadioButton[inStartUpView="true"]::checked {
-	background-color: palette(midlight);
+	color: palette(window);
+	background-color: palette(text);
+	border: 1px solid palette(text);
 }
 
 QRadioButton[inStartUpView="true"]:indicator {
@@ -251,3 +244,19 @@ QRadioButton[inStartUpView="true"]:indicator {
 	image: none;
 }
 
+QPushButton {
+	padding: 3px 8px 3px 8px;
+	min-width: 60px;
+	background-color: palette(window);
+	border: 1px solid palette(midlight);
+}
+
+QPushButton:checked {
+	color: palette(window);
+	background-color: palette(text);
+	border: 1px solid palette(text);
+}
+
+QPushButton:!checked:hover, QPushButton:!checked:pressed {
+	background-color: palette(midlight);
+}

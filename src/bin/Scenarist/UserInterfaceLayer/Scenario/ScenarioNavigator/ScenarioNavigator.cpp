@@ -179,11 +179,11 @@ void ScenarioNavigator::initView()
 
 	m_middleTitle->setFixedWidth(1);
 
-	m_showDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"));
+	m_showDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/draft_active.png"));
 	m_showDraft->setToolTip(tr("Show/hide draft"));
 	m_showDraft->setCheckable(true);
 
-	m_showNote->setIcons(QIcon(":/Graphics/Icons/Editing/note.png"));
+	m_showNote->setIcons(QIcon(":/Graphics/Icons/Editing/note.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/note_active.png"));
 	m_showNote->setToolTip(tr("Show/hide scene note"));
 	m_showNote->setCheckable(true);
 

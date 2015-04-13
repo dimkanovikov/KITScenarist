@@ -2,27 +2,10 @@
 #define SCENARIOFASTFORMATWIDGET_H
 
 #include <QFrame>
-#include <QToolButton>
 
-class QLabel;
+class QPushButton;
 class QCheckBox;
 
-
-/**
- * @brief Расширенный класс кнопки
- */
-class ToolButton : public QToolButton
-{
-	Q_OBJECT
-
-public:
-	explicit ToolButton(QWidget* _parent = 0);
-	void setText(const QString& _text);
-	QSize sizeHint() const;
-
-private:
-	QLabel* m_label;
-};
 
 namespace UserInterface
 {
@@ -95,7 +78,7 @@ namespace UserInterface
 		/**
 		 * @brief Список кнопок
 		 */
-		QList<ToolButton*> m_buttons;
+		QList<QPushButton*> m_buttons;
 
 		/**
 		 * @brief Переключатель захвата фокуса
