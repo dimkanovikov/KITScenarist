@@ -61,6 +61,8 @@
         <file>Icons/Editing/search_active.png</file>
         <file>Icons/Editing/note_active.png</file>
         <file>Icons/Editing/format_active.png</file>
+        <file>Icons/Editing/brush_active.png</file>
+        <file>Icons/Editing/brush.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

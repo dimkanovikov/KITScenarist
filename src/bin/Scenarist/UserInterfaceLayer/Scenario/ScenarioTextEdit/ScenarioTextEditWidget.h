@@ -233,6 +233,11 @@ namespace UserInterface
 		FlatButton* m_fastFormat;
 
 		/**
+		 * @brief Кнопка включения опций форматирования
+		 */
+		FlatButton* m_formatting;
+
+		/**
 		 * @brief Хронометраж сценария
 		 */
 		QLabel* m_duration;
