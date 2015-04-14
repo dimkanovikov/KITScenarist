@@ -22,11 +22,11 @@ AbstractMapper::AbstractMapper()
 
 void AbstractMapper::clear()
 {
-	foreach (DomainObject* domainObject, m_loadedObjectsMap.values()) {
-		delete domainObject;
-		domainObject = 0;
-	}
-
+//	foreach (DomainObject* domainObject, m_loadedObjectsMap.values()) {
+//		delete domainObject;
+//		domainObject = 0;
+//	}
+	qDeleteAll(m_loadedObjectsMap);
 	m_loadedObjectsMap.clear();
 }
 

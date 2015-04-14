@@ -21,7 +21,7 @@ namespace {
 }
 
 
-const ManagementLayer::Project&ProjectsManager::currentProject()
+const ManagementLayer::Project& ProjectsManager::currentProject()
 {
 	return s_currentProject;
 }

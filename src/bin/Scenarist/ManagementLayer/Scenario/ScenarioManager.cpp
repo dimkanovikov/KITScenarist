@@ -205,6 +205,11 @@ BusinessLogic::ScenarioDocument* ScenarioManager::scenario() const
 	return m_scenario;
 }
 
+BusinessLogic::ScenarioDocument*ScenarioManager::scenarioDraft() const
+{
+	return m_scenarioDraft;
+}
+
 QString ScenarioManager::scenarioName() const
 {
 	return m_dataEditManager->scenarioName();

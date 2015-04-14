@@ -10,6 +10,7 @@
 #include "CharacterPhotoMapper.h"
 #include "ScenarioMapper.h"
 #include "SettingsMapper.h"
+#include "DatabaseHistoryMapper.h"
 
 using namespace DataMappingLayer;
 
@@ -62,7 +63,7 @@ CharacterMapper* MapperFacade::characterMapper()
 	return s_characterMapper;
 }
 
-CharacterStateMapper*MapperFacade::characterStateMapper()
+CharacterStateMapper* MapperFacade::characterStateMapper()
 {
 	if (s_characterStateMapper == 0) {
 		s_characterStateMapper = new CharacterStateMapper;
@@ -94,6 +95,14 @@ SettingsMapper* MapperFacade::settingsMapper()
 	return s_settingsMapper;
 }
 
+DatabaseHistoryMapper* MapperFacade::databaseHistoryMapper()
+{
+	if (s_databaseHistoryMapper == 0) {
+		s_databaseHistoryMapper = new DatabaseHistoryMapper;
+	}
+	return s_databaseHistoryMapper;
+}
+
 PlaceMapper* MapperFacade::s_placeMapper = 0;
 LocationMapper* MapperFacade::s_locationMapper = 0;
 LocationPhotoMapper* MapperFacade::s_locationPhotoMapper = 0;
@@ -104,3 +113,4 @@ CharacterStateMapper* MapperFacade::s_characterStateMapper = 0;
 CharacterPhotoMapper* MapperFacade::s_characterPhotoMapper = 0;
 ScenarioMapper* MapperFacade::s_scenarioMapper = 0;
 SettingsMapper* MapperFacade::s_settingsMapper = 0;
+DatabaseHistoryMapper* MapperFacade::s_databaseHistoryMapper = 0;

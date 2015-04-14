@@ -110,6 +110,11 @@ namespace UserInterface
 		FlatButton* m_removeCharacter;
 
 		/**
+		 * @brief Объединить выбранных персонажей в одного
+		 */
+		FlatButton* m_mergeCharacters;
+
+		/**
 		 * @brief Кнопка обновления списка персонажей
 		 */
 		FlatButton* m_refreshCharacters;

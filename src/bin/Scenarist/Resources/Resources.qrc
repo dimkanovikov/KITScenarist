@@ -63,6 +63,7 @@
         <file>Icons/Editing/format_active.png</file>
         <file>Icons/Editing/brush_active.png</file>
         <file>Icons/Editing/brush.png</file>
+        <file>Icons/Editing/merge.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

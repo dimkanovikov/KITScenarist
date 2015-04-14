@@ -304,6 +304,11 @@ void ApplicationManager::aboutSave()
 	//
 	if (m_view->isWindowModified()) {
 		//
+		// Определим место хранения проекта
+		//
+		const bool currentProjectIsRemote = m_projectsManager->currentProject().type() == Project::Remote;
+
+		//
 		// Управляющие должны сохранить несохранённые данные
 		//
 		DatabaseLayer::Database::transaction();
@@ -311,6 +316,15 @@ void ApplicationManager::aboutSave()
 		m_charactersManager->saveCharacters();
 		m_locationsManager->saveLocations();
 		DatabaseLayer::Database::commit();
+
+		//
+		// Для проекта из облака отправляем данные на сервер
+		//
+		if (currentProjectIsRemote) {
+			m_synchronizationManager->aboutSaveScenario(m_scenarioManager->scenario()->scenario());
+			m_synchronizationManager->aboutSaveScenario(m_scenarioManager->scenarioDraft()->scenario());
+			m_synchronizationManager->aboutSaveData();
+		}
 
 		//
 		// Изменим статус окна на сохранение изменений

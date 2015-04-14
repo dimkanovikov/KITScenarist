@@ -41,6 +41,11 @@ namespace ManagementLayer
 		BusinessLogic::ScenarioDocument* scenario() const;
 
 		/**
+		 * @brief Получить черновик сценария
+		 */
+		BusinessLogic::ScenarioDocument* scenarioDraft() const;
+
+		/**
 		 * @brief Получить название сценария
 		 */
 		QString scenarioName() const;

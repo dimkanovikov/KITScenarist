@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+namespace Domain {
+	class Scenario;
+}
+
 
 namespace ManagementLayer
 {
@@ -36,6 +40,16 @@ namespace ManagementLayer
 		 * @brief Загрузить список доступных проектов
 		 */
 		void aboutLoadProjects();
+
+		/**
+		 * @brief Сохранить последнюю версию сценария
+		 */
+		void aboutSaveScenario(const Domain::Scenario* _scenario);
+
+		/**
+		 * @brief Сохранить данные сценария
+		 */
+		void aboutSaveData();
 
 	signals:
 		/**
@@ -86,7 +100,10 @@ namespace ManagementLayer
 		 */
 		QString m_sessionKey;
 
-
+		/**
+		 * @brief Дата и время последнего отправленного изменения данных
+		 */
+		QString m_lastSendedDataDatetime;
 
 
 

@@ -20,6 +20,7 @@ CharactersNavigator::CharactersNavigator(QWidget *parent) :
 	m_title(new QLabel(this)),
 	m_addCharacter(new FlatButton(this)),
 	m_removeCharacter(new FlatButton(this)),
+	m_mergeCharacters(new FlatButton(this)),
 	m_refreshCharacters(new FlatButton(this)),
 	m_endTitle(new QLabel(this)),
 	m_navigator(new QListView(this)),
@@ -107,6 +108,9 @@ void CharactersNavigator::initView()
 	m_removeCharacter->setToolTip(tr("Remove Selected Character") + " (Del)");
 	m_removeCharacter->setShortcut(QKeySequence("Delete"));
 
+	m_mergeCharacters->setIcon(QIcon(":/Graphics/Icons/Editing/merge.png"));
+	m_mergeCharacters->setToolTip(tr("Merge Selected Characters"));
+
 	m_refreshCharacters->setIcon(QIcon(":/Graphics/Icons/Editing/refresh.png"));
 	m_refreshCharacters->setToolTip(tr("Find All Characters from Scenario"));
 
@@ -123,6 +127,7 @@ void CharactersNavigator::initView()
 	topLayout->addWidget(m_title);
 	topLayout->addWidget(m_addCharacter);
 	topLayout->addWidget(m_removeCharacter);
+	topLayout->addWidget(m_mergeCharacters);
 	topLayout->addWidget(m_refreshCharacters);
 	topLayout->addWidget(m_endTitle);
 
@@ -153,6 +158,7 @@ void CharactersNavigator::initStyleSheet()
 	m_addCharacter->setProperty("inTopPanel", true);
 	m_removeCharacter->setProperty("inTopPanel", true);
 	m_refreshCharacters->setProperty("inTopPanel", true);
+	m_mergeCharacters->setProperty("inTopPanel", true);
 
 	m_navigator->setProperty("mainContainer", true);
 }

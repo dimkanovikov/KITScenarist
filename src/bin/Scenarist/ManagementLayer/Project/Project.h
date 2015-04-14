@@ -83,6 +83,11 @@ namespace ManagementLayer
 		void setLastEditDatetime(const QDateTime& _datetime);
 		/** @} */
 
+		/**
+		 * @brief Идентификатор проекта
+		 */
+		int id() const;
+
 	private:
 		/**
 		 * @brief Тип проекта

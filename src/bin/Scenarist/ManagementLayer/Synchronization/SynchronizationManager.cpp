@@ -4,6 +4,9 @@
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
+#include <DataLayer/DataStorageLayer/DatabaseHistoryStorage.h>
+
+#include <Domain/Scenario.h>
 
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
 #include <3rd_party/Helpers/PasswordStorage.h>
@@ -13,6 +16,7 @@
 #include <QEventLoop>
 #include <QTimer>
 #include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 using ManagementLayer::SynchronizationManager;
 using ManagementLayer::ProjectsManager;
@@ -27,6 +31,8 @@ namespace {
 	const QUrl URL_LOGIN = QUrl("http://kitscenarist.ru/api/account/login/");
 	const QUrl URL_LOGOUT = QUrl("http://kitscenarist.ru/api/account/logout/");
 	const QUrl URL_PROJECTS = QUrl("http://kitscenarist.ru/api/projects/");
+	const QUrl URL_SCENARIO_SAVE = QUrl("http://kitscenarist.ru/api/projects/scenario/save/");
+	const QUrl URL_SCENARIO_DATA_SAVE = QUrl("http://kitscenarist.ru/api/projects/data/save/");
 	/** @} */
 
 	/**
@@ -36,7 +42,19 @@ namespace {
 	const QString KEY_USER_NAME = "login";
 	const QString KEY_PASSWORD = "password";
 	const QString KEY_SESSION_KEY = "session_key";
+	const QString KEY_PROJECT = "project_id";
+	const QString KEY_CHANGES = "changes";
 	/** @{ */
+
+	/**
+	 * @brief Ключи для доступа к записям из истории изменений БД
+	 */
+	/** @{ */
+	const QString DBH_ID_KEY = "id";
+	const QString DBH_QUERY_KEY = "query";
+	const QString DBH_QUERY_VALUES_KEY = "query_values";
+	const QString DBH_DATETIME_KEY = "datetime";
+	/** @} */
 }
 
 
@@ -259,6 +277,96 @@ void SynchronizationManager::aboutLoadProjects()
 	//
 	sleepALittle();
 	progress.finish();
+}
+
+void SynchronizationManager::aboutSaveScenario(const Domain::Scenario* _scenario)
+{
+	if (!m_sessionKey.isEmpty()) {
+		//
+		// Отправляем последнюю версию на сервер
+		//
+		WebLoader* loader = new WebLoader;
+		connect(loader, SIGNAL(finished()), loader, SLOT(deleteLater()));
+
+		loader->setRequestMethod(WebLoader::Post);
+		loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		loader->addRequestAttribute("scenario_id", _scenario->id().value());
+		loader->addRequestAttribute("scenario_name", _scenario->name());
+		loader->addRequestAttribute("scenario_additional_info", _scenario->additionalInfo());
+		loader->addRequestAttribute("scenario_genre", _scenario->genre());
+		loader->addRequestAttribute("scenario_author", _scenario->author());
+		loader->addRequestAttribute("scenario_contacts", _scenario->contacts());
+		loader->addRequestAttribute("scenario_year", _scenario->year());
+		loader->addRequestAttribute("scenario_synopsis", _scenario->synopsis());
+		loader->addRequestAttribute("scenario_text", _scenario->text());
+		loader->addRequestAttribute("scenario_is_draft", _scenario->isDraft() ? 1 : 0);
+		loader->addRequestAttribute("scenario_version_start_datetime", _scenario->versionStartDatetime().toString("yyyy-MM-dd hh:mm:ss"));
+		loader->addRequestAttribute("scenario_version_end_datetime", _scenario->versionEndDatetime().toString("yyyy-MM-dd hh:mm:ss"));
+		loader->addRequestAttribute("scenario_version_comment", _scenario->versionComment());
+		loader->loadAsync(URL_SCENARIO_SAVE);
+	}
+}
+
+void SynchronizationManager::aboutSaveData()
+{
+	if (!m_sessionKey.isEmpty()) {
+		//
+		// Получить данные, которых на сервере ещё нет
+		//
+		QList<QMap<QString, QString> > databaseHistory =
+				StorageFacade::databaseHistoryStorage()->history(m_lastSendedDataDatetime);
+
+		//
+		// Сформировать xml для отправки
+		//
+		QString dataChangesXml;
+		QXmlStreamWriter xmlWriter(&dataChangesXml);
+		xmlWriter.writeStartDocument();
+		xmlWriter.writeStartElement("changes");
+		QMap<QString, QString> historyRecord;
+		foreach (historyRecord, databaseHistory) {
+			//
+			// Отправляем изменения из всех таблиц, кроме сценария
+			//
+			if (!historyRecord.value(DBH_QUERY_KEY).contains(" scenario ")) {
+				xmlWriter.writeStartElement("change");
+				//
+				xmlWriter.writeTextElement(DBH_ID_KEY, historyRecord.value(DBH_ID_KEY));
+				//
+				xmlWriter.writeStartElement(DBH_QUERY_KEY);
+				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_KEY));
+				xmlWriter.writeEndElement();
+				//
+				xmlWriter.writeStartElement(DBH_QUERY_VALUES_KEY);
+				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_VALUES_KEY));
+				xmlWriter.writeEndElement();
+				//
+				xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
+				//
+				xmlWriter.writeEndElement(); // change
+
+				//
+				// Обновляем дату и время последнего отправленного изменения
+				//
+				m_lastSendedDataDatetime = historyRecord.value(DBH_DATETIME_KEY);
+			}
+		}
+		xmlWriter.writeEndElement(); // changes
+		xmlWriter.writeEndDocument();
+
+		//
+		// Отправить данные
+		//
+		WebLoader* loader = new WebLoader;
+		connect(loader, SIGNAL(finished()), loader, SLOT(deleteLater()));
+
+		loader->setRequestMethod(WebLoader::Post);
+		loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		loader->addRequestAttribute(KEY_CHANGES, dataChangesXml);
+		loader->loadAsync(URL_SCENARIO_DATA_SAVE);
+	}
 }
 
 void SynchronizationManager::initConnections()

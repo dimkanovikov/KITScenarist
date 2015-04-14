@@ -207,7 +207,9 @@ SOURCES += main.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp \
     UserInterfaceLayer/StartUp/LoginDialog.cpp \
     ManagementLayer/Project/ProjectsManager.cpp \
-    ManagementLayer/Project/Project.cpp
+    ManagementLayer/Project/Project.cpp \
+    DataLayer/DataMappingLayer/DatabaseHistoryMapper.cpp \
+    DataLayer/DataStorageLayer/DatabaseHistoryStorage.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -370,7 +372,9 @@ HEADERS += \
     ManagementLayer/Project/ProjectsManager.h \
     ManagementLayer/Project/Project.h \
     3rd_party/Helpers/QVariantMapWriter.h \
-    3rd_party/Helpers/ImageHelper.h
+    3rd_party/Helpers/ImageHelper.h \
+    DataLayer/DataMappingLayer/DatabaseHistoryMapper.h \
+    DataLayer/DataStorageLayer/DatabaseHistoryStorage.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

@@ -10,6 +10,7 @@
 #include "CharacterPhotoStorage.h"
 #include "ScenarioStorage.h"
 #include "SettingsStorage.h"
+#include "DatabaseHistoryStorage.h"
 
 using namespace DataStorageLayer;
 
@@ -107,6 +108,14 @@ SettingsStorage* StorageFacade::settingsStorage()
 	return s_settingsStorage;
 }
 
+DatabaseHistoryStorage*StorageFacade::databaseHistoryStorage()
+{
+	if (s_databaseHistoryStorage == 0) {
+		s_databaseHistoryStorage = new DatabaseHistoryStorage;
+	}
+	return s_databaseHistoryStorage;
+}
+
 PlaceStorage* StorageFacade::s_placeStorage = 0;
 LocationStorage* StorageFacade::s_locationStorage = 0;
 LocationPhotoStorage* StorageFacade::s_locationPhotoStorage = 0;
@@ -117,3 +126,4 @@ CharacterStateStorage* StorageFacade::s_characterStateStorage = 0;
 CharacterPhotoStorage* StorageFacade::s_characterPhotoStorage = 0;
 ScenarioStorage* StorageFacade::s_scenarioStorage = 0;
 SettingsStorage* StorageFacade::s_settingsStorage = 0;
+DatabaseHistoryStorage* StorageFacade::s_databaseHistoryStorage = 0;

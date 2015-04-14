@@ -135,6 +135,11 @@ void Project::setLastEditDatetime(const QDateTime& _datetime)
 	}
 }
 
+int Project::id() const
+{
+	return m_id;
+}
+
 
 bool ManagementLayer::operator==(const ManagementLayer::Project& _lhs, const ManagementLayer::Project& _rhs)
 {

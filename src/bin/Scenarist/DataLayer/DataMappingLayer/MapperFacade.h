@@ -14,6 +14,7 @@ namespace DataMappingLayer
 	class CharacterPhotoMapper;
 	class ScenarioMapper;
 	class SettingsMapper;
+	class DatabaseHistoryMapper;
 
 	class MapperFacade
 	{
@@ -28,6 +29,7 @@ namespace DataMappingLayer
 		static CharacterPhotoMapper* characterPhotoMapper();
 		static ScenarioMapper* scenarioMapper();
 		static SettingsMapper* settingsMapper();
+		static DatabaseHistoryMapper* databaseHistoryMapper();
 
 	private:
 		static PlaceMapper* s_placeMapper;
@@ -40,6 +42,7 @@ namespace DataMappingLayer
 		static CharacterPhotoMapper* s_characterPhotoMapper;
 		static ScenarioMapper* s_scenarioMapper;
 		static SettingsMapper* s_settingsMapper;
+		static DatabaseHistoryMapper* s_databaseHistoryMapper;
 	};
 }
 
