@@ -24,8 +24,13 @@ Scenario* ScenarioStorage::current(bool _isDraft)
 		foreach (DomainObject* domainObject, all()->toList()) {
 			if (Scenario* scenario = dynamic_cast<Scenario*>(domainObject)) {
 				if (scenario->isDraft() == _isDraft) {
-					currentScenario = scenario;
-					break;
+					if (currentScenario) {
+						if (currentScenario->versionStartDatetime() < scenario->versionStartDatetime()) {
+							currentScenario = scenario;
+						}
+					} else {
+						currentScenario = scenario;
+					}
 				}
 			}
 		}
@@ -70,7 +75,7 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 		// Если с момента открытия сессии сценария прошло более, чем MAX_HOURS_FOR_SESSION,
 		// тогда создаём новую версию сценария
 		//
-		const int MAX_HOURS_FOR_SESSION = 3;
+		const int MAX_HOURS_FOR_SESSION = 2;
 		QDateTime nextVersionStartDatetime =
 				scenario->versionStartDatetime().addSecs(MAX_HOURS_FOR_SESSION * 60 * 60);
 		nextVersionStartDatetime.setUtcOffset(0);
@@ -86,6 +91,11 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 			// ... сохраняем её
 			//
 			MapperFacade::scenarioMapper()->insert(scenario);
+
+			//
+			// ... добавим в список
+			//
+			all()->append(scenario);
 		}
 		//
 		// В противном случае обновляем последнюю версию
