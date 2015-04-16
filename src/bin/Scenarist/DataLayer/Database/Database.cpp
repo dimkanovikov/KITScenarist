@@ -175,7 +175,7 @@ void Database::createTables(QSqlDatabase& _database)
 	// Таблица с историей запросов
 	q_creator.exec("CREATE TABLE _database_history "
 				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "id TEXT PRIMARY KEY, " // uuid
 				   "query TEXT NOT NULL, "
 				   "query_values TEXT NOT NULL, "
 				   "datetime TEXT NOT NULL "
@@ -753,7 +753,7 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 		//
 		q_updater.exec("CREATE TABLE _database_history "
 					   "( "
-					   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   "id TEXT PRIMARY KEY, " // uuid
 					   "query TEXT NOT NULL, "
 					   "query_values TEXT NOT NULL, "
 					   "datetime TEXT NOT NULL "

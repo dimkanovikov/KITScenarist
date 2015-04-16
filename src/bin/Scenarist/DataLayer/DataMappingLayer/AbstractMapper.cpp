@@ -10,6 +10,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QVariant>
+#include <QUuid>
 
 
 using namespace DataMappingLayer;
@@ -22,11 +23,10 @@ AbstractMapper::AbstractMapper()
 
 void AbstractMapper::clear()
 {
-//	foreach (DomainObject* domainObject, m_loadedObjectsMap.values()) {
-//		delete domainObject;
-//		domainObject = 0;
-//	}
-	qDeleteAll(m_loadedObjectsMap);
+	foreach (DomainObject* domainObject, m_loadedObjectsMap.values()) {
+		delete domainObject;
+		domainObject = 0;
+	}
 	m_loadedObjectsMap.clear();
 }
 
@@ -206,7 +206,11 @@ void AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
 	//
 	else {
 		QSqlQuery q_history(_sqlQuery);
-		q_history.prepare("INSERT INTO _database_history (query, query_values, datetime) VALUES(?, ?, ?);");
+		q_history.prepare("INSERT INTO _database_history (id, query, query_values, datetime) VALUES(?, ?, ?, ?);");
+		//
+		// ... uuid
+		//
+		q_history.addBindValue(QUuid::createUuid().toString());
 		//
 		// ... запрос
 		//

@@ -42,6 +42,16 @@ namespace ManagementLayer
 		void aboutLoadProjects();
 
 		/**
+		 * @brief Загрузить версии сценария, которых нет в БД
+		 */
+		void aboutLoadScenario();
+
+		/**
+		 * @brief Загрузить данные, которых нет в БД
+		 */
+		void aboutLoadData();
+
+		/**
 		 * @brief Сохранить последнюю версию сценария
 		 */
 		void aboutSaveScenario(const Domain::Scenario* _scenario);

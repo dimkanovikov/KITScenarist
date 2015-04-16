@@ -279,6 +279,16 @@ void SynchronizationManager::aboutLoadProjects()
 	progress.finish();
 }
 
+void SynchronizationManager::aboutLoadScenario()
+{
+
+}
+
+void SynchronizationManager::aboutLoadData()
+{
+
+}
+
 void SynchronizationManager::aboutSaveScenario(const Domain::Scenario* _scenario)
 {
 	if (!m_sessionKey.isEmpty()) {
@@ -330,6 +340,7 @@ void SynchronizationManager::aboutSaveData()
 			// Отправляем изменения из всех таблиц, кроме сценария
 			//
 			if (!historyRecord.value(DBH_QUERY_KEY).contains(" scenario ")) {
+				//
 				xmlWriter.writeStartElement("change");
 				//
 				xmlWriter.writeTextElement(DBH_ID_KEY, historyRecord.value(DBH_ID_KEY));
