@@ -8,6 +8,7 @@
 #include <QSqlRecord>
 #include <QTextCodec>
 #include <QVariant>
+#include <QUuid>
 
 using namespace DatabaseLayer;
 
@@ -276,7 +277,8 @@ void Database::createTables(QSqlDatabase& _database)
 				   "is_draft INTEGER NOT NULL DEFAULT(0), "
 				   "version_start_datetime TEXT NOT NULL, "
 				   "version_end_datetime TEXT NOT NULL, "
-				   "version_comment TEXT DEFAULT(NULL) "
+				   "version_comment TEXT DEFAULT(NULL), "
+				   "uuid TEXT NOT NULL "
 				   ")"
 				   );
 
@@ -747,6 +749,10 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 					.arg(defaultDateTime)
 					);
 		q_updater.exec("ALTER TABLE scenario ADD COLUMN version_comment TEXT DEFAULT(NULL)");
+		q_updater.exec(
+			QString("ALTER TABLE scenario ADD COLUMN uuid TEXT NOT NULL DEFAULT('%1')")
+					.arg(QUuid::createUuid().toString())
+					);
 
 		//
 		// Создаём таблицу для хранения всех запросов

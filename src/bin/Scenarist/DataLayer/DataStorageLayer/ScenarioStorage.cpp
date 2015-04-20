@@ -5,6 +5,8 @@
 
 #include <Domain/Scenario.h>
 
+#include <QUuid>
+
 using namespace DataStorageLayer;
 using namespace DataMappingLayer;
 
@@ -51,7 +53,8 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 		//
 		// ... создаём сценарий
 		//
-		scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime, _comment);
+		scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime,
+								currentDateTime, _comment, QUuid::createUuid().toString());
 		scenario->setIsDraft(_isDraft);
 
 		//
@@ -84,7 +87,8 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 			//
 			// ... создаём новую версию сценария
 			//
-			scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime, currentDateTime, _comment);
+			scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime,
+									currentDateTime, _comment, QUuid::createUuid().toString());
 			scenario->setIsDraft(_isDraft);
 
 			//

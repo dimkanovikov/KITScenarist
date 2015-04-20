@@ -17,7 +17,8 @@ namespace Domain
 	public:
 		Scenario(const Identifier& _id, const QString& _name, const QString& _synopsis,
 			const QString& _text, const QDateTime& _versionStartDatetime,
-			const QDateTime& _versionEndDatetime, const QString& _versionComment);
+			const QDateTime& _versionEndDatetime, const QString& _versionComment,
+			const QString& _uuid);
 
 		/**
 		 * @brief Название сценария
@@ -109,6 +110,14 @@ namespace Domain
 		void setVersionComment(const QString& _comment);
 		/** @} */
 
+		/**
+		 * @brief Uuid версии сценария
+		 */
+		/** @{ */
+		QString uuid() const;
+		void setUuid(const QString& _uuid);
+		/** @} */
+
 	private:
 		/**
 		 * @brief Название
@@ -167,6 +176,11 @@ namespace Domain
 		 * @brief Комментарий к фиксируемой версии сценария
 		 */
 		QString m_versionComment;
+
+		/**
+		 * @brief Uuid версии сценария
+		 */
+		QString m_uuid;
 	};
 
 	// ****
