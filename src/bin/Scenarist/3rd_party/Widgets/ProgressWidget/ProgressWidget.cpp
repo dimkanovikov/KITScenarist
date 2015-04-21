@@ -44,6 +44,16 @@ void ProgressWidget::showProgress(const QString& _title, const QString& _descrip
 	show();
 }
 
+void ProgressWidget::setProgressText(const QString& _title, const QString& _description)
+{
+	if (!_title.isEmpty()) {
+		m_title->setText(_title);
+	}
+	if (!_description.isEmpty()) {
+		m_description->setText(_description);
+	}
+}
+
 void ProgressWidget::finish()
 {
 	close();

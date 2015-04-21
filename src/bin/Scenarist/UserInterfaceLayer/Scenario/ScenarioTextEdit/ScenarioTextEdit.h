@@ -135,6 +135,12 @@ namespace UserInterface
 		 */
 		void resizeEvent(QResizeEvent* _event);
 
+	private slots:
+		/**
+		 * @brief Вспомогательный слот для корректировки отображения больших документов
+		 */
+		void aboutCorrectRepaint();
+
 	private:
 		/**
 		 * @brief Очистить текущий блок от установленного в нём типа

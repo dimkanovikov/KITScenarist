@@ -590,7 +590,7 @@
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="186"/>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="240"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="347"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="356"/>
         <source>Scenarist project files (*%1)</source>
         <translation>Файл проекта сценария (*%1)</translation>
     </message>
@@ -600,7 +600,7 @@
         <translation>Выберите файл для сохранения проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="345"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="354"/>
         <source>Choose project file to open</source>
         <translation>Выберите файл проекта для открытия</translation>
     </message>
@@ -622,102 +622,107 @@
         <translation> - изменён</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="556"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="565"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="557"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="566"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="945"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="964"/>
         <source>%1[*] - Scenarist</source>
         <translation>%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="654"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="673"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="455"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="464"/>
         <source>Exit from Application</source>
         <translation>Выход из программы</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="455"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="464"/>
         <source>Closing Databse Connections and Remove Temporatry Files.</source>
         <translation>Закрытие соединения с базой данных и удаление временных файлов.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="583"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="592"/>
         <source>Loading Scenario</source>
         <translation>Загрузка сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="583"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="592"/>
         <source>Please wait. Loading can take few minutes.</source>
         <translation>Немного терпения. Загрузка может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="661"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="598"/>
+        <source>Sync scenario with cloud service.</source>
+        <translation>Немного терпения. Сценарий синхронизируется с облаком.</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="680"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="662"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="681"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="663"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="682"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="664"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="683"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="665"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="684"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="709"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="728"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="710"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="729"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="711"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="730"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="713"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="732"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="719"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="738"/>
         <source>Import...</source>
         <translation>Импорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="722"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="741"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="725"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="744"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -859,58 +864,58 @@
 <context>
     <name>ManagementLayer::ScenarioManager</name>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="466"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="491"/>
         <source>Characters to delete</source>
         <translation>Будут удалены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="472"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="497"/>
         <source>Characters to save</source>
         <translation>Будут сохранены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="474"/>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="542"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="499"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="567"/>
         <source>Apply refreshing</source>
         <translation>Применить результаты поиска</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="533"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="558"/>
         <source>Locations to delete</source>
         <translation>Будут удалены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="539"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="564"/>
         <source>Locations to save</source>
         <translation>Будут сохранены</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="578"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="603"/>
         <source>Chron.</source>
         <translation>Хрон.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="717"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="742"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="718"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="743"/>
         <source>Edit Scenario Text</source>
         <translation>Редактирование текста сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="720"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="745"/>
         <source>Data</source>
         <translation>Данные</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="721"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="746"/>
         <source>Edit Scenario Data</source>
         <translation>Редактирование информации о сценарии</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="735"/>
+        <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="760"/>
         <source>On/off Fullscreen Mode</source>
         <translation>Включить/выключить полноэкранный режим</translation>
     </message>
@@ -1057,28 +1062,28 @@
 <context>
     <name>ManagementLayer::SynchronizationManager</name>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="80"/>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="164"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="111"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="195"/>
         <source>Authorizing</source>
         <translation>Авторизация</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="80"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="111"/>
         <source>Checking correction of user name and password.</source>
         <translation>Проверка корректности введённых имени пользователя и пароля.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="164"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="195"/>
         <source>Close working session.</source>
         <translation>Закрытие рабочего соединения.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="202"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="233"/>
         <source>Loading</source>
         <translation>Загрузка</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="202"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="233"/>
         <source>Loading projects list from remote server.</source>
         <translation>Загрузка списка доступных проектов из облака.</translation>
     </message>
@@ -2206,12 +2211,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::CharactersNavigator</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="99"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="100"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="104"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="105"/>
         <source>Create New Character</source>
         <translation>Добавить персонаж</translation>
     </message>
@@ -2220,12 +2225,17 @@ Paragraph</source>
         <translation type="obsolete">Изменить выбранного персонажа</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="107"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="108"/>
         <source>Remove Selected Character</source>
         <translation>Удалить выбранный персонаж</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="111"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="112"/>
+        <source>Merge Selected Characters</source>
+        <translation>Объединить выбранных персонажей</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="115"/>
         <source>Find All Characters from Scenario</source>
         <translation>Найти всех персонажей сценария</translation>
     </message>

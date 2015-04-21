@@ -120,6 +120,11 @@ namespace BusinessLogic
 		Domain::Scenario* scenario() const;
 
 		/**
+		 * @brief Установить сценарий
+		 */
+		void setScenario(Domain::Scenario* _scenario);
+
+		/**
 		 * @brief Сохранить документ в строку
 		 */
 		QString save() const;

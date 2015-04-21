@@ -374,7 +374,8 @@ HEADERS += \
     3rd_party/Helpers/QVariantMapWriter.h \
     3rd_party/Helpers/ImageHelper.h \
     DataLayer/DataMappingLayer/DatabaseHistoryMapper.h \
-    DataLayer/DataStorageLayer/DatabaseHistoryStorage.h
+    DataLayer/DataStorageLayer/DatabaseHistoryStorage.h \
+    3rd_party/Helpers/DiffMatchPatch.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

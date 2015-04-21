@@ -42,24 +42,56 @@ namespace ManagementLayer
 		void aboutLoadProjects();
 
 		/**
-		 * @brief Загрузить версии сценария, которых нет в БД
+		 * @brief Синхронизировать сценарий полностью
+		 * @note Скачать с сервера все версии, которых нет в БД и
+		 *		 отправить на сервер все версии, которых не на нём.
+		 *		 Используется при открытии проекта.
 		 */
-		void aboutLoadScenario();
+		void aboutSyncScenario(bool _isDraft = false);
 
 		/**
 		 * @brief Загрузить данные, которых нет в БД
 		 */
-		void aboutLoadData();
+		void aboutSyncData();
 
 		/**
-		 * @brief Сохранить последнюю версию сценария
+		 * @brief Актуализировать сценарий
 		 */
-		void aboutSaveScenario(const Domain::Scenario* _scenario);
+		void aboutUpdateScenario(bool _isDraft = false);
+
+		/**
+		 * @brief Актуализировать данные
+		 */
+		void aboutUpdateData();
+
+		/**
+		 * @brief Сохранить последнюю версию сценария на сервер
+		 */
+		/** @{ */
+		void aboutSaveScenarioToServer(bool _isDraft, bool _isAsync);
+		void aboutSaveScenarioToServer(Domain::Scenario* _scenario, bool _isAsync);
+		/** @} */
+
+		/**
+		 * @brief Сохранить заданную версию сценария в локальную БД
+		 * @note Если UUID не задан, сохранена будет последняя версия и актуализирована
+		 */
+		void aboutSaveScenarioToDB(const QString& _uuid, bool _isDraft);
 
 		/**
 		 * @brief Сохранить данные сценария
 		 */
 		void aboutSaveData();
+
+		/**
+		 * @brief Отправить изменение на сервер
+		 */
+		void aboutSaveDataToServer(const QString& _changeUuid);
+
+		/**
+		 * @brief Сохранить заданное изменение в локальную БД
+		 */
+		void aboutSaveDataToDB(const QString& _changeUuid);
 
 	signals:
 		/**

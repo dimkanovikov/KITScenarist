@@ -22,6 +22,11 @@ public:
 	void showProgress(const QString& _title, const QString& _description);
 
 	/**
+	 * @brief Обновить текст отображаемый в виджете
+	 */
+	void setProgressText(const QString& _title, const QString& _description);
+
+	/**
 	 * @brief Скрыть виджет и просигнализировать пользователю, о том, что операция завершилась
 	 */
 	void finish();

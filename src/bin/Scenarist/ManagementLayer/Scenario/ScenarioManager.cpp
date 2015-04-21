@@ -255,7 +255,7 @@ void ScenarioManager::loadCurrentProject()
 		m_dataEditManager->setScenarioName(currentScenario->name());
 		m_dataEditManager->setScenarioSynopsis(currentScenario->synopsis());
 	}
-	m_textEditManager->setScenarioDocument(m_scenarioDraft->document());
+	m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
 	m_textEditManager->setScenarioDocument(m_scenario->document());
 
 	//
@@ -290,16 +290,36 @@ void ScenarioManager::saveCurrentProject()
 	//
 	// Сохраняем сценарий
 	//
-	const QString scenarioText = m_scenario->save();
-	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
-		scenarioSynopsis, scenarioText);
+	{
+		const QString scenarioText = m_scenario->save();
+		Domain::Scenario* oldVersion = m_scenario->scenario();
+		Domain::Scenario* newVersion =
+				DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
+					scenarioSynopsis, scenarioText);
+		//
+		// Проверяем, не вышла ли новая версия и если необходимо обновляем указатель на сценарий
+		//
+		if (oldVersion != newVersion) {
+			m_scenario->setScenario(newVersion);
+		}
+	}
 
 	//
 	// Сохраняем черновик
 	//
-	const QString scenarioDraftText = m_scenarioDraft->save();
-	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
-		scenarioSynopsis, scenarioDraftText, IS_DRAFT);
+	{
+		const QString scenarioDraftText = m_scenarioDraft->save();
+		Domain::Scenario* oldVersion = m_scenario->scenario();
+		Domain::Scenario* newVersion =
+				DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
+					scenarioSynopsis, scenarioDraftText, IS_DRAFT);
+		//
+		// Проверяем, не вышла ли новая версия и если необходимо обновляем указатель на сценарий
+		//
+		if (oldVersion != newVersion) {
+			m_scenarioDraft->setScenario(newVersion);
+		}
+	}
 }
 
 void ScenarioManager::saveCurrentProjectSettings(const QString& _projectPath)

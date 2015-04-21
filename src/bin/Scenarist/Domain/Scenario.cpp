@@ -3,9 +3,10 @@
 using namespace Domain;
 
 
-Scenario::Scenario(const Identifier& _id, const QString& _name,
-	const QString& _synopsis, const QString& _text, const QDateTime& _versionStartDatetime,
-	const QDateTime& _versionEndDatetime, const QString& _versionComment, const QString& _uuid) :
+Scenario::Scenario(const Identifier& _id, const QString& _name, const QString& _synopsis,
+	const QString& _text, const QDateTime& _versionStartDatetime,
+	const QDateTime& _versionEndDatetime, const QString& _versionComment, const QString& _uuid,
+	bool _isSynced) :
 	DomainObject(_id),
 	m_name(_name),
 	m_synopsis(_synopsis),
@@ -14,7 +15,8 @@ Scenario::Scenario(const Identifier& _id, const QString& _name,
 	m_versionStartDatetime(_versionStartDatetime),
 	m_versionEndDatetime(_versionEndDatetime),
 	m_versionComment(_versionComment),
-	m_uuid(_uuid)
+	m_uuid(_uuid),
+	m_isSynced(_isSynced)
 {
 }
 
@@ -195,6 +197,22 @@ void Scenario::setUuid(const QString& _uuid)
 {
 	if (m_uuid != _uuid) {
 		m_uuid = _uuid;
+
+		changesNotStored();
+	}
+}
+
+bool Scenario::isSynced() const
+{
+	return m_isSynced;
+}
+
+void Scenario::setIsSynced(bool _isSynced)
+{
+	if (m_isSynced != _isSynced) {
+		m_isSynced = _isSynced;
+
+		changesNotStored();
 	}
 }
 

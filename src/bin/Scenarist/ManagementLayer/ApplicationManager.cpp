@@ -304,11 +304,6 @@ void ApplicationManager::aboutSave()
 	//
 	if (m_view->isWindowModified()) {
 		//
-		// Определим место хранения проекта
-		//
-		const bool currentProjectIsRemote = m_projectsManager->currentProject().type() == Project::Remote;
-
-		//
 		// Управляющие должны сохранить несохранённые данные
 		//
 		DatabaseLayer::Database::transaction();
@@ -320,10 +315,10 @@ void ApplicationManager::aboutSave()
 		//
 		// Для проекта из облака отправляем данные на сервер
 		//
-		if (currentProjectIsRemote) {
-			m_synchronizationManager->aboutSaveScenario(m_scenarioManager->scenario()->scenario());
-			m_synchronizationManager->aboutSaveScenario(m_scenarioManager->scenarioDraft()->scenario());
-			m_synchronizationManager->aboutSaveData();
+		if (m_projectsManager->currentProject().type() == Project::Remote) {
+			m_synchronizationManager->aboutUpdateScenario();
+			m_synchronizationManager->aboutUpdateScenario(true);
+			m_synchronizationManager->aboutUpdateData();
 		}
 
 		//
@@ -597,9 +592,14 @@ void ApplicationManager::goToEditCurrentProject()
 	progress.showProgress(tr("Loading Scenario"), tr("Please wait. Loading can take few minutes."));
 
 	//
-	// Активируем вкладки
+	// Синхронизируем проекты из облака
 	//
-	::enableActionsOnProjectOpen();
+	if (m_projectsManager->currentProject().type() == Project::Remote) {
+		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
+		m_synchronizationManager->aboutSyncScenario();
+		m_synchronizationManager->aboutSyncScenario(true);
+		m_synchronizationManager->aboutSyncData();
+	}
 
 	//
 	// Загрузить данные из файла
@@ -623,6 +623,11 @@ void ApplicationManager::goToEditCurrentProject()
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
 	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
+
+	//
+	// Активируем вкладки
+	//
+	::enableActionsOnProjectOpen();
 
 	//
 	// Перейти на вкладку редактирования сценария

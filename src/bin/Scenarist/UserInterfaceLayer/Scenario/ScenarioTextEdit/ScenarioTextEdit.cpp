@@ -323,12 +323,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 	if (isVisible() && s_firstRepaintUpdate) {
 		s_firstRepaintUpdate = false;
 
-		QTextCursor cursor(document());
-		cursor.beginEditBlock();
-		cursor.setBlockFormat(cursor.blockFormat());
-		cursor.movePosition(QTextCursor::End);
-		cursor.setBlockFormat(cursor.blockFormat());
-		cursor.endEditBlock();
+		QTimer::singleShot(10, this, SLOT(aboutCorrectRepaint()));
 	}
 
 
@@ -538,6 +533,16 @@ void ScenarioTextEdit::resizeEvent(QResizeEvent* _event)
 	QTimer::singleShot(10, this, SLOT(ensureCursorVisibleReimpl()));
 
 	s_firstRepaintUpdate = true;
+}
+
+void ScenarioTextEdit::aboutCorrectRepaint()
+{
+	QTextCursor cursor(document());
+	cursor.beginEditBlock();
+	cursor.setBlockFormat(cursor.blockFormat());
+	cursor.movePosition(QTextCursor::End);
+	cursor.setBlockFormat(cursor.blockFormat());
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()

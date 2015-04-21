@@ -18,7 +18,7 @@ namespace Domain
 		Scenario(const Identifier& _id, const QString& _name, const QString& _synopsis,
 			const QString& _text, const QDateTime& _versionStartDatetime,
 			const QDateTime& _versionEndDatetime, const QString& _versionComment,
-			const QString& _uuid);
+			const QString& _uuid, bool _isSynced = false);
 
 		/**
 		 * @brief Название сценария
@@ -118,6 +118,14 @@ namespace Domain
 		void setUuid(const QString& _uuid);
 		/** @} */
 
+		/**
+		 * @brief Синхронизирован ли сценарий с сервером
+		 */
+		/** @{ */
+		bool isSynced() const;
+		void setIsSynced(bool _isSynced);
+		/** @} */
+
 	private:
 		/**
 		 * @brief Название
@@ -181,6 +189,11 @@ namespace Domain
 		 * @brief Uuid версии сценария
 		 */
 		QString m_uuid;
+
+		/**
+		 * @brief Синхроинизирован ли сценарий с сервером
+		 */
+		bool m_isSynced;
 	};
 
 	// ****

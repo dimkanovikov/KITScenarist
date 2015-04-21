@@ -278,7 +278,8 @@ void Database::createTables(QSqlDatabase& _database)
 				   "version_start_datetime TEXT NOT NULL, "
 				   "version_end_datetime TEXT NOT NULL, "
 				   "version_comment TEXT DEFAULT(NULL), "
-				   "uuid TEXT NOT NULL "
+				   "uuid TEXT NOT NULL, "
+				   "is_synced INTEGER DEFAULT(0) "
 				   ")"
 				   );
 
@@ -753,6 +754,7 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 			QString("ALTER TABLE scenario ADD COLUMN uuid TEXT NOT NULL DEFAULT('%1')")
 					.arg(QUuid::createUuid().toString())
 					);
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN is_synced INTEGER DEFAULT(0)");
 
 		//
 		// Создаём таблицу для хранения всех запросов

@@ -15,6 +15,18 @@ QList<QMap<QString, QString> > DatabaseHistoryStorage::history(const QString& _f
 	return MapperFacade::databaseHistoryMapper()->history(_fromDatetime);
 }
 
+QMap<QString, QString> DatabaseHistoryStorage::historyRecord(const QString& _uuid)
+{
+	return MapperFacade::databaseHistoryMapper()->historyRecord(_uuid);
+}
+
+void DatabaseHistoryStorage::storeAndApplyHistoryRecord(const QString& _uuid, const QString& _query,
+	const QString& _queryValues, const QString& _datetime)
+{
+	MapperFacade::databaseHistoryMapper()->storeHistoryRecord(_uuid, _query, _queryValues, _datetime);
+	MapperFacade::databaseHistoryMapper()->applyHistoryRecord(_query, _queryValues);
+}
+
 DatabaseHistoryStorage::DatabaseHistoryStorage()
 {
 }

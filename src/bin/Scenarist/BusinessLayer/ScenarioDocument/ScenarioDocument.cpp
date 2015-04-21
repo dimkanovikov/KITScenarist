@@ -232,6 +232,13 @@ Domain::Scenario* ScenarioDocument::scenario() const
 	return m_scenario;
 }
 
+void ScenarioDocument::setScenario(Domain::Scenario* _scenario)
+{
+	if (m_scenario != _scenario) {
+		m_scenario = _scenario;
+	}
+}
+
 QString ScenarioDocument::save() const
 {
 	return m_xmlHandler->scenarioToXml();
