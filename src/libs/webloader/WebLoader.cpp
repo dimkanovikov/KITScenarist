@@ -123,6 +123,8 @@ void WebLoader::run()
 				 this,    SLOT(downloadError(QNetworkReply::NetworkError)) );
 		connect(reply, SIGNAL(sslErrors(QList<QSslError>)),
 				this, SLOT(downloadSslErrors(QList<QSslError>)));
+		connect(reply, SIGNAL(sslErrors(QList<QSslError>)),
+				reply, SLOT(ignoreSslErrors()));
 
 
 		exec(); // входим в поток обработки событий, ожидая завершения отработки networkManager'а

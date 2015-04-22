@@ -79,9 +79,9 @@ namespace ManagementLayer
 		void aboutSaveScenarioToDB(const QString& _uuid, bool _isDraft);
 
 		/**
-		 * @brief Сохранить данные сценария
+		 * @brief Отправить изменения сценария на сервер с момента последней отправки
 		 */
-		void aboutSaveData();
+		void aboutSaveDataToServer();
 
 		/**
 		 * @brief Отправить изменение на сервер
@@ -145,7 +145,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Дата и время последнего отправленного изменения данных
 		 */
-		QString m_lastSendedDataDatetime;
+		QString m_lastDataSyncDatetime;
 
 
 

@@ -7,6 +7,8 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 
+#include <DataLayer/Database/Database.h>
+
 #include <Domain/Scenario.h>
 
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
@@ -30,15 +32,15 @@ namespace {
 	 * @brief Ссылки для запросов
 	 */
 	/** @{ */
-	const QUrl URL_LOGIN = QUrl("http://kitscenarist.ru/api/account/login/");
-	const QUrl URL_LOGOUT = QUrl("http://kitscenarist.ru/api/account/logout/");
-	const QUrl URL_PROJECTS = QUrl("http://kitscenarist.ru/api/projects/");
-	const QUrl URL_SCENARIO_LOAD = QUrl("http://kitscenarist.ru/api/projects/scenario/");
-	const QUrl URL_SCENARIO_VERSIONS = QUrl("http://kitscenarist.ru/api/projects/scenario/list/");
-	const QUrl URL_SCENARIO_SAVE = QUrl("http://kitscenarist.ru/api/projects/scenario/save/");
-	const QUrl URL_SCENARIO_DATA_LOAD = QUrl("http://kitscenarist.ru/api/projects/data/");
-	const QUrl URL_SCENARIO_DATA_LIST = QUrl("http://kitscenarist.ru/api/projects/data/list/");
-	const QUrl URL_SCENARIO_DATA_SAVE = QUrl("http://kitscenarist.ru/api/projects/data/save/");
+	const QUrl URL_LOGIN = QUrl("https://kitscenarist.ru/api/account/login/");
+	const QUrl URL_LOGOUT = QUrl("https://kitscenarist.ru/api/account/logout/");
+	const QUrl URL_PROJECTS = QUrl("https://kitscenarist.ru/api/projects/");
+	const QUrl URL_SCENARIO_LOAD = QUrl("https://kitscenarist.ru/api/projects/scenario/");
+	const QUrl URL_SCENARIO_VERSIONS = QUrl("https://kitscenarist.ru/api/projects/scenario/list/");
+	const QUrl URL_SCENARIO_SAVE = QUrl("https://kitscenarist.ru/api/projects/scenario/save/");
+	const QUrl URL_SCENARIO_DATA_LOAD = QUrl("https://kitscenarist.ru/api/projects/data/");
+	const QUrl URL_SCENARIO_DATA_LIST = QUrl("https://kitscenarist.ru/api/projects/data/list/");
+	const QUrl URL_SCENARIO_DATA_SAVE = QUrl("https://kitscenarist.ru/api/projects/data/save/");
 	/** @} */
 
 	/**
@@ -373,6 +375,7 @@ void SynchronizationManager::aboutSyncScenario(bool _isDraft)
 		//
 		// Сохранить в локальной БД все версии, которых в ней нет
 		//
+		DatabaseLayer::Database::transaction();
 		foreach (const QString& versionUuid, remoteVersions.keys()) {
 			//
 			// ... сохранять нужно, если такой версии нет в локальной БД
@@ -394,6 +397,7 @@ void SynchronizationManager::aboutSyncScenario(bool _isDraft)
 				aboutSaveScenarioToDB(versionUuid, _isDraft);
 			}
 		}
+		DatabaseLayer::Database::commit();
 	}
 }
 
@@ -464,6 +468,7 @@ void SynchronizationManager::aboutSyncData()
 	//
 	// Сохранить в локальной БД все изменения, которых в ней нет
 	//
+	DatabaseLayer::Database::transaction();
 	foreach (const QString& changeUuid, remoteChanges) {
 		//
 		// ... сохранять нужно, если такого изменения нет в локальной БД
@@ -477,48 +482,49 @@ void SynchronizationManager::aboutSyncData()
 			aboutSaveDataToDB(changeUuid);
 		}
 	}
+	DatabaseLayer::Database::commit();
+
+	//
+	// Запоминаем время синхронизации данных, в дальнейшем будем отправлять изменения
+	// произведённые с данного момента
+	//
+	m_lastDataSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
 }
 
 void SynchronizationManager::aboutUpdateScenario(bool _isDraft)
 {
 	//
-	// Получить последний с сервера
+	// Получить последнюю версию с сервера
 	//
 
 	//
-	// Объеденить текущий текст с версией с сервера
+	// Если текст последней версии с сервера отличается от текущего текста
 	//
+	{
+		//
+		// Объеденить текущий текст с версией с сервера
+		//
+	}
 
 	//
-	// Отправляем на сервер результат объединения
+	// Если объединённый текст отличается от версии полученной с сервера
 	//
-	aboutSaveScenarioToServer(_isDraft, IS_ASYNC);
+	{
+		//
+		// Отправляем на сервер результат объединения
+		//
+		aboutSaveScenarioToServer(_isDraft, IS_ASYNC);
+	}
 
 	//
 	// Применяем результат объединения к текущему тексту
 	//
-
-
-
-
-
-//	WebLoader* loader = new WebLoader;
-//	connect(loader, SIGNAL(finished()), loader, SLOT(deleteLater()));
-
-//	loader->setRequestMethod(WebLoader::Post);
-//	loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-//	loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-//	loader->addRequestAttribute("scenario_id", _scenario->id().value());
-//	loader->addRequestAttribute("scenario_is_draft", _scenario->isDraft() ? 1 : 0);
-//	loader->addRequestAttribute("scenario_version_end_datetime", _scenario->versionEndDatetime().toString("yyyy-MM-dd hh:mm:ss"));
-//	QByteArray data = loader->loadSync(URL_SCENARIO_LOAD);
-//	qDebug() << data;
 }
 
 void SynchronizationManager::aboutUpdateData()
 {
 	//
-	// Получить новые изменения данных с сервера
+	// Получить новые изменения данных с сервера с момента m_lastDataSyncDatetime
 	//
 
 	//
@@ -528,6 +534,7 @@ void SynchronizationManager::aboutUpdateData()
 	//
 	// Отправить новые изменения данных на сервер
 	//
+	aboutSaveDataToServer();
 
 	//
 	// Актуализация данных в хранилищах
@@ -663,14 +670,14 @@ void SynchronizationManager::aboutSaveScenarioToDB(const QString& _uuid, bool _i
 	}
 }
 
-void SynchronizationManager::aboutSaveData()
+void SynchronizationManager::aboutSaveDataToServer()
 {
 	if (!m_sessionKey.isEmpty()) {
 		//
 		// Получить данные, которых на сервере ещё нет
 		//
 		QList<QMap<QString, QString> > databaseHistory =
-				StorageFacade::databaseHistoryStorage()->history(m_lastSendedDataDatetime);
+				StorageFacade::databaseHistoryStorage()->history(m_lastDataSyncDatetime);
 
 		//
 		// Сформировать xml для отправки
@@ -703,9 +710,9 @@ void SynchronizationManager::aboutSaveData()
 				xmlWriter.writeEndElement(); // change
 
 				//
-				// Обновляем дату и время последнего отправленного изменения
+				// Обновляем дату и время последней синхронизации изменений
 				//
-				m_lastSendedDataDatetime = historyRecord.value(DBH_DATETIME_KEY);
+				m_lastDataSyncDatetime = historyRecord.value(DBH_DATETIME_KEY);
 			}
 		}
 		xmlWriter.writeEndElement(); // changes
@@ -832,7 +839,7 @@ void SynchronizationManager::initConnections()
 void SynchronizationManager::sleepALittle()
 {
 	QEventLoop loop;
-	QTimer::singleShot(0, &loop, SLOT(quit()));
+	QTimer::singleShot(10, &loop, SLOT(quit()));
 	loop.exec();
 }
 
