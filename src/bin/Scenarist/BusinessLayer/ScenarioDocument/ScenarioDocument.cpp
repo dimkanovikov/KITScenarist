@@ -13,6 +13,8 @@
 
 #include <Domain/Scenario.h>
 
+#include <3rd_party/Helpers/DiffMatchPatch.h>
+
 #include <QCryptographicHash>
 #include <QRegularExpression>
 #include <QTextDocument>
@@ -303,6 +305,38 @@ QStringList ScenarioDocument::findLocations() const
 	}
 
 	return locations.toList();
+}
+#include <QDebug>
+void ScenarioDocument::merge(const QString& _newText)
+{
+
+//	//
+//	// Найти различия между текстами
+//	//
+//	diff_match_patch<std::wstring> dmp;
+//	diff_match_patch<std::wstring>::Diffs diffs = dmp.diff_main(_newText.toStdWString(), save().toStdWString());
+
+//	//
+//	// Для каждого различия
+//	//
+//	qDebug() << "\n\n";
+//	foreach (const diff_match_patch<std::wstring>::Diff& diff, diffs) {
+//		qDebug() << QString::fromStdWString(diff.toString());
+//		//
+//		// Сформировать на основе различия майм
+//		//
+
+//		//
+//		// Обновить параграф текста
+//		//
+//	}
+
+	diff_match_patch<std::wstring> dmp;
+	std::wstring strPatch = dmp.patch_toText(dmp.patch_make(_newText.toStdWString(), save().toStdWString()));
+	std::pair<std::wstring, std::vector<bool> > out = dmp.patch_apply(dmp.patch_fromText(strPatch), _newText.toStdWString());
+	load(QString::fromStdWString(out.first));
+
+//	load(_newText);
 }
 
 int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const

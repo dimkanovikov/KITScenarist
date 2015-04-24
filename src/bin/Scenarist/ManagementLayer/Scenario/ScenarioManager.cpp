@@ -635,13 +635,10 @@ void ScenarioManager::aboutUpdateScenario(const QString& _name, const QString& _
 		m_dataEditManager->setScenarioSynopsis(_synopsis);
 
 		m_scenario->scenario()->setText(_text);
-		//
-		// FIXME: Правильно нужно обновлть сценарий
-		//
-		m_scenario->load(m_scenario->scenario());
+		m_scenario->merge(_text);
 	} else {
 		m_scenarioDraft->scenario()->setText(_text);
-		m_scenarioDraft->load(m_scenarioDraft->scenario());
+		m_scenarioDraft->merge(_text);
 	}
 }
 

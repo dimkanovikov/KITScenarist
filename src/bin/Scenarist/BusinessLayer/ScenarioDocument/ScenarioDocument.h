@@ -149,6 +149,11 @@ namespace BusinessLogic
 		 */
 		QStringList findLocations() const;
 
+		/**
+		 * @brief Актуализировать текущий текст до передаваемого
+		 */
+		void merge(const QString& _newText);
+
 	public:
 		/**
 		 * @brief Вспомогательные функции для обработчика xml
