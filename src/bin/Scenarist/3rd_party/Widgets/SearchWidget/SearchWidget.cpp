@@ -50,7 +50,7 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	m_prevMatch->setFixedWidth(20);
 	m_prevMatch->setText(
 #ifdef Q_OS_WIN
-				QSysInfo::windowsVersion() == SysInfo::WV_XP ? "◄" : "◀"
+				QSysInfo::windowsVersion() == QSysInfo::WV_XP ? "◄" : "◀"
 #else
 				"◀"
 #endif
@@ -62,7 +62,7 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	m_nextMatch->setFixedWidth(20);
 	m_nextMatch->setText(
 #ifdef Q_OS_WIN
-				QSysInfo::windowsVersion() == SysInfo::WV_XP ? "►" : "▶"
+				QSysInfo::windowsVersion() == QSysInfo::WV_XP ? "►" : "▶"
 #else
 				"▶"
 #endif
