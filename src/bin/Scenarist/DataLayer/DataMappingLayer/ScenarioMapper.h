@@ -18,12 +18,6 @@ namespace DataMappingLayer
 	{
 	public:
 		Scenario* find(const Identifier& _id);
-
-		/**
-		 * @brief Извлечь только последнюю версию сценария и черновика
-		 */
-		ScenariosTable* findLast();
-
 		ScenariosTable* findAll();
 		void insert(Scenario* _scenario);
 		void update(Scenario* _scenario);

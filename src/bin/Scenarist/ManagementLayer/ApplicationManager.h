@@ -121,11 +121,6 @@ namespace ManagementLayer
 		 */
 		void aboutShowFullscreen();
 
-		/**
-		 * @brief Синхронизировать проект
-		 */
-		void aboutSyncProject();
-
 	private:
 		/**
 		 * @brief Загрузить состояние окна
@@ -154,16 +149,6 @@ namespace ManagementLayer
 		 * @brief Закрыть текущий проект
 		 */
 		void closeCurrentProject();
-
-		/**
-		 * @brief Запустить синхронизацию
-		 */
-		void startSync();
-
-		/**
-		 * @brief Остановить синхронизацию
-		 */
-		void stopSync();
 
 	private:
 		/**
@@ -271,11 +256,6 @@ namespace ManagementLayer
 		 * @brief Помощник резервного копирования
 		 */
 		BackupHelper m_backupHelper;
-
-		/**
-		 * @brief Таймер синхронизации
-		 */
-		QTimer m_syncTimer;
 	};
 }
 

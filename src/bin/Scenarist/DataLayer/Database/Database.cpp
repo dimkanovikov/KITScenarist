@@ -8,7 +8,6 @@
 #include <QSqlRecord>
 #include <QTextCodec>
 #include <QVariant>
-#include <QUuid>
 
 using namespace DatabaseLayer;
 
@@ -274,12 +273,7 @@ void Database::createTables(QSqlDatabase& _database)
 				   "year TEXT DEFAULT(NULL), "
 				   "synopsis TEXT DEFAULT(NULL), "
 				   "text TEXT NOT NULL, "
-				   "is_draft INTEGER NOT NULL DEFAULT(0), "
-				   "version_start_datetime TEXT NOT NULL, "
-				   "version_end_datetime TEXT NOT NULL, "
-				   "version_comment TEXT DEFAULT(NULL), "
-				   "uuid TEXT NOT NULL, "
-				   "is_synced INTEGER DEFAULT(0) "
+				   "is_draft INTEGER NOT NULL DEFAULT(0) "
 				   ")"
 				   );
 
@@ -298,17 +292,8 @@ void Database::createEnums(QSqlDatabase& _database)
 
 	// Пустой сценарий и черновик
 	{
-		const QString dateTime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
-		q_creator.exec(
-			QString("INSERT INTO scenario (id, text, version_start_datetime, version_end_datetime) "
-					"VALUES(null, '', '%1', '%1')")
-					.arg(dateTime)
-					);
-		q_creator.exec(
-			QString("INSERT INTO scenario (id, text, is_draft, version_start_datetime, version_end_datetime) "
-					"VALUES(null, '', 1, '%1', '%1')")
-					.arg(dateTime)
-					);
+		q_creator.exec("INSERT INTO scenario (id, text) VALUES(null, '')");
+		q_creator.exec("INSERT INTO scenario (id, text, is_draft) VALUES(null, '', 1)");
 	}
 
 	// Версия программы
@@ -737,25 +722,6 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 	_database.transaction();
 
 	{
-		//
-		// Добавляем новые столбцы
-		//
-		const QString defaultDateTime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
-		q_updater.exec(
-			QString("ALTER TABLE scenario ADD COLUMN version_start_datetime TEXT NOT NULL DEFAULT('%1')")
-					.arg(defaultDateTime)
-					);
-		q_updater.exec(
-			QString("ALTER TABLE scenario ADD COLUMN version_end_datetime TEXT NOT NULL DEFAULT('%1')")
-					.arg(defaultDateTime)
-					);
-		q_updater.exec("ALTER TABLE scenario ADD COLUMN version_comment TEXT DEFAULT(NULL)");
-		q_updater.exec(
-			QString("ALTER TABLE scenario ADD COLUMN uuid TEXT NOT NULL DEFAULT('%1')")
-					.arg(QUuid::createUuid().toString())
-					);
-		q_updater.exec("ALTER TABLE scenario ADD COLUMN is_synced INTEGER DEFAULT(0)");
-
 		//
 		// Создаём таблицу для хранения всех запросов
 		//

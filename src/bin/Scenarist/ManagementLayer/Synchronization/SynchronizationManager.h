@@ -42,68 +42,68 @@ namespace ManagementLayer
 		void aboutLoadProjects();
 
 	public:
-		/**
-		 * @brief Синхронизировать сценарий полностью
-		 * @note Скачать с сервера все версии, которых нет в БД и
-		 *		 отправить на сервер все версии, которых не на нём.
-		 *		 Используется при открытии проекта.
-		 */
-		void aboutSyncScenario(bool _isDraft = false);
+//		/**
+//		 * @brief Синхронизировать сценарий полностью
+//		 * @note Скачать с сервера все версии, которых нет в БД и
+//		 *		 отправить на сервер все версии, которых не на нём.
+//		 *		 Используется при открытии проекта.
+//		 */
+//		void aboutSyncScenario(bool _isDraft = false);
 
-		/**
-		 * @brief Загрузить данные, которых нет в БД
-		 */
-		void aboutSyncData();
+//		/**
+//		 * @brief Загрузить данные, которых нет в БД
+//		 */
+//		void aboutSyncData();
 
-		/**
-		 * @brief Актуализировать сценарий
-		 */
-		/** @{ */
-		void aboutUpdateScenario(bool _isDraft = false);
-		void aboutUpdateScenario(const QString& _name, const QString& _synopsis,
-			const QString& _text, bool _isDraft);
-		/** @} */
+//		/**
+//		 * @brief Актуализировать сценарий
+//		 */
+//		/** @{ */
+//		void aboutUpdateScenario(bool _isDraft = false);
+//		void aboutUpdateScenario(const QString& _name, const QString& _synopsis,
+//			const QString& _text, bool _isDraft);
+//		/** @} */
 
-		/**
-		 * @brief Актуализировать данные
-		 */
-		void aboutUpdateData();
+//		/**
+//		 * @brief Актуализировать данные
+//		 */
+//		void aboutUpdateData();
 
-		/**
-		 * @brief Сохранить последнюю версию сценария на сервер
-		 */
-		void aboutSaveScenarioToServer(bool _isDraft, bool _isAsync);
+//		/**
+//		 * @brief Сохранить последнюю версию сценария на сервер
+//		 */
+//		void aboutSaveScenarioToServer(bool _isDraft, bool _isAsync);
 
-		/**
-		 * @brief Сохранить версию сценария на сервер
-		 */
-		void aboutSaveScenarioToServer(Domain::Scenario* _scenario, bool _isAsync);
+//		/**
+//		 * @brief Сохранить версию сценария на сервер
+//		 */
+//		void aboutSaveScenarioToServer(Domain::Scenario* _scenario, bool _isAsync);
 
-		/**
-		 * @brief Загрузить версию сценария
-		 */
-		QHash<QString, QString> aboutLoadScenario(const QString& _uuid, bool _isDraft);
+//		/**
+//		 * @brief Загрузить версию сценария
+//		 */
+//		QHash<QString, QString> aboutLoadScenario(const QString& _uuid, bool _isDraft);
 
-		/**
-		 * @brief Сохранить заданную версию сценария в локальную БД
-		 * @note Если UUID не задан, сохранена будет последняя версия и актуализирована
-		 */
-		void aboutSaveScenarioToDB(const QString& _uuid, bool _isDraft);
+//		/**
+//		 * @brief Сохранить заданную версию сценария в локальную БД
+//		 * @note Если UUID не задан, сохранена будет последняя версия и актуализирована
+//		 */
+//		void aboutSaveScenarioToDB(const QString& _uuid, bool _isDraft);
 
-		/**
-		 * @brief Отправить изменения сценария на сервер с момента последней отправки
-		 */
-		void aboutSaveDataToServer();
+//		/**
+//		 * @brief Отправить изменения сценария на сервер с момента последней отправки
+//		 */
+//		void aboutSaveDataToServer();
 
-		/**
-		 * @brief Отправить изменение на сервер
-		 */
-		void aboutSaveDataToServer(const QString& _changeUuid);
+//		/**
+//		 * @brief Отправить изменение на сервер
+//		 */
+//		void aboutSaveDataToServer(const QString& _changeUuid);
 
-		/**
-		 * @brief Сохранить заданное изменение в локальную БД
-		 */
-		void aboutSaveDataToDB(const QString& _changeUuid);
+//		/**
+//		 * @brief Сохранить заданное изменение в локальную БД
+//		 */
+//		void aboutSaveDataToDB(const QString& _changeUuid);
 
 	signals:
 		/**
@@ -134,7 +134,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Сценарий актуализирован
 		 */
-		void scenarioUpdated(const QString& _name, const QString& _synopsis, const QString& _text, bool _isDraft);
+//		void scenarioUpdated(const QString& _name, const QString& _synopsis, const QString& _text, bool _isDraft);
 
 	private:
 		/**
@@ -152,13 +152,13 @@ namespace ManagementLayer
 		 * @brief Синхронизированные значения
 		 */
 		/** @{ */
-		QString lastSyncedName(bool _isDraft) const;
-		QString lastSyncedSynopsis(bool _isDraft) const;
-		QString lastSyncedText(bool _isDraft) const;
+//		QString lastSyncedName(bool _isDraft) const;
+//		QString lastSyncedSynopsis(bool _isDraft) const;
+//		QString lastSyncedText(bool _isDraft) const;
 
-		void setLastSyncedName(const QString& _name, bool _isDraft);
-		void setLastSyncedSynopsis(const QString& _synopsis, bool _isDraft);
-		void setLastSyncedText(const QString& _text, bool _isDraft);
+//		void setLastSyncedName(const QString& _name, bool _isDraft);
+//		void setLastSyncedSynopsis(const QString& _synopsis, bool _isDraft);
+//		void setLastSyncedText(const QString& _text, bool _isDraft);
 		/** @} */
 
 	private:
@@ -172,22 +172,22 @@ namespace ManagementLayer
 		 */
 		QString m_sessionKey;
 
-		/**
-		 * @brief Синхронизированные значения
-		 */
-		/** @{ */
-		QString m_lastSyncedName;
-		QString m_lastSyncedSynopsis;
-		QString m_lastSyncedText;
-		QString m_lastSyncedDraftName;
-		QString m_lastSyncedDraftSynopsis;
-		QString m_lastSyncedDraftText;
-		/** @} */
+//		/**
+//		 * @brief Синхронизированные значения
+//		 */
+//		/** @{ */
+//		QString m_lastSyncedName;
+//		QString m_lastSyncedSynopsis;
+//		QString m_lastSyncedText;
+//		QString m_lastSyncedDraftName;
+//		QString m_lastSyncedDraftSynopsis;
+//		QString m_lastSyncedDraftText;
+//		/** @} */
 
-		/**
-		 * @brief Дата и время последнего отправленного изменения данных
-		 */
-		QString m_lastDataSyncDatetime;
+//		/**
+//		 * @brief Дата и время последнего отправленного изменения данных
+//		 */
+//		QString m_lastDataSyncDatetime;
 
 
 

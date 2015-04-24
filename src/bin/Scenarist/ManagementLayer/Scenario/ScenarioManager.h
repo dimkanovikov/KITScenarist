@@ -68,7 +68,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Сохранить данные текущего проекта
 		 */
-		void saveCurrentProject(bool _toDatabase);
+		void saveCurrentProject();
 
 		/**
 		 * @brief Сохранить настройки текущего проекта
@@ -130,11 +130,6 @@ namespace ManagementLayer
 		 * @brief Изменено название сценария
 		 */
 		void aboutScenarioNameChanged(const QString& _name);
-
-		/**
-		 * @brief Обновить сценарий
-		 */
-		void aboutUpdateScenario(const QString& _name, const QString& _synopsis, const QString& _text, bool _isDraft);
 
 	signals:
 		/**

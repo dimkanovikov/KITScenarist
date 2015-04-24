@@ -4,19 +4,12 @@ using namespace Domain;
 
 
 Scenario::Scenario(const Identifier& _id, const QString& _name, const QString& _synopsis,
-	const QString& _text, const QDateTime& _versionStartDatetime,
-	const QDateTime& _versionEndDatetime, const QString& _versionComment, const QString& _uuid,
-	bool _isSynced) :
+	const QString& _text) :
 	DomainObject(_id),
 	m_name(_name),
 	m_synopsis(_synopsis),
 	m_text(_text),
-	m_isDraft(false),
-	m_versionStartDatetime(_versionStartDatetime),
-	m_versionEndDatetime(_versionEndDatetime),
-	m_versionComment(_versionComment),
-	m_uuid(_uuid),
-	m_isSynced(_isSynced)
+	m_isDraft(false)
 {
 }
 
@@ -30,7 +23,6 @@ void Scenario::setName(const QString& _name)
 	if (m_name != _name) {
 		m_name = _name;
 
-		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -45,7 +37,6 @@ void Scenario::setAdditionalInfo(const QString& _additionalInfo)
 	if (m_additionalInfo != _additionalInfo) {
 		m_additionalInfo = _additionalInfo;
 
-		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -60,7 +51,6 @@ void Scenario::setGenre(const QString& _genre)
 	if (m_genre != _genre) {
 		m_genre = _genre;
 
-		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -75,7 +65,6 @@ void Scenario::setAuthor(const QString _author)
 	if (m_author != _author) {
 		m_author = _author;
 
-		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -90,7 +79,6 @@ void Scenario::setContacts(const QString& _contacts)
 	if (m_contacts != _contacts) {
 		m_contacts = _contacts;
 
-		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -105,7 +93,6 @@ void Scenario::setYear(const QString& _year)
 	if (m_year != _year) {
 		m_year = _year;
 
-		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -120,7 +107,6 @@ void Scenario::setSynopsis(const QString& _synopsis)
 	if (m_synopsis != _synopsis) {
 		m_synopsis = _synopsis;
 
-		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -135,7 +121,6 @@ void Scenario::setText(const QString& _text)
 	if (m_text != _text) {
 		m_text = _text;
 
-		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -149,80 +134,6 @@ void Scenario::setIsDraft(bool _isDraft)
 {
 	if (m_isDraft != _isDraft) {
 		m_isDraft = _isDraft;
-
-		setIsSynced(false);
-		changesNotStored();
-	}
-}
-
-QDateTime Scenario::versionStartDatetime() const
-{
-	return m_versionStartDatetime;
-}
-
-void Scenario::setVersionStartDatetime(const QDateTime& _datetime)
-{
-	if (m_versionStartDatetime != _datetime) {
-		m_versionStartDatetime = _datetime;
-
-		setIsSynced(false);
-		changesNotStored();
-	}
-}
-
-QDateTime Scenario::versionEndDatetime() const
-{
-	return m_versionEndDatetime;
-}
-
-void Scenario::setVersionEndDatetime(const QDateTime& _datetime)
-{
-	if (m_versionEndDatetime != _datetime) {
-		m_versionEndDatetime = _datetime;
-
-		changesNotStored();
-	}
-}
-
-QString Scenario::versionComment() const
-{
-	return m_versionComment;
-}
-
-void Scenario::setVersionComment(const QString& _comment)
-{
-	if (m_versionComment != _comment) {
-		m_versionComment = _comment;
-
-		setIsSynced(false);
-		changesNotStored();
-	}
-}
-
-QString Scenario::uuid() const
-{
-	return m_uuid;
-}
-
-void Scenario::setUuid(const QString& _uuid)
-{
-	if (m_uuid != _uuid) {
-		m_uuid = _uuid;
-
-		setIsSynced(false);
-		changesNotStored();
-	}
-}
-
-bool Scenario::isSynced() const
-{
-	return m_isSynced;
-}
-
-void Scenario::setIsSynced(bool _isSynced)
-{
-	if (m_isSynced != _isSynced) {
-		m_isSynced = _isSynced;
 
 		changesNotStored();
 	}

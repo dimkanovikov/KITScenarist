@@ -16,9 +16,7 @@ namespace Domain
 	{
 	public:
 		Scenario(const Identifier& _id, const QString& _name, const QString& _synopsis,
-			const QString& _text, const QDateTime& _versionStartDatetime,
-			const QDateTime& _versionEndDatetime, const QString& _versionComment,
-			const QString& _uuid, bool _isSynced = false);
+			const QString& _text);
 
 		/**
 		 * @brief Название сценария
@@ -90,41 +88,6 @@ namespace Domain
 		/** @{ */
 		bool isDraft() const;
 		void setIsDraft(bool _isDraft);
-		/** @} */
-
-		/**
-		 * @brief Временные метки, начала и конца сессии работы над сценарием
-		 */
-		/** @{ */
-		QDateTime versionStartDatetime() const;
-		void setVersionStartDatetime(const QDateTime& _datetime);
-		QDateTime versionEndDatetime() const;
-		void setVersionEndDatetime(const QDateTime& _datetime);
-		/** @} */
-
-		/**
-		 * @brief Комментарий к фиксируемой версии сценария
-		 */
-		/** @{ */
-		QString versionComment() const;
-		void setVersionComment(const QString& _comment);
-		/** @} */
-
-		/**
-		 * @brief Uuid версии сценария
-		 */
-		/** @{ */
-		QString uuid() const;
-		void setUuid(const QString& _uuid);
-		/** @} */
-
-		/**
-		 * @brief Синхронизирован ли сценарий с сервером
-		 */
-		/** @{ */
-		bool isSynced() const;
-		void setIsSynced(bool _isSynced);
-		/** @} */
 
 	private:
 		/**
@@ -171,29 +134,6 @@ namespace Domain
 		 * @brief Является ли сценарий черновиком
 		 */
 		bool m_isDraft;
-
-		/**
-		 * @brief Временные метки, начала и конца сессии работы над сценарием
-		 */
-		/** @{ */
-		QDateTime m_versionStartDatetime;
-		QDateTime m_versionEndDatetime;
-		/** @} */
-
-		/**
-		 * @brief Комментарий к фиксируемой версии сценария
-		 */
-		QString m_versionComment;
-
-		/**
-		 * @brief Uuid версии сценария
-		 */
-		QString m_uuid;
-
-		/**
-		 * @brief Синхроинизирован ли сценарий с сервером
-		 */
-		bool m_isSynced;
 	};
 
 	// ****

@@ -46,9 +46,6 @@ namespace {
 	const char* MAC_CHANGED_SUFFIX =
 			QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
 
-	const bool TO_DATABASE = true;
-	const bool TO_MEMORY = false;
-
 	/**
 	 * @brief Неактивные при старте действия
 	 */
@@ -310,19 +307,19 @@ void ApplicationManager::aboutSave()
 		// Управляющие должны сохранить несохранённые данные
 		//
 		DatabaseLayer::Database::transaction();
-		m_scenarioManager->saveCurrentProject(TO_DATABASE);
+		m_scenarioManager->saveCurrentProject();
 		m_charactersManager->saveCharacters();
 		m_locationsManager->saveLocations();
 		DatabaseLayer::Database::commit();
 
-		//
-		// Для проекта из облака отправляем данные на сервер
-		//
-		if (m_projectsManager->currentProject().type() == Project::Remote) {
-			m_synchronizationManager->aboutUpdateScenario();
-			m_synchronizationManager->aboutUpdateScenario(true);
-			m_synchronizationManager->aboutUpdateData();
-		}
+//		//
+//		// Для проекта из облака отправляем данные на сервер
+//		//
+//		if (m_projectsManager->currentProject().type() == Project::Remote) {
+//			m_synchronizationManager->aboutUpdateScenario();
+//			m_synchronizationManager->aboutUpdateScenario(true);
+//			m_synchronizationManager->aboutUpdateData();
+//		}
 
 		//
 		// Изменим статус окна на сохранение изменений
@@ -524,19 +521,6 @@ void ApplicationManager::aboutShowFullscreen()
 	}
 }
 
-void ApplicationManager::aboutSyncProject()
-{
-	//
-	// Обновить параметры сценария
-	//
-	m_scenarioManager->saveCurrentProject(TO_MEMORY);
-	//
-	// Синхронизировать
-	//
-	m_synchronizationManager->aboutUpdateScenario();
-	m_synchronizationManager->aboutUpdateScenario(true);
-}
-
 void ApplicationManager::loadViewState()
 {
 	m_view->restoreGeometry(
@@ -607,15 +591,15 @@ void ApplicationManager::goToEditCurrentProject()
 	ProgressWidget progress(m_view);
 	progress.showProgress(tr("Loading Scenario"), tr("Please wait. Loading can take few minutes."));
 
-	//
-	// Синхронизируем проекты из облака
-	//
-	if (m_projectsManager->currentProject().type() == Project::Remote) {
-		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
-		m_synchronizationManager->aboutSyncScenario();
-		m_synchronizationManager->aboutSyncScenario(true);
-		m_synchronizationManager->aboutSyncData();
-	}
+//	//
+//	// Синхронизируем проекты из облака
+//	//
+//	if (m_projectsManager->currentProject().type() == Project::Remote) {
+//		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
+//		m_synchronizationManager->aboutSyncScenario();
+//		m_synchronizationManager->aboutSyncScenario(true);
+//		m_synchronizationManager->aboutSyncData();
+//	}
 
 	//
 	// Загрузить данные из файла
@@ -629,11 +613,6 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
-
-	//
-	// Запустим синхронизацию
-	//
-	startSync();
 
 	//
 	// Установим заголовок
@@ -670,11 +649,6 @@ void ApplicationManager::closeCurrentProject()
 	m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 
 	//
-	// Останавливаем синхронизацию
-	//
-	stopSync();
-
-	//
 	// Очистим все загруженные на текущий момент данные
 	//
 	DataStorageLayer::StorageFacade::clearStorages();
@@ -688,16 +662,6 @@ void ApplicationManager::closeCurrentProject()
 	// Информируем управляющего проектами, что текущий проект закрыт
 	//
 	m_projectsManager->closeCurrentProject();
-}
-
-void ApplicationManager::startSync()
-{
-	m_syncTimer.start(5000);
-}
-
-void ApplicationManager::stopSync()
-{
-	m_syncTimer.stop();
 }
 
 void ApplicationManager::initView()
@@ -853,10 +817,8 @@ void ApplicationManager::initConnections()
 			m_startUpManager, SLOT(aboutUserUnlogged()));
 	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
 			m_projectsManager, SLOT(setRemoteProjects(QString)));
-	connect(m_synchronizationManager, SIGNAL(scenarioUpdated(QString,QString,QString,bool)),
-			m_scenarioManager, SLOT(aboutUpdateScenario(QString,QString,QString,bool)));
-
-	connect(&m_syncTimer, SIGNAL(timeout()), this, SLOT(aboutSyncProject()));
+//	connect(m_synchronizationManager, SIGNAL(scenarioUpdated(QString,QString,QString,bool)),
+//			m_scenarioManager, SLOT(aboutUpdateScenario(QString,QString,QString,bool)));
 }
 
 void ApplicationManager::initStyleSheet()

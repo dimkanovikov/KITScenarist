@@ -282,76 +282,24 @@ void ScenarioManager::loadCurrentProjectSettings(const QString& _projectPath)
 	m_textEditManager->setCursorPosition(lastCursorPosition);
 }
 
-void ScenarioManager::saveCurrentProject(bool _toDatabase)
+void ScenarioManager::saveCurrentProject()
 {
 	//
 	// Сохраняем сценарий
 	//
 	{
-		const QString scenarioName = m_dataEditManager->scenarioName();
-		const QString scenarioSynopsis = m_dataEditManager->scenarioSynopsis();
-		const QString scenarioText = m_scenario->save();
-
-		//
-		// Если нужно сохранить в БД
-		//
-		if (_toDatabase) {
-			Domain::Scenario* oldVersion = m_scenario->scenario();
-			Domain::Scenario* newVersion =
-					DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(scenarioName,
-																					  scenarioSynopsis, scenarioText);
-			//
-			// Проверяем, не вышла ли новая версия и если необходимо обновляем указатель на сценарий
-			//
-			if (oldVersion != newVersion) {
-				m_scenario->setScenario(newVersion);
-			}
-		}
-		//
-		// В противном случае обновляем лишь значения объекта сценария
-		//
-		else {
-			if (m_scenario->scenario() == 0) {
-				saveCurrentProject(!_toDatabase);
-			}
-			m_scenario->scenario()->setName(scenarioName);
-			m_scenario->scenario()->setSynopsis(scenarioSynopsis);
-			m_scenario->scenario()->setText(scenarioText);
-			m_scenario->scenario()->setVersionEndDatetime(QDateTime::currentDateTimeUtc());
-		}
+		m_scenario->scenario()->setName(m_dataEditManager->scenarioName());
+		m_scenario->scenario()->setSynopsis(m_dataEditManager->scenarioSynopsis());
+		m_scenario->scenario()->setText(m_scenario->save());
+		DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenario->scenario());
 	}
 
 	//
 	// Сохраняем черновик
 	//
 	{
-		const QString scenarioDraftText = m_scenarioDraft->save();
-
-		//
-		// Если нужно сохранить в БД
-		//
-		if (_toDatabase) {
-			Domain::Scenario* oldVersion = m_scenario->scenario();
-			Domain::Scenario* newVersion =
-					DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(QString::null,
-						QString::null, scenarioDraftText, IS_DRAFT);
-			//
-			// Проверяем, не вышла ли новая версия и если необходимо обновляем указатель на сценарий
-			//
-			if (oldVersion != newVersion) {
-				m_scenarioDraft->setScenario(newVersion);
-			}
-		}
-		//
-		// В противном случае обновляем лишь значения объекта сценария
-		//
-		else {
-			if (m_scenarioDraft->scenario() == 0) {
-				saveCurrentProject(!_toDatabase);
-			}
-			m_scenarioDraft->scenario()->setText(scenarioDraftText);
-			m_scenarioDraft->scenario()->setVersionEndDatetime(QDateTime::currentDateTimeUtc());
-		}
+		m_scenarioDraft->scenario()->setText(m_scenarioDraft->save());
+		DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenarioDraft->scenario());
 	}
 }
 
@@ -623,23 +571,6 @@ void ScenarioManager::aboutRefreshLocations()
 void ScenarioManager::aboutScenarioNameChanged(const QString& _name)
 {
 	m_dataEditManager->setScenarioName(_name);
-}
-
-void ScenarioManager::aboutUpdateScenario(const QString& _name, const QString& _synopsis, const QString& _text, bool _isDraft)
-{
-	if (!_isDraft) {
-		m_scenario->scenario()->setName(_name);
-		m_dataEditManager->setScenarioName(_name);
-
-		m_scenario->scenario()->setSynopsis(_synopsis);
-		m_dataEditManager->setScenarioSynopsis(_synopsis);
-
-		m_scenario->scenario()->setText(_text);
-		m_scenario->merge(_text);
-	} else {
-		m_scenarioDraft->scenario()->setText(_text);
-		m_scenarioDraft->merge(_text);
-	}
 }
 
 void ScenarioManager::aboutUpdateDuration(int _cursorPosition)

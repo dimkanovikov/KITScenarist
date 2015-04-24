@@ -7,20 +7,13 @@ using namespace DataMappingLayer;
 
 namespace {
 	const QString COLUMNS = " id, name, additional_info, genre, author, contacts, year, synopsis, "
-							"text, is_draft, version_start_datetime, version_end_datetime, "
-							"version_comment, uuid, is_synced ";
+							"text, is_draft ";
 	const QString TABLE_NAME = " scenario ";
 }
 
 Scenario* ScenarioMapper::find(const Identifier& _id)
 {
 	return dynamic_cast<Scenario*>(abstractFind(_id));
-}
-
-ScenariosTable* ScenarioMapper::findLast()
-{
-	const QString filter = " ORDER BY version_end_datetime DESC LIMIT 2 ";
-	return qobject_cast<ScenariosTable*>(abstractFindAll(filter));
 }
 
 ScenariosTable* ScenarioMapper::findAll()
@@ -59,7 +52,7 @@ QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (" + COLUMNS + ") "
-					" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+					" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
 					);
 
 	Scenario* scenario = dynamic_cast<Scenario*>(_subject );
@@ -74,11 +67,6 @@ QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 	_insertValues.append(scenario->synopsis());
 	_insertValues.append(scenario->text());
 	_insertValues.append(scenario->isDraft() ? "1" : "0");
-	_insertValues.append(scenario->versionStartDatetime().toString("yyyy-MM-dd hh:mm:ss"));
-	_insertValues.append(scenario->versionEndDatetime().toString("yyyy-MM-dd hh:mm:ss"));
-	_insertValues.append(scenario->versionComment());
-	_insertValues.append(scenario->uuid());
-	_insertValues.append(scenario->isSynced() ? "1" : "0");
 
 	return insertStatement;
 }
@@ -95,12 +83,7 @@ QString ScenarioMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 					" year = ?, "
 					" synopsis = ?, "
 					" text = ?, "
-					" is_draft = ?, "
-					" version_start_datetime = ?, "
-					" version_end_datetime = ?, "
-					" version_comment = ?, "
-					" uuid = ?, "
-					" is_synced = ? "
+					" is_draft = ? "
 					" WHERE id = ? "
 					);
 
@@ -115,11 +98,6 @@ QString ScenarioMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 	_updateValues.append(scenario->synopsis());
 	_updateValues.append(scenario->text());
 	_updateValues.append(scenario->isDraft() ? "1" : "0");
-	_updateValues.append(scenario->versionStartDatetime().toString("yyyy-MM-dd hh:mm:ss"));
-	_updateValues.append(scenario->versionEndDatetime().toString("yyyy-MM-dd hh:mm:ss"));
-	_updateValues.append(scenario->versionComment());
-	_updateValues.append(scenario->uuid());
-	_updateValues.append(scenario->isSynced() ? "1" : "0");
 	_updateValues.append(scenario->id().value());
 
 	return updateStatement;
@@ -146,13 +124,8 @@ DomainObject* ScenarioMapper::doLoad(const Identifier& _id, const QSqlRecord& _r
 	QString synopsis = _record.value("synopsis").toString();
 	QString text = _record.value("text").toString();
 	bool isDraft = _record.value("is_draft").toInt();
-	QDateTime versionStartDate = _record.value("version_start_datetime").toDateTime();
-	QDateTime versionEndDate = _record.value("version_end_datetime").toDateTime();
-	QString versionComment = _record.value("version_comment").toString();
-	QString uuid = _record.value("uuid").toString();
-	bool isSynced = _record.value("is_synced").toInt();
 
-	Scenario* scenario = new Scenario(_id, name, synopsis, text, versionStartDate, versionEndDate, versionComment, uuid, isSynced);
+	Scenario* scenario = new Scenario(_id, name, synopsis, text);
 	scenario->setAdditionalInfo(additionalInfo);
 	scenario->setGenre(genre);
 	scenario->setAuthor(author);
