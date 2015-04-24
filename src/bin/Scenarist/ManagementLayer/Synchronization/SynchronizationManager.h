@@ -41,6 +41,7 @@ namespace ManagementLayer
 		 */
 		void aboutLoadProjects();
 
+	public:
 		/**
 		 * @brief Синхронизировать сценарий полностью
 		 * @note Скачать с сервера все версии, которых нет в БД и
@@ -57,7 +58,11 @@ namespace ManagementLayer
 		/**
 		 * @brief Актуализировать сценарий
 		 */
+		/** @{ */
 		void aboutUpdateScenario(bool _isDraft = false);
+		void aboutUpdateScenario(const QString& _name, const QString& _synopsis,
+			const QString& _text, bool _isDraft);
+		/** @} */
 
 		/**
 		 * @brief Актуализировать данные
@@ -67,10 +72,17 @@ namespace ManagementLayer
 		/**
 		 * @brief Сохранить последнюю версию сценария на сервер
 		 */
-		/** @{ */
 		void aboutSaveScenarioToServer(bool _isDraft, bool _isAsync);
+
+		/**
+		 * @brief Сохранить версию сценария на сервер
+		 */
 		void aboutSaveScenarioToServer(Domain::Scenario* _scenario, bool _isAsync);
-		/** @} */
+
+		/**
+		 * @brief Загрузить версию сценария
+		 */
+		QHash<QString, QString> aboutLoadScenario(const QString& _uuid, bool _isDraft);
 
 		/**
 		 * @brief Сохранить заданную версию сценария в локальную БД
@@ -119,6 +131,11 @@ namespace ManagementLayer
 		 */
 		void remoteProjectsNotLoaded(const QString& _error);
 
+		/**
+		 * @brief Сценарий актуализирован
+		 */
+		void scenarioUpdated(const QString& _name, const QString& _synopsis, const QString& _text, bool _isDraft);
+
 	private:
 		/**
 		 * @brief Настроить соединения
@@ -131,6 +148,19 @@ namespace ManagementLayer
 		 */
 		void sleepALittle();
 
+		/**
+		 * @brief Синхронизированные значения
+		 */
+		/** @{ */
+		QString lastSyncedName(bool _isDraft) const;
+		QString lastSyncedSynopsis(bool _isDraft) const;
+		QString lastSyncedText(bool _isDraft) const;
+
+		void setLastSyncedName(const QString& _name, bool _isDraft);
+		void setLastSyncedSynopsis(const QString& _synopsis, bool _isDraft);
+		void setLastSyncedText(const QString& _text, bool _isDraft);
+		/** @} */
+
 	private:
 		/**
 		 * @brief Указатель на главную форму приложения
@@ -141,6 +171,18 @@ namespace ManagementLayer
 		 * @brief Ключ сессии
 		 */
 		QString m_sessionKey;
+
+		/**
+		 * @brief Синхронизированные значения
+		 */
+		/** @{ */
+		QString m_lastSyncedName;
+		QString m_lastSyncedSynopsis;
+		QString m_lastSyncedText;
+		QString m_lastSyncedDraftName;
+		QString m_lastSyncedDraftSynopsis;
+		QString m_lastSyncedDraftText;
+		/** @} */
 
 		/**
 		 * @brief Дата и время последнего отправленного изменения данных

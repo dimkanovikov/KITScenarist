@@ -18,6 +18,7 @@
 #include <WebLoader.h>
 
 #include <QEventLoop>
+#include <QHash>
 #include <QTimer>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -70,6 +71,27 @@ namespace {
 	const bool IS_DRAFT = true;
 	const bool IS_ASYNC = true;
 	const bool IS_SYNC = false;
+
+	/**
+	 * @brief Объединить тексты
+	 */
+	static QString mergeTexts(const QString& _lastSyncedVersion, const QString& _currentVersion,
+		const QString& _currentRemoteVersion) {
+		//
+		// Преобразуем и обрабатываем строки
+		//
+		std::wstring currentRemoteVersion = _currentRemoteVersion.toStdWString();
+		std::wstring currentVersion = _currentVersion.isEmpty() ? currentRemoteVersion : _currentVersion.toStdWString();
+		std::wstring lastSyncedVersion = _lastSyncedVersion.isEmpty() ? currentRemoteVersion : _lastSyncedVersion.toStdWString();
+		//
+		// Объединяем текст версий
+		//
+		diff_match_patch<std::wstring> dmp;
+		std::wstring strPatch = dmp.patch_toText(dmp.patch_make(lastSyncedVersion, currentVersion));
+		std::pair<std::wstring, std::vector<bool> > out = dmp.patch_apply(dmp.patch_fromText(strPatch), currentRemoteVersion);
+		//
+		return QString::fromStdWString(out.first);
+	}
 }
 
 
@@ -493,32 +515,54 @@ void SynchronizationManager::aboutSyncData()
 
 void SynchronizationManager::aboutUpdateScenario(bool _isDraft)
 {
+	Scenario* current = DataStorageLayer::StorageFacade::scenarioStorage()->current(_isDraft);
+	if (current != 0) {
+		aboutUpdateScenario(current->name(), current->synopsis(), current->text(), _isDraft);
+	}
+}
+
+void SynchronizationManager::aboutUpdateScenario(const QString& _name, const QString& _synopsis,
+	const QString& _text, bool _isDraft)
+{
 	//
 	// Получить последнюю версию с сервера
 	//
+	const QHash<QString, QString> scenarioValues = aboutLoadScenario(QString::null, _isDraft);
+	const QString remoteName = scenarioValues.value("name");
+	const QString remoteSynopsis = scenarioValues.value("synopsis");
+	const QString remoteText = scenarioValues.value("text");
 
 	//
-	// Если текст последней версии с сервера отличается от текущего текста
+	// Если между текущей версией и версией с сервера есть отличия
 	//
-	{
+	if (remoteName != _name
+		|| remoteSynopsis != _synopsis
+		|| remoteText != _text) {
 		//
 		// Объеденить текущий текст с версией с сервера
 		//
-	}
+		const QString mergedName = ::mergeTexts(lastSyncedName(_isDraft), _name, remoteName);
+		const QString mergedSynopsis = ::mergeTexts(lastSyncedSynopsis(_isDraft), _synopsis, remoteSynopsis);
+		const QString mergedText = ::mergeTexts(lastSyncedText(_isDraft), _text, remoteText);
 
-	//
-	// Если объединённый текст отличается от версии полученной с сервера
-	//
-	{
+		Scenario* currentScenario = DataStorageLayer::StorageFacade::scenarioStorage()->current(_isDraft);
+		if (currentScenario == 0) {
+			currentScenario = DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(_name, _synopsis, _text);
+		}
+		currentScenario->setName(mergedName);
+		currentScenario->setSynopsis(mergedSynopsis);
+		currentScenario->setText(mergedText);
+
 		//
 		// Отправляем на сервер результат объединения
 		//
 		aboutSaveScenarioToServer(_isDraft, IS_ASYNC);
-	}
 
-	//
-	// Применяем результат объединения к текущему тексту
-	//
+		//
+		// Применяем результат объединения к текущему тексту
+		//
+		emit scenarioUpdated(mergedName, mergedSynopsis, mergedText, _isDraft);
+	}
 }
 
 void SynchronizationManager::aboutUpdateData()
@@ -548,6 +592,18 @@ void SynchronizationManager::aboutSaveScenarioToServer(bool _isDraft, bool _isAs
 	//
 	Scenario* scenario = DataStorageLayer::StorageFacade::scenarioStorage()->current(_isDraft);
 	aboutSaveScenarioToServer(scenario, _isAsync);
+
+	//
+	// Сохраняем последние отправленные значения
+	//
+	setLastSyncedName(scenario->name(), scenario->isDraft());
+	setLastSyncedSynopsis(scenario->synopsis(), scenario->isDraft());
+	setLastSyncedText(scenario->text(), scenario->isDraft());
+
+	//
+	// Пометим сценарий, как синхронизированный
+	//
+	scenario->setIsSynced(true);
 }
 
 void SynchronizationManager::aboutSaveScenarioToServer(Scenario* _scenario, bool _isAsync)
@@ -577,9 +633,49 @@ void SynchronizationManager::aboutSaveScenarioToServer(Scenario* _scenario, bool
 		} else {
 			loader->loadSync(URL_SCENARIO_SAVE);
 		}
-
-		_scenario->setIsSynced(true);
 	}
+}
+
+QHash<QString, QString> SynchronizationManager::aboutLoadScenario(const QString& _uuid, bool _isDraft)
+{
+	QHash<QString, QString> scenarioValues;
+
+	if (!m_sessionKey.isEmpty()) {
+		//
+		// ... загружаем сценарий
+		//
+		WebLoader loader;
+		loader.setRequestMethod(WebLoader::Post);
+		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		loader.addRequestAttribute(KEY_SCENARIO_ID, _uuid); // пустой uuid == текущий
+		loader.addRequestAttribute(KEY_SCENARIO_IS_DRAFT, _isDraft ? 1 : 0);
+		QByteArray response = loader.loadSync(URL_SCENARIO_LOAD);
+		//
+		// ... считываем данные о сценарии
+		//
+		QXmlStreamReader scenarioReader(response);
+		while (!scenarioReader.atEnd()) {
+			scenarioReader.readNext();
+			if (scenarioReader.name().toString() == "status") {
+				const bool success = scenarioReader.attributes().value("result").toString() == "true";
+				if (success) {
+					scenarioReader.readNextStartElement();
+					scenarioReader.readNextStartElement(); // scenario
+					while (!scenarioReader.atEnd()) {
+						scenarioReader.readNextStartElement();
+						const QString key = scenarioReader.name().toString();
+						const QString value = scenarioReader.readElementText();
+						if (!value.isEmpty()) {
+							scenarioValues.insert(key, value);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return scenarioValues;
 }
 
 void SynchronizationManager::aboutSaveScenarioToDB(const QString& _uuid, bool _isDraft)
@@ -587,36 +683,7 @@ void SynchronizationManager::aboutSaveScenarioToDB(const QString& _uuid, bool _i
 	//
 	// ... загружаем сценарий
 	//
-	WebLoader loader;
-	loader.setRequestMethod(WebLoader::Post);
-	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-	loader.addRequestAttribute(KEY_SCENARIO_ID, _uuid); // пустой uuid == текущий
-	loader.addRequestAttribute(KEY_SCENARIO_IS_DRAFT, _isDraft ? 1 : 0);
-	QByteArray response = loader.loadSync(URL_SCENARIO_LOAD);
-	//
-	// ... считываем данные о сценарии
-	//
-	QXmlStreamReader scenarioReader(response);
-	QHash<QString, QString> scenarioValues;
-	while (!scenarioReader.atEnd()) {
-		scenarioReader.readNext();
-		if (scenarioReader.name().toString() == "status") {
-			const bool success = scenarioReader.attributes().value("result").toString() == "true";
-			if (success) {
-				scenarioReader.readNextStartElement();
-				scenarioReader.readNextStartElement(); // scenario
-				while (!scenarioReader.atEnd()) {
-					scenarioReader.readNextStartElement();
-					const QString key = scenarioReader.name().toString();
-					const QString value = scenarioReader.readElementText();
-					if (!value.isEmpty()) {
-						scenarioValues.insert(key, value);
-					}
-				}
-			}
-		}
-	}
+	QHash<QString, QString> scenarioValues = aboutLoadScenario(_uuid, _isDraft);
 
 	//
 	// ... актуализируем
@@ -629,18 +696,14 @@ void SynchronizationManager::aboutSaveScenarioToDB(const QString& _uuid, bool _i
 			//
 			// ... получим данные для объединения
 			//
-			const Scenario* lastSyncedScenario = DataStorageLayer::StorageFacade::scenarioStorage()->lastSynced(_isDraft);
 			const Scenario* currentScenario = DataStorageLayer::StorageFacade::scenarioStorage()->current(_isDraft);
-			std::wstring currentRemoteVersion = scenarioValues.value("text").toStdWString();
-			std::wstring currentVersion = currentScenario != 0 ? currentScenario->text().toStdWString() : currentRemoteVersion;
-			std::wstring lastSyncedVersion = lastSyncedScenario != 0 ? lastSyncedScenario->text().toStdWString() : currentVersion;
+			const QString lastSyncedVersion = lastSyncedText(_isDraft);
+			const QString currentVersion = currentScenario != 0 ? currentScenario->text() : QString::null;
+			const QString currentRemoteVersion = scenarioValues.value("text");
 			//
 			// ... объединяем текст версий
 			//
-			diff_match_patch<std::wstring> dmp;
-			std::wstring strPatch = dmp.patch_toText(dmp.patch_make(lastSyncedVersion, currentVersion));
-			std::pair<std::wstring, std::vector<bool> > out = dmp.patch_apply(dmp.patch_fromText(strPatch), currentRemoteVersion);
-			QString mergedVersion = QString::fromStdWString(out.first);
+			QString mergedVersion = ::mergeTexts(lastSyncedVersion, currentVersion, currentRemoteVersion);
 			//
 			// ... сохраняем актуализированную версию
 			//
@@ -841,6 +904,72 @@ void SynchronizationManager::sleepALittle()
 	QEventLoop loop;
 	QTimer::singleShot(10, &loop, SLOT(quit()));
 	loop.exec();
+}
+
+QString SynchronizationManager::lastSyncedName(bool _isDraft) const
+{
+	QString result = _isDraft ? m_lastSyncedDraftName : m_lastSyncedName;
+	if (result.isEmpty()) {
+		Scenario* lastSynced = DataStorageLayer::StorageFacade::scenarioStorage()->lastSynced(_isDraft);
+		if (lastSynced != 0) {
+			result = lastSynced->name();
+		}
+	}
+
+	return result;
+}
+
+QString SynchronizationManager::lastSyncedSynopsis(bool _isDraft) const
+{
+	QString result = _isDraft ? m_lastSyncedDraftSynopsis : m_lastSyncedSynopsis;
+	if (result.isEmpty()) {
+		Scenario* lastSynced = DataStorageLayer::StorageFacade::scenarioStorage()->lastSynced(_isDraft);
+		if (lastSynced != 0) {
+			result = lastSynced->synopsis();
+		}
+	}
+
+	return result;
+}
+
+QString SynchronizationManager::lastSyncedText(bool _isDraft) const
+{
+	QString result = _isDraft ? m_lastSyncedDraftText : m_lastSyncedText;
+	if (result.isEmpty()) {
+		Scenario* lastSynced = DataStorageLayer::StorageFacade::scenarioStorage()->lastSynced(_isDraft);
+		if (lastSynced != 0) {
+			result = lastSynced->text();
+		}
+	}
+
+	return result;
+}
+
+void SynchronizationManager::setLastSyncedName(const QString& _name, bool _isDraft)
+{
+	if (_isDraft) {
+		m_lastSyncedDraftName = _name;
+	} else {
+		m_lastSyncedName = _name;
+	}
+}
+
+void SynchronizationManager::setLastSyncedSynopsis(const QString& _synopsis, bool _isDraft)
+{
+	if (_isDraft) {
+		m_lastSyncedDraftSynopsis = _synopsis;
+	} else {
+		m_lastSyncedSynopsis = _synopsis;
+	}
+}
+
+void SynchronizationManager::setLastSyncedText(const QString& _text, bool _isDraft)
+{
+	if (_isDraft) {
+		m_lastSyncedDraftText = _text;
+	} else {
+		m_lastSyncedText = _text;
+	}
 }
 
 

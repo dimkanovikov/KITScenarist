@@ -79,11 +79,17 @@ namespace Domain
 		virtual int rowCount(const QModelIndex&) const;
 		virtual int columnCount(const QModelIndex&) const;
 		virtual QVariant data(const QModelIndex&, int) const;
+
 		virtual DomainObject* itemForIndex(const QModelIndex&) const;
 		virtual QModelIndex indexForItem(DomainObject* _item) const;
 
 		QList<DomainObject*> toList() const;
+
+		/**
+		 * @brief Синоним для rowCount
+		 */
 		int count() const;
+
 		bool contains(DomainObject*) const;
 		void clear();
 

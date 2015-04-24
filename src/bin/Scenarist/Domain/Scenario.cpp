@@ -30,6 +30,7 @@ void Scenario::setName(const QString& _name)
 	if (m_name != _name) {
 		m_name = _name;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -44,6 +45,7 @@ void Scenario::setAdditionalInfo(const QString& _additionalInfo)
 	if (m_additionalInfo != _additionalInfo) {
 		m_additionalInfo = _additionalInfo;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -58,6 +60,7 @@ void Scenario::setGenre(const QString& _genre)
 	if (m_genre != _genre) {
 		m_genre = _genre;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -72,6 +75,7 @@ void Scenario::setAuthor(const QString _author)
 	if (m_author != _author) {
 		m_author = _author;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -86,6 +90,7 @@ void Scenario::setContacts(const QString& _contacts)
 	if (m_contacts != _contacts) {
 		m_contacts = _contacts;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -100,6 +105,7 @@ void Scenario::setYear(const QString& _year)
 	if (m_year != _year) {
 		m_year = _year;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -114,6 +120,7 @@ void Scenario::setSynopsis(const QString& _synopsis)
 	if (m_synopsis != _synopsis) {
 		m_synopsis = _synopsis;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -128,6 +135,7 @@ void Scenario::setText(const QString& _text)
 	if (m_text != _text) {
 		m_text = _text;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -142,6 +150,7 @@ void Scenario::setIsDraft(bool _isDraft)
 	if (m_isDraft != _isDraft) {
 		m_isDraft = _isDraft;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -156,6 +165,7 @@ void Scenario::setVersionStartDatetime(const QDateTime& _datetime)
 	if (m_versionStartDatetime != _datetime) {
 		m_versionStartDatetime = _datetime;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -184,6 +194,7 @@ void Scenario::setVersionComment(const QString& _comment)
 	if (m_versionComment != _comment) {
 		m_versionComment = _comment;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }
@@ -198,6 +209,7 @@ void Scenario::setUuid(const QString& _uuid)
 	if (m_uuid != _uuid) {
 		m_uuid = _uuid;
 
+		setIsSynced(false);
 		changesNotStored();
 	}
 }

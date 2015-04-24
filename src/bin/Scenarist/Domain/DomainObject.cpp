@@ -114,7 +114,7 @@ QList<DomainObject*> DomainObjectsItemModel::toList() const
 
 int DomainObjectsItemModel::count() const
 {
-	return domainObjects().count();
+	return rowCount(QModelIndex());
 }
 
 bool DomainObjectsItemModel::contains(DomainObject* domainObject) const

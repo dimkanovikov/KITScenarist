@@ -60,6 +60,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 	int openedFolders = 0;
 
 	QXmlStreamWriter writer(&resultXml);
+	writer.setAutoFormatting(true);
 	writer.writeStartDocument();
 	writer.writeStartElement("scenario");
 	do {
@@ -288,7 +289,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 	writer.writeEndElement(); // scenario
 	writer.writeEndDocument();
 
-	return resultXml.simplified();
+	return resultXml;
 }
 
 QString ScenarioXml::scenarioToXml(ScenarioModelItem* _fromItem, ScenarioModelItem* _toItem)

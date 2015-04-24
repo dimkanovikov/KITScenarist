@@ -102,7 +102,6 @@ Scenario* ScenarioStorage::storeScenario(const QString& _name, const QString& _s
 		scenario = new Scenario(Identifier(), _name, _synopsis, _text, currentDateTime,
 								currentDateTime, _comment, QUuid::createUuid().toString());
 		scenario->setIsDraft(_isDraft);
-		scenario->setIsSynced(false);
 
 		//
 		// ... сохраним сценарий в базе данных
@@ -293,14 +292,13 @@ Scenario* ScenarioStorage::storeOldScenario(const QString& _name, const QString&
 	//
 	else {
 		scenario = new Scenario(Identifier(), _name, _synopsis, _text, _versionStartDatetime,
-								_versionEndDatetime, _versionComment, _uuid);
+								_versionEndDatetime, _versionComment, _uuid, _isSynced);
 		scenario->setAdditionalInfo(_additionalInfo);
 		scenario->setGenre(_genre);
 		scenario->setAuthor(_author);
 		scenario->setContacts(_contacts);
 		scenario->setYear(_year);
 		scenario->setIsDraft(_isDraft);
-		scenario->setIsSynced(_isSynced);
 
 		//
 		// ... сохраняем её
