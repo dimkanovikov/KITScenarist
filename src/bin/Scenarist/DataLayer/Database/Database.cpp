@@ -277,6 +277,21 @@ void Database::createTables(QSqlDatabase& _database)
 				   ")"
 				   );
 
+	//
+	// Создаём таблицу изменений сценария
+	//
+	q_creator.exec("CREATE TABLE scenario_changes "
+				   "("
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "uuid TEXT NOT NULL, "
+				   "datetime TEXT NOT NULL, "
+				   "username TEXT NOT NULL, "
+				   "undo_patсh TEXT NOT NULL, " // отмена изменения
+				   "redo_patch TEXT NOT NULL, " // повтор изменения (наложение для соавторов)
+				   "is_draft INTEGER NOT NULL DEFAULT(0) "
+				   ")"
+				   );
+
 	_database.commit();
 }
 
@@ -732,6 +747,21 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 					   "query_values TEXT NOT NULL, "
 					   "datetime TEXT NOT NULL "
 					   "); "
+					   );
+
+		//
+		// Создаём таблицу изменений сценария
+		//
+		q_updater.exec("CREATE TABLE scenario_changes "
+					   "("
+					   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   "uuid TEXT NOT NULL, "
+					   "datetime TEXT NOT NULL, "
+					   "username TEXT NOT NULL, "
+					   "undo_patch TEXT NOT NULL, " // отмена изменения
+					   "redo_patch TEXT NOT NULL, " // повтор изменения (наложение для соавторов)
+					   "is_draft INTEGER NOT NULL DEFAULT(0) "
+					   ")"
 					   );
 	}
 

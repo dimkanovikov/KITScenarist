@@ -2,6 +2,7 @@
 #define SCENARIOMANAGER_H
 
 #include <QObject>
+#include <QTimer>
 #include <QModelIndex>
 
 class FlatButton;
@@ -201,6 +202,11 @@ namespace ManagementLayer
 		 */
 		void aboutShowHideNote();
 
+		/**
+		 * @brief Сохранить изменение текста
+		 */
+		void aboutSaveChanges();
+
 	private:
 		/**
 		 * @brief Загрузить данные
@@ -231,6 +237,11 @@ namespace ManagementLayer
 		 * @brief Получить документ сценария в соответсвии с режимом работы
 		 */
 		BusinessLogic::ScenarioDocument* workingScenario() const;
+
+		/**
+		 * @brief Сохранить изменения текста для заданного режима
+		 */
+		void saveScenarioChanges(bool _isDraft);
 
 	private:
 		/**
@@ -306,6 +317,23 @@ namespace ManagementLayer
 		 * @brief Текущий рабочий режим
 		 */
 		bool m_workModeIsDraft;
+
+		/**
+		 * @brief Таймер для сохранения изменений сценария
+		 */
+		QTimer m_saveChangesTimer;
+
+		/**
+		 * @brief Текст сценария с сохранёнными изменениями
+		 */
+		QString m_lastScenarioXml;
+		QString m_lastScenarioDraftXml;
+
+		/**
+		 * @brief MD5-хэш текста сценария с сохранёнными изменениями
+		 */
+		QByteArray m_lastScenarioXmlHash;
+		QByteArray m_lastScenarioDraftXmlHash;
 	};
 }
 

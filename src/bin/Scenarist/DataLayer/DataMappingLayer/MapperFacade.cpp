@@ -9,6 +9,7 @@
 #include "CharacterStateMapper.h"
 #include "CharacterPhotoMapper.h"
 #include "ScenarioMapper.h"
+#include "ScenarioChangeMapper.h"
 #include "SettingsMapper.h"
 #include "DatabaseHistoryMapper.h"
 
@@ -87,6 +88,14 @@ ScenarioMapper* MapperFacade::scenarioMapper()
 	return s_scenarioMapper;
 }
 
+ScenarioChangeMapper* MapperFacade::scenarioChangeMapper()
+{
+	if (s_scenarioChangeMapper == 0) {
+		s_scenarioChangeMapper = new ScenarioChangeMapper;
+	}
+	return s_scenarioChangeMapper;
+}
+
 SettingsMapper* MapperFacade::settingsMapper()
 {
 	if (s_settingsMapper == 0) {
@@ -112,5 +121,6 @@ CharacterMapper* MapperFacade::s_characterMapper = 0;
 CharacterStateMapper* MapperFacade::s_characterStateMapper = 0;
 CharacterPhotoMapper* MapperFacade::s_characterPhotoMapper = 0;
 ScenarioMapper* MapperFacade::s_scenarioMapper = 0;
+ScenarioChangeMapper* MapperFacade::s_scenarioChangeMapper = 0;
 SettingsMapper* MapperFacade::s_settingsMapper = 0;
 DatabaseHistoryMapper* MapperFacade::s_databaseHistoryMapper = 0;

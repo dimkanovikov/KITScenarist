@@ -9,6 +9,7 @@
 #include "CharacterStateStorage.h"
 #include "CharacterPhotoStorage.h"
 #include "ScenarioStorage.h"
+#include "ScenarioChangeStorage.h"
 #include "SettingsStorage.h"
 #include "DatabaseHistoryStorage.h"
 
@@ -100,6 +101,14 @@ ScenarioStorage* StorageFacade::scenarioStorage()
 	return s_scenarioStorage;
 }
 
+ScenarioChangeStorage*StorageFacade::scenarioChangeStorage()
+{
+	if (s_scenarioChangeStorage == 0) {
+		s_scenarioChangeStorage = new ScenarioChangeStorage;
+	}
+	return s_scenarioChangeStorage;
+}
+
 SettingsStorage* StorageFacade::settingsStorage()
 {
 	if (s_settingsStorage == 0) {
@@ -125,5 +134,6 @@ CharacterStorage* StorageFacade::s_characterStorage = 0;
 CharacterStateStorage* StorageFacade::s_characterStateStorage = 0;
 CharacterPhotoStorage* StorageFacade::s_characterPhotoStorage = 0;
 ScenarioStorage* StorageFacade::s_scenarioStorage = 0;
+ScenarioChangeStorage* StorageFacade::s_scenarioChangeStorage = 0;
 SettingsStorage* StorageFacade::s_settingsStorage = 0;
 DatabaseHistoryStorage* StorageFacade::s_databaseHistoryStorage = 0;

@@ -32,8 +32,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 	//
 	// Если необходимо обработать весь текст
 	//
+	bool isFullDocumentSave = false;
 	if (_startPosition == 0
 		&& _endPosition == 0) {
+		isFullDocumentSave = true;
 		_endPosition = m_scenario->document()->characterCount();
 	}
 
@@ -61,10 +63,28 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 
 	QXmlStreamWriter writer(&resultXml);
 	writer.setAutoFormatting(true);
+	writer.setAutoFormattingIndent(0);
 	writer.writeStartDocument();
 	writer.writeStartElement("scenario");
 	do {
-		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+		//
+		// Для всего документа сохраняем блоками
+		//
+		if (isFullDocumentSave) {
+			//
+			// Если не первый блок, перейдём к следующему
+			//
+			if (cursor.position() != _startPosition) {
+				cursor.movePosition(QTextCursor::NextBlock);
+			}
+			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		}
+		//
+		// Для некоторого текста, посимвольно
+		//
+		else {
+			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+		}
 
 		//
 		// Курсор в конце текущего блока
@@ -425,25 +445,27 @@ void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 			}
 
 			case QXmlStreamReader::Characters: {
-				QString textToInsert = reader.text().toString().simplified();
+				if (!reader.isWhitespace()) {
+					QString textToInsert = reader.text().toString().simplified();
 
-				//
-				// Если необходимо так же вставляем префикс и постфикс стиля
-				//
-				ScenarioBlockStyle currentStyle = ScenarioTemplateFacade::getTemplate().blockStyle(lastTokenType);
-				if (!currentStyle.prefix().isEmpty()
-					&& !textToInsert.startsWith(currentStyle.prefix())) {
-					textToInsert.prepend(currentStyle.prefix());
-				}
-				if (!currentStyle.postfix().isEmpty()
-					&& !textToInsert.endsWith(currentStyle.postfix())) {
-					textToInsert.append(currentStyle.postfix());
-				}
+					//
+					// Если необходимо так же вставляем префикс и постфикс стиля
+					//
+					ScenarioBlockStyle currentStyle = ScenarioTemplateFacade::getTemplate().blockStyle(lastTokenType);
+					if (!currentStyle.prefix().isEmpty()
+						&& !textToInsert.startsWith(currentStyle.prefix())) {
+						textToInsert.prepend(currentStyle.prefix());
+					}
+					if (!currentStyle.postfix().isEmpty()
+						&& !textToInsert.endsWith(currentStyle.postfix())) {
+						textToInsert.append(currentStyle.postfix());
+					}
 
-				//
-				// Пишем сам текст
-				//
-				cursor.insertText(textToInsert);
+					//
+					// Пишем сам текст
+					//
+					cursor.insertText(textToInsert);
+				}
 				break;
 			}
 

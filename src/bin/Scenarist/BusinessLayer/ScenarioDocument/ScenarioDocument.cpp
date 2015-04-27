@@ -506,7 +506,6 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			return;
 		}
 	}
-
 	//
 	// Сохранить md5 хэш текста документа
 	//
