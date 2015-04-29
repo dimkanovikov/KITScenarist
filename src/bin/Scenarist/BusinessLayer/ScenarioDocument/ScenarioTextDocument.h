@@ -3,6 +3,9 @@
 
 #include <QTextDocument>
 
+namespace Domain {
+	class ScenarioChange;
+}
 
 namespace BusinessLogic
 {
@@ -20,6 +23,11 @@ namespace BusinessLogic
 		explicit ScenarioTextDocument(QObject *parent, ScenarioXml* _xmlHandler);
 
 		/**
+		 * @brief Загрузить сценарий
+		 */
+		void load(const QString& _scenarioXml);
+
+		/**
 		 * @brief Получить майм представление данных в указанном диапазоне
 		 */
 		QString mimeFromSelection(int _startPosition, int _endPosition) const;
@@ -29,13 +37,60 @@ namespace BusinessLogic
 		 */
 		void insertFromMime(int _insertPosition, const QString& _mimeData);
 
-	signals:
+		/**
+		 * @brief Применить патч
+		 */
+		void applyPatch(const QString& _patch);
+
+		/**
+		 * @brief Сохранить изменения текста
+		 */
+		Domain::ScenarioChange* saveChanges();
+
+		/**
+		 * @brief Собственные реализации отмены/повтора последнего действия
+		 */
+		/** @{ */
+		void undoReimpl();
+		void redoReimpl();
+		/** @} */
+
+		/**
+		 * @brief Собственные реализации проверки доступности отмены/повтора последнего действия
+		 */
+		/** @{ */
+		bool isUndoAvailableReimpl() const;
+		bool isRedoAvailableReimpl() const;
+		/** @} */
 
 	private:
 		/**
 		 * @brief Обработчик xml
 		 */
 		ScenarioXml* m_xmlHandler;
+
+		/**
+		 * @brief Применяется ли патч в данный момент
+		 */
+		bool m_isPatchApplyProcessed;
+
+		/**
+		 * @brief Текст сценария с сохранёнными изменениями
+		 */
+		QString m_lastScenarioXml;
+
+		/**
+		 * @brief MD5-хэш текста сценария с сохранёнными изменениями
+		 */
+		QByteArray m_lastScenarioXmlHash;
+
+		/**
+		 * @brief Стеки для отмены/повтора последнего действия
+		 */
+		/** @{ */
+		QList<Domain::ScenarioChange*> m_undoStack;
+		QList<Domain::ScenarioChange*> m_redoStack;
+		/** @{ */
 	};
 }
 

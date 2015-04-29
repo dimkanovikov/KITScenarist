@@ -381,7 +381,8 @@ HEADERS += \
     3rd_party/Helpers/DiffMatchPatch.h \
     Domain/ScenarioChange.h \
     DataLayer/DataMappingLayer/ScenarioChangeMapper.h \
-    DataLayer/DataStorageLayer/ScenarioChangeStorage.h
+    DataLayer/DataStorageLayer/ScenarioChangeStorage.h \
+    3rd_party/Helpers/DiffMatchPatchHelper.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

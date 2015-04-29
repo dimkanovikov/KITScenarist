@@ -283,12 +283,12 @@ void ScenarioTextEditWidget::updateShortcuts()
 
 void ScenarioTextEditWidget::aboutUndo()
 {
-	m_editor->document()->undo();
+	m_editor->undoReimpl();
 }
 
 void ScenarioTextEditWidget::aboutRedo()
 {
-	m_editor->document()->redo();
+	m_editor->redoReimpl();
 }
 
 void ScenarioTextEditWidget::aboutShowSearch()
@@ -504,8 +504,6 @@ void ScenarioTextEditWidget::initConnections()
 
 void ScenarioTextEditWidget::initEditorConnections()
 {
-	connect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)));
-	connect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)));
 	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
@@ -516,8 +514,6 @@ void ScenarioTextEditWidget::initEditorConnections()
 
 void ScenarioTextEditWidget::removeEditorConnections()
 {
-	disconnect(m_editor, SIGNAL(undoAvailable(bool)), m_undo, SLOT(setEnabled(bool)));
-	disconnect(m_editor, SIGNAL(redoAvailable(bool)), m_redo, SLOT(setEnabled(bool)));
 	disconnect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));

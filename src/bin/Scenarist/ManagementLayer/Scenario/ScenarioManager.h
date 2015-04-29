@@ -238,11 +238,6 @@ namespace ManagementLayer
 		 */
 		BusinessLogic::ScenarioDocument* workingScenario() const;
 
-		/**
-		 * @brief Сохранить изменения текста для заданного режима
-		 */
-		void saveScenarioChanges(bool _isDraft);
-
 	private:
 		/**
 		 * @brief Представление сценария
@@ -322,18 +317,6 @@ namespace ManagementLayer
 		 * @brief Таймер для сохранения изменений сценария
 		 */
 		QTimer m_saveChangesTimer;
-
-		/**
-		 * @brief Текст сценария с сохранёнными изменениями
-		 */
-		QString m_lastScenarioXml;
-		QString m_lastScenarioDraftXml;
-
-		/**
-		 * @brief MD5-хэш текста сценария с сохранёнными изменениями
-		 */
-		QByteArray m_lastScenarioXmlHash;
-		QByteArray m_lastScenarioDraftXmlHash;
 	};
 }
 

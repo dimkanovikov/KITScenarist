@@ -6,6 +6,7 @@
 #include "ScenarioTextEditManager.h"
 
 #include <Domain/Scenario.h>
+#include <Domain/ScenarioChange.h>
 #include <Domain/Character.h>
 #include <Domain/Location.h>
 
@@ -24,13 +25,12 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/LocationStorage.h>
 
-#include <3rd_party/Helpers/DiffMatchPatch.h>
+#include <3rd_party/Helpers/DiffMatchPatchHelper.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
 
 #include <QComboBox>
-#include <QCryptographicHash>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMessageBox>
@@ -174,15 +174,6 @@ namespace {
 			}
 		}
 	}
-
-	/**
-	 * @brief Получить хэш текста
-	 */
-	static QByteArray textMd5Hash(const QString& _text) {
-		QCryptographicHash hash(QCryptographicHash::Md5);
-		hash.addData(_text.toUtf8());
-		return hash.result();
-	}
 }
 
 
@@ -235,6 +226,11 @@ int ScenarioManager::cursorPosition() const
 void ScenarioManager::loadCurrentProject()
 {
 	//
+	// Остановим таймер сохранения изменений документа
+	//
+	m_saveChangesTimer.stop();
+
+	//
 	// Очистим от предыдущих данных
 	//
 	m_navigatorManager->setNavigationModel(0);
@@ -256,16 +252,12 @@ void ScenarioManager::loadCurrentProject()
 	Domain::Scenario* currentScenario =
 			DataStorageLayer::StorageFacade::scenarioStorage()->current();
 	m_scenario->load(currentScenario);
-	m_lastScenarioXml = currentScenario->text();
-	m_lastScenarioXmlHash = ::textMd5Hash(m_lastScenarioXml);
 	//
 	// ... черновик
 	//
 	Domain::Scenario* currentScenarioDraft =
 			DataStorageLayer::StorageFacade::scenarioStorage()->current(IS_DRAFT);
 	m_scenarioDraft->load(currentScenarioDraft);
-	m_lastScenarioDraftXml = currentScenarioDraft->text();
-	m_lastScenarioDraftXmlHash = ::textMd5Hash(m_lastScenarioDraftXml);
 
 	//
 	// Установим данные для менеджеров
@@ -738,8 +730,15 @@ void ScenarioManager::aboutShowHideNote()
 
 void ScenarioManager::aboutSaveChanges()
 {
-	saveScenarioChanges(true);
-	saveScenarioChanges(false);
+	Domain::ScenarioChange* change = m_scenario->document()->saveChanges();
+	if (change != 0) {
+		change->setIsDraft(false);
+	}
+
+	Domain::ScenarioChange* changeDraft = m_scenarioDraft->document()->saveChanges();
+	if (changeDraft != 0) {
+		changeDraft->setIsDraft(true);
+	}
 }
 
 void ScenarioManager::initData()
@@ -891,39 +890,4 @@ void ScenarioManager::setWorkingMode(QObject* _sender)
 BusinessLogic::ScenarioDocument* ScenarioManager::workingScenario() const
 {
 	return m_workModeIsDraft ? m_scenarioDraft : m_scenario;
-}
-
-void ScenarioManager::saveScenarioChanges(bool _isDraft)
-{
-	const QString newScenarioXml = _isDraft ? m_scenarioDraft->save() : m_scenario->save();
-	const QByteArray newScenarioXmlHash = ::textMd5Hash(newScenarioXml);
-	QString& lastScenarioXml = _isDraft ? m_lastScenarioDraftXml : m_lastScenarioXml;
-	QByteArray& lastScenarioXmlHash = _isDraft ? m_lastScenarioDraftXmlHash : m_lastScenarioXmlHash;
-
-	//
-	// Если текущий текст сценария отличается от последнего сохранённого
-	//
-	if (lastScenarioXmlHash != newScenarioXmlHash) {
-		//
-		// Сформируем изменения
-		//
-		diff_match_patch<std::wstring> dmp;
-		const std::wstring lastXml = lastScenarioXml.toStdWString();
-		const std::wstring newXml = newScenarioXml.toStdWString();
-		const std::wstring undoPatch = dmp.patch_toText(dmp.patch_make(newXml, lastXml));
-		const std::wstring redoPatch = dmp.patch_toText(dmp.patch_make(lastXml, newXml));
-
-		//
-		// Сохраним изменения
-		//
-		DataStorageLayer::StorageFacade::scenarioChangeStorage()->append("user",
-			QString::fromStdWString(undoPatch), QString::fromStdWString(redoPatch), _isDraft);
-
-		//
-		// Запомним новый текст
-		// NOTE: т.к. использовались ссылки, то обновятся нужные значения
-		//
-		lastScenarioXml = newScenarioXml;
-		lastScenarioXmlHash = newScenarioXmlHash;
-	}
 }

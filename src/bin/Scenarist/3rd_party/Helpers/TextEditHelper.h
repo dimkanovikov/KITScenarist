@@ -75,6 +75,24 @@ namespace TextEditHelper
 	}
 
 	/**
+	 * @brief Удалить все xml-тэги из текста
+	 */
+
+	static QString removeXmlTags(const QString& _text)
+	{
+		const QString STR_CDATA_START = "<![CDATA[";
+		const QString STR_CDATA_END = "]]>";
+		const QRegularExpression RX_HTML_TAGS_CLEANER(
+				"<([^>]*)>",
+				QRegularExpression::MultilineOption | QRegularExpression::DotMatchesEverythingOption);
+
+		QString plainText = _text;
+		plainText = plainText.remove(STR_CDATA_START).remove(STR_CDATA_END);
+		plainText = plainText.remove(RX_HTML_TAGS_CLEANER);
+		return plainText;
+	}
+
+	/**
 	 * @brief Рассчитать высоту строки заданного шрифта
 	 */
 	static qreal fontLineHeight(const QFont& _font) {

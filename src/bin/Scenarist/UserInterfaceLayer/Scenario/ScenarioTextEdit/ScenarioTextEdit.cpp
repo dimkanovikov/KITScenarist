@@ -16,6 +16,7 @@
 #include <QDateTime>
 #include <QCompleter>
 #include <QKeyEvent>
+#include <QMenu>
 #include <QMimeData>
 #include <QPainter>
 #include <QScrollBar>
@@ -229,6 +230,28 @@ QString ScenarioTextEdit::shortcut(ScenarioBlockStyle::Type _forType) const
 	return m_shortcutsManager->shortcut(_forType);
 }
 
+QMenu* ScenarioTextEdit::createContextMenu(const QPoint& _pos)
+{
+	//
+	// Формируем стандартное меню, чтобы добраться до действий отмены и повтора последнего действия
+	// и присоединить их к собственным функциям повтора/отмены послденего действия
+	//
+	QMenu* menu = CompletableTextEdit::createContextMenu(_pos);
+	foreach (QAction* menuAction, menu->findChildren<QAction*>()) {
+		if (menuAction->text().endsWith(QKeySequence(QKeySequence::Undo).toString())) {
+			menuAction->disconnect();
+			connect(menuAction, SIGNAL(triggered()), this, SLOT(undoReimpl()));
+			menuAction->setEnabled(m_document->isUndoAvailableReimpl());
+		} else if (menuAction->text().endsWith(QKeySequence(QKeySequence::Redo).toString())) {
+			menuAction->disconnect();
+			connect(menuAction, SIGNAL(triggered()), this, SLOT(redoReimpl()));
+			menuAction->setEnabled(m_document->isRedoAvailableReimpl());
+		}
+	}
+
+	return menu;
+}
+
 void ScenarioTextEdit::ensureCursorVisibleReimpl()
 {
 	//
@@ -253,6 +276,16 @@ void ScenarioTextEdit::ensureCursorVisibleReimpl()
 			verticalScrollBar()->setValue(verticalScrollBar()->value() + SCROLL_DELTA);
 		}
 	}
+}
+
+void ScenarioTextEdit::undoReimpl()
+{
+	m_document->undoReimpl();
+}
+
+void ScenarioTextEdit::redoReimpl()
+{
+	m_document->redoReimpl();
 }
 
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
@@ -284,7 +317,20 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	// Отправить событие в базовый класс
 	//
 	if (handler->needSendEventToBaseClass()) {
-		SpellCheckTextEdit::keyPressEvent(_event);
+		//
+		// Переопределяем повтор и отмену последнего действия
+		//
+		if (_event == QKeySequence::Undo) {
+			undoReimpl();
+		} else if (_event == QKeySequence::Redo) {
+			redoReimpl();
+		}
+		//
+		// Остальные действия
+		//
+		else {
+			SpellCheckTextEdit::keyPressEvent(_event);
+		}
 
 		updateEnteredText(_event);
 		TextEditHelper::beautifyDocument(textCursor(), _event->text());

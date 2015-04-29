@@ -88,11 +88,24 @@ namespace UserInterface
 		 */
 		QString shortcut(BusinessLogic::ScenarioBlockStyle::Type _forType) const;
 
+		/**
+		 * @brief Переопределяем для корректировки вызова отмены/повтора последнего действия
+		 */
+		QMenu* createContextMenu(const QPoint &_pos);
+
 	public slots:
 		/**
 		 * @brief Своя реализация проверки виден ли курсор на экране
 		 */
 		void ensureCursorVisibleReimpl();
+
+		/**
+		 * @brief Собственные реализации отмены/повтора последнего действия
+		 */
+		/** @{ */
+		void undoReimpl();
+		void redoReimpl();
+		/** @} */
 
 	signals:
 		/**
