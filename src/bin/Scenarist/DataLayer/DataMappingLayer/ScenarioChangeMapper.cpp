@@ -15,9 +15,9 @@ ScenarioChange* ScenarioChangeMapper::find(const Identifier& _id)
 	return dynamic_cast<ScenarioChange*>(abstractFind(_id));
 }
 
-ScenarioChangesTable* ScenarioChangeMapper::findAll()
+ScenarioChangesTable* ScenarioChangeMapper::findAll(const QString& _queryFilter)
 {
-	return qobject_cast<ScenarioChangesTable*>(abstractFindAll());
+	return qobject_cast<ScenarioChangesTable*>(abstractFindAll(_queryFilter));
 }
 
 void ScenarioChangeMapper::insert(ScenarioChange* _change)

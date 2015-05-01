@@ -591,22 +591,21 @@ void ApplicationManager::goToEditCurrentProject()
 	ProgressWidget progress(m_view);
 	progress.showProgress(tr("Loading Scenario"), tr("Please wait. Loading can take few minutes."));
 
-//	//
-//	// Синхронизируем проекты из облака
-//	//
-//	if (m_projectsManager->currentProject().type() == Project::Remote) {
-//		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
-//		m_synchronizationManager->aboutSyncScenario();
-//		m_synchronizationManager->aboutSyncScenario(true);
-//		m_synchronizationManager->aboutSyncData();
-//	}
-
 	//
 	// Загрузить данные из файла
 	//
 	m_scenarioManager->loadCurrentProject();
 	m_charactersManager->loadCurrentProject();
 	m_locationsManager->loadCurrentProject();
+
+	//
+	// Синхронизируем проекты из облака
+	//
+	if (m_projectsManager->currentProject().type() == Project::Remote) {
+		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
+		m_synchronizationManager->aboutFullSyncScenario();
+//		m_synchronizationManager->aboutSyncData();
+	}
 
 	//
 	// Загрузить настройки файла
@@ -779,6 +778,7 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(openRemoteProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRemote(QModelIndex)));
 
 	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
+	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncScenario()));
 
 	connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
 			m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
@@ -817,6 +817,8 @@ void ApplicationManager::initConnections()
 			m_startUpManager, SLOT(aboutUserUnlogged()));
 	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
 			m_projectsManager, SLOT(setRemoteProjects(QString)));
+	connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),
+			m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
 //	connect(m_synchronizationManager, SIGNAL(scenarioUpdated(QString,QString,QString,bool)),
 //			m_scenarioManager, SLOT(aboutUpdateScenario(QString,QString,QString,bool)));
 }

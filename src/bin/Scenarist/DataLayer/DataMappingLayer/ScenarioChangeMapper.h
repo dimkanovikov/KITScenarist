@@ -18,7 +18,7 @@ namespace DataMappingLayer
 	{
 	public:
 		ScenarioChange* find(const Identifier& _id);
-		ScenarioChangesTable* findAll();
+		ScenarioChangesTable* findAll(const QString& _queryFilter = QString::null);
 		void insert(ScenarioChange* _change);
 		void update(ScenarioChange* _change);
 

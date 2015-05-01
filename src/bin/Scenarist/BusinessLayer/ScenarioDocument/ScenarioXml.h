@@ -24,6 +24,11 @@ namespace BusinessLogic
 		ScenarioXml(ScenarioDocument* _scenario);
 
 		/**
+		 * @brief Значение xml-документа по умолчанию
+		 */
+		QString defaultXml() const;
+
+		/**
 		 * @brief Записать сценарий в xml-строку из заданного диапазона текста
 		 */
 		QString scenarioToXml(int _startPosition = 0, int _endPosition = 0);

@@ -17,15 +17,21 @@ ScenarioChangesTable* ScenarioChangeStorage::all()
 	return m_all;
 }
 
-ScenarioChange* ScenarioChangeStorage::append(const QString& _user, const QString& _undoPatch,
-	const QString& _redoPatch, bool _isDraft)
+ScenarioChangesTable* ScenarioChangeStorage::allNew(const QString& _fromDatetime)
+{
+	const QString queryFilter = QString(" WHERE datetime >= '%1' ").arg(_fromDatetime);
+	return MapperFacade::scenarioChangeMapper()->findAll(queryFilter);
+}
+
+ScenarioChange* ScenarioChangeStorage::append(const QString& _id, const QString& _datetime,
+	const QString& _user, const QString& _undoPatch, const QString& _redoPatch, bool _isDraft)
 {
 	//
 	// Формируем изменение
 	//
 	ScenarioChange* change =
-			new ScenarioChange(Identifier(), QUuid::createUuid(),
-				QDateTime::currentDateTimeUtc(), _user, _undoPatch, _redoPatch, _isDraft);
+			new ScenarioChange(Identifier(), QUuid(_id), QDateTime::fromString(_datetime, "yyyy-MM-dd hh:mm:ss"),
+				_user, _undoPatch, _redoPatch, _isDraft);
 	//
 	// Добавляем его в список всех изменений
 	//
@@ -35,6 +41,14 @@ ScenarioChange* ScenarioChangeStorage::append(const QString& _user, const QStrin
 	// Возвращаем клиенту
 	//
 	return change;
+}
+
+ScenarioChange* ScenarioChangeStorage::append(const QString& _user, const QString& _undoPatch,
+	const QString& _redoPatch, bool _isDraft)
+{
+	return
+			append(QUuid::createUuid().toString(), QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss"),
+				_user, _undoPatch, _redoPatch, _isDraft);
 }
 
 void ScenarioChangeStorage::store()

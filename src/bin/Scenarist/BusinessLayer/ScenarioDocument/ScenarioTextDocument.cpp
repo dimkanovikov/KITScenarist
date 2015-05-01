@@ -55,9 +55,20 @@ ScenarioTextDocument::ScenarioTextDocument(QObject *parent, ScenarioXml* _xmlHan
 
 void ScenarioTextDocument::load(const QString& _scenarioXml)
 {
-	m_xmlHandler->xmlToScenario(0, _scenarioXml);
-	m_lastScenarioXml = _scenarioXml;
-	m_lastScenarioXmlHash = ::textMd5Hash(_scenarioXml);
+	//
+	// Если xml не задан сформируем его пустой аналог
+	//
+	QString scenarioXml = _scenarioXml;
+	if (scenarioXml.isEmpty()) {
+		scenarioXml = m_xmlHandler->defaultXml();
+	}
+
+	//
+	// Загружаем проект
+	//
+	m_xmlHandler->xmlToScenario(0, scenarioXml);
+	m_lastScenarioXml = scenarioXml;
+	m_lastScenarioXmlHash = ::textMd5Hash(scenarioXml);
 
 	m_undoStack.clear();
 	m_redoStack.clear();

@@ -286,7 +286,7 @@ void Database::createTables(QSqlDatabase& _database)
 				   "uuid TEXT NOT NULL, "
 				   "datetime TEXT NOT NULL, "
 				   "username TEXT NOT NULL, "
-				   "undo_patсh TEXT NOT NULL, " // отмена изменения
+				   "undo_patch TEXT NOT NULL, " // отмена изменения
 				   "redo_patch TEXT NOT NULL, " // повтор изменения (наложение для соавторов)
 				   "is_draft INTEGER NOT NULL DEFAULT(0) "
 				   ")"

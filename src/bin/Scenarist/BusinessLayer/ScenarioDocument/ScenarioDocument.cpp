@@ -947,11 +947,9 @@ void ScenarioDocument::load(const QString& _scenario)
 	//
 	// Загружаем сценарий
 	//
-	if (!_scenario.isEmpty()) {
-		m_document->load(_scenario);
-		int documentCharactersCount = m_document->characterCount();
-		aboutContentsChange(0, 0, documentCharactersCount);
-	}
+	m_document->load(_scenario);
+	int documentCharactersCount = m_document->characterCount();
+	aboutContentsChange(0, 0, documentCharactersCount);
 
 	//
 	// Подключаем необходимые сигналы

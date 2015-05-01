@@ -320,7 +320,7 @@ void ScenarioManager::saveCurrentProject()
 	//
 	// Сохраняем изменения
 	//
-	aboutSaveChanges();
+	aboutSaveScenarioChanges();
 	DataStorageLayer::StorageFacade::scenarioChangeStorage()->store();
 }
 
@@ -594,6 +594,15 @@ void ScenarioManager::aboutScenarioNameChanged(const QString& _name)
 	m_dataEditManager->setScenarioName(_name);
 }
 
+void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft)
+{
+	if (_isDraft) {
+		m_scenarioDraft->document()->applyPatch(_patch);
+	} else {
+		m_scenario->document()->applyPatch(_patch);
+	}
+}
+
 void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 {
 	QString duration;
@@ -728,7 +737,7 @@ void ScenarioManager::aboutShowHideNote()
 	m_navigatorManager->setNoteVisible(noteInvisible);
 }
 
-void ScenarioManager::aboutSaveChanges()
+void ScenarioManager::aboutSaveScenarioChanges()
 {
 	Domain::ScenarioChange* change = m_scenario->document()->saveChanges();
 	if (change != 0) {
@@ -739,6 +748,8 @@ void ScenarioManager::aboutSaveChanges()
 	if (changeDraft != 0) {
 		changeDraft->setIsDraft(true);
 	}
+
+	emit scenarioChangesSaved();
 }
 
 void ScenarioManager::initData()
@@ -846,7 +857,7 @@ void ScenarioManager::initConnections()
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCounters()));
 
-	connect(&m_saveChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSaveChanges()));
+	connect(&m_saveChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSaveScenarioChanges()));
 
 	//
 	// Настраиваем отслеживание изменений документа

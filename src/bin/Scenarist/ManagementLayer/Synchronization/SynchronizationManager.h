@@ -2,9 +2,11 @@
 #define SYNCHRONIZATIONMANAGER_H
 
 #include <QObject>
+#include <QHash>
 
 namespace Domain {
 	class Scenario;
+	class ScenarioChange;
 }
 
 
@@ -41,7 +43,31 @@ namespace ManagementLayer
 		 */
 		void aboutLoadProjects();
 
+		/**
+		 * @brief Полная синхронизация сценария
+		 */
+		void aboutFullSyncScenario();
+
+		/**
+		 * @brief Синхронизация сценария во время работы над ним
+		 */
+		void aboutWorkSyncScenario();
+
 	public:
+		/**
+		 * @brief Отправить изменения сценария на сервер
+		 */
+		/** @{ */
+		void uploadScenarioChanges(QList<Domain::ScenarioChange*> _changes);
+		void uploadScenarioChange(Domain::ScenarioChange* _change);
+		/** @} */
+
+		/**
+		 * @brief Скачать изменение
+		 */
+		QHash<QString, QString> downloadScenarioChange(const QString& _changeUuid);
+
+
 //		/**
 //		 * @brief Синхронизировать сценарий полностью
 //		 * @note Скачать с сервера все версии, которых нет в БД и
@@ -132,9 +158,9 @@ namespace ManagementLayer
 		void remoteProjectsNotLoaded(const QString& _error);
 
 		/**
-		 * @brief Сценарий актуализирован
+		 * @brief Необходимо применить патч
 		 */
-//		void scenarioUpdated(const QString& _name, const QString& _synopsis, const QString& _text, bool _isDraft);
+		void applyPatchRequested(const QString& _patch, bool _isDraft);
 
 	private:
 		/**
@@ -148,19 +174,6 @@ namespace ManagementLayer
 		 */
 		void sleepALittle();
 
-		/**
-		 * @brief Синхронизированные значения
-		 */
-		/** @{ */
-//		QString lastSyncedName(bool _isDraft) const;
-//		QString lastSyncedSynopsis(bool _isDraft) const;
-//		QString lastSyncedText(bool _isDraft) const;
-
-//		void setLastSyncedName(const QString& _name, bool _isDraft);
-//		void setLastSyncedSynopsis(const QString& _synopsis, bool _isDraft);
-//		void setLastSyncedText(const QString& _text, bool _isDraft);
-		/** @} */
-
 	private:
 		/**
 		 * @brief Указатель на главную форму приложения
@@ -172,83 +185,15 @@ namespace ManagementLayer
 		 */
 		QString m_sessionKey;
 
-//		/**
-//		 * @brief Синхронизированные значения
-//		 */
-//		/** @{ */
-//		QString m_lastSyncedName;
-//		QString m_lastSyncedSynopsis;
-//		QString m_lastSyncedText;
-//		QString m_lastSyncedDraftName;
-//		QString m_lastSyncedDraftSynopsis;
-//		QString m_lastSyncedDraftText;
-//		/** @} */
+		/**
+		 * @brief Дата и время последней синхронизации изменений сценария
+		 */
+		QString m_lastChangesSyncDatetime;
 
-//		/**
-//		 * @brief Дата и время последнего отправленного изменения данных
-//		 */
-//		QString m_lastDataSyncDatetime;
-
-
-
-		//
-		// Пока не используемые функции
-		//
-
-//		/**
-//		 * @brief Получить список синхронизируемых проектов
-//		 * @note Тут должны быть как собственные, так и те, к которым предоставлен доступ
-//		 */
-//		void projectsList() {}
-
-//		/**
-//		 * @brief Синхронизировать проект
-//		 */
-//		void syncProject() {}
-
-//		/**
-//		 * @brief Передать управляющему "слепок" с изменениями
-//		 */
-//		void appendChanges() {}
-
-//		/**
-//		 * @brief Передать управляющему позицию курсора
-//		 */
-//		void setCursorPosition(int _position);
-
-//	signals:
-//		/**
-//		 * @brief Обновить информацию о курсорах
-//		 */
-//		void updateCursors();
-
-//		/**
-//		 * @brief Применить изменения принятые от сервера
-//		 */
-//		void applyChanges();
-
-//	private slots:
-//		/**
-//		 * @brief Оправить изменения на сервер
-//		 */
-//		void aboutSendChangesToServer() {}
-
-//		/**
-//		 * @brief Получены изменения от сервера
-//		 */
-//		void aboutGetChangesFromServer() {}
-
-//	private:
-//		/**
-//		 * @brief Авторизован ли пользователь в данный момент
-//		 */
-//		bool isLogged() const { return true; }
-
-//	private:
-//		/**
-//		 * @brief Позиция курсора
-//		 */
-//		int m_cursorPosition;
+		/**
+		 * @brief Дата и время последней синхронизации изменений данных
+		 */
+		QString m_lastDataSyncDatetime;
 	};
 }
 

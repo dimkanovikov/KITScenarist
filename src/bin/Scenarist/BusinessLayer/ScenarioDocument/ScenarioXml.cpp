@@ -25,6 +25,15 @@ ScenarioXml::ScenarioXml(ScenarioDocument* _scenario) :
 	Q_ASSERT(m_scenario);
 }
 
+QString ScenarioXml::defaultXml() const
+{
+	return
+			"<?xml version=\"1.0\"?>\n"
+			"<scenario>\n"
+			"<time_and_place synopsis=\"\"><![CDATA[]]></time_and_place>\n"
+			"</scenario>\n";
+}
+
 QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 {
 	QString resultXml;

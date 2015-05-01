@@ -132,6 +132,11 @@ namespace ManagementLayer
 		 */
 		void aboutScenarioNameChanged(const QString& _name);
 
+		/**
+		 * @brief Применить патч к сценарию
+		 */
+		void aboutApplyPatch(const QString& _patch, bool _isDraft);
+
 	signals:
 		/**
 		 * @brief Сценарий изменён
@@ -142,6 +147,11 @@ namespace ManagementLayer
 		 * @brief Перейти в полноэкранный режим
 		 */
 		void showFullscreen();
+
+		/**
+		 * @brief Изменения сценария сохранены
+		 */
+		void scenarioChangesSaved();
 
 	private slots:
 		/**
@@ -205,7 +215,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Сохранить изменение текста
 		 */
-		void aboutSaveChanges();
+		void aboutSaveScenarioChanges();
 
 	private:
 		/**

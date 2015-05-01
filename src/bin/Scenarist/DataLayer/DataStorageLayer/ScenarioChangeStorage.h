@@ -25,10 +25,19 @@ namespace DataStorageLayer
 		ScenarioChangesTable* all();
 
 		/**
+		 * @brief Изменения сценария с заданной даты
+		 */
+		ScenarioChangesTable* allNew(const QString& _fromDatetime);
+
+		/**
 		 * @brief Добавить изменение
 		 */
+		/** @{ */
+		ScenarioChange* append(const QString& _id, const QString& _datetime, const QString& _user,
+			const QString& _undoPatch, const QString& _redoPatch, bool _isDraft = false);
 		ScenarioChange* append(const QString& _user, const QString& _undoPatch,
 			const QString& _redoPatch, bool _isDraft = false);
+		/** @} */
 
 		/**
 		 * @brief Сохранить несохранённые сценарии
