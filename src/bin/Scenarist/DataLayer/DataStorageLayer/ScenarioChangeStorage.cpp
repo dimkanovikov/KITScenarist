@@ -19,8 +19,14 @@ ScenarioChangesTable* ScenarioChangeStorage::all()
 
 ScenarioChangesTable* ScenarioChangeStorage::allNew(const QString& _fromDatetime)
 {
-	const QString queryFilter = QString(" WHERE datetime >= '%1' ").arg(_fromDatetime);
-	return MapperFacade::scenarioChangeMapper()->findAll(queryFilter);
+	ScenarioChangesTable* allNew = new ScenarioChangesTable;
+	foreach (DomainObject* domainObject, all()->toList()) {
+		ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject);
+		if (change->datetime().toString("yyyy-MM-dd hh:mm:ss") >= _fromDatetime) {
+			allNew->append(change);
+		}
+	}
+	return allNew;
 }
 
 ScenarioChange* ScenarioChangeStorage::append(const QString& _id, const QString& _datetime,

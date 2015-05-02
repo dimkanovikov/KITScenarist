@@ -557,7 +557,7 @@ void SynchronizationManager::uploadScenarioChanges(QList<ScenarioChange*> _chang
 
 			xmlWriter.writeTextElement(SCENARIO_CHANGE_ID, change->uuid().toString());
 
-			xmlWriter.writeTextElement(SCENARIO_CHANGE_DATETIME, change->datetime().toString(Qt::ISODate));
+			xmlWriter.writeTextElement(SCENARIO_CHANGE_DATETIME, change->datetime().toString("yyyy-MM-dd hh:mm:ss"));
 
 			xmlWriter.writeStartElement(SCENARIO_CHANGE_UNDO_PATCH);
 			xmlWriter.writeCDATA(change->undoPatch());
