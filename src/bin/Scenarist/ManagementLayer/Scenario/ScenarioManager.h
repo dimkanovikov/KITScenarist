@@ -86,6 +86,11 @@ namespace ManagementLayer
 		 */
 		void saveViewState();
 
+		/**
+		 * @brief Закрыть текущий проект
+		 */
+		void closeCurrentProject();
+
 	public slots:
 		/**
 		 * @brief Обновить параметры текстового редактора

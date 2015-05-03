@@ -3,7 +3,7 @@
 
 #include "DiffMatchPatch.h"
 #include "TextEditHelper.h"
-
+#include <QDebug>
 #include <QHash>
 #include <QString>
 #include <QRegularExpression>
@@ -131,16 +131,22 @@ public:
 	 */
 	static QPair<ChangeXml, ChangeXml> changedXml(const QString& _xml, const QString& _patch) {
 		//
-		// Разберём патчи на список
-		//
-		diff_match_patch<std::wstring> dmp;
-		diff_match_patch<std::wstring>::Patches patches = dmp.patch_fromText(_patch.toStdWString());
-
-		//
 		// Применим патчи
 		//
 		const QString oldXml = xmlToPlain(_xml);
 		const QString newXml = xmlToPlain(applyPatchXml(_xml, _patch));
+
+		//
+		// Формируем новый патч, он будет содержать все те же данные, но с корректными
+		// позициями для текста текущего пользователя
+		//
+		const QString newPatch = makePatch(oldXml, newXml);
+
+		//
+		// Разберём патчи на список
+		//
+		diff_match_patch<std::wstring> dmp;
+		diff_match_patch<std::wstring>::Patches patches = dmp.patch_fromText(newPatch.toStdWString());
 
 		//
 		// Рассчитаем метрики для формирования xml для обновления

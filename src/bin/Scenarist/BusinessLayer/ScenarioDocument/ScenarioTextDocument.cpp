@@ -6,8 +6,10 @@
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioChangeStorage.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/DiffMatchPatchHelper.h>
+#include <3rd_party/Helpers/PasswordStorage.h>
 
 #include <QCryptographicHash>
 
@@ -161,7 +163,13 @@ Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
 			//
 			// Сохраним изменения
 			//
-			change = DataStorageLayer::StorageFacade::scenarioChangeStorage()->append("user", undoPatch, redoPatch);
+			const QString username =
+					PasswordStorage::load(
+						DataStorageLayer::StorageFacade::settingsStorage()->value(
+							"application/user-name",
+							DataStorageLayer::SettingsStorage::ApplicationSettings)
+						);
+			change = DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(username, undoPatch, redoPatch);
 
 			//
 			// Запомним новый текст

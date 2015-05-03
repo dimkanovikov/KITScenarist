@@ -648,6 +648,11 @@ void ApplicationManager::closeCurrentProject()
 	m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 
 	//
+	// Закроем проект управляющими
+	//
+	m_scenarioManager->closeCurrentProject();
+
+	//
 	// Очистим все загруженные на текущий момент данные
 	//
 	DataStorageLayer::StorageFacade::clearStorages();

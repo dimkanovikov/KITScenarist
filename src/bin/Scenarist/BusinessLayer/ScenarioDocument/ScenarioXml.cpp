@@ -75,6 +75,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 	writer.setAutoFormattingIndent(0);
 	writer.writeStartDocument();
 	writer.writeStartElement("scenario");
+	bool isFirstBlock = true;
 	do {
 		//
 		// Для всего документа сохраняем блоками
@@ -83,8 +84,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 			//
 			// Если не первый блок, перейдём к следующему
 			//
-			if (cursor.position() != _startPosition) {
+			if (!isFirstBlock) {
 				cursor.movePosition(QTextCursor::NextBlock);
+			} else {
+				isFirstBlock = false;
 			}
 			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 		}

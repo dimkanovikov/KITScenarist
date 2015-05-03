@@ -226,25 +226,6 @@ int ScenarioManager::cursorPosition() const
 void ScenarioManager::loadCurrentProject()
 {
 	//
-	// Остановим таймер сохранения изменений документа
-	//
-	m_saveChangesTimer.stop();
-
-	//
-	// Очистим от предыдущих данных
-	//
-	m_navigatorManager->setNavigationModel(0);
-	m_draftNavigatorManager->setNavigationModel(0);
-	m_dataEditManager->clear();
-	m_textEditManager->setScenarioDocument(0);
-
-	//
-	// Очистим сценарий
-	//
-	m_scenario->clear();
-	m_scenarioDraft->clear();
-
-	//
 	// Загрузим сценарий
 	//
 	// ... чистовик
@@ -425,6 +406,28 @@ void ScenarioManager::saveViewState()
 				"application/scenario/state", m_mainViewSplitter->saveState().toHex(),
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
+}
+
+void ScenarioManager::closeCurrentProject()
+{
+	//
+	// Остановим таймер сохранения изменений документа
+	//
+	m_saveChangesTimer.stop();
+
+	//
+	// Очистим от предыдущих данных
+	//
+	m_navigatorManager->setNavigationModel(0);
+	m_draftNavigatorManager->setNavigationModel(0);
+	m_dataEditManager->clear();
+	m_textEditManager->setScenarioDocument(0);
+
+	//
+	// Очистим сценарий
+	//
+	m_scenario->clear();
+	m_scenarioDraft->clear();
 }
 
 void ScenarioManager::aboutTextEditSettingsUpdated()

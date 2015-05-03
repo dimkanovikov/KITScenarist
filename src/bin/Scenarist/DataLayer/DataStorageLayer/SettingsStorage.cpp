@@ -7,6 +7,7 @@
 
 #include <3rd_party/Helpers/ShortcutHelper.h>
 
+#include <QApplication>
 #include <QSettings>
 #include <QStandardPaths>
 #include <QStringList>
@@ -127,6 +128,8 @@ SettingsStorage::SettingsStorage()
 	// Настроим значения параметров по умолчанию
 	//
 	m_defaultValues.insert("application/uuid", QUuid::createUuid().toString());
+	m_defaultValues.insert("application/user-name",
+		QApplication::translate("DataStorageLayer::SettingsStorage", "Local user"));
 	m_defaultValues.insert("application/use-dark-theme", "0");
 	m_defaultValues.insert("application/autosave", "0");
 	m_defaultValues.insert("application/autosave-interval", "5");
