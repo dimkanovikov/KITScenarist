@@ -45,6 +45,19 @@ namespace {
 		}
 		return mimeXml;
 	}
+
+	/**
+	 * @brief Сохранить изменение
+	 */
+	static Domain::ScenarioChange* saveChange(const QString& _undoPatch, const QString& _redoPatch) {
+		const QString username =
+				PasswordStorage::load(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"application/user-name",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					);
+		return DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(username, _undoPatch, _redoPatch);
+	}
 }
 
 
@@ -128,9 +141,11 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	//
 	// Замещаем его обновлённым
 	//
+	cursor.beginEditBlock();
 	cursor.removeSelectedText();
 	m_xmlHandler->xmlToScenario(xmlsForUpdate.first.plainPos,
 		::makeMimeFromXml(xmlsForUpdate.second.xml));
+	cursor.endEditBlock();
 
 	//
 	// Запомним новый текст
@@ -163,13 +178,7 @@ Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
 			//
 			// Сохраним изменения
 			//
-			const QString username =
-					PasswordStorage::load(
-						DataStorageLayer::StorageFacade::settingsStorage()->value(
-							"application/user-name",
-							DataStorageLayer::SettingsStorage::ApplicationSettings)
-						);
-			change = DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(username, undoPatch, redoPatch);
+			change = ::saveChange(undoPatch, redoPatch);
 
 			//
 			// Запомним новый текст
@@ -196,6 +205,12 @@ void ScenarioTextDocument::undoReimpl()
 		Domain::ScenarioChange* change = m_undoStack.takeLast();
 		m_redoStack.append(change);
 		applyPatch(change->undoPatch());
+
+		//
+		// Сохраним изменения
+		//
+		Domain::ScenarioChange* newChange = ::saveChange(change->redoPatch(), change->undoPatch());
+		newChange->setIsDraft(change->isDraft());
 	}
 }
 
@@ -205,6 +220,12 @@ void ScenarioTextDocument::redoReimpl()
 		Domain::ScenarioChange* change = m_redoStack.takeLast();
 		m_undoStack.append(change);
 		applyPatch(change->redoPatch());
+
+		//
+		// Сохраним изменения
+		//
+		Domain::ScenarioChange* newChange = ::saveChange(change->undoPatch(), change->redoPatch());
+		newChange->setIsDraft(change->isDraft());
 	}
 }
 

@@ -22,7 +22,7 @@ ScenariosTable* ScenarioStorage::all()
 Scenario* ScenarioStorage::current(bool _isDraft)
 {
 	Scenario* currentScenario = 0;
-	if (all()->count() > 0) {
+	if (all()->size() > 0) {
 		foreach (DomainObject* domainObject, all()->toList()) {
 			if (Scenario* scenario = dynamic_cast<Scenario*>(domainObject)) {
 				if (scenario->isDraft() == _isDraft) {

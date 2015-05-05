@@ -53,7 +53,7 @@ namespace ManagementLayer
 		 */
 		void aboutWorkSyncScenario();
 
-	public:
+	private:
 		/**
 		 * @brief Отправить изменения сценария на сервер
 		 */
@@ -65,7 +65,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Скачать изменение
 		 */
-		QHash<QString, QString> downloadScenarioChange(const QString& _changeUuid);
+		QList<QHash<QString, QString> > downloadScenarioChanges(const QString& _changesUuids);
 
 
 //		/**

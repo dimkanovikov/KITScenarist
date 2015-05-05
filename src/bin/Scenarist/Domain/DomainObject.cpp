@@ -112,7 +112,7 @@ QList<DomainObject*> DomainObjectsItemModel::toList() const
 	return domainObjects();
 }
 
-int DomainObjectsItemModel::count() const
+int DomainObjectsItemModel::size() const
 {
 	return rowCount(QModelIndex());
 }
@@ -142,7 +142,7 @@ void DomainObjectsItemModel::clear()
 
 void DomainObjectsItemModel::append(DomainObject* domainObject)
 {
-	emit beginInsertRows(QModelIndex(), count(), count());
+	emit beginInsertRows(QModelIndex(), size(), size());
 	m_domainObjects.append( domainObject );
 	emit endInsertRows();
 }

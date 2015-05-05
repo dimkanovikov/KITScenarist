@@ -17,13 +17,13 @@ ScenarioChangesTable* ScenarioChangeStorage::all()
 	return m_all;
 }
 
-ScenarioChangesTable* ScenarioChangeStorage::allNew(const QString& _fromDatetime)
+QList<ScenarioChange*> ScenarioChangeStorage::allNew(const QString& _fromDatetime)
 {
-	ScenarioChangesTable* allNew = new ScenarioChangesTable;
+	QList<ScenarioChange*> allNew;
 	foreach (DomainObject* domainObject, all()->toList()) {
 		ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject);
 		if (change->datetime().toString("yyyy-MM-dd hh:mm:ss") >= _fromDatetime) {
-			allNew->append(change);
+			allNew.append(change);
 		}
 	}
 	return allNew;
@@ -44,6 +44,11 @@ ScenarioChange* ScenarioChangeStorage::append(const QString& _id, const QString&
 	all()->append(change);
 
 	//
+	// Сохраняем идентификатор в списке
+	//
+	m_uuids.insert(_id);
+
+	//
 	// Возвращаем клиенту
 	//
 	return change;
@@ -54,7 +59,23 @@ ScenarioChange* ScenarioChangeStorage::append(const QString& _user, const QStrin
 {
 	return
 			append(QUuid::createUuid().toString(), QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss"),
-				_user, _undoPatch, _redoPatch, _isDraft);
+				   _user, _undoPatch, _redoPatch, _isDraft);
+}
+
+bool ScenarioChangeStorage::contains(const QString& _uuid)
+{
+	//
+	// Обновляем список идентификаторов изменений, если нужно
+	//
+	if (m_uuids.size() != all()->size()) {
+		foreach (DomainObject* domainObject, all()->toList()) {
+			if (ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject)) {
+				m_uuids.insert(change->uuid().toString());
+			}
+		}
+	}
+
+	return m_uuids.contains(_uuid);
 }
 
 void ScenarioChangeStorage::store()

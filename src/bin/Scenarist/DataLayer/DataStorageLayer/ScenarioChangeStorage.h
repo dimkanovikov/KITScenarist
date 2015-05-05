@@ -4,7 +4,7 @@
 
 #include "StorageFacade.h"
 
-class QString;
+#include <QSet>
 
 namespace Domain {
 	class ScenarioChange;
@@ -27,7 +27,7 @@ namespace DataStorageLayer
 		/**
 		 * @brief Изменения сценария с заданной даты
 		 */
-		ScenarioChangesTable* allNew(const QString& _fromDatetime);
+		QList<ScenarioChange*> allNew(const QString& _fromDatetime);
 
 		/**
 		 * @brief Добавить изменение
@@ -38,6 +38,11 @@ namespace DataStorageLayer
 		ScenarioChange* append(const QString& _user, const QString& _undoPatch,
 			const QString& _redoPatch, bool _isDraft = false);
 		/** @} */
+
+		/**
+		 * @brief Есть ли такое изменение
+		 */
+		bool contains(const QString& _uuid);
 
 		/**
 		 * @brief Сохранить несохранённые сценарии
@@ -51,6 +56,11 @@ namespace DataStorageLayer
 
 	private:
 		ScenarioChangesTable* m_all;
+
+		/**
+		 * @brief Список изменений
+		 */
+		QSet<QString> m_uuids;
 
 	private:
 		ScenarioChangeStorage();

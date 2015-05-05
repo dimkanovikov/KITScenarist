@@ -88,7 +88,7 @@ namespace Domain
 		/**
 		 * @brief Синоним для rowCount
 		 */
-		int count() const;
+		int size() const;
 
 		bool contains(DomainObject*) const;
 		void clear();

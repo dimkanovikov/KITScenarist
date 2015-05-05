@@ -29,7 +29,7 @@ void CharacterPhotoStorage::store(Character* _character)
 	// Сохранить новые фотографии
 	//
 	CharacterPhotosTable* newPhotos = _character->photosTable();
-	if (newPhotos->count() > 0) {
+	if (newPhotos->size() > 0) {
 		foreach (DomainObject* domainObject, newPhotos->toList()) {
 			CharacterPhoto* newPhoto = dynamic_cast<CharacterPhoto*>(domainObject);
 
