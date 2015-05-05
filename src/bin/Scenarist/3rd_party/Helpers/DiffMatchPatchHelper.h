@@ -26,7 +26,7 @@ namespace {
 	/**
 	 * @brief Удалить все xml-тэги сценария
 	 */
-	QString removeXmlTagsForScenario(const QString& _xml) {
+	QString removeCommonXmlTagsForScenario(const QString& _xml) {
 		QString result = _xml;
 		result = result.remove("<?xml version=\"1.0\"?>\n");
 		result = result.remove("<scenario>\n");
@@ -35,6 +35,15 @@ namespace {
 		result = result.remove("</scene_group>\n");
 		result = result.remove("<folder>\n");
 		result = result.remove("</folder>\n");
+		return result;
+	}
+
+	/**
+	 * @brief Удалить все xml-тэги сценария
+	 */
+	QString removeXmlTagsForScenario(const QString& _xml) {
+		QString result = _xml;
+		result = removeCommonXmlTagsForScenario(result);
 		result = TextEditHelper::removeXmlTags(result);
 		return result;
 	}
@@ -287,7 +296,7 @@ private:
 		foreach (const QString& key, tagsMap().keys()) {
 			plain.replace(key, tagsMap().value(key));
 		}
-		return plain;
+		return removeCommonXmlTagsForScenario(plain);
 	}
 
 	/**

@@ -265,7 +265,7 @@ void ScenarioManager::loadCurrentProject()
 	//
 	// Запускаем таймер сохранения изменений
 	//
-	const int SAVE_CHANGES_INTERVAL = 5000;
+	const int SAVE_CHANGES_INTERVAL = 1000;
 	m_saveChangesTimer.start(SAVE_CHANGES_INTERVAL);
 }
 
