@@ -60,11 +60,8 @@ public:
 	 * @brief Сформировать патч между двумя простыми текстами
 	 */
 	static QString makePatch(const QString& _text1, const QString& _text2) {
-		diff_match_patch<std::wstring> dmp;
-		const std::wstring text1 = _text1.toStdWString();
-		const std::wstring text2 = _text2.toStdWString();
-		const std::wstring patch = dmp.patch_toText(dmp.patch_make(text1, text2));
-		return QString::fromStdWString(patch);
+		diff_match_patch dmp;
+		return dmp.patch_toText(dmp.patch_make(_text1, _text2));
 	}
 
 	/**
@@ -84,11 +81,9 @@ public:
 	 * @brief Применить патч для простого текста
 	 */
 	static QString applyPatch(const QString& _text, const QString& _patch) {
-		diff_match_patch<std::wstring> dmp;
-		const std::wstring text = _text.toStdWString();
-		const std::wstring patch = _patch.toStdWString();
-		std::wstring result = dmp.patch_apply(dmp.patch_fromText(patch), text).first;
-		return QString::fromStdWString(result);
+		diff_match_patch dmp;
+		QList<Patch> patches = dmp.patch_fromText(_patch);
+		return dmp.patch_apply(patches, _text).first;
 	}
 
 	/**
@@ -156,8 +151,8 @@ public:
 			//
 			// Разберём патчи на список
 			//
-			diff_match_patch<std::wstring> dmp;
-			diff_match_patch<std::wstring>::Patches patches = dmp.patch_fromText(newPatch.toStdWString());
+			diff_match_patch dmp;
+			QList<Patch> patches = dmp.patch_fromText(newPatch);
 
 			//
 			// Рассчитаем метрики для формирования xml для обновления
@@ -167,7 +162,7 @@ public:
 			int oldDistance = -1;
 			int newStartPos = -1;
 			int newEndPos = -1;
-			foreach (const diff_match_patch<std::wstring>::Patch& patch, patches) {
+			foreach (const Patch& patch, patches) {
 				//
 				// ... для старого
 				//

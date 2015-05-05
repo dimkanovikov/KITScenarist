@@ -13,9 +13,6 @@
 
 #include <Domain/Scenario.h>
 
-#include <3rd_party/Helpers/DiffMatchPatch.h>
-#include <3rd_party/Helpers/DiffMatchPatchHelper.h>
-
 #include <QCryptographicHash>
 #include <QRegularExpression>
 #include <QTextDocument>

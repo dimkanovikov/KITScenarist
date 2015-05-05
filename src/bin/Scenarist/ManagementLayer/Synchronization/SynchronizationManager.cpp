@@ -14,7 +14,6 @@
 #include <Domain/ScenarioChange.h>
 
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
-#include <3rd_party/Helpers/DiffMatchPatch.h>
 #include <3rd_party/Helpers/PasswordStorage.h>
 
 #include <WebLoader.h>
@@ -94,27 +93,6 @@ namespace {
 	const bool IS_DRAFT = true;
 	const bool IS_ASYNC = true;
 	const bool IS_SYNC = false;
-
-	/**
-	 * @brief Объединить тексты
-	 */
-	static QString mergeTexts(const QString& _lastSyncedVersion, const QString& _currentVersion,
-		const QString& _currentRemoteVersion) {
-		//
-		// Преобразуем и обрабатываем строки
-		//
-		std::wstring currentRemoteVersion = _currentRemoteVersion.toStdWString();
-		std::wstring currentVersion = _currentVersion.isEmpty() ? currentRemoteVersion : _currentVersion.toStdWString();
-		std::wstring lastSyncedVersion = _lastSyncedVersion.isEmpty() ? currentRemoteVersion : _lastSyncedVersion.toStdWString();
-		//
-		// Объединяем текст версий
-		//
-		diff_match_patch<std::wstring> dmp;
-		std::wstring strPatch = dmp.patch_toText(dmp.patch_make(lastSyncedVersion, currentVersion));
-		std::pair<std::wstring, std::vector<bool> > out = dmp.patch_apply(dmp.patch_fromText(strPatch), currentRemoteVersion);
-		//
-		return QString::fromStdWString(out.first);
-	}
 }
 
 
