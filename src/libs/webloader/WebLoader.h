@@ -34,7 +34,7 @@ public:
 	/*!
 	  \fn Конструктор
 	  */
-	explicit WebLoader( QObject * parent = 0, QNetworkCookieJar * jar = 0 );
+	explicit WebLoader(QObject * _parent = 0, QNetworkCookieJar * _jar = 0 );
 	/*!
 	  \fn Деструктор
 	  */
@@ -138,7 +138,10 @@ private slots:
 	  \param networkError - ошибка
 	  */
 	void downloadError( QNetworkReply::NetworkError networkError );
-
+	/*!
+	 * \fn Ошибки при защищённом подключении
+	 * \param Список ошибок
+	 */
 	void downloadSslErrors(const QList<QSslError>& _errors);
 
 
@@ -146,23 +149,7 @@ private slots:
 // Методы доступа к данным класса, а так же вспомогательные
 // методы для работы с данными класса
 private:
-	QNetworkAccessManager * networkManager();
 	void initNetworkManager();
-
-	QNetworkCookieJar * cookieJar() const;
-
-	WebRequest * request();
-
-	RequestMethod requestMethod() const;
-
-	bool isNeedRedirect() const;
-	void setIsNeedRedirect( bool isNeedRedirect );
-
-	QByteArray downloadedData() const;
-	void setDownloadedData( QByteArray data );
-
-	void setLastError( QString errorText );
-	void setLastErrorDetails(const QString& _details);
 
 // Данные класса
 private:
