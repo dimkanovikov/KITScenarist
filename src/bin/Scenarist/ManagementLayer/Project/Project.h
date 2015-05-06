@@ -53,6 +53,11 @@ namespace ManagementLayer
 		Type type() const;
 
 		/**
+		 * @brief Это проект из облака?
+		 */
+		bool isRemote() const;
+
+		/**
 		 * @brief Отображаемое название проекта
 		 */
 		QString displayName() const;

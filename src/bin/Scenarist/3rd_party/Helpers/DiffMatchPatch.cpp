@@ -170,7 +170,7 @@ diff_match_patch::diff_match_patch() :
   Match_Threshold(0.5f),
   Match_Distance(1000),
   Patch_DeleteThreshold(0.5f),
-  Patch_Margin(4),
+  Patch_Margin(8),
   Match_MaxBits(32) {
 }
 

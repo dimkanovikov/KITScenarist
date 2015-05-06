@@ -89,6 +89,11 @@ Project::Type Project::type() const
 	return m_type;
 }
 
+bool Project::isRemote() const
+{
+	return m_type == Remote;
+}
+
 QString Project::displayName() const
 {
 	QString result = m_name;

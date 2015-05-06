@@ -10,17 +10,24 @@
 
 namespace {
 	/**
+	 * @brief Является ли строка тэгом
+	 */
+	static bool isTag(const QString& _tag) {
+		return _tag.startsWith("<") && _tag.endsWith(">");
+	}
+
+	/**
 	 * @brief Является ли тэг открывающим
 	 */
 	static bool isOpenTag(const QString& _tag) {
-		return !_tag.isEmpty() && !_tag.contains("/");
+		return isTag(_tag) && !_tag.isEmpty() && !_tag.contains("/");
 	}
 
 	/**
 	 * @brief Является ли тэг закрывающим
 	 */
 	static bool isCloseTag(const QString& _tag) {
-		return !_tag.isEmpty() && _tag.contains("/");
+		return isTag(_tag) && !_tag.isEmpty() && _tag.contains("/");
 	}
 
 	/**
@@ -272,6 +279,10 @@ public:
 			int newStartPosForPlain = newStartPosForXml - (newXmlPartLength - newPlainPartLength);
 
 
+			qDebug() << oldXml << "\n\n" << _patch << "\n\n" << newXml
+					 << "\n\n****************\n\n" << oldXmlForUpdate << "\n\n" << newXmlForUpdate
+					 << "\n\n\n\n\n\n\n";
+
 			result =
 					QPair<ChangeXml, ChangeXml>(
 						ChangeXml(plainToXml(oldXmlForUpdate), oldStartPosForPlain),
@@ -340,8 +351,8 @@ private:
 			addTag("folder_header", s_tagsMap, s_charIndex);
 			addTag("folder_footer", s_tagsMap, s_charIndex);
 
-//			s_tagsMap.insert("<![CDATA[", QChar(s_charIndex++));
-//			s_tagsMap.insert("]]>", QChar(s_charIndex++));
+			s_tagsMap.insert("<![CDATA[", QChar(s_charIndex++));
+			s_tagsMap.insert("]]>", QChar(s_charIndex++));
 		}
 		return s_tagsMap;
 	}

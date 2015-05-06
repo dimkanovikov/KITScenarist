@@ -2,6 +2,11 @@
 
 #include <Domain/ScenarioChange.h>
 
+#include <DataLayer/Database/Database.h>
+
+#include <QSet>
+#include <QSqlQuery>
+
 using namespace DataMappingLayer;
 
 
@@ -13,6 +18,12 @@ namespace {
 ScenarioChange* ScenarioChangeMapper::find(const Identifier& _id)
 {
 	return dynamic_cast<ScenarioChange*>(abstractFind(_id));
+}
+
+ScenarioChangesTable* ScenarioChangeMapper::findLastOne()
+{
+	QString queryFilter = "WHERE id IN (SELECT MAX(id) FROM " + TABLE_NAME + ")";
+	return findAll(queryFilter);
 }
 
 ScenarioChangesTable* ScenarioChangeMapper::findAll(const QString& _queryFilter)
@@ -28,6 +39,38 @@ void ScenarioChangeMapper::insert(ScenarioChange* _change)
 void ScenarioChangeMapper::update(ScenarioChange* _change)
 {
 	abstractUpdate(_change);
+}
+
+bool ScenarioChangeMapper::containsUuid(const QString& _uuid)
+{
+	QSqlQuery checker = DatabaseLayer::Database::query();
+	checker.prepare("SELECT COUNT(id) FROM " + TABLE_NAME + " WHERE uuid = ?");
+	checker.addBindValue(_uuid);
+	checker.exec();
+	return checker.value(0).toInt();
+}
+
+QList<QString> ScenarioChangeMapper::uuids() const
+{
+	QSqlQuery loader = DatabaseLayer::Database::query();
+	loader.exec("SELECT uuid FROM " + TABLE_NAME);
+	QList<QString> uuids;
+	while (loader.next()) {
+		uuids.append(loader.value(0).toString());
+	}
+	return uuids;
+}
+
+ScenarioChange ScenarioChangeMapper::change(const QString& _uuid) const
+{
+	QSqlQuery loader = DatabaseLayer::Database::query();
+	loader.prepare("SELECT " + COLUMNS + " FROM " + TABLE_NAME + " WHERE uuid = ? ");
+	loader.addBindValue(_uuid);
+	loader.exec();
+	return
+			ScenarioChange(Identifier(), _uuid, loader.value("datetime").toDateTime(),
+				loader.value("user").toString(), loader.value("undo_patch").toString(),
+				loader.value("redo_patch").toString(), loader.value("is_draft").toInt());
 }
 
 QString ScenarioChangeMapper::findStatement(const Identifier& _id) const

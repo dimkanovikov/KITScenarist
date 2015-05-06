@@ -1,9 +1,13 @@
 #include "ScenarioChangeStorage.h"
 
+#include "SettingsStorage.h"
+
 #include <DataLayer/DataMappingLayer/MapperFacade.h>
 #include <DataLayer/DataMappingLayer/ScenarioChangeMapper.h>
 
 #include <Domain/ScenarioChange.h>
+
+#include <3rd_party/Helpers/PasswordStorage.h>
 
 using namespace DataStorageLayer;
 using namespace DataMappingLayer;
@@ -11,32 +15,35 @@ using namespace DataMappingLayer;
 
 ScenarioChangesTable* ScenarioChangeStorage::all()
 {
+	//
+	// Не загружаем старые значения, работаем только с новыми,
+	// сделанными с момента открытия проекта
+	//
 	if (m_all == 0) {
-		m_all = MapperFacade::scenarioChangeMapper()->findAll();
+		m_all = MapperFacade::scenarioChangeMapper()->findLastOne();
 	}
 	return m_all;
-}
-
-QList<ScenarioChange*> ScenarioChangeStorage::allNew(const QString& _fromDatetime)
-{
-	QList<ScenarioChange*> allNew;
-	foreach (DomainObject* domainObject, all()->toList()) {
-		ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject);
-		if (change->datetime().toString("yyyy-MM-dd hh:mm:ss") >= _fromDatetime) {
-			allNew.append(change);
-		}
-	}
-	return allNew;
 }
 
 ScenarioChange* ScenarioChangeStorage::append(const QString& _id, const QString& _datetime,
 	const QString& _user, const QString& _undoPatch, const QString& _redoPatch, bool _isDraft)
 {
 	//
+	// Новое изменение обязательно должно быть старше последнего
+	//
+	QDateTime changeDatetime = QDateTime::fromString(_datetime, "yyyy-MM-dd hh:mm:ss");
+	if (all()->size() > 0) {
+		ScenarioChange* lastChange = dynamic_cast<ScenarioChange*>(all()->toList().last());
+		while (changeDatetime <= lastChange->datetime()) {
+			changeDatetime = changeDatetime.addSecs(1);
+		}
+	}
+
+	//
 	// Формируем изменение
 	//
 	ScenarioChange* change =
-			new ScenarioChange(Identifier(), QUuid(_id), QDateTime::fromString(_datetime, "yyyy-MM-dd hh:mm:ss"),
+			new ScenarioChange(Identifier(), QUuid(_id), changeDatetime,
 				_user, _undoPatch, _redoPatch, _isDraft);
 	//
 	// Добавляем его в список всех изменений
@@ -62,22 +69,6 @@ ScenarioChange* ScenarioChangeStorage::append(const QString& _user, const QStrin
 				   _user, _undoPatch, _redoPatch, _isDraft);
 }
 
-bool ScenarioChangeStorage::contains(const QString& _uuid)
-{
-	//
-	// Обновляем список идентификаторов изменений, если нужно
-	//
-	if (m_uuids.size() != all()->size()) {
-		foreach (DomainObject* domainObject, all()->toList()) {
-			if (ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject)) {
-				m_uuids.insert(change->uuid().toString());
-			}
-		}
-	}
-
-	return m_uuids.contains(_uuid);
-}
-
 void ScenarioChangeStorage::store()
 {
 	//
@@ -97,6 +88,73 @@ void ScenarioChangeStorage::clear()
 	m_all = 0;
 
 	MapperFacade::scenarioChangeMapper()->clear();
+}
+
+bool ScenarioChangeStorage::contains(const QString& _uuid)
+{
+	bool contains = false;
+
+	//
+	// Проверяем в новых изменениях ещё не сохранённых в БД
+	//
+	contains = m_uuids.contains(_uuid);
+
+	//
+	// Проверяем в БД
+	//
+	if (!contains) {
+		contains = MapperFacade::scenarioChangeMapper()->containsUuid(_uuid);
+	}
+
+	return contains;
+}
+
+QList<QString> ScenarioChangeStorage::uuids() const
+{
+	return MapperFacade::scenarioChangeMapper()->uuids();
+}
+
+QList<QString> ScenarioChangeStorage::newUuids(const QString& _fromDatetime)
+{
+	//
+	// Отправляем изменения только от локального пользователя
+	//
+	const QString username =
+			PasswordStorage::load(
+				StorageFacade::settingsStorage()->value(
+					"application/user-name", SettingsStorage::ApplicationSettings
+					)
+				);
+
+	QList<QString> allNew;
+	foreach (DomainObject* domainObject, all()->toList()) {
+		ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject);
+		if (change->user() == username
+			&& change->datetime().toString("yyyy-MM-dd hh:mm:ss") >= _fromDatetime) {
+			allNew.append(change->uuid().toString());
+		}
+	}
+	return allNew;
+}
+
+ScenarioChange ScenarioChangeStorage::change(const QString& _uuid)
+{
+	//
+	// Если изменение ещё не сохранено, берём его из списке несохранённых
+	//
+	if (m_uuids.contains(_uuid)) {
+		foreach (DomainObject* domainObject, all()->toList()) {
+			ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject);
+			if (change->uuid().toString() == _uuid) {
+				return *change;
+			}
+		}
+	}
+
+	//
+	// А если сохранено, то из БД
+	//
+	return MapperFacade::scenarioChangeMapper()->change(_uuid);
 }
 
 ScenarioChangeStorage::ScenarioChangeStorage() :

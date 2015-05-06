@@ -9,6 +9,8 @@ namespace Domain {
 	class ScenarioChange;
 }
 
+class WebLoader;
+
 
 namespace ManagementLayer
 {
@@ -55,12 +57,14 @@ namespace ManagementLayer
 
 	private:
 		/**
+		 * @brief Возможно ли использовать методы синхронизации
+		 */
+		bool isCanSync() const;
+
+		/**
 		 * @brief Отправить изменения сценария на сервер
 		 */
-		/** @{ */
-		void uploadScenarioChanges(QList<Domain::ScenarioChange*> _changes);
-		void uploadScenarioChange(Domain::ScenarioChange* _change);
-		/** @} */
+		void uploadScenarioChanges(const QList<QString>& _changesUuids);
 
 		/**
 		 * @brief Скачать изменение
@@ -179,6 +183,11 @@ namespace ManagementLayer
 		 * @brief Указатель на главную форму приложения
 		 */
 		QWidget* m_view;
+
+		/**
+		 * @brief Загрузчик данных
+		 */
+		WebLoader* m_loader;
 
 		/**
 		 * @brief Ключ сессии

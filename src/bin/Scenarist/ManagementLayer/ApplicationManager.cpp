@@ -601,7 +601,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Синхронизируем проекты из облака
 	//
-	if (m_projectsManager->currentProject().type() == Project::Remote) {
+	if (m_projectsManager->currentProject().isRemote()) {
 		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
 		m_synchronizationManager->aboutFullSyncScenario();
 //		m_synchronizationManager->aboutSyncData();

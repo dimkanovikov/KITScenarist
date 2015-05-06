@@ -1,6 +1,7 @@
 #include "SynchronizationManager.h"
 
 #include <ManagementLayer/Project/ProjectsManager.h>
+#include <ManagementLayer/Project/Project.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioChangeStorage.h>
@@ -98,7 +99,8 @@ namespace {
 
 SynchronizationManager::SynchronizationManager(QObject* _parent, QWidget* _parentView) :
 	QObject(_parent),
-	m_view(_parentView)
+	m_view(_parentView),
+	m_loader(new WebLoader(this))
 {
 	initConnections();
 }
@@ -138,11 +140,10 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	//
 	// Авторизуемся
 	//
-	WebLoader loader;
-	loader.setRequestMethod(WebLoader::Post);
-	loader.addRequestAttribute(KEY_USER_NAME, _userName);
-	loader.addRequestAttribute(KEY_PASSWORD, _password);
-	QByteArray response = loader.loadSync(URL_LOGIN);
+	m_loader->setRequestMethod(WebLoader::Post);
+	m_loader->addRequestAttribute(KEY_USER_NAME, _userName);
+	m_loader->addRequestAttribute(KEY_PASSWORD, _password);
+	QByteArray response = m_loader->loadSync(URL_LOGIN);
 
 	//
 	// Считываем результат авторизации
@@ -222,10 +223,9 @@ void SynchronizationManager::aboutLogout()
 		//
 		// Закрываем авторизацию
 		//
-		WebLoader loader;
-		loader.setRequestMethod(WebLoader::Post);
-		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		loader.loadSync(URL_LOGOUT);
+		m_loader->setRequestMethod(WebLoader::Post);
+		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		m_loader->loadSync(URL_LOGOUT);
 
 		//
 		// Удаляем сохранённые значения, если они были
@@ -261,10 +261,9 @@ void SynchronizationManager::aboutLoadProjects()
 		//
 		// Получаем список проектов
 		//
-		WebLoader loader;
-		loader.setRequestMethod(WebLoader::Post);
-		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		QByteArray response = loader.loadSync(URL_PROJECTS);
+		m_loader->setRequestMethod(WebLoader::Post);
+		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		QByteArray response = m_loader->loadSync(URL_PROJECTS);
 
 		//
 		// Считываем результат
@@ -321,7 +320,7 @@ void SynchronizationManager::aboutLoadProjects()
 
 void SynchronizationManager::aboutFullSyncScenario()
 {
-	if (!m_sessionKey.isEmpty()) {
+	if (isCanSync()) {
 		//
 		// Запоминаем время синхронизации изменений сценария, в дальнейшем будем отправлять
 		// изменения произведённые с данного момента
@@ -331,11 +330,10 @@ void SynchronizationManager::aboutFullSyncScenario()
 		//
 		// Получить список патчей проекта
 		//
-		WebLoader loader;
-		loader.setRequestMethod(WebLoader::Post);
-		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-		QByteArray response = loader.loadSync(URL_SCENARIO_CHANGE_LIST);
+		m_loader->setRequestMethod(WebLoader::Post);
+		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LIST);
 		qDebug() << response;
 		//
 		// ... считываем изменения (uuid)
@@ -366,27 +364,22 @@ void SynchronizationManager::aboutFullSyncScenario()
 		//
 		// Сформируем список изменений сценария хранящихся локально
 		//
-		QHash<QString, ScenarioChange*> localChanges;
-		foreach (DomainObject* domainObject, StorageFacade::scenarioChangeStorage()->all()->toList()) {
-			if (ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject)) {
-				localChanges.insert(change->uuid().toString(), change);
-			}
-		}
+		QList<QString> localChanges = StorageFacade::scenarioChangeStorage()->uuids();
 
 
 		//
 		// Отправить на сайт все изменения, которых там нет
 		//
 		{
-			QList<ScenarioChange*> changesForUpload;
-			foreach (const QString& changeUuid, localChanges.keys()) {
+			QList<QString> changesForUpload;
+			foreach (const QString& changeUuid, localChanges) {
 				//
 				// ... отправлять нужно, если такого изменения нет на сайте
 				//
 				const bool needUpload = !remoteChanges.contains(changeUuid);
 
 				if (needUpload) {
-					changesForUpload.append(localChanges.value(changeUuid));
+					changesForUpload.append(changeUuid);
 				}
 			}
 			//
@@ -438,7 +431,7 @@ void SynchronizationManager::aboutFullSyncScenario()
 
 void SynchronizationManager::aboutWorkSyncScenario()
 {
-	if (!m_sessionKey.isEmpty()) {
+	if (isCanSync()) {
 		//
 		// Запоминаем время синхронизации изменений сценария
 		//
@@ -449,8 +442,8 @@ void SynchronizationManager::aboutWorkSyncScenario()
 		// Отправляем новые изменения
 		//
 		{
-			QList<ScenarioChange*> newChanges =
-					DataStorageLayer::StorageFacade::scenarioChangeStorage()->allNew(prevChangesSyncDatetime);
+			QList<QString> newChanges =
+					StorageFacade::scenarioChangeStorage()->newUuids(prevChangesSyncDatetime);
 			uploadScenarioChanges(newChanges);
 		}
 
@@ -460,12 +453,11 @@ void SynchronizationManager::aboutWorkSyncScenario()
 		{
 			const int LAST_MINUTES = 2;
 
-			WebLoader loader;
-			loader.setRequestMethod(WebLoader::Post);
-			loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-			loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-			loader.addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
-			QByteArray response = loader.loadSync(URL_SCENARIO_CHANGE_LIST);
+			m_loader->setRequestMethod(WebLoader::Post);
+			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+			m_loader->addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
+			QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LIST);
 			qDebug() << response;
 			//
 			// ... считываем uuid'ы новых изменений
@@ -517,10 +509,10 @@ void SynchronizationManager::aboutWorkSyncScenario()
 					//
 					// ... сохраняем
 					//
-					DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
-								change.value(SCENARIO_CHANGE_ID), change.value(SCENARIO_CHANGE_DATETIME),
-								change.value(SCENARIO_CHANGE_USERNAME), change.value(SCENARIO_CHANGE_UNDO_PATCH),
-								change.value(SCENARIO_CHANGE_REDO_PATCH), change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
+					StorageFacade::scenarioChangeStorage()->append(
+						change.value(SCENARIO_CHANGE_ID), change.value(SCENARIO_CHANGE_DATETIME),
+						change.value(SCENARIO_CHANGE_USERNAME), change.value(SCENARIO_CHANGE_UNDO_PATCH),
+						change.value(SCENARIO_CHANGE_REDO_PATCH), change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
 
 					//
 					// ... применяем
@@ -533,9 +525,16 @@ void SynchronizationManager::aboutWorkSyncScenario()
 	}
 }
 
-void SynchronizationManager::uploadScenarioChanges(QList<ScenarioChange*> _changes)
+bool SynchronizationManager::isCanSync() const
 {
-	if (!m_sessionKey.isEmpty()) {
+	return
+			ProjectsManager::currentProject().isRemote()
+			&& !m_sessionKey.isEmpty();
+}
+
+void SynchronizationManager::uploadScenarioChanges(const QList<QString>& _changesUuids)
+{
+	if (isCanSync()) {
 		//
 		// Сформировать xml для отправки
 		//
@@ -543,22 +542,24 @@ void SynchronizationManager::uploadScenarioChanges(QList<ScenarioChange*> _chang
 		QXmlStreamWriter xmlWriter(&changesXml);
 		xmlWriter.writeStartDocument();
 		xmlWriter.writeStartElement("changes");
-		foreach (ScenarioChange* change, _changes) {
+		foreach (const QString& changeUuid, _changesUuids) {
+			const ScenarioChange change = StorageFacade::scenarioChangeStorage()->change(changeUuid);
+
 			xmlWriter.writeStartElement("change");
 
-			xmlWriter.writeTextElement(SCENARIO_CHANGE_ID, change->uuid().toString());
+			xmlWriter.writeTextElement(SCENARIO_CHANGE_ID, change.uuid().toString());
 
-			xmlWriter.writeTextElement(SCENARIO_CHANGE_DATETIME, change->datetime().toString("yyyy-MM-dd hh:mm:ss"));
+			xmlWriter.writeTextElement(SCENARIO_CHANGE_DATETIME, change.datetime().toString("yyyy-MM-dd hh:mm:ss"));
 
 			xmlWriter.writeStartElement(SCENARIO_CHANGE_UNDO_PATCH);
-			xmlWriter.writeCDATA(change->undoPatch());
+			xmlWriter.writeCDATA(change.undoPatch());
 			xmlWriter.writeEndElement();
 
 			xmlWriter.writeStartElement(SCENARIO_CHANGE_REDO_PATCH);
-			xmlWriter.writeCDATA(change->redoPatch());
+			xmlWriter.writeCDATA(change.redoPatch());
 			xmlWriter.writeEndElement();
 
-			xmlWriter.writeTextElement(SCENARIO_CHANGE_IS_DRAFT, change->isDraft() ? "1" : "0");
+			xmlWriter.writeTextElement(SCENARIO_CHANGE_IS_DRAFT, change.isDraft() ? "1" : "0");
 
 			xmlWriter.writeEndElement(); // change
 		}
@@ -568,35 +569,28 @@ void SynchronizationManager::uploadScenarioChanges(QList<ScenarioChange*> _chang
 		//
 		// Отправить данные
 		//
-		WebLoader loader;
-		loader.setRequestMethod(WebLoader::Post);
-		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-		loader.addRequestAttribute(KEY_CHANGES, changesXml);
-		loader.loadSync(URL_SCENARIO_CHANGE_SAVE);
+		m_loader->setRequestMethod(WebLoader::Post);
+		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		m_loader->addRequestAttribute(KEY_CHANGES, changesXml);
+		m_loader->loadSync(URL_SCENARIO_CHANGE_SAVE);
 	}
-}
-
-void SynchronizationManager::uploadScenarioChange(ScenarioChange* _change)
-{
-	uploadScenarioChanges(QList<ScenarioChange*>() << _change);
 }
 
 QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(const QString& _changesUuids)
 {
 	QList<QHash<QString, QString> > changes;
 
-	if (!m_sessionKey.isEmpty()) {
+	if (isCanSync()) {
 		if (!_changesUuids.isEmpty()) {
 			//
 			// ... загружаем изменение
 			//
-			WebLoader loader;
-			loader.setRequestMethod(WebLoader::Post);
-			loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-			loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-			loader.addRequestAttribute(KEY_SCENARIO_CHANGES_IDS, _changesUuids);
-			QByteArray response = loader.loadSync(URL_SCENARIO_CHANGE_LOAD);
+			m_loader->setRequestMethod(WebLoader::Post);
+			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+			m_loader->addRequestAttribute(KEY_SCENARIO_CHANGES_IDS, _changesUuids);
+			QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LOAD);
 			qDebug() << response;
 
 			//
