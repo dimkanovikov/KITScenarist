@@ -107,11 +107,27 @@ namespace TextEditHelper
 	static void beautifyDocument(QTextDocument* _document) {
 		if (_document != 0) {
 			QTextCursor cursor(_document);
+
 			while (!cursor.isNull() && !cursor.atEnd()) {
 				cursor = _document->find("...", cursor);
 
 				if (!cursor.isNull()) {
 					cursor.insertText("…");
+				}
+			}
+
+			while (!cursor.isNull() && !cursor.atEnd()) {
+				cursor = _document->find("\"", cursor);
+
+				if (!cursor.isNull()) {
+					QTextCursor cursorCopy = cursor;
+					cursorCopy.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
+					if (cursorCopy.selectedText().isEmpty()
+						|| cursorCopy.selectedText().endsWith(" ")) {
+						cursor.insertText("«");
+					} else {
+						cursor.insertText("»");
+					}
 				}
 			}
 		}
@@ -125,13 +141,30 @@ namespace TextEditHelper
 	static void beautifyDocument(QTextCursor _cursor, const QString& _enteredText) {
 		if (_enteredText == ".") {
 			//
-			// Получим значения
+			// 3 предшествующих символа
 			//
-			// ... 3 предшествующих символа
 			_cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 3);
 
 			if (_cursor.selectedText() == "...") {
 				_cursor.insertText("…");
+			}
+		} else if (_enteredText == "\"") {
+			//
+			// Выделим введённый символ
+			//
+			_cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 1);
+			//
+			// Определим предшествующий текст
+			//
+			QTextCursor cursorCopy = _cursor;
+			cursorCopy.setPosition(_cursor.selectionStart());
+			cursorCopy.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
+
+			if (cursorCopy.selectedText().isEmpty()
+				|| cursorCopy.selectedText().endsWith(" ")) {
+				_cursor.insertText("«");
+			} else {
+				_cursor.insertText("»");
 			}
 		}
 	}
