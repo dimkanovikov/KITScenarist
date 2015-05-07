@@ -125,6 +125,12 @@ namespace UserInterface
 		void keyPressEvent(QKeyEvent* _event);
 
 		/**
+		 * @brief Дополнительная функция для обработки нажатий самим редактором
+		 * @return Обработано ли событие
+		 */
+		bool keyPressEventReimpl(QKeyEvent* _event);
+
+		/**
 		 * @brief Переопределяется для корректной загрузки больших документов
 		 */
 		void paintEvent(QPaintEvent* _event);

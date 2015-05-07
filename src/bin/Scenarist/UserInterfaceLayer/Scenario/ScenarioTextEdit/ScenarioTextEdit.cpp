@@ -317,18 +317,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	// Отправить событие в базовый класс
 	//
 	if (handler->needSendEventToBaseClass()) {
-		//
-		// Переопределяем повтор и отмену последнего действия
-		//
-		if (_event == QKeySequence::Undo) {
-			undoReimpl();
-		} else if (_event == QKeySequence::Redo) {
-			redoReimpl();
-		}
-		//
-		// Остальные действия
-		//
-		else {
+		if (!keyPressEventReimpl(_event)) {
 			SpellCheckTextEdit::keyPressEvent(_event);
 		}
 
@@ -357,6 +346,61 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	if (handler->needEnsureCursorVisible()) {
 		ensureCursorVisibleReimpl();
 	}
+}
+
+bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
+{
+	bool isEventHandled = true;
+	//
+	// Переопределяем
+	//
+	// ... отмену последнего действия
+	//
+	if (_event == QKeySequence::Undo) {
+		undoReimpl();
+	}
+	//
+	// ... повтор последнего действия
+	//
+	else if (_event == QKeySequence::Redo) {
+		redoReimpl();
+	}
+	//
+	// ... перевод курсора к концу строки
+	//
+	else if (_event == QKeySequence::MoveToEndOfLine) {
+		QTextCursor cursor = textCursor();
+		const int startY = cursorRect(cursor).y();
+		while (!cursor.atEnd()) {
+			cursor.movePosition(QTextCursor::Right);
+			if (cursorRect(cursor).y() > startY) {
+				cursor.movePosition(QTextCursor::Left);
+				setTextCursor(cursor);
+				break;
+			}
+		}
+		setTextCursor(cursor);
+	}
+	//
+	// ... перевод курсора к началу строки
+	//
+	else if (_event == QKeySequence::MoveToStartOfLine) {
+		QTextCursor cursor = textCursor();
+		const int startY = cursorRect(cursor).y();
+		while (!cursor.atEnd()) {
+			cursor.movePosition(QTextCursor::Left);
+			if (cursorRect(cursor).y() < startY) {
+				cursor.movePosition(QTextCursor::Right);
+				setTextCursor(cursor);
+				break;
+			}
+		}
+		setTextCursor(cursor);
+	} else {
+		isEventHandled = false;
+	}
+
+	return isEventHandled;
 }
 
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
