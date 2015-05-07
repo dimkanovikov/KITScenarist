@@ -11,6 +11,8 @@
 
 #include <Domain/Scenario.h>
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QTextBlock>
@@ -277,7 +279,7 @@ namespace {
 			}
 			documentXml.append(
 				QString("<w:rPr/></w:pPr><w:r><w:rPr/><w:t>%2</w:t></w:r></w:p>")
-				.arg(_cursor.block().text())
+				.arg(TextEditHelper::toHtmlEscaped(_cursor.block().text()))
 				);
 		}
 
@@ -389,8 +391,8 @@ void DocxExporter::writeStaticData(QtZipWriter* _zip, const ExportParameters& _e
 	//
 	_zip->addFile(QString::fromLatin1("word/settings.xml"),
 		"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-        "<w:settings xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\"><w:characterSpacingControl w:val=\"doNotCompress\"/>"
-        "<w:footnotePr></w:footnotePr><w:endnotePr></w:endnotePr></w:settings>");
+		"<w:settings xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\"><w:characterSpacingControl w:val=\"doNotCompress\"/>"
+		"<w:footnotePr></w:footnotePr><w:endnotePr></w:endnotePr></w:settings>");
 }
 
 void DocxExporter::writeStyles(QtZipWriter* _zip) const
@@ -400,8 +402,8 @@ void DocxExporter::writeStyles(QtZipWriter* _zip) const
 	//
 	QString styleXml =
 			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-            "<w:styles xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">"
-            "<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:asciiTheme=\"minorHAnsi\" w:eastAsiaTheme=\"minorEastAsia\" w:hAnsiTheme=\"minorHAnsi\" w:cstheme=\"minorBidi\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/><w:lang w:val=\"ru-RU\" w:eastAsia=\"ru-RU\" w:bidi=\"ar-SA\"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after=\"200\" w:line=\"276\" w:lineRule=\"auto\"/></w:pPr></w:pPrDefault></w:docDefaults>";
+			"<w:styles xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">"
+			"<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:asciiTheme=\"minorHAnsi\" w:eastAsiaTheme=\"minorEastAsia\" w:hAnsiTheme=\"minorHAnsi\" w:cstheme=\"minorBidi\"/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/><w:lang w:val=\"ru-RU\" w:eastAsia=\"ru-RU\" w:bidi=\"ar-SA\"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after=\"200\" w:line=\"276\" w:lineRule=\"auto\"/></w:pPr></w:pPrDefault></w:docDefaults>";
 
 	//
 	// Настройки в соответсвии со стилем
