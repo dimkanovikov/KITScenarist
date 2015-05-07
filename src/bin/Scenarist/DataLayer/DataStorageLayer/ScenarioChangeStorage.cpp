@@ -32,7 +32,8 @@ ScenarioChange* ScenarioChangeStorage::append(const QString& _id, const QString&
 	// Новое изменение обязательно должно быть старше последнего
 	//
 	QDateTime changeDatetime = QDateTime::fromString(_datetime, "yyyy-MM-dd hh:mm:ss");
-	if (all()->size() > 0) {
+	if (changeDatetime.isValid()
+		&& all()->size() > 0) {
 		ScenarioChange* lastChange = dynamic_cast<ScenarioChange*>(all()->toList().last());
 		while (changeDatetime <= lastChange->datetime()) {
 			changeDatetime = changeDatetime.addSecs(1);

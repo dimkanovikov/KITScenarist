@@ -158,6 +158,12 @@ namespace ManagementLayer
 		 */
 		void scenarioChangesSaved();
 
+		/**
+		 * @brief Обновлена позиция курсора
+		 * @note Используется для отправки на сервер информации о курсоре
+		 */
+		void cursorPositionUpdated(int _position, bool _isDraft);
+
 	private slots:
 		/**
 		 * @brief Обновить хронометраж

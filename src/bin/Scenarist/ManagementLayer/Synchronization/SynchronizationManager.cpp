@@ -48,6 +48,7 @@ namespace {
 	const QUrl URL_SCENARIO_CHANGE_LIST = QUrl("https://kitscenarist.ru/api/projects/scenario/change/list/");
 	const QUrl URL_SCENARIO_CHANGE_LOAD = QUrl("https://kitscenarist.ru/api/projects/scenario/change/");
 	const QUrl URL_SCENARIO_CHANGE_SAVE = QUrl("https://kitscenarist.ru/api/projects/scenario/change/save/");
+	const QUrl URL_SCENARIO_CURSORS = QUrl("https://kitscenarist.ru/api/projects/scenario/cursor/");
 
 	const QUrl URL_SCENARIO_DATA_LIST = QUrl("https://kitscenarist.ru/api/projects/data/list/");
 	const QUrl URL_SCENARIO_DATA_LOAD = QUrl("https://kitscenarist.ru/api/projects/data/");
@@ -67,6 +68,7 @@ namespace {
 	const QString KEY_SCENARIO_IS_DRAFT = "scenario_is_draft";
 	const QString KEY_SCENARIO_CHANGES_IDS = "changes_ids";
 	const QString KEY_FROM_LAST_MINUTES = "from_last_minutes";
+	const QString KEY_CURSOR_POSITION = "cursor_position";
 	/** @{ */
 
 	/**
@@ -521,6 +523,67 @@ void SynchronizationManager::aboutWorkSyncScenario()
 											 change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
 				}
 			}
+		}
+	}
+}
+
+void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDraft)
+{
+	if (isCanSync()) {
+		//
+		// Загрузим позиции курсоров
+		//
+		m_loader->setRequestMethod(WebLoader::Post);
+		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		m_loader->addRequestAttribute(KEY_CURSOR_POSITION, _cursorPosition);
+		m_loader->addRequestAttribute(KEY_SCENARIO_IS_DRAFT, _isDraft);
+		QByteArray response = m_loader->loadSync(URL_SCENARIO_CURSORS);
+		qDebug() << response;
+
+		//
+		// ... считываем данные о курсорах (имя пользователя, позиция, черновик)
+		//
+		QMap<QString, QPair<int, bool> > cursors;
+		QXmlStreamReader cursorsReader(response);
+		while (!cursorsReader.atEnd()) {
+			cursorsReader.readNext();
+			if (cursorsReader.name().toString() == "status") {
+				const bool success = cursorsReader.attributes().value("result").toString() == "true";
+				if (success) {
+					cursorsReader.readNextStartElement();
+					while (!cursorsReader.atEnd()
+						   && cursorsReader.readNextStartElement()) {
+						//
+						// Курсоры
+						//
+						while (cursorsReader.name() == "cursors"
+							   && cursorsReader.readNextStartElement()) {
+							//
+							// Считываем каждый курсор
+							//
+							while (cursorsReader.name() == "cursor") {
+								cursors.insert(
+									cursorsReader.attributes().value("username").toString(),
+									QPair<int, bool>(
+										cursorsReader.attributes().value("position").toInt(),
+										cursorsReader.attributes().value("is_draft").toInt()
+										)
+									);
+								//
+								// ... переход к следующему курсору
+								//
+								cursorsReader.readNextStartElement();
+								cursorsReader.readNextStartElement();
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (!cursors.isEmpty()) {
+			emit cursorsUpdated(cursors);
 		}
 	}
 }

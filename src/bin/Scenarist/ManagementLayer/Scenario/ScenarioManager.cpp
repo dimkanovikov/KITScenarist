@@ -753,6 +753,7 @@ void ScenarioManager::aboutSaveScenarioChanges()
 	}
 
 	emit scenarioChangesSaved();
+	emit cursorPositionUpdated(cursorPosition(), m_workModeIsDraft);
 }
 
 void ScenarioManager::initData()

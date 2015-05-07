@@ -55,6 +55,11 @@ namespace ManagementLayer
 		 */
 		void aboutWorkSyncScenario();
 
+		/**
+		 * @brief Загрузить информацию о курсорах соавторов и отправить информацию о своём
+		 */
+		void aboutUpdateCursors(int _cursorPosition, bool _isDraft);
+
 	private:
 		/**
 		 * @brief Возможно ли использовать методы синхронизации
@@ -165,6 +170,11 @@ namespace ManagementLayer
 		 * @brief Необходимо применить патч
 		 */
 		void applyPatchRequested(const QString& _patch, bool _isDraft);
+
+		/**
+		 * @brief Получены новые позиции курсоров пользователей
+		 */
+		void cursorsUpdated(const QMap<QString, QPair<int, bool> >& _cursors);
 
 	private:
 		/**
