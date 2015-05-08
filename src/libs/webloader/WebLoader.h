@@ -51,6 +51,10 @@ public:
 	  */
 	void setRequestMethod( RequestMethod method );
 	/*!
+	 * \fn Очистить все старые атрибуты запроса
+	 */
+	void clearRequestAttributes();
+	/*!
 	  \fn Добавление атрибута в запрос
 	  \param name   - имя атрибута
 	  \param value  - значение атрибута

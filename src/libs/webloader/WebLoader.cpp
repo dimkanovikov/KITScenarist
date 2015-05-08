@@ -91,6 +91,11 @@ void WebLoader::setRequestMethod( WebLoader::RequestMethod method )
 		m_requestMethod = method;
 }
 
+void WebLoader::clearRequestAttributes()
+{
+	m_request->clearAttributes();
+}
+
 void WebLoader::addRequestAttribute( QString name, QVariant value )
 {
 	m_request->addAttribute( name, value );
