@@ -93,6 +93,11 @@ namespace UserInterface
 		 */
 		QMenu* createContextMenu(const QPoint &_pos);
 
+		/**
+		 * @brief Установить список дополнительных курсоров для отрисовки
+		 */
+		void setAdditionalCursors(const QMap<QString, int>& _cursors);
+
 	public slots:
 		/**
 		 * @brief Своя реализация проверки виден ли курсор на экране
@@ -222,6 +227,11 @@ namespace UserInterface
 		 * @brief Отображать ли номер сцен
 		 */
 		bool m_showSceneNumbers;
+
+		/**
+		 * @brief Курсоры соавторов
+		 */
+		QMap<QString, int> m_additionalCursors;
 
 		/**
 		 * @brief Управляющий шорткатами

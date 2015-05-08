@@ -37,6 +37,24 @@ namespace {
 	 * @note см. paintEvent для детальной информации
 	 */
 	static bool s_firstRepaintUpdate = true;
+
+	/**
+	 * @brief Получить цвет для курсора соавтора
+	 */
+	static QColor cursorColor(int _index) {
+		QColor color;
+		switch (_index) {
+			case 0: color = Qt::red; break;
+			case 1: color = Qt::darkGreen; break;
+			case 2: color = Qt::blue; break;
+			case 3: color = Qt::darkCyan; break;
+			case 4: color = Qt::magenta; break;
+			case 5: color = Qt::darkMagenta; break;
+			case 6: color = Qt::darkRed; break;
+			case 7: color = Qt::darkYellow; break;
+		}
+		return color;
+	}
 }
 
 
@@ -252,6 +270,13 @@ QMenu* ScenarioTextEdit::createContextMenu(const QPoint& _pos)
 	return menu;
 }
 
+void ScenarioTextEdit::setAdditionalCursors(const QMap<QString, int>& _cursors)
+{
+	if (m_additionalCursors != _cursors) {
+		m_additionalCursors = _cursors;
+	}
+}
+
 void ScenarioTextEdit::ensureCursorVisibleReimpl()
 {
 	//
@@ -402,7 +427,7 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 
 	return isEventHandled;
 }
-
+#include <QDebug>
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 {
 	//
@@ -425,81 +450,148 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 	//
 	{
 		//
-		// Определить область прорисовки слева от текста
+		// Декорации слева от текста
 		//
-		const int left = 0;
-		const int right = document()->rootFrame()->frameFormat().leftMargin() - 10;
-
-
-		QPainter painter(viewport());
-
-		QTextBlock block = document()->begin();
-		const QRectF viewportGeometry = viewport()->geometry();
-		const int leftDelta = -horizontalScrollBar()->value();
-
-		QTextCursor cursor(document());
-		while (block.isValid()) {
+		{
 			//
-			// Ситль текущего блока
+			// Определить область прорисовки слева от текста
 			//
-			const ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(block);
+			const int left = 0;
+			const int right = document()->rootFrame()->frameFormat().leftMargin() - 10;
 
-			{
-				cursor.setPosition(block.position());
-				QRect cursorR = cursorRect(cursor);
 
+			QPainter painter(viewport());
+
+			QTextBlock block = document()->begin();
+			const QRectF viewportGeometry = viewport()->geometry();
+			const int leftDelta = -horizontalScrollBar()->value();
+
+			QTextCursor cursor(document());
+			while (block.isValid()) {
 				//
-				// Курсор на экране
+				// Стиль текущего блока
 				//
-				// ... ниже верхней границы
-				if ((cursorR.top() > 0 || cursorR.bottom() > 0)
-					// ... и выше нижней
-					&& cursorR.top() < viewportGeometry.bottom()) {
+				const ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(block);
+
+				{
+					cursor.setPosition(block.position());
+					QRect cursorR = cursorRect(cursor);
 
 					//
-					// Прорисовка символа пустой строки
+					// Курсор на экране
 					//
-					if (block.text().simplified().isEmpty()) {
-						//
-						// Определим область для отрисовки и выведем символ в редактор
-						//
-						QPointF topLeft(left + leftDelta, cursorR.top());
-						QPointF bottomRight(right + leftDelta, cursorR.bottom());
-						QRectF rect(topLeft, bottomRight);
-						painter.setFont(cursor.charFormat().font());
-						painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, "» ");
-					}
-					//
-					// Остальные декорации
-					//
-					else {
-						//
-						// Прорисовка номеров сцен, если необходимо
-						//
-						if (m_showSceneNumbers
-							&& blockType == ScenarioBlockStyle::TimeAndPlace) {
-							//
-							// Определим номер сцены
-							//
-							QTextBlockUserData* textBlockData = block.userData();
-							if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
-								const QString sceneNumber = QString::number(info->sceneNumber()) + ".";
+					// ... ниже верхней границы
+					if ((cursorR.top() > 0 || cursorR.bottom() > 0)
+						// ... и выше нижней
+						&& cursorR.top() < viewportGeometry.bottom()) {
 
+						//
+						// Прорисовка символа пустой строки
+						//
+						if (block.text().simplified().isEmpty()) {
+							//
+							// Определим область для отрисовки и выведем символ в редактор
+							//
+							QPointF topLeft(left + leftDelta, cursorR.top());
+							QPointF bottomRight(right + leftDelta, cursorR.bottom());
+							QRectF rect(topLeft, bottomRight);
+							painter.setFont(cursor.charFormat().font());
+							painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, "» ");
+						}
+						//
+						// Остальные декорации
+						//
+						else {
+							//
+							// Прорисовка номеров сцен, если необходимо
+							//
+							if (m_showSceneNumbers
+								&& blockType == ScenarioBlockStyle::TimeAndPlace) {
 								//
-								// Определим область для отрисовки и выведем номер сцены в редактор
+								// Определим номер сцены
 								//
-								QPointF topLeft(left + leftDelta, cursorR.top());
-								QPointF bottomRight(right + leftDelta, cursorR.bottom());
-								QRectF rect(topLeft, bottomRight);
-								painter.setFont(cursor.charFormat().font());
-								painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, sceneNumber);
+								QTextBlockUserData* textBlockData = block.userData();
+								if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
+									const QString sceneNumber = QString::number(info->sceneNumber()) + ".";
+
+									//
+									// Определим область для отрисовки и выведем номер сцены в редактор
+									//
+									QPointF topLeft(left + leftDelta, cursorR.top());
+									QPointF bottomRight(right + leftDelta, cursorR.bottom());
+									QRectF rect(topLeft, bottomRight);
+									painter.setFont(cursor.charFormat().font());
+									painter.drawText(rect, Qt::AlignRight | Qt::AlignTop, sceneNumber);
+								}
 							}
 						}
 					}
 				}
-			}
 
-			block = block.next();
+				block = block.next();
+			}
+		}
+
+		//
+		// Курсоры соавторов
+		//
+		{
+			if (!m_additionalCursors.isEmpty()) {
+				QPainter painter(viewport());
+				painter.setFont(QFont("Sans", 8));
+				painter.setPen(Qt::white);
+
+				const QRectF viewportGeometry = viewport()->geometry();
+				int cursorIndex = 0;
+				foreach (const QString& username, m_additionalCursors.keys()) {
+					QTextCursor cursor(m_document);
+					cursor.setPosition(m_additionalCursors.value(username));
+					const QRect cursorR = cursorRect(cursor);
+
+					//
+					// Если курсор на экране
+					//
+					// ... ниже верхней границы
+					if ((cursorR.top() > 0 || cursorR.bottom() > 0)
+						// ... и выше нижней
+						&& cursorR.top() < viewportGeometry.bottom()) {
+						//
+						// ... рисуем его
+						//
+						painter.fillRect(cursorR, ::cursorColor(cursorIndex));
+
+						//
+						// ... декорируем
+						//
+						{
+							//
+							// Если мышь около него, то выводим имя соавтора
+							//
+							const QPoint cursorPos = mapFromGlobal(QCursor::pos());
+							QRect extandedCursorR = cursorR;
+							extandedCursorR.setWidth(5);
+							if (extandedCursorR.contains(cursorPos)) {
+								const QRect usernameRect(
+									cursorR.left() - 1,
+									cursorR.top() - painter.fontMetrics().height() - 2,
+									painter.fontMetrics().width(username) + 2,
+									painter.fontMetrics().height() + 2);
+								painter.fillRect(usernameRect, ::cursorColor(cursorIndex));
+								painter.drawText(usernameRect, Qt::AlignCenter, username);
+							}
+							//
+							// Если нет, то рисуем небольшой квадратик
+							//
+							else {
+								painter.fillRect(cursorR.left() - 2, cursorR.top() - 5, 5, 5,
+									::cursorColor(cursorIndex));
+							}
+						}
+					}
+
+					++cursorIndex;
+				}
+			}
 		}
 	}
 }

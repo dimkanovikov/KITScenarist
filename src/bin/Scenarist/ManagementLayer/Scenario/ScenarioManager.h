@@ -142,6 +142,11 @@ namespace ManagementLayer
 		 */
 		void aboutApplyPatch(const QString& _patch, bool _isDraft);
 
+		/**
+		 * @brief Получены новые позиции курсоров пользователей
+		 */
+		void aboutCursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft);
+
 	signals:
 		/**
 		 * @brief Сценарий изменён
@@ -333,6 +338,14 @@ namespace ManagementLayer
 		 * @brief Текущий рабочий режим
 		 */
 		bool m_workModeIsDraft;
+
+		/**
+		 * @brief Курсоры соавторов
+		 */
+		/** @{ */
+		QMap<QString, int> m_cleanCursors;
+		QMap<QString, int> m_draftCursors;
+		/** @} */
 
 		/**
 		 * @brief Таймер для сохранения изменений сценария

@@ -265,7 +265,7 @@ void ScenarioManager::loadCurrentProject()
 	//
 	// Запускаем таймер сохранения изменений
 	//
-	const int SAVE_CHANGES_INTERVAL = 5000;
+	const int SAVE_CHANGES_INTERVAL = 3000;
 	m_saveChangesTimer.start(SAVE_CHANGES_INTERVAL);
 }
 
@@ -606,6 +606,29 @@ void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft)
 	}
 }
 
+void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft)
+{
+	//
+	// Запомним курсоры
+	//
+	if (_isDraft) {
+		if (m_draftCursors != _cursors) {
+			m_draftCursors = _cursors;
+		}
+	} else {
+		if (m_cleanCursors != _cursors) {
+			m_cleanCursors = _cursors;
+		}
+	}
+
+	//
+	// Обновим представление
+	//
+	if (m_workModeIsDraft == _isDraft) {
+		m_textEditManager->setAdditionalCursors(_cursors);
+	}
+}
+
 void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 {
 	QString duration;
@@ -891,9 +914,11 @@ void ScenarioManager::setWorkingMode(QObject* _sender)
 
 			if (!m_workModeIsDraft) {
 				m_textEditManager->setScenarioDocument(m_scenario->document());
+				m_textEditManager->setAdditionalCursors(m_cleanCursors);
 				m_draftNavigatorManager->clearSelection();
 			} else {
 				m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
+				m_textEditManager->setAdditionalCursors(m_draftCursors);
 				m_navigatorManager->clearSelection();
 			}
 

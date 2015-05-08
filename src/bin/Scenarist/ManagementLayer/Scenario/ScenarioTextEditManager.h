@@ -57,6 +57,11 @@ namespace ManagementLayer
 		 */
 		int cursorPosition() const;
 
+		/**
+		 * @brief Установить список дополнительных курсоров для отрисовки
+		 */
+		void setAdditionalCursors(const QMap<QString, int>& _cursors);
+
 	public slots:
 		/**
 		 * @brief Добавить элемент сценария в указанной позиции

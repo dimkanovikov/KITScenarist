@@ -542,9 +542,10 @@ void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDra
 		qDebug() << response;
 
 		//
-		// ... считываем данные о курсорах (имя пользователя, позиция, черновик)
+		// ... считываем данные о курсорах
 		//
-		QMap<QString, QPair<int, bool> > cursors;
+		QMap<QString, int> cleanCursors;
+		QMap<QString, int> draftCursors;
 		QXmlStreamReader cursorsReader(response);
 		while (!cursorsReader.atEnd()) {
 			cursorsReader.readNext();
@@ -563,13 +564,13 @@ void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDra
 							// Считываем каждый курсор
 							//
 							while (cursorsReader.name() == "cursor") {
-								cursors.insert(
-									cursorsReader.attributes().value("username").toString(),
-									QPair<int, bool>(
-										cursorsReader.attributes().value("position").toInt(),
-										cursorsReader.attributes().value("is_draft").toInt()
-										)
-									);
+								const QString username = cursorsReader.attributes().value("username").toString();
+								const int cursorPosition = cursorsReader.attributes().value("position").toInt();
+								const bool isDraft = cursorsReader.attributes().value("is_draft").toInt();
+
+								QMap<QString, int>& cursors = isDraft ? draftCursors : cleanCursors;
+								cursors.insert(username, cursorPosition);
+
 								//
 								// ... переход к следующему курсору
 								//
@@ -582,9 +583,11 @@ void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDra
 			}
 		}
 
-		if (!cursors.isEmpty()) {
-			emit cursorsUpdated(cursors);
-		}
+		//
+		// Уведомляем об обновлении курсоров
+		//
+		emit cursorsUpdated(cleanCursors);
+		emit cursorsUpdated(draftCursors, IS_DRAFT);
 	}
 }
 

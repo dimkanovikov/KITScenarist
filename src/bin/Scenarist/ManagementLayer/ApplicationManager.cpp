@@ -825,8 +825,8 @@ void ApplicationManager::initConnections()
 			m_projectsManager, SLOT(setRemoteProjects(QString)));
 	connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),
 			m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
-//	connect(m_synchronizationManager, SIGNAL(scenarioUpdated(QString,QString,QString,bool)),
-//			m_scenarioManager, SLOT(aboutUpdateScenario(QString,QString,QString,bool)));
+	connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
+			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
 }
 
 void ApplicationManager::initStyleSheet()

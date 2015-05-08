@@ -174,7 +174,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Получены новые позиции курсоров пользователей
 		 */
-		void cursorsUpdated(const QMap<QString, QPair<int, bool> >& _cursors);
+		void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
 
 	private:
 		/**

@@ -281,6 +281,11 @@ void ScenarioTextEditWidget::updateShortcuts()
 	updateStylesCombo();
 }
 
+void ScenarioTextEditWidget::setAdditionalCursors(const QMap<QString, int>& _cursors)
+{
+	m_editor->setAdditionalCursors(_cursors);
+}
+
 void ScenarioTextEditWidget::aboutUndo()
 {
 	m_editor->undoReimpl();

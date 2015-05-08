@@ -114,6 +114,11 @@ namespace UserInterface
 		 */
 		void updateShortcuts();
 
+		/**
+		 * @brief Установить список дополнительных курсоров для отрисовки
+		 */
+		void setAdditionalCursors(const QMap<QString, int>& _cursors);
+
 	public slots:
 		/**
 		 * @brief Отменить последнее действие

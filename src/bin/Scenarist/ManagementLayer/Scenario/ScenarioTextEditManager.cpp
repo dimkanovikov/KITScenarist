@@ -114,6 +114,11 @@ int ScenarioTextEditManager::cursorPosition() const
 	return m_view->cursorPosition();
 }
 
+void ScenarioTextEditManager::setAdditionalCursors(const QMap<QString, int>& _cursors)
+{
+	m_view->setAdditionalCursors(_cursors);
+}
+
 void ScenarioTextEditManager::addScenarioItem(int _position, const QString& _text, int _type)
 {
 	m_view->addItem(_position, _text, _type);
