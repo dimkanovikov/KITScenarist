@@ -273,7 +273,45 @@ QMenu* ScenarioTextEdit::createContextMenu(const QPoint& _pos)
 void ScenarioTextEdit::setAdditionalCursors(const QMap<QString, int>& _cursors)
 {
 	if (m_additionalCursors != _cursors) {
-		m_additionalCursors = _cursors;
+		//
+		// Обновим позиции
+		//
+		QMutableMapIterator<QString, int> iter(m_additionalCursors);
+		while (iter.hasNext()) {
+			iter.next();
+
+			const QString username = iter.key();
+			const int cursorPosition = iter.value();
+
+			//
+			// Если такой пользователь есть, то возможно необходимо обновить значение
+			//
+			if (_cursors.contains(username)) {
+				const int newCursorPosition = _cursors.value(username);
+				if (cursorPosition != newCursorPosition) {
+					iter.setValue(newCursorPosition);
+					m_additionalCursorsCorrected.insert(username, newCursorPosition);
+				}
+			}
+			//
+			// Если нет, удаляем
+			//
+			else {
+				iter.remove();
+				m_additionalCursorsCorrected.remove(username);
+			}
+		}
+
+		//
+		// Добавим новых
+		//
+		foreach (const QString& username, _cursors.keys()) {
+			if (!m_additionalCursors.contains(username)) {
+				const int cursorPosition = _cursors.value(username);
+				m_additionalCursors.insert(username, cursorPosition);
+				m_additionalCursorsCorrected.insert(username, cursorPosition);
+			}
+		}
 	}
 }
 
@@ -427,7 +465,7 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 
 	return isEventHandled;
 }
-#include <QDebug>
+
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 {
 	//
@@ -542,10 +580,12 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 				painter.setPen(Qt::white);
 
 				const QRectF viewportGeometry = viewport()->geometry();
+				QPoint mouseCursorPos = mapFromGlobal(QCursor::pos());
+				mouseCursorPos.setY(mouseCursorPos.y() + viewport()->mapFromParent(QPoint(0,0)).y());
 				int cursorIndex = 0;
-				foreach (const QString& username, m_additionalCursors.keys()) {
+				foreach (const QString& username, m_additionalCursorsCorrected.keys()) {
 					QTextCursor cursor(m_document);
-					cursor.setPosition(m_additionalCursors.value(username));
+					cursor.setPosition(m_additionalCursorsCorrected.value(username));
 					const QRect cursorR = cursorRect(cursor);
 
 					//
@@ -567,10 +607,9 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 							//
 							// Если мышь около него, то выводим имя соавтора
 							//
-							const QPoint cursorPos = mapFromGlobal(QCursor::pos());
 							QRect extandedCursorR = cursorR;
 							extandedCursorR.setWidth(5);
-							if (extandedCursorR.contains(cursorPos)) {
+							if (extandedCursorR.contains(mouseCursorPos)) {
 								const QRect usernameRect(
 									cursorR.left() - 1,
 									cursorR.top() - painter.fontMetrics().height() - 2,
@@ -725,6 +764,19 @@ void ScenarioTextEdit::aboutCorrectRepaint()
 	cursor.movePosition(QTextCursor::End);
 	cursor.setBlockFormat(cursor.blockFormat());
 	cursor.endEditBlock();
+}
+
+void ScenarioTextEdit::aboutCorrectAdditionalCursors(int _position, int _charsRemoved, int _charsAdded)
+{
+	if (_charsAdded != _charsRemoved) {
+		foreach (const QString& username, m_additionalCursorsCorrected.keys()) {
+			int additionalCursorPosition = m_additionalCursorsCorrected.value(username);
+			if (additionalCursorPosition > _position) {
+				additionalCursorPosition += _charsAdded - _charsRemoved;
+				m_additionalCursorsCorrected[username] = additionalCursorPosition;
+			}
+		}
+	}
 }
 
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()
@@ -1091,6 +1143,9 @@ void ScenarioTextEdit::initEditor()
 		== BusinessLogic::ScenarioBlockStyle::Undefined) {
 		applyScenarioTypeToBlockText(ScenarioBlockStyle::TimeAndPlace);
 	}
+
+	connect(document(), SIGNAL(contentsChange(int,int,int)),
+			this, SLOT(aboutCorrectAdditionalCursors(int,int,int)), Qt::UniqueConnection);
 }
 
 void ScenarioTextEdit::initView()

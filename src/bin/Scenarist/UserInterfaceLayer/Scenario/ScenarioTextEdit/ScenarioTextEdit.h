@@ -165,6 +165,11 @@ namespace UserInterface
 		 */
 		void aboutCorrectRepaint();
 
+		/**
+		 * @brief Скорректировать позиции курсоров соавторов
+		 */
+		void aboutCorrectAdditionalCursors(int _position, int _charsRemoved, int _charsAdded);
+
 	private:
 		/**
 		 * @brief Очистить текущий блок от установленного в нём типа
@@ -232,6 +237,11 @@ namespace UserInterface
 		 * @brief Курсоры соавторов
 		 */
 		QMap<QString, int> m_additionalCursors;
+
+		/**
+		 * @brief Скорректированные позиции курсоров, после локальных изменений текста
+		 */
+		QMap<QString, int> m_additionalCursorsCorrected;
 
 		/**
 		 * @brief Управляющий шорткатами
