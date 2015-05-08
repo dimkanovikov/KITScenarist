@@ -51,6 +51,12 @@ void WebRequest::setUrlReferer( QUrl url )
 		m_urlReferer = url;
 }
 
+void WebRequest::clearAttributes()
+{
+	m_attributes.clear();
+	m_attributeFiles.clear();
+}
+
 void WebRequest::addAttribute( QString name, QVariant value )
 {
 	QPair< QString, QVariant > attribute;

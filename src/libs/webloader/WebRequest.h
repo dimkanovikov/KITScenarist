@@ -39,7 +39,10 @@ public:
 	  \param url - ссылка
 	  */
 	void setUrlReferer( QUrl url );
-
+	/*!
+	 * \fn Очистить список атрибутов
+	 */
+	void clearAttributes();
 	/*!
 	  \fn Добавление текстового атрибута в запрос
 	  \param name - название атрибута
