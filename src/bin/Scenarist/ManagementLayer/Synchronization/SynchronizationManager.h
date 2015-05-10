@@ -60,6 +60,11 @@ namespace ManagementLayer
 		 */
 		void aboutUpdateCursors(int _cursorPosition, bool _isDraft);
 
+		/**
+		 * @brief Полная синхронизация данных
+		 */
+		void aboutFullSyncData();
+
 	private:
 		/**
 		 * @brief Возможно ли использовать методы синхронизации

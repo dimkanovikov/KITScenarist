@@ -11,6 +11,7 @@
 #include <DataLayer/Database/Database.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <Domain/Scenario.h>
@@ -25,6 +26,7 @@
 
 using ManagementLayer::ExportManager;
 using ManagementLayer::ProjectsManager;
+using DataStorageLayer::StorageFacade;
 using UserInterface::ExportDialog;
 
 
@@ -118,37 +120,37 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
 	// Загрузим параметры экспорта
 	//
 	m_exportDialog->setExportFilePath(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
+				StorageFacade::settingsStorage()->value(
 					QString("%1/file-path").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
 	m_exportDialog->setCheckPageBreaks(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
+				StorageFacade::settingsStorage()->value(
 					QString("%1/check-page-breaks").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
 				);
 	m_exportDialog->setCurrentStyle(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
+				StorageFacade::settingsStorage()->value(
 					QString("%1/style").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
 	m_exportDialog->setPageNumbering(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
+				StorageFacade::settingsStorage()->value(
 					QString("%1/page-numbering").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
 				);
 	m_exportDialog->setScenesNumbering(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
+				StorageFacade::settingsStorage()->value(
 					QString("%1/scenes-numbering").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
 				);
 	m_exportDialog->setScenesPrefix(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
+				StorageFacade::settingsStorage()->value(
 					QString("%1/scenes-prefix").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
 	m_exportDialog->setPrintTitle(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
+				StorageFacade::settingsStorage()->value(
 					QString("%1/print-title").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
 				);
@@ -162,31 +164,31 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
 	// Сохраним параметры экспорта
 	//
 	BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+	StorageFacade::settingsStorage()->setValue(
 				QString("%1/file-path").arg(projectKey),
 				exportParameters.filePath,
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+	StorageFacade::settingsStorage()->setValue(
 				QString("%1/check-page-breaks").arg(projectKey),
 				exportParameters.checkPageBreaks ? "1" : "0",
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+	StorageFacade::settingsStorage()->setValue(
 				QString("%1/style").arg(projectKey),
 				exportParameters.style,
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+	StorageFacade::settingsStorage()->setValue(
 				QString("%1/page-numbering").arg(projectKey),
 				exportParameters.printPagesNumbers ? "1" : "0",
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+	StorageFacade::settingsStorage()->setValue(
 				QString("%1/scenes-numbering").arg(projectKey),
 				exportParameters.printScenesNumbers ? "1" : "0",
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+	StorageFacade::settingsStorage()->setValue(
 				QString("%1/scenes-prefix").arg(projectKey),
 				exportParameters.scenesPrefix,
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+	StorageFacade::settingsStorage()->setValue(
 				QString("%1/print-title").arg(projectKey),
 				exportParameters.printTilte ? "1" : "0",
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
@@ -194,7 +196,7 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
 
 void ExportManager::aboutExportStyleChanged(const QString& _styleName)
 {
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue("export/style", _styleName,
+	StorageFacade::settingsStorage()->setValue("export/style", _styleName,
 																 DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
@@ -224,7 +226,7 @@ void ExportManager::initView()
 	// Загрузить настройки
 	//
 	m_exportDialog->setCurrentStyle(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
+				StorageFacade::settingsStorage()->value(
 					"export/style",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
@@ -244,7 +246,7 @@ void ExportManager::initExportDialog(BusinessLogic::ScenarioDocument* _scenario)
 	//
 	// Установка имени файла
 	//
-	QString exportFileName = currentScenario->name();
+	QString exportFileName = StorageFacade::scenarioDataStorage()->name();
 	if (exportFileName.isEmpty()) {
 		QFileInfo fileInfo(ProjectsManager::currentProject().path());
 		exportFileName = fileInfo.baseName();
@@ -254,12 +256,12 @@ void ExportManager::initExportDialog(BusinessLogic::ScenarioDocument* _scenario)
 	//
 	// Установка информации о титульном листе
 	//
-	m_exportDialog->setScenarioName(currentScenario->name());
-	m_exportDialog->setScenarioAdditionalInfo(currentScenario->additionalInfo());
-	m_exportDialog->setScenarioGenre(currentScenario->genre());
-	m_exportDialog->setScenarioAuthor(currentScenario->author());
-	m_exportDialog->setScenarioContacts(currentScenario->contacts());
-	m_exportDialog->setScenarioYear(currentScenario->year());
+	m_exportDialog->setScenarioName(StorageFacade::scenarioDataStorage()->name());
+	m_exportDialog->setScenarioAdditionalInfo(StorageFacade::scenarioDataStorage()->additionalInfo());
+	m_exportDialog->setScenarioGenre(StorageFacade::scenarioDataStorage()->genre());
+	m_exportDialog->setScenarioAuthor(StorageFacade::scenarioDataStorage()->author());
+	m_exportDialog->setScenarioContacts(StorageFacade::scenarioDataStorage()->contacts());
+	m_exportDialog->setScenarioYear(StorageFacade::scenarioDataStorage()->year());
 }
 
 void ExportManager::saveTitleListInfo(BusinessLogic::ScenarioDocument* _scenario)
@@ -269,29 +271,29 @@ void ExportManager::saveTitleListInfo(BusinessLogic::ScenarioDocument* _scenario
 	//
 	Domain::Scenario* currentScenario = _scenario->scenario();
 	bool isTitleListDataChanged = false;
-	if (currentScenario->name() != m_exportDialog->scenarioName()) {
-		currentScenario->setName(m_exportDialog->scenarioName());
-		emit scenarioNameChanged(currentScenario->name());
+	if (StorageFacade::scenarioDataStorage()->name() != m_exportDialog->scenarioName()) {
+		StorageFacade::scenarioDataStorage()->setName(m_exportDialog->scenarioName());
+		emit scenarioNameChanged(StorageFacade::scenarioDataStorage()->name());
 		isTitleListDataChanged = true;
 	}
-	if (currentScenario->additionalInfo() != m_exportDialog->scenarioAdditionalInfo()) {
-		currentScenario->setAdditionalInfo(m_exportDialog->scenarioAdditionalInfo());
+	if (StorageFacade::scenarioDataStorage()->additionalInfo() != m_exportDialog->scenarioAdditionalInfo()) {
+		StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_exportDialog->scenarioAdditionalInfo());
 		isTitleListDataChanged = true;
 	}
-	if (currentScenario->genre() != m_exportDialog->scenarioGenre()) {
-		currentScenario->setGenre(m_exportDialog->scenarioGenre());
+	if (StorageFacade::scenarioDataStorage()->genre() != m_exportDialog->scenarioGenre()) {
+		StorageFacade::scenarioDataStorage()->setGenre(m_exportDialog->scenarioGenre());
 		isTitleListDataChanged = true;
 	}
-	if (currentScenario->author() != m_exportDialog->scenarioAuthor()) {
-		currentScenario->setAuthor(m_exportDialog->scenarioAuthor());
+	if (StorageFacade::scenarioDataStorage()->author() != m_exportDialog->scenarioAuthor()) {
+		StorageFacade::scenarioDataStorage()->setAuthor(m_exportDialog->scenarioAuthor());
 		isTitleListDataChanged = true;
 	}
-	if (currentScenario->contacts() != m_exportDialog->scenarioContacts()) {
-		currentScenario->setContacts(m_exportDialog->scenarioContacts());
+	if (StorageFacade::scenarioDataStorage()->contacts() != m_exportDialog->scenarioContacts()) {
+		StorageFacade::scenarioDataStorage()->setContacts(m_exportDialog->scenarioContacts());
 		isTitleListDataChanged = true;
 	}
-	if (currentScenario->year() != m_exportDialog->scenarioYear()) {
-		currentScenario->setYear(m_exportDialog->scenarioYear());
+	if (StorageFacade::scenarioDataStorage()->year() != m_exportDialog->scenarioYear()) {
+		StorageFacade::scenarioDataStorage()->setYear(m_exportDialog->scenarioYear());
 		isTitleListDataChanged = true;
 	}
 	//

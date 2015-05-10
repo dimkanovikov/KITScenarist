@@ -40,8 +40,7 @@ Scenario* ScenarioStorage::current(bool _isDraft)
 		//
 		// ... создаём сценарий
 		//
-		currentScenario = new Scenario(Identifier(), QString::null, QString::null, QString::null);
-		currentScenario->setIsDraft(_isDraft);
+		currentScenario = new Scenario(Identifier(), QString::null, _isDraft);
 		//
 		// ... сохраним сценарий в базе данных
 		//

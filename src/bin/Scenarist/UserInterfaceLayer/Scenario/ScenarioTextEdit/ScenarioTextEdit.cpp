@@ -1170,18 +1170,22 @@ void ScenarioTextEdit::initEditor()
 
 void ScenarioTextEdit::initEditorConnections()
 {
-	connect(m_document, SIGNAL(contentsChange(int,int,int)),
-			this, SLOT(aboutCorrectAdditionalCursors(int,int,int)));
-	connect(m_document, SIGNAL(beforePatchApply()), this, SLOT(aboutSaveEditorState()));
-	connect(m_document, SIGNAL(afterPatchApply()), this, SLOT(aboutLoadEditorState()));
+	if (m_document != 0) {
+		connect(m_document, SIGNAL(contentsChange(int,int,int)),
+				this, SLOT(aboutCorrectAdditionalCursors(int,int,int)));
+		connect(m_document, SIGNAL(beforePatchApply()), this, SLOT(aboutSaveEditorState()));
+		connect(m_document, SIGNAL(afterPatchApply()), this, SLOT(aboutLoadEditorState()));
+	}
 }
 
 void ScenarioTextEdit::removeEditorConnections()
 {
-	disconnect(m_document, SIGNAL(contentsChange(int,int,int)),
-			   this, SLOT(aboutCorrectAdditionalCursors(int,int,int)));
-	disconnect(m_document, SIGNAL(beforePatchApply()), this, SLOT(aboutSaveEditorState()));
-	disconnect(m_document, SIGNAL(afterPatchApply()), this, SLOT(aboutLoadEditorState()));
+	if (m_document != 0) {
+		disconnect(m_document, SIGNAL(contentsChange(int,int,int)),
+				   this, SLOT(aboutCorrectAdditionalCursors(int,int,int)));
+		disconnect(m_document, SIGNAL(beforePatchApply()), this, SLOT(aboutSaveEditorState()));
+		disconnect(m_document, SIGNAL(afterPatchApply()), this, SLOT(aboutLoadEditorState()));
+	}
 }
 
 void ScenarioTextEdit::initView()
