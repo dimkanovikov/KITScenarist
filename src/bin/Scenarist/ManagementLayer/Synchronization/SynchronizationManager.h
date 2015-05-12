@@ -77,9 +77,19 @@ namespace ManagementLayer
 		void uploadScenarioChanges(const QList<QString>& _changesUuids);
 
 		/**
-		 * @brief Скачать изменение
+		 * @brief Скачать изменения с сервера
 		 */
 		QList<QHash<QString, QString> > downloadScenarioChanges(const QString& _changesUuids);
+
+		/**
+		 * @brief Отправить изменения данных на сервер
+		 */
+		void uploadScenarioData(const QList<QString>& _dataUuids);
+
+		/**
+		 * @brief Скачать и сохранить в БД изменения с сервера
+		 */
+		void downloadAndSaveScenarioData(const QString& _dataUuids);
 
 
 //		/**

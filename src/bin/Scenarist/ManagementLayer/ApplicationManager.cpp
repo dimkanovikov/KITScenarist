@@ -604,7 +604,7 @@ void ApplicationManager::goToEditCurrentProject()
 	if (m_projectsManager->currentProject().isRemote()) {
 		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
 		m_synchronizationManager->aboutFullSyncScenario();
-//		m_synchronizationManager->aboutSyncData();
+		m_synchronizationManager->aboutFullSyncData();
 	}
 
 	//

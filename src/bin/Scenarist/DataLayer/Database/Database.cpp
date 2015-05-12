@@ -292,7 +292,7 @@ void Database::createTables(QSqlDatabase& _database)
 				   "("
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "data_name TEXT NOT NULL UNIQUE, "
-				   "data_value TEXT NOT NULL DEFAULT('') "
+				   "data_value TEXT DEFAULT(NULL) "
 				   ")"
 				   );
 
@@ -775,7 +775,7 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 					   "("
 					   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					   "data_name TEXT NOT NULL UNIQUE, "
-					   "data_value TEXT NOT NULL DEFAULT('') "
+					   "data_value TEXT DEFAULT(NULL) "
 					   ")"
 					   );
 
