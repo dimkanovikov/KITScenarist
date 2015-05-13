@@ -22,11 +22,6 @@ namespace DataStorageLayer
 	{
 	public:
 		/**
-		 * @brief Очистить хранилище
-		 */
-		void clear();
-
-		/**
 		 * @brief Название сценария
 		 */
 		/** @{ */
@@ -81,6 +76,16 @@ namespace DataStorageLayer
 		QString synopsis() const;
 		void setSynopsis(const QString& _synopsis);
 		/** @} */
+
+		/**
+		 * @brief Очистить хранилище
+		 */
+		void clear();
+
+		/**
+		 * @brief Обновить хранилище
+		 */
+		void refresh();
 
 	private:
 		/**

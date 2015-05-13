@@ -3,6 +3,7 @@
 #include "CharacterPhotoMapper.h"
 
 #include <Domain/Character.h>
+#include <Domain/CharacterPhoto.h>
 
 using namespace DataMappingLayer;
 
@@ -103,12 +104,30 @@ QString CharacterMapper::deleteStatement(DomainObject* _subject, QVariantList& _
 
 DomainObject* CharacterMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
-	QString name = _record.value("name").toString();
-	QString realName = _record.value("real_name").toString();
-	QString description = _record.value("description").toString();
+	const QString name = _record.value("name").toString();
+	const QString realName = _record.value("real_name").toString();
+	const QString description = _record.value("description").toString();
 	CharacterPhotosTable* photos = MapperFacade::characterPhotoMapper()->findAllForCharacter(_id);
 
 	return new Character(_id, name, realName, description, photos);
+}
+
+void CharacterMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (Character* character = dynamic_cast<Character*>(_domainObject)) {
+		const QString name = _record.value("name").toString();
+		character->setName(name);
+
+		const QString realName = _record.value("real_name").toString();
+		character->setRealName(realName);
+
+		const QString description = _record.value("description").toString();
+		character->setDescription(description);
+
+		QScopedPointer<CharacterPhotosTable> photos(
+			MapperFacade::characterPhotoMapper()->findAllForCharacter(character->id()));
+		character->setPhotosTable(photos.data());
+	}
 }
 
 DomainObjectsItemModel* CharacterMapper::modelInstance()

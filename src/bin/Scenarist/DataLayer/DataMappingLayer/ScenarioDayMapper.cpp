@@ -90,9 +90,17 @@ QString ScenarioDayMapper::deleteStatement(DomainObject* _subject, QVariantList&
 
 DomainObject* ScenarioDayMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
-	QString name = _record.value("name").toString();
+	const QString name = _record.value("name").toString();
 
 	return new ScenarioDay(_id, name);
+}
+
+void ScenarioDayMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (ScenarioDay* day = dynamic_cast<ScenarioDay*>(_domainObject)) {
+		const QString name = _record.value("name").toString();
+		day->setName(name);
+	}
 }
 
 DomainObjectsItemModel* ScenarioDayMapper::modelInstance()

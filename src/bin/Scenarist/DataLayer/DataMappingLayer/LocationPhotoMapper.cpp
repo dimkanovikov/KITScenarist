@@ -121,10 +121,21 @@ DomainObject* LocationPhotoMapper::doLoad(const Identifier& _id, const QSqlRecor
 	// связывание фотографий с локациями осуществляется посредством метода findAllForLocation
 	//
 	Location* location = 0;
-	QPixmap photo = ImageHelper::imageFromBytes(_record.value("photo").toByteArray());
-	int sortOrder = _record.value("sort_order").toInt();
+	const QPixmap photo = ImageHelper::imageFromBytes(_record.value("photo").toByteArray());
+	const int sortOrder = _record.value("sort_order").toInt();
 
 	return new LocationPhoto(_id, location, photo, sortOrder);
+}
+
+void LocationPhotoMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (LocationPhoto* locationPhoto = dynamic_cast<LocationPhoto*>(_domainObject)) {
+		const QPixmap photo = ImageHelper::imageFromBytes(_record.value("photo").toByteArray());
+		locationPhoto->setPhoto(photo);
+
+		const int sortOrder = _record.value("sort_order").toInt();
+		locationPhoto->setSortOrder(sortOrder);
+	}
 }
 
 DomainObjectsItemModel* LocationPhotoMapper::modelInstance()

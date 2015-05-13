@@ -90,9 +90,17 @@ QString PlaceMapper::deleteStatement(DomainObject* _subject, QVariantList& _dele
 
 DomainObject* PlaceMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
-	QString name = _record.value("name").toString();
+	const QString name = _record.value("name").toString();
 
 	return new Place(_id, name);
+}
+
+void PlaceMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (Place* place = dynamic_cast<Place*>(_domainObject)) {
+		const QString name = _record.value("name").toString();
+		place->setName(name);
+	}
 }
 
 DomainObjectsItemModel* PlaceMapper::modelInstance()

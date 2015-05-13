@@ -21,6 +21,11 @@ namespace Domain
 		 */
 		QString name() const;
 
+		/**
+		 * @brief Установить название сценарного дня
+		 */
+		void setName(const QString& _name);
+
 	private:
 		/**
 		 * @brief Название сценарного дня

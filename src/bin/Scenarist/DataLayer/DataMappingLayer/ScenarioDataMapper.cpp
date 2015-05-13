@@ -97,6 +97,14 @@ DomainObject* ScenarioDataMapper::doLoad(const Identifier& _id, const QSqlRecord
 	return new ScenarioData(_id, name, value);
 }
 
+void ScenarioDataMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (ScenarioData* data = dynamic_cast<ScenarioData*>(_domainObject)) {
+		const QString value = _record.value("data_value").toString();
+		data->setValue(value);
+	}
+}
+
 DomainObjectsItemModel* ScenarioDataMapper::modelInstance()
 {
 	return new ScenarioDataTable;

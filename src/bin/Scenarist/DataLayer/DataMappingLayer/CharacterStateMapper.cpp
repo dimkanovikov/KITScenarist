@@ -90,9 +90,17 @@ QString CharacterStateMapper::deleteStatement(DomainObject* _subject, QVariantLi
 
 DomainObject* CharacterStateMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
-	QString name = _record.value("name").toString();
+	const QString name = _record.value("name").toString();
 
 	return new CharacterState(_id, name);
+}
+
+void CharacterStateMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (CharacterState* state = dynamic_cast<CharacterState*>(_domainObject)) {
+		const QString name = _record.value("name").toString();
+		state->setName(name);
+	}
 }
 
 DomainObjectsItemModel* CharacterStateMapper::modelInstance()

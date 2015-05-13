@@ -33,6 +33,11 @@ namespace DataStorageLayer
 		 */
 		void clear();
 
+		/**
+		 * @brief Обновить хранилище
+		 */
+		void refresh();
+
 	private:
 		ScenarioDaysTable* m_all;
 

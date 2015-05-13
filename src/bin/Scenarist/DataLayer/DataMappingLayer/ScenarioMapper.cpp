@@ -99,6 +99,17 @@ DomainObject* ScenarioMapper::doLoad(const Identifier& _id, const QSqlRecord& _r
 	return new Scenario(_id, text, isDraft);
 }
 
+void ScenarioMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (Scenario* scenario = dynamic_cast<Scenario*>(_domainObject)) {
+		const QString text = _record.value("text").toString();
+		scenario->setText(text);
+
+		const bool isDraft = _record.value("is_draft").toInt();
+		scenario->setIsDraft(isDraft);
+	}
+}
+
 DomainObjectsItemModel* ScenarioMapper::modelInstance()
 {
 	return new ScenariosTable;

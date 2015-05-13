@@ -32,6 +32,11 @@ void ScenarioDataStorage::clear()
 	MapperFacade::scenarioDataMapper()->clear();
 }
 
+void ScenarioDataStorage::refresh()
+{
+	MapperFacade::scenarioDataMapper()->refresh(all());
+}
+
 QString ScenarioDataStorage::name() const
 {
 	return data(NAME_KEY)->value();

@@ -26,6 +26,11 @@ namespace DataStorageLayer
 		 */
 		static void clearStorages();
 
+		/**
+		 * @brief Обновить данные хранилищ
+		 */
+		static void refreshStorages();
+
 	public:
 		static PlaceStorage* placeStorage();
 		static LocationStorage* locationStorage();

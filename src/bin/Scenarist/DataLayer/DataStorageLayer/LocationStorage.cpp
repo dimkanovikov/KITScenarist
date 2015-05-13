@@ -141,6 +141,11 @@ void LocationStorage::clear()
 	MapperFacade::locationMapper()->clear();
 }
 
+void LocationStorage::refresh()
+{
+	MapperFacade::locationMapper()->refresh(all());
+}
+
 LocationStorage::LocationStorage() :
 	m_all(0)
 {

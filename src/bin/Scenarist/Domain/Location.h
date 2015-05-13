@@ -42,17 +42,18 @@ namespace Domain
 		/**
 		 * @brief Получить фотографии локации
 		 */
+		/** @{ */
 		LocationPhotosTable* photosTable() const;
+		QList<QPixmap> photos() const;
+		/** @} */
 
 		/**
 		 * @brief Установить фотографии локации
 		 */
+		/** @{ */
+		void setPhotosTable(LocationPhotosTable* _photos);
 		void setPhotos(const QList<QPixmap>& _photos);
-
-		/**
-		 * @brief Получить фотографии локации
-		 */
-		QList<QPixmap> photos() const;
+		/** @} */
 
 	private:
 		/**

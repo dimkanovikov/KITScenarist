@@ -32,6 +32,25 @@ void StorageFacade::clearStorages()
 	scenarioDataStorage()->clear();
 }
 
+void StorageFacade::refreshStorages()
+{
+	//
+	// Хранилища с фотками обновляем первыми, т.к. другие хранилища зависят от них
+	//
+	locationPhotoStorage()->refresh();
+	characterPhotoStorage()->refresh();
+
+	placeStorage()->refresh();
+	locationStorage()->refresh();
+	scenarioDayStorage()->refresh();
+	timeStorage()->refresh();
+	characterStorage()->refresh();
+	characterStateStorage()->refresh();
+//	scenarioStorage()->refresh();
+//	scenarioChangeStorage()->refresh();
+	scenarioDataStorage()->refresh();
+}
+
 PlaceStorage* StorageFacade::placeStorage()
 {
 	if (s_placeStorage == 0) {

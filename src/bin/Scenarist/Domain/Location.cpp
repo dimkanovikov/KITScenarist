@@ -52,6 +52,27 @@ LocationPhotosTable* Location::photosTable() const
 	return m_photos;
 }
 
+QList<QPixmap> Location::photos() const
+{
+	QList<QPixmap> photos;
+	foreach (DomainObject* domainObject, m_photos->toList()) {
+		LocationPhoto* photo = dynamic_cast<LocationPhoto*>(domainObject);
+		photos.insert(photo->sortOrder(), photo->photo());
+	}
+	return photos;
+}
+
+void Location::setPhotosTable(LocationPhotosTable* _photos)
+{
+	if (m_photos != _photos) {
+		m_photos->clear();
+
+		foreach (DomainObject* photo, _photos->toList()) {
+			m_photos->append(photo);
+		}
+	}
+}
+
 void Location::setPhotos(const QList<QPixmap>& _photos)
 {
 	m_photos->clear();
@@ -62,16 +83,6 @@ void Location::setPhotos(const QList<QPixmap>& _photos)
 	}
 
 	changesNotStored();
-}
-
-QList<QPixmap> Location::photos() const
-{
-	QList<QPixmap> photos;
-	foreach (DomainObject* domainObject, m_photos->toList()) {
-		LocationPhoto* photo = dynamic_cast<LocationPhoto*>(domainObject);
-		photos.insert(photo->sortOrder(), photo->photo());
-	}
-	return photos;
 }
 
 // ****

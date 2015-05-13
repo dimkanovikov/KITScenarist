@@ -117,14 +117,25 @@ QString CharacterPhotoMapper::deleteStatement(DomainObject* _subject, QVariantLi
 DomainObject* CharacterPhotoMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
 	//
-	// Локации не загружаются чтобы не вызывать циклической инициилизации данных,
-	// связывание фотографий с локациями осуществляется посредством метода findAllForCharacter
+	// Персонажи не загружаются чтобы не вызывать циклической инициилизации данных,
+	// связывание фотографий с персонажами осуществляется посредством метода findAllForCharacter
 	//
 	Character* character = 0;
-	QPixmap photo = ImageHelper::imageFromBytes(_record.value("photo").toByteArray());
-	int sortOrder = _record.value("sort_order").toInt();
+	const QPixmap photo = ImageHelper::imageFromBytes(_record.value("photo").toByteArray());
+	const int sortOrder = _record.value("sort_order").toInt();
 
 	return new CharacterPhoto(_id, character, photo, sortOrder);
+}
+
+void CharacterPhotoMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (CharacterPhoto* characterPhoto = dynamic_cast<CharacterPhoto*>(_domainObject)) {
+		const QPixmap photo = ImageHelper::imageFromBytes(_record.value("photo").toByteArray());
+		characterPhoto->setPhoto(photo);
+
+		const int sortOrder = _record.value("sort_order").toInt();
+		characterPhoto->setSortOrder(sortOrder);
+	}
 }
 
 DomainObjectsItemModel* CharacterPhotoMapper::modelInstance()

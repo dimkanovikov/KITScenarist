@@ -65,6 +65,11 @@ namespace ManagementLayer
 		 */
 		void aboutFullSyncData();
 
+		/**
+		 * @brief Синхронизация данных во время работы
+		 */
+		void aboutWorkSyncData();
+
 	private:
 		/**
 		 * @brief Возможно ли использовать методы синхронизации

@@ -642,19 +642,7 @@ void SynchronizationManager::aboutFullSyncData()
 	//
 	// Сформируем список изменений сценария хранящихся локально
 	//
-	QList<QString> localChanges;
-	QMap<QString, QString> historyRecord;
-	foreach (historyRecord, StorageFacade::databaseHistoryStorage()->history(QString::null)) {
-		//
-		// Нас интересуют изменения из всех таблиц, кроме сценария и истории изменений сценария,
-		// они синхронизируются самостоятельно
-		//
-		const QString query = historyRecord.value(DBH_QUERY_KEY);
-		if (!query.contains(" scenario_changes ")
-			&& !query.contains(" scenario ")) {
-			localChanges.append(historyRecord.value(DBH_ID_KEY));
-		}
-	}
+	QList<QString> localChanges = StorageFacade::databaseHistoryStorage()->history(QString::null);
 
 	//
 	// Отправить на сайт все версии, которых на сайте нет
@@ -697,6 +685,85 @@ void SynchronizationManager::aboutFullSyncData()
 		// ... скачиваем и сохраняем
 		//
 		downloadAndSaveScenarioData(changesForDownloadAndSave.join(";"));
+	}
+}
+
+void SynchronizationManager::aboutWorkSyncData()
+{
+	if (isCanSync()) {
+		//
+		// Запоминаем время синхронизации изменений данных сценария
+		//
+		const QString prevDataSyncDatetime = m_lastDataSyncDatetime;
+		m_lastDataSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
+
+		//
+		// Отправляем новые изменения
+		//
+		{
+			QList<QString> newChanges =
+					StorageFacade::databaseHistoryStorage()->history(prevDataSyncDatetime);
+			uploadScenarioData(newChanges);
+		}
+
+		//
+		// Загружаем и применяем изменения от других пользователей за последние LAST_MINUTES минут
+		//
+		{
+			const int LAST_MINUTES = 2;
+
+			m_loader->setRequestMethod(WebLoader::Post);
+			m_loader->clearRequestAttributes();
+			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+			m_loader->addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
+			QByteArray response = m_loader->loadSync(URL_SCENARIO_DATA_LIST);
+
+			//
+			// ... считываем uuid'ы новых изменений
+			//
+			QList<QString> remoteChanges;
+			QXmlStreamReader changesReader(response);
+			while (!changesReader.atEnd()) {
+				changesReader.readNext();
+				if (changesReader.name().toString() == "status") {
+					const bool success = changesReader.attributes().value("result").toString() == "true";
+					if (success) {
+						changesReader.readNextStartElement();
+						changesReader.readNextStartElement(); // changes
+						while (!changesReader.atEnd()) {
+							changesReader.readNextStartElement();
+							if (changesReader.name() == "change") {
+								const QString changeUuid = changesReader.attributes().value("id").toString();
+								if (!changeUuid.isEmpty()) {
+									remoteChanges.append(changeUuid);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			//
+			// ... скачиваем все изменения, которых ещё нет
+			//
+			QStringList changesForDownload;
+			foreach (const QString& changeUuid, remoteChanges) {
+				//
+				// ... сохранять нужно, если такого изменения нет
+				//
+				const bool needDownload =
+						!DataStorageLayer::StorageFacade::databaseHistoryStorage()->contains(changeUuid);
+
+				if (needDownload) {
+					changesForDownload.append(changeUuid);
+				}
+			}
+			//
+			// ... скачиваем и сохраняем
+			//
+			downloadAndSaveScenarioData(changesForDownload.join(";"));
+		}
 	}
 }
 
@@ -840,21 +907,29 @@ void SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids
 					StorageFacade::databaseHistoryStorage()->historyRecord(dataUuid);
 
 			//
-			xmlWriter.writeStartElement("change");
+			// Нас интересуют изменения из всех таблиц, кроме сценария и истории изменений сценария,
+			// они синхронизируются самостоятельно
 			//
-			xmlWriter.writeTextElement(DBH_ID_KEY, historyRecord.value(DBH_ID_KEY));
-			//
-			xmlWriter.writeStartElement(DBH_QUERY_KEY);
-			xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_KEY));
-			xmlWriter.writeEndElement();
-			//
-			xmlWriter.writeStartElement(DBH_QUERY_VALUES_KEY);
-			xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_VALUES_KEY));
-			xmlWriter.writeEndElement();
-			//
-			xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
-			//
-			xmlWriter.writeEndElement(); // change
+			const QString query = historyRecord.value(DBH_QUERY_KEY);
+			if (!query.contains(" scenario_changes ")
+				&& !query.contains(" scenario ")) {
+				//
+				xmlWriter.writeStartElement("change");
+				//
+				xmlWriter.writeTextElement(DBH_ID_KEY, historyRecord.value(DBH_ID_KEY));
+				//
+				xmlWriter.writeStartElement(DBH_QUERY_KEY);
+				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_KEY));
+				xmlWriter.writeEndElement();
+				//
+				xmlWriter.writeStartElement(DBH_QUERY_VALUES_KEY);
+				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_VALUES_KEY));
+				xmlWriter.writeEndElement();
+				//
+				xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
+				//
+				xmlWriter.writeEndElement(); // change
+			}
 		}
 		xmlWriter.writeEndElement(); // changes
 		xmlWriter.writeEndDocument();
@@ -952,6 +1027,12 @@ void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUui
 				changeValues.value(DBH_QUERY_VALUES_KEY), changeValues.value(DBH_DATETIME_KEY));
 		}
 		DatabaseLayer::Database::commit();
+
+
+		//
+		// Обновляем данные
+		//
+		DataStorageLayer::StorageFacade::refreshStorages();
 	}
 }
 
