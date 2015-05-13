@@ -68,6 +68,27 @@ CharacterPhotosTable* Character::photosTable() const
 	return m_photos;
 }
 
+QList<QPixmap> Character::photos() const
+{
+	QList<QPixmap> photos;
+	foreach (DomainObject* domainObject, m_photos->toList()) {
+		CharacterPhoto* photo = dynamic_cast<CharacterPhoto*>(domainObject);
+		photos.insert(photo->sortOrder(), photo->photo());
+	}
+	return photos;
+}
+
+void Character::setPhotosTable(CharacterPhotosTable* _photos)
+{
+	if (m_photos != _photos) {
+		m_photos->clear();
+
+		foreach (DomainObject* photo, _photos->toList()) {
+			m_photos->append(photo);
+		}
+	}
+}
+
 void Character::setPhotos(const QList<QPixmap>& _photos)
 {
 	m_photos->clear();
@@ -78,16 +99,6 @@ void Character::setPhotos(const QList<QPixmap>& _photos)
 	}
 
 	changesNotStored();
-}
-
-QList<QPixmap> Character::photos() const
-{
-	QList<QPixmap> photos;
-	foreach (DomainObject* domainObject, m_photos->toList()) {
-		CharacterPhoto* photo = dynamic_cast<CharacterPhoto*>(domainObject);
-		photos.insert(photo->sortOrder(), photo->photo());
-	}
-	return photos;
 }
 
 // ****

@@ -10,14 +10,19 @@ namespace DataMappingLayer
 	{
 	public:
 		/**
-		 * @brief Получить таблицу изменений с указанной даты и времени
+		 * @brief Получить список uuid'ов изменений с указанной даты и времени
 		 */
-		QList<QMap<QString, QString> > history(const QString& _fromDatetime);
+		QList<QString> history(const QString& _fromDatetime);
 
 		/**
 		 * @brief Получить запись из таблицы изменений по UUID
 		 */
 		QMap<QString, QString> historyRecord(const QString& _uuid);
+
+		/**
+		 * @brief Содержится ли изменение с заданным uuid'ом в БД
+		 */
+		bool contains(const QString& _uuid) const;
 
 		/**
 		 * @brief Сохранить изменение данных

@@ -21,6 +21,11 @@ namespace DataMappingLayer
 		 */
 		void clear();
 
+		/**
+		 * @brief Обновить элементы списка
+		 */
+		void refresh(DomainObjectsItemModel* _model);
+
 	protected:
 		virtual QString findStatement(const Identifier&) const = 0;
 		virtual QString findAllStatement() const = 0;
@@ -29,7 +34,20 @@ namespace DataMappingLayer
 		virtual QString deleteStatement(DomainObject*, QVariantList&) const = 0;
 
 	protected:
+		/**
+		 * @brief Создать объект с заданным идентификатором из sql-записи
+		 */
 		virtual DomainObject* doLoad(const Identifier& _id, const QSqlRecord& _record) = 0;
+
+		/**
+		 * @brief Обновить параметры заданного объекта из sql-записи
+		 */
+		virtual void doLoad(DomainObject* _domainObject, const QSqlRecord& _record) = 0;
+
+		/**
+		 * @brief Получить экземпляр класса списка объектов
+		 * @note Шаблонный метод
+		 */
 		virtual DomainObjectsItemModel* modelInstance() = 0;
 
 	protected:
@@ -54,7 +72,7 @@ namespace DataMappingLayer
 		Identifier findNextIdentifier();
 
 		/**
-		 * @brief Загрузить объект из записи в БД
+		 * @brief Загрузить или обновить объект из записи в БД
 		 */
 		DomainObject* load(const QSqlRecord& _record);
 

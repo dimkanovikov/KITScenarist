@@ -77,6 +77,11 @@ void LocationPhotoStorage::clear()
 	MapperFacade::locationPhotoMapper()->clear();
 }
 
+void LocationPhotoStorage::refresh()
+{
+	MapperFacade::locationPhotoMapper()->refresh(all());
+}
+
 LocationPhotoStorage::LocationPhotoStorage() :
 	m_all(0)
 {

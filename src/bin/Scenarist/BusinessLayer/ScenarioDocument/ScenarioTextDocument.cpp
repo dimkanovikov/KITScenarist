@@ -116,6 +116,7 @@ void ScenarioTextDocument::insertFromMime(int _insertPosition, const QString& _m
 
 void ScenarioTextDocument::applyPatch(const QString& _patch)
 {
+	emit beforePatchApply();
 	m_isPatchApplyProcessed = true;
 
 
@@ -155,6 +156,7 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 
 
 	m_isPatchApplyProcessed = false;
+	emit afterPatchApply();
 }
 
 Domain::ScenarioChange* ScenarioTextDocument::saveChanges()

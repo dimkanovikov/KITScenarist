@@ -3,6 +3,7 @@
 #include "LocationPhotoMapper.h"
 
 #include <Domain/Location.h>
+#include <Domain/LocationPhoto.h>
 
 using namespace DataMappingLayer;
 
@@ -100,11 +101,26 @@ QString LocationMapper::deleteStatement(DomainObject* _subject, QVariantList& _d
 
 DomainObject* LocationMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
-	QString name = _record.value("name").toString();
-	QString description = _record.value("description").toString();
+	const QString name = _record.value("name").toString();
+	const QString description = _record.value("description").toString();
 	LocationPhotosTable* photos = MapperFacade::locationPhotoMapper()->findAllForLocation(_id);
 
 	return new Location(_id, name, description, photos);
+}
+
+void LocationMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (Location* location = dynamic_cast<Location*>(_domainObject)) {
+		const QString name = _record.value("name").toString();
+		location->setName(name);
+
+		const QString description = _record.value("description").toString();
+		location->setDescription(description);
+
+		QScopedPointer<LocationPhotosTable> photos(
+			MapperFacade::locationPhotoMapper()->findAllForLocation(location->id()));
+		location->setPhotosTable(photos.data());
+	}
 }
 
 DomainObjectsItemModel* LocationMapper::modelInstance()

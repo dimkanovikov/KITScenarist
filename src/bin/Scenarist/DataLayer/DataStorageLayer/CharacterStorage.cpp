@@ -148,6 +148,11 @@ void CharacterStorage::clear()
 	MapperFacade::characterMapper()->clear();
 }
 
+void CharacterStorage::refresh()
+{
+	MapperFacade::characterMapper()->refresh(all());
+}
+
 CharacterStorage::CharacterStorage() :
 	m_all(0)
 {

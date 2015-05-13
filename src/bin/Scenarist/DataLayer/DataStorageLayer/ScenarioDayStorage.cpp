@@ -67,6 +67,11 @@ void ScenarioDayStorage::clear()
 	MapperFacade::scenarioDayMapper()->clear();
 }
 
+void ScenarioDayStorage::refresh()
+{
+	MapperFacade::scenarioDayMapper()->refresh(all());
+}
+
 ScenarioDayStorage::ScenarioDayStorage() :
 	m_all(0)
 {

@@ -604,7 +604,7 @@ void ApplicationManager::goToEditCurrentProject()
 	if (m_projectsManager->currentProject().isRemote()) {
 		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
 		m_synchronizationManager->aboutFullSyncScenario();
-//		m_synchronizationManager->aboutSyncData();
+		m_synchronizationManager->aboutFullSyncData();
 	}
 
 	//
@@ -784,6 +784,7 @@ void ApplicationManager::initConnections()
 
 	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
 	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncScenario()));
+	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncData()));
 	connect(m_scenarioManager, SIGNAL(cursorPositionUpdated(int,bool)), m_synchronizationManager, SLOT(aboutUpdateCursors(int,bool)));
 
 	connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),

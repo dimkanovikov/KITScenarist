@@ -158,6 +158,29 @@ DomainObject* ScenarioChangeMapper::doLoad(const Identifier& _id, const QSqlReco
 	return new ScenarioChange(_id, uuid, datetime, user, undoPatch, redoPatch, isDraft);
 }
 
+void ScenarioChangeMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (ScenarioChange* change = dynamic_cast<ScenarioChange*>(_domainObject)) {
+		const QUuid uuid = QUuid(_record.value("uuid").toString());
+		change->setUuid(uuid);
+
+		const QDateTime datetime = QDateTime::fromString(_record.value("datetime").toString(), "yyyy-MM-dd hh:mm:ss");
+		change->setDatetime(datetime);
+
+		const QString user = _record.value("username").toString();
+		change->setUser(user);
+
+		const QString undoPatch = _record.value("undo_patch").toString();
+		change->setUndoPatch(undoPatch);
+
+		const QString redoPatch = _record.value("redo_patch").toString();
+		change->setRedoPatch(redoPatch);
+
+		const bool isDraft = _record.value("is_draft").toInt();
+		change->setIsDraft(isDraft);
+	}
+}
+
 DomainObjectsItemModel* ScenarioChangeMapper::modelInstance()
 {
 	return new ScenarioChangesTable;

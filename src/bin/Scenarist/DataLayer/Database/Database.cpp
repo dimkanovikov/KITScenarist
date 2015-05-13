@@ -265,13 +265,6 @@ void Database::createTables(QSqlDatabase& _database)
 	q_creator.exec("CREATE TABLE scenario "
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-				   "name TEXT DEFAULT(NULL), "
-				   "additional_info TEXT DEFAULT(NULL), "
-				   "genre TEXT DEFAULT(NULL), "
-				   "author TEXT DEFAULT(NULL), "
-				   "contacts TEXT DEFAULT(NULL), "
-				   "year TEXT DEFAULT(NULL), "
-				   "synopsis TEXT DEFAULT(NULL), "
 				   "text TEXT NOT NULL, "
 				   "is_draft INTEGER NOT NULL DEFAULT(0) "
 				   ")"
@@ -289,6 +282,17 @@ void Database::createTables(QSqlDatabase& _database)
 				   "undo_patch TEXT NOT NULL, " // отмена изменения
 				   "redo_patch TEXT NOT NULL, " // повтор изменения (наложение для соавторов)
 				   "is_draft INTEGER NOT NULL DEFAULT(0) "
+				   ")"
+				   );
+
+	//
+	// Таблица с данными сценария
+	//
+	q_creator.exec("CREATE TABLE scenario_data "
+				   "("
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "data_name TEXT NOT NULL UNIQUE, "
+				   "data_value TEXT DEFAULT(NULL) "
 				   ")"
 				   );
 
@@ -763,6 +767,63 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 					   "is_draft INTEGER NOT NULL DEFAULT(0) "
 					   ")"
 					   );
+
+		//
+		// Таблица с данными сценария
+		//
+		q_updater.exec("CREATE TABLE scenario_data "
+					   "("
+					   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   "data_name TEXT NOT NULL UNIQUE, "
+					   "data_value TEXT DEFAULT(NULL) "
+					   ")"
+					   );
+
+		//
+		// Перенесём данные о сценарии в новую таблицу
+		//
+		q_updater.exec("SELECT name, additional_info, genre, author, contacts, year, synopsis "
+					   "FROM scenario WHERE is_draft = 0");
+		if (q_updater.next()) {
+			QSqlQuery q_transporter(_database);
+			q_transporter.prepare("INSERT INTO scenario_data (data_name, data_value) VALUES(?, ?)");
+
+			const QString name = "name";
+			q_transporter.addBindValue(name);
+			q_transporter.addBindValue(q_updater.record().value(name));
+			q_transporter.exec();
+
+			const QString additionalInfo = "additional_info";
+			q_transporter.addBindValue(additionalInfo);
+			q_transporter.addBindValue(q_updater.record().value(additionalInfo));
+			q_transporter.exec();
+
+			const QString genre = "genre";
+			q_transporter.addBindValue(genre);
+			q_transporter.addBindValue(q_updater.record().value(genre));
+			q_transporter.exec();
+
+			const QString author = "author";
+			q_transporter.addBindValue(author);
+			q_transporter.addBindValue(q_updater.record().value(author));
+			q_transporter.exec();
+
+			const QString contacts = "contacts";
+			q_transporter.addBindValue(contacts);
+			q_transporter.addBindValue(q_updater.record().value(contacts));
+			q_transporter.exec();
+
+			const QString year = "year";
+			q_transporter.addBindValue(year);
+			q_transporter.addBindValue(q_updater.record().value(year));
+			q_transporter.exec();
+
+			const QString synopsis = "synopsis";
+			q_transporter.addBindValue(synopsis);
+			q_transporter.addBindValue(q_updater.record().value(synopsis));
+			q_transporter.exec();
+		}
+
 	}
 
 	_database.commit();

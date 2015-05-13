@@ -213,7 +213,10 @@ SOURCES += main.cpp \
     Domain/ScenarioChange.cpp \
     DataLayer/DataMappingLayer/ScenarioChangeMapper.cpp \
     DataLayer/DataStorageLayer/ScenarioChangeStorage.cpp \
-    3rd_party/Helpers/DiffMatchPatch.cpp
+    3rd_party/Helpers/DiffMatchPatch.cpp \
+    Domain/ScenarioData.cpp \
+    DataLayer/DataStorageLayer/ScenarioDataStorage.cpp \
+    DataLayer/DataMappingLayer/ScenarioDataMapper.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -383,7 +386,10 @@ HEADERS += \
     DataLayer/DataMappingLayer/ScenarioChangeMapper.h \
     DataLayer/DataStorageLayer/ScenarioChangeStorage.h \
     3rd_party/Helpers/DiffMatchPatchHelper.h \
-    3rd_party/Helpers/DiffMatchPatch.h
+    3rd_party/Helpers/DiffMatchPatch.h \
+    Domain/ScenarioData.h \
+    DataLayer/DataStorageLayer/ScenarioDataStorage.h \
+    DataLayer/DataMappingLayer/ScenarioDataMapper.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

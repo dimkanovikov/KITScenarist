@@ -38,6 +38,11 @@ namespace DataStorageLayer
 		 */
 		void clear();
 
+		/**
+		 * @brief Обновить хранилище
+		 */
+		void refresh();
+
 	private:
 		PlacesTable* m_all;
 

@@ -10,7 +10,7 @@ using DataMappingLayer::MapperFacade;
 using DataMappingLayer::DatabaseHistoryMapper;
 
 
-QList<QMap<QString, QString> > DatabaseHistoryStorage::history(const QString& _fromDatetime)
+QList<QString> DatabaseHistoryStorage::history(const QString& _fromDatetime)
 {
 	return MapperFacade::databaseHistoryMapper()->history(_fromDatetime);
 }
@@ -18,6 +18,11 @@ QList<QMap<QString, QString> > DatabaseHistoryStorage::history(const QString& _f
 QMap<QString, QString> DatabaseHistoryStorage::historyRecord(const QString& _uuid)
 {
 	return MapperFacade::databaseHistoryMapper()->historyRecord(_uuid);
+}
+
+bool DatabaseHistoryStorage::contains(const QString& _uuid) const
+{
+	return MapperFacade::databaseHistoryMapper()->contains(_uuid);
 }
 
 void DatabaseHistoryStorage::storeAndApplyHistoryRecord(const QString& _uuid, const QString& _query,

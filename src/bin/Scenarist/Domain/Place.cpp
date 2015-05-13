@@ -14,6 +14,15 @@ QString Place::name() const
 	return m_name;
 }
 
+void Place::setName(const QString& _name)
+{
+	if (m_name != _name) {
+		m_name = _name;
+
+		changesNotStored();
+	}
+}
+
 // ****
 
 namespace {

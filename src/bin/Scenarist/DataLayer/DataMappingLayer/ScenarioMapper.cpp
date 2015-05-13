@@ -6,8 +6,7 @@ using namespace DataMappingLayer;
 
 
 namespace {
-	const QString COLUMNS = " id, name, additional_info, genre, author, contacts, year, synopsis, "
-							"text, is_draft ";
+	const QString COLUMNS = " id, text, is_draft ";
 	const QString TABLE_NAME = " scenario ";
 }
 
@@ -52,19 +51,12 @@ QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (" + COLUMNS + ") "
-					" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+					" VALUES(?, ?, ?) "
 					);
 
 	Scenario* scenario = dynamic_cast<Scenario*>(_subject );
 	_insertValues.clear();
 	_insertValues.append(scenario->id().value());
-	_insertValues.append(scenario->name());
-	_insertValues.append(scenario->additionalInfo());
-	_insertValues.append(scenario->genre());
-	_insertValues.append(scenario->author());
-	_insertValues.append(scenario->contacts());
-	_insertValues.append(scenario->year());
-	_insertValues.append(scenario->synopsis());
 	_insertValues.append(scenario->text());
 	_insertValues.append(scenario->isDraft() ? "1" : "0");
 
@@ -75,27 +67,13 @@ QString ScenarioMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 {
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET name = ?, "
-					" additional_info = ?, "
-					" genre = ?, "
-					" author = ?, "
-					" contacts = ?, "
-					" year = ?, "
-					" synopsis = ?, "
-					" text = ?, "
+					" SET text = ?, "
 					" is_draft = ? "
 					" WHERE id = ? "
 					);
 
 	Scenario* scenario = dynamic_cast<Scenario*>(_subject);
 	_updateValues.clear();
-	_updateValues.append(scenario->name());
-	_updateValues.append(scenario->additionalInfo());
-	_updateValues.append(scenario->genre());
-	_updateValues.append(scenario->author());
-	_updateValues.append(scenario->contacts());
-	_updateValues.append(scenario->year());
-	_updateValues.append(scenario->synopsis());
 	_updateValues.append(scenario->text());
 	_updateValues.append(scenario->isDraft() ? "1" : "0");
 	_updateValues.append(scenario->id().value());
@@ -115,25 +93,21 @@ QString ScenarioMapper::deleteStatement(DomainObject* _subject, QVariantList& _d
 
 DomainObject* ScenarioMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
-	QString name = _record.value("name").toString();
-	QString additionalInfo = _record.value("additional_info").toString();
-	QString genre = _record.value("genre").toString();
-	QString author = _record.value("author").toString();
-	QString contacts = _record.value("contacts").toString();
-	QString year = _record.value("year").toString();
-	QString synopsis = _record.value("synopsis").toString();
-	QString text = _record.value("text").toString();
-	bool isDraft = _record.value("is_draft").toInt();
+	const QString text = _record.value("text").toString();
+	const bool isDraft = _record.value("is_draft").toInt();
 
-	Scenario* scenario = new Scenario(_id, name, synopsis, text);
-	scenario->setAdditionalInfo(additionalInfo);
-	scenario->setGenre(genre);
-	scenario->setAuthor(author);
-	scenario->setContacts(contacts);
-	scenario->setYear(year);
-	scenario->setIsDraft(isDraft);
+	return new Scenario(_id, text, isDraft);
+}
 
-	return scenario;
+void ScenarioMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (Scenario* scenario = dynamic_cast<Scenario*>(_domainObject)) {
+		const QString text = _record.value("text").toString();
+		scenario->setText(text);
+
+		const bool isDraft = _record.value("is_draft").toInt();
+		scenario->setIsDraft(isDraft);
+	}
 }
 
 DomainObjectsItemModel* ScenarioMapper::modelInstance()

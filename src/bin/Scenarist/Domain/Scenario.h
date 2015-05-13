@@ -3,7 +3,6 @@
 
 #include "DomainObject.h"
 
-#include <QDateTime>
 #include <QString>
 
 
@@ -15,64 +14,7 @@ namespace Domain
 	class Scenario : public DomainObject
 	{
 	public:
-		Scenario(const Identifier& _id, const QString& _name, const QString& _synopsis,
-			const QString& _text);
-
-		/**
-		 * @brief Название сценария
-		 */
-		/** @{ */
-		QString name() const;
-		void setName(const QString& _name);
-		/** @} */
-
-		/**
-		 * @brief Дополнительная информация
-		 */
-		/** @{ */
-		QString additionalInfo() const;
-		void setAdditionalInfo(const QString& _additionalInfo);
-		/** @} */
-
-		/**
-		 * @brief Жанр
-		 */
-		/** @{ */
-		QString genre() const;
-		void setGenre(const QString& _genre);
-		/** @} */
-
-		/**
-		 * @brief Автор
-		 */
-		/** @{ */
-		QString author() const;
-		void setAuthor(const QString _author);
-		/** @} */
-
-		/**
-		 * @brief Контактная информация
-		 */
-		/** @{ */
-		QString contacts() const;
-		void setContacts(const QString& _contacts);
-		/** @} */
-
-		/**
-		 * @brief Год
-		 */
-		/** @{ */
-		QString year() const;
-		void setYear(const QString& _year);
-		/** @} */
-
-		/**
-		 * @brief Синопсис сценария
-		 */
-		/** @{ */
-		QString synopsis() const;
-		void setSynopsis(const QString& _synopsis);
-		/** @} */
+		Scenario(const Identifier& _id, const QString& _text, bool _isDraft);
 
 		/**
 		 * @brief Текст сценария
@@ -90,41 +32,6 @@ namespace Domain
 		void setIsDraft(bool _isDraft);
 
 	private:
-		/**
-		 * @brief Название
-		 */
-		QString m_name;
-
-		/**
-		 * @brief Дополнительная информация
-		 */
-		QString m_additionalInfo;
-
-		/**
-		 * @brief Жанр
-		 */
-		QString m_genre;
-
-		/**
-		 * @brief Автор
-		 */
-		QString m_author;
-
-		/**
-		 * @brief Контакты
-		 */
-		QString m_contacts;
-
-		/**
-		 * @brief Год
-		 */
-		QString m_year;
-
-		/**
-		 * @brief Синопсис
-		 */
-		QString m_synopsis;
-
 		/**
 		 * @brief Текст сценария
 		 */
@@ -149,8 +56,6 @@ namespace Domain
 		enum Column {
 			Undefined,
 			Id,
-			Name,
-			Synopsis,
 			Text
 		};
 

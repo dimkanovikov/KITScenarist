@@ -21,6 +21,7 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioChangeStorage.h>
+#include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/LocationStorage.h>
@@ -246,8 +247,8 @@ void ScenarioManager::loadCurrentProject()
 	m_navigatorManager->setNavigationModel(m_scenario->model());
 	m_draftNavigatorManager->setNavigationModel(m_scenarioDraft->model());
 	if (currentScenario != 0) {
-		m_dataEditManager->setScenarioName(currentScenario->name());
-		m_dataEditManager->setScenarioSynopsis(currentScenario->synopsis());
+		m_dataEditManager->setScenarioName(DataStorageLayer::StorageFacade::scenarioDataStorage()->name());
+		m_dataEditManager->setScenarioSynopsis(DataStorageLayer::StorageFacade::scenarioDataStorage()->synopsis());
 	}
 	m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
 	m_textEditManager->setScenarioDocument(m_scenario->document());
@@ -287,8 +288,6 @@ void ScenarioManager::saveCurrentProject()
 	//
 	// Сохраняем сценарий
 	//
-	m_scenario->scenario()->setName(m_dataEditManager->scenarioName());
-	m_scenario->scenario()->setSynopsis(m_dataEditManager->scenarioSynopsis());
 	m_scenario->scenario()->setText(m_scenario->save());
 	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenario->scenario());
 
@@ -303,6 +302,12 @@ void ScenarioManager::saveCurrentProject()
 	//
 	aboutSaveScenarioChanges();
 	DataStorageLayer::StorageFacade::scenarioChangeStorage()->store();
+
+	//
+	// Сохраняем данные
+	//
+	DataStorageLayer::StorageFacade::scenarioDataStorage()->setName(m_dataEditManager->scenarioName());
+	DataStorageLayer::StorageFacade::scenarioDataStorage()->setSynopsis(m_dataEditManager->scenarioSynopsis());
 }
 
 void ScenarioManager::saveCurrentProjectSettings(const QString& _projectPath)

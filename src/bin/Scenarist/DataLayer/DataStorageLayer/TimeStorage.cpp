@@ -67,6 +67,11 @@ void TimeStorage::clear()
 	MapperFacade::timeMapper()->clear();
 }
 
+void TimeStorage::refresh()
+{
+	MapperFacade::timeMapper()->refresh(all());
+}
+
 TimeStorage::TimeStorage() :
 	m_all(0)
 {

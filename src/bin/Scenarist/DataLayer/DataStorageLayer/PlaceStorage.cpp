@@ -80,6 +80,11 @@ void PlaceStorage::clear()
 	MapperFacade::placeMapper()->clear();
 }
 
+void PlaceStorage::refresh()
+{
+	MapperFacade::placeMapper()->refresh(all());
+}
+
 PlaceStorage::PlaceStorage() :
 	m_all(0)
 {

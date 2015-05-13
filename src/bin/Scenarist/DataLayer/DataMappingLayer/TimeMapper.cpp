@@ -90,9 +90,17 @@ QString TimeMapper::deleteStatement(DomainObject* _subject, QVariantList& _delet
 
 DomainObject* TimeMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
-	QString name = _record.value("name").toString();
+	const QString name = _record.value("name").toString();
 
 	return new Time(_id, name);
+}
+
+void TimeMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
+{
+	if (Time* time = dynamic_cast<Time*>(_domainObject)) {
+		const QString name = _record.value("name").toString();
+		time->setName(name);
+	}
 }
 
 DomainObjectsItemModel* TimeMapper::modelInstance()

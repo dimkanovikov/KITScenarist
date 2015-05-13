@@ -79,6 +79,11 @@ void CharacterPhotoStorage::clear()
 	MapperFacade::characterPhotoMapper()->clear();
 }
 
+void CharacterPhotoStorage::refresh()
+{
+	MapperFacade::characterPhotoMapper()->refresh(all());
+}
+
 CharacterPhotoStorage::CharacterPhotoStorage() :
 	m_all(0)
 {

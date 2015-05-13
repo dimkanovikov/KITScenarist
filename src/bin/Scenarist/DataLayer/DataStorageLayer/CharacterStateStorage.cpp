@@ -80,6 +80,11 @@ void CharacterStateStorage::clear()
 	MapperFacade::characterStateMapper()->clear();
 }
 
+void CharacterStateStorage::refresh()
+{
+	MapperFacade::characterStateMapper()->refresh(all());
+}
+
 CharacterStateStorage::CharacterStateStorage() :
 	m_all(0)
 {

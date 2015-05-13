@@ -170,6 +170,16 @@ namespace UserInterface
 		 */
 		void aboutCorrectAdditionalCursors(int _position, int _charsRemoved, int _charsAdded);
 
+		/**
+		 * @brief Сохранить состояние редактора
+		 */
+		void aboutSaveEditorState();
+
+		/**
+		 * @brief Загрузить состояние редактора
+		 */
+		void aboutLoadEditorState();
+
 	private:
 		/**
 		 * @brief Очистить текущий блок от установленного в нём типа
@@ -204,6 +214,8 @@ namespace UserInterface
 
 	private:
 		void initEditor();
+		void initEditorConnections();
+		void removeEditorConnections();
 		void initView();
 		void initConnections();
 

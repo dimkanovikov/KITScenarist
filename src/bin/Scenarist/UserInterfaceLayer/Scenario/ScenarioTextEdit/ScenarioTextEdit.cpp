@@ -38,6 +38,9 @@ namespace {
 	 */
 	static bool s_firstRepaintUpdate = true;
 
+	const char* SCROLL_VALUE = "scrollValue";
+	const char* SCROLL_MAX = "scrollMaxValue";
+
 	/**
 	 * @brief Получить цвет для курсора соавтора
 	 */
@@ -78,6 +81,8 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 
 void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 {
+	removeEditorConnections();
+
 	m_document = _document;
 	setDocument(m_document);
 
@@ -779,6 +784,22 @@ void ScenarioTextEdit::aboutCorrectAdditionalCursors(int _position, int _charsRe
 	}
 }
 
+void ScenarioTextEdit::aboutSaveEditorState()
+{
+	setProperty(SCROLL_VALUE, verticalScrollBar()->value());
+	setProperty(SCROLL_MAX, verticalScrollBar()->maximum());
+}
+
+void ScenarioTextEdit::aboutLoadEditorState()
+{
+	const int scrollValue = property(SCROLL_VALUE).toInt();
+	const int scrollMax = property(SCROLL_MAX).toInt();
+	const int currentScrollMax = verticalScrollBar()->maximum();
+	if (currentScrollMax != scrollMax) {
+		verticalScrollBar()->setValue(scrollValue + currentScrollMax - scrollMax);
+	}
+}
+
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 {
 	QTextCursor cursor = textCursor();
@@ -1144,8 +1165,27 @@ void ScenarioTextEdit::initEditor()
 		applyScenarioTypeToBlockText(ScenarioBlockStyle::TimeAndPlace);
 	}
 
-	connect(document(), SIGNAL(contentsChange(int,int,int)),
-			this, SLOT(aboutCorrectAdditionalCursors(int,int,int)), Qt::UniqueConnection);
+	initEditorConnections();
+}
+
+void ScenarioTextEdit::initEditorConnections()
+{
+	if (m_document != 0) {
+		connect(m_document, SIGNAL(contentsChange(int,int,int)),
+				this, SLOT(aboutCorrectAdditionalCursors(int,int,int)));
+		connect(m_document, SIGNAL(beforePatchApply()), this, SLOT(aboutSaveEditorState()));
+		connect(m_document, SIGNAL(afterPatchApply()), this, SLOT(aboutLoadEditorState()));
+	}
+}
+
+void ScenarioTextEdit::removeEditorConnections()
+{
+	if (m_document != 0) {
+		disconnect(m_document, SIGNAL(contentsChange(int,int,int)),
+				   this, SLOT(aboutCorrectAdditionalCursors(int,int,int)));
+		disconnect(m_document, SIGNAL(beforePatchApply()), this, SLOT(aboutSaveEditorState()));
+		disconnect(m_document, SIGNAL(afterPatchApply()), this, SLOT(aboutLoadEditorState()));
+	}
 }
 
 void ScenarioTextEdit::initView()

@@ -10,6 +10,7 @@
 #include "CharacterPhotoStorage.h"
 #include "ScenarioStorage.h"
 #include "ScenarioChangeStorage.h"
+#include "ScenarioDataStorage.h"
 #include "SettingsStorage.h"
 #include "DatabaseHistoryStorage.h"
 
@@ -27,6 +28,27 @@ void StorageFacade::clearStorages()
 	characterStateStorage()->clear();
 	characterPhotoStorage()->clear();
 	scenarioStorage()->clear();
+	scenarioChangeStorage()->clear();
+	scenarioDataStorage()->clear();
+}
+
+void StorageFacade::refreshStorages()
+{
+	//
+	// Хранилища с фотками обновляем первыми, т.к. другие хранилища зависят от них
+	//
+	locationPhotoStorage()->refresh();
+	characterPhotoStorage()->refresh();
+
+	placeStorage()->refresh();
+	locationStorage()->refresh();
+	scenarioDayStorage()->refresh();
+	timeStorage()->refresh();
+	characterStorage()->refresh();
+	characterStateStorage()->refresh();
+//	scenarioStorage()->refresh();
+//	scenarioChangeStorage()->refresh();
+	scenarioDataStorage()->refresh();
 }
 
 PlaceStorage* StorageFacade::placeStorage()
@@ -101,12 +123,20 @@ ScenarioStorage* StorageFacade::scenarioStorage()
 	return s_scenarioStorage;
 }
 
-ScenarioChangeStorage*StorageFacade::scenarioChangeStorage()
+ScenarioChangeStorage* StorageFacade::scenarioChangeStorage()
 {
 	if (s_scenarioChangeStorage == 0) {
 		s_scenarioChangeStorage = new ScenarioChangeStorage;
 	}
 	return s_scenarioChangeStorage;
+}
+
+ScenarioDataStorage* StorageFacade::scenarioDataStorage()
+{
+	if (s_scenarioDataStorage == 0) {
+		s_scenarioDataStorage = new ScenarioDataStorage;
+	}
+	return s_scenarioDataStorage;
 }
 
 SettingsStorage* StorageFacade::settingsStorage()
@@ -135,5 +165,6 @@ CharacterStateStorage* StorageFacade::s_characterStateStorage = 0;
 CharacterPhotoStorage* StorageFacade::s_characterPhotoStorage = 0;
 ScenarioStorage* StorageFacade::s_scenarioStorage = 0;
 ScenarioChangeStorage* StorageFacade::s_scenarioChangeStorage = 0;
+ScenarioDataStorage* StorageFacade::s_scenarioDataStorage = 0;
 SettingsStorage* StorageFacade::s_settingsStorage = 0;
 DatabaseHistoryStorage* StorageFacade::s_databaseHistoryStorage = 0;

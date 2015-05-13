@@ -14,6 +14,13 @@ QString CharacterState::name() const
 	return m_name;
 }
 
+void CharacterState::setName(const QString& _name)
+{
+	if (m_name != _name) {
+		m_name = _name;
+	}
+}
+
 // ****
 
 namespace {

@@ -17,13 +17,18 @@ namespace Domain
 		CharacterState(const Identifier& _id, const QString& _name);
 
 		/**
-		 * @brief Получить название места
+		 * @brief Получить название состояния
 		 */
 		QString name() const;
 
+		/**
+		 * @brief Установить название состояния
+		 */
+		void setName(const QString& _name);
+
 	private:
 		/**
-		 * @brief Название места
+		 * @brief Название состояния
 		 */
 		QString m_name;
 	};

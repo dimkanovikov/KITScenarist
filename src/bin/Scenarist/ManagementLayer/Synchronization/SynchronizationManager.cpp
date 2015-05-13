@@ -64,9 +64,9 @@ namespace {
 	const QString KEY_SESSION_KEY = "session_key";
 	const QString KEY_PROJECT = "project_id";
 	const QString KEY_CHANGES = "changes";
+	const QString KEY_CHANGES_IDS = "changes_ids";
 	const QString KEY_SCENARIO_ID = "scenario_id";
 	const QString KEY_SCENARIO_IS_DRAFT = "scenario_is_draft";
-	const QString KEY_SCENARIO_CHANGES_IDS = "changes_ids";
 	const QString KEY_FROM_LAST_MINUTES = "from_last_minutes";
 	const QString KEY_CURSOR_POSITION = "cursor_position";
 	/** @{ */
@@ -340,7 +340,7 @@ void SynchronizationManager::aboutFullSyncScenario()
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 		QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LIST);
-		qDebug() << response;
+
 		//
 		// ... считываем изменения (uuid)
 		//
@@ -412,7 +412,8 @@ void SynchronizationManager::aboutFullSyncScenario()
 			//
 			// ... скачиваем
 			//
-			const QList<QHash<QString, QString> > changes = downloadScenarioChanges(changesForDownload.join(";"));
+			const QList<QHash<QString, QString> > changes =
+					downloadScenarioChanges(changesForDownload.join(";"));
 			QHash<QString, QString> change;
 			foreach (change, changes) {
 				if (!change.isEmpty()) {
@@ -465,7 +466,7 @@ void SynchronizationManager::aboutWorkSyncScenario()
 			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 			m_loader->addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
 			QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LIST);
-			qDebug() << response;
+
 			//
 			// ... считываем uuid'ы новых изменений
 			//
@@ -545,7 +546,7 @@ void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDra
 		m_loader->addRequestAttribute(KEY_CURSOR_POSITION, _cursorPosition);
 		m_loader->addRequestAttribute(KEY_SCENARIO_IS_DRAFT, _isDraft ? "1" : "0");
 		QByteArray response = m_loader->loadSync(URL_SCENARIO_CURSORS);
-		qDebug() << response;
+
 
 		//
 		// ... считываем данные о курсорах
@@ -597,6 +598,175 @@ void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDra
 	}
 }
 
+void SynchronizationManager::aboutFullSyncData()
+{
+	//
+	// Запоминаем время синхронизации данных, в дальнейшем будем отправлять изменения
+	// произведённые с данного момента
+	//
+	m_lastDataSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
+
+	//
+	// Получить список всех изменений данных на сервере
+	//
+	WebLoader loader;
+	loader.setRequestMethod(WebLoader::Post);
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+	QByteArray response = loader.loadSync(URL_SCENARIO_DATA_LIST);
+	//
+	// ... считываем изменения (uuid)
+	//
+	QList<QString> remoteChanges;
+	QXmlStreamReader changesReader(response);
+	while (!changesReader.atEnd()) {
+		changesReader.readNext();
+		if (changesReader.name().toString() == "status") {
+			const bool success = changesReader.attributes().value("result").toString() == "true";
+			if (success) {
+				changesReader.readNextStartElement();
+				changesReader.readNextStartElement(); // changes
+				while (!changesReader.atEnd()) {
+					changesReader.readNextStartElement();
+					if (changesReader.name() == "change") {
+						const QString changeUuid = changesReader.attributes().value("id").toString();
+						if (!changeUuid.isEmpty()) {
+							remoteChanges.append(changeUuid);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//
+	// Сформируем список изменений сценария хранящихся локально
+	//
+	QList<QString> localChanges = StorageFacade::databaseHistoryStorage()->history(QString::null);
+
+	//
+	// Отправить на сайт все версии, которых на сайте нет
+	//
+	{
+		QList<QString> changesForUpload;
+		foreach (const QString& changeUuid, localChanges) {
+			//
+			// ... отправлять нужно, если такого изменения нет на сайте
+			//
+			const bool needUpload = !remoteChanges.contains(changeUuid);
+
+			if (needUpload) {
+				changesForUpload.append(changeUuid);
+			}
+		}
+		//
+		// ... отправляем
+		//
+		uploadScenarioData(changesForUpload);
+	}
+
+
+	//
+	// Сохранить в локальной БД все изменения, которых в ней нет
+	//
+	{
+		QStringList changesForDownloadAndSave;
+		foreach (const QString& changeUuid, remoteChanges) {
+			//
+			// ... сохранять нужно, если такого изменения нет в локальной БД
+			//
+			bool needSave = !localChanges.contains(changeUuid);
+
+			if (needSave) {
+				changesForDownloadAndSave.append(changeUuid);
+			}
+		}
+		//
+		// ... скачиваем и сохраняем
+		//
+		downloadAndSaveScenarioData(changesForDownloadAndSave.join(";"));
+	}
+}
+
+void SynchronizationManager::aboutWorkSyncData()
+{
+	if (isCanSync()) {
+		//
+		// Запоминаем время синхронизации изменений данных сценария
+		//
+		const QString prevDataSyncDatetime = m_lastDataSyncDatetime;
+		m_lastDataSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
+
+		//
+		// Отправляем новые изменения
+		//
+		{
+			QList<QString> newChanges =
+					StorageFacade::databaseHistoryStorage()->history(prevDataSyncDatetime);
+			uploadScenarioData(newChanges);
+		}
+
+		//
+		// Загружаем и применяем изменения от других пользователей за последние LAST_MINUTES минут
+		//
+		{
+			const int LAST_MINUTES = 2;
+
+			m_loader->setRequestMethod(WebLoader::Post);
+			m_loader->clearRequestAttributes();
+			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+			m_loader->addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
+			QByteArray response = m_loader->loadSync(URL_SCENARIO_DATA_LIST);
+
+			//
+			// ... считываем uuid'ы новых изменений
+			//
+			QList<QString> remoteChanges;
+			QXmlStreamReader changesReader(response);
+			while (!changesReader.atEnd()) {
+				changesReader.readNext();
+				if (changesReader.name().toString() == "status") {
+					const bool success = changesReader.attributes().value("result").toString() == "true";
+					if (success) {
+						changesReader.readNextStartElement();
+						changesReader.readNextStartElement(); // changes
+						while (!changesReader.atEnd()) {
+							changesReader.readNextStartElement();
+							if (changesReader.name() == "change") {
+								const QString changeUuid = changesReader.attributes().value("id").toString();
+								if (!changeUuid.isEmpty()) {
+									remoteChanges.append(changeUuid);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			//
+			// ... скачиваем все изменения, которых ещё нет
+			//
+			QStringList changesForDownload;
+			foreach (const QString& changeUuid, remoteChanges) {
+				//
+				// ... сохранять нужно, если такого изменения нет
+				//
+				const bool needDownload =
+						!DataStorageLayer::StorageFacade::databaseHistoryStorage()->contains(changeUuid);
+
+				if (needDownload) {
+					changesForDownload.append(changeUuid);
+				}
+			}
+			//
+			// ... скачиваем и сохраняем
+			//
+			downloadAndSaveScenarioData(changesForDownload.join(";"));
+		}
+	}
+}
+
 bool SynchronizationManager::isCanSync() const
 {
 	return
@@ -606,7 +776,8 @@ bool SynchronizationManager::isCanSync() const
 
 void SynchronizationManager::uploadScenarioChanges(const QList<QString>& _changesUuids)
 {
-	if (isCanSync()) {
+	if (isCanSync()
+		&& !_changesUuids.isEmpty()) {
 		//
 		// Сформировать xml для отправки
 		//
@@ -654,61 +825,60 @@ QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(
 {
 	QList<QHash<QString, QString> > changes;
 
-	if (isCanSync()) {
-		if (!_changesUuids.isEmpty()) {
-			//
-			// ... загружаем изменение
-			//
-			m_loader->setRequestMethod(WebLoader::Post);
-			m_loader->clearRequestAttributes();
-			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-			m_loader->addRequestAttribute(KEY_SCENARIO_CHANGES_IDS, _changesUuids);
-			QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LOAD);
-			qDebug() << response;
+	if (isCanSync()
+		&& !_changesUuids.isEmpty()) {
+		//
+		// ... загружаем изменения
+		//
+		m_loader->setRequestMethod(WebLoader::Post);
+		m_loader->clearRequestAttributes();
+		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		m_loader->addRequestAttribute(KEY_CHANGES_IDS, _changesUuids);
+		QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LOAD);
 
-			//
-			// ... считываем данные об изменении
-			//
-			QXmlStreamReader changesReader(response);
-			while (!changesReader.atEnd()) {
-				changesReader.readNext();
-				if (changesReader.name().toString() == "status") {
-					const bool success = changesReader.attributes().value("result").toString() == "true";
-					if (success) {
-						changesReader.readNextStartElement();
-						while (!changesReader.atEnd()
+
+		//
+		// ... считываем данные об изменениях
+		//
+		QXmlStreamReader changesReader(response);
+		while (!changesReader.atEnd()) {
+			changesReader.readNext();
+			if (changesReader.name().toString() == "status") {
+				const bool success = changesReader.attributes().value("result").toString() == "true";
+				if (success) {
+					changesReader.readNextStartElement();
+					while (!changesReader.atEnd()
+						   && changesReader.readNextStartElement()) {
+						//
+						// Изменения
+						//
+						while (changesReader.name() == "changes"
 							   && changesReader.readNextStartElement()) {
 							//
-							// Изменения
+							// Считываем каждое изменение
 							//
-							while (changesReader.name() == "changes"
+							while (changesReader.name() == "change"
 								   && changesReader.readNextStartElement()) {
 								//
-								// Считываем каждое изменение
+								// Данные изменения
 								//
-								while (changesReader.name() == "change"
-									   && changesReader.readNextStartElement()) {
-									//
-									// Данные изменения
-									//
-									QHash<QString, QString> change;
-									while (changesReader.name() != "change") {
-										const QString key = changesReader.name().toString();
-										const QString value = changesReader.readElementText();
-										if (!value.isEmpty()) {
-											change.insert(key, value);
-										}
-
-										//
-										// ... переходим к следующему элементу
-										//
-										changesReader.readNextStartElement();
+								QHash<QString, QString> change;
+								while (changesReader.name() != "change") {
+									const QString key = changesReader.name().toString();
+									const QString value = changesReader.readElementText();
+									if (!value.isEmpty()) {
+										change.insert(key, value);
 									}
 
-									if (!change.isEmpty()) {
-										changes.append(change);
-									}
+									//
+									// ... переходим к следующему элементу
+									//
+									changesReader.readNextStartElement();
+								}
+
+								if (!change.isEmpty()) {
+									changes.append(change);
 								}
 							}
 						}
@@ -719,6 +889,151 @@ QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(
 	}
 
 	return changes;
+}
+
+void SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids)
+{
+	if (isCanSync()
+		&& !_dataUuids.isEmpty()) {
+		//
+		// Сформировать xml для отправки
+		//
+		QString dataChangesXml;
+		QXmlStreamWriter xmlWriter(&dataChangesXml);
+		xmlWriter.writeStartDocument();
+		xmlWriter.writeStartElement("changes");
+		foreach (const QString& dataUuid, _dataUuids) {
+			const QMap<QString, QString> historyRecord =
+					StorageFacade::databaseHistoryStorage()->historyRecord(dataUuid);
+
+			//
+			// Нас интересуют изменения из всех таблиц, кроме сценария и истории изменений сценария,
+			// они синхронизируются самостоятельно
+			//
+			const QString query = historyRecord.value(DBH_QUERY_KEY);
+			if (!query.contains(" scenario_changes ")
+				&& !query.contains(" scenario ")) {
+				//
+				xmlWriter.writeStartElement("change");
+				//
+				xmlWriter.writeTextElement(DBH_ID_KEY, historyRecord.value(DBH_ID_KEY));
+				//
+				xmlWriter.writeStartElement(DBH_QUERY_KEY);
+				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_KEY));
+				xmlWriter.writeEndElement();
+				//
+				xmlWriter.writeStartElement(DBH_QUERY_VALUES_KEY);
+				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_VALUES_KEY));
+				xmlWriter.writeEndElement();
+				//
+				xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
+				//
+				xmlWriter.writeEndElement(); // change
+			}
+		}
+		xmlWriter.writeEndElement(); // changes
+		xmlWriter.writeEndDocument();
+
+		//
+		// Отправить данные
+		//
+		m_loader->setRequestMethod(WebLoader::Post);
+		m_loader->clearRequestAttributes();
+		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		m_loader->addRequestAttribute(KEY_CHANGES, dataChangesXml);
+		//
+		// NOTE: При отправке большого объёма данных возможно зависание
+		//
+		m_loader->loadSync(URL_SCENARIO_DATA_SAVE);
+	}
+}
+
+void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUuids)
+{
+
+	if (isCanSync()
+		&& !_dataUuids.isEmpty()) {
+		//
+		// ... загружаем изменения
+		//
+		m_loader->setRequestMethod(WebLoader::Post);
+		m_loader->clearRequestAttributes();
+		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		m_loader->addRequestAttribute(KEY_CHANGES_IDS, _dataUuids);
+		QByteArray response = m_loader->loadSync(URL_SCENARIO_DATA_LOAD);
+
+
+		//
+		// ... считываем данные об изменениях
+		//
+		QList<QHash<QString, QString> > changes;
+		QXmlStreamReader changesReader(response);
+		while (!changesReader.atEnd()) {
+			changesReader.readNext();
+			if (changesReader.name().toString() == "status") {
+				const bool success = changesReader.attributes().value("result").toString() == "true";
+				if (success) {
+					changesReader.readNextStartElement();
+					while (!changesReader.atEnd()
+						   && changesReader.readNextStartElement()) {
+						//
+						// Изменения
+						//
+						while (changesReader.name() == "changes"
+							   && changesReader.readNextStartElement()) {
+							//
+							// Считываем каждое изменение
+							//
+							while (changesReader.name() == "change"
+								   && changesReader.readNextStartElement()) {
+								//
+								// Данные изменения
+								//
+								QHash<QString, QString> change;
+								while (changesReader.name() != "change") {
+									const QString key = changesReader.name().toString();
+									const QString value = changesReader.readElementText();
+									if (!value.isEmpty()) {
+										change.insert(key, value);
+									}
+
+									//
+									// ... переходим к следующему элементу
+									//
+									changesReader.readNextStartElement();
+								}
+
+								if (!change.isEmpty()) {
+									changes.append(change);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		//
+		// Применяем изменения
+		//
+		QHash<QString, QString> changeValues;
+		DatabaseLayer::Database::transaction();
+		foreach (changeValues, changes) {
+			DataStorageLayer::StorageFacade::databaseHistoryStorage()->storeAndApplyHistoryRecord(
+				changeValues.value(DBH_ID_KEY), changeValues.value(DBH_QUERY_KEY),
+				changeValues.value(DBH_QUERY_VALUES_KEY), changeValues.value(DBH_DATETIME_KEY));
+		}
+		DatabaseLayer::Database::commit();
+
+
+		//
+		// Обновляем данные
+		//
+		DataStorageLayer::StorageFacade::refreshStorages();
+	}
 }
 
 
@@ -744,423 +1059,8 @@ QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(
 
 
 
-//void SynchronizationManager::aboutSyncScenario(bool _isDraft)
-//{
-//	//
-//	// Скачать последнюю версию сценария и актуализировать её
-//	//
-//	aboutSaveScenarioToDB(QString::null, _isDraft);
 
-//	//
-//	// Синхронизация всех остальных версий сценария
-//	//
-//	{
-//		//
-//		// Получить список версий сценария на сервере
-//		//
-//		WebLoader loader;
-//		loader.setRequestMethod(WebLoader::Post);
-//		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-//		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-//		QByteArray response = loader.loadSync(URL_SCENARIO_VERSIONS);
-//		//
-//		// ... считываем версии (uuid, время конца сессии)
-//		//
-//		QHash<QString, QString> remoteVersions;
-//		QXmlStreamReader scenarioReader(response);
-//		while (!scenarioReader.atEnd()) {
-//			scenarioReader.readNext();
-//			if (scenarioReader.name().toString() == "status") {
-//				const bool success = scenarioReader.attributes().value("result").toString() == "true";
-//				if (success) {
-//					scenarioReader.readNextStartElement();
-//					scenarioReader.readNextStartElement(); // versions
-//					while (!scenarioReader.atEnd()) {
-//						scenarioReader.readNextStartElement();
-//						if (scenarioReader.name() == "version") {
-//							const QString versionUuid = scenarioReader.attributes().value("id").toString();
-//							const QString versionDatetime = scenarioReader.attributes().value("version_end_datetime").toString();
-//							remoteVersions.insert(versionUuid, versionDatetime);
-//						}
-//					}
-//				}
-//			}
-//		}
 
-//		//
-//		// Сформируем список версий сценария хранящихся локально
-//		//
-//		QHash<QString, Scenario*> localVersions;
-//		foreach (DomainObject* domainObject, DataStorageLayer::StorageFacade::scenarioStorage()->all()->toList()) {
-//			if (Scenario* scenario = dynamic_cast<Scenario*>(domainObject)) {
-//				localVersions.insert(scenario->uuid(), scenario);
-//			}
-//		}
-
-//		//
-//		// Отправить на сайт все версии, которых на сайте нет, включая текущую объединённую
-//		//
-//		foreach (const QString& versionUuid, localVersions.keys()) {
-//			//
-//			// ... отправлять нужно, если такой версии нет на сайте
-//			//
-//			bool needSend = !remoteVersions.contains(versionUuid);
-//			if (needSend == false) {
-//				//
-//				// ... или если её дата изменения меньше даты изменения её локальной копии
-//				//
-//				Scenario* scenario = localVersions.value(versionUuid);
-//				const QString scenarioVersionEndDatetime = scenario->versionEndDatetime().toString("yyyy-MM-dd hh:mm:ss");
-//				needSend = remoteVersions.value(versionUuid) < scenarioVersionEndDatetime;
-//			}
-
-//			//
-//			// ... отправляем
-//			//
-//			if (needSend) {
-//				aboutSaveScenarioToServer(localVersions.value(versionUuid), IS_SYNC);
-//			}
-//		}
-
-//		//
-//		// Сохранить в локальной БД все версии, которых в ней нет
-//		//
-//		DatabaseLayer::Database::transaction();
-//		foreach (const QString& versionUuid, remoteVersions.keys()) {
-//			//
-//			// ... сохранять нужно, если такой версии нет в локальной БД
-//			//
-//			bool needSave = !localVersions.contains(versionUuid);
-//			if (needSave == false) {
-//				//
-//				// ... или если её дата изменения больше даты изменения её локальной копии
-//				//
-//				Scenario* scenario = localVersions.value(versionUuid);
-//				const QString scenarioVersionEndDatetime = scenario->versionEndDatetime().toString("yyyy-MM-dd hh:mm:ss");
-//				needSave = remoteVersions.value(versionUuid) > scenarioVersionEndDatetime;
-//			}
-
-//			//
-//			// ... сохраняем
-//			//
-//			if (needSave) {
-//				aboutSaveScenarioToDB(versionUuid, _isDraft);
-//			}
-//		}
-//		DatabaseLayer::Database::commit();
-//	}
-//}
-
-//void SynchronizationManager::aboutSyncData()
-//{
-//	//
-//	// Получить список всех изменений данных на сервере
-//	//
-//	WebLoader loader;
-//	loader.setRequestMethod(WebLoader::Post);
-//	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-//	loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-//	QByteArray response = loader.loadSync(URL_SCENARIO_DATA_LIST);
-//	//
-//	// ... считываем изменения (uuid)
-//	//
-//	QList<QString> remoteChanges;
-//	QXmlStreamReader changesReader(response);
-//	while (!changesReader.atEnd()) {
-//		changesReader.readNext();
-//		if (changesReader.name().toString() == "status") {
-//			const bool success = changesReader.attributes().value("result").toString() == "true";
-//			if (success) {
-//				changesReader.readNextStartElement();
-//				changesReader.readNextStartElement(); // changes
-//				while (!changesReader.atEnd()) {
-//					changesReader.readNextStartElement();
-//					if (changesReader.name() == "change") {
-//						const QString changeUuid = changesReader.attributes().value("id").toString();
-//						remoteChanges.append(changeUuid);
-//					}
-//				}
-//			}
-//		}
-//	}
-
-//	//
-//	// Сформируем список изменений сценария хранящихся локально
-//	//
-//	QList<QString> localChanges;
-//	QMap<QString, QString> historyRecord;
-//	foreach (historyRecord, StorageFacade::databaseHistoryStorage()->history(QString::null)) {
-//		//
-//		// Нас интересуют изменения из всех таблиц, кроме сценария
-//		//
-//		if (!historyRecord.value(DBH_QUERY_KEY).contains(" scenario ")) {
-//			localChanges.append(historyRecord.value(DBH_ID_KEY));
-//		}
-//	}
-
-//	//
-//	// Отправить на сайт все версии, которых на сайте нет
-//	//
-//	foreach (const QString& changeUuid, localChanges) {
-//		//
-//		// ... отправлять нужно, если такого изменения нет на сайте
-//		//
-//		bool needSend = !remoteChanges.contains(changeUuid);
-
-//		//
-//		// ... отправляем
-//		//
-//		if (needSend) {
-//			aboutSaveDataToServer(changeUuid);
-//		}
-//	}
-
-//	//
-//	// Сохранить в локальной БД все изменения, которых в ней нет
-//	//
-//	DatabaseLayer::Database::transaction();
-//	foreach (const QString& changeUuid, remoteChanges) {
-//		//
-//		// ... сохранять нужно, если такого изменения нет в локальной БД
-//		//
-//		bool needSave = !localChanges.contains(changeUuid);
-
-//		//
-//		// ... сохраняем
-//		//
-//		if (needSave) {
-//			aboutSaveDataToDB(changeUuid);
-//		}
-//	}
-//	DatabaseLayer::Database::commit();
-
-//	//
-//	// Запоминаем время синхронизации данных, в дальнейшем будем отправлять изменения
-//	// произведённые с данного момента
-//	//
-//	m_lastDataSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
-//}
-
-//void SynchronizationManager::aboutUpdateScenario(bool _isDraft)
-//{
-//	Scenario* current = DataStorageLayer::StorageFacade::scenarioStorage()->current(_isDraft);
-//	if (current != 0) {
-//		aboutUpdateScenario(current->name(), current->synopsis(), current->text(), _isDraft);
-//	}
-//}
-
-//void SynchronizationManager::aboutUpdateScenario(const QString& _name, const QString& _synopsis,
-//	const QString& _text, bool _isDraft)
-//{
-//	//
-//	// Получить последнюю версию с сервера
-//	//
-//	const QHash<QString, QString> scenarioValues = aboutLoadScenario(QString::null, _isDraft);
-//	const QString remoteName = scenarioValues.value("name");
-//	const QString remoteSynopsis = scenarioValues.value("synopsis");
-//	const QString remoteText = scenarioValues.value("text");
-
-//	//
-//	// Если между текущей версией и версией с сервера есть отличия
-//	//
-//	if (remoteName != _name
-//		|| remoteSynopsis != _synopsis
-//		|| remoteText != _text) {
-//		//
-//		// Объеденить текущий текст с версией с сервера
-//		//
-//		const QString mergedName = ::mergeTexts(lastSyncedName(_isDraft), _name, remoteName);
-//		const QString mergedSynopsis = ::mergeTexts(lastSyncedSynopsis(_isDraft), _synopsis, remoteSynopsis);
-//		const QString mergedText = ::mergeTexts(lastSyncedText(_isDraft), _text, remoteText);
-
-//		Scenario* currentScenario = DataStorageLayer::StorageFacade::scenarioStorage()->current(_isDraft);
-//		if (currentScenario == 0) {
-//			currentScenario = DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(_name, _synopsis, _text);
-//		}
-
-//		currentScenario->setName(mergedName);
-//		currentScenario->setSynopsis(mergedSynopsis);
-//		currentScenario->setText(mergedText);
-
-//		//
-//		// Отправляем на сервер результат объединения
-//		//
-//		aboutSaveScenarioToServer(_isDraft, IS_ASYNC);
-
-//		//
-//		// Применяем результат объединения к текущему тексту
-//		//
-//		emit scenarioUpdated(mergedName, mergedSynopsis, mergedText, _isDraft);
-//	}
-//}
-
-//void SynchronizationManager::aboutUpdateData()
-//{
-//	//
-//	// Получить новые изменения данных с сервера с момента m_lastDataSyncDatetime
-//	//
-
-//	//
-//	// Сохранить их в БД
-//	//
-
-//	//
-//	// Отправить новые изменения данных на сервер
-//	//
-//	aboutSaveDataToServer();
-
-//	//
-//	// Актуализация данных в хранилищах
-//	//
-//}
-
-//void SynchronizationManager::aboutSaveScenarioToServer(bool _isDraft, bool _isAsync)
-//{
-//	//
-//	// Отправляем последнюю версию на сервер
-//	//
-//	Scenario* scenario = DataStorageLayer::StorageFacade::scenarioStorage()->current(_isDraft);
-//	aboutSaveScenarioToServer(scenario, _isAsync);
-
-//	//
-//	// Сохраняем последние отправленные значения
-//	//
-//	setLastSyncedName(scenario->name(), scenario->isDraft());
-//	setLastSyncedSynopsis(scenario->synopsis(), scenario->isDraft());
-//	setLastSyncedText(scenario->text(), scenario->isDraft());
-
-//	//
-//	// Пометим сценарий, как синхронизированный
-//	//
-//	scenario->setIsSynced(true);
-//}
-
-//void SynchronizationManager::aboutSaveScenarioToServer(Scenario* _scenario, bool _isAsync)
-//{
-//	if (!m_sessionKey.isEmpty()) {
-//		WebLoader* loader = new WebLoader;
-//		connect(loader, SIGNAL(finished()), loader, SLOT(deleteLater()));
-
-//		loader->setRequestMethod(WebLoader::Post);
-//		loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-//		loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-//		loader->addRequestAttribute(KEY_SCENARIO_ID, _scenario->uuid());
-//		loader->addRequestAttribute("scenario_name", _scenario->name());
-//		loader->addRequestAttribute("scenario_additional_info", _scenario->additionalInfo());
-//		loader->addRequestAttribute("scenario_genre", _scenario->genre());
-//		loader->addRequestAttribute("scenario_author", _scenario->author());
-//		loader->addRequestAttribute("scenario_contacts", _scenario->contacts());
-//		loader->addRequestAttribute("scenario_year", _scenario->year());
-//		loader->addRequestAttribute("scenario_synopsis", _scenario->synopsis());
-//		loader->addRequestAttribute("scenario_text", _scenario->text());
-//		loader->addRequestAttribute(KEY_SCENARIO_IS_DRAFT, _scenario->isDraft() ? 1 : 0);
-//		loader->addRequestAttribute("scenario_version_start_datetime", _scenario->versionStartDatetime().toString("yyyy-MM-dd hh:mm:ss"));
-//		loader->addRequestAttribute("scenario_version_end_datetime", _scenario->versionEndDatetime().toString("yyyy-MM-dd hh:mm:ss"));
-//		loader->addRequestAttribute("scenario_version_comment", _scenario->versionComment());
-//		if (_isAsync) {
-//			loader->loadAsync(URL_SCENARIO_SAVE);
-//		} else {
-//			loader->loadSync(URL_SCENARIO_SAVE);
-//		}
-//	}
-//}
-
-//QHash<QString, QString> SynchronizationManager::aboutLoadScenario(const QString& _uuid, bool _isDraft)
-//{
-//	QHash<QString, QString> scenarioValues;
-
-//	if (!m_sessionKey.isEmpty()) {
-//		//
-//		// ... загружаем сценарий
-//		//
-//		WebLoader loader;
-//		loader.setRequestMethod(WebLoader::Post);
-//		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-//		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-//		loader.addRequestAttribute(KEY_SCENARIO_ID, _uuid); // пустой uuid == текущий
-//		loader.addRequestAttribute(KEY_SCENARIO_IS_DRAFT, _isDraft ? 1 : 0);
-//		QByteArray response = loader.loadSync(URL_SCENARIO_LOAD);
-//		//
-//		// ... считываем данные о сценарии
-//		//
-//		QXmlStreamReader scenarioReader(response);
-//		while (!scenarioReader.atEnd()) {
-//			scenarioReader.readNext();
-//			if (scenarioReader.name().toString() == "status") {
-//				const bool success = scenarioReader.attributes().value("result").toString() == "true";
-//				if (success) {
-//					scenarioReader.readNextStartElement();
-//					scenarioReader.readNextStartElement(); // scenario
-//					while (!scenarioReader.atEnd()) {
-//						scenarioReader.readNextStartElement();
-//						const QString key = scenarioReader.name().toString();
-//						const QString value = scenarioReader.readElementText();
-//						if (!value.isEmpty()) {
-//							scenarioValues.insert(key, value);
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
-
-//	return scenarioValues;
-//}
-
-//void SynchronizationManager::aboutSaveScenarioToDB(const QString& _uuid, bool _isDraft)
-//{
-//	//
-//	// ... загружаем сценарий
-//	//
-//	QHash<QString, QString> scenarioValues = aboutLoadScenario(_uuid, _isDraft);
-
-//	//
-//	// ... актуализируем
-//	//
-//	if (!scenarioValues.isEmpty()) {
-//		//
-//		// Для текущей версии объединяем тексты
-//		//
-//		if (_uuid.isEmpty()) {
-//			//
-//			// ... получим данные для объединения
-//			//
-//			const Scenario* currentScenario = DataStorageLayer::StorageFacade::scenarioStorage()->current(_isDraft);
-//			const QString lastSyncedVersion = lastSyncedText(_isDraft);
-//			const QString currentVersion = currentScenario != 0 ? currentScenario->text() : QString::null;
-//			const QString currentRemoteVersion = scenarioValues.value("text");
-//			//
-//			// ... объединяем текст версий
-//			//
-//			QString mergedVersion = ::mergeTexts(lastSyncedVersion, currentVersion, currentRemoteVersion);
-//			//
-//			// ... сохраняем актуализированную версию
-//			//
-//			DataStorageLayer::StorageFacade::scenarioStorage()->storeActualScenario(
-//				scenarioValues.value("name"), scenarioValues.value("additional_info"),
-//				scenarioValues.value("genre"), scenarioValues.value("author"),
-//				scenarioValues.value("contacts"), scenarioValues.value("year"),
-//				scenarioValues.value("synopsis"), mergedVersion, _isDraft,
-//				QDateTime::fromString(scenarioValues.value("version_start_datetime"), "yyyy-MM-dd hh:mm:ss"),
-//				QDateTime::fromString(scenarioValues.value("version_end_datetime"), "yyyy-MM-dd hh:mm:ss"),
-//				scenarioValues.value("version_comment"), scenarioValues.value("id"));
-//		}
-//		//
-//		// Для старых версий, просто обновление
-//		//
-//		else {
-//			const bool isSynced = true;
-//			DataStorageLayer::StorageFacade::scenarioStorage()->storeOldScenario(
-//				scenarioValues.value("name"), scenarioValues.value("additional_info"),
-//				scenarioValues.value("genre"), scenarioValues.value("author"),
-//				scenarioValues.value("contacts"), scenarioValues.value("year"),
-//				scenarioValues.value("synopsis"), scenarioValues.value("text"), _isDraft,
-//				QDateTime::fromString(scenarioValues.value("version_start_datetime"), "yyyy-MM-dd hh:mm:ss"),
-//				QDateTime::fromString(scenarioValues.value("version_end_datetime"), "yyyy-MM-dd hh:mm:ss"),
-//				scenarioValues.value("version_comment"), scenarioValues.value("id"), isSynced);
-//		}
-//	}
-//}
 
 //void SynchronizationManager::aboutSaveDataToServer()
 //{
@@ -1334,98 +1234,3 @@ void SynchronizationManager::sleepALittle()
 	QTimer::singleShot(10, &loop, SLOT(quit()));
 	loop.exec();
 }
-
-//QString SynchronizationManager::lastSyncedName(bool _isDraft) const
-//{
-//	QString result = _isDraft ? m_lastSyncedDraftName : m_lastSyncedName;
-//	if (result.isEmpty()) {
-//		Scenario* lastSynced = DataStorageLayer::StorageFacade::scenarioStorage()->lastSynced(_isDraft);
-//		if (lastSynced != 0) {
-//			result = lastSynced->name();
-//		}
-//	}
-
-//	return result;
-//}
-
-//QString SynchronizationManager::lastSyncedSynopsis(bool _isDraft) const
-//{
-//	QString result = _isDraft ? m_lastSyncedDraftSynopsis : m_lastSyncedSynopsis;
-//	if (result.isEmpty()) {
-//		Scenario* lastSynced = DataStorageLayer::StorageFacade::scenarioStorage()->lastSynced(_isDraft);
-//		if (lastSynced != 0) {
-//			result = lastSynced->synopsis();
-//		}
-//	}
-
-//	return result;
-//}
-
-//QString SynchronizationManager::lastSyncedText(bool _isDraft) const
-//{
-//	QString result = _isDraft ? m_lastSyncedDraftText : m_lastSyncedText;
-//	if (result.isEmpty()) {
-//		Scenario* lastSynced = DataStorageLayer::StorageFacade::scenarioStorage()->lastSynced(_isDraft);
-//		if (lastSynced != 0) {
-//			result = lastSynced->text();
-//		}
-//	}
-
-//	return result;
-//}
-
-//void SynchronizationManager::setLastSyncedName(const QString& _name, bool _isDraft)
-//{
-//	if (_isDraft) {
-//		m_lastSyncedDraftName = _name;
-//	} else {
-//		m_lastSyncedName = _name;
-//	}
-//}
-
-//void SynchronizationManager::setLastSyncedSynopsis(const QString& _synopsis, bool _isDraft)
-//{
-//	if (_isDraft) {
-//		m_lastSyncedDraftSynopsis = _synopsis;
-//	} else {
-//		m_lastSyncedSynopsis = _synopsis;
-//	}
-//}
-
-//void SynchronizationManager::setLastSyncedText(const QString& _text, bool _isDraft)
-//{
-//	if (_isDraft) {
-//		m_lastSyncedDraftText = _text;
-//	} else {
-//		m_lastSyncedText = _text;
-//	}
-//}
-
-
-
-
-
-
-//
-// Пока не используемые функции
-//
-
-//void SynchronizationManager::setCursorPosition(int _position)
-//{
-//	if (m_cursorPosition != _position) {
-//		m_cursorPosition = _position;
-//	}
-//}
-
-//void SynchronizationManager::initConnections()
-//{
-//	QTimer* sendChangesTimer = new QTimer(this);
-//	connect(sendChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSendChangesToServer()));
-
-//	//
-//	// Отправляем/получаем изменения, каждые SEND_CHANGES_INTERVAL мсек
-//	//
-//	const int SEND_CHANGES_INTERVAL = 1000;
-//	sendChangesTimer->start(SEND_CHANGES_INTERVAL);
-//}
-

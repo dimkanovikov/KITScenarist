@@ -55,6 +55,11 @@ namespace DataStorageLayer
 		 */
 		void clear();
 
+		/**
+		 * @brief Обновить хранилище
+		 */
+		void refresh();
+
 	private:
 		CharactersTable* m_all;
 

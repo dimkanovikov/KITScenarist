@@ -47,6 +47,7 @@ namespace DataMappingLayer
 
 	protected:
 		DomainObject* doLoad(const Identifier& _id, const QSqlRecord& _record);
+		void doLoad(DomainObject* _domainObject, const QSqlRecord& _record);
 		DomainObjectsItemModel* modelInstance();
 
 	private:

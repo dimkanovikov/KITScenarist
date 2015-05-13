@@ -60,6 +60,16 @@ namespace ManagementLayer
 		 */
 		void aboutUpdateCursors(int _cursorPosition, bool _isDraft);
 
+		/**
+		 * @brief Полная синхронизация данных
+		 */
+		void aboutFullSyncData();
+
+		/**
+		 * @brief Синхронизация данных во время работы
+		 */
+		void aboutWorkSyncData();
+
 	private:
 		/**
 		 * @brief Возможно ли использовать методы синхронизации
@@ -72,9 +82,19 @@ namespace ManagementLayer
 		void uploadScenarioChanges(const QList<QString>& _changesUuids);
 
 		/**
-		 * @brief Скачать изменение
+		 * @brief Скачать изменения с сервера
 		 */
 		QList<QHash<QString, QString> > downloadScenarioChanges(const QString& _changesUuids);
+
+		/**
+		 * @brief Отправить изменения данных на сервер
+		 */
+		void uploadScenarioData(const QList<QString>& _dataUuids);
+
+		/**
+		 * @brief Скачать и сохранить в БД изменения с сервера
+		 */
+		void downloadAndSaveScenarioData(const QString& _dataUuids);
 
 
 //		/**

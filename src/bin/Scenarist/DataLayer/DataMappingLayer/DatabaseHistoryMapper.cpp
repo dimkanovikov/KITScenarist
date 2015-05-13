@@ -18,23 +18,17 @@ namespace {
 }
 
 
-QList<QMap<QString, QString> > DatabaseHistoryMapper::history(const QString& _fromDatetime)
+QList<QString> DatabaseHistoryMapper::history(const QString& _fromDatetime)
 {
 	QSqlQuery q_loader = DatabaseLayer::Database::query();
 	q_loader.exec(
-		QString("SELECT %1, %2, %3, %4 FROM _database_history WHERE %4 > '%5'")
-		.arg(ID_KEY, QUERY_KEY, QUERY_VALUES_KEY, DATETIME_KEY, _fromDatetime)
+		QString("SELECT %1 FROM _database_history WHERE %2 > '%3'")
+		.arg(ID_KEY, DATETIME_KEY, _fromDatetime)
 		);
 
-	QList<QMap<QString, QString> > databaseHistory;
+	QList<QString> databaseHistory;
 	while (q_loader.next()) {
-		QMap<QString, QString> historyRecord;
-		historyRecord.insert(ID_KEY, q_loader.value(ID_KEY).toString());
-		historyRecord.insert(QUERY_KEY, q_loader.value(QUERY_KEY).toString());
-		historyRecord.insert(QUERY_VALUES_KEY, q_loader.value(QUERY_VALUES_KEY).toString());
-		historyRecord.insert(DATETIME_KEY, q_loader.value(DATETIME_KEY).toString());
-
-		databaseHistory.append(historyRecord);
+		databaseHistory.append(q_loader.value(ID_KEY).toString());
 	}
 
 	return databaseHistory;
@@ -56,6 +50,18 @@ QMap<QString, QString> DatabaseHistoryMapper::historyRecord(const QString& _uuid
 	historyRecord.insert(DATETIME_KEY, q_loader.value(DATETIME_KEY).toString());
 
 	return historyRecord;
+}
+
+bool DatabaseHistoryMapper::contains(const QString& _uuid) const
+{
+	QSqlQuery q_loader = DatabaseLayer::Database::query();
+	q_loader.exec(
+		QString("SELECT COUNT(%1) AS size FROM _database_history WHERE %1 = '%2'")
+		.arg(ID_KEY, _uuid)
+		);
+
+	q_loader.next();
+	return q_loader.value("size").toBool();
 }
 
 void DatabaseHistoryMapper::storeHistoryRecord(const QString& _uuid, const QString& _query,

@@ -63,6 +63,15 @@ namespace BusinessLogic
 		bool isRedoAvailableReimpl() const;
 		/** @} */
 
+	signals:
+		/**
+		 * @brief Сигналы уведомляющие об этапах применения патчей
+		 */
+		/** @{ */
+		void beforePatchApply();
+		void afterPatchApply();
+		/** @} */
+
 	private:
 		/**
 		 * @brief Обработчик xml

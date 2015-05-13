@@ -1,12 +1,12 @@
-#ifndef SCENARIODAYMAPPER_H
-#define SCENARIODAYMAPPER_H
+#ifndef SCENARIODATAMAPPER_H
+#define SCENARIODATAMAPPER_H
 
 #include "AbstractMapper.h"
 #include "MapperFacade.h"
 
 namespace Domain {
-	class ScenarioDay;
-	class ScenarioDaysTable;
+	class ScenarioData;
+	class ScenarioDataTable;
 }
 
 using namespace Domain;
@@ -14,13 +14,13 @@ using namespace Domain;
 
 namespace DataMappingLayer
 {
-	class ScenarioDayMapper : public AbstractMapper
+	class ScenarioDataMapper : public AbstractMapper
 	{
 	public:
-		ScenarioDay* find(const Identifier& _id);
-		ScenarioDaysTable* findAll();
-		void insert(ScenarioDay* _scenaryDay);
-		void update(ScenarioDay* _scenaryDay);
+		ScenarioData* find(const Identifier& _id);
+		ScenarioDataTable* findAll();
+		void insert(ScenarioData* _scenaryData);
+		void update(ScenarioData* _scenaryData);
 
 	protected:
 		QString findStatement(const Identifier& _id) const;
@@ -35,11 +35,11 @@ namespace DataMappingLayer
 		DomainObjectsItemModel* modelInstance();
 
 	private:
-		ScenarioDayMapper();
+		ScenarioDataMapper();
 
 		// Для доступа к конструктору
 		friend class MapperFacade;
 	};
 }
 
-#endif // SCENARIODAYMAPPER_H
+#endif // SCENARIODATAMAPPER_H

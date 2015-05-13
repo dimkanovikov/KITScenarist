@@ -30,25 +30,74 @@ void AbstractMapper::clear()
 	m_loadedObjectsMap.clear();
 }
 
-DomainObject * AbstractMapper::abstractFind(const Identifier& _id)
+void AbstractMapper::refresh(DomainObjectsItemModel* _model)
 {
-	DomainObject *result = m_loadedObjectsMap.value( _id, 0 );
-	if ( !DomainObject::isValid( result ) ) {
-		result = loadObjectFromDatabase( _id );
+	QSqlQuery query = Database::query();
+	query.prepare(findAllStatement());
+	query.exec();
+	QSet<Identifier> updatedObjectsIds;
+	//
+	// Для каждого объекта из БД
+	//
+	while (query.next()) {
+		const QSqlRecord record = query.record();
+		//
+		// ... загружаем или обновляем
+		//
+		DomainObject *domainObject = load(record);
+		//
+		// ... сохраняем идентификатор обновлённого объекта
+		//
+		updatedObjectsIds.insert(domainObject->id());
+		//
+		// ... добавляем объект в список для обновления
+		//
+		if (!_model->contains(domainObject)) {
+			_model->append(domainObject);
+		}
+	}
+
+	//
+	// Удаляем все объекты, которых нет в БД
+	//
+	foreach (DomainObject* domainObject, _model->toList()) {
+		if (!updatedObjectsIds.contains(domainObject->id())) {
+			//
+			// ... из списка для обновления
+			//
+			_model->remove(domainObject);
+			//
+			// ... из карты загруженных объектов
+			//
+			m_loadedObjectsMap.remove(domainObject->id());
+			//
+			// ... сам объект
+			//
+			delete domainObject;
+			domainObject = 0;
+		}
+	}
+}
+
+DomainObject* AbstractMapper::abstractFind(const Identifier& _id)
+{
+	DomainObject* result = m_loadedObjectsMap.value(_id, 0);
+	if (!DomainObject::isValid(result)) {
+		result = loadObjectFromDatabase(_id);
 	}
 	return result;
 }
 
-DomainObjectsItemModel * AbstractMapper::abstractFindAll(const QString& _filter)
+DomainObjectsItemModel* AbstractMapper::abstractFindAll(const QString& _filter)
 {
 	QSqlQuery query = Database::query();
-	query.prepare( findAllStatement() + _filter );
+	query.prepare(findAllStatement() + _filter);
 	query.exec();
-	DomainObjectsItemModel * result = modelInstance();
-	while ( query.next() ) {
+	DomainObjectsItemModel* result = modelInstance();
+	while (query.next()) {
 		QSqlRecord record = query.record();
-		DomainObject *domainObject = load( record );
-		result->append( domainObject );
+		DomainObject* domainObject = load(record);
+		result->append(domainObject);
 	}
 	return result;
 }
@@ -156,13 +205,12 @@ void AbstractMapper::abstractDelete(DomainObject* _subject)
 
 DomainObject* AbstractMapper::loadObjectFromDatabase(const Identifier& _id)
 {
-	DomainObject *result = 0;
 	QSqlQuery query = Database::query();
 	query.prepare( findStatement( _id ) );
 	query.exec();
 	query.next();
 	QSqlRecord record = query.record();
-	result = load( record );
+	DomainObject* result = load( record );
 	return result;
 }
 
@@ -181,11 +229,23 @@ DomainObject* AbstractMapper::load(const QSqlRecord& _record )
 {
 	DomainObject* result = 0;
 
-	int idValue = _record.value("id").toInt();
+	const int idValue = _record.value("id").toInt();
 	if (idValue != 0) {
 		Identifier id(idValue);
-		result = doLoad(id, _record);
-		m_loadedObjectsMap.insert(id, result);
+		//
+		// Если объект загружен, обновляем его и используем указатель на него
+		//
+		if (m_loadedObjectsMap.contains(id)) {
+			doLoad(m_loadedObjectsMap.value(id), _record);
+			result = m_loadedObjectsMap.value(id);
+		}
+		//
+		// В противном случае создаём новый объект и сохраняем указатель на него
+		//
+		else {
+			result = doLoad(id, _record);
+			m_loadedObjectsMap.insert(id, result);
+		}
 	}
 
 	return result;
