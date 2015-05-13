@@ -22,7 +22,7 @@ QList<QString> DatabaseHistoryMapper::history(const QString& _fromDatetime)
 {
 	QSqlQuery q_loader = DatabaseLayer::Database::query();
 	q_loader.exec(
-		QString("SELECT %1 FROM _database_history WHERE %2 > '%3'")
+		QString("SELECT %1 FROM _database_history WHERE %2 >= '%3'")
 		.arg(ID_KEY, DATETIME_KEY, _fromDatetime)
 		);
 
