@@ -47,6 +47,7 @@ bool ScenarioChangeMapper::containsUuid(const QString& _uuid)
 	checker.prepare("SELECT COUNT(id) FROM " + TABLE_NAME + " WHERE uuid = ?");
 	checker.addBindValue(_uuid);
 	checker.exec();
+	checker.next();
 	return checker.value(0).toInt();
 }
 
@@ -67,9 +68,10 @@ ScenarioChange ScenarioChangeMapper::change(const QString& _uuid) const
 	loader.prepare("SELECT " + COLUMNS + " FROM " + TABLE_NAME + " WHERE uuid = ? ");
 	loader.addBindValue(_uuid);
 	loader.exec();
+	loader.next();
 	return
 			ScenarioChange(Identifier(), _uuid, loader.value("datetime").toDateTime(),
-				loader.value("user").toString(), loader.value("undo_patch").toString(),
+				loader.value("username").toString(), loader.value("undo_patch").toString(),
 				loader.value("redo_patch").toString(), loader.value("is_draft").toInt());
 }
 

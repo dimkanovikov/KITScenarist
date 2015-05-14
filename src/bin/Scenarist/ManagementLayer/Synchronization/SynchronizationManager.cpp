@@ -19,7 +19,6 @@
 
 #include <WebLoader.h>
 
-#include <QDebug>
 #include <QEventLoop>
 #include <QHash>
 #include <QScopedPointer>
