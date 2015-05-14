@@ -149,6 +149,11 @@ int Project::id() const
 	return m_id;
 }
 
+bool Project::isCommentOnly() const
+{
+	return m_role == Commentator;
+}
+
 
 bool ManagementLayer::operator==(const ManagementLayer::Project& _lhs, const ManagementLayer::Project& _rhs)
 {

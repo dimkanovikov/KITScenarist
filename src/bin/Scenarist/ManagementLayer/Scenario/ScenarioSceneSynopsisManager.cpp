@@ -29,6 +29,11 @@ void ScenarioSceneSynopsisManager::setSynopsis(const QString& _synopsis)
 	m_view->setSynopsis(_synopsis);
 }
 
+void ScenarioSceneSynopsisManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_view->setCommentOnly(_isCommentOnly);
+}
+
 void ScenarioSceneSynopsisManager::initView()
 {
 

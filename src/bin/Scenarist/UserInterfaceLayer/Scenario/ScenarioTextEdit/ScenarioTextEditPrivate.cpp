@@ -78,6 +78,8 @@ QString ShortcutsManager::shortcut(int _forBlockType) const
 
 void ShortcutsManager::changeTextBlock(int _blockType) const
 {
-	ScenarioBlockStyle::Type blockType = (ScenarioBlockStyle::Type)_blockType;
-	m_editor->changeScenarioBlockType(blockType);
+	if (!m_editor->isReadOnly()) {
+		ScenarioBlockStyle::Type blockType = (ScenarioBlockStyle::Type)_blockType;
+		m_editor->changeScenarioBlockType(blockType);
+	}
 }

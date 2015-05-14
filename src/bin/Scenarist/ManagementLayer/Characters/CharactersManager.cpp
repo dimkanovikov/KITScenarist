@@ -81,6 +81,12 @@ void CharactersManager::saveCharacters()
 	}
 }
 
+void CharactersManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_navigatorManager->setCommentOnly(_isCommentOnly);
+	m_dataEditManager->setCommentOnly(_isCommentOnly);
+}
+
 void CharactersManager::aboutAddCharacter(const QString& _name)
 {
 	DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(_name);

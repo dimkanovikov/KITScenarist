@@ -84,7 +84,7 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="sinopsisPage">
+     <widget class="QWidget" name="synopsisPage">
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="2" column="0" colspan="2">
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -189,9 +189,6 @@
         </widget>
        </item>
       </layout>
-      <zorder>synopsisStack</zorder>
-      <zorder>name</zorder>
-      <zorder>label</zorder>
      </widget>
     </widget>
    </item>

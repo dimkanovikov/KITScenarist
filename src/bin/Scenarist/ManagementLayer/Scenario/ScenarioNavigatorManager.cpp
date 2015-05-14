@@ -102,6 +102,11 @@ void ScenarioNavigatorManager::setNoteVisible(bool _visible)
 	m_navigator->setNoteVisible(_visible);
 }
 
+void ScenarioNavigatorManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_navigator->setCommentOnly(_isCommentOnly);
+}
+
 void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
 {
 	m_addItemDialog->clearText();

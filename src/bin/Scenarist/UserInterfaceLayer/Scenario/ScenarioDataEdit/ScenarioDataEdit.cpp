@@ -87,6 +87,12 @@ void ScenarioDataEdit::setScenarioSynopsisFromScenes(const QString& _synopsis)
 	ui->fromScenarioSynopsis->setHtml(_synopsis);
 }
 
+void ScenarioDataEdit::setCommentOnly(bool _isCommentOnly)
+{
+	ui->name->setReadOnly(_isCommentOnly);
+	ui->sourceSynopsis->setReadOnly(_isCommentOnly);
+}
+
 void ScenarioDataEdit::aboutNameChanged()
 {
 	if (ui->name->text() != m_sourceName) {

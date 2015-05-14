@@ -45,6 +45,11 @@ void CharactersNavigatorManager::chooseCharacter(const QString& _name)
 	m_navigator->selectCharacter(_name);
 }
 
+void CharactersNavigatorManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_navigator->setCommentOnly(_isCommentOnly);
+}
+
 void CharactersNavigatorManager::aboutAddCharacter()
 {
 	QString characterName;

@@ -36,6 +36,11 @@ namespace ManagementLayer
 		 */
 		void editCharacter(Domain::Character* _character);
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	signals:
 		/**
 		 * @brief Персонаж изменён

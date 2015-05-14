@@ -66,6 +66,11 @@ namespace UserInterface
 		 */
 		QList<QPixmap> photos() const;
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	signals:
 		/**
 		 * @brief Сохранить

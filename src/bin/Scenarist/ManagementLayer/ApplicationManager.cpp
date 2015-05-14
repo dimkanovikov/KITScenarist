@@ -312,14 +312,13 @@ void ApplicationManager::aboutSave()
 		m_locationsManager->saveLocations();
 		DatabaseLayer::Database::commit();
 
-//		//
-//		// Для проекта из облака отправляем данные на сервер
-//		//
-//		if (m_projectsManager->currentProject().type() == Project::Remote) {
-//			m_synchronizationManager->aboutUpdateScenario();
-//			m_synchronizationManager->aboutUpdateScenario(true);
-//			m_synchronizationManager->aboutUpdateData();
-//		}
+		//
+		// Для проекта из облака отправляем данные на сервер
+		//
+		if (m_projectsManager->currentProject().type() == Project::Remote) {
+			m_synchronizationManager->aboutWorkSyncScenario();
+			m_synchronizationManager->aboutWorkSyncData();
+		}
 
 		//
 		// Изменим статус окна на сохранение изменений
@@ -453,7 +452,6 @@ void ApplicationManager::aboutSyncClosedWithError(const QString& _error)
 		//
 		// Продолжаем в автономном режиме
 		//
-
 	}
 }
 
@@ -643,6 +641,14 @@ void ApplicationManager::goToEditCurrentProject()
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
 	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
+
+	//
+	// Настроим режим работы со сценарием
+	//
+	const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
+	m_scenarioManager->setCommentOnly(isCommentOnly);
+	m_charactersManager->setCommentOnly(isCommentOnly);
+	m_locationsManager->setCommentOnly(isCommentOnly);
 
 	//
 	// Активируем вкладки

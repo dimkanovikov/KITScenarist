@@ -60,6 +60,11 @@ namespace ManagementLayer
 		 */
 		void setNoteVisible(bool _visible);
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	signals:
 		/**
 		 * @brief Запрос на добавление элемента

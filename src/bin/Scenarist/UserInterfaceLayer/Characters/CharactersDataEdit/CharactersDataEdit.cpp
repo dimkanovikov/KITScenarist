@@ -101,6 +101,14 @@ QList<QPixmap> CharactersDataEdit::photos() const
 	return ui->photos->photos();
 }
 
+void CharactersDataEdit::setCommentOnly(bool _isCommentOnly)
+{
+	ui->addPhoto->setVisible(!_isCommentOnly);
+	ui->name->setReadOnly(_isCommentOnly);
+	ui->realName->setReadOnly(_isCommentOnly);
+	ui->description->setReadOnly(_isCommentOnly);
+}
+
 namespace {
 	static bool isEqualPixmapLists(const QList<QPixmap>& _lhs, const QList<QPixmap>& _rhs) {
 		QList<QImage> lhs, rhs;

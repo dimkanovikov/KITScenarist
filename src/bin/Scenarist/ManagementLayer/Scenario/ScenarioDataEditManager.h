@@ -51,6 +51,11 @@ namespace ManagementLayer
 		 */
 		void setScenarioSynopsisFromScenes(const QString& _synopsis);
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	signals:
 		/**
 		 * @brief Сигралы об изменении параметров

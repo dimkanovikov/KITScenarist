@@ -47,6 +47,11 @@ void CharactersDataEditManager::editCharacter(Domain::Character* _character)
 	}
 }
 
+void CharactersDataEditManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_editor->setCommentOnly(_isCommentOnly);
+}
+
 void CharactersDataEditManager::aboutSave()
 {
 	if (!m_editor->name().isEmpty()) {

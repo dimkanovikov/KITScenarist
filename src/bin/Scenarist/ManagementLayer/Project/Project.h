@@ -93,6 +93,11 @@ namespace ManagementLayer
 		 */
 		int id() const;
 
+		/**
+		 * @brief Сценарий возможно только комментировать?
+		 */
+		bool isCommentOnly() const;
+
 	private:
 		/**
 		 * @brief Тип проекта

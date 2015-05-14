@@ -286,6 +286,24 @@ void ScenarioTextEditWidget::setAdditionalCursors(const QMap<QString, int>& _cur
 	m_editor->setAdditionalCursors(_cursors);
 }
 
+void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
+{
+	m_textStyles->setEnabled(!_isCommentOnly);
+	m_undo->setVisible(!_isCommentOnly);
+	m_redo->setVisible(!_isCommentOnly);
+	m_fastFormat->setVisible(!_isCommentOnly);
+	m_editor->setReadOnly(_isCommentOnly);
+	m_searchLine->setSearchOnly(_isCommentOnly);
+
+	if (_isCommentOnly) {
+		//
+		// Закроем панель быстрого форматирования, если она была открыта
+		//
+		m_fastFormat->setChecked(false);
+		m_fastFormatWidget->hide();
+	}
+}
+
 void ScenarioTextEditWidget::aboutUndo()
 {
 	m_editor->undoReimpl();

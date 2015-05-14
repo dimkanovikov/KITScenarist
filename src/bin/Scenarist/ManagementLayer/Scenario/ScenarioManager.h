@@ -91,6 +91,11 @@ namespace ManagementLayer
 		 */
 		void closeCurrentProject();
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	public slots:
 		/**
 		 * @brief Обновить параметры текстового редактора

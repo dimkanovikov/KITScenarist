@@ -81,6 +81,12 @@ void LocationsManager::saveLocations()
 	}
 }
 
+void LocationsManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_navigatorManager->setCommentOnly(_isCommentOnly);
+	m_dataEditManager->setCommentOnly(_isCommentOnly);
+}
+
 void LocationsManager::aboutAddLocation(const QString& _name)
 {
 	DataStorageLayer::StorageFacade::locationStorage()->storeLocation(_name);

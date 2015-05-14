@@ -48,6 +48,11 @@ void LocationsDataEditManager::editLocation(Location* _location)
 	}
 }
 
+void LocationsDataEditManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_editor->setCommentOnly(_isCommentOnly);
+}
+
 void LocationsDataEditManager::aboutSave()
 {
 	if (!m_editor->name().isEmpty()) {

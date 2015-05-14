@@ -39,6 +39,11 @@ namespace UserInterface
 		 */
 		void selectLocation(const QModelIndex& _index);
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	signals:
 		/**
 		 * @brief Добавить локацию

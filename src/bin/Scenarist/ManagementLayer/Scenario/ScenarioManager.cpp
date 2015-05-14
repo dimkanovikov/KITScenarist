@@ -435,6 +435,15 @@ void ScenarioManager::closeCurrentProject()
 	m_scenarioDraft->clear();
 }
 
+void ScenarioManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_navigatorManager->setCommentOnly(_isCommentOnly);
+	m_draftNavigatorManager->setCommentOnly(_isCommentOnly);
+	m_sceneSynopsisManager->setCommentOnly(_isCommentOnly);
+	m_textEditManager->setCommentOnly(_isCommentOnly);
+	m_dataEditManager->setCommentOnly(_isCommentOnly);
+}
+
 void ScenarioManager::aboutTextEditSettingsUpdated()
 {
 	m_scenario->refresh();
