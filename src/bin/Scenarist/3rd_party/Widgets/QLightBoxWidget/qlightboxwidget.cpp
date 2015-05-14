@@ -50,7 +50,8 @@ bool QLightBoxWidget::eventFilter(QObject* _object, QEvent* _event)
 	//
 	if (_event->type() == QEvent::ChildAdded) {
 		QChildEvent* childEvent = dynamic_cast<QChildEvent*>(_event);
-		if (childEvent->child() != this) {
+		if (childEvent->child() != this
+			&&isVisible()) {
 			QWidget* parent = parentWidget();
 			setParent(0);
 			setParent(parent);

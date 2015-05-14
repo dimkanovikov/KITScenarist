@@ -436,6 +436,27 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 	}
 }
 
+void ApplicationManager::aboutSyncClosedWithError(const QString& _error)
+{
+	//
+	// Показать пользователю сообщение об ошибке с предложением
+	// переподключиться, или продолжить работу в автономном режиме
+	//
+	if (QMessageBox::question(m_view, tr("Synchronization stopped"),
+			tr("Synchronization stopped with error:\n\"%1\"\n\nDo you want reconect to service?").arg(_error))
+		== QMessageBox::Yes) {
+		//
+		// Переподключаемся
+		//
+		m_synchronizationManager->login();
+	} else {
+		//
+		// Продолжаем в автономном режиме
+		//
+
+	}
+}
+
 void ApplicationManager::aboutImport()
 {
 	m_importManager->importScenario(m_scenarioManager->scenario(), m_scenarioManager->cursorPosition());
@@ -828,6 +849,8 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
 	connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
 			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
+	connect(m_synchronizationManager, SIGNAL(syncClosedWithError(QString)),
+			this, SLOT(aboutSyncClosedWithError(QString)));
 }
 
 void ApplicationManager::initStyleSheet()

@@ -72,14 +72,20 @@ namespace ManagementLayer
 
 	private:
 		/**
+		 * @brief Обработать ошибку работы с API
+		 */
+		void handleError(const QByteArray& _response);
+
+		/**
 		 * @brief Возможно ли использовать методы синхронизации
 		 */
 		bool isCanSync() const;
 
 		/**
 		 * @brief Отправить изменения сценария на сервер
+		 * @return Удалось ли отправить данные
 		 */
-		void uploadScenarioChanges(const QList<QString>& _changesUuids);
+		bool uploadScenarioChanges(const QList<QString>& _changesUuids);
 
 		/**
 		 * @brief Скачать изменения с сервера
@@ -88,77 +94,14 @@ namespace ManagementLayer
 
 		/**
 		 * @brief Отправить изменения данных на сервер
+		 * @return Удалось ли отправить данные
 		 */
-		void uploadScenarioData(const QList<QString>& _dataUuids);
+		bool uploadScenarioData(const QList<QString>& _dataUuids);
 
 		/**
 		 * @brief Скачать и сохранить в БД изменения с сервера
 		 */
 		void downloadAndSaveScenarioData(const QString& _dataUuids);
-
-
-//		/**
-//		 * @brief Синхронизировать сценарий полностью
-//		 * @note Скачать с сервера все версии, которых нет в БД и
-//		 *		 отправить на сервер все версии, которых не на нём.
-//		 *		 Используется при открытии проекта.
-//		 */
-//		void aboutSyncScenario(bool _isDraft = false);
-
-//		/**
-//		 * @brief Загрузить данные, которых нет в БД
-//		 */
-//		void aboutSyncData();
-
-//		/**
-//		 * @brief Актуализировать сценарий
-//		 */
-//		/** @{ */
-//		void aboutUpdateScenario(bool _isDraft = false);
-//		void aboutUpdateScenario(const QString& _name, const QString& _synopsis,
-//			const QString& _text, bool _isDraft);
-//		/** @} */
-
-//		/**
-//		 * @brief Актуализировать данные
-//		 */
-//		void aboutUpdateData();
-
-//		/**
-//		 * @brief Сохранить последнюю версию сценария на сервер
-//		 */
-//		void aboutSaveScenarioToServer(bool _isDraft, bool _isAsync);
-
-//		/**
-//		 * @brief Сохранить версию сценария на сервер
-//		 */
-//		void aboutSaveScenarioToServer(Domain::Scenario* _scenario, bool _isAsync);
-
-//		/**
-//		 * @brief Загрузить версию сценария
-//		 */
-//		QHash<QString, QString> aboutLoadScenario(const QString& _uuid, bool _isDraft);
-
-//		/**
-//		 * @brief Сохранить заданную версию сценария в локальную БД
-//		 * @note Если UUID не задан, сохранена будет последняя версия и актуализирована
-//		 */
-//		void aboutSaveScenarioToDB(const QString& _uuid, bool _isDraft);
-
-//		/**
-//		 * @brief Отправить изменения сценария на сервер с момента последней отправки
-//		 */
-//		void aboutSaveDataToServer();
-
-//		/**
-//		 * @brief Отправить изменение на сервер
-//		 */
-//		void aboutSaveDataToServer(const QString& _changeUuid);
-
-//		/**
-//		 * @brief Сохранить заданное изменение в локальную БД
-//		 */
-//		void aboutSaveDataToDB(const QString& _changeUuid);
 
 	signals:
 		/**
@@ -182,11 +125,6 @@ namespace ManagementLayer
 		void remoteProjectsLoaded(const QString& _projectsXml);
 
 		/**
-		 * @brief Не удалось получить список доступных проектов
-		 */
-		void remoteProjectsNotLoaded(const QString& _error);
-
-		/**
 		 * @brief Необходимо применить патч
 		 */
 		void applyPatchRequested(const QString& _patch, bool _isDraft);
@@ -195,6 +133,11 @@ namespace ManagementLayer
 		 * @brief Получены новые позиции курсоров пользователей
 		 */
 		void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
+
+		/**
+		 * @brief Сессия закрыта с ошибкой
+		 */
+		void syncClosedWithError(const QString& _errorText);
 
 	private:
 		/**

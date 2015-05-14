@@ -149,74 +149,93 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	QByteArray response = m_loader->loadSync(URL_LOGIN);
 
 	//
-	// Считываем результат авторизации
+	// Если связь с интернетом есть
 	//
-	QXmlStreamReader responseReader(response);
-	//
-	// Успешно ли завершилась авторизация
-	//
-	bool success = false;
-	QString sessionKey;
-	QString errorMessage;
-	while (!responseReader.atEnd()) {
-		responseReader.readNext();
-		if (responseReader.name().toString() == "status") {
-			success = responseReader.attributes().value("result").toString() == "true";
-			//
-			// Если авторизация успешна, сохраняем ключ сессии
-			//
-			if (success) {
-				responseReader.readNext(); // закрытие тэга status
-				responseReader.readNext(); // тэг session_key
-				responseReader.readNext(); // содержимое тэга session_key
-				sessionKey = responseReader.text().toString().simplified();
-				break;
-			}
-			//
-			// В противном случае считываем сообщение об ошибке
-			//
-			else {
-				errorMessage = responseReader.attributes().value("error").toString();
-				break;
+	if (!response.isEmpty()) {
+		//
+		// Считываем результат авторизации
+		//
+		QXmlStreamReader responseReader(response);
+		//
+		// Успешно ли завершилась авторизация
+		//
+		bool success = false;
+		QString sessionKey;
+		QString errorMessage;
+		while (!responseReader.atEnd()) {
+			responseReader.readNext();
+			if (responseReader.name().toString() == "status") {
+				success = responseReader.attributes().value("result").toString() == "true";
+				//
+				// Если авторизация успешна, сохраняем ключ сессии
+				//
+				if (success) {
+					responseReader.readNext(); // закрытие тэга status
+					responseReader.readNext(); // тэг session_key
+					responseReader.readNext(); // содержимое тэга session_key
+					sessionKey = responseReader.text().toString().simplified();
+					break;
+				}
+				//
+				// В противном случае считываем сообщение об ошибке
+				//
+				else {
+					errorMessage = responseReader.attributes().value("error").toString();
+					break;
+				}
 			}
 		}
+
+		//
+		// Закрываем уведомление для пользователя
+		//
+		sleepALittle();
+		progress.finish();
+
+		//
+		// Если авторизация прошла
+		//
+		if (success) {
+			//
+			// ... сохраняем информацию о сессии
+			//
+			m_sessionKey = sessionKey;
+			//
+			// ... и о пользователе
+			//
+			StorageFacade::settingsStorage()->setValue(
+						"application/user-name",
+						PasswordStorage::save(_userName),
+						SettingsStorage::ApplicationSettings);
+			StorageFacade::settingsStorage()->setValue(
+						"application/password",
+						PasswordStorage::save(_password, _userName),
+						SettingsStorage::ApplicationSettings);
+
+			emit loginAccepted(_userName);
+		} else {
+			emit loginNotAccepted(_userName, _password, errorMessage);
+		}
 	}
-
 	//
-	// Закрываем уведомление для пользователя
+	// Если связи с интернетом нет, работаем в автономном режиме
 	//
-	sleepALittle();
-	progress.finish();
-
-	//
-	// Если авторизация прошла
-	//
-	if (success) {
-		//
-		// ... сохраняем информацию о сессии
-		//
-		m_sessionKey = sessionKey;
-		//
-		// ... и о пользователе
-		//
-		StorageFacade::settingsStorage()->setValue(
-			"application/user-name",
-			PasswordStorage::save(_userName),
-			SettingsStorage::ApplicationSettings);
-		StorageFacade::settingsStorage()->setValue(
-			"application/password",
-			PasswordStorage::save(_password, _userName),
-			SettingsStorage::ApplicationSettings);
-
+	else {
 		emit loginAccepted(_userName);
-	} else {
-		emit loginNotAccepted(_userName, _password, errorMessage);
+
+		QByteArray cachedProjectsXml =
+			QByteArray::fromBase64(
+				StorageFacade::settingsStorage()->value(
+					"application/remote-projects",
+					SettingsStorage::ApplicationSettings).toUtf8()
+				);
+		emit remoteProjectsLoaded(cachedProjectsXml);
 	}
 }
 
 void SynchronizationManager::aboutLogout()
 {
-	if (!m_sessionKey.isEmpty()) {
+	if (isCanSync()) {
 		//
 		// Информация для пользователя
 		//
@@ -278,7 +297,6 @@ void SynchronizationManager::aboutLoadProjects()
 		// Успешно ли завершилось получение
 		//
 		bool success = false;
-		QString errorMessage;
 		while (!responseReader.atEnd()) {
 			responseReader.readNext();
 			if (responseReader.name().toString() == "status") {
@@ -294,7 +312,7 @@ void SynchronizationManager::aboutLoadProjects()
 				// Если получить список проектов не удалось, считываем сообщение об ошибке
 				//
 				else {
-					errorMessage = responseReader.attributes().value("error").toString();
+					handleError(response);
 					break;
 				}
 			}
@@ -311,8 +329,6 @@ void SynchronizationManager::aboutLoadProjects()
 						"application/remote-projects", response.toBase64(), SettingsStorage::ApplicationSettings);
 
 			emit remoteProjectsLoaded(response);
-		} else {
-			emit remoteProjectsNotLoaded(errorMessage);
 		}
 
 		//
@@ -362,6 +378,9 @@ void SynchronizationManager::aboutFullSyncScenario()
 							}
 						}
 					}
+				} else {
+					handleError(response);
+					break;
 				}
 			}
 		}
@@ -439,19 +458,30 @@ void SynchronizationManager::aboutFullSyncScenario()
 void SynchronizationManager::aboutWorkSyncScenario()
 {
 	if (isCanSync()) {
-		//
-		// Запоминаем время синхронизации изменений сценария
-		//
-		const QString prevChangesSyncDatetime = m_lastChangesSyncDatetime;
-		m_lastChangesSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
 
 		//
 		// Отправляем новые изменения
 		//
 		{
+			//
+			// Запоминаем время синхронизации изменений сценария
+			//
+			const QString prevChangesSyncDatetime = m_lastChangesSyncDatetime;
+			m_lastChangesSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
+
+			//
+			// Отправляем
+			//
 			QList<QString> newChanges =
 					StorageFacade::scenarioChangeStorage()->newUuids(prevChangesSyncDatetime);
-			uploadScenarioChanges(newChanges);
+			const bool changesUploaded = uploadScenarioChanges(newChanges);
+
+			//
+			// Не обновляем время последней синхронизации, если изменения не были отправлены
+			//
+			if (changesUploaded == false) {
+				m_lastChangesSyncDatetime = prevChangesSyncDatetime;
+			}
 		}
 
 		//
@@ -488,6 +518,9 @@ void SynchronizationManager::aboutWorkSyncScenario()
 								}
 							}
 						}
+					} else {
+						handleError(response);
+						break;
 					}
 				}
 			}
@@ -586,6 +619,9 @@ void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDra
 							}
 						}
 					}
+				} else {
+					handleError(response);
+					break;
 				}
 			}
 		}
@@ -600,91 +636,96 @@ void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDra
 
 void SynchronizationManager::aboutFullSyncData()
 {
-	//
-	// Запоминаем время синхронизации данных, в дальнейшем будем отправлять изменения
-	// произведённые с данного момента
-	//
-	m_lastDataSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
+	if (isCanSync()) {
+		//
+		// Запоминаем время синхронизации данных, в дальнейшем будем отправлять изменения
+		// произведённые с данного момента
+		//
+		m_lastDataSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
 
-	//
-	// Получить список всех изменений данных на сервере
-	//
-	WebLoader loader;
-	loader.setRequestMethod(WebLoader::Post);
-	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-	QByteArray response = loader.loadSync(URL_SCENARIO_DATA_LIST);
-	//
-	// ... считываем изменения (uuid)
-	//
-	QList<QString> remoteChanges;
-	QXmlStreamReader changesReader(response);
-	while (!changesReader.atEnd()) {
-		changesReader.readNext();
-		if (changesReader.name().toString() == "status") {
-			const bool success = changesReader.attributes().value("result").toString() == "true";
-			if (success) {
-				changesReader.readNextStartElement();
-				changesReader.readNextStartElement(); // changes
-				while (!changesReader.atEnd()) {
+		//
+		// Получить список всех изменений данных на сервере
+		//
+		WebLoader loader;
+		loader.setRequestMethod(WebLoader::Post);
+		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		QByteArray response = loader.loadSync(URL_SCENARIO_DATA_LIST);
+		//
+		// ... считываем изменения (uuid)
+		//
+		QList<QString> remoteChanges;
+		QXmlStreamReader changesReader(response);
+		while (!changesReader.atEnd()) {
+			changesReader.readNext();
+			if (changesReader.name().toString() == "status") {
+				const bool success = changesReader.attributes().value("result").toString() == "true";
+				if (success) {
 					changesReader.readNextStartElement();
-					if (changesReader.name() == "change") {
-						const QString changeUuid = changesReader.attributes().value("id").toString();
-						if (!changeUuid.isEmpty()) {
-							remoteChanges.append(changeUuid);
+					changesReader.readNextStartElement(); // changes
+					while (!changesReader.atEnd()) {
+						changesReader.readNextStartElement();
+						if (changesReader.name() == "change") {
+							const QString changeUuid = changesReader.attributes().value("id").toString();
+							if (!changeUuid.isEmpty()) {
+								remoteChanges.append(changeUuid);
+							}
 						}
 					}
+				} else {
+					handleError(response);
+					break;
 				}
 			}
 		}
-	}
 
-	//
-	// Сформируем список изменений сценария хранящихся локально
-	//
-	QList<QString> localChanges = StorageFacade::databaseHistoryStorage()->history(QString::null);
+		//
+		// Сформируем список изменений сценария хранящихся локально
+		//
+		QList<QString> localChanges = StorageFacade::databaseHistoryStorage()->history(QString::null);
 
-	//
-	// Отправить на сайт все версии, которых на сайте нет
-	//
-	{
-		QList<QString> changesForUpload;
-		foreach (const QString& changeUuid, localChanges) {
-			//
-			// ... отправлять нужно, если такого изменения нет на сайте
-			//
-			const bool needUpload = !remoteChanges.contains(changeUuid);
+		//
+		// Отправить на сайт все версии, которых на сайте нет
+		//
+		{
+			QList<QString> changesForUpload;
+			foreach (const QString& changeUuid, localChanges) {
+				//
+				// ... отправлять нужно, если такого изменения нет на сайте
+				//
+				const bool needUpload = !remoteChanges.contains(changeUuid);
 
-			if (needUpload) {
-				changesForUpload.append(changeUuid);
+				if (needUpload) {
+					changesForUpload.append(changeUuid);
+				}
 			}
+			//
+			// ... отправляем
+			//
+			uploadScenarioData(changesForUpload);
 		}
+
+
 		//
-		// ... отправляем
+		// Сохранить в локальной БД все изменения, которых в ней нет
 		//
-		uploadScenarioData(changesForUpload);
-	}
+		{
+			QStringList changesForDownloadAndSave;
+			foreach (const QString& changeUuid, remoteChanges) {
+				//
+				// ... сохранять нужно, если такого изменения нет в локальной БД
+				//
+				bool needSave = !localChanges.contains(changeUuid);
 
-
-	//
-	// Сохранить в локальной БД все изменения, которых в ней нет
-	//
-	{
-		QStringList changesForDownloadAndSave;
-		foreach (const QString& changeUuid, remoteChanges) {
-			//
-			// ... сохранять нужно, если такого изменения нет в локальной БД
-			//
-			bool needSave = !localChanges.contains(changeUuid);
-
-			if (needSave) {
-				changesForDownloadAndSave.append(changeUuid);
+				if (needSave) {
+					changesForDownloadAndSave.append(changeUuid);
+				}
 			}
+			//
+			// ... скачиваем и сохраняем
+			//
+			downloadAndSaveScenarioData(changesForDownloadAndSave.join(";"));
 		}
-		//
-		// ... скачиваем и сохраняем
-		//
-		downloadAndSaveScenarioData(changesForDownloadAndSave.join(";"));
 	}
 }
 
@@ -692,18 +733,28 @@ void SynchronizationManager::aboutWorkSyncData()
 {
 	if (isCanSync()) {
 		//
-		// Запоминаем время синхронизации изменений данных сценария
-		//
-		const QString prevDataSyncDatetime = m_lastDataSyncDatetime;
-		m_lastDataSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
-
-		//
 		// Отправляем новые изменения
 		//
 		{
+			//
+			// Запоминаем время синхронизации изменений данных сценария
+			//
+			const QString prevDataSyncDatetime = m_lastDataSyncDatetime;
+			m_lastDataSyncDatetime = QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss");
+
+			//
+			// Отправляем
+			//
 			QList<QString> newChanges =
 					StorageFacade::databaseHistoryStorage()->history(prevDataSyncDatetime);
-			uploadScenarioData(newChanges);
+			const bool dataUploaded = uploadScenarioData(newChanges);
+
+			//
+			// Не обновляем время последней синхронизации, если данные не были отправлены
+			//
+			if (dataUploaded == false) {
+				m_lastDataSyncDatetime = prevDataSyncDatetime;
+			}
 		}
 
 		//
@@ -740,6 +791,9 @@ void SynchronizationManager::aboutWorkSyncData()
 								}
 							}
 						}
+					} else {
+						handleError(response);
+						break;
 					}
 				}
 			}
@@ -767,6 +821,32 @@ void SynchronizationManager::aboutWorkSyncData()
 	}
 }
 
+void SynchronizationManager::handleError(const QByteArray& _response)
+{
+	//
+	// Считываем ошибку
+	//
+	QXmlStreamReader responseReader(_response);
+	QString errorMessage;
+	while (!responseReader.atEnd()) {
+		responseReader.readNext();
+		if (responseReader.name().toString() == "status") {
+			errorMessage = responseReader.attributes().value("error").toString();
+			break;
+		}
+	}
+
+	//
+	// Закрываем сессию
+	//
+	m_sessionKey.clear();
+
+	//
+	// Уведомляем об ошибке
+	//
+	emit syncClosedWithError(errorMessage);
+}
+
 bool SynchronizationManager::isCanSync() const
 {
 	return
@@ -774,10 +854,11 @@ bool SynchronizationManager::isCanSync() const
 			&& !m_sessionKey.isEmpty();
 }
 
-void SynchronizationManager::uploadScenarioChanges(const QList<QString>& _changesUuids)
+bool SynchronizationManager::uploadScenarioChanges(const QList<QString>& _changesUuids)
 {
-	if (isCanSync()
-		&& !_changesUuids.isEmpty()) {
+	bool changesUploaded = false;
+
+	if (isCanSync()) {
 		//
 		// Сформировать xml для отправки
 		//
@@ -817,8 +898,15 @@ void SynchronizationManager::uploadScenarioChanges(const QList<QString>& _change
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 		m_loader->addRequestAttribute(KEY_CHANGES, changesXml);
-		m_loader->loadSync(URL_SCENARIO_CHANGE_SAVE);
+		const QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_SAVE);
+
+		//
+		// Изменения отправлены, если сервер это подтвердил
+		//
+		changesUploaded = !response.isEmpty();
 	}
+
+	return changesUploaded;
 }
 
 QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(const QString& _changesUuids)
@@ -883,6 +971,9 @@ QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(
 							}
 						}
 					}
+				} else {
+					handleError(response);
+					break;
 				}
 			}
 		}
@@ -891,10 +982,11 @@ QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(
 	return changes;
 }
 
-void SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids)
+bool SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids)
 {
-	if (isCanSync()
-		&& !_dataUuids.isEmpty()) {
+	bool dataUploaded = false;
+
+	if (isCanSync()) {
 		//
 		// Сформировать xml для отправки
 		//
@@ -945,8 +1037,15 @@ void SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids
 		//
 		// NOTE: При отправке большого объёма данных возможно зависание
 		//
-		m_loader->loadSync(URL_SCENARIO_DATA_SAVE);
+		const QByteArray response = m_loader->loadSync(URL_SCENARIO_DATA_SAVE);
+
+		//
+		// Данные отправлены, если сервер это подтвердил
+		//
+		dataUploaded = !response.isEmpty();
 	}
+
+	return dataUploaded;
 }
 
 void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUuids)
@@ -1011,6 +1110,9 @@ void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUui
 							}
 						}
 					}
+				} else {
+					handleError(response);
+					break;
 				}
 			}
 		}
@@ -1035,193 +1137,6 @@ void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUui
 		DataStorageLayer::StorageFacade::refreshStorages();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//void SynchronizationManager::aboutSaveDataToServer()
-//{
-//	if (!m_sessionKey.isEmpty()) {
-//		//
-//		// Получить данные, которых на сервере ещё нет
-//		//
-//		QList<QMap<QString, QString> > databaseHistory =
-//				StorageFacade::databaseHistoryStorage()->history(m_lastDataSyncDatetime);
-
-//		//
-//		// Сформировать xml для отправки
-//		//
-//		QString dataChangesXml;
-//		QXmlStreamWriter xmlWriter(&dataChangesXml);
-//		xmlWriter.writeStartDocument();
-//		xmlWriter.writeStartElement("changes");
-//		QMap<QString, QString> historyRecord;
-//		foreach (historyRecord, databaseHistory) {
-//			//
-//			// Отправляем изменения из всех таблиц, кроме сценария
-//			//
-//			if (!historyRecord.value(DBH_QUERY_KEY).contains(" scenario ")) {
-//				//
-//				xmlWriter.writeStartElement("change");
-//				//
-//				xmlWriter.writeTextElement(DBH_ID_KEY, historyRecord.value(DBH_ID_KEY));
-//				//
-//				xmlWriter.writeStartElement(DBH_QUERY_KEY);
-//				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_KEY));
-//				xmlWriter.writeEndElement();
-//				//
-//				xmlWriter.writeStartElement(DBH_QUERY_VALUES_KEY);
-//				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_VALUES_KEY));
-//				xmlWriter.writeEndElement();
-//				//
-//				xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
-//				//
-//				xmlWriter.writeEndElement(); // change
-
-//				//
-//				// Обновляем дату и время последней синхронизации изменений
-//				//
-//				m_lastDataSyncDatetime = historyRecord.value(DBH_DATETIME_KEY);
-//			}
-//		}
-//		xmlWriter.writeEndElement(); // changes
-//		xmlWriter.writeEndDocument();
-
-//		//
-//		// Отправить данные
-//		//
-//		WebLoader* loader = new WebLoader;
-//		connect(loader, SIGNAL(finished()), loader, SLOT(deleteLater()));
-
-//		loader->setRequestMethod(WebLoader::Post);
-//		loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-//		loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-//		loader->addRequestAttribute(KEY_CHANGES, dataChangesXml);
-//		loader->loadAsync(URL_SCENARIO_DATA_SAVE);
-//	}
-//}
-
-//void SynchronizationManager::aboutSaveDataToServer(const QString& _changeUuid)
-//{
-//	if (!m_sessionKey.isEmpty()) {
-//		//
-//		// Получить данные для сохранения
-//		//
-//		QMap<QString, QString> historyRecord =
-//				StorageFacade::databaseHistoryStorage()->historyRecord(_changeUuid);
-
-//		//
-//		// Отправить данные
-//		//
-//		{
-//			//
-//			// Сформировать xml для отправки
-//			//
-//			QString dataChangesXml;
-//			QXmlStreamWriter xmlWriter(&dataChangesXml);
-//			xmlWriter.writeStartDocument();
-//			xmlWriter.writeStartElement("changes");
-//			xmlWriter.writeStartElement("change");
-//			//
-//			xmlWriter.writeTextElement(DBH_ID_KEY, historyRecord.value(DBH_ID_KEY));
-//			//
-//			xmlWriter.writeStartElement(DBH_QUERY_KEY);
-//			xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_KEY));
-//			xmlWriter.writeEndElement();
-//			//
-//			xmlWriter.writeStartElement(DBH_QUERY_VALUES_KEY);
-//			xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_VALUES_KEY));
-//			xmlWriter.writeEndElement();
-//			//
-//			xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
-//			//
-//			xmlWriter.writeEndElement(); // change
-//			xmlWriter.writeEndElement(); // changes
-//			xmlWriter.writeEndDocument();
-
-//			//
-//			// Отправить данные
-//			//
-//			WebLoader* loader = new WebLoader;
-//			connect(loader, SIGNAL(finished()), loader, SLOT(deleteLater()));
-
-//			loader->setRequestMethod(WebLoader::Post);
-//			loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-//			loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-//			loader->addRequestAttribute(KEY_CHANGES, dataChangesXml);
-//			loader->loadAsync(URL_SCENARIO_DATA_SAVE);
-//		}
-//	}
-//}
-
-//void SynchronizationManager::aboutSaveDataToDB(const QString& _changeUuid)
-//{
-//	if (!_changeUuid.isEmpty()) {
-//		//
-//		// ... загружаем данные
-//		//
-//		WebLoader loader;
-//		loader.setRequestMethod(WebLoader::Post);
-//		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-//		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-//		loader.addRequestAttribute(KEY_SCENARIO_CHANGE_ID, _changeUuid);
-//		QByteArray response = loader.loadSync(URL_SCENARIO_DATA_LOAD);
-
-//		//
-//		// ... считываем данные об изменении
-//		//
-//		QXmlStreamReader changeReader(response);
-//		QHash<QString, QString> changeValues;
-//		while (!changeReader.atEnd()) {
-//			changeReader.readNext();
-//			if (changeReader.name().toString() == "status") {
-//				const bool success = changeReader.attributes().value("result").toString() == "true";
-//				if (success) {
-//					changeReader.readNextStartElement();
-//					changeReader.readNextStartElement();
-//					while (!changeReader.atEnd()) {
-//						changeReader.readNextStartElement();
-//						const QString key = changeReader.name().toString();
-//						const QString value = changeReader.readElementText();
-//						if (!value.isEmpty()) {
-//							changeValues.insert(key, value);
-//						}
-//					}
-//				}
-//			}
-//		}
-
-//		//
-//		// ... сохраняем
-//		//
-//		DataStorageLayer::StorageFacade::databaseHistoryStorage()->storeAndApplyHistoryRecord(
-//			changeValues.value(DBH_ID_KEY), changeValues.value(DBH_QUERY_KEY),
-//			changeValues.value(DBH_QUERY_VALUES_KEY), changeValues.value(DBH_DATETIME_KEY));
-//	}
-//}
 
 void SynchronizationManager::initConnections()
 {

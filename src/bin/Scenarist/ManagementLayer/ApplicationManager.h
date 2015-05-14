@@ -87,6 +87,11 @@ namespace ManagementLayer
 		/** @} */
 
 		/**
+		 * @brief Синхронизация остановленна с ошибкой
+		 */
+		void aboutSyncClosedWithError(const QString& _error);
+
+		/**
 		 * @brief Импортировать документ
 		 */
 		void aboutImport();
