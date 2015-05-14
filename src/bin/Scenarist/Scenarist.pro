@@ -138,7 +138,6 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
     3rd_party/Widgets/ElidedLabel/ElidedLabel.cpp \
     BusinessLayer/Export/PdfExporter.cpp \
-    BusinessLayer/Export/RtfExporter.cpp \
     BusinessLayer/ScenarioDocument/ScenarioXml.cpp \
     BusinessLayer/ScenarioDocument/ScenarioTextDocument.cpp \
     UserInterfaceLayer/StartUp/StartUpView.cpp \
@@ -304,7 +303,6 @@ HEADERS += \
     3rd_party/Widgets/ElidedLabel/ElidedLabel.h \
     BusinessLayer/Export/AbstractExporter.h \
     BusinessLayer/Export/PdfExporter.h \
-    BusinessLayer/Export/RtfExporter.h \
     BusinessLayer/ScenarioDocument/ScenarioXml.h \
     BusinessLayer/ScenarioDocument/ScenarioTextDocument.h \
     UserInterfaceLayer/StartUp/StartUpView.h \

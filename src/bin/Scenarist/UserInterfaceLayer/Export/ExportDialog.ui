@@ -359,16 +359,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="rtf">
-       <property name="text">
-        <string>RTF</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QRadioButton" name="pdf">
        <property name="text">
         <string>PDF</string>
@@ -464,7 +454,6 @@
   <tabstop>file</tabstop>
   <tabstop>browseFile</tabstop>
   <tabstop>docx</tabstop>
-  <tabstop>rtf</tabstop>
   <tabstop>pdf</tabstop>
   <tabstop>checkPageBreaks</tabstop>
   <tabstop>showAdditional</tabstop>
