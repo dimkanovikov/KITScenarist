@@ -178,9 +178,9 @@ void WebLoader::run()
 				reply, SLOT(ignoreSslErrors()));
 
 		//
-		// Таймер для прерыванию работы через 10 секунд
+		// Таймер для прерыванию работы через TIMEOUT_MS секунд
 		//
-		const int TIMEOUT_MS = 10000;
+		const int TIMEOUT_MS = 20000;
 		QTimer timeoutTimer;
 		connect(&timeoutTimer, SIGNAL(timeout()), this, SLOT(quit()));
 		timeoutTimer.setSingleShot(true);
