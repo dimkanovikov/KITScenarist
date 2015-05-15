@@ -107,12 +107,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Авторизация пройдена успешно
 		 */
-		void loginAccepted(const QString& _userName);
-
-		/**
-		 * @brief Авторизация не пройдена
-		 */
-		void loginNotAccepted(const QString& _userName, const QString& _password, const QString& _error);
+		void loginAccepted();
 
 		/**
 		 * @brief Авторизация закрыта
@@ -137,7 +132,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Сессия закрыта с ошибкой
 		 */
-		void syncClosedWithError(const QString& _errorText);
+		void syncClosedWithError(int errorCode, const QString& _errorText);
 
 	private:
 		/**

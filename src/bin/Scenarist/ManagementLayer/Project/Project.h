@@ -98,6 +98,14 @@ namespace ManagementLayer
 		 */
 		bool isCommentOnly() const;
 
+		/**
+		 * @brief Возможна ли синхронизация
+		 */
+		/** @{ */
+		bool isSyncAvailable() const;
+		void setSyncAvailable(bool _syncAvailable);
+		/** @} */
+
 	private:
 		/**
 		 * @brief Тип проекта
@@ -133,6 +141,11 @@ namespace ManagementLayer
 		 * @brief Роль пользователя в проекте (для проектов из облака)
 		 */
 		Role m_role;
+
+		/**
+		 * @brief Возможна ли синхронизация
+		 */
+		bool m_isSyncAvailable;
 	};
 
 	/**

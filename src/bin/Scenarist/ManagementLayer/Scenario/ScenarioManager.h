@@ -62,6 +62,11 @@ namespace ManagementLayer
 		void loadCurrentProject();
 
 		/**
+		 * @brief Запустить таймер сохранения изменений
+		 */
+		void startChangesHandling();
+
+		/**
 		 * @brief Загрузить настройки текущего проекта
 		 */
 		void loadCurrentProjectSettings(const QString& _projectPath);

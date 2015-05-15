@@ -262,7 +262,10 @@ void ScenarioManager::loadCurrentProject()
 	// Обновим счётчики, когда данные полностью загрузятся
 	//
 	QTimer::singleShot(100, this, SLOT(aboutUpdateCounters()));
+}
 
+void ScenarioManager::startChangesHandling()
+{
 	//
 	// Запускаем таймер сохранения изменений
 	//

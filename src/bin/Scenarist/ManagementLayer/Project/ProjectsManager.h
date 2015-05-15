@@ -68,6 +68,11 @@ namespace ManagementLayer
 		void setCurrentProjectName(const QString& _projectName);
 
 		/**
+		 * @brief Установить флаг возможна ли синхронизация текущего проекта
+		 */
+		void setCurrentProjectSyncAvailable(bool _syncAvailable);
+
+		/**
 		 * @brief Текущий проект закрыт
 		 */
 		void closeCurrentProject();

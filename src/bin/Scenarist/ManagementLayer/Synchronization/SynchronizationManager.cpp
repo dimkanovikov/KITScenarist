@@ -40,10 +40,6 @@ namespace {
 	const QUrl URL_LOGOUT = QUrl("https://kitscenarist.ru/api/account/logout/");
 	const QUrl URL_PROJECTS = QUrl("https://kitscenarist.ru/api/projects/");
 
-
-	const QUrl URL_SCENARIO_LOAD = QUrl("https://kitscenarist.ru/api/projects/scenario/");
-	const QUrl URL_SCENARIO_SAVE = QUrl("https://kitscenarist.ru/api/projects/scenario/save/");
-
 	const QUrl URL_SCENARIO_CHANGE_LIST = QUrl("https://kitscenarist.ru/api/projects/scenario/change/list/");
 	const QUrl URL_SCENARIO_CHANGE_LOAD = QUrl("https://kitscenarist.ru/api/projects/scenario/change/");
 	const QUrl URL_SCENARIO_CHANGE_SAVE = QUrl("https://kitscenarist.ru/api/projects/scenario/change/save/");
@@ -64,7 +60,6 @@ namespace {
 	const QString KEY_PROJECT = "project_id";
 	const QString KEY_CHANGES = "changes";
 	const QString KEY_CHANGES_IDS = "changes_ids";
-	const QString KEY_SCENARIO_ID = "scenario_id";
 	const QString KEY_SCENARIO_IS_DRAFT = "scenario_is_draft";
 	const QString KEY_FROM_LAST_MINUTES = "from_last_minutes";
 	const QString KEY_CURSOR_POSITION = "cursor_position";
@@ -95,6 +90,11 @@ namespace {
 	const bool IS_DRAFT = true;
 	const bool IS_ASYNC = true;
 	const bool IS_SYNC = false;
+
+	/**
+	 * @brief Код ошибки означающий работу в автономном режиме
+	 */
+	const int OFFLINE_ERROR_CODE = 0;
 }
 
 
@@ -160,7 +160,6 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 		//
 		bool success = false;
 		QString sessionKey;
-		QString errorMessage;
 		while (!responseReader.atEnd()) {
 			responseReader.readNext();
 			if (responseReader.name().toString() == "status") {
@@ -179,7 +178,7 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 				// В противном случае считываем сообщение об ошибке
 				//
 				else {
-					errorMessage = responseReader.attributes().value("error").toString();
+					handleError(response);
 					break;
 				}
 			}
@@ -211,24 +210,14 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 						PasswordStorage::save(_password, _userName),
 						SettingsStorage::ApplicationSettings);
 
-			emit loginAccepted(_userName);
-		} else {
-			emit loginNotAccepted(_userName, _password, errorMessage);
+			emit loginAccepted();
 		}
 	}
 	//
-	// Если связи с интернетом нет, работаем в автономном режиме
+	// Если связи с интернетом нет, уведомляем клиента об этом
 	//
 	else {
-		emit loginAccepted(_userName);
-
-		QByteArray cachedProjectsXml =
-			QByteArray::fromBase64(
-				StorageFacade::settingsStorage()->value(
-					"application/remote-projects",
-					SettingsStorage::ApplicationSettings).toUtf8()
-				);
-		emit remoteProjectsLoaded(cachedProjectsXml);
+		emit syncClosedWithError(OFFLINE_ERROR_CODE, tr("Can't estabilish network connection."));
 	}
 }
 
@@ -826,30 +815,45 @@ void SynchronizationManager::handleError(const QByteArray& _response)
 	// Считываем ошибку
 	//
 	QXmlStreamReader responseReader(_response);
+	int errorCode = 0;
 	QString errorMessage;
 	while (!responseReader.atEnd()) {
 		responseReader.readNext();
 		if (responseReader.name().toString() == "status") {
+			errorCode = responseReader.attributes().value("errorCode").toInt();
 			errorMessage = responseReader.attributes().value("error").toString();
 			break;
 		}
 	}
 
 	//
-	// Закрываем сессию
+	// Закрываем сессию, если
+	// - закончилась подписка
+	// - закрыта сессия
 	//
-	m_sessionKey.clear();
+	switch (errorCode) {
+		case 102:
+		case 104: {
+			m_sessionKey.clear();
+			break;
+		}
+
+		default: {
+			break;
+		}
+	}
 
 	//
 	// Уведомляем об ошибке
 	//
-	emit syncClosedWithError(errorMessage);
+	emit syncClosedWithError(errorCode, errorMessage);
 }
 
 bool SynchronizationManager::isCanSync() const
 {
 	return
 			ProjectsManager::currentProject().isRemote()
+			&& ProjectsManager::currentProject().isSyncAvailable()
 			&& !m_sessionKey.isEmpty();
 }
 
@@ -1139,7 +1143,7 @@ void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUui
 
 void SynchronizationManager::initConnections()
 {
-	connect(this, SIGNAL(loginAccepted(QString)), this, SLOT(aboutLoadProjects()));
+	connect(this, SIGNAL(loginAccepted()), this, SLOT(aboutLoadProjects()));
 }
 
 void SynchronizationManager::sleepALittle()

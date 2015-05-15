@@ -31,12 +31,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Пользователь с заданным именем успешно авторизован на сервере
 		 */
-		void aboutUserLogged(const QString& _userName);
+		void aboutUserLogged();
 
 		/**
 		 * @brief Попробовать повторно авторизоваться, после неудачной попытки
 		 */
-		void aboutRetryLogin(const QString& _userName, const QString& _password, const QString& _error);
+		void aboutRetryLogin(const QString& _error);
 
 		/**
 		 * @brief Пользователь закрыл авторизацию
@@ -106,6 +106,10 @@ namespace ManagementLayer
 		void aboutLoadUpdatesInfo(QNetworkReply* _reply);
 
 	private:
+		/**
+		 * @brief Настроить данные
+		 */
+		void initData();
 
 		/**
 		 * @brief Настроить соединения
@@ -122,6 +126,16 @@ namespace ManagementLayer
 		 * @brief Представление для стартовой страницы
 		 */
 		UserInterface::StartUpView* m_view;
+
+		/**
+		 * @brief Логин введённый при авторизации
+		 */
+		QString m_userName;
+
+		/**
+		 * @brief Пароль введённый при авторизации
+		 */
+		QString m_password;
 	};
 }
 

@@ -143,47 +143,71 @@ void WebLoader::run()
 	do
 	{
 		//! Начало загрузки страницы m_request->url()
-		emit uploadProgress( 0 );
-		emit downloadProgress( 0 );
+		emit uploadProgress(0);
+		emit downloadProgress(0);
 
-		QNetworkReply *reply;
+		QNetworkReply *reply = 0;
 
-		switch ( m_requestMethod ) {
+		switch (m_requestMethod) {
 
 			default:
 			case WebLoader::Get: {
-				QNetworkRequest request = this->m_request->networkRequest();
-				reply = m_networkManager->get( request );
+				const QNetworkRequest request = this->m_request->networkRequest();
+				reply = m_networkManager->get(request);
 				break;
 			}
 
 			case WebLoader::Post: {
-				QNetworkRequest networkRequest = m_request->networkRequest( true );
-				QByteArray data = m_request->multiPartData();
-				reply = m_networkManager->post( networkRequest, data );
+				const QNetworkRequest networkRequest = m_request->networkRequest(true);
+				const QByteArray data = m_request->multiPartData();
+				reply = m_networkManager->post(networkRequest, data);
 				break;
 			}
 
 		} // switch
 
-		connect( reply, SIGNAL(uploadProgress(qint64,qint64)),
-				 this,    SLOT(uploadProgress(qint64,qint64)) );
-		connect( reply, SIGNAL(downloadProgress(qint64,qint64)),
-				 this,    SLOT(downloadProgress(qint64,qint64)) );
-		connect( reply, SIGNAL(error(QNetworkReply::NetworkError)),
-				 this,    SLOT(downloadError(QNetworkReply::NetworkError)) );
+		connect(reply, SIGNAL(uploadProgress(qint64,qint64)),
+				this, SLOT(uploadProgress(qint64,qint64)));
+		connect(reply, SIGNAL(downloadProgress(qint64,qint64)),
+				this, SLOT(downloadProgress(qint64,qint64)));
+		connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),
+				this, SLOT(downloadError(QNetworkReply::NetworkError)));
 		connect(reply, SIGNAL(sslErrors(QList<QSslError>)),
 				this, SLOT(downloadSslErrors(QList<QSslError>)));
 		connect(reply, SIGNAL(sslErrors(QList<QSslError>)),
 				reply, SLOT(ignoreSslErrors()));
 
+		//
+		// Таймер для прерыванию работы через 10 секунд
+		//
+		const int TIMEOUT_MS = 10000;
+		QTimer timeoutTimer;
+		connect(&timeoutTimer, SIGNAL(timeout()), this, SLOT(quit()));
+		timeoutTimer.setSingleShot(true);
+		timeoutTimer.start(TIMEOUT_MS);
 
-		exec(); // входим в поток обработки событий, ожидая завершения отработки networkManager'а
+		//
+		// Входим в поток обработки событий, ожидая завершения отработки networkManager'а
+		//
+		exec();
 
-	} while ( m_isNeedRedirect );
+		//
+		// Если ответ получен, останавливаем таймер
+		//
+		if (timeoutTimer.isActive()) {
+			timeoutTimer.stop();
+		}
+		//
+		// ... а если загрузка прервалась по таймеру, освобождаем ресурсы и закрываем соединение
+		//
+		else {
+			reply->abort();
+		}
 
-	emit downloadComplete( m_downloadedData );
-	emit downloadComplete( QString( m_downloadedData ) );
+	} while (m_isNeedRedirect);
+
+	emit downloadComplete(m_downloadedData);
+	emit downloadComplete(QString(m_downloadedData));
 }
 
 void WebLoader::uploadProgress( qint64 uploadedBytes, qint64 totalBytes )

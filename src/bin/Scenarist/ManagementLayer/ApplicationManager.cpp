@@ -14,7 +14,6 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Export/PdfExporter.h>
-#include <BusinessLayer/Export/RtfExporter.h>
 
 #include <DataLayer/Database/Database.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
@@ -45,6 +44,7 @@ namespace {
 	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
 	const char* MAC_CHANGED_SUFFIX =
 			QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
+	const bool SYNC_UNAVAILABLE = false;
 
 	/**
 	 * @brief Неактивные при старте действия
@@ -435,23 +435,101 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 	}
 }
 
-void ApplicationManager::aboutSyncClosedWithError(const QString& _error)
+void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString& _error)
 {
+	bool switchToOfflineMode = false;
+	switch (_errorCode) {
+		//
+		// Нет связи с интернетом
+		//
+		case 0: {
+			QMessageBox::information(m_view, tr("Network error"),
+				tr("Can't estabilish network connection.\n"
+				   "Continue working in offline mode."));
+			switchToOfflineMode = true;
+			break;
+		}
+
+		//
+		// Проблемы с вводом логина и пароля
+		//
+		case 100:
+		case 101: {
+			m_startUpManager->aboutRetryLogin(_error);
+			break;
+		}
+
+		//
+		// Закончилась подписка
+		//
+		case 102: {
+			QMessageBox::information(m_view, tr("Subscription ended"),
+				tr("Buyed subscription period is finished.\n"
+				   "Continue working in offline mode."));
+			switchToOfflineMode = true;
+			break;
+		}
+
+		//
+		// Сессия закрыта
+		//
+		case 104: {
+			if (QMessageBox::question(m_view, tr("Session closed"),
+					tr("New session for you account started at other device. Restart session?"))
+				== QMessageBox::Yes) {
+				//
+				// Переподключаемся
+				//
+				m_synchronizationManager->login();
+			} else {
+				//
+				// Переходим в автономный режим
+				//
+				QMessageBox::information(m_view, tr("Session closed"),
+					tr("Continue working in offline mode."));
+				switchToOfflineMode = true;
+			}
+			break;
+		}
+
+		//
+		// Проект недоступен
+		//
+		case 201: {
+			QMessageBox::information(m_view, tr("Project not available"),
+				tr("Current project is not available for syncronization now.\n"
+				   "Continue working with this project in offline mode."));
+			m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
+			break;
+		}
+
+		//
+		// Остальное
+		//
+		default: {
+			QMessageBox::warning(m_view, tr("Error"), _error);
+			break;
+		}
+	}
+
 	//
-	// Показать пользователю сообщение об ошибке с предложением
-	// переподключиться, или продолжить работу в автономном режиме
+	// Если необходимо переключаемся в автономный режим
 	//
-	if (QMessageBox::question(m_view, tr("Synchronization stopped"),
-			tr("Synchronization stopped with error:\n\"%1\"\n\nDo you want reconect to service?").arg(_error))
-		== QMessageBox::Yes) {
+	if (switchToOfflineMode) {
 		//
-		// Переподключаемся
+		// Имитируем успешную авторизацию
 		//
-		m_synchronizationManager->login();
-	} else {
+		m_startUpManager->aboutUserLogged();
 		//
-		// Продолжаем в автономном режиме
+		// и загружаем список доступных проектов из кэша
 		//
+		QByteArray cachedProjectsXml =
+			QByteArray::fromBase64(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/remote-projects",
+					DataStorageLayer::SettingsStorage::ApplicationSettings).toUtf8()
+				);
+		m_projectsManager->setRemoteProjects(cachedProjectsXml);
 	}
 }
 
@@ -625,6 +703,11 @@ void ApplicationManager::goToEditCurrentProject()
 		m_synchronizationManager->aboutFullSyncScenario();
 		m_synchronizationManager->aboutFullSyncData();
 	}
+
+	//
+	// Запускаем обработку изменений сценария
+	//
+	m_scenarioManager->startChangesHandling();
 
 	//
 	// Загрузить настройки файла
@@ -843,10 +926,8 @@ void ApplicationManager::initConnections()
 	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
-	connect(m_synchronizationManager, SIGNAL(loginAccepted(QString)),
-			m_startUpManager, SLOT(aboutUserLogged(QString)));
-	connect(m_synchronizationManager, SIGNAL(loginNotAccepted(QString,QString,QString)),
-			m_startUpManager, SLOT(aboutRetryLogin(QString,QString,QString)));
+	connect(m_synchronizationManager, SIGNAL(loginAccepted()),
+			m_startUpManager, SLOT(aboutUserLogged()));
 	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
 			m_startUpManager, SLOT(aboutUserUnlogged()));
 	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
@@ -855,8 +936,8 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
 	connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
 			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
-	connect(m_synchronizationManager, SIGNAL(syncClosedWithError(QString)),
-			this, SLOT(aboutSyncClosedWithError(QString)));
+	connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
+			this, SLOT(aboutSyncClosedWithError(int,QString)));
 }
 
 void ApplicationManager::initStyleSheet()
