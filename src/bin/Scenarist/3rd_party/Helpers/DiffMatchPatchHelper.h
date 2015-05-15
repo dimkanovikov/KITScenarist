@@ -3,7 +3,7 @@
 
 #include "DiffMatchPatch.h"
 #include "TextEditHelper.h"
-#include <QDebug>
+
 #include <QHash>
 #include <QString>
 #include <QRegularExpression>
@@ -277,11 +277,6 @@ public:
 			const int newXmlPartLength = newXmlPart.length();
 			const int newPlainPartLength = ::removeXmlTagsForScenario(plainToXml(newXmlPart)).length();
 			int newStartPosForPlain = newStartPosForXml - (newXmlPartLength - newPlainPartLength);
-
-
-			qDebug() << oldXml << "\n\n" << _patch << "\n\n" << newXml
-					 << "\n\n****************\n\n" << oldXmlForUpdate << "\n\n" << newXmlForUpdate
-					 << "\n\n\n\n\n\n\n";
 
 			result =
 					QPair<ChangeXml, ChangeXml>(

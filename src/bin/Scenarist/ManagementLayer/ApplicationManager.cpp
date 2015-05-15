@@ -14,7 +14,6 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Export/PdfExporter.h>
-#include <BusinessLayer/Export/RtfExporter.h>
 
 #include <DataLayer/Database/Database.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
@@ -45,6 +44,7 @@ namespace {
 	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
 	const char* MAC_CHANGED_SUFFIX =
 			QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
+	const bool SYNC_UNAVAILABLE = false;
 
 	/**
 	 * @brief Неактивные при старте действия
@@ -312,14 +312,13 @@ void ApplicationManager::aboutSave()
 		m_locationsManager->saveLocations();
 		DatabaseLayer::Database::commit();
 
-//		//
-//		// Для проекта из облака отправляем данные на сервер
-//		//
-//		if (m_projectsManager->currentProject().type() == Project::Remote) {
-//			m_synchronizationManager->aboutUpdateScenario();
-//			m_synchronizationManager->aboutUpdateScenario(true);
-//			m_synchronizationManager->aboutUpdateData();
-//		}
+		//
+		// Для проекта из облака отправляем данные на сервер
+		//
+		if (m_projectsManager->currentProject().type() == Project::Remote) {
+			m_synchronizationManager->aboutWorkSyncScenario();
+			m_synchronizationManager->aboutWorkSyncData();
+		}
 
 		//
 		// Изменим статус окна на сохранение изменений
@@ -433,6 +432,104 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 		// ... перейдём к редактированию
 		//
 		goToEditCurrentProject();
+	}
+}
+
+void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString& _error)
+{
+	bool switchToOfflineMode = false;
+	switch (_errorCode) {
+		//
+		// Нет связи с интернетом
+		//
+		case 0: {
+			QMessageBox::information(m_view, tr("Network error"),
+				tr("Can't estabilish network connection.\n"
+				   "Continue working in offline mode."));
+			switchToOfflineMode = true;
+			break;
+		}
+
+		//
+		// Проблемы с вводом логина и пароля
+		//
+		case 100:
+		case 101: {
+			m_startUpManager->aboutRetryLogin(_error);
+			break;
+		}
+
+		//
+		// Закончилась подписка
+		//
+		case 102: {
+			QMessageBox::information(m_view, tr("Subscription ended"),
+				tr("Buyed subscription period is finished.\n"
+				   "Continue working in offline mode."));
+			switchToOfflineMode = true;
+			break;
+		}
+
+		//
+		// Сессия закрыта
+		//
+		case 104: {
+			if (QMessageBox::question(m_view, tr("Session closed"),
+					tr("New session for you account started at other device. Restart session?"))
+				== QMessageBox::Yes) {
+				//
+				// Переподключаемся
+				//
+				m_synchronizationManager->login();
+			} else {
+				//
+				// Переходим в автономный режим
+				//
+				QMessageBox::information(m_view, tr("Session closed"),
+					tr("Continue working in offline mode."));
+				switchToOfflineMode = true;
+			}
+			break;
+		}
+
+		//
+		// Проект недоступен
+		//
+		case 201: {
+			QMessageBox::information(m_view, tr("Project not available"),
+				tr("Current project is not available for syncronization now.\n"
+				   "Continue working with this project in offline mode."));
+			m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
+			break;
+		}
+
+		//
+		// Остальное
+		//
+		default: {
+			QMessageBox::warning(m_view, tr("Error"), _error);
+			break;
+		}
+	}
+
+	//
+	// Если необходимо переключаемся в автономный режим
+	//
+	if (switchToOfflineMode) {
+		//
+		// Имитируем успешную авторизацию
+		//
+		m_startUpManager->aboutUserLogged();
+		//
+		// и загружаем список доступных проектов из кэша
+		//
+		QByteArray cachedProjectsXml =
+			QByteArray::fromBase64(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/remote-projects",
+					DataStorageLayer::SettingsStorage::ApplicationSettings).toUtf8()
+				);
+		m_projectsManager->setRemoteProjects(cachedProjectsXml);
 	}
 }
 
@@ -608,6 +705,11 @@ void ApplicationManager::goToEditCurrentProject()
 	}
 
 	//
+	// Запускаем обработку изменений сценария
+	//
+	m_scenarioManager->startChangesHandling();
+
+	//
 	// Загрузить настройки файла
 	//
 	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
@@ -622,6 +724,14 @@ void ApplicationManager::goToEditCurrentProject()
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
 	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
+
+	//
+	// Настроим режим работы со сценарием
+	//
+	const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
+	m_scenarioManager->setCommentOnly(isCommentOnly);
+	m_charactersManager->setCommentOnly(isCommentOnly);
+	m_locationsManager->setCommentOnly(isCommentOnly);
 
 	//
 	// Активируем вкладки
@@ -816,10 +926,8 @@ void ApplicationManager::initConnections()
 	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
-	connect(m_synchronizationManager, SIGNAL(loginAccepted(QString)),
-			m_startUpManager, SLOT(aboutUserLogged(QString)));
-	connect(m_synchronizationManager, SIGNAL(loginNotAccepted(QString,QString,QString)),
-			m_startUpManager, SLOT(aboutRetryLogin(QString,QString,QString)));
+	connect(m_synchronizationManager, SIGNAL(loginAccepted()),
+			m_startUpManager, SLOT(aboutUserLogged()));
 	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
 			m_startUpManager, SLOT(aboutUserUnlogged()));
 	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
@@ -828,6 +936,8 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
 	connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
 			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
+	connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
+			this, SLOT(aboutSyncClosedWithError(int,QString)));
 }
 
 void ApplicationManager::initStyleSheet()

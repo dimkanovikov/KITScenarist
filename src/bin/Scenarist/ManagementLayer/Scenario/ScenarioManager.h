@@ -62,6 +62,11 @@ namespace ManagementLayer
 		void loadCurrentProject();
 
 		/**
+		 * @brief Запустить таймер сохранения изменений
+		 */
+		void startChangesHandling();
+
+		/**
 		 * @brief Загрузить настройки текущего проекта
 		 */
 		void loadCurrentProjectSettings(const QString& _projectPath);
@@ -90,6 +95,11 @@ namespace ManagementLayer
 		 * @brief Закрыть текущий проект
 		 */
 		void closeCurrentProject();
+
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
 
 	public slots:
 		/**

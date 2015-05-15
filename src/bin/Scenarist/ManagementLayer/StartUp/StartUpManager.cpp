@@ -8,6 +8,8 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <3rd_party/Helpers/PasswordStorage.h>
+
 #include <QApplication>
 #include <QFile>
 #include <QFileInfo>
@@ -21,6 +23,8 @@
 
 using ManagementLayer::StartUpManager;
 using ManagementLayer::ProjectsManager;
+using DataStorageLayer::StorageFacade;
+using DataStorageLayer::SettingsStorage;
 using UserInterface::StartUpView;
 using UserInterface::LoginDialog;
 
@@ -29,6 +33,7 @@ StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new StartUpView(_parentWidget))
 {
+	initData();
 	initConnections();
 
 	checkNewVersion();
@@ -39,23 +44,25 @@ QWidget* StartUpManager::view() const
 	return m_view;
 }
 
-void StartUpManager::aboutUserLogged(const QString& _userName)
+void StartUpManager::aboutUserLogged()
 {
 	const bool isLogged = true;
-	m_view->setUserLogged(isLogged, _userName);
+	m_view->setUserLogged(isLogged, m_userName);
 }
 
-void StartUpManager::aboutRetryLogin(const QString& _userName, const QString& _password, const QString& _error)
+void StartUpManager::aboutRetryLogin(const QString& _error)
 {
 	//
-	// Показать диалог авторизации
+	// Показать диалог авторизации с заданной ошибкой
 	//
 	LoginDialog loginDialog(m_view);
-	loginDialog.setUserName(_userName);
-	loginDialog.setPassword(_password);
+	loginDialog.setUserName(m_userName);
+	loginDialog.setPassword(m_password);
 	loginDialog.setError(_error);
 	if (loginDialog.exec() == QDialog::Accepted) {
-		emit loginRequested(loginDialog.userName(), loginDialog.password());
+		m_userName = loginDialog.userName();
+		m_password = loginDialog.password();
+		emit loginRequested(m_userName, m_password);
 	}
 }
 
@@ -82,7 +89,9 @@ void StartUpManager::aboutLoginClicked()
 	//
 	LoginDialog loginDialog(m_view);
 	if (loginDialog.exec() == QDialog::Accepted) {
-		emit loginRequested(loginDialog.userName(), loginDialog.password());
+		m_userName = loginDialog.userName();
+		m_password = loginDialog.password();
+		emit loginRequested(m_userName, m_password);
 	}
 }
 
@@ -147,6 +156,26 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 			}
 		}
 	}
+}
+
+void StartUpManager::initData()
+{
+	//
+	// Загрузим имя пользователя и пароль из настроек
+	//
+	m_userName =
+			PasswordStorage::load(
+				StorageFacade::settingsStorage()->value(
+					"application/user-name",
+					SettingsStorage::ApplicationSettings)
+				);
+	m_password =
+			PasswordStorage::load(
+				StorageFacade::settingsStorage()->value(
+					"application/password",
+					SettingsStorage::ApplicationSettings),
+				m_userName
+				);
 }
 
 void StartUpManager::initConnections()

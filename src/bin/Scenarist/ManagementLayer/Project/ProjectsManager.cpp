@@ -190,7 +190,7 @@ void ProjectsManager::setCurrentProjectName(const QString& _projectName)
 		// Определим источник хранения проекта
 		//
 		QMutableListIterator<ManagementLayer::Project> projectsIterator(m_recentProjects);
-		if (s_currentProject.type() == Project::Remote) {
+		if (s_currentProject.isRemote()) {
 			projectsIterator = QMutableListIterator<ManagementLayer::Project>(m_remoteProjects);
 		}
 		//
@@ -208,11 +208,42 @@ void ProjectsManager::setCurrentProjectName(const QString& _projectName)
 		//
 		// Уведомляем об обновлении
 		//
-		if (s_currentProject.type() == Project::Local) {
-			emit recentProjectsUpdated();
-		} else {
+		if (s_currentProject.isRemote()) {
 			emit remoteProjectsUpdated();
+		} else {
+			emit recentProjectsUpdated();
 		}
+	}
+}
+
+void ProjectsManager::setCurrentProjectSyncAvailable(bool _syncAvailable)
+{
+	//
+	// Определим источник хранения проекта
+	//
+	QMutableListIterator<ManagementLayer::Project> projectsIterator(m_recentProjects);
+	if (s_currentProject.isRemote()) {
+		projectsIterator = QMutableListIterator<ManagementLayer::Project>(m_remoteProjects);
+	}
+	//
+	// Обновим флаг доступности синхронизации
+	//
+	while (projectsIterator.hasNext()) {
+		Project& project = projectsIterator.next();
+		if (project == s_currentProject) {
+			s_currentProject.setSyncAvailable(_syncAvailable);
+			projectsIterator.setValue(s_currentProject);
+			break;
+		}
+	}
+
+	//
+	// Уведомляем об обновлении
+	//
+	if (s_currentProject.isRemote()) {
+		emit remoteProjectsUpdated();
+	} else {
+		emit recentProjectsUpdated();
 	}
 }
 

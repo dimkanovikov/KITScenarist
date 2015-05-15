@@ -45,6 +45,11 @@ void ScenarioSceneSynopsis::setSynopsis(const QString& _synopsis)
 	}
 }
 
+void ScenarioSceneSynopsis::setCommentOnly(bool _isCommentOnly)
+{
+	m_synopsis->setReadOnly(_isCommentOnly);
+}
+
 void ScenarioSceneSynopsis::aboutSynopsisChanged()
 {
 	if (m_sourceSynopsis != m_synopsis->toHtml()) {

@@ -86,6 +86,8 @@ void Character::setPhotosTable(CharacterPhotosTable* _photos)
 		foreach (DomainObject* photo, _photos->toList()) {
 			m_photos->append(photo);
 		}
+
+		changesNotStored();
 	}
 }
 

@@ -150,7 +150,7 @@ QString Patch::toString() {
 		text += QString(' ');
 		break;
 	}
-	text += QString(QUrl::toPercentEncoding(aDiff.text, " !~*'();/?:@&=+$,#"))
+	text += QString(QUrl::toPercentEncoding(aDiff.text, " !~*();/?:@&=+$,#"))
 		+ QString("\n");
   }
 

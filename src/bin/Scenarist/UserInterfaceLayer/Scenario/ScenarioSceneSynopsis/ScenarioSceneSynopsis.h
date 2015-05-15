@@ -29,6 +29,11 @@ namespace UserInterface
 		 */
 		void setSynopsis(const QString& _synopsis);
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	signals:
 		/**
 		 * @brief Текст синопсиса изменился

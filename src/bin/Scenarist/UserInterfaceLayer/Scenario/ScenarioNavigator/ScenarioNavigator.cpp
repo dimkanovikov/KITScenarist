@@ -110,6 +110,14 @@ void ScenarioNavigator::setNoteVisible(bool _visible)
 	m_showNote->repaint();
 }
 
+void ScenarioNavigator::setCommentOnly(bool _isCommentOnly)
+{
+	m_addItem->setVisible(!_isCommentOnly);
+	m_removeItem->setVisible(!_isCommentOnly);
+	m_navigationTree->setDragDropMode(_isCommentOnly ? QAbstractItemView::NoDragDrop : QAbstractItemView::DragDrop);
+	m_navigationTree->setSelectionMode(_isCommentOnly ? QAbstractItemView::SingleSelection : QAbstractItemView::ContiguousSelection);
+}
+
 bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 {
 	bool isEventFiltered = false;

@@ -38,7 +38,8 @@ Project::Role Project::roleFromString(const QString& _role)
 Project::Project() :
 	m_type(Invalid),
 	m_id(0),
-	m_role(Owner)
+	m_role(Owner),
+	m_isSyncAvailable(false)
 {
 }
 
@@ -50,7 +51,8 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 	m_lastEditDatetime(_lastEditDatetime),
 	m_id(_id),
 	m_owner(_owner),
-	m_role(_role)
+	m_role(_role),
+	m_isSyncAvailable(false)
 {
 	//
 	// Сформируем путь к файлам проектов из облака
@@ -81,6 +83,11 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 		// ... корректируем путь
 		//
 		m_path = QDir::toNativeSeparators(m_path);
+
+		//
+		// Устанавливаем флаг доступности синхронизации
+		//
+		m_isSyncAvailable = true;
 	}
 }
 
@@ -147,6 +154,23 @@ void Project::setLastEditDatetime(const QDateTime& _datetime)
 int Project::id() const
 {
 	return m_id;
+}
+
+bool Project::isCommentOnly() const
+{
+	return m_role == Commentator;
+}
+
+bool Project::isSyncAvailable() const
+{
+	return m_isSyncAvailable;
+}
+
+void Project::setSyncAvailable(bool _syncAvailable)
+{
+	if (m_isSyncAvailable != _syncAvailable) {
+		m_isSyncAvailable = _syncAvailable;
+	}
 }
 
 

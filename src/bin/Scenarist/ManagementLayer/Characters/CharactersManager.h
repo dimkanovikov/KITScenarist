@@ -43,6 +43,11 @@ namespace ManagementLayer
 		 */
 		void saveCharacters();
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	signals:
 		/**
 		 * @brief Был изменён персонаж

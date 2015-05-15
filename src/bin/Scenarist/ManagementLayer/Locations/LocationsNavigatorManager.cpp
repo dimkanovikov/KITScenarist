@@ -45,6 +45,11 @@ void LocationsNavigatorManager::chooseLocation(const QString& _name)
 	m_navigator->selectLocation(_name);
 }
 
+void LocationsNavigatorManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_navigator->setCommentOnly(_isCommentOnly);
+}
+
 void LocationsNavigatorManager::aboutAddLocation()
 {
 	QString locationName;

@@ -71,6 +71,13 @@ void LocationsNavigator::selectLocation(const QModelIndex& _index)
 	}
 }
 
+void LocationsNavigator::setCommentOnly(bool _isCommentOnly)
+{
+	m_addLocation->setVisible(!_isCommentOnly);
+	m_removeLocation->setVisible(!_isCommentOnly);
+	m_refreshLocations->setVisible(!_isCommentOnly);
+}
+
 void LocationsNavigator::aboutEditLocation()
 {
 	emit editLocation(selectedLocationName());

@@ -73,6 +73,13 @@ void CharactersNavigator::selectCharacter(const QModelIndex& _index)
 	}
 }
 
+void CharactersNavigator::setCommentOnly(bool _isCommentOnly)
+{
+	m_addCharacter->setVisible(!_isCommentOnly);
+	m_removeCharacter->setVisible(!_isCommentOnly);
+	m_refreshCharacters->setVisible(!_isCommentOnly);
+}
+
 void CharactersNavigator::aboutEditCharacter()
 {
 	QStringList selectedCharacters = selectedCharactersNames();

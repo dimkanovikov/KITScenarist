@@ -56,6 +56,11 @@ void ScenarioDataEditManager::setScenarioSynopsisFromScenes(const QString& _syno
 	m_view->setScenarioSynopsisFromScenes(_synopsis);
 }
 
+void ScenarioDataEditManager::setCommentOnly(bool _isCommentOnly)
+{
+	m_view->setCommentOnly(_isCommentOnly);
+}
+
 void ScenarioDataEditManager::initView()
 {
 

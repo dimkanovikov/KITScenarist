@@ -36,6 +36,11 @@ namespace ManagementLayer
 		 */
 		void editLocation(Domain::Location* _location);
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	signals:
 		/**
 		 * @brief Была изменена локация

@@ -24,6 +24,11 @@ public:
 	 */
 	void setEditor(QTextEdit* _editor);
 
+	/**
+	 * @brief Установить режим только поиска или и замены тоже
+	 */
+	void setSearchOnly(bool _isSearchOnly);
+
 private slots:
 	/**
 	 * @brief Перейти к следующему совпадению

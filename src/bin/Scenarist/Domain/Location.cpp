@@ -70,6 +70,8 @@ void Location::setPhotosTable(LocationPhotosTable* _photos)
 		foreach (DomainObject* photo, _photos->toList()) {
 			m_photos->append(photo);
 		}
+
+		changesNotStored();
 	}
 }
 

@@ -86,17 +86,19 @@ void SimpleTextEditor::contextMenuEvent(QContextMenuEvent* _event)
 	//
 	QMenu* menu = createStandardContextMenu();
 
-	//
-	// Добавим действия настройки стиля
-	//
-	QAction* actionInsertBefore = 0;
-	if (menu->actions().count() > 0) {
-		actionInsertBefore = menu->actions().first();
+	if (!isReadOnly()) {
+		//
+		// Добавим действия настройки стиля
+		//
+		QAction* actionInsertBefore = 0;
+		if (menu->actions().count() > 0) {
+			actionInsertBefore = menu->actions().first();
+		}
+		menu->insertAction(actionInsertBefore, actionTextBold);
+		menu->insertAction(actionInsertBefore, actionTextItalic);
+		menu->insertAction(actionInsertBefore, actionTextUnderline);
+		menu->insertSeparator(actionInsertBefore);
 	}
-	menu->insertAction(actionInsertBefore, actionTextBold);
-	menu->insertAction(actionInsertBefore, actionTextItalic);
-	menu->insertAction(actionInsertBefore, actionTextUnderline);
-	menu->insertSeparator(actionInsertBefore);
 
 	//
 	// Покажем меню, а после очистим от него память

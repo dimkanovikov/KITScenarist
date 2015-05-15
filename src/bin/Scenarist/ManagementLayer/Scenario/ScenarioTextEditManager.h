@@ -62,6 +62,11 @@ namespace ManagementLayer
 		 */
 		void setAdditionalCursors(const QMap<QString, int>& _cursors);
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	public slots:
 		/**
 		 * @brief Добавить элемент сценария в указанной позиции

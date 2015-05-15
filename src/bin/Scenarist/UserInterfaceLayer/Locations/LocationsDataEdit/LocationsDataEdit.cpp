@@ -84,6 +84,13 @@ QList<QPixmap> LocationsDataEdit::photos() const
 	return ui->photos->photos();
 }
 
+void LocationsDataEdit::setCommentOnly(bool _isCommentOnly)
+{
+	ui->addPhoto->setVisible(!_isCommentOnly);
+	ui->name->setReadOnly(_isCommentOnly);
+	ui->description->setReadOnly(_isCommentOnly);
+}
+
 namespace {
 	static bool isEqualPixmapLists(const QList<QPixmap>& _lhs, const QList<QPixmap>& _rhs) {
 		QList<QImage> lhs, rhs;

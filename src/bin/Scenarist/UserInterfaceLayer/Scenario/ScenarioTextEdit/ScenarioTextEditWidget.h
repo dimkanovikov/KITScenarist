@@ -119,6 +119,11 @@ namespace UserInterface
 		 */
 		void setAdditionalCursors(const QMap<QString, int>& _cursors);
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	public slots:
 		/**
 		 * @brief Отменить последнее действие

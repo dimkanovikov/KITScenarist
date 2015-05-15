@@ -25,6 +25,8 @@ void ScenarioChange::setUuid(const QUuid& _uuid)
 {
 	if (m_uuid != _uuid) {
 		m_uuid = _uuid;
+
+		changesNotStored();
 	}
 }
 
@@ -37,6 +39,8 @@ void ScenarioChange::setDatetime(const QDateTime& _datetime)
 {
 	if (m_datetime != _datetime) {
 		m_datetime = _datetime;
+
+		changesNotStored();
 	}
 }
 
@@ -49,6 +53,8 @@ void ScenarioChange::setUser(const QString& _user)
 {
 	if (m_user != _user) {
 		m_user = _user;
+
+		changesNotStored();
 	}
 }
 
@@ -61,6 +67,8 @@ void ScenarioChange::setUndoPatch(const QString& _patch)
 {
 	if (m_undoPatch != _patch) {
 		m_undoPatch = _patch;
+
+		changesNotStored();
 	}
 }
 
@@ -73,6 +81,8 @@ void ScenarioChange::setRedoPatch(const QString& _patch)
 {
 	if (m_redoPatch != _patch) {
 		m_redoPatch = _patch;
+
+		changesNotStored();
 	}
 }
 
@@ -85,6 +95,8 @@ void ScenarioChange::setIsDraft(bool _isDraft)
 {
 	if (m_isDraft != _isDraft) {
 		m_isDraft = _isDraft;
+
+		changesNotStored();
 	}
 }
 
