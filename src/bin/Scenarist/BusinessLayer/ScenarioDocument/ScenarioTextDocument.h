@@ -2,6 +2,7 @@
 #define SCENARIOTEXTDOCUMENT_H
 
 #include <QTextDocument>
+#include <QTextCursor>
 
 namespace Domain {
 	class ScenarioChange;
@@ -62,6 +63,12 @@ namespace BusinessLogic
 		bool isUndoAvailableReimpl() const;
 		bool isRedoAvailableReimpl() const;
 		/** @} */
+
+		/**
+		 * @brief Установить курсор в заданную позицию
+		 */
+		void setCursorPosition(QTextCursor& _cursor, int _position,
+			QTextCursor::MoveMode _moveMode = QTextCursor::MoveAnchor);
 
 	signals:
 		/**

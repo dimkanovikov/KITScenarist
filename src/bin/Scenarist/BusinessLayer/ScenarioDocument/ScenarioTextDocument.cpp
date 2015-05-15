@@ -131,17 +131,9 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	// Выделяем текст сценария, соответствующий xml для обновления
 	//
 	QTextCursor cursor(this);
-	if (xmlsForUpdate.first.plainPos > 0) {
-		cursor.setPosition(xmlsForUpdate.first.plainPos);
-	} else {
-		cursor.setPosition(0);
-	}
+	setCursorPosition(cursor, xmlsForUpdate.first.plainPos);
 	const int selectionEndPos = xmlsForUpdate.first.plainPos + xmlsForUpdate.first.plainLength;
-	if (characterCount() > selectionEndPos) {
-		cursor.setPosition(selectionEndPos, QTextCursor::KeepAnchor);
-	} else {
-		cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
-	}
+	setCursorPosition(cursor, selectionEndPos, QTextCursor::KeepAnchor);
 
 	//
 	// Замещаем его обновлённым
@@ -243,4 +235,26 @@ bool ScenarioTextDocument::isUndoAvailableReimpl() const
 bool ScenarioTextDocument::isRedoAvailableReimpl() const
 {
 	return !m_redoStack.isEmpty();
+}
+
+void ScenarioTextDocument::setCursorPosition(QTextCursor& _cursor, int _position, QTextCursor::MoveMode _moveMode)
+{
+	//
+	// Нормальное позиционирование
+	//
+	if (_position > 0 && _position < characterCount()) {
+		_cursor.setPosition(_position, _moveMode);
+	}
+	//
+	// Для отрицательного ни чего не делаем, оставляем курсор в нуле
+	//
+	else if (_position < 0) {
+		_cursor.movePosition(QTextCursor::Start, _moveMode);
+	}
+	//
+	// Для очень большого, просто помещаем в конец документа
+	//
+	else {
+		_cursor.movePosition(QTextCursor::End, _moveMode);
+	}
 }
