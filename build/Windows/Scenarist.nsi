@@ -89,10 +89,10 @@ Section "App files section" SecFiles
   File "${pkgdir}\icudt53.dll"
   File "${pkgdir}\icuin53.dll"
   File "${pkgdir}\icuuc53.dll"
+  File "${pkgdir}\libeay32.dll"
   File "${pkgdir}\libgcc_s_dw2-1.dll"
   File "${pkgdir}\libstdc++-6.dll"
   File "${pkgdir}\libwinpthread-1.dll"
-  ;File "${pkgdir}\mingwm10.dll"
   File "${pkgdir}\Qt5Core.dll"
   File "${pkgdir}\Qt5Gui.dll"
   File "${pkgdir}\Qt5Network.dll"
@@ -103,6 +103,8 @@ Section "App files section" SecFiles
   File "${pkgdir}\hunspell.dll"
   File "${pkgdir}\fileformats.dll"
   File "${pkgdir}\Scenarist.exe"
+  File "${pkgdir}\ssleay32.dll"
+  File "${pkgdir}\webloader.dll"
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
