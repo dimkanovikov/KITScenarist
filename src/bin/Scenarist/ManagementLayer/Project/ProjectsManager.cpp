@@ -36,6 +36,7 @@ ProjectsManager::ProjectsManager(QObject* _parent) :
 	QObject(_parent)
 {
 	loadRecentProjects();
+    refreshProjects();
 }
 
 ProjectsManager::~ProjectsManager()
@@ -323,9 +324,6 @@ void ProjectsManager::loadRecentProjects()
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
 
-	//
-	// Сохраним недавно используемые проекты
-	//
 	m_recentProjects.clear();
 
 	//

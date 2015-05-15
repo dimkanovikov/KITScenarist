@@ -557,8 +557,8 @@ void ApplicationManager::aboutExit()
 		//
 		// Выводим информацию для пользователя, о закрытии программы
 		//
-		ProgressWidget* progress = new ProgressWidget(m_view);
-		progress->showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
+        ProgressWidget progress(m_view);
+        progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
 
 		//
 		// Закроем текущий проект
@@ -573,6 +573,7 @@ void ApplicationManager::aboutExit()
 		//
 		// Выходим
 		//
+        progress.close();
 		qApp->exit();
 	}
 }
