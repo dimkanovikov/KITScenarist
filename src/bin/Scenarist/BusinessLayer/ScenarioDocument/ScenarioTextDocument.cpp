@@ -131,7 +131,11 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	// Выделяем текст сценария, соответствующий xml для обновления
 	//
 	QTextCursor cursor(this);
-	cursor.setPosition(xmlsForUpdate.first.plainPos);
+	if (xmlsForUpdate.first.plainPos > 0) {
+		cursor.setPosition(xmlsForUpdate.first.plainPos);
+	} else {
+		cursor.setPosition(0);
+	}
 	const int selectionEndPos = xmlsForUpdate.first.plainPos + xmlsForUpdate.first.plainLength;
 	if (characterCount() > selectionEndPos) {
 		cursor.setPosition(selectionEndPos, QTextCursor::KeepAnchor);
