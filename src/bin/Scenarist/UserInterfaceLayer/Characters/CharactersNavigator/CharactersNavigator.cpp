@@ -117,6 +117,7 @@ void CharactersNavigator::initView()
 
 	m_mergeCharacters->setIcon(QIcon(":/Graphics/Icons/Editing/merge.png"));
 	m_mergeCharacters->setToolTip(tr("Merge Selected Characters"));
+	m_mergeCharacters->hide();
 
 	m_refreshCharacters->setIcon(QIcon(":/Graphics/Icons/Editing/refresh.png"));
 	m_refreshCharacters->setToolTip(tr("Find All Characters from Scenario"));
