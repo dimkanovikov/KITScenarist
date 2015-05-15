@@ -689,6 +689,11 @@ void ApplicationManager::goToEditCurrentProject()
 	progress.showProgress(tr("Loading Scenario"), tr("Please wait. Loading can take few minutes."));
 
 	//
+	// Установим заголовок
+	//
+	updateWindowTitle();
+
+	//
 	// Загрузить данные из файла
 	//
 	m_scenarioManager->loadCurrentProject();
@@ -714,11 +719,6 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
-
-	//
-	// Установим заголовок
-	//
-	updateWindowTitle();
 
 	//
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
