@@ -17,21 +17,21 @@
 using namespace BusinessLogic;
 
 
-ScenarioXml::ScenarioXml(ScenarioDocument* _scenario) :
-	m_scenario(_scenario),
-	m_lastMimeFrom(0),
-	m_lastMimeTo(0)
-{
-	Q_ASSERT(m_scenario);
-}
-
-QString ScenarioXml::defaultXml() const
+QString ScenarioXml::defaultXml()
 {
 	return
 			"<?xml version=\"1.0\"?>\n"
 			"<scenario>\n"
 			"<time_and_place synopsis=\"\"><![CDATA[]]></time_and_place>\n"
 			"</scenario>\n";
+}
+
+ScenarioXml::ScenarioXml(ScenarioDocument* _scenario) :
+	m_scenario(_scenario),
+	m_lastMimeFrom(0),
+	m_lastMimeTo(0)
+{
+	Q_ASSERT(m_scenario);
 }
 
 QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)

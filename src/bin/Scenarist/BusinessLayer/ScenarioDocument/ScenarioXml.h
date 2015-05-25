@@ -17,16 +17,17 @@ namespace BusinessLogic
 	{
 	public:
 		/**
+		 * @brief Значение xml-документа по умолчанию
+		 */
+		static QString defaultXml();
+
+	public:
+		/**
 		 * @brief Конструктор фасада для работы с xml
 		 *
 		 * @note Документ должен быть обязательно задан
 		 */
 		ScenarioXml(ScenarioDocument* _scenario);
-
-		/**
-		 * @brief Значение xml-документа по умолчанию
-		 */
-		QString defaultXml() const;
 
 		/**
 		 * @brief Записать сценарий в xml-строку из заданного диапазона текста

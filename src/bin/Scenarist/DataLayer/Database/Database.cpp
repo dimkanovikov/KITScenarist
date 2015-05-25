@@ -1,5 +1,9 @@
 #include "Database.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioXml.h>
+
+#include <3rd_party/Helpers/DiffMatchPatchHelper.h>
+
 #include <QApplication>
 #include <QDateTime>
 #include <QRegularExpression>
@@ -7,6 +11,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QTextCodec>
+#include <QUuid>
 #include <QVariant>
 
 using namespace DatabaseLayer;
@@ -822,6 +827,25 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 			q_transporter.addBindValue(synopsis);
 			q_transporter.addBindValue(q_updater.record().value(synopsis));
 			q_transporter.exec();
+		}
+
+		//
+		// Сам сценарий
+		//
+		q_updater.exec("SELECT text FROM scenario WHERE is_draft = 0");
+		if (q_updater.next()) {
+			const QString defaultScenarioXml = BusinessLogic::ScenarioXml::defaultXml();
+			const QString scenarioXml = q_updater.record().value("text").toString();
+			const QString undoPatch = DiffMatchPatchHelper::makePatchXml(scenarioXml, defaultScenarioXml);
+			const QString redoPatch = DiffMatchPatchHelper::makePatchXml(defaultScenarioXml, scenarioXml);
+			q_updater.prepare("INSERT INTO scenario_changes (uuid, datetime, username, undo_patch, redo_patch) "
+							  "VALUES(?, ?, ?, ?, ?)");
+			q_updater.addBindValue(QUuid::createUuid().toString());
+			q_updater.addBindValue(QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss"));
+			q_updater.addBindValue("user");
+			q_updater.addBindValue(undoPatch);
+			q_updater.addBindValue(redoPatch);
+			q_updater.exec();
 		}
 
 	}
