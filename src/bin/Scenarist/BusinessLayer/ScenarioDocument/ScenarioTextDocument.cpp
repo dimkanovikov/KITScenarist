@@ -242,7 +242,7 @@ void ScenarioTextDocument::setCursorPosition(QTextCursor& _cursor, int _position
 	//
 	// Нормальное позиционирование
 	//
-	if (_position > 0 && _position < characterCount()) {
+	if (_position >= 0 && _position < characterCount()) {
 		_cursor.setPosition(_position, _moveMode);
 	}
 	//
