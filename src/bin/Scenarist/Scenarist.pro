@@ -216,7 +216,9 @@ SOURCES += main.cpp \
     Domain/ScenarioData.cpp \
     DataLayer/DataStorageLayer/ScenarioDataStorage.cpp \
     DataLayer/DataMappingLayer/ScenarioDataMapper.cpp \
-    3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.cpp
+    3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.cpp \
+    3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.cpp \
+    3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -389,7 +391,9 @@ HEADERS += \
     Domain/ScenarioData.h \
     DataLayer/DataStorageLayer/ScenarioDataStorage.h \
     DataLayer/DataMappingLayer/ScenarioDataMapper.h \
-    3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h
+    3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h \
+    3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h \
+    3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

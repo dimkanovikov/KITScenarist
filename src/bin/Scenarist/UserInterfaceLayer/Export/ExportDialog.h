@@ -1,7 +1,7 @@
 #ifndef EXPORTDIALOG_H
 #define EXPORTDIALOG_H
 
-#include <QDialog>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
 class QAbstractItemModel;
 
@@ -19,7 +19,7 @@ namespace UserInterface
 	/**
 	 * @brief Диалог экспорта
 	 */
-	class ExportDialog : public QDialog
+	class ExportDialog : public QLightBoxDialog
 	{
 		Q_OBJECT
 

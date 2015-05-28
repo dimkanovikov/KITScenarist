@@ -3,11 +3,13 @@
 #include <QApplication>
 #include <QKeyEvent>
 #include <QMimeData>
+#include <QTextFrame>
+#include <QTextFrameFormat>
 
 using UserInterface::ScenarioLineEdit;
 
 namespace {
-	const int DOCUMENT_MARGIN = 4;
+	const int DOCUMENT_PADDING = 4;
 }
 
 
@@ -18,13 +20,15 @@ ScenarioLineEdit::ScenarioLineEdit(QWidget* _parent) :
 	//
 	// Настраиваем документ
 	//
-	document()->setDocumentMargin(DOCUMENT_MARGIN);
+	QTextFrameFormat format = document()->rootFrame()->frameFormat();
+	format.setPadding(DOCUMENT_PADDING);
+	document()->rootFrame()->setFrameFormat(format);
 
 	//
 	// Настраиваем собственный размер
 	//
 	QFontMetricsF metrics(document()->defaultFont());
-	int height = metrics.boundingRect("Q").height() + (DOCUMENT_MARGIN * 2);
+	int height = metrics.boundingRect("Q").height() + (DOCUMENT_PADDING * 2);
 	setFixedHeight(height);
 
 	//

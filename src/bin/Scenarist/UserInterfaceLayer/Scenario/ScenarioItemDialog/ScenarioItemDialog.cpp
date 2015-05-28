@@ -14,7 +14,7 @@ using BusinessLogic::ScenarioBlockStyle;
 
 
 ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
-	QDialog(_parent),
+	QLightBoxDialog(_parent),
 	m_folder(new QRadioButton(this)),
 	m_scenesGroup(new QRadioButton(this)),
 	m_scene(new QRadioButton(this)),
@@ -27,9 +27,9 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 
 void ScenarioItemDialog::clearText()
 {
-    QTextCursor cursor(m_itemEditor->document());
-    cursor.select(QTextCursor::Document);
-    cursor.removeSelectedText();
+	QTextCursor cursor(m_itemEditor->document());
+	cursor.select(QTextCursor::Document);
+	cursor.removeSelectedText();
 
 	aboutUpdateCurrentTextStyle();
 }
@@ -51,7 +51,7 @@ ScenarioBlockStyle::Type ScenarioItemDialog::itemType() const
 
 QString ScenarioItemDialog::itemHeader() const
 {
-    return m_itemEditor->toPlainText();
+	return m_itemEditor->toPlainText();
 }
 
 void ScenarioItemDialog::aboutUpdateCurrentTextStyle()
@@ -100,6 +100,8 @@ void ScenarioItemDialog::initView()
 	layout->addWidget(m_buttons);
 
 	setLayout(layout);
+
+	QLightBoxDialog::initView();
 }
 
 void ScenarioItemDialog::initConnections()
@@ -110,4 +112,6 @@ void ScenarioItemDialog::initConnections()
 
 	connect(m_buttons, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(m_buttons, SIGNAL(rejected()), this, SLOT(reject()));
+
+	QLightBoxDialog::initConnections();
 }

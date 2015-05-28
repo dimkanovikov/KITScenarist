@@ -48,7 +48,7 @@ namespace {
 
 
 ExportDialog::ExportDialog(QWidget* _parent) :
-	QDialog(_parent),
+	QLightBoxDialog(_parent),
 	ui(new Ui::ExportDialog)
 {
 	ui->setupUi(this);
@@ -203,6 +203,30 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 	return exportParameters;
 }
 
+void ExportDialog::aboutFormatChanged()
+{
+	const QString format = ui->docx->isChecked() ? "docx" : "pdf";
+	QString filePath = ui->file->text();
+
+	//
+	// Обновить имя файла, если оно уже задано в другом формате
+	//
+	if (!filePath.isEmpty()
+		&& !filePath.endsWith(format)) {
+		QFileInfo fileInfo(filePath);
+		//
+		// Если у файла есть расширение
+		//
+		if (!fileInfo.suffix().isEmpty()) {
+			filePath.replace(fileInfo.suffix(), format);
+		} else {
+			filePath.append("." + format);
+		}
+
+		ui->file->setText(filePath);
+	}
+}
+
 void ExportDialog::aboutChooseFile()
 {
 	const QString format = ui->docx->isChecked() ? "docx" : "pdf";
@@ -236,30 +260,8 @@ void ExportDialog::initView()
 	ui->additionalSettings->hide();
 
 	resize(width(), sizeHint().height());
-}
 
-void ExportDialog::aboutFormatChanged()
-{
-	const QString format = ui->docx->isChecked() ? "docx" : "pdf";
-	QString filePath = ui->file->text();
-
-	//
-	// Обновить имя файла, если оно уже задано в другом формате
-	//
-	if (!filePath.isEmpty()
-		&& !filePath.endsWith(format)) {
-		QFileInfo fileInfo(filePath);
-		//
-		// Если у файла есть расширение
-		//
-		if (!fileInfo.suffix().isEmpty()) {
-			filePath.replace(fileInfo.suffix(), format);
-		} else {
-			filePath.append("." + format);
-		}
-
-		ui->file->setText(filePath);
-	}
+	QLightBoxDialog::initView();
 }
 
 void ExportDialog::initConnections()
@@ -275,4 +277,6 @@ void ExportDialog::initConnections()
 	connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reject()));
 	connect(ui->printPreview, SIGNAL(clicked()), this, SIGNAL(printPreview()));
 	connect(ui->exportTo, SIGNAL(clicked()), this, SLOT(accept()));
+
+	QLightBoxDialog::initConnections();
 }

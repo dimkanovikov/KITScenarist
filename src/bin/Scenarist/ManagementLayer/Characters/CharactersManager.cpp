@@ -9,10 +9,11 @@
 
 #include <Domain/Character.h>
 
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+
 #include <QWidget>
 #include <QSplitter>
 #include <QHBoxLayout>
-#include <QMessageBox>
 
 using ManagementLayer::CharactersManager;
 using ManagementLayer::CharactersNavigatorManager;
@@ -111,11 +112,10 @@ void CharactersManager::aboutRemoveCharacters(const QStringList& _names)
 	//
 	// Если пользователь серьёзно намерен удалить персонажа
 	//
-	if (QMessageBox::question(
-			m_view,
-			tr("Remove Characters"),
+	if (QLightBoxMessage::question(m_view, tr("Remove Characters"),
 			tr("Are you shure to remove selected characters?"),
-			QMessageBox::Yes | QMessageBox::No) == 	QMessageBox::Yes) {
+			QDialogButtonBox::Yes | QDialogButtonBox::No)
+		== QDialogButtonBox::Yes) {
 		//
 		// ... удалим его
 		//

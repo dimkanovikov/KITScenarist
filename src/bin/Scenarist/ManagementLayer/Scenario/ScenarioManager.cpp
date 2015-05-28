@@ -29,12 +29,12 @@
 #include <3rd_party/Helpers/DiffMatchPatchHelper.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
 
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QMessageBox>
 #include <QSplitter>
 #include <QTextCursor>
 #include <QTextBlock>
@@ -518,7 +518,7 @@ void ScenarioManager::aboutRefreshCharacters()
 		}
 		message.append(QString("<b>%1:</b> %2.").arg(tr("Characters to save")).arg(saveList.join(", ")));
 	}
-	if (QMessageBox::question(m_view, tr("Apply refreshing"), message) == QMessageBox::Yes) {
+	if (QLightBoxMessage::question(m_view, tr("Apply refreshing"), message) == QDialogButtonBox::Yes) {
 		//
 		// Удалить тех, кого нет
 		//
@@ -586,7 +586,7 @@ void ScenarioManager::aboutRefreshLocations()
 		message.append(QString("<b>%1:</b> %2.").arg(tr("Locations to save")).arg(saveList.join(", ")));
 	}
 
-	if (QMessageBox::question(m_view, tr("Apply refreshing"), message) == QMessageBox::Yes) {
+	if (QLightBoxMessage::question(m_view, tr("Apply refreshing"), message) == QDialogButtonBox::Yes) {
 		//
 		// Удалить те, которых нет
 		//

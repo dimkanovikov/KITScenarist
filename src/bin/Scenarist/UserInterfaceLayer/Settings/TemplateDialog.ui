@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>TemplateDialog</class>
- <widget class="QDialog" name="TemplateDialog">
+ <widget class="QWidget" name="TemplateDialog">
   <property name="geometry">
    <rect>
     <x>0</x>

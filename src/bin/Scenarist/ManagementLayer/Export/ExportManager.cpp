@@ -41,9 +41,9 @@ ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
 	m_currentScenario = _scenario;
-	initExportDialog(m_currentScenario);
+	initExportDialog();
 
-	if (m_exportDialog->exec() == QDialog::Accepted) {
+	if (m_exportDialog->exec() == QLightBoxDialog::Accepted) {
 		//
 		// Покажем уведомление пользователю
 		//
@@ -92,7 +92,7 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 
 void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
-	initExportDialog(_scenario);
+	initExportDialog();
 
 	//
 	// Покажем уведомление пользователю
@@ -205,11 +205,11 @@ void ExportManager::aboutPrintPreview()
 	saveTitleListInfo(m_currentScenario);
 
 	//
-	// Закрывать диалоговое окно нельзя, поэтому прячем его
+	// Скрываем окно настроек, показываем предпросмотр, а потом вновь показываем его
 	//
-	m_exportDialog->setWindowOpacity(0);
+	m_exportDialog->hide();
 	printPreviewScenario(m_currentScenario);
-	m_exportDialog->setWindowOpacity(1);
+	m_exportDialog->show();
 }
 
 void ExportManager::initView()
@@ -236,10 +236,8 @@ void ExportManager::initConnections()
 	connect(m_exportDialog, SIGNAL(printPreview()), this, SLOT(aboutPrintPreview()));
 }
 
-void ExportManager::initExportDialog(BusinessLogic::ScenarioDocument* _scenario)
+void ExportManager::initExportDialog()
 {
-	Domain::Scenario* currentScenario = _scenario->scenario();
-
 	//
 	// Установка имени файла
 	//

@@ -80,7 +80,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Загрузить в диалог настройки экспорта
 		 */
-		void initExportDialog(BusinessLogic::ScenarioDocument* _scenario);
+		void initExportDialog();
 
 		/**
 		 * @brief Сохранить информацию о титульном листе, если изменилась

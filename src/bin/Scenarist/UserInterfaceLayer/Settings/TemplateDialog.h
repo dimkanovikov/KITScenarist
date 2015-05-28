@@ -1,7 +1,7 @@
 #ifndef TEMPLATEDIALOG_H
 #define TEMPLATEDIALOG_H
 
-#include <QDialog>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
@@ -17,7 +17,7 @@ namespace UserInterface
 	/**
 	 * @brief Диалог редактирования шаблона
 	 */
-	class TemplateDialog : public QDialog
+	class TemplateDialog : public QLightBoxDialog
 	{
 		Q_OBJECT
 

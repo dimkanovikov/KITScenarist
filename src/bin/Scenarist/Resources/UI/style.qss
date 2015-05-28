@@ -260,3 +260,17 @@ QPushButton:checked {
 QPushButton:!checked:hover, QPushButton:!checked:pressed {
 	background-color: palette(midlight);
 }
+
+/*
+ * Стили лайтбокса
+ */
+[lightBoxDialogTitle=true] {
+	font-weight: 700;
+	background-color: palette(button);
+	padding: 7px 20px 7px 20px;
+	border-bottom: 1px solid palette(midlight);
+}
+
+[lightBoxDialogCentralWidget=true] {
+	background-color: palette(button);
+}

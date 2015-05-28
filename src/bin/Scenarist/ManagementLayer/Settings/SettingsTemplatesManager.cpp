@@ -29,7 +29,7 @@ bool SettingsTemplatesManager::newTemplate()
 	//
 	// Отображаем диалог пользователю
 	//
-	if (m_view->exec() == QDialog::Accepted) {
+	if (m_view->exec() == QLightBoxDialog::Accepted) {
 		//
 		// Сохраняем созданный шаблон
 		//
@@ -74,7 +74,7 @@ bool SettingsTemplatesManager::editTemplate(const QString& _templateName)
 	//
 	// Отображаем диалог пользователю
 	//
-	if (m_view->exec() == QDialog::Accepted) {
+	if (m_view->exec() == QLightBoxDialog::Accepted) {
 		//
 		// Сохраняем изменённый шаблон
 		//

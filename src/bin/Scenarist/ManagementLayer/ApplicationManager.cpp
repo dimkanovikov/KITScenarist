@@ -21,13 +21,13 @@
 
 #include <3rd_party/Widgets/SideBar/SideBar.h>
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <UserInterfaceLayer/ApplicationView.h>
 
 #include <QApplication>
 #include <QComboBox>
 #include <QFileDialog>
-#include <QMessageBox>
 #include <QMenu>
 #include <QStackedWidget>
 #include <QStandardItemModel>
@@ -443,7 +443,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		// Нет связи с интернетом
 		//
 		case 0: {
-			QMessageBox::information(m_view, tr("Network error"),
+			QLightBoxMessage::information(m_view, tr("Network error"),
 				tr("Can't estabilish network connection.\n"
 				   "Continue working in offline mode."));
 			switchToOfflineMode = true;
@@ -463,7 +463,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		// Закончилась подписка
 		//
 		case 102: {
-			QMessageBox::information(m_view, tr("Subscription ended"),
+			QLightBoxMessage::information(m_view, tr("Subscription ended"),
 				tr("Buyed subscription period is finished.\n"
 				   "Continue working in offline mode."));
 			switchToOfflineMode = true;
@@ -474,9 +474,9 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		// Сессия закрыта
 		//
 		case 104: {
-			if (QMessageBox::question(m_view, tr("Session closed"),
+			if (QLightBoxMessage::question(m_view, tr("Session closed"),
 					tr("New session for you account started at other device. Restart session?"))
-				== QMessageBox::Yes) {
+				== QDialogButtonBox::Yes) {
 				//
 				// Переподключаемся
 				//
@@ -485,7 +485,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 				//
 				// Переходим в автономный режим
 				//
-				QMessageBox::information(m_view, tr("Session closed"),
+				QLightBoxMessage::information(m_view, tr("Session closed"),
 					tr("Continue working in offline mode."));
 				switchToOfflineMode = true;
 			}
@@ -496,7 +496,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		// Проект недоступен
 		//
 		case 201: {
-			QMessageBox::information(m_view, tr("Project not available"),
+			QLightBoxMessage::information(m_view, tr("Project not available"),
 				tr("Current project is not available for syncronization now.\n"
 				   "Continue working with this project in offline mode."));
 			m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
@@ -507,7 +507,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		// Остальное
 		//
 		default: {
-			QMessageBox::warning(m_view, tr("Error"), _error);
+			QLightBoxMessage::warning(m_view, tr("Error"), _error);
 			break;
 		}
 	}
@@ -557,8 +557,8 @@ void ApplicationManager::aboutExit()
 		//
 		// Выводим информацию для пользователя, о закрытии программы
 		//
-        ProgressWidget progress(m_view);
-        progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
+		ProgressWidget progress(m_view);
+		progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
 
 		//
 		// Закроем текущий проект
@@ -573,7 +573,7 @@ void ApplicationManager::aboutExit()
 		//
 		// Выходим
 		//
-        progress.close();
+		progress.close();
 		qApp->exit();
 	}
 }
@@ -660,15 +660,16 @@ bool ApplicationManager::saveIfNeeded()
 		//
 		// ... спрашиваем пользователя, хочет ли он сохранить изменения
 		//
-		int questionResult = QMessageBox::question(m_view, tr("Save project changes?"),
-												   tr("Project was modified. Save changes?"),
-												   QMessageBox::Cancel | QMessageBox::Yes | QMessageBox::No);
+		int questionResult =
+				QLightBoxMessage::question(m_view, tr("Save project changes?"),
+					tr("Project was modified. Save changes?"),
+					QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
 
-		if (questionResult != QMessageBox::Cancel) {
+		if (questionResult != QDialogButtonBox::Cancel) {
 			//
 			// ... и сохраняем, если хочет
 			//
-			if (questionResult == QMessageBox::Yes) {
+			if (questionResult == QDialogButtonBox::Yes) {
 				aboutSave();
 			} else {
 				::updateWindowModified(m_view, false);

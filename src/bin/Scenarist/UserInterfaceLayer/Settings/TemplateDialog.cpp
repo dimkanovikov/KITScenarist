@@ -10,7 +10,7 @@ using UserInterface::TemplateDialog;
 
 
 TemplateDialog::TemplateDialog(QWidget *parent) :
-	QDialog(parent),
+	QLightBoxDialog(parent),
 	ui(new Ui::TemplateDialog)
 {
 	ui->setupUi(this);
@@ -343,6 +343,8 @@ void TemplateDialog::initView()
 	// Предварительная настройка типа вертикальных отступов
 	//
 	aboutSpacingTypeChanged();
+
+	QLightBoxDialog::initView();
 }
 
 void TemplateDialog::initConnections()
@@ -354,4 +356,6 @@ void TemplateDialog::initConnections()
 
 	connect(ui->close, SIGNAL(clicked()), this, SLOT(reject()));
 	connect(ui->save, SIGNAL(clicked()), this, SLOT(accept()));
+
+	QLightBoxDialog::initConnections();
 }

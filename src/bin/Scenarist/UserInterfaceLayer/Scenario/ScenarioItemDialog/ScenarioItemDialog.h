@@ -1,7 +1,7 @@
 #ifndef SCENARIOITEMDIALOG_H
 #define SCENARIOITEMDIALOG_H
 
-#include <QDialog>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
@@ -16,7 +16,7 @@ namespace UserInterface
 	/**
 	 * @brief Диалог добавления элемента сценария
 	 */
-	class ScenarioItemDialog : public QDialog
+	class ScenarioItemDialog : public QLightBoxDialog
 	{
 		Q_OBJECT
 
@@ -36,7 +36,7 @@ namespace UserInterface
 		/**
 		 * @brief Получить текст
 		 */
-        QString itemHeader() const;
+		QString itemHeader() const;
 
 	private slots:
 		/**

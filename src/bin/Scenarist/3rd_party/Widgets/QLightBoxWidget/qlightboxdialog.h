@@ -3,6 +3,8 @@
 
 #include "qlightboxwidget.h"
 
+class QLabel;
+
 
 /**
  * @brief Диалог перекрывающий родительское окно
@@ -16,8 +18,8 @@ public:
 	 * @brief Коды возврата
 	 */
 	enum DialogCode {
-		Accepted,
-		Rejected
+		Accepted = 1,
+		Rejected = 0
 	};
 
 public:
@@ -78,6 +80,11 @@ protected:
 	virtual void initConnections();
 
 private:
+	/**
+	 * @brief Заголовок диалога
+	 */
+	QLabel* m_title;
+
 	/**
 	 * @brief Виджет диалога
 	 */

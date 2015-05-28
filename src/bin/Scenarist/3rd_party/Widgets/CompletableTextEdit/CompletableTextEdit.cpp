@@ -6,16 +6,10 @@
 #include <QScrollBar>
 
 namespace {
-	//
-	// NOTE: При переходе от обычного редактора к обёртке масштабирования, дополняльщик
-	//		 стал показываться и скрываться через раз после нажатия клавиш. А всё дело в том,
-	//		 что его стандартное таково, что если виджет потерял фокус, то всплывающий список
-	//		 принудительно скрывается. Приходится применять мини хак.
-	//
 	class MyCompleter : public QCompleter
 	{
 	public:
-		explicit MyCompleter(QObject* _p = 0) : QCompleter(_p), m_focusLocker(false) {}
+		explicit MyCompleter(QObject* _p = 0) : QCompleter(_p) {}
 
 		/**
 		 * @brief Переопределяется для отображения подсказки по глобальной координате
@@ -25,28 +19,6 @@ namespace {
 			complete(_rect);
 			popup()->move(_rect.topLeft());
 		}
-
-	protected:
-		bool eventFilter(QObject *o, QEvent *e) {
-			//
-			// Проверяем тип события, чтобы не войти в бесконечную рекурсию
-			//
-			if (!m_focusLocker
-				&& e->type() != QEvent::FocusIn
-				&& widget()) {
-
-				m_focusLocker = true;
-				widget()->setFocus();
-				m_focusLocker = false;
-			}
-			return QCompleter::eventFilter(o,e);
-		}
-
-	private:
-		/**
-		 * @brief Флаг для прекращения рекурсии установления фокуса для виджета
-		 */
-		bool m_focusLocker;
 	};
 }
 

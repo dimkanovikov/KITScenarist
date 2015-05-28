@@ -21,7 +21,8 @@ namespace TextEditHelper
 				escapedText
 				.replace("<", "&lt;")
 				.replace(">", "&gt;")
-				.replace("\"", "&quot;");
+				.replace("\"", "&quot;")
+				.replace("&", "&amp;");
 		return escapedText;
 	}
 
@@ -34,7 +35,8 @@ namespace TextEditHelper
 		text =  text
 				.replace("&lt;", "<")
 				.replace("&gt;", ">")
-				.replace("&quot;", "\"");
+				.replace("&quot;", "\"")
+				.replace("&amp;", "&");
 		return text;
 	}
 

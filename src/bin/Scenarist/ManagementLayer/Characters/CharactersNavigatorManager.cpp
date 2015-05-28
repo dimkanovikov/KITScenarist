@@ -7,8 +7,8 @@
 
 #include <UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.h>
 
-#include <QInputDialog>
-#include <QMessageBox>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 using ManagementLayer::CharactersNavigatorManager;
 using UserInterface::CharactersNavigator;
@@ -56,14 +56,11 @@ void CharactersNavigatorManager::aboutAddCharacter()
 	bool needReply = false;
 	do {
 		needReply = false;
-		characterName = QInputDialog::getText(m_navigator, tr("Add Character"), tr("Name"), QLineEdit::Normal, characterName);
+		characterName = QLightBoxInputDialog::getText(m_navigator, tr("Add Character"), tr("Name"), characterName);
 		if (!characterName.isEmpty()) {
 			if (DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(characterName.toUpper())) {
-				QMessageBox::critical(
-							m_navigator,
-							tr("Add Character Error"),
-							tr("Character with same name already exist in project")
-							);
+				QLightBoxMessage::critical(m_navigator, tr("Add Character Error"),
+					tr("Character with same name already exist in project"));
 				needReply = true;
 			} else {
 				emit addCharacter(characterName.toUpper());

@@ -1,7 +1,8 @@
 #include "AcceptebleLineEdit.h"
 
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+
 #include <QKeyEvent>
-#include <QMessageBox>
 #include <QStyle>
 #include <QToolButton>
 
@@ -95,9 +96,9 @@ void AcceptebleLineEdit::focusOutEvent(QFocusEvent* _event)
 {
 	if (m_acceptedText != text()) {
 		const QString question = tr("was changed from \"%1\" to \"%2\". Apply changes?").arg(m_acceptedText, text());
-		if (QMessageBox::question(this, tr("Apply changes"),
+		if (QLightBoxMessage::question(this, tr("Apply changes"),
 				QString("%1 %2").arg(m_questionPrefix).arg(question))
-			== QMessageBox::Yes) {
+			== QDialogButtonBox::Yes) {
 			acceptText();
 		} else {
 			rejectText();

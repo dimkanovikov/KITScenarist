@@ -44,7 +44,6 @@
         <file>Images/logo.png</file>
         <file>Icons/style.png</file>
         <file>Icons/Editing/photo.png</file>
-        <file>Icons/Editing/clear.png</file>
         <file>Icons/Editing/save.png</file>
         <file>Icons/Editing/download.png</file>
         <file>Icons/browse.png</file>
@@ -61,9 +60,9 @@
         <file>Icons/Editing/search_active.png</file>
         <file>Icons/Editing/note_active.png</file>
         <file>Icons/Editing/format_active.png</file>
-        <file>Icons/Editing/brush_active.png</file>
-        <file>Icons/Editing/brush.png</file>
         <file>Icons/Editing/merge.png</file>
+        <file>Icons/Editing/corrector_active.png</file>
+        <file>Icons/Editing/corrector.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

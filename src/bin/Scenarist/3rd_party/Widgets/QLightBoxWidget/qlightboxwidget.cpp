@@ -52,7 +52,7 @@ bool QLightBoxWidget::eventFilter(QObject* _object, QEvent* _event)
 		QChildEvent* childEvent = dynamic_cast<QChildEvent*>(_event);
 		if (childEvent->child() != this
 			&& isVisible()) {
-			updateParent();
+			resetParent();
 		}
 	}
 
@@ -64,6 +64,7 @@ bool QLightBoxWidget::eventFilter(QObject* _object, QEvent* _event)
 		&& _event->type() == QEvent::Resize) {
 		updateSelf();
 	}
+
 	return QWidget::eventFilter(_object, _event);
 }
 
@@ -100,7 +101,7 @@ void QLightBoxWidget::showEvent(QShowEvent* _event)
 	QWidget::showEvent(_event);
 }
 
-void QLightBoxWidget::updateParent()
+void QLightBoxWidget::resetParent()
 {
 	QWidget* parent = parentWidget();
 	setParent(0);
@@ -116,7 +117,7 @@ void QLightBoxWidget::updateSelf()
 			//
 			// Переустановим родителя
 			//
-			updateParent();
+			resetParent();
 
 			//
 			// Обновляем отображение

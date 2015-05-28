@@ -13,7 +13,6 @@
 #include <QApplication>
 #include <QFile>
 #include <QFileInfo>
-#include <QMessageBox>
 #include <QDateTime>
 #include <QMutableMapIterator>
 #include <QNetworkAccessManager>

@@ -7,8 +7,8 @@
 
 #include <UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.h>
 
-#include <QInputDialog>
-#include <QMessageBox>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 using ManagementLayer::LocationsNavigatorManager;
 using UserInterface::LocationsNavigator;
@@ -56,14 +56,14 @@ void LocationsNavigatorManager::aboutAddLocation()
 	bool needReply = false;
 	do {
 		needReply = false;
-		locationName = QInputDialog::getText(m_navigator, tr("Add Location"), tr("Name"), QLineEdit::Normal, locationName);
+		locationName = QLightBoxInputDialog::getText(m_navigator, tr("Add Location"), tr("Name"), locationName);
 		if (!locationName.isEmpty()) {
 			if (DataStorageLayer::StorageFacade::locationStorage()->hasLocation(locationName.toUpper())) {
-				QMessageBox::critical(
-							m_navigator,
-							tr("Add Location Error"),
-							tr("Location with same name already exist in project")
-							);
+				QLightBoxMessage::critical(
+					m_navigator,
+					tr("Add Location Error"),
+					tr("Location with same name already exist in project")
+					);
 				needReply = true;
 			} else {
 				emit addLocation(locationName.toUpper());

@@ -9,10 +9,11 @@
 
 #include <Domain/Location.h>
 
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+
 #include <QWidget>
 #include <QSplitter>
 #include <QHBoxLayout>
-#include <QMessageBox>
 
 using ManagementLayer::LocationsManager;
 using ManagementLayer::LocationsNavigatorManager;
@@ -111,11 +112,9 @@ void LocationsManager::aboutRemoveLocation(const QString& _name)
 	//
 	// Если пользователь серьёзно намерен удалить локацию
 	//
-	if (QMessageBox::question(
-			m_view,
-			tr("Remove Location"),
-			tr("Are you shure to remove location?"),
-			QMessageBox::Yes | QMessageBox::No) == 	QMessageBox::Yes) {
+	if (QLightBoxMessage::question(m_view, tr("Remove Location"),
+			tr("Are you shure to remove location?"), QDialogButtonBox::Yes | QDialogButtonBox::No)
+		== 	QDialogButtonBox::Yes) {
 		//
 		// ... удалим её
 		//
