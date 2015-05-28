@@ -1,7 +1,7 @@
 #ifndef IMPORTDIALOG_H
 #define IMPORTDIALOG_H
 
-#include <QDialog>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
 namespace Ui {
 	class ImportDialog;
@@ -17,7 +17,7 @@ namespace UserInterface
 	/**
 	 * @brief Диалог импорта
 	 */
-	class ImportDialog : public QDialog
+	class ImportDialog : public QLightBoxDialog
 	{
 		Q_OBJECT
 

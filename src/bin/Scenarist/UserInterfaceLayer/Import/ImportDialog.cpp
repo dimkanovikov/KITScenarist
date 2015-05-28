@@ -42,7 +42,7 @@ namespace {
 
 
 ImportDialog::ImportDialog(QWidget *parent) :
-	QDialog(parent),
+	QLightBoxDialog(parent),
 	ui(new Ui::ImportDialog)
 {
 	ui->setupUi(this);
@@ -95,7 +95,7 @@ void ImportDialog::aboutFileNameChanged()
 
 void ImportDialog::initView()
 {
-
+	QLightBoxDialog::initView();
 }
 
 void ImportDialog::initConnections()
@@ -105,4 +105,6 @@ void ImportDialog::initConnections()
 
 	connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reject()));
 	connect(ui->importTo, SIGNAL(clicked()), this, SLOT(accept()));
+
+	QLightBoxDialog::initConnections();
 }

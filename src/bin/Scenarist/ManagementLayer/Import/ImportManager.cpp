@@ -35,7 +35,7 @@ ImportManager::ImportManager(QObject* _parent, QWidget* _parentWidget) :
 
 void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, int _cursorPosition)
 {
-	if (m_importDialog->exec() == QDialog::Accepted) {
+	if (m_importDialog->exec() == QLightBoxDialog::Accepted) {
 		BusinessLogic::ImportParameters importParameters = m_importDialog->importParameters();
 
 		//

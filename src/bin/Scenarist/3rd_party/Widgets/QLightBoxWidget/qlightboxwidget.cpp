@@ -51,10 +51,8 @@ bool QLightBoxWidget::eventFilter(QObject* _object, QEvent* _event)
 	if (_event->type() == QEvent::ChildAdded) {
 		QChildEvent* childEvent = dynamic_cast<QChildEvent*>(_event);
 		if (childEvent->child() != this
-			&&isVisible()) {
-			QWidget* parent = parentWidget();
-			setParent(0);
-			setParent(parent);
+			&& isVisible()) {
+			updateParent();
 		}
 	}
 
@@ -102,12 +100,24 @@ void QLightBoxWidget::showEvent(QShowEvent* _event)
 	QWidget::showEvent(_event);
 }
 
+void QLightBoxWidget::updateParent()
+{
+	QWidget* parent = parentWidget();
+	setParent(0);
+	setParent(parent);
+}
+
 void QLightBoxWidget::updateSelf()
 {
 	if (!m_isInUpdateSelf) {
 		m_isInUpdateSelf = true;
 
 		{
+			//
+			// Переустановим родителя
+			//
+			updateParent();
+
 			//
 			// Обновляем отображение
 			//
