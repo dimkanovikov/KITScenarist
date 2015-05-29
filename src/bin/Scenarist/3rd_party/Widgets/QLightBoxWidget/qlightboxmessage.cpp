@@ -71,6 +71,7 @@ void QLightBoxMessage::initView()
 {
 	m_icon->setFixedSize(ICON_PIXMAP_SIZE);
 	m_text->setWordWrap(true);
+	m_text->setMinimumWidth(300);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->addWidget(m_icon, 0, Qt::AlignCenter);

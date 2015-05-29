@@ -112,8 +112,8 @@ void LocationsManager::aboutRemoveLocation(const QString& _name)
 	//
 	// Если пользователь серьёзно намерен удалить локацию
 	//
-	if (QLightBoxMessage::question(m_view, tr("Remove Location"),
-			tr("Are you shure to remove location?"), QDialogButtonBox::Yes | QDialogButtonBox::No)
+	if (QLightBoxMessage::question(m_view, QString::null,
+			tr("Are you shure to remove location <b>%1</b>?").arg(_name), QDialogButtonBox::Yes | QDialogButtonBox::No)
 		== 	QDialogButtonBox::Yes) {
 		//
 		// ... удалим её

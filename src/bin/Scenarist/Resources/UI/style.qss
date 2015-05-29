@@ -268,9 +268,10 @@ QPushButton:!checked:hover, QPushButton:!checked:pressed {
 	font-weight: 700;
 	background-color: palette(button);
 	padding: 7px 20px 7px 20px;
-	border-bottom: 1px solid palette(midlight);
+	border: 1px solid palette(midlight);
 }
 
 [lightBoxDialogCentralWidget=true] {
 	background-color: palette(button);
+	border: 1px solid palette(midlight);
 }

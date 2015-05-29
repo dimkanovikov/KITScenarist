@@ -21,6 +21,9 @@ int QLightBoxDialog::exec()
 	m_execResult = Rejected;
 
 	m_title->setText(windowTitle());
+	if (m_title->text().isEmpty()) {
+		m_title->hide();
+	}
 
 	show();
 
@@ -76,17 +79,6 @@ bool QLightBoxDialog::event(QEvent* _event)
 	}
 
 	return result;
-}
-
-void QLightBoxDialog::mousePressEvent(QMouseEvent* _event)
-{
-	QLightBoxWidget::mousePressEvent(_event);
-
-	if (m_centralWidget != 0) {
-		if (!m_centralWidget->rect().contains(m_centralWidget->mapFromParent(_event->pos()))) {
-			reject();
-		}
-	}
 }
 
 void QLightBoxDialog::initView()

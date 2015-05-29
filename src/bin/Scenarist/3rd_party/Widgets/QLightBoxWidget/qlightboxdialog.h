@@ -65,11 +65,6 @@ protected:
 	bool event(QEvent* _event);
 
 	/**
-	 * @brief Переопределяется для отмены диалога в случае щелчка пользователя вне самого диалога
-	 */
-	void mousePressEvent(QMouseEvent* _event);
-
-	/**
 	 * @brief Настроить представление
 	 */
 	virtual void initView();
