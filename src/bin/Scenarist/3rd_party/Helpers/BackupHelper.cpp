@@ -1,7 +1,27 @@
 #include "BackupHelper.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/ScenarioStorage.h>
+
+#include <Domain/Scenario.h>
+
+#include <QDateTime>
 #include <QDir>
 #include <QFileInfo>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+
+namespace {
+	/**
+	 * @brief Расширение файла "Кит сценарист резервная копия"
+	 */
+	const QString BACKUP_VERSIONS_EXTANSION = "kitsrc";
+
+	/**
+	 * @brief Название соединения для БД резервных копий версий сценария
+	 */
+	const QString BACKUPDB_CONNECTION_NAME = "backup_versions";
+}
 
 
 BackupHelper::BackupHelper() :
@@ -38,7 +58,9 @@ void BackupHelper::saveBackup(const QString& _filePath)
 		const QString tmpBackupFileName =
 				QString("%1%2.backup.tmp.%3").arg(backupPath, fileInfo.baseName(), fileInfo.completeSuffix());
 		const QString backupFileName =
-				QString("%1%2.backup.%3").arg(backupPath, fileInfo.baseName(), fileInfo.completeSuffix());
+				QString("%1%2.full.backup.%3").arg(backupPath, fileInfo.baseName(), fileInfo.completeSuffix());
+		const QString backupVersionsFileName =
+				QString("%1%2.versions.backup.%3").arg(backupPath, fileInfo.baseName(), BACKUP_VERSIONS_EXTANSION);
 
 		//
 		// Копируем файл во временную резервную копию
@@ -49,6 +71,34 @@ void BackupHelper::saveBackup(const QString& _filePath)
 			//
 			QFile::remove(backupFileName);
 			QFile::rename(tmpBackupFileName, backupFileName);
+		}
+
+		//
+		// Добавляем версию сценария в файл с резервными копиями версий текста сценария
+		//
+		{
+			//
+			// NOTE: Как быть с быстродействием?
+			//
+			{
+				QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", BACKUPDB_CONNECTION_NAME);
+				db.setDatabaseName(backupVersionsFileName);
+				db.open();
+				//
+				// Храним всего 10 копий, удаляя более старые
+				//
+				QSqlQuery backuper(db);
+				backuper.exec("CREATE TABLE versions (id INTEGER PRIMARY KEY, version TEXT NOT NULL, datetime TEXT NOT NULL)");
+				backuper.exec("UPDATE versions SET id = (id + 1)");
+				backuper.exec("DELETE FROM versions WHERE id = 11");
+
+				backuper.prepare("INSERT INTO versions VALUES(1, ?, ?)");
+				backuper.addBindValue(DataStorageLayer::StorageFacade::scenarioStorage()->current()->text());
+				backuper.addBindValue(QDateTime::currentDateTime().toString(Qt::ISODate));
+				backuper.exec();
+			}
+
+			QSqlDatabase::removeDatabase(BACKUPDB_CONNECTION_NAME);
 		}
 	}
 }

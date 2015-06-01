@@ -809,6 +809,8 @@ void ScenarioManager::initData()
 
 void ScenarioManager::initView()
 {
+	m_view->setTabOrder(0, m_textEditManager->view());
+
 	m_viewEditorsTabs = new TabBar(m_view);
 	m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
