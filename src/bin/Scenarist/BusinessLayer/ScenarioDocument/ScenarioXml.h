@@ -30,9 +30,15 @@ namespace BusinessLogic
 		ScenarioXml(ScenarioDocument* _scenario);
 
 		/**
+		 * @brief Сохранить весь сценарий в xml-строку, не корректируются значения последнего
+		 *		  сохранённого майм выделения
+		 */
+		QString scenarioToXml();
+
+		/**
 		 * @brief Записать сценарий в xml-строку из заданного диапазона текста
 		 */
-		QString scenarioToXml(int _startPosition = 0, int _endPosition = 0);
+		QString scenarioToXml(int _startPosition, int _endPosition, bool _correctLastMime = true);
 
 		/**
 		 * @brief Записать сценарий в xml-строку из заданного диапазона элементов

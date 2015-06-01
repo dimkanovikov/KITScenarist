@@ -34,7 +34,13 @@ ScenarioXml::ScenarioXml(ScenarioDocument* _scenario) :
 	Q_ASSERT(m_scenario);
 }
 
-QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
+QString ScenarioXml::scenarioToXml()
+{
+	const bool NO_CORRECT_LAST_MIME = false;
+	return scenarioToXml(0, 0, NO_CORRECT_LAST_MIME);
+}
+
+QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _correctLastMime)
 {
 	QString resultXml;
 
@@ -51,8 +57,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition)
 	//
 	// Сохраним позиции
 	//
-	m_lastMimeFrom = _startPosition;
-	m_lastMimeTo = _endPosition;
+	if (_correctLastMime) {
+		m_lastMimeFrom = _startPosition;
+		m_lastMimeTo = _endPosition;
+	}
 
 	//
 	// Получим курсор для редактирования

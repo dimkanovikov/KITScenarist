@@ -289,7 +289,8 @@ bool ScenarioModel::dropMimeData(
 
 	bool isDropSucceed = false;
 
-	if (_data != 0
+	if ((_row != -1 && _column != -1)
+		&& _data != 0
 		&& _data->hasFormat(MIME_TYPE)) {
 
 		switch (_action) {
