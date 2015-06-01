@@ -784,6 +784,17 @@ void ScenarioTextEdit::aboutCorrectAdditionalCursors(int _position, int _charsRe
 	}
 }
 
+void ScenarioTextEdit::aboutSelectionChanged()
+{
+	//
+	// Если включена опция для редактора
+	//
+
+	//
+	// Отобразить вспомогатаельную панель
+	//
+}
+
 void ScenarioTextEdit::aboutSaveEditorState()
 {
 	setProperty(SCROLL_VALUE, verticalScrollBar()->value());

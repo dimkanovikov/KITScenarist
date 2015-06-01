@@ -138,19 +138,19 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 				QString updateInfo =
 						tr("Released version %1 ").arg(maxVersion)
 #ifdef Q_OS_WIN
-						+ "<a href=\"http://kitscenarist.ru/downloads/windows/scenarist-setup-" + maxVersion + ".exe\" "
+						+ "<a href=\"https://kitscenarist.ru/downloads/windows/scenarist-setup-" + maxVersion + ".exe\" "
 #elif defined Q_OS_LINUX
 #ifdef Q_PROCESSOR_X86_64
-						+ "<a href=\"http://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + "_amd64.deb\" "
+						+ "<a href=\"https://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + "_amd64.deb\" "
 #else
-						+ "<a href=\"http://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + "_i386.deb\" "
+						+ "<a href=\"https://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + "_i386.deb\" "
 #endif
 #elif defined Q_OS_MAC
-						+ "<a href=\"http://kitscenarist.ru/downloads/mac/scenarist-setup-" + maxVersion + ".dmg\" "
+						+ "<a href=\"https://kitscenarist.ru/downloads/mac/scenarist-setup-" + maxVersion + ".dmg\" "
 #endif
-						+ tr("style=\"color:#2b78da;\">download</a> "
-							 "or <a href=\"http://kitscenarist.ru/history.html\" "
-							 "style=\"color:#2b78da;\">read more</a>.");
+						+ "style=\"color:#2b78da;\">" + tr("download") + "</a> "
+						+ tr("or") + "<a href=\"https://kitscenarist.ru/history.html\" "
+						+ "style=\"color:#2b78da;\">" + tr("read more") + "</a>.";
 				m_view->setUpdateInfo(updateInfo);
 			}
 		}
@@ -210,7 +210,7 @@ void StartUpManager::checkNewVersion()
 	//
 	// Построим ссылку, чтобы учитывать запрос на проверку обновлений
 	//
-	QString url = QString("http://kitscenarist.ru/api/app_updates.php");
+	QString url = QString("https://kitscenarist.ru/api/app_updates.php");
 
 	url.append("?system_type=");
 	url.append(

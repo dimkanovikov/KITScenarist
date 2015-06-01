@@ -131,7 +131,7 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("application/user-name",
 		QApplication::translate("DataStorageLayer::SettingsStorage", "Local user"));
 	m_defaultValues.insert("application/use-dark-theme", "0");
-	m_defaultValues.insert("application/autosave", "0");
+	m_defaultValues.insert("application/autosave", "1");
 	m_defaultValues.insert("application/autosave-interval", "5");
 	m_defaultValues.insert("application/save-backups", "0");
 	m_defaultValues.insert("application/save-backups-folder",
@@ -164,6 +164,7 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/shortcuts/transition", ShortcutHelper::makeShortcut("Ctrl+G"));
 	m_defaultValues.insert("scenario-editor/shortcuts/note", ShortcutHelper::makeShortcut("Ctrl+P"));
 	m_defaultValues.insert("scenario-editor/shortcuts/title", ShortcutHelper::makeShortcut("Ctrl+N"));
+	m_defaultValues.insert("scenario-editor/shortcuts/noprintable_text", ShortcutHelper::makeShortcut("Ctrl+Esc"));
 	m_defaultValues.insert("scenario-editor/shortcuts/scene_group_header", ShortcutHelper::makeShortcut("Ctrl+D"));
 	m_defaultValues.insert("scenario-editor/shortcuts/folder_header", ShortcutHelper::makeShortcut("Ctrl+Space"));
 	//
@@ -185,6 +186,8 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-note-by-enter", QString::number(ScenarioBlockStyle::Action));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-title-by-tab", QString::number(ScenarioBlockStyle::Action));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-title-by-enter", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-noprintable_text-by-tab", QString::number(ScenarioBlockStyle::Action));
+	m_defaultValues.insert("scenario-editor/styles-jumping/from-noprintable_text-by-enter", QString::number(ScenarioBlockStyle::Action));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_group_header-by-tab", QString::number(ScenarioBlockStyle::TimeAndPlace));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_group_header-by-enter", QString::number(ScenarioBlockStyle::TimeAndPlace));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-folder_header-by-tab", QString::number(ScenarioBlockStyle::TimeAndPlace));
@@ -208,6 +211,8 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/styles-changing/from-note-by-enter", QString::number(ScenarioBlockStyle::Note));
 	m_defaultValues.insert("scenario-editor/styles-changing/from-title-by-tab", QString::number(ScenarioBlockStyle::Title));
 	m_defaultValues.insert("scenario-editor/styles-changing/from-title-by-enter", QString::number(ScenarioBlockStyle::Title));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-noprintable_text-by-tab", QString::number(ScenarioBlockStyle::NoprintableText));
+	m_defaultValues.insert("scenario-editor/styles-changing/from-noprintable_text-by-enter", QString::number(ScenarioBlockStyle::NoprintableText));
 	m_defaultValues.insert("scenario-editor/styles-changing/from-scene_group_header-by-tab", QString::number(ScenarioBlockStyle::SceneGroupHeader));
 	m_defaultValues.insert("scenario-editor/styles-changing/from-scene_group_header-by-enter", QString::number(ScenarioBlockStyle::SceneGroupHeader));
 	m_defaultValues.insert("scenario-editor/styles-changing/from-folder_header-by-tab", QString::number(ScenarioBlockStyle::FolderHeader));

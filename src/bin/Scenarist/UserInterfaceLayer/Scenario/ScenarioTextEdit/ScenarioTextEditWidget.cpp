@@ -55,7 +55,7 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_redo(new FlatButton(this)),
 	m_search(new FlatButton(this)),
 	m_fastFormat(new FlatButton(this)),
-	m_formatting(new FlatButton(this)),
+	m_correction(new FlatButton(this)),
 	m_duration(new QLabel(this)),
 	m_countersInfo(new QLabel(this)),
 	m_editor(new ScenarioTextEdit(this)),
@@ -406,10 +406,9 @@ void ScenarioTextEditWidget::initView()
 	m_fastFormat->setToolTip(tr("Text Fast Format"));
 	m_fastFormat->setCheckable(true);
 
-	m_formatting->setIcons(QIcon(":/Graphics/Icons/Editing/brush.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/brush_active.png"));
-	m_formatting->setToolTip(tr("Text Formatting"));
-	m_formatting->setCheckable(true);
-	m_formatting->hide();
+	m_correction->setIcons(QIcon(":/Graphics/Icons/Editing/corrector.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/corrector_active.png"));
+	m_correction->setToolTip(tr("Text Corrections"));
+	m_correction->setCheckable(true);
 
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 	m_duration->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -432,7 +431,7 @@ void ScenarioTextEditWidget::initView()
 	topLayout->addWidget(m_redo);
 	topLayout->addWidget(m_search);
 	topLayout->addWidget(m_fastFormat);
-	topLayout->addWidget(m_formatting);
+	topLayout->addWidget(m_correction);
 	topLayout->addWidget(m_duration);
 	topLayout->addWidget(m_countersInfo);
 
@@ -555,7 +554,7 @@ void ScenarioTextEditWidget::initStyleSheet()
 	m_redo->setProperty("inTopPanel", true);
 	m_search->setProperty("inTopPanel", true);
 	m_fastFormat->setProperty("inTopPanel", true);
-	m_formatting->setProperty("inTopPanel", true);
+	m_correction->setProperty("inTopPanel", true);
 
 	m_duration->setProperty("inTopPanel", true);
 	m_duration->setProperty("topPanelTopBordered", true);

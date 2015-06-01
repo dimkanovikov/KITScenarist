@@ -26,7 +26,7 @@ namespace KeyProcessingLayer
 	class NoteHandler;
 	class TitleHeaderHandler;
 	class TitleHandler;
-	class SimpleTextHandler;
+	class NoprintableTextHandler;
 	class SceneGroupHeaderHandler;
 	class SceneGroupFooterHandler;
 	class FolderHeaderHandler;
@@ -86,7 +86,7 @@ namespace KeyProcessingLayer
 		NoteHandler* m_noteHandler;
 		TitleHeaderHandler* m_titleheaderHandler;
 		TitleHandler* m_titleHandler;
-		SimpleTextHandler* m_simpleTextHandler;
+		NoprintableTextHandler* m_simpleTextHandler;
 		SceneGroupHeaderHandler* m_sceneGroupHeaderHandler;
 		SceneGroupFooterHandler* m_sceneGroupFooterHandler;
 		FolderHeaderHandler* m_folderHeaderHandler;

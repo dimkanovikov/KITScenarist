@@ -126,7 +126,6 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/PrepareHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SimpleTextHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/StandardKeyHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.cpp \
@@ -218,7 +217,8 @@ SOURCES += main.cpp \
     DataLayer/DataMappingLayer/ScenarioDataMapper.cpp \
     3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.cpp \
     3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.cpp \
-    3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.cpp
+    3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -292,7 +292,6 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/PrepareHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SimpleTextHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/StandardKeyHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.h \
@@ -393,7 +392,8 @@ HEADERS += \
     DataLayer/DataMappingLayer/ScenarioDataMapper.h \
     3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h \
     3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h \
-    3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h
+    3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

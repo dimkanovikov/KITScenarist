@@ -171,6 +171,11 @@ namespace UserInterface
 		void aboutCorrectAdditionalCursors(int _position, int _charsRemoved, int _charsAdded);
 
 		/**
+		 * @brief Обработки изменения выделения
+		 */
+		void aboutSelectionChanged();
+
+		/**
 		 * @brief Сохранить состояние редактора
 		 */
 		void aboutSaveEditorState();

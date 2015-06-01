@@ -135,12 +135,12 @@ void ExportDialog::setScenarioName(const QString& _name)
 
 QString ExportDialog::scenarioAdditionalInfo() const
 {
-	return ui->additionalInfo->text();
+	return ui->additionalInfo->currentText();
 }
 
 void ExportDialog::setScenarioAdditionalInfo(const QString& _additionalInfo)
 {
-	ui->additionalInfo->setText(_additionalInfo);
+	ui->additionalInfo->setEditText(_additionalInfo);
 }
 
 QString ExportDialog::scenarioGenre() const
@@ -191,7 +191,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 	exportParameters.style = ui->styles->currentText();
 	exportParameters.printTilte = ui->printTitle->isChecked();
 	exportParameters.scenarioName = ui->name->text();
-	exportParameters.scenarioAdditionalInfo = ui->additionalInfo->text();
+	exportParameters.scenarioAdditionalInfo = ui->additionalInfo->currentText();
 	exportParameters.scenarioGenre = ui->genre->text();
 	exportParameters.scenarioAuthor = ui->author->text();
 	exportParameters.scenarioContacts = ui->contacts->toPlainText();

@@ -243,9 +243,9 @@ namespace UserInterface
 		FlatButton* m_fastFormat;
 
 		/**
-		 * @brief Кнопка включения опций форматирования
+		 * @brief Кнопка включения опций редакторов
 		 */
-		FlatButton* m_formatting;
+		FlatButton* m_correction;
 
 		/**
 		 * @brief Хронометраж сценария

@@ -183,7 +183,6 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 				//
 				// Если строка пуста, то сменить стиль на описание действия
 				//
-//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::TimeAndPlace));
 			} else {
 				//! Текст не пуст
@@ -230,7 +229,6 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 						//
 						// А затем вставим блок
 						//
-//						editor()->addScenarioBlock(ScenarioBlockStyle::SceneCharacters);
 						editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::TimeAndPlace));
 					}
 				} else {

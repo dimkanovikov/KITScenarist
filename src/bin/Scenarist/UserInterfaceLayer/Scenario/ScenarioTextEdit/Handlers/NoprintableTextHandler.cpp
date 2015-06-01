@@ -1,4 +1,4 @@
-#include "SimpleTextHandler.h"
+#include "NoprintableTextHandler.h"
 
 #include "../ScenarioTextEdit.h"
 
@@ -10,12 +10,12 @@ using namespace BusinessLogic;
 using UserInterface::ScenarioTextEdit;
 
 
-SimpleTextHandler::SimpleTextHandler(ScenarioTextEdit* _editor) :
+NoprintableTextHandler::NoprintableTextHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
 }
 
-void SimpleTextHandler::handleEnter(QKeyEvent*)
+void NoprintableTextHandler::handleEnter(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -48,17 +48,47 @@ void SimpleTextHandler::handleEnter(QKeyEvent*)
 			//
 			// Ни чего не делаем
 			//
-			handleDelete();
-		}
+		} else {
+			//! Нет выделения
 
-		//
-		// Вставляем блок и применяем ему стиль простого текста
-		//
-		editor()->addScenarioBlock(ScenarioBlockStyle::NoprintableText);
+			if (cursorBackwardText.isEmpty()
+				&& cursorForwardText.isEmpty()) {
+				//! Текст пуст
+
+				//
+				// Ни чего не делаем
+				//
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::NoprintableText));
+			} else {
+				//! Текст не пуст
+
+				if (cursorBackwardText.isEmpty()) {
+					//! В начале блока
+
+					//
+					// Ни чего не делаем
+					//
+				} else if (cursorForwardText.isEmpty()) {
+					//! В конце блока
+
+					//
+					// Вставляем блок и применяем ему стиль описания действия
+					//
+					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::NoprintableText));
+				} else {
+					//! Внутри блока
+
+					//
+					// Вставляем блок и применяем ему стиль описания действия
+					//
+					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
+				}
+			}
+		}
 	}
 }
 
-void SimpleTextHandler::handleTab(QKeyEvent*)
+void NoprintableTextHandler::handleTab(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения

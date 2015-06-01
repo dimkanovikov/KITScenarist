@@ -1,5 +1,5 @@
-#ifndef SIMPLETEXTHANDLER_H
-#define SIMPLETEXTHANDLER_H
+#ifndef NOPRINTABLETEXTHANDLER_H
+#define NOPRINTABLETEXTHANDLER_H
 
 #include "StandardKeyHandler.h"
 
@@ -9,10 +9,10 @@ namespace KeyProcessingLayer
 	/**
 	 * @brief Класс выполняющий обработку нажатия клавиш в блоке описание действия
 	 */
-	class SimpleTextHandler : public StandardKeyHandler
+	class NoprintableTextHandler : public StandardKeyHandler
 	{
 	public:
-		SimpleTextHandler(UserInterface::ScenarioTextEdit* _editor);
+		NoprintableTextHandler(UserInterface::ScenarioTextEdit* _editor);
 
 	protected:
 		/**
@@ -25,4 +25,4 @@ namespace KeyProcessingLayer
 	};
 }
 
-#endif // SIMPLETEXTHANDLER_H
+#endif // NOPRINTABLETEXTHANDLER_H

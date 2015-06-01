@@ -32,6 +32,7 @@ ShortcutsManager::ShortcutsManager(UserInterface::ScenarioTextEdit* _editor) :
 	m_shortcuts.insert(ScenarioBlockStyle::Transition, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::Note, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::Title, new QShortcut(_editor));
+	m_shortcuts.insert(ScenarioBlockStyle::NoprintableText, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::SceneGroupHeader, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::FolderHeader, new QShortcut(_editor));
 

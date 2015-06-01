@@ -264,7 +264,6 @@ void ExportManager::saveTitleListInfo(BusinessLogic::ScenarioDocument* _scenario
 	//
 	// Сохраняем информацию о титульном листе
 	//
-	Domain::Scenario* currentScenario = _scenario->scenario();
 	bool isTitleListDataChanged = false;
 	if (StorageFacade::scenarioDataStorage()->name() != m_exportDialog->scenarioName()) {
 		StorageFacade::scenarioDataStorage()->setName(m_exportDialog->scenarioName());
