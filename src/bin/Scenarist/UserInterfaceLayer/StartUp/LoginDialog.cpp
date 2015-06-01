@@ -5,7 +5,7 @@ using UserInterface::LoginDialog;
 
 
 LoginDialog::LoginDialog(QWidget* _parent) :
-	QDialog(_parent),
+	QLightBoxDialog(_parent),
 	ui(new Ui::LoginDialog)
 {
 	ui->setupUi(this);
@@ -49,10 +49,15 @@ void LoginDialog::setError(const QString& _error)
 void LoginDialog::initView()
 {
 	ui->error->hide();
-	resize(width(), sizeHint().height());
+	ui->buttons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
+
+	QLightBoxDialog::initView();
 }
 
 void LoginDialog::initConnections()
 {
-	connect(ui->login, SIGNAL(clicked()), this, SLOT(accept()));
+	connect(ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(ui->buttons, SIGNAL(rejected()), this, SLOT(reject()));
+
+	QLightBoxDialog::initConnections();
 }

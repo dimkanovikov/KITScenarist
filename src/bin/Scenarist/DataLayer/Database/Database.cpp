@@ -314,12 +314,6 @@ void Database::createEnums(QSqlDatabase& _database)
 	QSqlQuery q_creator(_database);
 	_database.transaction();
 
-	// Пустой сценарий и черновик
-	{
-		q_creator.exec("INSERT INTO scenario (id, text) VALUES(null, '')");
-		q_creator.exec("INSERT INTO scenario (id, text, is_draft) VALUES(null, '', 1)");
-	}
-
 	// Версия программы
 	{
 		q_creator.exec(

@@ -1,7 +1,7 @@
 #ifndef LOGINDIALOG_H
 #define LOGINDIALOG_H
 
-#include <QDialog>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
 namespace Ui {
 	class LoginDialog;
@@ -13,7 +13,7 @@ namespace UserInterface
 	/**
 	 * @brief Класс диалога авторизации пользователя
 	 */
-	class LoginDialog : public QDialog
+	class LoginDialog : public QLightBoxDialog
 	{
 		Q_OBJECT
 

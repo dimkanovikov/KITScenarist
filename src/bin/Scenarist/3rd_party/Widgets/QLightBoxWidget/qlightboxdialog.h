@@ -74,6 +74,11 @@ protected:
 	 */
 	virtual void initConnections();
 
+	/**
+	 * @brief Виджет на который нужно установить фокус при отображении
+	 */
+	virtual QWidget* focusedOnExec() const;
+
 private:
 	/**
 	 * @brief Заголовок диалога

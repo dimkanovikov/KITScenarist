@@ -35,6 +35,11 @@ private:
 	 */
 	void initConnections();
 
+	/**
+	 * @brief Виджет на который установить фокус при отображении
+	 */
+	QWidget* focusedOnExec() const;
+
 private:
 	/**
 	 * @brief Текстовая метка

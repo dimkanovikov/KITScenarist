@@ -52,3 +52,8 @@ void QLightBoxInputDialog::initConnections()
 	QLightBoxDialog::initConnections();
 }
 
+QWidget* QLightBoxInputDialog::focusedOnExec() const
+{
+	return m_textInput;
+}
+

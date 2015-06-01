@@ -58,7 +58,7 @@ void StartUpManager::aboutRetryLogin(const QString& _error)
 	loginDialog.setUserName(m_userName);
 	loginDialog.setPassword(m_password);
 	loginDialog.setError(_error);
-	if (loginDialog.exec() == QDialog::Accepted) {
+	if (loginDialog.exec() == QLightBoxDialog::Accepted) {
 		m_userName = loginDialog.userName();
 		m_password = loginDialog.password();
 		emit loginRequested(m_userName, m_password);
@@ -87,7 +87,7 @@ void StartUpManager::aboutLoginClicked()
 	// Показать диалог авторизации
 	//
 	LoginDialog loginDialog(m_view);
-	if (loginDialog.exec() == QDialog::Accepted) {
+	if (loginDialog.exec() == QLightBoxDialog::Accepted) {
 		m_userName = loginDialog.userName();
 		m_password = loginDialog.password();
 		emit loginRequested(m_userName, m_password);

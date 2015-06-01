@@ -95,9 +95,8 @@ void AcceptebleLineEdit::keyPressEvent(QKeyEvent* _event)
 void AcceptebleLineEdit::focusOutEvent(QFocusEvent* _event)
 {
 	if (m_acceptedText != text()) {
-		const QString question = tr("was changed from \"%1\" to \"%2\". Apply changes?").arg(m_acceptedText, text());
-		if (QLightBoxMessage::question(this, tr("Apply changes"),
-				QString("%1 %2").arg(m_questionPrefix).arg(question))
+		const QString question = tr("was changed from <b>%1</b> to <b>%2</b>. Apply changes?").arg(m_acceptedText, text());
+		if (QLightBoxMessage::question(this, QString::null, QString("%1 %2").arg(m_questionPrefix).arg(question))
 			== QDialogButtonBox::Yes) {
 			acceptText();
 		} else {

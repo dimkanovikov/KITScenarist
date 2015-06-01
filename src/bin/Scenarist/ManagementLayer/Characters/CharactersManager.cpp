@@ -112,8 +112,8 @@ void CharactersManager::aboutRemoveCharacters(const QStringList& _names)
 	//
 	// Если пользователь серьёзно намерен удалить персонажа
 	//
-	if (QLightBoxMessage::question(m_view, tr("Remove Characters"),
-			tr("Are you shure to remove selected characters?"),
+	if (QLightBoxMessage::question(m_view, QString::null,
+			tr("Are you shure to remove characters: <b>%1</b>?").arg(_names.join(", ")),
 			QDialogButtonBox::Yes | QDialogButtonBox::No)
 		== QDialogButtonBox::Yes) {
 		//

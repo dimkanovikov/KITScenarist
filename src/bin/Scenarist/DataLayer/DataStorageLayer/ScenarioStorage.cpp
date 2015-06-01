@@ -3,6 +3,8 @@
 #include <DataLayer/DataMappingLayer/MapperFacade.h>
 #include <DataLayer/DataMappingLayer/ScenarioMapper.h>
 
+#include <BusinessLayer/ScenarioDocument/ScenarioXml.h>
+
 #include <Domain/Scenario.h>
 
 #include <QUuid>
@@ -40,7 +42,8 @@ Scenario* ScenarioStorage::current(bool _isDraft)
 		//
 		// ... создаём сценарий
 		//
-		currentScenario = new Scenario(Identifier(), QString::null, _isDraft);
+		currentScenario =
+			new Scenario(Identifier(), BusinessLogic::ScenarioXml::defaultXml(), _isDraft);
 		//
 		// ... сохраним сценарий в базе данных
 		//

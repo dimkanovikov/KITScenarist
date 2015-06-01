@@ -4,6 +4,7 @@
 #include <QGridLayout>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QTimer>
 
 
 QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget) :
@@ -27,7 +28,7 @@ int QLightBoxDialog::exec()
 
 	show();
 
-	m_centralWidget->setFocus();
+	focusedOnExec()->setFocus();
 
 	QEventLoop dialogEventLoop;
 	connect(this, SIGNAL(accepted()), &dialogEventLoop, SLOT(quit()));
@@ -115,4 +116,9 @@ void QLightBoxDialog::initView()
 
 void QLightBoxDialog::initConnections()
 {
+}
+
+QWidget* QLightBoxDialog::focusedOnExec() const
+{
+	return m_centralWidget;
 }
