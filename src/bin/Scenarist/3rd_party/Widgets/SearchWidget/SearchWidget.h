@@ -25,6 +25,12 @@ public:
 	void setEditor(QTextEdit* _editor);
 
 	/**
+	 * @brief Выделить искомый текст
+	 * @note Применяется при повторном показе, чтобы можно было сразу вводить новый текст
+	 */
+	void selectText();
+
+	/**
 	 * @brief Установить режим только поиска или и замены тоже
 	 */
 	void setSearchOnly(bool _isSearchOnly);

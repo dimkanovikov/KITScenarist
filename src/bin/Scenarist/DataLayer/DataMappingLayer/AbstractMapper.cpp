@@ -265,29 +265,37 @@ void AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
 	// Если всё завершилось успешно сохраняем запрос и данные в таблицу истории запросов
 	//
 	else {
-		QSqlQuery q_history(_sqlQuery);
-		q_history.prepare("INSERT INTO _database_history (id, query, query_values, datetime) VALUES(?, ?, ?, ?);");
 		//
-		// ... uuid
+		// NOTE: Оптимизация размера файла проекта
+		// Сохраняем всё, кроме изменений сценария и текста самого сценария
 		//
-		q_history.addBindValue(QUuid::createUuid().toString());
-		//
-		// ... запрос
-		//
-		q_history.addBindValue(_sqlQuery.lastQuery());
-		//
-		// ... данные
-		//
-		const QString valueString = QVariantMapWriter::mapToDataString(_sqlQuery.boundValues());
-		q_history.addBindValue(valueString);
-		//
-		// ... время выполнения
-		//
-		q_history.addBindValue(QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss"));
+		if (!_sqlQuery.lastQuery().contains(" scenario_changes ")
+			&& !_sqlQuery.lastQuery().contains(" scenario ")) {
 
-		//
-		// Сохраняем данные
-		//
-		q_history.exec();
+			QSqlQuery q_history(_sqlQuery);
+			q_history.prepare("INSERT INTO _database_history (id, query, query_values, datetime) VALUES(?, ?, ?, ?);");
+			//
+			// ... uuid
+			//
+			q_history.addBindValue(QUuid::createUuid().toString());
+			//
+			// ... запрос
+			//
+			q_history.addBindValue(_sqlQuery.lastQuery());
+			//
+			// ... данные
+			//
+			const QString valueString = QVariantMapWriter::mapToDataString(_sqlQuery.boundValues());
+			q_history.addBindValue(valueString);
+			//
+			// ... время выполнения
+			//
+			q_history.addBindValue(QDateTime::currentDateTimeUtc().toString("yyyy-MM-dd hh:mm:ss"));
+
+			//
+			// Сохраняем данные
+			//
+			q_history.exec();
+		}
 	}
 }

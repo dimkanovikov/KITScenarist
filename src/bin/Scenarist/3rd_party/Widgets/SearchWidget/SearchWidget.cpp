@@ -101,6 +101,11 @@ void SearchWidget::setEditor(QTextEdit* _editor)
 	}
 }
 
+void SearchWidget::selectText()
+{
+	m_searchText->selectAll();
+}
+
 void SearchWidget::setSearchOnly(bool _isSearchOnly)
 {
 	m_replaceText->setVisible(!_isSearchOnly);

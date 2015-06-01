@@ -1002,29 +1002,26 @@ bool SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids
 					StorageFacade::databaseHistoryStorage()->historyRecord(dataUuid);
 
 			//
+			// NOTE: Вынесено на уровень AbstractMapper::executeSql
 			// Нас интересуют изменения из всех таблиц, кроме сценария и истории изменений сценария,
 			// они синхронизируются самостоятельно
 			//
-			const QString query = historyRecord.value(DBH_QUERY_KEY);
-			if (!query.contains(" scenario_changes ")
-				&& !query.contains(" scenario ")) {
-				//
-				xmlWriter.writeStartElement("change");
-				//
-				xmlWriter.writeTextElement(DBH_ID_KEY, historyRecord.value(DBH_ID_KEY));
-				//
-				xmlWriter.writeStartElement(DBH_QUERY_KEY);
-				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_KEY));
-				xmlWriter.writeEndElement();
-				//
-				xmlWriter.writeStartElement(DBH_QUERY_VALUES_KEY);
-				xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_VALUES_KEY));
-				xmlWriter.writeEndElement();
-				//
-				xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
-				//
-				xmlWriter.writeEndElement(); // change
-			}
+
+			xmlWriter.writeStartElement("change");
+			//
+			xmlWriter.writeTextElement(DBH_ID_KEY, historyRecord.value(DBH_ID_KEY));
+			//
+			xmlWriter.writeStartElement(DBH_QUERY_KEY);
+			xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_KEY));
+			xmlWriter.writeEndElement();
+			//
+			xmlWriter.writeStartElement(DBH_QUERY_VALUES_KEY);
+			xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_VALUES_KEY));
+			xmlWriter.writeEndElement();
+			//
+			xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
+			//
+			xmlWriter.writeEndElement(); // change
 		}
 		xmlWriter.writeEndElement(); // changes
 		xmlWriter.writeEndDocument();

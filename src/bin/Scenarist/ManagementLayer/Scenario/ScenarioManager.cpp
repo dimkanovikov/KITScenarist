@@ -64,6 +64,11 @@ namespace {
 	const bool IS_DRAFT = true;
 
 	/**
+	 * @brief Интервал формирования патчей для отмены/повтора последнего действия, мс
+	 */
+	const int SAVE_CHANGES_INTERVAL = 5000;
+
+	/**
 	 * @brief Обновить текст сценария для нового имени персонажа
 	 */
 	static void updateScenarioForNewCharacterName(ScenarioDocument* _scenario,
@@ -269,7 +274,6 @@ void ScenarioManager::startChangesHandling()
 	//
 	// Запускаем таймер сохранения изменений
 	//
-	const int SAVE_CHANGES_INTERVAL = 3000;
 	m_saveChangesTimer.start(SAVE_CHANGES_INTERVAL);
 }
 

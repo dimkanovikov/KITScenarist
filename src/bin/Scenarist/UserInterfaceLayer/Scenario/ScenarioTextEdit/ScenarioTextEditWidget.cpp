@@ -318,6 +318,7 @@ void ScenarioTextEditWidget::aboutShowSearch()
 {
 	m_searchLine->setVisible(m_search->isChecked());
 	if (m_searchLine->isVisible()) {
+		m_searchLine->selectText();
 		m_searchLine->setFocus();
 	}
 }
