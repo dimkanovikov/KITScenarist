@@ -218,7 +218,8 @@ SOURCES += main.cpp \
     3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.cpp \
     3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.cpp \
     3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.cpp
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.cpp \
+    3rd_party/Widgets/ToolTipLabel/ToolTipLabel.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -393,7 +394,8 @@ HEADERS += \
     3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h \
     3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h \
     3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.h
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.h \
+    3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

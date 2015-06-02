@@ -133,7 +133,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>1</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -1538,15 +1538,12 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_3">
+                    <widget class="ToolTipLabel" name="label_3">
                      <property name="maximumSize">
                       <size>
                        <width>16</width>
                        <height>16</height>
                       </size>
-                     </property>
-                     <property name="cursor">
-                      <cursorShape>WhatsThisCursor</cursorShape>
                      </property>
                      <property name="toolTip">
                       <string>Simbols without spaces | Simbols with spaces</string>
@@ -1574,15 +1571,12 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_2">
+                    <widget class="ToolTipLabel" name="label_2">
                      <property name="maximumSize">
                       <size>
                        <width>16</width>
                        <height>16</height>
                       </size>
-                     </property>
-                     <property name="cursor">
-                      <cursorShape>WhatsThisCursor</cursorShape>
                      </property>
                      <property name="toolTip">
                       <string>Pages Mode only</string>
@@ -1645,15 +1639,12 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLabel" name="label_29">
+                    <widget class="ToolTipLabel" name="label_29">
                      <property name="maximumSize">
                       <size>
                        <width>16</width>
                        <height>16</height>
                       </size>
-                     </property>
-                     <property name="cursor">
-                      <cursorShape>WhatsThisCursor</cursorShape>
                      </property>
                      <property name="toolTip">
                       <string>For standard template and compatible</string>
@@ -2237,6 +2228,11 @@ Paragraph</string>
    <class>FlatButton</class>
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ToolTipLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

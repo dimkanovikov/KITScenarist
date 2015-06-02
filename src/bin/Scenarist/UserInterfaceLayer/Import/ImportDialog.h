@@ -3,6 +3,8 @@
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
+class QPushButton;
+
 namespace Ui {
 	class ImportDialog;
 }
@@ -54,6 +56,11 @@ namespace UserInterface
 
 	private:
 		Ui::ImportDialog *ui;
+
+		/**
+		 * @brief Кнопка импорта
+		 */
+		QPushButton* m_import;
 	};
 }
 

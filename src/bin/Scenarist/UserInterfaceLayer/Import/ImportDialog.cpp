@@ -10,6 +10,7 @@
 
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QPushButton>
 #include <QStandardPaths>
 
 using UserInterface::ImportDialog;
@@ -90,11 +91,14 @@ void ImportDialog::aboutChooseFile()
 
 void ImportDialog::aboutFileNameChanged()
 {
-	ui->importTo->setEnabled(!ui->file->text().isEmpty());
+	m_import->setEnabled(!ui->file->text().isEmpty());
 }
 
 void ImportDialog::initView()
 {
+	m_import = ui->buttons->addButton(tr("Import"), QDialogButtonBox::AcceptRole);
+	m_import->setEnabled(false);
+
 	QLightBoxDialog::initView();
 }
 
@@ -103,8 +107,8 @@ void ImportDialog::initConnections()
 	connect(ui->browseFile, SIGNAL(clicked()), this, SLOT(aboutChooseFile()));
 	connect(ui->file, SIGNAL(textChanged(QString)), this, SLOT(aboutFileNameChanged()));
 
-	connect(ui->cancel, SIGNAL(clicked()), this, SLOT(reject()));
-	connect(ui->importTo, SIGNAL(clicked()), this, SLOT(accept()));
+	connect(ui->buttons, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
 
 	QLightBoxDialog::initConnections();
 }

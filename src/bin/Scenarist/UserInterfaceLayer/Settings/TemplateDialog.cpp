@@ -354,8 +354,8 @@ void TemplateDialog::initConnections()
 	connect(ui->spacingType, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutSpacingTypeChanged()));
 	connect(ui->lineSpacing, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutLineSpacingChanged()));
 
-	connect(ui->close, SIGNAL(clicked()), this, SLOT(reject()));
-	connect(ui->save, SIGNAL(clicked()), this, SLOT(accept()));
+	connect(ui->buttons, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
 
 	QLightBoxDialog::initConnections();
 }
