@@ -225,6 +225,13 @@ namespace {
 		return linesCount;
 	}
 
+	/**
+	 * @brief Поссчитать кол-во строк, занимаемых текущим блоком
+	 */
+	static int linesOfText(const QTextCursor& _cursor) {
+		return ::linesOfText(_cursor.document(), _cursor.blockFormat(), _cursor.charFormat(), _cursor.block().text());
+	}
+
 	// ********
 	// Методы проверки переносов строк
 	//
@@ -266,11 +273,11 @@ namespace {
 	 */
 	static void checkPageBreakForTimeAndPlace(QTextCursor& _destDocumentCursor,
 		const QTextBlockFormat& _blockFormat, const QTextCharFormat& _charFormat,
-		const int _linesToEndOfPage) {
+		const int _blockLines, const int _linesToEndOfPage) {
 		//
 		// ... вставляем столько пустых строк, чтобы перейти на следующую страницу
 		//
-		if (_linesToEndOfPage <= 2) {
+		if (_linesToEndOfPage <= qMax(2, _blockLines)) {
 			int insertLines = _linesToEndOfPage;
 			while (insertLines-- > 0) {
 				::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
@@ -286,12 +293,15 @@ namespace {
 	 */
 	static void checkPageBreakForCharacter(QTextCursor& _destDocumentCursor,
 		const QTextBlockFormat& _blockFormat, const QTextCharFormat& _charFormat,
-		const int _linesToEndOfPage) {
+		const int _blockLines, const int _linesToEndOfPage) {
 		//
 		// ... вставляем пустую строку, чтобы перейти на следующую страницу
 		//
-		if (_linesToEndOfPage == 1) {
-			::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
+		if (_linesToEndOfPage <= _blockLines) {
+			int insertLines = _linesToEndOfPage;
+			while (insertLines-- > 0) {
+				::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
+			}
 		}
 	}
 
@@ -407,8 +417,8 @@ namespace {
 	 */
 	static void checkPageBreakForParenthetical(QTextCursor& _sourceDocumentCursor,
 		QTextCursor& _destDocumentCursor, const QTextBlockFormat& _blockFormat,
-		const QTextCharFormat& _charFormat, const int _linesToEndOfPage) {
-		if (_linesToEndOfPage <= 1) {
+		const QTextCharFormat& _charFormat, const int _blockLines, const int _linesToEndOfPage) {
+		if (_linesToEndOfPage <= _blockLines) {
 			//
 			// ... ищем имя персонажа
 			//
@@ -423,10 +433,12 @@ namespace {
 				_destDocumentCursor.movePosition(QTextCursor::PreviousBlock);
 				_destDocumentCursor.movePosition(QTextCursor::StartOfBlock);
 				//
-				// ... нужно перенести 2 строки имя персонажа и ремарку
+				// ... нужно перенести строки с именем персонажа и ремаркой
 				//
-				_destDocumentCursor.insertBlock();
-				_destDocumentCursor.insertBlock();
+				int insertLines = _linesToEndOfPage + ::linesOfText(characterCursor);
+				while (insertLines-- > 0) {
+					_destDocumentCursor.insertBlock();
+				}
 				_destDocumentCursor.movePosition(QTextCursor::End);
 			}
 			//
@@ -807,14 +819,14 @@ namespace {
 		//
 		if (currentBlockType == ScenarioBlockStyle::TimeAndPlace
 			|| currentBlockType == ScenarioBlockStyle::SceneGroupHeader) {
-			checkPageBreakForTimeAndPlace(_destDocumentCursor, blockFormat, charFormat, linesToEndOfPage);
+			checkPageBreakForTimeAndPlace(_destDocumentCursor, blockFormat, charFormat, blockLines, linesToEndOfPage);
 		}
 
 		//
 		// Для блока "Персонаж"
 		//
 		else if (currentBlockType == ScenarioBlockStyle::Character) {
-			checkPageBreakForCharacter(_destDocumentCursor, blockFormat, charFormat, linesToEndOfPage);
+			checkPageBreakForCharacter(_destDocumentCursor, blockFormat, charFormat, blockLines, linesToEndOfPage);
 		}
 
 		//
@@ -830,7 +842,7 @@ namespace {
 		//
 		else if (currentBlockType == ScenarioBlockStyle::Parenthetical) {
 			checkPageBreakForParenthetical(_sourceDocumentCursor, _destDocumentCursor,
-				blockFormat, charFormat, linesToEndOfPage);
+				blockFormat, charFormat, blockLines, linesToEndOfPage);
 		}
 
 		//
