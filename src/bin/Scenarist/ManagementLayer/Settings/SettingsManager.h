@@ -46,6 +46,11 @@ namespace ManagementLayer
 
 	private slots:
 		/**
+		 * @brief Сбросить настройки
+		 */
+		void aboutResetSettings();
+
+		/**
 		 * @brief Изменения параметров
 		 */
 		/** @{ */

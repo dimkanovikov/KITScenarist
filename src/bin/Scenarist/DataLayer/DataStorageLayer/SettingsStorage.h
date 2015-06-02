@@ -39,6 +39,11 @@ namespace DataStorageLayer
 		 */
 		QMap<QString, QString> values(const QString& _valuesGroup, SettingsPlace _settingsPlace);
 
+		/**
+		 * @brief Сбросить настройки
+		 */
+		void resetValues(SettingsPlace _settingsPlace);
+
 	private:
 		SettingsStorage();
 

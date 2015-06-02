@@ -549,6 +549,11 @@ void SettingsView::initConnections()
 	connect(ui->configurableChronometry, SIGNAL(toggled(bool)), ui->configurableChronometryGroup, SLOT(setEnabled(bool)));
 
 	//
+	// Сбросить настройки
+	//
+	connect(ui->resetSettings, SIGNAL(clicked(bool)), this, SIGNAL(resetSettings()));
+
+	//
 	// Сигналы об изменении параметров
 	//
 	// ... приложение

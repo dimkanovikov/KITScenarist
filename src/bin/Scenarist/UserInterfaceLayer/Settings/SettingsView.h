@@ -94,6 +94,11 @@ namespace UserInterface
 
 	signals:
 		/**
+		 * @brief Сбросить пользовательские настройки
+		 */
+		void resetSettings();
+
+		/**
 		 * @brief Изменения параметров
 		 */
 		/** @{ */

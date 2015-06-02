@@ -122,6 +122,19 @@ QMap<QString, QString> SettingsStorage::values(const QString& _valuesGroup, Sett
 	return settingsValues;
 }
 
+void SettingsStorage::resetValues(SettingsStorage::SettingsPlace _settingsPlace)
+{
+	if (_settingsPlace == ApplicationSettings) {
+		foreach (const QString& key, m_defaultValues.keys()) {
+			setValue(key, m_defaultValues.value(key), _settingsPlace);
+			QApplication::processEvents();
+		}
+	}
+	else {
+		Q_ASSERT_X(0, Q_FUNC_INFO, "Can't reset settings stored in database.");
+	}
+}
+
 SettingsStorage::SettingsStorage()
 {
 	//
@@ -137,11 +150,14 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("application/save-backups-folder",
 		QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
 
+	m_defaultValues.insert("navigator/show-scenes-numbers", "1");
 	m_defaultValues.insert("navigator/show-scene-description", "1");
 	m_defaultValues.insert("navigator/scene-description-is-scene-text", "1");
 	m_defaultValues.insert("navigator/scene-description-height", "1");
 
 	m_defaultValues.insert("scenario-editor/zoom-range", "1");
+	m_defaultValues.insert("scenario-editor/show-scenes-numbers", "0");
+	m_defaultValues.insert("scenario-editor/page-view", "1");
 	m_defaultValues.insert("scenario-editor/spell-checking", "0");
 	m_defaultValues.insert("scenario-editor/text-color", "#000000");
 	m_defaultValues.insert("scenario-editor/background-color", "#FEFEFE");
@@ -219,6 +235,7 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/styles-changing/from-folder_header-by-enter", QString::number(ScenarioBlockStyle::FolderHeader));
 
 
+	m_defaultValues.insert("chronometry/used", "1");
 	m_defaultValues.insert("chronometry/current-chronometer-type", "pages-chronometer");
 	m_defaultValues.insert("chronometry/pages/seconds", "60");
 	m_defaultValues.insert("chronometry/characters/characters", "1000");
@@ -229,6 +246,11 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("chronometry/configurable/seconds-for-every-50/action", "1.5");
 	m_defaultValues.insert("chronometry/configurable/seconds-for-paragraph/dialog", "2");
 	m_defaultValues.insert("chronometry/configurable/seconds-for-every-50/dialog", "2.4");
+
+
+	m_defaultValues.insert("counters/pages/used", "0");
+	m_defaultValues.insert("counters/words/used", "0");
+	m_defaultValues.insert("counters/simbols/used", "0");
 }
 
 QString SettingsStorage::defaultValue(const QString& _key) const

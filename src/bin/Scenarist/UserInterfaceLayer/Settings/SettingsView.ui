@@ -116,6 +116,13 @@
          </item>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="resetSettings">
+         <property name="text">
+          <string>Reset Settings</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="layoutWidget1">

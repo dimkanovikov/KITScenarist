@@ -12,6 +12,7 @@
 
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h>
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h>
+#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
 
 #include <QFileDialog>
 #include <QSplitter>
@@ -142,6 +143,26 @@ void SettingsManager::saveViewState()
 				"application/settings/state", m_view->splitter()->saveState().toHex(),
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				);
+}
+
+void SettingsManager::aboutResetSettings()
+{
+	ProgressWidget progress(m_view);
+	progress.showProgress(tr("Restoring"),
+		tr("Please wait. Restoring settings to default values can take few minutes."));
+
+	//
+	// Сбрасываем настройки
+	//
+	DataStorageLayer::StorageFacade::settingsStorage()->resetValues(
+		DataStorageLayer::SettingsStorage::ApplicationSettings);
+
+	//
+	// Перезагружаем интерфейс
+	//
+	initView();
+
+	progress.close();
 }
 
 void SettingsManager::applicationUseDarkThemeChanged(bool _value)
@@ -822,6 +843,11 @@ void SettingsManager::initView()
 
 void SettingsManager::initConnections()
 {
+	//
+	// Сбросить настройки
+	//
+	connect(m_view, SIGNAL(resetSettings()), this, SLOT(aboutResetSettings()));
+
 	//
 	// Сохранение изменений параметров
 	//
