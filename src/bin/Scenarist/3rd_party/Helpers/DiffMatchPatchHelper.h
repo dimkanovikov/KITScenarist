@@ -166,7 +166,7 @@ public:
 			//
 			int oldStartPos = -1;
 			int oldEndPos = -1;
-			int oldDistance = -1;
+			int oldDistance = 0;
 			int newStartPos = -1;
 			int newEndPos = -1;
 			foreach (const Patch& patch, patches) {
@@ -175,11 +175,11 @@ public:
 				//
 				if (oldStartPos == -1
 					|| patch.start1 < oldStartPos) {
-					oldStartPos = patch.start1;
+					oldStartPos = patch.start1 - oldDistance;
 				}
 				if (oldEndPos == -1
 					|| oldEndPos < (patch.start1 + patch.length1)) {
-					oldEndPos = patch.start1 + patch.length1;
+					oldEndPos = patch.start1 + patch.length1 - oldDistance;
 				}
 				oldDistance += patch.length2 - patch.length1;
 				//
@@ -195,22 +195,9 @@ public:
 				}
 			}
 			//
-			// Если патчей несколько, нужно скорректировать позицию конца искомого исходного текста,
-			// т.к. все патчи накладываются последовательно и start1 в следующем патче считается по
-			// уже обновлённому тексту
+			// Отнимает один символ, т.к. в патче указан индекс символа начиная с 1
 			//
-			if (patches.size() > 1) {
-				oldEndPos -= oldDistance;
-			}
-			//
-			// Если патч один, то отнимает один символ, т.к. в патче указан индекс символа начиная с 1
-			//
-			else if (patches.size() == 1) {
-				oldEndPos -= 1;
-			}
-			//
-			// Для нового текста, корректируем только индекс символа начинающийся с 1
-			//
+			oldEndPos -= 1;
 			newEndPos -= 1;
 
 

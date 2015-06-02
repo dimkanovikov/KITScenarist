@@ -29,11 +29,6 @@ namespace UserInterface
 		 */
 		void removeLineBreaks();
 
-		/**
-		 * @brief Сбросить формат текста
-		 */
-		void clearCharFormat();
-
 	private:
 		/**
 		 * @brief Флаг для предовращения рекурсивного вызова функции clearCharFormat

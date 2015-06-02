@@ -317,6 +317,10 @@ void Database::createEnums(QSqlDatabase& _database)
 	// Версия программы
 	{
 		q_creator.exec(
+					QString("INSERT INTO system_variables VALUES ('application-version-on-create', '%1')")
+					.arg(qApp->applicationVersion())
+					);
+		q_creator.exec(
 					QString("INSERT INTO system_variables VALUES ('application-version', '%1')")
 					.arg(qApp->applicationVersion())
 					);

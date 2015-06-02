@@ -49,12 +49,6 @@ ScenarioLineEdit::ScenarioLineEdit(QWidget* _parent) :
 	setStoreDataWhenEditing(false);
 
 	setAddSpaceToBottom(false);
-
-	//
-	// Делаем себя похожим на обычный редактор
-	//
-	connect(document(), SIGNAL(contentsChanged()), this, SLOT(clearCharFormat()));
-	clearCharFormat();
 }
 
 void ScenarioLineEdit::keyPressEvent(QKeyEvent* _event)
@@ -91,39 +85,5 @@ void ScenarioLineEdit::removeLineBreaks()
 		if (!cursor.atEnd()) {
 			cursor.deleteChar();
 		}
-	}
-}
-
-void ScenarioLineEdit::clearCharFormat()
-{
-	if (!m_inClearCharFormat) {
-		m_inClearCharFormat = true;
-
-		QTextCursor cursor = textCursor();
-
-		//
-		// Установим стиль отображения текста, как в обычном редакторе
-		//
-		QTextCharFormat charFormat = cursor.charFormat();
-		charFormat.setFont(QApplication::font());
-		charFormat.setForeground(QApplication::palette().foreground());
-
-		if (cursor.charFormat() != charFormat) {
-			//
-			// Обновим стили
-			//
-			cursor.setBlockCharFormat(charFormat);
-
-			//
-			// Применим стиль текста ко всему блоку, выделив его,
-			// т.к. в блоке могут находиться фрагменты в другом стиле
-			//
-			cursor.select(QTextCursor::BlockUnderCursor);
-			cursor.setCharFormat(charFormat);
-			cursor.clearSelection();
-			setTextCursor(cursor);
-		}
-
-		m_inClearCharFormat = false;
 	}
 }
