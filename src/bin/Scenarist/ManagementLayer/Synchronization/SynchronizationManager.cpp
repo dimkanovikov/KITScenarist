@@ -878,7 +878,8 @@ bool SynchronizationManager::uploadScenarioChanges(const QList<QString>& _change
 {
 	bool changesUploaded = false;
 
-	if (isCanSync()) {
+	if (isCanSync()
+		&& !_changesUuids.isEmpty()) {
 		//
 		// Сформировать xml для отправки
 		//
@@ -1006,7 +1007,8 @@ bool SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids
 {
 	bool dataUploaded = false;
 
-	if (isCanSync()) {
+	if (isCanSync()
+		&& !_dataUuids.isEmpty()) {
 		//
 		// Сформировать xml для отправки
 		//

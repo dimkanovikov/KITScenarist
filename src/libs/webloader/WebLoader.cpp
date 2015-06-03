@@ -263,7 +263,8 @@ void WebLoader::downloadError( QNetworkReply::NetworkError networkError )
 	switch ( networkError ) {
 
 		case QNetworkReply::NoError:
-			//! Загрузка прошла без ошибок
+			m_lastError.clear();
+			m_lastErrorDetails.clear();
 			break;
 		default:
 			m_lastError =

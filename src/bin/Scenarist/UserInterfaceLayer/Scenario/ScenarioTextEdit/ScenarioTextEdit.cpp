@@ -38,8 +38,11 @@ namespace {
 	 */
 	static bool s_firstRepaintUpdate = true;
 
-	const char* SCROLL_VALUE = "scrollValue";
-	const char* SCROLL_MAX = "scrollMaxValue";
+	/**
+	 * @brief Флаг положения курсора
+	 * @note Используется для корректировки скрола при совместном редактировании
+	 */
+	const char* CURSOR_RECT = "cursorRect";
 
 	/**
 	 * @brief Получить цвет для курсора соавтора
@@ -797,17 +800,22 @@ void ScenarioTextEdit::aboutSelectionChanged()
 
 void ScenarioTextEdit::aboutSaveEditorState()
 {
-	setProperty(SCROLL_VALUE, verticalScrollBar()->value());
-	setProperty(SCROLL_MAX, verticalScrollBar()->maximum());
+	setProperty(CURSOR_RECT, cursorRect());
 }
 
 void ScenarioTextEdit::aboutLoadEditorState()
 {
-	const int scrollValue = property(SCROLL_VALUE).toInt();
-	const int scrollMax = property(SCROLL_MAX).toInt();
-	const int currentScrollMax = verticalScrollBar()->maximum();
-	if (currentScrollMax != scrollMax) {
-		verticalScrollBar()->setValue(scrollValue + currentScrollMax - scrollMax);
+	const QRect prevCursorRect = property(CURSOR_RECT).toRect();
+	QRect currentCursorRect = cursorRect();
+	while (prevCursorRect != currentCursorRect) {
+		int verticalDelta = 0;
+		if (prevCursorRect.y() < currentCursorRect.y()) {
+			verticalDelta = 1;
+		} else if (prevCursorRect.y() > currentCursorRect.y()) {
+			verticalDelta = -1;
+		}
+		verticalScrollBar()->setValue(verticalScrollBar()->value() + verticalDelta);
+		currentCursorRect = cursorRect();
 	}
 }
 
