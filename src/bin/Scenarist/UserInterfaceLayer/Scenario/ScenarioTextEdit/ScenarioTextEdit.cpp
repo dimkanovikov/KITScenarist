@@ -1127,7 +1127,7 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 			//
 			// Если перед нами конец предложения и не сокращение
 			//
-			QString endOfSentancePattern = QString("([.]|[?]|[!]) %1$").arg(eventText);
+			QString endOfSentancePattern = QString("([.]|[?]|[!]|[…]) %1$").arg(eventText);
 			if (cursorBackwardText.contains(QRegularExpression(endOfSentancePattern))
 				&& !stringEndsWithAbbrev(cursorBackwardText)) {
 				//
