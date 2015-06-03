@@ -576,8 +576,8 @@ void ApplicationManager::aboutExit()
 		//
 		// Выводим информацию для пользователя, о закрытии программы
 		//
-		ProgressWidget progress(m_view);
-		progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
+        ProgressWidget progress(m_view);
+        progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
 
 		//
 		// Закроем текущий проект
@@ -592,8 +592,9 @@ void ApplicationManager::aboutExit()
 		//
 		// Выходим
 		//
-		progress.close();
-		qApp->exit();
+        progress.close();
+        QApplication::processEvents();
+        QApplication::quit();
 	}
 }
 
@@ -895,6 +896,14 @@ QMenu* ApplicationManager::createMenu()
 	connect(import, SIGNAL(triggered()), this, SLOT(aboutImport()));
 	connect(exportTo, SIGNAL(triggered()), this, SLOT(aboutExportTo()));
 	connect(printPreview, SIGNAL(triggered()), this, SLOT(aboutPrintPreview()));
+
+#ifdef Q_OS_MAC
+    //
+    // Добавляем действие "Сохранить" в виджет главного окна,
+    // чтобы в маке работал шорткат
+    //
+    m_view->addAction(saveProject);
+#endif
 
 	return menu;
 }
