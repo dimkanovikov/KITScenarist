@@ -807,11 +807,20 @@ void ScenarioTextEdit::aboutLoadEditorState()
 {
 	const QRect prevCursorRect = property(CURSOR_RECT).toRect();
 	QRect currentCursorRect = cursorRect();
-	while (prevCursorRect != currentCursorRect) {
+
+	//
+	// Корректируем позицию курсора, пока
+	// - не восстановим предыдущее значение
+	// - не сдвинем прокрутку в самый верх
+	// - не сдвинем прокрутку в самый низ
+	//
+	while (prevCursorRect.y() != currentCursorRect.y()
+		   && verticalScrollBar()->value() != verticalScrollBar()->minimum()
+		   && verticalScrollBar()->value() != verticalScrollBar()->maximum()) {
 		int verticalDelta = 0;
 		if (prevCursorRect.y() < currentCursorRect.y()) {
 			verticalDelta = 1;
-		} else if (prevCursorRect.y() > currentCursorRect.y()) {
+		} else {
 			verticalDelta = -1;
 		}
 		verticalScrollBar()->setValue(verticalScrollBar()->value() + verticalDelta);
