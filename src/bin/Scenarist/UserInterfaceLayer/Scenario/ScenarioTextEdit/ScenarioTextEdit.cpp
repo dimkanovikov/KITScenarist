@@ -264,16 +264,16 @@ QMenu* ScenarioTextEdit::createContextMenu(const QPoint& _pos)
 	//
 	QMenu* menu = CompletableTextEdit::createContextMenu(_pos);
 	foreach (QAction* menuAction, menu->findChildren<QAction*>()) {
-		if (menuAction->text().endsWith(QKeySequence(QKeySequence::Undo).toString())) {
+        if (menuAction->text().endsWith(QKeySequence(QKeySequence::Undo).toString(QKeySequence::NativeText))) {
 			menuAction->disconnect();
 			connect(menuAction, SIGNAL(triggered()), this, SLOT(undoReimpl()));
 			menuAction->setEnabled(m_document->isUndoAvailableReimpl());
-		} else if (menuAction->text().endsWith(QKeySequence(QKeySequence::Redo).toString())) {
+        } else if (menuAction->text().endsWith(QKeySequence(QKeySequence::Redo).toString(QKeySequence::NativeText))) {
 			menuAction->disconnect();
 			connect(menuAction, SIGNAL(triggered()), this, SLOT(redoReimpl()));
 			menuAction->setEnabled(m_document->isRedoAvailableReimpl());
 		}
-	}
+    }
 
 	return menu;
 }
@@ -582,7 +582,8 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 		// Курсоры соавторов
 		//
 		{
-			if (!m_additionalCursors.isEmpty()) {
+            if (!m_additionalCursors.isEmpty()
+                && m_document != 0) {
 				QPainter painter(viewport());
 				painter.setFont(QFont("Sans", 8));
 				painter.setPen(Qt::white);
