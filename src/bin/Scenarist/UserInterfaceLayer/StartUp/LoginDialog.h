@@ -42,6 +42,12 @@ namespace UserInterface
 		 */
 		void setError(const QString& _error);
 
+	protected:
+		/**
+		 * @brief При запуске фокусируемся на поле ввода имени пользователя
+		 */
+		QWidget* focusedOnExec() const;
+
 	private:
 		/**
 		 * @brief Настроить представление

@@ -101,7 +101,8 @@ namespace {
 SynchronizationManager::SynchronizationManager(QObject* _parent, QWidget* _parentView) :
 	QObject(_parent),
 	m_view(_parentView),
-	m_loader(new WebLoader(this))
+	m_loader(new WebLoader(this)),
+	m_isInternetConnectionActive(true)
 {
 	initConnections();
 }
@@ -145,119 +146,112 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_USER_NAME, _userName);
 	m_loader->addRequestAttribute(KEY_PASSWORD, _password);
-	QByteArray response = m_loader->loadSync(URL_LOGIN);
+	QByteArray response = loadSyncWrapper(URL_LOGIN);
 
 	//
-	// Если связь с интернетом есть
+	// Считываем результат авторизации
 	//
-	if (!response.isEmpty()) {
-		//
-		// Считываем результат авторизации
-		//
-		QXmlStreamReader responseReader(response);
-		//
-		// Успешно ли завершилась авторизация
-		//
-		bool success = false;
-		QString sessionKey;
-		while (!responseReader.atEnd()) {
-			responseReader.readNext();
-			if (responseReader.name().toString() == "status") {
-				success = responseReader.attributes().value("result").toString() == "true";
-				//
-				// Если авторизация успешна, сохраняем ключ сессии
-				//
-				if (success) {
-					responseReader.readNext(); // закрытие тэга status
-					responseReader.readNext(); // тэг session_key
-					responseReader.readNext(); // содержимое тэга session_key
-					sessionKey = responseReader.text().toString().simplified();
-					break;
-				}
-				//
-				// В противном случае считываем сообщение об ошибке
-				//
-				else {
-					handleError(response);
-					break;
-				}
+	QXmlStreamReader responseReader(response);
+	//
+	// Успешно ли завершилась авторизация
+	//
+	bool success = false;
+	QString sessionKey;
+	while (!responseReader.atEnd()) {
+		responseReader.readNext();
+		if (responseReader.name().toString() == "status") {
+			success = responseReader.attributes().value("result").toString() == "true";
+			//
+			// Если авторизация успешна, сохраняем ключ сессии
+			//
+			if (success) {
+				responseReader.readNext(); // закрытие тэга status
+				responseReader.readNext(); // тэг session_key
+				responseReader.readNext(); // содержимое тэга session_key
+				sessionKey = responseReader.text().toString().simplified();
+				break;
+			}
+			//
+			// В противном случае считываем сообщение об ошибке
+			//
+			else {
+				handleError(response);
+				break;
 			}
 		}
-
-		//
-		// Закрываем уведомление для пользователя
-		//
-		sleepALittle();
-		progress.finish();
-
-		//
-		// Если авторизация прошла
-		//
-		if (success) {
-			//
-			// ... сохраняем информацию о сессии
-			//
-			m_sessionKey = sessionKey;
-			//
-			// ... и о пользователе
-			//
-			StorageFacade::settingsStorage()->setValue(
-						"application/user-name",
-						PasswordStorage::save(_userName),
-						SettingsStorage::ApplicationSettings);
-			StorageFacade::settingsStorage()->setValue(
-						"application/password",
-						PasswordStorage::save(_password, _userName),
-						SettingsStorage::ApplicationSettings);
-
-			emit loginAccepted();
-		}
 	}
+
 	//
-	// Если связи с интернетом нет, уведомляем клиента об этом
+	// Закрываем уведомление для пользователя
 	//
-	else {
-		emit syncClosedWithError(OFFLINE_ERROR_CODE, tr("Can't estabilish network connection."));
+	sleepALittle();
+	progress.finish();
+
+	//
+	// Если авторизация прошла
+	//
+	if (success) {
+		//
+		// ... сохраняем информацию о сессии
+		//
+		m_sessionKey = sessionKey;
+		//
+		// ... и о пользователе
+		//
+		StorageFacade::settingsStorage()->setValue(
+					"application/user-name",
+					PasswordStorage::save(_userName),
+					SettingsStorage::ApplicationSettings);
+		StorageFacade::settingsStorage()->setValue(
+					"application/password",
+					PasswordStorage::save(_password, _userName),
+					SettingsStorage::ApplicationSettings);
+
+		emit loginAccepted();
 	}
 }
 
 void SynchronizationManager::aboutLogout()
 {
-	if (isCanSync()) {
-		//
-		// Информация для пользователя
-		//
-		ProgressWidget progress(m_view);
-		progress.showProgress(tr("Authorizing"), tr("Close working session."));
+	//
+	// Информация для пользователя
+	//
+	ProgressWidget progress(m_view);
+	progress.showProgress(tr("Authorizing"), tr("Close working session."));
 
-		//
-		// Закрываем авторизацию
-		//
+	//
+	// Закрываем авторизацию
+	//
+	if (!m_sessionKey.isEmpty()) {
 		m_loader->setRequestMethod(WebLoader::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		m_loader->loadSync(URL_LOGOUT);
-
-		//
-		// Удаляем сохранённые значения, если они были
-		//
-		StorageFacade::settingsStorage()->setValue(
-			"application/user-name",
-			QString::null,
-			SettingsStorage::ApplicationSettings);
-		StorageFacade::settingsStorage()->setValue(
-			"application/password",
-			QString::null,
-			SettingsStorage::ApplicationSettings);
-
-		//
-		// Закрываем уведомление для пользователя
-		//
-		sleepALittle();
-		progress.finish();
-
-		emit logoutAccepted();
+		loadSyncWrapper(URL_LOGOUT);
 	}
+
+	//
+	// Удаляем сохранённые значения, если они были
+	//
+	StorageFacade::settingsStorage()->setValue(
+				"application/user-name",
+				QString::null,
+				SettingsStorage::ApplicationSettings);
+	StorageFacade::settingsStorage()->setValue(
+				"application/password",
+				QString::null,
+				SettingsStorage::ApplicationSettings);
+	StorageFacade::settingsStorage()->setValue(
+				"application/remote-projects",
+				QString::null,
+				SettingsStorage::ApplicationSettings);
+
+	//
+	// Закрываем уведомление для пользователя
+	//
+	sleepALittle();
+	progress.finish();
+
+	emit logoutAccepted();
 }
 
 void SynchronizationManager::aboutLoadProjects()
@@ -275,7 +269,7 @@ void SynchronizationManager::aboutLoadProjects()
 		m_loader->setRequestMethod(WebLoader::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		QByteArray response = m_loader->loadSync(URL_PROJECTS);
+		QByteArray response = loadSyncWrapper(URL_PROJECTS);
 
 		//
 		// Считываем результат
@@ -343,7 +337,7 @@ void SynchronizationManager::aboutFullSyncScenario()
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-		QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LIST);
+		QByteArray response = loadSyncWrapper(URL_SCENARIO_CHANGE_LIST);
 
 		//
 		// ... считываем изменения (uuid)
@@ -483,7 +477,7 @@ void SynchronizationManager::aboutWorkSyncScenario()
 			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 			m_loader->addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
-			QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LIST);
+			QByteArray response = loadSyncWrapper(URL_SCENARIO_CHANGE_LIST);
 
 			//
 			// ... считываем uuid'ы новых изменений
@@ -566,7 +560,7 @@ void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDra
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 		m_loader->addRequestAttribute(KEY_CURSOR_POSITION, _cursorPosition);
 		m_loader->addRequestAttribute(KEY_SCENARIO_IS_DRAFT, _isDraft ? "1" : "0");
-		QByteArray response = m_loader->loadSync(URL_SCENARIO_CURSORS);
+		QByteArray response = loadSyncWrapper(URL_SCENARIO_CURSORS);
 
 
 		//
@@ -756,7 +750,7 @@ void SynchronizationManager::aboutWorkSyncData()
 			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 			m_loader->addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
-			QByteArray response = m_loader->loadSync(URL_SCENARIO_DATA_LIST);
+			QByteArray response = loadSyncWrapper(URL_SCENARIO_DATA_LIST);
 
 			//
 			// ... считываем uuid'ы новых изменений
@@ -809,6 +803,28 @@ void SynchronizationManager::aboutWorkSyncData()
 	}
 }
 
+QByteArray SynchronizationManager::loadSyncWrapper(const QUrl& _url)
+{
+	QByteArray response;
+
+	//
+	// Если соединение активно, делаем запрос
+	//
+	if (m_isInternetConnectionActive) {
+		response = m_loader->loadSync(_url);
+
+		//
+		// Если пропало соединение с интернетом, уведомляем об этом
+		//
+		if (response.isEmpty()) {
+			m_isInternetConnectionActive = false;
+			emit syncClosedWithError(OFFLINE_ERROR_CODE, tr("Can't estabilish network connection."));
+		}
+	}
+
+	return response;
+}
+
 void SynchronizationManager::handleError(const QByteArray& _response)
 {
 	//
@@ -852,7 +868,8 @@ void SynchronizationManager::handleError(const QByteArray& _response)
 bool SynchronizationManager::isCanSync() const
 {
 	return
-			ProjectsManager::currentProject().isRemote()
+			m_isInternetConnectionActive
+			&& ProjectsManager::currentProject().isRemote()
 			&& ProjectsManager::currentProject().isSyncAvailable()
 			&& !m_sessionKey.isEmpty();
 }
@@ -901,7 +918,7 @@ bool SynchronizationManager::uploadScenarioChanges(const QList<QString>& _change
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 		m_loader->addRequestAttribute(KEY_CHANGES, changesXml);
-		const QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_SAVE);
+		const QByteArray response = loadSyncWrapper(URL_SCENARIO_CHANGE_SAVE);
 
 		//
 		// Изменения отправлены, если сервер это подтвердил
@@ -926,7 +943,7 @@ QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 		m_loader->addRequestAttribute(KEY_CHANGES_IDS, _changesUuids);
-		QByteArray response = m_loader->loadSync(URL_SCENARIO_CHANGE_LOAD);
+		QByteArray response = loadSyncWrapper(URL_SCENARIO_CHANGE_LOAD);
 
 
 		//
@@ -1037,7 +1054,7 @@ bool SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids
 		//
 		// NOTE: При отправке большого объёма данных возможно зависание
 		//
-		const QByteArray response = m_loader->loadSync(URL_SCENARIO_DATA_SAVE);
+		const QByteArray response = loadSyncWrapper(URL_SCENARIO_DATA_SAVE);
 
 		//
 		// Данные отправлены, если сервер это подтвердил
@@ -1061,7 +1078,7 @@ void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUui
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 		m_loader->addRequestAttribute(KEY_CHANGES_IDS, _dataUuids);
-		QByteArray response = m_loader->loadSync(URL_SCENARIO_DATA_LOAD);
+		QByteArray response = loadSyncWrapper(URL_SCENARIO_DATA_LOAD);
 
 
 		//

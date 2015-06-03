@@ -70,7 +70,43 @@ namespace ManagementLayer
 		 */
 		void aboutWorkSyncData();
 
+	signals:
+		/**
+		 * @brief Авторизация пройдена успешно
+		 */
+		void loginAccepted();
+
+		/**
+		 * @brief Авторизация закрыта
+		 */
+		void logoutAccepted();
+
+		/**
+		 * @brief Список доступных проектов получен
+		 */
+		void remoteProjectsLoaded(const QString& _projectsXml);
+
+		/**
+		 * @brief Необходимо применить патч
+		 */
+		void applyPatchRequested(const QString& _patch, bool _isDraft);
+
+		/**
+		 * @brief Получены новые позиции курсоров пользователей
+		 */
+		void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
+
+		/**
+		 * @brief Сессия закрыта с ошибкой
+		 */
+		void syncClosedWithError(int errorCode, const QString& _errorText);
+
 	private:
+		/**
+		 * @brief Обёртка для вызова функции m_loader->loadSync, отлавливающая отсутствие интернета
+		 */
+		QByteArray loadSyncWrapper(const QUrl& _url);
+
 		/**
 		 * @brief Обработать ошибку работы с API
 		 */
@@ -102,37 +138,6 @@ namespace ManagementLayer
 		 * @brief Скачать и сохранить в БД изменения с сервера
 		 */
 		void downloadAndSaveScenarioData(const QString& _dataUuids);
-
-	signals:
-		/**
-		 * @brief Авторизация пройдена успешно
-		 */
-		void loginAccepted();
-
-		/**
-		 * @brief Авторизация закрыта
-		 */
-		void logoutAccepted();
-
-		/**
-		 * @brief Список доступных проектов получен
-		 */
-		void remoteProjectsLoaded(const QString& _projectsXml);
-
-		/**
-		 * @brief Необходимо применить патч
-		 */
-		void applyPatchRequested(const QString& _patch, bool _isDraft);
-
-		/**
-		 * @brief Получены новые позиции курсоров пользователей
-		 */
-		void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
-
-		/**
-		 * @brief Сессия закрыта с ошибкой
-		 */
-		void syncClosedWithError(int errorCode, const QString& _errorText);
 
 	private:
 		/**
@@ -171,6 +176,11 @@ namespace ManagementLayer
 		 * @brief Дата и время последней синхронизации изменений данных
 		 */
 		QString m_lastDataSyncDatetime;
+
+		/**
+		 * @brief Активно ли соединение с интернетом
+		 */
+		bool m_isInternetConnectionActive;
 	};
 }
 

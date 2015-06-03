@@ -69,7 +69,6 @@ namespace {
 		foreach (QAction* action, g_disableOnStartActions) {
 			action->setEnabled(true);
 		}
-		g_disableOnStartActions.clear();
 	}
 
 	/**
@@ -315,7 +314,7 @@ void ApplicationManager::aboutSave()
 		//
 		// Для проекта из облака отправляем данные на сервер
 		//
-		if (m_projectsManager->currentProject().type() == Project::Remote) {
+		if (m_projectsManager->currentProject().isRemote()) {
 			m_synchronizationManager->aboutWorkSyncScenario();
 			m_synchronizationManager->aboutWorkSyncData();
 		}
@@ -435,6 +434,16 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 	}
 }
 
+void ApplicationManager::aboutUserUnlogged()
+{
+	//
+	// Закрываем проект, если он из облака
+	//
+	if (m_projectsManager->currentProject().isRemote()) {
+		closeCurrentProject();
+	}
+}
+
 void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString& _error)
 {
 	bool switchToOfflineMode = false;
@@ -516,20 +525,30 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 	// Если необходимо переключаемся в автономный режим
 	//
 	if (switchToOfflineMode) {
+		const QString loginData =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/user-name",
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+
 		//
-		// Имитируем успешную авторизацию
+		// Если есть закэшированные данные о прошлой авторизации
 		//
-		m_startUpManager->aboutUserLogged();
-		//
-		// и загружаем список доступных проектов из кэша
-		//
-		QByteArray cachedProjectsXml =
-			QByteArray::fromBase64(
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/remote-projects",
-					DataStorageLayer::SettingsStorage::ApplicationSettings).toUtf8()
-				);
-		m_projectsManager->setRemoteProjects(cachedProjectsXml);
+		if (!loginData.isEmpty()) {
+			//
+			// Имитируем успешную авторизацию
+			//
+			m_startUpManager->aboutUserLogged();
+			//
+			// и загружаем список доступных проектов из кэша
+			//
+			QByteArray cachedProjectsXml =
+					QByteArray::fromBase64(
+						DataStorageLayer::StorageFacade::settingsStorage()->value(
+							"application/remote-projects",
+							DataStorageLayer::SettingsStorage::ApplicationSettings).toUtf8()
+						);
+			m_projectsManager->setRemoteProjects(cachedProjectsXml);
+		}
 	}
 }
 
@@ -778,6 +797,11 @@ void ApplicationManager::closeCurrentProject()
 	// Информируем управляющего проектами, что текущий проект закрыт
 	//
 	m_projectsManager->closeCurrentProject();
+
+	//
+	// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
+	//
+	::disableActionsOnStart();
 }
 
 void ApplicationManager::initView()
@@ -932,6 +956,8 @@ void ApplicationManager::initConnections()
 			m_startUpManager, SLOT(aboutUserLogged()));
 	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
 			m_startUpManager, SLOT(aboutUserUnlogged()));
+	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
+			this, SLOT(aboutUserUnlogged()));
 	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
 			m_projectsManager, SLOT(setRemoteProjects(QString)));
 	connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),

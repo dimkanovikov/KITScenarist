@@ -46,6 +46,11 @@ void LoginDialog::setError(const QString& _error)
 	resize(width(), sizeHint().height());
 }
 
+QWidget* LoginDialog::focusedOnExec() const
+{
+	return ui->userName;
+}
+
 void LoginDialog::initView()
 {
 	ui->error->hide();
