@@ -422,7 +422,7 @@ void SynchronizationManager::aboutFullSyncScenario()
 			foreach (change, changes) {
 				if (!change.isEmpty()) {
 					//
-					// ... сохраняем
+					// ... добавляем
 					//
 					DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
 								change.value(SCENARIO_CHANGE_ID), change.value(SCENARIO_CHANGE_DATETIME),
@@ -436,6 +436,11 @@ void SynchronizationManager::aboutFullSyncScenario()
 											 change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
 				}
 			}
+
+			//
+			// ... сохраняем
+			//
+			DataStorageLayer::StorageFacade::scenarioChangeStorage()->store();
 		}
 	}
 }
