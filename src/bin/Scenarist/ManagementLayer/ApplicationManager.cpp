@@ -497,7 +497,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 				//
 				// Переподключаемся
 				//
-				m_synchronizationManager->login();
+				QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
+				return;
 			} else {
 				//
 				// Переходим в автономный режим
@@ -564,6 +565,10 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 							DataStorageLayer::SettingsStorage::ApplicationSettings).toUtf8()
 						);
 			m_projectsManager->setRemoteProjects(cachedProjectsXml);
+			//
+			// говорим, что все проекты недоступны к синхронизации
+			//
+			m_projectsManager->setRemoteProjectsSyncUnavailable();
 		}
 	}
 }

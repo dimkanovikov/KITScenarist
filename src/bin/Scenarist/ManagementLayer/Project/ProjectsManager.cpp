@@ -36,7 +36,7 @@ ProjectsManager::ProjectsManager(QObject* _parent) :
 	QObject(_parent)
 {
 	loadRecentProjects();
-    refreshProjects();
+	refreshProjects();
 }
 
 ProjectsManager::~ProjectsManager()
@@ -306,6 +306,13 @@ void ProjectsManager::setRemoteProjects(const QString& _xml)
 	// Уведомляем об обновлении
 	//
 	emit remoteProjectsUpdated();
+}
+
+void ProjectsManager::setRemoteProjectsSyncUnavailable()
+{
+	for (int projectIndex = 0; projectIndex < m_remoteProjects.size(); ++projectIndex) {
+		m_remoteProjects[projectIndex].setSyncAvailable(false);
+	}
 }
 
 void ProjectsManager::loadRecentProjects()

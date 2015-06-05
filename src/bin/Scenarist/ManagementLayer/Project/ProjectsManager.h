@@ -88,6 +88,11 @@ namespace ManagementLayer
 		 */
 		void setRemoteProjects(const QString& _xml);
 
+		/**
+		 * @brief Установить для всех проектов из облака флаг о недоступной синхронизации
+		 */
+		void setRemoteProjectsSyncUnavailable();
+
 	signals:
 		/**
 		 * @brief Обновлён список проектов
