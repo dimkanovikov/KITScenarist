@@ -51,12 +51,12 @@
 <context>
     <name>BusinessLogic::AbstractExporter</name>
     <message>
-        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="235"/>
+        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="242"/>
         <source>(MORE)</source>
         <translation>(ДАЛЬШЕ)</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="236"/>
+        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="243"/>
         <source> (cont&apos;d)</source>
         <translation> (ПРОД.)</translation>
     </message>
@@ -231,37 +231,38 @@
         <translation>Экспортировать сценарий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="154"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="240"/>
         <source>Template:</source>
         <translation>Шаблон:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="328"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="410"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="414"/>
         <source>Original scenario</source>
         <translation>Оригинальный сценарий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="336"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="422"/>
         <source>Additional:</source>
         <translation>Дополнительно:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="365"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="124"/>
         <source>DOCX</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="139"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="225"/>
         <source>Common</source>
         <translation>Общее</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="26"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="455"/>
         <source>Additional (Numbering, Title Page etc.)</source>
         <translation>Расширенные настройки (нумерация, титульная страница и пр.)</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="97"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="42"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -270,57 +271,57 @@
         <translation type="vanished">Стиль:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="194"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="280"/>
         <source>Page Numbering</source>
         <translation>Нумерация страниц</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="201"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="287"/>
         <source>Scenes Numbering</source>
         <translation>Нумерация сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="209"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="295"/>
         <source>Title List</source>
         <translation>Титульная страница</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="215"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="301"/>
         <source>Print</source>
         <translation>Печатать</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="227"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="313"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="237"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="323"/>
         <source>Scenario name.</source>
         <translation>Название сценария.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="244"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="330"/>
         <source>Genre:</source>
         <translation>Жанр:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="254"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="340"/>
         <source>Scenario genre.</source>
         <translation>Жанр сценария.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="261"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="347"/>
         <source>Author:</source>
         <translation>Автор:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="271"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="357"/>
         <source>Scenario author.</source>
         <translation>Автор сценария.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="278"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="364"/>
         <source>Contacts:</source>
         <translation>Контакты:</translation>
     </message>
@@ -329,12 +330,12 @@
         <translation type="vanished">Контакты.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="285"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="371"/>
         <source>Year:</source>
         <translation>Год:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="295"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="381"/>
         <source>Scenario wirting year.</source>
         <translation>Год написания сценария.</translation>
     </message>
@@ -343,22 +344,22 @@
         <translation type="vanished">Дополнительная информация (оригинальный сценарий, экранизация и т.п.).</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="418"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="177"/>
         <source>Check page breaks</source>
         <translation>Корректировать текст на разрывах страниц</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="434"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="190"/>
         <source>Checking page breaks can increase scenario page numbers.</source>
         <translation>Корректировка текста на разрывах страниц может привести к увеличению кол-ва страниц сценария.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="125"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="70"/>
         <source>Format:</source>
         <translation>Формат:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="375"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="134"/>
         <source>PDF</source>
         <translation></translation>
     </message>
@@ -375,12 +376,12 @@
         <translation type="vanished">Нумерация сцен:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="177"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="263"/>
         <source>Scenes Prefix:</source>
         <translation>Приставка сцен:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="33"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="80"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
@@ -389,22 +390,22 @@
         <translation type="obsolete">Файл:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="49"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="96"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="52"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="99"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="90"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="35"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="107"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="52"/>
         <source>Export</source>
         <translation>Экспортировать</translation>
     </message>
@@ -469,42 +470,40 @@
         <translation type="vanished">Удалять номера сцен:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="86"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="vanished">Отмена</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="96"/>
         <source>Import</source>
-        <translation>Импортировать</translation>
+        <translation type="vanished">Импортировать</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="108"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="78"/>
         <source>Insert To</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="114"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="84"/>
         <source>Replace scenario</source>
         <translation>заменив исходный сценарий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="124"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="94"/>
         <source>Current cursor position</source>
         <translation>в текущую позицию курсора</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="131"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="101"/>
         <source>End of scenario</source>
         <translation>в конец сценария</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="141"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="71"/>
         <source>Remove scenes numbers</source>
         <translation>Удалять номера сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="148"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="111"/>
         <source>Find characters and locations</source>
         <translation>Определить персонажей и локации</translation>
     </message>
@@ -596,24 +595,24 @@
 <context>
     <name>ManagementLayer::ApplicationManager</name>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="184"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="183"/>
         <source>Choose file for new project</source>
         <translation>Выберите файл для нового проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="186"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="240"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="355"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="185"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="239"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="354"/>
         <source>Scenarist project files (*%1)</source>
         <translation>Файл проекта сценария (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="238"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="237"/>
         <source>Choose file for save project</source>
         <translation>Выберите файл для сохранения проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="353"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="352"/>
         <source>Choose project file to open</source>
         <translation>Выберите файл проекта для открытия</translation>
     </message>
@@ -635,164 +634,180 @@
         <translation> - изменён</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="664"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="506"/>
+        <source>New session for you account started at other device.
+Continue working in offline mode.</source>
+        <translation>Пользователь с вашими учётными данными авторизовался на другом устройстве.
+Работаем в автономном режиме.</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="700"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="665"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="701"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1087"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1148"/>
         <source>%1[*] - Scenarist</source>
         <translation>%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="789"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="839"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="446"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="449"/>
+        <source>Connection active</source>
+        <translation>Соединение установлено</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="449"/>
+        <source>Project sinchronized</source>
+        <translation>Проект успешно синхронизирован.</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="462"/>
         <source>Network error</source>
         <translation>Ошибка сети</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="447"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="463"/>
         <source>Can&apos;t estabilish network connection.
 Continue working in offline mode.</source>
         <translation>Отсутствует подключение к интернету.
-Переходим в автономный режим.</translation>
+Работаем в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="466"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="482"/>
         <source>Subscription ended</source>
         <translation>Подписка закончена</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="467"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="483"/>
         <source>Buyed subscription period is finished.
 Continue working in offline mode.</source>
         <translation>Закончился оплаченный период подписки.
-Переходим в автономный режим.</translation>
+Работаем в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="477"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="488"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="494"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="505"/>
         <source>Session closed</source>
         <translation>Сессия закрыта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="478"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="495"/>
         <source>New session for you account started at other device. Restart session?</source>
         <translation>Пользователь с вашими учётными данными авторизовался на другом устройстве. Переподключиться?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="489"/>
         <source>Continue working in offline mode.</source>
-        <translation>Переходим в автономный режим.</translation>
+        <translation type="vanished">Переходим в автономный режим.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="499"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="518"/>
         <source>Project not available</source>
         <translation>Проект недоступен</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="500"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="519"/>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
         <translation>Проект недоступен для синхронизации.
-Работа над проектом в автономном режиме.</translation>
+Работаем с ним в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="510"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="530"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="561"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="596"/>
         <source>Exit from Application</source>
         <translation>Выход из программы</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="561"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="596"/>
         <source>Closing Databse Connections and Remove Temporatry Files.</source>
         <translation>Закрытие соединения с базой данных и удаление временных файлов.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="691"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="727"/>
         <source>Loading Scenario</source>
         <translation>Загрузка сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="691"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="727"/>
         <source>Please wait. Loading can take few minutes.</source>
         <translation>Немного терпения. Загрузка может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="709"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="745"/>
         <source>Sync scenario with cloud service.</source>
         <translation>Немного терпения. Сценарий синхронизируется с облаком.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="796"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="846"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="797"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="847"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="798"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="848"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="799"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="849"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="800"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="850"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="844"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="894"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="845"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="895"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="846"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="896"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="848"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="898"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="854"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="904"/>
         <source>Import...</source>
         <translation>Импорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="857"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="907"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="860"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="910"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -1003,7 +1018,7 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::SettingsManager</name>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="448"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="449"/>
         <source>Choose file to load</source>
         <translation>Выберите файл для загрузки</translation>
     </message>
@@ -1022,35 +1037,35 @@ Continue working with this project in offline mode.</source>
         <translation>Немного терпения. Восстановление исходных значений настроек может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="449"/>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="473"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="450"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="474"/>
         <source>Scenario Template Files (*.%1)</source>
         <translation>Файлы шаблона сценария (*.%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="472"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="473"/>
         <source>Choose file to save</source>
         <translation>Выберите файл для сохранения</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="667"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="668"/>
         <source>Press in paragraph&apos;s end</source>
         <translation>Курсор в конце абзаца с текстом</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="669"/>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="674"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="670"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="675"/>
         <source>Tab</source>
         <translation>Tab</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="670"/>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="675"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="671"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="676"/>
         <source>Enter</source>
         <translation>Enter</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="672"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="673"/>
         <source>Press in empty paragraph</source>
         <translation>Курсор в пустом абзаце</translation>
     </message>
@@ -1071,12 +1086,12 @@ Continue working with this project in offline mode.</source>
         <translation type="vanished">Смена пустого блока</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="678"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="679"/>
         <source>Block Name</source>
         <translation>Текущий блок</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="679"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="680"/>
         <source>Shortcut</source>
         <translation>Сочетание клавиш</translation>
     </message>
@@ -1162,33 +1177,33 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::SynchronizationManager</name>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="139"/>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="231"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="143"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="223"/>
         <source>Authorizing</source>
         <translation>Авторизация</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="139"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="143"/>
         <source>Checking correction of user name and password.</source>
         <translation>Проверка корректности введённых имени пользователя и пароля.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="220"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="825"/>
         <source>Can&apos;t estabilish network connection.</source>
         <translation>Отсутствует подключение к интернету.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="231"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="223"/>
         <source>Close working session.</source>
         <translation>Закрытие рабочего соединения.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="270"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="267"/>
         <source>Loading</source>
         <translation>Загрузка</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="270"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="267"/>
         <source>Loading projects list from remote server.</source>
         <translation>Загрузка списка доступных проектов из облака.</translation>
     </message>
@@ -1394,7 +1409,7 @@ Continue working with this project in offline mode.</source>
     <name>SettingsView</name>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="14"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1872"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1863"/>
         <source>Dialog</source>
         <translation>Диалог</translation>
     </message>
@@ -1483,42 +1498,42 @@ Continue working with this project in offline mode.</source>
         <translation>Высота описания, строк:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1629"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1623"/>
         <source>Chronometry</source>
         <translation>Хронометраж</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2112"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2103"/>
         <source>Apply Selected Template</source>
         <translation>Применить выбранный шаблон</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2115"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2106"/>
         <source>Apply</source>
         <translation>Применить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2126"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2117"/>
         <source>Add Template</source>
         <translation>Добавить шаблон</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2140"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2131"/>
         <source>Edit Selected Template</source>
         <translation>Изменить выбранный шаблон</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2154"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2145"/>
         <source>Delete Selected Template</source>
         <translation>Удалить выбранный шаблон</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2168"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2159"/>
         <source>Load Template From File</source>
         <translation>Загрузить шаблон из файла</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2182"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2173"/>
         <source>Save Template To File</source>
         <translation>Сохранить шаблон в файл</translation>
     </message>
@@ -1596,68 +1611,68 @@ Continue working with this project in offline mode.</source>
         <translation>Отображать номера сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1640"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1634"/>
         <source>Pages Chronometry</source>
         <translation>Постраничный подсчёт</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1659"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1650"/>
         <source>For standard template and compatible</source>
         <translation>Для стандартного шаблона и совместимых</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1699"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1690"/>
         <source>Page</source>
         <translation>Страница</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1706"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1769"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1697"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1760"/>
         <source>=</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1720"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1783"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1711"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1774"/>
         <source>Seconds</source>
         <translation>секунд</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1746"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1737"/>
         <source>Characters Chronometry</source>
         <translation>Посимвольный подсчёт</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1790"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1781"/>
         <source>Characters</source>
         <translation>символов</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1797"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1788"/>
         <source>Consider Spaces</source>
         <translation>Считать с пробелами</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1826"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1817"/>
         <source>Configurable Chronometry</source>
         <translation>Гибкий подсчёт</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1842"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1833"/>
         <source>Time And Place</source>
         <translation>Время и место</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2003"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1994"/>
         <source>Seconds for
 Paragraph</source>
         <translation>Секунд
 за абзац</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1879"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1923"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1956"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1870"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1914"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1947"/>
         <source>+</source>
         <translation></translation>
     </message>
@@ -1667,14 +1682,14 @@ Paragraph</source>
         <translation>Хронометраж/счётчики</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1889"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1880"/>
         <source>Seconds per
 50 characters</source>
         <translation>Секунд за
 50 символов</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1916"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1907"/>
         <source>Action</source>
         <translation>Действие</translation>
     </message>
@@ -1684,17 +1699,17 @@ Paragraph</source>
         <translation>Счётчики</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1572"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1569"/>
         <source>Pages Counter</source>
         <translation>Счётчик страниц</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1588"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1582"/>
         <source>Pages Mode only</source>
         <translation>Только для постраничного режима</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1606"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1600"/>
         <source>Words Counter</source>
         <translation>Счётчик слов</translation>
     </message>
@@ -1707,7 +1722,7 @@ Paragraph</source>
         <translation type="vanished">Добавить стиль</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2129"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2120"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
@@ -1716,7 +1731,7 @@ Paragraph</source>
         <translation type="vanished">Изменить выбранный стиль</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2143"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2134"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
@@ -1733,12 +1748,12 @@ Paragraph</source>
         <translation type="vanished">Сохранить стиль в файл</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2185"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2176"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2171"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2162"/>
         <source>Load</source>
         <translation>Загрузить</translation>
     </message>
@@ -1748,7 +1763,7 @@ Paragraph</source>
         <translation>Счётчик символов</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1552"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1549"/>
         <source>Simbols without spaces | Simbols with spaces</source>
         <translation>Символов без пробелов | Символов с пробелами</translation>
     </message>
@@ -1757,7 +1772,7 @@ Paragraph</source>
         <translation type="vanished">Для стандартного стиля и совместимых</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2157"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2148"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -2131,25 +2146,25 @@ Paragraph</source>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="55"/>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="464"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="437"/>
         <source>Left:</source>
         <translation>Слева:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="75"/>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="382"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="355"/>
         <source>Top:</source>
         <translation>Сверху:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="95"/>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="481"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="454"/>
         <source>Right:</source>
         <translation>Справа:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="115"/>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="413"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="386"/>
         <source>Bottom:</source>
         <translation>Снизу:</translation>
     </message>
@@ -2170,129 +2185,127 @@ Paragraph</source>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="192"/>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="554"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="527"/>
         <source>Left</source>
         <translation>по левому краю</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="197"/>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="559"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="532"/>
         <source>Center</source>
         <translation>по центру</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="202"/>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="564"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="537"/>
         <source>Right</source>
         <translation>по правому краю</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="243"/>
         <source>Close</source>
-        <translation>Закрыть</translation>
+        <translation type="vanished">Закрыть</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="250"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="vanished">Сохранить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="268"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="241"/>
         <source>Active</source>
         <translation>Включён</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="277"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="250"/>
         <source>Bold</source>
         <translation>Жирный</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="286"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="259"/>
         <source>Line spacing:</source>
         <translation>Межстрочный интервал:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="294"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="267"/>
         <source>Single</source>
         <translation>одинарный</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="299"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="272"/>
         <source>One and Half</source>
         <translation>полуторный</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="304"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="277"/>
         <source>Double</source>
         <translation>двойной</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="309"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="282"/>
         <source>Fixed</source>
         <translation>фиксированный</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="320"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="293"/>
         <source>value, mm</source>
         <translation>значение, мм</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="355"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="328"/>
         <source>Underline</source>
         <translation>Подчёркнутый</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="362"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="335"/>
         <source>Spacing</source>
         <translation>Отступы:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="369"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="342"/>
         <source>Lines</source>
         <translation>Линий:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="374"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="347"/>
         <source>mm</source>
         <translation>мм:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="457"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="430"/>
         <source>mm:</source>
         <translation>мм:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="503"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="476"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="523"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="496"/>
         <source>pt</source>
         <translation>пт</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="540"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="513"/>
         <source>Alignment:</source>
         <translation>Выравнивание:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="569"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="542"/>
         <source>Justify</source>
         <translation>по ширине</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="605"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="578"/>
         <source>Uppercase</source>
         <translation>Верхний регистр</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="612"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="585"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="622"/>
+        <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="595"/>
         <source>Framing brackets</source>
         <translation>Обрамлять скобками</translation>
     </message>
@@ -2366,9 +2379,14 @@ Paragraph</source>
 <context>
     <name>UserInterface::ImportDialog</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="79"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="80"/>
         <source>Choose file to import</source>
         <translation>Выберите файл для импорта</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="99"/>
+        <source>Import</source>
+        <translation>Импорт</translation>
     </message>
     <message>
         <source>%1 files (*%2)</source>
@@ -2418,7 +2436,7 @@ Paragraph</source>
 <context>
     <name>UserInterface::LoginDialog</name>
     <message>
-        <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.cpp" line="52"/>
+        <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.cpp" line="57"/>
         <source>Login</source>
         <translation>Войти</translation>
     </message>
@@ -3004,7 +3022,7 @@ Paragraph</source>
 <context>
     <name>WebLoader</name>
     <message>
-        <location filename="../../../../libs/webloader/WebLoader.cpp" line="270"/>
+        <location filename="../../../../libs/webloader/WebLoader.cpp" line="271"/>
         <source>Sorry, we have some error while loading. Error is: %1</source>
         <translation></translation>
     </message>

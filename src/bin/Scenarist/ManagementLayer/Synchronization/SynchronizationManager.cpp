@@ -21,6 +21,7 @@
 
 #include <QEventLoop>
 #include <QHash>
+#include <QNetworkConfigurationManager>
 #include <QScopedPointer>
 #include <QTimer>
 #include <QXmlStreamReader>
@@ -36,6 +37,8 @@ namespace {
 	 * @brief Ссылки для запросов
 	 */
 	/** @{ */
+	const QUrl URL_CHECK_INTERNET_CONNECTION = QUrl("https://www.google.ru/");
+
 	const QUrl URL_LOGIN = QUrl("https://kitscenarist.ru/api/account/login/");
 	const QUrl URL_LOGOUT = QUrl("https://kitscenarist.ru/api/account/logout/");
 	const QUrl URL_PROJECTS = QUrl("https://kitscenarist.ru/api/projects/");
@@ -814,11 +817,16 @@ QByteArray SynchronizationManager::loadSyncWrapper(const QUrl& _url)
 		response = m_loader->loadSync(_url);
 
 		//
-		// Если пропало соединение с интернетом, уведомляем об этом
+		// Если пропало соединение с интернетом, уведомляем об этом и запускаем процесс проверки связи
 		//
 		if (response.isEmpty()) {
 			m_isInternetConnectionActive = false;
+
 			emit syncClosedWithError(OFFLINE_ERROR_CODE, tr("Can't estabilish network connection."));
+			emit cursorsUpdated(QMap<QString, int>());
+			emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
+
+			checkInternetConnection();
 		}
 	}
 
@@ -1154,6 +1162,16 @@ void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUui
 		// Обновляем данные
 		//
 		DataStorageLayer::StorageFacade::refreshStorages();
+	}
+}
+
+void SynchronizationManager::checkInternetConnection()
+{
+	if (QNetworkConfigurationManager().isOnline()) {
+		m_isInternetConnectionActive = true;
+		emit syncRestarted();
+	} else {
+		QTimer::singleShot(5000, this, SLOT(checkInternetConnection()));
 	}
 }
 

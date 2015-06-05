@@ -63,6 +63,8 @@
         <file>Icons/Editing/merge.png</file>
         <file>Icons/Editing/corrector_active.png</file>
         <file>Icons/Editing/corrector.png</file>
+        <file>Icons/Indicator/connected.png</file>
+        <file>Icons/Indicator/disconnected.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

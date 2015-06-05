@@ -9,6 +9,7 @@ namespace Domain {
 	class ScenarioChange;
 }
 
+class QTimer;
 class WebLoader;
 
 
@@ -97,9 +98,14 @@ namespace ManagementLayer
 		void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
 
 		/**
-		 * @brief Сессия закрыта с ошибкой
+		 * @brief Синхроинзация закрыта с ошибкой
 		 */
 		void syncClosedWithError(int errorCode, const QString& _errorText);
+
+		/**
+		 * @brief Синхронизация восстановлена
+		 */
+		void syncRestarted();
 
 	private:
 		/**
@@ -138,6 +144,12 @@ namespace ManagementLayer
 		 * @brief Скачать и сохранить в БД изменения с сервера
 		 */
 		void downloadAndSaveScenarioData(const QString& _dataUuids);
+
+	private slots:
+		/**
+		 * @brief Проверить соединение с интернетом
+		 */
+		void checkInternetConnection();
 
 	private:
 		/**

@@ -444,17 +444,24 @@ void ApplicationManager::aboutUserUnlogged()
 	}
 }
 
+void ApplicationManager::aboutShowSyncActiveIndicator()
+{
+	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"), tr("Connection active"), tr("Project sinchronized"));
+}
+
 void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString& _error)
 {
 	bool switchToOfflineMode = false;
+	QString title;
+	QString error = _error;
 	switch (_errorCode) {
 		//
 		// Нет связи с интернетом
 		//
 		case 0: {
-			QLightBoxMessage::information(m_view, tr("Network error"),
-				tr("Can't estabilish network connection.\n"
-				   "Continue working in offline mode."));
+			title = tr("Network error");
+			error = tr("Can't estabilish network connection.\n"
+					   "Continue working in offline mode.");
 			switchToOfflineMode = true;
 			break;
 		}
@@ -472,9 +479,10 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		// Закончилась подписка
 		//
 		case 102: {
-			QLightBoxMessage::information(m_view, tr("Subscription ended"),
-				tr("Buyed subscription period is finished.\n"
-				   "Continue working in offline mode."));
+			title = tr("Subscription ended");
+			error = tr("Buyed subscription period is finished.\n"
+					   "Continue working in offline mode.");
+			QLightBoxMessage::information(m_view, title, error);
 			switchToOfflineMode = true;
 			break;
 		}
@@ -494,8 +502,10 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 				//
 				// Переходим в автономный режим
 				//
-				QLightBoxMessage::information(m_view, tr("Session closed"),
-					tr("Continue working in offline mode."));
+				title = tr("Session closed");
+				error = tr("New session for you account started at other device.\n"
+						   "Continue working in offline mode.");
+				QLightBoxMessage::information(m_view, title, error);
 				switchToOfflineMode = true;
 			}
 			break;
@@ -505,9 +515,10 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		// Проект недоступен
 		//
 		case 201: {
-			QLightBoxMessage::information(m_view, tr("Project not available"),
-				tr("Current project is not available for syncronization now.\n"
-				   "Continue working with this project in offline mode."));
+			title = tr("Project not available");
+			error = tr("Current project is not available for syncronization now.\n"
+					   "Continue working with this project in offline mode.");
+			QLightBoxMessage::information(m_view, title, error);
 			m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
 			break;
 		}
@@ -520,6 +531,11 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			break;
 		}
 	}
+
+	//
+	// Сигнализируем об ошибке
+	//
+	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"), title, error);
 
 	//
 	// Если необходимо переключаемся в автономный режим
@@ -576,8 +592,8 @@ void ApplicationManager::aboutExit()
 		//
 		// Выводим информацию для пользователя, о закрытии программы
 		//
-        ProgressWidget progress(m_view);
-        progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
+		ProgressWidget progress(m_view);
+		progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
 
 		//
 		// Закроем текущий проект
@@ -592,9 +608,9 @@ void ApplicationManager::aboutExit()
 		//
 		// Выходим
 		//
-        progress.close();
-        QApplication::processEvents();
-        QApplication::quit();
+		progress.close();
+		QApplication::processEvents();
+		QApplication::quit();
 	}
 }
 
@@ -716,6 +732,32 @@ void ApplicationManager::goToEditCurrentProject()
 	updateWindowTitle();
 
 	//
+	// Настроим режим работы со сценарием
+	//
+	const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
+	m_scenarioManager->setCommentOnly(isCommentOnly);
+	m_charactersManager->setCommentOnly(isCommentOnly);
+	m_locationsManager->setCommentOnly(isCommentOnly);
+
+	//
+	// Активируем вкладки
+	//
+	::enableActionsOnProjectOpen();
+
+	//
+	// Настроим индикатор
+	//
+	if (m_projectsManager->currentProject().isRemote()) {
+		if (m_projectsManager->currentProject().isSyncAvailable()) {
+			aboutShowSyncActiveIndicator();
+		} else {
+			aboutSyncClosedWithError(201);
+		}
+	} else {
+		m_tabs->removeIndicator();
+	}
+
+	//
 	// Загрузить данные из файла
 	//
 	m_scenarioManager->loadCurrentProject();
@@ -746,19 +788,6 @@ void ApplicationManager::goToEditCurrentProject()
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
 	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
-
-	//
-	// Настроим режим работы со сценарием
-	//
-	const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
-	m_scenarioManager->setCommentOnly(isCommentOnly);
-	m_charactersManager->setCommentOnly(isCommentOnly);
-	m_locationsManager->setCommentOnly(isCommentOnly);
-
-	//
-	// Активируем вкладки
-	//
-	::enableActionsOnProjectOpen();
 
 	//
 	// Перейти на вкладку редактирования сценария
@@ -898,11 +927,11 @@ QMenu* ApplicationManager::createMenu()
 	connect(printPreview, SIGNAL(triggered()), this, SLOT(aboutPrintPreview()));
 
 #ifdef Q_OS_MAC
-    //
-    // Добавляем действие "Сохранить" в виджет главного окна,
-    // чтобы в маке работал шорткат
-    //
-    m_view->addAction(saveProject);
+	//
+	// Добавляем действие "Сохранить" в виджет главного окна,
+	// чтобы в маке работал шорткат
+	//
+	m_view->addAction(saveProject);
 #endif
 
 	return menu;
@@ -975,6 +1004,7 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
 	connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
 			this, SLOT(aboutSyncClosedWithError(int,QString)));
+	connect(m_synchronizationManager, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
 }
 
 void ApplicationManager::initStyleSheet()

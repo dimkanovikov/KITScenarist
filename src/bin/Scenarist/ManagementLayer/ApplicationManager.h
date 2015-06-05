@@ -92,9 +92,14 @@ namespace ManagementLayer
 		void aboutUserUnlogged();
 
 		/**
+		 * @brief Отобразить индикатор активной синхронизации
+		 */
+		void aboutShowSyncActiveIndicator();
+
+		/**
 		 * @brief Синхронизация остановленна с ошибкой
 		 */
-		void aboutSyncClosedWithError(int errorCode, const QString& _error);
+		void aboutSyncClosedWithError(int errorCode, const QString& _error = QString::null);
 
 		/**
 		 * @brief Импортировать документ

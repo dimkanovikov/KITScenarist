@@ -13,7 +13,6 @@ class SideTabBar : public QWidget
 
 public:
 	SideTabBar(QWidget *parent = 0);
-	~SideTabBar();
 
 	void addTab(QAction* action);
 	QAction* addTab(const QString& text, const QIcon& icon = QIcon());
@@ -22,12 +21,23 @@ public:
 
 	QList<QAction*> tabs() const;
 
+	/**
+	 * @brief Добавить индикатор вниз панели
+	 * @note Вызов с пустыми параметрами, равен вызову функции removeIndicator
+	 */
+	void addIndicator(const QIcon& _icon, const QString& _title = QString::null, const QString& _message = QString::null);
+
+	/**
+	 * @brief Убрать индикатор из панели
+	 */
+	void removeIndicator();
+
 signals:
 	void currentChanged(int index);
 
 protected:
 	void paintEvent(QPaintEvent* event);
-	void mousePressEvent(QMouseEvent* event);
+	void mousePressEvent(QMouseEvent* _event);
 	void mouseReleaseEvent(QMouseEvent* event);
 	QSize minimumSizeHint() const;
 
@@ -39,6 +49,11 @@ private:
 	QList<QAction*> m_tabs;
 	QAction* m_pressedTab;
 	QAction* m_checkedTab;
+
+	/**
+	 * @brief Индикатор внизу панели
+	 */
+	QAction* m_indicator;
 };
 
 #endif // SIDEBAR_H

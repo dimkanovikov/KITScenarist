@@ -1,9 +1,38 @@
 #include "SideBar.h"
 
-namespace {
-	const int ACTION_HEIGHT = 70;
-	const int ACTION_WIDTH = 90;
+#include <QLabel>
+#include <QMenu>
+#include <QWidgetAction>
 
+namespace {
+	/**
+	 * @brief Ширина панели
+	 */
+	const int SIDEBAR_WIDTH = 90;
+
+	/**
+	 * @brief Высота вкладки
+	 */
+	const int TAB_HEIGHT = 70;
+
+	/**
+	 * @brief Высота индикатора
+	 */
+	const int INDICATOR_HEIGHT = 32;
+
+	/**
+	 * @brief Размер иконки индикатора
+	 */
+	const QSize INDICATOR_ICON_SIZE(16, 16);
+
+	/**
+	 * @brief Цвет текущей вкладки
+	 */
+	const QColor CURRENT_TAB_BG_COLOR(38, 40, 42);
+
+	/**
+	 * @brief Перевести изображение в режим "оттенки серого"
+	 */
 	void convertToGrayscale (QImage& _img)
 	{
 		for (int r = 0; r < _img.height (); ++r)
@@ -21,31 +50,39 @@ namespace {
 	}
 }
 
-SideTabBar::SideTabBar(QWidget *parent)
-	: QWidget(parent), m_centerTabs(false), m_pressedTab(0), m_checkedTab(0)
+SideTabBar::SideTabBar(QWidget *parent) :
+	QWidget(parent),
+	m_centerTabs(false),
+	m_pressedTab(0),
+	m_checkedTab(0),
+	m_indicator(new QAction(this))
 {
-	setFixedWidth(ACTION_WIDTH);
-}
+	setFixedWidth(SIDEBAR_WIDTH);
 
-SideTabBar::~SideTabBar()
-{
-
+	//
+	// По умолчанию индикатор скрыт
+	//
+	removeIndicator();
 }
 
 void SideTabBar::paintEvent(QPaintEvent *event)
 {
 	QPainter p(this);
 
+	//
+	// Рисуем вкладки
+	//
+
 	p.fillRect(event->rect(), QBrush(QColor(64, 66, 68)));
 	p.setPen(QColor(95, 95, 95));
 	p.drawLine(event->rect().topRight(), event->rect().bottomRight());
 
-	int actions_height = m_tabs.size()*ACTION_HEIGHT;
+	int actions_height = m_tabs.size()*TAB_HEIGHT;
 
 	int action_y = m_centerTabs ? (event->rect().height()/2-actions_height/2) : 0;
 	foreach(QAction *action, m_tabs)
 	{
-		QRect actionRect(0, action_y, event->rect().width(), ACTION_HEIGHT);
+		QRect actionRect(0, action_y, event->rect().width(), TAB_HEIGHT);
 
 
 		if(action->isChecked())
@@ -77,7 +114,7 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 
 		int icon_size = 48;
 
-		QRect actionIconRect(0, action_y, event->rect().width(), ACTION_HEIGHT-16);
+		QRect actionIconRect(0, action_y, event->rect().width(), TAB_HEIGHT-16);
 		QImage actionImage(action->icon().pixmap(icon_size).toImage());
 		// Если действие недоступно
 		if (!action->isEnabled()) {
@@ -104,11 +141,21 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 		action_y += actionRect.height();
 	}
 
+	//
+	// Рисуем индикатор
+	//
+	if (m_indicator->isVisible()) {
+		const QRect indicatorRect(0, height() - INDICATOR_HEIGHT, SIDEBAR_WIDTH, INDICATOR_HEIGHT);
+
+		p.fillRect(indicatorRect, CURRENT_TAB_BG_COLOR);
+
+		m_indicator->icon().paint(&p, indicatorRect);
+	}
 }
 
 QSize SideTabBar::minimumSizeHint() const
 {
-	return QSize(ACTION_WIDTH, m_tabs.size()*ACTION_HEIGHT);
+	return QSize(SIDEBAR_WIDTH, (m_tabs.size() * TAB_HEIGHT) + (m_indicator->isVisible() ? INDICATOR_HEIGHT : 0));
 }
 
 void SideTabBar::addTab(QAction *action)
@@ -150,12 +197,48 @@ QList<QAction*> SideTabBar::tabs() const
 	return m_tabs;
 }
 
-void SideTabBar::mousePressEvent(QMouseEvent *event)
+void SideTabBar::addIndicator(const QIcon& _icon, const QString& _title, const QString& _message)
 {
-	m_pressedTab = tabAt(event->pos());
-	if(m_pressedTab == 0 || m_pressedTab == m_checkedTab)
-		return;
+	m_indicator->setIcon(_icon);
+	m_indicator->setText(QString("<b>%1</b><p>%2</p>").arg(_title).arg(_message).replace("\n", "<br/>"));
+	m_indicator->setVisible(!_icon.isNull());
 	update();
+}
+
+void SideTabBar::removeIndicator()
+{
+	addIndicator(QIcon());
+}
+
+void SideTabBar::mousePressEvent(QMouseEvent* _event)
+{
+	//
+	// Нажата кнопка?
+	//
+	m_pressedTab = tabAt(_event->pos());
+	if (m_pressedTab != 0 && m_pressedTab != m_checkedTab) {
+		//
+		// Обновим внешний вид
+		//
+		update();
+	}
+	//
+	// Нажат индикатор?
+	//
+	else if (m_indicator->isVisible()
+			 && !m_indicator->text().isEmpty()
+			 && _event->pos().y() > (height() - INDICATOR_HEIGHT)) {
+		//
+		// Покажем информацию
+		//
+		QMenu menu(this);
+		QWidgetAction menuText(&menu);
+		QLabel label(m_indicator->text());
+		label.setMargin(8);
+		menuText.setDefaultWidget(&label);
+		menu.addAction(&menuText);
+		menu.exec(mapToGlobal(QPoint(SIDEBAR_WIDTH, height() - menu.sizeHint().height())));
+	}
 }
 
 void SideTabBar::mouseReleaseEvent(QMouseEvent *event)
@@ -180,12 +263,12 @@ void SideTabBar::mouseReleaseEvent(QMouseEvent *event)
 
 QAction* SideTabBar::tabAt(const QPoint &at)
 {
-	int actions_height = m_tabs.size()*ACTION_HEIGHT;
+	int actions_height = m_tabs.size()*TAB_HEIGHT;
 
 	int action_y = m_centerTabs ? (rect().height()/2-actions_height/2) : 0;
 	foreach(QAction *action, m_tabs)
 	{
-		QRect actionRect(0, action_y, rect().width(), ACTION_HEIGHT);
+		QRect actionRect(0, action_y, rect().width(), TAB_HEIGHT);
 		if(actionRect.contains(at))
 			return action;
 		action_y += actionRect.height();
