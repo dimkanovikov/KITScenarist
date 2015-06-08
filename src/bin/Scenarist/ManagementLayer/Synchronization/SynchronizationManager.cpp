@@ -90,6 +90,7 @@ namespace {
 	const QString DBH_DATETIME_KEY = "datetime";
 	/** @} */
 
+	const bool IS_CLEAN = false;
 	const bool IS_DRAFT = true;
 	const bool IS_ASYNC = true;
 	const bool IS_SYNC = false;
@@ -418,6 +419,11 @@ void SynchronizationManager::aboutFullSyncScenario()
 			//
 			const QList<QHash<QString, QString> > changes =
 					downloadScenarioChanges(changesForDownload.join(";"));
+			//
+			// ... применять будет пачками
+			//
+			QList<QString> cleanPatches;
+			QList<QString> draftPatches;
 			QHash<QString, QString> change;
 			foreach (change, changes) {
 				if (!change.isEmpty()) {
@@ -429,12 +435,21 @@ void SynchronizationManager::aboutFullSyncScenario()
 								change.value(SCENARIO_CHANGE_USERNAME), change.value(SCENARIO_CHANGE_UNDO_PATCH),
 								change.value(SCENARIO_CHANGE_REDO_PATCH), change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
 
-					//
-					// ... применяем
-					//
-					emit applyPatchRequested(change.value(SCENARIO_CHANGE_REDO_PATCH),
-											 change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
+					if (change.value(SCENARIO_CHANGE_IS_DRAFT).toInt()) {
+						draftPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
+					} else {
+						cleanPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
+					}
 				}
+			}
+			//
+			// ... применяем
+			//
+			if (!cleanPatches.isEmpty()) {
+				emit applyPatchesRequested(cleanPatches, IS_CLEAN);
+			}
+			if (!draftPatches.isEmpty()) {
+				emit applyPatchesRequested(cleanPatches, IS_DRAFT);
 			}
 
 			//

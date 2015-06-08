@@ -627,6 +627,15 @@ void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft)
 	}
 }
 
+void ScenarioManager::aboutApplyPatches(const QList<QString>& _patches, bool _isDraft)
+{
+	if (_isDraft) {
+		m_scenarioDraft->document()->applyPatches(_patches);
+	} else {
+		m_scenario->document()->applyPatches(_patches);
+	}
+}
+
 void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft)
 {
 	//

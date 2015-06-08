@@ -90,7 +90,10 @@ namespace ManagementLayer
 		/**
 		 * @brief Необходимо применить патч
 		 */
+		/** @{ */
 		void applyPatchRequested(const QString& _patch, bool _isDraft);
+		void applyPatchesRequested(const QList<QString>& _patch, bool _isDraft);
+		/** @} */
 
 		/**
 		 * @brief Получены новые позиции курсоров пользователей

@@ -155,6 +155,46 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	emit afterPatchApply();
 }
 
+void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
+{
+	emit beforePatchApply();
+	m_isPatchApplyProcessed = true;
+
+
+	//
+	// Определим xml для применения патчей
+	//
+	const QString currentXml = m_xmlHandler->scenarioToXml();
+
+	//
+	// Применяем патчи
+	//
+	QString newXml = currentXml;
+	foreach (const QString& patch, _patches) {
+		newXml = DiffMatchPatchHelper::applyPatchXml(newXml, patch);
+	}
+
+	//
+	// Перезагружаем текст документа
+	//
+	QTextCursor cursor(this);
+	cursor.beginEditBlock();
+	cursor.select(QTextCursor::Document);
+	cursor.removeSelectedText();
+	m_xmlHandler->xmlToScenario(0, newXml);
+	cursor.endEditBlock();
+
+	//
+	// Запомним новый текст
+	//
+	m_lastScenarioXml = m_xmlHandler->scenarioToXml();
+	m_lastScenarioXmlHash = ::textMd5Hash(m_lastScenarioXml);
+
+
+	m_isPatchApplyProcessed = false;
+	emit afterPatchApply();
+}
+
 Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
 {
 	Domain::ScenarioChange* change = 0;

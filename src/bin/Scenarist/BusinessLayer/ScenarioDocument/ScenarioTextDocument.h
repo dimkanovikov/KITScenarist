@@ -44,6 +44,12 @@ namespace BusinessLogic
 		void applyPatch(const QString& _patch);
 
 		/**
+		 * @brief Применить множество патчей
+		 * @note Метод для оптимизации, перестраивается весь документ
+		 */
+		void applyPatches(const QList<QString>& _patches);
+
+		/**
 		 * @brief Сохранить изменения текста
 		 */
 		Domain::ScenarioChange* saveChanges();
