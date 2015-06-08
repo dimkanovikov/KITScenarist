@@ -23,7 +23,7 @@ Character::Character(
 
 QString Character::name() const
 {
-	return m_name;
+	return m_name.toUpper();
 }
 
 void Character::setName(const QString& _name)

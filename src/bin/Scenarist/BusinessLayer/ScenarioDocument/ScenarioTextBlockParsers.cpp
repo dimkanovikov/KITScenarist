@@ -123,16 +123,22 @@ QString TimeAndPlaceParser::timeName(const QString& _text)
 
 QStringList SceneCharactersParser::characters(const QString& _text)
 {
-	QString characters = _text;
+	QString characters = _text.simplified();
 
 	//
 	// Удалим потенциальные приставку и окончание
 	//
 	ScenarioBlockStyle style = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::SceneCharacters);
 	QString stylePrefix = style.prefix();
+	if (!stylePrefix.isEmpty()
+		&& characters.startsWith(stylePrefix)) {
+		characters.remove(QRegularExpression(QString("^[%1]").arg(stylePrefix)));
+	}
 	QString stylePostfix = style.postfix();
-	characters.remove(QRegularExpression(QString("^[%1]").arg(stylePrefix)));
-	characters.remove(QRegularExpression(QString("[%1]$").arg(stylePostfix)));
+	if (!stylePostfix.isEmpty()
+		&& characters.endsWith(stylePostfix)) {
+		characters.remove(QRegularExpression(QString("[%1]$").arg(stylePostfix)));
+	}
 
-	return characters.split(", ", QString::SkipEmptyParts);
+	return characters.split(",", QString::SkipEmptyParts);
 }

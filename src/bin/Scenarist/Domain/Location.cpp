@@ -21,7 +21,7 @@ Location::Location(
 
 QString Location::name() const
 {
-	return m_name;
+	return m_name.toUpper();
 }
 
 void Location::setName(const QString& _name)
