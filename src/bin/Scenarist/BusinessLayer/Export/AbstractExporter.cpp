@@ -535,11 +535,14 @@ namespace {
 					_destDocumentCursor.movePosition(QTextCursor::PreviousBlock, QTextCursor::MoveAnchor, emptyLines);
 					insertLines += emptyLines;
 					//
+					// ... строки абзаца
+					//
+					insertLines += ::linesOfText(_destDocumentCursor);
+					//
 					// ... переходим в конец блока перед ремаркой
 					//
 					_destDocumentCursor.movePosition(QTextCursor::PreviousBlock);
 					_destDocumentCursor.movePosition(QTextCursor::EndOfBlock);
-					++insertLines;
 
 					//
 					// ... проверяем предпредыдущий блок
@@ -558,11 +561,14 @@ namespace {
 					_destDocumentCursor.movePosition(QTextCursor::PreviousBlock, QTextCursor::MoveAnchor, emptyLines);
 					insertLines += emptyLines;
 					//
+					// ... строки абзаца
+					//
+					insertLines += ::linesOfText(_destDocumentCursor);
+					//
 					// ... переходим в конец блока перед персонажем
 					//
 					_destDocumentCursor.movePosition(QTextCursor::PreviousBlock);
 					_destDocumentCursor.movePosition(QTextCursor::EndOfBlock);
-					++insertLines;
 				}
 
 				//
