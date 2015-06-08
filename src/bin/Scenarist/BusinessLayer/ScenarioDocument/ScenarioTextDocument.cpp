@@ -181,7 +181,7 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 	cursor.beginEditBlock();
 	cursor.select(QTextCursor::Document);
 	cursor.removeSelectedText();
-	m_xmlHandler->xmlToScenario(0, newXml);
+	m_xmlHandler->xmlToScenario(0, ::makeMimeFromXml(newXml));
 	cursor.endEditBlock();
 
 	//
