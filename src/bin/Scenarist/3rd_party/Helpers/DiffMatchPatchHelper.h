@@ -175,10 +175,10 @@ public:
 				//
 				if (oldStartPos == -1
 					|| patch.start1 < oldStartPos) {
-					oldStartPos = patch.start1 - oldDistance;
+					oldStartPos = patch.start1;
 				}
 				if (oldEndPos == -1
-					|| oldEndPos < (patch.start1 + patch.length1)) {
+					|| oldEndPos < (patch.start1 + patch.length1 - oldDistance)) {
 					oldEndPos = patch.start1 + patch.length1 - oldDistance;
 				}
 				oldDistance += patch.length2 - patch.length1;
@@ -193,6 +193,12 @@ public:
 					|| newEndPos < (patch.start2 + patch.length2)) {
 					newEndPos = patch.start2 + patch.length2;
 				}
+			}
+			//
+			// Для случая, когда текста остаётся ровно столько же, сколько и было
+			//
+			if (oldDistance == 0) {
+				oldEndPos = newEndPos;
 			}
 			//
 			// Отнимает один символ, т.к. в патче указан индекс символа начиная с 1
@@ -264,6 +270,7 @@ public:
 			const int newXmlPartLength = newXmlPart.length();
 			const int newPlainPartLength = ::removeXmlTagsForScenario(plainToXml(newXmlPart)).length();
 			int newStartPosForPlain = newStartPosForXml - (newXmlPartLength - newPlainPartLength);
+
 
 			result =
 					QPair<ChangeXml, ChangeXml>(
