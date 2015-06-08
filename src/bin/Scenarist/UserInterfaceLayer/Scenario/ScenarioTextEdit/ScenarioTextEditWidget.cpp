@@ -410,6 +410,7 @@ void ScenarioTextEditWidget::initView()
 	m_correction->setIcons(QIcon(":/Graphics/Icons/Editing/corrector.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/corrector_active.png"));
 	m_correction->setToolTip(tr("Text Corrections"));
 	m_correction->setCheckable(true);
+	m_correction->hide();
 
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 	m_duration->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
