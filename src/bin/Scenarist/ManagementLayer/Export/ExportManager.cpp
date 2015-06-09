@@ -85,7 +85,7 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 	//
 	// Сохраняем информацию о титульном листе
 	//
-	saveTitleListInfo(m_currentScenario);
+	saveTitleListInfo();
 
 	m_currentScenario = 0;
 }
@@ -202,7 +202,7 @@ void ExportManager::aboutPrintPreview()
 	//
 	// Сохраняем информацию о титульном листе
 	//
-	saveTitleListInfo(m_currentScenario);
+	saveTitleListInfo();
 
 	//
 	// Скрываем окно настроек, показываем предпросмотр, а потом вновь показываем его
@@ -259,7 +259,7 @@ void ExportManager::initExportDialog()
 	m_exportDialog->setScenarioYear(StorageFacade::scenarioDataStorage()->year());
 }
 
-void ExportManager::saveTitleListInfo(BusinessLogic::ScenarioDocument* _scenario)
+void ExportManager::saveTitleListInfo()
 {
 	//
 	// Сохраняем информацию о титульном листе

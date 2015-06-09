@@ -1,9 +1,11 @@
 #include "qlightboxdialog.h"
 
 #include <QEventLoop>
+#include <QGraphicsOpacityEffect>
 #include <QGridLayout>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QPropertyAnimation>
 #include <QTimer>
 
 
@@ -11,7 +13,9 @@ QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget) :
 	QLightBoxWidget(parent, _followToHeadWidget),
 	m_title(new QLabel(this)),
 	m_centralWidget(0),
-	m_execResult(Rejected)
+	m_execResult(Rejected),
+	m_opacityEffect(new QGraphicsOpacityEffect(this)),
+	m_opacityAnimation(new QPropertyAnimation(m_opacityEffect, "opacity"))
 {
 	initView();
 	initConnections();
@@ -28,6 +32,15 @@ int QLightBoxDialog::exec()
 
 	show();
 
+	//
+	// Анимируем открытие
+	//
+	{
+		m_opacityAnimation->setStartValue(0);
+		m_opacityAnimation->setEndValue(1);
+		m_opacityAnimation->start();
+	}
+
 	focusedOnExec()->setFocus();
 
 	QEventLoop dialogEventLoop;
@@ -35,6 +48,19 @@ int QLightBoxDialog::exec()
 	connect(this, SIGNAL(rejected()), &dialogEventLoop, SLOT(quit()));
 	connect(this, SIGNAL(finished(int)), &dialogEventLoop, SLOT(quit()));
 	dialogEventLoop.exec();
+
+	//
+	// Анимируем закрытие
+	//
+	{
+		m_opacityAnimation->setStartValue(1);
+		m_opacityAnimation->setEndValue(0);
+		m_opacityAnimation->start();
+
+		QEventLoop hideEventLoop;
+		connect(m_opacityAnimation, SIGNAL(finished()), &hideEventLoop, SLOT(quit()));
+		hideEventLoop.exec();
+	}
 
 	hide();
 
@@ -112,6 +138,11 @@ void QLightBoxDialog::initView()
 		newLayout->setColumnStretch(2, 1);
 		setLayout(newLayout);
 	}
+
+	m_opacityEffect->setOpacity(0);
+	setGraphicsEffect(m_opacityEffect);
+	m_opacityAnimation->setDuration(300);
+	m_opacityAnimation->setEasingCurve(QEasingCurve::OutCirc);
 }
 
 void QLightBoxDialog::initConnections()

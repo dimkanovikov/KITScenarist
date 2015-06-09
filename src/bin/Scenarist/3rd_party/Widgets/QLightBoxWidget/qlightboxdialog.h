@@ -3,7 +3,9 @@
 
 #include "qlightboxwidget.h"
 
+class QGraphicsOpacityEffect;
 class QLabel;
+class QPropertyAnimation;
 
 
 /**
@@ -94,6 +96,14 @@ private:
 	 * @brief Актуальный код возврата
 	 */
 	int m_execResult;
+
+	/**
+	 * @brief Графический эффект для реализации эффекта плавного появления/скрытия
+	 */
+	/** @{ */
+	QGraphicsOpacityEffect* m_opacityEffect;
+	QPropertyAnimation* m_opacityAnimation;
+	/** @} */
 };
 
 #endif // QLIGHTBOXDIALOG_H

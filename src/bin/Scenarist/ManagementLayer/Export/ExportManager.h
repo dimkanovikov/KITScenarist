@@ -85,7 +85,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Сохранить информацию о титульном листе, если изменилась
 		 */
-		void saveTitleListInfo(BusinessLogic::ScenarioDocument* _scenario);
+		void saveTitleListInfo();
 
 	private:
 		/**
