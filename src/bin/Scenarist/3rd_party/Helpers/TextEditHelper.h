@@ -17,12 +17,11 @@ namespace TextEditHelper
 	static QString toHtmlEscaped(const QString& _text)
 	{
 		QString escapedText = _text;
-		escapedText =
-				escapedText
-				.replace("<", "&lt;")
-				.replace(">", "&gt;")
-				.replace("\"", "&quot;")
-				.replace("&", "&amp;");
+		escapedText = escapedText.replace("&", "&amp;");
+		escapedText = escapedText
+					  .replace("<", "&lt;")
+					  .replace(">", "&gt;")
+					  .replace("\"", "&quot;");
 		return escapedText;
 	}
 
@@ -32,11 +31,11 @@ namespace TextEditHelper
 	static QString fromHtmlEscaped(const QString& _escapedText)
 	{
 		QString text = _escapedText;
-		text =  text
+		text = text.replace("&amp;", "&");
+		text = text
 				.replace("&lt;", "<")
 				.replace("&gt;", ">")
-				.replace("&quot;", "\"")
-				.replace("&amp;", "&");
+				.replace("&quot;", "\"");
 		return text;
 	}
 

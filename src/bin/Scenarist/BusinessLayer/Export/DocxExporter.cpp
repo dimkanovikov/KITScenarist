@@ -249,11 +249,12 @@ namespace {
 		//
 		// Запишем параграф в документ
 		//
+		const QString blockText = TextEditHelper::toHtmlEscaped(_cursor.block().text());
 		if (currentBlockType != ScenarioBlockStyle::Undefined) {
 			documentXml =
 				QString("<w:p><w:pPr><w:pStyle w:val=\"%1\"/><w:rPr/></w:pPr><w:r><w:rPr/><w:t>%2</w:t></w:r></w:p>")
 				.arg(ScenarioBlockStyle::typeName(currentBlockType).toUpper().replace("_", ""))
-				.arg(_cursor.block().text());
+				.arg(blockText);
 		} else {
 			documentXml = "<w:p><w:pPr><w:pStyle w:val=\"Normal\"/>";
 			switch (_cursor.blockFormat().alignment()) {
@@ -279,7 +280,7 @@ namespace {
 			}
 			documentXml.append(
 				QString("<w:rPr/></w:pPr><w:r><w:rPr/><w:t>%2</w:t></w:r></w:p>")
-				.arg(TextEditHelper::toHtmlEscaped(_cursor.block().text()))
+				.arg(blockText)
 				);
 		}
 
