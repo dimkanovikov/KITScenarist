@@ -24,14 +24,14 @@ namespace BusinessLogic
 		void setSceneNumber(int _number);
 
 		/**
-		 * @brief Получить синопсис
+		 * @brief Получить описание
 		 */
-		QString synopsis(bool htmlEscaped = false) const;
+		QString description(bool htmlEscaped = false) const;
 
 		/**
-		 * @brief Установить синопсис
+		 * @brief Установить описание
 		 */
-		void setSynopsis(const QString& _synopsis, bool htmlEscaped = false);
+		void setDescription(const QString& _description, bool htmlEscaped = false);
 
 	private:
 		/**
@@ -40,9 +40,9 @@ namespace BusinessLogic
 		int m_sceneNumber;
 
 		/**
-		 * @brief Текст синопсиса
+		 * @brief Текст описания
 		 */
-		QString m_synopsis;
+		QString m_description;
 	};
 }
 

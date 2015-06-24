@@ -22,35 +22,35 @@ void ScenarioTextBlockInfo::setSceneNumber(int _number)
 	}
 }
 
-QString ScenarioTextBlockInfo::synopsis(bool htmlEscaped) const
+QString ScenarioTextBlockInfo::description(bool htmlEscaped) const
 {
-	QString resultSynopsis = m_synopsis;
+	QString resultDescription = m_description;
 	if (htmlEscaped) {
-		resultSynopsis = TextEditHelper::toHtmlEscaped(resultSynopsis);
+		resultDescription = TextEditHelper::toHtmlEscaped(resultDescription);
 	}
 
-	return resultSynopsis;
+	return resultDescription;
 }
 
-void ScenarioTextBlockInfo::setSynopsis(const QString& _synopsis, bool htmlEscaped)
+void ScenarioTextBlockInfo::setDescription(const QString& _description, bool htmlEscaped)
 {
 	//
 	// При необходимости избавимся от html-преобразованных символов
 	//
-	QString inputSynopsis = _synopsis;
+	QString inputDescription = _description;
 	if (htmlEscaped) {
-		inputSynopsis = TextEditHelper::fromHtmlEscaped(inputSynopsis);
+		inputDescription = TextEditHelper::fromHtmlEscaped(inputDescription);
 	}
 
 	//
 	// Уберём лишнее
 	//
-	inputSynopsis = TextEditHelper::removeDocumentTags(inputSynopsis);
+	inputDescription = TextEditHelper::removeDocumentTags(inputDescription);
 
 	//
-	// Обновим синопсис, если он изменился
+	// Обновим описание, если он изменился
 	//
-	if (m_synopsis != inputSynopsis) {
-		m_synopsis = inputSynopsis;
+	if (m_description != inputDescription) {
+		m_description = inputDescription;
 	}
 }

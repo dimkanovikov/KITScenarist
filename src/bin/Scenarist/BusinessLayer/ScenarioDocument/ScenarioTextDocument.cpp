@@ -26,27 +26,6 @@ namespace {
 	}
 
 	/**
-	 * @brief Подготовить майм для вставки из заданного xml
-	 */
-	static QString makeMimeFromXml(const QString& _xml) {
-		const QString XML_HEADER = "<?xml version=\"1.0\"?>";
-		const QString SCENARIO_HEADER = "<scenario>";
-		const QString SCENARIO_FOOTER = "</scenario>";
-
-		QString mimeXml = _xml;
-		if (!mimeXml.contains(XML_HEADER)) {
-			if (!mimeXml.contains(SCENARIO_HEADER)) {
-				mimeXml.prepend(SCENARIO_HEADER);
-			}
-			mimeXml.prepend(XML_HEADER);
-		}
-		if (!mimeXml.endsWith(SCENARIO_FOOTER)) {
-			mimeXml.append(SCENARIO_FOOTER);
-		}
-		return mimeXml;
-	}
-
-	/**
 	 * @brief Сохранить изменение
 	 */
 	static Domain::ScenarioChange* saveChange(const QString& _undoPatch, const QString& _redoPatch) {
@@ -141,7 +120,7 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	cursor.beginEditBlock();
 	cursor.removeSelectedText();
 	m_xmlHandler->xmlToScenario(xmlsForUpdate.first.plainPos,
-		::makeMimeFromXml(xmlsForUpdate.second.xml));
+		ScenarioXml::makeMimeFromXml(xmlsForUpdate.second.xml));
 	cursor.endEditBlock();
 
 	//
@@ -181,7 +160,7 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 	cursor.beginEditBlock();
 	cursor.select(QTextCursor::Document);
 	cursor.removeSelectedText();
-	m_xmlHandler->xmlToScenario(0, ::makeMimeFromXml(newXml));
+	m_xmlHandler->xmlToScenario(0, ScenarioXml::makeMimeFromXml(newXml));
 	cursor.endEditBlock();
 
 	//

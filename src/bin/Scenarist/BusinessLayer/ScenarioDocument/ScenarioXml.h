@@ -21,6 +21,11 @@ namespace BusinessLogic
 		 */
 		static QString defaultXml();
 
+		/**
+		 * @brief Подготовить майм для вставки из заданного xml
+		 */
+		static QString makeMimeFromXml(const QString& _xml);
+
 	public:
 		/**
 		 * @brief Конструктор фасада для работы с xml
@@ -64,6 +69,16 @@ namespace BusinessLogic
 		 * Используетмя при перемещении элементов по дереву
 		 */
 		int removeLastMime();
+
+		/**
+		 * @brief Преобразование xml-текста в сценарий (сценарий созданый до версий 0.5.2)
+		 */
+		void xmlToScenarioV0(int _position, const QString& _xml);
+
+		/**
+		 * @brief Преобразование xml-текста в сценарий (сценарий созданый с версии 0.5.3)
+		 */
+		void xmlToScenarioV1(int _position, const QString& _xml);
 
 	private:
 		/**

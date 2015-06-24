@@ -5,9 +5,10 @@
 #include "TextEditHelper.h"
 
 #include <QHash>
+#include <QSet>
 #include <QString>
 #include <QRegularExpression>
-
+#include <QDebug>
 namespace {
 	/**
 	 * @brief Является ли строка тэгом
@@ -36,21 +37,34 @@ namespace {
 	QString removeCommonXmlTagsForScenario(const QString& _xml) {
 		QString result = _xml;
 		result = result.remove("<?xml version=\"1.0\"?>\n");
-		result = result.remove("<scenario>\n");
+		result = result.remove("<scenario version=\"1.0\">\n");
 		result = result.remove("</scenario>\n");
-		result = result.remove("<scene_group>\n");
-		result = result.remove("</scene_group>\n");
-		result = result.remove("<folder>\n");
-		result = result.remove("</folder>\n");
+
 		return result;
 	}
 
 	/**
 	 * @brief Удалить все xml-тэги сценария
 	 */
-	QString removeXmlTagsForScenario(const QString& _xml) {
+	QString removeXmlTagsForScenario(const QString& _xml, const QHash<QString,QString> _tagsMap) {
 		QString result = _xml;
 		result = removeCommonXmlTagsForScenario(result);
+
+		result = result.remove("<scene_group>\n");
+		result = result.remove("</scene_group>\n");
+		result = result.remove("<folder>\n");
+		result = result.remove("</folder>\n");
+		result = result.remove("<reviews>\n");
+		result = result.remove("</reviews>\n");
+		result = result.remove("<reviews/>\n");
+
+		foreach (const QString& tag, _tagsMap.keys()) {
+			result = result.remove(tag + "\n");
+		}
+
+		result = result.remove(QRegularExpression("<time_and_place(.*)>\n"));
+		result = result.remove(QRegularExpression("<review(.*)/>\n"));
+
 		result = TextEditHelper::removeXmlTags(result);
 		return result;
 	}
@@ -131,7 +145,14 @@ public:
 			xml(_xml), plainPos(_pos), plainLength(_length)
 		{
 			if (_length == -1) {
-				plainLength = ::removeXmlTagsForScenario(xml).length();
+				//
+				// Считаем длину убирая xml-тэги и последний перевод строки
+				//
+				QString plain = ::removeXmlTagsForScenario(xml, tagsMap());
+				if (plain.endsWith("\n")) {
+					plain = plain.left(plain.length() - 1);
+				}
+				plainLength = plain.length();
 			}
 		}
 	};
@@ -262,13 +283,12 @@ public:
 			//
 			const QString oldXmlPart = oldXml.left(oldStartPosForXml);
 			const int oldXmlPartLength = oldXmlPart.length();
-			const int oldPlainPartLength = ::removeXmlTagsForScenario(plainToXml(oldXmlPart)).length();
+			const int oldPlainPartLength = ::removeXmlTagsForScenario(plainToXml(oldXmlPart), tagsMap()).length();
 			int oldStartPosForPlain = oldStartPosForXml - (oldXmlPartLength - oldPlainPartLength);
-
 			//
 			const QString newXmlPart = newXml.left(newStartPosForXml);
 			const int newXmlPartLength = newXmlPart.length();
-			const int newPlainPartLength = ::removeXmlTagsForScenario(plainToXml(newXmlPart)).length();
+			const int newPlainPartLength = ::removeXmlTagsForScenario(plainToXml(newXmlPart), tagsMap()).length();
 			int newStartPosForPlain = newStartPosForXml - (newXmlPartLength - newPlainPartLength);
 
 
@@ -287,11 +307,14 @@ private:
 	 * @brief Преобразовать xml в плоский текст, заменяя тэги спецсимволами
 	 */
 	static QString xmlToPlain(const QString& _xml) {
+		//
+		// TODO: искать тэги и добавлять их в карту, чтобы ещё более корректной была замена
+		//
 		QString plain = _xml;
 		foreach (const QString& key, tagsMap().keys()) {
 			plain.replace(key, tagsMap().value(key));
 		}
-		return removeCommonXmlTagsForScenario(plain);
+		return ::removeCommonXmlTagsForScenario(plain);
 	}
 
 	/**
@@ -331,6 +354,7 @@ private:
 			addTag("dialog", s_tagsMap, s_charIndex);
 			addTag("transition", s_tagsMap, s_charIndex);
 			addTag("note", s_tagsMap, s_charIndex);
+			addTag("title_header", s_tagsMap, s_charIndex);
 			addTag("title", s_tagsMap, s_charIndex);
 			addTag("noprintable_text", s_tagsMap, s_charIndex);
 			addTag("scene_group", s_tagsMap, s_charIndex);
