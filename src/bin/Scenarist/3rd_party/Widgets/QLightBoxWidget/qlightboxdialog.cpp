@@ -36,9 +36,9 @@ int QLightBoxDialog::exec()
 	// Анимируем открытие
 	//
 	{
-		m_opacityAnimation->setStartValue(0);
-		m_opacityAnimation->setEndValue(1);
-		m_opacityAnimation->start();
+//		m_opacityAnimation->setStartValue(0);
+//		m_opacityAnimation->setEndValue(1);
+//		m_opacityAnimation->start();
 	}
 
 	focusedOnExec()->setFocus();
@@ -53,13 +53,13 @@ int QLightBoxDialog::exec()
 	// Анимируем закрытие
 	//
 	{
-		m_opacityAnimation->setStartValue(1);
-		m_opacityAnimation->setEndValue(0);
-		m_opacityAnimation->start();
+//		m_opacityAnimation->setStartValue(1);
+//		m_opacityAnimation->setEndValue(0);
+//		m_opacityAnimation->start();
 
-		QEventLoop hideEventLoop;
-		connect(m_opacityAnimation, SIGNAL(finished()), &hideEventLoop, SLOT(quit()));
-		hideEventLoop.exec();
+//		QEventLoop hideEventLoop;
+//		connect(m_opacityAnimation, SIGNAL(finished()), &hideEventLoop, SLOT(quit()));
+//		hideEventLoop.exec();
 	}
 
 	hide();
@@ -139,10 +139,10 @@ void QLightBoxDialog::initView()
 		setLayout(newLayout);
 	}
 
-	m_opacityEffect->setOpacity(0);
-	setGraphicsEffect(m_opacityEffect);
-	m_opacityAnimation->setDuration(300);
-	m_opacityAnimation->setEasingCurve(QEasingCurve::OutCirc);
+//	m_opacityEffect->setOpacity(0);
+//	setGraphicsEffect(m_opacityEffect);
+//	m_opacityAnimation->setDuration(300);
+//	m_opacityAnimation->setEasingCurve(QEasingCurve::OutCirc);
 }
 
 void QLightBoxDialog::initConnections()
