@@ -17,6 +17,11 @@ namespace {
 	const int POSSIBLE_RECIEVED_MAX_FILE_SIZE = 120000;
 
 	/**
+	 * @brief Максимальное время ожидания ответа от серева при синхронном запросе
+	 */
+	const int SYNC_LOAD_TIMEOUT = 60000;
+
+	/**
 	 * @brief Преобразовать ошибку в читаемый вид
 	 */
 	static QString networkErrorToString(QNetworkReply::NetworkError networkError) {
@@ -121,6 +126,7 @@ QByteArray WebLoader::loadSync(QUrl urlToLoad, QUrl referer)
 
 	QEventLoop loop;
 	connect(this, SIGNAL(finished()), &loop, SLOT(quit()));
+	QTimer::singleShot(SYNC_LOAD_TIMEOUT, &loop, SLOT(quit()));
 	start();
 	loop.exec();
 
