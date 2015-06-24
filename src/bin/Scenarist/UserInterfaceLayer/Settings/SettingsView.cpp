@@ -209,6 +209,11 @@ void SettingsView::setScenarioEditCurrentTemplate(const QString& _templateName)
 	ui->currentScenarioTemplate->setCurrentText(_templateName);
 }
 
+void SettingsView::setScenarioEditAutoJumpToNextBlock(bool _value)
+{
+	ui->autoJumpToNextBlock->setChecked(_value);
+}
+
 void SettingsView::setNavigatorShowScenesNumbers(bool _value)
 {
 	ui->showScenesNumbersInNavigator->setChecked(_value);
@@ -568,6 +573,7 @@ void SettingsView::initConnections()
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
 	connect(ui->currentScenarioTemplate, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentTemplateChanged(QString)));
+	connect(ui->autoJumpToNextBlock, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)));
 	// ... навигатор
 	connect(ui->showScenesNumbersInNavigator, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
 	connect(ui->showSceneDescription, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowSceneDescriptionChanged(bool)));

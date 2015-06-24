@@ -60,7 +60,6 @@ void DialogHandler::handleEnter(QKeyEvent*)
 				//
 				// Меняем стиль блока на описание действия
 				//
-//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Dialog));
 			} else {
 				//! Текст не пуст
@@ -77,7 +76,6 @@ void DialogHandler::handleEnter(QKeyEvent*)
 					//
 					// Перейдём к блоку персонажа
 					//
-//					editor()->addScenarioBlock(ScenarioBlockStyle::Character);
 					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Dialog));
 				} else {
 					//! Внутри блока
@@ -166,7 +164,6 @@ void DialogHandler::handleTab(QKeyEvent*)
 				//
 				// Меняем стиль на ремарку
 				//
-//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Parenthetical);
 				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Dialog));
 			} else {
 				//! Текст не пуст
@@ -183,7 +180,6 @@ void DialogHandler::handleTab(QKeyEvent*)
 					//
 					// Вставляем блок ремарки
 					//
-//					editor()->addScenarioBlock(ScenarioBlockStyle::Parenthetical);
 					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Dialog));
 				} else {
 					//! Внутри блока

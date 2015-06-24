@@ -74,7 +74,6 @@ void NoteHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставляем блок и применяем ему стиль описания действия
 					//
-//					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Note));
 				} else {
 					//! Внутри блока
@@ -148,7 +147,6 @@ void NoteHandler::handleTab(QKeyEvent*)
 					//
 					// Действуем как нажатие клавиши ENTER
 					//
-//					handleEnter();
 					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Note));
 				} else {
 					//! Внутри блока

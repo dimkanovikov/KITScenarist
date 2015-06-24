@@ -73,6 +73,16 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 				break;
 			}
 		}
+
+		//
+		// Если нужно автоматически перепрыгиваем к следующему блоку
+		//
+		if (autoJumpToNextBlock()
+			&& currentSection == CharacterParser::SectionName) {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			editor()->setTextCursor(cursor);
+			editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Character));
+		}
 	} else {
 		//! Подстановщик закрыт
 
@@ -92,7 +102,6 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 				//
 				// Cменить стиль на описание действия
 				//
-//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Character));
 			} else {
 				//! Текст не пуст
@@ -115,7 +124,6 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставить блок реплики героя
 					//
-//					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
 					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Character));
 				} else {
 					//! Внутри блока
@@ -174,7 +182,6 @@ void CharacterHandler::handleTab(QKeyEvent*)
 				//
 				// Cменить стиль на описание действия
 				//
-//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Character));
 			} else {
 				//! Текст не пуст
@@ -196,7 +203,6 @@ void CharacterHandler::handleTab(QKeyEvent*)
 					//
 					// Вставить блок ремарки
 					//
-//					editor()->addScenarioBlock(ScenarioBlockStyle::Parenthetical);
 					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Character));
 				} else {
 					//! Внутри блока

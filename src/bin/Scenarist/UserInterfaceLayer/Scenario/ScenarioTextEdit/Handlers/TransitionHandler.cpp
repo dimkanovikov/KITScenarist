@@ -74,7 +74,6 @@ void TransitionHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставляем блок и применяем ему стиль время и место
 					//
-//					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
 					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Transition));
 				} else {
 					//! Внутри блока
@@ -148,7 +147,6 @@ void TransitionHandler::handleTab(QKeyEvent*)
 					//
 					// Действуем как нажатие клавиши ENTER
 					//
-//					handleEnter();
 					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Transition));
 				} else {
 					//! Внутри блока

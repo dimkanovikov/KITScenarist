@@ -22,8 +22,12 @@ namespace KeyProcessingLayer
 
 	protected:
 		/**
+		 * @brief Перепрыгивать к следующему блоку автоматически?
+		 */
+		static bool autoJumpToNextBlock();
+
+		/**
 		 * @brief Получить стиль блока к которому переходить
-		 * TODO: вынести из этого класса, чтобы не работать с настройками из интерфейса
 		 */
 		/** @{ */
 		static BusinessLogic::ScenarioBlockStyle::Type jumpForTab(BusinessLogic::ScenarioBlockStyle::Type _blockType);

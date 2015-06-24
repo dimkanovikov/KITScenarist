@@ -81,7 +81,6 @@ void FolderHeaderHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставить блок время и место
 					//
-//					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
 					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::FolderHeader));
 				} else {
 					//! Внутри блока
@@ -155,7 +154,6 @@ void FolderHeaderHandler::handleTab(QKeyEvent*)
 					//
 					// Как ENTER
 					//
-//					handleEnter();
 					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::FolderHeader));
 				} else {
 					//! Внутри блока

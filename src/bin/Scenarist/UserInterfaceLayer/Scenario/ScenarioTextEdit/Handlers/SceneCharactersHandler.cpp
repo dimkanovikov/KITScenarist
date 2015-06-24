@@ -72,7 +72,6 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 				//
 				// Cменить стиль на описание действия
 				//
-//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Action);
 				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::SceneCharacters));
 			} else {
 				//! Текст не пуст
@@ -98,7 +97,6 @@ void SceneCharactersHandler::handleEnter(QKeyEvent*)
 					//
 					cursor.movePosition(QTextCursor::EndOfBlock);
 					editor()->setTextCursor(cursor);
-//					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::SceneCharacters));
 				} else {
 					//! Внутри блока

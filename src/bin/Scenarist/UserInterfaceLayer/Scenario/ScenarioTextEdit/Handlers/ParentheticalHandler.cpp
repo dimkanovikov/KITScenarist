@@ -83,7 +83,6 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 					//
 					cursor.movePosition(QTextCursor::EndOfBlock);
 					editor()->setTextCursor(cursor);
-//					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
 					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Parenthetical));
 				} else {
 					//! Внутри блока
@@ -158,7 +157,6 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 				//
 				// Меняем стиль на реплику
 				//
-//				editor()->changeScenarioBlockType(ScenarioBlockStyle::Dialog);
 				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Parenthetical));
 			} else {
 				//! Текст не пуст
@@ -179,7 +177,6 @@ void ParentheticalHandler::handleTab(QKeyEvent*)
 					//
 					cursor.movePosition(QTextCursor::EndOfBlock);
 					editor()->setTextCursor(cursor);
-//					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
 					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Parenthetical));
 				} else {
 					//! Внутри блока

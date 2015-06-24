@@ -184,6 +184,8 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/shortcuts/scene_group_header", ShortcutHelper::makeShortcut("Ctrl+D"));
 	m_defaultValues.insert("scenario-editor/shortcuts/folder_header", ShortcutHelper::makeShortcut("Ctrl+Space"));
 	//
+	m_defaultValues.insert("scenario-editor/auto-styles-jumping", "1");
+	//
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-time_and_place-by-tab", QString::number(ScenarioBlockStyle::SceneCharacters));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-time_and_place-by-enter", QString::number(ScenarioBlockStyle::Action));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_characters-by-tab", QString::number(ScenarioBlockStyle::Action));

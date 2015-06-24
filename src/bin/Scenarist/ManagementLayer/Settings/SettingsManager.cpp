@@ -265,6 +265,11 @@ void SettingsManager::scenarioEditCurrentTemplateChanged(const QString& _value)
 	storeValue("scenario-editor/current-style", _value);
 }
 
+void SettingsManager::scenarioEditAutoJumpToNextBlockChanged(bool _value)
+{
+	storeValue("scenario-editor/auto-styles-jumping", _value);
+}
+
 void SettingsManager::scenarioEditBlockSettingsChanged(const QString& _block, const QString& _shortcut, const QString& _jumpTab,
 	const QString& _jumpEnter, const QString& _changeTab, const QString& _changeEnter)
 {
@@ -662,6 +667,13 @@ void SettingsManager::initView()
 					"scenario-editor/current-style",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
+	// ... автоматический переход к следующему блоку
+	m_view->setScenarioEditAutoJumpToNextBlock(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/auto-styles-jumping",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	// ... модель переходов между блоками, её заголовок и делегат
 	QStandardItemModel* blockJumpsHeaderModel = new QStandardItemModel(this);
 	{
@@ -872,6 +884,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderTextColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderBackgroundColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditCurrentTemplateChanged(QString)), this, SLOT(scenarioEditCurrentTemplateChanged(QString)));
+	connect(m_view, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)), this, SLOT(scenarioEditAutoJumpToNextBlockChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)),
 			this, SLOT(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)));
 

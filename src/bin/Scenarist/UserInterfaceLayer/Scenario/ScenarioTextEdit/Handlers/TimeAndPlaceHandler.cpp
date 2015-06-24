@@ -83,6 +83,15 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 		//
 		handleOther();
 
+		//
+		// Если нужно автоматически перепрыгиваем к следующему блоку
+		//
+		if (autoJumpToNextBlock()
+			&& currentSection == TimeAndPlaceParser::SectionTime) {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			editor()->setTextCursor(cursor);
+			editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::TimeAndPlace));
+		}
 	} else {
 		//! Подстановщик закрыт
 
@@ -124,7 +133,6 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставка блока описания действия
 					//
-//					editor()->addScenarioBlock(ScenarioBlockStyle::Action);
 					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::TimeAndPlace));
 				} else {
 					//! Внутри блока

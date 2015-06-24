@@ -38,6 +38,7 @@ scenario-editor/shortcuts/transition
 scenario-editor/shortcuts/nonprintable
 scenario-editor/shortcuts/scenes-group
 scenario-editor/shortcuts/folder
+scenario-editor/auto-styles-jumping - при возможности автоматически переходить к следующему блоку
 scenario-editor/styles-jumping/... - к каким блокам переходить редактору сценария
 scenario-editor/styles-jumping/from-time-and-place-by-tab
 scenario-editor/styles-jumping/from-time-and-place-by-enter

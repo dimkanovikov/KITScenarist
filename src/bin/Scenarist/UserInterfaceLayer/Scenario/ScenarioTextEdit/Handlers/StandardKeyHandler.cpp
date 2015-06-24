@@ -48,6 +48,15 @@ StandardKeyHandler::StandardKeyHandler(ScenarioTextEdit* _editor) :
 {
 }
 
+bool StandardKeyHandler::autoJumpToNextBlock()
+{
+	return
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"scenario-editor/auto-styles-jumping",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+}
+
 ScenarioBlockStyle::Type StandardKeyHandler::jumpForTab(ScenarioBlockStyle::Type _blockType)
 {
 	return ::actionFor(TAB, JUMP, _blockType);
