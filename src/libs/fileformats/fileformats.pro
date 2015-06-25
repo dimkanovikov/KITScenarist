@@ -22,7 +22,8 @@ HEADERS += \
     qtzip/qtzipreader.h \
     qtzip/QtZipReader \
     qtzip/qtzipwriter.h \
-    qtzip/QtZipWriter
+    qtzip/QtZipWriter \
+    format_helpers.h
 
 SOURCES += \
     docx_reader.cpp \

@@ -50,6 +50,30 @@ class DocxReader : public FormatReader
 		}
 	};
 
+	class Comment
+	{
+	public:
+		int start_position;
+		int end_position;
+		QString text;
+		QString author;
+		QString date;
+
+		Comment() {
+			clear();
+		}
+
+		void clear() {
+			start_position = -1;
+			end_position = -1;
+			text.clear();
+			author.clear();
+			date.clear();
+		}
+
+		void insertIfReady(const QTextCursor& _cursor) const;
+	};
+
 public:
 	DocxReader();
 
@@ -65,6 +89,7 @@ private:
 	void readData(QIODevice* device);
 	void readContent();
 	void readStyles();
+	void readComments();
 	void readDocument();
 	void readBody();
 	void readParagraph();
@@ -79,6 +104,9 @@ private:
 	QHash<QString, Style> m_styles;
 	QStack<Style> m_previous_styles;
 	Style m_current_style;
+
+	QHash<QString, Comment> m_comments;
+	Comment m_current_comment;
 
 	bool m_in_block;
 };

@@ -19,6 +19,8 @@
 
 #include "docx_reader.h"
 
+#include "format_helpers.h"
+
 #include "qtzip/QtZipReader"
 
 #include <QTextDocument>
@@ -31,31 +33,65 @@ namespace {
 		qreal pixels = inches * 96.0;
 		return pixels;
 	}
+
+	static bool readBool(const QStringRef& value)
+	{
+		// ECMA-376, ISO/IEC 29500 strict
+		if (value.isEmpty()) {
+			return true;
+		} else if (value == "false") {
+			return false;
+		} else if (value == "true") {
+			return true;
+		} else if (value == "0") {
+			return false;
+		} else if (value == "1") {
+			return true;
+		// ECMA-376 1st edition, ECMA-376 2nd edition transitional, ISO/IEC 29500 transitional
+		} else if (value == "off") {
+			return false;
+		} else if (value == "on") {
+			return true;
+		// Invalid, just guess
+		} else {
+			return true;
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
 
-static bool readBool(const QStringRef& value)
+void DocxReader::Comment::insertIfReady(const QTextCursor& _cursor) const
 {
-	// ECMA-376, ISO/IEC 29500 strict
-	if (value.isEmpty()) {
-		return true;
-	} else if (value == "false") {
-		return false;
-	} else if (value == "true") {
-		return true;
-	} else if (value == "0") {
-		return false;
-	} else if (value == "1") {
-		return true;
-	// ECMA-376 1st edition, ECMA-376 2nd edition transitional, ISO/IEC 29500 transitional
-	} else if (value == "off") {
-		return false;
-	} else if (value == "on") {
-		return true;
-	// Invalid, just guess
-	} else {
-		return true;
+	if (start_position != -1 && end_position != -1 && start_position < end_position && !text.isEmpty()) {
+		QTextCursor commentCursor(_cursor);
+		commentCursor.setPosition(start_position);
+		commentCursor.setPosition(end_position, QTextCursor::KeepAnchor);
+		QTextCharFormat format = commentCursor.charFormat();
+		//
+		format.setProperty(Docx::IsComment, true);
+		//
+		// Проверяем, не добавлен ли ещё этот комментарий
+		//
+		QStringList comments = format.property(Docx::Comments).toStringList();
+		if (!comments.contains(text)) {
+			comments.append(text);
+			format.setProperty(Docx::Comments, comments);
+			//
+			QStringList authors = format.property(Docx::CommentsAuthors).toStringList();
+			authors.append(author);
+			format.setProperty(Docx::CommentsAuthors, authors);
+			//
+			QStringList dates = format.property(Docx::CommentsDates).toStringList();
+			dates.append(date);
+			format.setProperty(Docx::CommentsDates, dates);
+			//
+			// Цвет настраивается по первому автору
+			//
+			format.setBackground(Docx::commentColor(authors.first()));
+			//
+			commentCursor.mergeCharFormat(format);
+		}
 	}
 }
 
@@ -86,8 +122,12 @@ void DocxReader::readData(QIODevice* device)
 
 	// Read archive
 	if (zip.isReadable()) {
-		const QString files[] = { QString::fromLatin1("word/styles.xml"), QString::fromLatin1("word/document.xml") };
-		for (int i = 0; i < 2; ++i) {
+		const QString files[] = {
+			QString::fromLatin1("word/styles.xml"),
+			QString::fromLatin1("word/comments.xml"),
+			QString::fromLatin1("word/document.xml")
+		};
+		for (int i = 0; i < 3; ++i) {
 			QByteArray data = zip.fileData(files[i]);
 			if (data.isEmpty()) {
 				continue;
@@ -117,6 +157,8 @@ void DocxReader::readContent()
 	m_xml.readNextStartElement();
 	if (m_xml.qualifiedName() == "w:styles") {
 		readStyles();
+	} else if (m_xml.qualifiedName() == "w:comments") {
+		readComments();
 	} else if (m_xml.qualifiedName() == "w:document") {
 		readDocument();
 	}
@@ -247,6 +289,57 @@ void DocxReader::readStyles()
 
 //-----------------------------------------------------------------------------
 
+void DocxReader::readComments()
+{
+	if (!m_xml.readNextStartElement()) {
+		return;
+	}
+
+	// Read comments
+	do {
+		if (m_xml.qualifiedName() == "w:comment") {
+			Comment comment;
+
+			// Find comment ID
+			const QString comment_id = m_xml.attributes().value(QLatin1String("w:id")).toString();
+			if (m_comments.contains(comment_id)) {
+				m_xml.skipCurrentElement();
+				continue;
+			}
+
+			// Read comment contents
+			comment.author = m_xml.attributes().value(QLatin1String("w:author")).toString();
+			comment.date = m_xml.attributes().value(QLatin1String("w:date")).toString();
+			while (m_xml.readNextStartElement()) {
+				if (m_xml.qualifiedName() == "w:p") {
+					while (m_xml.readNextStartElement()) {
+						if (m_xml.qualifiedName() == "w:r") {
+							while (m_xml.readNextStartElement()) {
+								if (m_xml.qualifiedName() == "w:t") {
+									comment.text.append(m_xml.readElementText());
+								} else {
+									m_xml.skipCurrentElement();
+								}
+							}
+						} else {
+							m_xml.skipCurrentElement();
+						}
+					}
+				} else {
+					m_xml.skipCurrentElement();
+				}
+			}
+
+			// Add to comments list
+			m_comments.insert(comment_id, comment);
+		} else if (m_xml.tokenType() != QXmlStreamReader::EndElement) {
+			m_xml.skipCurrentElement();
+		}
+	} while (m_xml.readNextStartElement());
+}
+
+//-----------------------------------------------------------------------------
+
 void DocxReader::readDocument()
 {
 	m_cursor.beginEditBlock();
@@ -301,6 +394,17 @@ void DocxReader::readParagraph()
 		do {
 			if (m_xml.qualifiedName() == "w:r") {
 				readRun();
+			} else if ((m_xml.qualifiedName() == "w:commentRangeStart")
+					   || (m_xml.qualifiedName() == "w:bookmarkStart")) {
+				m_current_comment.clear();
+				m_current_comment.start_position = m_cursor.position();
+				m_xml.skipCurrentElement();
+			} else if ((m_xml.qualifiedName() == "w:commentRangeEnd")
+					   || (m_xml.qualifiedName() == "w:bookmarkEnd")) {
+				m_current_comment.end_position = m_cursor.position();
+				m_current_comment.insertIfReady(m_cursor);
+
+				m_xml.skipCurrentElement();
 			} else if (m_xml.tokenType() != QXmlStreamReader::EndElement) {
 				m_xml.skipCurrentElement();
 			}
@@ -422,6 +526,13 @@ void DocxReader::readRun()
 			} else if (m_xml.qualifiedName() == "w:cr") {
 				m_cursor.insertText(QChar(0x2028), m_current_style.char_format);
 				m_xml.skipCurrentElement();
+			} else if (m_xml.qualifiedName() == "w:commentReference") {
+				const QString comment_id = m_xml.attributes().value("w:id").toString();
+				m_current_comment.text = m_comments.value(comment_id).text;
+				m_current_comment.author = m_comments.value(comment_id).author;
+				m_current_comment.date = m_comments.value(comment_id).date;
+				m_current_comment.insertIfReady(m_cursor);
+				m_xml.skipCurrentElement();
 			} else if (m_xml.tokenType() != QXmlStreamReader::EndElement) {
 				m_xml.skipCurrentElement();
 			}
@@ -484,6 +595,36 @@ void DocxReader::readRunProperties(Style& style, bool allowstyles)
 			rstyle.merge(style);
 			style = rstyle;
 		}
+		//
+		// Заливка
+		//
+		else if (m_xml.qualifiedName() == "w:shd") {
+			const QColor color("#" + m_xml.attributes().value("w:fill").toString());
+			style.char_format.setProperty(Docx::IsBackground, true);
+			style.char_format.setBackground(color);
+		}
+		//
+		// Выделение маркером
+		//
+		else if (m_xml.qualifiedName() == "w:highlight") {
+			const QColor color(value.toString());
+			style.char_format.setProperty(Docx::IsHighlight, true);
+			style.char_format.setBackground(color);
+		}
+		//
+		// Цвет текста
+		//
+		else if (m_xml.qualifiedName() == "w:color") {
+			const QColor color("#" + value.toString());
+			//
+			// ... иногда встречается непонятное окрашивание в "почти чёрный", игнорируем его
+			//
+			if (color != Qt::black
+				&& color != QColor("#00000A")) {
+				style.char_format.setProperty(Docx::IsForeground, true);
+			}
+			style.char_format.setForeground(color);
+		}
 
 		m_xml.skipCurrentElement();
 	}
@@ -507,3 +648,4 @@ void DocxReader::readText()
 }
 
 //-----------------------------------------------------------------------------
+
