@@ -2,6 +2,7 @@
 
 #include <format_manager.h>
 #include <format_reader.h>
+#include <format_helpers.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
@@ -36,6 +37,27 @@ namespace {
 	 * @brief Некоторые программы выравнивают текст при помощи пробелов
 	 */
 	const QString OLD_SCHOOL_CENTERING_PREFIX = "                    ";
+
+	/**
+	 * @brief Ключи для формирования xml из импортируемого документа
+	 */
+	/** @{ */
+	const QString NODE_SCENARIO = "scenario";
+	const QString NODE_VALUE = "v";
+	const QString NODE_REVIEW_GROUP = "reviews";
+	const QString NODE_REVIEW = "review";
+	const QString NODE_REVIEW_COMMENT = "review_comment";
+
+	const QString ATTRIBUTE_VERSION = "version";
+	const QString ATTRIBUTE_REVIEW_FROM = "from";
+	const QString ATTRIBUTE_REVIEW_LENGTH = "length";
+	const QString ATTRIBUTE_REVIEW_COLOR = "color";
+	const QString ATTRIBUTE_REVIEW_BGCOLOR = "bgcolor";
+	const QString ATTRIBUTE_REVIEW_IS_HIGHLIGHT = "is_highlight";
+	const QString ATTRIBUTE_REVIEW_COMMENT = "comment";
+	const QString ATTRIBUTE_REVIEW_AUTHOR = "author";
+	const QString ATTRIBUTE_REVIEW_DATE = "date";
+	/** @} */
 
 	/**
 	 * @brief Определить тип блока в текущей позиции курсора
@@ -240,6 +262,10 @@ QString DocumentImporter::importScenario(const ImportParameters& _importParamete
 	}
 
 	//
+	// FIXME: много чего дублируется с ScenarioXml
+	//
+
+	//
 	// Преобразовать его в xml-строку
 	//
 	QString scenarioXml;
@@ -247,7 +273,8 @@ QString DocumentImporter::importScenario(const ImportParameters& _importParamete
 
 	QXmlStreamWriter writer(&scenarioXml);
 	writer.writeStartDocument();
-	writer.writeStartElement("scenario");
+	writer.writeStartElement(NODE_SCENARIO);
+	writer.writeAttribute(ATTRIBUTE_VERSION, "1.0");
 
 	//
 	// Для каждого блока текста определяем тип
@@ -296,7 +323,58 @@ QString DocumentImporter::importScenario(const ImportParameters& _importParamete
 			//
 			// Пишем текст
 			//
+			writer.writeStartElement(NODE_VALUE);
 			writer.writeCDATA(blockText);
+			writer.writeEndElement();
+
+			//
+			// Пишем редакторские комментарии
+			//
+			const QTextBlock currentBlock = cursor.block();
+			if (!currentBlock.textFormats().isEmpty()) {
+				writer.writeStartElement(NODE_REVIEW_GROUP);
+				foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
+					//
+					// Всё, кроме стандартного
+					//
+					if (range.format.boolProperty(Docx::IsForeground)
+						|| range.format.boolProperty(Docx::IsBackground)
+						|| range.format.boolProperty(Docx::IsHighlight)
+						|| range.format.boolProperty(Docx::IsComment)) {
+						writer.writeStartElement(NODE_REVIEW);
+						writer.writeAttribute(ATTRIBUTE_REVIEW_FROM, QString::number(range.start));
+						writer.writeAttribute(ATTRIBUTE_REVIEW_LENGTH, QString::number(range.length));
+						if (range.format.hasProperty(QTextFormat::ForegroundBrush)) {
+							writer.writeAttribute(ATTRIBUTE_REVIEW_COLOR,
+								range.format.foreground().color().name());
+						}
+						if (range.format.hasProperty(QTextFormat::BackgroundBrush)) {
+							writer.writeAttribute(ATTRIBUTE_REVIEW_BGCOLOR,
+								range.format.background().color().name());
+						}
+						writer.writeAttribute(ATTRIBUTE_REVIEW_IS_HIGHLIGHT,
+							range.format.boolProperty(Docx::IsHighlight) ? "true" : "false");
+						//
+						// ... комментарии
+						//
+						const QStringList comments = range.format.property(Docx::Comments).toStringList();
+						const QStringList authors = range.format.property(Docx::CommentsAuthors).toStringList();
+						const QStringList dates = range.format.property(Docx::CommentsDates).toStringList();
+						for (int commentIndex = 0; commentIndex < comments.size(); ++commentIndex) {
+							writer.writeEmptyElement(NODE_REVIEW_COMMENT);
+							writer.writeAttribute(ATTRIBUTE_REVIEW_COMMENT, comments.at(commentIndex));
+							writer.writeAttribute(ATTRIBUTE_REVIEW_AUTHOR, authors.at(commentIndex));
+							writer.writeAttribute(ATTRIBUTE_REVIEW_DATE, dates.at(commentIndex));
+						}
+						//
+						writer.writeEndElement();
+					}
+				}
+				writer.writeEndElement();
+			}
+			//
+			// ... конец абзаца
+			//
 			writer.writeEndElement();
 
 			//

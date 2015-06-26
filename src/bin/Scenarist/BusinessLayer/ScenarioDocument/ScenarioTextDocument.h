@@ -10,6 +10,7 @@ namespace Domain {
 
 namespace BusinessLogic
 {
+	class ScenarioReviewModel;
 	class ScenarioXml;
 
 
@@ -76,6 +77,11 @@ namespace BusinessLogic
 		void setCursorPosition(QTextCursor& _cursor, int _position,
 			QTextCursor::MoveMode _moveMode = QTextCursor::MoveAnchor);
 
+		/**
+		 * @brief Получить модель редакторсках правок
+		 */
+		ScenarioReviewModel* reviewModel() const;
+
 	signals:
 		/**
 		 * @brief Сигналы уведомляющие об этапах применения патчей
@@ -84,6 +90,11 @@ namespace BusinessLogic
 		void beforePatchApply();
 		void afterPatchApply();
 		/** @} */
+
+		/**
+		 * @brief В документ были внесены редакторские примечания
+		 */
+		void reviewChanged();
 
 	private:
 		/**
@@ -113,6 +124,11 @@ namespace BusinessLogic
 		QList<Domain::ScenarioChange*> m_undoStack;
 		QList<Domain::ScenarioChange*> m_redoStack;
 		/** @{ */
+
+		/**
+		 * @brief Модель редакторских правок документа
+		 */
+		ScenarioReviewModel* m_reviewModel;
 	};
 }
 

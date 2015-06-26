@@ -1,5 +1,6 @@
 #include "ScenarioTextDocument.h"
 
+#include "ScenarioReviewModel.h"
 #include "ScenarioXml.h"
 
 #include <Domain/ScenarioChange.h>
@@ -43,8 +44,10 @@ namespace {
 ScenarioTextDocument::ScenarioTextDocument(QObject *parent, ScenarioXml* _xmlHandler) :
 	QTextDocument(parent),
 	m_xmlHandler(_xmlHandler),
-	m_isPatchApplyProcessed(false)
+	m_isPatchApplyProcessed(false),
+	m_reviewModel(new ScenarioReviewModel(this))
 {
+	connect(m_reviewModel, SIGNAL(reviewChanged()), this, SIGNAL(reviewChanged()));
 }
 
 void ScenarioTextDocument::load(const QString& _scenarioXml)
@@ -276,4 +279,9 @@ void ScenarioTextDocument::setCursorPosition(QTextCursor& _cursor, int _position
 	else {
 		_cursor.movePosition(QTextCursor::End, _moveMode);
 	}
+}
+
+ScenarioReviewModel*ScenarioTextDocument::reviewModel() const
+{
+	return m_reviewModel;
 }

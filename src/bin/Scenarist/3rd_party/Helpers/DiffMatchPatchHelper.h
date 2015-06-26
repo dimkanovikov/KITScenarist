@@ -57,6 +57,7 @@ namespace {
 		result = result.remove("<reviews>\n");
 		result = result.remove("</reviews>\n");
 		result = result.remove("<reviews/>\n");
+		result = result.remove("<review_comment/>\n");
 
 		foreach (const QString& tag, _tagsMap.keys()) {
 			result = result.remove(tag + "\n");
@@ -64,6 +65,7 @@ namespace {
 
 		result = result.remove(QRegularExpression("<time_and_place(.*)>\n"));
 		result = result.remove(QRegularExpression("<review(.*)/>\n"));
+		result = result.remove(QRegularExpression("<review_comment(.*)/>\n"));
 
 		result = TextEditHelper::removeXmlTags(result);
 		return result;

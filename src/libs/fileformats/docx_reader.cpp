@@ -607,7 +607,7 @@ void DocxReader::readRunProperties(Style& style, bool allowstyles)
 		// Выделение маркером
 		//
 		else if (m_xml.qualifiedName() == "w:highlight") {
-			const QColor color(value.toString());
+			const QColor color(Docx::highlightColor(value.toString()));
 			style.char_format.setProperty(Docx::IsHighlight, true);
 			style.char_format.setBackground(color);
 		}

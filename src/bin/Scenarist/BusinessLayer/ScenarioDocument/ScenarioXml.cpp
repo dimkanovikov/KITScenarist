@@ -23,6 +23,7 @@ namespace {
 	const QString NODE_VALUE = "v";
 	const QString NODE_REVIEW_GROUP = "reviews";
 	const QString NODE_REVIEW = "review";
+	const QString NODE_REVIEW_COMMENT = "review_comment";
 
 	const QString ATTRIBUTE_VERSION = "version";
 	const QString ATTRIBUTE_DESCRIPTION = "description";
@@ -30,9 +31,11 @@ namespace {
 	const QString ATTRIBUTE_REVIEW_LENGTH = "length";
 	const QString ATTRIBUTE_REVIEW_COLOR = "color";
 	const QString ATTRIBUTE_REVIEW_BGCOLOR = "bgcolor";
+	const QString ATTRIBUTE_REVIEW_IS_HIGHLIGHT = "is_highlight";
+	const QString ATTRIBUTE_REVIEW_DONE = "done";
 	const QString ATTRIBUTE_REVIEW_COMMENT = "comment";
 	const QString ATTRIBUTE_REVIEW_AUTHOR = "author";
-	const QString ATTRIBUTE_REVIEW_DONE = "done";
+	const QString ATTRIBUTE_REVIEW_DATE = "date";
 
 	const QString SCENARIO_XML_VERSION = "1.0";
 }
@@ -296,68 +299,82 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				//
 				// Пишем редакторские комментарии
 				//
-//				if (!currentBlock.textFormats().isEmpty()) {
-//					writer.writeStartElement(NODE_REVIEW_GROUP);
-//					foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
-//						bool isReviewMark =
-//							range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark);
+				if (!currentBlock.textFormats().isEmpty()) {
+					writer.writeStartElement(NODE_REVIEW_GROUP);
+					foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
+						bool isReviewMark =
+							range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark);
 
-//						//
-//						// Корректируем позиции выделения
-//						//
-//						int start = range.start;
-//						int length = range.length;
-//						bool isSelected = false;
-//						//
-//						// Если выделение разрывает редакторские правки
-//						//
-//						if (cursor.selectionStart() < (cursor.block().position() + range.start + range.length)
-//							|| cursor.selectionEnd() > (cursor.block().position() + range.start)) {
+						//
+						// Корректируем позиции выделения
+						//
+						int start = range.start;
+						int length = range.length;
+						bool isSelected = false;
+						//
+						// Если выделение разрывает редакторские правки
+						//
+						if (cursor.selectionStart() < (cursor.block().position() + range.start + range.length)
+							|| cursor.selectionEnd() > (cursor.block().position() + range.start)) {
 
-//							isSelected = true;
+							isSelected = true;
 
-//							if (cursor.selectionStart() > (cursor.block().position() + range.start)) {
-//								start = 0;
-//							} else {
-//								start = range.start - (cursor.selectionStart() - currentBlock.position());
-//							}
+							if (cursor.selectionStart() > (cursor.block().position() + range.start)) {
+								start = 0;
+							} else {
+								start = range.start - (cursor.selectionStart() - currentBlock.position());
+							}
 
-//							if (cursor.selectionEnd() < (cursor.block().position() + range.start + range.length)) {
-//								if (cursor.selectionStart() > (cursor.block().position() + range.start)) {
-//									length = cursor.selectionEnd() - cursor.selectionStart();
-//								} else {
-//									length -= cursor.block().position() + range.start + range.length - cursor.selectionEnd();
-//								}
-//							} else {
-//								if (cursor.selectionStart() > (cursor.block().position() + range.start)) {
-//									length = currentBlock.position() + range.start + range.length - cursor.selectionStart();
-//								}
-//							}
-//						}
+							if (cursor.selectionEnd() < (cursor.block().position() + range.start + range.length)) {
+								if (cursor.selectionStart() > (cursor.block().position() + range.start)) {
+									length = cursor.selectionEnd() - cursor.selectionStart();
+								} else {
+									length -= cursor.block().position() + range.start + range.length - cursor.selectionEnd();
+								}
+							} else {
+								if (cursor.selectionStart() > (cursor.block().position() + range.start)) {
+									length = currentBlock.position() + range.start + range.length - cursor.selectionStart();
+								}
+							}
+						}
 
 
 
-//						//
-//						// Всё, кроме стандартного и только, если выделен записываемый текст
-//						//
-//						if (isReviewMark && isSelected) {
-//							writer.writeEmptyElement(NODE_REVIEW);
-//							writer.writeAttribute(ATTRIBUTE_REVIEW_FROM, QString::number(start));
-//							writer.writeAttribute(ATTRIBUTE_REVIEW_LENGTH, QString::number(length));
-//							if (range.format.hasProperty(QTextFormat::ForegroundBrush)) {
-//								writer.writeAttribute(ATTRIBUTE_REVIEW_COLOR, range.format.foreground().color().name());
-//							}
-//							if (range.format.hasProperty(QTextFormat::BackgroundBrush)) {
-//								writer.writeAttribute(ATTRIBUTE_REVIEW_BGCOLOR, range.format.background().color().name());
-//							}
-//							writer.writeAttribute(ATTRIBUTE_REVIEW_COMMENT, range.format.stringProperty(ScenarioBlockStyle::PropertyComment));
-//							writer.writeAttribute(ATTRIBUTE_REVIEW_AUTHOR, range.format.stringProperty(ScenarioBlockStyle::PropertyCommentAuthor));
-//							writer.writeAttribute(ATTRIBUTE_REVIEW_DONE,
-//												  range.format.boolProperty(ScenarioBlockStyle::PropertyIsDone) ? "true" : "false");
-//						}
-//					}
-//					writer.writeEndElement();
-//				}
+						//
+						// Все редакторские правки, и только, если выделен записываемый текст
+						//
+						if (isReviewMark && isSelected) {
+							writer.writeStartElement(NODE_REVIEW);
+							writer.writeAttribute(ATTRIBUTE_REVIEW_FROM, QString::number(start));
+							writer.writeAttribute(ATTRIBUTE_REVIEW_LENGTH, QString::number(length));
+							if (range.format.hasProperty(QTextFormat::ForegroundBrush)) {
+								writer.writeAttribute(ATTRIBUTE_REVIEW_COLOR, range.format.foreground().color().name());
+							}
+							if (range.format.hasProperty(QTextFormat::BackgroundBrush)) {
+								writer.writeAttribute(ATTRIBUTE_REVIEW_BGCOLOR, range.format.background().color().name());
+							}
+							writer.writeAttribute(ATTRIBUTE_REVIEW_IS_HIGHLIGHT,
+								range.format.boolProperty(ScenarioBlockStyle::PropertyIsHighlight) ? "true" : "false");
+							writer.writeAttribute(ATTRIBUTE_REVIEW_DONE,
+								range.format.boolProperty(ScenarioBlockStyle::PropertyIsDone) ? "true" : "false");
+							//
+							// ... комментарии
+							//
+							const QStringList comments = range.format.property(ScenarioBlockStyle::PropertyComments).toStringList();
+							const QStringList authors = range.format.property(ScenarioBlockStyle::PropertyCommentsAuthors).toStringList();
+							const QStringList dates = range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
+							for (int commentIndex = 0; commentIndex < comments.size(); ++commentIndex) {
+								writer.writeEmptyElement(NODE_REVIEW_COMMENT);
+								writer.writeAttribute(ATTRIBUTE_REVIEW_COMMENT, comments.at(commentIndex));
+								writer.writeAttribute(ATTRIBUTE_REVIEW_AUTHOR, authors.at(commentIndex));
+								writer.writeAttribute(ATTRIBUTE_REVIEW_DATE, dates.at(commentIndex));
+							}
+							//
+							writer.writeEndElement();
+						}
+					}
+					writer.writeEndElement();
+				}
 
 				//
 				// Закрываем текущий элемент
@@ -786,45 +803,67 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 						cursor.block().setUserData(info);
 					}
 				}
-//				//
-//				// Обработка остальных тэгов
-//				//
-//				else {
-//					//
-//					// Редакторские заметки
-//					//
-//					if (tokenName == NODE_REVIEW) {
-//						const int start = reader.attributes().value(ATTRIBUTE_REVIEW_FROM).toInt();
-//						const int length = reader.attributes().value(ATTRIBUTE_REVIEW_LENGTH).toInt();
-//						const QString comment = reader.attributes().value(ATTRIBUTE_REVIEW_COMMENT).toString();
-//						const QString commentAuthor = reader.attributes().value(ATTRIBUTE_REVIEW_AUTHOR).toString();
-//						const bool done = reader.attributes().value(ATTRIBUTE_REVIEW_DONE).toString() == "true";
+				//
+				// Обработка остальных тэгов
+				//
+				else {
+					//
+					// Редакторские заметки
+					//
+					if (tokenName == NODE_REVIEW) {
+						const int start = reader.attributes().value(ATTRIBUTE_REVIEW_FROM).toInt();
+						const int length = reader.attributes().value(ATTRIBUTE_REVIEW_LENGTH).toInt();
+						const bool highlight = reader.attributes().value(ATTRIBUTE_REVIEW_IS_HIGHLIGHT).toString() == "true";
+						const bool done = reader.attributes().value(ATTRIBUTE_REVIEW_DONE).toString() == "true";
+						const QColor foreground(reader.attributes().value(ATTRIBUTE_REVIEW_COLOR).toString());
+						const QColor background(reader.attributes().value(ATTRIBUTE_REVIEW_BGCOLOR).toString());
+						//
+						// ... считываем комментарии
+						//
+						QStringList comments, authors, dates;
+						while (reader.readNextStartElement()) {
+							if (reader.name() == NODE_REVIEW_COMMENT) {
+								comments << reader.attributes().value(ATTRIBUTE_REVIEW_COMMENT).toString();
+								authors << reader.attributes().value(ATTRIBUTE_REVIEW_AUTHOR).toString();
+								dates << reader.attributes().value(ATTRIBUTE_REVIEW_DATE).toString();
 
-//						QTextCharFormat reviewFormat;
-//						reviewFormat.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
-//						if (reader.attributes().hasAttribute(ATTRIBUTE_REVIEW_COLOR)) {
-//							const QColor foreground(reader.attributes().value(ATTRIBUTE_REVIEW_COLOR).toString());
-//							reviewFormat.setForeground(foreground);
-//						}
-//						if (reader.attributes().hasAttribute(ATTRIBUTE_REVIEW_BGCOLOR)) {
-//							const QColor background(reader.attributes().value(ATTRIBUTE_REVIEW_BGCOLOR).toString());
-//							reviewFormat.setBackground(background);
-//						}
-//						reviewFormat.setProperty(ScenarioBlockStyle::PropertyComment, comment);
-//						reviewFormat.setProperty(ScenarioBlockStyle::PropertyCommentAuthor, commentAuthor);
-//						reviewFormat.setProperty(ScenarioBlockStyle::PropertyIsDone, done);
+								reader.skipCurrentElement();
+							}
+						}
 
-//						QTextCursor reviewCursor = cursor;
-//						int startDelta = 0;
-//						if (reviewCursor.block().position() < _position
-//							&& (reviewCursor.block().position() + reviewCursor.block().length()) > _position) {
-//							startDelta = _position - reviewCursor.block().position();
-//						}
-//						reviewCursor.setPosition(reviewCursor.block().position() + start + startDelta);
-//						reviewCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, length);
-//						reviewCursor.mergeCharFormat(reviewFormat);
-//					}
-//				}
+
+						//
+						// Собираем формат редакторской заметки
+						//
+						QTextCharFormat reviewFormat;
+						reviewFormat.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
+						if (foreground.isValid()) {
+							reviewFormat.setForeground(foreground);
+						}
+						if (background.isValid()) {
+							reviewFormat.setBackground(background);
+						}
+						reviewFormat.setProperty(ScenarioBlockStyle::PropertyIsHighlight, highlight);
+						reviewFormat.setProperty(ScenarioBlockStyle::PropertyIsDone, done);
+						reviewFormat.setProperty(ScenarioBlockStyle::PropertyComments, comments);
+						reviewFormat.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, authors);
+						reviewFormat.setProperty(ScenarioBlockStyle::PropertyCommentsDates, dates);
+
+
+						//
+						// Вставляем в документ
+						//
+						QTextCursor reviewCursor = cursor;
+						int startDelta = 0;
+						if (reviewCursor.block().position() < _position
+							&& (reviewCursor.block().position() + reviewCursor.block().length()) > _position) {
+							startDelta = _position - reviewCursor.block().position();
+						}
+						reviewCursor.setPosition(reviewCursor.block().position() + start + startDelta);
+						reviewCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, length);
+						reviewCursor.mergeCharFormat(reviewFormat);
+					}
+				}
 
 				//
 				// Обновим последний использовавшийся тип блока

@@ -59,7 +59,14 @@ namespace BusinessLogic
 			PropertyPrefix,			//!< Префикс блока
 			PropertyPostfix,		//!< Постфикс блока
 			PropertyIsFirstUppercase,	//!< Необходимо ли первый символ поднимать в верхний регистр
-			PropertyIsCanModify		//!< Редактируемый ли блок
+			PropertyIsCanModify,	//!< Редактируемый ли блок
+			//
+			PropertyIsReviewMark,	//!< Формат является редакторской правкой
+			PropertyIsHighlight,	//!< Является ли правка аналогом выделения цветом из ворда
+			PropertyIsDone,			//!< Правка помечена как выполненная
+			PropertyComments,		//!< Список комментариев к правке
+			PropertyCommentsAuthors,//!< Список авторов комментариев
+			PropertyCommentsDates	//!< Список дат комментариев
 		};
 
 		/**

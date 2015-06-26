@@ -34,26 +34,14 @@ public:
 	 * @brief Получить название цвета выделения
 	 */
 	static QString highlightColorName(const QColor& _color) {
-		static QHash<QColor, QString> s_highlightColors;
-		if (s_highlightColors.isEmpty()) {
-			s_highlightColors.insert(Qt::black, "black");
-			s_highlightColors.insert(Qt::blue, "blue");
-			s_highlightColors.insert(Qt::cyan, "cyan");
-			s_highlightColors.insert(Qt::green, "green");
-			s_highlightColors.insert(Qt::magenta, "magenta");
-			s_highlightColors.insert(Qt::red, "red");
-			s_highlightColors.insert(Qt::yellow, "yellow");
-			s_highlightColors.insert(Qt::white, "white");
-			s_highlightColors.insert(Qt::darkBlue, "darkBlue");
-			s_highlightColors.insert(Qt::darkCyan, "darkCyan");
-			s_highlightColors.insert(Qt::darkGreen, "darkGreen");
-			s_highlightColors.insert(Qt::darkMagenta, "darkMagenta");
-			s_highlightColors.insert(Qt::darkRed, "darkRed");
-			s_highlightColors.insert(Qt::darkYellow, "darkYellow");
-			s_highlightColors.insert(Qt::darkGray, "darkGray");
-			s_highlightColors.insert(Qt::lightGray, "lightGray");
-		}
-		return s_highlightColors.value(_color, "none");
+		return highlightColors().value(_color, "none");
+	}
+
+	/**
+	 * @brief Получить цвет выделения по названию
+	 */
+	static QColor highlightColor(const QString& _name) {
+		return highlightColors().key(_name);
 	}
 
 	/**
@@ -83,6 +71,30 @@ public:
 			case 6: result = QColor("#a4a000"); break;
 		}
 		return result;
+	}
+
+private:
+	static QHash<QColor, QString> highlightColors() {
+		static QHash<QColor, QString> s_highlightColors;
+		if (s_highlightColors.isEmpty()) {
+			s_highlightColors.insert(Qt::black, "black");
+			s_highlightColors.insert(Qt::blue, "blue");
+			s_highlightColors.insert(Qt::cyan, "cyan");
+			s_highlightColors.insert(Qt::green, "green");
+			s_highlightColors.insert(Qt::magenta, "magenta");
+			s_highlightColors.insert(Qt::red, "red");
+			s_highlightColors.insert(Qt::yellow, "yellow");
+			s_highlightColors.insert(Qt::white, "white");
+			s_highlightColors.insert(Qt::darkBlue, "darkBlue");
+			s_highlightColors.insert(Qt::darkCyan, "darkCyan");
+			s_highlightColors.insert(Qt::darkGreen, "darkGreen");
+			s_highlightColors.insert(Qt::darkMagenta, "darkMagenta");
+			s_highlightColors.insert(Qt::darkRed, "darkRed");
+			s_highlightColors.insert(Qt::darkYellow, "darkYellow");
+			s_highlightColors.insert(Qt::darkGray, "darkGray");
+			s_highlightColors.insert(Qt::lightGray, "lightGray");
+		}
+		return s_highlightColors;
 	}
 };
 
