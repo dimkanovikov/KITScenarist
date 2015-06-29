@@ -2,6 +2,8 @@
 
 #include "qtzip/QtZipWriter"
 
+#include "format_helpers.h"
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
@@ -237,7 +239,7 @@ namespace {
 	/**
 	 * @brief Сформировать текст блока документа в зависимости от его стиля и оформления
 	 */
-	static QString docxText(const QTextCursor& _cursor) {
+	static QString docxText(QMap<int, QStringList>& _comments, const QTextCursor& _cursor) {
 		QString documentXml;
 
 		//
@@ -249,13 +251,116 @@ namespace {
 		//
 		// Запишем параграф в документ
 		//
-		const QString blockText = TextEditHelper::toHtmlEscaped(_cursor.block().text());
 		if (currentBlockType != ScenarioBlockStyle::Undefined) {
 			documentXml =
-				QString("<w:p><w:pPr><w:pStyle w:val=\"%1\"/><w:rPr/></w:pPr><w:r><w:rPr/><w:t>%2</w:t></w:r></w:p>")
-				.arg(ScenarioBlockStyle::typeName(currentBlockType).toUpper().replace("_", ""))
-				.arg(blockText);
+				QString("<w:p><w:pPr><w:pStyle w:val=\"%1\"/>")
+				.arg(ScenarioBlockStyle::typeName(currentBlockType).toUpper().replace("_", ""));
+
+			//
+			//  ... текст абзаца
+			//
+			const QTextBlock block = _cursor.block();
+			const QString blockText = block.text();
+			documentXml.append("<w:rPr/></w:pPr>");
+			foreach (const QTextLayout::FormatRange& range, block.textFormats()) {
+				//
+				// ... стандартный для абзаца
+				//
+				if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark) == false) {
+					documentXml.append(
+						QString("<w:r><w:rPr/><w:t>%2</w:t></w:r>")
+						.arg(TextEditHelper::toHtmlEscaped(blockText.mid(range.start, range.length)))
+						);
+				}
+				//
+				// ... нестандартный
+				//
+				else {
+					const QStringList comments = range.format.property(ScenarioBlockStyle::PropertyComments).toStringList();
+					const bool hasComments = !comments.isEmpty();
+					int lastCommentIndex = 0;
+					//
+					// Комментарий
+					//
+					if (hasComments) {
+						const QStringList authors = range.format.property(ScenarioBlockStyle::PropertyCommentsAuthors).toStringList();
+						const QStringList dates = range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
+
+						for (int commentIndex = 0; commentIndex < comments.size(); ++commentIndex) {
+							if (!_comments.isEmpty()) {
+								lastCommentIndex = _comments.lastKey() + 1;
+							}
+							_comments.insert(lastCommentIndex,
+								QStringList() << comments.at(commentIndex)
+											  << authors.at(commentIndex)
+											  << dates.at(commentIndex));
+
+							documentXml.append(
+								QString("<w:commentRangeStart w:id=\"%1\"/>").arg(lastCommentIndex));
+						}
+					}
+					documentXml.append("<w:r>");
+					documentXml.append("<w:rPr>");
+					//
+					// Заливка
+					//
+					if (!hasComments
+						&& range.format.hasProperty(QTextFormat::BackgroundBrush)) {
+						if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsHighlight)) {
+							documentXml.append(
+										QString("<w:highlight w:val=\"%1\"/>")
+										// код цвета без решётки
+										.arg(Docx::highlightColorName(range.format.background().color())));
+						} else {
+							documentXml.append(
+										QString("<w:shd w:fill=\"%1\" w:val=\"clear\"/>")
+										// код цвета без решётки
+										.arg(range.format.background().color().name().mid(1)));
+						}
+					}
+					//
+					// Цвет текста
+					//
+					if (!hasComments
+						&& range.format.hasProperty(QTextFormat::ForegroundBrush)) {
+						documentXml.append(
+							QString("<w:color w:val=\"%1\"/>")
+									// код цвета без решётки
+									.arg(range.format.foreground().color().name().mid(1)));
+					}
+					documentXml.append("</w:rPr>");
+					//
+					// Сам текст
+					//
+					documentXml.append(
+						QString("<w:t>%2</w:t>")
+						.arg(TextEditHelper::toHtmlEscaped(blockText.mid(range.start, range.length)))
+						);
+					documentXml.append("</w:r>");
+					//
+					// Текст комментария
+					//
+					if (hasComments) {
+						for (int commentIndex = lastCommentIndex - comments.size() + 1;
+							 commentIndex <= lastCommentIndex; ++commentIndex) {
+							documentXml.append(
+										QString("<w:commentRangeEnd w:id=\"%1\"/>"
+												"<w:r><w:rPr/><w:commentReference w:id=\"%1\"/></w:r>")
+										.arg(commentIndex));
+						}
+					}
+				}
+			}
+			//
+			// ... закрываем абзац
+			//
+			documentXml.append("</w:p>");
+
+
 		} else {
+			//
+			// ... настройки абзаца
+			//
 			documentXml = "<w:p><w:pPr><w:pStyle w:val=\"Normal\"/>";
 			switch (_cursor.blockFormat().alignment()) {
 				case Qt::AlignCenter:
@@ -279,8 +384,8 @@ namespace {
 				}
 			}
 			documentXml.append(
-				QString("<w:rPr/></w:pPr><w:r><w:rPr/><w:t>%2</w:t></w:r></w:p>")
-				.arg(blockText)
+				QString("<w:rPr/></w:pPr><w:r><w:rPr/><w:t>%1</w:t></w:r></w:p>")
+				.arg(TextEditHelper::toHtmlEscaped(_cursor.block().text()))
 				);
 		}
 
@@ -322,7 +427,12 @@ void DocxExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters&
 			//
 			// ... документ
 			//
-			writeDocument(&zip, _scenario, _exportParameters);
+			QMap<int, QStringList> comments;
+			writeDocument(&zip, _scenario, comments, _exportParameters);
+			//
+			// ... комментарии
+			//
+			writeComments(&zip, comments);
 		}
 		zip.close();
 		docxFile.close();
@@ -339,7 +449,8 @@ void DocxExporter::writeStaticData(QtZipWriter* _zip, const ExportParameters& _e
 			"<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
 			"<Override PartName=\"/_rels/.rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
 			"<Override PartName=\"/word/_rels/document.xml.rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
-			"<Override PartName=\"/word/styles.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml\"/>";
+			"<Override PartName=\"/word/styles.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml\"/>"
+			"<Override PartName=\"/word/comments.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml\"/>";
 	//
 	// ... необходимы ли колонтитулы
 	//
@@ -371,19 +482,20 @@ void DocxExporter::writeStaticData(QtZipWriter* _zip, const ExportParameters& _e
 	QString documentXmlRels =
 			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			"<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
-			"<Relationship Id=\"docRId0\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles\" Target=\"styles.xml\"/>";
+			"<Relationship Id=\"docRId0\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles\" Target=\"styles.xml\"/>"
+			"<Relationship Id=\"docRId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments\" Target=\"comments.xml\"/>";
 	//
 	// ... необходимы ли колонтитулы
 	//
 	if (_exportParameters.printPagesNumbers) {
 		if (::exportStyle().numberingAlignment().testFlag(Qt::AlignTop)) {
-			documentXmlRels.append("<Relationship Id=\"docRId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/header\" Target=\"header1.xml\"/>");
+			documentXmlRels.append("<Relationship Id=\"docRId2\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/header\" Target=\"header1.xml\"/>");
 		} else {
-			documentXmlRels.append("<Relationship Id=\"docRId2\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer\" Target=\"footer1.xml\"/>");
+			documentXmlRels.append("<Relationship Id=\"docRId3\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer\" Target=\"footer1.xml\"/>");
 		}
 	}
 	documentXmlRels.append(
-		"<Relationship Id=\"docRId3\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings\" Target=\"settings.xml\"/>"
+		"<Relationship Id=\"docRId4\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings\" Target=\"settings.xml\"/>"
 		"</Relationships>");
 	_zip->addFile(QString::fromLatin1("word/_rels/document.xml.rels"), documentXmlRels.toUtf8());
 
@@ -483,7 +595,7 @@ void DocxExporter::writeFooter(QtZipWriter* _zip, const ExportParameters& _expor
 }
 
 void DocxExporter::writeDocument(QtZipWriter* _zip, ScenarioDocument* _scenario,
-	const ExportParameters& _exportParameters) const
+	QMap<int, QStringList>& _comments, const ExportParameters& _exportParameters) const
 {
 	QString documentXml =
 			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
@@ -501,7 +613,7 @@ void DocxExporter::writeDocument(QtZipWriter* _zip, ScenarioDocument* _scenario,
 	//
 	QTextCursor documentCursor(preparedDocument);
 	while (!documentCursor.atEnd()) {
-		documentXml.append(::docxText(documentCursor));
+		documentXml.append(::docxText(_comments, documentCursor));
 
 		//
 		// Переходим к следующему параграфу
@@ -520,9 +632,9 @@ void DocxExporter::writeDocument(QtZipWriter* _zip, ScenarioDocument* _scenario,
 	//
 	if (_exportParameters.printPagesNumbers) {
 		if (style.numberingAlignment().testFlag(Qt::AlignTop)) {
-			documentXml.append("<w:headerReference w:type=\"default\" r:id=\"docRId1\"/>");
+			documentXml.append("<w:headerReference w:type=\"default\" r:id=\"docRId2\"/>");
 		} else {
-			documentXml.append("<w:footerReference w:type=\"default\" r:id=\"docRId2\"/>");
+			documentXml.append("<w:footerReference w:type=\"default\" r:id=\"docRId3\"/>");
 		}
 	}
 	//
@@ -572,4 +684,35 @@ void DocxExporter::writeDocument(QtZipWriter* _zip, ScenarioDocument* _scenario,
 	// Запишем документ в архив
 	//
 	_zip->addFile(QString::fromLatin1("word/document.xml"), documentXml.toUtf8());
+}
+
+void DocxExporter::writeComments(QtZipWriter* _zip, const QMap<int, QStringList>& _comments) const
+{
+	const int COMMENT_AUTHOR = 1;
+	const int COMMENT_DATE = 2;
+	const int COMMENT_TEXT = 0;
+
+	QString headerXml =
+			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+			"<w:comments xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\">";
+
+	foreach (const int commentIndex, _comments.keys()) {
+		const QStringList comment = _comments.value(commentIndex);
+		headerXml.append(
+			QString("<w:comment w:id=\"%1\" w:author=\"%2\" w:date=\"%3\" w:initials=\"\">"
+					"<w:p><w:r><w:rPr></w:rPr><w:t>%4</w:t></w:r></w:p>"
+					"</w:comment>")
+					.arg(commentIndex)
+					.arg(comment.at(COMMENT_AUTHOR))
+					.arg(comment.at(COMMENT_DATE))
+					.arg(comment.at(COMMENT_TEXT))
+					);
+	}
+
+	headerXml.append("</w:comments>");
+
+	//
+	// Запишем комментарии в архив
+	//
+	_zip->addFile(QString::fromLatin1("word/comments.xml"), headerXml.toUtf8());
 }

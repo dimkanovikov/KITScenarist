@@ -20,7 +20,8 @@ namespace BusinessLogic
 			checkPageBreaks(false),
 			printTilte(false),
 			printPagesNumbers(false),
-			printScenesNumbers(false)
+			printScenesNumbers(false),
+			saveReviewMarks(true)
 		{}
 
 		/**
@@ -69,6 +70,11 @@ namespace BusinessLogic
 		 * @brief Приставка сцен
 		 */
 		QString scenesPrefix;
+
+		/**
+		 * @brief Сохранять редакторские пометки
+		 */
+		bool saveReviewMarks;
 	};
 
 

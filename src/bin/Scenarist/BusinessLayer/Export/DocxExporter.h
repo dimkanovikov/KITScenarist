@@ -50,7 +50,12 @@ namespace BusinessLogic
 		 * @brief Записать документ
 		 */
 		void writeDocument(QtZipWriter* _zip, ScenarioDocument* _scenario,
-			const ExportParameters& _exportParameters) const;
+			QMap<int, QStringList>& _comments, const ExportParameters& _exportParameters) const;
+
+		/**
+		 * @brief Записать комментарии
+		 */
+		void writeComments(QtZipWriter* _zip, const QMap<int, QStringList>& _comments) const;
 	};
 }
 

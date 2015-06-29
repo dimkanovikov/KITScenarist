@@ -7,7 +7,7 @@
 /**
  * @brief Вспомогательная функция, для возможности размещения цвета в хэше
  */
-uint qHash(const QColor& _key) { return qHash(_key.name()); }
+inline uint qHash(const QColor& _key) { return qHash(_key.name()); }
 
 
 /**

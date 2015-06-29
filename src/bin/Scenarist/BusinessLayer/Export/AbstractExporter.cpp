@@ -1096,6 +1096,26 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 				} else {
 					destDocumentCursor.insertText(sourceDocumentCursor.block().text());
 				}
+
+				//
+				// Добавляем редакторские пометки, если необходимо
+				//
+				if (_exportParameters.saveReviewMarks) {
+					//
+					// Если в блоке есть пометки, добавляем их
+					//
+					if (!sourceDocumentCursor.block().textFormats().isEmpty()) {
+						const int startBlockPosition = destDocumentCursor.block().position();
+						foreach (const QTextLayout::FormatRange& range, sourceDocumentCursor.block().textFormats()) {
+							if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)) {
+								destDocumentCursor.setPosition(startBlockPosition + range.start);
+								destDocumentCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, range.length);
+								destDocumentCursor.mergeCharFormat(range.format);
+							}
+						}
+						destDocumentCursor.movePosition(QTextCursor::EndOfBlock);
+					}
+				}
 			}
 
 			//
