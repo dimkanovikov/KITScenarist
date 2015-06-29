@@ -17,6 +17,22 @@ using namespace DataStorageLayer;
 using namespace DataMappingLayer;
 using namespace BusinessLogic;
 
+namespace {
+	/**
+	 * @brief Имя пользователя из системы
+	 */
+	static QString systemUserName() {
+		QString name = qgetenv("USER");
+		if (name.isEmpty()) {
+			name = qgetenv("USERNAME");
+			if (name.isEmpty()) {
+				name = "user";
+			}
+		}
+		return name;
+	}
+}
+
 
 void SettingsStorage::setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace)
 {
@@ -76,7 +92,7 @@ QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace
 		value = MapperFacade::settingsMapper()->value(_key);
 	}
 
-	if (value.isNull()) {
+	if (value.isEmpty()) {
 		value = defaultValue(_key);
 	}
 
@@ -141,8 +157,7 @@ SettingsStorage::SettingsStorage()
 	// Настроим значения параметров по умолчанию
 	//
 	m_defaultValues.insert("application/uuid", QUuid::createUuid().toString());
-	m_defaultValues.insert("application/user-name",
-		QApplication::translate("DataStorageLayer::SettingsStorage", "Local user"));
+	m_defaultValues.insert("application/user-name", ::systemUserName());
 	m_defaultValues.insert("application/use-dark-theme", "0");
 	m_defaultValues.insert("application/autosave", "1");
 	m_defaultValues.insert("application/autosave-interval", "5");

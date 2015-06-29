@@ -163,11 +163,9 @@ void StartUpManager::initData()
 	// Загрузим имя пользователя и пароль из настроек
 	//
 	m_userName =
-			PasswordStorage::load(
-				StorageFacade::settingsStorage()->value(
-					"application/user-name",
-					SettingsStorage::ApplicationSettings)
-				);
+			StorageFacade::settingsStorage()->value(
+				"application/user-name",
+				SettingsStorage::ApplicationSettings);
 	m_password =
 			PasswordStorage::load(
 				StorageFacade::settingsStorage()->value(

@@ -117,11 +117,9 @@ void SynchronizationManager::login()
 	// Авторизуемся, если параметры сохранены
 	//
 	const QString login =
-			PasswordStorage::load(
-				StorageFacade::settingsStorage()->value(
-					"application/user-name",
-					SettingsStorage::ApplicationSettings)
-				);
+			StorageFacade::settingsStorage()->value(
+				"application/user-name",
+				SettingsStorage::ApplicationSettings);
 	const QString password =
 			PasswordStorage::load(
 				StorageFacade::settingsStorage()->value(
@@ -204,7 +202,7 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 		//
 		StorageFacade::settingsStorage()->setValue(
 					"application/user-name",
-					PasswordStorage::save(_userName),
+					_userName,
 					SettingsStorage::ApplicationSettings);
 		StorageFacade::settingsStorage()->setValue(
 					"application/password",

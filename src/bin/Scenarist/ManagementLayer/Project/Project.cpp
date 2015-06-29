@@ -63,11 +63,9 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 		//
 		const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
 		const QString login =
-				PasswordStorage::load(
-					StorageFacade::settingsStorage()->value(
-						"application/user-name",
-						SettingsStorage::ApplicationSettings)
-					);
+				StorageFacade::settingsStorage()->value(
+					"application/user-name",
+					SettingsStorage::ApplicationSettings);
 		const QString remoteProjectsFolderPath =
 				QString("%1%4%2%4%3").arg(appDataFolderPath).arg("Projects").arg(login).arg(QDir::separator());
 		//

@@ -31,11 +31,9 @@ namespace {
 	 */
 	static Domain::ScenarioChange* saveChange(const QString& _undoPatch, const QString& _redoPatch) {
 		const QString username =
-				PasswordStorage::load(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-						"application/user-name",
-						DataStorageLayer::SettingsStorage::ApplicationSettings)
-					);
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/user-name",
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
 		return DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(username, _undoPatch, _redoPatch);
 	}
 }
