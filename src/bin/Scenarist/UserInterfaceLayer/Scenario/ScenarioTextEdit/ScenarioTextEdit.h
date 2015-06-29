@@ -101,8 +101,9 @@ namespace UserInterface
 	public slots:
 		/**
 		 * @brief Своя реализация проверки виден ли курсор на экране
+		 * @param Значение true докручивает, как сверху, так и снизу, а false только снизу
 		 */
-		void ensureCursorVisibleReimpl();
+		void ensureCursorVisibleReimpl(bool _upAndDown = false);
 
 		/**
 		 * @brief Собственные реализации отмены/повтора последнего действия
@@ -122,6 +123,11 @@ namespace UserInterface
 		 * @brief Изменён стиль блока
 		 */
 		void styleChanged();
+
+		/**
+		 * @brief В документ были внесены редакторские примечания
+		 */
+		void reviewChanged();
 
 	protected:
 		/**

@@ -79,6 +79,7 @@ namespace ManagementLayer
 		void scenarioEditBlockSettingsChanged(const QString& _block, const QString& _shortcut,
 			const QString& _tab, const QString& _enter, const QString& _changeTab,
 			const QString& _changeEnter);
+		void scenarioEditReviewUseWordHighlightChanged(bool _value);
 
 		void navigatorShowScenesNumbersChanged(bool  _value);
 		void navigatorShowSceneDescriptionChanged(bool _value);

@@ -220,7 +220,11 @@ SOURCES += main.cpp \
     3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.cpp \
     3rd_party/Widgets/ToolTipLabel/ToolTipLabel.cpp \
-    BusinessLayer/ScenarioDocument/ScenarioReviewModel.cpp
+    BusinessLayer/ScenarioDocument/ScenarioReviewModel.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp \
+    3rd_party/Widgets/ColoredToolButton/ColoredToolButton.cpp \
+    3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.cpp \
+    3rd_party/Widgets/ColoredToolButton/WordHighlightColorsPane.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -397,7 +401,12 @@ HEADERS += \
     3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.h \
     3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h \
-    BusinessLayer/ScenarioDocument/ScenarioReviewModel.h
+    BusinessLayer/ScenarioDocument/ScenarioReviewModel.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.h \
+    3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h \
+    3rd_party/Widgets/ColoredToolButton/ColorsPane.h \
+    3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.h \
+    3rd_party/Widgets/ColoredToolButton/WordHighlightColorsPane.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

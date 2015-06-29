@@ -64,6 +64,7 @@ scenario-editor/styles-jumping/from-scenes-group-by-tab
 scenario-editor/styles-jumping/from-scenes-group-by-enter
 scenario-editor/styles-jumping/from-folder-by-tab
 scenario-editor/styles-jumping/from-folder-by-enter
+scenario-editor/review/use-highlight - использовать выделения текста а-ля маркер ворд
 
 chronometry/used - включён ли подсчёт хронометража
 chronometry/current-chronometer-type - используемая система хронометража

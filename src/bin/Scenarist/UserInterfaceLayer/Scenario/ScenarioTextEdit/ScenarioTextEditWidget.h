@@ -17,6 +17,8 @@ namespace UserInterface
 {
 	class ScenarioTextEdit;
 	class ScenarioFastFormatWidget;
+	class ScenarioReviewPanel;
+	class ScenarioReviewView;
 
 
 	/**
@@ -245,7 +247,7 @@ namespace UserInterface
 		/**
 		 * @brief Кнопка включения опций редакторов
 		 */
-		FlatButton* m_correction;
+		FlatButton* m_review;
 
 		/**
 		 * @brief Хронометраж сценария
@@ -276,6 +278,16 @@ namespace UserInterface
 		 * @brief Виджет быстрого форматирования текста
 		 */
 		ScenarioFastFormatWidget* m_fastFormatWidget;
+
+		/**
+		 * @brief Всплывающая панель рецензирования
+		 */
+		ScenarioReviewPanel* m_reviewPanel;
+
+		/**
+		 * @brief Панель со списком комментариев
+		 */
+//		ScenarioReviewView* m_reviewView;
 
 		/**
 		 * @brief MD5-хэш текста сценария, используется для отслеживания изменённости текста

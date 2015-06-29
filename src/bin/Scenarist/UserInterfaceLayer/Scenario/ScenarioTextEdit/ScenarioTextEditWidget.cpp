@@ -3,6 +3,8 @@
 #include "ScenarioTextEdit.h"
 #include "ScenarioTextEditHelpers.h"
 #include "ScenarioFastFormatWidget.h"
+#include "ScenarioReviewPanel.h"
+//#include "ScenarioReviewView.h"
 
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
@@ -21,12 +23,15 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QScrollBar>
+#include <QSplitter>
 #include <QTextBlock>
 #include <QTreeView>
 #include <QHeaderView>
 #include <QStandardItemModel>
 
 using UserInterface::ScenarioTextEditWidget;
+using UserInterface::ScenarioReviewPanel;
+using UserInterface::ScenarioReviewView;
 using UserInterface::ScenarioTextEdit;
 using BusinessLogic::ScenarioTemplateFacade;
 using BusinessLogic::ScenarioTemplate;
@@ -34,7 +39,6 @@ using BusinessLogic::ScenarioBlockStyle;
 
 namespace {
 	const int SCROLL_DELTA = 140;
-
 
 	/**
 	 * @brief Получить хэш текста
@@ -55,13 +59,15 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_redo(new FlatButton(this)),
 	m_search(new FlatButton(this)),
 	m_fastFormat(new FlatButton(this)),
-	m_correction(new FlatButton(this)),
+	m_review(new FlatButton(this)),
 	m_duration(new QLabel(this)),
 	m_countersInfo(new QLabel(this)),
 	m_editor(new ScenarioTextEdit(this)),
 	m_editorWrapper(new ScalableWrapper(m_editor, this)),
 	m_searchLine(new SearchWidget(this)),
-	m_fastFormatWidget(new ScenarioFastFormatWidget(this))
+	m_fastFormatWidget(new ScenarioFastFormatWidget(this)),
+	m_reviewPanel(new ScenarioReviewPanel(m_editor, this))/*,
+	m_reviewView(new ScenarioReviewView(this))*/
 {
 	initView();
 	initConnections();
@@ -407,10 +413,9 @@ void ScenarioTextEditWidget::initView()
 	m_fastFormat->setToolTip(tr("Text Fast Format"));
 	m_fastFormat->setCheckable(true);
 
-	m_correction->setIcons(QIcon(":/Graphics/Icons/Editing/corrector.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/corrector_active.png"));
-	m_correction->setToolTip(tr("Text Corrections"));
-	m_correction->setCheckable(true);
-	m_correction->hide();
+	m_review->setIcons(QIcon(":/Graphics/Icons/Editing/review.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/review_active.png"));
+	m_review->setToolTip(tr("Review"));
+	m_review->setCheckable(true);
 
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 	m_duration->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -425,6 +430,9 @@ void ScenarioTextEditWidget::initView()
 	m_fastFormatWidget->setEditor(m_editor);
 	m_fastFormatWidget->hide();
 
+//	m_reviewView->setEditor(m_editor);
+//	m_reviewView->hide();
+
 	QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
@@ -433,19 +441,28 @@ void ScenarioTextEditWidget::initView()
 	topLayout->addWidget(m_redo);
 	topLayout->addWidget(m_search);
 	topLayout->addWidget(m_fastFormat);
-	topLayout->addWidget(m_correction);
+	topLayout->addWidget(m_review);
 	topLayout->addWidget(m_duration);
 	topLayout->addWidget(m_countersInfo);
 
 	QVBoxLayout* mainLayout = new QVBoxLayout;
+	mainLayout->setContentsMargins(QMargins());
 	mainLayout->addWidget(m_toolbar);
 	mainLayout->addWidget(m_editorWrapper);
 	mainLayout->addWidget(m_searchLine);
 
+	QSplitter* mainSplitter = new QSplitter(this);
+	mainSplitter->setHandleWidth(1);
+	mainSplitter->setOpaqueResize(false);
+	QWidget* mainLayoutWidget = new QWidget(this);
+	mainLayoutWidget->setLayout(mainLayout);
+	mainSplitter->addWidget(mainLayoutWidget);
+//	mainSplitter->addWidget(m_reviewView);
+
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
 	layout->setSpacing(0);
-	layout->addLayout(mainLayout);
+	layout->addWidget(mainSplitter);
 	layout->addWidget(m_fastFormatWidget);
 
 	setLayout(layout);
@@ -522,6 +539,8 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()));
 	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
 	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
+	connect(m_review, SIGNAL(toggled(bool)), m_reviewPanel, SLOT(setIsActive(bool)));
+//	connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
 
 	initEditorConnections();
 }
@@ -533,6 +552,7 @@ void ScenarioTextEditWidget::initEditorConnections()
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
 	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
 	connect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
+	connect(m_editor, SIGNAL(reviewChanged()), this, SIGNAL(textChanged()));
 	connect(m_editorWrapper, SIGNAL(zoomRangeChanged(qreal)), this, SIGNAL(zoomRangeChanged(qreal)));
 }
 
@@ -543,6 +563,7 @@ void ScenarioTextEditWidget::removeEditorConnections()
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
 	disconnect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
 	disconnect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
+	disconnect(m_editor, SIGNAL(reviewChanged()), this, SIGNAL(textChanged()));
 	disconnect(m_editorWrapper, SIGNAL(zoomRangeChanged(qreal)), this, SIGNAL(zoomRangeChanged(qreal)));
 }
 
@@ -556,7 +577,7 @@ void ScenarioTextEditWidget::initStyleSheet()
 	m_redo->setProperty("inTopPanel", true);
 	m_search->setProperty("inTopPanel", true);
 	m_fastFormat->setProperty("inTopPanel", true);
-	m_correction->setProperty("inTopPanel", true);
+	m_review->setProperty("inTopPanel", true);
 
 	m_duration->setProperty("inTopPanel", true);
 	m_duration->setProperty("topPanelTopBordered", true);

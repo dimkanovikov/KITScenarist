@@ -277,7 +277,7 @@ namespace {
 				//
 				else {
 					const QStringList comments = range.format.property(ScenarioBlockStyle::PropertyComments).toStringList();
-					const bool hasComments = !comments.isEmpty();
+					const bool hasComments = !comments.isEmpty() && !comments.first().isEmpty();
 					int lastCommentIndex = 0;
 					//
 					// Комментарий

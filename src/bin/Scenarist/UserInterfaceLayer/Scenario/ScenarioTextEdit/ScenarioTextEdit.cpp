@@ -6,6 +6,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioReviewModel.h>
 
 #include <3rd_party/Helpers/TextEditHelper.h>
 
@@ -203,7 +204,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioBlockStyle::Type _bl
 	// т.к. в блоке могут находиться фрагменты в другом стиле
 	//
 	cursor.select(QTextCursor::BlockUnderCursor);
-	cursor.setCharFormat(newBlockStyle.charFormat());
+	cursor.mergeCharFormat(newBlockStyle.charFormat());
 
 	cursor.endEditBlock();
 
@@ -264,16 +265,16 @@ QMenu* ScenarioTextEdit::createContextMenu(const QPoint& _pos)
 	//
 	QMenu* menu = CompletableTextEdit::createContextMenu(_pos);
 	foreach (QAction* menuAction, menu->findChildren<QAction*>()) {
-        if (menuAction->text().endsWith(QKeySequence(QKeySequence::Undo).toString(QKeySequence::NativeText))) {
+		if (menuAction->text().endsWith(QKeySequence(QKeySequence::Undo).toString(QKeySequence::NativeText))) {
 			menuAction->disconnect();
 			connect(menuAction, SIGNAL(triggered()), this, SLOT(undoReimpl()));
 			menuAction->setEnabled(m_document->isUndoAvailableReimpl());
-        } else if (menuAction->text().endsWith(QKeySequence(QKeySequence::Redo).toString(QKeySequence::NativeText))) {
+		} else if (menuAction->text().endsWith(QKeySequence(QKeySequence::Redo).toString(QKeySequence::NativeText))) {
 			menuAction->disconnect();
 			connect(menuAction, SIGNAL(triggered()), this, SLOT(redoReimpl()));
 			menuAction->setEnabled(m_document->isRedoAvailableReimpl());
 		}
-    }
+	}
 
 	return menu;
 }
@@ -323,7 +324,7 @@ void ScenarioTextEdit::setAdditionalCursors(const QMap<QString, int>& _cursors)
 	}
 }
 
-void ScenarioTextEdit::ensureCursorVisibleReimpl()
+void ScenarioTextEdit::ensureCursorVisibleReimpl(bool _upAndDown)
 {
 	//
 	// Применяем стандартное поведение
@@ -337,13 +338,17 @@ void ScenarioTextEdit::ensureCursorVisibleReimpl()
 	QApplication::processEvents();
 
 	//
-	// Если курсор в конце документа прокручиваем ещё немного
+	// Если необходимо прокручиваем ещё немного
 	//
 	{
 		const int DETECT_DELTA = 10;
 		const int SCROLL_DELTA = 200;
 		QRect cursorRect = this->cursorRect();
-		if (cursorRect.height() + cursorRect.y() + DETECT_DELTA >= viewport()->height()) {
+		if (cursorRect.y() - DETECT_DELTA <= 0
+			&& _upAndDown) {
+			verticalScrollBar()->setValue(verticalScrollBar()->value() - SCROLL_DELTA);
+		}
+		else if (cursorRect.height() + cursorRect.y() + DETECT_DELTA >= viewport()->height()) {
 			verticalScrollBar()->setValue(verticalScrollBar()->value() + SCROLL_DELTA);
 		}
 	}
@@ -582,8 +587,8 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 		// Курсоры соавторов
 		//
 		{
-            if (!m_additionalCursors.isEmpty()
-                && m_document != 0) {
+			if (!m_additionalCursors.isEmpty()
+				&& m_document != 0) {
 				QPainter painter(viewport());
 				painter.setFont(QFont("Sans", 8));
 				painter.setPen(Qt::white);
@@ -1204,6 +1209,7 @@ void ScenarioTextEdit::initEditorConnections()
 				this, SLOT(aboutCorrectAdditionalCursors(int,int,int)));
 		connect(m_document, SIGNAL(beforePatchApply()), this, SLOT(aboutSaveEditorState()));
 		connect(m_document, SIGNAL(afterPatchApply()), this, SLOT(aboutLoadEditorState()));
+		connect(m_document, SIGNAL(reviewChanged()), this, SIGNAL(reviewChanged()));
 	}
 }
 
@@ -1214,6 +1220,7 @@ void ScenarioTextEdit::removeEditorConnections()
 				   this, SLOT(aboutCorrectAdditionalCursors(int,int,int)));
 		disconnect(m_document, SIGNAL(beforePatchApply()), this, SLOT(aboutSaveEditorState()));
 		disconnect(m_document, SIGNAL(afterPatchApply()), this, SLOT(aboutLoadEditorState()));
+		disconnect(m_document, SIGNAL(reviewChanged()), this, SIGNAL(reviewChanged()));
 	}
 }
 
