@@ -24,7 +24,10 @@ namespace {
 	static QString systemUserName() {
 		QString name = qgetenv("USER");
 		if (name.isEmpty()) {
-			name = qgetenv("USERNAME");
+			//
+			// Windows
+			//
+			name = QString::fromLocal8Bit(qgetenv("USERNAME"));
 			if (name.isEmpty()) {
 				name = "user";
 			}
