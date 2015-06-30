@@ -240,15 +240,69 @@ void ScenarioReviewModel::addReviewMarkComment(const QModelIndex& _index, const 
 	}
 }
 
+void ScenarioReviewModel::updateReviewMarkComment(const QModelIndex& _index, int _commentIndex, const QString& _comment)
+{
+	if (_index.isValid()) {
+		const ReviewMarkInfo mark = m_reviewMarks.at(_index.row());
+
+		QTextCursor cursor(m_document);
+		cursor.setPosition(mark.startPosition);
+		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, mark.length);
+
+		QTextCharFormat format = cursor.charFormat();
+		QStringList comments = format.property(ScenarioBlockStyle::PropertyComments).toStringList();
+		QStringList authors = format.property(ScenarioBlockStyle::PropertyCommentsAuthors).toStringList();
+		QStringList dates = format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
+
+		if (comments.size() > _commentIndex) {
+			comments[_commentIndex] = _comment;
+			dates[_commentIndex] = QDateTime::currentDateTime().toString(Qt::ISODate);
+		}
+
+		format.setProperty(ScenarioBlockStyle::PropertyComments, comments);
+		format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, authors);
+		format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, dates);
+		cursor.mergeCharFormat(format);
+
+		emit reviewChanged();
+	}
+}
+
 void ScenarioReviewModel::removeMark(int _cursorPosition)
 {
 	removeMark(indexForPosition(_cursorPosition));
 }
 
-void ScenarioReviewModel::removeMark(const QModelIndex& _index)
+void ScenarioReviewModel::removeMark(const QModelIndex& _index, int _commentIndex)
 {
 	if (_index.isValid()) {
-		removeRow(_index.row());
+		if (_commentIndex == 0) {
+			removeRow(_index.row());
+		} else {
+			const ReviewMarkInfo mark = m_reviewMarks.at(_index.row());
+
+			QTextCursor cursor(m_document);
+			cursor.setPosition(mark.startPosition);
+			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, mark.length);
+
+			QTextCharFormat format = cursor.charFormat();
+			QStringList comments = format.property(ScenarioBlockStyle::PropertyComments).toStringList();
+			QStringList authors = format.property(ScenarioBlockStyle::PropertyCommentsAuthors).toStringList();
+			QStringList dates = format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
+
+			if (comments.size() > _commentIndex) {
+				comments.removeAt(_commentIndex);
+				authors.removeAt(_commentIndex);
+				dates.removeAt(_commentIndex);
+			}
+
+			format.setProperty(ScenarioBlockStyle::PropertyComments, comments);
+			format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, authors);
+			format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, dates);
+			cursor.mergeCharFormat(format);
+
+			emit reviewChanged();
+		}
 	}
 }
 

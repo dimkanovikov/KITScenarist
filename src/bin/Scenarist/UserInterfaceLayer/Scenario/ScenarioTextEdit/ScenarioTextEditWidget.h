@@ -287,7 +287,7 @@ namespace UserInterface
 		/**
 		 * @brief Панель со списком комментариев
 		 */
-//		ScenarioReviewView* m_reviewView;
+		ScenarioReviewView* m_reviewView;
 
 		/**
 		 * @brief MD5-хэш текста сценария, используется для отслеживания изменённости текста

@@ -4,7 +4,7 @@
 #include "ScenarioTextEditHelpers.h"
 #include "ScenarioFastFormatWidget.h"
 #include "ScenarioReviewPanel.h"
-//#include "ScenarioReviewView.h"
+#include "ScenarioReviewView.h"
 
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
@@ -66,8 +66,8 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_editorWrapper(new ScalableWrapper(m_editor, this)),
 	m_searchLine(new SearchWidget(this)),
 	m_fastFormatWidget(new ScenarioFastFormatWidget(this)),
-	m_reviewPanel(new ScenarioReviewPanel(m_editor, this))/*,
-	m_reviewView(new ScenarioReviewView(this))*/
+	m_reviewPanel(new ScenarioReviewPanel(m_editor, this)),
+	m_reviewView(new ScenarioReviewView(this))
 {
 	initView();
 	initConnections();
@@ -430,8 +430,8 @@ void ScenarioTextEditWidget::initView()
 	m_fastFormatWidget->setEditor(m_editor);
 	m_fastFormatWidget->hide();
 
-//	m_reviewView->setEditor(m_editor);
-//	m_reviewView->hide();
+	m_reviewView->setEditor(m_editor);
+	m_reviewView->hide();
 
 	QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
 	topLayout->setContentsMargins(QMargins());
@@ -457,7 +457,8 @@ void ScenarioTextEditWidget::initView()
 	QWidget* mainLayoutWidget = new QWidget(this);
 	mainLayoutWidget->setLayout(mainLayout);
 	mainSplitter->addWidget(mainLayoutWidget);
-//	mainSplitter->addWidget(m_reviewView);
+	mainSplitter->addWidget(m_reviewView);
+	mainSplitter->setSizes(QList<int>() << 3 << 1);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -540,7 +541,7 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
 	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
 	connect(m_review, SIGNAL(toggled(bool)), m_reviewPanel, SLOT(setIsActive(bool)));
-//	connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
+	connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
 
 	initEditorConnections();
 }

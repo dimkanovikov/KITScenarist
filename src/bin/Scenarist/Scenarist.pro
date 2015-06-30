@@ -224,7 +224,10 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp \
     3rd_party/Widgets/ColoredToolButton/ColoredToolButton.cpp \
     3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.cpp \
-    3rd_party/Widgets/ColoredToolButton/WordHighlightColorsPane.cpp
+    3rd_party/Widgets/ColoredToolButton/WordHighlightColorsPane.cpp \
+    3rd_party/Widgets/QWidgetListView/qwidgetlistview.cpp \
+    3rd_party/Widgets/QWidgetListView/qtmodelwidget.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -406,7 +409,10 @@ HEADERS += \
     3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h \
     3rd_party/Widgets/ColoredToolButton/ColorsPane.h \
     3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.h \
-    3rd_party/Widgets/ColoredToolButton/WordHighlightColorsPane.h
+    3rd_party/Widgets/ColoredToolButton/WordHighlightColorsPane.h \
+    3rd_party/Widgets/QWidgetListView/qwidgetlistview.h \
+    3rd_party/Widgets/QWidgetListView/qtmodelwidget.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

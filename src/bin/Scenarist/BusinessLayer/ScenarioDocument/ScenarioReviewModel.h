@@ -64,6 +64,16 @@ namespace BusinessLogic {
 		/** @} */
 
 		/**
+		 * @brief Добавить комментарий к существующей редакторской заметке
+		 */
+		void addReviewMarkComment(const QModelIndex& _index, const QString& _comment);
+
+		/**
+		 * @brief Обновить комментарий
+		 */
+		void updateReviewMarkComment(const QModelIndex& _index, int _commentIndex, const QString& _comment);
+
+		/**
 		 * @brief Установить флаг "выполнено" для заметки
 		 */
 		/** @{ */
@@ -72,16 +82,11 @@ namespace BusinessLogic {
 		/** @} */
 
 		/**
-		 * @brief Добавить комментарий к существующей редакторской заметке
-		 */
-		void addReviewMarkComment(const QModelIndex& _index, const QString& _comment);
-
-		/**
 		 * @brief Удалить заметку
 		 */
 		/** @{ */
 		void removeMark(int _cursorPosition);
-		void removeMark(const QModelIndex& _index);
+		void removeMark(const QModelIndex& _index, int _commentIndex = 0);
 		/** @{ */
 
 		/**

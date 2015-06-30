@@ -123,10 +123,10 @@ void ScenarioReviewPanel::aboutShow()
 				"scenario-editor/review/use-highlight",
 				SettingsStorage::ApplicationSettings).toInt() == false) {
 			m_textBgColor->setVisible(hasSelectedText);
-			m_textHighlight->setVisible(!hasSelectedText);
+			m_textHighlight->setVisible(false);
 		} else {
 			m_textHighlight->setVisible(hasSelectedText);
-			m_textBgColor->setVisible(!hasSelectedText);
+			m_textBgColor->setVisible(false);
 		}
 		m_comment->setVisible(hasSelectedText);
 		m_done->setVisible(hasReview);
