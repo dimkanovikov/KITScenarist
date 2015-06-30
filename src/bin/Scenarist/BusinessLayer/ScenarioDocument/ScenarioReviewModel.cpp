@@ -134,6 +134,10 @@ void ScenarioReviewModel::setReviewMarkTextBgColor(int _startPosition, int _leng
 		QTextCharFormat format;
 		format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
 		format.setBackground(_color);
+		//
+		// Принудительно стираем цвет текста
+		//
+		format.setForeground(QColor());
 		format.setProperty(ScenarioBlockStyle::PropertyComments, QStringList() << "");
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, QStringList() << ::userName());
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, QStringList() << QDateTime::currentDateTime().toString(Qt::ISODate));
@@ -153,6 +157,10 @@ void ScenarioReviewModel::setReviewMarkTextHighlight(int _startPosition, int _le
 		format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
 		format.setProperty(ScenarioBlockStyle::PropertyIsHighlight, true);
 		format.setBackground(_color);
+		//
+		// Принудительно стираем цвет текста
+		//
+		format.setForeground(QColor());
 		format.setProperty(ScenarioBlockStyle::PropertyComments, QStringList() << "");
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, QStringList() << ::userName());
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, QStringList() << QDateTime::currentDateTime().toString(Qt::ISODate));
