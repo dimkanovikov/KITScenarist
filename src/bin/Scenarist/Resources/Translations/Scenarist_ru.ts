@@ -235,13 +235,13 @@
         <translation>Шаблон:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="410"/>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="414"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="420"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="424"/>
         <source>Original scenario</source>
         <translation>Оригинальный сценарий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="422"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="432"/>
         <source>Additional:</source>
         <translation>Дополнительно:</translation>
     </message>
@@ -256,7 +256,7 @@
         <translation>Общее</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="455"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="465"/>
         <source>Additional (Numbering, Title Page etc.)</source>
         <translation>Расширенные настройки (нумерация, титульная страница и пр.)</translation>
     </message>
@@ -272,55 +272,60 @@
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="280"/>
         <source>Page Numbering</source>
-        <translation>Нумерация страниц</translation>
+        <translation>Нумеровать страницы</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="287"/>
         <source>Scenes Numbering</source>
-        <translation>Нумерация сцен</translation>
+        <translation>Нумеровать сцены</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="295"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="294"/>
+        <source>Save Review Marks</source>
+        <translation>Сохранять пометки редактора</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="305"/>
         <source>Title List</source>
         <translation>Титульная страница</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="301"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="311"/>
         <source>Print</source>
         <translation>Печатать</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="313"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="323"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="323"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="333"/>
         <source>Scenario name.</source>
         <translation>Название сценария.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="330"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="340"/>
         <source>Genre:</source>
         <translation>Жанр:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="340"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="350"/>
         <source>Scenario genre.</source>
         <translation>Жанр сценария.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="347"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="357"/>
         <source>Author:</source>
         <translation>Автор:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="357"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="367"/>
         <source>Scenario author.</source>
         <translation>Автор сценария.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="364"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="374"/>
         <source>Contacts:</source>
         <translation>Контакты:</translation>
     </message>
@@ -329,12 +334,12 @@
         <translation type="vanished">Контакты.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="371"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="381"/>
         <source>Year:</source>
         <translation>Год:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="381"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="391"/>
         <source>Scenario wirting year.</source>
         <translation>Год написания сценария.</translation>
     </message>
@@ -861,22 +866,22 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::ExportManager</name>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="51"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="58"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="51"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="58"/>
         <source>Please wait. Export can take few minutes.</source>
         <translation>Немного терпения. Экспорт может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="101"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="108"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="101"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="108"/>
         <source>Please wait. Preparing document to preview can take few minutes.</source>
         <translation>Немного терпения. Подготовка сценария к предпросмотру может длиться несколько минут.</translation>
     </message>
@@ -2375,12 +2380,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::ExportDialog</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="234"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="240"/>
         <source>Choose file to export scenario</source>
         <translation>Выберите файл для экспорта сценария</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="236"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="242"/>
         <source>%1 files (*%2)</source>
         <translation>%1 файлы (*%2)</translation>
     </message>
@@ -2694,28 +2699,28 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioReviewWidget</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="251"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="255"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="252"/>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="308"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="256"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="312"/>
         <source>Reply</source>
         <translation>Ответить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="253"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="257"/>
         <source>Done</source>
         <translation>Исправлено</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="257"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="261"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="297"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="301"/>
         <source>Comment</source>
         <translation>Комментарий</translation>
     </message>

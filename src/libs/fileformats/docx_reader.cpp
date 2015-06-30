@@ -627,13 +627,7 @@ void DocxReader::readRunProperties(Style& style, bool allowstyles)
 		//
 		else if (m_xml.qualifiedName() == "w:color") {
 			const QColor color("#" + value.toString());
-			//
-			// ... иногда встречается непонятное окрашивание в "почти чёрный", игнорируем его
-			//
-			if (color != Qt::black
-				&& color != QColor("#00000A")) {
-				style.char_format.setProperty(Docx::IsForeground, true);
-			}
+			style.char_format.setProperty(Docx::IsForeground, true);
 			style.char_format.setForeground(color);
 		}
 

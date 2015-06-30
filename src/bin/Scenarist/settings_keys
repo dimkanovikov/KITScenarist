@@ -124,3 +124,4 @@ projects/[project_name]/export/page-numbering - нумерация страни�
 projects/[project_name]/export/scenes-numbering - нумерация сцен
 projects/[project_name]/export/scenes-prefix - приставка сцен
 projects/[project_name]/export/print-title - печатать ли титульную страницу
+projects/[project_name]/export/save-review-marks - сохранять редакторские пометки

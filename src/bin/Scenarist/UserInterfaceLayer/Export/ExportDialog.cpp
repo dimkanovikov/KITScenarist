@@ -118,6 +118,11 @@ void ExportDialog::setScenesPrefix(const QString& _prefix)
 	ui->scenesPrefix->setText(_prefix);
 }
 
+void ExportDialog::setSaveReviewMarks(bool _save)
+{
+	ui->saveReviewMarks->setChecked(_save);
+}
+
 void ExportDialog::setPrintTitle(bool _isChecked)
 {
 	ui->printTitle->setChecked(_isChecked);
@@ -199,6 +204,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 	exportParameters.printPagesNumbers = ui->pageNumbering->isChecked();
 	exportParameters.printScenesNumbers = ui->scenesNumbering->isChecked();
 	exportParameters.scenesPrefix = ui->scenesPrefix->text();
+	exportParameters.saveReviewMarks = ui->saveReviewMarks->isChecked();
 
 	return exportParameters;
 }

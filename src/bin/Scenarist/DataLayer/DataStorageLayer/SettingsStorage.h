@@ -32,7 +32,7 @@ namespace DataStorageLayer
 		/**
 		 * @brief Получить значение по ключу
 		 */
-		QString value(const QString& _key, SettingsPlace _settingsPlace);
+		QString value(const QString& _key, SettingsPlace _settingsPlace, const QString& _defaultValue = QString::null);
 
 		/**
 		 * @brief Получить группу значений

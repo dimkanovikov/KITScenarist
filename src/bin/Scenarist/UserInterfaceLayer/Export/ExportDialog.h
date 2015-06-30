@@ -68,6 +68,11 @@ namespace UserInterface
 		void setScenesPrefix(const QString& _prefix);
 
 		/**
+		 * @brief Установить необходимость сохранения редакторских пометок
+		 */
+		void setSaveReviewMarks(bool _save);
+
+		/**
 		 * @brief Установить печатать ли титульный лист
 		 */
 		void setPrintTitle(bool _isChecked);

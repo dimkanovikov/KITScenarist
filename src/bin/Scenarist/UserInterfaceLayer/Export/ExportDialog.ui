@@ -218,7 +218,7 @@
    <item row="5" column="0" colspan="2">
     <widget class="QTabWidget" name="additionalSettings">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="commonTab">
       <attribute name="title">
@@ -285,6 +285,16 @@
         <widget class="QCheckBox" name="scenesNumbering">
          <property name="text">
           <string>Scenes Numbering</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QCheckBox" name="saveReviewMarks">
+         <property name="text">
+          <string>Save Review Marks</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

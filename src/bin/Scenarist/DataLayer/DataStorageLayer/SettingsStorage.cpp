@@ -86,7 +86,7 @@ void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QSt
 
 }
 
-QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace)
+QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace, const QString& _defaultValue)
 {
 	QString value;
 	if (_settingsPlace == ApplicationSettings) {
@@ -96,7 +96,11 @@ QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace
 	}
 
 	if (value.isEmpty()) {
-		value = defaultValue(_key);
+		if (_defaultValue.isEmpty()) {
+			value = defaultValue(_key);
+		} else {
+			value = _defaultValue;
+		}
 	}
 
 	return value;

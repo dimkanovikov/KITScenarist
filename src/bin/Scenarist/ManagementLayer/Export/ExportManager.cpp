@@ -28,6 +28,13 @@ using ManagementLayer::ProjectsManager;
 using DataStorageLayer::StorageFacade;
 using UserInterface::ExportDialog;
 
+namespace {
+	/**
+	 * @brief По умолчанию необходимо экспортировать редакторские пометки
+	 */
+	const QString SAVE_REVIEW_MARKS_BY_DEFAULT = "1";
+}
+
 
 ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
@@ -146,6 +153,12 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
 					QString("%1/scenes-prefix").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
+	m_exportDialog->setSaveReviewMarks(
+				StorageFacade::settingsStorage()->value(
+					QString("%1/save-review-marks").arg(projectKey),
+					DataStorageLayer::SettingsStorage::ApplicationSettings,
+					SAVE_REVIEW_MARKS_BY_DEFAULT).toInt()
+				);
 	m_exportDialog->setPrintTitle(
 				StorageFacade::settingsStorage()->value(
 					QString("%1/print-title").arg(projectKey),
@@ -184,6 +197,10 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
 	StorageFacade::settingsStorage()->setValue(
 				QString("%1/scenes-prefix").arg(projectKey),
 				exportParameters.scenesPrefix,
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+	StorageFacade::settingsStorage()->setValue(
+				QString("%1/save-review-marks").arg(projectKey),
+				exportParameters.saveReviewMarks ? "1" : "0",
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
 	StorageFacade::settingsStorage()->setValue(
 				QString("%1/print-title").arg(projectKey),
