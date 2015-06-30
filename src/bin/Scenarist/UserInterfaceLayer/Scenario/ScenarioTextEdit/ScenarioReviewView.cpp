@@ -73,16 +73,19 @@ ReviewMarkWidget::ReviewMarkWidget(QWidget* _parent) :
 }
 
 void ReviewMarkWidget::setReviewMark(const QColor& _color, const QString& _author,
-	const QString& _date, const QString& _comment)
+	const QString& _date, const QString& _comment, bool _done)
 {
 	if (_color.isValid()) {
 		m_color->setStyleSheet(QString("background-color: %1; border: 1px solid palette(midlight); border-right: none;").arg(_color.name()));
 	} else {
 		m_color->setStyleSheet("");
 	}
+	//
 	m_author->setText(_author);
+	//
 	m_date->setText(QDateTime::fromString(_date, Qt::ISODate).toString("dd.MM.yyyy hh:mm"));
-	if (_comment.isEmpty()) {
+	//
+	if (_comment.isEmpty() || _done) {
 		m_comment->hide();
 	} else {
 		m_comment->show();
@@ -108,6 +111,10 @@ QString ReviewMarkWidget::comment() const
 
 void ReviewMarkWidget::paintEvent(QPaintEvent* _event)
 {
+	//
+	// Настроим стиль
+	//
+
 	//
 	// Если это ответ на редакторскую заметку
 	//
@@ -199,6 +206,7 @@ ScenarioReviewWidget::ScenarioReviewWidget(QAbstractItemModel* _model, const QMo
 
 void ScenarioReviewWidget::dataChanged()
 {
+	const bool done = model()->data(index(), ScenarioReviewModel::IsDoneRole).toBool();
 	const QColor color = model()->data(index(), Qt::DecorationRole).value<QColor>();
 	const QStringList authors = model()->data(index(), ScenarioReviewModel::CommentsAuthorsRole).toStringList();
 	const QStringList dates = model()->data(index(), ScenarioReviewModel::CommentsDatesRole).toStringList();
@@ -228,8 +236,12 @@ void ScenarioReviewWidget::dataChanged()
 	//
 	for (int commentIndex = 0; commentIndex < m_reviewMarks.size(); ++commentIndex) {
 		ReviewMarkWidget* widget = m_reviewMarks.at(commentIndex);
-		widget->setReviewMark(commentIndex == 0 ? color : QColor(), authors.value(commentIndex), dates.value(commentIndex), comments.value(commentIndex));
+		widget->setReviewMark(commentIndex == 0 ? color : QColor(), authors.value(commentIndex),
+			dates.value(commentIndex), comments.value(commentIndex), done);
 		widget->setSelected(isSelected());
+		if (commentIndex > 0) {
+			widget->setVisible(!done);
+		}
 	}
 }
 

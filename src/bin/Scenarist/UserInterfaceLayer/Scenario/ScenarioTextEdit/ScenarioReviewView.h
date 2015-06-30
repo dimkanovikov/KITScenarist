@@ -31,7 +31,7 @@ namespace UserInterface {
 		 * @brief Установить редакторское замечание в виджет
 		 */
 		void setReviewMark(const QColor& _color, const QString& _author, const QString& _date,
-			const QString& _comment);
+			const QString& _comment, bool _done);
 
 		/**
 		 * @brief Выделить/снять выделение
