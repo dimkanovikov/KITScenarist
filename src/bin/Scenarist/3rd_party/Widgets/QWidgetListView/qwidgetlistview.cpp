@@ -79,9 +79,10 @@ void QWidgetListView::scrollTo(const QModelIndex& _index)
 	if (_index.isValid()) {
 		const QWidget* scrollToWidget = m_widgets.at(_index.row());
 		const QPoint widgetPos = scrollToWidget->mapTo(this, scrollToWidget->pos());
+
 		//
 		// NOTE: Почему-то при преобразовании координат относительно поля прокрутки y-координата
-		//		 вырастает в два раза
+		//		 вырастает в два раза. По-видимому к y-координате добавляется позиция ползунка.
 		//
 		const int widgetTop = (widgetPos.y() - verticalScrollBar()->sliderPosition()) / 2;
 		const int widgetBottom = widgetTop + scrollToWidget->height();
@@ -104,7 +105,7 @@ void QWidgetListView::scrollTo(const QModelIndex& _index)
 				else {
 					moveToPx = widgetBottom - height();
 				}
-				const int newSliderPosition = verticalScrollBar()->sliderPosition() + (moveToPx / sliderStepInPx);
+				const int newSliderPosition = verticalScrollBar()->sliderPosition() + moveToPx;
 				verticalScrollBar()->setSliderPosition(newSliderPosition);
 			}
 		}
