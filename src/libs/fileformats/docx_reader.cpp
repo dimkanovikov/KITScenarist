@@ -360,6 +360,17 @@ void DocxReader::readBody()
 	while (m_xml.readNextStartElement()) {
 		if (m_xml.qualifiedName() == "w:p") {
 			readParagraph();
+		} else if ((m_xml.qualifiedName() == "w:commentRangeStart")
+				   || (m_xml.qualifiedName() == "w:bookmarkStart")) {
+			m_current_comment.clear();
+			m_current_comment.start_position = m_cursor.position();
+			m_xml.skipCurrentElement();
+		} else if ((m_xml.qualifiedName() == "w:commentRangeEnd")
+				   || (m_xml.qualifiedName() == "w:bookmarkEnd")) {
+			m_current_comment.end_position = m_cursor.position();
+			m_current_comment.insertIfReady(m_cursor);
+
+			m_xml.skipCurrentElement();
 		} else {
 			m_xml.skipCurrentElement();
 		}
