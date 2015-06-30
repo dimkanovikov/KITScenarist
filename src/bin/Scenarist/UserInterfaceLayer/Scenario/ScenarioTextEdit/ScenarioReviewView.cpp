@@ -157,7 +157,11 @@ void ReviewMarkWidget::initView()
 	authorFont.setBold(true);
 	m_author->setFont(authorFont);
 	QFont dateFont = m_date->font();
+#ifdef Q_OS_WIN
+	dateFont.setPointSize(dateFont.pointSize() - 1);
+#else
 	dateFont.setPointSize(dateFont.pointSize() - 4);
+#endif
 	dateFont.setBold(true);
 	m_date->setFont(dateFont);
 	m_comment->setWordWrap(true);
