@@ -2695,6 +2695,36 @@ Paragraph</source>
         <source>Comment</source>
         <translation>Комментарий</translation>
     </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="239"/>
+        <source>Change text color</source>
+        <translation>Изменить цвет текста</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="242"/>
+        <source>Change text background</source>
+        <translation>Изменить цвет фона</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="245"/>
+        <source>Highlight text</source>
+        <translation>Выделить текст маркером</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="248"/>
+        <source>Add comment</source>
+        <translation>Добавить комментарий</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="251"/>
+        <source>Mark as done</source>
+        <translation>Пометить как исправлено</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="253"/>
+        <source>Clear</source>
+        <translation>Очистить</translation>
+    </message>
 </context>
 <context>
     <name>UserInterface::ScenarioReviewWidget</name>

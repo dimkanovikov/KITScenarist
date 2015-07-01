@@ -236,15 +236,21 @@ void ScenarioReviewPanel::initView()
 
 	m_textColor->setIconSize(ICON_SIZE);
 	m_textColor->setColorsPane(ColoredToolButton::Google);
+	m_textColor->setToolTip(tr("Change text color"));
 	m_textBgColor->setIconSize(ICON_SIZE);
 	m_textBgColor->setColorsPane(ColoredToolButton::Google);
+	m_textBgColor->setToolTip(tr("Change text background"));
 	m_textHighlight->setIconSize(ICON_SIZE);
 	m_textHighlight->setColorsPane(ColoredToolButton::WordHighlight);
+	m_textHighlight->setToolTip(tr("Highlight text"));
 	m_comment->setIconSize(ICON_SIZE);
 	m_comment->setColorsPane(ColoredToolButton::Google);
+	m_comment->setToolTip(tr("Add comment"));
 	m_done->setIconSize(ICON_SIZE);
 	m_done->setCheckable(true);
+	m_done->setToolTip(tr("Mark as done"));
 	m_clear->setIconSize(ICON_SIZE);
+	m_clear->setToolTip(tr("Clear"));
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
