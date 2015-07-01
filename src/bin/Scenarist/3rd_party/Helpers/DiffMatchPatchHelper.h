@@ -8,7 +8,7 @@
 #include <QSet>
 #include <QString>
 #include <QRegularExpression>
-#include <QDebug>
+
 namespace {
 	/**
 	 * @brief Является ли строка тэгом
@@ -57,6 +57,11 @@ namespace {
 		result = result.remove("<reviews>\n");
 		result = result.remove("</reviews>\n");
 		result = result.remove("<reviews/>\n");
+		result = result.remove("<review>\n");
+		result = result.remove("</review>\n");
+		result = result.remove("<review/>\n");
+		result = result.remove("<review_comment>\n");
+		result = result.remove("</review_comment>\n");
 		result = result.remove("<review_comment/>\n");
 
 		foreach (const QString& tag, _tagsMap.keys()) {
@@ -64,8 +69,8 @@ namespace {
 		}
 
 		result = result.remove(QRegularExpression("<time_and_place(.*)>\n"));
-		result = result.remove(QRegularExpression("<review(.*)/>\n"));
-		result = result.remove(QRegularExpression("<review_comment(.*)/>\n"));
+		result = result.remove(QRegularExpression("<review(.*)>\n"));
+		result = result.remove(QRegularExpression("<review_comment(.*)>\n"));
 
 		result = TextEditHelper::removeXmlTags(result);
 		return result;
@@ -292,6 +297,9 @@ public:
 			const int newXmlPartLength = newXmlPart.length();
 			const int newPlainPartLength = ::removeXmlTagsForScenario(plainToXml(newXmlPart), tagsMap()).length();
 			int newStartPosForPlain = newStartPosForXml - (newXmlPartLength - newPlainPartLength);
+
+
+//			qDebug() << oldXml << "\n\n\n" << newXml << "\n\n\n" << oldXmlForUpdate << "\n\n\n" << newXmlForUpdate << "\n\n\n****\n\n\n";
 
 
 			result =
