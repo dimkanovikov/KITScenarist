@@ -258,7 +258,7 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/styles-changing/from-folder_header-by-tab", QString::number(ScenarioBlockStyle::FolderHeader));
 	m_defaultValues.insert("scenario-editor/styles-changing/from-folder_header-by-enter", QString::number(ScenarioBlockStyle::FolderHeader));
 	//
-	m_defaultValues.insert("scenario-editor/review/use-highlight", "0");
+	m_defaultValues.insert("scenario-editor/review/use-highlight", "1");
 
 	m_defaultValues.insert("chronometry/used", "1");
 	m_defaultValues.insert("chronometry/current-chronometer-type", "pages-chronometer");

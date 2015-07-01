@@ -88,6 +88,13 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 		//
 		if (autoJumpToNextBlock()
 			&& currentSection == TimeAndPlaceParser::SectionTime) {
+			//
+			// Сохраним параметры сцены
+			//
+			storeSceneParameters();
+			//
+			// Переходим к следующему блоку
+			//
 			cursor.movePosition(QTextCursor::EndOfBlock);
 			editor()->setTextCursor(cursor);
 			editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::TimeAndPlace));
