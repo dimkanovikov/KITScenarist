@@ -627,8 +627,13 @@ void DocxReader::readRunProperties(Style& style, bool allowstyles)
 		//
 		else if (m_xml.qualifiedName() == "w:color") {
 			const QColor color("#" + value.toString());
-			style.char_format.setProperty(Docx::IsForeground, true);
-			style.char_format.setForeground(color);
+			//
+			// Игнорируем все оттенки близкие к чёрному
+			//
+			if (color.value() > 10) {
+				style.char_format.setProperty(Docx::IsForeground, true);
+				style.char_format.setForeground(color);
+			}
 		}
 
 		m_xml.skipCurrentElement();
