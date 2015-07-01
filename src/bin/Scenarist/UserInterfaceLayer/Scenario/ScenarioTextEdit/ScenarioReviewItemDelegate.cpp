@@ -17,7 +17,7 @@ namespace {
 	/**
 	 * @brief Расстояния
 	 */
-	const int TOP_MARGIN = 3, SPACING = 3, BOTTOM_MARGIN = 0, RIGHT_MARGIN = 3;
+	const int TOP_MARGIN = 3, SPACING = 6, BOTTOM_MARGIN = 0, RIGHT_MARGIN = 3;
 
 	/**
 	 * @brief Рассчитать высоту текста по заданной ширине
@@ -25,8 +25,13 @@ namespace {
 	static int heightForWidth(const QString& _text, int _width) {
 		static QLabel s_label;
 		s_label.setWordWrap(true);
-		s_label.setText(_text);
-		return s_label.heightForWidth(_width);
+
+		int height = 0;
+		if (!_text.isEmpty()) {
+			s_label.setText(_text);
+			height = s_label.heightForWidth(_width);
+		}
+		return height;
 	}
 
 	/**
@@ -41,6 +46,36 @@ namespace {
 	}
 }
 
+
+int ScenarioReviewItemDelegate::commentIndexFor(const QModelIndex& _index, int _y, QWidget* _widget)
+{
+	const int width = _widget->width();
+
+	//
+	// Считаем высоту
+	//
+	// ... высота заголовка: отступ сверху + две строки (автор и дата) + отступ снизу
+	//
+	const int headerHeight = TOP_MARGIN + _widget->fontMetrics().height() * 2 + BOTTOM_MARGIN;
+	//
+	// ... полная высота
+	//
+	int height = 0;
+	if (_index.data(ScenarioReviewModel::IsDoneRole).toBool() == false) {
+		const QStringList comments = _index.data(ScenarioReviewModel::CommentsRole).toStringList();
+		foreach (const QString& comment, comments) {
+			const int top = height;
+			height += headerHeight + ::commentHeightForWidth(comment, width) + SPACING;
+			const int bottom = height;
+
+			if (top <= _y && _y <= bottom) {
+				return comments.indexOf(comment);
+			}
+		}
+	}
+
+	return 0;
+}
 
 ScenarioReviewItemDelegate::ScenarioReviewItemDelegate(QObject* _parent) :
 	QStyledItemDelegate(_parent)
@@ -122,6 +157,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 	//
 	// Определим данные
 	//
+	const bool done  = _index.data(ScenarioReviewModel::IsDoneRole).toBool();
 	QStringList authors = _index.data(ScenarioReviewModel::CommentsAuthorsRole).toStringList();
 	const QStringList dates = _index.data(ScenarioReviewModel::CommentsDatesRole).toStringList();
 	const QStringList comments = _index.data(ScenarioReviewModel::CommentsRole).toStringList();
@@ -142,19 +178,30 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		//
 		// Определим область комментария
 		//
-		const int height = headerHeight + ::commentHeightForWidth(comments.value(commentIndex), width) + SPACING;
+		int height = headerHeight;
+		if (!done) {
+			height += ::commentHeightForWidth(comments.value(commentIndex), width) + SPACING;
+		}
 		const QRect rect(0, lastTop, width, height);
 
 		//
 		// ... фон
 		//
 		_painter->fillRect(rect, commentIndex == 0 ? backgroundColor : replyBackgroundColor);
+
 		//
 		// ... цвет заметки
 		//
 		const QColor color = _index.data(Qt::DecorationRole).value<QColor>();
-		const QRect colorRect(0, lastTop, COLOR_MARK_WIDTH, opt.rect.height());
+		const QRect colorRect(0, lastTop, COLOR_MARK_WIDTH, height);
 		_painter->fillRect(colorRect, commentIndex == 0 ? color : replyBackgroundColor);
+
+		//
+		// ... границы
+		//
+		_painter->setPen(borderColor);
+		_painter->drawRect(rect);
+
 		//
 		// ... автор
 		//
@@ -167,6 +214,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 			HEADER_LINE_HEIGHT
 			);
 		_painter->drawText(headerRect, authors.value(commentIndex));
+
 		//
 		// ... дата
 		//
@@ -179,6 +227,14 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 			DATE_LINE_HEIGHT
 			);
 		_painter->drawText(dateRect, dates.value(commentIndex));
+
+		//
+		// ... если комментарий исправлен на этом месте завершаем рисование
+		//
+		if (done) {
+			break;
+		}
+
 		//
 		// ... комментарий
 		//
@@ -191,11 +247,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 			height - TOP_MARGIN - headerRect.height() - dateRect.height() - SPACING - BOTTOM_MARGIN
 			);
 		_painter->drawText(commentRect, Qt::TextWordWrap, comments.value(commentIndex));
-		//
-		// ... границы
-		//
-		_painter->setPen(borderColor);
-		_painter->drawRect(rect);
+
 
 		lastTop += height;
 	}
@@ -223,9 +275,11 @@ QSize ScenarioReviewItemDelegate::sizeHint(const QStyleOptionViewItem& _option, 
 		// ... полная высота
 		//
 		int height = 0;
-		const QStringList comments = _index.data(ScenarioReviewModel::CommentsRole).toStringList();
-		foreach (const QString& comment, comments) {
-			height += headerHeight + ::commentHeightForWidth(comment, width) + SPACING;
+		if (_index.data(ScenarioReviewModel::IsDoneRole).toBool() == false) {
+			const QStringList comments = _index.data(ScenarioReviewModel::CommentsRole).toStringList();
+			foreach (const QString& comment, comments) {
+				height += headerHeight + ::commentHeightForWidth(comment, width) + SPACING;
+			}
 		}
 		if (height == 0) {
 			height = headerHeight;
