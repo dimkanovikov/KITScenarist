@@ -15,9 +15,8 @@ namespace UserInterface
 
 	public:
 		explicit ScenarioNavigatorItemDelegate(QObject* _parent = 0);
-		~ScenarioNavigatorItemDelegate();
 
-		void paint (QPainter* _painter, const QStyleOptionViewItem& _option, const QModelIndex& _index) const;
+		void paint(QPainter* _painter, const QStyleOptionViewItem& _option, const QModelIndex& _index) const;
 		QSize sizeHint(const QStyleOptionViewItem& _option, const QModelIndex& _index) const;
 
 		/**
@@ -29,12 +28,6 @@ namespace UserInterface
 		void setSceneDescriptionIsSceneText(bool _isSceneText);
 		void setSceneDescriptionHeight(int _height);
 		/** @} */
-
-	private:
-		/**
-		 * @brief Обновить отображение виджета
-		 */
-		void updateWidgetView();
 
 	private:
 		/**

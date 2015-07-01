@@ -1,5 +1,6 @@
 #include "ScenarioReviewView.h"
 
+#include "ScenarioReviewItemDelegate.h"
 #include "ScenarioTextEdit.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
@@ -12,6 +13,7 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QLabel>
+#include <QListView>
 #include <QMenu>
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -25,6 +27,7 @@
 using BusinessLogic::ScenarioTextDocument;
 using BusinessLogic::ScenarioReviewModel;
 using UserInterface::ReviewMarkWidget;
+using UserInterface::ScenarioReviewItemDelegate;
 using UserInterface::ScenarioReviewWidget;
 using UserInterface::ScenarioReviewView;
 
@@ -367,7 +370,7 @@ void ScenarioReviewWidget::initStylesheet()
 
 UserInterface::ScenarioReviewView::ScenarioReviewView(QWidget* _parent) :
 	QWidget(_parent),
-	m_view(new QWidgetListView(this)),
+	m_view(new QListView(this)),
 	m_editor(0)
 {
 	initView();
@@ -428,7 +431,8 @@ void ScenarioReviewView::aboutSelectMark()
 	const int cursorPosition = m_editor->textCursor().position();
 	if (ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(m_view->model())) {
 		const QModelIndex index = reviewModel->indexForPosition(cursorPosition);
-		m_view->setSelectedItem(index);
+		m_view->clearSelection();
+		m_view->setCurrentIndex(index);
 		if (index.isValid()) {
 			m_view->scrollTo(index);
 		}
@@ -437,7 +441,9 @@ void ScenarioReviewView::aboutSelectMark()
 
 void ScenarioReviewView::initView()
 {
-	m_view->setMetaObject(&ScenarioReviewWidget::staticMetaObject);
+	m_view->setItemDelegate(new ScenarioReviewItemDelegate(m_view));
+	m_view->setAlternatingRowColors(true);
+	m_view->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());

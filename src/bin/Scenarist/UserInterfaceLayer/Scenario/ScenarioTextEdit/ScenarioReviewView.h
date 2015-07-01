@@ -10,7 +10,7 @@ class QLabel;
 class QStandardItemModel;
 class QTextDocument;
 class QVBoxLayout;
-class QWidgetListView;
+class QListView;
 
 namespace UserInterface {
 
@@ -215,7 +215,7 @@ namespace UserInterface {
 		/**
 		 * @brief Представление комментариев
 		 */
-		QWidgetListView* m_view;
+		QListView* m_view;
 
 		/**
 		 * @brief Редактор сценария

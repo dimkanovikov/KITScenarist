@@ -227,7 +227,8 @@ SOURCES += main.cpp \
     3rd_party/Widgets/ColoredToolButton/WordHighlightColorsPane.cpp \
     3rd_party/Widgets/QWidgetListView/qwidgetlistview.cpp \
     3rd_party/Widgets/QWidgetListView/qtmodelwidget.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewItemDelegate.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -412,7 +413,8 @@ HEADERS += \
     3rd_party/Widgets/ColoredToolButton/WordHighlightColorsPane.h \
     3rd_party/Widgets/QWidgetListView/qwidgetlistview.h \
     3rd_party/Widgets/QWidgetListView/qtmodelwidget.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.h
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewItemDelegate.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

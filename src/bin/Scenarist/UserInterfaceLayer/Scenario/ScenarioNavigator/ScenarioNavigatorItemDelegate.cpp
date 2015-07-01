@@ -17,10 +17,6 @@ ScenarioNavigatorItemDelegate::ScenarioNavigatorItemDelegate(QObject* _parent) :
 {
 }
 
-ScenarioNavigatorItemDelegate::~ScenarioNavigatorItemDelegate()
-{
-}
-
 void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& _option, const QModelIndex& _index) const
 {
 	//
