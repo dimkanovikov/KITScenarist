@@ -1,9 +1,7 @@
 #ifndef SCENARIOREVIEWVIEW_H
 #define SCENARIOREVIEWVIEW_H
 
-#include <QWidget>
-
-class QListView;
+#include <QListView>
 
 namespace UserInterface {
 
@@ -13,7 +11,7 @@ namespace UserInterface {
 	/**
 	 * @brief Класс списка редакторских комментариев
 	 */
-	class ScenarioReviewView : public QWidget
+	class ScenarioReviewView : public QListView
 	{
 		Q_OBJECT
 
@@ -24,6 +22,13 @@ namespace UserInterface {
 		 * @brief Установить редактор
 		 */
 		void setEditor(ScenarioTextEdit* _editor);
+
+	protected:
+		/**
+		 * @brief Переопределяется для обновления размеров элементов,
+		 *		  т.к. стандартная реализация этого не делает
+		 */
+		void resizeEvent(QResizeEvent* _event);
 
 	private slots:
 		/**
@@ -78,11 +83,6 @@ namespace UserInterface {
 		void initConnections();
 
 	private:
-		/**
-		 * @brief Представление комментариев
-		 */
-		QListView* m_view;
-
 		/**
 		 * @brief Редактор сценария
 		 */

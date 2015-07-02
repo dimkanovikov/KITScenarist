@@ -2727,32 +2727,55 @@ Paragraph</source>
     </message>
 </context>
 <context>
-    <name>UserInterface::ScenarioReviewWidget</name>
+    <name>UserInterface::ScenarioReviewView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="255"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="123"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="256"/>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="312"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="124"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="177"/>
         <source>Reply</source>
         <translation>Ответить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="257"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="125"/>
         <source>Done</source>
         <translation>Исправлено</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="261"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="130"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="301"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="167"/>
         <source>Comment</source>
         <translation>Комментарий</translation>
+    </message>
+</context>
+<context>
+    <name>UserInterface::ScenarioReviewWidget</name>
+    <message>
+        <source>Edit</source>
+        <translation type="vanished">Изменить</translation>
+    </message>
+    <message>
+        <source>Reply</source>
+        <translation type="vanished">Ответить</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation type="vanished">Исправлено</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="vanished">Удалить</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="vanished">Комментарий</translation>
     </message>
 </context>
 <context>

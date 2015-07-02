@@ -2,6 +2,8 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioReviewModel.h>
 
+#include <QAbstractItemView>
+#include <QDateTime>
 #include <QLabel>
 #include <QPainter>
 
@@ -171,7 +173,10 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 	//
 	// Для каждого комментария
 	//
-	const int width = _option.widget->width();
+	int width = _option.widget->width();
+	if (const QAbstractItemView* view = qobject_cast<const QAbstractItemView*>(_option.widget)) {
+		width = view->viewport()->width();
+	}
 	const int headerHeight = TOP_MARGIN + _option.fontMetrics.height() * 2 + BOTTOM_MARGIN;
 	int lastTop = 0;
 	for (int commentIndex = 0; commentIndex < authors.size(); ++commentIndex) {
@@ -226,7 +231,8 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 			opt.rect.width() - colorRect.right() - SPACING - RIGHT_MARGIN,
 			DATE_LINE_HEIGHT
 			);
-		_painter->drawText(dateRect, dates.value(commentIndex));
+		const QString date = QDateTime::fromString(dates.value(commentIndex), Qt::ISODate).toString("dd.MM.yyyy hh:mm");
+		_painter->drawText(dateRect, date);
 
 		//
 		// ... если комментарий исправлен на этом месте завершаем рисование
@@ -263,7 +269,10 @@ QSize ScenarioReviewItemDelegate::sizeHint(const QStyleOptionViewItem& _option, 
 		//
 		// Ширина
 		//
-		const int width = _option.widget->width();
+		int width = _option.widget->width();
+		if (const QAbstractItemView* view = qobject_cast<const QAbstractItemView*>(_option.widget)) {
+			width = view->viewport()->width();
+		}
 
 		//
 		// Считаем высоту

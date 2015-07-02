@@ -8,9 +8,7 @@
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 
-#include <QListView>
 #include <QMenu>
-#include <QVBoxLayout>
 
 using BusinessLogic::ScenarioTextDocument;
 using BusinessLogic::ScenarioReviewModel;
@@ -48,8 +46,7 @@ namespace {
 
 
 ScenarioReviewView::ScenarioReviewView(QWidget* _parent) :
-	QWidget(_parent),
-	m_view(new QListView(this)),
+	QListView(_parent),
 	m_editor(0)
 {
 	initView();
@@ -70,12 +67,19 @@ void ScenarioReviewView::setEditor(ScenarioTextEdit* _editor)
 	}
 }
 
+void ScenarioReviewView::resizeEvent(QResizeEvent* _event)
+{
+	QListView::resizeEvent(_event);
+
+	reset();
+}
+
 void ScenarioReviewView::aboutUpdateModel()
 {
 	if (m_editor != 0) {
 		if (ScenarioTextDocument* document = qobject_cast<ScenarioTextDocument*>(m_editor->document())) {
 			ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(document->reviewModel());
-			m_view->setModel(reviewModel);
+			setModel(reviewModel);
 		}
 	}
 }
@@ -87,7 +91,7 @@ void ScenarioReviewView::aboutMoveCursorToMark(const QModelIndex& _index)
 	//
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutSelectMark()));
 
-	if (ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(m_view->model())) {
+	if (ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model())) {
 		const int cursorPosition = reviewModel->markStartPosition(_index);
 		const int length = reviewModel->markLength(_index);
 		QTextCursor cursor = m_editor->textCursor();
@@ -107,12 +111,12 @@ void ScenarioReviewView::aboutMoveCursorToMark(const QModelIndex& _index)
 void ScenarioReviewView::aboutSelectMark()
 {
 	const int cursorPosition = m_editor->textCursor().position();
-	if (ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(m_view->model())) {
+	if (ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model())) {
 		const QModelIndex index = reviewModel->indexForPosition(cursorPosition);
-		m_view->clearSelection();
-		m_view->setCurrentIndex(index);
+		clearSelection();
+		setCurrentIndex(index);
 		if (index.isValid()) {
-			m_view->scrollTo(index);
+			scrollTo(index);
 		}
 	}
 }
@@ -124,20 +128,19 @@ void ScenarioReviewView::aboutContextMenuRequested(const QPoint& _pos)
 	QAction* reply = menu->addAction(tr("Reply"));
 	QAction* done = menu->addAction(tr("Done"));
 	done->setCheckable(true);
-	done->setChecked(
-		m_view->model()->data(m_view->currentIndex(), ScenarioReviewModel::IsDoneRole).toBool());
+	done->setChecked(model()->data(currentIndex(), ScenarioReviewModel::IsDoneRole).toBool());
 	menu->addSeparator();
 	QAction* remove = menu->addAction(tr("Remove"));
 
 	//
 	// Определим комментарий над коротым нажата кнопка мыши
 	//
-	const int y = _pos.y() - m_view->visualRect(m_view->currentIndex()).top();
-	int commentIndex = ScenarioReviewItemDelegate::commentIndexFor(m_view->currentIndex(), y, m_view);
+	const int y = _pos.y() - visualRect(currentIndex()).top();
+	int commentIndex = ScenarioReviewItemDelegate::commentIndexFor(currentIndex(), y, this);
 
 	QAction* toggled = menu->exec(mapToGlobal(_pos));
 	if (toggled != 0) {
-		const QModelIndex lastCurrent = m_view->currentIndex();
+		const QModelIndex lastCurrent = currentIndex();
 		if (toggled == edit) {
 			aboutEdit(commentIndex);
 		} else if (toggled == reply) {
@@ -147,8 +150,8 @@ void ScenarioReviewView::aboutContextMenuRequested(const QPoint& _pos)
 		} else if (toggled == remove) {
 			aboutDelete(commentIndex);
 		}
-		m_view->clearSelection();
-		m_view->setCurrentIndex(lastCurrent);
+		clearSelection();
+		setCurrentIndex(lastCurrent);
 	}
 
 	menu->deleteLater();
@@ -156,45 +159,45 @@ void ScenarioReviewView::aboutContextMenuRequested(const QPoint& _pos)
 
 void ScenarioReviewView::aboutEdit(int _commentIndex)
 {
-	if (m_view->currentIndex().isValid()) {
-		ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(m_view->model());
+	if (currentIndex().isValid()) {
+		ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model());
 		const QString oldComment =
 			reviewModel->data(
-				m_view->currentIndex(),
+				currentIndex(),
 				ScenarioReviewModel::CommentsRole
 				).toStringList().value(_commentIndex);
 		const QString comment =
 			QLightBoxInputDialog::getText(this, QString::null, tr("Comment"), oldComment);
 		if (!comment.isEmpty()) {
-			reviewModel->updateReviewMarkComment(m_view->currentIndex(), _commentIndex, comment);
+			reviewModel->updateReviewMarkComment(currentIndex(), _commentIndex, comment);
 		}
 	}
 }
 
 void ScenarioReviewView::aboutReply()
 {
-	if (m_view->currentIndex().isValid()) {
+	if (currentIndex().isValid()) {
 		const QString comment = QLightBoxInputDialog::getText(this, QString::null, tr("Reply"));
 		if (!comment.isEmpty()) {
-			ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(m_view->model());
-			reviewModel->addReviewMarkComment(m_view->currentIndex(), comment);
+			ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model());
+			reviewModel->addReviewMarkComment(currentIndex(), comment);
 		}
 	}
 }
 
 void ScenarioReviewView::aboutDone(bool _done)
 {
-	if (m_view->currentIndex().isValid()) {
-		ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(m_view->model());
-		reviewModel->setReviewMarkIsDone(m_view->currentIndex(), _done);
+	if (currentIndex().isValid()) {
+		ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model());
+		reviewModel->setReviewMarkIsDone(currentIndex(), _done);
 	}
 }
 
 void ScenarioReviewView::aboutDelete(int _commentIndex)
 {
-	if (m_view->currentIndex().isValid()) {
-		ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(m_view->model());
-		reviewModel->removeMark(m_view->currentIndex(), _commentIndex);
+	if (currentIndex().isValid()) {
+		ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model());
+		reviewModel->removeMark(currentIndex(), _commentIndex);
 	}
 }
 
@@ -202,18 +205,15 @@ void ScenarioReviewView::initView()
 {
 	setContextMenuPolicy(Qt::CustomContextMenu);
 
-	m_view->setItemDelegate(new ScenarioReviewItemDelegate(m_view));
-	m_view->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-
-	QVBoxLayout* layout = new QVBoxLayout;
-	layout->setContentsMargins(QMargins());
-	layout->addWidget(m_view);
-	setLayout(layout);
+	setItemDelegate(new ScenarioReviewItemDelegate(this));
+	setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+	setResizeMode(QListView::Adjust);
 }
 
 void ScenarioReviewView::initConnections()
 {
 	connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(aboutContextMenuRequested(QPoint)));
 
-	connect(m_view, SIGNAL(clicked(QModelIndex)), this, SLOT(aboutMoveCursorToMark(QModelIndex)));
+	connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(aboutMoveCursorToMark(QModelIndex)));
+	connect(this, SIGNAL(activated(QModelIndex)), this, SLOT(aboutMoveCursorToMark(QModelIndex)));
 }
