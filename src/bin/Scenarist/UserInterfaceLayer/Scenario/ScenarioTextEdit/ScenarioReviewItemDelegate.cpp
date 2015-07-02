@@ -27,12 +27,19 @@ namespace {
 	static int heightForWidth(const QString& _text, int _width) {
 		static QLabel s_label;
 		s_label.setWordWrap(true);
+		s_label.setMargin(2);
 
 		int height = 0;
 		if (!_text.isEmpty()) {
 			s_label.setText(_text);
 			height = s_label.heightForWidth(_width);
 		}
+#ifdef Q_OS_WIN
+		//
+		// Делаем небольшое увеличение, почему-то некорректно рассчитывается высота
+		//
+		height *= 1.2;
+#endif
 		return height;
 	}
 
@@ -250,7 +257,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 			colorRect.right() + SPACING,
 			dateRect.bottom() + SPACING,
 			opt.rect.width() - colorRect.right() - SPACING - RIGHT_MARGIN,
-			height - TOP_MARGIN - headerRect.height() - dateRect.height() - SPACING - BOTTOM_MARGIN
+			height - headerHeight - SPACING
 			);
 		_painter->drawText(commentRect, Qt::TextWordWrap, comments.value(commentIndex));
 
