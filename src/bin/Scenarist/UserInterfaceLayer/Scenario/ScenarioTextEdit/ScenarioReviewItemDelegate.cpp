@@ -3,6 +3,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioReviewModel.h>
 
 #include <QAbstractItemView>
+#include <QApplication>
 #include <QDateTime>
 #include <QLabel>
 #include <QPainter>
@@ -27,19 +28,12 @@ namespace {
 	static int heightForWidth(const QString& _text, int _width) {
 		static QLabel s_label;
 		s_label.setWordWrap(true);
-		s_label.setMargin(2);
 
 		int height = 0;
 		if (!_text.isEmpty()) {
 			s_label.setText(_text);
 			height = s_label.heightForWidth(_width);
 		}
-#ifdef Q_OS_WIN
-		//
-		// Делаем небольшое увеличение, почему-то некорректно рассчитывается высота
-		//
-		height *= 1.2;
-#endif
 		return height;
 	}
 
@@ -58,7 +52,10 @@ namespace {
 
 int ScenarioReviewItemDelegate::commentIndexFor(const QModelIndex& _index, int _y, QWidget* _widget)
 {
-	const int width = _widget->width();
+	int width = _widget->width();
+	if (const QAbstractItemView* view = qobject_cast<const QAbstractItemView*>(_widget)) {
+		width = view->viewport()->width();
+	}
 
 	//
 	// Считаем высоту
@@ -123,8 +120,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 #else
 	dateFont.setPointSize(dateFont.pointSize() - 4);
 #endif
-	QFont textFont = opt.font;
-	textFont.setBold(false);
+	QFont textFont = QApplication::font();
 	//
 	// ... для выделенных элементов
 	//
@@ -222,7 +218,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		const QRect headerRect(
 			colorRect.right() + SPACING,
 			lastTop + TOP_MARGIN,
-			opt.rect.width() - colorRect.right() - SPACING - RIGHT_MARGIN,
+			width - colorRect.right() - SPACING - RIGHT_MARGIN,
 			HEADER_LINE_HEIGHT
 			);
 		_painter->drawText(headerRect, authors.value(commentIndex));
@@ -235,7 +231,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		const QRect dateRect(
 			colorRect.right() + SPACING,
 			headerRect.bottom(),
-			opt.rect.width() - colorRect.right() - SPACING - RIGHT_MARGIN,
+			width - colorRect.right() - SPACING - RIGHT_MARGIN,
 			DATE_LINE_HEIGHT
 			);
 		const QString date = QDateTime::fromString(dates.value(commentIndex), Qt::ISODate).toString("dd.MM.yyyy hh:mm");
@@ -256,7 +252,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		const QRect commentRect(
 			colorRect.right() + SPACING,
 			dateRect.bottom() + SPACING,
-			opt.rect.width() - colorRect.right() - SPACING - RIGHT_MARGIN,
+			width - colorRect.right() - SPACING - RIGHT_MARGIN,
 			height - headerHeight - SPACING
 			);
 		_painter->drawText(commentRect, Qt::TextWordWrap, comments.value(commentIndex));
