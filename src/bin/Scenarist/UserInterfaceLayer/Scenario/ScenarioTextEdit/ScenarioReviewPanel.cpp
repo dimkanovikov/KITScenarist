@@ -97,18 +97,58 @@ void ScenarioReviewPanel::aboutShow()
 	if (QApplication::mouseButtons() == Qt::NoButton) {
 		const bool hasSelectedText = m_editor->textCursor().hasSelection();
 		bool hasReview = false;
+		bool showDone = false;
 		bool reviewDone = false;
-		const QTextBlock textBlock = m_editor->textCursor().block();
-		if (!textBlock.textFormats().isEmpty()) {
-			const int cursorPosition = m_editor->textCursor().positionInBlock();
-			foreach (const QTextLayout::FormatRange& range, textBlock.textFormats()) {
-				if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)
-					&& range.start <= cursorPosition
-					&& (range.start + range.length) > cursorPosition) {
-					hasReview = true;
-					reviewDone = range.format.boolProperty(ScenarioBlockStyle::PropertyIsDone);
+
+		//
+		// Для случая, когда выделения нет, курсор может стоять над выделением
+		//
+		if (!m_editor->textCursor().hasSelection()) {
+			const QTextBlock textBlock = m_editor->textCursor().block();
+			if (!textBlock.textFormats().isEmpty()) {
+				const int cursorPosition = m_editor->textCursor().positionInBlock();
+				foreach (const QTextLayout::FormatRange& range, textBlock.textFormats()) {
+					if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)
+						&& range.start <= cursorPosition
+						&& (range.start + range.length) > cursorPosition) {
+						hasReview = true;
+						showDone = true;
+						reviewDone = range.format.boolProperty(ScenarioBlockStyle::PropertyIsDone);
+						break;
+					}
+				}
+			}
+		}
+		//
+		// Если выделен некоторый текст
+		//
+		else {
+			QTextCursor cursor = m_editor->textCursor();
+			const int fromCursorPos = qMin(cursor.selectionStart(), cursor.selectionEnd());
+			const int toCursorPos = qMax(cursor.selectionStart(), cursor.selectionEnd());
+			cursor.setPosition(fromCursorPos);
+			while (!cursor.atEnd()
+				   && cursor.position() < toCursorPos) {
+				const QTextBlock textBlock = cursor.block();
+				if (!textBlock.textFormats().isEmpty()) {
+					foreach (const QTextLayout::FormatRange& range, textBlock.textFormats()) {
+						if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)
+							&& ((textBlock.position() + range.start) >= fromCursorPos)
+							&& ((textBlock.position() + range.start + range.length) < toCursorPos)) {
+							hasReview = true;
+							break;
+						}
+					}
+				}
+				//
+				// ... прерываем поиск, если нашли заметку
+				//
+				if (hasReview) {
 					break;
 				}
+
+				cursor.movePosition(QTextCursor::EndOfBlock);
+				cursor.movePosition(QTextCursor::NextBlock);
 			}
 		}
 
@@ -129,7 +169,7 @@ void ScenarioReviewPanel::aboutShow()
 			m_textBgColor->setVisible(false);
 		}
 		m_comment->setVisible(hasSelectedText);
-		m_done->setVisible(hasReview);
+		m_done->setVisible(showDone);
 		m_done->setChecked(reviewDone);
 		m_clear->setVisible(hasReview);
 
@@ -225,7 +265,10 @@ void ScenarioReviewPanel::clearReview()
 	close();
 
 	BusinessLogic::ScenarioReviewModel* model = reviewModel();
-	model->removeMark(m_editor->textCursor().position());
+	const QTextCursor cursor = m_editor->textCursor();
+	const int from = qMin(cursor.selectionStart(), cursor.selectionEnd());
+	const int to = qMax(cursor.selectionStart(), cursor.selectionEnd());
+	model->removeMarks(from, to);
 }
 
 void ScenarioReviewPanel::initView()

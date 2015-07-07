@@ -196,31 +196,6 @@ void ScenarioReviewModel::setReviewMarkComment(const QModelIndex& _index, const 
 	}
 }
 
-void ScenarioReviewModel::setReviewMarkIsDone(int _cursorPosition, bool _isDone)
-{
-	const QModelIndex indexForUpdate = indexForPosition(_cursorPosition);
-	setReviewMarkIsDone(indexForUpdate, _isDone);
-}
-
-void ScenarioReviewModel::setReviewMarkIsDone(const QModelIndex& _index, bool _isDone)
-{
-	if (_index.isValid()) {
-		const ReviewMarkInfo mark = m_reviewMarks.at(_index.row());
-
-		QTextCursor cursor(m_document);
-		cursor.setPosition(mark.startPosition);
-		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, mark.length);
-		if (cursor.charFormat().boolProperty(ScenarioBlockStyle::PropertyIsDone) != _isDone) {
-			QTextCharFormat format;
-			format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
-			format.setProperty(ScenarioBlockStyle::PropertyIsDone, _isDone);
-			cursor.mergeCharFormat(format);
-
-			emit reviewChanged();
-		}
-	}
-}
-
 void ScenarioReviewModel::addReviewMarkComment(const QModelIndex& _index, const QString& _comment)
 {
 	if (_index.isValid()) {
@@ -273,6 +248,52 @@ void ScenarioReviewModel::updateReviewMarkComment(const QModelIndex& _index, int
 		cursor.mergeCharFormat(format);
 
 		emit reviewChanged();
+	}
+}
+
+void ScenarioReviewModel::setReviewMarkIsDone(int _cursorPosition, bool _isDone)
+{
+	const QModelIndex indexForUpdate = indexForPosition(_cursorPosition);
+	setReviewMarkIsDone(indexForUpdate, _isDone);
+}
+
+void ScenarioReviewModel::setReviewMarkIsDone(const QModelIndex& _index, bool _isDone)
+{
+	if (_index.isValid()) {
+		const ReviewMarkInfo mark = m_reviewMarks.at(_index.row());
+
+		QTextCursor cursor(m_document);
+		cursor.setPosition(mark.startPosition);
+		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, mark.length);
+		if (cursor.charFormat().boolProperty(ScenarioBlockStyle::PropertyIsDone) != _isDone) {
+			QTextCharFormat format;
+			format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
+			format.setProperty(ScenarioBlockStyle::PropertyIsDone, _isDone);
+			cursor.mergeCharFormat(format);
+
+			emit reviewChanged();
+		}
+	}
+}
+
+void ScenarioReviewModel::removeMarks(int _fromCursorPosition, int _toCursorPosition)
+{
+	if (_fromCursorPosition == _toCursorPosition) {
+		removeMark(_fromCursorPosition);
+	} else {
+		//
+		// Удаляем все заметки входящие в заданный интервал
+		//
+		QList<QModelIndex> indexesToDelete;
+		for (int position = _fromCursorPosition; position <= _toCursorPosition; ++position) {
+			const QModelIndex index = indexForPosition(position);
+			if (!indexesToDelete.contains(index)) {
+				indexesToDelete.prepend(index);
+			}
+		}
+		foreach (const QModelIndex& index, indexesToDelete) {
+			removeMark(index);
+		}
 	}
 }
 

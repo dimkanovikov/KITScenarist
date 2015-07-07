@@ -85,6 +85,7 @@ namespace BusinessLogic {
 		 * @brief Удалить заметку
 		 */
 		/** @{ */
+		void removeMarks(int _fromCursorPosition, int _toCursorPosition);
 		void removeMark(int _cursorPosition);
 		void removeMark(const QModelIndex& _index, int _commentIndex = 0);
 		/** @{ */

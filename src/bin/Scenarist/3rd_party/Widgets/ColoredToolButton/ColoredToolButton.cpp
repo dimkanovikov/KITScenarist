@@ -91,9 +91,12 @@ void ColoredToolButton::setColor(const QColor& _color)
 
 	if (m_colorsPane != 0) {
 		m_colorsPane->setCurrentColor(_color);
+		menu()->close();
 	}
 
 	aboutUpdateIcon(_color);
+
+	emit clicked(_color);
 }
 
 bool ColoredToolButton::event(QEvent* _event)
