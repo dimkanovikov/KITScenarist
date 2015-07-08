@@ -71,7 +71,8 @@ namespace ManagementLayer
 		/**
 		 * @brief Добавить элемент сценария в указанной позиции
 		 */
-		void addScenarioItem(int _position, const QString& _text, int _type);
+		void addScenarioItem(int _position, int _type, const QString& _header,
+			const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Удалить заданный текст сценария

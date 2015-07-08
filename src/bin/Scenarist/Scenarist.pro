@@ -16,6 +16,12 @@ TEMPLATE = app
 QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 
 #
+# Включить профилирование
+#
+#QMAKE_CXXFLAGS_DEBUG += -pg
+#QMAKE_LFLAGS_DEBUG += -pg
+
+#
 # Для создания предустановленных справочников на русском языке
 #
 DEFINES += USE_RUSSIAN_DATABASE_ENUMS

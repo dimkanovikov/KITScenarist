@@ -2,6 +2,9 @@
 
 #include "../ScenarioTextEdit/ScenarioLineEdit.h"
 
+#include <3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h>
+#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
+
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QRadioButton>
@@ -18,7 +21,9 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 	m_folder(new QRadioButton(this)),
 	m_scenesGroup(new QRadioButton(this)),
 	m_scene(new QRadioButton(this)),
-	m_itemEditor(new ScenarioLineEdit(this)),
+	m_header(new ScenarioLineEdit(this)),
+	m_color(new ColoredToolButton(QIcon(":/Graphics/Icons/Editing/rect.png"), this)),
+	m_description(new SimpleTextEditor(this)),
 	m_buttons(new QDialogButtonBox(this))
 {
 	initView();
@@ -27,9 +32,12 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 
 void ScenarioItemDialog::clearText()
 {
-	QTextCursor cursor(m_itemEditor->document());
+	QTextCursor cursor(m_header->document());
 	cursor.select(QTextCursor::Document);
 	cursor.removeSelectedText();
+
+	m_color->setColor(QColor());
+	m_description->clear();
 
 	aboutUpdateCurrentTextStyle();
 }
@@ -49,9 +57,19 @@ ScenarioBlockStyle::Type ScenarioItemDialog::itemType() const
 	return currentType;
 }
 
-QString ScenarioItemDialog::itemHeader() const
+QString ScenarioItemDialog::header() const
 {
-	return m_itemEditor->toPlainText();
+	return m_header->toPlainText();
+}
+
+QColor ScenarioItemDialog::color() const
+{
+	return m_color->currentColor();
+}
+
+QString ScenarioItemDialog::description() const
+{
+	return m_description->toHtml();
 }
 
 void ScenarioItemDialog::aboutUpdateCurrentTextStyle()
@@ -73,7 +91,7 @@ void ScenarioItemDialog::aboutUpdateCurrentTextStyle()
 	//
 	// Обновим стиль текущего параграфа для редактора
 	//
-	m_itemEditor->changeScenarioBlockType(currentType);
+	m_header->changeScenarioBlockType(currentType);
 }
 
 void ScenarioItemDialog::initView()
@@ -85,6 +103,8 @@ void ScenarioItemDialog::initView()
 	m_scenesGroup->setText(tr("Scenes group"));
 	m_scene->setText(tr("Scene"));
 
+	m_color->setColorsPane(ColoredToolButton::Google);
+
 	m_buttons->addButton(QDialogButtonBox::Ok);
 	m_buttons->addButton(QDialogButtonBox::Cancel);
 
@@ -94,9 +114,14 @@ void ScenarioItemDialog::initView()
 	topLayout->addWidget(m_scene);
 	topLayout->addStretch();
 
+	QHBoxLayout* headerLayout = new QHBoxLayout;
+	headerLayout->addWidget(m_header);
+	headerLayout->addWidget(m_color);
+
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->addLayout(topLayout);
-	layout->addWidget(m_itemEditor);
+	layout->addLayout(headerLayout);
+	layout->addWidget(m_description);
 	layout->addWidget(m_buttons);
 
 	setLayout(layout);

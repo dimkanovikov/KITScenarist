@@ -14,6 +14,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
 #include <QApplication>
@@ -36,6 +37,7 @@ using UserInterface::ScenarioTextEdit;
 using BusinessLogic::ScenarioTemplateFacade;
 using BusinessLogic::ScenarioTemplate;
 using BusinessLogic::ScenarioBlockStyle;
+using BusinessLogic::ScenarioTextBlockInfo;
 
 namespace {
 	const int SCROLL_DELTA = 140;
@@ -197,7 +199,8 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	}
 }
 
-void ScenarioTextEditWidget::addItem(int _position, const QString& _text, int _type)
+void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _header,
+	const QColor& _color, const QString& _description)
 {
 	QTextCursor cursor = m_editor->textCursor();
 	cursor.beginEditBlock();
@@ -221,7 +224,21 @@ void ScenarioTextEditWidget::addItem(int _position, const QString& _text, int _t
 	//
 	// Устанавливаем текст в блок
 	//
-	m_editor->insertPlainText(_text);
+	m_editor->insertPlainText(_header);
+
+	//
+	// Устанавливаем цвет и описание
+	//
+	cursor = m_editor->textCursor();
+	QTextBlockUserData* textBlockData = cursor.block().userData();
+	ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+	if (info == 0) {
+		info = new ScenarioTextBlockInfo;
+	}
+	info->setColor(_color);
+	info->setDescription(_description);
+	cursor.block().setUserData(info);
+
 	//
 	// Если это группирующий блок, то вставим и закрывающий текст
 	//
@@ -229,7 +246,7 @@ void ScenarioTextEditWidget::addItem(int _position, const QString& _text, int _t
 		cursor = m_editor->textCursor();
 		cursor.movePosition(QTextCursor::NextBlock);
 		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-		cursor.insertText(Helpers::footerText(_text));
+		cursor.insertText(Helpers::footerText(_header));
 	}
 
 	cursor.endEditBlock();

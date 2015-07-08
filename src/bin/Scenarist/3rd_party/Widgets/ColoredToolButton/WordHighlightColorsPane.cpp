@@ -61,6 +61,8 @@ WordHighlightColorsPane::WordHighlightColorsPane(QWidget* _parent) :
 	// Настроим курсор
 	//
 	setCursor(Qt::PointingHandCursor);
+
+	initColors();
 }
 
 QColor WordHighlightColorsPane::currentColor() const
@@ -88,39 +90,8 @@ void WordHighlightColorsPane::paintEvent(QPaintEvent * _event)
 	//
 	// Рисуем панель
 	//
-	int topMargin = PANEL_MARGIN;
-	int leftMargin = PANEL_MARGIN;
-	QList<QColor> colors;
-	colors << QColor("#ffff00")
-		   << QColor("#00ff00")
-		   << QColor("#00ffff")
-		   << QColor("#ff00ff")
-		   << QColor("#0000ff") // ****
-		   << QColor("#ff0000")
-		   << QColor("#000080")
-		   << QColor("#008080")
-		   << QColor("#008000")
-		   << QColor("#800080") // ****
-		   << QColor("#800000")
-		   << QColor("#808000")
-		   << QColor("#808080")
-		   << QColor("#c0c0c0")
-		   << QColor("#000000");
-	for (int row = 0; row < COLOR_RECT_ROWS; ++row) {
-		leftMargin = PANEL_MARGIN;
-		for (int column = 0; column < COLOR_RECT_COLUMNS; ++column) {
-			QRectF colorRect;
-			colorRect.setLeft(leftMargin);
-			colorRect.setTop(topMargin);
-			colorRect.setWidth(COLOR_RECT_SIZE);
-			colorRect.setHeight(COLOR_RECT_SIZE);
-
-			painter.fillRect(colorRect, colors.at((row * COLOR_RECT_COLUMNS) + column));
-			m_colorInfos.append(ColorKeyInfo(colors.at((row * COLOR_RECT_COLUMNS) + column), colorRect));
-
-			leftMargin += COLOR_RECT_SIZE + COLOR_RECT_SPACE;
-		}
-		topMargin += COLOR_RECT_SIZE + COLOR_RECT_SPACE;
+	foreach (const ColorKeyInfo& colorInfo, m_colorInfos) {
+		painter.fillRect(colorInfo.rect, colorInfo.color);
 	}
 
 	//
@@ -188,5 +159,45 @@ void WordHighlightColorsPane::mousePressEvent(QMouseEvent* _event)
 			repaint();
 			break;
 		}
+	}
+}
+
+void WordHighlightColorsPane::initColors()
+{
+	//
+	// Формируем цвета
+	//
+	int topMargin = PANEL_MARGIN;
+	int leftMargin = PANEL_MARGIN;
+	QList<QColor> colors;
+	colors << QColor("#ffff00")
+		   << QColor("#00ff00")
+		   << QColor("#00ffff")
+		   << QColor("#ff00ff")
+		   << QColor("#0000ff") // ****
+		   << QColor("#ff0000")
+		   << QColor("#000080")
+		   << QColor("#008080")
+		   << QColor("#008000")
+		   << QColor("#800080") // ****
+		   << QColor("#800000")
+		   << QColor("#808000")
+		   << QColor("#808080")
+		   << QColor("#c0c0c0")
+		   << QColor("#000000");
+	for (int row = 0; row < COLOR_RECT_ROWS; ++row) {
+		leftMargin = PANEL_MARGIN;
+		for (int column = 0; column < COLOR_RECT_COLUMNS; ++column) {
+			QRectF colorRect;
+			colorRect.setLeft(leftMargin);
+			colorRect.setTop(topMargin);
+			colorRect.setWidth(COLOR_RECT_SIZE);
+			colorRect.setHeight(COLOR_RECT_SIZE);
+
+			m_colorInfos.append(ColorKeyInfo(colors.at((row * COLOR_RECT_COLUMNS) + column), colorRect));
+
+			leftMargin += COLOR_RECT_SIZE + COLOR_RECT_SPACE;
+		}
+		topMargin += COLOR_RECT_SIZE + COLOR_RECT_SPACE;
 	}
 }

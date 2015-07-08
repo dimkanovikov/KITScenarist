@@ -115,14 +115,16 @@ void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
 	// Если пользователь действительно хочет добавить элемент
 	//
 	if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
-		QString itemHeader = m_addItemDialog->itemHeader();
-		int itemType = m_addItemDialog->itemType();
+		const int itemType = m_addItemDialog->itemType();
+		const QString header = m_addItemDialog->header();
+		const QColor color = m_addItemDialog->color();
+		const QString description = m_addItemDialog->description();
 
 		//
 		// Если задан заголовок
 		//
-		if (!itemHeader.isEmpty()) {
-			emit addItem(m_scenarioModelProxy->mapToSource(_index), itemHeader, itemType);
+		if (!header.isEmpty()) {
+			emit addItem(m_scenarioModelProxy->mapToSource(_index), itemType, header, color, description);
 		}
 	}
 }
@@ -134,6 +136,11 @@ void ScenarioNavigatorManager::aboutRemoveItems(const QModelIndexList& _indexes)
 		removeIndexes.append(m_scenarioModelProxy->mapToSource(index));
 	}
 	emit removeItems(removeIndexes);
+}
+
+void ScenarioNavigatorManager::aboutSetItemColor(const QModelIndex& _index, const QColor& _color)
+{
+	emit setItemColor(m_scenarioModelProxy->mapToSource(_index), _color);
 }
 
 void ScenarioNavigatorManager::aboutSceneChoosed(const QModelIndex& _index)
@@ -157,6 +164,7 @@ void ScenarioNavigatorManager::initConnections()
 
 	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)));
 	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
+	connect(m_navigator, SIGNAL(setItemColor(QModelIndex,QColor)), this, SLOT(aboutSetItemColor(QModelIndex,QColor)));
 	connect(m_navigator, SIGNAL(showHideDraft()), this, SIGNAL(showHideDraft()));
 	connect(m_navigator, SIGNAL(showHideNote()), this, SIGNAL(showHideNote()));
 	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutSceneChoosed(QModelIndex)));

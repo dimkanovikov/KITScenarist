@@ -5,8 +5,10 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
+class ColoredToolButton;
 class QDialogButtonBox;
 class QRadioButton;
+class SimpleTextEditor;
 
 namespace UserInterface
 {
@@ -36,7 +38,17 @@ namespace UserInterface
 		/**
 		 * @brief Получить текст
 		 */
-		QString itemHeader() const;
+		QString header() const;
+
+		/**
+		 * @brief Получить цвет
+		 */
+		QColor color() const;
+
+		/**
+		 * @brief Получить описание
+		 */
+		QString description() const;
 
 	private slots:
 		/**
@@ -68,7 +80,17 @@ namespace UserInterface
 		/**
 		 * @brief Редактор заголовка элемента
 		 */
-		ScenarioLineEdit* m_itemEditor;
+		ScenarioLineEdit* m_header;
+
+		/**
+		 * @brief Цвет сцены
+		 */
+		ColoredToolButton* m_color;
+
+		/**
+		 * @brief Описание сцены
+		 */
+		SimpleTextEditor* m_description;
 
 		/**
 		 * @brief Кнопки диалога

@@ -20,6 +20,15 @@ ColoredToolButton::ColoredToolButton(const QIcon& _icon, QWidget* _parent) :
 	setFocusPolicy(Qt::NoFocus);
 	aboutUpdateIcon(palette().text().color());
 
+	setStyleSheet("QToolButton { border: 1px solid transparent; min-width: 26px; padding: 3px; } "
+				  "QToolButton[popupMode=\"1\"] { padding-right: 16px; }"
+				  "QToolButton::menu-button { border: 1px solid transparent; width: 16px; }"
+				  "QToolButton:hover { border: 1px solid palette(midlight); }"
+				  "QToolButton[popupMode=\"1\"]:hover { border-right: 1px solid transparent; }"
+				  "QToolButton::menu-button:hover { border: 1px solid palette(midlight); }"
+				  "QToolButton:pressed, QToolButton::menu-button:pressed { background-color: palette(midlight); }"
+				  "QToolButton:checked, QToolButton::menu-button:checked { background-color: palette(midlight); }");
+
 	connect(this, SIGNAL(clicked()), this, SLOT(aboutClicked()));
 }
 
@@ -52,7 +61,7 @@ void ColoredToolButton::setColorsPane(ColoredToolButton::ColorsPaneType _pane)
 	//
 	switch (_pane) {
 		default:
-		None: {
+		case NonePane: {
 			break;
 		}
 
@@ -83,6 +92,11 @@ void ColoredToolButton::setColorsPane(ColoredToolButton::ColorsPaneType _pane)
 	} else {
 		setPopupMode(QToolButton::DelayedPopup);
 	}
+}
+
+QColor ColoredToolButton::currentColor() const
+{
+	return m_colorsPane->currentColor();
 }
 
 void ColoredToolButton::setColor(const QColor& _color)

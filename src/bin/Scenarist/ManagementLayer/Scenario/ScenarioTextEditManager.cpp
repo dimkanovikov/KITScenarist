@@ -124,9 +124,10 @@ void ScenarioTextEditManager::setCommentOnly(bool _isCommentOnly)
 	m_view->setCommentOnly(_isCommentOnly);
 }
 
-void ScenarioTextEditManager::addScenarioItem(int _position, const QString& _text, int _type)
+void ScenarioTextEditManager::addScenarioItem(int _position, int _type, const QString& _header,
+	const QColor& _color, const QString& _description)
 {
-	m_view->addItem(_position, _text, _type);
+	m_view->addItem(_position, _type, _header, _color, _description);
 }
 
 void ScenarioTextEditManager::removeScenarioText(int _from, int _to)

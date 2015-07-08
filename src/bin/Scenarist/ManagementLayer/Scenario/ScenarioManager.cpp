@@ -724,12 +724,13 @@ void ScenarioManager::aboutMoveCursorToItem(int _itemPosition)
 	m_textEditManager->setCursorPosition(_itemPosition);
 }
 
-void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, const QString& _itemHeader, int _itemType)
+void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType,
+	const QString& _header, const QColor& _color, const QString& _description)
 {
 	setWorkingMode(sender());
 
 	const int position = workingScenario()->itemEndPosition(_afterItemIndex);
-	m_textEditManager->addScenarioItem(position, _itemHeader, _itemType);
+	m_textEditManager->addScenarioItem(position, _itemType, _header, _color, _description);
 }
 
 void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
@@ -739,6 +740,14 @@ void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
 	const int from = workingScenario()->itemStartPosition(_indexes.first());
 	const int to = workingScenario()->itemEndPosition(_indexes.last());
 	m_textEditManager->removeScenarioText(from, to);
+}
+
+void ScenarioManager::aboutSetItemColor(const QModelIndex& _itemIndex, const QColor& _color)
+{
+	setWorkingMode(sender());
+
+	const int position = workingScenario()->itemStartPosition(_itemIndex);
+	workingScenario()->setItemColorAtPosition(position, _color);
 }
 
 void ScenarioManager::aboutShowHideDraft()
@@ -891,8 +900,9 @@ void ScenarioManager::initConnections()
 
 	connect(m_showFullscreen, SIGNAL(clicked()), this, SIGNAL(showFullscreen()));
 
-	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,QString,int)), this, SLOT(aboutAddItem(QModelIndex,QString,int)));
+	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
+	connect(m_navigatorManager, SIGNAL(setItemColor(QModelIndex,QColor)), this, SLOT(aboutSetItemColor(QModelIndex,QColor)));
 	connect(m_navigatorManager, SIGNAL(showHideDraft()), this, SLOT(aboutShowHideDraft()));
 	connect(m_navigatorManager, SIGNAL(showHideNote()), this, SLOT(aboutShowHideNote()));
 	connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
@@ -900,8 +910,9 @@ void ScenarioManager::initConnections()
 	connect(m_navigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
 	connect(m_navigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
 
-	connect(m_draftNavigatorManager, SIGNAL(addItem(QModelIndex,QString,int)), this, SLOT(aboutAddItem(QModelIndex,QString,int)));
+	connect(m_draftNavigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_draftNavigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
+	connect(m_draftNavigatorManager, SIGNAL(setItemColor(QModelIndex,QColor)), this, SLOT(aboutSetItemColor(QModelIndex,QColor)));
 	connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
 	connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(int)), this, SLOT(aboutMoveCursorToItem(int)));
 	connect(m_draftNavigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));

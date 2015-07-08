@@ -224,12 +224,18 @@ namespace ManagementLayer
 		/**
 		 * @brief Добавить элемент, после заданного
 		 */
-		void aboutAddItem(const QModelIndex& _afterItemIndex, const QString& _itemHeader, int _itemType);
+		void aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _header,
+						  const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Удалить заданныё элемент
 		 */
 		void aboutRemoveItems(const QModelIndexList& _itemIndex);
+
+		/**
+		 * @brief Установить цвет элемента
+		 */
+		void aboutSetItemColor(const QModelIndex& _itemIndex, const QColor& _color);
 
 		/**
 		 * @brief Показать/скрыть заметки к сцене

@@ -141,6 +141,44 @@ QString ScenarioDocument::itemHeaderAtPosition(int _position) const
 	return header;
 }
 
+QColor ScenarioDocument::itemColor(ScenarioModelItem* _item) const
+{
+	QTextCursor cursor(m_document);
+	cursor.setPosition(_item->position());
+
+	QColor color;
+	QTextBlockUserData* textBlockData = cursor.block().userData();
+	if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
+		color = info->color();
+	}
+	return color;
+}
+
+void ScenarioDocument::setItemColorAtPosition(int _position, const QColor& _color)
+{
+	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+		//
+		// Установить цвет в элемент
+		//
+		item->setColor(_color);
+		m_model->updateItem(item);
+
+		//
+		// Установить цвет в документ
+		//
+		QTextCursor cursor(m_document);
+		cursor.setPosition(item->position());
+
+		QTextBlockUserData* textBlockData = cursor.block().userData();
+		ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+		if (info == 0) {
+			info = new ScenarioTextBlockInfo;
+		}
+		info->setColor(_color);
+		cursor.block().setUserData(info);
+	}
+}
+
 QString ScenarioDocument::itemSynopsisAtPosition(int _position) const
 {
 	QString synopsis;
@@ -171,7 +209,7 @@ void ScenarioDocument::setItemSynopsisAtPosition(int _position, const QString& _
 		//
 		QTextDocument synopsisDoc;
 		synopsisDoc.setHtml(_synopsis);
-		item->setSynopsis(synopsisDoc.toPlainText().simplified());
+		item->setDescription(synopsisDoc.toPlainText().simplified());
 		m_model->updateItem(item);
 
 		//
@@ -790,9 +828,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				 && cursor.position() < (_position + _charsAdded));
 	}
 
-	m_model->updateSceneNumbers();
 	updateDocumentScenesNumbers();
-
 }
 
 void ScenarioDocument::initConnections()
@@ -813,9 +849,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	// Получим данные элемента
 	//
 	QTextCursor cursor(m_document);
-	// ... заголовок
 	cursor.setPosition(_itemStartPos);
-	QString itemHeader = cursor.block().text().simplified();
 	// ... тип
 	ScenarioModelItem::Type itemType = ScenarioModelItem::Undefined;
 	ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
@@ -828,6 +862,10 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			   || blockType == ScenarioBlockStyle::FolderFooter) {
 		itemType = ScenarioModelItem::Folder;
 	}
+	// ... заголовок
+	QString itemHeader = cursor.block().text().simplified();
+	// ... цвет
+	const QColor color = itemColor(_item);
 	// ... текст
 	cursor.movePosition(QTextCursor::NextBlock);
 	cursor.setPosition(_itemEndPos, QTextCursor::KeepAnchor);
@@ -859,10 +897,11 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	//
 	// Обновим данные элемента
 	//
-	_item->setHeader(itemHeader);
 	_item->setType(itemType);
+	_item->setHeader(itemHeader);
+	_item->setColor(color);
 	_item->setText(itemText);
-	_item->setSynopsis(synopsis);
+	_item->setDescription(synopsis);
 	_item->setDuration(itemDuration);
 	_item->setHasNote(hasNote);
 	_item->setCounter(counter);
@@ -901,6 +940,8 @@ ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNe
 
 void ScenarioDocument::updateDocumentScenesNumbers()
 {
+	m_model->updateSceneNumbers();
+
 	//
 	// Проходим документ и обновляем номера сцен
 	//

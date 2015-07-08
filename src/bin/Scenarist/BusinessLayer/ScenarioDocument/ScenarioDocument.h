@@ -90,6 +90,16 @@ namespace BusinessLogic
 		QString itemHeaderAtPosition(int _position) const;
 
 		/**
+		 * @brief Цвет сцены
+		 */
+		QColor itemColor(ScenarioModelItem* _item) const;
+
+		/**
+		 * @brief Установить цвет для сцены в указанной позиции
+		 */
+		void setItemColorAtPosition(int _position, const QColor& _color);
+
+		/**
 		 * @brief Синопсис сцены в позиции
 		 */
 		QString itemSynopsisAtPosition(int _position) const;

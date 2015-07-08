@@ -24,15 +24,15 @@ ScenarioChangesTable* ScenarioChangeStorage::all()
 	}
 	return m_all;
 }
-#include <QDebug>
+
 ScenarioChange* ScenarioChangeStorage::append(const QString& _id, const QString& _datetime,
 	const QString& _user, const QString& _undoPatch, const QString& _redoPatch, bool _isDraft)
 {
-	const QString compressed = qCompress(_undoPatch.toUtf8()).toBase64();
-	qDebug() << _undoPatch;
-	qDebug() << compressed;
-	qDebug() << qUncompress(QByteArray::fromBase64(compressed.toUtf8()));
-	qDebug() << "____";
+//	const QString compressed = qCompress(_undoPatch.toUtf8()).toBase64();
+//	qDebug() << _undoPatch;
+//	qDebug() << compressed;
+//	qDebug() << qUncompress(QByteArray::fromBase64(compressed.toUtf8()));
+//	qDebug() << "____";
 
 	//
 	// Новое изменение обязательно должно быть старше последнего

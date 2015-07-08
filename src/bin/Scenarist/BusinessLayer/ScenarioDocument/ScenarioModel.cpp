@@ -219,11 +219,19 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		}
 
 		//
+		// Цвет сцены
+		//
+		case ColorIndex: {
+			result = item->color();
+			break;
+		}
+
+		//
 		// Текст сцены
 		//
 		case SceneTextIndex: {
 			if (item->type() == ScenarioModelItem::Scenario) {
-				result = item->synopsis();
+				result = item->description();
 			} else {
 				result = item->text();
 			}
@@ -231,10 +239,10 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		}
 
 		//
-		// Синопсис
+		// Описание
 		//
-		case SynopsisIndex: {
-			result = item->synopsis();
+		case DescriptionIndex: {
+			result = item->description();
 			break;
 		}
 

@@ -32,6 +32,11 @@ public:
 	 */
 	void setColorsPane(ColorsPaneType _pane);
 
+	/**
+	 * @brief Текущий цвет
+	 */
+	QColor currentColor() const;
+
 public slots:
 	/**
 	 * @brief Установить цвет

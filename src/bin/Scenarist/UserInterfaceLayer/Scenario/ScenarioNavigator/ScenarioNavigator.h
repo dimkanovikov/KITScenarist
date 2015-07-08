@@ -104,6 +104,11 @@ namespace UserInterface
 		void removeItems(const QModelIndexList& _itemIndex);
 
 		/**
+		 * @brief Запрос на установку цвета текущего элемента
+		 */
+		void setItemColor(const QModelIndex& _index, const QColor& _color);
+
+		/**
 		 * @brief Показать/скрыть заметки к сцене
 		 */
 		void showHideDraft();
@@ -144,6 +149,11 @@ namespace UserInterface
 		 * @brief Обработка запроса на удаление элемента
 		 */
 		void aboutRemoveItem();
+
+		/**
+		 * @brief Обработать запрос на отображение контекстного меню
+		 */
+		void aboutContextMenuRequested(const QPoint& _pos);
 
 	private:
 		/**

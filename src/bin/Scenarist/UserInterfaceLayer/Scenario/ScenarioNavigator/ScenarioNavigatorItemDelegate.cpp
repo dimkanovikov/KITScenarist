@@ -72,6 +72,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	// Рисуем
 	//
 	const int TREE_INDICATOR_WIDTH = 18;
+	const int COLOR_RECT_WIDTH = 12;
 	const int MARGIN = 2;
 	const int RIGHT_MARGIN = 12;
 	const int ITEMS_SPACING = 4;
@@ -93,6 +94,19 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	const QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
 	_painter->drawPixmap(iconRect, icon);
 	//
+	// ... цвет сцены
+	//
+	const QColor color = _index.data(BusinessLogic::ScenarioModel::ColorIndex).value<QColor>();
+	const QRect colorRect(
+				TREE_INDICATOR_WIDTH + opt.rect.width() - COLOR_RECT_WIDTH - ITEMS_SPACING - RIGHT_MARGIN,
+				0,
+				COLOR_RECT_WIDTH,
+				opt.rect.height()
+				);
+	if (color.isValid()) {
+		_painter->fillRect(colorRect, color);
+	}
+	//
 	// ... текстовая часть
 	//
 	_painter->setPen(textBrush.color());
@@ -107,7 +121,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 			: "";
 	const int chronometryRectWidth = _painter->fontMetrics().width(chronometry);
 	const QRect chronometryRect(
-		TREE_INDICATOR_WIDTH + opt.rect.width() - chronometryRectWidth - ITEMS_SPACING - RIGHT_MARGIN,
+		TREE_INDICATOR_WIDTH + opt.rect.width() - chronometryRectWidth - ITEMS_SPACING - RIGHT_MARGIN - COLOR_RECT_WIDTH,
 		MARGIN,
 		chronometryRectWidth,
 		TEXT_LINE_HEIGHT
@@ -149,7 +163,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		const QString descriptionText =
 				m_sceneDescriptionIsSceneText
 				? _index.data(BusinessLogic::ScenarioModel::SceneTextIndex).toString()
-				: _index.data(BusinessLogic::ScenarioModel::SynopsisIndex).toString();
+				: _index.data(BusinessLogic::ScenarioModel::DescriptionIndex).toString();
 		_painter->drawText(descriptionRect, Qt::TextWordWrap, descriptionText);
 	}
 

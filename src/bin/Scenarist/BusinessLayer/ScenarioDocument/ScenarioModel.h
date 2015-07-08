@@ -30,8 +30,9 @@ namespace BusinessLogic
 		 * @brief Индексы ролей с данными в модели
 		 */
 		enum DataRoles {
-			SceneTextIndex = Qt::UserRole + 1,
-			SynopsisIndex,
+			ColorIndex = Qt::UserRole + 1,
+			SceneTextIndex,
+			DescriptionIndex,
 			DurationIndex,
 			SceneNumberIndex,
 			VisibilityIndex

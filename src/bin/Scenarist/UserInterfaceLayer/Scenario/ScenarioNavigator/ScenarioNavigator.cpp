@@ -3,13 +3,19 @@
 #include "ScenarioNavigatorItemDelegate.h"
 #include "ScenarioNavigatorProxyStyle.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
+
+#include <3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 
+#include <QAction>
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QMenu>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <QWidgetAction>
 
 using UserInterface::ScenarioNavigator;
 using UserInterface::ScenarioNavigatorItemDelegate;
@@ -171,8 +177,52 @@ void ScenarioNavigator::aboutRemoveItem()
 	}
 }
 
+void ScenarioNavigator::aboutContextMenuRequested(const QPoint& _pos)
+{
+	QMenu* menu = new QMenu(this);
+	//
+	// Цвет
+	//
+	QAction* color = menu->addAction(tr("Color"));
+	QMenu* colorMenu = new QMenu(this);
+	QWidgetAction* wa = new QWidgetAction(colorMenu);
+	GoogleColorsPane* colorsPane = new GoogleColorsPane(colorMenu);
+	colorsPane->setCurrentColor(m_navigationTree->currentIndex().data(BusinessLogic::ScenarioModel::ColorIndex).value<QColor>());
+	wa->setDefaultWidget(colorsPane);
+	QAction* removeColor = colorMenu->addAction(tr("Clear"));
+	colorMenu->addAction(wa);
+	color->setMenu(colorMenu);
+
+	connect(colorsPane, SIGNAL(selected(QColor)), menu, SLOT(close()));
+	//
+	// Остальное
+	//
+	menu->addSeparator();
+	QAction* addNew = menu->addAction(tr("Create After"));
+	QAction* remove = menu->addAction(tr("Remove"));
+
+	QAction* toggled = menu->exec(mapToGlobal(_pos));
+	if (toggled != 0) {
+		if (toggled == removeColor) {
+			emit setItemColor(m_navigationTree->currentIndex(), QColor());
+		} else if (toggled == addNew) {
+			aboutAddItem();
+		} else if (toggled == remove) {
+			aboutRemoveItem();
+		}
+	} else {
+		if (colorsPane->currentColor().isValid()) {
+			emit setItemColor(m_navigationTree->currentIndex(), colorsPane->currentColor());
+		}
+	}
+
+	menu->deleteLater();
+}
+
 void ScenarioNavigator::initView()
 {
+	setContextMenuPolicy(Qt::CustomContextMenu);
+
 	m_draftTitle->setText(tr("Draft:"));
 
 	m_scenesCountTitle->setText(tr("Scenes:"));
@@ -232,6 +282,8 @@ void ScenarioNavigator::initView()
 
 void ScenarioNavigator::initConnections()
 {
+	connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(aboutContextMenuRequested(QPoint)));
+
 	connect(m_addItem, SIGNAL(clicked()), this, SLOT(aboutAddItem()));
 	connect(m_removeItem, SIGNAL(clicked()), this, SLOT(aboutRemoveItem()));
 	connect(m_showDraft, SIGNAL(clicked()), this, SIGNAL(showHideDraft()));

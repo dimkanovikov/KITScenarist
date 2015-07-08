@@ -43,6 +43,12 @@ protected:
 
 private:
 	/**
+	 * @brief Инициилизировать цвета панели
+	 */
+	void initColors();
+
+private:
+	/**
 	 * @brief Вспомогательный класс, для хранения связи цвета и его прямоугольника в палитре
 	 */
 	class ColorKeyInfo

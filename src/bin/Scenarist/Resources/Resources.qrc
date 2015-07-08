@@ -72,6 +72,7 @@
         <file>Icons/Review/done.png</file>
         <file>Icons/Review/clear.png</file>
         <file>Icons/Review/comment.png</file>
+        <file>Icons/Editing/rect.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

@@ -27,6 +27,7 @@ namespace {
 
 	const QString ATTRIBUTE_VERSION = "version";
 	const QString ATTRIBUTE_DESCRIPTION = "description";
+	const QString ATTRIBUTE_COLOR = "color";
 	const QString ATTRIBUTE_REVIEW_FROM = "from";
 	const QString ATTRIBUTE_REVIEW_LENGTH = "length";
 	const QString ATTRIBUTE_REVIEW_COLOR = "color";
@@ -285,7 +286,12 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				if (canHaveDescription) {
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
 						bool htmlEscaped = true;
-						writer.writeAttribute(ATTRIBUTE_DESCRIPTION, info->description(htmlEscaped));
+						if (!info->description(htmlEscaped).isEmpty()) {
+							writer.writeAttribute(ATTRIBUTE_DESCRIPTION, info->description(htmlEscaped));
+						}
+						if (info->color().isValid()) {
+							writer.writeAttribute(ATTRIBUTE_COLOR, info->color().name());
+						}
 					}
 				}
 
@@ -801,10 +807,16 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 					if (tokenType == ScenarioBlockStyle::TimeAndPlace
 						|| tokenType == ScenarioBlockStyle::SceneGroupHeader
 						|| tokenType == ScenarioBlockStyle::FolderHeader) {
-						QString synopsis = reader.attributes().value(ATTRIBUTE_DESCRIPTION).toString();
 						ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
-						bool htmlEscaped = true;
-						info->setDescription(synopsis, htmlEscaped);
+						if (reader.attributes().hasAttribute(ATTRIBUTE_DESCRIPTION)) {
+							QString synopsis = reader.attributes().value(ATTRIBUTE_DESCRIPTION).toString();
+							bool htmlEscaped = true;
+							info->setDescription(synopsis, htmlEscaped);
+						}
+						if (reader.attributes().hasAttribute(ATTRIBUTE_COLOR)) {
+							QColor color(reader.attributes().value(ATTRIBUTE_COLOR).toString());
+							info->setColor(color);
+						}
 						cursor.block().setUserData(info);
 					}
 				}

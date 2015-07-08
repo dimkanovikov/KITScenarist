@@ -69,12 +69,18 @@ namespace ManagementLayer
 		/**
 		 * @brief Запрос на добавление элемента
 		 */
-		void addItem(const QModelIndex& _afterItemIndex, const QString& _itemHeader, int _itemType);
+		void addItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _header,
+			const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Запрос на удаление элемента
 		 */
 		void removeItems(const QModelIndexList& _indexes);
+
+		/**
+		 * @brief Запрос на установку цвета элемента
+		 */
+		void setItemColor(const QModelIndex& _indexes, const QColor& _color);
 
 		/**
 		 * @brief Показать/скрыть заметки к сцене
@@ -112,6 +118,11 @@ namespace ManagementLayer
 		 * @brief Удалить выбранные элементы
 		 */
 		void aboutRemoveItems(const QModelIndexList& _indexes);
+
+		/**
+		 * @brief Установить цвет элемента
+		 */
+		void aboutSetItemColor(const QModelIndex& _index, const QColor& _color);
 
 		/**
 		 * @brief Выбрана сцена

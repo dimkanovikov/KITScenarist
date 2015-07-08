@@ -22,6 +22,18 @@ void ScenarioTextBlockInfo::setSceneNumber(int _number)
 	}
 }
 
+QColor ScenarioTextBlockInfo::color() const
+{
+	return m_color;
+}
+
+void ScenarioTextBlockInfo::setColor(const QColor& _color)
+{
+	if (m_color != _color) {
+		m_color = _color;
+	}
+}
+
 QString ScenarioTextBlockInfo::description(bool htmlEscaped) const
 {
 	QString resultDescription = m_description;

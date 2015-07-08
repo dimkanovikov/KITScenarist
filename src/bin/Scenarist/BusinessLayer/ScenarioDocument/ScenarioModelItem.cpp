@@ -61,15 +61,27 @@ void ScenarioModelItem::setHeader(const QString& _header)
 	}
 }
 
-QString ScenarioModelItem::synopsis() const
+QColor ScenarioModelItem::color() const
 {
-	return m_synopsis;
+	return m_color;
 }
 
-void ScenarioModelItem::setSynopsis(const QString& _synopsis)
+void ScenarioModelItem::setColor(const QColor& _color)
 {
-	if (m_synopsis != _synopsis) {
-		m_synopsis = _synopsis;
+	if (m_color != _color) {
+		m_color = _color;
+	}
+}
+
+QString ScenarioModelItem::description() const
+{
+	return m_description;
+}
+
+void ScenarioModelItem::setDescription(const QString& _description)
+{
+	if (m_description != _description) {
+		m_description = _description;
 	}
 }
 
