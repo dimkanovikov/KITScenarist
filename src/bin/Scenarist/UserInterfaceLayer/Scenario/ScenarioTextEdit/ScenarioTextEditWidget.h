@@ -59,7 +59,12 @@ namespace UserInterface
 		/**
 		 * @brief Включить/выключить отображение номеров сцен
 		 */
-		void setShowScenesNumbers(bool _show);
+        void setShowScenesNumbers(bool _show);
+
+        /**
+         * @brief Установить значение необходимости подсвечивать текущую строку
+         */
+        void setHighlightCurrentLine(bool _highlight);
 
 		/**
 		 * @brief Включить/выключить постраничное отображение

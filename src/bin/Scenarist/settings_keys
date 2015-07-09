@@ -9,6 +9,7 @@ simple-editor/zoom-range - коэффициент масштабирования
 
 scenario-editor/zoom-range - коэффициент масштабирования редактора сценария
 scenario-editor/show-scenes-numbers - показывать номера сцен в редакторе сценария
+scenario-editor/highlight-current-line - подсвечивать текущую строку редактора
 scenario-editor/page-view - используется ли режим постраничного отображения
 scenario-editor/spell-checking - включена ли проверка орфографии
 scenario-editor/spell-checking-language - язык проверки орфографии

@@ -111,7 +111,12 @@ void ScenarioTextEditWidget::setCountersInfo(const QString& _counters)
 
 void ScenarioTextEditWidget::setShowScenesNumbers(bool _show)
 {
-	m_editor->setShowSceneNumbers(_show);
+    m_editor->setShowSceneNumbers(_show);
+}
+
+void ScenarioTextEditWidget::setHighlightCurrentLine(bool _highlight)
+{
+    m_editor->setHighlightCurrentLine(_highlight);
 }
 
 void ScenarioTextEditWidget::setUsePageView(bool _use)

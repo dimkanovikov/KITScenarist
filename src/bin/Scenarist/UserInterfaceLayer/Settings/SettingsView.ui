@@ -322,20 +322,27 @@
                <item row="0" column="0">
                 <widget class="QWidget" name="scenarioEditPageWidget" native="true">
                  <layout class="QGridLayout" name="gridLayout_7">
-                  <item row="4" column="1" rowspan="2">
-                   <spacer name="horizontalSpacer_9">
+                  <item row="1" column="0">
+                   <widget class="QCheckBox" name="showScenesNumbersInEditor">
+                    <property name="text">
+                     <string>Show Scenes Numbers</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="9" column="0">
+                   <spacer name="verticalSpacer">
                     <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
+                     <enum>Qt::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>10</width>
-                      <height>20</height>
+                      <width>13</width>
+                      <height>13</height>
                      </size>
                     </property>
                    </spacer>
                   </item>
-                  <item row="4" column="0">
+                  <item row="5" column="0">
                    <layout class="QVBoxLayout" name="verticalLayout_3">
                     <property name="spacing">
                      <number>0</number>
@@ -421,7 +428,7 @@
                           </sizepolicy>
                          </property>
                          <property name="currentIndex">
-                          <number>1</number>
+                          <number>0</number>
                          </property>
                          <widget class="QWidget" name="lightThemeColors">
                           <layout class="QGridLayout" name="gridLayout_21">
@@ -1156,34 +1163,34 @@
                     </item>
                    </layout>
                   </item>
-                  <item row="8" column="0">
-                   <spacer name="verticalSpacer">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>13</width>
-                      <height>13</height>
-                     </size>
-                    </property>
-                   </spacer>
+                  <item row="8" column="0" colspan="2">
+                   <layout class="QHBoxLayout" name="horizontalLayout_5">
+                    <item>
+                     <widget class="QLabel" name="label_20">
+                      <property name="text">
+                       <string>Editor Text Template:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="currentScenarioTemplate"/>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_14">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
                   </item>
-                  <item row="2" column="0" colspan="2">
-                   <widget class="QCheckBox" name="pageView">
-                    <property name="text">
-                     <string>Page View</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0">
-                   <widget class="QCheckBox" name="showScenesNumbersInEditor">
-                    <property name="text">
-                     <string>Show Scenes Numbers</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="0" colspan="2">
+                  <item row="4" column="0" colspan="2">
                    <layout class="QHBoxLayout" name="horizontalLayout_3">
                     <item>
                      <widget class="QCheckBox" name="spellChecking">
@@ -1210,32 +1217,32 @@
                     </item>
                    </layout>
                   </item>
-                  <item row="7" column="0" colspan="2">
-                   <layout class="QHBoxLayout" name="horizontalLayout_5">
-                    <item>
-                     <widget class="QLabel" name="label_20">
-                      <property name="text">
-                       <string>Editor Text Template:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QComboBox" name="currentScenarioTemplate"/>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_14">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
+                  <item row="3" column="0" colspan="2">
+                   <widget class="QCheckBox" name="pageView">
+                    <property name="text">
+                     <string>Page View</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1" rowspan="2">
+                   <spacer name="horizontalSpacer_9">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>10</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QCheckBox" name="highlightCurrentLine">
+                    <property name="text">
+                     <string>Highlight Current Line</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -2294,6 +2301,7 @@ Paragraph</string>
   <tabstop>saveBackupsFolder</tabstop>
   <tabstop>browseBackupFolder</tabstop>
   <tabstop>showScenesNumbersInEditor</tabstop>
+  <tabstop>highlightCurrentLine</tabstop>
   <tabstop>pageView</tabstop>
   <tabstop>spellChecking</tabstop>
   <tabstop>spellCheckingLanguage</tabstop>
@@ -2304,13 +2312,12 @@ Paragraph</string>
   <tabstop>folderTextColorDark</tabstop>
   <tabstop>folderBackgroundColorDark</tabstop>
   <tabstop>nonprintableTextColorDark</tabstop>
+  <tabstop>textColor</tabstop>
+  <tabstop>backgroundColor</tabstop>
+  <tabstop>folderTextColor</tabstop>
+  <tabstop>folderBackgroundColor</tabstop>
+  <tabstop>nonprintableTextColor</tabstop>
   <tabstop>currentScenarioTemplate</tabstop>
-  <tabstop>scenarioEditBlockSettingsTable</tabstop>
-  <tabstop>showScenesNumbersInNavigator</tabstop>
-  <tabstop>showSceneDescription</tabstop>
-  <tabstop>sceneDescriptionIsSceneText</tabstop>
-  <tabstop>sceneDescriptionIsSceneSynopsis</tabstop>
-  <tabstop>sceneDescriptionHeight</tabstop>
   <tabstop>chronometryGroup</tabstop>
   <tabstop>pagesChronometry</tabstop>
   <tabstop>pagesChronometrySeconds</tabstop>
@@ -2327,17 +2334,23 @@ Paragraph</string>
   <tabstop>pagesCounter</tabstop>
   <tabstop>wordsCounter</tabstop>
   <tabstop>simbolsCounter</tabstop>
-  <tabstop>nonprintableTextColor</tabstop>
+  <tabstop>sceneDescriptionIsSceneSynopsis</tabstop>
   <tabstop>newTemplate</tabstop>
   <tabstop>loadTemplate</tabstop>
   <tabstop>removeTemplate</tabstop>
   <tabstop>saveTemplate</tabstop>
   <tabstop>templates</tabstop>
-  <tabstop>folderTextColor</tabstop>
-  <tabstop>backgroundColor</tabstop>
-  <tabstop>folderBackgroundColor</tabstop>
+  <tabstop>showSceneDescription</tabstop>
+  <tabstop>showScenesNumbersInNavigator</tabstop>
+  <tabstop>sceneDescriptionIsSceneText</tabstop>
   <tabstop>editTemplate</tabstop>
-  <tabstop>textColor</tabstop>
+  <tabstop>scenarioEditBlockSettingsTable</tabstop>
+  <tabstop>resetSettings</tabstop>
+  <tabstop>autoJumpToNextBlock</tabstop>
+  <tabstop>reviewUseWordHighlight</tabstop>
+  <tabstop>charactersChronometry</tabstop>
+  <tabstop>applyTemplate</tabstop>
+  <tabstop>sceneDescriptionHeight</tabstop>
  </tabstops>
  <resources>
   <include location="../../Resources/Resources.qrc"/>

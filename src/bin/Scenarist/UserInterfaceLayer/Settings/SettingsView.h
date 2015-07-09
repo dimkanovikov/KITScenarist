@@ -54,6 +54,7 @@ namespace UserInterface
 		void setApplicationSaveBackupsFolder(const QString& _folder);
 
 		void setScenarioEditShowScenesNumbers(bool _value);
+        void setScenarioEditHighlightCurrentLine(bool _value);
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditSpellCheck(bool _value);
 		void setScenarioEditSpellCheckLanguage(int _value);
@@ -111,6 +112,7 @@ namespace UserInterface
 		void applicationSaveBackupsFolderChanged(const QString&);
 
 		void scenarioEditShowScenesNumbersChanged(bool);
+        void scenarioEditHighlightCurrentLineChanged(bool);
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditSpellCheckChanged(bool);
 		void scenarioEditSpellCheckLanguageChanged(int);
