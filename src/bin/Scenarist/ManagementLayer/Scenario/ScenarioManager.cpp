@@ -748,6 +748,8 @@ void ScenarioManager::aboutSetItemColor(const QModelIndex& _itemIndex, const QCo
 
 	const int position = workingScenario()->itemStartPosition(_itemIndex);
 	workingScenario()->setItemColorAtPosition(position, _color);
+
+    emit scenarioChanged();
 }
 
 void ScenarioManager::aboutShowHideDraft()
