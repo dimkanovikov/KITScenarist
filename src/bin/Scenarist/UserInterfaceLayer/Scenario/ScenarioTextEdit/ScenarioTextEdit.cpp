@@ -472,7 +472,25 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 			}
 		}
 		setTextCursor(cursor);
-	} else {
+    }
+    //
+    // Поднятие/опускание регистра букв
+    //
+    else if (_event->modifiers().testFlag(Qt::ControlModifier)
+             && (_event->key() == Qt::Key_Up
+                 || _event->key() == Qt::Key_Down)
+             && textCursor().hasSelection()) {
+        const bool toUpper = _event->key() == Qt::Key_Up;
+        const int from = qMin(textCursor().selectionStart(), textCursor().selectionEnd());
+        const int to = qMax(textCursor().selectionStart(), textCursor().selectionEnd());
+        QTextCursor cursor = textCursor();
+        for (int position = from; position < to; ++position) {
+            cursor.setPosition(position);
+            cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+            cursor.insertText(toUpper ? cursor.selectedText().toUpper() : cursor.selectedText().toLower());
+        }
+    }
+    else {
 		isEventHandled = false;
 	}
 
