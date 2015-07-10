@@ -1,6 +1,7 @@
 #include "AbstractMapper.h"
 
 #include <DataLayer/Database/Database.h>
+#include <DataLayer/Database/DatabaseHelper.h>
 
 #include <3rd_party/Helpers/QVariantMapWriter.h>
 
@@ -283,9 +284,10 @@ void AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
 			//
 			q_history.addBindValue(_sqlQuery.lastQuery());
 			//
-			// ... данные
+			// ... данные в сжатом виде
 			//
-			const QString valueString = QVariantMapWriter::mapToDataString(_sqlQuery.boundValues());
+			QString valueString = QVariantMapWriter::mapToDataString(_sqlQuery.boundValues());
+			valueString = DatabaseHelper::compress(valueString);
 			q_history.addBindValue(valueString);
 			//
 			// ... время выполнения

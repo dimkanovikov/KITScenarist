@@ -28,23 +28,7 @@ ScenarioChangesTable* ScenarioChangeStorage::all()
 ScenarioChange* ScenarioChangeStorage::append(const QString& _id, const QString& _datetime,
 	const QString& _user, const QString& _undoPatch, const QString& _redoPatch, bool _isDraft)
 {
-//	const QString compressed = qCompress(_undoPatch.toUtf8()).toBase64();
-//	qDebug() << _undoPatch;
-//	qDebug() << compressed;
-//	qDebug() << qUncompress(QByteArray::fromBase64(compressed.toUtf8()));
-//	qDebug() << "____";
-
-	//
-	// Новое изменение обязательно должно быть старше последнего
-	//
 	QDateTime changeDatetime = QDateTime::fromString(_datetime, "yyyy-MM-dd hh:mm:ss");
-//	if (changeDatetime.isValid()
-//		&& all()->size() > 0) {
-//		ScenarioChange* lastChange = dynamic_cast<ScenarioChange*>(all()->toList().last());
-//		while (changeDatetime <= lastChange->datetime()) {
-//			changeDatetime = changeDatetime.addSecs(1);
-//		}
-//	}
 
 	//
 	// Формируем изменение

@@ -420,7 +420,8 @@ HEADERS += \
     3rd_party/Widgets/QWidgetListView/qwidgetlistview.h \
     3rd_party/Widgets/QWidgetListView/qtmodelwidget.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewItemDelegate.h
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewItemDelegate.h \
+    DataLayer/Database/DatabaseHelper.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

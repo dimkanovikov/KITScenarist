@@ -5,6 +5,8 @@
 
 #include <Domain/ScenarioChange.h>
 
+#include <DataLayer/Database/DatabaseHelper.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioChangeStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -15,6 +17,7 @@
 #include <QCryptographicHash>
 
 using namespace BusinessLogic;
+using DatabaseLayer::DatabaseHelper;
 
 namespace {
 	/**
@@ -105,7 +108,8 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	//
 	const QString currentXml = m_xmlHandler->scenarioToXml();
 	QPair<DiffMatchPatchHelper::ChangeXml, DiffMatchPatchHelper::ChangeXml> xmlsForUpdate;
-	xmlsForUpdate = DiffMatchPatchHelper::changedXml(currentXml, _patch);
+	const QString patchUncopressed = DatabaseHelper::uncompress(_patch);
+	xmlsForUpdate = DiffMatchPatchHelper::changedXml(currentXml, patchUncopressed);
 
 	//
 	// Выделяем текст сценария, соответствующий xml для обновления
@@ -151,7 +155,8 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 	//
 	QString newXml = currentXml;
 	foreach (const QString& patch, _patches) {
-		newXml = DiffMatchPatchHelper::applyPatchXml(newXml, patch);
+		const QString patchUncopressed = DatabaseHelper::uncompress(patch);
+		newXml = DiffMatchPatchHelper::applyPatchXml(newXml, patchUncopressed);
 	}
 
 	//
@@ -191,12 +196,14 @@ Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
 			// Сформируем изменения
 			//
 			const QString undoPatch = DiffMatchPatchHelper::makePatchXml(newScenarioXml, m_lastScenarioXml);
+			const QString undoPatchCompressed = DatabaseHelper::compress(undoPatch);
 			const QString redoPatch = DiffMatchPatchHelper::makePatchXml(m_lastScenarioXml, newScenarioXml);
+			const QString redoPatchCompressed = DatabaseHelper::compress(redoPatch);
 
 			//
 			// Сохраним изменения
 			//
-			change = ::saveChange(undoPatch, redoPatch);
+			change = ::saveChange(undoPatchCompressed, redoPatchCompressed);
 
 			//
 			// Запомним новый текст
