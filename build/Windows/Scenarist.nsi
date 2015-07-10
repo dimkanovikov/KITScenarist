@@ -77,6 +77,7 @@ Section "App files section" SecFiles
   
   SetOutPath "$INSTDIR\platforms"
   File "${pkgdir}\platforms\qminimal.dll"
+  File "${pkgdir}\platforms\qoffscreen.dll"
   File "${pkgdir}\platforms\qwindows.dll"
   
   SetOutPath "$INSTDIR\printsupport"
@@ -86,9 +87,9 @@ Section "App files section" SecFiles
   File "${pkgdir}\sqldrivers\qsqlite.dll"
 
   SetOutPath "$INSTDIR"
-  File "${pkgdir}\icudt53.dll"
-  File "${pkgdir}\icuin53.dll"
-  File "${pkgdir}\icuuc53.dll"
+  File "${pkgdir}\icudt54.dll"
+  File "${pkgdir}\icuin54.dll"
+  File "${pkgdir}\icuuc54.dll"
   File "${pkgdir}\libeay32.dll"
   File "${pkgdir}\libgcc_s_dw2-1.dll"
   File "${pkgdir}\libstdc++-6.dll"
