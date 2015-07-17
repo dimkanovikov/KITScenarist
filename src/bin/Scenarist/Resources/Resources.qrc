@@ -72,6 +72,8 @@
         <file>Icons/folder_noted.png</file>
         <file>Icons/scene_group_noted.png</file>
         <file>Icons/scene_noted.png</file>
+        <file>Icons/chevron-right.png</file>
+        <file>Icons/statistics.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

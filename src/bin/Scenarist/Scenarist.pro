@@ -234,7 +234,13 @@ SOURCES += main.cpp \
     3rd_party/Widgets/QWidgetListView/qwidgetlistview.cpp \
     3rd_party/Widgets/QWidgetListView/qtmodelwidget.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewItemDelegate.cpp
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewItemDelegate.cpp \
+    3rd_party/Widgets/Ctk/ctkCollapsibleButton.cpp \
+    UserInterfaceLayer/Statistics/StatisticsView.cpp \
+    ManagementLayer/Statistics/StatisticsManager.cpp \
+    UserInterfaceLayer/Statistics/ChevronButton.cpp \
+    3rd_party/Widgets/Ctk/ctkPopupWidget.cpp \
+    3rd_party/Widgets/Ctk/ctkBasePopupWidget.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -421,7 +427,16 @@ HEADERS += \
     3rd_party/Widgets/QWidgetListView/qtmodelwidget.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewItemDelegate.h \
-    DataLayer/Database/DatabaseHelper.h
+    DataLayer/Database/DatabaseHelper.h \
+    3rd_party/Widgets/Ctk/ctkCollapsibleButton.h \
+    UserInterfaceLayer/Statistics/StatisticsView.h \
+    ManagementLayer/Statistics/StatisticsManager.h \
+    UserInterfaceLayer/Statistics/ChevronButton.h \
+    3rd_party/Widgets/Ctk/ctkPopupWidget.h \
+    3rd_party/Widgets/Ctk/ctkPopupWidget_p.h \
+    3rd_party/Widgets/Ctk/ctkBasePopupWidget.h \
+    3rd_party/Widgets/Ctk/ctkBasePopupWidget_p.h \
+    3rd_party/Widgets/Ctk/ctkPimpl.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -436,7 +451,7 @@ FORMS += \
 
 
 RESOURCES += \
-	Resources/Resources.qrc
+    Resources/Resources.qrc
 
 OTHER_FILES += \
 	settings_keys \

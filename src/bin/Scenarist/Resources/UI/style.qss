@@ -263,8 +263,26 @@ QRadioButton[inStartUpView="true"]:indicator {
 	image: none;
 }
 
+QRadioButton[chevron="true"] {
+	spacing: 0px;
+	padding: 4px 8px 4px 8px;
+	background-color: palette(base);
+	border: none;
+}
+
+QRadioButton[chevron="true"]::checked {
+	color: palette(highlighted-text);
+	background-color: palette(highlight);
+}
+
+QRadioButton[chevron="true"]:indicator {
+	width: 0px;
+	height: 0px;
+	image: none;
+}
+
 QPushButton {
-	padding: 3px 8px 3px 8px;
+	padding: 4px 8px 4px 8px;
 	min-width: 60px;
 	background-color: palette(button);
 	border: 1px solid palette(dark);
@@ -281,6 +299,18 @@ QPushButton:checked {
 }
 
 QPushButton:!checked:hover, QPushButton:!checked:pressed {
+	background-color: palette(dark);
+}
+
+ctkCollapsibleButton[reportButton="true"] {
+	padding: 4px 8px 4px 8px;
+	background-color: palette(button);
+	border: none;
+	font-weight: bold;
+}
+
+ctkCollapsibleButton[reportButton="true"]:hover,
+ctkCollapsibleButton[reportButton="true"]:pressed {
 	background-color: palette(dark);
 }
 

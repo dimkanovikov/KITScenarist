@@ -5,6 +5,7 @@
 #include "Scenario/ScenarioManager.h"
 #include "Characters/CharactersManager.h"
 #include "Locations/LocationsManager.h"
+#include "Statistics/StatisticsManager.h"
 #include "Settings/SettingsManager.h"
 #include "Import/ImportManager.h"
 #include "Export/ExportManager.h"
@@ -126,6 +127,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_scenarioManager(new ScenarioManager(this, m_view)),
 	m_charactersManager(new CharactersManager(this, m_view)),
 	m_locationsManager(new LocationsManager(this, m_view)),
+	m_statisticsManager(new StatisticsManager(this, m_view)),
 	m_settingsManager(new SettingsManager(this, m_view)),
 	m_importManager(new ImportManager(this, m_view)),
 	m_exportManager(new ExportManager(this, m_view)),
@@ -862,6 +864,7 @@ void ApplicationManager::initView()
 	g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
+	/*g_disableOnStartActions << */m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
 	m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
 
 	//
@@ -871,6 +874,7 @@ void ApplicationManager::initView()
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
 	m_tabsWidgets->addWidget(m_charactersManager->view());
 	m_tabsWidgets->addWidget(m_locationsManager->view());
+	m_tabsWidgets->addWidget(m_statisticsManager->view());
 	m_tabsWidgets->addWidget(m_settingsManager->view());
 
 	//

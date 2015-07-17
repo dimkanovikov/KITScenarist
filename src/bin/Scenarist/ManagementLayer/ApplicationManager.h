@@ -22,6 +22,7 @@ namespace ManagementLayer
 	class ScenarioManager;
 	class CharactersManager;
 	class LocationsManager;
+	class StatisticsManager;
 	class SettingsManager;
 	class ExportManager;
 	class ImportManager;
@@ -246,6 +247,11 @@ namespace ManagementLayer
 		 * @brief Управляющий локациями
 		 */
 		LocationsManager* m_locationsManager;
+
+		/**
+		 * @brief Управляющий статистикой
+		 */
+		StatisticsManager* m_statisticsManager;
 
 		/**
 		 * @brief Управляющий настройками
