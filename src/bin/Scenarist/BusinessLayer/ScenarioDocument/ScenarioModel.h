@@ -35,6 +35,7 @@ namespace BusinessLogic
 			DescriptionIndex,
 			DurationIndex,
 			SceneNumberIndex,
+			HasNoteIndex,
 			VisibilityIndex
 		};
 

@@ -96,6 +96,8 @@ void ImportDialog::aboutFileNameChanged()
 
 void ImportDialog::initView()
 {
+	ui->browseFile->updateIcons();
+
 	m_import = ui->buttons->addButton(tr("Import"), QDialogButtonBox::AcceptRole);
 	m_import->setEnabled(false);
 

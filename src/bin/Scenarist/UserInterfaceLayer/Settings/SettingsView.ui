@@ -65,8 +65,8 @@
          </property>
          <property name="iconSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>36</width>
+           <height>36</height>
           </size>
          </property>
          <item>
@@ -133,7 +133,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -248,7 +248,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QToolButton" name="browseBackupFolder">
+                 <widget class="FlatButton" name="browseBackupFolder">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>

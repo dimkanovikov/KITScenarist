@@ -27,6 +27,7 @@
 
 #include <QApplication>
 #include <QComboBox>
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QMenu>
 #include <QStackedWidget>
@@ -385,6 +386,11 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 		//
 		::updateWindowModified(m_view, false);
 	}
+}
+
+void ApplicationManager::aboutShowHelp()
+{
+	QDesktopServices::openUrl(QUrl("https://kitscenarist.ru/help/"));
 }
 
 void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
@@ -956,6 +962,7 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
+	connect(m_startUpManager, SIGNAL(helpRequested()), this, SLOT(aboutShowHelp()));
 	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_projectsManager, SLOT(refreshProjects()));
 	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_synchronizationManager, SLOT(aboutLoadProjects()));
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRecent(QModelIndex)));
@@ -1057,46 +1064,48 @@ void ApplicationManager::reloadApplicationSettings()
 
 		if (useDarkTheme) {
 			palette.setColor(QPalette::Window, QColor("#26282a"));
+			palette.setColor(QPalette::WindowText, QColor("#ebebeb"));
+			palette.setColor(QPalette::Button, QColor("#414244"));
+			palette.setColor(QPalette::ButtonText, QColor("#ebebeb"));
 			palette.setColor(QPalette::Base, QColor("#404040"));
-			palette.setColor(QPalette::Disabled, QPalette::Base, QColor("#333333"));
-			palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
-
+			palette.setColor(QPalette::AlternateBase, QColor("#353535"));
+			palette.setColor(QPalette::Text, QColor("#ebebeb"));
 			palette.setColor(QPalette::Highlight, QColor("#2b78da"));
-			palette.setColor(QPalette::HighlightedText, QColor(255,255,255));
-
-			palette.setColor(QPalette::WindowText, QColor("#EBEBEB"));
-			palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#a1a1a1"));
-			palette.setColor(QPalette::Text, QColor("#EBEBEB"));
-			palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#a1a1a1"));
-
-			palette.setColor(QPalette::Button, QColor(53,53,53));
-			palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#1b1e21"));
-			palette.setColor(QPalette::ButtonText, QColor(255,255,255));
-			palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#a1a1a1"));
-
-			palette.setColor(QPalette::Link, QColor("#2b78da"));
-
-			//
-			// Фон неактивного пункта меню
-			//
+			palette.setColor(QPalette::HighlightedText, QColor("#ffffff"));
 			palette.setColor(QPalette::Light, QColor("#404040"));
-			//
-			//
-			//
 			palette.setColor(QPalette::Midlight, QColor("#696765"));
+			palette.setColor(QPalette::Dark, QColor("#696765"));
 			palette.setColor(QPalette::Shadow, QColor("#1c2023"));
+
+			palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#a1a1a1"));
+			palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#1b1e21"));
+			palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#a1a1a1"));
+			palette.setColor(QPalette::Disabled, QPalette::Base, QColor("#333333"));
+			palette.setColor(QPalette::Inactive, QPalette::Text, QColor("#bcbdbf"));
+			palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#666769"));
+			palette.setColor(QPalette::Disabled, QPalette::Highlight, QColor("#eeeeee"));
 		} else {
-			//
-			// Светлой темой как раз является стандартная палитра стиля без стилевых надстроек
-			//
-			palette = QStyleFactory::create("Fusion")->standardPalette();
-
+			palette.setColor(QPalette::Window, QColor("#f6f6f6"));
+			palette.setColor(QPalette::WindowText, QColor("#38393a"));
+			palette.setColor(QPalette::Button, QColor("#e4e4e4"));
+			palette.setColor(QPalette::ButtonText, QColor("#38393a"));
+			palette.setColor(QPalette::Base, QColor("#ffffff"));
+			palette.setColor(QPalette::AlternateBase, QColor("#eeeeee"));
+			palette.setColor(QPalette::Text, QColor("#38393a"));
 			palette.setColor(QPalette::Highlight, QColor("#2b78da"));
-			palette.setColor(QPalette::HighlightedText, QColor(255,255,255));
+			palette.setColor(QPalette::HighlightedText, QColor("#ffffff"));
+			palette.setColor(QPalette::Light, QColor("#ffffff"));
+			palette.setColor(QPalette::Midlight, QColor("#d6d6d6"));
+			palette.setColor(QPalette::Dark, QColor("#bdbebf"));
+			palette.setColor(QPalette::Mid, QColor("#a0a2a4"));
+			palette.setColor(QPalette::Shadow, QColor("#585a5c"));
 
-			palette.setColor(QPalette::Link, QColor("#2b78da"));
-
-			palette.setColor(QPalette::Shadow, palette.midlight().color());
+			palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#acadaf"));
+			palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#f6f6f6"));
+			palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#acadaf"));
+			palette.setColor(QPalette::Inactive, QPalette::Text, QColor("#595a5c"));
+			palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#acadaf"));
+			palette.setColor(QPalette::Disabled, QPalette::Highlight, QColor("#eeeeee"));
 		}
 
 		//

@@ -3,6 +3,8 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
 #include <QPainter>
 
 using UserInterface::ScenarioNavigatorItemDelegate;
@@ -88,10 +90,18 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// ... иконка
 	//
-	const int iconSize = m_showSceneDescription ? 32 : 20;
-	const int iconTopMargin = m_showSceneDescription ? MARGIN*2 : MARGIN;
+	const int iconSize =  20;
+	const int iconTopMargin = MARGIN;
 	const QRect iconRect(MARGIN, iconTopMargin, iconSize, iconSize);
-	const QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
+	QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
+	QIcon iconColorized(icon);
+	QColor iconColor = textBrush.color();
+	// ... если есть заметка, рисуем красноватым цветом
+	if (_index.data(BusinessLogic::ScenarioModel::HasNoteIndex).toBool()) {
+		iconColor = QColor("#ec3838");
+	}
+	ImageHelper::setIconColor(iconColorized, iconRect.size(), iconColor);
+	icon = iconColorized.pixmap(iconRect.size());
 	_painter->drawPixmap(iconRect, icon);
 	//
 	// ... цвет сцены

@@ -1,5 +1,6 @@
 #include "SideBar.h"
 
+#include <QApplication>
 #include <QLabel>
 #include <QMenu>
 #include <QWidgetAction>
@@ -31,22 +32,32 @@ namespace {
 	const QColor CURRENT_TAB_BG_COLOR(38, 40, 42);
 
 	/**
-	 * @brief Перевести изображение в режим "оттенки серого"
+	 * @brief Покрасить иконку в цвет
 	 */
-	void convertToGrayscale (QImage& _img)
-	{
-		for (int r = 0; r < _img.height (); ++r)
-		{
-			for (int c = 0; c < _img.width (); ++c)
-			{
-				QRgb rgba = _img.pixel (c, r);
+	static QPixmap colorizeIcon(const QPixmap& _icon, const QColor& _color) {
+		QPixmap baseIconPixmap = _icon;
+		QPixmap newIconPixmap = baseIconPixmap;
 
-				int gray = qGray  (rgba);
-				int a    = qAlpha (rgba);
+		QPainter painter(&newIconPixmap);
+		painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+		painter.fillRect(newIconPixmap.rect(), _color);
+		painter.end();
 
-				_img.setPixel (c, r, qRgba (gray, gray, gray, a));
-			}
-		}
+		return newIconPixmap;
+	}
+
+	/**
+	 * @brief Сделать иконку "неактивной"
+	 */
+	static QPixmap makeIconInactive(const QPixmap& _icon) {
+		return ::colorizeIcon(_icon, QApplication::palette().color(QPalette::Inactive, QPalette::Text));
+	}
+
+	/**
+	 * @brief Сделать иконку "выключенной"
+	 */
+	static QPixmap makeIconDisabled(const QPixmap& _icon) {
+		return ::colorizeIcon(_icon, QApplication::palette().color(QPalette::Disabled, QPalette::Text));
 	}
 }
 
@@ -69,72 +80,60 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 {
 	QPainter p(this);
 
+
+	//
+	// Фон
+	//
+	p.fillRect(event->rect(), palette().button());
+	//
+	// Границы сверху и справа
+	//
+	p.setPen(palette().dark().color());
+	p.drawLine(event->rect().topLeft(), event->rect().topRight());
+	p.drawLine(event->rect().topRight(), event->rect().bottomRight());
+
+
 	//
 	// Рисуем вкладки
 	//
-
-	p.fillRect(event->rect(), QBrush(QColor(64, 66, 68)));
-	p.setPen(QColor(95, 95, 95));
-	p.drawLine(event->rect().topRight(), event->rect().bottomRight());
-
 	int actions_height = m_tabs.size()*TAB_HEIGHT;
-
-	int action_y = m_centerTabs ? (event->rect().height()/2-actions_height/2) : 0;
-	foreach(QAction *action, m_tabs)
+	int action_y = m_centerTabs ? (event->rect().height()/2-actions_height/2) : 1;
+	foreach (QAction *action, m_tabs)
 	{
-		QRect actionRect(0, action_y, event->rect().width(), TAB_HEIGHT);
+		QRect actionRect(0, action_y, event->rect().width() - 1, TAB_HEIGHT);
 
-
-		if(action->isChecked())
-		{
-//			p.setOpacity(0.5);
-			p.fillRect(actionRect, QColor(38, 40, 42));
-			p.setPen(QColor(9, 9, 9));
-			p.drawLine(actionRect.topLeft(), actionRect.topRight());
-			p.setOpacity(1);
+		//
+		// Текущая вкладка
+		//
+		if (action->isChecked()) {
+			p.fillRect(actionRect, palette().window());
 
 		}
 
-		if(action == m_tabs.last())
-		{
-			p.setPen(QColor(15, 15, 15));
-			p.drawLine(QPoint(0, actionRect.bottomLeft().y()-1), QPoint(actionRect.width(), actionRect.bottomRight().y()-1));
-			p.setPen(QColor(95, 95, 95));
-			p.drawLine(actionRect.bottomLeft(), actionRect.bottomRight());
-
-		}
-
-		if(!action->isChecked())
-		{
-			p.setPen(QColor(15, 15, 15));
-			p.drawLine(actionRect.topLeft(), actionRect.topRight());
-			p.setPen(QColor(95, 95, 95));
-			p.drawLine(QPoint(0, actionRect.topLeft().y()+1), QPoint(actionRect.width(), actionRect.topRight().y()+1));
-		}
 
 		int icon_size = 48;
 
 		QRect actionIconRect(0, action_y, event->rect().width(), TAB_HEIGHT-16);
-		QImage actionImage(action->icon().pixmap(icon_size).toImage());
+		QPixmap actionImage = action->icon().pixmap(icon_size);
 		// Если действие недоступно
 		if (!action->isEnabled()) {
-			convertToGrayscale(actionImage);
+			actionImage = ::makeIconDisabled(actionImage);
 		}
 		// Если действие неактивно
-		if (!action->isChecked()) {
-			p.setOpacity(0.4);
+		else if (!action->isChecked()) {
+			actionImage = ::makeIconInactive(actionImage);
 		}
 		// Рисуем иконку
-		QIcon actionIcon(QPixmap::fromImage(actionImage));
+		QIcon actionIcon(actionImage);
 		actionIcon.paint(&p, actionIconRect);
 		p.setOpacity(1);
 
 
-		p.setPen(QColor(217, 217, 217)); // неактивный текст
+		p.setPen(QApplication::palette().color(QPalette::Inactive, QPalette::Text)); // неактивный текст
 		if (action->isChecked())
-			p.setPen(QColor(255, 255, 255)); // активный текст
+			p.setPen(QApplication::palette().color(QPalette::Active, QPalette::Text)); // активный текст
 		if (!action->isEnabled())
-			p.setPen(QColor(160, 160, 160)); // недоступный текст
+			p.setPen(QApplication::palette().color(QPalette::Disabled, QPalette::Text)); // недоступный текст
 		QRect actionTextRect(0, action_y+actionRect.height()-23, event->rect().width(), 18);
 		p.drawText(actionTextRect, Qt::AlignCenter, action->text());
 
@@ -146,9 +145,14 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 	//
 	if (m_indicator->isVisible()) {
 		const QRect indicatorRect(0, height() - INDICATOR_HEIGHT, SIDEBAR_WIDTH, INDICATOR_HEIGHT);
-
-		p.fillRect(indicatorRect, CURRENT_TAB_BG_COLOR);
-
+		//
+		// Граница сверху
+		//
+		p.setPen(palette().dark().color());
+		p.drawLine(indicatorRect.topLeft(), indicatorRect.topRight());
+		//
+		// Иконка индикатора
+		//
 		m_indicator->icon().paint(&p, indicatorRect);
 	}
 }

@@ -187,7 +187,10 @@ void ScenarioNavigator::aboutContextMenuRequested(const QPoint& _pos)
 	QMenu* colorMenu = new QMenu(this);
 	QWidgetAction* wa = new QWidgetAction(colorMenu);
 	GoogleColorsPane* colorsPane = new GoogleColorsPane(colorMenu);
-	colorsPane->setCurrentColor(m_navigationTree->currentIndex().data(BusinessLogic::ScenarioModel::ColorIndex).value<QColor>());
+	colorsPane->setCurrentColor(
+				m_navigationTree->currentIndex().data(
+					BusinessLogic::ScenarioModel::ColorIndex).value<QColor>()
+				);
 	wa->setDefaultWidget(colorsPane);
 	QAction* removeColor = colorMenu->addAction(tr("Clear"));
 	colorMenu->addAction(wa);
@@ -237,11 +240,11 @@ void ScenarioNavigator::initView()
 
 	m_middleTitle->setFixedWidth(1);
 
-	m_showDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/draft_active.png"));
+	m_showDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"));
 	m_showDraft->setToolTip(tr("Show/hide draft"));
 	m_showDraft->setCheckable(true);
 
-	m_showNote->setIcons(QIcon(":/Graphics/Icons/Editing/note.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/note_active.png"));
+	m_showNote->setIcons(QIcon(":/Graphics/Icons/Editing/note.png"));
 	m_showNote->setToolTip(tr("Show/hide scene note"));
 	m_showNote->setCheckable(true);
 
@@ -314,7 +317,6 @@ void ScenarioNavigator::initStyleSheet()
 
 	m_endTitle->setProperty("inTopPanel", true);
 	m_endTitle->setProperty("topPanelTopBordered", true);
-	m_endTitle->setProperty("topPanelRightBordered", true);
 
 	m_navigationTree->setProperty("mainContainer", true);
 }

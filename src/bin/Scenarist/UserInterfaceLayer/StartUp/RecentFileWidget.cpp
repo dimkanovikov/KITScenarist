@@ -51,7 +51,7 @@ void RecentFileWidget::setMouseHover(bool _hover)
 	if (_hover) {
 		styleSheet = "background-color: palette(alternate-base);";
 	} else {
-		styleSheet = "background-color: palette(window);";
+		styleSheet = "background-color: palette(base);";
 	}
 	setStyleSheet(styleSheet);
 }

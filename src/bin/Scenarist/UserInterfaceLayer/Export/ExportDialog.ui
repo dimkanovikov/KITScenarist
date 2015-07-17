@@ -91,7 +91,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="browseFile">
+       <widget class="FlatButton" name="browseFile">
         <property name="toolTip">
          <string>Browse...</string>
         </property>
@@ -469,6 +469,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>FlatButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
+  </customwidget>
   <customwidget>
    <class>ToolTipLabel</class>
    <extends>QLabel</extends>

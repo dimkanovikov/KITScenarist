@@ -262,6 +262,8 @@ void ExportDialog::aboutFileNameChanged()
 
 void ExportDialog::initView()
 {
+	ui->browseFile->updateIcons();
+
 	ui->additionalSettings->setCurrentWidget(ui->commonTab);
 	ui->additionalSettings->hide();
 

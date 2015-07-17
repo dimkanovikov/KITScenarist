@@ -108,18 +108,18 @@ void CharactersNavigator::initView()
 	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_endTitle->setFixedWidth(1);
 
-	m_addCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
+	m_addCharacter->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_addCharacter->setToolTip(tr("Create New Character"));
 
-	m_removeCharacter->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
+	m_removeCharacter->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
 	m_removeCharacter->setToolTip(tr("Remove Selected Character") + " (Del)");
 	m_removeCharacter->setShortcut(QKeySequence("Delete"));
 
-	m_mergeCharacters->setIcon(QIcon(":/Graphics/Icons/Editing/merge.png"));
+	m_mergeCharacters->setIcons(QIcon(":/Graphics/Icons/Editing/merge.png"));
 	m_mergeCharacters->setToolTip(tr("Merge Selected Characters"));
 	m_mergeCharacters->hide();
 
-	m_refreshCharacters->setIcon(QIcon(":/Graphics/Icons/Editing/refresh.png"));
+	m_refreshCharacters->setIcons(QIcon(":/Graphics/Icons/Editing/refresh.png"));
 	m_refreshCharacters->setToolTip(tr("Find All Characters from Scenario"));
 
 	m_navigatorProxyModel->sort(0);
@@ -161,7 +161,6 @@ void CharactersNavigator::initStyleSheet()
 	m_title->setProperty("topPanelTopBordered", true);
 	m_endTitle->setProperty("inTopPanel", true);
 	m_endTitle->setProperty("topPanelTopBordered", true);
-	m_endTitle->setProperty("topPanelRightBordered", true);
 
 	m_addCharacter->setProperty("inTopPanel", true);
 	m_removeCharacter->setProperty("inTopPanel", true);

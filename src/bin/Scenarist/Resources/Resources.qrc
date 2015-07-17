@@ -56,12 +56,7 @@
         <file>Icons/login.png</file>
         <file>Icons/logout.png</file>
         <file>Icons/Editing/checkmark.png</file>
-        <file>Icons/Editing/draft_active.png</file>
-        <file>Icons/Editing/search_active.png</file>
-        <file>Icons/Editing/note_active.png</file>
-        <file>Icons/Editing/format_active.png</file>
         <file>Icons/Editing/merge.png</file>
-        <file>Icons/Editing/review_active.png</file>
         <file>Icons/Editing/review.png</file>
         <file>Icons/Indicator/connected.png</file>
         <file>Icons/Indicator/disconnected.png</file>
@@ -73,6 +68,10 @@
         <file>Icons/Review/clear.png</file>
         <file>Icons/Review/comment.png</file>
         <file>Icons/Editing/rect.png</file>
+        <file>Icons/help_startpage.png</file>
+        <file>Icons/folder_noted.png</file>
+        <file>Icons/scene_group_noted.png</file>
+        <file>Icons/scene_noted.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

@@ -3,6 +3,8 @@
 
 #include <QByteArray>
 #include <QBuffer>
+#include <QIcon>
+#include <QPainter>
 #include <QPixmap>
 
 namespace {
@@ -62,6 +64,23 @@ public:
 		QPixmap image;
 		image.loadFromData(_bytes);
 		return image;
+	}
+
+	/**
+	 * @brief Установить цвет иконки
+	 */
+	static void setIconColor(QIcon& _icon, const QSize& _iconSize, const QColor& _color) {
+		if (!_icon.isNull()) {
+			QPixmap baseIconPixmap = _icon.pixmap(_iconSize);
+			QPixmap newIconPixmap = baseIconPixmap;
+
+			QPainter painter(&newIconPixmap);
+			painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+			painter.fillRect(newIconPixmap.rect(), _color);
+			painter.end();
+
+			_icon = QIcon(newIconPixmap);
+		}
 	}
 };
 

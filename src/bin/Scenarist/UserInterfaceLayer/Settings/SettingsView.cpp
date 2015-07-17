@@ -128,12 +128,12 @@ void SettingsView::setApplicationSaveBackupsFolder(const QString& _folder)
 
 void SettingsView::setScenarioEditShowScenesNumbers(bool _value)
 {
-    ui->showScenesNumbersInEditor->setChecked(_value);
+	ui->showScenesNumbersInEditor->setChecked(_value);
 }
 
 void SettingsView::setScenarioEditHighlightCurrentLine(bool _value)
 {
-    ui->highlightCurrentLine->setChecked(_value);
+	ui->highlightCurrentLine->setChecked(_value);
 }
 
 void SettingsView::setScenarioEditPageView(bool _value)
@@ -516,6 +516,7 @@ void SettingsView::initView()
 
 	ui->spellCheckingLanguage->setCurrentIndex(0);
 	ui->spellCheckingLanguage->setEnabled(false);
+	ui->browseBackupFolder->updateIcons();
 
 	ui->lightTheme->setChecked(true);
 	aboutColorThemeChanged();
@@ -530,6 +531,13 @@ void SettingsView::initView()
 
 	m_jumpsTableHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
 	ui->scenarioEditBlockSettingsTable->setHorizontalHeader(m_jumpsTableHeader);
+
+	ui->newTemplate->updateIcons();
+	ui->editTemplate->updateIcons();
+	ui->saveTemplate->updateIcons();
+	ui->loadTemplate->updateIcons();
+	ui->removeTemplate->updateIcons();
+	ui->applyTemplate->updateIcons();
 }
 
 void SettingsView::initConnections()
@@ -580,7 +588,7 @@ void SettingsView::initConnections()
 	connect(ui->saveBackupsFolder, SIGNAL(textChanged(QString)), this, SIGNAL(applicationSaveBackupsFolderChanged(QString)));
 	// ... текстовый редактор
 	connect(ui->showScenesNumbersInEditor, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)));
-    connect(ui->highlightCurrentLine, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)));
+	connect(ui->highlightCurrentLine, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)));
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
@@ -647,9 +655,7 @@ void SettingsView::initStyleSheet()
 	foreach (QWidget* topEmpty, topEmptyList) {
 		topEmpty->setProperty("inTopPanel", true);
 		topEmpty->setProperty("topPanelTopBordered", true);
-		topEmpty->setProperty("topPanelRightBordered", true);
 	}
-	ui->topRightEmptyLabel_7->setProperty("topPanelRightBordered", false);
 
 	//
 	// Основные контейнеры с содержимым

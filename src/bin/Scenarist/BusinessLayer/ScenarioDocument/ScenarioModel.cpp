@@ -265,6 +265,14 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		}
 
 		//
+		// Если ли заметки для данного элемента
+		//
+		case HasNoteIndex: {
+			result = item->hasNote();
+			break;
+		}
+
+		//
 		// Видимость элемента
 		//
 		case VisibilityIndex: {

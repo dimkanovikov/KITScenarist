@@ -138,6 +138,8 @@ void CharactersDataEdit::aboutCharacterChanged()
 
 void CharactersDataEdit::initView()
 {
+	ui->addPhoto->updateIcons();
+
 	QFont nameFont = ui->name->font();
 	nameFont.setCapitalization(QFont::AllUppercase);
 	ui->name->setFont(nameFont);

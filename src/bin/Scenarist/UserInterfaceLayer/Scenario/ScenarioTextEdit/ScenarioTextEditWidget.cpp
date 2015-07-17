@@ -111,12 +111,12 @@ void ScenarioTextEditWidget::setCountersInfo(const QString& _counters)
 
 void ScenarioTextEditWidget::setShowScenesNumbers(bool _show)
 {
-    m_editor->setShowSceneNumbers(_show);
+	m_editor->setShowSceneNumbers(_show);
 }
 
 void ScenarioTextEditWidget::setHighlightCurrentLine(bool _highlight)
 {
-    m_editor->setHighlightCurrentLine(_highlight);
+	m_editor->setHighlightCurrentLine(_highlight);
 }
 
 void ScenarioTextEditWidget::setUsePageView(bool _use)
@@ -426,16 +426,16 @@ void ScenarioTextEditWidget::initView()
 	m_redo->setIcons(QIcon(":/Graphics/Icons/Editing/redo.png"));
 	m_redo->setToolTip(ShortcutHelper::makeToolTip(tr("Redo last action"), "Shift+Ctrl+Z"));
 
-	m_search->setIcons(QIcon(":/Graphics/Icons/Editing/search.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/search_active.png"));
+	m_search->setIcons(QIcon(":/Graphics/Icons/Editing/search.png"));
 	m_search->setToolTip(ShortcutHelper::makeToolTip(tr("Search and Replace"), "Ctrl+F"));
 	m_search->setCheckable(true);
 	m_search->setShortcut(QKeySequence("Ctrl+F"));
 
-	m_fastFormat->setIcons(QIcon(":/Graphics/Icons/Editing/format.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/format_active.png"));
+	m_fastFormat->setIcons(QIcon(":/Graphics/Icons/Editing/format.png"));
 	m_fastFormat->setToolTip(tr("Text Fast Format"));
 	m_fastFormat->setCheckable(true);
 
-	m_review->setIcons(QIcon(":/Graphics/Icons/Editing/review.png"), QIcon(), QIcon(":/Graphics/Icons/Editing/review_active.png"));
+	m_review->setIcons(QIcon(":/Graphics/Icons/Editing/review.png"));
 	m_review->setToolTip(tr("Review"));
 	m_review->setCheckable(true);
 
@@ -609,5 +609,5 @@ void ScenarioTextEditWidget::initStyleSheet()
 	m_countersInfo->setProperty("topPanelTopBordered", true);
 	m_countersInfo->setProperty("topPanelRightBordered", true);
 
-	m_editor->setProperty("mainContainer", true);
+	m_editorWrapper->setProperty("mainContainer", true);
 }

@@ -3,6 +3,8 @@
 
 #include "RecentFilesDelegate.h"
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
 #include <QStandardItemModel>
 
 using UserInterface::StartUpView;
@@ -56,7 +58,7 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName)
 	ui->login->setVisible(!isLogged);
 	ui->logoutIcon->setVisible(isLogged);
 	ui->logout->setVisible(isLogged);
-	ui->logout->setText(QString("<a href=\"#\" style=\"color:#2b78da;\">%1</a> %2").arg(tr("Logout")).arg(_userName));
+	ui->logout->setText(QString("%1 <a href=\"#\" style=\"color:#2b78da;\">%2</a>").arg(_userName).arg(tr("Logout")));
 	ui->remoteProjects->setVisible(isLogged);
 
 	if (!isLogged && ui->remoteProjects->isChecked()) {
@@ -81,6 +83,16 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
 	//
 	_remoteProjectsModel->setParent(ui->remoteFiles);
 	ui->remoteFiles->setModel(_remoteProjectsModel);
+}
+
+bool StartUpView::event(QEvent* _event)
+{
+	if (_event->type() == QEvent::PaletteChange) {
+		initStyleSheet();
+		initIconsColor();
+	}
+
+	return QWidget::event(_event);
 }
 
 bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
@@ -140,15 +152,17 @@ void StartUpView::initView()
 	ui->remoteFiles->setItemDelegate(new RecentFilesDelegate(ui->remoteFiles));
 	ui->remoteFiles->setMouseTracking(true);
 	ui->remoteFiles->installEventFilter(this);
+
+	initIconsColor();
 }
 
 void StartUpView::initConnections()
 {
 	connect(ui->login, SIGNAL(linkActivated(QString)), this, SIGNAL(loginClicked()));
 	connect(ui->logout, SIGNAL(linkActivated(QString)), this, SIGNAL(logoutClicked()));
-	connect(ui->createProject, SIGNAL(linkActivated(QString)), this, SIGNAL(createProjectClicked()));
-	connect(ui->openProject, SIGNAL(linkActivated(QString)), this, SIGNAL(openProjectClicked()));
-	connect(ui->help, SIGNAL(linkActivated(QString)), this, SIGNAL(helpClicked()));
+	connect(ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
+	connect(ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));
+	connect(ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));
 
 	connect(ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
 	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRecentProjectClicked(QModelIndex)));
@@ -162,6 +176,43 @@ void StartUpView::initStyleSheet()
 	ui->topEmptyLabel->setProperty("topPanelTopBordered", true);
 	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
 
+	ui->mainContainer->setProperty("mainContainer", true);
+	ui->projectsFrame->setProperty("mainContainer", true);
+	ui->projectsFrame->setProperty("baseForeground", true);
+
+	ui->createProject->setProperty("leftAlignedText", true);
+	ui->openProject->setProperty("leftAlignedText", true);
+	ui->help->setProperty("leftAlignedText", true);
+
 	ui->localProjects->setProperty("inStartUpView", true);
 	ui->remoteProjects->setProperty("inStartUpView", true);
+
+	ui->recentFiles->viewport()->setStyleSheet("background-color: palette(base);");
+	ui->remoteFiles->viewport()->setStyleSheet("background-color: palette(base);");
+}
+
+void StartUpView::initIconsColor()
+{
+	const QSize iconSize = ui->createProject->iconSize();
+
+	QIcon account(*ui->loginIcon->pixmap());
+	ImageHelper::setIconColor(account, iconSize, palette().text().color());
+	ui->loginIcon->setPixmap(account.pixmap(iconSize));
+	ui->logoutIcon->setPixmap(account.pixmap(iconSize));
+
+	QIcon createProject = ui->createProject->icon();
+	ImageHelper::setIconColor(createProject, iconSize, palette().text().color());
+	ui->createProject->setIcon(createProject);
+
+	QIcon openProject = ui->openProject->icon();
+	ImageHelper::setIconColor(openProject, iconSize, palette().text().color());
+	ui->openProject->setIcon(openProject);
+
+	QIcon help = ui->help->icon();
+	ImageHelper::setIconColor(help, iconSize, palette().text().color());
+	ui->help->setIcon(help);
+
+	QIcon refresh = ui->refreshProjects->icon();
+	ImageHelper::setIconColor(refresh, iconSize, palette().text().color());
+	ui->refreshProjects->setIcon(refresh);
 }

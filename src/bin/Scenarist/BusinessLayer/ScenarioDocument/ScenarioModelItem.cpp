@@ -130,17 +130,29 @@ QPixmap ScenarioModelItem::icon() const
 
 	switch (m_type) {
 		case Scene: {
-			iconPath = ":/Graphics/Icons/scene.png";
+			if (!hasNote()) {
+				iconPath = ":/Graphics/Icons/scene.png";
+			} else {
+				iconPath = ":/Graphics/Icons/scene_noted.png";
+			}
 			break;
 		}
 
 		case SceneGroup: {
-			iconPath = ":/Graphics/Icons/scene_group.png";
+			if (!hasNote()) {
+				iconPath = ":/Graphics/Icons/scene_group.png";
+			} else {
+				iconPath = ":/Graphics/Icons/scene_group_noted.png";
+			}
 			break;
 		}
 
 		case Folder: {
-			iconPath = ":/Graphics/Icons/folder.png";
+			if (!hasNote()) {
+				iconPath = ":/Graphics/Icons/folder.png";
+			} else {
+				iconPath = ":/Graphics/Icons/folder_noted.png";
+			}
 			break;
 		}
 
@@ -155,25 +167,7 @@ QPixmap ScenarioModelItem::icon() const
 		}
 	}
 
-	QImage iconImage(iconPath);
-
-	//
-	// Если есть заметка, дополним иконку элемента
-	//
-	if (hasNote()) {
-		QPainter painter(&iconImage);
-		painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-
-		//
-		// Отрисовываем картинку в правом нижнем углу
-		//
-		QImage note (":/Graphics/Icons/note.png");
-		painter.drawImage(iconImage.width() - note.width(),
-						  iconImage.height() - note.height(),
-						  note);
-	}
-
-	return QPixmap::fromImage(iconImage);
+	return QPixmap(iconPath);
 }
 
 bool ScenarioModelItem::hasNote() const

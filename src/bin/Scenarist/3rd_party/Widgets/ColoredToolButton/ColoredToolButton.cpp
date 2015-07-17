@@ -4,6 +4,8 @@
 #include "GoogleColorsPane.h"
 #include "WordHighlightColorsPane.h"
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
 #include <QBitmap>
 #include <QEvent>
 #include <QMenu>
@@ -23,11 +25,11 @@ ColoredToolButton::ColoredToolButton(const QIcon& _icon, QWidget* _parent) :
 	setStyleSheet("QToolButton { border: 1px solid transparent; min-width: 26px; padding: 3px; } "
 				  "QToolButton[popupMode=\"1\"] { padding-right: 16px; }"
 				  "QToolButton::menu-button { border: 1px solid transparent; width: 16px; }"
-				  "QToolButton:hover { border: 1px solid palette(midlight); }"
+				  "QToolButton:hover { border: 1px solid palette(dark); }"
 				  "QToolButton[popupMode=\"1\"]:hover { border-right: 1px solid transparent; }"
-				  "QToolButton::menu-button:hover { border: 1px solid palette(midlight); }"
-				  "QToolButton:pressed, QToolButton::menu-button:pressed { background-color: palette(midlight); }"
-				  "QToolButton:checked, QToolButton::menu-button:checked { background-color: palette(midlight); }");
+				  "QToolButton::menu-button:hover { border: 1px solid palette(dark); }"
+				  "QToolButton:pressed, QToolButton::menu-button:pressed { background-color: palette(dark); }"
+				  "QToolButton:checked, QToolButton::menu-button:checked { background-color: palette(dark); }");
 
 	connect(this, SIGNAL(clicked()), this, SLOT(aboutClicked()));
 }
@@ -126,15 +128,9 @@ bool ColoredToolButton::event(QEvent* _event)
 
 void ColoredToolButton::aboutUpdateIcon(const QColor& _color)
 {
-	QPixmap baseIconPixmap = m_icon.pixmap(iconSize());
-	QPixmap newIconPixmap = baseIconPixmap;
-
-	QPainter painter(&newIconPixmap);
-	painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-	painter.fillRect(newIconPixmap.rect(), _color);
-	painter.end();
-
-	setIcon(QIcon(newIconPixmap));
+	QIcon newIcon = m_icon;
+	ImageHelper::setIconColor(newIcon, iconSize(), _color);
+	setIcon(newIcon);
 }
 
 void ColoredToolButton::aboutClicked()

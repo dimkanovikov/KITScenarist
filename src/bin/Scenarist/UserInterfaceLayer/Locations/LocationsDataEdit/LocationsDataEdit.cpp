@@ -120,6 +120,8 @@ void LocationsDataEdit::aboutLocationChanged()
 
 void LocationsDataEdit::initView()
 {
+	ui->addPhoto->updateIcons();
+
 	QFont nameFont = ui->name->font();
 	nameFont.setCapitalization(QFont::AllUppercase);
 	ui->name->setFont(nameFont);

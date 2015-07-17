@@ -101,14 +101,14 @@ void LocationsNavigator::initView()
 	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_endTitle->setFixedWidth(1);
 
-	m_addLocation->setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
+	m_addLocation->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_addLocation->setToolTip(tr("Create New Location"));
 
-	m_removeLocation->setIcon(QIcon(":/Graphics/Icons/Editing/delete.png"));
+	m_removeLocation->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
 	m_removeLocation->setToolTip(tr("Remove Selected Location") + " (Del)");
 	m_removeLocation->setShortcut(QKeySequence("Delete"));
 
-	m_refreshLocations->setIcon(QIcon(":/Graphics/Icons/Editing/refresh.png"));
+	m_refreshLocations->setIcons(QIcon(":/Graphics/Icons/Editing/refresh.png"));
 	m_refreshLocations->setToolTip(tr("Find All Locations From Scenario"));
 
 	m_navigatorProxyModel->sort(0);
@@ -148,7 +148,6 @@ void LocationsNavigator::initStyleSheet()
 	m_title->setProperty("topPanelTopBordered", true);
 	m_endTitle->setProperty("inTopPanel", true);
 	m_endTitle->setProperty("topPanelTopBordered", true);
-	m_endTitle->setProperty("topPanelRightBordered", true);
 
 	m_addLocation->setProperty("inTopPanel", true);
 	m_removeLocation->setProperty("inTopPanel", true);

@@ -17,10 +17,21 @@ public:
 	/**
 	 * @brief Установить иконки
 	 */
-	void setIcons(const QIcon& _icon, const QIcon& _hoverIcon = QIcon(),
-		const QIcon& _checkedIcon = QIcon());
+	void setIcons(const QIcon& _icon, const QIcon& _checkedIcon = QIcon(),
+		const QIcon& _hoverIcon = QIcon());
+
+	/**
+	 * @brief Обновить иконки
+	 * @note Основное использование, когда кнопки созданы в дизайнере и иконки назначены там же
+	 */
+	void updateIcons();
 
 protected:
+	/**
+	 * @brief Переопределяем для обновления цвета иконки, при смене палитры
+	 */
+	bool event(QEvent* _event);
+
 	/**
 	 * @brief Переопределяются для обновления иконки
 	 */
@@ -50,6 +61,11 @@ private:
 	 * @brief Иконка для состояния "включёно"
 	 */
 	QIcon m_checkedIcon;
+
+	/**
+	 * @brief Флаг того, что иконка с состоянии "включено" просто окрашивается в цвет выделения
+	 */
+	bool m_checkedIconHighlight;
 };
 
 #endif // FLATBUTTON_H

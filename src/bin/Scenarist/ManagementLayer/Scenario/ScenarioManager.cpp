@@ -749,7 +749,7 @@ void ScenarioManager::aboutSetItemColor(const QModelIndex& _itemIndex, const QCo
 	const int position = workingScenario()->itemStartPosition(_itemIndex);
 	workingScenario()->setItemColorAtPosition(position, _color);
 
-    emit scenarioChanged();
+	emit scenarioChanged();
 }
 
 void ScenarioManager::aboutShowHideDraft()
@@ -851,7 +851,7 @@ void ScenarioManager::initView()
 	m_viewEditors->addWidget(m_dataEditManager->view());
 
 	m_showFullscreen = new FlatButton(m_view);
-	m_showFullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"), QIcon(),
+	m_showFullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
 		QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
 	m_showFullscreen->setToolTip(ShortcutHelper::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
 	m_showFullscreen->setShortcut(QKeySequence("F5"));

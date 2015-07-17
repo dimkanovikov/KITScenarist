@@ -79,6 +79,11 @@ namespace ManagementLayer
 		void aboutLoad(const QString& _fileName = QString());
 
 		/**
+		 * @brief Открыть справку
+		 */
+		void aboutShowHelp();
+
+		/**
 		 * @brief Загрузить из списка
 		 */
 		/** @{ */

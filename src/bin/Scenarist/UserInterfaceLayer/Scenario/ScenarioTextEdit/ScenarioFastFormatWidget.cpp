@@ -29,6 +29,7 @@ namespace {
 	QPushButton* createStyleButton(ScenarioFastFormatWidget* _parent, Qt::Key _key) {
 		QPushButton* styleButton = new QPushButton(_parent);
 		styleButton->setCheckable(true);
+		styleButton->setProperty("leftAlignedText", true);
 
 		_parent->connect(styleButton, SIGNAL(clicked()), _parent, SLOT(aboutChangeStyle()));
 		QShortcut* timeAndPlaceShortcut1 = new QShortcut(_key, _parent);
@@ -47,16 +48,6 @@ ScenarioFastFormatWidget::ScenarioFastFormatWidget(QWidget *parent) :
 	m_grabFocus(new QCheckBox(this))
 {
 	setFrameShape(QFrame::Box);
-	setStyleSheet("*[fastFormatWidget=\"true\"] {"
-				  "  border: 0px solid black; "
-				  "  border-left-width: 1px; "
-				  "  border-left-style: solid; "
-				  "  border-left-color: palette(dark);"
-				  "}"
-				  "QPushButton {"
-				  "padding: 3px 6px 3px 6px; text-align: left;"
-				  "}"
-				  );
 	setProperty("fastFormatWidget", true);
 
 

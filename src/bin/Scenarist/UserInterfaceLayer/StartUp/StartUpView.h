@@ -86,6 +86,11 @@ namespace UserInterface
 
 	protected:
 		/**
+		 * @brief Переопределяем для обновления цвета иконок, при смене палитры
+		 */
+		bool event(QEvent* _event);
+
+		/**
 		 * @brief Переопределяется для фиксации события когда мышка покидает виджет недавних проектов
 		 */
 		bool eventFilter(QObject* _watched, QEvent* _event);
@@ -111,6 +116,11 @@ namespace UserInterface
 		 * @brief Настроить внешний вид
 		 */
 		void initStyleSheet();
+
+		/**
+		 * @brief Настроить цвет иконок
+		 */
+		void initIconsColor();
 
 	private:
 		Ui::StartUpView *ui;
