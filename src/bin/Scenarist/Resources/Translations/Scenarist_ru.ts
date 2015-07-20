@@ -599,24 +599,24 @@
 <context>
     <name>ManagementLayer::ApplicationManager</name>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="183"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="186"/>
         <source>Choose file for new project</source>
         <translation>Выберите файл для нового проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="185"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="239"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="354"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="188"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="242"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="357"/>
         <source>Scenarist project files (*%1)</source>
         <translation>Файл проекта сценария (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="237"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="240"/>
         <source>Choose file for save project</source>
         <translation>Выберите файл для сохранения проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="352"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="355"/>
         <source>Choose project file to open</source>
         <translation>Выберите файл проекта для открытия</translation>
     </message>
@@ -633,79 +633,79 @@
         <translation type="obsolete">RTF файлы (*%1)</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="46"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="48"/>
         <source> - changed</source>
         <translation> - изменён</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="507"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="515"/>
         <source>New session for you account started at other device.
 Continue working in offline mode.</source>
         <translation>Пользователь с вашими учётными данными авторизовался на другом устройстве.
 Работаем в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="705"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="713"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="706"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="714"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1161"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1172"/>
         <source>%1[*] - Scenarist</source>
         <translation>%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="848"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="856"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="449"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="457"/>
         <source>Connection active</source>
         <translation>Соединение установлено</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="449"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="457"/>
         <source>Project sinchronized</source>
         <translation>Проект успешно синхронизирован.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="462"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="470"/>
         <source>Network error</source>
         <translation>Ошибка сети</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="463"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="471"/>
         <source>Can&apos;t estabilish network connection.
 Continue working in offline mode.</source>
         <translation>Отсутствует подключение к интернету.
 Работаем в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="482"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="490"/>
         <source>Subscription ended</source>
         <translation>Подписка закончена</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="483"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="491"/>
         <source>Buyed subscription period is finished.
 Continue working in offline mode.</source>
         <translation>Закончился оплаченный период подписки.
 Работаем в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="494"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="506"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="502"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="514"/>
         <source>Session closed</source>
         <translation>Сессия закрыта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="495"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="503"/>
         <source>New session for you account started at other device. Restart session?</source>
         <translation>Пользователь с вашими учётными данными авторизовался на другом устройстве. Переподключиться?</translation>
     </message>
@@ -714,104 +714,109 @@ Continue working in offline mode.</source>
         <translation type="vanished">Переходим в автономный режим.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="519"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="527"/>
         <source>Project not available</source>
         <translation>Проект недоступен</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="520"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="528"/>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
         <translation>Проект недоступен для синхронизации.
 Работаем с ним в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="531"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="539"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="601"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="609"/>
         <source>Exit from Application</source>
         <translation>Выход из программы</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="601"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="609"/>
         <source>Closing Databse Connections and Remove Temporatry Files.</source>
         <translation>Закрытие соединения с базой данных и удаление временных файлов.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="732"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="740"/>
         <source>Loading Scenario</source>
         <translation>Загрузка сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="732"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="740"/>
         <source>Please wait. Loading can take few minutes.</source>
         <translation>Немного терпения. Загрузка может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="776"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="784"/>
         <source>Sync scenario with cloud service.</source>
         <translation>Немного терпения. Сценарий синхронизируется с облаком.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="855"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="863"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="856"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="864"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="857"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="865"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="858"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="866"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="859"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="867"/>
+        <source>Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="868"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="903"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="913"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="904"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="914"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="905"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="915"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="907"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="917"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="913"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="923"/>
         <source>Import...</source>
         <translation>Импорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="916"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="926"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="919"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="929"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>

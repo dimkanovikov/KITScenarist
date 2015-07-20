@@ -89,6 +89,9 @@ void StatisticsView::initView()
 	QSlider* popupSlider = new QSlider(Qt::Vertical, popup);
 	// add here the signal/slot connection between the slider and the spinbox
 	popupLayout->addWidget(popupSlider); // Control where to display the the popup relative to the parent
+	popupLayout->addWidget(new QPushButton("Push button", popup));
+	popupLayout->addWidget(new QPushButton("Push button 2", popup));
+	popupLayout->addStretch();
 	popup->setAlignment(Qt::AlignBottom | Qt::AlignLeft); // at the top left corner
 
 	popup->setHorizontalDirection( Qt::LeftToRight ); // open outside the parent
