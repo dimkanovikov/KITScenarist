@@ -68,7 +68,7 @@ namespace {
 			result = result.remove(tag + "\n");
 		}
 
-		result = result.remove(QRegularExpression("<time_and_place(.*)>\n"));
+		result = result.remove(QRegularExpression("<scene_heading(.*)>\n"));
 		result = result.remove(QRegularExpression("<review(.*)>\n"));
 		result = result.remove(QRegularExpression("<review_comment(.*)>\n"));
 
@@ -356,7 +356,7 @@ private:
 		static QHash<QString,QString> s_tagsMap;
 		static int s_charIndex = 44032;
 		if (s_tagsMap.isEmpty()) {
-			addTag("time_and_place", s_tagsMap, s_charIndex);
+			addTag("scene_heading", s_tagsMap, s_charIndex);
 			addTag("scene_characters", s_tagsMap, s_charIndex);
 			addTag("action", s_tagsMap, s_charIndex);
 			addTag("character", s_tagsMap, s_charIndex);

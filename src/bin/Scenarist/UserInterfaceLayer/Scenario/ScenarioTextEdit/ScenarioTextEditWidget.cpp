@@ -494,53 +494,26 @@ void ScenarioTextEditWidget::initView()
 void ScenarioTextEditWidget::initStylesCombo()
 {
 	ScenarioTemplate style = ScenarioTemplateFacade::getTemplate();
+	const bool BEAUTIFY_NAME = true;
 
-	if (style.blockStyle(ScenarioBlockStyle::TimeAndPlace).isActive()) {
-		m_textStyles->addItem(tr("Time and Place"), ScenarioBlockStyle::TimeAndPlace);
-	}
+	QList<ScenarioBlockStyle::Type> types;
+	types << ScenarioBlockStyle::SceneHeading
+		  << ScenarioBlockStyle::SceneCharacters
+		  << ScenarioBlockStyle::Action
+		  << ScenarioBlockStyle::Character
+		  << ScenarioBlockStyle::Dialogue
+		  << ScenarioBlockStyle::Parenthetical
+		  << ScenarioBlockStyle::Title
+		  << ScenarioBlockStyle::Note
+		  << ScenarioBlockStyle::Transition
+		  << ScenarioBlockStyle::NoprintableText
+		  << ScenarioBlockStyle::SceneGroupHeader
+		  << ScenarioBlockStyle::FolderHeader;
 
-	if (style.blockStyle(ScenarioBlockStyle::SceneCharacters).isActive()) {
-		m_textStyles->addItem(tr("Scene Characters"), ScenarioBlockStyle::SceneCharacters);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Action).isActive()) {
-		m_textStyles->addItem(tr("Action"), ScenarioBlockStyle::Action);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Character).isActive()) {
-		m_textStyles->addItem(tr("Character"), ScenarioBlockStyle::Character);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Dialog).isActive()) {
-		m_textStyles->addItem(tr("Dialog"), ScenarioBlockStyle::Dialog);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Parenthetical).isActive()) {
-		m_textStyles->addItem(tr("Parethentcial"), ScenarioBlockStyle::Parenthetical);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Title).isActive()) {
-		m_textStyles->addItem(tr("Title"), ScenarioBlockStyle::Title);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Note).isActive()) {
-		m_textStyles->addItem(tr("Note"), ScenarioBlockStyle::Note);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Transition).isActive()) {
-		m_textStyles->addItem(tr("Transition"), ScenarioBlockStyle::Transition);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::NoprintableText).isActive()) {
-		m_textStyles->addItem(tr("Noprintable Text"), ScenarioBlockStyle::NoprintableText);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::SceneGroupHeader).isActive()) {
-		m_textStyles->addItem(tr("Scenes Group"), ScenarioBlockStyle::SceneGroupHeader);
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::FolderHeader).isActive()) {
-		m_textStyles->addItem(tr("Folder"), ScenarioBlockStyle::FolderHeader);
+	foreach (ScenarioBlockStyle::Type type, types) {
+		if (style.blockStyle(type).isActive()) {
+			m_textStyles->addItem(ScenarioBlockStyle::typeName(type, BEAUTIFY_NAME), type);
+		}
 	}
 
 	updateStylesCombo();

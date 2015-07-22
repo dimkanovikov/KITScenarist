@@ -177,7 +177,7 @@ void ActionHandler::handleOther(QKeyEvent* _event)
 		//
 		QString maybePlace = cursorBackwardText.remove(".").toUpper();
 		if (DataStorageLayer::StorageFacade::placeStorage()->hasPlace(maybePlace)) {
-			editor()->changeScenarioBlockType(ScenarioBlockStyle::TimeAndPlace);
+			editor()->changeScenarioBlockType(ScenarioBlockStyle::SceneHeading);
 		}
 	} else {
 		//! В противном случае, обрабатываем в базовом классе

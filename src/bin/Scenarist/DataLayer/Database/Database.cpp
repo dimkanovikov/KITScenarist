@@ -465,6 +465,14 @@ void Database::updateDatabase(QSqlDatabase& _database)
 				updateDatabaseTo_0_5_0(_database);
 			}
 		}
+		//
+		// 0.5.x
+		//
+		if (versionMinor <= 5) {
+			if (versionBuild <=5) {
+				updateDatabaseTo_0_5_6(_database);
+			}
+		}
 	}
 
 	//
@@ -846,6 +854,41 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 			q_updater.exec();
 		}
 
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_5_6(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Извлекаем текст сценария
+		//
+		q_updater.exec("SELECT id, text FROM scenario");
+		QMap<int, QString> scenarioTexts;
+		while (q_updater.next()) {
+			const int id = q_updater.record().value("id").toInt();
+			QString text = q_updater.record().value("text").toString();
+			//
+			// Заменяем старые теги на новые
+			//
+			text = text.replace("time_and_place", "scene_heading");
+			scenarioTexts.insert(id, text);
+		}
+		//
+		// ... обновим данные
+		//
+		q_updater.prepare("UPDATE scenario SET text = ? WHERE id = ?");
+		foreach (int id, scenarioTexts.keys()) {
+			q_updater.addBindValue(scenarioTexts.value(id));
+			q_updater.addBindValue(id);
+			q_updater.exec();
+		}
 	}
 
 	_database.commit();

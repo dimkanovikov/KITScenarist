@@ -332,9 +332,9 @@ QStringList ScenarioDocument::findLocations() const
 	QTextCursor cursor(document());
 	while (!cursor.atEnd()) {
 		cursor.movePosition(QTextCursor::EndOfBlock);
-		if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
+		if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneHeading) {
 			QString location =
-					BusinessLogic::TimeAndPlaceParser::locationName(cursor.block().text().toUpper().trimmed());
+					BusinessLogic::SceneHeadingParser::locationName(cursor.block().text().toUpper().trimmed());
 			locations.insert(location);
 		}
 		cursor.movePosition(QTextCursor::NextBlock);
@@ -410,7 +410,7 @@ int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
 		// Пока не дошли до сигнального блока
 		//
 		ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(cursor.block());
-		while (currentType != ScenarioBlockStyle::TimeAndPlace
+		while (currentType != ScenarioBlockStyle::SceneHeading
 			   && currentType != ScenarioBlockStyle::SceneGroupHeader
 			   && currentType != ScenarioBlockStyle::SceneGroupFooter
 			   && currentType != ScenarioBlockStyle::FolderHeader
@@ -665,7 +665,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				cursor.movePosition(QTextCursor::EndOfBlock);
 				currentType = ScenarioBlockStyle::forBlock(cursor.block());
 			} while (!cursor.atEnd()
-					 && currentType != ScenarioBlockStyle::TimeAndPlace
+					 && currentType != ScenarioBlockStyle::SceneHeading
 					 && currentType != ScenarioBlockStyle::SceneGroupHeader
 					 && currentType != ScenarioBlockStyle::SceneGroupFooter
 					 && currentType != ScenarioBlockStyle::FolderHeader
@@ -680,7 +680,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			// и оступить на один блок назад в виду того, что мы зашли на следующий элемент
 			//
 			if (!cursor.atEnd()
-				|| currentType == ScenarioBlockStyle::TimeAndPlace
+				|| currentType == ScenarioBlockStyle::SceneHeading
 				|| currentType == ScenarioBlockStyle::SceneGroupHeader
 				|| currentType == ScenarioBlockStyle::SceneGroupFooter
 				|| currentType == ScenarioBlockStyle::FolderHeader
@@ -743,7 +743,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				// Действуем в зависимости от последующего за текущим элементом блока
 				//
 				switch (nextBlockType) {
-					case ScenarioBlockStyle::TimeAndPlace: {
+					case ScenarioBlockStyle::SceneHeading: {
 						//
 						// Создать новый элемент
 						//
@@ -853,7 +853,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	// ... тип
 	ScenarioModelItem::Type itemType = ScenarioModelItem::Undefined;
 	ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
-	if (blockType == ScenarioBlockStyle::TimeAndPlace) {
+	if (blockType == ScenarioBlockStyle::SceneHeading) {
 		itemType = ScenarioModelItem::Scene;
 	} else if (blockType == ScenarioBlockStyle::SceneGroupHeader
 			   || blockType == ScenarioBlockStyle::SceneGroupFooter) {
@@ -947,7 +947,7 @@ void ScenarioDocument::updateDocumentScenesNumbers()
 	//
 	QTextBlock block = document()->begin();
 	while (block.isValid()) {
-		if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::TimeAndPlace) {
+		if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::SceneHeading) {
 			if (ScenarioModelItem* item = itemForPosition(block.position())) {
 				//
 				// Обновим данные документа

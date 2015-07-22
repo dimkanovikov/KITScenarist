@@ -22,12 +22,12 @@ namespace BusinessLogic
 		 */
 		enum Type {
 			Undefined,		//!< Неопределён
-			TimeAndPlace,	//!< Время - место
+			SceneHeading,	//!< Время - место
 			SceneCharacters,//!< Персонажи сцены
 			Action,			//!< Описание действия
 			Character,		//!< Имя героя
 			Parenthetical,	//!< Ремарка
-			Dialog,			//!< Реплика героя
+			Dialogue,			//!< Реплика героя
 			Transition,		//!< Переход
 			Note,			//!< Примечание
 			TitleHeader,	//!< Заголовок титра

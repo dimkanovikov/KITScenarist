@@ -271,7 +271,7 @@ namespace {
 	 * - нельзя оставлять на предпоследней строке, т.к. после может идти
 	 *   блок с одной пустой строкой
 	 */
-	static void checkPageBreakForTimeAndPlace(QTextCursor& _destDocumentCursor,
+	static void checkPageBreakForSceneHeading(QTextCursor& _destDocumentCursor,
 		const QTextBlockFormat& _blockFormat, const QTextCharFormat& _charFormat,
 		const int _blockLines, const int _linesToEndOfPage) {
 		//
@@ -346,7 +346,7 @@ namespace {
 				//
 				ScenarioBlockStyle::Type prevBlockType =
 						ScenarioBlockStyle::forBlock(_sourceDocumentCursor.block().previous());
-				if (prevBlockType == ScenarioBlockStyle::TimeAndPlace) {
+				if (prevBlockType == ScenarioBlockStyle::SceneHeading) {
 					//
 					// ... пустые строки
 					//
@@ -502,7 +502,7 @@ namespace {
 		const bool nextDialogOrParentheticalOnNewPage =
 				_blockLines == _linesToEndOfPage
 				&& (nextBlockType == ScenarioBlockStyle::Parenthetical
-					|| nextBlockType == ScenarioBlockStyle::Dialog	);
+					|| nextBlockType == ScenarioBlockStyle::Dialogue	);
 		//
 		// ... и случай, если не влезает до конца страницы, разорвать блок
 		//
@@ -662,7 +662,7 @@ namespace {
 						// ... это тот случай, когда мы уже разорвали
 						// блок реплики и нужно вставить "прод." и "дальше"
 						//
-						if (prevBlockType == ScenarioBlockStyle::Dialog) {
+						if (prevBlockType == ScenarioBlockStyle::Dialogue) {
 							//
 							// ДАЛЬШЕ
 							//
@@ -823,9 +823,9 @@ namespace {
 		//
 		// Для блоков "Время и место" и "Группа сцен"
 		//
-		if (currentBlockType == ScenarioBlockStyle::TimeAndPlace
+		if (currentBlockType == ScenarioBlockStyle::SceneHeading
 			|| currentBlockType == ScenarioBlockStyle::SceneGroupHeader) {
-			checkPageBreakForTimeAndPlace(_destDocumentCursor, blockFormat, charFormat, blockLines, linesToEndOfPage);
+			checkPageBreakForSceneHeading(_destDocumentCursor, blockFormat, charFormat, blockLines, linesToEndOfPage);
 		}
 
 		//
@@ -854,7 +854,7 @@ namespace {
 		//
 		// Для блока "Реплика"
 		//
-		else if (currentBlockType == ScenarioBlockStyle::Dialog) {
+		else if (currentBlockType == ScenarioBlockStyle::Dialogue) {
 			checkPageBreakForDialog(_sourceDocumentCursor, _destDocumentCursor, blockFormat,
 				charFormat, blockLines, linesToEndOfPage);
 		}
@@ -1069,7 +1069,7 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 				//
 				// Для блока "Время и место" добавочная информация
 				//
-				if (currentBlockType == ScenarioBlockStyle::TimeAndPlace) {
+				if (currentBlockType == ScenarioBlockStyle::SceneHeading) {
 					//
 					// Префикс экспорта
 					//

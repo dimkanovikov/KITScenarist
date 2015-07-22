@@ -133,7 +133,6 @@ SOURCES += main.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/StandardKeyHandler.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.cpp \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.cpp \
 	UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TransitionHandler.cpp \
     3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.cpp \
@@ -241,7 +240,8 @@ SOURCES += main.cpp \
     3rd_party/Widgets/Ctk/ctkPopupWidget.cpp \
     3rd_party/Widgets/Ctk/ctkBasePopupWidget.cpp \
     UserInterfaceLayer/Statistics/StatisticsSettings.cpp \
-    UserInterfaceLayer/Statistics/ReportButton.cpp
+    UserInterfaceLayer/Statistics/ReportButton.cpp \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -316,7 +316,6 @@ HEADERS += \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/StandardKeyHandler.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TimeAndPlaceHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.h \
     UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHeaderHandler.h \
 	UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TransitionHandler.h \
@@ -439,7 +438,8 @@ HEADERS += \
     3rd_party/Widgets/Ctk/ctkPimpl.h \
     UserInterfaceLayer/Statistics/StatisticsSettings.h \
     BusinessLayer/Statistics/AbstractReport.h \
-    UserInterfaceLayer/Statistics/ReportButton.h
+    UserInterfaceLayer/Statistics/ReportButton.h \
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

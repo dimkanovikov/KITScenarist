@@ -164,8 +164,8 @@ namespace {
 				//
 				// Если мы в блоке персонажа
 				//
-				if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::TimeAndPlace) {
-					const QString location = BusinessLogic::TimeAndPlaceParser::locationName(cursor.block().text());
+				if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneHeading) {
+					const QString location = BusinessLogic::SceneHeadingParser::locationName(cursor.block().text());
 					if (location == cursor.selectedText()) {
 						replaceSelection = true;
 					}

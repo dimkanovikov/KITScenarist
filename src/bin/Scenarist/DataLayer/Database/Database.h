@@ -152,6 +152,13 @@ namespace DatabaseLayer
 		 */
 		static void updateDatabaseTo_0_5_0(QSqlDatabase& _database);
 
+		/**
+		 * @brief Обновить базу данных до версии 0.5.6
+		 *
+		 * - блоки с именем time_and_place заменяются на scene_heading
+		 */
+		static void updateDatabaseTo_0_5_6(QSqlDatabase& _database);
+
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )

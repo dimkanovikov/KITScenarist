@@ -105,12 +105,12 @@ void StatisticsManager::initView()
 	// Загрузить модель элементов сценария
 	//
 	QStringList elements;
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::TimeAndPlace, BEAUTIFY_BLOCK_NAME);
+	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneHeading, BEAUTIFY_BLOCK_NAME);
 	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneCharacters, BEAUTIFY_BLOCK_NAME);
 	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Action, BEAUTIFY_BLOCK_NAME);
 	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Character, BEAUTIFY_BLOCK_NAME);
 	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Parenthetical, BEAUTIFY_BLOCK_NAME);
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Dialog, BEAUTIFY_BLOCK_NAME);
+	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Dialogue, BEAUTIFY_BLOCK_NAME);
 	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Transition, BEAUTIFY_BLOCK_NAME);
 	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Note, BEAUTIFY_BLOCK_NAME);
 	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Title, BEAUTIFY_BLOCK_NAME);

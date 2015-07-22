@@ -93,8 +93,8 @@ namespace ManagementLayer
 		void chronometryCharactersCharactersChanged(int  _value);
 		void chronometryCharactersSecondsChanged(int  _value);
 		void chronometryCharactersConsiderSpacesChanged(bool  _value);
-		void chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double  _value);
-		void chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double  _value);
+		void chronometryConfigurableSecondsForParagraphSceneHeadingChanged(double  _value);
+		void chronometryConfigurableSecondsFor50SceneHeadingChanged(double  _value);
 		void chronometryConfigurableSecondsForParagraphActionChanged(double  _value);
 		void chronometryConfigurableSecondsFor50ActionChanged(double  _value);
 		void chronometryConfigurableSecondsForParagraphDialogChanged(double  _value);

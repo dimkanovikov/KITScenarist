@@ -49,12 +49,12 @@ namespace {
 		static QMap<int, ScenarioBlockStyle::Type> s_types;
 		if (s_types.isEmpty()) {
 			s_types.insert(0, ScenarioBlockStyle::Undefined);
-			s_types.insert(1, ScenarioBlockStyle::TimeAndPlace);
+			s_types.insert(1, ScenarioBlockStyle::SceneHeading);
 			s_types.insert(2, ScenarioBlockStyle::SceneCharacters);
 			s_types.insert(3, ScenarioBlockStyle::Action);
 			s_types.insert(4, ScenarioBlockStyle::Character);
 			s_types.insert(5, ScenarioBlockStyle::Parenthetical);
-			s_types.insert(6, ScenarioBlockStyle::Dialog);
+			s_types.insert(6, ScenarioBlockStyle::Dialogue);
 			s_types.insert(7, ScenarioBlockStyle::Transition);
 			s_types.insert(8, ScenarioBlockStyle::Note);
 			s_types.insert(9, ScenarioBlockStyle::TitleHeader);

@@ -52,9 +52,9 @@ QString CharacterParser::state(const QString& _text)
 
 // ****
 
-TimeAndPlaceParser::Section TimeAndPlaceParser::section(const QString& _text)
+SceneHeadingParser::Section SceneHeadingParser::section(const QString& _text)
 {
-	TimeAndPlaceParser::Section section = SectionUndefined;
+	SceneHeadingParser::Section section = SectionUndefined;
 
 	if (_text.split(", ").count() == 2) {
 		section = SectionScenarioDay;
@@ -72,7 +72,7 @@ TimeAndPlaceParser::Section TimeAndPlaceParser::section(const QString& _text)
 	return section;
 }
 
-QString TimeAndPlaceParser::placeName(const QString& _text)
+QString SceneHeadingParser::placeName(const QString& _text)
 {
 	QString placeName;
 
@@ -83,7 +83,7 @@ QString TimeAndPlaceParser::placeName(const QString& _text)
 	return placeName;
 }
 
-QString TimeAndPlaceParser::locationName(const QString& _text)
+QString SceneHeadingParser::locationName(const QString& _text)
 {
 	QString locationName;
 
@@ -97,7 +97,7 @@ QString TimeAndPlaceParser::locationName(const QString& _text)
 	return locationName;
 }
 
-QString TimeAndPlaceParser::scenarioDayName(const QString& _text)
+QString SceneHeadingParser::scenarioDayName(const QString& _text)
 {
 	QString scenarioDayName;
 
@@ -108,7 +108,7 @@ QString TimeAndPlaceParser::scenarioDayName(const QString& _text)
 	return scenarioDayName;
 }
 
-QString TimeAndPlaceParser::timeName(const QString& _text)
+QString SceneHeadingParser::timeName(const QString& _text)
 {
 	QString timeName;
 

@@ -1,4 +1,4 @@
-#include "TimeAndPlaceHandler.h"
+#include "SceneHeadingHandler.h"
 
 #include "../ScenarioTextEdit.h"
 
@@ -25,12 +25,12 @@ using namespace BusinessLogic;
 using UserInterface::ScenarioTextEdit;
 
 
-TimeAndPlaceHandler::TimeAndPlaceHandler(ScenarioTextEdit* _editor) :
+SceneHeadingHandler::SceneHeadingHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
 }
 
-void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
+void SceneHeadingHandler::handleEnter(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -44,8 +44,8 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
 	// ... текущая секция
-	TimeAndPlaceParser::Section currentSection =
-			TimeAndPlaceParser::section(cursorBackwardText);
+	SceneHeadingParser::Section currentSection =
+			SceneHeadingParser::section(cursorBackwardText);
 
 
 	//
@@ -68,7 +68,7 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 		// Дописать необходимые символы
 		//
 		switch (currentSection) {
-			case TimeAndPlaceParser::SectionPlace: {
+			case SceneHeadingParser::SectionPlace: {
 				cursor.insertText(". ");
 				break;
 			}
@@ -87,7 +87,7 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 		// Если нужно автоматически перепрыгиваем к следующему блоку
 		//
 		if (autoJumpToNextBlock()
-			&& currentSection == TimeAndPlaceParser::SectionTime) {
+			&& currentSection == SceneHeadingParser::SectionTime) {
 			//
 			// Сохраним параметры сцены
 			//
@@ -97,7 +97,7 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 			//
 			cursor.movePosition(QTextCursor::EndOfBlock);
 			editor()->setTextCursor(cursor);
-			editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::TimeAndPlace));
+			editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::SceneHeading));
 		}
 	} else {
 		//! Подстановщик закрыт
@@ -118,7 +118,7 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 				//
 				// Меняем в соответствии с настройками
 				//
-				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::TimeAndPlace));
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::SceneHeading));
 			} else {
 				//! Текст не пуст
 
@@ -133,14 +133,14 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставка блока заголовка перед собой
 					//
-					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioBlockStyle::SceneHeading);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 
 					//
 					// Вставка блока описания действия
 					//
-					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::TimeAndPlace));
+					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::SceneHeading));
 				} else {
 					//! Внутри блока
 
@@ -154,7 +154,7 @@ void TimeAndPlaceHandler::handleEnter(QKeyEvent*)
 	}
 }
 
-void TimeAndPlaceHandler::handleTab(QKeyEvent*)
+void SceneHeadingHandler::handleTab(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -198,7 +198,7 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 				//
 				// Если строка пуста, то сменить стиль на описание действия
 				//
-				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::TimeAndPlace));
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::SceneHeading));
 			} else {
 				//! Текст не пуст
 
@@ -214,7 +214,7 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 					//
 					// Если нет времени, то добавление " - " и отображение подсказки
 					//
-					if (TimeAndPlaceParser::timeName(cursorBackwardText).isEmpty()) {
+					if (SceneHeadingParser::timeName(cursorBackwardText).isEmpty()) {
 						//
 						// Добавим необходимый текст в зависимости от того, что ввёл пользователь
 						//
@@ -244,7 +244,7 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 						//
 						// А затем вставим блок
 						//
-						editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::TimeAndPlace));
+						editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::SceneHeading));
 					}
 				} else {
 					//! Внутри блока
@@ -258,7 +258,7 @@ void TimeAndPlaceHandler::handleTab(QKeyEvent*)
 	}
 }
 
-void TimeAndPlaceHandler::handleOther(QKeyEvent*)
+void SceneHeadingHandler::handleOther(QKeyEvent*)
 {
 	//
 	// Получим необходимые значения
@@ -272,7 +272,7 @@ void TimeAndPlaceHandler::handleOther(QKeyEvent*)
 	// ... текст до курсора
 	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
 	// ... текущая секция
-	TimeAndPlaceParser::Section currentSection = TimeAndPlaceParser::section(cursorBackwardText);
+	SceneHeadingParser::Section currentSection = SceneHeadingParser::section(cursorBackwardText);
 
 
 	//
@@ -285,27 +285,27 @@ void TimeAndPlaceHandler::handleOther(QKeyEvent*)
 	QString sectionText;
 
 	switch (currentSection) {
-		case TimeAndPlaceParser::SectionPlace: {
+		case SceneHeadingParser::SectionPlace: {
 			sectionModel = StorageFacade::placeStorage()->all();
-			sectionText = TimeAndPlaceParser::placeName(currentBlockText);
+			sectionText = SceneHeadingParser::placeName(currentBlockText);
 			break;
 		}
 
-		case TimeAndPlaceParser::SectionLocation: {
+		case SceneHeadingParser::SectionLocation: {
 			sectionModel = StorageFacade::locationStorage()->all();
-			sectionText = TimeAndPlaceParser::locationName(currentBlockText);
+			sectionText = SceneHeadingParser::locationName(currentBlockText);
 			break;
 		}
 
-		case TimeAndPlaceParser::SectionScenarioDay: {
+		case SceneHeadingParser::SectionScenarioDay: {
 			sectionModel = StorageFacade::scenarioDayStorage()->all();
-			sectionText = TimeAndPlaceParser::scenarioDayName(currentBlockText);
+			sectionText = SceneHeadingParser::scenarioDayName(currentBlockText);
 			break;
 		}
 
-		case TimeAndPlaceParser::SectionTime: {
+		case SceneHeadingParser::SectionTime: {
 			sectionModel = StorageFacade::timeStorage()->all();
-			sectionText = TimeAndPlaceParser::timeName(currentBlockText);
+			sectionText = SceneHeadingParser::timeName(currentBlockText);
 			break;
 		}
 
@@ -320,7 +320,7 @@ void TimeAndPlaceHandler::handleOther(QKeyEvent*)
 	editor()->complete(sectionModel, sectionText);
 }
 
-void TimeAndPlaceHandler::storeSceneParameters() const
+void SceneHeadingHandler::storeSceneParameters() const
 {
 	if (editor()->storeDataWhenEditing()) {
 		//
@@ -336,25 +336,25 @@ void TimeAndPlaceHandler::storeSceneParameters() const
 		//
 		// Сохраняем время
 		//
-		QString placeName = TimeAndPlaceParser::placeName(currentBlockText);
+		QString placeName = SceneHeadingParser::placeName(currentBlockText);
 		StorageFacade::placeStorage()->storePlace(placeName);
 
 		//
 		// Сохраняем локацию
 		//
-		QString locationName = TimeAndPlaceParser::locationName(currentBlockText);
+		QString locationName = SceneHeadingParser::locationName(currentBlockText);
 		StorageFacade::locationStorage()->storeLocation(locationName);
 
 		//
 		// Сохраняем место
 		//
-		QString timeName = TimeAndPlaceParser::timeName(currentBlockText);
+		QString timeName = SceneHeadingParser::timeName(currentBlockText);
 		StorageFacade::timeStorage()->storeTime(timeName);
 
 		//
 		// Сохраняем сценарный день
 		//
-		QString scenarioDayName = TimeAndPlaceParser::scenarioDayName(currentBlockText);
+		QString scenarioDayName = SceneHeadingParser::scenarioDayName(currentBlockText);
 		StorageFacade::scenarioDayStorage()->storeScenarioDay(scenarioDayName);
 	}
 }

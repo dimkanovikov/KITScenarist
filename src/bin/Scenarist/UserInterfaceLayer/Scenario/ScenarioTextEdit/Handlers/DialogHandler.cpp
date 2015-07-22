@@ -60,7 +60,7 @@ void DialogHandler::handleEnter(QKeyEvent*)
 				//
 				// Меняем стиль блока на описание действия
 				//
-				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Dialog));
+				editor()->changeScenarioBlockType(changeForEnter(ScenarioBlockStyle::Dialogue));
 			} else {
 				//! Текст не пуст
 
@@ -76,7 +76,7 @@ void DialogHandler::handleEnter(QKeyEvent*)
 					//
 					// Перейдём к блоку персонажа
 					//
-					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Dialog));
+					editor()->addScenarioBlock(jumpForEnter(ScenarioBlockStyle::Dialogue));
 				} else {
 					//! Внутри блока
 
@@ -92,7 +92,7 @@ void DialogHandler::handleEnter(QKeyEvent*)
 							QTextCursor cursor = editor()->textCursor();
 							QTextBlock cursorBlock = cursor.block();
 							while ((ScenarioBlockStyle::forBlock(cursorBlock) != ScenarioBlockStyle::Character
-									|| ScenarioBlockStyle::forBlock(cursorBlock) == ScenarioBlockStyle::Dialog
+									|| ScenarioBlockStyle::forBlock(cursorBlock) == ScenarioBlockStyle::Dialogue
 									|| ScenarioBlockStyle::forBlock(cursorBlock) == ScenarioBlockStyle::Parenthetical)
 								   && !cursor.atStart()) {
 								cursor.movePosition(QTextCursor::PreviousBlock);
@@ -113,7 +113,7 @@ void DialogHandler::handleEnter(QKeyEvent*)
 						//
 						// Оставшийся текст форматируем, как "диалог"
 						//
-						editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+						editor()->addScenarioBlock(ScenarioBlockStyle::Dialogue);
 					}
 				}
 			}
@@ -164,7 +164,7 @@ void DialogHandler::handleTab(QKeyEvent*)
 				//
 				// Меняем стиль на ремарку
 				//
-				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Dialog));
+				editor()->changeScenarioBlockType(changeForTab(ScenarioBlockStyle::Dialogue));
 			} else {
 				//! Текст не пуст
 
@@ -180,7 +180,7 @@ void DialogHandler::handleTab(QKeyEvent*)
 					//
 					// Вставляем блок ремарки
 					//
-					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Dialog));
+					editor()->addScenarioBlock(jumpForTab(ScenarioBlockStyle::Dialogue));
 				} else {
 					//! Внутри блока
 
@@ -191,8 +191,8 @@ void DialogHandler::handleTab(QKeyEvent*)
 					//
 					// ... оставляем пустой блок реплики
 					//
-					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
-					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Dialogue);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Dialogue);
 
 					//
 					// ... возвращаем курсор к пустому блоку
@@ -260,13 +260,13 @@ void DialogHandler::handleOther(QKeyEvent* _event)
 			// если скобка нажата в начале строки, то делаем лишь один перевод строки
 			//
 			if (cursorBackwardText != "(") {
-				editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+				editor()->addScenarioBlock(ScenarioBlockStyle::Dialogue);
 			}
 			//
 			// ... если после скобки нет текста, не добавляем новый параграф
 			//
 			if (!cursorForwardText.isEmpty()) {
-				editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+				editor()->addScenarioBlock(ScenarioBlockStyle::Dialogue);
 
 				//
 				// ... возвращаем курсор к пустому блоку

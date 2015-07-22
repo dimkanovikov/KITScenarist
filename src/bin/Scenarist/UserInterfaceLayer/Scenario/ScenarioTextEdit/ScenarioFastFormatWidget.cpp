@@ -118,83 +118,33 @@ void ScenarioFastFormatWidget::selectCurrentBlock()
 void ScenarioFastFormatWidget::reinitBlockStyles()
 {
 	ScenarioTemplate style = ScenarioTemplateFacade::getTemplate();
+	const bool BEAUTIFY_NAME = true;
 
 	//
 	// Настраиваем в зависимости от доступности стиля
 	//
 	int itemIndex = 0;
 
-	//
-	// TODO: Использовать ScenarioBlockStyle::typeName
-	//
-	if (style.blockStyle(ScenarioBlockStyle::TimeAndPlace).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 Time and Place").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::TimeAndPlace);
-		++itemIndex;
-	}
+	QList<ScenarioBlockStyle::Type> types;
+	types << ScenarioBlockStyle::SceneHeading
+		  << ScenarioBlockStyle::SceneCharacters
+		  << ScenarioBlockStyle::Action
+		  << ScenarioBlockStyle::Character
+		  << ScenarioBlockStyle::Dialogue
+		  << ScenarioBlockStyle::Parenthetical
+		  << ScenarioBlockStyle::Title
+		  << ScenarioBlockStyle::Note
+		  << ScenarioBlockStyle::Transition
+		  << ScenarioBlockStyle::NoprintableText;
 
-	if (style.blockStyle(ScenarioBlockStyle::SceneCharacters).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 Scene Characters").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::SceneCharacters);
-		++itemIndex;
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Action).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 Action").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Action);
-		++itemIndex;
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Character).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 Character").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Character);
-		++itemIndex;
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Dialog).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 Dialog").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Dialog);
-		++itemIndex;
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Parenthetical).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 Parenthetical").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Parenthetical);
-		++itemIndex;
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Title).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 Title").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Title);
-		++itemIndex;
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Note).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 Note").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Note);
-		++itemIndex;
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::Transition).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 Transition").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::Transition);
-		++itemIndex;
-	}
-
-	if (style.blockStyle(ScenarioBlockStyle::NoprintableText).isActive()) {
-		m_buttons.at(itemIndex)->setVisible(true);
-		m_buttons.at(itemIndex)->setText(tr("%1 NoprintableText").arg(itemIndex));
-		m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, ScenarioBlockStyle::NoprintableText);
-		++itemIndex;
+	foreach (ScenarioBlockStyle::Type type, types) {
+		if (style.blockStyle(type).isActive()) {
+			m_buttons.at(itemIndex)->setVisible(true);
+			m_buttons.at(itemIndex)->setText(
+				tr("%1 %2").arg(itemIndex).arg(ScenarioBlockStyle::typeName(type, BEAUTIFY_NAME)));
+			m_buttons.at(itemIndex)->setProperty(STYLE_PROPERTY_KEY, type);
+			++itemIndex;
+		}
 	}
 
 	for (; itemIndex < m_buttons.count(); ++itemIndex) {

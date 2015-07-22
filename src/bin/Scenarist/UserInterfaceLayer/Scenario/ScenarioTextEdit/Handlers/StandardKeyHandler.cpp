@@ -438,7 +438,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	//
 	// Определим стиль результирующего блока
 	//
-	ScenarioBlockStyle::Type targetType = ScenarioBlockStyle::TimeAndPlace;
+	ScenarioBlockStyle::Type targetType = ScenarioBlockStyle::SceneHeading;
 	{
 		if (topBlock == bottomBlock) {
 			targetType = topStyle.type();

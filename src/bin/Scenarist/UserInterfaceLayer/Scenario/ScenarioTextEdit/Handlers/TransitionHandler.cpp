@@ -81,7 +81,7 @@ void TransitionHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставляем блок и применяем ему стиль время и место
 					//
-					editor()->addScenarioBlock(ScenarioBlockStyle::TimeAndPlace);
+					editor()->addScenarioBlock(ScenarioBlockStyle::SceneHeading);
 				}
 			}
 		}

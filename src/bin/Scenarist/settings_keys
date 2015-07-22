@@ -27,7 +27,7 @@ scenario-editor/autosave - включено ли автосохранение п
 scenario-editor/autosave-interval - интервал автоматического сохранения
 scenario-editor/current-style - стиль отображения текста в редакторе
 scenario-editor/shortcuts/... - горячие клавиши для форматов текста
-scenario-editor/shortcuts/time-and-place
+scenario-editor/shortcuts/scene_heading
 scenario-editor/shortcuts/scene-characters
 scenario-editor/shortcuts/action
 scenario-editor/shortcuts/character
@@ -41,8 +41,8 @@ scenario-editor/shortcuts/scenes-group
 scenario-editor/shortcuts/folder
 scenario-editor/auto-styles-jumping - при возможности автоматически переходить к следующему блоку
 scenario-editor/styles-jumping/... - к каким блокам переходить редактору сценария
-scenario-editor/styles-jumping/from-time-and-place-by-tab
-scenario-editor/styles-jumping/from-time-and-place-by-enter
+scenario-editor/styles-jumping/from-scene_heading-by-tab
+scenario-editor/styles-jumping/from-scene_heading-by-enter
 scenario-editor/styles-jumping/from-scene-characters-by-tab
 scenario-editor/styles-jumping/from-scene-characters-by-enter
 scenario-editor/styles-jumping/from-action-by-tab
@@ -73,10 +73,10 @@ chronometry/pages/seconds - количество секунд на одной с
 chronometry/characters/characters - количество символов в посимвольном хронометре
 chronometry/characters/seconds - количество секунд в посимвольном хронометре
 chronometry/characters/consider-spaces - учитывать пробелы в посимвольном хронометраже
-chronometry/configurable/seconds-for-paragraph/time-and-place - секунд за блок текста
+chronometry/configurable/seconds-for-paragraph/scene_heading - секунд за блок текста
 chronometry/configurable/seconds-for-paragraph/action - секунд за блок текста
 chronometry/configurable/seconds-for-paragraph/dialog - секунд за блок текста
-chronometry/configurable/seconds-for-every-50/time-and-place - секунд за каждые 50 символов
+chronometry/configurable/seconds-for-every-50/scene_heading - секунд за каждые 50 символов
 chronometry/configurable/seconds-for-every-50/action - секунд за каждые 50 символов
 chronometry/configurable/seconds-for-every-50/dialog - секунд за каждые 50 символов
 

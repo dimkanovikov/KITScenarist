@@ -19,9 +19,9 @@ QString ConfigurableChronometer::name() const
 float ConfigurableChronometer::calculateFrom(
 		BusinessLogic::ScenarioBlockStyle::Type _type, const QString& _text) const
 {
-	if (_type != ScenarioBlockStyle::TimeAndPlace
+	if (_type != ScenarioBlockStyle::SceneHeading
 		&& _type != ScenarioBlockStyle::Action
-		&& _type != ScenarioBlockStyle::Dialog) {
+		&& _type != ScenarioBlockStyle::Dialogue) {
 		return 0;
 	}
 
@@ -36,12 +36,12 @@ float ConfigurableChronometer::calculateFrom(
 	if (_type == ScenarioBlockStyle::Action) {
 		secondsForParagraphKey = "chronometry/configurable/seconds-for-paragraph/action";
 		secondsForEvery50Key = "chronometry/configurable/seconds-for-every-50/action";
-	} else if (_type == ScenarioBlockStyle::Dialog) {
+	} else if (_type == ScenarioBlockStyle::Dialogue) {
 		secondsForParagraphKey = "chronometry/configurable/seconds-for-paragraph/dialog";
 		secondsForEvery50Key = "chronometry/configurable/seconds-for-every-50/dialog";
 	} else {
-		secondsForParagraphKey = "chronometry/configurable/seconds-for-paragraph/time-and-place";
-		secondsForEvery50Key = "chronometry/configurable/seconds-for-every-50/time-and-place";
+		secondsForParagraphKey = "chronometry/configurable/seconds-for-paragraph/scene_heading";
+		secondsForEvery50Key = "chronometry/configurable/seconds-for-every-50/scene_heading";
 	}
 
 	//

@@ -119,7 +119,7 @@ namespace {
 				// 1. всё что осталось
 				//
 				else {
-					blockType = ScenarioBlockStyle::Dialog;
+					blockType = ScenarioBlockStyle::Dialogue;
 				}
 
 			}
@@ -138,7 +138,7 @@ namespace {
 					//
 					if (blockTextUppercase.contains(PLACE_CONTAINS_CHECKER)
 						|| blockTextUppercase.contains(START_FROM_NUMBER_CHECKER)) {
-						blockType = ScenarioBlockStyle::TimeAndPlace;
+						blockType = ScenarioBlockStyle::SceneHeading;
 					}
 					//
 					// Участника сцены
@@ -146,7 +146,7 @@ namespace {
 					// 2. идут сразу же после времени и места
 					// 3. не имеют сверху отступа
 					//
-					else if (_lastBlockType == ScenarioBlockStyle::TimeAndPlace
+					else if (_lastBlockType == ScenarioBlockStyle::SceneHeading
 							 && _prevEmptyLines == 0
 							 && blockFormat.topMargin() == 0) {
 						blockType = ScenarioBlockStyle::SceneCharacters;
@@ -199,8 +199,8 @@ namespace {
 		// * всевозможные "инт - " меняем на "инт. "
 		// * убираем точки в конце названия локации
 		//
-		if (_blockType == ScenarioBlockStyle::TimeAndPlace) {
-			const QString location = BusinessLogic::TimeAndPlaceParser::locationName(_blockText);
+		if (_blockType == ScenarioBlockStyle::SceneHeading) {
+			const QString location = BusinessLogic::SceneHeadingParser::locationName(_blockText);
 			QString clearLocation = location.simplified();
 			clearLocation.remove(NOISE_AT_START);
 			clearLocation.remove(NOISE_AT_END);
@@ -306,7 +306,7 @@ QString DocumentImporter::importScenario(const ImportParameters& _importParamete
 			//
 			// Если текущий тип "Время и место" и нужно удалить номер сцены, то делаем это
 			//
-			if (blockType == ScenarioBlockStyle::TimeAndPlace
+			if (blockType == ScenarioBlockStyle::SceneHeading
 				&& _importParameters.removeScenesNumbers){
 				blockText = blockText.toUpper();
 				QRegularExpressionMatch match = START_FROM_NUMBER_CHECKER.match(blockText);

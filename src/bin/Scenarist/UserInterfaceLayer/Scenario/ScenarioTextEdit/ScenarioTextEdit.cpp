@@ -605,7 +605,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 							// Прорисовка номеров сцен, если необходимо
 							//
 							if (m_showSceneNumbers
-								&& blockType == ScenarioBlockStyle::TimeAndPlace) {
+								&& blockType == ScenarioBlockStyle::SceneHeading) {
 								//
 								// Определим номер сцены
 								//
@@ -1244,7 +1244,7 @@ void ScenarioTextEdit::initEditor()
 	setTextCursor(cursor);
 	if (BusinessLogic::ScenarioBlockStyle::forBlock(cursor.block())
 		== BusinessLogic::ScenarioBlockStyle::Undefined) {
-		applyScenarioTypeToBlockText(ScenarioBlockStyle::TimeAndPlace);
+		applyScenarioTypeToBlockText(ScenarioBlockStyle::SceneHeading);
 	}
 
 	initEditorConnections();

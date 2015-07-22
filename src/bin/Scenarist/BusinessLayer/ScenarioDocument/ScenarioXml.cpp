@@ -44,7 +44,7 @@ namespace {
 
 QString ScenarioXml::defaultXml()
 {
-	return makeMimeFromXml("<time_and_place description=\"\"><![CDATA[]]></time_and_place>\n");
+	return makeMimeFromXml("<scene_heading description=\"\"><![CDATA[]]></scene_heading>\n");
 }
 
 QString ScenarioXml::makeMimeFromXml(const QString& _xml)
@@ -177,7 +177,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			QString currentNode = ScenarioBlockStyle::typeName(currentType); // имя текущей ячейки
 			bool canHaveDescription = false; // может иметь описание
 			switch (currentType) {
-				case ScenarioBlockStyle::TimeAndPlace: {
+				case ScenarioBlockStyle::SceneHeading: {
 					canHaveDescription = true;
 					break;
 				}
@@ -187,7 +187,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 					break;
 				}
 
-				case ScenarioBlockStyle::Dialog: {
+				case ScenarioBlockStyle::Dialogue: {
 					break;
 				}
 
@@ -652,7 +652,7 @@ void ScenarioXml::xmlToScenarioV0(int _position, const QString& _xml)
 				//
 				// Если необходимо, загрузить информацию о сцене
 				//
-				if (tokenType == ScenarioBlockStyle::TimeAndPlace
+				if (tokenType == ScenarioBlockStyle::SceneHeading
 					|| tokenType == ScenarioBlockStyle::SceneGroupHeader
 					|| tokenType == ScenarioBlockStyle::FolderHeader) {
 					QString synopsis = reader.attributes().value("synopsis").toString();
@@ -804,7 +804,7 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 					//
 					// Если необходимо, загрузить информацию о сцене
 					//
-					if (tokenType == ScenarioBlockStyle::TimeAndPlace
+					if (tokenType == ScenarioBlockStyle::SceneHeading
 						|| tokenType == ScenarioBlockStyle::SceneGroupHeader
 						|| tokenType == ScenarioBlockStyle::FolderHeader) {
 						ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;

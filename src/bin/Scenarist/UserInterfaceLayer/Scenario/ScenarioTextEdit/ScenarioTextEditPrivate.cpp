@@ -23,12 +23,12 @@ ShortcutsManager::ShortcutsManager(UserInterface::ScenarioTextEdit* _editor) :
 	//
 	// Создаём шорткаты
 	//
-	m_shortcuts.insert(ScenarioBlockStyle::TimeAndPlace, new QShortcut(_editor));
+	m_shortcuts.insert(ScenarioBlockStyle::SceneHeading, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::SceneCharacters, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::Action, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::Character, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::Parenthetical, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::Dialog, new QShortcut(_editor));
+	m_shortcuts.insert(ScenarioBlockStyle::Dialogue, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::Transition, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::Note, new QShortcut(_editor));
 	m_shortcuts.insert(ScenarioBlockStyle::Title, new QShortcut(_editor));

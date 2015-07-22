@@ -82,12 +82,12 @@ namespace {
 		const int ROWS_COUNT = 0;
 		const int COLUMNS_COUNT = 6;
 		QStandardItemModel* blocksJumpsModel = new QStandardItemModel(ROWS_COUNT, COLUMNS_COUNT, _parent);
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::TimeAndPlace));
+		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneHeading));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneCharacters));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Action));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Character));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Parenthetical));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Dialog));
+		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Dialogue));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Transition));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Note));
 		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Title));
@@ -192,12 +192,12 @@ void SettingsManager::applicationSaveBackupsFolderChanged(const QString& _value)
 
 void SettingsManager::scenarioEditShowScenesNumbersChanged(bool _value)
 {
-    storeValue("scenario-editor/show-scenes-numbers", _value);
+	storeValue("scenario-editor/show-scenes-numbers", _value);
 }
 
 void SettingsManager::scenarioEditHighlightCurrentLineChanged(bool _value)
 {
-    storeValue("scenario-editor/highlight-current-line", _value);
+	storeValue("scenario-editor/highlight-current-line", _value);
 }
 
 void SettingsManager::scenarioEditPageViewChanged(bool _value)
@@ -370,14 +370,14 @@ void SettingsManager::chronometryCharactersConsiderSpacesChanged(bool _value)
 	storeValue("chronometry/characters/consider-spaces", _value);
 }
 
-void SettingsManager::chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double _value)
+void SettingsManager::chronometryConfigurableSecondsForParagraphSceneHeadingChanged(double _value)
 {
-	storeValue("chronometry/configurable/seconds-for-paragraph/time-and-place", _value);
+	storeValue("chronometry/configurable/seconds-for-paragraph/scene_heading", _value);
 }
 
-void SettingsManager::chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double _value)
+void SettingsManager::chronometryConfigurableSecondsFor50SceneHeadingChanged(double _value)
 {
-	storeValue("chronometry/configurable/seconds-for-every-50/time-and-place", _value);
+	storeValue("chronometry/configurable/seconds-for-every-50/scene_heading", _value);
 }
 
 void SettingsManager::chronometryConfigurableSecondsForParagraphActionChanged(double _value)
@@ -582,12 +582,12 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
-    m_view->setScenarioEditHighlightCurrentLine(
-                DataStorageLayer::StorageFacade::settingsStorage()->value(
-                    "scenario-editor/highlight-current-line",
-                    DataStorageLayer::SettingsStorage::ApplicationSettings)
-                .toInt()
-                );
+	m_view->setScenarioEditHighlightCurrentLine(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/highlight-current-line",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setScenarioEditPageView(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"scenario-editor/page-view",
@@ -722,12 +722,12 @@ void SettingsManager::initView()
 	QStringList delegateModel;
 	{
 		const bool BEAUTIFY_NAME = true;
-		delegateModel << ScenarioBlockStyle::typeName(ScenarioBlockStyle::TimeAndPlace, BEAUTIFY_NAME)
+		delegateModel << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneHeading, BEAUTIFY_NAME)
 					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneCharacters, BEAUTIFY_NAME)
 					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Action, BEAUTIFY_NAME)
 					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Character, BEAUTIFY_NAME)
 					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Parenthetical, BEAUTIFY_NAME)
-					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Dialog, BEAUTIFY_NAME)
+					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Dialogue, BEAUTIFY_NAME)
 					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Transition, BEAUTIFY_NAME)
 					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Note, BEAUTIFY_NAME)
 					  << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Title, BEAUTIFY_NAME)
@@ -816,15 +816,15 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
-	m_view->setChronometryConfigurableSecondsForParagraphTimeAndPlace(
+	m_view->setChronometryConfigurableSecondsForParagraphSceneHeading(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"chronometry/configurable/seconds-for-paragraph/time-and-place",
+					"chronometry/configurable/seconds-for-paragraph/scene_heading",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toDouble()
 				);
-	m_view->setChronometryConfigurableSecondsFor50TimeAndPlace(
+	m_view->setChronometryConfigurableSecondsFor50SceneHeading(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"chronometry/configurable/seconds-for-every-50/time-and-place",
+					"chronometry/configurable/seconds-for-every-50/scene_heading",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toDouble()
 				);
@@ -893,7 +893,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SLOT(applicationSaveBackupsFolderChanged(QString)));
 
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
-    connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SLOT(scenarioEditHighlightCurrentLineChanged(bool)));
+	connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SLOT(scenarioEditHighlightCurrentLineChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SLOT(scenarioEditSpellCheckChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckLanguageChanged(int)), this, SLOT(scenarioEditSpellCheckLanguageChanged(int)));
@@ -924,10 +924,10 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(chronometryCharactersCharactersChanged(int)), this, SLOT(chronometryCharactersCharactersChanged(int)));
 	connect(m_view, SIGNAL(chronometryCharactersSecondsChanged(int)), this, SLOT(chronometryCharactersSecondsChanged(int)));
 	connect(m_view, SIGNAL(chronometryCharactersConsiderSpaces(bool)), this, SLOT(chronometryCharactersConsiderSpacesChanged(bool)));
-	connect(m_view, SIGNAL(chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double)),
-			this, SLOT(chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double)));
-	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double)),
-			this, SLOT(chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double)));
+	connect(m_view, SIGNAL(chronometryConfigurableSecondsForParagraphSceneHeadingChanged(double)),
+			this, SLOT(chronometryConfigurableSecondsForParagraphSceneHeadingChanged(double)));
+	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50SceneHeadingChanged(double)),
+			this, SLOT(chronometryConfigurableSecondsFor50SceneHeadingChanged(double)));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsForParagraphActionChanged(double)),
 			this, SLOT(chronometryConfigurableSecondsForParagraphActionChanged(double)));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50ActionChanged(double)),
@@ -951,8 +951,8 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SIGNAL(applicationSettingsUpdated()));
 
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
-    connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
-    connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckLanguageChanged(int)), this, SIGNAL(scenarioEditSettingsUpdated()));
@@ -981,9 +981,9 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(chronometryCharactersCharactersChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCharactersSecondsChanged(int)), this, SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryCharactersConsiderSpaces(bool)), this, SIGNAL(chronometrySettingsUpdated()));
-	connect(m_view, SIGNAL(chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double)),
+	connect(m_view, SIGNAL(chronometryConfigurableSecondsForParagraphSceneHeadingChanged(double)),
 			SIGNAL(chronometrySettingsUpdated()));
-	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double)),
+	connect(m_view, SIGNAL(chronometryConfigurableSecondsFor50SceneHeadingChanged(double)),
 			SIGNAL(chronometrySettingsUpdated()));
 	connect(m_view, SIGNAL(chronometryConfigurableSecondsForParagraphActionChanged(double)),
 			SIGNAL(chronometrySettingsUpdated()));

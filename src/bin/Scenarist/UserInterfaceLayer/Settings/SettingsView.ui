@@ -133,7 +133,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -300,7 +300,7 @@
            <item row="2" column="0" colspan="2">
             <widget class="QStackedWidget" name="ScenarioEditPageStack">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="scenarioEditCommon">
               <layout class="QGridLayout" name="gridLayout_10">
@@ -1308,7 +1308,7 @@
                  <item>
                   <widget class="QCheckBox" name="autoJumpToNextBlock">
                    <property name="text">
-                    <string>Automatically jump to next paragraph (in time and place and characters)</string>
+                    <string>Automatically jump to next paragraph (in scene headings and characters)</string>
                    </property>
                    <property name="checked">
                     <bool>true</bool>
@@ -1887,7 +1887,7 @@
                     <item row="1" column="0">
                      <widget class="QLabel" name="label">
                       <property name="text">
-                       <string>Time And Place</string>
+                       <string>Scene Heading</string>
                       </property>
                      </widget>
                     </item>
@@ -1992,7 +1992,7 @@
                      </spacer>
                     </item>
                     <item row="1" column="3" colspan="2">
-                     <widget class="QDoubleSpinBox" name="configurableChronometrySecondsForParagraphTimeAndPlace">
+                     <widget class="QDoubleSpinBox" name="configurableChronometrySecondsForParagraphSceneHeading">
                       <property name="decimals">
                        <number>1</number>
                       </property>
@@ -2009,7 +2009,7 @@
                      </widget>
                     </item>
                     <item row="1" column="8">
-                     <widget class="QDoubleSpinBox" name="configurableChronometrySecondsPer50CharactersTimeAndPlace">
+                     <widget class="QDoubleSpinBox" name="configurableChronometrySecondsPer50CharactersSceneHeading">
                       <property name="decimals">
                        <number>1</number>
                       </property>
@@ -2324,8 +2324,8 @@ Paragraph</string>
   <tabstop>charactersChronometrySeconds</tabstop>
   <tabstop>charactersChronometryConsiderSpaces</tabstop>
   <tabstop>configurableChronometry</tabstop>
-  <tabstop>configurableChronometrySecondsForParagraphTimeAndPlace</tabstop>
-  <tabstop>configurableChronometrySecondsPer50CharactersTimeAndPlace</tabstop>
+  <tabstop>configurableChronometrySecondsForParagraphSceneHeading</tabstop>
+  <tabstop>configurableChronometrySecondsPer50CharactersSceneHeading</tabstop>
   <tabstop>configurableChronometrySecondsForParagraphAction</tabstop>
   <tabstop>configurableChronometrySecondsPer50CharactersAction</tabstop>
   <tabstop>configurableChronometrySecondsForParagraphDialog</tabstop>

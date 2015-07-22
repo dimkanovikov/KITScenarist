@@ -2,7 +2,7 @@
 
 #include "PrepareHandler.h"
 #include "PreHandler.h"
-#include "TimeAndPlaceHandler.h"
+#include "SceneHeadingHandler.h"
 #include "SceneCharactersHandler.h"
 #include "ActionHandler.h"
 #include "CharacterHandler.h"
@@ -69,7 +69,7 @@ KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :
 {
 	m_prepareHandler = new PrepareHandler(_editor);
 	m_preHandler = new PreHandler(_editor);
-	m_sceneHeaderHandler = new TimeAndPlaceHandler(_editor);
+	m_sceneHeaderHandler = new SceneHeadingHandler(_editor);
 	m_sceneCharactersHandler = new SceneCharactersHandler(_editor);
 	m_actionHandler = new ActionHandler(_editor);
 	m_characterHandler = new CharacterHandler(_editor);
@@ -91,7 +91,7 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioBlockStyle::Type _
 	AbstractKeyHandler* handler = 0;
 
 	switch (_type) {
-		case ScenarioBlockStyle::TimeAndPlace: {
+		case ScenarioBlockStyle::SceneHeading: {
 			handler = m_sceneHeaderHandler;
 			break;
 		}
@@ -115,7 +115,7 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioBlockStyle::Type _
 			break;
 		}
 
-		case ScenarioBlockStyle::Dialog: {
+		case ScenarioBlockStyle::Dialogue: {
 			handler = m_dialogHandler;
 			break;
 		}

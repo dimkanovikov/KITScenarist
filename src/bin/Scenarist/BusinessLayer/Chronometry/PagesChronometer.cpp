@@ -67,7 +67,7 @@ float PagesChronometer::calculateFrom(
 			break;
 		}
 
-		case ScenarioBlockStyle::Dialog: {
+		case ScenarioBlockStyle::Dialogue: {
 			lineLength = 28;
 			additionalLines = 0;
 			break;

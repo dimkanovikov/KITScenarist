@@ -45,7 +45,7 @@ namespace BusinessLogic
 	/**
 	 * @brief Парсер текста блока время и место
 	 */
-	class TimeAndPlaceParser
+	class SceneHeadingParser
 	{
 	public:
 		/**
@@ -65,7 +65,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Получить секцию блока
 		 */
-		static TimeAndPlaceParser::Section section(const QString& _text);
+		static SceneHeadingParser::Section section(const QString& _text);
 
 		/**
 		 * @brief Получить название места

@@ -103,7 +103,7 @@ void ParentheticalHandler::handleEnter(QKeyEvent*)
 					// Перейдём к блоку реплики
 					//
 					editor()->setTextCursor(cursor);
-					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Dialogue);
 				}
 			}
 		}
@@ -253,7 +253,7 @@ void ParentheticalHandler::handleOther(QKeyEvent* _event)
 			//
 			// Переходим к блоку реплики
 			//
-			editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+			editor()->addScenarioBlock(ScenarioBlockStyle::Dialogue);
 		}
 		//
 		// Во всех остальных случаях удаляем введённую скобку

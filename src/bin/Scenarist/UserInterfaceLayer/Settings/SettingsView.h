@@ -54,7 +54,7 @@ namespace UserInterface
 		void setApplicationSaveBackupsFolder(const QString& _folder);
 
 		void setScenarioEditShowScenesNumbers(bool _value);
-        void setScenarioEditHighlightCurrentLine(bool _value);
+		void setScenarioEditHighlightCurrentLine(bool _value);
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditSpellCheck(bool _value);
 		void setScenarioEditSpellCheckLanguage(int _value);
@@ -83,8 +83,8 @@ namespace UserInterface
 		void setChronometryCharactersCharacters(int  _value);
 		void setChronometryCharactersSeconds(int  _value);
 		void setChronometryCharactersConsiderSpaces(bool  _value);
-		void setChronometryConfigurableSecondsForParagraphTimeAndPlace(double  _value);
-		void setChronometryConfigurableSecondsFor50TimeAndPlace(double  _value);
+		void setChronometryConfigurableSecondsForParagraphSceneHeading(double  _value);
+		void setChronometryConfigurableSecondsFor50SceneHeading(double  _value);
 		void setChronometryConfigurableSecondsForParagraphAction(double  _value);
 		void setChronometryConfigurableSecondsFor50Action(double  _value);
 		void setChronometryConfigurableSecondsForParagraphDialog(double  _value);
@@ -112,7 +112,7 @@ namespace UserInterface
 		void applicationSaveBackupsFolderChanged(const QString&);
 
 		void scenarioEditShowScenesNumbersChanged(bool);
-        void scenarioEditHighlightCurrentLineChanged(bool);
+		void scenarioEditHighlightCurrentLineChanged(bool);
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditSpellCheckChanged(bool);
 		void scenarioEditSpellCheckLanguageChanged(int);
@@ -144,8 +144,8 @@ namespace UserInterface
 		void chronometryCharactersCharactersChanged(int);
 		void chronometryCharactersSecondsChanged(int);
 		void chronometryCharactersConsiderSpaces(bool);
-		void chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double);
-		void chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double);
+		void chronometryConfigurableSecondsForParagraphSceneHeadingChanged(double);
+		void chronometryConfigurableSecondsFor50SceneHeadingChanged(double);
 		void chronometryConfigurableSecondsForParagraphActionChanged(double);
 		void chronometryConfigurableSecondsFor50ActionChanged(double);
 		void chronometryConfigurableSecondsForParagraphDialogChanged(double);

@@ -8,6 +8,16 @@ using BusinessLogic::ScenarioBlockStyle;
 using BusinessLogic::ScenarioTemplate;
 using UserInterface::TemplateDialog;
 
+namespace {
+	/**
+	 * @brief Сформировать элемент списка для заданного типа блока
+	 */
+	static QListWidgetItem* makeListWidgetItem(ScenarioBlockStyle::Type _forType) {
+		static const bool BEAUTIFY_NAME = true;
+		return new QListWidgetItem(ScenarioBlockStyle::typeName(_forType, BEAUTIFY_NAME), 0, _forType);
+	}
+}
+
 
 TemplateDialog::TemplateDialog(QWidget *parent) :
 	QLightBoxDialog(parent),
@@ -318,19 +328,19 @@ void TemplateDialog::initView()
 	//
 	// Формируем модель стилей блоков (она для всех стилей едина)
 	//
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Time And Place"), 0, ScenarioBlockStyle::TimeAndPlace));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Scene Characters"), 0, ScenarioBlockStyle::SceneCharacters));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Action"), 0, ScenarioBlockStyle::Action));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Character"), 0, ScenarioBlockStyle::Character));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Parenthetical"), 0, ScenarioBlockStyle::Parenthetical));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Dialog"), 0, ScenarioBlockStyle::Dialog));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Transition"), 0, ScenarioBlockStyle::Transition));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Note"), 0, ScenarioBlockStyle::Note));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Title Header"), 0, ScenarioBlockStyle::TitleHeader));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Title"), 0, ScenarioBlockStyle::Title));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Noprintable Text"), 0, ScenarioBlockStyle::NoprintableText));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Scene Group"), 0, ScenarioBlockStyle::SceneGroupHeader));
-	ui->blockStyles->addItem(new QListWidgetItem(tr("Folder"), 0, ScenarioBlockStyle::FolderHeader));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneHeading));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneCharacters));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Action));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Character));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Parenthetical));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Dialogue));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Transition));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Note));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::TitleHeader));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Title));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::NoprintableText));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneGroupHeader));
+	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::FolderHeader));
 
 	//
 	// Сформируем модель из списка шрифтов системы

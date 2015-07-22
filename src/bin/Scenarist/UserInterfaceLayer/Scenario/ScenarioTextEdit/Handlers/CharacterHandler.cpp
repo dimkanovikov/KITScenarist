@@ -131,7 +131,7 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 					//
 					// Вставить блок реплики героя
 					//
-					editor()->addScenarioBlock(ScenarioBlockStyle::Dialog);
+					editor()->addScenarioBlock(ScenarioBlockStyle::Dialogue);
 				}
 			}
 		}

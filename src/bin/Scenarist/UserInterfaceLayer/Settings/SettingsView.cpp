@@ -293,14 +293,14 @@ void SettingsView::setChronometryCharactersConsiderSpaces(bool _value)
 	ui->charactersChronometryConsiderSpaces->setChecked(_value);
 }
 
-void SettingsView::setChronometryConfigurableSecondsForParagraphTimeAndPlace(double _value)
+void SettingsView::setChronometryConfigurableSecondsForParagraphSceneHeading(double _value)
 {
-	ui->configurableChronometrySecondsForParagraphTimeAndPlace->setValue(_value);
+	ui->configurableChronometrySecondsForParagraphSceneHeading->setValue(_value);
 }
 
-void SettingsView::setChronometryConfigurableSecondsFor50TimeAndPlace(double _value)
+void SettingsView::setChronometryConfigurableSecondsFor50SceneHeading(double _value)
 {
-	ui->configurableChronometrySecondsPer50CharactersTimeAndPlace->setValue(_value);
+	ui->configurableChronometrySecondsPer50CharactersSceneHeading->setValue(_value);
 }
 
 void SettingsView::setChronometryConfigurableSecondsForParagraphAction(double _value)
@@ -609,10 +609,10 @@ void SettingsView::initConnections()
 	connect(ui->charactersChronometryCharacters, SIGNAL(valueChanged(int)), this, SIGNAL(chronometryCharactersCharactersChanged(int)));
 	connect(ui->charactersChronometrySeconds, SIGNAL(valueChanged(int)), this, SIGNAL(chronometryCharactersSecondsChanged(int)));
 	connect(ui->charactersChronometryConsiderSpaces, SIGNAL(toggled(bool)), this, SIGNAL(chronometryCharactersConsiderSpaces(bool)));
-	connect(ui->configurableChronometrySecondsForParagraphTimeAndPlace, SIGNAL(valueChanged(double)),
-			this, SIGNAL(chronometryConfigurableSecondsForParagraphTimeAndPlaceChanged(double)));
-	connect(ui->configurableChronometrySecondsPer50CharactersTimeAndPlace, SIGNAL(valueChanged(double)),
-			this, SIGNAL(chronometryConfigurableSecondsFor50TimeAndPlaceChanged(double)));
+	connect(ui->configurableChronometrySecondsForParagraphSceneHeading, SIGNAL(valueChanged(double)),
+			this, SIGNAL(chronometryConfigurableSecondsForParagraphSceneHeadingChanged(double)));
+	connect(ui->configurableChronometrySecondsPer50CharactersSceneHeading, SIGNAL(valueChanged(double)),
+			this, SIGNAL(chronometryConfigurableSecondsFor50SceneHeadingChanged(double)));
 	connect(ui->configurableChronometrySecondsForParagraphAction, SIGNAL(valueChanged(double)),
 			this, SIGNAL(chronometryConfigurableSecondsForParagraphActionChanged(double)));
 	connect(ui->configurableChronometrySecondsPer50CharactersAction, SIGNAL(valueChanged(double)),

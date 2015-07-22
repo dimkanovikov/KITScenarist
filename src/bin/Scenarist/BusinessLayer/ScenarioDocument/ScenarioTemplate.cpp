@@ -38,12 +38,12 @@ namespace {
 		static QMap<ScenarioBlockStyle::Type, QString> s_typeNames;
 		if (s_typeNames.isEmpty()) {
 			s_typeNames.insert(ScenarioBlockStyle::Undefined, "undefined");
-			s_typeNames.insert(ScenarioBlockStyle::TimeAndPlace, "time_and_place");
+			s_typeNames.insert(ScenarioBlockStyle::SceneHeading, "scene_heading");
 			s_typeNames.insert(ScenarioBlockStyle::SceneCharacters, "scene_characters");
 			s_typeNames.insert(ScenarioBlockStyle::Action, "action");
 			s_typeNames.insert(ScenarioBlockStyle::Character, "character");
 			s_typeNames.insert(ScenarioBlockStyle::Parenthetical, "parenthetical");
-			s_typeNames.insert(ScenarioBlockStyle::Dialog, "dialog");
+			s_typeNames.insert(ScenarioBlockStyle::Dialogue, "dialog");
 			s_typeNames.insert(ScenarioBlockStyle::Transition, "transition");
 			s_typeNames.insert(ScenarioBlockStyle::Note, "note");
 			s_typeNames.insert(ScenarioBlockStyle::TitleHeader, "title_header");
@@ -64,12 +64,12 @@ namespace {
 		static QMap<ScenarioBlockStyle::Type, QString> s_beautifyTypeNames;
 		if (s_beautifyTypeNames.isEmpty()) {
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Undefined, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Undefined"));
-			s_beautifyTypeNames.insert(ScenarioBlockStyle::TimeAndPlace, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Time and Place"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneHeading, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Heading"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneCharacters, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Characters"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Action, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Action"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Character, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Character"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Parenthetical, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Parenthetical"));
-			s_beautifyTypeNames.insert(ScenarioBlockStyle::Dialog, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Dialog"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Dialogue, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Dialog"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Transition, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Transition"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Note, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Note"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::TitleHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Title Header"));
@@ -350,13 +350,18 @@ ScenarioBlockStyle::ScenarioBlockStyle(const QXmlStreamAttributes& _blockAttribu
 	// Считываем параметры
 	//
 	// ... тип блока и его активность в стиле
+	// NOTE: обрабатываем так же и старые стили
 	//
-	m_type = typeForName(_blockAttributes.value ("id").toString ());
-	m_isActive = _blockAttributes.value ("active").toString () == "true";
+	QString typeName = _blockAttributes.value("id").toString();
+	if (typeName == "time_and_place") {
+		typeName = "scene_heading";
+	}
+	m_type = typeForName(typeName);
+	m_isActive = _blockAttributes.value("active").toString() == "true";
 	//
 	// ... настройки шрифта
 	//
-	m_font.setFamily(_blockAttributes.value ("font_family").toString());
+	m_font.setFamily(_blockAttributes.value("font_family").toString());
 	m_font.setPointSizeF(_blockAttributes.value("font_size").toDouble());
 	//
 	// ... начертание

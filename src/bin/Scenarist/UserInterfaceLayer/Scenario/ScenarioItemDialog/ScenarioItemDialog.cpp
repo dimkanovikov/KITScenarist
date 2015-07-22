@@ -47,7 +47,7 @@ ScenarioBlockStyle::Type ScenarioItemDialog::itemType() const
 	//
 	// Определим выбранный стиль
 	//
-	ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::TimeAndPlace;
+	ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::SceneHeading;
 	if (m_folder->isChecked()) {
 		currentType = ScenarioBlockStyle::FolderHeader;
 	} else if (m_scenesGroup->isChecked()) {
@@ -85,7 +85,7 @@ void ScenarioItemDialog::aboutUpdateCurrentTextStyle()
 		|| m_scenesGroup->isChecked()) {
 		currentType = ScenarioBlockStyle::Note;
 	} else {
-		currentType = ScenarioBlockStyle::TimeAndPlace;
+		currentType = ScenarioBlockStyle::SceneHeading;
 	}
 
 	//
