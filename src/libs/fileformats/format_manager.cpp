@@ -85,11 +85,11 @@ QString FormatManager::filter(const QString& type)
 QStringList FormatManager::filters(const QString& type)
 {
 	static const QStringList default_filters = QStringList()
-			<< filter("odt")
 			<< filter("docx")
-			<< filter("rtf")
-			<< filter("txt")
-			<< (QCoreApplication::translate("FormatManager", "All Files") + QLatin1String(" (*)"));
+			<< filter("odt");
+//			<< filter("rtf")
+//			<< filter("txt")
+//			<< (QCoreApplication::translate("FormatManager", "All Files") + QLatin1String(" (*)"));
 
 	QStringList result = default_filters;
 	if (!type.isEmpty()) {
@@ -103,7 +103,8 @@ QStringList FormatManager::filters(const QString& type)
 			result.move(4, 0);
 		}
 	} else {
-		result.prepend(QCoreApplication::translate("FormatManager", "All Supported Files") + QLatin1String(" (*.docx *.odt *.rtf *.txt *.text)"));
+//		result.prepend(QCoreApplication::translate("FormatManager", "All Supported Files") + QLatin1String(" (*.docx *.odt *.rtf *.txt *.text)"));
+		result.prepend(QCoreApplication::translate("FormatManager", "All Supported Files") + QLatin1String(" (*.docx *.odt)"));
 	}
 	return result;
 }
