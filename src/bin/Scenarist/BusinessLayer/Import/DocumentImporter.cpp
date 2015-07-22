@@ -21,12 +21,12 @@ namespace {
 	/**
 	 * @brief Регулярное выражение для определения блока "Время и место" по наличию слов места
 	 */
-	const QRegularExpression PLACE_CONTAINS_CHECKER("(^|[^\\S])(INT|EXT|ИНТ|НАТ|ПАВ|ЭКСТ)[. ]");
+	const QRegularExpression PLACE_CONTAINS_CHECKER("(^|[^\\S])(INT|EXT|ИНТ|НАТ|ПАВ|ЭКСТ)([. ]|[ - ])");
 
 	/**
 	 * @brief Регулярное выражение для определения блока "Время и место" по началу с номера
 	 */
-	const QRegularExpression START_FROM_NUMBER_CHECKER("^([\\d]{1,}[\\d\\S]{0,})[.](([\\d\\S]{1,})[.]|) ");
+	const QRegularExpression START_FROM_NUMBER_CHECKER("^([\\d]{1,}[\\d\\S]{0,})([.]|[-])(([\\d\\S]{1,})([.]|)|) ");
 
 	/**
 	 * @brief Допущение для блоков, которые по идее вообще не должны иметь отступа в пикселях (16 мм)
@@ -194,6 +194,12 @@ namespace {
 	 */
 	static QString clearBlockText(ScenarioBlockStyle::Type _blockType, const QString& _blockText) {
 		QString result = _blockText;
+
+		//
+		// Удаляем длинные тире
+		//
+		result = result.replace("–", "-");
+
 		//
 		// Для блока времени и места:
 		// * всевозможные "инт - " меняем на "инт. "
