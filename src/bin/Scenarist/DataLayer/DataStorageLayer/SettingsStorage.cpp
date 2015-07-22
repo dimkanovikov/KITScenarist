@@ -39,6 +39,14 @@ namespace {
 
 void SettingsStorage::setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace)
 {
+	//
+	// Кэшируем значение
+	//
+	cacheValue(_key, _value, _settingsPlace);
+
+	//
+	// Сохраняем его в заданное хранилище
+	//
 	if (_settingsPlace == ApplicationSettings) {
 		QSettings().setValue(_key.toUtf8().toHex(), _value);
 	} else {
@@ -48,6 +56,14 @@ void SettingsStorage::setValue(const QString& _key, const QString& _value, Setti
 
 void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QString& _valuesGroup, SettingsStorage::SettingsPlace _settingsPlace)
 {
+	//
+	// Кэшируем значение
+	//
+	cacheValue(_valuesGroup, QVariant::fromValue<QMap<QString, QString> >(_values), _settingsPlace);
+
+	//
+	// Сохраняем его в заданное хранилище
+	//
 	if (_settingsPlace == ApplicationSettings) {
 		QSettings settings;
 
@@ -70,6 +86,7 @@ void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QSt
 		//
 		foreach (const QString& key, _values.keys()) {
 			settings.setValue(key.toUtf8().toHex(), _values.value(key));
+			m_cachedValues.insert(key.toUtf8().toHex(), _values.value(key));
 		}
 
 		//
@@ -88,19 +105,37 @@ void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QSt
 
 QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace, const QString& _defaultValue)
 {
-	QString value;
-	if (_settingsPlace == ApplicationSettings) {
-		value = QSettings().value(_key.toUtf8().toHex(), QVariant()).toString();
-	} else {
-		value = MapperFacade::settingsMapper()->value(_key);
-	}
+	//
+	// Пробуем получить значение из кэша
+	//
+	bool hasCachedValue = false;
+	QString value = getCachedValue(_key, _settingsPlace, hasCachedValue).toString();
 
-	if (value.isEmpty()) {
-		if (_defaultValue.isEmpty()) {
-			value = defaultValue(_key);
+	//
+	// Если в кэше нет, то загружаем из указанного места
+	//
+	if (!hasCachedValue) {
+		if (_settingsPlace == ApplicationSettings) {
+			value = QSettings().value(_key.toUtf8().toHex(), QVariant()).toString();
 		} else {
-			value = _defaultValue;
+			value = MapperFacade::settingsMapper()->value(_key);
 		}
+
+		//
+		// Если параметр не задан, то используем значение по умолчанию
+		//
+		if (value.isEmpty()) {
+			if (_defaultValue.isEmpty()) {
+				value = m_defaultValues.value(_key);
+			} else {
+				value = _defaultValue;
+			}
+		}
+
+		//
+		// Сохраняем значение в кэш
+		//
+		cacheValue(_key, value, _settingsPlace);
 	}
 
 	return value;
@@ -108,38 +143,53 @@ QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace
 
 QMap<QString, QString> SettingsStorage::values(const QString& _valuesGroup, SettingsStorage::SettingsPlace _settingsPlace)
 {
-	QMap<QString, QString> settingsValues;
+	//
+	// Пробуем получить значение из кэша
+	//
+	bool hasCachedValue = false;
+	QMap<QString, QString> settingsValues =
+		getCachedValue(_valuesGroup, _settingsPlace, hasCachedValue).value<QMap<QString, QString> >();
 
-	if (_settingsPlace == ApplicationSettings) {
-		QSettings settings;
+	//
+	// Если в кэше нет, то загружаем из указанного места
+	//
+	if (!hasCachedValue) {
+		if (_settingsPlace == ApplicationSettings) {
+			QSettings settings;
 
-		//
-		// Откроем группу для считывания
-		//
-		settings.beginGroup(_valuesGroup);
+			//
+			// Откроем группу для считывания
+			//
+			settings.beginGroup(_valuesGroup);
 
-		//
-		// Получим все ключи
-		//
-		QStringList keys = settings.childKeys();
+			//
+			// Получим все ключи
+			//
+			QStringList keys = settings.childKeys();
 
+			//
+			// Получим все значения
+			//
+			foreach (QString key, keys) {
+				 settingsValues.insert(QByteArray::fromHex(key.toUtf8()), settings.value(key).toString());
+			}
+
+			//
+			// Закроем группу
+			//
+			settings.endGroup();
+		}
 		//
-		// Получим все значения
+		// Из базы данных карта параметров не умеет загружаться
 		//
-		foreach (QString key, keys) {
-			 settingsValues.insert(QByteArray::fromHex(key.toUtf8()), settings.value(key).toString());
+		else {
+			Q_ASSERT_X(0, Q_FUNC_INFO, "Database settings can't load group of settings");
 		}
 
 		//
-		// Закроем группу
+		// Сохраняем значение в кэш
 		//
-		settings.endGroup();
-	}
-	//
-	// Из базы данных карта параметров не умеет загружаться
-	//
-	else {
-		Q_ASSERT_X(0, Q_FUNC_INFO, "Database settings can't load group of settings");
+		cacheValue(_valuesGroup, QVariant::fromValue<QMap<QString, QString> >(settingsValues), _settingsPlace);
 	}
 
 	return settingsValues;
@@ -147,6 +197,14 @@ QMap<QString, QString> SettingsStorage::values(const QString& _valuesGroup, Sett
 
 void SettingsStorage::resetValues(SettingsStorage::SettingsPlace _settingsPlace)
 {
+	//
+	// Сбрасываем кэш
+	//
+	m_cachedValues.clear();
+
+	//
+	// Восстанавливаем значения по умолчанию
+	//
 	if (_settingsPlace == ApplicationSettings) {
 		foreach (const QString& key, m_defaultValues.keys()) {
 			setValue(key, m_defaultValues.value(key), _settingsPlace);
@@ -278,7 +336,17 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("counters/simbols/used", "0");
 }
 
-QString SettingsStorage::defaultValue(const QString& _key) const
+QVariant SettingsStorage::getCachedValue(const QString& _key, SettingsStorage::SettingsPlace _settingsPlace, bool& _ok)
 {
-	return m_defaultValues.value(_key, QString());
+	const QString key = QString("%1:%2").arg(_settingsPlace == ApplicationSettings ? "app" : "db").arg(_key);
+	const QString keyHex = key.toUtf8().toHex();
+	_ok = m_cachedValues.contains(keyHex);
+	return m_cachedValues.value(keyHex);
+}
+
+void SettingsStorage::cacheValue(const QString& _key, const QVariant& _value, SettingsStorage::SettingsPlace _settingsPlace)
+{
+	const QString key = QString("%1:%2").arg(_settingsPlace == ApplicationSettings ? "app" : "db").arg(_key);
+	const QString keyHex = key.toUtf8().toHex();
+	m_cachedValues.insert(keyHex, _value);
 }
