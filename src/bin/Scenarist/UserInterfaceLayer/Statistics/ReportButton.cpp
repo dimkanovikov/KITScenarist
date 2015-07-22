@@ -1,4 +1,4 @@
-#include "ChevronButton.h"
+#include "ReportButton.h"
 
 #include <3rd_party/Helpers/ImageHelper.h>
 
@@ -18,20 +18,29 @@ namespace {
 	const QSize ICON_SIZE(20, 20);
 }
 
+using UserInterface::ReportButton;
 
-ChevronButton::ChevronButton(QWidget* _parent) :
-	QRadioButton(_parent)
+
+ReportButton::ReportButton(const QString& _text, BusinessLogic::ReportParameters::Type _type, int _subtype,
+	QWidget* _parent) :
+	QRadioButton(_text, _parent),
+	m_type(_type),
+	m_subtype(_subtype)
 {
 	init();
 }
 
-ChevronButton::ChevronButton(const QString& _text, QWidget* _parent) :
-	QRadioButton(_text, _parent)
+BusinessLogic::ReportParameters::Type ReportButton::type() const
 {
-	init();
+	return m_type;
 }
 
-void ChevronButton::paintEvent(QPaintEvent* _event)
+int ReportButton::subtype() const
+{
+	return m_subtype;
+}
+
+void ReportButton::paintEvent(QPaintEvent* _event)
 {
 	QRadioButton::paintEvent(_event);
 
@@ -52,7 +61,7 @@ void ChevronButton::paintEvent(QPaintEvent* _event)
 	}
 }
 
-void ChevronButton::init()
+void ReportButton::init()
 {
 	setProperty("chevron", true);
 }

@@ -314,6 +314,11 @@ ctkCollapsibleButton[reportButton="true"]:pressed {
 	background-color: palette(dark);
 }
 
+ctkBasePopupWidget {
+	background-color: palette(window);
+	border: 1px solid palette(dark);
+}
+
 /*
  * Стили лайтбокса
  */

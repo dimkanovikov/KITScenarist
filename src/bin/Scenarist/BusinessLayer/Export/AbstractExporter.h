@@ -84,21 +84,20 @@ namespace BusinessLogic
 	class AbstractExporter
 	{
 	public:
+		/**
+		 * @brief Сформировать из сценария документ, готовый для экспорта
+		 * @note Вызывающий получает владение над новым сформированным документом
+		 */
+		static QTextDocument* prepareDocument(const ScenarioDocument* _scenario,
+			const ExportParameters& _exportParameters);
+
+	public:
 		virtual ~AbstractExporter() {}
 
 		/**
 		 * @brief Экспорт заданного документа в файл
 		 */
 		virtual void exportTo(ScenarioDocument* _scenario, const ExportParameters& _exportParameters) const = 0;
-
-	protected:
-		/**
-		 * @brief Сформировать из сценария документ, готовый для экспорта
-		 *
-		 * @note Вызывающий получает владение над новым сформированным документом
-		 */
-		QTextDocument* prepareDocument(const ScenarioDocument* _scenario,
-			const ExportParameters& _exportParameters) const;
 	};
 }
 

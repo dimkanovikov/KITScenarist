@@ -862,7 +862,7 @@ namespace {
 }
 
 QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDocument* _scenario,
-		const ExportParameters& _exportParameters) const
+		const ExportParameters& _exportParameters)
 {
 	ScenarioTemplate exportStyle = ::exportStyle();
 

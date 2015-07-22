@@ -74,6 +74,8 @@
         <file>Icons/scene_noted.png</file>
         <file>Icons/chevron-right.png</file>
         <file>Icons/statistics.png</file>
+        <file>Icons/printer.png</file>
+        <file>Icons/settings_tool.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

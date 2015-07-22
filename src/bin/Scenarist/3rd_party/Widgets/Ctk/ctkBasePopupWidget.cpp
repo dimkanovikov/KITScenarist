@@ -656,43 +656,6 @@ bool ctkBasePopupWidget::event(QEvent* event)
   return this->Superclass::event(event);
 }
 
-// -------------------------------------------------------------------------
-void ctkBasePopupWidget::paintEvent(QPaintEvent* event)
-{
-  Q_D(ctkBasePopupWidget);
-  Q_UNUSED(event);
-
-  QPainter painter(this);
-  QBrush brush = this->palette().window();
-  if (brush.style() == Qt::LinearGradientPattern ||
-	  brush.style() == Qt::ConicalGradientPattern ||
-	  brush.style() == Qt::RadialGradientPattern)
-	{
-	QGradient* newGradient = duplicateGradient(brush.gradient());
-	QGradientStops stops;
-	foreach(QGradientStop stop, newGradient->stops())
-	  {
-	  stop.second.setAlpha(stop.second.alpha() * d->EffectAlpha);
-	  stops.push_back(stop);
-	  }
-	newGradient->setStops(stops);
-	brush = QBrush(*newGradient);
-	delete newGradient;
-	}
-  else
-	{
-	QColor color = brush.color();
-	color.setAlpha(color.alpha() * d->EffectAlpha);
-	brush.setColor(color);
-	}
-  //QColor semiTransparentColor = this->palette().window().color();
-  //semiTransparentColor.setAlpha(d->CurrentAlpha);
-  painter.fillRect(this->rect(), brush);
-  painter.end();
-  // Let the QFrame draw itself if needed
-  this->Superclass::paintEvent(event);
-}
-
 // --------------------------------------------------------------------------
 void ctkBasePopupWidget::showPopup()
 {

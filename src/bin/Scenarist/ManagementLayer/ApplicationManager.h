@@ -142,6 +142,11 @@ namespace ManagementLayer
 		 */
 		void aboutShowFullscreen();
 
+		/**
+		 * @brief Подготовить документ для подсчёта статистики
+		 */
+		void aboutPrepareScenarioForStatistics();
+
 	private:
 		/**
 		 * @brief Загрузить состояние окна

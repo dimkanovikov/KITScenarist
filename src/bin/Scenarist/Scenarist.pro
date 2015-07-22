@@ -238,9 +238,10 @@ SOURCES += main.cpp \
     3rd_party/Widgets/Ctk/ctkCollapsibleButton.cpp \
     UserInterfaceLayer/Statistics/StatisticsView.cpp \
     ManagementLayer/Statistics/StatisticsManager.cpp \
-    UserInterfaceLayer/Statistics/ChevronButton.cpp \
     3rd_party/Widgets/Ctk/ctkPopupWidget.cpp \
-    3rd_party/Widgets/Ctk/ctkBasePopupWidget.cpp
+    3rd_party/Widgets/Ctk/ctkBasePopupWidget.cpp \
+    UserInterfaceLayer/Statistics/StatisticsSettings.cpp \
+    UserInterfaceLayer/Statistics/ReportButton.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -431,12 +432,14 @@ HEADERS += \
     3rd_party/Widgets/Ctk/ctkCollapsibleButton.h \
     UserInterfaceLayer/Statistics/StatisticsView.h \
     ManagementLayer/Statistics/StatisticsManager.h \
-    UserInterfaceLayer/Statistics/ChevronButton.h \
     3rd_party/Widgets/Ctk/ctkPopupWidget.h \
     3rd_party/Widgets/Ctk/ctkPopupWidget_p.h \
     3rd_party/Widgets/Ctk/ctkBasePopupWidget.h \
     3rd_party/Widgets/Ctk/ctkBasePopupWidget_p.h \
-    3rd_party/Widgets/Ctk/ctkPimpl.h
+    3rd_party/Widgets/Ctk/ctkPimpl.h \
+    UserInterfaceLayer/Statistics/StatisticsSettings.h \
+    BusinessLayer/Statistics/AbstractReport.h \
+    UserInterfaceLayer/Statistics/ReportButton.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -447,7 +450,8 @@ FORMS += \
     UserInterfaceLayer/Export/ExportDialog.ui \
     UserInterfaceLayer/Import/ImportDialog.ui \
     UserInterfaceLayer/Settings/TemplateDialog.ui \
-    UserInterfaceLayer/StartUp/LoginDialog.ui
+    UserInterfaceLayer/StartUp/LoginDialog.ui \
+    UserInterfaceLayer/Statistics/StatisticsSettings.ui
 
 
 RESOURCES += \

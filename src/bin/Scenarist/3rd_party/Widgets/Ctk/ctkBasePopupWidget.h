@@ -190,7 +190,6 @@ protected:
 
   virtual void setBaseWidget(QWidget* baseWidget);
   virtual bool event(QEvent* event);
-  virtual void paintEvent(QPaintEvent*);
 
 protected Q_SLOTS:
   virtual void onEffectFinished();

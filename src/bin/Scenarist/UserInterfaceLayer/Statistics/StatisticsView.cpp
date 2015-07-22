@@ -1,128 +1,223 @@
 #include "StatisticsView.h"
 
-#include "ChevronButton.h"
+#include "ReportButton.h"
+#include "StatisticsSettings.h"
 
 #include <3rd_party/Widgets/Ctk/ctkCollapsibleButton.h>
 #include <3rd_party/Widgets/Ctk/ctkPopupWidget.h>
+#include <3rd_party/Widgets/FlatButton/FlatButton.h>
 
 #include <QButtonGroup>
-#include <QPushButton>
-#include <QRadioButton>
-#include <QSlider>
-
+#include <QFrame>
+#include <QLabel>
+#include <QSplitter>
+#include <QStackedWidget>
+#include <QTextBrowser>
 #include <QVariant>
 #include <QVBoxLayout>
 
 using UserInterface::StatisticsView;
+using UserInterface::StatisticsSettings;
+using UserInterface::ReportButton;
+using BusinessLogic::ReportParameters;
 
 
 StatisticsView::StatisticsView(QWidget* _parent) :
-	QWidget(_parent)
+	QWidget(_parent),
+	m_leftTopEmptyLabel(new QLabel(this)),
+	m_rightTopEmptyLabel(new QLabel(this)),
+	m_settings(new FlatButton(this)),
+	m_print(new FlatButton(this)),
+	m_save(new FlatButton(this)),
+	m_statisticTypes(new QFrame(this)),
+	m_statisticSettings(new StatisticsSettings(this)),
+	m_statisticData(new QStackedWidget(this)),
+	m_reportData(new QTextBrowser(this))
 {
 	initView();
 	initConnections();
 	initStyleSheet();
 }
 
+void StatisticsView::setCharacters(QAbstractItemModel* _characters)
+{
+	m_statisticSettings->setCharacters(_characters);
+}
+
+void StatisticsView::setScriptElements(QAbstractItemModel* _elements)
+{
+	m_statisticSettings->setScriptElements(_elements);
+}
+
+void StatisticsView::setReport(const QString& _html)
+{
+	m_reportData->setHtml(_html);
+}
+
+void StatisticsView::aboutInitDataPanel()
+{
+	if (ReportButton* button = qobject_cast<ReportButton*>(sender())) {
+		if (button->type() == BusinessLogic::ReportParameters::Report) {
+			m_statisticData->setCurrentWidget(m_reportData);
+		} else {
+			//
+			// TODO: график
+			//
+		}
+
+		m_statisticSettings->setCurrentIndex(button->group()->checkedId());
+
+		if (ctkPopupWidget* settingsPanel = m_settings->findChild<ctkPopupWidget*>()) {
+			settingsPanel->setFixedSize(m_statisticSettings->currentWidget()->sizeHint());
+		}
+	}
+}
+
+void StatisticsView::aboutMakeReport()
+{
+	if (ReportButton* button = qobject_cast<ReportButton*>(m_reports.first()->group()->checkedButton())) {
+		BusinessLogic::ReportParameters parameters = m_statisticSettings->settings();
+		parameters.type = button->type();
+		if (parameters.type == BusinessLogic::ReportParameters::Report) {
+			parameters.reportType = (BusinessLogic::ReportParameters::ReportType)button->subtype();
+		} else {
+			//
+			// TODO: график
+			//
+		}
+
+		emit makeReport(parameters);
+	}
+}
+
 void StatisticsView::initView()
 {
+	//
+	// Настраиваем панели инструментов
+	//
+	m_settings->setIcons(QIcon(":/Graphics/Icons/settings_tool.png"));
+	m_settings->setCheckable(true);
+	ctkPopupWidget* settingsPanel = new ctkPopupWidget(m_settings);
+	QHBoxLayout* settingsPanelLayout = new QHBoxLayout(settingsPanel);
+	settingsPanelLayout->setContentsMargins(QMargins());
+	settingsPanelLayout->setSpacing(0);
+	settingsPanelLayout->addWidget(m_statisticSettings);
+	settingsPanel->setAutoShow(false);
+	settingsPanel->setAutoHide(false);
+	settingsPanel->setFixedSize(1, 0);
+	connect(m_settings, SIGNAL(toggled(bool)), settingsPanel, SLOT(showPopup(bool)));
 
-	ctkCollapsibleButton* btn = new ctkCollapsibleButton("Reports", this);
-	btn->setIndicatorAlignment(Qt::AlignRight);
-	btn->setCollapsed(true);
-	btn->setProperty("reportButton", true);
-
-	ChevronButton* rb1 = new ChevronButton("rb 1", btn);
-	ChevronButton* rb2 = new ChevronButton("rb 2", btn);
-	ChevronButton* rb3 = new ChevronButton("rb 3", btn);
-
-
-
-	QVBoxLayout* layout = new QVBoxLayout;
-	layout->setContentsMargins(QMargins());
-	layout->setSpacing(0);
-	layout->addWidget(rb1);
-	layout->addWidget(rb2);
-	layout->addWidget(rb3);
-
-	btn->setLayout(layout);
+	m_print->setIcons(QIcon(":/Graphics/Icons/printer.png"));
+	m_save->setIcons(QIcon(":/Graphics/Icons/Editing/download.png"));
 
 
-	ctkCollapsibleButton* btn1 = new ctkCollapsibleButton("Reports", this);
-	btn1->setIndicatorAlignment(Qt::AlignRight);
-	btn1->setCollapsed(true);
-	btn1->setProperty("reportButton", true);
+	//
+	// Настраиваем панель со списком отчётов
+	//
+	ctkCollapsibleButton* reports = new ctkCollapsibleButton(tr("Reports"), this);
+	reports->setIndicatorAlignment(Qt::AlignRight);
+	reports->setProperty("reportButton", true);
 
-	QRadioButton* rb11 = new QRadioButton("rb 11", btn1);
-	QRadioButton* rb21 = new QRadioButton("rb 21", btn1);
-	QRadioButton* rb31 = new QRadioButton("rb 31", btn1);
+	m_reports << new ReportButton(tr("Statistics report"), ReportParameters::Report, ReportParameters::Statistics, reports);
+	m_reports << new ReportButton(tr("Scene report"), ReportParameters::Report, ReportParameters::Scene, reports);
+	m_reports << new ReportButton(tr("Location report"), ReportParameters::Report, ReportParameters::Location, reports);
+	m_reports << new ReportButton(tr("Cast report"), ReportParameters::Report, ReportParameters::Cast, reports);
+	m_reports << new ReportButton(tr("Character report"), ReportParameters::Report, ReportParameters::Character, reports);
+	m_reports << new ReportButton(tr("Script report"), ReportParameters::Report, ReportParameters::Script, reports);
 
-	QVBoxLayout* layout1 = new QVBoxLayout;
-	layout1->setContentsMargins(QMargins());
-	layout1->setSpacing(0);
-	layout1->addWidget(rb11);
-	layout1->addWidget(rb21);
-	layout1->addWidget(rb31);
-
-	btn1->setLayout(layout1);
-
+	QVBoxLayout* reportsLayout = new QVBoxLayout;
+	reportsLayout->setContentsMargins(QMargins());
+	reportsLayout->setSpacing(0);
+	foreach (ReportButton* button, m_reports) {
+		reportsLayout->addWidget(button);
+	}
+	reports->setLayout(reportsLayout);
 
 	QButtonGroup* group = new QButtonGroup(this);
-	group->addButton(rb1);
-	group->addButton(rb2);
-	group->addButton(rb3);
-	group->addButton(rb11);
-	group->addButton(rb21);
-	group->addButton(rb31);
+	int buttonId = 1;
+	foreach (ReportButton* button, m_reports) {
+		group->addButton(button, buttonId++);
+	}
+
+	QVBoxLayout* statisticTypesLayout = new QVBoxLayout;
+	statisticTypesLayout->setContentsMargins(QMargins());
+	statisticTypesLayout->setSpacing(0);
+	statisticTypesLayout->addWidget(reports);
+	statisticTypesLayout->addStretch();
+	m_statisticTypes->setLayout(statisticTypesLayout);
+
+	QVBoxLayout* statisticTypesMainLayout = new QVBoxLayout;
+	statisticTypesMainLayout->setContentsMargins(QMargins());
+	statisticTypesMainLayout->setSpacing(0);
+	statisticTypesMainLayout->addWidget(m_leftTopEmptyLabel);
+	statisticTypesMainLayout->addWidget(m_statisticTypes);
+
+	QWidget* statisticTypesPanel = new QWidget(this);
+	statisticTypesPanel->setLayout(statisticTypesMainLayout);
 
 
-	QPushButton* btn2 = new QPushButton("popup", this);
-	ctkPopupWidget* popup = new ctkPopupWidget(btn2);
-//	popup->setAlignment(Qt::AlignRight | Qt::AlignTop | Qt::AlignBottom);
-//	popup->setOrientation(Qt::Horizontal);
-//	QHBoxLayout* popupLayout = new QHBoxLayout(popup);
-//	QSlider* popupSlider = new QSlider(popup);
-//	popupLayout->addWidget(popupSlider);
+	//
+	// Настраиваем панель с данными по отчётам
+	//
+	m_statisticData->addWidget(m_reportData);
 
-	QHBoxLayout* popupLayout = new QHBoxLayout(popup);
-	// populate the popup with a vertical QSlider:
-	QSlider* popupSlider = new QSlider(Qt::Vertical, popup);
-	// add here the signal/slot connection between the slider and the spinbox
-	popupLayout->addWidget(popupSlider); // Control where to display the the popup relative to the parent
-	popupLayout->addWidget(new QPushButton("Push button", popup));
-	popupLayout->addWidget(new QPushButton("Push button 2", popup));
-	popupLayout->addStretch();
-	popup->setAlignment(Qt::AlignBottom | Qt::AlignLeft); // at the top left corner
+	QHBoxLayout* toolbarLayout = new QHBoxLayout;
+	toolbarLayout->setContentsMargins(QMargins());
+	toolbarLayout->setSpacing(0);
+	toolbarLayout->addWidget(m_settings);
+	toolbarLayout->addWidget(m_print);
+	toolbarLayout->addWidget(m_save);
+	toolbarLayout->addWidget(m_rightTopEmptyLabel);
 
-	popup->setHorizontalDirection( Qt::LeftToRight ); // open outside the parent
-	popup->setVerticalDirection(ctkBasePopupWidget::TopToBottom); // at the left of the spinbox sharing the top border
-	// Control the animation
-	popup->setAnimationEffect(ctkBasePopupWidget::ScrollEffect); // could also be FadeEffect
-	popup->setOrientation(Qt::Vertical); // how to animate, could be Qt::Vertical or Qt::Horizontal|Qt::Vertical
-//	popup->setEasingCurve(QEasingCurve::OutQuart); // how to accelerate the animation, QEasingCurve::Type
-//	popup->setEffectDuration(100); // how long in ms.
-	// Control the behavior
-	popup->setAutoShow(false); // automatically open when the mouse is over the spinbox
-	popup->setAutoHide(true); // automatically hide when the mouse leaves the popup or the spinbox.
-	connect(btn2, SIGNAL(clicked(bool)), popup, SLOT(showPopup()));
+	QVBoxLayout* statisticDataLayout = new QVBoxLayout;
+	statisticDataLayout->setContentsMargins(QMargins());
+	statisticDataLayout->setSpacing(0);
+	statisticDataLayout->addLayout(toolbarLayout);
+	statisticDataLayout->addWidget(m_statisticData, 1);
 
-	QVBoxLayout* ml = new QVBoxLayout;
-	ml->setContentsMargins(QMargins());
-	ml->setSpacing(0);
-	ml->addWidget(btn);
-	ml->addWidget(btn1);
-	ml->addWidget(btn2);
-	ml->addStretch();
-	setLayout(ml);
+	QWidget* statisticDataPanel = new QWidget(this);
+	statisticDataPanel->setLayout(statisticDataLayout);
+
+
+	//
+	// Объединяем всё
+	//
+	QSplitter* splitter = new QSplitter(this);
+	splitter->setHandleWidth(1);
+	splitter->addWidget(statisticTypesPanel);
+	splitter->addWidget(statisticDataPanel);
+
+	QHBoxLayout* layout = new QHBoxLayout;
+	layout->setContentsMargins(QMargins());
+	layout->setSpacing(0);
+	layout->addWidget(splitter);
+	setLayout(layout);
 }
 
 void StatisticsView::initConnections()
 {
+	foreach (ReportButton* button, m_reports) {
+		connect(button, SIGNAL(clicked(bool)), this, SLOT(aboutInitDataPanel()));
+		connect(button, SIGNAL(clicked(bool)), this, SLOT(aboutMakeReport()));
+	}
 
+	connect(m_statisticSettings, SIGNAL(settingsChanged()), this, SLOT(aboutMakeReport()));
 }
 
 void StatisticsView::initStyleSheet()
 {
+	m_leftTopEmptyLabel->setProperty("inTopPanel", true);
+	m_leftTopEmptyLabel->setProperty("topPanelTopBordered", true);
 
+	m_settings->setProperty("inTopPanel", true);
+	m_print->setProperty("inTopPanel", true);
+	m_save->setProperty("inTopPanel", true);
+
+	m_rightTopEmptyLabel->setProperty("inTopPanel", true);
+	m_rightTopEmptyLabel->setProperty("topPanelTopBordered", true);
+	m_rightTopEmptyLabel->setProperty("topPanelRightBordered", true);
+
+	m_statisticTypes->setProperty("mainContainer", true);
+	m_statisticData->setProperty("mainContainer", true);
 }
 

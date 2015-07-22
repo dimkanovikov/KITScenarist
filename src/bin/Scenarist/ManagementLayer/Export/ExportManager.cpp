@@ -97,6 +97,14 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 	m_currentScenario = 0;
 }
 
+QTextDocument* ExportManager::exportScenarioToDocument(BusinessLogic::ScenarioDocument* _scenario)
+{
+	initExportDialog();
+
+	BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
+	return BusinessLogic::AbstractExporter::prepareDocument(_scenario, exportParameters);
+}
+
 void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario)
 {
 	initExportDialog();

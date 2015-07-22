@@ -635,6 +635,8 @@ void ApplicationManager::aboutApplicationSettingsUpdated()
 void ApplicationManager::aboutProjectChanged()
 {
 	::updateWindowModified(m_view, true);
+
+	m_statisticsManager->scenarioTextChanged();
 }
 
 void ApplicationManager::aboutShowFullscreen()
@@ -666,6 +668,11 @@ void ApplicationManager::aboutShowFullscreen()
 		m_tabs->hide();
 		m_view->showFullScreen();
 	}
+}
+
+void ApplicationManager::aboutPrepareScenarioForStatistics()
+{
+	m_statisticsManager->setExportedScenario(m_exportManager->exportScenarioToDocument(m_scenarioManager->scenario()));
 }
 
 void ApplicationManager::loadViewState()
@@ -776,6 +783,7 @@ void ApplicationManager::goToEditCurrentProject()
 	m_scenarioManager->loadCurrentProject();
 	m_charactersManager->loadCurrentProject();
 	m_locationsManager->loadCurrentProject();
+	m_statisticsManager->loadCurrentProject();
 
 	//
 	// Синхронизируем проекты из облака
@@ -864,7 +872,7 @@ void ApplicationManager::initView()
 	g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
-	/*g_disableOnStartActions << */m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
+	g_disableOnStartActions << m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
 	m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
 
 	//
@@ -986,6 +994,8 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutLocationNameChanged(QString,QString)));
 	connect(m_locationsManager, SIGNAL(refreshLocations()),
 			m_scenarioManager, SLOT(aboutRefreshLocations()));
+
+	connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
 
 	connect(m_settingsManager, SIGNAL(applicationSettingsUpdated()),
 			this, SLOT(aboutApplicationSettingsUpdated()));

@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <QTextDocument>
+
 namespace BusinessLogic {
 	class ScenarioDocument;
 }
@@ -28,6 +30,12 @@ namespace ManagementLayer
 		 * @brief Экспортировать документ
 		 */
 		void exportScenario(BusinessLogic::ScenarioDocument* _scenario);
+
+		/**
+		 * @brief Экспортировать сценарий в текстовый документ
+		 * @note Клиент получает владение над документом
+		 */
+		QTextDocument* exportScenarioToDocument(BusinessLogic::ScenarioDocument* _scenario);
 
 		/**
 		 * @brief Предварительный просмотр документа

@@ -32,10 +32,10 @@ namespace {
 		styleButton->setProperty("leftAlignedText", true);
 
 		_parent->connect(styleButton, SIGNAL(clicked()), _parent, SLOT(aboutChangeStyle()));
-		QShortcut* timeAndPlaceShortcut1 = new QShortcut(_key, _parent);
-		QShortcut* timeAndPlaceShortcut2 = new QShortcut(_key + Qt::KeypadModifier, _parent);
-		_parent->connect(timeAndPlaceShortcut1, SIGNAL(activated()), styleButton, SLOT(click()));
-		_parent->connect(timeAndPlaceShortcut2, SIGNAL(activated()), styleButton, SLOT(click()));
+		QShortcut* shortcut1 = new QShortcut(_key, _parent);
+		QShortcut* shortcut2 = new QShortcut(_key + Qt::KeypadModifier, _parent);
+		_parent->connect(shortcut1, SIGNAL(activated()), styleButton, SLOT(click()));
+		_parent->connect(shortcut2, SIGNAL(activated()), styleButton, SLOT(click()));
 
 		return styleButton;
 	}
@@ -124,6 +124,9 @@ void ScenarioFastFormatWidget::reinitBlockStyles()
 	//
 	int itemIndex = 0;
 
+	//
+	// TODO: Использовать ScenarioBlockStyle::typeName
+	//
 	if (style.blockStyle(ScenarioBlockStyle::TimeAndPlace).isActive()) {
 		m_buttons.at(itemIndex)->setVisible(true);
 		m_buttons.at(itemIndex)->setText(tr("%1 Time and Place").arg(itemIndex));
