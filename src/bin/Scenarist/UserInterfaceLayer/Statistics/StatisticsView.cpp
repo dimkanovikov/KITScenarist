@@ -6,7 +6,9 @@
 #include <3rd_party/Widgets/Ctk/ctkCollapsibleButton.h>
 #include <3rd_party/Widgets/Ctk/ctkPopupWidget.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
+#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
 
+#include <QApplication>
 #include <QButtonGroup>
 #include <QFrame>
 #include <QLabel>
@@ -32,7 +34,8 @@ StatisticsView::StatisticsView(QWidget* _parent) :
 	m_statisticTypes(new QFrame(this)),
 	m_statisticSettings(new StatisticsSettings(this)),
 	m_statisticData(new QStackedWidget(this)),
-	m_reportData(new QTextBrowser(this))
+	m_reportData(new QTextBrowser(this)),
+	m_progress(new ProgressWidget(m_statisticData, false))
 {
 	initView();
 	initConnections();
@@ -44,14 +47,20 @@ void StatisticsView::setCharacters(QAbstractItemModel* _characters)
 	m_statisticSettings->setCharacters(_characters);
 }
 
-void StatisticsView::setScriptElements(QAbstractItemModel* _elements)
-{
-	m_statisticSettings->setScriptElements(_elements);
-}
-
 void StatisticsView::setReport(const QString& _html)
 {
 	m_reportData->setHtml(_html);
+}
+
+void StatisticsView::showProgress()
+{
+	m_progress->showProgress(tr("Preparing report"), tr("Please wait. Preparing report to preview can take few minutes."));
+	QApplication::processEvents();
+}
+
+void StatisticsView::hideProgress()
+{
+	m_progress->finish();
 }
 
 void StatisticsView::aboutInitDataPanel()
@@ -118,12 +127,11 @@ void StatisticsView::initView()
 	reports->setIndicatorAlignment(Qt::AlignRight);
 	reports->setProperty("reportButton", true);
 
-	m_reports << new ReportButton(tr("Statistics report"), ReportParameters::Report, ReportParameters::Statistics, reports);
-	m_reports << new ReportButton(tr("Scene report"), ReportParameters::Report, ReportParameters::Scene, reports);
-	m_reports << new ReportButton(tr("Location report"), ReportParameters::Report, ReportParameters::Location, reports);
-	m_reports << new ReportButton(tr("Cast report"), ReportParameters::Report, ReportParameters::Cast, reports);
-	m_reports << new ReportButton(tr("Character report"), ReportParameters::Report, ReportParameters::Character, reports);
-	m_reports << new ReportButton(tr("Script report"), ReportParameters::Report, ReportParameters::Script, reports);
+	m_reports << new ReportButton(tr("Statistics report"), ReportParameters::Report, ReportParameters::StatisticsReport, reports);
+	m_reports << new ReportButton(tr("Scene report"), ReportParameters::Report, ReportParameters::SceneReport, reports);
+	m_reports << new ReportButton(tr("Location report"), ReportParameters::Report, ReportParameters::LocationReport, reports);
+	m_reports << new ReportButton(tr("Cast report"), ReportParameters::Report, ReportParameters::CastReport, reports);
+	m_reports << new ReportButton(tr("Character report"), ReportParameters::Report, ReportParameters::CharacterReport, reports);
 
 	QVBoxLayout* reportsLayout = new QVBoxLayout;
 	reportsLayout->setContentsMargins(QMargins());
@@ -184,6 +192,7 @@ void StatisticsView::initView()
 	//
 	QSplitter* splitter = new QSplitter(this);
 	splitter->setHandleWidth(1);
+	splitter->setOpaqueResize(false);
 	splitter->addWidget(statisticTypesPanel);
 	splitter->addWidget(statisticDataPanel);
 

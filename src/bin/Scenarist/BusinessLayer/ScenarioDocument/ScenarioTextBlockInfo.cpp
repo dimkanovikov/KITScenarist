@@ -66,3 +66,12 @@ void ScenarioTextBlockInfo::setDescription(const QString& _description, bool htm
 		m_description = inputDescription;
 	}
 }
+
+ScenarioTextBlockInfo* ScenarioTextBlockInfo::clone() const
+{
+	ScenarioTextBlockInfo* copy = new ScenarioTextBlockInfo;
+	copy->m_sceneNumber = m_sceneNumber;
+	copy->m_color = m_color;
+	copy->m_description = m_description;
+	return copy;
+}

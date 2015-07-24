@@ -32,12 +32,6 @@ namespace ManagementLayer
 		void exportScenario(BusinessLogic::ScenarioDocument* _scenario);
 
 		/**
-		 * @brief Экспортировать сценарий в текстовый документ
-		 * @note Клиент получает владение над документом
-		 */
-		QTextDocument* exportScenarioToDocument(BusinessLogic::ScenarioDocument* _scenario);
-
-		/**
 		 * @brief Предварительный просмотр документа
 		 */
 		void printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario);

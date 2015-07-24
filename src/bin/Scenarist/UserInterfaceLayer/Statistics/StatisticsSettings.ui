@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>260</width>
+    <width>357</width>
     <height>219</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>5</number>
   </property>
   <widget class="QWidget" name="page_0"/>
   <widget class="QWidget" name="page_1">
@@ -63,84 +63,114 @@
   </widget>
   <widget class="QWidget" name="page_2">
    <layout class="QFormLayout" name="formLayout_2">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Sort by:</string>
+       <string>Sort scenes</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="1" column="1">
      <widget class="QComboBox" name="sceneSortBy">
       <property name="sizeAdjustPolicy">
        <enum>QComboBox::AdjustToContents</enum>
       </property>
       <item>
        <property name="text">
-        <string>Script order</string>
+        <string>by script order</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Alphabetical order</string>
+        <string>by alphabetical order</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Shortest scene</string>
+        <string>from longest to shortest scene</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Longest scene</string>
+        <string>from shortest to longest scene</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>from massive to unmanned scene</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from unmanned to massive scene</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QCheckBox" name="sceneShowCharacters">
+      <property name="text">
+       <string>Show characters</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
    </layout>
   </widget>
   <widget class="QWidget" name="page_3">
    <layout class="QFormLayout" name="formLayout_3">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_2">
+    <item row="0" column="0" colspan="2">
+     <widget class="QCheckBox" name="locationExtendedView">
       <property name="text">
-       <string>Sort by:</string>
+       <string>Extended view</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Sort locations</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
      <widget class="QComboBox" name="locationSortBy">
       <property name="sizeAdjustPolicy">
        <enum>QComboBox::AdjustToContents</enum>
       </property>
       <item>
        <property name="text">
-        <string>Script order</string>
+        <string>by script order</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Alphabetical order</string>
+        <string>by alphabetical order</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Most occurences</string>
+        <string>from most to least occurences</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Least occurences</string>
+        <string>from least to most occurences</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Scene intro</string>
+        <string>from longest to shortest chron</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Time of day</string>
+        <string>from shortest to longest chron</string>
        </property>
       </item>
      </widget>
@@ -150,85 +180,55 @@
   <widget class="QWidget" name="page_5">
    <layout class="QFormLayout" name="formLayout_4">
     <item row="0" column="0" colspan="2">
-     <widget class="QCheckBox" name="castNumberOfScenes">
+     <widget class="QCheckBox" name="castShowSpeakingAndNonspeakingScenes">
       <property name="text">
-       <string>Number of speaking scenes</string>
+       <string>Show speaking and non-speaking scenes count</string>
       </property>
       <property name="checked">
        <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QCheckBox" name="castNumberOfNonspeakingScenes">
-      <property name="text">
-       <string>Number of non-speaking scenes</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QCheckBox" name="castTotalSceneAppearances">
-      <property name="text">
-       <string>Total scene appearances</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="QCheckBox" name="castTotalDialogues">
-      <property name="text">
-       <string>Total dialogues</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
+    <item row="1" column="0">
      <widget class="QLabel" name="label_4">
       <property name="text">
-       <string>Sort by:</string>
+       <string>Sort characters</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
+    <item row="1" column="1">
      <widget class="QComboBox" name="castSortBy">
       <property name="sizeAdjustPolicy">
        <enum>QComboBox::AdjustToContents</enum>
       </property>
       <item>
        <property name="text">
-        <string>Script order</string>
+        <string>by script order</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Alphabetical order</string>
+        <string>by alphabetical order</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Most scenes</string>
+        <string>from most to least scenes</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Least scenes</string>
+        <string>from least to most scenes</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Most speaking scenes</string>
+        <string>from most to least dialogues</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Least speaking scenes</string>
+        <string>from least to most dialogues</string>
        </property>
       </item>
      </widget>
@@ -241,36 +241,6 @@
      <widget class="QLabel" name="label_3">
       <property name="text">
        <string>Character:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QCheckBox" name="characterIncludeSceneHeadings">
-      <property name="text">
-       <string>Include Scene Headings</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QCheckBox" name="characterIncludeDialogues">
-      <property name="text">
-       <string>Include Dialogues</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QCheckBox" name="characterIncludeArcBeats">
-      <property name="text">
-       <string>Include Arc Beats</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -287,43 +257,6 @@
       </property>
       <property name="horizontalScrollMode">
        <enum>QAbstractItemView::ScrollPerPixel</enum>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="page">
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Script Elements to include</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QListView" name="scriptElements">
-      <property name="alternatingRowColors">
-       <bool>true</bool>
-      </property>
-      <property name="selectionMode">
-       <enum>QAbstractItemView::ExtendedSelection</enum>
-      </property>
-      <property name="verticalScrollMode">
-       <enum>QAbstractItemView::ScrollPerPixel</enum>
-      </property>
-      <property name="horizontalScrollMode">
-       <enum>QAbstractItemView::ScrollPerPixel</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QCheckBox" name="scriptUseCourierNew">
-      <property name="text">
-       <string>Use Courier New font</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
       </property>
      </widget>
     </item>

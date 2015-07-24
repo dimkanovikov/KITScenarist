@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class FlatButton;
+class ProgressWidget;
 class QAbstractItemModel;
 class QFrame;
 class QLabel;
@@ -36,14 +37,17 @@ namespace UserInterface
 		void setCharacters(QAbstractItemModel* _characters);
 
 		/**
-		 * @brief Задать элементы сценария
-		 */
-		void setScriptElements(QAbstractItemModel* _elements);
-
-		/**
 		 * @brief Установить отчёт
 		 */
 		void setReport(const QString& _html);
+
+		/**
+		 * @brief Функции управленя индикатором информирования пользователя о подготовке отчёта
+		 */
+		/** @{ */
+		void showProgress();
+		void hideProgress();
+		/** @} */
 
 	signals:
 		/**
@@ -126,6 +130,11 @@ namespace UserInterface
 		 * @brief Данные отчёта
 		 */
 		QTextBrowser* m_reportData;
+
+		/**
+		 * @brief Виджет перекрытие для отображения сообщения о формирующемся отчёте
+		 */
+		ProgressWidget* m_progress;
 	};
 }
 

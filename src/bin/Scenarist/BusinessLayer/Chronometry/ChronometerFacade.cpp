@@ -24,6 +24,11 @@ bool ChronometerFacade::chronometryUsed()
 				SettingsStorage::ApplicationSettings).toInt();
 }
 
+int ChronometerFacade::calculate(const QTextBlock& _block)
+{
+	return calculate(_block, _block);
+}
+
 int ChronometerFacade::calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock)
 {
 	return calculate(

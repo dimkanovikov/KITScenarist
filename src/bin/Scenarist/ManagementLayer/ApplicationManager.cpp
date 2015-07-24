@@ -672,7 +672,7 @@ void ApplicationManager::aboutShowFullscreen()
 
 void ApplicationManager::aboutPrepareScenarioForStatistics()
 {
-	m_statisticsManager->setExportedScenario(m_exportManager->exportScenarioToDocument(m_scenarioManager->scenario()));
+	m_statisticsManager->setExportedScenario(m_scenarioManager->scenario()->document());
 }
 
 void ApplicationManager::loadViewState()

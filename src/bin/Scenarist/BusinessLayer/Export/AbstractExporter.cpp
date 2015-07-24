@@ -3,6 +3,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
 
 #include <Domain/Scenario.h>
 
@@ -65,6 +66,8 @@ namespace {
 	static QTextBlockFormat blockFormatForType(ScenarioBlockStyle::Type _type) {
 		ScenarioBlockStyle style = ::exportStyle().blockStyle(_type);
 		QTextBlockFormat format = style.blockFormat();
+
+		format.setProperty(ScenarioBlockStyle::PropertyType, _type);
 
 		//
 		// Очищаем цвета
@@ -884,6 +887,20 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 	// NOTE: делаем копию документа, т.к. данные могут быть изменены, удаляем, при выходе
 	//
 	QTextDocument* scenarioDocument = _scenario->document()->clone();
+	//
+	// ... копируем пользовательские данные из блоков
+	//
+	{
+		QTextBlock sourceDocumentBlock = _scenario->document()->begin();
+		QTextBlock copyDocumentBlock = scenarioDocument->begin();
+		while (sourceDocumentBlock.isValid()) {
+			if (ScenarioTextBlockInfo* sceneInfo = dynamic_cast<ScenarioTextBlockInfo*>(sourceDocumentBlock.userData())) {
+				copyDocumentBlock.setUserData(sceneInfo->clone());
+			}
+			sourceDocumentBlock = sourceDocumentBlock.next();
+			copyDocumentBlock = copyDocumentBlock.next();
+		}
+	}
 	QTextCursor sourceDocumentCursor(scenarioDocument);
 	QTextCursor destDocumentCursor(preparedDocument);
 
@@ -975,7 +992,6 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 	// Запись текста документа
 	//
 	ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::Undefined;
-	int currentSceneNumber = 1;
 	//
 	// Кол-во пустых строк после предыдущего блока с текстом. Отслеживаем их, для случая, когда
 	// подряд идут два блока у первого из которых есть отступ снизу, а у второго сверху. В таком
@@ -1071,6 +1087,15 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 				//
 				if (currentBlockType == ScenarioBlockStyle::SceneHeading) {
 					//
+					// Данные сцены
+					//
+					QTextBlockUserData* textBlockData = sourceDocumentCursor.block().userData();
+					ScenarioTextBlockInfo* sceneInfo = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+					if (sceneInfo != 0) {
+						destDocumentCursor.block().setUserData(sceneInfo->clone());
+					}
+
+					//
 					// Префикс экспорта
 					//
 					destDocumentCursor.insertText(_exportParameters.scenesPrefix);
@@ -1078,9 +1103,10 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 					// Номер сцены, если необходимо
 					//
 					if (_exportParameters.printScenesNumbers) {
-						QString sceneNumber = QString("%1. ").arg(currentSceneNumber);
-						destDocumentCursor.insertText(sceneNumber);
-						++currentSceneNumber;
+						if (sceneInfo != 0) {
+							QString sceneNumber = QString("%1. ").arg(sceneInfo->sceneNumber());
+							destDocumentCursor.insertText(sceneNumber);
+						}
 					}
 				}
 

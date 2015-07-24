@@ -7,8 +7,8 @@
 #include <QProgressBar>
 
 
-ProgressWidget::ProgressWidget(QWidget* _parent) :
-	QLightBoxWidget(_parent, true)
+ProgressWidget::ProgressWidget(QWidget* _parent, bool _followToHeadWidget) :
+	QLightBoxWidget(_parent, _followToHeadWidget)
 {
 	m_title = new QLabel("Title");
 	m_title->setStyleSheet("font-size: 28px; font-weight: bold; color: white; margin: 20px 0px 0px 12px;");

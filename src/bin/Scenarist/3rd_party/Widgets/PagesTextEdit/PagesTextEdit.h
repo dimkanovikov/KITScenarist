@@ -31,6 +31,11 @@ public:
 	 */
 	bool usePageMode() const;
 
+	/**
+	 * @brief Получить номер страницы курсора
+	 */
+	int cursorPage(const QTextCursor& _cursor);
+
 public slots:
 	/**
 	 * @brief Установить режим отображения текста

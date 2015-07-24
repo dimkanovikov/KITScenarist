@@ -120,7 +120,7 @@ void ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 			// Определим название проекта
 			//
 			QFileInfo fileInfo(projectPath);
-			QString projectName = fileInfo.baseName();
+			QString projectName = fileInfo.completeBaseName();
 			//
 			// Создаём проект
 			//

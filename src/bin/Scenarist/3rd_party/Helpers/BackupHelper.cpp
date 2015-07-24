@@ -56,11 +56,11 @@ void BackupHelper::saveBackup(const QString& _filePath)
 
 		QFileInfo fileInfo(_filePath);
 		const QString tmpBackupFileName =
-				QString("%1%2.backup.tmp.%3").arg(backupPath, fileInfo.baseName(), fileInfo.completeSuffix());
+				QString("%1%2.backup.tmp.%3").arg(backupPath, fileInfo.completeBaseName(), fileInfo.completeSuffix());
 		const QString backupFileName =
-				QString("%1%2.full.backup.%3").arg(backupPath, fileInfo.baseName(), fileInfo.completeSuffix());
+				QString("%1%2.full.backup.%3").arg(backupPath, fileInfo.completeBaseName(), fileInfo.completeSuffix());
 		const QString backupVersionsFileName =
-				QString("%1%2.versions.backup.%3").arg(backupPath, fileInfo.baseName(), BACKUP_VERSIONS_EXTANSION);
+				QString("%1%2.versions.backup.%3").arg(backupPath, fileInfo.completeBaseName(), BACKUP_VERSIONS_EXTANSION);
 
 		//
 		// Копируем файл во временную резервную копию

@@ -31,11 +31,6 @@ namespace UserInterface
 		void setCharacters(QAbstractItemModel* _characters);
 
 		/**
-		 * @brief Задать элементы сценария
-		 */
-		void setScriptElements(QAbstractItemModel* _elements);
-
-		/**
 		 * @brief Получить параметры отчётов
 		 */
 		const BusinessLogic::ReportParameters& settings() const;

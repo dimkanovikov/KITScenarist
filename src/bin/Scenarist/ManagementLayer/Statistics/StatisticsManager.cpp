@@ -1,6 +1,7 @@
 #include "StatisticsManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
+#include <BusinessLayer/Statistics/ReportFacade.h>
 
 #include <Domain/Character.h>
 
@@ -63,11 +64,7 @@ void StatisticsManager::scenarioTextChanged()
 void StatisticsManager::setExportedScenario(QTextDocument* _scenario)
 {
 	if (m_exportedScenario != _scenario) {
-		delete m_exportedScenario;
-		m_exportedScenario = 0;
-
 		m_exportedScenario = _scenario;
-
 		m_needUpdateScenario = false;
 	}
 }
@@ -77,6 +74,7 @@ void StatisticsManager::aboutMakeReport(const BusinessLogic::ReportParameters& _
 	//
 	// Уведомляем пользователя, о том, что началась генерация отчёта
 	//
+	m_view->showProgress();
 
 	//
 	// Запрашиваем экспортируемый документ, если нужно
@@ -88,33 +86,24 @@ void StatisticsManager::aboutMakeReport(const BusinessLogic::ReportParameters& _
 	//
 	// Формируем отчёт
 	//
+	const QString reportHtml = BusinessLogic::ReportFacade::makeReport(m_exportedScenario, _parameters);
+
 
 	//
 	// Устанавливаем отчёт в форму
 	//
-	m_view->setReport(m_exportedScenario->toHtml());
+	m_view->setReport(reportHtml);
+
 
 	//
 	// Закрываем уведомление
 	//
+	m_view->hideProgress();
 }
 
 void StatisticsManager::initView()
 {
-	//
-	// Загрузить модель элементов сценария
-	//
-	QStringList elements;
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneHeading, BEAUTIFY_BLOCK_NAME);
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::SceneCharacters, BEAUTIFY_BLOCK_NAME);
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Action, BEAUTIFY_BLOCK_NAME);
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Character, BEAUTIFY_BLOCK_NAME);
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Parenthetical, BEAUTIFY_BLOCK_NAME);
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Dialogue, BEAUTIFY_BLOCK_NAME);
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Transition, BEAUTIFY_BLOCK_NAME);
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Note, BEAUTIFY_BLOCK_NAME);
-	elements << ScenarioBlockStyle::typeName(ScenarioBlockStyle::Title, BEAUTIFY_BLOCK_NAME);
-	m_view->setScriptElements(new QStringListModel(elements, this));
+
 }
 
 void StatisticsManager::initConnections()

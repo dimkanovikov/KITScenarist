@@ -54,6 +54,11 @@ bool PagesTextEdit::usePageMode() const
 	return m_usePageMode;
 }
 
+int PagesTextEdit::cursorPage(const QTextCursor& _cursor)
+{
+	return (cursorRect(_cursor).top() / m_pageMetrics.pxPageSize().height()) + 1;
+}
+
 void PagesTextEdit::setUsePageMode(bool _use)
 {
 	if (m_usePageMode != _use) {

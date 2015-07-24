@@ -135,6 +135,7 @@ void CharactersManager::initView()
 	m_viewSplitter->addWidget(m_navigatorManager->view());
 	m_viewSplitter->addWidget(m_dataEditManager->view());
 	m_viewSplitter->setStretchFactor(1, 1);
+	m_viewSplitter->setOpaqueResize(false);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());

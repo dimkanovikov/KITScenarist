@@ -43,6 +43,11 @@ namespace BusinessLogic
 		 */
 		void setDescription(const QString& _description, bool htmlEscaped = false);
 
+		/**
+		 * @brief Создать дубликат
+		 */
+		ScenarioTextBlockInfo* clone() const;
+
 	private:
 		/**
 		 * @brief Номер сцены

@@ -20,13 +20,6 @@ namespace BusinessLogic
 		 */
 		static Counter calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition);
 
-
-
-
-
-
-
-
 		/**
 		 * @brief Расчитать исформацию для заданного документа
 		 */
@@ -48,15 +41,6 @@ namespace BusinessLogic
 		 * @brief Посчитать кол-во символов без пробелов
 		 */
 		static int charactersWithoutSpacesCount(const QString& _text);
-
-
-
-
-
-
-
-
-
 
 		/**
 		 * @brief Посчитать количество страниц

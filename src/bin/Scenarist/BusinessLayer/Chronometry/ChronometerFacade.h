@@ -23,6 +23,11 @@ namespace BusinessLogic
 		static bool chronometryUsed();
 
 		/**
+		 * @brief Вычислить хронометраж последовательности ограниченной заданным блоком
+		 */
+		static int calculate(const QTextBlock& _block);
+
+		/**
 		 * @brief Вычислить хронометраж последовательности ограниченной заданными блоками
 		 */
 		static int calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock);

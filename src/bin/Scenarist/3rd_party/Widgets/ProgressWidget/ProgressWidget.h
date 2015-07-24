@@ -14,7 +14,7 @@ class ProgressWidget : public QLightBoxWidget
 	Q_OBJECT
 
 public:
-	explicit ProgressWidget(QWidget* _parent = 0);
+	explicit ProgressWidget(QWidget* _parent = 0, bool _followToHeadWidget = true);
 
 	/**
 	 * @brief Показать виджет с заданными заголовком и описание

@@ -241,7 +241,12 @@ SOURCES += main.cpp \
     3rd_party/Widgets/Ctk/ctkBasePopupWidget.cpp \
     UserInterfaceLayer/Statistics/StatisticsSettings.cpp \
     UserInterfaceLayer/Statistics/ReportButton.cpp \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.cpp
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.cpp \
+    BusinessLayer/Statistics/LocationReport.cpp \
+    BusinessLayer/Statistics/SceneReport.cpp \
+    BusinessLayer/Statistics/ReportFacade.cpp \
+    BusinessLayer/Statistics/CastReport.cpp \
+    BusinessLayer/Statistics/CharacterReport.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -439,7 +444,12 @@ HEADERS += \
     UserInterfaceLayer/Statistics/StatisticsSettings.h \
     BusinessLayer/Statistics/AbstractReport.h \
     UserInterfaceLayer/Statistics/ReportButton.h \
-    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.h
+    UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.h \
+    BusinessLayer/Statistics/LocationReport.h \
+    BusinessLayer/Statistics/SceneReport.h \
+    BusinessLayer/Statistics/ReportFacade.h \
+    BusinessLayer/Statistics/CastReport.h \
+    BusinessLayer/Statistics/CharacterReport.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

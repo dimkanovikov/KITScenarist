@@ -3,6 +3,8 @@
 
 #include <QStringList>
 
+class QTextDocument;
+
 
 namespace BusinessLogic
 {
@@ -26,12 +28,11 @@ namespace BusinessLogic
 		 * @brief Тип отчёта
 		 */
 		enum ReportType {
-			Statistics,
-			Scene,
-			Location,
-			Cast,
-			Character,
-			Script
+			StatisticsReport,
+			SceneReport,
+			LocationReport,
+			CastReport,
+			CharacterReport
 		} reportType;
 
 		/**
@@ -47,21 +48,24 @@ namespace BusinessLogic
 		/**
 		 * @brief Параметры отчёта по сценам
 		 */
+		/** @{ */
+		bool sceneShowCharacters;
 		int sceneSortByColumn;
+		/** @} */
 
 		/**
 		 * @brief Параметры отчёта по локациям
 		 */
+		/** @{ */
+		bool locationExtendedView;
 		int locationSortByColumn;
+		/** @} */
 
 		/**
 		 * @brief Параметры отчёта по персонажам
 		 */
 		/** @{ */
-		bool castNumberOfScenes;
-		bool castNumberOdNonspekingScenes;
-		bool castTotalSceneAppearance;
-		bool castTotalDialogues;
+		bool castShowSpeakingAndNonspeakingScenes;
 		int castSortByColumn;
 		/** @} */
 
@@ -70,18 +74,27 @@ namespace BusinessLogic
 		 */
 		/** @{ */
 		QString characterName;
-		bool characterIncludeSceneHeadings;
-		bool characterIncludeDialogs;
-		bool characterIncludeArcBeats;
 		/** @} */
+	};
+
+	/**
+	 * @brief Базовый класс для отчёта
+	 */
+	class AbstractReport
+	{
+	public:
+		virtual ~AbstractReport() {}
 
 		/**
-		 * @brief Параметры отчёта по тексту сценария
+		 * @brief Получить название отчёта
 		 */
-		/** @{ */
-		QStringList scriptElements;
-		bool scriptUseCourierNew;
-		/** @} */
+		virtual QString reportName(const ReportParameters& _parameters) const = 0;
+
+		/**
+		 * @brief Сформировать отчёт по заданному сценарию с установленными параметрами
+		 */
+		virtual QString makeReport(QTextDocument* _scenario,
+			const ReportParameters& _parameters) const = 0;
 	};
 }
 
