@@ -127,7 +127,7 @@ void StatisticsView::initView()
 	reports->setIndicatorAlignment(Qt::AlignRight);
 	reports->setProperty("reportButton", true);
 
-	m_reports << new ReportButton(tr("Statistics report"), ReportParameters::Report, ReportParameters::StatisticsReport, reports);
+	m_reports << new ReportButton(tr("Statistics report"), ReportParameters::Report, ReportParameters::SummaryReport, reports);
 	m_reports << new ReportButton(tr("Scene report"), ReportParameters::Report, ReportParameters::SceneReport, reports);
 	m_reports << new ReportButton(tr("Location report"), ReportParameters::Report, ReportParameters::LocationReport, reports);
 	m_reports << new ReportButton(tr("Cast report"), ReportParameters::Report, ReportParameters::CastReport, reports);

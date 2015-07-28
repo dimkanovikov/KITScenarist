@@ -38,6 +38,11 @@ namespace BusinessLogic
 		static int calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition);
 
 		/**
+		 * @brief Вычислить хронометраж всего документа
+		 */
+		static int calculate(QTextDocument* _document);
+
+		/**
 		 * @brief Получить строковое представление для заданного количества секунд
 		 */
 		static QString secondsToTime(int _seconds);

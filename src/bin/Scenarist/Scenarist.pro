@@ -246,7 +246,8 @@ SOURCES += main.cpp \
     BusinessLayer/Statistics/SceneReport.cpp \
     BusinessLayer/Statistics/ReportFacade.cpp \
     BusinessLayer/Statistics/CastReport.cpp \
-    BusinessLayer/Statistics/CharacterReport.cpp
+    BusinessLayer/Statistics/CharacterReport.cpp \
+    BusinessLayer/Statistics/SummaryReport.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -449,7 +450,8 @@ HEADERS += \
     BusinessLayer/Statistics/SceneReport.h \
     BusinessLayer/Statistics/ReportFacade.h \
     BusinessLayer/Statistics/CastReport.h \
-    BusinessLayer/Statistics/CharacterReport.h
+    BusinessLayer/Statistics/CharacterReport.h \
+    BusinessLayer/Statistics/SummaryReport.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

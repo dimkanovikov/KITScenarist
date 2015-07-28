@@ -88,6 +88,11 @@ int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPositi
 	return chronometry;
 }
 
+int ChronometerFacade::calculate(QTextDocument* _document)
+{
+	return calculate(_document, 0, _document->characterCount());
+}
+
 QString ChronometerFacade::secondsToTime(int _seconds)
 {
 	QString timeString = "0:00";

@@ -6,6 +6,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <QApplication>
+#include <QTextBlock>
 #include <QTextCursor>
 #include <QTextDocument>
 
@@ -56,6 +57,61 @@ Counter CountersFacade::calculate(QTextDocument* _document, int _fromCursorPosit
 			counter.setCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
 		}
 	}
+
+	return counter;
+}
+
+BusinessLogic::Counter CountersFacade::calculateFull(QTextDocument* _document)
+{
+	Counter counter;
+	//
+	// Определим текст, который необходимо обсчитать
+	//
+	QTextCursor cursor(_document);
+	cursor.setPosition(0);
+	cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
+	QString text = cursor.selectedText();
+	//
+	// ... слова
+	//
+	counter.setWords(wordsCount(text.simplified()));
+	//
+	// ... символы
+	//
+	// Когда текст получаем из QTextCursor'а, то строки в нём разделяются не \n,
+	// а UTF-символом разрыва параграфов
+	//
+	static const QChar paragraphSeparator(8233);
+	text = text.remove(paragraphSeparator);
+	counter.setCharactersWithSpaces(charactersWithSpacesCount(text));
+	text = text.simplified();
+	counter.setCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
+
+	return counter;
+}
+
+BusinessLogic::Counter CountersFacade::calculateFull(const QTextBlock& _block)
+{
+	Counter counter;
+	//
+	// Определим текст, который необходимо обсчитать
+	//
+	QString text = _block.text();
+	//
+	// ... слова
+	//
+	counter.setWords(wordsCount(text.simplified()));
+	//
+	// ... символы
+	//
+	// Когда текст получаем из QTextCursor'а, то строки в нём разделяются не \n,
+	// а UTF-символом разрыва параграфов
+	//
+	static const QChar paragraphSeparator(8233);
+	text = text.remove(paragraphSeparator);
+	counter.setCharactersWithSpaces(charactersWithSpacesCount(text));
+	text = text.simplified();
+	counter.setCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
 
 	return counter;
 }

@@ -2,6 +2,7 @@
 #define COUNTERSFACADE_H
 
 class QString;
+class QTextBlock;
 class QTextDocument;
 
 
@@ -19,6 +20,16 @@ namespace BusinessLogic
 		 * @brief Рассчитать значения в заданном промежутке документа
 		 */
 		static Counter calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition);
+
+		/**
+		 * @brief Рассчитать все значения для документа
+		 */
+		static Counter calculateFull(QTextDocument* _document);
+
+		/**
+		 * @brief Рассчитать все значения для блока
+		 */
+		static Counter calculateFull(const QTextBlock& _block);
 
 		/**
 		 * @brief Расчитать исформацию для заданного документа

@@ -1,6 +1,7 @@
 #include "ReportFacade.h"
 
 #include "AbstractReport.h"
+#include "SummaryReport.h"
 #include "SceneReport.h"
 #include "LocationReport.h"
 #include "CastReport.h"
@@ -27,6 +28,11 @@ QString BusinessLogic::ReportFacade::makeReport(QTextDocument* _scenario, const 
 			AbstractReport* report = 0;
 			switch (_parameters.reportType) {
 				default:
+				case ReportParameters::SummaryReport: {
+					report = new SummaryReport;
+					break;
+				}
+
 				case ReportParameters::SceneReport: {
 					report = new SceneReport;
 					break;

@@ -28,7 +28,7 @@ namespace BusinessLogic
 		 * @brief Тип отчёта
 		 */
 		enum ReportType {
-			StatisticsReport,
+			SummaryReport,
 			SceneReport,
 			LocationReport,
 			CastReport,
@@ -39,10 +39,10 @@ namespace BusinessLogic
 		 * @brief Параметры отчёта по статистике сценария
 		 */
 		/** @{ */
-		bool statisticsSummaryText;
-		bool statisticsScenes;
-		bool statisticsLocations;
-		bool statisticsCharacters;
+		bool summaryText;
+		bool summaryScenes;
+		bool summaryLocations;
+		bool summaryCharacters;
 		/** @} */
 
 		/**

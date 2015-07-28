@@ -14,13 +14,13 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>5</number>
+   <number>1</number>
   </property>
   <widget class="QWidget" name="page_0"/>
   <widget class="QWidget" name="page_1">
    <layout class="QFormLayout" name="formLayout">
     <item row="0" column="0">
-     <widget class="QCheckBox" name="statisticsSummaryText">
+     <widget class="QCheckBox" name="summaryText">
       <property name="text">
        <string>Summary text statistics</string>
       </property>
@@ -30,7 +30,7 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QCheckBox" name="statisticsScenes">
+     <widget class="QCheckBox" name="summaryScenes">
       <property name="text">
        <string>Scenes statistics</string>
       </property>
@@ -40,7 +40,7 @@
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QCheckBox" name="statisticsLocations">
+     <widget class="QCheckBox" name="summaryLocations">
       <property name="text">
        <string>Locations statistics</string>
       </property>
@@ -50,7 +50,7 @@
      </widget>
     </item>
     <item row="3" column="0">
-     <widget class="QCheckBox" name="statisticsCharacters">
+     <widget class="QCheckBox" name="summaryCharacters">
       <property name="text">
        <string>Characters statistics</string>
       </property>

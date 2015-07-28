@@ -136,7 +136,7 @@
 <context>
     <name>BusinessLayer::ReportFacade</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/ReportFacade.cpp" line="65"/>
+        <location filename="../../BusinessLayer/Statistics/ReportFacade.cpp" line="71"/>
         <source>generated</source>
         <translation>сформировано</translation>
     </message>
@@ -210,17 +210,17 @@
 <context>
     <name>BusinessLogic::CountersFacade</name>
     <message>
-        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="123"/>
+        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="179"/>
         <source>Pages</source>
         <translation>Страниц</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="130"/>
+        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="186"/>
         <source>Words</source>
         <translation>Слов</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="137"/>
+        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="193"/>
         <source>Simbols</source>
         <translation>Символов</translation>
     </message>
@@ -310,6 +310,115 @@
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="81"/>
         <source>Folder Footer</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::SummaryReport</name>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="57"/>
+        <source>Summary report</source>
+        <translation>Суммарная информация</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="139"/>
+        <source>Chronometry</source>
+        <translation>Хронометраж</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="141"/>
+        <source>Pages</source>
+        <translation>Страниц</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="143"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="164"/>
+        <source>Words</source>
+        <translation>Слов</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="145"/>
+        <source>Characters with/without spaces</source>
+        <translation>Символов с/без пробелов</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="156"/>
+        <source>Text</source>
+        <translation>Текст</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="160"/>
+        <source>Paragraph</source>
+        <translation>Параграф</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="162"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="219"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="279"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="343"/>
+        <source>Size</source>
+        <translation>Кол-во</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="166"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="221"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="281"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="345"/>
+        <source>Percents</source>
+        <translation>Процентов</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="193"/>
+        <source>Scenes</source>
+        <translation>Сцен</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="217"/>
+        <source>Time</source>
+        <translation>Время действия</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="234"/>
+        <source>[UNDEFINED]</source>
+        <translation>[НЕ ОПРЕДЕЛЕНО]</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="253"/>
+        <source>Locations</source>
+        <translation>Локации</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="277"/>
+        <source>Place</source>
+        <translation>Тип локации</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="310"/>
+        <source>Characters</source>
+        <translation>Персонажи</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="341"/>
+        <source>Dialogues count</source>
+        <translation>Количество реплик</translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="vanished">Кол-во</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="355"/>
+        <source>More 10 dialogues</source>
+        <translation>Более 10 реплик</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="362"/>
+        <source>About 10 dialogues</source>
+        <translation>Менее 10 реплик</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="369"/>
+        <source>Nonspeaking</source>
+        <translation>Молчаливые</translation>
     </message>
 </context>
 <context>
@@ -2137,22 +2246,22 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="25"/>
         <source>Summary text statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Суммарная статистика по тексту</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="35"/>
         <source>Scenes statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика по сценам</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="45"/>
         <source>Locations statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика по локациям</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="55"/>
         <source>Characters statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика по персонажам</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="127"/>
