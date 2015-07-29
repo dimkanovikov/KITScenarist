@@ -8,6 +8,7 @@ class ProgressWidget;
 class QAbstractItemModel;
 class QFrame;
 class QLabel;
+class QPrinter;
 class QStackedWidget;
 class QTextBrowser;
 
@@ -65,6 +66,19 @@ namespace UserInterface
 		 * @brief Запрос на формирование отчёта
 		 */
 		void aboutMakeReport();
+
+		/**
+		 * @brief Печатать отчёт
+		 */
+		/** @{ */
+		void aboutPrintReport();
+		void aboutPrint(QPrinter* _printer);
+		/** @{ */
+
+		/**
+		 * @brief Сохранить отчёт
+		 */
+		void aboutSaveReport();
 
 	private:
 		/**

@@ -10,8 +10,12 @@
 
 #include <QApplication>
 #include <QButtonGroup>
+#include <QFileDialog>
 #include <QFrame>
 #include <QLabel>
+#include <QPageLayout>
+#include <QPrinter>
+#include <QPrintPreviewDialog>
 #include <QSplitter>
 #include <QStackedWidget>
 #include <QTextBrowser>
@@ -96,6 +100,40 @@ void StatisticsView::aboutMakeReport()
 		}
 
 		emit makeReport(parameters);
+	}
+}
+
+void StatisticsView::aboutPrintReport()
+{
+	QPrinter printer;
+	printer.setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
+	QPrintPreviewDialog printDialog(&printer, this);
+	printDialog.setWindowState(Qt::WindowMaximized);
+	connect(&printDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(aboutPrint(QPrinter*)));
+
+	//
+	// Вызываем диалог предварительного просмотра и печати
+	//
+	printDialog.exec();
+}
+
+void StatisticsView::aboutPrint(QPrinter* _printer)
+{
+	m_reportData->document()->print(_printer);
+}
+
+void StatisticsView::aboutSaveReport()
+{
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save report"), tr("Report.pdf"), tr("PDF files (*.pdf)"));
+	if (!fileName.isEmpty()) {
+		if (!fileName.endsWith(".pdf")) {
+			fileName.append(".pdf");
+		}
+		QPrinter printer;
+		printer.setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
+		printer.setOutputFormat(QPrinter::PdfFormat);
+		printer.setOutputFileName(fileName);
+		m_reportData->print(&printer);
 	}
 }
 
@@ -211,6 +249,9 @@ void StatisticsView::initConnections()
 	}
 
 	connect(m_statisticSettings, SIGNAL(settingsChanged()), this, SLOT(aboutMakeReport()));
+
+	connect(m_print, SIGNAL(clicked(bool)), this, SLOT(aboutPrintReport()));
+	connect(m_save, SIGNAL(clicked(bool)), this, SLOT(aboutSaveReport()));
 }
 
 void StatisticsView::initStyleSheet()
