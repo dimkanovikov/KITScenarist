@@ -793,6 +793,12 @@ void ApplicationManager::goToEditCurrentProject()
 		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
 		m_synchronizationManager->aboutFullSyncScenario();
 		m_synchronizationManager->aboutFullSyncData();
+
+		//
+		// Принудительно сохраняем текст сценария
+		//
+		m_view->setWindowModified(true);
+		aboutSave();
 	}
 
 	//
