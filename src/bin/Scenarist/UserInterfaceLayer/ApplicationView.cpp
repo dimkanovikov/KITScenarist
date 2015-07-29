@@ -10,7 +10,7 @@ ApplicationView::ApplicationView(QWidget *_parent) :
 	QWidget(_parent, Qt::Window)
 {
 	setWindowIcon(QIcon(":/Graphics/Icons/logo.png"));
-	setWindowTitle(tr("Scenarist"));
+	setWindowTitle(tr("KIT Scenarist"));
 }
 
 void ApplicationView::closeEvent(QCloseEvent* _event)

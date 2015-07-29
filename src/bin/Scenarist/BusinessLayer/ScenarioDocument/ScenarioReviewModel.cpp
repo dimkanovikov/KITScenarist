@@ -52,7 +52,8 @@ QVariant ScenarioReviewModel::data(const QModelIndex& _index, int _role) const
 {
 	QVariant result;
 
-	if (_index.isValid()) {
+	if (_index.isValid()
+		&& _index.row() < m_reviewMarks.size()) {
 		const ReviewMarkInfo info = m_reviewMarks.at(_index.row());
 
 		switch (_role) {

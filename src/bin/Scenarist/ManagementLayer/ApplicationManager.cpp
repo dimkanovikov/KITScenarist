@@ -279,6 +279,7 @@ void ApplicationManager::aboutSaveAs()
 			// ... переключаемся на использование другого файла
 			//
 			DatabaseLayer::Database::setCurrentFile(saveAsProjectFileName);
+			m_projectsManager->setCurrentProject(saveAsProjectFileName);
 
 			//
 			// ... сохраняем изменения
@@ -1179,6 +1180,6 @@ void ApplicationManager::updateWindowTitle()
 #ifdef Q_OS_MAC
 	m_view->setWindowTitle(projectFileName);
 #else
-	m_view->setWindowTitle(tr("%1[*] - Scenarist").arg(projectFileName));
+	m_view->setWindowTitle(tr("%1[*] - KIT Scenarist").arg(projectFileName));
 #endif
 }

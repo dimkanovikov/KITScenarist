@@ -134,7 +134,7 @@ void ScenarioReviewPanel::aboutShow()
 					foreach (const QTextLayout::FormatRange& range, textBlock.textFormats()) {
 						if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)
 							&& ((textBlock.position() + range.start) >= fromCursorPos)
-							&& ((textBlock.position() + range.start + range.length) < toCursorPos)) {
+							&& ((textBlock.position() + range.start + range.length) <= toCursorPos)) {
 							hasReview = true;
 							break;
 						}

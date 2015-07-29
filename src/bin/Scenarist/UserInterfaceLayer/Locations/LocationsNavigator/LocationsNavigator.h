@@ -58,7 +58,7 @@ namespace UserInterface
 		/**
 		 * @brief Удалить локацию
 		 */
-		void removeLocation(const QString& _name);
+		void removeLocations(const QStringList& _names);
 
 		/**
 		 * @brief Обновить список локаций
@@ -78,9 +78,9 @@ namespace UserInterface
 
 	private:
 		/**
-		 * @brief Получить имя выделенной локации
+		 * @brief Получить названия выделенных локаций
 		 */
-		QString selectedLocationName() const;
+		QStringList selectedLocationsNames() const;
 
 	private:
 		/**

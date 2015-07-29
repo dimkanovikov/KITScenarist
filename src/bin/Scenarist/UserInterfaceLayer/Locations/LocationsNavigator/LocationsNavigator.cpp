@@ -80,19 +80,24 @@ void LocationsNavigator::setCommentOnly(bool _isCommentOnly)
 
 void LocationsNavigator::aboutEditLocation()
 {
-	emit editLocation(selectedLocationName());
+	const QStringList locations = selectedLocationsNames();
+	if (!locations.isEmpty()) {
+		emit editLocation(locations.first());
+	}
 }
 
 void LocationsNavigator::aboutRemoveLocation()
 {
-	emit removeLocation(selectedLocationName());
+	emit removeLocations(selectedLocationsNames());
 }
 
-QString LocationsNavigator::selectedLocationName() const
+QStringList LocationsNavigator::selectedLocationsNames() const
 {
-	QModelIndex currentSelected = m_navigator->selectionModel()->currentIndex();
-	QString userName = m_navigator->model()->data(currentSelected).toString();
-	return userName;
+	QStringList locationsNames;
+	foreach (QModelIndex locationIndex, m_navigator->selectionModel()->selectedIndexes()) {
+		locationsNames.append(m_navigatorProxyModel->data(locationIndex).toString());
+	}
+	return locationsNames;
 }
 
 void LocationsNavigator::initView()
@@ -116,6 +121,7 @@ void LocationsNavigator::initView()
 	m_navigator->setAlternatingRowColors(true);
 	m_navigator->setItemDelegate(new LocationsNavigatorItemDelegate(m_navigator));
 	m_navigator->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+	m_navigator->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());

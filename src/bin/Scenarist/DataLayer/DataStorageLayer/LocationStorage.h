@@ -42,6 +42,7 @@ namespace DataStorageLayer
 		 * @brief Удалить локацию
 		 */
 		void removeLocation(const QString& _name);
+		void removeLocations(const QStringList& _names);
 
 		/**
 		 * @brief Проверить наличие заданной локации

@@ -76,7 +76,7 @@ namespace ManagementLayer
 		void aboutEditCharacter(const QString& _name);
 
 		/**
-		 * @brief Удалить персонажа
+		 * @brief Удалить персонажей
 		 */
 		void aboutRemoveCharacters(const QStringList& _names);
 

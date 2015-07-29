@@ -392,10 +392,13 @@ void ScalableWrapper::scaleTextEdit()
 {
 	const qreal DEFAULT_ZOOM_RANGE = 1.;
 	const qreal MINIMUM_ZOOM_RANGE = 0.5;
+	const qreal MAXIMUM_ZOOM_RANGE = 3.;
 	if (m_zoomRange == 0) {
 		m_zoomRange = DEFAULT_ZOOM_RANGE;
 	} else if (m_zoomRange < MINIMUM_ZOOM_RANGE) {
 		m_zoomRange = MINIMUM_ZOOM_RANGE;
+	} else if (m_zoomRange > MAXIMUM_ZOOM_RANGE) {
+		m_zoomRange = MAXIMUM_ZOOM_RANGE;
 	}
 	m_editorProxy->setScale(m_zoomRange);
 }

@@ -110,7 +110,7 @@ void CharactersManager::aboutEditCharacter(const QString& _name)
 void CharactersManager::aboutRemoveCharacters(const QStringList& _names)
 {
 	//
-	// Если пользователь серьёзно намерен удалить персонажа
+	// Если пользователь серьёзно намерен удалить персонажей
 	//
 	if (QLightBoxMessage::question(m_view, QString::null,
 			tr("Are you shure to remove characters: <b>%1</b>?").arg(_names.join(", ")),

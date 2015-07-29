@@ -120,6 +120,13 @@ void LocationStorage::removeLocation(const QString& _name)
 	}
 }
 
+void LocationStorage::removeLocations(const QStringList& _names)
+{
+	foreach (const QString& name, _names) {
+		removeLocation(name);
+	}
+}
+
 bool LocationStorage::hasLocation(const QString& _name)
 {
 	bool contains = false;

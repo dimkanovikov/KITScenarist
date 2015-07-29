@@ -82,7 +82,7 @@ void CharactersNavigator::setCommentOnly(bool _isCommentOnly)
 
 void CharactersNavigator::aboutEditCharacter()
 {
-	QStringList selectedCharacters = selectedCharactersNames();
+	const QStringList selectedCharacters = selectedCharactersNames();
 	if (!selectedCharacters.isEmpty()) {
 		emit editCharacter(selectedCharacters.first());
 	}

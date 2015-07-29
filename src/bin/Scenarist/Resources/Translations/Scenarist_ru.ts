@@ -948,9 +948,8 @@ Continue working in offline mode.</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1182"/>
         <source>%1[*] - Scenarist</source>
-        <translation>%1 [*] - Сценарист</translation>
+        <translation type="vanished">%1 [*] - Сценарист</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="864"/>
@@ -1112,6 +1111,11 @@ Continue working with this project in offline mode.</source>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="937"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1182"/>
+        <source>%1[*] - KIT Scenarist</source>
+        <translation>%1 [*] - КИТ Сценарист</translation>
     </message>
 </context>
 <context>
@@ -2796,9 +2800,13 @@ Paragraph</source>
 <context>
     <name>UserInterface::ApplicationView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/ApplicationView.cpp" line="13"/>
         <source>Scenarist</source>
-        <translation>Сценарист</translation>
+        <translation type="vanished">Сценарист</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/ApplicationView.cpp" line="13"/>
+        <source>KIT Scenarist</source>
+        <translation>КИТ Сценарист</translation>
     </message>
 </context>
 <context>
@@ -3471,42 +3479,57 @@ Paragraph</source>
 <context>
     <name>UserInterface::StatisticsView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="57"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="61"/>
         <source>Preparing report</source>
         <translation>Подготовка отчёта</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="57"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="61"/>
         <source>Please wait. Preparing report to preview can take few minutes.</source>
         <translation>Немного терпения. Подготовка отчёта может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="126"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="127"/>
+        <source>Save report</source>
+        <translation>Сохранить отчёт</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="127"/>
+        <source>Report.pdf</source>
+        <translation>Отчёт.pdf</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="127"/>
+        <source>PDF files (*.pdf)</source>
+        <translation>Файлы PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="164"/>
         <source>Reports</source>
         <translation>Отчёты</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="130"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="168"/>
         <source>Statistics report</source>
         <translation>Суммарная информация</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="131"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="169"/>
         <source>Scene report</source>
         <translation>По сценам</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="132"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="170"/>
         <source>Location report</source>
         <translation>По локациям</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="133"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="171"/>
         <source>Cast report</source>
         <translation>По персонажам</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="134"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="172"/>
         <source>Character report</source>
         <translation>По персонажу</translation>
     </message>

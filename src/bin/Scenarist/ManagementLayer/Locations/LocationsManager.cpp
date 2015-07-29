@@ -107,18 +107,19 @@ void LocationsManager::aboutEditLocation(const QString& _name)
 	m_dataEditManager->editLocation(location);
 }
 
-void LocationsManager::aboutRemoveLocation(const QString& _name)
+void LocationsManager::aboutRemoveLocations(const QStringList& _names)
 {
 	//
-	// Если пользователь серьёзно намерен удалить локацию
+	// Если пользователь серьёзно намерен удалить локации
 	//
 	if (QLightBoxMessage::question(m_view, QString::null,
-			tr("Are you shure to remove location <b>%1</b>?").arg(_name), QDialogButtonBox::Yes | QDialogButtonBox::No)
-		== 	QDialogButtonBox::Yes) {
+			tr("Are you shure to remove locations: <b>%1</b>?").arg(_names.join(", ")),
+			QDialogButtonBox::Yes | QDialogButtonBox::No)
+		== QDialogButtonBox::Yes) {
 		//
-		// ... удалим её
+		// ... удалим
 		//
-		DataStorageLayer::StorageFacade::locationStorage()->removeLocation(_name);
+		DataStorageLayer::StorageFacade::locationStorage()->removeLocations(_names);
 
 		//
 		// ... очистим редактор
@@ -148,7 +149,7 @@ void LocationsManager::initConnections()
 {
 	connect(m_navigatorManager, SIGNAL(addLocation(QString)), this, SLOT(aboutAddLocation(QString)));
 	connect(m_navigatorManager, SIGNAL(editLocation(QString)), this, SLOT(aboutEditLocation(QString)));
-	connect(m_navigatorManager, SIGNAL(removeLocation(QString)), this, SLOT(aboutRemoveLocation(QString)));
+	connect(m_navigatorManager, SIGNAL(removeLocations(QStringList)), this, SLOT(aboutRemoveLocations(QStringList)));
 	connect(m_navigatorManager, SIGNAL(refreshLocations()), this, SIGNAL(refreshLocations()));
 
 	connect(m_dataEditManager, SIGNAL(locationChanged()), this, SIGNAL(locationChanged()));

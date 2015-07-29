@@ -76,9 +76,9 @@ namespace ManagementLayer
 		void aboutEditLocation(const QString& _name);
 
 		/**
-		 * @brief Удалить локацию
+		 * @brief Удалить локации
 		 */
-		void aboutRemoveLocation(const QString& _name);
+		void aboutRemoveLocations(const QStringList& _names);
 
 	private:
 		/**

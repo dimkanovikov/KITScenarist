@@ -49,7 +49,7 @@ namespace ManagementLayer
 		void editCharacter(const QString& _name);
 
 		/**
-		 * @brief Удалить персонажа
+		 * @brief Удалить персонажей
 		 */
 		void removeCharacters(const QStringList& _names);
 

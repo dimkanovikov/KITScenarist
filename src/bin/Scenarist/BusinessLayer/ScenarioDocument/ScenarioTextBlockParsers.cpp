@@ -89,8 +89,8 @@ QString SceneHeadingParser::locationName(const QString& _text)
 
 	if (_text.split(".").count() > 1) {
 		locationName = _text.mid(_text.indexOf(".") + 1);
-		const QString suffix = locationName.split("-").last();
-		locationName = locationName.remove("-" + suffix);
+		const QString suffix = locationName.split(" - ").last();
+		locationName = locationName.remove(" - " + suffix);
 		locationName = locationName.simplified();
 	}
 
