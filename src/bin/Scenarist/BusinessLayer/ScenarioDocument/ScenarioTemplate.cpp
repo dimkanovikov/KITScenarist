@@ -822,7 +822,18 @@ void ScenarioTemplateFacade::saveTemplate(const BusinessLogic::ScenarioTemplate&
 		QList<QStandardItem*> templateRow;
 		templateRow << new QStandardItem(_template.name());
 		templateRow << new QStandardItem(_template.description());
+		templateRow.first()->setData(true, Qt::UserRole);
 		stylesRootItem->appendRow(templateRow);
+	}
+	//
+	// А если был обновляем описание
+	//
+	else {
+		foreach (QStandardItem* templateItem, s_instance->m_templatesModel->findItems(_template.name())) {
+			s_instance->m_templatesModel->setData(
+				s_instance->m_templatesModel->index(templateItem->index().row(), 1),
+				_template.description());
+		}
 	}
 	//
 	// Добавляем/обновляем шаблон в библиотеке

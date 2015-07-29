@@ -308,7 +308,9 @@ void StandardKeyHandler::handlePageDown(QKeyEvent* _event)
 
 void StandardKeyHandler::handleOther(QKeyEvent*)
 {
-
+	if (editor()->isCompleterVisible()) {
+		editor()->closeCompleter();
+	}
 }
 
 

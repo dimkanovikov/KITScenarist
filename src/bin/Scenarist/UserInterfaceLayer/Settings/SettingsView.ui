@@ -136,7 +136,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>1</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -2223,7 +2223,7 @@ Paragraph</string>
              </property>
              <property name="icon">
               <iconset resource="../../Resources/Resources.qrc">
-               <normaloff>:/Graphics/Icons/Editing/download.png</normaloff>:/Graphics/Icons/Editing/download.png</iconset>
+               <normaloff>:/Graphics/Icons/folder.png</normaloff>:/Graphics/Icons/folder.png</iconset>
              </property>
             </widget>
            </item>
