@@ -8,6 +8,7 @@
 #include <QMenu>
 #include <QScreen>
 #include <QScrollBar>
+#include <QScroller>
 #include <QShortcut>
 #include <QTextEdit>
 
@@ -29,6 +30,7 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	// Отслеживаем жесты
 	//
 	grabGesture(Qt::PinchGesture);
+	grabGesture(Qt::SwipeGesture);
 
 	//
 	// Всегда показываем полосы прокрутки
@@ -47,6 +49,10 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	m_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	m_editor->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	m_editor->installEventFilter(this);
+	//
+	// Скроллер для отлавливания жестов прокрутки редактора текста
+	//
+	QScroller::grabGesture(m_editor);
 
 	//
 	// Настраиваем само представление
@@ -202,6 +208,9 @@ void ScalableWrapper::wheelEvent(QWheelEvent* _event)
 
 void ScalableWrapper::gestureEvent(QGestureEvent* _event)
 {
+	//
+	// Жест масштабирования
+	//
 	if (QGesture* gesture = _event->gesture(Qt::PinchGesture)) {
 		if (QPinchGesture* pinch = qobject_cast<QPinchGesture *>(gesture)) {
 			//
@@ -247,6 +256,34 @@ void ScalableWrapper::gestureEvent(QGestureEvent* _event)
 			_event->accept();
 		}
 	}
+
+	//
+	// Жест прокрутки
+	//
+//	if (QGesture* gesture = _event->gesture(Qt::SwipeGesture)) {
+//		if (QSwipeGesture* swipe = qobject_cast<QSwipeGesture*>(gesture)) {
+//			qreal dx = 0;
+//			if (swipe->horizontalDirection() == QSwipeGesture::Left) {
+//				dx = -1 * swipe->swipeAngle();
+//			} else if (swipe->horizontalDirection() == QSwipeGesture::Right) {
+//				dx = swipe->swipeAngle();
+//			}
+
+//			qreal dy = 0;
+//			if (swipe->verticalDirection() == QSwipeGesture::Up) {
+//				dy = -1 * swipe->swipeAngle();
+//			} else if (swipe->verticalDirection() == QSwipeGesture::Down) {
+//				dy = swipe->swipeAngle();
+//			}
+
+//			//
+//			// Прокручиваем, если нужно
+//			//
+//			if (dx != 0 || dy != 0) {
+//				m_editor->scroll(dx, dy);
+//			}
+//		}
+//	}
 }
 
 bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
