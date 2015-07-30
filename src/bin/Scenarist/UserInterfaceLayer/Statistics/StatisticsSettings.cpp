@@ -22,7 +22,7 @@ StatisticsSettings::~StatisticsSettings()
 void StatisticsSettings::setCharacters(QAbstractItemModel* _characters)
 {
 	ui->characterName->setModel(_characters);
-	if (_characters != 0) {
+	if (_characters->rowCount() > 0) {
 		ui->characterName->setCurrentIndex(_characters->index(0, 0));
 		connect(ui->characterName->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SIGNAL(settingsChanged()));
 	}
@@ -44,7 +44,10 @@ const BusinessLogic::ReportParameters& StatisticsSettings::settings() const
 	m_settings.castShowSpeakingAndNonspeakingScenes = ui->castShowSpeakingAndNonspeakingScenes->isChecked();
 	m_settings.castSortByColumn = ui->castSortBy->currentIndex();
 
-	m_settings.characterName = ui->characterName->currentIndex().data().toString();
+	m_settings.characterName =
+			ui->characterName->model()->rowCount() > 0
+			? ui->characterName->currentIndex().data().toString()
+			: QString::null;
 
 	return m_settings;
 }

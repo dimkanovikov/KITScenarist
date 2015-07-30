@@ -86,14 +86,17 @@ bool ctkPopupWidgetPrivate::eventFilter(QObject* obj, QEvent* event)
 	}
   // Here are the application events, it's a lot of events, so we need to be
   // careful to be fast.
-  if (event->type() == QEvent::ApplicationDeactivate)
+  if (event->type() == QEvent::ActivationChange)
 	{
-	// We wait to see if there is no other window being active
-	QTimer::singleShot(0, this, SLOT(onApplicationDeactivate()));
-	}
-  else if (event->type() == QEvent::ApplicationActivate)
-	{
-	QTimer::singleShot(0, this, SLOT(updateVisibility()));
+	  if (qApp->applicationState() & Qt::ApplicationInactive)
+		{
+		  // We wait to see if there is no other window being active
+		  QTimer::singleShot(0, this, SLOT(onApplicationDeactivate()));
+		}
+	  else if (qApp->applicationState() & Qt::ApplicationActive)
+		{
+		  QTimer::singleShot(0, this, SLOT(updateVisibility()));
+		}
 	}
   if (this->BaseWidget.isNull())
 	{
@@ -130,7 +133,7 @@ bool ctkPopupWidgetPrivate::eventFilter(QObject* obj, QEvent* event)
 			event->type() == QEvent::WindowDeactivate) &&
 		   widget == this->BaseWidget->window())
 	{
-	QTimer::singleShot(0, this, SLOT(updateVisibility()));
+	  QTimer::singleShot(0, this, SLOT(updateVisibility()));
 	}
   else if (event->type() == QEvent::RequestSoftwareInputPanel)
 	{
