@@ -34,7 +34,7 @@ void FlatButton::setIcons(const QIcon& _icon, const QIcon& _checkedIcon, const Q
 	} else {
 		m_checkedIconHighlight = true;
 		m_checkedIcon = _icon;
-		ImageHelper::setIconColor(m_checkedIcon, ICON_SIZE, palette().highlight().color().lighter());
+		ImageHelper::setIconColor(m_checkedIcon, ICON_SIZE, palette().highlight().color());
 	}
 
 	m_hoverIcon = _hoverIcon;

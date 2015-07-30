@@ -151,6 +151,7 @@ void StatisticsView::initView()
 	settingsPanelLayout->addWidget(m_statisticSettings);
 	settingsPanel->setAutoShow(false);
 	settingsPanel->setAutoHide(false);
+	settingsPanel->setEffectDuration(200);
 	settingsPanel->setFixedSize(1, 0);
 	connect(m_settings, SIGNAL(toggled(bool)), settingsPanel, SLOT(showPopup(bool)));
 

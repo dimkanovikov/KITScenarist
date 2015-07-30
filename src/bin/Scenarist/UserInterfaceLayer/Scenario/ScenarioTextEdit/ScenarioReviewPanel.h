@@ -8,6 +8,7 @@ namespace BusinessLogic {
 }
 
 class ColoredToolButton;
+class FlatButton;
 class QAbstractItemModel;
 
 namespace UserInterface
@@ -25,23 +26,17 @@ namespace UserInterface
 	public:
 		explicit ScenarioReviewPanel(ScenarioTextEdit* _editor, QWidget* _parent = 0);
 
-	public slots:
+	signals:
 		/**
-		 * @brief Включить/выключить рецензирование
+		 * @brief Включение/выключение режима рецензирования
 		 */
-		void setIsActive(bool _active);
-
-	protected:
-		/**
-		 * @brief Переопределяем для того, чтобы проксировать события клавиатуры в редактор
-		 */
-		bool event(QEvent* _event);
+		void toggled(bool);
 
 	private slots:
 		/**
-		 * @brief Показать себя, при смене позиции курсора
+		 * @brief Обновить доступность действий при смене курсора
 		 */
-		void aboutShow();
+		void aboutUpdateActionsEnable();
 
 		void aboutChangeTextColor(const QColor& _color);
 		void aboutChangeTextBgColor(const QColor& _color);
@@ -59,10 +54,7 @@ namespace UserInterface
 		/**
 		 * @brief Настроить соединения
 		 */
-		/** @{ */
 		void initConnections();
-		void removeConnections();
-		/** @} */
 
 		/**
 		 * @brief Настроить внешний вид
@@ -76,14 +68,14 @@ namespace UserInterface
 
 	private:
 		/**
-		 * @brief Активно ли рецензирование
-		 */
-		bool m_isActive;
-
-		/**
 		 * @brief Редактор текста, к которому привязана панель
 		 */
 		ScenarioTextEdit* m_editor;
+
+		/**
+		 * @brief Кнопка активации панели
+		 */
+		FlatButton* m_activateButton;
 
 		/**
 		 * @brief Цвет текста
@@ -108,12 +100,12 @@ namespace UserInterface
 		/**
 		 * @brief Решено
 		 */
-		ColoredToolButton* m_done;
+		FlatButton* m_done;
 
 		/**
 		 * @brief Очистить форматирование
 		 */
-		ColoredToolButton* m_clear;
+		FlatButton* m_clear;
 	};
 }
 

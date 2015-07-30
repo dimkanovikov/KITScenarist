@@ -99,6 +99,16 @@ QToolButton::menu-arrow[inTopPanel="true"] {
 	image: url(:Interface/UI/menuarrow.png);
 }
 
+QToolButton[reviewPanel="true"] {
+	padding-right: 14px;
+	min-width: 20px;
+}
+
+QToolButton::menu-button[reviewPanel="true"] {
+	padding-right: 3px;
+	border-right: none;
+}
+
 /*
  * Выпадающий список
  */

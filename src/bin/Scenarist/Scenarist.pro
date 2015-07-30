@@ -247,7 +247,8 @@ SOURCES += main.cpp \
     BusinessLayer/Statistics/ReportFacade.cpp \
     BusinessLayer/Statistics/CastReport.cpp \
     BusinessLayer/Statistics/CharacterReport.cpp \
-    BusinessLayer/Statistics/SummaryReport.cpp
+    BusinessLayer/Statistics/SummaryReport.cpp \
+    3rd_party/Widgets/PopupWidget/PopupWidget.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -451,7 +452,9 @@ HEADERS += \
     BusinessLayer/Statistics/ReportFacade.h \
     BusinessLayer/Statistics/CastReport.h \
     BusinessLayer/Statistics/CharacterReport.h \
-    BusinessLayer/Statistics/SummaryReport.h
+    BusinessLayer/Statistics/SummaryReport.h \
+    3rd_party/Widgets/PopupWidget/PopupWidget.h \
+    3rd_party/Widgets/PopupWidget/PopupWidget_p.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \

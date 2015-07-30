@@ -59,12 +59,12 @@ namespace UserInterface
 		/**
 		 * @brief Включить/выключить отображение номеров сцен
 		 */
-        void setShowScenesNumbers(bool _show);
+		void setShowScenesNumbers(bool _show);
 
-        /**
-         * @brief Установить значение необходимости подсвечивать текущую строку
-         */
-        void setHighlightCurrentLine(bool _highlight);
+		/**
+		 * @brief Установить значение необходимости подсвечивать текущую строку
+		 */
+		void setHighlightCurrentLine(bool _highlight);
 
 		/**
 		 * @brief Включить/выключить постраничное отображение
@@ -221,6 +221,16 @@ namespace UserInterface
 
 	private:
 		/**
+		 * @brief Собственно редактор текста
+		 */
+		ScenarioTextEdit* m_editor;
+
+		/**
+		 * @brief Обёртка редактора, позволяющая его масштабировать
+		 */
+		ScalableWrapper* m_editorWrapper;
+
+		/**
 		 * @brief Панель инструментов
 		 */
 		QWidget* m_toolbar;
@@ -251,9 +261,9 @@ namespace UserInterface
 		FlatButton* m_fastFormat;
 
 		/**
-		 * @brief Кнопка включения опций редакторов
+		 * @brief Кнопка и панель рецензирования
 		 */
-		FlatButton* m_review;
+		ScenarioReviewPanel* m_review;
 
 		/**
 		 * @brief Хронометраж сценария
@@ -266,16 +276,6 @@ namespace UserInterface
 		QLabel* m_countersInfo;
 
 		/**
-		 * @brief Собственно редактор текста
-		 */
-		ScenarioTextEdit* m_editor;
-
-		/**
-		 * @brief Обёртка редактора, позволяющая его масштабировать
-		 */
-		ScalableWrapper* m_editorWrapper;
-
-		/**
 		 * @brief Виджет поиска
 		 */
 		SearchWidget* m_searchLine;
@@ -284,11 +284,6 @@ namespace UserInterface
 		 * @brief Виджет быстрого форматирования текста
 		 */
 		ScenarioFastFormatWidget* m_fastFormatWidget;
-
-		/**
-		 * @brief Всплывающая панель рецензирования
-		 */
-		ScenarioReviewPanel* m_reviewPanel;
 
 		/**
 		 * @brief Панель со списком комментариев

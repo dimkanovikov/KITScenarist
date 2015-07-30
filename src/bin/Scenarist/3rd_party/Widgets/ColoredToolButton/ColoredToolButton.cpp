@@ -22,14 +22,14 @@ ColoredToolButton::ColoredToolButton(const QIcon& _icon, QWidget* _parent) :
 	setFocusPolicy(Qt::NoFocus);
 	aboutUpdateIcon(palette().text().color());
 
-	setStyleSheet("QToolButton { border: 1px solid transparent; min-width: 26px; padding: 3px; } "
-				  "QToolButton[popupMode=\"1\"] { padding-right: 16px; }"
-				  "QToolButton::menu-button { border: 1px solid transparent; width: 16px; }"
-				  "QToolButton:hover { border: 1px solid palette(dark); }"
-				  "QToolButton[popupMode=\"1\"]:hover { border-right: 1px solid transparent; }"
-				  "QToolButton::menu-button:hover { border: 1px solid palette(dark); }"
-				  "QToolButton:pressed, QToolButton::menu-button:pressed { background-color: palette(dark); }"
-				  "QToolButton:checked, QToolButton::menu-button:checked { background-color: palette(dark); }");
+//	setStyleSheet("QToolButton { border: 1px solid transparent; min-width: 26px; padding: 3px; } "
+//				  "QToolButton[popupMode=\"1\"] { padding-right: 16px; }"
+//				  "QToolButton::menu-button { border: 1px solid transparent; width: 16px; }"
+//				  "QToolButton:hover { border: 1px solid palette(dark); }"
+//				  "QToolButton[popupMode=\"1\"]:hover { border-right: 1px solid transparent; }"
+//				  "QToolButton::menu-button:hover { border: 1px solid palette(dark); }"
+//				  "QToolButton:pressed, QToolButton::menu-button:pressed { background-color: palette(dark); }"
+//				  "QToolButton:checked, QToolButton::menu-button:checked { background-color: palette(dark); }");
 
 	connect(this, SIGNAL(clicked()), this, SLOT(aboutClicked()));
 }

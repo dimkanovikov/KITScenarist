@@ -55,20 +55,19 @@ namespace {
 
 ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	QFrame(_parent),
+	m_editor(new ScenarioTextEdit(this)),
+	m_editorWrapper(new ScalableWrapper(m_editor, this)),
 	m_toolbar(new QWidget(this)),
 	m_textStyles(new QComboBox(this)),
 	m_undo(new FlatButton(this)),
 	m_redo(new FlatButton(this)),
 	m_search(new FlatButton(this)),
 	m_fastFormat(new FlatButton(this)),
-	m_review(new FlatButton(this)),
+	m_review(new ScenarioReviewPanel(m_editor, this)),
 	m_duration(new QLabel(this)),
 	m_countersInfo(new QLabel(this)),
-	m_editor(new ScenarioTextEdit(this)),
-	m_editorWrapper(new ScalableWrapper(m_editor, this)),
 	m_searchLine(new SearchWidget(this)),
 	m_fastFormatWidget(new ScenarioFastFormatWidget(this)),
-	m_reviewPanel(new ScenarioReviewPanel(m_editor, this)),
 	m_reviewView(new ScenarioReviewView(this))
 {
 	initView();
@@ -435,10 +434,6 @@ void ScenarioTextEditWidget::initView()
 	m_fastFormat->setToolTip(tr("Text Fast Format"));
 	m_fastFormat->setCheckable(true);
 
-	m_review->setIcons(QIcon(":/Graphics/Icons/Editing/review.png"));
-	m_review->setToolTip(tr("Review"));
-	m_review->setCheckable(true);
-
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 	m_duration->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_duration->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -535,7 +530,6 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()));
 	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
 	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
-	connect(m_review, SIGNAL(toggled(bool)), m_reviewPanel, SLOT(setIsActive(bool)));
 	connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
 
 	initEditorConnections();
@@ -573,7 +567,6 @@ void ScenarioTextEditWidget::initStyleSheet()
 	m_redo->setProperty("inTopPanel", true);
 	m_search->setProperty("inTopPanel", true);
 	m_fastFormat->setProperty("inTopPanel", true);
-	m_review->setProperty("inTopPanel", true);
 
 	m_duration->setProperty("inTopPanel", true);
 	m_duration->setProperty("topPanelTopBordered", true);
