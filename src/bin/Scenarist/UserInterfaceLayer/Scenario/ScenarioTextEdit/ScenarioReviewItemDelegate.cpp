@@ -108,7 +108,8 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 	QColor backgroundColor = opt.palette.background().color();
 	QColor replyBackgroundColor = opt.palette.window().color();
 	QColor borderColor = opt.palette.midlight().color();
-	QColor textColor = opt.palette.text().color();
+	QColor textColor = opt.palette.windowText().color();
+	QColor replyColor = opt.palette.windowText().color();
 	QColor dateColor = opt.palette.dark().color();
 	QFont headerFont = opt.font;
 	headerFont.setBold(true);
@@ -123,28 +124,22 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 	//
 	// ... для выделенных элементов
 	//
-	if(opt.state.testFlag(QStyle::State_Selected))
-	{
+	if (opt.state.testFlag(QStyle::State_Selected)) {
 		backgroundColor = opt.palette.highlight().color();
 		textColor = opt.palette.highlightedText().color();
 	}
 	//
 	// ... для остальных
 	//
-	else
-	{
+	else {
 		//
 		// Реализация альтернативных цветов в представлении
 		//
-		if(opt.features.testFlag(QStyleOptionViewItemV2::Alternate))
-		{
+		if (opt.features.testFlag(QStyleOptionViewItemV2::Alternate)) {
 			backgroundColor = opt.palette.alternateBase().color();
-			textColor = opt.palette.windowText().color();
 		}
-		else
-		{
+		else {
 			backgroundColor = opt.palette.base().color();
-			textColor = opt.palette.windowText().color();
 		}
 	}
 
@@ -212,7 +207,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		//
 		// ... автор
 		//
-		_painter->setPen(textColor);
+		_painter->setPen(commentIndex == 0 ? textColor : replyColor);
 		_painter->setFont(headerFont);
 		const QRect headerRect(
 			colorRect.right() + SPACING,
@@ -246,7 +241,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 		//
 		// ... комментарий
 		//
-		_painter->setPen(textColor);
+		_painter->setPen(commentIndex == 0 ? textColor : replyColor);
 		_painter->setFont(textFont);
 		const QRect commentRect(
 			colorRect.right() + SPACING,

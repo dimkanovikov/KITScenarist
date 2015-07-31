@@ -237,6 +237,54 @@ namespace {
 	}
 
 	/**
+	 * @brief Является ли заданный формат открывающим комментарий
+	 */
+	static bool isCommentsRangeStart(const QTextBlock& _block, const QTextLayout::FormatRange& _range) {
+		//
+		// Ищем предыдущий блок, до тех пор, пока не дойдём до текста или начала
+		//
+		QTextBlock prevBlock = _block.previous();
+		while (prevBlock.isValid() && prevBlock.text().isEmpty()) {
+			prevBlock = prevBlock.previous();
+		}
+
+		bool isStart = true;
+		if (prevBlock.isValid()) {
+			foreach (const QTextLayout::FormatRange& range, prevBlock.textFormats()) {
+				if (range.format == _range.format) {
+					isStart = false;
+					break;
+				}
+			}
+		}
+		return isStart;
+	}
+
+	/**
+	 * @brief Является ли заданный формат закрывающим комментарий
+	 */
+	static bool isCommentsRangeEnd(const QTextBlock& _block, const QTextLayout::FormatRange& _range) {
+		//
+		// Ищем следующий блок, до тех пор, пока не дойдём до текста или конца
+		//
+		QTextBlock nextBlock = _block.next();
+		while (nextBlock.isValid() && nextBlock.text().isEmpty()) {
+			nextBlock = nextBlock.next();
+		}
+
+		bool isEnd = true;
+		if (nextBlock.isValid()) {
+			foreach (const QTextLayout::FormatRange& range, nextBlock.textFormats()) {
+				if (range.format == _range.format) {
+					isEnd = false;
+					break;
+				}
+			}
+		}
+		return isEnd;
+	}
+
+	/**
 	 * @brief Сформировать текст блока документа в зависимости от его стиля и оформления
 	 */
 	static QString docxText(QMap<int, QStringList>& _comments, const QTextCursor& _cursor) {
@@ -278,11 +326,12 @@ namespace {
 				else {
 					const QStringList comments = range.format.property(ScenarioBlockStyle::PropertyComments).toStringList();
 					const bool hasComments = !comments.isEmpty() && !comments.first().isEmpty();
-					int lastCommentIndex = 0;
+					int lastCommentIndex = _comments.isEmpty() ? 0 : _comments.lastKey();
 					//
 					// Комментарий
 					//
-					if (hasComments) {
+					if (hasComments
+						&& isCommentsRangeStart(block, range)) {
 						const QStringList authors = range.format.property(ScenarioBlockStyle::PropertyCommentsAuthors).toStringList();
 						const QStringList dates = range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
 
@@ -340,7 +389,8 @@ namespace {
 					//
 					// Текст комментария
 					//
-					if (hasComments) {
+					if (hasComments
+						&& isCommentsRangeEnd(block, range)) {
 						for (int commentIndex = lastCommentIndex - comments.size() + 1;
 							 commentIndex <= lastCommentIndex; ++commentIndex) {
 							documentXml.append(

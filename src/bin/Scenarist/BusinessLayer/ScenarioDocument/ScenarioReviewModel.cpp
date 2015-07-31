@@ -500,8 +500,6 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 								insertPosition = iter.value();
 							}
 
-							beginInsertRows(QModelIndex(), insertPosition, insertPosition);
-
 							ReviewMarkInfo newMark;
 							if (range.format.hasProperty(QTextFormat::BackgroundBrush)) {
 								newMark.background = range.format.background().color();
@@ -515,6 +513,39 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 							newMark.comments = range.format.property(ScenarioBlockStyle::PropertyComments).toStringList();
 							newMark.authors = range.format.property(ScenarioBlockStyle::PropertyCommentsAuthors).toStringList();
 							newMark.dates = range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
+
+							//
+							// Если возможно, объединяем заметку с предыдущей
+							//
+							if (insertPosition > 0) {
+								const int prevMarkIndex = insertPosition - 1;
+								ReviewMarkInfo& prevMark = m_reviewMarks[prevMarkIndex];
+								if ((prevMark.startPosition + prevMark.length) == (newMark.startPosition - 1)
+									&& prevMark.foreground == newMark.foreground
+									&& prevMark.background == newMark.background
+									&& prevMark.comments == newMark.comments
+									&& prevMark.authors == newMark.authors
+									&& prevMark.dates == newMark.dates) {
+									//
+									// Обновляем сохранённую заметку
+									//
+									const int oldEndPos = prevMark.endPosition();
+									prevMark.length += 1 + newMark.length;
+									//
+									// Обновляем карту
+									//
+									m_reviewMap.remove(oldEndPos);
+									m_reviewMap.insert(prevMark.endPosition(), prevMarkIndex);
+
+									//
+									// Переходим к обработке следующего элемента
+									//
+									continue;
+								}
+							}
+
+
+							beginInsertRows(QModelIndex(), insertPosition, insertPosition);
 							m_reviewMarks.insert(insertPosition, newMark);
 							//
 							m_reviewMap.insert(newMark.startPosition, insertPosition);
@@ -523,7 +554,6 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 								*iter = iter.value() + 1;
 								++iter;
 							}
-
 							endInsertRows();
 						}
 					}
