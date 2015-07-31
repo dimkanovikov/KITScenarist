@@ -105,8 +105,8 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 	//
 	// Определим кисти и шрифты
 	//
-	QColor backgroundColor = opt.palette.background().color();
-	QColor replyBackgroundColor = opt.palette.window().color();
+	QColor backgroundColor = opt.palette.base().color();
+	QColor replyBackgroundColor = opt.palette.alternateBase().color();
 	QColor borderColor = opt.palette.midlight().color();
 	QColor textColor = opt.palette.windowText().color();
 	QColor replyColor = opt.palette.windowText().color();
@@ -127,20 +127,6 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 	if (opt.state.testFlag(QStyle::State_Selected)) {
 		backgroundColor = opt.palette.highlight().color();
 		textColor = opt.palette.highlightedText().color();
-	}
-	//
-	// ... для остальных
-	//
-	else {
-		//
-		// Реализация альтернативных цветов в представлении
-		//
-		if (opt.features.testFlag(QStyleOptionViewItemV2::Alternate)) {
-			backgroundColor = opt.palette.alternateBase().color();
-		}
-		else {
-			backgroundColor = opt.palette.base().color();
-		}
 	}
 
 	//

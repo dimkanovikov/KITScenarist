@@ -92,9 +92,29 @@ bool ScenarioReviewModel::removeRows(int _row, int _count, const QModelIndex& _p
 			//
 			if (!m_document->isEmpty()) {
 				QTextCursor cursor(m_document);
+				cursor.beginEditBlock();
 				cursor.setPosition(review.startPosition);
-				cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, review.length);
-				cursor.setCharFormat(cursor.block().charFormat());
+				//
+				// Для каждого блока по отдельности
+				//
+				while (cursor.position() <= review.endPosition()) {
+					cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+					//
+					// Если ещё в текущем блоке, очищаем формат
+					//
+					if (!cursor.atBlockStart()) {
+						const ScenarioBlockStyle::Type type = ScenarioBlockStyle::forBlock(cursor.block());
+						const ScenarioBlockStyle style = ScenarioTemplateFacade::getTemplate().blockStyle(type);
+						cursor.setCharFormat(style.charFormat());
+					}
+					//
+					// Если перешли в другой блок, снимаем выделение
+					//
+					else {
+						cursor.setPosition(cursor.selectionEnd());
+					}
+				}
+				cursor.endEditBlock();
 
 				emit reviewChanged();
 			}
