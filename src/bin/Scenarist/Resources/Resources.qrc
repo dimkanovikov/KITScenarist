@@ -11,6 +11,8 @@
         <file>HunspellDictionaries/uk_UA.dic</file>
         <file>HunspellDictionaries/ru_RU_yo.dic</file>
         <file>HunspellDictionaries/ru_RU_yo.aff</file>
+        <file>HunspellDictionaries/es_ES.dic</file>
+        <file>HunspellDictionaries/es_ES.aff</file>
     </qresource>
     <qresource prefix="/Graphics">
         <file>Icons/folder.png</file>

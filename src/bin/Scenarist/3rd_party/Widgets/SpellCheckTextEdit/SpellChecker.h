@@ -22,7 +22,8 @@ public:
 		Russian,
 		RussianWithYo,
 		Ukrainian,
-		Belorussian
+		Belorussian,
+		Spanish
 	};
 
 public:

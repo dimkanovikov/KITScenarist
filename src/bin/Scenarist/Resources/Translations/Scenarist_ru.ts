@@ -728,6 +728,11 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="131"/>
+        <source>Save review marks</source>
+        <translation>Сохранять пометки редактора</translation>
+    </message>
+    <message>
         <source>Remove scenes numbers:</source>
         <translation type="vanished">Удалять номера сцен:</translation>
     </message>
@@ -740,22 +745,22 @@
         <translation type="vanished">Импортировать</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="78"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="81"/>
         <source>Insert To</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="84"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="87"/>
         <source>Replace scenario</source>
         <translation>заменив исходный сценарий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="94"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="97"/>
         <source>Current cursor position</source>
         <translation>в текущую позицию курсора</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="101"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="104"/>
         <source>End of scenario</source>
         <translation>в конец сценария</translation>
     </message>
@@ -765,7 +770,7 @@
         <translation>Удалять номера сцен</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="111"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="114"/>
         <source>Find characters and locations</source>
         <translation>Определить персонажей и локации</translation>
     </message>
@@ -899,7 +904,7 @@
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="188"/>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="242"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="357"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="358"/>
         <source>Scenarist project files (*%1)</source>
         <translation>Файл проекта сценария (*%1)</translation>
     </message>
@@ -909,7 +914,7 @@
         <translation>Выберите файл для сохранения проекта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="355"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="356"/>
         <source>Choose project file to open</source>
         <translation>Выберите файл проекта для открытия</translation>
     </message>
@@ -931,19 +936,19 @@
         <translation> - изменён</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="515"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="516"/>
         <source>New session for you account started at other device.
 Continue working in offline mode.</source>
         <translation>Пользователь с вашими учётными данными авторизовался на другом устройстве.
 Работаем в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="720"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="721"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="721"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="722"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
     </message>
@@ -952,52 +957,52 @@ Continue working in offline mode.</source>
         <translation type="vanished">%1 [*] - Сценарист</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="864"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="871"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="457"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="458"/>
         <source>Connection active</source>
         <translation>Соединение установлено</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="457"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="458"/>
         <source>Project sinchronized</source>
         <translation>Проект успешно синхронизирован.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="470"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="471"/>
         <source>Network error</source>
         <translation>Ошибка сети</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="471"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="472"/>
         <source>Can&apos;t estabilish network connection.
 Continue working in offline mode.</source>
         <translation>Отсутствует подключение к интернету.
 Работаем в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="490"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="491"/>
         <source>Subscription ended</source>
         <translation>Подписка закончена</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="491"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="492"/>
         <source>Buyed subscription period is finished.
 Continue working in offline mode.</source>
         <translation>Закончился оплаченный период подписки.
 Работаем в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="502"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="514"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="503"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="515"/>
         <source>Session closed</source>
         <translation>Сессия закрыта</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="503"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="504"/>
         <source>New session for you account started at other device. Restart session?</source>
         <translation>Пользователь с вашими учётными данными авторизовался на другом устройстве. Переподключиться?</translation>
     </message>
@@ -1006,114 +1011,114 @@ Continue working in offline mode.</source>
         <translation type="vanished">Переходим в автономный режим.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="527"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="528"/>
         <source>Project not available</source>
         <translation>Проект недоступен</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="528"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="529"/>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
         <translation>Проект недоступен для синхронизации.
 Работаем с ним в автономном режиме.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="539"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="540"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="609"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="610"/>
         <source>Exit from Application</source>
         <translation>Выход из программы</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="609"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="610"/>
         <source>Closing Databse Connections and Remove Temporatry Files.</source>
         <translation>Закрытие соединения с базой данных и удаление временных файлов.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="747"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="748"/>
         <source>Loading Scenario</source>
         <translation>Загрузка сценария</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="747"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="748"/>
         <source>Please wait. Loading can take few minutes.</source>
         <translation>Немного терпения. Загрузка может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="792"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="793"/>
         <source>Sync scenario with cloud service.</source>
         <translation>Немного терпения. Сценарий синхронизируется с облаком.</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="871"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="878"/>
         <source>Start</source>
         <translation>Начало</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="872"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="879"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="873"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="880"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="874"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="881"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="875"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="882"/>
         <source>Statistics</source>
         <translation>Статистика</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="876"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="883"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="921"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="928"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="922"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="929"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="923"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="930"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="925"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="932"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="931"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="938"/>
         <source>Import...</source>
         <translation>Импорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="934"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="941"/>
         <source>Export to...</source>
         <translation>Экспорт...</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="937"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="944"/>
         <source>Print Preview</source>
         <translation>Предпросмотр</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1182"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1189"/>
         <source>%1[*] - KIT Scenarist</source>
         <translation>%1 [*] - КИТ Сценарист</translation>
     </message>
@@ -1212,9 +1217,13 @@ Continue working with this project in offline mode.</source>
         <translation type="vanished">Удалить локацию?</translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Locations/LocationsManager.cpp" line="116"/>
         <source>Are you shure to remove location &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Удалить локацию &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation type="vanished">Удалить локацию &lt;b&gt;%1&lt;/b&gt;?</translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Locations/LocationsManager.cpp" line="116"/>
+        <source>Are you shure to remove locations: &lt;b&gt;%1&lt;/b&gt;?</source>
+        <translation>Удалить локации: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
 </context>
 <context>
@@ -2870,12 +2879,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::ImportDialog</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="80"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="81"/>
         <source>Choose file to import</source>
         <translation>Выберите файл для импорта</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="101"/>
+        <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="102"/>
         <source>Import</source>
         <translation>Импорт</translation>
     </message>
@@ -2900,12 +2909,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::LocationsNavigator</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="100"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="105"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="105"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="110"/>
         <source>Create New Location</source>
         <translation>Создать новую локацию</translation>
     </message>
@@ -2914,12 +2923,12 @@ Paragraph</source>
         <translation type="obsolete">Изменить выбранную локацию</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="108"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="113"/>
         <source>Remove Selected Location</source>
         <translation>Удалить выбранную локацию</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="112"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="117"/>
         <source>Find All Locations From Scenario</source>
         <translation>Найти все локации из сценария</translation>
     </message>
@@ -3183,37 +3192,42 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioReviewPanel</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="241"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="176"/>
         <source>Comment</source>
         <translation>Комментарий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="282"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="208"/>
+        <source>Review</source>
+        <translation>Рецензирование</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="213"/>
         <source>Change text color</source>
         <translation>Изменить цвет текста</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="285"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="216"/>
         <source>Change text background</source>
         <translation>Изменить цвет фона</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="288"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="219"/>
         <source>Highlight text</source>
         <translation>Выделить текст маркером</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="291"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="222"/>
         <source>Add comment</source>
         <translation>Добавить комментарий</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="294"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="225"/>
         <source>Mark as done</source>
         <translation>Пометить как исправлено</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="296"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp" line="227"/>
         <source>Clear</source>
         <translation>Очистить</translation>
     </message>
@@ -3221,28 +3235,28 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioReviewView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="127"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="150"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="128"/>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="180"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="151"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="212"/>
         <source>Reply</source>
         <translation>Ответить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="129"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="152"/>
         <source>Done</source>
         <translation>Исправлено</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="133"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="156"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="170"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="193"/>
         <source>Comment</source>
         <translation>Комментарий</translation>
     </message>
@@ -3285,17 +3299,17 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioTextEditWidget</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="418"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="417"/>
         <source>Current Text Block Style</source>
         <translation>Формат текущего блока текста</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="424"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="423"/>
         <source>Undo last action</source>
         <translation>Отменить последнее действие</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="427"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="426"/>
         <source>Redo last action</source>
         <translation>Повторить последнее действие</translation>
     </message>
@@ -3328,12 +3342,12 @@ Paragraph</source>
         <translation type="vanished">Ctrl+J</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="94"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="93"/>
         <source>DRAFT</source>
         <translation>ЧЕРНОВИК</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="430"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="429"/>
         <source>Search and Replace</source>
         <translation>Поиск и замена</translation>
     </message>
@@ -3346,9 +3360,8 @@ Paragraph</source>
         <translation type="vanished">Рецензирование</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="439"/>
         <source>Review</source>
-        <translation>Рецензирование</translation>
+        <translation type="vanished">Рецензирование</translation>
     </message>
     <message>
         <source>Character</source>
@@ -3403,7 +3416,7 @@ Paragraph</source>
         <translation type="vanished">Поиск текста (Ctrl+F)</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="435"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="434"/>
         <source>Text Fast Format</source>
         <translation>Быстрое форматирование текста</translation>
     </message>
@@ -3412,7 +3425,7 @@ Paragraph</source>
         <translation type="vanished">Хрон.:</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="442"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="437"/>
         <source>Duration from Start to Cursor Position | Full Duration</source>
         <translation>Хронометраж от начала до текущей позиции курсора | Полный хронометраж сценария</translation>
     </message>
@@ -3445,17 +3458,22 @@ Paragraph</source>
         <translation>белорусский</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="524"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="507"/>
+        <source>Spanish</source>
+        <translation>испанский</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="525"/>
         <source>Common</source>
         <translation>Общие параметры</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="525"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="526"/>
         <source>Shortcuts Settings</source>
         <translation>Горячие клавиши</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="526"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="527"/>
         <source>Review</source>
         <translation>Рецензирование</translation>
     </message>
@@ -3504,32 +3522,32 @@ Paragraph</source>
         <translation>Файлы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="164"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="165"/>
         <source>Reports</source>
         <translation>Отчёты</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="168"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="169"/>
         <source>Statistics report</source>
         <translation>Суммарная информация</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="169"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="170"/>
         <source>Scene report</source>
         <translation>По сценам</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="170"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="171"/>
         <source>Location report</source>
         <translation>По локациям</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="171"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="172"/>
         <source>Cast report</source>
         <translation>По персонажам</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="172"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="173"/>
         <source>Character report</source>
         <translation>По персонажу</translation>
     </message>

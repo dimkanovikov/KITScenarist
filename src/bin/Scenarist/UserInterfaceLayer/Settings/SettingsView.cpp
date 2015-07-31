@@ -504,6 +504,7 @@ void SettingsView::initData()
 	ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
 	ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
 	ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
+	ui->spellCheckingLanguage->addItem(tr("Spanish"), SpellChecker::Spanish);
 }
 
 void SettingsView::initView()
