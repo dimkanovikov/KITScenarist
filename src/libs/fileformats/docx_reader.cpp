@@ -312,6 +312,9 @@ void DocxReader::readComments()
 			comment.date = m_xml.attributes().value(QLatin1String("w:date")).toString();
 			while (m_xml.readNextStartElement()) {
 				if (m_xml.qualifiedName() == "w:p") {
+					if (!comment.text.isEmpty()) {
+						comment.text.append("\n");
+					}
 					while (m_xml.readNextStartElement()) {
 						if (m_xml.qualifiedName() == "w:r") {
 							while (m_xml.readNextStartElement()) {
