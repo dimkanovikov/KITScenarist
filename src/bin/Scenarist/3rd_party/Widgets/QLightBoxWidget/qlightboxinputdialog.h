@@ -6,6 +6,7 @@
 class QDialogButtonBox;
 class QLabel;
 class QLineEdit;
+class QPlainTextEdit;
 
 
 /**
@@ -20,6 +21,12 @@ public:
 	 * @brief Получить текст
 	 */
 	static QString getText(QWidget* _parent, const QString& _title, const QString& _label,
+		const QString& _text = QString());
+
+	/**
+	 * @brief Получить большое текст
+	 */
+	static QString getLongText(QWidget* _parent, const QString& _title, const QString& _label,
 		const QString& _text = QString());
 
 private:
@@ -49,7 +56,12 @@ private:
 	/**
 	 * @brief Поле для текстового ввода
 	 */
-	QLineEdit* m_textInput;
+	QLineEdit* m_lineEdit;
+
+	/**
+	 * @brief Поле для ввода большого кол-ва текста
+	 */
+	QPlainTextEdit* m_textEdit;
 
 	/**
 	 * @brief Кнопки диалога

@@ -80,6 +80,8 @@ void ScenarioReviewView::aboutUpdateModel()
 		if (ScenarioTextDocument* document = qobject_cast<ScenarioTextDocument*>(m_editor->document())) {
 			ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(document->reviewModel());
 			setModel(reviewModel);
+
+			connect(this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(aboutEdit(QModelIndex)), Qt::UniqueConnection);
 		}
 	}
 }
@@ -136,7 +138,7 @@ void ScenarioReviewView::aboutContextMenuRequested(const QPoint& _pos)
 	// Определим комментарий над коротым нажата кнопка мыши
 	//
 	const int y = _pos.y() - visualRect(currentIndex()).top();
-	int commentIndex = ScenarioReviewItemDelegate::commentIndexFor(currentIndex(), y, this);
+	const int commentIndex = ScenarioReviewItemDelegate::commentIndexFor(currentIndex(), y, this);
 
 	QAction* toggled = menu->exec(mapToGlobal(_pos));
 	if (toggled != 0) {
@@ -167,17 +169,26 @@ void ScenarioReviewView::aboutEdit(int _commentIndex)
 				ScenarioReviewModel::CommentsRole
 				).toStringList().value(_commentIndex);
 		const QString comment =
-			QLightBoxInputDialog::getText(this, QString::null, tr("Comment"), oldComment);
+			QLightBoxInputDialog::getLongText(this, QString::null, tr("Comment"), oldComment);
 		if (!comment.isEmpty()) {
 			reviewModel->updateReviewMarkComment(currentIndex(), _commentIndex, comment);
 		}
 	}
 }
 
+void ScenarioReviewView::aboutEdit(const QModelIndex& _index)
+{
+	if (_index.isValid()) {
+		const int y = mapFromGlobal(QCursor::pos()).y() - visualRect(_index).top();
+		const int commentIndex = ScenarioReviewItemDelegate::commentIndexFor(_index, y, this);
+		aboutEdit(commentIndex);
+	}
+}
+
 void ScenarioReviewView::aboutReply()
 {
 	if (currentIndex().isValid()) {
-		const QString comment = QLightBoxInputDialog::getText(this, QString::null, tr("Reply"));
+		const QString comment = QLightBoxInputDialog::getLongText(this, QString::null, tr("Reply"));
 		if (!comment.isEmpty()) {
 			ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model());
 			reviewModel->addReviewMarkComment(currentIndex(), comment);

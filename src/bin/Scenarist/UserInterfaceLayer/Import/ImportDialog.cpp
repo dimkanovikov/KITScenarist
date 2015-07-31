@@ -70,6 +70,7 @@ BusinessLogic::ImportParameters ImportDialog::importParameters() const
 		importParameters.insertionMode = BusinessLogic::ImportParameters::ToDocumentEnd;
 	}
 	importParameters.findCharactersAndLocations = ui->findCharactersAndLocations->isChecked();
+	importParameters.saveReviewMarks = ui->saveReviewMarks->isChecked();
 
 	return importParameters;
 }

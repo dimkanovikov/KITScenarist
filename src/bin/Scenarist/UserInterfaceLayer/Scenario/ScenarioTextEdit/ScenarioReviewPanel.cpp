@@ -173,7 +173,7 @@ void ScenarioReviewPanel::aboutChangeTextHighlight(const QColor& _color)
 
 void ScenarioReviewPanel::aboutAddComment(const QColor& _color)
 {
-	const QString comment = QLightBoxInputDialog::getText(parentWidget(), QString::null, tr("Comment"));
+	const QString comment = QLightBoxInputDialog::getLongText(parentWidget(), QString::null, tr("Comment"));
 	if (!comment.isEmpty()) {
 		BusinessLogic::ScenarioReviewModel* model = reviewModel();
 		const int selectionStart = m_editor->textCursor().selectionStart();

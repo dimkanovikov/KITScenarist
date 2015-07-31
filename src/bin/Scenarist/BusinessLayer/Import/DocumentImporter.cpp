@@ -336,47 +336,49 @@ QString DocumentImporter::importScenario(const ImportParameters& _importParamete
 			//
 			// Пишем редакторские комментарии
 			//
-			const QTextBlock currentBlock = cursor.block();
-			if (!currentBlock.textFormats().isEmpty()) {
-				writer.writeStartElement(NODE_REVIEW_GROUP);
-				foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
-					//
-					// Всё, кроме стандартного
-					//
-					if (range.format.boolProperty(Docx::IsForeground)
-						|| range.format.boolProperty(Docx::IsBackground)
-						|| range.format.boolProperty(Docx::IsHighlight)
-						|| range.format.boolProperty(Docx::IsComment)) {
-						writer.writeStartElement(NODE_REVIEW);
-						writer.writeAttribute(ATTRIBUTE_REVIEW_FROM, QString::number(range.start));
-						writer.writeAttribute(ATTRIBUTE_REVIEW_LENGTH, QString::number(range.length));
-						if (range.format.hasProperty(QTextFormat::ForegroundBrush)) {
-							writer.writeAttribute(ATTRIBUTE_REVIEW_COLOR,
-								range.format.foreground().color().name());
-						}
-						if (range.format.hasProperty(QTextFormat::BackgroundBrush)) {
-							writer.writeAttribute(ATTRIBUTE_REVIEW_BGCOLOR,
-								range.format.background().color().name());
-						}
-						writer.writeAttribute(ATTRIBUTE_REVIEW_IS_HIGHLIGHT,
-							range.format.boolProperty(Docx::IsHighlight) ? "true" : "false");
+			if (_importParameters.saveReviewMarks) {
+				const QTextBlock currentBlock = cursor.block();
+				if (!currentBlock.textFormats().isEmpty()) {
+					writer.writeStartElement(NODE_REVIEW_GROUP);
+					foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
 						//
-						// ... комментарии
+						// Всё, кроме стандартного
 						//
-						const QStringList comments = range.format.property(Docx::Comments).toStringList();
-						const QStringList authors = range.format.property(Docx::CommentsAuthors).toStringList();
-						const QStringList dates = range.format.property(Docx::CommentsDates).toStringList();
-						for (int commentIndex = 0; commentIndex < comments.size(); ++commentIndex) {
-							writer.writeEmptyElement(NODE_REVIEW_COMMENT);
-							writer.writeAttribute(ATTRIBUTE_REVIEW_COMMENT, comments.at(commentIndex));
-							writer.writeAttribute(ATTRIBUTE_REVIEW_AUTHOR, authors.at(commentIndex));
-							writer.writeAttribute(ATTRIBUTE_REVIEW_DATE, dates.at(commentIndex));
+						if (range.format.boolProperty(Docx::IsForeground)
+							|| range.format.boolProperty(Docx::IsBackground)
+							|| range.format.boolProperty(Docx::IsHighlight)
+							|| range.format.boolProperty(Docx::IsComment)) {
+							writer.writeStartElement(NODE_REVIEW);
+							writer.writeAttribute(ATTRIBUTE_REVIEW_FROM, QString::number(range.start));
+							writer.writeAttribute(ATTRIBUTE_REVIEW_LENGTH, QString::number(range.length));
+							if (range.format.hasProperty(QTextFormat::ForegroundBrush)) {
+								writer.writeAttribute(ATTRIBUTE_REVIEW_COLOR,
+													  range.format.foreground().color().name());
+							}
+							if (range.format.hasProperty(QTextFormat::BackgroundBrush)) {
+								writer.writeAttribute(ATTRIBUTE_REVIEW_BGCOLOR,
+													  range.format.background().color().name());
+							}
+							writer.writeAttribute(ATTRIBUTE_REVIEW_IS_HIGHLIGHT,
+												  range.format.boolProperty(Docx::IsHighlight) ? "true" : "false");
+							//
+							// ... комментарии
+							//
+							const QStringList comments = range.format.property(Docx::Comments).toStringList();
+							const QStringList authors = range.format.property(Docx::CommentsAuthors).toStringList();
+							const QStringList dates = range.format.property(Docx::CommentsDates).toStringList();
+							for (int commentIndex = 0; commentIndex < comments.size(); ++commentIndex) {
+								writer.writeEmptyElement(NODE_REVIEW_COMMENT);
+								writer.writeAttribute(ATTRIBUTE_REVIEW_COMMENT, comments.at(commentIndex));
+								writer.writeAttribute(ATTRIBUTE_REVIEW_AUTHOR, authors.at(commentIndex));
+								writer.writeAttribute(ATTRIBUTE_REVIEW_DATE, dates.at(commentIndex));
+							}
+							//
+							writer.writeEndElement();
 						}
-						//
-						writer.writeEndElement();
 					}
+					writer.writeEndElement();
 				}
-				writer.writeEndElement();
 			}
 			//
 			// ... конец абзаца

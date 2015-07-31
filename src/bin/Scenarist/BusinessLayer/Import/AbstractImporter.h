@@ -46,6 +46,11 @@ namespace BusinessLogic
 		 * @brief Искать ли персонажей и локации
 		 */
 		bool findCharactersAndLocations;
+
+		/**
+		 * @brief Сохранять редакторские заметки
+		 */
+		bool saveReviewMarks;
 	};
 
 	/**

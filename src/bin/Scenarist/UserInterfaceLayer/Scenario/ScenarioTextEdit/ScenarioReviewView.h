@@ -54,7 +54,10 @@ namespace UserInterface {
 		/**
 		 * @brief Изменить текст комментария
 		 */
+		/** @{ */
 		void aboutEdit(int _commentIndex);
+		void aboutEdit(const QModelIndex& _index);
+		/** @} */
 
 		/**
 		 * @brief Ответить на комментарий
