@@ -8,6 +8,7 @@
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 
+#include <QKeyEvent>
 #include <QMenu>
 
 using BusinessLogic::ScenarioTextDocument;
@@ -72,6 +73,26 @@ void ScenarioReviewView::resizeEvent(QResizeEvent* _event)
 	QListView::resizeEvent(_event);
 
 	reset();
+}
+
+void ScenarioReviewView::keyPressEvent(QKeyEvent* _event)
+{
+	//
+	// Отлавливаем необходимую комбинацию клавиш
+	//
+	const QString keyCharacter = _event->text();
+	if (_event->modifiers().testFlag(Qt::ControlModifier)
+		&& ((Qt::Key)_event->key() == Qt::Key_Z
+			|| keyCharacter == "z"
+			|| keyCharacter == QString::fromUtf8("я"))) {
+		if (_event->modifiers().testFlag(Qt::ShiftModifier)) {
+			emit redoPressed();
+		} else {
+			emit undoPressed();
+		}
+	}
+
+	QListView::keyPressEvent(_event);
 }
 
 void ScenarioReviewView::aboutUpdateModel()

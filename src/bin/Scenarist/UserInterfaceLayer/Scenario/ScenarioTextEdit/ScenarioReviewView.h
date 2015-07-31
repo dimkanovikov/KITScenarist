@@ -23,12 +23,29 @@ namespace UserInterface {
 		 */
 		void setEditor(ScenarioTextEdit* _editor);
 
+	signals:
+
+		/**
+		 * @brief Запрос отмены действия
+		 */
+		void undoPressed();
+
+		/**
+		 * @brief Запрос повтора действия
+		 */
+		void redoPressed();
+
 	protected:
 		/**
 		 * @brief Переопределяется для обновления размеров элементов,
 		 *		  т.к. стандартная реализация этого не делает
 		 */
 		void resizeEvent(QResizeEvent* _event);
+
+		/**
+		 * @brief Переопределяется чтобы отлавливать нажатия Ctrl+Z и Ctrl+Shift+Z в дереве
+		 */
+		void keyPressEvent(QKeyEvent* _event);
 
 	private slots:
 		/**
