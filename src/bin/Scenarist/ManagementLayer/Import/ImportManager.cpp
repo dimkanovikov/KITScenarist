@@ -81,7 +81,7 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 		//
 		// ... в случае необходимости определяем локации и персонажей
 		//
-		{
+		if (importParameters.findCharactersAndLocations) {
 			//
 			// Персонажи
 			//

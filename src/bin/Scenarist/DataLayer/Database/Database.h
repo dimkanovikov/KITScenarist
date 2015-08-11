@@ -93,13 +93,6 @@ namespace DatabaseLayer
 		static void updateDatabaseTo_0_0_2(QSqlDatabase& _database);
 
 		/**
-		 * @brief Обновить базу данных до версии 0.0.4
-		 *
-		 * Упорядочивание таблицы времён
-		 */
-		static void updateDatabaseTo_0_0_4(QSqlDatabase& _database);
-
-		/**
 		 * @brief Обновить базу данных до версии 0.0.5
 		 *
 		 * Добавление информации о персонажах/локациях

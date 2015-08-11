@@ -22,11 +22,6 @@ QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 #QMAKE_LFLAGS_DEBUG += -pg
 
 #
-# Для создания предустановленных справочников на русском языке
-#
-DEFINES += USE_RUSSIAN_DATABASE_ENUMS
-
-#
 # Подключаем библиотеку HUNSPELL
 #
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../libs/hunspell/release/ -lhunspell

@@ -36,21 +36,21 @@ Application::Application(int& _argc, char** _argv) :
 	// Подключим файл переводов Qt
 	//
 	QTranslator* russianQtTranslator = new QTranslator;
-	russianQtTranslator->load(":/Translations/Translations/qt_ru.qm");
+	russianQtTranslator->load(":/Translations/Translations/qt_es.qm");
 	installTranslator(russianQtTranslator);
 
 	//
 	// Подключим дополнительный файл переводов Qt
 	//
 	QTranslator* russianQtBaseTranslator = new QTranslator;
-	russianQtBaseTranslator->load(":/Translations/Translations/qtbase_ru.qm");
+	russianQtBaseTranslator->load(":/Translations/Translations/qtbase_es.qm");
 	installTranslator(russianQtBaseTranslator);
 
 	//
 	// Подключим файл переводов программы
 	//
 	QTranslator* russianTranslator = new QTranslator;
-	russianTranslator->load(":/Translations/Translations/Scenarist_ru.qm");
+	russianTranslator->load(":/Translations/Translations/Scenarist_es.qm");
 	installTranslator(russianTranslator);
 }
 

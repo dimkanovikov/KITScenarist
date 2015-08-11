@@ -243,7 +243,8 @@ namespace {
 	 * @brief Вспомогательные слова на разрывах реплик
 	 */
 	static const char* DIALOG_BREAK = QT_TRANSLATE_NOOP("BusinessLogic::AbstractExporter", "(MORE)");
-	static const char* DIALOG_CONTINUED = QT_TRANSLATE_NOOP("BusinessLogic::AbstractExporter", " (cont'd)");
+	//: Continued
+	static const char* DIALOG_CONTINUED = QT_TRANSLATE_NOOP("BusinessLogic::AbstractExporter", " (CONT'D)");
 
 	/**
 	 * @brief Разбить текст по предложениям

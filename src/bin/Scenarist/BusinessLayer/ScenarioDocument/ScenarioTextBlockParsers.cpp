@@ -140,5 +140,14 @@ QStringList SceneCharactersParser::characters(const QString& _text)
 		characters.remove(QRegularExpression(QString("[%1]$").arg(stylePostfix)));
 	}
 
-	return characters.split(",", QString::SkipEmptyParts);
+	QStringList charactersList = characters.split(",", QString::SkipEmptyParts);
+
+	//
+	// Убираем символы пробелов
+	//
+	for (int index = 0; index < charactersList.size(); ++index) {
+		charactersList[index] = charactersList[index].simplified();
+	}
+
+	return charactersList;
 }

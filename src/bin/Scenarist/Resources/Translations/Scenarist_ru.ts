@@ -202,9 +202,15 @@
         <translation>(ДАЛЬШЕ)</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="246"/>
-        <source> (cont&apos;d)</source>
+        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="247"/>
+        <source> (CONT&apos;D)</source>
+        <extracomment>Continued</extracomment>
         <translation> (ПРОД.)</translation>
+    </message>
+    <message>
+        <source> (cont&apos;d)</source>
+        <extracomment>Continued</extracomment>
+        <translation type="vanished"> (ПРОД.)</translation>
     </message>
 </context>
 <context>
@@ -471,6 +477,59 @@
     <message>
         <source>Local user</source>
         <translation type="vanished">Пользователь</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseLayer::Database</name>
+    <message>
+        <location filename="../../DataLayer/Database/Database.cpp" line="333"/>
+        <source>INT</source>
+        <translation>ИНТ</translation>
+    </message>
+    <message>
+        <location filename="../../DataLayer/Database/Database.cpp" line="337"/>
+        <source>EXT</source>
+        <translation>НАТ</translation>
+    </message>
+    <message>
+        <location filename="../../DataLayer/Database/Database.cpp" line="345"/>
+        <source>DAY</source>
+        <translation>ДЕНЬ</translation>
+    </message>
+    <message>
+        <location filename="../../DataLayer/Database/Database.cpp" line="349"/>
+        <source>NIGHT</source>
+        <translation>НОЧЬ</translation>
+    </message>
+    <message>
+        <location filename="../../DataLayer/Database/Database.cpp" line="353"/>
+        <location filename="../../DataLayer/Database/Database.cpp" line="482"/>
+        <source>MORNING</source>
+        <translation>УТРО</translation>
+    </message>
+    <message>
+        <location filename="../../DataLayer/Database/Database.cpp" line="357"/>
+        <location filename="../../DataLayer/Database/Database.cpp" line="486"/>
+        <source>EVENING</source>
+        <translation>ВЕЧЕР</translation>
+    </message>
+    <message>
+        <location filename="../../DataLayer/Database/Database.cpp" line="366"/>
+        <source>V.O.</source>
+        <extracomment>Voice over</extracomment>
+        <translation>ЗК</translation>
+    </message>
+    <message>
+        <location filename="../../DataLayer/Database/Database.cpp" line="371"/>
+        <source>O.S.</source>
+        <extracomment>Off-screen</extracomment>
+        <translation>ВПЗ</translation>
+    </message>
+    <message>
+        <location filename="../../DataLayer/Database/Database.cpp" line="376"/>
+        <source>CONT&apos;D</source>
+        <extracomment>Continued</extracomment>
+        <translation>ПРОД</translation>
     </message>
 </context>
 <context>
@@ -969,7 +1028,7 @@ Continue working in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="458"/>
         <source>Project sinchronized</source>
-        <translation>Проект успешно синхронизирован.</translation>
+        <translation>Проект успешно синхронизирован</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="471"/>
@@ -2190,7 +2249,7 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="434"/>
         <source>Update recent projects list</source>
-        <translation>Обновить список недавно используемых проектов.</translation>
+        <translation>Обновить список недавно используемых проектов</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Create Project&lt;/a&gt;</source>

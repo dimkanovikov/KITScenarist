@@ -83,6 +83,10 @@
         <file>Translations/Scenarist_ru.qm</file>
         <file>Translations/qt_ru.qm</file>
         <file>Translations/qtbase_ru.qm</file>
+        <file>Translations/Scenarist_es.qm</file>
+        <file>Translations/Scenarist_es.ts</file>
+        <file>Translations/qtbase_es.qm</file>
+        <file>Translations/qt_es.qm</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/style.qss</file>
