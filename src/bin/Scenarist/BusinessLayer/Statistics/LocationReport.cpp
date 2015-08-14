@@ -25,7 +25,7 @@ namespace {
 
 QString LocationReport::reportName(const ReportParameters&) const
 {
-	return QApplication::translate("BusinessLayer::LocationReport", "Location Report");
+	return QApplication::translate("BusinessLogic::LocationReport", "Location Report");
 }
 
 QString LocationReport::makeReport(QTextDocument* _scenario,
@@ -143,15 +143,15 @@ QString LocationReport::makeReport(QTextDocument* _scenario,
 	//
 	html.append("<tr>");
 	html.append(QString("<td><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::LocationReport", "Location/Scene")));
+				.arg(QApplication::translate("BusinessLogic::LocationReport", "Location/Scene")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::LocationReport", "Number")));
+				.arg(QApplication::translate("BusinessLogic::LocationReport", "Number")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::LocationReport", "Page")));
+				.arg(QApplication::translate("BusinessLogic::LocationReport", "Page")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::LocationReport", "Scenes")));
+				.arg(QApplication::translate("BusinessLogic::LocationReport", "Scenes")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::LocationReport", "Chron")));
+				.arg(QApplication::translate("BusinessLogic::LocationReport", "Chron")));
 	html.append("</tr>");
 	//
 	// ... данные
@@ -160,7 +160,7 @@ QString LocationReport::makeReport(QTextDocument* _scenario,
 		html.append("<tr style=\"background-color: #ababab;\">");
 		const QString locationName =
 				data->name.isEmpty()
-				? QApplication::translate("BusinessLayer::LocationReport", "[UNDEFINED]")
+				? QApplication::translate("BusinessLogic::LocationReport", "[UNDEFINED]")
 				: data->name;
 		html.append(QString("<td><b>%1</b></td>").arg(locationName));
 		html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(QString::null));
@@ -204,7 +204,7 @@ QString LocationReport::makeReport(QTextDocument* _scenario,
 			html.append("<tr>");
 			const QString locationTimeName =
 					locationTimeData->name.isEmpty()
-					? QApplication::translate("BusinessLayer::LocationReport", "[UNDEFINED]")
+					? QApplication::translate("BusinessLogic::LocationReport", "[UNDEFINED]")
 					: locationTimeData->name;
 			html.append(QString("<td><b>%1</b></td>").arg(locationTimeName));
 			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(QString::null));

@@ -36,6 +36,159 @@
 <context>
     <name>BusinessLayer::CastReport</name>
     <message>
+        <source>Cast Report</source>
+        <translation type="vanished">Отчёт по персонажам</translation>
+    </message>
+    <message>
+        <source>Character</source>
+        <translation type="vanished">Персонаж</translation>
+    </message>
+    <message>
+        <source>Total Dialogues</source>
+        <translation type="vanished">Всего реплик</translation>
+    </message>
+    <message>
+        <source>Speaking Scenes</source>
+        <translation type="vanished">Сцен с репликами</translation>
+    </message>
+    <message>
+        <source>Non-Sp. Scenes</source>
+        <translation type="vanished">Сцен без реплик</translation>
+    </message>
+    <message>
+        <source>Total Scenes</source>
+        <translation type="vanished">Всего сцен</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLayer::CharacterReport</name>
+    <message>
+        <source>Character Report</source>
+        <translation type="vanished">Отчёт по персонажу</translation>
+    </message>
+    <message>
+        <source>Scene/Dialogue</source>
+        <translation type="vanished">Сцена/Реплика</translation>
+    </message>
+    <message>
+        <source>Number</source>
+        <translation type="vanished">Номер</translation>
+    </message>
+    <message>
+        <source>Page</source>
+        <translation type="vanished">Страница</translation>
+    </message>
+    <message>
+        <source>[UNDEFINED]</source>
+        <translation type="vanished">[НЕ ОПРЕДЕЛЕНО]</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLayer::LocationReport</name>
+    <message>
+        <source>Location Report</source>
+        <translation type="vanished">Отчёт по локациям</translation>
+    </message>
+    <message>
+        <source>Location/Scene</source>
+        <translation type="vanished">Локация/Сцена</translation>
+    </message>
+    <message>
+        <source>Number</source>
+        <translation type="vanished">Номер</translation>
+    </message>
+    <message>
+        <source>Page</source>
+        <translation type="vanished">Страница</translation>
+    </message>
+    <message>
+        <source>Scenes</source>
+        <translation type="vanished">Сцен</translation>
+    </message>
+    <message>
+        <source>Chron</source>
+        <translation type="vanished">Хрон</translation>
+    </message>
+    <message>
+        <source>[UNDEFINED]</source>
+        <translation type="vanished">[НЕ ОПРЕДЕЛЕНО]</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLayer::ReportFacade</name>
+    <message>
+        <source>generated</source>
+        <translation type="vanished">сформировано</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLayer::SceneReport</name>
+    <message>
+        <source>Scene Report</source>
+        <translation type="vanished">Отчёт по сценам</translation>
+    </message>
+    <message>
+        <source>Scene/Characters</source>
+        <translation type="vanished">Сцена/Персонажи</translation>
+    </message>
+    <message>
+        <source>Number</source>
+        <translation type="vanished">Номер</translation>
+    </message>
+    <message>
+        <source>Page</source>
+        <translation type="vanished">Страница</translation>
+    </message>
+    <message>
+        <source>Characters</source>
+        <translation type="vanished">Персонажей</translation>
+    </message>
+    <message>
+        <source>Chron</source>
+        <translation type="vanished">Хрон</translation>
+    </message>
+    <message>
+        <source>[UNDEFINED]</source>
+        <translation type="vanished">[НЕ ОПРЕДЕЛЕНО]</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::AbstarctExporter</name>
+    <message>
+        <source>(MORE)</source>
+        <translation type="vanished">ДАЛЬШЕ</translation>
+    </message>
+    <message>
+        <source> (cont&apos;d)</source>
+        <translation type="vanished"> (ПРОД.)</translation>
+    </message>
+    <message>
+        <source>(cont&apos;d)</source>
+        <translation type="vanished">(ПРОД.)</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::AbstractExporter</name>
+    <message>
+        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="245"/>
+        <source>(MORE)</source>
+        <translation>(ДАЛЬШЕ)</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="247"/>
+        <source> (CONT&apos;D)</source>
+        <extracomment>Continued</extracomment>
+        <translation> (ПРОД.)</translation>
+    </message>
+    <message>
+        <source> (cont&apos;d)</source>
+        <extracomment>Continued</extracomment>
+        <translation type="vanished"> (ПРОД.)</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::CastReport</name>
+    <message>
         <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="30"/>
         <source>Cast Report</source>
         <translation>Отчёт по персонажам</translation>
@@ -67,7 +220,7 @@
     </message>
 </context>
 <context>
-    <name>BusinessLayer::CharacterReport</name>
+    <name>BusinessLogic::CharacterReport</name>
     <message>
         <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="25"/>
         <source>Character Report</source>
@@ -95,7 +248,25 @@
     </message>
 </context>
 <context>
-    <name>BusinessLayer::LocationReport</name>
+    <name>BusinessLogic::CountersFacade</name>
+    <message>
+        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="179"/>
+        <source>Pages</source>
+        <translation>Страниц</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="186"/>
+        <source>Words</source>
+        <translation>Слов</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="193"/>
+        <source>Simbols</source>
+        <translation>Символов</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::LocationReport</name>
     <message>
         <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="28"/>
         <source>Location Report</source>
@@ -134,101 +305,11 @@
     </message>
 </context>
 <context>
-    <name>BusinessLayer::ReportFacade</name>
+    <name>BusinessLogic::ReportFacade</name>
     <message>
         <location filename="../../BusinessLayer/Statistics/ReportFacade.cpp" line="71"/>
         <source>generated</source>
         <translation>сформировано</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLayer::SceneReport</name>
-    <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="35"/>
-        <source>Scene Report</source>
-        <translation>Отчёт по сценам</translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="235"/>
-        <source>Scene/Characters</source>
-        <translation>Сцена/Персонажи</translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="237"/>
-        <source>Number</source>
-        <translation>Номер</translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="239"/>
-        <source>Page</source>
-        <translation>Страница</translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="241"/>
-        <source>Characters</source>
-        <translation>Персонажей</translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="243"/>
-        <source>Chron</source>
-        <translation>Хрон</translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="252"/>
-        <source>[UNDEFINED]</source>
-        <translation>[НЕ ОПРЕДЕЛЕНО]</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLogic::AbstarctExporter</name>
-    <message>
-        <source>(MORE)</source>
-        <translation type="vanished">ДАЛЬШЕ</translation>
-    </message>
-    <message>
-        <source> (cont&apos;d)</source>
-        <translation type="vanished"> (ПРОД.)</translation>
-    </message>
-    <message>
-        <source>(cont&apos;d)</source>
-        <translation type="vanished">(ПРОД.)</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLogic::AbstractExporter</name>
-    <message>
-        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="245"/>
-        <source>(MORE)</source>
-        <translation>(ДАЛЬШЕ)</translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Export/AbstractExporter.cpp" line="247"/>
-        <source> (CONT&apos;D)</source>
-        <extracomment>Continued</extracomment>
-        <translation> (ПРОД.)</translation>
-    </message>
-    <message>
-        <source> (cont&apos;d)</source>
-        <extracomment>Continued</extracomment>
-        <translation type="vanished"> (ПРОД.)</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLogic::CountersFacade</name>
-    <message>
-        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="179"/>
-        <source>Pages</source>
-        <translation>Страниц</translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="186"/>
-        <source>Words</source>
-        <translation>Слов</translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="193"/>
-        <source>Simbols</source>
-        <translation>Символов</translation>
     </message>
 </context>
 <context>
@@ -316,6 +397,44 @@
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="81"/>
         <source>Folder Footer</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::SceneReport</name>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="35"/>
+        <source>Scene Report</source>
+        <translation>Отчёт по сценам</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="235"/>
+        <source>Scene/Characters</source>
+        <translation>Сцена/Персонажи</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="237"/>
+        <source>Number</source>
+        <translation>Номер</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="239"/>
+        <source>Page</source>
+        <translation>Страница</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="241"/>
+        <source>Characters</source>
+        <translation>Персонажей</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="243"/>
+        <source>Chron</source>
+        <translation>Хрон</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="252"/>
+        <source>[UNDEFINED]</source>
+        <translation>[НЕ ОПРЕДЕЛЕНО]</translation>
     </message>
 </context>
 <context>
@@ -503,13 +622,13 @@
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="353"/>
-        <location filename="../../DataLayer/Database/Database.cpp" line="482"/>
+        <location filename="../../DataLayer/Database/Database.cpp" line="477"/>
         <source>MORNING</source>
         <translation>УТРО</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="357"/>
-        <location filename="../../DataLayer/Database/Database.cpp" line="486"/>
+        <location filename="../../DataLayer/Database/Database.cpp" line="481"/>
         <source>EVENING</source>
         <translation>ВЕЧЕР</translation>
     </message>

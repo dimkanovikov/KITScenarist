@@ -22,7 +22,7 @@ namespace {
 
 QString CharacterReport::reportName(const ReportParameters& _parameters) const
 {
-	QString name = QApplication::translate("BusinessLayer::CharacterReport", "Character Report");
+	QString name = QApplication::translate("BusinessLogic::CharacterReport", "Character Report");
 	name.append(" - ");
 	name.append(_parameters.characterName);
 	return name;
@@ -97,11 +97,11 @@ QString CharacterReport::makeReport(QTextDocument* _scenario,
 	//
 	html.append("<tr>");
 	html.append(QString("<td><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::CharacterReport", "Scene/Dialogue")));
+				.arg(QApplication::translate("BusinessLogic::CharacterReport", "Scene/Dialogue")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::CharacterReport", "Number")));
+				.arg(QApplication::translate("BusinessLogic::CharacterReport", "Number")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::CharacterReport", "Page")));
+				.arg(QApplication::translate("BusinessLogic::CharacterReport", "Page")));
 	html.append("</tr>");
 	//
 	// ... данные
@@ -111,7 +111,7 @@ QString CharacterReport::makeReport(QTextDocument* _scenario,
 			html.append("<tr style=\"background-color: #ababab;\">");
 			const QString sceneName =
 					data->scene.isEmpty()
-					? QApplication::translate("BusinessLayer::CharacterReport", "[UNDEFINED]")
+					? QApplication::translate("BusinessLogic::CharacterReport", "[UNDEFINED]")
 					: data->scene;
 			html.append(QString("<td><b>%1</b></td>").arg(sceneName));
 			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->number));

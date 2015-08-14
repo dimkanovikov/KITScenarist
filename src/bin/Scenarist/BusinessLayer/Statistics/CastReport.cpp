@@ -27,7 +27,7 @@ namespace {
 
 QString CastReport::reportName(const ReportParameters&) const
 {
-	return QApplication::translate("BusinessLayer::CastReport", "Cast Report");
+	return QApplication::translate("BusinessLogic::CastReport", "Cast Report");
 }
 
 QString CastReport::makeReport(QTextDocument* _scenario,
@@ -223,17 +223,17 @@ QString CastReport::makeReport(QTextDocument* _scenario,
 	//
 	html.append("<tr>");
 	html.append(QString("<td><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::CastReport", "Character")));
+				.arg(QApplication::translate("BusinessLogic::CastReport", "Character")));
 	html.append(QString("<td align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::CastReport", "Total Dialogues")));
+				.arg(QApplication::translate("BusinessLogic::CastReport", "Total Dialogues")));
 	if (_parameters.castShowSpeakingAndNonspeakingScenes) {
 		html.append(QString("<td align=\"center\"><u>%1</u></td>")
-					.arg(QApplication::translate("BusinessLayer::CastReport", "Speaking Scenes")));
+					.arg(QApplication::translate("BusinessLogic::CastReport", "Speaking Scenes")));
 		html.append(QString("<td align=\"center\"><u>%1</u></td>")
-					.arg(QApplication::translate("BusinessLayer::CastReport", "Non-Sp. Scenes")));
+					.arg(QApplication::translate("BusinessLogic::CastReport", "Non-Sp. Scenes")));
 	}
 	html.append(QString("<td align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::CastReport", "Total Scenes")));
+				.arg(QApplication::translate("BusinessLogic::CastReport", "Total Scenes")));
 	html.append("</tr>");
 	//
 	// ... данные

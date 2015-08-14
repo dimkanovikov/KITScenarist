@@ -32,7 +32,7 @@ namespace {
 
 QString SceneReport::reportName(const ReportParameters&) const
 {
-	return QApplication::translate("BusinessLayer::SceneReport", "Scene Report");
+	return QApplication::translate("BusinessLogic::SceneReport", "Scene Report");
 }
 
 QString SceneReport::makeReport(QTextDocument* _scenario,
@@ -232,15 +232,15 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 	//
 	html.append("<tr>");
 	html.append(QString("<td><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::SceneReport", "Scene/Characters")));
+				.arg(QApplication::translate("BusinessLogic::SceneReport", "Scene/Characters")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::SceneReport", "Number")));
+				.arg(QApplication::translate("BusinessLogic::SceneReport", "Number")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::SceneReport", "Page")));
+				.arg(QApplication::translate("BusinessLogic::SceneReport", "Page")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::SceneReport", "Characters")));
+				.arg(QApplication::translate("BusinessLogic::SceneReport", "Characters")));
 	html.append(QString("<td width=\"8%\" align=\"center\"><u>%1</u></td>")
-				.arg(QApplication::translate("BusinessLayer::SceneReport", "Chron")));
+				.arg(QApplication::translate("BusinessLogic::SceneReport", "Chron")));
 	html.append("</tr>");
 	//
 	// ... данные
@@ -249,7 +249,7 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 		html.append("<tr style=\"background-color: #ababab;\">");
 		QString sceneName =
 				data->name.isEmpty()
-				? QApplication::translate("BusinessLayer::SceneReport", "[UNDEFINED]")
+				? QApplication::translate("BusinessLogic::SceneReport", "[UNDEFINED]")
 				: data->name;
 
 		html.append(QString("<td><b>%1</b></td>").arg(sceneName));

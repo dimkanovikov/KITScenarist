@@ -17,147 +17,116 @@
 <context>
     <name>BusinessLayer::CastReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="30"/>
-        <source>Cast Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="226"/>
         <source>Character</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Personaje</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="228"/>
         <source>Total Dialogues</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Todos los diálogos</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="231"/>
         <source>Speaking Scenes</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Escenas con diálogo</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="233"/>
         <source>Non-Sp. Scenes</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">escenas sin diálogo</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="236"/>
         <source>Total Scenes</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Todas las escenas</translation>
     </message>
 </context>
 <context>
     <name>BusinessLayer::CharacterReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="25"/>
         <source>Character Report</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Reporte de Personajes</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="100"/>
         <source>Scene/Dialogue</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Escenas/Diálogos</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="102"/>
         <source>Number</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Numeración</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="104"/>
         <source>Page</source>
-        <translation type="unfinished">Página</translation>
+        <translation type="obsolete">Página</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="114"/>
         <source>[UNDEFINED]</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">[INDEFINIDO]</translation>
     </message>
 </context>
 <context>
     <name>BusinessLayer::LocationReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="28"/>
         <source>Location Report</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Reporte de Locaciónes</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="146"/>
         <source>Location/Scene</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Locaciónes/Escenas</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="148"/>
         <source>Number</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Numero</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="150"/>
         <source>Page</source>
-        <translation type="unfinished">Página</translation>
+        <translation type="obsolete">Página</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="152"/>
         <source>Scenes</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Escenas</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="154"/>
         <source>Chron</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Duración de la escena/s</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="163"/>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="207"/>
         <source>[UNDEFINED]</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">[INDEFINIDO]</translation>
     </message>
 </context>
 <context>
     <name>BusinessLayer::ReportFacade</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/ReportFacade.cpp" line="71"/>
         <source>generated</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">generada</translation>
     </message>
 </context>
 <context>
     <name>BusinessLayer::SceneReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="35"/>
         <source>Scene Report</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Reporte de Escena</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="235"/>
         <source>Scene/Characters</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Escena/Personajes</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="237"/>
         <source>Number</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Numero</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="239"/>
         <source>Page</source>
-        <translation type="unfinished">Página</translation>
+        <translation type="obsolete">Página</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="241"/>
         <source>Characters</source>
-        <translation type="unfinished">Personajes</translation>
+        <translation type="obsolete">Personajes</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="243"/>
         <source>Chron</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Duración de la escena/s</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="252"/>
         <source>[UNDEFINED]</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">[INDEFINIDO]</translation>
     </message>
 </context>
 <context>
@@ -180,6 +149,67 @@
     </message>
 </context>
 <context>
+    <name>BusinessLogic::CastReport</name>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="30"/>
+        <source>Cast Report</source>
+        <translation>Informe de personajes</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="226"/>
+        <source>Character</source>
+        <translation>Personaje</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="228"/>
+        <source>Total Dialogues</source>
+        <translation>Todos los diálogos</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="231"/>
+        <source>Speaking Scenes</source>
+        <translation>Escenas con diálogo</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="233"/>
+        <source>Non-Sp. Scenes</source>
+        <translation>escenas sin diálogo</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="236"/>
+        <source>Total Scenes</source>
+        <translation>Todas las escenas</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::CharacterReport</name>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="25"/>
+        <source>Character Report</source>
+        <translation>Reporte de Personajes</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="100"/>
+        <source>Scene/Dialogue</source>
+        <translation>Escenas/Diálogos</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="102"/>
+        <source>Number</source>
+        <translation>Numeración</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="104"/>
+        <source>Page</source>
+        <translation>Página</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="114"/>
+        <source>[UNDEFINED]</source>
+        <translation>[INDEFINIDO]</translation>
+    </message>
+</context>
+<context>
     <name>BusinessLogic::CountersFacade</name>
     <message>
         <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="179"/>
@@ -195,6 +225,53 @@
         <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="193"/>
         <source>Simbols</source>
         <translation>Simbolos</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::LocationReport</name>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="28"/>
+        <source>Location Report</source>
+        <translation>Reporte de Locaciónes</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="146"/>
+        <source>Location/Scene</source>
+        <translation>Locaciónes/Escenas</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="148"/>
+        <source>Number</source>
+        <translation>Numero</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="150"/>
+        <source>Page</source>
+        <translation>Página</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="152"/>
+        <source>Scenes</source>
+        <translation>Escenas</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="154"/>
+        <source>Chron</source>
+        <translation>Duración de la escena/s</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="163"/>
+        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="207"/>
+        <source>[UNDEFINED]</source>
+        <translation>[INDEFINIDO]</translation>
+    </message>
+</context>
+<context>
+    <name>BusinessLogic::ReportFacade</name>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/ReportFacade.cpp" line="71"/>
+        <source>generated</source>
+        <translation>generada</translation>
     </message>
 </context>
 <context>
@@ -285,42 +362,80 @@
     </message>
 </context>
 <context>
+    <name>BusinessLogic::SceneReport</name>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="35"/>
+        <source>Scene Report</source>
+        <translation>Reporte de Escena</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="235"/>
+        <source>Scene/Characters</source>
+        <translation>Escena/Personajes</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="237"/>
+        <source>Number</source>
+        <translation>Numero</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="239"/>
+        <source>Page</source>
+        <translation>Página</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="241"/>
+        <source>Characters</source>
+        <translation>Personajes</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="243"/>
+        <source>Chron</source>
+        <translation>Duración de la escena/s</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="252"/>
+        <source>[UNDEFINED]</source>
+        <translation>[INDEFINIDO]</translation>
+    </message>
+</context>
+<context>
     <name>BusinessLogic::SummaryReport</name>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="57"/>
         <source>Summary report</source>
-        <translation type="unfinished"></translation>
+        <translation>Resumen del informe</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="139"/>
         <source>Chronometry</source>
-        <translation type="unfinished">Tiempo</translation>
+        <translation>Tiempo</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="141"/>
         <source>Pages</source>
-        <translation type="unfinished">Páginas</translation>
+        <translation>Páginas</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="143"/>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="164"/>
         <source>Words</source>
-        <translation type="unfinished">Palabras</translation>
+        <translation>Palabras</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="145"/>
         <source>Characters with/without spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Caracteres con/sin espacio</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="156"/>
         <source>Text</source>
-        <translation type="unfinished">Texto</translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="160"/>
         <source>Paragraph</source>
-        <translation type="unfinished"></translation>
+        <translation>Párrafo</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="162"/>
@@ -328,7 +443,7 @@
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="279"/>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="343"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="166"/>
@@ -336,57 +451,57 @@
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="281"/>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="345"/>
         <source>Percents</source>
-        <translation type="unfinished"></translation>
+        <translation>Porcentajes</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="193"/>
         <source>Scenes</source>
-        <translation type="unfinished"></translation>
+        <translation>Escenas</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="217"/>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="234"/>
         <source>[UNDEFINED]</source>
-        <translation type="unfinished"></translation>
+        <translation>[INDEFINIDO]</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="253"/>
         <source>Locations</source>
-        <translation type="unfinished"></translation>
+        <translation>Locaciones</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="277"/>
         <source>Place</source>
-        <translation type="unfinished"></translation>
+        <translation>Lugar</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="310"/>
         <source>Characters</source>
-        <translation type="unfinished">Personajes</translation>
+        <translation>Personajes</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="341"/>
         <source>Dialogues count</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuenta de Diálogos</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="355"/>
         <source>More 10 dialogues</source>
-        <translation type="unfinished"></translation>
+        <translation>Más de 10 diálogos</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="362"/>
         <source>About 10 dialogues</source>
-        <translation type="unfinished"></translation>
+        <translation>Aproximadamente 10 diálogos</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="369"/>
         <source>Nonspeaking</source>
-        <translation type="unfinished"></translation>
+        <translation>Sin diálogo</translation>
     </message>
 </context>
 <context>
@@ -427,52 +542,56 @@
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="333"/>
         <source>INT</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Interiores</translatorcomment>
+        <translation>INT</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="337"/>
         <source>EXT</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Exteriores</translatorcomment>
+        <translation>EXT</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="345"/>
         <source>DAY</source>
-        <translation type="unfinished"></translation>
+        <translation>Día</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="349"/>
         <source>NIGHT</source>
-        <translation type="unfinished"></translation>
+        <translation>NOCHE</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="353"/>
-        <location filename="../../DataLayer/Database/Database.cpp" line="482"/>
+        <location filename="../../DataLayer/Database/Database.cpp" line="477"/>
         <source>MORNING</source>
-        <translation type="unfinished"></translation>
+        <translation>MAÑANA</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="357"/>
-        <location filename="../../DataLayer/Database/Database.cpp" line="486"/>
+        <location filename="../../DataLayer/Database/Database.cpp" line="481"/>
         <source>EVENING</source>
-        <translation type="unfinished"></translation>
+        <translation>ANOCHECER</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="366"/>
         <source>V.O.</source>
         <extracomment>Voice over</extracomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Voz en Off</translatorcomment>
+        <translation>V.O.</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="371"/>
         <source>O.S.</source>
         <extracomment>Off-screen</extracomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>off-screen/ fuera de escena</translatorcomment>
+        <translation>O.S.</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="376"/>
         <source>CONT&apos;D</source>
         <extracomment>Continued</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A Continuación</translation>
     </message>
 </context>
 <context>
@@ -810,7 +929,7 @@
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="242"/>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="358"/>
         <source>Scenarist project files (*%1)</source>
-        <translation>lista de archivos de projecto de Scenarist (*%1)</translation>
+        <translation>archivos de projecto del guión (*%1)</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="240"/>
@@ -935,7 +1054,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="879"/>
         <source>Scenario</source>
-        <translation>Escenario</translation>
+        <translation>Guión</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="880"/>
@@ -1202,7 +1321,7 @@ Continue working with this project in offline mode.</source>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="465"/>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="489"/>
         <source>Scenario Template Files (*.%1)</source>
-        <translation>Archivos Template del Escenario (*.%1)</translation>
+        <translation>Archivos Template del Guión (*.%1)</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="488"/>
@@ -1333,7 +1452,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioModel.cpp" line="24"/>
         <source>Scenario</source>
-        <translation>Escenario</translation>
+        <translation>Guión</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="434"/>
@@ -1887,136 +2006,136 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="14"/>
         <source>StackedWidget</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="25"/>
         <source>Summary text statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Estadísticas de texto Resumen</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="35"/>
         <source>Scenes statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>estadísticas de la Escena</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="45"/>
         <source>Locations statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Estadísticas de las locaciones</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="55"/>
         <source>Characters statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>estadísticas de los Personajes</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="69"/>
         <source>Sort scenes</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipos de escena</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="80"/>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="148"/>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="206"/>
         <source>by script order</source>
-        <translation type="unfinished"></translation>
+        <translation>por orden de guión</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="85"/>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="153"/>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="211"/>
         <source>by alphabetical order</source>
-        <translation type="unfinished"></translation>
+        <translation>por orden alfabetico</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="90"/>
         <source>from longest to shortest scene</source>
-        <translation type="unfinished"></translation>
+        <translation>de larga a mas corta escena</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="95"/>
         <source>from shortest to longest scene</source>
-        <translation type="unfinished"></translation>
+        <translation>de corta a más larga escena</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="100"/>
         <source>from massive to unmanned scene</source>
-        <translation type="unfinished"></translation>
+        <translation>de una escena con muchos personajes a otra con menos</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="105"/>
         <source>from unmanned to massive scene</source>
-        <translation type="unfinished"></translation>
+        <translation>de una escena con pocos personajes a otra de muchos</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="113"/>
         <source>Show characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar caracteres</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="127"/>
         <source>Extended view</source>
-        <translation type="unfinished"></translation>
+        <translation>vista Extendida</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="137"/>
         <source>Sort locations</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de locación</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="158"/>
         <source>from most to least occurences</source>
-        <translation type="unfinished"></translation>
+        <translation>de más a menos ocurrencias</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="163"/>
         <source>from least to most occurences</source>
-        <translation type="unfinished"></translation>
+        <translation>de menos a más ocurrencias</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="168"/>
         <source>from longest to shortest chron</source>
-        <translation type="unfinished"></translation>
+        <translation>de un tiempo en escena más extenso a otro más reducido</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="173"/>
         <source>from shortest to longest chron</source>
-        <translation type="unfinished"></translation>
+        <translation>de un tiempo en escena reducido a otro mas extenso</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="185"/>
         <source>Show speaking and non-speaking scenes count</source>
-        <translation type="unfinished"></translation>
+        <translation>mostar la cuenta de las escenas con y sin diálogo</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="195"/>
         <source>Sort characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de personaje</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="216"/>
         <source>from most to least scenes</source>
-        <translation type="unfinished"></translation>
+        <translation>de más a menos escenas</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="221"/>
         <source>from least to most scenes</source>
-        <translation type="unfinished"></translation>
+        <translation>de menos a mas escenas</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="226"/>
         <source>from most to least dialogues</source>
-        <translation type="unfinished"></translation>
+        <translation>de más a menos diálogo</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="231"/>
         <source>from least to most dialogues</source>
-        <translation type="unfinished"></translation>
+        <translation>de menos a más diálogo</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="243"/>
         <source>Character:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personaje:</translation>
     </message>
 </context>
 <context>
@@ -2161,7 +2280,8 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="347"/>
         <source>mm</source>
-        <translation>mm:</translation>
+        <translatorcomment>mm</translatorcomment>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="430"/>
@@ -2710,57 +2830,57 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="61"/>
         <source>Preparing report</source>
-        <translation type="unfinished"></translation>
+        <translation>Preparando informe</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="61"/>
         <source>Please wait. Preparing report to preview can take few minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor espere. La vista previa del informe puede demorar unos minutos.</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="127"/>
         <source>Save report</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar informe</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="127"/>
         <source>Report.pdf</source>
-        <translation type="unfinished"></translation>
+        <translation>Informe.pdf</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="127"/>
         <source>PDF files (*.pdf)</source>
-        <translation type="unfinished"></translation>
+        <translation>archivos PDF (*.pdf)</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="165"/>
         <source>Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Informes</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="169"/>
         <source>Statistics report</source>
-        <translation type="unfinished"></translation>
+        <translation>informe de Estadísticas</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="170"/>
         <source>Scene report</source>
-        <translation type="unfinished"></translation>
+        <translation>informe de Escena</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="171"/>
         <source>Location report</source>
-        <translation type="unfinished"></translation>
+        <translation>informe de Localización</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="172"/>
         <source>Cast report</source>
-        <translation type="unfinished"></translation>
+        <translation>Informe de personajes</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="173"/>
         <source>Character report</source>
-        <translation type="unfinished"></translation>
+        <translation>informe del Personaje</translation>
     </message>
 </context>
 <context>

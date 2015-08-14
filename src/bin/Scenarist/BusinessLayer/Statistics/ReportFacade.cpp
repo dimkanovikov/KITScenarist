@@ -68,7 +68,7 @@ QString BusinessLogic::ReportFacade::makeReport(QTextDocument* _scenario, const 
 						"<td valign=\"top\" align=\"right\"><small>%3 %4</small></td></tr></table>")
 						.arg(scenarioName)
 						.arg(report->reportName(_parameters))
-						.arg(QApplication::translate("BusinessLayer::ReportFacade", "generated"))
+						.arg(QApplication::translate("BusinessLogic::ReportFacade", "generated"))
 						.arg(QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss t"))
 						);
 			result.append("<hr width=\"100%\"></hr>");
