@@ -78,15 +78,15 @@ namespace UserInterface
 		 */
 		void setShowSceneNumbers(bool _show);
 
-        /**
-         * @brief Подсвечивается ли текущая строка в редакторе
-         */
-        bool highlightCurrentLine() const;
+		/**
+		 * @brief Подсвечивается ли текущая строка в редакторе
+		 */
+		bool highlightCurrentLine() const;
 
-        /**
-         * @brief Установить значение необходимости подсвечивать текущую строку
-         */
-        void setHighlightCurrentLine(bool _highlight);
+		/**
+		 * @brief Установить значение необходимости подсвечивать текущую строку
+		 */
+		void setHighlightCurrentLine(bool _highlight);
 
 		/**
 		 * @brief Обновить сочетания клавиш для переходов между блоками
@@ -199,7 +199,7 @@ namespace UserInterface
 		/**
 		 * @brief Загрузить состояние редактора
 		 */
-        void aboutLoadEditorState();
+		void aboutLoadEditorState();
 
 	private:
 		/**
@@ -266,10 +266,10 @@ namespace UserInterface
 		 */
 		bool m_showSceneNumbers;
 
-        /**
-         * @brief Подсвечивать текущую линию
-         */
-        bool m_highlightCurrentLine;
+		/**
+		 * @brief Подсвечивать текущую линию
+		 */
+		bool m_highlightCurrentLine;
 
 		/**
 		 * @brief Курсоры соавторов

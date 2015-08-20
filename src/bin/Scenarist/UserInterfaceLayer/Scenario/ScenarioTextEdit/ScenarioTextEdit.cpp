@@ -71,7 +71,7 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	m_lastMouseClickTime(0),
 	m_storeDataWhenEditing(true),
 	m_showSceneNumbers(false),
-    m_highlightCurrentLine(false),
+	m_highlightCurrentLine(false),
 	m_shortcutsManager(new ShortcutsManager(this))
 {
 	setAttribute(Qt::WA_KeyCompression);
@@ -245,19 +245,19 @@ void ScenarioTextEdit::setShowSceneNumbers(bool _show)
 {
 	if (m_showSceneNumbers != _show) {
 		m_showSceneNumbers = _show;
-    }
+	}
 }
 
 bool ScenarioTextEdit::highlightCurrentLine() const
 {
-    return m_highlightCurrentLine;
+	return m_highlightCurrentLine;
 }
 
 void ScenarioTextEdit::setHighlightCurrentLine(bool _highlight)
 {
-    if (m_highlightCurrentLine != _highlight) {
-        m_highlightCurrentLine = _highlight;
-    }
+	if (m_highlightCurrentLine != _highlight) {
+		m_highlightCurrentLine = _highlight;
+	}
 }
 
 void ScenarioTextEdit::updateShortcuts()
@@ -485,25 +485,25 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 			}
 		}
 		setTextCursor(cursor);
-    }
-    //
-    // Поднятие/опускание регистра букв
-    //
-    else if (_event->modifiers().testFlag(Qt::ControlModifier)
-             && (_event->key() == Qt::Key_Up
-                 || _event->key() == Qt::Key_Down)
-             && textCursor().hasSelection()) {
-        const bool toUpper = _event->key() == Qt::Key_Up;
-        const int from = qMin(textCursor().selectionStart(), textCursor().selectionEnd());
-        const int to = qMax(textCursor().selectionStart(), textCursor().selectionEnd());
-        QTextCursor cursor = textCursor();
-        for (int position = from; position < to; ++position) {
-            cursor.setPosition(position);
-            cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
-            cursor.insertText(toUpper ? cursor.selectedText().toUpper() : cursor.selectedText().toLower());
-        }
-    }
-    else {
+	}
+	//
+	// Поднятие/опускание регистра букв
+	//
+	else if (_event->modifiers().testFlag(Qt::ControlModifier)
+			 && (_event->key() == Qt::Key_Up
+				 || _event->key() == Qt::Key_Down)
+			 && textCursor().hasSelection()) {
+		const bool toUpper = _event->key() == Qt::Key_Up;
+		const int from = qMin(textCursor().selectionStart(), textCursor().selectionEnd());
+		const int to = qMax(textCursor().selectionStart(), textCursor().selectionEnd());
+		QTextCursor cursor = textCursor();
+		for (int position = from; position < to; ++position) {
+			cursor.setPosition(position);
+			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+			cursor.insertText(toUpper ? cursor.selectedText().toUpper() : cursor.selectedText().toLower());
+		}
+	}
+	else {
 		isEventHandled = false;
 	}
 
@@ -524,21 +524,21 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 	}
 
 
-    //
-    // Подсветка строки
-    //
-    if (m_highlightCurrentLine) {
-        const int width = viewport()->width();
-        const QRect cursorR = cursorRect();
-        const QRect highlightRect(0, cursorR.top(), width, cursorR.height());
-        QColor lineColor = palette().highlight().color().lighter();
-        lineColor.setAlpha(100);
+	//
+	// Подсветка строки
+	//
+	if (m_highlightCurrentLine) {
+		const int width = viewport()->width();
+		const QRect cursorR = cursorRect();
+		const QRect highlightRect(0, cursorR.top(), width, cursorR.height());
+		QColor lineColor = palette().highlight().color().lighter();
+		lineColor.setAlpha(100);
 
-        QPainter painter(viewport());
-        painter.save();
-        painter.fillRect(highlightRect, lineColor);
-        painter.restore();
-    }
+		QPainter painter(viewport());
+		painter.save();
+		painter.fillRect(highlightRect, lineColor);
+		painter.restore();
+	}
 
 
 	CompletableTextEdit::paintEvent(_event);
@@ -693,7 +693,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 					++cursorIndex;
 				}
 			}
-        }
+		}
 	}
 }
 
@@ -879,7 +879,7 @@ void ScenarioTextEdit::aboutLoadEditorState()
 		}
 		verticalScrollBar()->setValue(verticalScrollBar()->value() + verticalDelta);
 		currentCursorRect = cursorRect();
-    }
+	}
 }
 
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()
@@ -1290,5 +1290,5 @@ void ScenarioTextEdit::initConnections()
 	//
 	// При перемещении курсора может меняться стиль блока
 	//
-    connect(this, SIGNAL(cursorPositionChanged()), this, SIGNAL(currentStyleChanged()), Qt::UniqueConnection);
+	connect(this, SIGNAL(cursorPositionChanged()), this, SIGNAL(currentStyleChanged()), Qt::UniqueConnection);
 }

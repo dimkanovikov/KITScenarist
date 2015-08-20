@@ -87,6 +87,8 @@
         <file>Translations/Scenarist_es.ts</file>
         <file>Translations/qtbase_es.qm</file>
         <file>Translations/qt_es.qm</file>
+        <file>Translations/Scenarist_fr.ts</file>
+        <file>Translations/Scenarist_en.ts</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/style.qss</file>

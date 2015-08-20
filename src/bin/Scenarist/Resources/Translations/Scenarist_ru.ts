@@ -2,17 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
-    <name></name>
-    <message>
-        <source>(MORE)</source>
-        <translation type="vanished">ДАЛЬШЕ</translation>
-    </message>
-    <message>
-        <source> (cont&apos;d)</source>
-        <translation type="vanished"> (ПРОД.)</translation>
-    </message>
-</context>
-<context>
     <name>AcceptebleLineEdit</name>
     <message>
         <location filename="../../3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.cpp" line="32"/>
@@ -23,148 +12,6 @@
         <location filename="../../3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.cpp" line="98"/>
         <source>was changed from &lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;. Apply changes?</source>
         <translation>было изменено с &lt;b&gt;%1&lt;/b&gt; на &lt;b&gt;%2&lt;/b&gt;. Применить изменения?</translation>
-    </message>
-    <message>
-        <source>was changed from &quot;%1&quot; to &quot;%2&quot;. Apply changes?</source>
-        <translation type="vanished">было изменено с &quot;%1&quot; на &quot;%2&quot;. Применить изменения?</translation>
-    </message>
-    <message>
-        <source>Apply changes</source>
-        <translation type="vanished">Применение изменений</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLayer::CastReport</name>
-    <message>
-        <source>Cast Report</source>
-        <translation type="vanished">Отчёт по персонажам</translation>
-    </message>
-    <message>
-        <source>Character</source>
-        <translation type="vanished">Персонаж</translation>
-    </message>
-    <message>
-        <source>Total Dialogues</source>
-        <translation type="vanished">Всего реплик</translation>
-    </message>
-    <message>
-        <source>Speaking Scenes</source>
-        <translation type="vanished">Сцен с репликами</translation>
-    </message>
-    <message>
-        <source>Non-Sp. Scenes</source>
-        <translation type="vanished">Сцен без реплик</translation>
-    </message>
-    <message>
-        <source>Total Scenes</source>
-        <translation type="vanished">Всего сцен</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLayer::CharacterReport</name>
-    <message>
-        <source>Character Report</source>
-        <translation type="vanished">Отчёт по персонажу</translation>
-    </message>
-    <message>
-        <source>Scene/Dialogue</source>
-        <translation type="vanished">Сцена/Реплика</translation>
-    </message>
-    <message>
-        <source>Number</source>
-        <translation type="vanished">Номер</translation>
-    </message>
-    <message>
-        <source>Page</source>
-        <translation type="vanished">Страница</translation>
-    </message>
-    <message>
-        <source>[UNDEFINED]</source>
-        <translation type="vanished">[НЕ ОПРЕДЕЛЕНО]</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLayer::LocationReport</name>
-    <message>
-        <source>Location Report</source>
-        <translation type="vanished">Отчёт по локациям</translation>
-    </message>
-    <message>
-        <source>Location/Scene</source>
-        <translation type="vanished">Локация/Сцена</translation>
-    </message>
-    <message>
-        <source>Number</source>
-        <translation type="vanished">Номер</translation>
-    </message>
-    <message>
-        <source>Page</source>
-        <translation type="vanished">Страница</translation>
-    </message>
-    <message>
-        <source>Scenes</source>
-        <translation type="vanished">Сцен</translation>
-    </message>
-    <message>
-        <source>Chron</source>
-        <translation type="vanished">Хрон</translation>
-    </message>
-    <message>
-        <source>[UNDEFINED]</source>
-        <translation type="vanished">[НЕ ОПРЕДЕЛЕНО]</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLayer::ReportFacade</name>
-    <message>
-        <source>generated</source>
-        <translation type="vanished">сформировано</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLayer::SceneReport</name>
-    <message>
-        <source>Scene Report</source>
-        <translation type="vanished">Отчёт по сценам</translation>
-    </message>
-    <message>
-        <source>Scene/Characters</source>
-        <translation type="vanished">Сцена/Персонажи</translation>
-    </message>
-    <message>
-        <source>Number</source>
-        <translation type="vanished">Номер</translation>
-    </message>
-    <message>
-        <source>Page</source>
-        <translation type="vanished">Страница</translation>
-    </message>
-    <message>
-        <source>Characters</source>
-        <translation type="vanished">Персонажей</translation>
-    </message>
-    <message>
-        <source>Chron</source>
-        <translation type="vanished">Хрон</translation>
-    </message>
-    <message>
-        <source>[UNDEFINED]</source>
-        <translation type="vanished">[НЕ ОПРЕДЕЛЕНО]</translation>
-    </message>
-</context>
-<context>
-    <name>BusinessLogic::AbstarctExporter</name>
-    <message>
-        <source>(MORE)</source>
-        <translation type="vanished">ДАЛЬШЕ</translation>
-    </message>
-    <message>
-        <source> (cont&apos;d)</source>
-        <translation type="vanished"> (ПРОД.)</translation>
-    </message>
-    <message>
-        <source>(cont&apos;d)</source>
-        <translation type="vanished">(ПРОД.)</translation>
     </message>
 </context>
 <context>
@@ -179,11 +26,6 @@
         <source> (CONT&apos;D)</source>
         <extracomment>Continued</extracomment>
         <translation> (ПРОД.)</translation>
-    </message>
-    <message>
-        <source> (cont&apos;d)</source>
-        <extracomment>Continued</extracomment>
-        <translation type="vanished"> (ПРОД.)</translation>
     </message>
 </context>
 <context>
@@ -318,10 +160,6 @@
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="66"/>
         <source>Undefined</source>
         <translation>Неопределён</translation>
-    </message>
-    <message>
-        <source>Time and Place</source>
-        <translation type="vanished">Время и место</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="67"/>
@@ -535,10 +373,6 @@
         <translation>Количество реплик</translation>
     </message>
     <message>
-        <source>Count</source>
-        <translation type="vanished">Кол-во</translation>
-    </message>
-    <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="355"/>
         <source>More 10 dialogues</source>
         <translation>Более 10 реплик</translation>
@@ -582,28 +416,9 @@
         <translation>Описание:</translation>
     </message>
     <message>
-        <source>Add photo</source>
-        <translation type="obsolete">Добавить фото</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Сохранить</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Отмена</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui" line="90"/>
         <source>Choose Character</source>
         <translation>Выберите персонажа</translation>
-    </message>
-</context>
-<context>
-    <name>DataStorageLayer::SettingsStorage</name>
-    <message>
-        <source>Local user</source>
-        <translation type="vanished">Пользователь</translation>
     </message>
 </context>
 <context>
@@ -711,10 +526,6 @@
         <translation>Предпросмотр</translation>
     </message>
     <message>
-        <source>Style:</source>
-        <translation type="vanished">Стиль:</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="280"/>
         <source>Page Numbering</source>
         <translation>Нумеровать страницы</translation>
@@ -775,10 +586,6 @@
         <translation>Контакты:</translation>
     </message>
     <message>
-        <source>Contacts.</source>
-        <translation type="vanished">Контакты.</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="381"/>
         <source>Year:</source>
         <translation>Год:</translation>
@@ -787,10 +594,6 @@
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="391"/>
         <source>Scenario wirting year.</source>
         <translation>Год написания сценария.</translation>
-    </message>
-    <message>
-        <source>Additional info about scenario.</source>
-        <translation type="vanished">Дополнительная информация (оригинальный сценарий, экранизация и т.п.).</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="177"/>
@@ -813,18 +616,6 @@
         <translation></translation>
     </message>
     <message>
-        <source>Title Page:</source>
-        <translation type="vanished">Титульная страница:</translation>
-    </message>
-    <message>
-        <source>Page Numbering:</source>
-        <translation type="vanished">Нумерация страниц:</translation>
-    </message>
-    <message>
-        <source>Scenes Numbering:</source>
-        <translation type="vanished">Нумерация сцен:</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="263"/>
         <source>Scenes Prefix:</source>
         <translation>Приставка сцен:</translation>
@@ -833,10 +624,6 @@
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="80"/>
         <source>File</source>
         <translation>Файл</translation>
-    </message>
-    <message>
-        <source>File:</source>
-        <translation type="obsolete">Файл:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="96"/>
@@ -882,10 +669,6 @@
         <translation>Простой текст</translation>
     </message>
     <message>
-        <source>All Files</source>
-        <translation type="vanished">Все файлы</translation>
-    </message>
-    <message>
         <location filename="../../../../libs/fileformats/format_manager.cpp" line="107"/>
         <source>All Supported Files</source>
         <translation>Все поддерживаемые файлы</translation>
@@ -919,18 +702,6 @@
         <translation>Сохранять пометки редактора</translation>
     </message>
     <message>
-        <source>Remove scenes numbers:</source>
-        <translation type="vanished">Удалять номера сцен:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Отмена</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Импортировать</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="81"/>
         <source>Insert To</source>
         <translation>Вставить</translation>
@@ -960,45 +731,6 @@
         <source>Find characters and locations</source>
         <translation>Определить персонажей и локации</translation>
     </message>
-    <message>
-        <source>Find characters and locations:</source>
-        <translation type="vanished">Определить персонажей и локации:</translation>
-    </message>
-</context>
-<context>
-    <name>LocationReport</name>
-    <message>
-        <source>Location Report</source>
-        <translation type="vanished">Отчёт по локациям</translation>
-    </message>
-    <message>
-        <source>Location/Scene</source>
-        <translation type="vanished">Локация/Сцена</translation>
-    </message>
-    <message>
-        <source>Number</source>
-        <translation type="vanished">Номер</translation>
-    </message>
-    <message>
-        <source>Page</source>
-        <translation type="vanished">Страница</translation>
-    </message>
-    <message>
-        <source>Scenes</source>
-        <translation type="vanished">Сцен</translation>
-    </message>
-    <message>
-        <source>Chron</source>
-        <translation type="vanished">Хрон</translation>
-    </message>
-    <message>
-        <source>[UNDEFINED]</source>
-        <translation type="vanished">[НЕ ОПРЕДЕЛЕНО]</translation>
-    </message>
-    <message>
-        <source>&lt;UNDEFINED&gt;</source>
-        <translation type="vanished">&lt;НЕ ОПРЕДЕЛЕНО&gt;</translation>
-    </message>
 </context>
 <context>
     <name>LocationsDataEdit</name>
@@ -1027,18 +759,6 @@
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
-    <message>
-        <source>Add Photo</source>
-        <translation type="obsolete">Добавить фото</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Сохранить</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Отмена</translation>
-    </message>
 </context>
 <context>
     <name>LoginDialog</name>
@@ -1061,18 +781,6 @@
         <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.ui" line="62"/>
         <source>User name</source>
         <translation>Имя пользователя</translation>
-    </message>
-    <message>
-        <source>Login</source>
-        <translation type="vanished">Войти</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;http://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Registration&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;http://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Зарегистрироваться&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>Remember me</source>
-        <translation type="vanished">Запомнить меня</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/StartUp/LoginDialog.ui" line="52"/>
@@ -1105,18 +813,6 @@
         <translation>Выберите файл проекта для открытия</translation>
     </message>
     <message>
-        <source>Choose file to export scenario</source>
-        <translation type="obsolete">Выберите файл для экспорта сценария</translation>
-    </message>
-    <message>
-        <source>PDF files (*%1)</source>
-        <translation type="obsolete">PDF файлы (*%1)</translation>
-    </message>
-    <message>
-        <source>RTF files (*%1)</source>
-        <translation type="obsolete">RTF файлы (*%1)</translation>
-    </message>
-    <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="48"/>
         <source> - changed</source>
         <translation> - изменён</translation>
@@ -1137,10 +833,6 @@ Continue working in offline mode.</source>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="722"/>
         <source>Project was modified. Save changes?</source>
         <translation>Проект был изменён. Сохранить изменения?</translation>
-    </message>
-    <message>
-        <source>%1[*] - Scenarist</source>
-        <translation type="vanished">%1 [*] - Сценарист</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="871"/>
@@ -1191,10 +883,6 @@ Continue working in offline mode.</source>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="504"/>
         <source>New session for you account started at other device. Restart session?</source>
         <translation>Пользователь с вашими учётными данными авторизовался на другом устройстве. Переподключиться?</translation>
-    </message>
-    <message>
-        <source>Continue working in offline mode.</source>
-        <translation type="vanished">Переходим в автономный режим.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="528"/>
@@ -1312,22 +1000,6 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::CharactersManager</name>
     <message>
-        <source>Remove Character</source>
-        <translation type="vanished">Удалить персонажа</translation>
-    </message>
-    <message>
-        <source>Are you shure to remove character?</source>
-        <translation type="vanished">Удалить персонаж?</translation>
-    </message>
-    <message>
-        <source>Remove Characters</source>
-        <translation type="vanished">Удалить персонажи</translation>
-    </message>
-    <message>
-        <source>Are you shure to remove selected characters?</source>
-        <translation type="vanished">Удалить выбранные персонажи?</translation>
-    </message>
-    <message>
         <location filename="../../ManagementLayer/Characters/CharactersManager.cpp" line="116"/>
         <source>Are you shure to remove characters: &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Удалить персонажей: &lt;b&gt;%1&lt;/b&gt;?</translation>
@@ -1394,18 +1066,6 @@ Continue working with this project in offline mode.</source>
 </context>
 <context>
     <name>ManagementLayer::LocationsManager</name>
-    <message>
-        <source>Remove Location</source>
-        <translation type="vanished">Удалить локацию</translation>
-    </message>
-    <message>
-        <source>Are you shure to remove location?</source>
-        <translation type="vanished">Удалить локацию?</translation>
-    </message>
-    <message>
-        <source>Are you shure to remove location &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="vanished">Удалить локацию &lt;b&gt;%1&lt;/b&gt;?</translation>
-    </message>
     <message>
         <location filename="../../ManagementLayer/Locations/LocationsManager.cpp" line="116"/>
         <source>Are you shure to remove locations: &lt;b&gt;%1&lt;/b&gt;?</source>
@@ -1511,10 +1171,6 @@ Continue working with this project in offline mode.</source>
         <source>On/off Fullscreen Mode</source>
         <translation>Включить/выключить полноэкранный режим</translation>
     </message>
-    <message>
-        <source>Synopsis</source>
-        <translation type="obsolete">Синопсис</translation>
-    </message>
 </context>
 <context>
     <name>ManagementLayer::SettingsManager</name>
@@ -1522,10 +1178,6 @@ Continue working with this project in offline mode.</source>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="464"/>
         <source>Choose file to load</source>
         <translation>Выберите файл для загрузки</translation>
-    </message>
-    <message>
-        <source>Scenario Style Files (*.%1)</source>
-        <translation type="vanished">Файлы стиля сценария (*.%1)</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="151"/>
@@ -1571,22 +1223,6 @@ Continue working with this project in offline mode.</source>
         <translation>Курсор в пустом абзаце</translation>
     </message>
     <message>
-        <source>Jump after text in block</source>
-        <translation type="vanished">Переход после блока с текстом</translation>
-    </message>
-    <message>
-        <source>By Tab</source>
-        <translation type="vanished">По Tab</translation>
-    </message>
-    <message>
-        <source>By Enter</source>
-        <translation type="vanished">По Enter</translation>
-    </message>
-    <message>
-        <source>Change empty block</source>
-        <translation type="vanished">Смена пустого блока</translation>
-    </message>
-    <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="714"/>
         <source>Block Name</source>
         <translation>Текущий блок</translation>
@@ -1595,21 +1231,6 @@ Continue working with this project in offline mode.</source>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="715"/>
         <source>Shortcut</source>
         <translation>Сочетание клавиш</translation>
-    </message>
-    <message>
-        <source>Jump on Tab</source>
-        <translation type="vanished">Переход по Tab</translation>
-    </message>
-    <message>
-        <source>Jump on Enter</source>
-        <translation type="vanished">Переход по Enter</translation>
-    </message>
-</context>
-<context>
-    <name>ManagementLayer::SettingsStylesManager</name>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Стандартный</translation>
     </message>
 </context>
 <context>
@@ -1622,14 +1243,6 @@ Continue working with this project in offline mode.</source>
 </context>
 <context>
     <name>ManagementLayer::StartUpManager</name>
-    <message>
-        <source>Can&apos;t open choosed file</source>
-        <translation type="vanished">Не удалось открыть выбранный файл</translation>
-    </message>
-    <message>
-        <source>File &lt;b&gt;%1&lt;/b&gt; isn&apos;t exist. File will be removed from recent list.</source>
-        <translation type="vanished">Файла &lt;b&gt;%1&lt;/b&gt; не существует. Запись будет удалена из списка недавних проектов.</translation>
-    </message>
     <message>
         <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="139"/>
         <source>Released version %1 </source>
@@ -1649,30 +1262,6 @@ Continue working with this project in offline mode.</source>
         <location filename="../../ManagementLayer/StartUp/StartUpManager.cpp" line="153"/>
         <source>read more</source>
         <translation>узнать подробности</translation>
-    </message>
-    <message>
-        <source>style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;http://kitscenarist.ru/history.html&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
-        <translation type="vanished">style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;http://kitscenarist.ru/history.html&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
-        <translation type="vanished">style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>Released version %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-%1.exe&quot; &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/downloads/linux/&quot; &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-%1.dmg&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
-        <translation type="obsolete">Вышла новая версия %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-%1.exe&quot; &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/downloads/linux/&quot; &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-%1.dmg&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>Released version %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
-        <translation type="obsolete">Вышла новая версия %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/downloads/windows/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>Released version %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/downloads/windows/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
-        <translation type="obsolete">Вышла новая версия %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/downloads/windows/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>Released version %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
-        <translation type="obsolete">Вышла новая версия %1 &lt;a href=&quot;http://dimkanovikov.pro/kit/downloads/scenarist-setup-%1.exe&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/news.html&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
     </message>
 </context>
 <context>
@@ -1710,21 +1299,6 @@ Continue working with this project in offline mode.</source>
     </message>
 </context>
 <context>
-    <name>ManagmentLayer::Project</name>
-    <message>
-        <source>Owner</source>
-        <translation type="vanished">владелец</translation>
-    </message>
-    <message>
-        <source>Redactor</source>
-        <translation type="vanished">редактирование</translation>
-    </message>
-    <message>
-        <source>Commentator</source>
-        <translation type="vanished">комментирование</translation>
-    </message>
-</context>
-<context>
     <name>OdtReader</name>
     <message>
         <location filename="../../../../libs/fileformats/odt_reader.cpp" line="77"/>
@@ -1744,10 +1318,6 @@ Continue working with this project in offline mode.</source>
         <source>Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</source>
         <translation>Изображения (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</translation>
     </message>
-    <message>
-        <source>Images (*.png *.jpeg *.jpg)</source>
-        <translation type="vanished">Изображения (*.png *.jpeg *.jpg)</translation>
-    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1755,11 +1325,6 @@ Continue working with this project in offline mode.</source>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioModel.cpp" line="24"/>
         <source>Scenario</source>
         <translation>Сценарий</translation>
-    </message>
-    <message>
-        <source>Title:</source>
-        <comment>ScenarioTextBlockStyle</comment>
-        <translation type="obsolete">Титр:</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="412"/>
@@ -1772,16 +1337,6 @@ Continue working with this project in offline mode.</source>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation>КОНЕЦ ПАПКИ</translation>
-    </message>
-    <message>
-        <source>END OF</source>
-        <comment>FolderHeader</comment>
-        <translation type="obsolete">КОНЕЦ</translation>
-    </message>
-    <message>
-        <source>END OF</source>
-        <comment>SceneGroupHeader</comment>
-        <translation type="obsolete">КОНЕЦ</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.cpp" line="21"/>
@@ -1826,30 +1381,6 @@ Continue working with this project in offline mode.</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <source>Additional:</source>
-        <translation type="vanished">Дополнительно:</translation>
-    </message>
-    <message>
-        <source>Genre:</source>
-        <translation type="vanished">Жанр:</translation>
-    </message>
-    <message>
-        <source>Author:</source>
-        <translation type="vanished">Автор:</translation>
-    </message>
-    <message>
-        <source>Contacts:</source>
-        <translation type="vanished">Контакты:</translation>
-    </message>
-    <message>
-        <source>Year:</source>
-        <translation type="vanished">Год:</translation>
-    </message>
-    <message>
-        <source>Synopsis:</source>
-        <translation type="obsolete">Синопсис:</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui" line="94"/>
         <source>Source</source>
         <translation>Синопсис</translation>
@@ -1862,14 +1393,6 @@ Continue working with this project in offline mode.</source>
 </context>
 <context>
     <name>SearchWidget</name>
-    <message>
-        <source>Prev</source>
-        <translation type="vanished">Предыдущее</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translation type="vanished">Следующее</translation>
-    </message>
     <message>
         <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="40"/>
         <source>Find...</source>
@@ -1913,10 +1436,6 @@ Continue working with this project in offline mode.</source>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1923"/>
         <source>Dialog</source>
         <translation>Диалог</translation>
-    </message>
-    <message>
-        <source>Text Editor</source>
-        <translation type="obsolete">Редактор текста</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="77"/>
@@ -1982,10 +1501,6 @@ Continue working with this project in offline mode.</source>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="351"/>
         <source>Highlight Current Line</source>
         <translation>Подсвечивать текущую строку</translation>
-    </message>
-    <message>
-        <source>Automatically jump to next paragraph (in time and place and characters)</source>
-        <translation type="vanished">Автоматически переходить к следующему абзацу (для блоков &quot;Время и место&quot; и &quot;Герой&quot;)</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1330"/>
@@ -2073,10 +1588,6 @@ Continue working with this project in offline mode.</source>
         <translation>минут</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Цвета</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="460"/>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="942"/>
         <source>Text:</source>
@@ -2115,14 +1626,6 @@ Continue working with this project in offline mode.</source>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1246"/>
         <source>Page View</source>
         <translation>Постраничный вид</translation>
-    </message>
-    <message>
-        <source>Styles Library</source>
-        <translation type="vanished">Библиотека стилей</translation>
-    </message>
-    <message>
-        <source>Editor Text Style:</source>
-        <translation type="vanished">Стиль оформления текста:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="331"/>
@@ -2183,10 +1686,6 @@ Continue working with this project in offline mode.</source>
         <translation>Гибкий подсчёт</translation>
     </message>
     <message>
-        <source>Time And Place</source>
-        <translation type="vanished">Время и место</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2054"/>
         <source>Seconds for
 Paragraph</source>
@@ -2238,38 +1737,14 @@ Paragraph</source>
         <translation>Счётчик слов</translation>
     </message>
     <message>
-        <source>Pages Counter [Pages Mode only]</source>
-        <translation type="vanished">Счётчик страниц [только в постраничном режиме]</translation>
-    </message>
-    <message>
-        <source>Add Style</source>
-        <translation type="vanished">Добавить стиль</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2180"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <source>Edit Selected Style</source>
-        <translation type="vanished">Изменить выбранный стиль</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2194"/>
         <source>Edit</source>
         <translation>Изменить</translation>
-    </message>
-    <message>
-        <source>Delete Selected Style</source>
-        <translation type="vanished">Удалить выбранный стиль</translation>
-    </message>
-    <message>
-        <source>Load Style From File</source>
-        <translation type="vanished">Загрузить стиль из файла</translation>
-    </message>
-    <message>
-        <source>Save Style To File</source>
-        <translation type="vanished">Сохранить стиль в файл</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2236"/>
@@ -2290,10 +1765,6 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1609"/>
         <source>Simbols without spaces | Simbols with spaces</source>
         <translation>Символов без пробелов | Символов с пробелами</translation>
-    </message>
-    <message>
-        <source>For standard style and compatible</source>
-        <translation type="vanished">Для стандартного стиля и совместимых</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2208"/>
@@ -2321,10 +1792,6 @@ Paragraph</source>
 </context>
 <context>
     <name>SpellCheckTextEdit</name>
-    <message>
-        <source>Spell Checking</source>
-        <translation type="obsolete">Проверка правописания</translation>
-    </message>
     <message>
         <location filename="../../3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.cpp" line="38"/>
         <source>Ignore</source>
@@ -2379,10 +1846,6 @@ Paragraph</source>
         <translation>Обновить список недавно используемых проектов</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Create Project&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Создать новый проект&lt;/a&gt;</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="402"/>
         <source>Projects from local computer</source>
         <translation>Проекты на компьютере</translation>
@@ -2393,18 +1856,6 @@ Paragraph</source>
         <translation>Проекты на kitscenarist.ru</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Open Project&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;Открыть проект&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;http://kitscenarist.ru/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;http://kitscenarist.ru/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Как пользоваться программой?&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Help&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot; style=&quot;color:#2b78da;&quot;&gt;Как пользоваться программой?&lt;/a&gt;</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="169"/>
         <source>0.0.0</source>
         <translation></translation>
@@ -2413,26 +1864,6 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/StartUp/StartUpView.ui" line="327"/>
         <source>Released version 0.0.0 &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
         <translation>Вышла новая версия 0.0.0 &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;#&quot;&gt;Create Project&lt;/a&gt;</source>
-        <translation type="obsolete">&lt;a href=&quot;#&quot;&gt;Создать проект&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;#&quot;&gt;Open Project&lt;/a&gt;</source>
-        <translation type="obsolete">&lt;a href=&quot;#&quot;&gt;Открыть проект&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot;&gt;Help&lt;/a&gt;</source>
-        <translation type="obsolete">&lt;a href=&quot;http://dimkanovikov.pro/kit/scenarist/help.html&quot;&gt;Справка&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;a href=&quot;#&quot;&gt;Help&lt;/a&gt;</source>
-        <translation type="obsolete">&lt;a href=&quot;#&quot;&gt;Справка&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>Scenarist</source>
-        <translation type="obsolete">Сценарист</translation>
     </message>
 </context>
 <context>
@@ -2466,10 +1897,6 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="127"/>
         <source>Extended view</source>
         <translation>Расширенный вид</translation>
-    </message>
-    <message>
-        <source>Sort locations:</source>
-        <translation type="vanished">Сортировать локации</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="69"/>
@@ -2577,229 +2004,6 @@ Paragraph</source>
     </message>
 </context>
 <context>
-    <name>StyleDialog</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="obsolete">Диалог</translation>
-    </message>
-    <message>
-        <source>Time And Place</source>
-        <translation type="obsolete">Время и место</translation>
-    </message>
-    <message>
-        <source>Edit Scenario Style</source>
-        <translation type="vanished">Настройка стиля сценария</translation>
-    </message>
-    <message>
-        <source>Scene Characters</source>
-        <translation type="obsolete">Участники сцены</translation>
-    </message>
-    <message>
-        <source>Action</source>
-        <translation type="obsolete">Описание действия</translation>
-    </message>
-    <message>
-        <source>Character</source>
-        <translation type="obsolete">Герой</translation>
-    </message>
-    <message>
-        <source>Parenthetical</source>
-        <translation type="obsolete">Ремарка</translation>
-    </message>
-    <message>
-        <source>Transition</source>
-        <translation type="obsolete">Переход</translation>
-    </message>
-    <message>
-        <source>Note</source>
-        <translation type="obsolete">Примечание</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation type="obsolete">Титр</translation>
-    </message>
-    <message>
-        <source>Nonprintable Text</source>
-        <translation type="obsolete">Непечатный текст</translation>
-    </message>
-    <message>
-        <source>Scenes Group</source>
-        <translation type="obsolete">Группа сцен</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="obsolete">Папка</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="vanished">Включён</translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation type="vanished">Жирный</translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation type="vanished">Курсив</translation>
-    </message>
-    <message>
-        <source>Spacing</source>
-        <translation type="vanished">Отступы:</translation>
-    </message>
-    <message>
-        <source>mm:</source>
-        <translation type="vanished">мм:</translation>
-    </message>
-    <message>
-        <source>Lines:</source>
-        <translation type="vanished">Линий:</translation>
-    </message>
-    <message>
-        <source>Underline</source>
-        <translation type="vanished">Подчёркнутый</translation>
-    </message>
-    <message>
-        <source>Uppercase</source>
-        <translation type="vanished">Верхний регистр</translation>
-    </message>
-    <message>
-        <source>Top, lines:</source>
-        <translation type="vanished">Сверху, строк:</translation>
-    </message>
-    <message>
-        <source>Block Parameters</source>
-        <translation type="obsolete">Параметры блока</translation>
-    </message>
-    <message>
-        <source>Left, mm:</source>
-        <translation type="vanished">Слева, мм:</translation>
-    </message>
-    <message>
-        <source>Right, mm:</source>
-        <translation type="vanished">Справа, мм:</translation>
-    </message>
-    <message>
-        <source>Common</source>
-        <translation type="vanished">Общие настройки</translation>
-    </message>
-    <message>
-        <source>Left:</source>
-        <translation type="vanished">Слева:</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="vanished">Название:</translation>
-    </message>
-    <message>
-        <source>Fields, mm:</source>
-        <translation type="vanished">Поля, мм:</translation>
-    </message>
-    <message>
-        <source>Description:</source>
-        <translation type="vanished">Описание:</translation>
-    </message>
-    <message>
-        <source>Top:</source>
-        <translation type="vanished">Сверху:</translation>
-    </message>
-    <message>
-        <source>Bottom:</source>
-        <translation type="vanished">Снизу:</translation>
-    </message>
-    <message>
-        <source>Right:</source>
-        <translation type="vanished">Справа:</translation>
-    </message>
-    <message>
-        <source>Font:</source>
-        <translation type="vanished">Шрифт:</translation>
-    </message>
-    <message>
-        <source>Lines</source>
-        <translation type="vanished">Линий:</translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation type="vanished">мм:</translation>
-    </message>
-    <message>
-        <source>Line spacing:</source>
-        <translation type="vanished">Межстрочный интервал:</translation>
-    </message>
-    <message>
-        <source>Edit Scenario Template</source>
-        <translation type="vanished">Настройка шаблона сценария</translation>
-    </message>
-    <message>
-        <source>Single</source>
-        <translation type="vanished">одинарный</translation>
-    </message>
-    <message>
-        <source>One and Half</source>
-        <translation type="vanished">полуторный</translation>
-    </message>
-    <message>
-        <source>Double</source>
-        <translation type="vanished">двойной</translation>
-    </message>
-    <message>
-        <source>Fixed</source>
-        <translation type="vanished">фиксированный</translation>
-    </message>
-    <message>
-        <source>value, mm</source>
-        <translation type="vanished">значение, мм</translation>
-    </message>
-    <message>
-        <source>Alignment:</source>
-        <translation type="vanished">Выравнивание:</translation>
-    </message>
-    <message>
-        <source>Framing brackets</source>
-        <translation type="vanished">Обрамлять скобками</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">по левому краю</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation type="vanished">по центру</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">по правому краю</translation>
-    </message>
-    <message>
-        <source>Justify</source>
-        <translation type="vanished">по ширине</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Отступы:</translation>
-    </message>
-    <message>
-        <source>Numbering:</source>
-        <translation type="vanished">Номера страниц:</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">вверху</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">внизу</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Закрыть</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Сохранить</translation>
-    </message>
-</context>
-<context>
     <name>TemplateDialog</name>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="14"/>
@@ -2882,14 +2086,6 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="537"/>
         <source>Right</source>
         <translation>по правому краю</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Закрыть</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Сохранить</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.ui" line="241"/>
@@ -2995,10 +2191,6 @@ Paragraph</source>
 <context>
     <name>UserInterface::ApplicationView</name>
     <message>
-        <source>Scenarist</source>
-        <translation type="vanished">Сценарист</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/ApplicationView.cpp" line="13"/>
         <source>KIT Scenarist</source>
         <translation>КИТ Сценарист</translation>
@@ -3028,10 +2220,6 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="112"/>
         <source>Create New Character</source>
         <translation>Добавить персонаж</translation>
-    </message>
-    <message>
-        <source>Edit Selected Character</source>
-        <translation type="obsolete">Изменить выбранного персонажа</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp" line="115"/>
@@ -3074,10 +2262,6 @@ Paragraph</source>
         <source>Import</source>
         <translation>Импорт</translation>
     </message>
-    <message>
-        <source>%1 files (*%2)</source>
-        <translation type="vanished">%1 файлы (*%2)</translation>
-    </message>
 </context>
 <context>
     <name>UserInterface::LocationsDataEdit</name>
@@ -3105,10 +2289,6 @@ Paragraph</source>
         <translation>Создать новую локацию</translation>
     </message>
     <message>
-        <source>Edit Selected Location</source>
-        <translation type="obsolete">Изменить выбранную локацию</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="113"/>
         <source>Remove Selected Location</source>
         <translation>Удалить выбранную локацию</translation>
@@ -3130,10 +2310,6 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioDataEdit</name>
     <message>
-        <source>Common</source>
-        <translation type="vanished">Общее</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.cpp" line="122"/>
         <source>Synopsis</source>
         <translation>Синопсис</translation>
@@ -3141,10 +2317,6 @@ Paragraph</source>
 </context>
 <context>
     <name>UserInterface::ScenarioFastFormatWidget</name>
-    <message>
-        <source>â Prev</source>
-        <translation type="vanished">↑ Предыдущий</translation>
-    </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="56"/>
         <source>↑ Prev</source>
@@ -3164,126 +2336,6 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp" line="144"/>
         <source>%1 %2</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>%1 Time and Place</source>
-        <translation type="vanished">%1 Время и место</translation>
-    </message>
-    <message>
-        <source>%1 Scene Characters</source>
-        <translation type="vanished">%1 Участники сцены</translation>
-    </message>
-    <message>
-        <source>%1 Action</source>
-        <translation type="vanished">%1 Описание действия</translation>
-    </message>
-    <message>
-        <source>%1 Character</source>
-        <translation type="vanished">%1 Герой</translation>
-    </message>
-    <message>
-        <source>%1 Dialog</source>
-        <translation type="vanished">%1 Диалог</translation>
-    </message>
-    <message>
-        <source>%1 Parenthetical</source>
-        <translation type="vanished">%1 Ремарка</translation>
-    </message>
-    <message>
-        <source>%1 Title</source>
-        <translation type="vanished">%1 Титр</translation>
-    </message>
-    <message>
-        <source>%1 Note</source>
-        <translation type="vanished">%1 Примечание</translation>
-    </message>
-    <message>
-        <source>%1 Transition</source>
-        <translation type="vanished">%1 Переход</translation>
-    </message>
-    <message>
-        <source>%1 NoprintableText</source>
-        <translation type="vanished">%1 Заметка по тексту</translation>
-    </message>
-    <message>
-        <source>0 Time and Place</source>
-        <translation type="obsolete">0 Время и место</translation>
-    </message>
-    <message>
-        <source>1 Scene Characters</source>
-        <translation type="obsolete">1 Участники сцены</translation>
-    </message>
-    <message>
-        <source>2 Action</source>
-        <translation type="obsolete">2 Описание действия</translation>
-    </message>
-    <message>
-        <source>3 Character</source>
-        <translation type="obsolete">3 Герой</translation>
-    </message>
-    <message>
-        <source>5 Parenthetical</source>
-        <translation type="obsolete">5 Ремарка</translation>
-    </message>
-    <message>
-        <source>6 Transition</source>
-        <translation type="obsolete">6 Переход</translation>
-    </message>
-    <message>
-        <source>7 Note</source>
-        <translation type="obsolete">7 Примечание</translation>
-    </message>
-    <message>
-        <source>8 Title</source>
-        <translation type="obsolete">8 Титр</translation>
-    </message>
-    <message>
-        <source>9 Noprintable Text</source>
-        <translation type="obsolete">9 Непечатный текст</translation>
-    </message>
-    <message>
-        <source>1 Action</source>
-        <translation type="obsolete">1 Описание действия</translation>
-    </message>
-    <message>
-        <source>2 Character</source>
-        <translation type="obsolete">2 Герой</translation>
-    </message>
-    <message>
-        <source>3 Parenthetical</source>
-        <translation type="obsolete">3 Ремарка</translation>
-    </message>
-    <message>
-        <source>4 Dialog</source>
-        <translation type="obsolete">4 Диалог</translation>
-    </message>
-    <message>
-        <source>3 Dialog</source>
-        <translation type="obsolete">3 Диалог</translation>
-    </message>
-    <message>
-        <source>4 Parenthetical</source>
-        <translation type="obsolete">4 Ремарка</translation>
-    </message>
-    <message>
-        <source>5 Transition</source>
-        <translation type="obsolete">5 Переход</translation>
-    </message>
-    <message>
-        <source>6 Note</source>
-        <translation type="obsolete">6 Примечание</translation>
-    </message>
-    <message>
-        <source>7 Title</source>
-        <translation type="obsolete">7 Титр</translation>
-    </message>
-    <message>
-        <source>8 Noprintable Text</source>
-        <translation type="obsolete">8 Непечатный текст</translation>
-    </message>
-    <message>
-        <source>â Next</source>
-        <translation type="vanished">↓ Следующий</translation>
     </message>
 </context>
 <context>
@@ -3311,14 +2363,6 @@ Paragraph</source>
 </context>
 <context>
     <name>UserInterface::ScenarioNavigator</name>
-    <message>
-        <source>Navigator</source>
-        <translation type="obsolete">Навигатор</translation>
-    </message>
-    <message>
-        <source>Scenes: </source>
-        <translation type="obsolete">Сцен: </translation>
-    </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="186"/>
         <source>Color</source>
@@ -3448,34 +2492,7 @@ Paragraph</source>
     </message>
 </context>
 <context>
-    <name>UserInterface::ScenarioReviewWidget</name>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Изменить</translation>
-    </message>
-    <message>
-        <source>Reply</source>
-        <translation type="vanished">Ответить</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation type="vanished">Исправлено</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Удалить</translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="vanished">Комментарий</translation>
-    </message>
-</context>
-<context>
     <name>UserInterface::ScenarioSceneSynopsis</name>
-    <message>
-        <source>Synopsis of</source>
-        <translation type="vanished">Синопсис</translation>
-    </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.cpp" line="24"/>
         <source>Notes of</source>
@@ -3500,34 +2517,6 @@ Paragraph</source>
         <translation>Повторить последнее действие</translation>
     </message>
     <message>
-        <source>Search text</source>
-        <translation type="vanished">Поиск текста</translation>
-    </message>
-    <message>
-        <source>Time and Place</source>
-        <translation type="vanished">Время и место</translation>
-    </message>
-    <message>
-        <source>Ctrl+Enter</source>
-        <translation type="vanished">Ctrl+Энтер</translation>
-    </message>
-    <message>
-        <source>Scene Characters</source>
-        <translation type="vanished">Участники сцены</translation>
-    </message>
-    <message>
-        <source>Ctrl+E</source>
-        <translation type="vanished">Ctrl+E</translation>
-    </message>
-    <message>
-        <source>Action</source>
-        <translation type="vanished">Описание действия</translation>
-    </message>
-    <message>
-        <source>Ctrl+J</source>
-        <translation type="vanished">Ctrl+J</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="93"/>
         <source>DRAFT</source>
         <translation>ЧЕРНОВИК</translation>
@@ -3538,77 +2527,9 @@ Paragraph</source>
         <translation>Поиск и замена</translation>
     </message>
     <message>
-        <source>Text Formatting</source>
-        <translation type="vanished">Форматирование текста</translation>
-    </message>
-    <message>
-        <source>Text Corrections</source>
-        <translation type="vanished">Рецензирование</translation>
-    </message>
-    <message>
-        <source>Review</source>
-        <translation type="vanished">Рецензирование</translation>
-    </message>
-    <message>
-        <source>Character</source>
-        <translation type="vanished">Герой</translation>
-    </message>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Диалог</translation>
-    </message>
-    <message>
-        <source>Parethentcial</source>
-        <translation type="vanished">Ремарка</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation type="vanished">Титр</translation>
-    </message>
-    <message>
-        <source>Note</source>
-        <translation type="vanished">Примечание</translation>
-    </message>
-    <message>
-        <source>Transition</source>
-        <translation type="vanished">Переход</translation>
-    </message>
-    <message>
-        <source>Noprintable Text</source>
-        <translation type="vanished">Заметка по тексту</translation>
-    </message>
-    <message>
-        <source>Scenes Group</source>
-        <translation type="vanished">Группа сцен</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Папка</translation>
-    </message>
-    <message>
-        <source>Ctrl+Space</source>
-        <translation type="vanished">Ctrl+Пробел</translation>
-    </message>
-    <message>
-        <source>Undo last action (Ctrl+Z)</source>
-        <translation type="vanished">Отменить последнее действие (Ctrl+Z)</translation>
-    </message>
-    <message>
-        <source>Redo last action (Shift+Ctrl+Z)</source>
-        <translation type="vanished">Повторить последнее действие (Shift+Ctrl+Z)</translation>
-    </message>
-    <message>
-        <source>Search text (Ctrl+F)</source>
-        <translation type="vanished">Поиск текста (Ctrl+F)</translation>
-    </message>
-    <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="434"/>
         <source>Text Fast Format</source>
         <translation>Быстрое форматирование текста</translation>
-    </message>
-    <message>
-        <source>Chron: </source>
-        <translation type="vanished">Хрон.:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="437"/>
@@ -3662,14 +2583,6 @@ Paragraph</source>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="527"/>
         <source>Review</source>
         <translation>Рецензирование</translation>
-    </message>
-    <message>
-        <source>Blocks Settings</source>
-        <translation type="vanished">Параметры блоков текста</translation>
-    </message>
-    <message>
-        <source>Blocks Jumps</source>
-        <translation type="vanished">Переходы между блоками</translation>
     </message>
 </context>
 <context>
@@ -3739,126 +2652,11 @@ Paragraph</source>
     </message>
 </context>
 <context>
-    <name>UserInterface::StyleDialog</name>
-    <message>
-        <source>Scenario Style</source>
-        <translation type="obsolete">Стиль сценария</translation>
-    </message>
-    <message>
-        <source>Unnamed Style</source>
-        <translation type="vanished">Стиль без названия</translation>
-    </message>
-    <message>
-        <source>Time And Place</source>
-        <translation type="vanished">Время и место</translation>
-    </message>
-    <message>
-        <source>Scene Characters</source>
-        <translation type="vanished">Участники сцены</translation>
-    </message>
-    <message>
-        <source>Action</source>
-        <translation type="vanished">Действие</translation>
-    </message>
-    <message>
-        <source>Character</source>
-        <translation type="vanished">Герой</translation>
-    </message>
-    <message>
-        <source>Parenthetical</source>
-        <translation type="vanished">Ремарка</translation>
-    </message>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Диалог</translation>
-    </message>
-    <message>
-        <source>Transition</source>
-        <translation type="vanished">Переход</translation>
-    </message>
-    <message>
-        <source>Note</source>
-        <translation type="vanished">Примечание</translation>
-    </message>
-    <message>
-        <source>Title Header</source>
-        <translation type="vanished">Заголовок титра</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation type="vanished">Титр</translation>
-    </message>
-    <message>
-        <source>Noprintable Text</source>
-        <translation type="vanished">Непечатный текст</translation>
-    </message>
-    <message>
-        <source>Scene Group</source>
-        <translation type="vanished">Группа сцен</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Папка</translation>
-    </message>
-</context>
-<context>
     <name>UserInterface::TemplateDialog</name>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/TemplateDialog.cpp" line="95"/>
         <source>Unnamed Template</source>
         <translation>Шаблон без названия</translation>
-    </message>
-    <message>
-        <source>Time And Place</source>
-        <translation type="vanished">Время и место</translation>
-    </message>
-    <message>
-        <source>Scene Characters</source>
-        <translation type="vanished">Участники сцены</translation>
-    </message>
-    <message>
-        <source>Action</source>
-        <translation type="vanished">Действие</translation>
-    </message>
-    <message>
-        <source>Character</source>
-        <translation type="vanished">Герой</translation>
-    </message>
-    <message>
-        <source>Parenthetical</source>
-        <translation type="vanished">Ремарка</translation>
-    </message>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">Диалог</translation>
-    </message>
-    <message>
-        <source>Transition</source>
-        <translation type="vanished">Переход</translation>
-    </message>
-    <message>
-        <source>Note</source>
-        <translation type="vanished">Примечание</translation>
-    </message>
-    <message>
-        <source>Title Header</source>
-        <translation type="vanished">Заголовок титра</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation type="vanished">Титр</translation>
-    </message>
-    <message>
-        <source>Noprintable Text</source>
-        <translation type="vanished">Заметка по тексту</translation>
-    </message>
-    <message>
-        <source>Scene Group</source>
-        <translation type="vanished">Группа сцен</translation>
-    </message>
-    <message>
-        <source>Folder</source>
-        <translation type="vanished">Папка</translation>
     </message>
 </context>
 <context>

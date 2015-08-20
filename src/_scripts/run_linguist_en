@@ -1,0 +1,4 @@
+#/bin/sh
+
+./update_ts
+~/Qt/5.5/gcc_64/bin/linguist ../bin/Scenarist/Resources/Translations/Scenarist_en.ts

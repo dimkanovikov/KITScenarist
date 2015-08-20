@@ -104,9 +104,21 @@ void ScalableWrapper::zoomOut()
 {
 	setZoomRange(m_zoomRange - 0.1);
 }
-
+#include <QDebug>
 bool ScalableWrapper::event(QEvent* _event)
 {
+	if (_event->type() == QEvent::KeyPress
+		|| _event->type() == QEvent::KeyRelease) {
+		QKeyEvent* event = dynamic_cast<QKeyEvent*>(_event);
+		qDebug() << _event->type()
+				 << "key -" << event->key()
+				 << "| text -" << event->text()
+				 << "| modifiers -" << event->modifiers();
+	}
+
+
+
+
 	bool result = true;
 	//
 	// Определяем особый обработчик для жестов
