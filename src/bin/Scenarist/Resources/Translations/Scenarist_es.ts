@@ -362,6 +362,14 @@
     </message>
 </context>
 <context>
+    <name>BusinessLogic::ScenarioTemplate</name>
+    <message>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp" line="743"/>
+        <source>Default</source>
+        <translation>Por defecto</translation>
+    </message>
+</context>
+<context>
     <name>BusinessLogic::SceneReport</name>
     <message>
         <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="35"/>

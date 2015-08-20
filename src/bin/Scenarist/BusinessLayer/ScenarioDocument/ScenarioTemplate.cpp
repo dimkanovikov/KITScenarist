@@ -739,6 +739,9 @@ void ScenarioTemplate::load(const QString& _fromFile)
 			//
 			QXmlStreamAttributes templateAttributes = reader.attributes();
 			m_name = templateAttributes.value("name").toString();
+			if (m_name == "default") {
+				m_name = QApplication::translate("BusinessLogic::ScenarioTemplate", "Default");
+			}
 			m_description = templateAttributes.value("description").toString();
 			m_pageSizeId = PageMetrics::pageSizeIdFromString(templateAttributes.value("page_format").toString());
 			m_pageMargins = ::marginsFromString(templateAttributes.value("page_margins").toString());
