@@ -805,7 +805,11 @@ ScenarioTemplate ScenarioTemplateFacade::getTemplate(const QString& _templateNam
 			result = s_instance->m_defaultTemplate;
 		}
 	} else {
-		result = s_instance->m_templates.value(_templateName);
+		//
+		// Передаём значением по-умолчанию стандартный шаблон, т.к. иногда, например при смене языка
+		// может возникнуть ситуация с передачей стандартного шаблона на другом языке
+		//
+		result = s_instance->m_templates.value(_templateName, s_instance->m_defaultTemplate);
 	}
 
 	result.updateBlocksColors();

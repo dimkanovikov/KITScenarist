@@ -120,6 +120,7 @@ void QLightBoxDialog::initView()
 		m_centralWidget->setProperty("lightBoxDialogCentralWidget", true);
 		m_centralWidget->setMinimumSize(minimumSize());
 		m_centralWidget->setMaximumSize(maximumSize());
+		m_centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 		QLayout* centralWidgetLayout = layout();
 		centralWidgetLayout->setContentsMargins(20, 8, 20, 10);

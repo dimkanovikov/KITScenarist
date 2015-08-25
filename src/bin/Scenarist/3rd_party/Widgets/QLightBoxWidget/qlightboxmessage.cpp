@@ -74,12 +74,14 @@ void QLightBoxMessage::initView()
 	m_text->setMinimumWidth(300);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
-	topLayout->addWidget(m_icon, 0, Qt::AlignCenter);
+	topLayout->addWidget(m_icon, 0, Qt::AlignLeft | Qt::AlignTop);
 	topLayout->addWidget(m_text, 1);
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->addLayout(topLayout);
 	layout->addWidget(m_buttons);
 	setLayout(layout);
+
+	setMinimumWidth(500);
 
 	QLightBoxDialog::initView();
 }

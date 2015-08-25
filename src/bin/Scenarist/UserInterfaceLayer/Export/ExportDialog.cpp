@@ -258,6 +258,7 @@ void ExportDialog::aboutChooseFile()
 void ExportDialog::aboutFileNameChanged()
 {
 	ui->exportTo->setEnabled(!ui->file->text().isEmpty());
+	ui->existsLabel->setVisible(QFile::exists(ui->file->text()));
 }
 
 void ExportDialog::initView()
