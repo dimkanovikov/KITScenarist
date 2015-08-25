@@ -65,9 +65,16 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 			const QFileInfo fileInfo(filePath);
 
 			//
+			// Проверяем возможность записи в файл
+			//
+			QFile file(filePath);
+			const bool canWrite = file.open(QIODevice::WriteOnly);
+			file.close();
+
+			//
 			// Если возможна запись в файл
 			//
-			if (fileInfo.isWritable()) {
+			if (canWrite) {
 				//
 				// Определим экспортирующего
 				//

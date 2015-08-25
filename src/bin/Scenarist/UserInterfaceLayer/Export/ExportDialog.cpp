@@ -76,6 +76,8 @@ void ExportDialog::setExportFilePath(const QString& _filePath)
 	} else {
 		ui->pdf->setChecked(true);
 	}
+
+	aboutFileNameChanged();
 }
 
 void ExportDialog::setExportFileName(const QString& _fileName)
