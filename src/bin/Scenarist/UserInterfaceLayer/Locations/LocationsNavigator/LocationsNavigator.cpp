@@ -38,7 +38,8 @@ void LocationsNavigator::setModel(QAbstractItemModel* _model)
 	//
 	// Настраиваем запрос на изменение при изменении текущего элемента
 	//
-	connect(m_navigator->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(aboutEditLocation()));
+	connect(m_navigator->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+			this, SLOT(aboutEditLocation()));
 }
 
 void LocationsNavigator::selectFirstLocation()
