@@ -33,9 +33,10 @@ public:
 
 public slots:
 	/**
-	 * @brief Выбрать фотографию
+	 * @brief Выбрать фотографию в указанной папке
+	 * @return Возвращает путь к выбранной фотографии
 	 */
-	void aboutChoosePhoto();
+	QString aboutChoosePhoto(const QString& _folder = QString::null);
 
 signals:
 	/**

@@ -73,6 +73,11 @@ namespace UserInterface
 		 */
 		void aboutLocationChanged();
 
+		/**
+		 * @brief Добавить фотографию
+		 */
+		void aboutAddPhoto();
+
 	private:
 		/**
 		 * @brief Настроить представление

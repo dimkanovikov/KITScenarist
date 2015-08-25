@@ -83,6 +83,11 @@ namespace UserInterface
 		 */
 		void aboutCharacterChanged();
 
+		/**
+		 * @brief Добавить фотографию
+		 */
+		void aboutAddPhoto();
+
 	private:
 		/**
 		 * @brief Настроить представление

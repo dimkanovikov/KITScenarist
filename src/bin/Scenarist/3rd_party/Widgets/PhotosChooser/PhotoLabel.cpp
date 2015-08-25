@@ -74,16 +74,16 @@ QPixmap PhotoLabel::photo() const
 	return m_photo;
 }
 
-void PhotoLabel::aboutChoosePhoto()
+QString PhotoLabel::aboutChoosePhoto(const QString& _folder)
 {
 	QString imageFile =
-			QFileDialog::getOpenFileName(this,
-										 tr("Choose image"),
-										 QString(),
-										 tr("Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)"));
+			QFileDialog::getOpenFileName(this, tr("Choose image"), _folder,
+				tr("Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)"));
 	if (!imageFile.isEmpty()) {
 		setPhoto(QPixmap(imageFile));
 	}
+
+	return imageFile;
 }
 
 void PhotoLabel::enterEvent(QEvent* _event)

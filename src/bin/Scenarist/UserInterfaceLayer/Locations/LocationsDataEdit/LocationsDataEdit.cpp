@@ -1,9 +1,42 @@
 #include "LocationsDataEdit.h"
 #include "ui_LocationsDataEdit.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <3rd_party/Helpers/TextEditHelper.h>
 
+#include <QDir>
+#include <QFileInfo>
+#include <QStandardPaths>
+
 using UserInterface::LocationsDataEdit;
+
+namespace {
+	/**
+	 * @brief Получить путь к последней используемой папке с изображениями
+	 */
+	static QString imagesFolderPath() {
+		QString exportFolderPath =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"locations/images-folder",
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+		if (exportFolderPath.isEmpty()) {
+			exportFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+		}
+		return exportFolderPath;
+	}
+
+	/**
+	 * @brief Сохранить путь к последней используемой папке с изображениями
+	 */
+	static void saveImagesFolderPath(const QString& _path) {
+		DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+					"locations/images-folder",
+					QFileInfo(_path).absoluteDir().absolutePath(),
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+	}
+}
 
 
 LocationsDataEdit::LocationsDataEdit(QWidget *parent) :
@@ -118,6 +151,14 @@ void LocationsDataEdit::aboutLocationChanged()
 	ui->addPhoto->setVisible(addPhotoVisible);
 }
 
+void LocationsDataEdit::aboutAddPhoto()
+{
+	const QString newImagesFolder = ui->photos->aboutAddPhoto(::imagesFolderPath());
+	if (!newImagesFolder.isEmpty()) {
+		::saveImagesFolderPath(newImagesFolder);
+	}
+}
+
 void LocationsDataEdit::initView()
 {
 	ui->addPhoto->updateIcons();
@@ -134,7 +175,7 @@ void LocationsDataEdit::initConnections()
 	connect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutLocationChanged()));
 	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutLocationChanged()));
 
-	connect(ui->addPhoto, SIGNAL(clicked()), ui->photos, SLOT(aboutAddPhoto()));
+	connect(ui->addPhoto, SIGNAL(clicked()), this, SLOT(aboutAddPhoto()));
 }
 
 void LocationsDataEdit::removeConnections()
@@ -143,7 +184,7 @@ void LocationsDataEdit::removeConnections()
 	disconnect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutLocationChanged()));
 	disconnect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutLocationChanged()));
 
-	disconnect(ui->addPhoto, SIGNAL(clicked()), ui->photos, SLOT(aboutAddPhoto()));
+	disconnect(ui->addPhoto, SIGNAL(clicked()), this, SLOT(aboutAddPhoto()));
 }
 
 void LocationsDataEdit::initStyleSheet()

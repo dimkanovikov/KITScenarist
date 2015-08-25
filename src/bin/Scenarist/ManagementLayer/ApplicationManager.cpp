@@ -480,7 +480,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		//
 		case 100:
 		case 101: {
-			m_startUpManager->aboutRetryLogin(_error);
+			error = tr("Incorrect username or password.");
+			m_startUpManager->aboutRetryLogin(error);
 			break;
 		}
 

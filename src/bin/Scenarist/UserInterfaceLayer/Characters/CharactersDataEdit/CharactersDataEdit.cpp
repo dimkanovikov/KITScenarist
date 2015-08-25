@@ -1,9 +1,42 @@
 #include "CharactersDataEdit.h"
 #include "ui_CharactersDataEdit.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <3rd_party/Helpers/TextEditHelper.h>
 
+#include <QDir>
+#include <QFileInfo>
+#include <QStandardPaths>
+
 using UserInterface::CharactersDataEdit;
+
+namespace {
+	/**
+	 * @brief Получить путь к последней используемой папке с изображениями
+	 */
+	static QString imagesFolderPath() {
+		QString exportFolderPath =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"characters/images-folder",
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+		if (exportFolderPath.isEmpty()) {
+			exportFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+		}
+		return exportFolderPath;
+	}
+
+	/**
+	 * @brief Сохранить путь к последней используемой папке с изображениями
+	 */
+	static void saveImagesFolderPath(const QString& _path) {
+		DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+					"characters/images-folder",
+					QFileInfo(_path).absoluteDir().absolutePath(),
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+	}
+}
 
 
 CharactersDataEdit::CharactersDataEdit(QWidget *parent) :
@@ -136,6 +169,14 @@ void CharactersDataEdit::aboutCharacterChanged()
 	ui->addPhoto->setVisible(addPhotoVisible);
 }
 
+void CharactersDataEdit::aboutAddPhoto()
+{
+	const QString newImagesFolder = ui->photos->aboutAddPhoto(::imagesFolderPath());
+	if (!newImagesFolder.isEmpty()) {
+		::saveImagesFolderPath(newImagesFolder);
+	}
+}
+
 void CharactersDataEdit::initView()
 {
 	ui->addPhoto->updateIcons();
@@ -153,7 +194,7 @@ void CharactersDataEdit::initConnections()
 	connect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutCharacterChanged()));
 	connect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutCharacterChanged()));
 
-	connect(ui->addPhoto, SIGNAL(clicked()), ui->photos, SLOT(aboutAddPhoto()));
+	connect(ui->addPhoto, SIGNAL(clicked()), this, SLOT(aboutAddPhoto()));
 }
 
 void CharactersDataEdit::removeConnections()
@@ -163,7 +204,7 @@ void CharactersDataEdit::removeConnections()
 	disconnect(ui->description, SIGNAL(textChanged()), this, SLOT(aboutCharacterChanged()));
 	disconnect(ui->photos, SIGNAL(photoChanged()), this, SLOT(aboutCharacterChanged()));
 
-	disconnect(ui->addPhoto, SIGNAL(clicked()), ui->photos, SLOT(aboutAddPhoto()));
+	disconnect(ui->addPhoto, SIGNAL(clicked()), this, SLOT(aboutAddPhoto()));
 }
 
 void CharactersDataEdit::initStyleSheet()

@@ -208,7 +208,7 @@ void StartUpManager::checkNewVersion()
 	//
 	// Построим ссылку, чтобы учитывать запрос на проверку обновлений
 	//
-	QString url = QString("https://kitscenarist.ru/api/app_updates.php");
+	QString url = QString("https://kitscenarist.ru/api/app/updates/");
 
 	url.append("?system_type=");
 	url.append(

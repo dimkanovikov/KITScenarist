@@ -124,19 +124,22 @@ bool PhotosChooser::canAddPhoto() const
 	return canAdd;
 }
 
-void PhotosChooser::aboutAddPhoto()
+QString PhotosChooser::aboutAddPhoto(const QString& _folder)
 {
+	QString selectedFilePath;
 	if (!m_mainPhoto->isVisible()) {
-		m_mainPhoto->aboutChoosePhoto();
+		selectedFilePath = m_mainPhoto->aboutChoosePhoto(_folder);
 	} else if (!m_additionalPhoto1->isVisible()) {
-		m_additionalPhoto1->aboutChoosePhoto();
+		selectedFilePath = m_additionalPhoto1->aboutChoosePhoto(_folder);
 	} else if (!m_additionalPhoto2->isVisible()) {
-		m_additionalPhoto2->aboutChoosePhoto();
+		selectedFilePath = m_additionalPhoto2->aboutChoosePhoto(_folder);
 	} else if (!m_additionalPhoto3->isVisible()) {
-		m_additionalPhoto3->aboutChoosePhoto();
+		selectedFilePath = m_additionalPhoto3->aboutChoosePhoto(_folder);
 	} else if (!m_additionalPhoto4->isVisible()) {
-		m_additionalPhoto4->aboutChoosePhoto();
+		selectedFilePath = m_additionalPhoto4->aboutChoosePhoto(_folder);
 	}
+
+	return selectedFilePath;
 }
 
 void PhotosChooser::aboutShowPhoto(const QPixmap& _photo)
