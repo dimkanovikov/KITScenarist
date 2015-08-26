@@ -17,14 +17,14 @@ namespace {
 	 * @brief Получить путь к последней используемой папке с изображениями
 	 */
 	static QString imagesFolderPath() {
-		QString exportFolderPath =
+		QString imagesFolderPath =
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"characters/images-folder",
 					DataStorageLayer::SettingsStorage::ApplicationSettings);
-		if (exportFolderPath.isEmpty()) {
-			exportFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+		if (imagesFolderPath.isEmpty()) {
+			imagesFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 		}
-		return exportFolderPath;
+		return imagesFolderPath;
 	}
 
 	/**

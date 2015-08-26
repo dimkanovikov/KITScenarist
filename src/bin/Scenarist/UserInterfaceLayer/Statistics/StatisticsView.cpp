@@ -3,6 +3,9 @@
 #include "ReportButton.h"
 #include "StatisticsSettings.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <3rd_party/Widgets/Ctk/ctkCollapsibleButton.h>
 #include <3rd_party/Widgets/Ctk/ctkPopupWidget.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
@@ -10,6 +13,7 @@
 
 #include <QApplication>
 #include <QButtonGroup>
+#include <QFileInfo>
 #include <QFileDialog>
 #include <QFrame>
 #include <QLabel>
@@ -18,6 +22,7 @@
 #include <QPrintPreviewDialog>
 #include <QSplitter>
 #include <QStackedWidget>
+#include <QStandardPaths>
 #include <QTextBrowser>
 #include <QVariant>
 #include <QVBoxLayout>
@@ -26,6 +31,40 @@ using UserInterface::StatisticsView;
 using UserInterface::StatisticsSettings;
 using UserInterface::ReportButton;
 using BusinessLogic::ReportParameters;
+
+namespace {
+	/**
+	 * @brief Получить путь к последней используемой папке
+	 */
+	static QString reportsFolderPath() {
+		QString reportsFolderPath =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"reports/save-folder",
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+		if (reportsFolderPath.isEmpty()) {
+			reportsFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+		}
+		return reportsFolderPath;
+	}
+
+	/**
+	 * @brief Получить путь к сохраняемому файлу
+	 */
+	static QString reportFilePath(const QString& _fileName) {
+		QString filePath = ::reportsFolderPath() + QDir::separator() + _fileName;
+		return QDir::toNativeSeparators(filePath);
+	}
+
+	/**
+	 * @brief Сохранить путь к последней используемой папке
+	 */
+	static void saveReportsFolderPath(const QString& _path) {
+		DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+					"reports/save-folder",
+					QFileInfo(_path).absoluteDir().absolutePath(),
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+	}
+}
 
 
 StatisticsView::StatisticsView(QWidget* _parent) :
@@ -124,7 +163,8 @@ void StatisticsView::aboutPrint(QPrinter* _printer)
 
 void StatisticsView::aboutSaveReport()
 {
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save report"), tr("Report.pdf"), tr("PDF files (*.pdf)"));
+	const QString saveFileName = ::reportFilePath(tr("Report.pdf"));
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save report"), saveFileName, tr("PDF files (*.pdf)"));
 	if (!fileName.isEmpty()) {
 		if (!fileName.endsWith(".pdf")) {
 			fileName.append(".pdf");
@@ -134,6 +174,8 @@ void StatisticsView::aboutSaveReport()
 		printer.setOutputFormat(QPrinter::PdfFormat);
 		printer.setOutputFileName(fileName);
 		m_reportData->print(&printer);
+
+		::saveReportsFolderPath(fileName);
 	}
 }
 

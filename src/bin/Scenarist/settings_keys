@@ -129,3 +129,4 @@ projects/[project_name]/export/save-review-marks - сохранять редак
 
 locations/images-folder - последняя используемая папка для выбора фотографий локаций
 characters/images-folder - последняя используемая папка для выбора фотографий персонажей
+reports/save-folder - папка для сохранения отчётов
