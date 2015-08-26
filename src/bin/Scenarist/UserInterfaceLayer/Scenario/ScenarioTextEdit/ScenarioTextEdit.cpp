@@ -985,7 +985,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 	//
 	cursor.movePosition(QTextCursor::StartOfBlock);
 	cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-	cursor.setCharFormat(newBlockStyle.charFormat());
+	cursor.mergeCharFormat(newBlockStyle.charFormat());
 	cursor.clearSelection();
 
 	//
