@@ -57,8 +57,8 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 			rxPattern.append("|" + character->name());
 		}
 	}
-	rxPattern.prepend("(^|\\W)(");
-	rxPattern.append(")($|\\W)");
+	rxPattern.prepend("(^|\\W)[(]");
+	rxPattern.append("[)]($|\\W)");
 	QRegularExpression rxCharacterFinder(rxPattern,
 		QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
 

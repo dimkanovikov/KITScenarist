@@ -76,8 +76,8 @@ QString SceneHeadingParser::placeName(const QString& _text)
 {
 	QString placeName;
 
-	if (_text.split(".").count() > 0) {
-		placeName = _text.split(".").value(0);
+	if (_text.split(". ").count() > 0) {
+		placeName = _text.split(". ").value(0);
 	}
 
 	return placeName;
@@ -87,8 +87,8 @@ QString SceneHeadingParser::locationName(const QString& _text)
 {
 	QString locationName;
 
-	if (_text.split(".").count() > 1) {
-		locationName = _text.mid(_text.indexOf(".") + 1);
+	if (_text.split(". ").count() > 1) {
+		locationName = _text.mid(_text.indexOf(". ") + 1);
 		const QString suffix = locationName.split(" - ").last();
 		locationName = locationName.remove(" - " + suffix);
 		locationName = locationName.simplified();
