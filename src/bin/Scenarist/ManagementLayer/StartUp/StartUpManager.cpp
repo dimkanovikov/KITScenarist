@@ -149,7 +149,7 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 						+ "<a href=\"https://kitscenarist.ru/downloads/mac/scenarist-setup-" + maxVersion + ".dmg\" "
 #endif
 						+ "style=\"color:#2b78da;\">" + tr("download") + "</a> "
-						+ tr("or") + "<a href=\"https://kitscenarist.ru/history.html\" "
+						+ tr("or") + " <a href=\"https://kitscenarist.ru/history.html\" "
 						+ "style=\"color:#2b78da;\">" + tr("read more") + "</a>.";
 				m_view->setUpdateInfo(updateInfo);
 			}
