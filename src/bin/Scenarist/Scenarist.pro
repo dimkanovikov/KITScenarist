@@ -243,7 +243,8 @@ SOURCES += main.cpp \
     BusinessLayer/Statistics/CastReport.cpp \
     BusinessLayer/Statistics/CharacterReport.cpp \
     BusinessLayer/Statistics/SummaryReport.cpp \
-    3rd_party/Widgets/PopupWidget/PopupWidget.cpp
+    3rd_party/Widgets/PopupWidget/PopupWidget.cpp \
+    UserInterfaceLayer/Settings/LanguageDialog.cpp
 
 HEADERS += \
     ManagementLayer/ApplicationManager.h \
@@ -449,7 +450,8 @@ HEADERS += \
     BusinessLayer/Statistics/CharacterReport.h \
     BusinessLayer/Statistics/SummaryReport.h \
     3rd_party/Widgets/PopupWidget/PopupWidget.h \
-    3rd_party/Widgets/PopupWidget/PopupWidget_p.h
+    3rd_party/Widgets/PopupWidget/PopupWidget_p.h \
+    UserInterfaceLayer/Settings/LanguageDialog.h
 
 FORMS += \
     UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -461,7 +463,8 @@ FORMS += \
     UserInterfaceLayer/Import/ImportDialog.ui \
     UserInterfaceLayer/Settings/TemplateDialog.ui \
     UserInterfaceLayer/StartUp/LoginDialog.ui \
-    UserInterfaceLayer/Statistics/StatisticsSettings.ui
+    UserInterfaceLayer/Statistics/StatisticsSettings.ui \
+    UserInterfaceLayer/Settings/LanguageDialog.ui
 
 
 RESOURCES += \

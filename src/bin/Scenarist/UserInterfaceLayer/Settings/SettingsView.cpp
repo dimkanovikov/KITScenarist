@@ -1,6 +1,8 @@
 #include "SettingsView.h"
 #include "ui_SettingsView.h"
 
+#include "LanguageDialog.h"
+
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QSignalMapper>
@@ -32,6 +34,7 @@ namespace {
 SettingsView::SettingsView(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::SettingsView),
+	m_appLanguage(-1),
 	m_scenarioEditorTabs(new TabBar(this)),
 	m_jumpsTableHeader(new HierarchicalHeaderView(Qt::Horizontal, this))
 {
@@ -99,6 +102,33 @@ int SettingsView::chronometryCurrentType() const
 		type = 2;
 	}
 	return type;
+}
+
+void SettingsView::setApplicationLanguage(int _value)
+{
+	m_appLanguage = _value;
+
+	switch (_value) {
+		case -1: {
+			ui->applicationLanguage->setText(tr("System"));
+			break;
+		}
+
+		case 0: {
+			ui->applicationLanguage->setText(tr("Russian"));
+			break;
+		}
+
+		case 1: {
+			ui->applicationLanguage->setText(tr("Spanish"));
+			break;
+		}
+
+		case 2: {
+			ui->applicationLanguage->setText(tr("English"));
+			break;
+		}
+	}
 }
 
 void SettingsView::setApplicationUseDarkTheme(bool _value)
@@ -338,6 +368,14 @@ void SettingsView::setSimbolsCounterUsed(bool _value)
 	ui->simbolsCounter->setChecked(_value);
 }
 
+void SettingsView::aboutChooseApplicationLanguage()
+{
+	UserInterface::LanguageDialog dlg(this, m_appLanguage);
+	if (dlg.exec() == QLightBoxDialog::Accepted) {
+		emit applicationLanguageChanged(dlg.language());
+	}
+}
+
 void SettingsView::aboutScenarioEditSpellCheckLanguageChanged()
 {
 	emit scenarioEditSpellCheckLanguageChanged(ui->spellCheckingLanguage->currentData().toInt());
@@ -504,6 +542,8 @@ void SettingsView::initData()
 	ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
 	ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
 	ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
+	ui->spellCheckingLanguage->addItem(tr("English (GB)"), SpellChecker::EnglishGB);
+	ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);
 	ui->spellCheckingLanguage->addItem(tr("Spanish"), SpellChecker::Spanish);
 }
 
@@ -582,6 +622,7 @@ void SettingsView::initConnections()
 	// Сигналы об изменении параметров
 	//
 	// ... приложение
+	connect(ui->changeLanguage, SIGNAL(clicked(bool)), this, SLOT(aboutChooseApplicationLanguage()));
 	connect(ui->useDarkTheme, SIGNAL(toggled(bool)), this, SIGNAL(applicationUseDarkThemeChanged(bool)));
 	connect(ui->autosave, SIGNAL(toggled(bool)), this, SIGNAL(applicationAutosaveChanged(bool)));
 	connect(ui->autosaveInterval, SIGNAL(valueChanged(int)), this, SIGNAL(applicationAutosaveIntervalChanged(int)));

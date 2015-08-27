@@ -40,7 +40,7 @@ QString CharacterReport::makeReport(QTextDocument* _scenario,
 	edit.setUsePageMode(true);
 	edit.setPageFormat(::editorStyle().pageSizeId());
 	edit.setPageMargins(::editorStyle().pageMargins());
-	edit.setDocument(_scenario);
+	edit.setDocument(_scenario->clone());
 
 	//
 	// Бежим по документу и собираем информацию о сценах

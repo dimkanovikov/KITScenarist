@@ -42,7 +42,7 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 	edit.setUsePageMode(true);
 	edit.setPageFormat(::editorStyle().pageSizeId());
 	edit.setPageMargins(::editorStyle().pageMargins());
-	edit.setDocument(_scenario);
+	edit.setDocument(_scenario->clone());
 
 	//
 	// Сформируем регулярное выражение для выуживания молчаливых персонажей

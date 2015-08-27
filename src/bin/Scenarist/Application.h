@@ -4,7 +4,7 @@
 #include <QApplication>
 
 namespace ManagementLayer {
-    class ApplicationManager;
+	class ApplicationManager;
 }
 
 
@@ -13,27 +13,33 @@ namespace ManagementLayer {
  */
 class Application : public QApplication
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit Application(int& _argc, char** _argv);
+	explicit Application(int& _argc, char** _argv);
 
-    /**
-     * @brief Запуск приложения
-     */
-    void setupManager(ManagementLayer::ApplicationManager* _manager);
+	/**
+	 * @brief Запуск приложения
+	 */
+	void setupManager(ManagementLayer::ApplicationManager* _manager);
 
 protected:
-    /**
-     * @brief Переопределяется для обработки события открытия файла в Mac OS
-     */
-    bool event(QEvent* _event);
+	/**
+	 * @brief Переопределяется для обработки события открытия файла в Mac OS
+	 */
+	bool event(QEvent* _event);
 
 private:
-    /**
-     * @brief Управляющий приложением
-     */
-    ManagementLayer::ApplicationManager* m_applicationManager;
+	/**
+	 * @brief Настроить перевод приложения
+	 */
+	void initTranslation();
+
+private:
+	/**
+	 * @brief Управляющий приложением
+	 */
+	ManagementLayer::ApplicationManager* m_applicationManager;
 };
 
 #endif // APPLICATION_H

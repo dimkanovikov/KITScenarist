@@ -180,6 +180,12 @@ QString SpellChecker::dictionaryFilePath(
 		case Belorussian:
 			fileName += "be_BY";
 			break;
+		case EnglishGB:
+			fileName += "en_GB";
+			break;
+		case EnglishUS:
+			fileName += "en_US";
+			break;
 		case Spanish:
 			fileName += "es_ES";
 			break;
