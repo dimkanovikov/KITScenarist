@@ -528,7 +528,7 @@
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="114"/>
         <source>File exists. It will be replaced after exporting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл с таким названием уже существует. Он будет перезаписан после экспорта.</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="314"/>
@@ -742,27 +742,27 @@
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="20"/>
         <source>Choose application language</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите язык приложения</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="26"/>
         <source>Detect language from system locale</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать системные настройки локализации</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="36"/>
         <source>Русский</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="46"/>
         <source>Español</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="60"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -897,7 +897,7 @@ Continue working in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="483"/>
         <source>Incorrect username or password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не верное имя пользователя или пароль.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="492"/>
@@ -1081,12 +1081,12 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="101"/>
         <source>Export error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка экспорта</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="102"/>
         <source>Can&apos;t write to file. Maybe it opened in other application. Please, close it and restart export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удаётся записать файл. Возможно он открыт в другом приложении. Пожалуйста, закройте все приложения использующие этот файл и перезапустите экспорт.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="128"/>
@@ -1240,7 +1240,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="177"/>
         <source>Language will be change after application restart.</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык будет обновлён после перезапуска приложения.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="477"/>
@@ -1558,17 +1558,17 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="279"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="286"/>
         <source>Russian</source>
-        <translation type="unfinished">русский</translation>
+        <translation>русский</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="293"/>
         <source>Change</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1368"/>
@@ -2642,22 +2642,22 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="113"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Системный</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="128"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Английский</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="545"/>
         <source>English (GB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Английский (GB)</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="546"/>
         <source>English (US)</source>
-        <translation type="unfinished"></translation>
+        <translation>Английский (US)</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="565"/>

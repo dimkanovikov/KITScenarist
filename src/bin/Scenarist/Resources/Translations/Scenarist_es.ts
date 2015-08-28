@@ -104,7 +104,7 @@
     <message>
         <location filename="../../BusinessLayer/Counters/CountersFacade.cpp" line="193"/>
         <source>Simbols</source>
-        <translation>Simbolos</translation>
+        <translation>Caracteres</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@
     <message>
         <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="243"/>
         <source>Chron</source>
-        <translation>Duración de la escena/s</translation>
+        <translation>Duración</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="257"/>
@@ -756,17 +756,17 @@
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="36"/>
         <source>Русский</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="46"/>
         <source>Español</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="60"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -932,7 +932,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="611"/>
         <source>Closing Databse Connections and Remove Temporatry Files.</source>
-        <translation>cerrando la conexion de datos y quitando los archivos temporales.</translation>
+        <translation>Сerrando la conexion de datos y quitando los archivos temporales.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="722"/>
@@ -1192,7 +1192,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="670"/>
         <source>Chron.</source>
-        <translation>Tiempo en escena.</translation>
+        <translation>Duración</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Scenario/ScenarioManager.cpp" line="838"/>
@@ -1508,7 +1508,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="104"/>
         <source>Chronometry/Counters</source>
-        <translation>Tiempo/Contador</translation>
+        <translation>Duración/Contador</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="113"/>
@@ -1644,7 +1644,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="286"/>
         <source>Russian</source>
-        <translation type="unfinished">Ruso</translation>
+        <translation>Ruso</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="293"/>
@@ -1679,12 +1679,12 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1634"/>
         <source>Simbols Counter</source>
-        <translation>Contador de Símbolos</translation>
+        <translation>Contador de Caracteres</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1647"/>
         <source>Simbols without spaces | Simbols with spaces</source>
-        <translation>Simblos sin espacios | Simbolos con espacios</translation>
+        <translation>Caracteres sin espacios | Caracteres con espacios</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1667"/>
@@ -1704,12 +1704,12 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1721"/>
         <source>Chronometry</source>
-        <translation>Tiempo</translation>
+        <translation>Duración</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1732"/>
         <source>Pages Chronometry</source>
-        <translation>Tiempo por Páginas</translation>
+        <translation>Duración por Páginas</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1748"/>
@@ -1736,12 +1736,12 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1835"/>
         <source>Characters Chronometry</source>
-        <translation>Tiempo por carácter</translation>
+        <translation>Duración por carácter</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1879"/>
         <source>Characters</source>
-        <translation>Carácter</translation>
+        <translation>Carácteres</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1886"/>
@@ -1751,7 +1751,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1915"/>
         <source>Configurable Chronometry</source>
-        <translation>Configurar Tiempo</translation>
+        <translation>Configurar Duración</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1968"/>
@@ -1949,7 +1949,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="35"/>
         <source>Scenes statistics</source>
-        <translation>estadísticas de la Escena</translation>
+        <translation>Estadísticas de la Escena</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="45"/>
@@ -1959,7 +1959,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="55"/>
         <source>Characters statistics</source>
-        <translation>estadísticas de los Personajes</translation>
+        <translation>Estadísticas de los Personajes</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="69"/>
@@ -2003,7 +2003,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="113"/>
         <source>Show characters</source>
-        <translation>Mostrar caracteres</translation>
+        <translation>Mostrar personajes</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="127"/>
@@ -2038,7 +2038,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="185"/>
         <source>Show speaking and non-speaking scenes count</source>
-        <translation>mostar la cuenta de las escenas con y sin diálogo</translation>
+        <translation>Mostar la cuenta de las escenas con y sin diálogo</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="195"/>
@@ -2719,7 +2719,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="211"/>
         <source>Statistics report</source>
-        <translation>Informe de Estadísticas</translation>
+        <translation>Resumen del informe</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="212"/>
