@@ -14,6 +14,9 @@
 ;--------------------------------
 ;General
 
+  ;Show all languages, despite user's codepage
+  !define MUI_LANGDLL_ALLLANGUAGES
+
   !define pkgdir "files"
 
   ;Name and file
@@ -50,6 +53,8 @@
 ;Languages
 
   !insertmacro MUI_LANGUAGE "Russian"
+  !insertmacro MUI_LANGUAGE "English"
+  !insertmacro MUI_LANGUAGE "Spanish"
 
 ;--------------------------------
 ;Installer Sections
@@ -168,3 +173,13 @@ Section "Uninstall"
   ${unregisterExtension} ".kitsp" "Проект сценария"
 
 SectionEnd
+
+Function .onInit
+
+	;Language selection dialog
+
+	InitPluginsDir
+	!insertmacro MUI_LANGDLL_DISPLAY
+	
+FunctionEnd
+
