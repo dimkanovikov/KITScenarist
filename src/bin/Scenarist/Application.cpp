@@ -2,6 +2,9 @@
 
 #include <ManagementLayer/ApplicationManager.h>
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <QFileOpenEvent>
 #include <QFontDatabase>
 #include <QStyle>
@@ -33,25 +36,9 @@ Application::Application(int& _argc, char** _argv) :
 	fontDatabase.addApplicationFont(":/Fonts/Courier New");
 
 	//
-	// Подключим файл переводов Qt
+	// Настроим перевод приложения
 	//
-	QTranslator* russianQtTranslator = new QTranslator;
-	russianQtTranslator->load(":/Translations/Translations/qt_es.qm");
-	installTranslator(russianQtTranslator);
-
-	//
-	// Подключим дополнительный файл переводов Qt
-	//
-	QTranslator* russianQtBaseTranslator = new QTranslator;
-	russianQtBaseTranslator->load(":/Translations/Translations/qtbase_es.qm");
-	installTranslator(russianQtBaseTranslator);
-
-	//
-	// Подключим файл переводов программы
-	//
-	QTranslator* russianTranslator = new QTranslator;
-	russianTranslator->load(":/Translations/Translations/Scenarist_es.qm");
-	installTranslator(russianTranslator);
+	initTranslation();
 }
 
 void Application::setupManager(ManagementLayer::ApplicationManager *_manager)
@@ -71,4 +58,58 @@ bool Application::event(QEvent *_event)
 	}
 
 	return result;
+}
+
+void Application::initTranslation()
+{
+	//
+	// Определим язык перевода
+	//
+	const int language =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/language",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	QString translationSuffix = QLocale::system().name();
+	translationSuffix.truncate(translationSuffix.lastIndexOf('_'));
+	//
+	// ... если не удалось определить локаль, используем англоязычный перевод
+	//
+	if (translationSuffix.isEmpty()) {
+		translationSuffix = "en";
+	}
+
+	if (language == 0) {
+		translationSuffix = "ru";
+	} else if (language == 1) {
+		translationSuffix = "es";
+	} else if (language == 2) {
+		translationSuffix = "en";
+	}
+
+	//
+	// Для отличных от английского, подключаем переводы самой Qt
+	//
+	if (translationSuffix != "en") {
+		//
+		// Подключим файл переводов Qt
+		//
+		QTranslator* qtTranslator = new QTranslator;
+		qtTranslator->load(":/Translations/Translations/qt_" + translationSuffix + ".qm");
+		installTranslator(qtTranslator);
+
+		//
+		// Подключим дополнительный файл переводов Qt
+		//
+		QTranslator* qtBaseTranslator = new QTranslator;
+		qtBaseTranslator->load(":/Translations/Translations/qtbase_" + translationSuffix + ".qm");
+		installTranslator(qtBaseTranslator);
+	}
+
+	//
+	// Подключим файл переводов программы
+	//
+	QTranslator* appTranslator = new QTranslator;
+	appTranslator->load(":/Translations/Translations/Scenarist_" + translationSuffix + ".qm");
+	installTranslator(appTranslator);
 }

@@ -42,7 +42,7 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 	edit.setUsePageMode(true);
 	edit.setPageFormat(::editorStyle().pageSizeId());
 	edit.setPageMargins(::editorStyle().pageMargins());
-	edit.setDocument(_scenario);
+	edit.setDocument(_scenario->clone());
 
 	//
 	// Сформируем регулярное выражение для выуживания молчаливых персонажей
@@ -245,18 +245,31 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 	//
 	// ... данные
 	//
+	const bool styledHeaderFormat = _parameters.sceneShowCharacters;
 	foreach (SceneData* data, reportScenesDataList) {
-		html.append("<tr style=\"background-color: #ababab;\">");
+		if (styledHeaderFormat) {
+			html.append("<tr style=\"background-color: #ababab;\">");
+		} else {
+			html.append("<tr>");
+		}
 		QString sceneName =
 				data->name.isEmpty()
 				? QApplication::translate("BusinessLogic::SceneReport", "[UNDEFINED]")
 				: data->name;
 
-		html.append(QString("<td><b>%1</b></td>").arg(sceneName));
-		html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->number));
-		html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->page));
-		html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->characters.size()));
-		html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(ChronometerFacade::secondsToTime(data->chron)));
+		if (styledHeaderFormat) {
+			html.append(QString("<td><b>%1</b></td>").arg(sceneName));
+			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->number));
+			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->page));
+			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->characters.size()));
+			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(ChronometerFacade::secondsToTime(data->chron)));
+		} else {
+			html.append(QString("<td>%1</td>").arg(sceneName));
+			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(data->number));
+			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(data->page));
+			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(data->characters.size()));
+			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(ChronometerFacade::secondsToTime(data->chron)));
+		}
 		html.append("</tr>");
 
 		//
@@ -284,12 +297,12 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 				html.append(QString("<td>%1</td>").arg(charactersNames));
 				html.append("</tr>");
 			}
-		}
 
-		//
-		// И добавляем пустую строку для отступа перед следующим элементом
-		//
-		html.append("<tr><td></td></tr>");
+			//
+			// И добавляем пустую строку для отступа перед следующим элементом
+			//
+			html.append("<tr><td></td></tr>");
+		}
 	}
 
 	html.append("</table>");

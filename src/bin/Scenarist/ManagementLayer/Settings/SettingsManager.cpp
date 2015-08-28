@@ -13,7 +13,9 @@
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h>
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h>
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
+#include <QApplication>
 #include <QFileDialog>
 #include <QSplitter>
 #include <QStandardItemModel>
@@ -163,6 +165,16 @@ void SettingsManager::aboutResetSettings()
 	initView();
 
 	progress.close();
+}
+
+void SettingsManager::applicationLanguageChanged(int _value)
+{
+	storeValue("application/language", _value);
+
+	//
+	// Уведомляем о том, что язык сменится после перезапуска
+	//
+	QLightBoxMessage::information(m_view, QString::null, tr("Language will be change after application restart."));
 }
 
 void SettingsManager::applicationUseDarkThemeChanged(bool _value)
@@ -543,6 +555,12 @@ void SettingsManager::initView()
 	//
 	// Настройки приложения
 	//
+	m_view->setApplicationLanguage(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/language",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setApplicationUseDarkTheme(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"application/use-dark-theme",
@@ -886,6 +904,7 @@ void SettingsManager::initConnections()
 	//
 	// Сохранение изменений параметров
 	//
+	connect(m_view, SIGNAL(applicationLanguageChanged(int)), this, SLOT(applicationLanguageChanged(int)));
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SLOT(applicationUseDarkThemeChanged(bool)));
 	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SLOT(applicationAutosaveChanged(bool)));
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SLOT(applicationAutosaveIntervalChanged(int)));

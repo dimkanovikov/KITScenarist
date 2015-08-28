@@ -11,6 +11,8 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
 
+#include <3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h>
+
 #include <QApplication>
 #include <QTextBlock>
 #include <QTextDocument>
@@ -18,6 +20,13 @@
 using namespace BusinessLogic;
 
 namespace {
+	/**
+	 * @brief Стиль документа
+	 */
+	static ScenarioTemplate editorStyle() {
+		return ScenarioTemplateFacade::getTemplate();
+	}
+
 	/**
 	 * @brief Сформировать линию графика
 	 */
@@ -121,8 +130,14 @@ QString SummaryReport::makeReport(QTextDocument* _scenario, const BusinessLogic:
 		//
 		// Статистика по текстовой состовляющей
 		//
+		PagesTextEdit edit;
+		edit.setUsePageMode(true);
+		edit.setPageFormat(::editorStyle().pageSizeId());
+		edit.setPageMargins(::editorStyle().pageMargins());
+		edit.setDocument(_scenario->clone());
+
 		const int chron = ChronometerFacade::calculate(_scenario);
-		const int pageCount = _scenario->pageCount();
+		const int pageCount = edit.document()->pageCount();
 		const Counter counter = CountersFacade::calculateFull(_scenario);
 
 		html.append("<table width=\"100%\">");

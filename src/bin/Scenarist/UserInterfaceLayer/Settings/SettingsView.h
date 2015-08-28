@@ -47,6 +47,7 @@ namespace UserInterface
 		 * @brief Установка параметров
 		 */
 		/** @{ */
+		void setApplicationLanguage(int _value);
 		void setApplicationUseDarkTheme(bool _value);
 		void setApplicationAutosave(bool);
 		void setApplicationAutosaveInterval(int);
@@ -105,6 +106,7 @@ namespace UserInterface
 		 * @brief Изменения параметров
 		 */
 		/** @{ */
+		void applicationLanguageChanged(int);
 		void applicationUseDarkThemeChanged(bool);
 		void applicationAutosaveChanged(bool);
 		void applicationAutosaveIntervalChanged(int);
@@ -168,6 +170,11 @@ namespace UserInterface
 		/** @} */
 
 	private slots:
+		/**
+		 * @brief Выбрать язык приложения
+		 */
+		void aboutChooseApplicationLanguage();
+
 		/**
 		 * @brief Обработка смены языка для проверки орфографии
 		 */
@@ -251,6 +258,11 @@ namespace UserInterface
 		 * @brief Форма
 		 */
 		Ui::SettingsView *ui;
+
+		/**
+		 * @brief Язык приложения
+		 */
+		int m_appLanguage;
 
 		/**
 		 * @brief Переключатель вкладок для настроек редактора сценария

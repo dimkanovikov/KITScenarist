@@ -278,7 +278,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="252"/>
+        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="257"/>
         <source>[UNDEFINED]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -286,104 +286,104 @@
 <context>
     <name>BusinessLogic::SummaryReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="57"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="66"/>
         <source>Summary report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="139"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="154"/>
         <source>Chronometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="141"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="156"/>
         <source>Pages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="143"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="164"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="158"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="179"/>
         <source>Words</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="145"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="160"/>
         <source>Characters with/without spaces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="156"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="171"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="160"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="175"/>
         <source>Paragraph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="162"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="219"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="279"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="343"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="177"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="234"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="294"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="358"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="166"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="221"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="281"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="345"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="181"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="236"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="296"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="360"/>
         <source>Percents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="193"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="208"/>
         <source>Scenes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="217"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="232"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="234"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="249"/>
         <source>[UNDEFINED]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="253"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="268"/>
         <source>Locations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="277"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="292"/>
         <source>Place</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="310"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="325"/>
         <source>Characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="341"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="356"/>
         <source>Dialogues count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="355"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="370"/>
         <source>More 10 dialogues</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="362"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="377"/>
         <source>About 10 dialogues</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="369"/>
+        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="384"/>
         <source>Nonspeaking</source>
         <translation type="unfinished"></translation>
     </message>
@@ -485,163 +485,168 @@
 <context>
     <name>ExportDialog</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="14"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="26"/>
         <source>Export Scenario</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="35"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="47"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="42"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="54"/>
         <source>Print Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="52"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="64"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="70"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="82"/>
         <source>Format:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="80"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="92"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="96"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="114"/>
+        <source>File exists. It will be replaced after exporting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="130"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="99"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="133"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="124"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="158"/>
         <source>DOCX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="134"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="168"/>
         <source>PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="177"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="211"/>
         <source>Check page breaks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="190"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="224"/>
         <source>Checking page breaks can increase scenario page numbers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="225"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="259"/>
         <source>Common</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="240"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="274"/>
         <source>Template:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="263"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="297"/>
         <source>Scenes Prefix:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="280"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="314"/>
         <source>Page Numbering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="287"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="321"/>
         <source>Scenes Numbering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="294"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="328"/>
         <source>Save Review Marks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="305"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="339"/>
         <source>Title List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="311"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="345"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="323"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="357"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="333"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="367"/>
         <source>Scenario name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="340"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="374"/>
         <source>Genre:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="350"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="384"/>
         <source>Scenario genre.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="357"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="391"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="367"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="401"/>
         <source>Scenario author.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="374"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="408"/>
         <source>Contacts:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="381"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="415"/>
         <source>Year:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="391"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="425"/>
         <source>Scenario wirting year.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="420"/>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="424"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="454"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="458"/>
         <source>Original scenario</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="432"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="466"/>
         <source>Additional:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="465"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="499"/>
         <source>Additional (Numbering, Title Page etc.)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -729,6 +734,34 @@
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="131"/>
         <source>Save review marks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LanguageDialog</name>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="20"/>
+        <source>Choose application language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="26"/>
+        <source>Detect language from system locale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="36"/>
+        <source>Русский</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="46"/>
+        <source>Español</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="60"/>
+        <source>English</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -839,156 +872,161 @@ Continue working in offline mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="491"/>
-        <source>Subscription ended</source>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="483"/>
+        <source>Incorrect username or password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="492"/>
+        <source>Subscription ended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="493"/>
         <source>Buyed subscription period is finished.
 Continue working in offline mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="503"/>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="515"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="504"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="516"/>
         <source>Session closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="504"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="505"/>
         <source>New session for you account started at other device. Restart session?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="516"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="517"/>
         <source>New session for you account started at other device.
 Continue working in offline mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="528"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="529"/>
         <source>Project not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="529"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="530"/>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="540"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="541"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="610"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="611"/>
         <source>Exit from Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="610"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="611"/>
         <source>Closing Databse Connections and Remove Temporatry Files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="721"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="722"/>
         <source>Save project changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="722"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="723"/>
         <source>Project was modified. Save changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="748"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="749"/>
         <source>Loading Scenario</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="748"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="749"/>
         <source>Please wait. Loading can take few minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="793"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="794"/>
         <source>Sync scenario with cloud service.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="871"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="872"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="878"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="879"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="879"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="880"/>
         <source>Scenario</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="880"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="881"/>
         <source>Characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="881"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="882"/>
         <source>Locations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="882"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="883"/>
         <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="883"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="884"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="928"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="929"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="929"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="930"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="930"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="931"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="932"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="933"/>
         <source>Save As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="938"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="939"/>
         <source>Import...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="941"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="942"/>
         <source>Export to...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="944"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="945"/>
         <source>Print Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1189"/>
+        <location filename="../../ManagementLayer/ApplicationManager.cpp" line="1190"/>
         <source>%1[*] - KIT Scenarist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1027,22 +1065,32 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::ExportManager</name>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="58"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="59"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="58"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="59"/>
         <source>Please wait. Export can take few minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="108"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="101"/>
+        <source>Export error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="102"/>
+        <source>Can&apos;t write to file. Maybe it opened in other application. Please, close it and restart export.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="128"/>
         <source>Print Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="108"/>
+        <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="128"/>
         <source>Please wait. Preparing document to preview can take few minutes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1171,60 +1219,65 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::SettingsManager</name>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="151"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="153"/>
         <source>Restoring</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="152"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="154"/>
         <source>Please wait. Restoring settings to default values can take few minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="464"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="177"/>
+        <source>Language will be change after application restart.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="476"/>
         <source>Choose file to load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="465"/>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="489"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="477"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="501"/>
         <source>Scenario Template Files (*.%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="488"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="500"/>
         <source>Choose file to save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="703"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="721"/>
         <source>Press in paragraph&apos;s end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="705"/>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="710"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="723"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="728"/>
         <source>Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="706"/>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="711"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="724"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="729"/>
         <source>Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="708"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="726"/>
         <source>Press in empty paragraph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="714"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="732"/>
         <source>Block Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="715"/>
+        <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="733"/>
         <source>Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1263,33 +1316,33 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::SynchronizationManager</name>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="142"/>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="222"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="143"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="223"/>
         <source>Authorizing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="142"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="143"/>
         <source>Checking correction of user name and password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="222"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="223"/>
         <source>Close working session.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="266"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="267"/>
         <source>Loading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="266"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="267"/>
         <source>Loading projects list from remote server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="843"/>
+        <location filename="../../ManagementLayer/Synchronization/SynchronizationManager.cpp" line="844"/>
         <source>Can&apos;t estabilish network connection.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1305,12 +1358,12 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>PhotoLabel</name>
     <message>
-        <location filename="../../3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp" line="81"/>
+        <location filename="../../3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp" line="80"/>
         <source>Choose image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp" line="83"/>
+        <location filename="../../3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp" line="81"/>
         <source>Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1429,7 +1482,7 @@ Continue working with this project in offline mode.</source>
     <name>SettingsView</name>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="14"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1923"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1961"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1464,304 +1517,319 @@ Continue working with this project in offline mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="171"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="315"/>
         <source>Use Dark Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="180"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="186"/>
         <source>Automatically Save Every</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="209"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="215"/>
         <source>Minutes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="236"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="229"/>
         <source>Save Backups</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="259"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="252"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="262"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="255"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="331"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1415"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="279"/>
+        <source>Language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="286"/>
+        <source>Russian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="293"/>
+        <source>Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="369"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1453"/>
         <source>Show Scenes Numbers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="351"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="389"/>
         <source>Highlight Current Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="365"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="403"/>
         <source>Colors for</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="388"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="426"/>
         <source>Light Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="398"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="436"/>
         <source>Dark Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="460"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="942"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="498"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="980"/>
         <source>Text:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="539"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1133"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="577"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1171"/>
         <source>Folder text:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="618"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="823"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="656"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="861"/>
         <source>Noneprintable text:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="681"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1163"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="719"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1201"/>
         <source>Background:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="744"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1140"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="782"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1178"/>
         <source>Folder background:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1181"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1219"/>
         <source>Editor Text Template:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1208"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1246"/>
         <source>Spell Checking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1246"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1284"/>
         <source>Page View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1314"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1352"/>
         <source>Automatically jump to next paragraph (in scene headings and characters)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1330"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1368"/>
         <source>Use MS Word like highlighting colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1441"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1479"/>
         <source>Show scene description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1452"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1490"/>
         <source>Scene text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1462"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1500"/>
         <source>Scene synopsis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1486"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1524"/>
         <source>Description height, lines:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1588"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1626"/>
         <source>Counters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1596"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1634"/>
         <source>Simbols Counter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1609"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1647"/>
         <source>Simbols without spaces | Simbols with spaces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1629"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1667"/>
         <source>Pages Counter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1642"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1680"/>
         <source>Pages Mode only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1660"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1698"/>
         <source>Words Counter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1683"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1721"/>
         <source>Chronometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1694"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1732"/>
         <source>Pages Chronometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1710"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1748"/>
         <source>For standard template and compatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1750"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1788"/>
         <source>Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1757"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1820"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1795"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1858"/>
         <source>=</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1771"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1834"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1809"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1872"/>
         <source>Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1797"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1835"/>
         <source>Characters Chronometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1841"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1879"/>
         <source>Characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1848"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1886"/>
         <source>Consider Spaces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1877"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1915"/>
         <source>Configurable Chronometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1893"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1931"/>
         <source>Scene Heading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1930"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1974"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2007"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1968"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2012"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2045"/>
         <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1940"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1978"/>
         <source>Seconds per
 50 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1967"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2005"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2054"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2092"/>
         <source>Seconds for
 Paragraph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2163"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2201"/>
         <source>Apply Selected Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2166"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2204"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2177"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2215"/>
         <source>Add Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2180"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2218"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2191"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2229"/>
         <source>Edit Selected Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2194"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2232"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2205"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2243"/>
         <source>Delete Selected Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2208"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2246"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2219"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2257"/>
         <source>Load Template From File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2222"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2260"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2233"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2271"/>
         <source>Save Template To File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2236"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="2274"/>
         <source>Save As...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2193,12 +2261,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::CharactersDataEdit</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp" line="33"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp" line="66"/>
         <source>Choose Character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp" line="146"/>
+        <location filename="../../UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp" line="187"/>
         <source>Character name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2234,12 +2302,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::ExportDialog</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="240"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="242"/>
         <source>Choose file to export scenario</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="242"/>
+        <location filename="../../UserInterfaceLayer/Export/ExportDialog.cpp" line="244"/>
         <source>%1 files (*%2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2260,12 +2328,12 @@ Paragraph</source>
 <context>
     <name>UserInterface::LocationsDataEdit</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp" line="32"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp" line="65"/>
         <source>Choose Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp" line="128"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp" line="169"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2273,22 +2341,22 @@ Paragraph</source>
 <context>
     <name>UserInterface::LocationsNavigator</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="105"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="106"/>
         <source>Locations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="110"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="111"/>
         <source>Create New Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="113"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="114"/>
         <source>Remove Selected Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="117"/>
+        <location filename="../../UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="118"/>
         <source>Find All Locations From Scenario</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2459,28 +2527,28 @@ Paragraph</source>
 <context>
     <name>UserInterface::ScenarioReviewView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="150"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="152"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="151"/>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="212"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="153"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="214"/>
         <source>Reply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="152"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="154"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="156"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="158"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="193"/>
+        <location filename="../../UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewView.cpp" line="195"/>
         <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2534,47 +2602,69 @@ Paragraph</source>
 <context>
     <name>UserInterface::SettingsView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="358"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="396"/>
         <source>Choose backups saving folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="503"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="541"/>
         <source>Russian with Yo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="504"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="118"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="542"/>
         <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="505"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="543"/>
         <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="506"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="544"/>
         <source>Belorussian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="507"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="123"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="547"/>
         <source>Spanish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="525"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="113"/>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="128"/>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="545"/>
+        <source>English (GB)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="546"/>
+        <source>English (US)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="565"/>
         <source>Common</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="526"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="566"/>
         <source>Shortcuts Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="527"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="567"/>
         <source>Review</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2590,57 +2680,57 @@ Paragraph</source>
 <context>
     <name>UserInterface::StatisticsView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="61"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="100"/>
         <source>Preparing report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="61"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="100"/>
         <source>Please wait. Preparing report to preview can take few minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="127"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="167"/>
         <source>Save report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="127"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="166"/>
         <source>Report.pdf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="127"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="167"/>
         <source>PDF files (*.pdf)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="165"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="207"/>
         <source>Reports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="169"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="211"/>
         <source>Statistics report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="170"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="212"/>
         <source>Scene report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="171"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="213"/>
         <source>Location report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="172"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="214"/>
         <source>Cast report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="173"/>
+        <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="215"/>
         <source>Character report</source>
         <translation type="unfinished"></translation>
     </message>

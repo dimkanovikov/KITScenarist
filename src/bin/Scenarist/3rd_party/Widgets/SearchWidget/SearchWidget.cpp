@@ -131,8 +131,11 @@ void SearchWidget::aboutReplaceOne()
 
 		const QString searchText = m_searchText->text();
 		QTextCursor cursor = m_editor->textCursor();
-		if (cursor.hasSelection()
-			&& cursor.selectedText() == searchText) {
+		bool selectedTextEqual =
+			m_caseSensitive->isChecked()
+			? cursor.selectedText() == searchText
+			: cursor.selectedText().toLower() == searchText.toLower();
+		if (selectedTextEqual) {
 			cursor.insertText(replaceText);
 			aboutFindNext();
 		}

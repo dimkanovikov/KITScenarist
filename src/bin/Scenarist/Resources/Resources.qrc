@@ -13,6 +13,10 @@
         <file>HunspellDictionaries/ru_RU_yo.aff</file>
         <file>HunspellDictionaries/es_ES.dic</file>
         <file>HunspellDictionaries/es_ES.aff</file>
+        <file>HunspellDictionaries/en_GB.aff</file>
+        <file>HunspellDictionaries/en_GB.dic</file>
+        <file>HunspellDictionaries/en_US.dic</file>
+        <file>HunspellDictionaries/en_US.aff</file>
     </qresource>
     <qresource prefix="/Graphics">
         <file>Icons/folder.png</file>

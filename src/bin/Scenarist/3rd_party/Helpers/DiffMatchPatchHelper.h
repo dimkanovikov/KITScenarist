@@ -4,6 +4,7 @@
 #include "DiffMatchPatch.h"
 #include "TextEditHelper.h"
 
+#include <QDebug>
 #include <QHash>
 #include <QSet>
 #include <QString>
@@ -69,6 +70,8 @@ namespace {
 		}
 
 		result = result.remove(QRegularExpression("<scene_heading(.*)>\n"));
+		result = result.remove(QRegularExpression("<scene_group_header(.*)>\n"));
+		result = result.remove(QRegularExpression("<folder_header(.*)>\n"));
 		result = result.remove(QRegularExpression("<review(.*)>\n"));
 		result = result.remove(QRegularExpression("<review_comment(.*)>\n"));
 
@@ -161,6 +164,14 @@ public:
 				}
 				plainLength = plain.length();
 			}
+
+			//
+			// Убираем тэги folder и scene_group, чтобы избавиться от несбалансированного xml
+			//
+			xml.remove("<folder>");
+			xml.remove("</folder>");
+			xml.remove("<scene_group>");
+			xml.remove("</scene_group>");
 		}
 	};
 
@@ -299,7 +310,7 @@ public:
 			int newStartPosForPlain = newStartPosForXml - (newXmlPartLength - newPlainPartLength);
 
 
-//			qDebug() << oldXml << "\n\n\n" << newXml << "\n\n\n" << oldXmlForUpdate << "\n\n\n" << newXmlForUpdate << "\n\n\n****\n\n\n";
+//			qDebug() << qPrintable(oldXml) << "\n\n\n" << qPrintable(newXml) << "\n\n\n" << qPrintable(oldXmlForUpdate) << "\n\n\n" << qPrintable(newXmlForUpdate) << "\n\n\n****\n\n\n";
 
 
 			result =

@@ -136,7 +136,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -165,14 +165,20 @@
            <item row="1" column="0">
             <widget class="QWidget" name="applicationPageWidget" native="true">
              <layout class="QGridLayout" name="gridLayout_2">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="useDarkTheme">
-                <property name="text">
-                 <string>Use Dark Theme</string>
+              <item row="4" column="1">
+               <spacer name="verticalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
                 </property>
-               </widget>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>13</width>
+                  <height>13</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
-              <item row="1" column="0" colspan="2">
+              <item row="2" column="0" colspan="2">
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
                  <widget class="QCheckBox" name="autosave">
@@ -215,20 +221,7 @@
                 </item>
                </layout>
               </item>
-              <item row="3" column="1">
-               <spacer name="verticalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>13</width>
-                  <height>13</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="2" column="0" colspan="2">
+              <item row="3" column="0" colspan="2">
                <layout class="QHBoxLayout" name="horizontalLayout_11">
                 <item>
                  <widget class="QCheckBox" name="saveBackups">
@@ -277,6 +270,51 @@
                  </widget>
                 </item>
                </layout>
+              </item>
+              <item row="0" column="0" colspan="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_13">
+                <item>
+                 <widget class="QLabel" name="label_31">
+                  <property name="text">
+                   <string>Language:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="applicationLanguage">
+                  <property name="text">
+                   <string>Russian</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="changeLanguage">
+                  <property name="text">
+                   <string>Change</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QCheckBox" name="useDarkTheme">
+                <property name="text">
+                 <string>Use Dark Theme</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

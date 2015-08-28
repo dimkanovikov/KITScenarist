@@ -23,6 +23,8 @@ public:
 		RussianWithYo,
 		Ukrainian,
 		Belorussian,
+		EnglishGB,
+		EnglishUS,
 		Spanish
 	};
 
