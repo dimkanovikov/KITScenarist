@@ -33,6 +33,64 @@ namespace {
 	 * @brief Размер иконок в кнопках
 	 */
 	const QSize ICON_SIZE(20, 20);
+
+	/**
+	 * @brief Сохранить используемый цвет
+	 */
+	static void saveColor(const QString& _key, const QColor& _color) {
+		StorageFacade::settingsStorage()->setValue(
+			_key, _color.name(), SettingsStorage::ApplicationSettings);
+	}
+
+	/**
+	 * @brief Сохранить используемый цвет текста
+	 */
+	static void saveTextColor(const QColor& _color) {
+		saveColor("scenario-editor/review/text-color", _color);
+	}
+
+	/**
+	 * @brief Сохранить используемый цвет фона текста
+	 */
+	static void saveHighlightColor(const QColor& _color) {
+		saveColor("scenario-editor/review/highlight-color", _color);
+	}
+
+	/**
+	 * @brief Сохранить используемый цвет комментария
+	 */
+	static void saveCommentColor(const QColor& _color) {
+		saveColor("scenario-editor/review/comment-color", _color);
+	}
+
+	/**
+	 * @brief Загрузить используемый цвет
+	 */
+	static QColor loadColor(const QString& _key) {
+		return QColor(StorageFacade::settingsStorage()->value(
+						  _key, SettingsStorage::ApplicationSettings));
+	}
+
+	/**
+	 * @brief Загрузить используемый цвет текста
+	 */
+	static QColor loadTextColor() {
+		return loadColor("scenario-editor/review/text-color");
+	}
+
+	/**
+	 * @brief Загрузить используемый цвет выделения
+	 */
+	static QColor loadHighlightColor() {
+		return loadColor("scenario-editor/review/highlight-color");
+	}
+
+	/**
+	 * @brief Загрузить используемый цвет комментария
+	 */
+	static QColor loadCommentColor() {
+		return loadColor("scenario-editor/review/comment-color");
+	}
 }
 
 
@@ -93,6 +151,8 @@ void ScenarioReviewPanel::aboutUpdateActionsEnable()
 
 void ScenarioReviewPanel::aboutChangeTextColor(const QColor& _color)
 {
+	::saveTextColor(_color);
+
 	if (m_editor->textCursor().hasSelection()) {
 		BusinessLogic::ScenarioReviewModel* model = reviewModel();
 		const int selectionStart = m_editor->textCursor().selectionStart();
@@ -107,6 +167,8 @@ void ScenarioReviewPanel::aboutChangeTextColor(const QColor& _color)
 
 void ScenarioReviewPanel::aboutChangeTextBgColor(const QColor& _color)
 {
+	::saveHighlightColor(_color);
+
 	if (m_editor->textCursor().hasSelection()) {
 		BusinessLogic::ScenarioReviewModel* model = reviewModel();
 		const int selectionStart = m_editor->textCursor().selectionStart();
@@ -121,6 +183,8 @@ void ScenarioReviewPanel::aboutChangeTextBgColor(const QColor& _color)
 
 void ScenarioReviewPanel::aboutChangeTextHighlight(const QColor& _color)
 {
+	::saveHighlightColor(_color);
+
 	if (m_editor->textCursor().hasSelection()) {
 		BusinessLogic::ScenarioReviewModel* model = reviewModel();
 		const int selectionStart = m_editor->textCursor().selectionStart();
@@ -135,6 +199,8 @@ void ScenarioReviewPanel::aboutChangeTextHighlight(const QColor& _color)
 
 void ScenarioReviewPanel::aboutAddComment(const QColor& _color)
 {
+	::saveCommentColor(_color);
+
 	if (m_editor->textCursor().hasSelection()) {
 		const QString comment = QLightBoxInputDialog::getLongText(parentWidget(), QString::null, tr("Comment"));
 		if (!comment.isEmpty()) {
@@ -175,15 +241,19 @@ void ScenarioReviewPanel::initView()
 	m_textColor->setIconSize(ICON_SIZE);
 	m_textColor->setColorsPane(ColoredToolButton::Google);
 	m_textColor->setToolTip(tr("Change text color"));
+	m_textColor->setColor(::loadTextColor());
 	m_textBgColor->setIconSize(ICON_SIZE);
 	m_textBgColor->setColorsPane(ColoredToolButton::Google);
 	m_textBgColor->setToolTip(tr("Change text background"));
+	m_textBgColor->setColor(::loadHighlightColor());
 	m_textHighlight->setIconSize(ICON_SIZE);
 	m_textHighlight->setColorsPane(ColoredToolButton::WordHighlight);
 	m_textHighlight->setToolTip(tr("Highlight text"));
+	m_textHighlight->setColor(::loadHighlightColor());
 	m_comment->setIconSize(ICON_SIZE);
 	m_comment->setColorsPane(ColoredToolButton::Google);
 	m_comment->setToolTip(tr("Add comment"));
+	m_comment->setColor(::loadCommentColor());
 	m_done->setIcons(QIcon(":/Graphics/Icons/Review/done.png"));
 	m_done->setCheckable(true);
 	m_done->setToolTip(tr("Mark as done"));

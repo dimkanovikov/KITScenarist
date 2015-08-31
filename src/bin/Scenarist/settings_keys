@@ -67,6 +67,9 @@ scenario-editor/styles-jumping/from-scenes-group-by-enter
 scenario-editor/styles-jumping/from-folder-by-tab
 scenario-editor/styles-jumping/from-folder-by-enter
 scenario-editor/review/use-highlight - использовать выделения текста а-ля маркер ворд
+scenario-editor/review/text-color - последний используемый цвет текста
+scenario-editor/review/highlight-color - последний используемый цвет выделения текста
+scenario-editor/review/comment-color - последний используемый цвет комментирования
 
 chronometry/used - включён ли подсчёт хронометража
 chronometry/current-chronometer-type - используемая система хронометража
