@@ -29,16 +29,6 @@ namespace ManagementLayer
 		void loadCurrentProject();
 
 		/**
-		 * @brief Загрузить состояние окна
-		 */
-		void loadViewState();
-
-		/**
-		 * @brief Сохранить состояние окна
-		 */
-		void saveViewState();
-
-		/**
 		 * @brief Сохранить персонажи сценария
 		 */
 		void saveCharacters();

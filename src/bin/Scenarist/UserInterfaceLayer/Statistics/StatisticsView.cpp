@@ -272,6 +272,7 @@ void StatisticsView::initView()
 	// Объединяем всё
 	//
 	QSplitter* splitter = new QSplitter(this);
+	splitter->setObjectName("statisticsSplitter");
 	splitter->setHandleWidth(1);
 	splitter->setOpaqueResize(false);
 	splitter->addWidget(statisticTypesPanel);

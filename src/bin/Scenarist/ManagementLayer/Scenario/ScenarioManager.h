@@ -82,16 +82,6 @@ namespace ManagementLayer
 		void saveCurrentProjectSettings(const QString& _projectPath);
 
 		/**
-		 * @brief Загрузить состояние окна
-		 */
-		void loadViewState();
-
-		/**
-		 * @brief Сохранить состояние окна
-		 */
-		void saveViewState();
-
-		/**
 		 * @brief Закрыть текущий проект
 		 */
 		void closeCurrentProject();

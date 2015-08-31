@@ -328,98 +328,6 @@ void ScenarioManager::saveCurrentProjectSettings(const QString& _projectPath)
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
-void ScenarioManager::loadViewState()
-{
-	m_draftViewSplitter->restoreGeometry(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/scenario/draft/geometry",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-	m_draftViewSplitter->restoreState(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/scenario/draft/state",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-	const bool draftInvisible = m_draftViewSplitter->sizes().last() == 0;
-	m_navigatorManager->setDraftVisible(!draftInvisible);
-
-	m_noteViewSplitter->restoreGeometry(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/scenario/left/geometry",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-	m_noteViewSplitter->restoreState(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/scenario/left/state",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-	const bool noteInvisible = m_noteViewSplitter->sizes().last() == 0;
-	m_navigatorManager->setNoteVisible(!noteInvisible);
-
-	m_mainViewSplitter->restoreGeometry(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/scenario/geometry",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-	m_mainViewSplitter->restoreState(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/scenario/state",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-
-	if (m_mainViewSplitter->opaqueResize()) {
-		m_mainViewSplitter->setOpaqueResize(false);
-	}
-}
-
-void ScenarioManager::saveViewState()
-{
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/draft/geometry", m_draftViewSplitter->saveGeometry().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/draft/state", m_draftViewSplitter->saveState().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/left/geometry", m_noteViewSplitter->saveGeometry().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/left/state", m_noteViewSplitter->saveState().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/geometry", m_mainViewSplitter->saveGeometry().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/scenario/state", m_mainViewSplitter->saveState().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-}
-
 void ScenarioManager::closeCurrentProject()
 {
 	//
@@ -871,21 +779,25 @@ void ScenarioManager::initView()
 	rightLayout->addLayout(topLayout);
 	rightLayout->addWidget(m_viewEditors, 1);
 
+	m_draftViewSplitter->setObjectName("draftScenarioEditSplitter");
 	m_draftViewSplitter->setHandleWidth(1);
+	m_draftViewSplitter->setOrientation(Qt::Vertical);
 	m_draftViewSplitter->addWidget(m_navigatorManager->view());
 	m_draftViewSplitter->addWidget(m_draftNavigatorManager->view());
-	m_draftViewSplitter->setOrientation(Qt::Vertical);
 
+	m_noteViewSplitter->setObjectName("noteScenarioEditSplitter");
 	m_noteViewSplitter->setHandleWidth(1);
+	m_noteViewSplitter->setOrientation(Qt::Vertical);
 	m_noteViewSplitter->addWidget(m_draftViewSplitter);
 	m_noteViewSplitter->addWidget(m_sceneSynopsisManager->view());
-	m_noteViewSplitter->setOrientation(Qt::Vertical);
 
+	m_mainViewSplitter->setObjectName("mainScenarioEditSplitter");
 	m_mainViewSplitter->setHandleWidth(1);
-	m_mainViewSplitter->addWidget(m_noteViewSplitter);
-	m_mainViewSplitter->addWidget(rightWidget);
+	m_mainViewSplitter->setOrientation(Qt::Horizontal);
 	m_mainViewSplitter->setStretchFactor(1, 1);
 	m_mainViewSplitter->setOpaqueResize(false);
+	m_mainViewSplitter->addWidget(m_noteViewSplitter);
+	m_mainViewSplitter->addWidget(rightWidget);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());

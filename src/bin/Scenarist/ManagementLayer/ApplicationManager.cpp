@@ -679,32 +679,12 @@ void ApplicationManager::aboutPrepareScenarioForStatistics()
 
 void ApplicationManager::loadViewState()
 {
-	m_view->restoreGeometry(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/geometry",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-
-	m_scenarioManager->loadViewState();
-	m_charactersManager->loadViewState();
-	m_locationsManager->loadViewState();
-	m_settingsManager->loadViewState();
+	DataStorageLayer::StorageFacade::settingsStorage()->loadApplicationStateAndGeometry(m_view);
 }
 
 void ApplicationManager::saveViewState()
 {
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/geometry", m_view->saveGeometry().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-
-	m_scenarioManager->saveViewState();
-	m_charactersManager->saveViewState();
-	m_locationsManager->saveViewState();
-	m_settingsManager->saveViewState();
+	DataStorageLayer::StorageFacade::settingsStorage()->saveApplicationStateAndGeometry(m_view);
 }
 
 bool ApplicationManager::saveIfNeeded()

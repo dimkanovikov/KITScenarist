@@ -474,6 +474,7 @@ void ScenarioTextEditWidget::initView()
 	mainLayout->addWidget(m_searchLine);
 
 	QSplitter* mainSplitter = new QSplitter(this);
+	mainSplitter->setObjectName("mainScenarioSplitter");
 	mainSplitter->setHandleWidth(1);
 	mainSplitter->setOpaqueResize(false);
 	QWidget* mainLayoutWidget = new QWidget(this);

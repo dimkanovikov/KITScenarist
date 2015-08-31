@@ -22,16 +22,6 @@ namespace ManagementLayer
 
 		QWidget* view() const;
 
-		/**
-		 * @brief Загрузить состояние окна
-		 */
-		void loadViewState();
-
-		/**
-		 * @brief Сохранить состояние окна
-		 */
-		void saveViewState();
-
 	signals:
 		/**
 		 * @brief Обновления настроек
