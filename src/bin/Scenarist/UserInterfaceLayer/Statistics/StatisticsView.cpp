@@ -186,6 +186,7 @@ void StatisticsView::initView()
 	//
 	m_settings->setIcons(QIcon(":/Graphics/Icons/settings_tool.png"));
 	m_settings->setCheckable(true);
+	m_settings->setToolTip(tr("Report settings"));
 	ctkPopupWidget* settingsPanel = new ctkPopupWidget(m_settings);
 	QHBoxLayout* settingsPanelLayout = new QHBoxLayout(settingsPanel);
 	settingsPanelLayout->setContentsMargins(QMargins());
@@ -198,7 +199,9 @@ void StatisticsView::initView()
 	connect(m_settings, SIGNAL(toggled(bool)), settingsPanel, SLOT(showPopup(bool)));
 
 	m_print->setIcons(QIcon(":/Graphics/Icons/printer.png"));
+	m_print->setToolTip(tr("Print preview"));
 	m_save->setIcons(QIcon(":/Graphics/Icons/Editing/download.png"));
+	m_save->setToolTip(tr("Save report to file"));
 
 
 	//
