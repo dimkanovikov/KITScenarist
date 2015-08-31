@@ -346,36 +346,6 @@ void ScenarioTextEdit::setAdditionalCursors(const QMap<QString, int>& _cursors)
 	}
 }
 
-void ScenarioTextEdit::ensureCursorVisibleReimpl(bool _upAndDown)
-{
-	//
-	// Применяем стандартное поведение
-	//
-	ensureCursorVisible();
-
-	//
-	// Необходимо подождать, пока в приложение произойдёт перестройка размера линии прокрутки
-	// для того, чтобы иметь возможность прокрутить её ниже стандартной позиции редактора
-	//
-	QApplication::processEvents();
-
-	//
-	// Если необходимо прокручиваем ещё немного
-	//
-	{
-		const int DETECT_DELTA = 10;
-		const int SCROLL_DELTA = 200;
-		QRect cursorRect = this->cursorRect();
-		if (cursorRect.y() - DETECT_DELTA <= 0
-			&& _upAndDown) {
-			verticalScrollBar()->setValue(verticalScrollBar()->value() - SCROLL_DELTA);
-		}
-		else if (cursorRect.height() + cursorRect.y() + DETECT_DELTA >= viewport()->height()) {
-			verticalScrollBar()->setValue(verticalScrollBar()->value() + SCROLL_DELTA);
-		}
-	}
-}
-
 void ScenarioTextEdit::undoReimpl()
 {
 	m_document->undoReimpl();
