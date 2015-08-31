@@ -156,6 +156,11 @@ void SettingsView::setApplicationSaveBackupsFolder(const QString& _folder)
 	ui->saveBackupsFolder->setText(_folder);
 }
 
+void SettingsView::setScenarioEditPageView(bool _value)
+{
+	ui->pageView->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditShowScenesNumbers(bool _value)
 {
 	ui->showScenesNumbersInEditor->setChecked(_value);
@@ -166,9 +171,9 @@ void SettingsView::setScenarioEditHighlightCurrentLine(bool _value)
 	ui->highlightCurrentLine->setChecked(_value);
 }
 
-void SettingsView::setScenarioEditPageView(bool _value)
+void SettingsView::setScenarioEditEnableAutoReplacing(bool _value)
 {
-	ui->pageView->setChecked(_value);
+	ui->enableAutoReplacing->setChecked(_value);
 }
 
 void SettingsView::setScenarioEditSpellCheck(bool _value)
@@ -629,9 +634,10 @@ void SettingsView::initConnections()
 	connect(ui->saveBackups, SIGNAL(toggled(bool)), this, SIGNAL(applicationSaveBackupsChanged(bool)));
 	connect(ui->saveBackupsFolder, SIGNAL(textChanged(QString)), this, SIGNAL(applicationSaveBackupsFolderChanged(QString)));
 	// ... текстовый редактор
+	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->showScenesNumbersInEditor, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)));
 	connect(ui->highlightCurrentLine, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)));
-	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
+	connect(ui->enableAutoReplacing, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditEnableAutoReplacing(bool)));
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
 	connect(ui->currentScenarioTemplate, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentTemplateChanged(QString)));

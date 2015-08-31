@@ -67,6 +67,11 @@ namespace UserInterface
 		void setHighlightCurrentLine(bool _highlight);
 
 		/**
+		 * @brief Установить необходимость автоматических замен
+		 */
+		void setAutoReplacing(bool _replacing);
+
+		/**
 		 * @brief Включить/выключить постраничное отображение
 		 */
 		void setUsePageView(bool _use);

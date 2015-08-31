@@ -89,6 +89,11 @@ namespace UserInterface
 		void setHighlightCurrentLine(bool _highlight);
 
 		/**
+		 * @brief Установить необходимость автоматических замен
+		 */
+		void setAutoReplacing(bool _replacing);
+
+		/**
 		 * @brief Обновить сочетания клавиш для переходов между блоками
 		 */
 		void updateShortcuts();
@@ -270,6 +275,11 @@ namespace UserInterface
 		 * @brief Подсвечивать текущую линию
 		 */
 		bool m_highlightCurrentLine;
+
+		/**
+		 * @brief Использовать автозамены для особых случаев
+		 */
+		bool m_autoReplacing;
 
 		/**
 		 * @brief Курсоры соавторов

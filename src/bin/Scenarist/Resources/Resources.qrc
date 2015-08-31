@@ -94,6 +94,7 @@
         <file>Translations/qt_es.qm</file>
         <file>Translations/Scenarist_fr.ts</file>
         <file>Translations/Scenarist_en.ts</file>
+        <file>Translations/Scenarist_en.qm</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/style.qss</file>

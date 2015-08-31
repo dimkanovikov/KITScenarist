@@ -75,17 +75,24 @@ void Application::initTranslation()
 	//
 	// ... если не удалось определить локаль, используем англоязычный перевод
 	//
+	QLocale::Language currentLanguage = QLocale::AnyLanguage;
 	if (translationSuffix.isEmpty()) {
 		translationSuffix = "en";
+		currentLanguage = QLocale::English;
 	}
 
 	if (language == 0) {
 		translationSuffix = "ru";
+		currentLanguage = QLocale::Russian;
 	} else if (language == 1) {
 		translationSuffix = "es";
+		currentLanguage = QLocale::Spanish;
 	} else if (language == 2) {
 		translationSuffix = "en";
+		currentLanguage = QLocale::English;
 	}
+
+	QLocale::setDefault(QLocale(currentLanguage));
 
 	//
 	// Для отличных от английского, подключаем переводы самой Qt

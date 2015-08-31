@@ -61,9 +61,10 @@ namespace ManagementLayer
 		void applicationSaveBackupsChanged(bool _value);
 		void applicationSaveBackupsFolderChanged(const QString& _value);
 
+		void scenarioEditPageViewChanged(bool  _value);
 		void scenarioEditShowScenesNumbersChanged(bool  _value);
 		void scenarioEditHighlightCurrentLineChanged(bool _value);
-		void scenarioEditPageViewChanged(bool  _value);
+		void scenarioEditEnableAutoReplacing(bool  _value);
 		void scenarioEditSpellCheckChanged(bool  _value);
 		void scenarioEditSpellCheckLanguageChanged(int _value);
 		void scenarioEditTextColorChanged(const QColor& _value);

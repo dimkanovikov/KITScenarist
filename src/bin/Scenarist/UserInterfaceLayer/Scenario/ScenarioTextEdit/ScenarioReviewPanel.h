@@ -110,3 +110,4 @@ namespace UserInterface
 }
 
 #endif // SCENARIOREVIEWPANEL_H
+

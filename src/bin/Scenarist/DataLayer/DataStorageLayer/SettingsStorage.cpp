@@ -236,9 +236,10 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("navigator/scene-description-is-scene-text", "1");
 	m_defaultValues.insert("navigator/scene-description-height", "1");
 
+	m_defaultValues.insert("scenario-editor/page-view", "1");
 	m_defaultValues.insert("scenario-editor/zoom-range", "1");
 	m_defaultValues.insert("scenario-editor/show-scenes-numbers", "0");
-	m_defaultValues.insert("scenario-editor/page-view", "1");
+	m_defaultValues.insert("scenario-editor/auto-replacing", "1");
 	m_defaultValues.insert("scenario-editor/spell-checking", "0");
 	m_defaultValues.insert("scenario-editor/text-color", "#000000");
 	m_defaultValues.insert("scenario-editor/background-color", "#FEFEFE");

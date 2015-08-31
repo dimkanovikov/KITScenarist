@@ -54,9 +54,10 @@ namespace UserInterface
 		void setApplicationSaveBackups(bool _save);
 		void setApplicationSaveBackupsFolder(const QString& _folder);
 
+		void setScenarioEditPageView(bool _value);
 		void setScenarioEditShowScenesNumbers(bool _value);
 		void setScenarioEditHighlightCurrentLine(bool _value);
-		void setScenarioEditPageView(bool _value);
+		void setScenarioEditEnableAutoReplacing(bool _value);
 		void setScenarioEditSpellCheck(bool _value);
 		void setScenarioEditSpellCheckLanguage(int _value);
 		void setScenarioEditTextColor(const QColor& _color);
@@ -113,9 +114,10 @@ namespace UserInterface
 		void applicationSaveBackupsChanged(bool);
 		void applicationSaveBackupsFolderChanged(const QString&);
 
+		void scenarioEditPageViewChanged(bool);
 		void scenarioEditShowScenesNumbersChanged(bool);
 		void scenarioEditHighlightCurrentLineChanged(bool);
-		void scenarioEditPageViewChanged(bool);
+		void scenarioEditEnableAutoReplacing(bool);
 		void scenarioEditSpellCheckChanged(bool);
 		void scenarioEditSpellCheckLanguageChanged(int);
 		void scenarioEditTextColorChanged(const QColor&);

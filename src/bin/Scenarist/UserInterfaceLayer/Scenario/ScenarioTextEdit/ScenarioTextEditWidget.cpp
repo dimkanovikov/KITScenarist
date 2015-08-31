@@ -118,6 +118,11 @@ void ScenarioTextEditWidget::setHighlightCurrentLine(bool _highlight)
 	m_editor->setHighlightCurrentLine(_highlight);
 }
 
+void ScenarioTextEditWidget::setAutoReplacing(bool _replacing)
+{
+	m_editor->setAutoReplacing(_replacing);
+}
+
 void ScenarioTextEditWidget::setUsePageView(bool _use)
 {
 	//

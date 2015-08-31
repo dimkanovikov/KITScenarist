@@ -97,7 +97,9 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 
 	setHighlighterDocument(m_document);
 
-	TextEditHelper::beautifyDocument(m_document);
+	if (m_autoReplacing) {
+		TextEditHelper::beautifyDocument(m_document);
+	}
 
 	s_firstRepaintUpdate = true;
 }
@@ -260,6 +262,13 @@ void ScenarioTextEdit::setHighlightCurrentLine(bool _highlight)
 	}
 }
 
+void ScenarioTextEdit::setAutoReplacing(bool _replacing)
+{
+	if (m_autoReplacing != _replacing) {
+		m_autoReplacing = _replacing;
+	}
+}
+
 void ScenarioTextEdit::updateShortcuts()
 {
 	m_shortcutsManager->update();
@@ -411,7 +420,10 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 		}
 
 		updateEnteredText(_event);
-		TextEditHelper::beautifyDocument(textCursor(), _event->text());
+
+		if (m_autoReplacing) {
+			TextEditHelper::beautifyDocument(textCursor(), _event->text());
+		}
 	}
 
 	//
@@ -1191,7 +1203,8 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 			// Если перед нами конец предложения и не сокращение
 			//
 			QString endOfSentancePattern = QString("([.]|[?]|[!]|[…]) %1$").arg(eventText);
-			if (cursorBackwardText.contains(QRegularExpression(endOfSentancePattern))
+			if (m_autoReplacing
+				&& cursorBackwardText.contains(QRegularExpression(endOfSentancePattern))
 				&& !stringEndsWithAbbrev(cursorBackwardText)) {
 				//
 				// Сделаем первую букву заглавной

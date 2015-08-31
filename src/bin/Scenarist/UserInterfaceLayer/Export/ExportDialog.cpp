@@ -88,6 +88,8 @@ void ExportDialog::setExportFileName(const QString& _fileName)
 		ui->file->setText(::exportFilePath(_fileName));
 		aboutFormatChanged();
 	}
+
+	aboutFileNameChanged();
 }
 
 void ExportDialog::setCheckPageBreaks(bool _check)
