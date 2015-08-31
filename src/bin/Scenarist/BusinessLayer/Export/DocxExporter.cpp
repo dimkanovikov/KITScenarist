@@ -316,7 +316,7 @@ namespace {
 				//
 				if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark) == false) {
 					documentXml.append(
-						QString("<w:r><w:rPr/><w:t>%2</w:t></w:r>")
+						QString("<w:r><w:rPr/><w:t xml:space=\"preserve\">%2</w:t></w:r>")
 						.arg(TextEditHelper::toHtmlEscaped(blockText.mid(range.start, range.length)))
 						);
 				}
@@ -382,7 +382,7 @@ namespace {
 					// Сам текст
 					//
 					documentXml.append(
-						QString("<w:t>%2</w:t>")
+						QString("<w:t xml:space=\"preserve\">%2</w:t>")
 						.arg(TextEditHelper::toHtmlEscaped(blockText.mid(range.start, range.length)))
 						);
 					documentXml.append("</w:r>");
