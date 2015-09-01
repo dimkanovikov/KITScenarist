@@ -50,14 +50,14 @@ namespace {
 	 * @brief Сделать иконку "неактивной"
 	 */
 	static QPixmap makeIconInactive(const QPixmap& _icon) {
-		return ::colorizeIcon(_icon, QApplication::palette().color(QPalette::Inactive, QPalette::Text));
+		return colorizeIcon(_icon, QApplication::palette().color(QPalette::Inactive, QPalette::Text));
 	}
 
 	/**
 	 * @brief Сделать иконку "выключенной"
 	 */
 	static QPixmap makeIconDisabled(const QPixmap& _icon) {
-		return ::colorizeIcon(_icon, QApplication::palette().color(QPalette::Disabled, QPalette::Text));
+		return colorizeIcon(_icon, QApplication::palette().color(QPalette::Disabled, QPalette::Text));
 	}
 }
 

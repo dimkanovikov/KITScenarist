@@ -42,7 +42,7 @@
 #ifndef QTZIPREADER_H
 #define QTZIPREADER_H
 
-#include <QtGlobal>
+#include "fileformatsglobal.h"
 
 #include <QDateTime>
 #include <QFile>
@@ -50,62 +50,62 @@
 
 class QtZipReaderPrivate;
 
-class QtZipReader
+class FILEFORMATS_EXPORT QtZipReader
 {
 public:
-    explicit QtZipReader(const QString &fileName, QIODevice::OpenMode mode = QIODevice::ReadOnly );
+	explicit QtZipReader(const QString &fileName, QIODevice::OpenMode mode = QIODevice::ReadOnly );
 
-    explicit QtZipReader(QIODevice *device);
-    ~QtZipReader();
+	explicit QtZipReader(QIODevice *device);
+	~QtZipReader();
 
-    QIODevice* device() const;
+	QIODevice* device() const;
 
-    bool isReadable() const;
-    bool exists() const;
+	bool isReadable() const;
+	bool exists() const;
 
-    struct FileInfo
-    {
-        FileInfo();
-        FileInfo(const FileInfo &other);
-        ~FileInfo();
-        FileInfo &operator=(const FileInfo &other);
-        bool isValid() const;
-        QString filePath;
-        uint isDir : 1;
-        uint isFile : 1;
-        uint isSymLink : 1;
-        QFile::Permissions permissions;
-        uint crc;
-        qint64 size;
-        QDateTime lastModified;
-        void *d;
-    };
+	struct FileInfo
+	{
+		FileInfo();
+		FileInfo(const FileInfo &other);
+		~FileInfo();
+		FileInfo &operator=(const FileInfo &other);
+		bool isValid() const;
+		QString filePath;
+		uint isDir : 1;
+		uint isFile : 1;
+		uint isSymLink : 1;
+		QFile::Permissions permissions;
+		uint crc;
+		qint64 size;
+		QDateTime lastModified;
+		void *d;
+	};
 
-    QList<FileInfo> fileInfoList() const;
-    QStringList fileList() const;
-    int count() const;
+	QList<FileInfo> fileInfoList() const;
+	QStringList fileList() const;
+	int count() const;
 
-    FileInfo entryInfoAt(int index) const;
-    QByteArray fileData(const QString &fileName) const;
-    bool extractAll(const QString &destinationDir) const;
+	FileInfo entryInfoAt(int index) const;
+	QByteArray fileData(const QString &fileName) const;
+	bool extractAll(const QString &destinationDir) const;
 
-    enum Status {
-        NoError,
-        FileReadError,
-        FileOpenError,
-        FilePermissionsError,
-        FileError
-    };
+	enum Status {
+		NoError,
+		FileReadError,
+		FileOpenError,
+		FilePermissionsError,
+		FileError
+	};
 
-    Status status() const;
+	Status status() const;
 
-    void close();
+	void close();
 
-    static bool canRead(QIODevice* device);
+	static bool canRead(QIODevice* device);
 
 private:
-    QtZipReaderPrivate *d;
-    Q_DISABLE_COPY(QtZipReader)
+	QtZipReaderPrivate *d;
+	Q_DISABLE_COPY(QtZipReader)
 };
 
 #endif // QTZIPREADER_H

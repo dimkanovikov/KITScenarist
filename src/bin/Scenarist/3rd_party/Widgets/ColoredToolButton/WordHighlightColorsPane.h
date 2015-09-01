@@ -26,12 +26,6 @@ public slots:
 	 */
 	void setCurrentColor(const QColor& _color);
 
-signals:
-	/**
-	* @brief Выбран цвет
-	*/
-	void selected(const QColor& _color);
-
 protected:
 	/**
 	 * @brief Переопределяются, для реализации логики работы палитры

@@ -1,0 +1,13 @@
+#ifndef WEBLOADERGLOBAL
+#define WEBLOADERGLOBAL
+
+#include <QtCore/QtGlobal>
+
+#if defined(WEBLOADER_LIBRARY)
+#  define WEBLOADER_EXPORT Q_DECL_EXPORT
+#else
+#  define WEBLOADER_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // WEBLOADERGLOBAL
+

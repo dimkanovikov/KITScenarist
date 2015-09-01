@@ -84,18 +84,18 @@ namespace {
 		const int ROWS_COUNT = 0;
 		const int COLUMNS_COUNT = 6;
 		QStandardItemModel* blocksJumpsModel = new QStandardItemModel(ROWS_COUNT, COLUMNS_COUNT, _parent);
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneHeading));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneCharacters));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Action));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Character));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Parenthetical));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Dialogue));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Transition));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Note));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Title));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::NoprintableText));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneGroupHeader));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::FolderHeader));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::SceneHeading));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::SceneCharacters));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Action));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Character));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Parenthetical));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Dialogue));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Transition));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Note));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Title));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::NoprintableText));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::SceneGroupHeader));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::FolderHeader));
 
 		return blocksJumpsModel;
 	}

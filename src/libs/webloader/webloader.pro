@@ -22,7 +22,8 @@ HEADERS += \
     WebRequest.h \
     WebLoader.h \
     HttpMultiPart.h \
-    QFreeDesktopMime/freedesktopmime.h
+    QFreeDesktopMime/freedesktopmime.h \
+    WebLoaderGlobal.h
 
 RESOURCES += \
     resources.qrc

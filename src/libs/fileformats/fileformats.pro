@@ -1,6 +1,8 @@
 TARGET   = fileformats
 TEMPLATE = lib
 
+DEFINES += FILEFORMATS_LIBRARY
+
 #
 # Build configuration
 #
@@ -23,7 +25,8 @@ HEADERS += \
     qtzip/QtZipReader \
     qtzip/qtzipwriter.h \
     qtzip/QtZipWriter \
-    format_helpers.h
+    format_helpers.h \
+    fileformatsglobal.h
 
 SOURCES += \
     docx_reader.cpp \

@@ -98,7 +98,7 @@ namespace {
 		//
 		if (_alignment.contains(",")) {
 			foreach (const QString& align, _alignment.split(",")) {
-				result |= ::alignmentFromString(align);
+				result |= alignmentFromString(align);
 			}
 		}
 		//

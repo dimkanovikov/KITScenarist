@@ -101,16 +101,16 @@ namespace {
 			//
 			blockStyle.append(
 				QString("<w:ind w:left=\"%1\" w:right=\"%2\"/>")
-				.arg(::mmToTwips(_style.leftMargin()))
-				.arg(::mmToTwips(_style.rightMargin()))
+				.arg(mmToTwips(_style.leftMargin()))
+				.arg(mmToTwips(_style.rightMargin()))
 				);
 			//
 			// ... интервалы
 			//
 			blockStyle.append(
 				QString("<w:spacing w:before=\"%1\" w:after=\"%2\" ")
-				.arg(::mmToTwips(_style.topMargin()))
-				.arg(::mmToTwips(_style.bottomMargin()))
+				.arg(mmToTwips(_style.topMargin()))
+				.arg(mmToTwips(_style.bottomMargin()))
 				);
 			// ... межстрочный
 			int lineSpacing = 240;
@@ -132,7 +132,7 @@ namespace {
 				}
 
 				case ScenarioBlockStyle::FixedLineSpacing: {
-					lineSpacing = ::mmToTwips(_style.lineSpacingValue());
+					lineSpacing = mmToTwips(_style.lineSpacingValue());
 					lineSpacingType = "exact";
 					break;
 				}

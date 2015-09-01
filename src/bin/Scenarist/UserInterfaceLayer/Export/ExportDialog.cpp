@@ -31,7 +31,7 @@ namespace {
 	 * @brief Получить путь к экспортируемому файлу
 	 */
 	static QString exportFilePath(const QString& _fileName) {
-		QString filePath = ::exportFolderPath() + QDir::separator() + _fileName;
+		QString filePath = exportFolderPath() + QDir::separator() + _fileName;
 		return QDir::toNativeSeparators(filePath);
 	}
 

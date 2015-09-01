@@ -41,60 +41,60 @@
 #ifndef QTZIPWRITER_H
 #define QTZIPWRITER_H
 
-#include <QtGlobal>
+#include "fileformatsglobal.h"
 
 #include <QFile>
 #include <QString>
 
 class QtZipWriterPrivate;
 
-class QtZipWriter
+class FILEFORMATS_EXPORT QtZipWriter
 {
 public:
-    explicit QtZipWriter(const QString &fileName, QIODevice::OpenMode mode = (QIODevice::WriteOnly | QIODevice::Truncate) );
+	explicit QtZipWriter(const QString &fileName, QIODevice::OpenMode mode = (QIODevice::WriteOnly | QIODevice::Truncate) );
 
-    explicit QtZipWriter(QIODevice *device);
-    ~QtZipWriter();
+	explicit QtZipWriter(QIODevice *device);
+	~QtZipWriter();
 
-    QIODevice* device() const;
+	QIODevice* device() const;
 
-    bool isWritable() const;
-    bool exists() const;
+	bool isWritable() const;
+	bool exists() const;
 
-    enum Status {
-        NoError,
-        FileWriteError,
-        FileOpenError,
-        FilePermissionsError,
-        FileError
-    };
+	enum Status {
+		NoError,
+		FileWriteError,
+		FileOpenError,
+		FilePermissionsError,
+		FileError
+	};
 
-    Status status() const;
+	Status status() const;
 
-    enum CompressionPolicy {
-        AlwaysCompress,
-        NeverCompress,
-        AutoCompress
-    };
+	enum CompressionPolicy {
+		AlwaysCompress,
+		NeverCompress,
+		AutoCompress
+	};
 
-    void setCompressionPolicy(CompressionPolicy policy);
-    CompressionPolicy compressionPolicy() const;
+	void setCompressionPolicy(CompressionPolicy policy);
+	CompressionPolicy compressionPolicy() const;
 
-    void setCreationPermissions(QFile::Permissions permissions);
-    QFile::Permissions creationPermissions() const;
+	void setCreationPermissions(QFile::Permissions permissions);
+	QFile::Permissions creationPermissions() const;
 
-    void addFile(const QString &fileName, const QByteArray &data);
+	void addFile(const QString &fileName, const QByteArray &data);
 
-    void addFile(const QString &fileName, QIODevice *device);
+	void addFile(const QString &fileName, QIODevice *device);
 
-    void addDirectory(const QString &dirName);
+	void addDirectory(const QString &dirName);
 
-    void addSymLink(const QString &fileName, const QString &destination);
+	void addSymLink(const QString &fileName, const QString &destination);
 
-    void close();
+	void close();
 private:
-    QtZipWriterPrivate *d;
-    Q_DISABLE_COPY(QtZipWriter)
+	QtZipWriterPrivate *d;
+	Q_DISABLE_COPY(QtZipWriter)
 };
 
 #endif // QTZIPWRITER_H
