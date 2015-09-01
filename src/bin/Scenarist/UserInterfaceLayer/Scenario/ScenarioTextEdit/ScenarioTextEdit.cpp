@@ -418,7 +418,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 		ensureCursorVisibleReimpl();
 	}
 }
-
+#include <QDebug>
 bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 {
 	bool isEventHandled = true;
