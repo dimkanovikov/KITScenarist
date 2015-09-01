@@ -515,6 +515,18 @@ int ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelIt
 		if (insertPosition != 0) {
 			insertPosition = cursor.position();
 		}
+		//
+		// ... перенесём данные оставшиеся в предыдущем блоке, в новое место
+		//
+		else {
+			cursor.movePosition(QTextCursor::PreviousBlock);
+			if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*> (cursor.block().userData())) {
+				ScenarioTextBlockInfo* movedInfo = info->clone();
+				cursor.block().setUserData(0);
+				cursor.movePosition(QTextCursor::NextBlock);
+				cursor.block().setUserData(movedInfo);
+			}
+		}
 
 		//
 		// Вставка данных
