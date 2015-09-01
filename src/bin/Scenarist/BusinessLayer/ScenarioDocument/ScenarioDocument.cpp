@@ -842,7 +842,7 @@ void ScenarioDocument::removeConnections()
 	disconnect(m_document, SIGNAL(contentsChange(int,int,int)),
 			   this, SLOT(aboutContentsChange(int,int,int)));
 }
-
+#include <QDebug>
 void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos)
 {
 	//
@@ -867,9 +867,24 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	// ... цвет
 	const QColor color = itemColor(_item);
 	// ... текст
+	QString itemText;
 	cursor.movePosition(QTextCursor::NextBlock);
-	cursor.setPosition(_itemEndPos, QTextCursor::KeepAnchor);
-	QString itemText = cursor.selectedText().simplified();
+	while (!cursor.atEnd()
+		   && cursor.position() < _itemEndPos) {
+		if (!itemText.isEmpty()) {
+			itemText.append(" ");
+		}
+
+		ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
+		ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
+		itemText +=
+			blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
+			? cursor.block().text().toUpper()
+			: cursor.block().text();
+
+		cursor.movePosition(QTextCursor::NextBlock);
+		cursor.movePosition(QTextCursor::EndOfBlock);
+	}
 	// ... синопсис
 	QTextDocument doc;
 	doc.setHtml(itemSynopsis(_item));
