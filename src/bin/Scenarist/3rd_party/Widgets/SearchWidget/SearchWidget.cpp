@@ -76,7 +76,7 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	m_replaceOne->setText(tr("Replace"));
 	connect(m_replaceOne, SIGNAL(clicked()), this, SLOT(aboutReplaceOne()));
 
-	m_replaceAll->setFixedWidth(40);
+	m_replaceAll->setFixedWidth(50);
 	m_replaceAll->setText(tr("All"));
 	connect(m_replaceAll, SIGNAL(clicked()), this, SLOT(aboutReplaceAll()));
 

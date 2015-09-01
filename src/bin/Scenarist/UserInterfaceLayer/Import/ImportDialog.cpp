@@ -39,6 +39,22 @@ namespace {
 					QFileInfo(_path).absoluteDir().absolutePath(),
 					DataStorageLayer::SettingsStorage::ApplicationSettings);
 	}
+
+	/**
+	 * @brief Получить список доступных к импорту видов файлов
+	 */
+	static QString filters() {
+		QString filters;
+		filters.append(QApplication::translate("UserInterface::ImportDialog", "All Supported Files") + QLatin1String(" (*.kitsp *.docx *.doc *.odt)"));
+		filters.append(";;");
+		filters.append(QApplication::translate("UserInterface::ImportDialog","KIT Scenarist Project") + QLatin1String(" (*.kitsp)"));
+		filters.append(";;");
+		filters.append(QApplication::translate("UserInterface::ImportDialog","Office Open XML") + QLatin1String(" (*.docx *.doc)"));
+		filters.append(";;");
+		filters.append(QApplication::translate("UserInterface::ImportDialog","OpenDocument Text") + QLatin1String(" (*.odt)"));
+
+		return filters;
+	}
 }
 
 
@@ -78,8 +94,7 @@ BusinessLogic::ImportParameters ImportDialog::importParameters() const
 void ImportDialog::aboutChooseFile()
 {
 	QString filePath =
-			QFileDialog::getOpenFileName(this, tr("Choose file to import"),
-				::importFolderPath(), FormatManager::filters().join(";;"));
+			QFileDialog::getOpenFileName(this, tr("Choose file to import"), ::importFolderPath(), ::filters());
 
 	if (!filePath.isEmpty()) {
 		//
