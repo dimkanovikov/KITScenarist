@@ -98,7 +98,7 @@ void ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 		// Проверяем находится ли проект в списке недавно используемых
 		//
 		foreach (const Project& project, m_recentProjects) {
-			if (project.path() == projectPath) {
+            if (project.path().compare(projectPath) == 0) {
 				newCurrentProject = project;
 				break;
 			}

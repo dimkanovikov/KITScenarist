@@ -135,6 +135,13 @@ void StartUpView::aboutFilesSourceChanged()
 
 void StartUpView::initView()
 {
+#ifdef Q_OS_MAC
+    QFont versionFont = ui->version->font();
+    versionFont.setPointSize(12);
+    ui->version->setFont(versionFont);
+    ui->version_2->setFont(versionFont);
+#endif
+
 	ui->version->setText(QApplication::applicationVersion());
 
 	ui->updateInfo->hide();

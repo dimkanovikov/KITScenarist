@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-	Application application(argc, argv);
+    Application application(argc, argv);
 
 	//
 	// Получим имя файла, который пользователь возможно хочет открыть

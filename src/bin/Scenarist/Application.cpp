@@ -8,6 +8,23 @@
 #include <QStyleFactory>
 #include <QTranslator>
 
+namespace {
+    /**
+     * @brief Подготовить путь к файлу для сохранения
+     */
+    static QString preparePath(const QString& _path) {
+        QString newPath = _path;
+#ifdef Q_OS_MAC
+        //
+        // Это две разные буквы!
+        // Первую даёт нам мак, когда открываешь файл через двойной щелчок на нём
+        //
+        newPath.replace("й", "й");
+#endif
+        return newPath;
+    }
+}
+
 
 Application::Application(int& _argc, char** _argv) :
 	QApplication(_argc, _argv),
@@ -64,8 +81,8 @@ bool Application::event(QEvent *_event)
 	bool result = true;
 	if (_event->type() == QEvent::FileOpen
 		&& m_applicationManager != 0) {
-		QFileOpenEvent* fileOpenEvent = static_cast<QFileOpenEvent*>(_event);
-		m_applicationManager->openFile(fileOpenEvent->file());
+        QFileOpenEvent* fileOpenEvent = static_cast<QFileOpenEvent*>(_event);
+        m_applicationManager->openFile(::preparePath(fileOpenEvent->file()));
 	} else {
 		result = QApplication::event(_event);
 	}
