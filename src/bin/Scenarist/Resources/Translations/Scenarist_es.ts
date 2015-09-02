@@ -11,7 +11,7 @@
     <message>
         <location filename="../../3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.cpp" line="98"/>
         <source>was changed from &lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;. Apply changes?</source>
-        <translation>Fue cambiado desde &lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;. ¿Aplicar los cambios?</translation>
+        <translation>fue cambiado desde &lt;b&gt;%1&lt;/b&gt; to &lt;b&gt;%2&lt;/b&gt;. ¿Aplicar los cambios?</translation>
     </message>
 </context>
 <context>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="233"/>
         <source>Non-Sp. Scenes</source>
-        <translation>escenas sin diálogo</translation>
+        <translation>Escenas sin diálogo</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="236"/>
@@ -2346,22 +2346,22 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="48"/>
         <source>All Supported Files</source>
-        <translation type="unfinished">Todos los formatos</translation>
+        <translation>Todos los formatos</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="50"/>
         <source>KIT Scenarist Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de proyecto del guión</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="52"/>
         <source>Office Open XML</source>
-        <translation type="unfinished">OpenDocument Text</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="54"/>
         <source>OpenDocument Text</source>
-        <translation type="unfinished">OpenDocument Text</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="97"/>
@@ -2501,7 +2501,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="196"/>
         <source>Color %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Color %1</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="217"/>
@@ -2775,7 +2775,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="202"/>
         <source>Print preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir vista Previa</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="204"/>

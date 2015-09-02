@@ -1114,12 +1114,12 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/Import/ImportManager.cpp" line="183"/>
         <source>File format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Не поддерживаемый формат файла</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Import/ImportManager.cpp" line="184"/>
         <source>Microsoft &lt;b&gt;DOC&lt;/b&gt; files are not supported. You need save it to &lt;b&gt;DOCX&lt;/b&gt; file and reimport.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы &lt;b&gt;DOC&lt;/b&gt; не поддерживаются. Вам необходимо сохранить его в формате &lt;b&gt;DOCX&lt;/b&gt; и повторите импорт.</translation>
     </message>
 </context>
 <context>
@@ -1583,14 +1583,16 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1232"/>
         <source>Enable automatically replacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить автоматические замены текста</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1245"/>
         <source>Replace lowercase characters to uppercase on start of sentence.
 Replace three single dots to threedots character.
 Replace quotes to language specific.</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменяет прописные буквы на заглавные в начале предложения.
+Заменяет три точки на символ многоточия.
+Заменяет машинописные кавычки на корректные в соответствии с языком.</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1416"/>
@@ -2345,22 +2347,22 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="48"/>
         <source>All Supported Files</source>
-        <translation type="unfinished">Все поддерживаемые файлы</translation>
+        <translation>Все поддерживаемые файлы</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="50"/>
         <source>KIT Scenarist Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл проекта сценария</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="52"/>
         <source>Office Open XML</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="54"/>
         <source>OpenDocument Text</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.cpp" line="97"/>
@@ -2495,17 +2497,17 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="188"/>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвета</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="196"/>
         <source>Color %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет %1</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="217"/>
         <source>Add color</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить цвет</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="291"/>
@@ -2769,17 +2771,17 @@ Paragraph</source>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="189"/>
         <source>Report settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры отчёта</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="202"/>
         <source>Print preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Предпросмотр</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="204"/>
         <source>Save report to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить отчёт в файл</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="210"/>
