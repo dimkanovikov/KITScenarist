@@ -15,6 +15,7 @@ using BusinessLogic::ScenarioTextDocument;
 using BusinessLogic::ScenarioReviewModel;
 using UserInterface::ScenarioReviewView;
 using UserInterface::ScenarioReviewItemDelegate;
+using UserInterface::ScenarioTextEdit;
 
 namespace {
 

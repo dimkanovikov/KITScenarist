@@ -441,7 +441,7 @@ namespace {
 		//
 		else {
 			for (int itemIndex = 0; itemIndex < _item->childCount(); ++itemIndex) {
-				::updateSceneNumbers(_item->childAt(itemIndex), _sceneNumberCounter);
+				updateSceneNumbers(_item->childAt(itemIndex), _sceneNumberCounter);
 			}
 		}
 	}

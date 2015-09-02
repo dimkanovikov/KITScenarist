@@ -36,9 +36,8 @@ namespace {
 	 * @brief Определить размер страницы документа
 	 */
 	static QSizeF documentSize() {
-		ScenarioTemplate exportStyle = ::exportStyle();
-		QSizeF pageSize = QPageSize(exportStyle.pageSizeId()).size(QPageSize::Millimeter);
-		QMarginsF pageMargins = exportStyle.pageMargins();
+		QSizeF pageSize = QPageSize(exportStyle().pageSizeId()).size(QPageSize::Millimeter);
+		QMarginsF pageMargins = exportStyle().pageMargins();
 
 		return QSizeF(
 					PageMetrics::mmToPx(pageSize.width() - pageMargins.left() - pageMargins.right()),
@@ -50,7 +49,7 @@ namespace {
 	 * @brief Получить стиль оформления символов для заданного типа
 	 */
 	static QTextCharFormat charFormatForType(ScenarioBlockStyle::Type _type) {
-		QTextCharFormat format = ::exportStyle().blockStyle(_type).charFormat();
+		QTextCharFormat format = exportStyle().blockStyle(_type).charFormat();
 
 		//
 		// Очищаем цвета
@@ -64,7 +63,7 @@ namespace {
 	 * @brief Получить стиль оформления абзаца для заданного типа
 	 */
 	static QTextBlockFormat blockFormatForType(ScenarioBlockStyle::Type _type) {
-		ScenarioBlockStyle style = ::exportStyle().blockStyle(_type);
+		ScenarioBlockStyle style = exportStyle().blockStyle(_type);
 		QTextBlockFormat format = style.blockFormat();
 
 		format.setProperty(ScenarioBlockStyle::PropertyType, _type);
@@ -124,7 +123,7 @@ namespace {
 			const int documentPagesCount = _inDocument->pageCount();
 			QTextCursor cursor(_inDocument);
 			cursor.movePosition(QTextCursor::End);
-			::insertLine(cursor, _blockFormat, _charFormat);
+			insertLine(cursor, _blockFormat, _charFormat);
 			const int documentPagesCountWithNextLine = _inDocument->pageCount();
 			cursor.deletePreviousChar();
 			if (documentPagesCount == documentPagesCountWithNextLine) {
@@ -165,7 +164,7 @@ namespace {
 		while (type != LastPageLine
 			   && result <= checkLimit) {
 
-			::insertLine(cursor, _blockFormat, _charFormat);
+			insertLine(cursor, _blockFormat, _charFormat);
 			++result;
 
 			if (documentPagesCount == _inDocument->pageCount()) {
@@ -232,7 +231,7 @@ namespace {
 	 * @brief Поссчитать кол-во строк, занимаемых текущим блоком
 	 */
 	static int linesOfText(const QTextCursor& _cursor) {
-		return ::linesOfText(_cursor.document(), _cursor.blockFormat(), _cursor.charFormat(), _cursor.block().text());
+		return linesOfText(_cursor.document(), _cursor.blockFormat(), _cursor.charFormat(), _cursor.block().text());
 	}
 
 	// ********
@@ -284,7 +283,7 @@ namespace {
 		if (_linesToEndOfPage <= qMax(2, _blockLines)) {
 			int insertLines = _linesToEndOfPage;
 			while (insertLines-- > 0) {
-				::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
+				insertLine(_destDocumentCursor, _blockFormat, _charFormat);
 			}
 		}
 	}
@@ -304,7 +303,7 @@ namespace {
 		if (_linesToEndOfPage <= _blockLines) {
 			int insertLines = _linesToEndOfPage;
 			while (insertLines-- > 0) {
-				::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
+				insertLine(_destDocumentCursor, _blockFormat, _charFormat);
 			}
 		}
 	}
@@ -354,7 +353,7 @@ namespace {
 					//
 					// ... пустые строки
 					//
-					int emptyLines = ::exportStyle().blockStyle(currentBlockType).topSpace();
+					int emptyLines = exportStyle().blockStyle(currentBlockType).topSpace();
 					_destDocumentCursor.movePosition(QTextCursor::PreviousBlock, QTextCursor::MoveAnchor, emptyLines);
 					insertLines += emptyLines;
 					//
@@ -367,7 +366,7 @@ namespace {
 				// ... переходим до следующей страницы
 				//
 				while (insertLines-- > 0) {
-					::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
+					insertLine(_destDocumentCursor, _blockFormat, _charFormat);
 				}
 				//
 				// ... переводим курсор в конец
@@ -381,14 +380,14 @@ namespace {
 				//
 				// ... разрываем предложения по точкам
 				//
-				QStringList sentences = ::splitTextToSentences(_sourceDocumentCursor.block().text());
+				QStringList sentences = splitTextToSentences(_sourceDocumentCursor.block().text());
 				//
 				// ... пробуем сформировать текст, который влезет в конец страницы
 				//
 				QStringList nextPageSentences;
 				while (!sentences.isEmpty()) {
 					nextPageSentences.prepend(sentences.takeLast());
-					int lines = ::linesOfText(preparedDocument, _blockFormat, _charFormat, sentences.join(" "));
+					int lines = linesOfText(preparedDocument, _blockFormat, _charFormat, sentences.join(" "));
 
 					//
 					// ... если нашли текст, который влезет в конец страницы, то
@@ -439,7 +438,7 @@ namespace {
 				//
 				// ... нужно перенести строки с именем персонажа и ремаркой
 				//
-				int insertLines = _linesToEndOfPage + ::linesOfText(characterCursor);
+				int insertLines = _linesToEndOfPage + linesOfText(characterCursor);
 				while (insertLines-- > 0) {
 					_destDocumentCursor.insertBlock();
 				}
@@ -459,12 +458,12 @@ namespace {
 				//
 				// ... вставляем строку ДАЛЬШЕ
 				//
-				::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
+				insertLine(_destDocumentCursor, _blockFormat, _charFormat);
 				_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_BREAK));
 				//
 				// ... вставляем блок персонажа
 				//
-				::insertLine(_destDocumentCursor, characterCursor.blockFormat(), characterCursor.charFormat());
+				insertLine(_destDocumentCursor, characterCursor.blockFormat(), characterCursor.charFormat());
 				_destDocumentCursor.insertText(characterCursor.block().text().toUpper());
 				//
 				// ... и приписку (ПРОД.)
@@ -535,13 +534,13 @@ namespace {
 					//
 					// ... пустые строки
 					//
-					int emptyLines = ::exportStyle().blockStyle(currentBlockType).topSpace();
+					int emptyLines = exportStyle().blockStyle(currentBlockType).topSpace();
 					_destDocumentCursor.movePosition(QTextCursor::PreviousBlock, QTextCursor::MoveAnchor, emptyLines);
 					insertLines += emptyLines;
 					//
 					// ... строки абзаца
 					//
-					insertLines += ::linesOfText(_destDocumentCursor);
+					insertLines += linesOfText(_destDocumentCursor);
 					//
 					// ... переходим в конец блока перед ремаркой
 					//
@@ -561,13 +560,13 @@ namespace {
 					//
 					// ... пустые строки
 					//
-					int emptyLines = ::exportStyle().blockStyle(currentBlockType).topSpace();
+					int emptyLines = exportStyle().blockStyle(currentBlockType).topSpace();
 					_destDocumentCursor.movePosition(QTextCursor::PreviousBlock, QTextCursor::MoveAnchor, emptyLines);
 					insertLines += emptyLines;
 					//
 					// ... строки абзаца
 					//
-					insertLines += ::linesOfText(_destDocumentCursor);
+					insertLines += linesOfText(_destDocumentCursor);
 					//
 					// ... переходим в конец блока перед персонажем
 					//
@@ -579,9 +578,9 @@ namespace {
 				// Если предыдущим блоком не является персонаж, вставляем ДАЛЬШЕ
 				//
 				if (prevBlockType != ScenarioBlockStyle::Character) {
-					::insertLine(_destDocumentCursor,
-						::blockFormatForType(ScenarioBlockStyle::Parenthetical),
-						::charFormatForType(ScenarioBlockStyle::Parenthetical));
+					insertLine(_destDocumentCursor,
+						blockFormatForType(ScenarioBlockStyle::Parenthetical),
+						charFormatForType(ScenarioBlockStyle::Parenthetical));
 					_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_BREAK));
 					--insertLines;
 				}
@@ -590,7 +589,7 @@ namespace {
 				// ... переходим до следующей страницы
 				//
 				while (insertLines-- > 0) {
-					::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
+					insertLine(_destDocumentCursor, _blockFormat, _charFormat);
 				}
 				//
 				// ... переводим курсор в конец
@@ -620,9 +619,9 @@ namespace {
 					//
 					// ... вставляем (ПРОД.)
 					//
-					::insertLine(_destDocumentCursor,
-						::blockFormatForType(ScenarioBlockStyle::Character),
-						::charFormatForType(ScenarioBlockStyle::Character));
+					insertLine(_destDocumentCursor,
+						blockFormatForType(ScenarioBlockStyle::Character),
+						charFormatForType(ScenarioBlockStyle::Character));
 					_destDocumentCursor.insertText(prevBlock.text().toUpper());
 					_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_CONTINUED));
 
@@ -639,14 +638,14 @@ namespace {
 				//
 				// ... разрываем предложения по точкам
 				//
-				QStringList sentences = ::splitTextToSentences(_sourceDocumentCursor.block().text());
+				QStringList sentences = splitTextToSentences(_sourceDocumentCursor.block().text());
 				//
 				// ... пробуем сформировать текст, который влезет в конец страницы
 				//
 				QStringList nextPageSentences;
 				while (!sentences.isEmpty()) {
 					nextPageSentences.prepend(sentences.takeLast());
-					int lines = ::linesOfText(preparedDocument, _blockFormat, _charFormat, sentences.join(" "));
+					int lines = linesOfText(preparedDocument, _blockFormat, _charFormat, sentences.join(" "));
 					//
 					// Учитываем добавочную строку ДАЛЬШЕ, если абзац не пуст
 					//
@@ -670,9 +669,9 @@ namespace {
 							//
 							// ДАЛЬШЕ
 							//
-							::insertLine(_destDocumentCursor,
-								::blockFormatForType(ScenarioBlockStyle::Parenthetical),
-								::charFormatForType(ScenarioBlockStyle::Parenthetical));
+							insertLine(_destDocumentCursor,
+								blockFormatForType(ScenarioBlockStyle::Parenthetical),
+								charFormatForType(ScenarioBlockStyle::Parenthetical));
 							_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_BREAK));
 
 							//
@@ -680,7 +679,7 @@ namespace {
 							//
 							int toEndOfPage = _linesToEndOfPage - 1;
 							while (toEndOfPage-- > 0) {
-								::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
+								insertLine(_destDocumentCursor, _blockFormat, _charFormat);
 							}
 
 							//
@@ -697,9 +696,9 @@ namespace {
 							//
 							// ... вставляем (ПРОД.)
 							//
-							::insertLine(_destDocumentCursor,
-								::blockFormatForType(ScenarioBlockStyle::Character),
-								::charFormatForType(ScenarioBlockStyle::Character));
+							insertLine(_destDocumentCursor,
+								blockFormatForType(ScenarioBlockStyle::Character),
+								charFormatForType(ScenarioBlockStyle::Character));
 							_destDocumentCursor.insertText(prevBlock.text().toUpper());
 							_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_CONTINUED));
 						}
@@ -718,7 +717,7 @@ namespace {
 								//
 								// ... пустые строки
 								//
-								int emptyLines = ::exportStyle().blockStyle(currentBlockType).topSpace();
+								int emptyLines = exportStyle().blockStyle(currentBlockType).topSpace();
 								_destDocumentCursor.movePosition(QTextCursor::PreviousBlock, QTextCursor::MoveAnchor, emptyLines);
 								insertLines += emptyLines;
 								//
@@ -741,7 +740,7 @@ namespace {
 								//
 								// ... пустые строки
 								//
-								int emptyLines = ::exportStyle().blockStyle(currentBlockType).topSpace();
+								int emptyLines = exportStyle().blockStyle(currentBlockType).topSpace();
 								_destDocumentCursor.movePosition(QTextCursor::PreviousBlock, QTextCursor::MoveAnchor, emptyLines);
 								insertLines += emptyLines;
 								//
@@ -756,9 +755,9 @@ namespace {
 							// Если предыдущим блоком не является персонаж, вставляем ДАЛЬШЕ
 							//
 							if (prevBlockType != ScenarioBlockStyle::Character) {
-								::insertLine(_destDocumentCursor,
-									::blockFormatForType(ScenarioBlockStyle::Parenthetical),
-									::charFormatForType(ScenarioBlockStyle::Parenthetical));
+								insertLine(_destDocumentCursor,
+									blockFormatForType(ScenarioBlockStyle::Parenthetical),
+									charFormatForType(ScenarioBlockStyle::Parenthetical));
 								_destDocumentCursor.insertText(QApplication::translate("BusinessLogic::AbstractExporter", DIALOG_BREAK));
 								--insertLines;
 							}
@@ -767,7 +766,7 @@ namespace {
 							// ... переходим до следующей страницы
 							//
 							while (insertLines-- > 0) {
-								::insertLine(_destDocumentCursor, _blockFormat, _charFormat);
+								insertLine(_destDocumentCursor, _blockFormat, _charFormat);
 							}
 							//
 							// ... переводим курсор в конец
@@ -790,7 +789,7 @@ namespace {
 						//
 						// ... остальной текст
 						//
-						::insertLine(_sourceDocumentCursor, _blockFormat, _charFormat);
+						insertLine(_sourceDocumentCursor, _blockFormat, _charFormat);
 						_sourceDocumentCursor.insertText(nextPageSentences.join(" "));
 						_sourceDocumentCursor.movePosition(QTextCursor::PreviousBlock);
 						break;
@@ -812,8 +811,8 @@ namespace {
 		// ... тип текущего блока под курсором
 		ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::forBlock(_sourceDocumentCursor.block());
 		// ... определим стили
-		QTextBlockFormat blockFormat = ::blockFormatForType(currentBlockType);
-		QTextCharFormat charFormat = ::charFormatForType(currentBlockType);
+		QTextBlockFormat blockFormat = blockFormatForType(currentBlockType);
+		QTextCharFormat charFormat = charFormatForType(currentBlockType);
 		// ... документ в который осуществляется вывод
 		QTextDocument* preparedDocument = _destDocumentCursor.document();
 
@@ -821,22 +820,22 @@ namespace {
 		//
 		// Посчитаем сколько строк до конца страницы и сколько строк в блоке
 		//
-		const int blockLines = ::linesOfText(preparedDocument, blockFormat, charFormat, _sourceDocumentCursor.block().text());
-		const int linesToEndOfPage = ::linesToEndOfPage(preparedDocument, blockFormat, charFormat, blockLines);
+		const int blockLines = linesOfText(preparedDocument, blockFormat, charFormat, _sourceDocumentCursor.block().text());
+		const int linesToEndOfPageCount = linesToEndOfPage(preparedDocument, blockFormat, charFormat, blockLines);
 
 		//
 		// Для блоков "Время и место" и "Группа сцен"
 		//
 		if (currentBlockType == ScenarioBlockStyle::SceneHeading
 			|| currentBlockType == ScenarioBlockStyle::SceneGroupHeader) {
-			checkPageBreakForSceneHeading(_destDocumentCursor, blockFormat, charFormat, blockLines, linesToEndOfPage);
+			checkPageBreakForSceneHeading(_destDocumentCursor, blockFormat, charFormat, blockLines, linesToEndOfPageCount);
 		}
 
 		//
 		// Для блока "Персонаж"
 		//
 		else if (currentBlockType == ScenarioBlockStyle::Character) {
-			checkPageBreakForCharacter(_destDocumentCursor, blockFormat, charFormat, blockLines, linesToEndOfPage);
+			checkPageBreakForCharacter(_destDocumentCursor, blockFormat, charFormat, blockLines, linesToEndOfPageCount);
 		}
 
 		//
@@ -844,7 +843,7 @@ namespace {
 		//
 		else if (currentBlockType == ScenarioBlockStyle::Action) {
 			checkPageBreakForAction(_sourceDocumentCursor, _destDocumentCursor, blockFormat,
-				charFormat, blockLines, linesToEndOfPage);
+				charFormat, blockLines, linesToEndOfPageCount);
 		}
 
 		//
@@ -852,7 +851,7 @@ namespace {
 		//
 		else if (currentBlockType == ScenarioBlockStyle::Parenthetical) {
 			checkPageBreakForParenthetical(_sourceDocumentCursor, _destDocumentCursor,
-				blockFormat, charFormat, blockLines, linesToEndOfPage);
+				blockFormat, charFormat, blockLines, linesToEndOfPageCount);
 		}
 
 		//
@@ -860,7 +859,7 @@ namespace {
 		//
 		else if (currentBlockType == ScenarioBlockStyle::Dialogue) {
 			checkPageBreakForDialog(_sourceDocumentCursor, _destDocumentCursor, blockFormat,
-				charFormat, blockLines, linesToEndOfPage);
+				charFormat, blockLines, linesToEndOfPageCount);
 		}
 	}
 }

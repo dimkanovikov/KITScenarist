@@ -102,15 +102,15 @@ namespace {
 				// Определяем где положено находиться нумерации
 				//
 				QRectF numberingRect;
-				if (::exportStyle().numberingAlignment().testFlag(Qt::AlignTop)) {
+				if (exportStyle().numberingAlignment().testFlag(Qt::AlignTop)) {
 					numberingRect = headerRect;
 				} else {
 					numberingRect = footerRect;
 				}
 				Qt::Alignment numberingAlignment = Qt::AlignVCenter;
-				if (::exportStyle().numberingAlignment().testFlag(Qt::AlignLeft)) {
+				if (exportStyle().numberingAlignment().testFlag(Qt::AlignLeft)) {
 					numberingAlignment |= Qt::AlignLeft;
-				} else if (::exportStyle().numberingAlignment().testFlag(Qt::AlignCenter)) {
+				} else if (exportStyle().numberingAlignment().testFlag(Qt::AlignCenter)) {
 					numberingAlignment |= Qt::AlignCenter;
 				} else {
 					numberingAlignment |= Qt::AlignRight;

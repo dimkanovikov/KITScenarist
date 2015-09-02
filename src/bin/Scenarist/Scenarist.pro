@@ -13,7 +13,7 @@ TEMPLATE = app
 # Отключаем предупреждения о статических функциях и переменных
 # не используемых в собственных заголовочных файлах
 #
-QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
+unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 
 #
 # Включить профилирование

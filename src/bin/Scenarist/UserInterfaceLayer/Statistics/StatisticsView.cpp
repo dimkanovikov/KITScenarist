@@ -51,7 +51,7 @@ namespace {
 	 * @brief Получить путь к сохраняемому файлу
 	 */
 	static QString reportFilePath(const QString& _fileName) {
-		QString filePath = ::reportsFolderPath() + QDir::separator() + _fileName;
+		QString filePath = reportsFolderPath() + QDir::separator() + _fileName;
 		return QDir::toNativeSeparators(filePath);
 	}
 
