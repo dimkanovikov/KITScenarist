@@ -650,12 +650,12 @@ void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
 	m_textEditManager->removeScenarioText(from, to);
 }
 
-void ScenarioManager::aboutSetItemColor(const QModelIndex& _itemIndex, const QColor& _color)
+void ScenarioManager::aboutSetItemColors(const QModelIndex& _itemIndex, const QString& _colors)
 {
 	setWorkingMode(sender());
 
 	const int position = workingScenario()->itemStartPosition(_itemIndex);
-	workingScenario()->setItemColorAtPosition(position, _color);
+	workingScenario()->setItemColorsAtPosition(position, _colors);
 
 	emit scenarioChanged();
 }
@@ -816,7 +816,7 @@ void ScenarioManager::initConnections()
 
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
-	connect(m_navigatorManager, SIGNAL(setItemColor(QModelIndex,QColor)), this, SLOT(aboutSetItemColor(QModelIndex,QColor)));
+	connect(m_navigatorManager, SIGNAL(setItemColors(QModelIndex,QString)), this, SLOT(aboutSetItemColors(QModelIndex,QString)));
 	connect(m_navigatorManager, SIGNAL(showHideDraft()), this, SLOT(aboutShowHideDraft()));
 	connect(m_navigatorManager, SIGNAL(showHideNote()), this, SLOT(aboutShowHideNote()));
 	connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
@@ -826,7 +826,7 @@ void ScenarioManager::initConnections()
 
 	connect(m_draftNavigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_draftNavigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
-	connect(m_draftNavigatorManager, SIGNAL(setItemColor(QModelIndex,QColor)), this, SLOT(aboutSetItemColor(QModelIndex,QColor)));
+	connect(m_draftNavigatorManager, SIGNAL(setItemColors(QModelIndex,QString)), this, SLOT(aboutSetItemColors(QModelIndex,QString)));
 	connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
 	connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(int)), this, SLOT(aboutMoveCursorToItem(int)));
 	connect(m_draftNavigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));

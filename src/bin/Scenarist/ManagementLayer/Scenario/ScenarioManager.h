@@ -225,7 +225,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Установить цвет элемента
 		 */
-		void aboutSetItemColor(const QModelIndex& _itemIndex, const QColor& _color);
+		void aboutSetItemColors(const QModelIndex& _itemIndex, const QString& _colors);
 
 		/**
 		 * @brief Показать/скрыть заметки к сцене

@@ -24,14 +24,14 @@ namespace BusinessLogic
 		void setSceneNumber(int _number);
 
 		/**
-		 * @brief Получить цвет сцены
+		 * @brief Получить цвета сцены
 		 */
-		QColor color() const;
+		QString colors() const;
 
 		/**
-		 * @brief Установить цвет сцены
+		 * @brief Установить цвета сцены
 		 */
-		void setColor(const QColor& _color);
+		void setColors(const QString& _colors);
 
 		/**
 		 * @brief Получить описание
@@ -55,9 +55,9 @@ namespace BusinessLogic
 		int m_sceneNumber;
 
 		/**
-		 * @brief Цвет сцены
+		 * @brief Цвета сцены
 		 */
-		QColor m_color;
+		QString m_colors;
 
 		/**
 		 * @brief Текст описания

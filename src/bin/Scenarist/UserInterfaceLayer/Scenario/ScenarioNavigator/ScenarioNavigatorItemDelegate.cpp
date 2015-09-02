@@ -104,17 +104,50 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	icon = iconColorized.pixmap(iconRect.size());
 	_painter->drawPixmap(iconRect, icon);
 	//
-	// ... цвет сцены
+	// ... цвета сцены
 	//
-	const QColor color = _index.data(BusinessLogic::ScenarioModel::ColorIndex).value<QColor>();
-	const QRect colorRect(
-				TREE_INDICATOR_WIDTH + opt.rect.width() - COLOR_RECT_WIDTH - ITEMS_SPACING - RIGHT_MARGIN,
-				0,
-				COLOR_RECT_WIDTH,
-				opt.rect.height()
-				);
-	if (color.isValid()) {
-		_painter->fillRect(colorRect, color);
+	const QString colorsNames = _index.data(BusinessLogic::ScenarioModel::ColorIndex).toString();
+	QStringList colorsNamesList = colorsNames.split(";", QString::SkipEmptyParts);
+	const int maxColorsInColumn = m_showSceneDescription ? m_sceneDescriptionHeight + 1 : 1;
+	int colorsCount = colorsNamesList.size();
+	int colorRectX = TREE_INDICATOR_WIDTH + opt.rect.width() - COLOR_RECT_WIDTH - ITEMS_SPACING - RIGHT_MARGIN;
+	while (colorsCount > 0) {
+		//
+		// Выссчитываем сколько влезет в одну колонку
+		//
+		int colorsInColumn = 0;
+		if (colorsCount >= maxColorsInColumn) {
+			colorsInColumn = maxColorsInColumn;
+		} else {
+			colorsInColumn = colorsCount;
+		}
+
+		//
+		// Рисуем, начиная с последних выбранных цветов
+		//
+		for (int colorIndex = 0; colorIndex < colorsInColumn; ++colorIndex) {
+			const QString colorName = colorsNamesList.takeAt(colorsCount - colorsInColumn);
+			const QColor color(colorName);
+			const QRect colorRect(
+						colorRectX,
+						opt.rect.height() / colorsInColumn * colorIndex,
+						COLOR_RECT_WIDTH,
+						opt.rect.height() / colorsInColumn
+						);
+			_painter->fillRect(colorRect, color);
+		}
+
+		//
+		// Обновляем счётчик оставшихся цветов
+		//
+		colorsCount = colorsNamesList.size();
+
+		//
+		// Сдвигаем координату для прорисовку предыдущих цветов
+		//
+		if (colorsCount > 0) {
+			colorRectX -= COLOR_RECT_WIDTH;
+		}
 	}
 	//
 	// ... текстовая часть
@@ -131,7 +164,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 			: "";
 	const int chronometryRectWidth = _painter->fontMetrics().width(chronometry);
 	const QRect chronometryRect(
-		TREE_INDICATOR_WIDTH + opt.rect.width() - chronometryRectWidth - ITEMS_SPACING - RIGHT_MARGIN - COLOR_RECT_WIDTH,
+		colorRectX - chronometryRectWidth - ITEMS_SPACING,
 		MARGIN,
 		chronometryRectWidth,
 		TEXT_LINE_HEIGHT

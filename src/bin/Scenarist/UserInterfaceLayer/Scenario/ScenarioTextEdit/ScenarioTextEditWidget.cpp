@@ -244,7 +244,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	if (info == 0) {
 		info = new ScenarioTextBlockInfo;
 	}
-	info->setColor(_color);
+	info->setColors(_color.name());
 	info->setDescription(_description);
 	cursor.block().setUserData(info);
 

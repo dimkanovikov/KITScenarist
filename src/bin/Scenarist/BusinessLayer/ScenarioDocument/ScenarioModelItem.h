@@ -49,10 +49,10 @@ namespace BusinessLogic
 		void setHeader(const QString& _header);
 
 		/**
-		 * @brief Цвет элемента
+		 * @brief Цвета элемента
 		 */
-		QColor color() const;
-		void setColor(const QColor& _color);
+		QString colors() const;
+		void setColors(const QString& _colors);
 
 		/**
 		 * @brief Описание элемента
@@ -139,9 +139,9 @@ namespace BusinessLogic
 		QString m_header;
 
 		/**
-		 * @brief Цвет элемента
+		 * @brief Цвета элемента
 		 */
-		QColor m_color;
+		QString m_colors;
 
 		/**
 		 * @brief Описание элемента

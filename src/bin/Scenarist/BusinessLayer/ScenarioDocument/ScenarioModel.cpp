@@ -222,7 +222,7 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		// Цвет сцены
 		//
 		case ColorIndex: {
-			result = item->color();
+			result = item->colors();
 			break;
 		}
 
