@@ -56,19 +56,24 @@ void ScenarioTextEditManager::setCursorPosition(int _position)
 
 void ScenarioTextEditManager::reloadTextEditSettings()
 {
+	m_view->setUsePageView(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/page-view",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt());
 	m_view->setShowScenesNumbers(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"scenario-editor/show-scenes-numbers",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
-    m_view->setHighlightCurrentLine(
-                DataStorageLayer::StorageFacade::settingsStorage()->value(
-                    "scenario-editor/highlight-current-line",
-                    DataStorageLayer::SettingsStorage::ApplicationSettings)
-                .toInt());
-	m_view->setUsePageView(
+	m_view->setHighlightCurrentLine(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/page-view",
+					"scenario-editor/highlight-current-line",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt());
+	m_view->setAutoReplacing(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/auto-replacing",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
 	m_view->setUseSpellChecker(

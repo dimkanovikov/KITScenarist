@@ -61,15 +61,15 @@ void ScenarioModelItem::setHeader(const QString& _header)
 	}
 }
 
-QColor ScenarioModelItem::color() const
+QString ScenarioModelItem::colors() const
 {
-	return m_color;
+	return m_colors;
 }
 
-void ScenarioModelItem::setColor(const QColor& _color)
+void ScenarioModelItem::setColors(const QString& _colors)
 {
-	if (m_color != _color) {
-		m_color = _color;
+	if (m_colors != _colors) {
+		m_colors = _colors;
 	}
 }
 

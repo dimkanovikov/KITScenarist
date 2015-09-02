@@ -1,0 +1,13 @@
+#ifndef FILEFORMATSGLOBAL
+#define FILEFORMATSGLOBAL
+
+#include <QtCore/QtGlobal>
+
+#if defined(FILEFORMATS_LIBRARY)
+#  define FILEFORMATS_EXPORT Q_DECL_EXPORT
+#else
+#  define FILEFORMATS_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // FILEFORMATSGLOBAL
+

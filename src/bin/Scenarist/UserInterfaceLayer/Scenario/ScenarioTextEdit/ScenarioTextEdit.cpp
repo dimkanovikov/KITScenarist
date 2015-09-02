@@ -97,7 +97,9 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 
 	setHighlighterDocument(m_document);
 
-	TextEditHelper::beautifyDocument(m_document);
+	if (m_autoReplacing) {
+		TextEditHelper::beautifyDocument(m_document);
+	}
 
 	s_firstRepaintUpdate = true;
 }
@@ -260,6 +262,13 @@ void ScenarioTextEdit::setHighlightCurrentLine(bool _highlight)
 	}
 }
 
+void ScenarioTextEdit::setAutoReplacing(bool _replacing)
+{
+	if (m_autoReplacing != _replacing) {
+		m_autoReplacing = _replacing;
+	}
+}
+
 void ScenarioTextEdit::updateShortcuts()
 {
 	m_shortcutsManager->update();
@@ -337,36 +346,6 @@ void ScenarioTextEdit::setAdditionalCursors(const QMap<QString, int>& _cursors)
 	}
 }
 
-void ScenarioTextEdit::ensureCursorVisibleReimpl(bool _upAndDown)
-{
-	//
-	// Применяем стандартное поведение
-	//
-	ensureCursorVisible();
-
-	//
-	// Необходимо подождать, пока в приложение произойдёт перестройка размера линии прокрутки
-	// для того, чтобы иметь возможность прокрутить её ниже стандартной позиции редактора
-	//
-	QApplication::processEvents();
-
-	//
-	// Если необходимо прокручиваем ещё немного
-	//
-	{
-		const int DETECT_DELTA = 10;
-		const int SCROLL_DELTA = 200;
-		QRect cursorRect = this->cursorRect();
-		if (cursorRect.y() - DETECT_DELTA <= 0
-			&& _upAndDown) {
-			verticalScrollBar()->setValue(verticalScrollBar()->value() - SCROLL_DELTA);
-		}
-		else if (cursorRect.height() + cursorRect.y() + DETECT_DELTA >= viewport()->height()) {
-			verticalScrollBar()->setValue(verticalScrollBar()->value() + SCROLL_DELTA);
-		}
-	}
-}
-
 void ScenarioTextEdit::undoReimpl()
 {
 	m_document->undoReimpl();
@@ -411,7 +390,10 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 		}
 
 		updateEnteredText(_event);
-		TextEditHelper::beautifyDocument(textCursor(), _event->text());
+
+		if (m_autoReplacing) {
+			TextEditHelper::beautifyDocument(textCursor(), _event->text());
+		}
 	}
 
 	//
@@ -436,7 +418,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 		ensureCursorVisibleReimpl();
 	}
 }
-
+#include <QDebug>
 bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 {
 	bool isEventHandled = true;
@@ -985,7 +967,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 	//
 	cursor.movePosition(QTextCursor::StartOfBlock);
 	cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-	cursor.setCharFormat(newBlockStyle.charFormat());
+	cursor.mergeCharFormat(newBlockStyle.charFormat());
 	cursor.clearSelection();
 
 	//
@@ -1191,7 +1173,8 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 			// Если перед нами конец предложения и не сокращение
 			//
 			QString endOfSentancePattern = QString("([.]|[?]|[!]|[…]) %1$").arg(eventText);
-			if (cursorBackwardText.contains(QRegularExpression(endOfSentancePattern))
+			if (m_autoReplacing
+				&& cursorBackwardText.contains(QRegularExpression(endOfSentancePattern))
 				&& !stringEndsWithAbbrev(cursorBackwardText)) {
 				//
 				// Сделаем первую букву заглавной

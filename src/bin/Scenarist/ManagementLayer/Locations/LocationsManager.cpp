@@ -24,7 +24,8 @@ LocationsManager::LocationsManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new QWidget(_parentWidget)),
 	m_navigatorManager(new LocationsNavigatorManager(this, m_view)),
-	m_dataEditManager(new LocationsDataEditManager(this, m_view))
+	m_dataEditManager(new LocationsDataEditManager(this, m_view)),
+	m_viewSplitter(new QSplitter(m_view))
 {
 	initView();
 	initConnections();
@@ -39,38 +40,6 @@ void LocationsManager::loadCurrentProject()
 {
 	m_dataEditManager->clean();
 	m_navigatorManager->loadLocations();
-}
-
-void LocationsManager::loadViewState()
-{
-	m_viewSplitter->restoreGeometry(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/locations/geometry",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-	m_viewSplitter->restoreState(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/locations/state",
-					DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-}
-
-void LocationsManager::saveViewState()
-{
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/locations/geometry", m_viewSplitter->saveGeometry().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/locations/state", m_viewSplitter->saveState().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
 }
 
 void LocationsManager::saveLocations()
@@ -130,12 +99,12 @@ void LocationsManager::aboutRemoveLocations(const QStringList& _names)
 
 void LocationsManager::initView()
 {
-	m_viewSplitter = new QSplitter(m_view);
+	m_viewSplitter->setObjectName("locationsSplitter");
 	m_viewSplitter->setHandleWidth(1);
-	m_viewSplitter->addWidget(m_navigatorManager->view());
-	m_viewSplitter->addWidget(m_dataEditManager->view());
 	m_viewSplitter->setStretchFactor(1, 1);
 	m_viewSplitter->setOpaqueResize(false);
+	m_viewSplitter->addWidget(m_navigatorManager->view());
+	m_viewSplitter->addWidget(m_dataEditManager->view());
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());

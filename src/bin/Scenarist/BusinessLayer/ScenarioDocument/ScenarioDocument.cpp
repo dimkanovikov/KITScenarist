@@ -141,26 +141,26 @@ QString ScenarioDocument::itemHeaderAtPosition(int _position) const
 	return header;
 }
 
-QColor ScenarioDocument::itemColor(ScenarioModelItem* _item) const
+QString ScenarioDocument::itemColors(ScenarioModelItem* _item) const
 {
 	QTextCursor cursor(m_document);
 	cursor.setPosition(_item->position());
 
-	QColor color;
+	QString colors;
 	QTextBlockUserData* textBlockData = cursor.block().userData();
 	if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
-		color = info->color();
+		colors = info->colors();
 	}
-	return color;
+	return colors;
 }
 
-void ScenarioDocument::setItemColorAtPosition(int _position, const QColor& _color)
+void ScenarioDocument::setItemColorsAtPosition(int _position, const QString& _colors)
 {
 	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
 		//
 		// Установить цвет в элемент
 		//
-		item->setColor(_color);
+		item->setColors(_colors);
 		m_model->updateItem(item);
 
 		//
@@ -174,7 +174,7 @@ void ScenarioDocument::setItemColorAtPosition(int _position, const QColor& _colo
 		if (info == 0) {
 			info = new ScenarioTextBlockInfo;
 		}
-		info->setColor(_color);
+		info->setColors(_colors);
 		cursor.block().setUserData(info);
 	}
 }
@@ -842,7 +842,7 @@ void ScenarioDocument::removeConnections()
 	disconnect(m_document, SIGNAL(contentsChange(int,int,int)),
 			   this, SLOT(aboutContentsChange(int,int,int)));
 }
-
+#include <QDebug>
 void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos)
 {
 	//
@@ -865,11 +865,26 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	// ... заголовок
 	QString itemHeader = cursor.block().text().simplified();
 	// ... цвет
-	const QColor color = itemColor(_item);
+	const QString colors = itemColors(_item);
 	// ... текст
+	QString itemText;
 	cursor.movePosition(QTextCursor::NextBlock);
-	cursor.setPosition(_itemEndPos, QTextCursor::KeepAnchor);
-	QString itemText = cursor.selectedText().simplified();
+	while (!cursor.atEnd()
+		   && cursor.position() < _itemEndPos) {
+		if (!itemText.isEmpty()) {
+			itemText.append(" ");
+		}
+
+		ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
+		ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
+		itemText +=
+			blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
+			? cursor.block().text().toUpper()
+			: cursor.block().text();
+
+		cursor.movePosition(QTextCursor::NextBlock);
+		cursor.movePosition(QTextCursor::EndOfBlock);
+	}
 	// ... синопсис
 	QTextDocument doc;
 	doc.setHtml(itemSynopsis(_item));
@@ -899,7 +914,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	//
 	_item->setType(itemType);
 	_item->setHeader(itemHeader);
-	_item->setColor(color);
+	_item->setColors(colors);
 	_item->setText(itemText);
 	_item->setDescription(synopsis);
 	_item->setDuration(itemDuration);

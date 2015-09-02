@@ -1,6 +1,32 @@
 #ifndef PAGESTEXTEDIT_H
 #define PAGESTEXTEDIT_H
 
+#include <QScrollBar>
+
+
+/**
+ * @brief Реализация полосы прокрутки, которая не "скачет" из-за постоянных смены максимума
+ */
+class ScrollBar : public QScrollBar
+{
+	Q_OBJECT
+
+public:
+	ScrollBar(Qt::Orientation _orientation, QWidget* _parent = 0);
+
+	void setMaximumReimpl(int _maximum);
+
+protected:
+	void sliderChange(SliderChange _change);
+
+private:
+	int m_maximum;
+};
+
+
+// ****
+
+
 #include <QTextEdit>
 
 #include "PageMetrics.h"
@@ -61,6 +87,12 @@ public slots:
 	 * @brief Установить водяной знак
 	 */
 	void setWatermark(const QString& _watermark);
+
+	/**
+	 * @brief Своя реализация проверки виден ли курсор на экране
+	 * @param Значение true докручивает, как сверху, так и снизу, а false только снизу
+	 */
+	void ensureCursorVisibleReimpl(bool _upAndDown = false);
 
 protected:
 	/**

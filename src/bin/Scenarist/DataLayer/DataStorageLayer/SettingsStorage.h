@@ -45,6 +45,14 @@ namespace DataStorageLayer
 		 */
 		void resetValues(SettingsPlace _settingsPlace);
 
+		/**
+		 * @brief Сохранить и загрузить положения окон, слайдеров, заголовков таблиц и т.п.
+		 */
+		/** @{ */
+		void saveApplicationStateAndGeometry(QWidget* _widget);
+		void loadApplicationStateAndGeometry(QWidget* _widget);
+		/** @} */
+
 	private:
 		SettingsStorage();
 

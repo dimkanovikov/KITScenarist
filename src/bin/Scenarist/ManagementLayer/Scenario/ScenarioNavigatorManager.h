@@ -80,7 +80,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Запрос на установку цвета элемента
 		 */
-		void setItemColor(const QModelIndex& _indexes, const QColor& _color);
+		void setItemColors(const QModelIndex& _indexes, const QString& _colors);
 
 		/**
 		 * @brief Показать/скрыть заметки к сцене
@@ -120,9 +120,9 @@ namespace ManagementLayer
 		void aboutRemoveItems(const QModelIndexList& _indexes);
 
 		/**
-		 * @brief Установить цвет элемента
+		 * @brief Установить цвета элемента
 		 */
-		void aboutSetItemColor(const QModelIndex& _index, const QColor& _color);
+		void aboutSetItemColors(const QModelIndex& _index, const QString& _colors);
 
 		/**
 		 * @brief Выбрана сцена

@@ -20,12 +20,15 @@
 #ifndef FORMAT_READER_H
 #define FORMAT_READER_H
 
+#include "fileformatsglobal.h"
+
 #include <QString>
 #include <QTextCursor>
+
 class QIODevice;
 class QTextDocument;
 
-class FormatReader
+class FILEFORMATS_EXPORT FormatReader
 {
 public:
 	virtual ~FormatReader()

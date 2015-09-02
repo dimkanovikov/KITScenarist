@@ -1,6 +1,7 @@
 #ifndef WEBLOADER_H
 #define WEBLOADER_H
 
+#include "WebLoaderGlobal.h"
 #include "WebRequest.h"
 
 #include <QtCore/QThread>
@@ -16,7 +17,7 @@ class QNetworkCookieJar;
 
   \brief Класс для работы с http-протоколом
   */
-class WebLoader : public QThread
+class WEBLOADER_EXPORT WebLoader : public QThread
 {
 	Q_OBJECT
 

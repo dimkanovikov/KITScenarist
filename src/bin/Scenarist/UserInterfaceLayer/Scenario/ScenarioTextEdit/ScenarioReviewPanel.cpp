@@ -33,6 +33,64 @@ namespace {
 	 * @brief Размер иконок в кнопках
 	 */
 	const QSize ICON_SIZE(20, 20);
+
+	/**
+	 * @brief Сохранить используемый цвет
+	 */
+	static void saveColor(const QString& _key, const QColor& _color) {
+		StorageFacade::settingsStorage()->setValue(
+			_key, _color.name(), SettingsStorage::ApplicationSettings);
+	}
+
+	/**
+	 * @brief Сохранить используемый цвет текста
+	 */
+	static void saveTextColor(const QColor& _color) {
+		saveColor("scenario-editor/review/text-color", _color);
+	}
+
+	/**
+	 * @brief Сохранить используемый цвет фона текста
+	 */
+	static void saveHighlightColor(const QColor& _color) {
+		saveColor("scenario-editor/review/highlight-color", _color);
+	}
+
+	/**
+	 * @brief Сохранить используемый цвет комментария
+	 */
+	static void saveCommentColor(const QColor& _color) {
+		saveColor("scenario-editor/review/comment-color", _color);
+	}
+
+	/**
+	 * @brief Загрузить используемый цвет
+	 */
+	static QColor loadColor(const QString& _key) {
+		return QColor(StorageFacade::settingsStorage()->value(
+						  _key, SettingsStorage::ApplicationSettings));
+	}
+
+	/**
+	 * @brief Загрузить используемый цвет текста
+	 */
+	static QColor loadTextColor() {
+		return loadColor("scenario-editor/review/text-color");
+	}
+
+	/**
+	 * @brief Загрузить используемый цвет выделения
+	 */
+	static QColor loadHighlightColor() {
+		return loadColor("scenario-editor/review/highlight-color");
+	}
+
+	/**
+	 * @brief Загрузить используемый цвет комментария
+	 */
+	static QColor loadCommentColor() {
+		return loadColor("scenario-editor/review/comment-color");
+	}
 }
 
 
@@ -54,9 +112,6 @@ ScenarioReviewPanel::ScenarioReviewPanel(ScenarioTextEdit* _editor, QWidget* _pa
 
 void ScenarioReviewPanel::aboutUpdateActionsEnable()
 {
-	const bool hasSelectedText = m_editor->textCursor().hasSelection();
-	bool hasReview = false;
-	bool showDone = false;
 	bool reviewDone = false;
 
 	//
@@ -70,120 +125,95 @@ void ScenarioReviewPanel::aboutUpdateActionsEnable()
 				if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)
 					&& range.start <= cursorPosition
 					&& (range.start + range.length) > cursorPosition) {
-					hasReview = true;
-					showDone = true;
 					reviewDone = range.format.boolProperty(ScenarioBlockStyle::PropertyIsDone);
 					break;
 				}
 			}
 		}
 	}
-	//
-	// Если выделен некоторый текст
-	//
-	else {
-		QTextCursor cursor = m_editor->textCursor();
-		const int fromCursorPos = qMin(cursor.selectionStart(), cursor.selectionEnd());
-		const int toCursorPos = qMax(cursor.selectionStart(), cursor.selectionEnd());
-		cursor.setPosition(fromCursorPos);
-		while (!cursor.atEnd()
-			   && cursor.position() < toCursorPos) {
-			const QTextBlock textBlock = cursor.block();
-			if (!textBlock.textFormats().isEmpty()) {
-				foreach (const QTextLayout::FormatRange& range, textBlock.textFormats()) {
-					if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)
-						&& ((textBlock.position() + range.start) >= fromCursorPos)
-						&& ((textBlock.position() + range.start + range.length) <= toCursorPos)) {
-						hasReview = true;
-						break;
-					}
-				}
-			}
-			//
-			// ... прерываем поиск, если нашли заметку
-			//
-			if (hasReview) {
-				break;
-			}
-
-			cursor.movePosition(QTextCursor::EndOfBlock);
-			cursor.movePosition(QTextCursor::NextBlock);
-		}
-	}
 
 	//
 	// Настроим кнопки
-	//
-	m_textColor->setEnabled(hasSelectedText);
 	//
 	// ... выделение в зависимости от настроек
 	//
 	if (StorageFacade::settingsStorage()->value(
 			"scenario-editor/review/use-highlight",
 			SettingsStorage::ApplicationSettings).toInt() == false) {
-		m_textBgColor->setEnabled(hasSelectedText);
 		m_textBgColor->setVisible(true);
 		m_textHighlight->setVisible(false);
 	} else {
-		m_textHighlight->setEnabled(hasSelectedText);
 		m_textHighlight->setVisible(true);
 		m_textBgColor->setVisible(false);
 	}
-	m_comment->setEnabled(hasSelectedText);
-	m_done->setEnabled(showDone);
 	m_done->setChecked(reviewDone);
-	m_clear->setEnabled(hasReview);
 }
 
 void ScenarioReviewPanel::aboutChangeTextColor(const QColor& _color)
 {
-	BusinessLogic::ScenarioReviewModel* model = reviewModel();
-	const int selectionStart = m_editor->textCursor().selectionStart();
-	const int selectionEnd = m_editor->textCursor().selectionEnd();
-	const int startPosition = qMin(selectionStart, selectionEnd);
-	const int length = qMax(selectionStart, selectionEnd) - startPosition;
-	model->setReviewMarkTextColor(startPosition, length, _color);
+	::saveTextColor(_color);
 
-	m_editor->moveCursor(QTextCursor::Right);
+	if (m_editor->textCursor().hasSelection()) {
+		BusinessLogic::ScenarioReviewModel* model = reviewModel();
+		const int selectionStart = m_editor->textCursor().selectionStart();
+		const int selectionEnd = m_editor->textCursor().selectionEnd();
+		const int startPosition = qMin(selectionStart, selectionEnd);
+		const int length = qMax(selectionStart, selectionEnd) - startPosition;
+		model->setReviewMarkTextColor(startPosition, length, _color);
+
+		m_editor->moveCursor(QTextCursor::Right);
+	}
 }
 
 void ScenarioReviewPanel::aboutChangeTextBgColor(const QColor& _color)
 {
-	BusinessLogic::ScenarioReviewModel* model = reviewModel();
-	const int selectionStart = m_editor->textCursor().selectionStart();
-	const int selectionEnd = m_editor->textCursor().selectionEnd();
-	const int startPosition = qMin(selectionStart, selectionEnd);
-	const int length = qMax(selectionStart, selectionEnd) - startPosition;
-	model->setReviewMarkTextBgColor(startPosition, length, _color);
+	::saveHighlightColor(_color);
 
-	m_editor->moveCursor(QTextCursor::Right);
-}
-
-void ScenarioReviewPanel::aboutChangeTextHighlight(const QColor& _color)
-{
-	BusinessLogic::ScenarioReviewModel* model = reviewModel();
-	const int selectionStart = m_editor->textCursor().selectionStart();
-	const int selectionEnd = m_editor->textCursor().selectionEnd();
-	const int startPosition = qMin(selectionStart, selectionEnd);
-	const int length = qMax(selectionStart, selectionEnd) - startPosition;
-	model->setReviewMarkTextHighlight(startPosition, length, _color);
-
-	m_editor->moveCursor(QTextCursor::Right);
-}
-
-void ScenarioReviewPanel::aboutAddComment(const QColor& _color)
-{
-	const QString comment = QLightBoxInputDialog::getLongText(parentWidget(), QString::null, tr("Comment"));
-	if (!comment.isEmpty()) {
+	if (m_editor->textCursor().hasSelection()) {
 		BusinessLogic::ScenarioReviewModel* model = reviewModel();
 		const int selectionStart = m_editor->textCursor().selectionStart();
 		const int selectionEnd = m_editor->textCursor().selectionEnd();
 		const int startPosition = qMin(selectionStart, selectionEnd);
 		const int length = qMax(selectionStart, selectionEnd) - startPosition;
 		model->setReviewMarkTextBgColor(startPosition, length, _color);
-		model->setReviewMarkComment(startPosition, length, comment);
 
 		m_editor->moveCursor(QTextCursor::Right);
+	}
+}
+
+void ScenarioReviewPanel::aboutChangeTextHighlight(const QColor& _color)
+{
+	::saveHighlightColor(_color);
+
+	if (m_editor->textCursor().hasSelection()) {
+		BusinessLogic::ScenarioReviewModel* model = reviewModel();
+		const int selectionStart = m_editor->textCursor().selectionStart();
+		const int selectionEnd = m_editor->textCursor().selectionEnd();
+		const int startPosition = qMin(selectionStart, selectionEnd);
+		const int length = qMax(selectionStart, selectionEnd) - startPosition;
+		model->setReviewMarkTextHighlight(startPosition, length, _color);
+
+		m_editor->moveCursor(QTextCursor::Right);
+	}
+}
+
+void ScenarioReviewPanel::aboutAddComment(const QColor& _color)
+{
+	::saveCommentColor(_color);
+
+	if (m_editor->textCursor().hasSelection()) {
+		const QString comment = QLightBoxInputDialog::getLongText(parentWidget(), QString::null, tr("Comment"));
+		if (!comment.isEmpty()) {
+			BusinessLogic::ScenarioReviewModel* model = reviewModel();
+			const int selectionStart = m_editor->textCursor().selectionStart();
+			const int selectionEnd = m_editor->textCursor().selectionEnd();
+			const int startPosition = qMin(selectionStart, selectionEnd);
+			const int length = qMax(selectionStart, selectionEnd) - startPosition;
+			model->setReviewMarkTextBgColor(startPosition, length, _color);
+			model->setReviewMarkComment(startPosition, length, comment);
+
+			m_editor->moveCursor(QTextCursor::Right);
+		}
 	}
 }
 
@@ -211,15 +241,19 @@ void ScenarioReviewPanel::initView()
 	m_textColor->setIconSize(ICON_SIZE);
 	m_textColor->setColorsPane(ColoredToolButton::Google);
 	m_textColor->setToolTip(tr("Change text color"));
+	m_textColor->setColor(::loadTextColor());
 	m_textBgColor->setIconSize(ICON_SIZE);
 	m_textBgColor->setColorsPane(ColoredToolButton::Google);
 	m_textBgColor->setToolTip(tr("Change text background"));
+	m_textBgColor->setColor(::loadHighlightColor());
 	m_textHighlight->setIconSize(ICON_SIZE);
 	m_textHighlight->setColorsPane(ColoredToolButton::WordHighlight);
 	m_textHighlight->setToolTip(tr("Highlight text"));
+	m_textHighlight->setColor(::loadHighlightColor());
 	m_comment->setIconSize(ICON_SIZE);
 	m_comment->setColorsPane(ColoredToolButton::Google);
 	m_comment->setToolTip(tr("Add comment"));
+	m_comment->setColor(::loadCommentColor());
 	m_done->setIcons(QIcon(":/Graphics/Icons/Review/done.png"));
 	m_done->setCheckable(true);
 	m_done->setToolTip(tr("Mark as done"));

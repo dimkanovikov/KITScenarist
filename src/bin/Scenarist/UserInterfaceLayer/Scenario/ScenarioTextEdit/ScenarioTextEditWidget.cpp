@@ -118,6 +118,11 @@ void ScenarioTextEditWidget::setHighlightCurrentLine(bool _highlight)
 	m_editor->setHighlightCurrentLine(_highlight);
 }
 
+void ScenarioTextEditWidget::setAutoReplacing(bool _replacing)
+{
+	m_editor->setAutoReplacing(_replacing);
+}
+
 void ScenarioTextEditWidget::setUsePageView(bool _use)
 {
 	//
@@ -239,7 +244,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	if (info == 0) {
 		info = new ScenarioTextBlockInfo;
 	}
-	info->setColor(_color);
+	info->setColors(_color.name());
 	info->setDescription(_description);
 	cursor.block().setUserData(info);
 
@@ -469,6 +474,7 @@ void ScenarioTextEditWidget::initView()
 	mainLayout->addWidget(m_searchLine);
 
 	QSplitter* mainSplitter = new QSplitter(this);
+	mainSplitter->setObjectName("mainScenarioSplitter");
 	mainSplitter->setHandleWidth(1);
 	mainSplitter->setOpaqueResize(false);
 	QWidget* mainLayoutWidget = new QWidget(this);

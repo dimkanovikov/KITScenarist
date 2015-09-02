@@ -89,6 +89,11 @@ namespace UserInterface
 		void setHighlightCurrentLine(bool _highlight);
 
 		/**
+		 * @brief Установить необходимость автоматических замен
+		 */
+		void setAutoReplacing(bool _replacing);
+
+		/**
 		 * @brief Обновить сочетания клавиш для переходов между блоками
 		 */
 		void updateShortcuts();
@@ -109,12 +114,6 @@ namespace UserInterface
 		void setAdditionalCursors(const QMap<QString, int>& _cursors);
 
 	public slots:
-		/**
-		 * @brief Своя реализация проверки виден ли курсор на экране
-		 * @param Значение true докручивает, как сверху, так и снизу, а false только снизу
-		 */
-		void ensureCursorVisibleReimpl(bool _upAndDown = false);
-
 		/**
 		 * @brief Собственные реализации отмены/повтора последнего действия
 		 */
@@ -270,6 +269,11 @@ namespace UserInterface
 		 * @brief Подсвечивать текущую линию
 		 */
 		bool m_highlightCurrentLine;
+
+		/**
+		 * @brief Использовать автозамены для особых случаев
+		 */
+		bool m_autoReplacing;
 
 		/**
 		 * @brief Курсоры соавторов

@@ -8,16 +8,26 @@
 #include <3rd_party/Helpers/ShortcutHelper.h>
 
 #include <QApplication>
+#include <QHeaderView>
 #include <QSettings>
+#include <QSplitter>
 #include <QStandardPaths>
 #include <QStringList>
+#include <QTableView>
+#include <QTreeView>
 #include <QUuid>
+#include <QWidget>
 
 using namespace DataStorageLayer;
 using namespace DataMappingLayer;
 using namespace BusinessLogic;
 
 namespace {
+	/**
+	 * @brief Ключ для хранения положения и размеров интерфейса
+	 */
+	const QString STATE_AND_GEOMETRY_KEY = "state_and_geometry";
+
 	/**
 	 * @brief Имя пользователя из системы
 	 */
@@ -216,12 +226,69 @@ void SettingsStorage::resetValues(SettingsStorage::SettingsPlace _settingsPlace)
 	}
 }
 
+void SettingsStorage::saveApplicationStateAndGeometry(QWidget* _widget)
+{
+	QSettings settings;
+
+	settings.beginGroup(STATE_AND_GEOMETRY_KEY);
+
+	settings.setValue("geometry", _widget->saveGeometry());
+
+	settings.beginGroup("splitters");
+	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
+		settings.setValue(splitter->objectName() + "-state", splitter->saveState());
+		settings.setValue(splitter->objectName() + "-geometry", splitter->saveGeometry());
+	}
+	settings.endGroup();
+
+	settings.beginGroup("headers");
+	foreach (QTableView* table, _widget->findChildren<QTableView*>()) {
+		settings.setValue(table->objectName() + "-state", table->horizontalHeader()->saveState());
+		settings.setValue(table->objectName() + "-geometry", table->horizontalHeader()->saveGeometry());
+	}
+	foreach (QTreeView* tree, QApplication::activeWindow()->findChildren<QTreeView*>()) {
+		settings.setValue(tree->objectName() + "-state", tree->header()->saveState());
+		settings.setValue(tree->objectName() + "-geometry", tree->header()->saveGeometry());
+	}
+	settings.endGroup();
+	settings.endGroup(); // STATE_AND_GEOMETRY_KEY
+}
+
+void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
+{
+	QSettings settings;
+
+	settings.beginGroup(STATE_AND_GEOMETRY_KEY);
+
+	_widget->restoreGeometry(settings.value("geometry").toByteArray());
+
+	settings.beginGroup("splitters");
+	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
+		splitter->restoreState(settings.value(splitter->objectName() + "-state").toByteArray());
+		splitter->restoreGeometry(settings.value(splitter->objectName() + "-geometry").toByteArray());
+	}
+	settings.endGroup();
+
+	settings.beginGroup("headers");
+	foreach (QTableView* table, _widget->findChildren<QTableView*>()) {
+		table->horizontalHeader()->restoreState(settings.value(table->objectName() + "-state").toByteArray());
+		table->horizontalHeader()->restoreGeometry(settings.value(table->objectName() + "-geometry").toByteArray());
+	}
+	foreach (QTreeView* tree, _widget->findChildren<QTreeView*>()) {
+		tree->header()->restoreState(settings.value(tree->objectName() + "-state").toByteArray());
+		tree->header()->restoreGeometry(settings.value(tree->objectName() + "-geometry").toByteArray());
+	}
+	settings.endGroup();
+	settings.endGroup(); // STATE_AND_GEOMETRY_KEY
+}
+
 SettingsStorage::SettingsStorage()
 {
 	//
 	// Настроим значения параметров по умолчанию
 	//
 	m_defaultValues.insert("application/uuid", QUuid::createUuid().toString());
+	m_defaultValues.insert("application/language", "-1");
 	m_defaultValues.insert("application/user-name", ::systemUserName());
 	m_defaultValues.insert("application/use-dark-theme", "0");
 	m_defaultValues.insert("application/autosave", "1");
@@ -235,9 +302,10 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("navigator/scene-description-is-scene-text", "1");
 	m_defaultValues.insert("navigator/scene-description-height", "1");
 
+	m_defaultValues.insert("scenario-editor/page-view", "1");
 	m_defaultValues.insert("scenario-editor/zoom-range", "1");
 	m_defaultValues.insert("scenario-editor/show-scenes-numbers", "0");
-	m_defaultValues.insert("scenario-editor/page-view", "1");
+	m_defaultValues.insert("scenario-editor/auto-replacing", "1");
 	m_defaultValues.insert("scenario-editor/spell-checking", "0");
 	m_defaultValues.insert("scenario-editor/text-color", "#000000");
 	m_defaultValues.insert("scenario-editor/background-color", "#FEFEFE");

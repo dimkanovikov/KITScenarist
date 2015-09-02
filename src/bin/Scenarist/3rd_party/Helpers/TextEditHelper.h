@@ -2,6 +2,7 @@
 #define TEXTEDITHELPER_H
 
 #include <QFontMetricsF>
+#include <QLocale>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QString>
@@ -135,6 +136,44 @@ namespace TextEditHelper
 	}
 
 	/**
+	 * @brief Функции для получения корректных кавычек в зависимости от локали приложения
+	 */
+	/** @{ */
+	static QString localeQuote(bool _open) {
+		QString quote = "";
+		switch (QLocale().language()) {
+			default: {
+				quote = "\"";
+				break;
+			}
+
+			case QLocale::Russian:
+			case QLocale::Spanish: {
+				if (_open) {
+					quote = "«";
+				} else {
+					quote = "»";
+				}
+				break;
+			}
+
+			case QLocale::English: {
+				if (_open) {
+					quote = "“";
+				} else {
+					quote = "”";
+				}
+				break;
+			}
+		}
+
+		return quote;
+	}
+	static QString localOpenQuote() { return localeQuote(true); }
+	static QString localCloseQuote() { return localeQuote(false); }
+	/** @{ */
+
+	/**
 	 * @brief Украшения документа при вводе текста
 	 *
 	 * Оптимизация, чтобы не просматривать весь документ
@@ -163,9 +202,9 @@ namespace TextEditHelper
 
 			if (cursorCopy.selectedText().isEmpty()
 				|| cursorCopy.selectedText().endsWith(" ")) {
-				_cursor.insertText("«");
+				_cursor.insertText(localOpenQuote());
 			} else {
-				_cursor.insertText("»");
+				_cursor.insertText(localCloseQuote());
 			}
 		}
 	}

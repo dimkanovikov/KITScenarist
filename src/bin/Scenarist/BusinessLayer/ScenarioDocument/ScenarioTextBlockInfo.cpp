@@ -22,15 +22,15 @@ void ScenarioTextBlockInfo::setSceneNumber(int _number)
 	}
 }
 
-QColor ScenarioTextBlockInfo::color() const
+QString ScenarioTextBlockInfo::colors() const
 {
-	return m_color;
+	return m_colors;
 }
 
-void ScenarioTextBlockInfo::setColor(const QColor& _color)
+void ScenarioTextBlockInfo::setColors(const QString& _colors)
 {
-	if (m_color != _color) {
-		m_color = _color;
+	if (m_colors != _colors) {
+		m_colors = _colors;
 	}
 }
 
@@ -71,7 +71,7 @@ ScenarioTextBlockInfo* ScenarioTextBlockInfo::clone() const
 {
 	ScenarioTextBlockInfo* copy = new ScenarioTextBlockInfo;
 	copy->m_sceneNumber = m_sceneNumber;
-	copy->m_color = m_color;
+	copy->m_colors = m_colors;
 	copy->m_description = m_description;
 	return copy;
 }

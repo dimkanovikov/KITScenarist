@@ -41,8 +41,9 @@ public:
 public slots:
 	/**
 	 * @brief Добавить фотографию
+	 * @return Путь к выбранному файлу
 	 */
-	void aboutAddPhoto();
+	QString aboutAddPhoto(const QString& _folder = QString::null);
 
 signals:
 	/**

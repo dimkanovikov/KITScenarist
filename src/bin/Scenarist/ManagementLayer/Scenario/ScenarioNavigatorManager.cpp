@@ -138,9 +138,9 @@ void ScenarioNavigatorManager::aboutRemoveItems(const QModelIndexList& _indexes)
 	emit removeItems(removeIndexes);
 }
 
-void ScenarioNavigatorManager::aboutSetItemColor(const QModelIndex& _index, const QColor& _color)
+void ScenarioNavigatorManager::aboutSetItemColors(const QModelIndex& _index, const QString& _colors)
 {
-	emit setItemColor(m_scenarioModelProxy->mapToSource(_index), _color);
+	emit setItemColors(m_scenarioModelProxy->mapToSource(_index), _colors);
 }
 
 void ScenarioNavigatorManager::aboutSceneChoosed(const QModelIndex& _index)
@@ -164,7 +164,7 @@ void ScenarioNavigatorManager::initConnections()
 
 	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)));
 	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
-	connect(m_navigator, SIGNAL(setItemColor(QModelIndex,QColor)), this, SLOT(aboutSetItemColor(QModelIndex,QColor)));
+	connect(m_navigator, SIGNAL(setItemColors(QModelIndex,QString)), this, SLOT(aboutSetItemColors(QModelIndex,QString)));
 	connect(m_navigator, SIGNAL(showHideDraft()), this, SIGNAL(showHideDraft()));
 	connect(m_navigator, SIGNAL(showHideNote()), this, SIGNAL(showHideNote()));
 	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutSceneChoosed(QModelIndex)));

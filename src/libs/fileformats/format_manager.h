@@ -22,6 +22,8 @@
 
 class FormatReader;
 
+#include "fileformatsglobal.h"
+
 #include <QCoreApplication>
 #include <QString>
 
@@ -29,7 +31,7 @@ class QIODevice;
 class QStringList;
 
 
-class FormatManager
+class FILEFORMATS_EXPORT FormatManager
 {
 public:
 	static FormatReader* createReader(QIODevice* device, const QString& type = QString());

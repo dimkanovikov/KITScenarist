@@ -13,7 +13,9 @@
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h>
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h>
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
+#include <QApplication>
 #include <QFileDialog>
 #include <QSplitter>
 #include <QStandardItemModel>
@@ -82,18 +84,18 @@ namespace {
 		const int ROWS_COUNT = 0;
 		const int COLUMNS_COUNT = 6;
 		QStandardItemModel* blocksJumpsModel = new QStandardItemModel(ROWS_COUNT, COLUMNS_COUNT, _parent);
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneHeading));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneCharacters));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Action));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Character));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Parenthetical));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Dialogue));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Transition));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Note));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::Title));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::NoprintableText));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::SceneGroupHeader));
-		blocksJumpsModel->appendRow(::blocksJumpsModelRow(ScenarioBlockStyle::FolderHeader));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::SceneHeading));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::SceneCharacters));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Action));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Character));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Parenthetical));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Dialogue));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Transition));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Note));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::Title));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::NoprintableText));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::SceneGroupHeader));
+		blocksJumpsModel->appendRow(blocksJumpsModelRow(ScenarioBlockStyle::FolderHeader));
 
 		return blocksJumpsModel;
 	}
@@ -111,38 +113,6 @@ SettingsManager::SettingsManager(QObject* _parent, QWidget* _parentWidget) :
 QWidget* SettingsManager::view() const
 {
 	return m_view;
-}
-
-void SettingsManager::loadViewState()
-{
-	m_view->splitter()->restoreGeometry(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-						"application/settings/geometry",
-						DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-	m_view->splitter()->restoreState(
-				QByteArray::fromHex(
-					DataStorageLayer::StorageFacade::settingsStorage()->value(
-						"application/settings/state",
-						DataStorageLayer::SettingsStorage::ApplicationSettings)
-					.toUtf8()
-					)
-				);
-}
-
-void SettingsManager::saveViewState()
-{
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/settings/geometry", m_view->splitter()->saveGeometry().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-				"application/settings/state", m_view->splitter()->saveState().toHex(),
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
 }
 
 void SettingsManager::aboutResetSettings()
@@ -163,6 +133,16 @@ void SettingsManager::aboutResetSettings()
 	initView();
 
 	progress.close();
+}
+
+void SettingsManager::applicationLanguageChanged(int _value)
+{
+	storeValue("application/language", _value);
+
+	//
+	// Уведомляем о том, что язык сменится после перезапуска
+	//
+	QLightBoxMessage::information(m_view, QString::null, tr("Language will be change after application restart."));
 }
 
 void SettingsManager::applicationUseDarkThemeChanged(bool _value)
@@ -190,6 +170,11 @@ void SettingsManager::applicationSaveBackupsFolderChanged(const QString& _value)
 	storeValue("application/save-backups-folder", _value);
 }
 
+void SettingsManager::scenarioEditPageViewChanged(bool _value)
+{
+	storeValue("scenario-editor/page-view", _value);
+}
+
 void SettingsManager::scenarioEditShowScenesNumbersChanged(bool _value)
 {
 	storeValue("scenario-editor/show-scenes-numbers", _value);
@@ -200,9 +185,9 @@ void SettingsManager::scenarioEditHighlightCurrentLineChanged(bool _value)
 	storeValue("scenario-editor/highlight-current-line", _value);
 }
 
-void SettingsManager::scenarioEditPageViewChanged(bool _value)
+void SettingsManager::scenarioEditEnableAutoReplacing(bool _value)
 {
-	storeValue("scenario-editor/page-view", _value);
+	storeValue("scenario-editor/auto-replacing", _value);
 }
 
 void SettingsManager::scenarioEditSpellCheckChanged(bool _value)
@@ -543,6 +528,12 @@ void SettingsManager::initView()
 	//
 	// Настройки приложения
 	//
+	m_view->setApplicationLanguage(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/language",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setApplicationUseDarkTheme(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"application/use-dark-theme",
@@ -576,6 +567,12 @@ void SettingsManager::initView()
 	//
 	// Настройки текстового редактора
 	//
+	m_view->setScenarioEditPageView(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/page-view",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setScenarioEditShowScenesNumbers(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"scenario-editor/show-scenes-numbers",
@@ -588,9 +585,9 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
-	m_view->setScenarioEditPageView(
+	m_view->setScenarioEditEnableAutoReplacing(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/page-view",
+					"scenario-editor/auto-replacing",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
@@ -886,15 +883,17 @@ void SettingsManager::initConnections()
 	//
 	// Сохранение изменений параметров
 	//
+	connect(m_view, SIGNAL(applicationLanguageChanged(int)), this, SLOT(applicationLanguageChanged(int)));
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SLOT(applicationUseDarkThemeChanged(bool)));
 	connect(m_view, SIGNAL(applicationAutosaveChanged(bool)), this, SLOT(applicationAutosaveChanged(bool)));
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SLOT(applicationAutosaveIntervalChanged(int)));
 	connect(m_view, SIGNAL(applicationSaveBackupsChanged(bool)), this, SLOT(applicationSaveBackupsChanged(bool)));
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SLOT(applicationSaveBackupsFolderChanged(QString)));
 
+	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SLOT(scenarioEditHighlightCurrentLineChanged(bool)));
-	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
+	connect(m_view, SIGNAL(scenarioEditEnableAutoReplacing(bool)), this, SLOT(scenarioEditEnableAutoReplacing(bool)));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SLOT(scenarioEditSpellCheckChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckLanguageChanged(int)), this, SLOT(scenarioEditSpellCheckLanguageChanged(int)));
 	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SLOT(scenarioEditTextColorChanged(QColor)));
@@ -951,9 +950,10 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SIGNAL(applicationSettingsUpdated()));
 
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
-	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditEnableAutoReplacing(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckLanguageChanged(int)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));

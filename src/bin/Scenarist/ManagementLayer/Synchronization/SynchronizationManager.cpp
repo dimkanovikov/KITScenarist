@@ -88,6 +88,7 @@ namespace {
 	const QString DBH_QUERY_KEY = "query";
 	const QString DBH_QUERY_VALUES_KEY = "query_values";
 	const QString DBH_DATETIME_KEY = "datetime";
+	const QString DBH_ORDER_KEY = "order";
 	/** @} */
 
 	const bool IS_CLEAN = false;
@@ -1042,6 +1043,7 @@ bool SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids
 		QXmlStreamWriter xmlWriter(&dataChangesXml);
 		xmlWriter.writeStartDocument();
 		xmlWriter.writeStartElement("changes");
+		int order = 0;
 		foreach (const QString& dataUuid, _dataUuids) {
 			const QMap<QString, QString> historyRecord =
 					StorageFacade::databaseHistoryStorage()->historyRecord(dataUuid);
@@ -1065,6 +1067,8 @@ bool SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids
 			xmlWriter.writeEndElement();
 			//
 			xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
+			//
+			xmlWriter.writeTextElement(DBH_ORDER_KEY, QString::number(order++));
 			//
 			xmlWriter.writeEndElement(); // change
 		}

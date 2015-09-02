@@ -5,6 +5,35 @@
 #include <QRegularExpression>
 #include <QScrollBar>
 #include <QTextFrame>
+#include <QTimer>
+
+
+ScrollBar::ScrollBar(Qt::Orientation _orientation, QWidget* _parent) :
+	QScrollBar(_orientation, _parent),
+	m_maximum(0)
+{
+}
+
+void ScrollBar::setMaximumReimpl(int _maximum)
+{
+	if (m_maximum != _maximum) {
+		m_maximum = _maximum;
+		setMaximum(_maximum);
+	}
+}
+
+void ScrollBar::sliderChange(QAbstractSlider::SliderChange _change)
+{
+	QScrollBar::sliderChange(_change);
+
+	if (m_maximum != maximum()) {
+		setMaximum(m_maximum);
+	}
+}
+
+
+// ****
+
 
 PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	QTextEdit(parent),
@@ -14,6 +43,7 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	m_showPageNumbers(true),
 	m_pageNumbersAlignment(Qt::AlignTop | Qt::AlignRight)
 {
+	setVerticalScrollBar(new ScrollBar(Qt::Vertical, this));
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
 	//
@@ -36,7 +66,7 @@ void PagesTextEdit::setPageFormat(QPageSize::PageSizeId _pageFormat)
 	//
 	// Перерисуем себя
 	//
-	repaint();
+	update();
 }
 
 void PagesTextEdit::setPageMargins(const QMarginsF& _margins)
@@ -46,7 +76,7 @@ void PagesTextEdit::setPageMargins(const QMarginsF& _margins)
 	//
 	// Перерисуем себя
 	//
-	repaint();
+	update();
 }
 
 bool PagesTextEdit::usePageMode() const
@@ -67,7 +97,7 @@ void PagesTextEdit::setUsePageMode(bool _use)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
 	}
 }
 
@@ -79,7 +109,7 @@ void PagesTextEdit::setAddSpaceToBottom(bool _addSpace)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
 	}
 }
 
@@ -91,7 +121,7 @@ void PagesTextEdit::setShowPageNumbers(bool _show)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
 	}
 }
 
@@ -103,7 +133,7 @@ void PagesTextEdit::setPageNumbersAlignment(Qt::Alignment _align)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
 	}
 }
 
@@ -126,7 +156,50 @@ void PagesTextEdit::setWatermark(const QString& _watermark)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
+	}
+}
+
+void PagesTextEdit::ensureCursorVisibleReimpl(bool _upAndDown)
+{
+	if (verticalScrollBar()->maximum() > 0) {
+		//
+		// Применяем стандартное поведение
+		//
+		ensureCursorVisible();
+
+		//
+		// Если необходимо прокручиваем ещё немного
+		//
+		{
+			const int DETECT_DELTA = 10;
+			const int SCROLL_DELTA = 200;
+			QRect cursorRect = this->cursorRect();
+			if (cursorRect.y() - DETECT_DELTA <= 0
+				&& _upAndDown) {
+				verticalScrollBar()->setValue(verticalScrollBar()->value() - SCROLL_DELTA);
+			}
+			else if (cursorRect.height() + cursorRect.y() + DETECT_DELTA >= viewport()->height()) {
+				//
+				// Если можем, прокручиваем вниз на SCROLL_DELTA
+				//
+				if (verticalScrollBar()->value() + SCROLL_DELTA <= verticalScrollBar()->maximum()) {
+					verticalScrollBar()->setValue(verticalScrollBar()->value() + SCROLL_DELTA);
+				}
+				//
+				// Если SCROLL_DELTA это много, но ещё можно прокрутить - прокручиваем до конца
+				//
+				else if (verticalScrollBar()->maximum() - verticalScrollBar()->value() > 0) {
+					verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+				}
+				//
+				// В противном случае ожидаем увеличения длины полосы прокрутки и пробуем снова
+				//
+				else {
+					QTimer::singleShot(10, this, SLOT(ensureCursorVisibleReimpl()));
+				}
+			}
+		}
 	}
 }
 
@@ -227,7 +300,9 @@ void PagesTextEdit::updateVerticalScrollRange()
 		const int documentHeight = pageHeight * document()->pageCount();
 		const int maximumValue = documentHeight - viewport()->height();
 		if (verticalScrollBar()->maximum() != maximumValue) {
-			verticalScrollBar()->setMaximum(maximumValue);
+			if (ScrollBar* verticalScrollBar = qobject_cast<ScrollBar*>(this->verticalScrollBar())) {
+				verticalScrollBar->setMaximumReimpl(maximumValue);
+			}
 		}
 	}
 	//
@@ -239,7 +314,9 @@ void PagesTextEdit::updateVerticalScrollRange()
 				document()->size().height() - viewport()->size().height()
 				+ (m_addBottomSpace ? SCROLL_DELTA : 0);
 		if (verticalScrollBar()->maximum() != maximumValue) {
-			verticalScrollBar()->setMaximum(maximumValue);
+			if (ScrollBar* verticalScrollBar = qobject_cast<ScrollBar*>(this->verticalScrollBar())) {
+				verticalScrollBar->setMaximumReimpl(maximumValue);
+			}
 		}
 	}
 }
@@ -511,4 +588,3 @@ void PagesTextEdit::aboutUpdateDocumentGeometry()
 		document()->rootFrame()->setFrameFormat(rootFrameFormat);
 	}
 }
-

@@ -31,7 +31,7 @@ namespace {
 	 * @brief Получить путь к экспортируемому файлу
 	 */
 	static QString exportFilePath(const QString& _fileName) {
-		QString filePath = ::exportFolderPath() + QDir::separator() + _fileName;
+		QString filePath = exportFolderPath() + QDir::separator() + _fileName;
 		return QDir::toNativeSeparators(filePath);
 	}
 
@@ -76,6 +76,8 @@ void ExportDialog::setExportFilePath(const QString& _filePath)
 	} else {
 		ui->pdf->setChecked(true);
 	}
+
+	aboutFileNameChanged();
 }
 
 void ExportDialog::setExportFileName(const QString& _fileName)
@@ -86,6 +88,8 @@ void ExportDialog::setExportFileName(const QString& _fileName)
 		ui->file->setText(::exportFilePath(_fileName));
 		aboutFormatChanged();
 	}
+
+	aboutFileNameChanged();
 }
 
 void ExportDialog::setCheckPageBreaks(bool _check)
@@ -258,6 +262,7 @@ void ExportDialog::aboutChooseFile()
 void ExportDialog::aboutFileNameChanged()
 {
 	ui->exportTo->setEnabled(!ui->file->text().isEmpty());
+	ui->existsLabel->setVisible(QFile::exists(ui->file->text()));
 }
 
 void ExportDialog::initView()

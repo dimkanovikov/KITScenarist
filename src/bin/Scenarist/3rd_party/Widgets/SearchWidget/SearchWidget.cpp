@@ -76,7 +76,7 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	m_replaceOne->setText(tr("Replace"));
 	connect(m_replaceOne, SIGNAL(clicked()), this, SLOT(aboutReplaceOne()));
 
-	m_replaceAll->setFixedWidth(40);
+	m_replaceAll->setFixedWidth(50);
 	m_replaceAll->setText(tr("All"));
 	connect(m_replaceAll, SIGNAL(clicked()), this, SLOT(aboutReplaceAll()));
 
@@ -131,8 +131,11 @@ void SearchWidget::aboutReplaceOne()
 
 		const QString searchText = m_searchText->text();
 		QTextCursor cursor = m_editor->textCursor();
-		if (cursor.hasSelection()
-			&& cursor.selectedText() == searchText) {
+		bool selectedTextEqual =
+			m_caseSensitive->isChecked()
+			? cursor.selectedText() == searchText
+			: cursor.selectedText().toLower() == searchText.toLower();
+		if (selectedTextEqual) {
 			cursor.insertText(replaceText);
 			aboutFindNext();
 		}

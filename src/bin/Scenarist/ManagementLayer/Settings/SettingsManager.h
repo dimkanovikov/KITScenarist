@@ -22,16 +22,6 @@ namespace ManagementLayer
 
 		QWidget* view() const;
 
-		/**
-		 * @brief Загрузить состояние окна
-		 */
-		void loadViewState();
-
-		/**
-		 * @brief Сохранить состояние окна
-		 */
-		void saveViewState();
-
 	signals:
 		/**
 		 * @brief Обновления настроек
@@ -54,15 +44,17 @@ namespace ManagementLayer
 		 * @brief Изменения параметров
 		 */
 		/** @{ */
+		void applicationLanguageChanged(int _value);
 		void applicationUseDarkThemeChanged(bool _value);
 		void applicationAutosaveChanged(bool _value);
 		void applicationAutosaveIntervalChanged(int _value);
 		void applicationSaveBackupsChanged(bool _value);
 		void applicationSaveBackupsFolderChanged(const QString& _value);
 
-		void scenarioEditShowScenesNumbersChanged(bool  _value);
-        void scenarioEditHighlightCurrentLineChanged(bool _value);
 		void scenarioEditPageViewChanged(bool  _value);
+		void scenarioEditShowScenesNumbersChanged(bool  _value);
+		void scenarioEditHighlightCurrentLineChanged(bool _value);
+		void scenarioEditEnableAutoReplacing(bool  _value);
 		void scenarioEditSpellCheckChanged(bool  _value);
 		void scenarioEditSpellCheckLanguageChanged(int _value);
 		void scenarioEditTextColorChanged(const QColor& _value);

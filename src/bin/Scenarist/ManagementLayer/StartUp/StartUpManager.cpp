@@ -135,21 +135,27 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 			// Если она больше текущей версии программы, выводим информацию
 			//
 			if (QApplication::applicationVersion() < maxVersion) {
+				QString localeSuffix;
+				if (QLocale().language() == QLocale::English) {
+					localeSuffix = "_en";
+				} else if (QLocale().language() == QLocale::Spanish) {
+					localeSuffix = "_es";
+				}
 				QString updateInfo =
 						tr("Released version %1 ").arg(maxVersion)
 #ifdef Q_OS_WIN
 						+ "<a href=\"https://kitscenarist.ru/downloads/windows/scenarist-setup-" + maxVersion + ".exe\" "
 #elif defined Q_OS_LINUX
 #ifdef Q_PROCESSOR_X86_64
-						+ "<a href=\"https://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + "_amd64.deb\" "
+						+ "<a href=\"https://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + localeSuffix + "_amd64.deb\" "
 #else
-						+ "<a href=\"https://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + "_i386.deb\" "
+						+ "<a href=\"https://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + localeSuffix + "_i386.deb\" "
 #endif
 #elif defined Q_OS_MAC
-						+ "<a href=\"https://kitscenarist.ru/downloads/mac/scenarist-setup-" + maxVersion + ".dmg\" "
+						+ "<a href=\"https://kitscenarist.ru/downloads/mac/scenarist-setup-" + maxVersion + localeSuffix + ".dmg\" "
 #endif
 						+ "style=\"color:#2b78da;\">" + tr("download") + "</a> "
-						+ tr("or") + "<a href=\"https://kitscenarist.ru/history.html\" "
+						+ tr("or") + " <a href=\"https://kitscenarist.ru/history.html\" "
 						+ "style=\"color:#2b78da;\">" + tr("read more") + "</a>.";
 				m_view->setUpdateInfo(updateInfo);
 			}
@@ -208,7 +214,7 @@ void StartUpManager::checkNewVersion()
 	//
 	// Построим ссылку, чтобы учитывать запрос на проверку обновлений
 	//
-	QString url = QString("https://kitscenarist.ru/api/app_updates.php");
+	QString url = QString("https://kitscenarist.ru/api/app/updates/");
 
 	url.append("?system_type=");
 	url.append(

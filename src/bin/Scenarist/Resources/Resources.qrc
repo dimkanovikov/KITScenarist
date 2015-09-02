@@ -13,6 +13,10 @@
         <file>HunspellDictionaries/ru_RU_yo.aff</file>
         <file>HunspellDictionaries/es_ES.dic</file>
         <file>HunspellDictionaries/es_ES.aff</file>
+        <file>HunspellDictionaries/en_GB.aff</file>
+        <file>HunspellDictionaries/en_GB.dic</file>
+        <file>HunspellDictionaries/en_US.dic</file>
+        <file>HunspellDictionaries/en_US.aff</file>
     </qresource>
     <qresource prefix="/Graphics">
         <file>Icons/folder.png</file>
@@ -78,6 +82,7 @@
         <file>Icons/statistics.png</file>
         <file>Icons/printer.png</file>
         <file>Icons/settings_tool.png</file>
+        <file>Icons/alert.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
@@ -89,6 +94,7 @@
         <file>Translations/qt_es.qm</file>
         <file>Translations/Scenarist_fr.ts</file>
         <file>Translations/Scenarist_en.ts</file>
+        <file>Translations/Scenarist_en.qm</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/style.qss</file>

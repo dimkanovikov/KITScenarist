@@ -289,8 +289,8 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 						if (!info->description(htmlEscaped).isEmpty()) {
 							writer.writeAttribute(ATTRIBUTE_DESCRIPTION, info->description(htmlEscaped));
 						}
-						if (info->color().isValid()) {
-							writer.writeAttribute(ATTRIBUTE_COLOR, info->color().name());
+						if (!info->colors().isEmpty()) {
+							writer.writeAttribute(ATTRIBUTE_COLOR, info->colors());
 						}
 					}
 				}
@@ -514,6 +514,18 @@ int ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelIt
 		//
 		if (insertPosition != 0) {
 			insertPosition = cursor.position();
+		}
+		//
+		// ... перенесём данные оставшиеся в предыдущем блоке, в новое место
+		//
+		else {
+			cursor.movePosition(QTextCursor::PreviousBlock);
+			if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*> (cursor.block().userData())) {
+				ScenarioTextBlockInfo* movedInfo = info->clone();
+				cursor.block().setUserData(0);
+				cursor.movePosition(QTextCursor::NextBlock);
+				cursor.block().setUserData(movedInfo);
+			}
 		}
 
 		//
@@ -814,8 +826,7 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 							info->setDescription(synopsis, htmlEscaped);
 						}
 						if (reader.attributes().hasAttribute(ATTRIBUTE_COLOR)) {
-							QColor color(reader.attributes().value(ATTRIBUTE_COLOR).toString());
-							info->setColor(color);
+							info->setColors(reader.attributes().value(ATTRIBUTE_COLOR).toString());
 						}
 						cursor.block().setUserData(info);
 					}

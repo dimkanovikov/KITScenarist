@@ -104,9 +104,9 @@ namespace UserInterface
 		void removeItems(const QModelIndexList& _itemIndex);
 
 		/**
-		 * @brief Запрос на установку цвета текущего элемента
+		 * @brief Запрос на установку цветов текущего элемента
 		 */
-		void setItemColor(const QModelIndex& _index, const QColor& _color);
+		void setItemColors(const QModelIndex& _index, const QString& _colors);
 
 		/**
 		 * @brief Показать/скрыть заметки к сцене

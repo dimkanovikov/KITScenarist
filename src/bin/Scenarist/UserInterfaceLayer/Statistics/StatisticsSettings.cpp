@@ -22,7 +22,7 @@ StatisticsSettings::~StatisticsSettings()
 void StatisticsSettings::setCharacters(QAbstractItemModel* _characters)
 {
 	ui->characterName->setModel(_characters);
-	if (_characters->rowCount() > 0) {
+	if (_characters != 0) {
 		ui->characterName->setCurrentIndex(_characters->index(0, 0));
 		connect(ui->characterName->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SIGNAL(settingsChanged()));
 	}

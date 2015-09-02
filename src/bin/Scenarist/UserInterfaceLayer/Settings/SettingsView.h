@@ -47,15 +47,17 @@ namespace UserInterface
 		 * @brief Установка параметров
 		 */
 		/** @{ */
+		void setApplicationLanguage(int _value);
 		void setApplicationUseDarkTheme(bool _value);
 		void setApplicationAutosave(bool);
 		void setApplicationAutosaveInterval(int);
 		void setApplicationSaveBackups(bool _save);
 		void setApplicationSaveBackupsFolder(const QString& _folder);
 
+		void setScenarioEditPageView(bool _value);
 		void setScenarioEditShowScenesNumbers(bool _value);
 		void setScenarioEditHighlightCurrentLine(bool _value);
-		void setScenarioEditPageView(bool _value);
+		void setScenarioEditEnableAutoReplacing(bool _value);
 		void setScenarioEditSpellCheck(bool _value);
 		void setScenarioEditSpellCheckLanguage(int _value);
 		void setScenarioEditTextColor(const QColor& _color);
@@ -105,15 +107,17 @@ namespace UserInterface
 		 * @brief Изменения параметров
 		 */
 		/** @{ */
+		void applicationLanguageChanged(int);
 		void applicationUseDarkThemeChanged(bool);
 		void applicationAutosaveChanged(bool);
 		void applicationAutosaveIntervalChanged(int);
 		void applicationSaveBackupsChanged(bool);
 		void applicationSaveBackupsFolderChanged(const QString&);
 
+		void scenarioEditPageViewChanged(bool);
 		void scenarioEditShowScenesNumbersChanged(bool);
 		void scenarioEditHighlightCurrentLineChanged(bool);
-		void scenarioEditPageViewChanged(bool);
+		void scenarioEditEnableAutoReplacing(bool);
 		void scenarioEditSpellCheckChanged(bool);
 		void scenarioEditSpellCheckLanguageChanged(int);
 		void scenarioEditTextColorChanged(const QColor&);
@@ -168,6 +172,11 @@ namespace UserInterface
 		/** @} */
 
 	private slots:
+		/**
+		 * @brief Выбрать язык приложения
+		 */
+		void aboutChooseApplicationLanguage();
+
 		/**
 		 * @brief Обработка смены языка для проверки орфографии
 		 */
@@ -251,6 +260,11 @@ namespace UserInterface
 		 * @brief Форма
 		 */
 		Ui::SettingsView *ui;
+
+		/**
+		 * @brief Язык приложения
+		 */
+		int m_appLanguage;
 
 		/**
 		 * @brief Переключатель вкладок для настроек редактора сценария

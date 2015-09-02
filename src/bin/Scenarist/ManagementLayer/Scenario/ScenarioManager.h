@@ -82,16 +82,6 @@ namespace ManagementLayer
 		void saveCurrentProjectSettings(const QString& _projectPath);
 
 		/**
-		 * @brief Загрузить состояние окна
-		 */
-		void loadViewState();
-
-		/**
-		 * @brief Сохранить состояние окна
-		 */
-		void saveViewState();
-
-		/**
 		 * @brief Закрыть текущий проект
 		 */
 		void closeCurrentProject();
@@ -235,7 +225,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Установить цвет элемента
 		 */
-		void aboutSetItemColor(const QModelIndex& _itemIndex, const QColor& _color);
+		void aboutSetItemColors(const QModelIndex& _itemIndex, const QString& _colors);
 
 		/**
 		 * @brief Показать/скрыть заметки к сцене

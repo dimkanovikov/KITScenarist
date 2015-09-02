@@ -18,6 +18,7 @@
 #include <UserInterfaceLayer/Export/ExportDialog.h>
 
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <QDir>
 #include <QFileInfo>
@@ -64,23 +65,42 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 			const QFileInfo fileInfo(filePath);
 
 			//
-			// Определим экспортирующего
+			// Проверяем возможность записи в файл
 			//
-			BusinessLogic::AbstractExporter* exporter = 0;
-			if (fileInfo.suffix() == "docx") {
-				exporter = new BusinessLogic::DocxExporter;
-			} else if (fileInfo.suffix() == "pdf") {
-				exporter = new BusinessLogic::PdfExporter;
-			} else {
-				Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Unknown file extension: " + fileInfo.suffix()));
-			}
+			QFile file(filePath);
+			const bool canWrite = file.open(QIODevice::WriteOnly);
+			file.close();
 
 			//
-			// Экспортируем документ
+			// Если возможна запись в файл
 			//
-			exporter->exportTo(_scenario, exportParameters);
-			delete exporter;
-			exporter = 0;
+			if (canWrite) {
+				//
+				// Определим экспортирующего
+				//
+				BusinessLogic::AbstractExporter* exporter = 0;
+				if (fileInfo.suffix() == "docx") {
+					exporter = new BusinessLogic::DocxExporter;
+				} else if (fileInfo.suffix() == "pdf") {
+					exporter = new BusinessLogic::PdfExporter;
+				} else {
+					Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Unknown file extension: " + fileInfo.suffix()));
+				}
+
+				//
+				// Экспортируем документ
+				//
+				exporter->exportTo(_scenario, exportParameters);
+				delete exporter;
+				exporter = 0;
+			}
+			//
+			// Если невозможно записать в файл, предупреждаем пользователя и отваливаемся
+			//
+			else {
+				QLightBoxMessage::critical(&progress, tr("Export error"),
+					tr("Can't write to file. Maybe it opened in other application. Please, close it and restart export."));
+			}
 		}
 
 		//

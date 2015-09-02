@@ -15,6 +15,7 @@ using BusinessLogic::ScenarioTextDocument;
 using BusinessLogic::ScenarioReviewModel;
 using UserInterface::ScenarioReviewView;
 using UserInterface::ScenarioReviewItemDelegate;
+using UserInterface::ScenarioTextEdit;
 
 namespace {
 
@@ -109,26 +110,27 @@ void ScenarioReviewView::aboutUpdateModel()
 
 void ScenarioReviewView::aboutMoveCursorToMark(const QModelIndex& _index)
 {
-	//
-	// Отключаемся, чтобы не моргал выделенный элемент
-	//
-	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutSelectMark()));
+	if (_index.isValid()) {
+		//
+		// Отключаемся, чтобы не моргал выделенный элемент
+		//
+		disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutSelectMark()));
 
-	if (ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model())) {
-		const int cursorPosition = reviewModel->markStartPosition(_index);
-		const int length = reviewModel->markLength(_index);
-		QTextCursor cursor = m_editor->textCursor();
-		cursor.setPosition(cursorPosition + length);
-		m_editor->setTextCursorReimpl(cursor);
-		m_editor->ensureCursorVisibleReimpl(true);
-		m_editor->clearFocus();
-		m_editor->setFocus();
+		if (ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model())) {
+			const int cursorPosition = reviewModel->markStartPosition(_index);
+			QTextCursor cursor = m_editor->textCursor();
+			cursor.setPosition(cursorPosition);
+			m_editor->setTextCursorReimpl(cursor);
+			m_editor->ensureCursorVisibleReimpl(true);
+			m_editor->clearFocus();
+			m_editor->setFocus();
+		}
+
+		//
+		// Восстанавливаем соединение
+		//
+		connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutSelectMark()));
 	}
-
-	//
-	// Восстанавливаем соединение
-	//
-	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutSelectMark()));
 }
 
 void ScenarioReviewView::aboutSelectMark()
