@@ -66,7 +66,7 @@ void PagesTextEdit::setPageFormat(QPageSize::PageSizeId _pageFormat)
 	//
 	// Перерисуем себя
 	//
-	repaint();
+	update();
 }
 
 void PagesTextEdit::setPageMargins(const QMarginsF& _margins)
@@ -76,7 +76,7 @@ void PagesTextEdit::setPageMargins(const QMarginsF& _margins)
 	//
 	// Перерисуем себя
 	//
-	repaint();
+	update();
 }
 
 bool PagesTextEdit::usePageMode() const
@@ -97,7 +97,7 @@ void PagesTextEdit::setUsePageMode(bool _use)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
 	}
 }
 
@@ -109,7 +109,7 @@ void PagesTextEdit::setAddSpaceToBottom(bool _addSpace)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
 	}
 }
 
@@ -121,7 +121,7 @@ void PagesTextEdit::setShowPageNumbers(bool _show)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
 	}
 }
 
@@ -133,7 +133,7 @@ void PagesTextEdit::setPageNumbersAlignment(Qt::Alignment _align)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
 	}
 }
 
@@ -156,7 +156,7 @@ void PagesTextEdit::setWatermark(const QString& _watermark)
 		//
 		// Перерисуем себя
 		//
-		repaint();
+		update();
 	}
 }
 
