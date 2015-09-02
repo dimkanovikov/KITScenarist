@@ -23,6 +23,7 @@ HEADERS += \
     WebLoader.h \
     HttpMultiPart.h \
     QFreeDesktopMime/freedesktopmime.h \
+    WebLoaderGlobal.h \
     WebLoaderGlobal.h
 
 RESOURCES += \
