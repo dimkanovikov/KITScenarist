@@ -1,11 +1,6 @@
 #!/bin/bash
 
 #
-# Удалить старый образ
-#
-rm ./Scenarist.dmg
-
-#
 # сформировать app-файл
 #
 ~/Qt/5.5/clang_64/bin/macdeployqt ../Release/bin/Scenarist/Scenarist.app
@@ -50,8 +45,23 @@ cp ../../src/bin/Scenarist/logo.icns ../Release/bin/Scenarist/Scenarist.app/Cont
 #
 cp -R ../Release/bin/Scenarist/Scenarist.app ./Scenarist.app
 
-# запустить скрипт создания dmg-файла
+#
+# Создаём русский dmg-файл
+#
 ./make_dmg.sh -i ../../src/bin/Scenarist/logo.icns -b cover.png -c "462:252:176:258" -s "640:400"  Scenarist.app 
+mv -f Scenarist.dmg scenarist-setup-$1.dmg
+
+#
+# Создаём английский dmg-файл
+#
+./make_dmg.sh -i ../../src/bin/Scenarist/logo.icns -b cover_en.png -c "462:252:176:258" -s "640:400"  Scenarist.app 
+mv -f Scenarist.dmg scenarist-setup-$1_en.dmg
+
+#
+# Создаём испанский dmg-файл
+#
+./make_dmg.sh -i ../../src/bin/Scenarist/logo.icns -b cover_es.png -c "462:252:176:258" -s "640:400"  Scenarist.app 
+mv -f Scenarist.dmg scenarist-setup-$1_es.dmg
 
 # удалить app-файл
 rm -R ./Scenarist.app
