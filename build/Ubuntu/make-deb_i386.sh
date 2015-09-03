@@ -29,7 +29,7 @@ mv -f scenarist_i386.deb scenarist-setup-$1_en_i386.deb
 #
 # Make Spanish installer
 #
-echo Build English version
+echo Build Spanish version
 cp -f translations/i386/es/control scenarist_i386/DEBIAN/
 fakeroot dpkg-deb --build scenarist_i386
 mv -f scenarist_i386.deb scenarist-setup-$1_es_i386.deb

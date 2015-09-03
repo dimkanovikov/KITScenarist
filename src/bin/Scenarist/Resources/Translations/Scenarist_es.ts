@@ -137,7 +137,7 @@
     <message>
         <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="154"/>
         <source>Chron</source>
-        <translation>Duración de la escena/s</translation>
+        <translation>Duración</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="163"/>
@@ -293,7 +293,7 @@
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="154"/>
         <source>Chronometry</source>
-        <translation>Tiempo</translation>
+        <translation>Duración</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="156"/>
@@ -370,7 +370,7 @@
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="356"/>
         <source>Dialogues count</source>
-        <translation>Cuenta de Diálogos</translation>
+        <translation>Cuenta de diálogos</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="370"/>
@@ -521,7 +521,7 @@
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="114"/>
         <source>File exists. It will be replaced after exporting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ya existe este archivo, desea remplazarlo después de exportar.</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="130"/>
@@ -551,7 +551,7 @@
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="224"/>
         <source>Checking page breaks can increase scenario page numbers.</source>
-        <translation>revisando el salto de página puede incrementar el número de páginas en el guión.</translation>
+        <translation>Revisando el salto de página puede incrementar el número de páginas en el guión.</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="259"/>
@@ -566,17 +566,17 @@
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="297"/>
         <source>Scenes Prefix:</source>
-        <translation>Prefijo de la Escena:</translation>
+        <translation>Prefijo de la escena:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="314"/>
         <source>Page Numbering</source>
-        <translation>Numeración de Páginas</translation>
+        <translation>Numeración de páginas</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="321"/>
         <source>Scenes Numbering</source>
-        <translation>Numeración de Escenas</translation>
+        <translation>Numeración de escenas</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="328"/>
@@ -642,7 +642,7 @@
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="454"/>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="458"/>
         <source>Original scenario</source>
-        <translation>Escenario Original</translation>
+        <translation>Escenario original</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="466"/>
@@ -660,17 +660,17 @@
     <message>
         <location filename="../../../../libs/fileformats/format_manager.cpp" line="71"/>
         <source>OpenDocument Text</source>
-        <translation>OpenDocument Text</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../../libs/fileformats/format_manager.cpp" line="73"/>
         <source>Office Open XML</source>
-        <translation>OpenDocument Text</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../../libs/fileformats/format_manager.cpp" line="75"/>
         <source>Rich Text Format</source>
-        <translation>Rich Text Format(.rtf)</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../../libs/fileformats/format_manager.cpp" line="77"/>
@@ -698,12 +698,12 @@
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="45"/>
         <source>Browse...</source>
-        <translation>Navegador...</translation>
+        <translation>Carpetas...</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="48"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="71"/>
@@ -733,7 +733,7 @@
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="114"/>
         <source>Find characters and locations</source>
-        <translation>Encontrar Personajes y Escenarios</translation>
+        <translation>Encontrar personajes y locaciónes</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Import/ImportDialog.ui" line="131"/>
@@ -746,12 +746,12 @@
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="20"/>
         <source>Choose application language</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir idioma</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="26"/>
         <source>Detect language from system locale</source>
-        <translation type="unfinished"></translation>
+        <translation>Detectar el idioma para el sistema local</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/LanguageDialog.ui" line="36"/>
@@ -842,7 +842,7 @@
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="242"/>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="358"/>
         <source>Scenarist project files (*%1)</source>
-        <translation>archivos de proyecto del guión (*%1)</translation>
+        <translation>Archivos de proyecto del guión (*%1)</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="240"/>
@@ -873,12 +873,13 @@
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="472"/>
         <source>Can&apos;t estabilish network connection.
 Continue working in offline mode.</source>
-        <translation>no pudo establecer la conexion a internet. continue trabajando fuera de linea.</translation>
+        <translation>No pudo establecer la conexion a internet.
+Continue trabajando fuera de linea.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="483"/>
         <source>Incorrect username or password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de usuario o clave incorrecta.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="492"/>
@@ -889,7 +890,8 @@ Continue working in offline mode.</source>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="493"/>
         <source>Buyed subscription period is finished.
 Continue working in offline mode.</source>
-        <translation>el Periodo de subscripción paga a finalizado. siga trabajando en el modo fuera de linea.</translation>
+        <translation>El periodo de subscripción paga a finalizado.
+Siga trabajando en el modo fuera de linea.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="504"/>
@@ -900,13 +902,13 @@ Continue working in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="505"/>
         <source>New session for you account started at other device. Restart session?</source>
-        <translation>una nueva sesión a empezado en otro equipo quiere reiniciar la sesión?</translation>
+        <translation>Una nueva sesión a empezado en otro equipo quiere. Reiniciar la sesión?</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="517"/>
         <source>New session for you account started at other device.
 Continue working in offline mode.</source>
-        <translation>una nueva sesión a empezado en otro equipo. siga trabajando fuera de linea.</translation>
+        <translation>Una nueva sesión a empezado en otro equipo. siga trabajando fuera de linea.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="529"/>
@@ -917,7 +919,8 @@ Continue working in offline mode.</source>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="530"/>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
-        <translation>el proyecto actual no esta disponible para sincronizarse ahora. continue trabajando fuera de linea.</translation>
+        <translation>El proyecto actual no esta disponible para sincronizarse ahora.
+Continue trabajando fuera de linea.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="541"/>
@@ -942,7 +945,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="703"/>
         <source>Project was modified. Save changes?</source>
-        <translation>El proyecto fue modificado.¿quire guardar los cambios?</translation>
+        <translation>El proyecto fue modificado. ¿Quire guardar los cambios?</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="729"/>
@@ -1081,12 +1084,12 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="101"/>
         <source>Export error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al Exportar</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="102"/>
         <source>Can&apos;t write to file. Maybe it opened in other application. Please, close it and restart export.</source>
-        <translation type="unfinished"></translation>
+        <translation>No puedo reescribir el archivo. Tal vez esta siendo usado por otra aplicación. Por favor cerrar y exportar otra vez.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Export/ExportManager.cpp" line="128"/>
@@ -1114,12 +1117,12 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/Import/ImportManager.cpp" line="183"/>
         <source>File format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de archivo no soportado</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Import/ImportManager.cpp" line="184"/>
         <source>Microsoft &lt;b&gt;DOC&lt;/b&gt; files are not supported. You need save it to &lt;b&gt;DOCX&lt;/b&gt; file and reimport.</source>
-        <translation type="unfinished"></translation>
+        <translation>Microsoft archivo &lt;b&gt;DOC&lt;/b&gt; no es soportado. Necesitas guardarlo en archivo &lt;b&gt;DOCX&lt;/b&gt; y Re-importar.</translation>
     </message>
 </context>
 <context>
@@ -1245,7 +1248,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="145"/>
         <source>Language will be change after application restart.</source>
-        <translation type="unfinished"></translation>
+        <translation>El idioma va a cambiar después que el programa se reinicie.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/Settings/SettingsManager.cpp" line="449"/>
@@ -1553,7 +1556,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="252"/>
         <source>Browse...</source>
-        <translation>Buscador...</translation>
+        <translation>Carpetas...</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="255"/>
@@ -1649,7 +1652,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="279"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Idioma:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="286"/>
@@ -1659,19 +1662,21 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="293"/>
         <source>Change</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1232"/>
         <source>Enable automatically replacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar remplazo automático</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1245"/>
         <source>Replace lowercase characters to uppercase on start of sentence.
 Replace three single dots to threedots character.
 Replace quotes to language specific.</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplazar los caracteres en minúscula por mayúscula en el principio de la frase.
+Remplazar trespuntos solos por un carácter de tres puntos.
+Remplazar citas por términos específicos.</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.ui" line="1527"/>
@@ -2496,7 +2501,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="188"/>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Color</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="196"/>
@@ -2506,7 +2511,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="217"/>
         <source>Add color</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar color</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="291"/>
@@ -2665,69 +2670,69 @@ Párrafo</translation>
 <context>
     <name>UserInterface::SettingsView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="401"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="402"/>
         <source>Choose backups saving folder</source>
         <translation>Elejir carpeta de respaldo</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="546"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="547"/>
         <source>Russian with Yo</source>
         <translation>Ruso con ё</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="118"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="547"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="548"/>
         <source>Russian</source>
         <translation>Ruso</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="548"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="549"/>
         <source>Ukrainian</source>
         <translation>Ukraniano</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="549"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="550"/>
         <source>Belorussian</source>
         <translation>Beloruso</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="123"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="552"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="553"/>
         <source>Spanish</source>
-        <translation></translation>
+        <translation>Español</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="113"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="128"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="550"/>
-        <source>English (GB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingles</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="551"/>
-        <source>English (US)</source>
-        <translation type="unfinished"></translation>
+        <source>English (GB)</source>
+        <translation>Ingles (GB)</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="570"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="552"/>
+        <source>English (US)</source>
+        <translation>Ingles (US)</translation>
+    </message>
+    <message>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="571"/>
         <source>Common</source>
         <translation>Común</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="571"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="572"/>
         <source>Shortcuts Settings</source>
         <translation>Atajos de Teclado</translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="572"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="573"/>
         <source>Review</source>
         <translation>Revisión</translation>
     </message>
@@ -2770,7 +2775,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="189"/>
         <source>Report settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Informe de configuración</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="202"/>
@@ -2780,7 +2785,7 @@ Párrafo</translation>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="204"/>
         <source>Save report to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar informe en archivo</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Statistics/StatisticsView.cpp" line="210"/>

@@ -562,7 +562,7 @@
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="297"/>
         <source>Scenes Prefix:</source>
-        <translation></translation>
+        <translation>Scenes prefix:</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Export/ExportDialog.ui" line="314"/>
@@ -928,7 +928,7 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="611"/>
         <source>Closing Databse Connections and Remove Temporatry Files.</source>
-        <translation>Closing databse connections and removing temporatry files.</translation>
+        <translation>Closing database connections and removing temporatry files.</translation>
     </message>
     <message>
         <location filename="../../ManagementLayer/ApplicationManager.cpp" line="702"/>
@@ -2650,34 +2650,34 @@ Paragraph</source>
 <context>
     <name>UserInterface::SettingsView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="401"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="402"/>
         <source>Choose backups saving folder</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="546"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="547"/>
         <source>Russian with Yo</source>
         <translation>Russian with Ё</translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="118"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="547"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="548"/>
         <source>Russian</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="548"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="549"/>
         <source>Ukrainian</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="549"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="550"/>
         <source>Belorussian</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="123"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="552"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="553"/>
         <source>Spanish</source>
         <translation></translation>
     </message>
@@ -2692,27 +2692,27 @@ Paragraph</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="550"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="551"/>
         <source>English (GB)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="551"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="552"/>
         <source>English (US)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="570"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="571"/>
         <source>Common</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="571"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="572"/>
         <source>Shortcuts Settings</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="572"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="573"/>
         <source>Review</source>
         <translation></translation>
     </message>

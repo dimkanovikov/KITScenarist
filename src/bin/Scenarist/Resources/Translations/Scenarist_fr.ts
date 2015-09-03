@@ -2650,34 +2650,34 @@ Paragraph</source>
 <context>
     <name>UserInterface::SettingsView</name>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="401"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="402"/>
         <source>Choose backups saving folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="546"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="547"/>
         <source>Russian with Yo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="118"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="547"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="548"/>
         <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="548"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="549"/>
         <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="549"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="550"/>
         <source>Belorussian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="123"/>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="552"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="553"/>
         <source>Spanish</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2692,27 +2692,27 @@ Paragraph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="550"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="551"/>
         <source>English (GB)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="551"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="552"/>
         <source>English (US)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="570"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="571"/>
         <source>Common</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="571"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="572"/>
         <source>Shortcuts Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="572"/>
+        <location filename="../../UserInterfaceLayer/Settings/SettingsView.cpp" line="573"/>
         <source>Review</source>
         <translation type="unfinished"></translation>
     </message>

@@ -29,7 +29,7 @@ mv -f scenarist_amd64.deb scenarist-setup-$1_en_amd64.deb
 #
 # Make Spanish installer
 #
-echo Build English version
+echo Build Spanish version
 cp -f translations/amd64/es/control scenarist_amd64/DEBIAN/
-fakeroot dpkg-deb --build scenarist_i386
+fakeroot dpkg-deb --build scenarist_amd64
 mv -f scenarist_amd64.deb scenarist-setup-$1_es_amd64.deb
