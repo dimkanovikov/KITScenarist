@@ -20,7 +20,7 @@
   !define pkgdir "files"
 
   ;Name and file
-  Name "Сценарист"
+  Name "КИТ Сценарист"
   Caption "Установка программы написания сценариев"
   OutFile "scenarist-setup.exe"
   BrandingText "DimkaNovikov labs."
@@ -92,13 +92,9 @@ Section "App files section" SecFiles
   File "${pkgdir}\sqldrivers\qsqlite.dll"
 
   SetOutPath "$INSTDIR"
-  File "${pkgdir}\icudt54.dll"
-  File "${pkgdir}\icuin54.dll"
-  File "${pkgdir}\icuuc54.dll"
+  File "${pkgdir}\msvcp120.dll"
+  File "${pkgdir}\msvcr120.dll"
   File "${pkgdir}\libeay32.dll"
-  File "${pkgdir}\libgcc_s_dw2-1.dll"
-  File "${pkgdir}\libstdc++-6.dll"
-  File "${pkgdir}\libwinpthread-1.dll"
   File "${pkgdir}\Qt5Core.dll"
   File "${pkgdir}\Qt5Gui.dll"
   File "${pkgdir}\Qt5Network.dll"
