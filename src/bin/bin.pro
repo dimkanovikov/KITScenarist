@@ -1,3 +1,4 @@
 TEMPLATE = subdirs
 
-SUBDIRS = Scenarist
+SUBDIRS = Scenarist \
+    Scenarist-mobile
