@@ -8,6 +8,21 @@ DEFINES += FILEFORMATS_LIBRARY
 #
 CONFIG += qt thread warn_on
 
+#
+# Конфигурируем расположение файлов сборки
+#
+CONFIG(debug, debug|release) {
+    DESTDIR = $$PWD/../../../build/Debug/libs/fileformats
+} else {
+    DESTDIR = $$PWD/../../../build/Release/libs/fileformats
+}
+
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
+RCC_DIR = $$DESTDIR/.qrc
+UI_DIR = $$DESTDIR/.ui
+#
+
 mac {
      LIBS += -lz
 }

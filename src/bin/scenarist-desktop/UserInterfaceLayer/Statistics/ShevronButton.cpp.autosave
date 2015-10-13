@@ -1,0 +1,38 @@
+#include "ShevronButton.h"
+
+#include <QIcon>
+#include <QPainter>
+
+namespace {
+	/**
+	 * @brief Отступ справа
+	 */
+	const int RIGHT_MARGIN = 8;
+	
+	/**
+	 * @brief Размер иконки
+	 */
+	const QSize ICON_SIZE(20, 20);
+}
+
+
+ShevronButton::ShevronButton(QWidget* _parent) :
+	QRadioButton(_parent)
+{
+	
+}
+
+void ShevronButton::paintEvent(QPaintEvent* _event)
+{
+	QRadioButton::paintEvent(_event);
+	
+	
+	//
+	// Рисуем шеврон
+	//
+	QPainter painter(this);
+	if (checked() || underMouse()) {
+		QRect chevronRect(width() - RIGHT_MARGIN - ICON_SIZE.width(),)
+	}
+}
+

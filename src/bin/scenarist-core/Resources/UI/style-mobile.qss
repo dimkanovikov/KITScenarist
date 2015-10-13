@@ -1,0 +1,17 @@
+/*
+ *
+ */
+QToolButton {
+    border: none;
+    min-width: 40px;
+    min-height: 40px;
+    icon-size: 24px;
+}
+
+QFrame[toolbar=true] {
+    background-color: #4CAF50;
+}
+
+QFrame[side-nav=true] {
+    background-color: white;
+}

@@ -1,0 +1,12 @@
+#include "ScenarioDraftNavigator.h"
+
+ScenarioDraft::ScenarioDraft(QWidget *parent) : QWidget(parent)
+{
+
+}
+
+ScenarioDraft::~ScenarioDraft()
+{
+
+}
+

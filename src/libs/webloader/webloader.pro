@@ -12,6 +12,21 @@ TEMPLATE = lib
 
 DEFINES += WEBLOADER_LIBRARY
 
+#
+# Конфигурируем расположение файлов сборки
+#
+CONFIG(debug, debug|release) {
+    DESTDIR = $$PWD/../../../build/Debug/libs/webloader
+} else {
+    DESTDIR = $$PWD/../../../build/Release/libs/webloader
+}
+
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
+RCC_DIR = $$DESTDIR/.qrc
+UI_DIR = $$DESTDIR/.ui
+#
+
 SOURCES += \
     WebRequest.cpp \
     WebLoader.cpp \
