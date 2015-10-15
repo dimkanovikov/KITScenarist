@@ -107,7 +107,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QToolButton" name="toolButton">
+       <widget class="QToolButton" name="tab">
         <property name="text">
          <string/>
         </property>
@@ -118,7 +118,33 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox"/>
+       <widget class="QComboBox" name="comboBox">
+        <item>
+         <property name="text">
+          <string>Scene Heading</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Action</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Character</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Dialogue</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Paratentical</string>
+         </property>
+        </item>
+       </widget>
       </item>
       <item>
        <widget class="QToolButton" name="toolButton_3">

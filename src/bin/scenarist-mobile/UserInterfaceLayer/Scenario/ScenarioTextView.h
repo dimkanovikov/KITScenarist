@@ -23,6 +23,22 @@ namespace UserInterface
 		 */
 		QWidget* toolbar() const;
 
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
+
+        /**
+         * @brief Настроить соединения для формы
+         */
+        void initConnections();
+
+        /**
+         * @brief Настроить внешний вид
+         */
+        void initStyleSheet();
+
 	private:
 		/**
 		 * @brief Интерфейс представления

@@ -3,9 +3,9 @@
  */
 QToolButton {
     border: none;
-    min-width: 40px;
-    min-height: 40px;
-    icon-size: 24px;
+    min-width: 80px;
+    min-height: 80px;
+    icon-size: 74px;
 }
 
 QFrame[toolbar=true] {

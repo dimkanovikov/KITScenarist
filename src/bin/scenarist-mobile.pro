@@ -381,3 +381,10 @@ FORMS += \
     scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.ui \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.ui
 
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_EXTRA_LIBS = \
+        /Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Debug/libs/fileformats/libfileformats.so \
+        /Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Debug/libs/hunspell/libhunspell.so \
+        $$PWD/../../build/Debug/libs/webloader/libwebloader.so
+}
+
