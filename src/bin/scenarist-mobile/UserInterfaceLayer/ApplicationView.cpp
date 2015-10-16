@@ -1,6 +1,8 @@
 #include "ApplicationView.h"
 #include "ui_ApplicationView.h"
 
+#include <QCloseEvent>
+
 using UserInterface::ApplicationView;
 
 
@@ -30,6 +32,16 @@ void ApplicationView::setCurrentView(int _index)
 {
 	m_ui->toolbarsContainer->setCurrentIndex(_index);
 	m_ui->viewsContainer->setCurrentIndex(_index);
+}
+
+void ApplicationView::closeEvent(QCloseEvent* _event)
+{
+	//
+	// Вместо реального закрытия формы испускаем сигнал сигнализирующий об этом намерении
+	//
+
+	_event->ignore();
+	emit wantToClose();
 }
 
 void ApplicationView::initView()

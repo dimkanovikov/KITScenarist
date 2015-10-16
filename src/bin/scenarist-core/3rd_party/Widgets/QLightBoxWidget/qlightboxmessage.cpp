@@ -54,7 +54,7 @@ QDialogButtonBox::StandardButton QLightBoxMessage::message(QWidget* _parent, con
 	if (_buttons.testFlag(_defaultButton)) {
 		message.m_buttons->button(_defaultButton)->setDefault(true);
 	}
-#ifndef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
 	foreach (QAbstractButton* button, message.m_buttons->buttons())	{
 		button->setProperty("flat", true);
 	}
@@ -77,8 +77,9 @@ void QLightBoxMessage::initView()
 {
 	m_icon->setFixedSize(ICON_PIXMAP_SIZE);
 	m_text->setWordWrap(true);
+#ifndef Q_OS_ANDROID
 	m_text->setMinimumWidth(300);
-
+#endif
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->addWidget(m_icon, 0, Qt::AlignLeft | Qt::AlignTop);
 	topLayout->addWidget(m_text, 1);
@@ -86,9 +87,9 @@ void QLightBoxMessage::initView()
 	layout->addLayout(topLayout);
 	layout->addWidget(m_buttons);
 	setLayout(layout);
-
+#ifndef Q_OS_ANDROID
 	setMinimumWidth(500);
-
+#endif
 	QLightBoxDialog::initView();
 }
 

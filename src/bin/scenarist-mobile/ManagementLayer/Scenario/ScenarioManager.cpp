@@ -274,7 +274,7 @@ void ScenarioManager::loadCurrentProject()
 	//
 	// Обновим счётчики, когда данные полностью загрузятся
 	//
-	QTimer::singleShot(100, this, SLOT(aboutUpdateCounters()));
+//	QTimer::singleShot(100, this, SLOT(aboutUpdateCounters()));
 
 	//
 	// Показываем редактор текста сценария

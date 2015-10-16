@@ -462,36 +462,36 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 //	m_exportManager->printPreviewScenario(m_scenarioManager->scenario());
 //}
 
-//void ApplicationManager::aboutExit()
-//{
-//	//
-//	// Сохраняем, если необходимо
-//	//
-//	if (saveIfNeeded()) {
-//		//
-//		// Выводим информацию для пользователя, о закрытии программы
-//		//
-//		ProgressWidget progress(m_view);
-//		progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
+void ApplicationManager::aboutExit()
+{
+	//
+	// Сохраняем, если необходимо
+	//
+	if (saveIfNeeded()) {
+		//
+		// Выводим информацию для пользователя, о закрытии программы
+		//
+		ProgressWidget progress(m_view);
+		progress.showProgress(tr("Exit from Application"), tr("Closing Database Connections and Remove Temporatry Files."));
 
-//		//
-//		// Закроем текущий проект
-//		//
-//		closeCurrentProject();
+		//
+		// Закроем текущий проект
+		//
+		closeCurrentProject();
 
-//		//
-//		// Сохраняем состояния виджетов
-//		//
+		//
+		// Сохраняем состояния виджетов
+		//
 //		saveViewState();
 
-//		//
-//		// Выходим
-//		//
-//		progress.close();
-//		QApplication::processEvents();
-//		QApplication::quit();
-//	}
-//}
+		//
+		// Выходим
+		//
+		progress.close();
+		QApplication::processEvents();
+		QApplication::quit();
+	}
+}
 
 //void ApplicationManager::aboutApplicationSettingsUpdated()
 //{
@@ -727,27 +727,14 @@ void ApplicationManager::initConnections()
 		m_view->setCurrentView(PROJECT_TEXT_VIEW_INDEX);
 	});
 
+	connect(m_view, &ApplicationView::wantToClose, this, &ApplicationManager::aboutExit);
+
+	connect(m_projectsManager, &ProjectsManager::recentProjectsUpdated, this, &ApplicationManager::aboutUpdateProjectsList);
+	connect(m_projectsManager, &ProjectsManager::remoteProjectsUpdated, this, &ApplicationManager::aboutUpdateProjectsList);
+
 	connect(m_startUpManager, &StartUpManager::createProjectRequested, this, &ApplicationManager::createNewProject);
 	connect(m_startUpManager, &StartUpManager::openRecentProjectRequested, this, &ApplicationManager::aboutLoadFromRecent);
 	connect(m_startUpManager, &StartUpManager::openRemoteProjectRequested, this, &ApplicationManager::aboutLoadFromRemote);
-
-//	connect(m_view, SIGNAL(wantToClose()), this, SLOT(aboutExit()));
-
-//	connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
-//	connect(m_tabs, SIGNAL(currentChanged(int)), m_tabsWidgets, SLOT(setCurrentIndex(int)));
-
-//	connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
-//	connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
-
-//	connect(m_startUpManager, SIGNAL(loginRequested(QString,QString)), m_synchronizationManager, SLOT(aboutLogin(QString,QString)));
-//	connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
-//	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
-//	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
-//	connect(m_startUpManager, SIGNAL(helpRequested()), this, SLOT(aboutShowHelp()));
-//	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_projectsManager, SLOT(refreshProjects()));
-//	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_synchronizationManager, SLOT(aboutLoadProjects()));
-//	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRecent(QModelIndex)));
-//	connect(m_startUpManager, SIGNAL(openRemoteProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRemote(QModelIndex)));
 
 //	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
 //	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncScenario()));
@@ -780,7 +767,7 @@ void ApplicationManager::initConnections()
 //	connect(m_exportManager, SIGNAL(scenarioNameChanged(QString)),
 //			m_scenarioManager, SLOT(aboutScenarioNameChanged(QString)));
 
-//	connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
+	connect(m_scenarioManager, &ScenarioManager::scenarioChanged, this, &ApplicationManager::aboutProjectChanged);
 //	connect(m_charactersManager, SIGNAL(characterChanged()), this, SLOT(aboutProjectChanged()));
 //	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
 //	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));

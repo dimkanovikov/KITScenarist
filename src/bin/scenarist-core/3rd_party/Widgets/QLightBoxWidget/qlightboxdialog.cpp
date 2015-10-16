@@ -116,7 +116,7 @@ void QLightBoxDialog::initView()
 #endif
 
 	if (layout() != 0) {
-		m_centralWidget = new QWidget(this);
+		m_centralWidget = new QFrame(this);
 		m_centralWidget->setProperty("lightBoxDialogCentralWidget", true);
 		m_centralWidget->setMinimumSize(minimumSize());
 		m_centralWidget->setMaximumSize(maximumSize());

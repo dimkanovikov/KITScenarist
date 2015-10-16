@@ -103,12 +103,16 @@ void ScenarioNavigatorView::initView()
 	m_ui->navigator->setSelectionMode(QAbstractItemView::ContiguousSelection);
 	m_ui->navigator->setStyle(new ScenarioNavigatorProxyStyle(m_ui->navigator->style()));
 
-	QScroller::grabGesture(m_ui->navigator);
+	QScroller::grabGesture(m_ui->navigator, QScroller::LeftMouseButtonGesture);
 }
 
 void ScenarioNavigatorView::initConnections()
 {
 	connect(m_ui->text, &QToolButton::clicked, this, &ScenarioNavigatorView::showTextClicked);
+	connect(m_ui->navigator, &QTreeView::clicked, [=](const QModelIndex& _index){
+		emit sceneChoosed(_index);
+		emit showTextClicked();
+	});
 }
 
 void ScenarioNavigatorView::initStyleSheet()

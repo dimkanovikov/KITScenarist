@@ -3,6 +3,7 @@
 
 #include "qlightboxwidget.h"
 
+class QFrame;
 class QGraphicsOpacityEffect;
 class QLabel;
 class QPropertyAnimation;
@@ -90,7 +91,7 @@ private:
 	/**
 	 * @brief Виджет диалога
 	 */
-	QWidget* m_centralWidget;
+	QFrame* m_centralWidget;
 
 	/**
 	 * @brief Актуальный код возврата

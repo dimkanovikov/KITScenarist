@@ -38,6 +38,17 @@ namespace UserInterface
 		 */
 		void menuClicked();
 
+		/**
+		 * @brief Пользователь хочет закрыть приложение
+		 */
+		void wantToClose();
+
+	protected:
+		/**
+		 * @brief Переопределяется для отлавливания события закрытия приложения
+		 */
+		void closeEvent(QCloseEvent* _event);
+
 	private:
 		/**
 		 * @brief Настроить представление

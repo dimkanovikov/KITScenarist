@@ -105,3 +105,19 @@ QFrame[toolbar=true] {
 QFrame[side-nav=true] {
     background-color: white;
 }
+
+
+/*
+ * Стили лайтбокса
+ */
+[lightBoxDialogTitle=true] {
+	font-weight: 700;
+	background-color: palette(window);
+	padding: 7px 20px 7px 20px;
+	border: 1px solid palette(dark);
+}
+
+[lightBoxDialogCentralWidget=true] {
+	background-color: palette(window);
+	border: 1px solid palette(dark);
+}

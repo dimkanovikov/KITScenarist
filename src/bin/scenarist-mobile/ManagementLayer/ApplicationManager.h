@@ -100,10 +100,10 @@ namespace ManagementLayer
 //		 */
 //		void aboutPrintPreview();
 
-//		/**
-//		 * @brief Закрыть приложение
-//		 */
-//		void aboutExit();
+		/**
+		 * @brief Закрыть приложение
+		 */
+		void aboutExit();
 
 //		/**
 //		 * @brief Обновлены общие настройки приложения

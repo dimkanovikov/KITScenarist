@@ -148,10 +148,10 @@ void ScenarioNavigatorManager::aboutSceneChoosed(const QModelIndex& _index)
 	emit sceneChoosed(m_scenarioModelProxy->mapToSource(_index));
 }
 
-//void ScenarioNavigatorManager::aboutModelUpdated()
-//{
+void ScenarioNavigatorManager::aboutModelUpdated()
+{
 //	m_view->setScenesCount(m_scenarioModel->scenesCount());
-//}
+}
 
 void ScenarioNavigatorManager::initView()
 {

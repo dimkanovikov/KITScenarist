@@ -136,10 +136,10 @@ namespace ManagementLayer
 		 */
 		void aboutSceneChoosed(const QModelIndex& _index);
 
-//		/**
-//		 * @brief Обновить информацию о модели
-//		 */
-//		void aboutModelUpdated();
+		/**
+		 * @brief Обновить информацию о модели
+		 */
+		void aboutModelUpdated();
 
 	private:
 		/**

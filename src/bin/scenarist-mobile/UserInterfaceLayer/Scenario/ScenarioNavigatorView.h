@@ -95,6 +95,26 @@ namespace UserInterface
 		 */
 		void showTextClicked();
 
+//		/**
+//		 * @brief Запрос на добавление элемента
+//		 */
+//		void addItem(const QModelIndex& _itemIndex);
+
+//		/**
+//		 * @brief Запрос на удаление элемента
+//		 */
+//		void removeItems(const QModelIndexList& _itemIndex);
+
+//		/**
+//		 * @brief Запрос на установку цветов текущего элемента
+//		 */
+//		void setItemColors(const QModelIndex& _index, const QString& _colors);
+
+		/**
+		 * @brief Активирована сцена
+		 */
+		void sceneChoosed(const QModelIndex& _sceneIndex);
+
 	private:
 		/**
 		 * @brief Настроить представление
