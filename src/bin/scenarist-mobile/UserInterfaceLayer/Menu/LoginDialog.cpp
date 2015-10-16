@@ -1,68 +1,92 @@
 #include "LoginDialog.h"
 #include "ui_LoginDialog.h"
 
+#include <QDesktopServices>
+#include <QUrl>
+
 using UserInterface::LoginDialog;
 
 
 LoginDialog::LoginDialog(QWidget* _parent) :
-	QLightBoxDialog(_parent),
-	ui(new Ui::LoginDialog)
+	QWidget(_parent),
+	m_ui(new Ui::LoginDialog)
 {
-	ui->setupUi(this);
+	m_ui->setupUi(this);
 
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
 LoginDialog::~LoginDialog()
 {
-	delete ui;
+	delete m_ui;
 }
 
 QString LoginDialog::userName() const
 {
-	return ui->userName->text();
+	return m_ui->userName->text();
 }
 
 void LoginDialog::setUserName(const QString& _userName)
 {
-	ui->userName->setText(_userName);
+	m_ui->userName->setText(_userName);
 }
 
 QString LoginDialog::password() const
 {
-	return ui->password->text();
+	return m_ui->password->text();
 }
 
 void LoginDialog::setPassword(const QString& _password)
 {
-	ui->password->setText(_password);
+	m_ui->password->setText(_password);
 }
 
 void LoginDialog::setError(const QString& _error)
 {
-	ui->error->setText(_error);
-	ui->error->show();
-	resize(width(), sizeHint().height());
+	m_ui->error->setText(_error);
+	m_ui->error->show();
+	updateSize();
 }
 
-QWidget* LoginDialog::focusedOnExec() const
+void LoginDialog::showProgressBar()
 {
-	return ui->userName;
+	m_ui->progressBar->show();
+	m_ui->content->setEnabled(false);
+	updateSize();
+}
+
+void LoginDialog::hideProgressBar()
+{
+	m_ui->progressBar->hide();
+	m_ui->content->setEnabled(true);
+	updateSize();
 }
 
 void LoginDialog::initView()
 {
-	ui->error->hide();
-	ui->buttons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
-
-	QLightBoxDialog::initView();
+	m_ui->error->hide();
+	m_ui->progressBar->hide();
 }
 
 void LoginDialog::initConnections()
 {
-	connect(ui->buttons, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(ui->buttons, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(m_ui->signUp, &QPushButton::clicked, [=](){
+		QDesktopServices::openUrl(QUrl("https://kitscenarist.ru/cabin.html"));
+	});
+	connect(m_ui->login, &QPushButton::clicked, this, &LoginDialog::loginClicked);
+	connect(m_ui->cancel, &QPushButton::clicked, this, &LoginDialog::cancelClicked);
+}
 
-	QLightBoxDialog::initConnections();
+void LoginDialog::initStyleSheet()
+{
+	m_ui->signUp->setProperty("flat", true);
+	m_ui->login->setProperty("raised", true);
+	m_ui->cancel->setProperty("raised", true);
+}
+
+void LoginDialog::updateSize()
+{
+	resize(width(), sizeHint().height());
 }

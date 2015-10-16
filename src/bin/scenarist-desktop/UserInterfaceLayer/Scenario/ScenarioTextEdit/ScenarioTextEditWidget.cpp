@@ -92,7 +92,7 @@ void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocu
 	m_editor->setScenarioDocument(_document);
 	m_editor->setWatermark(_isDraft ? tr("DRAFT") : QString::null);
 	if (_document != 0) {
-		m_lastTextMd5Hash = textMd5Hash(_document->toPlainText());
+		m_lastTextMd5Hash = ::textMd5Hash(_document->toPlainText());
 	}
 
 	initEditorConnections();

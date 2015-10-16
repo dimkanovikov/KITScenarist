@@ -1,6 +1,6 @@
 #include "ApplicationManager.h"
 
-//#include "Project/ProjectsManager.h"
+#include "Project/ProjectsManager.h"
 #include "Menu/MenuManager.h"
 #include "StartUp/StartUpManager.h"
 #include "Scenario/ScenarioManager.h"
@@ -12,92 +12,66 @@
 //#include "Export/ExportManager.h"
 //#include "Synchronization/SynchronizationManager.h"
 
-#include <3rd_party/Widgets/WAF/Animation.h>
-
 #include <UserInterfaceLayer/ApplicationView.h>
 
+#include <DataLayer/Database/Database.h>
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+
+#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Helpers/StyleSheetHelper.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+#include <3rd_party/Widgets/WAF/Animation.h>
+
+#include <QDir>
 #include <QFile>
+#include <QStandardPaths>
 
 using namespace ManagementLayer;
 using UserInterface::ApplicationView;
 
-//namespace {
-//	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
+namespace {
+	/**
+	 * @brief Индексы представлений в общем стэке
+	 */
+	/** @{ */
+	const int PROJECTS_VIEW_INDEX = 0;
+	const int PROJECT_TEXT_VIEW_INDEX = 1;
+	/** @} */
+
+	/**
+	 * @brief Расширение файла проекта сценария
+	 */
+	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
 //	const char* MAC_CHANGED_SUFFIX =
 //			QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
 //	const bool SYNC_UNAVAILABLE = false;
 
-//	/**
-//	 * @brief Неактивные при старте действия
-//	 */
-//	QList<QAction*> g_disableOnStartActions;
-
-//	/**
-//	 * @brief Отключить некоторые действия
-//	 *
-//	 * Используется при старте приложения, пока не загружен какой-либо проект
-//	 */
-//	static void disableActionsOnStart() {
-//		foreach (QAction* action, g_disableOnStartActions) {
-//			action->setEnabled(false);
-//		}
-//	}
-
-//	/**
-//	 * @brief Активировать отключенные при старте действия
-//	 */
-//	static void enableActionsOnProjectOpen() {
-//		foreach (QAction* action, g_disableOnStartActions) {
-//			action->setEnabled(true);
-//		}
-//	}
-
-//	/**
-//	 * @brief Получить путь к папке проектов
-//	 */
-//	static QString projectsFolderPath() {
-//		QString projectsFolderPath =
-//				DataStorageLayer::StorageFacade::settingsStorage()->value(
-//					"application/project-files",
-//					DataStorageLayer::SettingsStorage::ApplicationSettings);
-//		if (projectsFolderPath.isEmpty()) {
-//			projectsFolderPath = QDir::homePath();
-//		}
-//		return projectsFolderPath;
-//	}
-
-//	/**
-//	 * @brief Сохранить путь к папке проектов
-//	 */
-//	static void saveProjectsFolderPath(const QString& _path) {
-//		DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-//					"application/project-files",
-//					QFileInfo(_path).absoluteDir().absolutePath(),
-//					DataStorageLayer::SettingsStorage::ApplicationSettings);
-//	}
-
-//	static void updateWindowModified(QWidget* _widget, bool _modified) {
-//#ifdef Q_OS_MAC
-//		static const QString suffix =
-//				QApplication::translate("ManagementLayer::ApplicationManager", MAC_CHANGED_SUFFIX);
-//		if (_modified) {
-//			if (!_widget->windowTitle().endsWith(suffix)) {
-//				_widget->setWindowTitle(_widget->windowTitle() + suffix);
-//			}
-//		} else {
-//			if (_widget->windowTitle().endsWith(suffix)) {
-//				_widget->setWindowTitle(_widget->windowTitle().remove(suffix));
-//			}
-//		}
-//#endif
-//		_widget->setWindowModified(_modified);
-//	}
-//}
+	/**
+	 * @brief Обновить состояние изменённости текущего проекта
+	 */
+	static void updateWindowModified(QWidget* _widget, bool _modified) {
+#ifdef Q_OS_MAC
+		static const QString suffix =
+				QApplication::translate("ManagementLayer::ApplicationManager", MAC_CHANGED_SUFFIX);
+		if (_modified) {
+			if (!_widget->windowTitle().endsWith(suffix)) {
+				_widget->setWindowTitle(_widget->windowTitle() + suffix);
+			}
+		} else {
+			if (_widget->windowTitle().endsWith(suffix)) {
+				_widget->setWindowTitle(_widget->windowTitle().remove(suffix));
+			}
+		}
+#endif
+		_widget->setWindowModified(_modified);
+	}
+}
 
 
 ApplicationManager::ApplicationManager(QObject *parent) :
 	QObject(parent),
 	m_view(new ApplicationView),
+	m_projectsManager(new ProjectsManager(this)),
 	m_menuManager(new MenuManager(this, m_view)),
 	m_startUpManager(new StartUpManager(this, m_view)),
 	m_scenarioManager(new ScenarioManager(this, m_view))
@@ -105,7 +79,6 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_menu(new QToolButton(m_view)),
 	m_tabs(new SideTabBar(m_view)),
 	m_tabsWidgets(new QStackedWidget),
-	m_projectsManager(new ProjectsManager(this)),
 	m_charactersManager(new CharactersManager(this, m_view)),
 	m_locationsManager(new LocationsManager(this, m_view)),
 	m_statisticsManager(new StatisticsManager(this, m_view)),
@@ -118,7 +91,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	initConnections();
 	initStyleSheet();
 
-//	aboutUpdateProjectsList();
+	aboutUpdateProjectsList();
 
 //	reloadApplicationSettings();
 
@@ -137,84 +110,79 @@ void ApplicationManager::exec()
 	m_view->show();
 }
 
-//void ApplicationManager::aboutUpdateProjectsList()
-//{
-//	m_startUpManager->setRecentProjects(m_projectsManager->recentProjects());
-//	m_startUpManager->setRemoteProjects(m_projectsManager->remoteProjects());
-//}
+void ApplicationManager::aboutUpdateProjectsList()
+{
+	m_startUpManager->setRecentProjects(m_projectsManager->recentProjects());
+	m_startUpManager->setRemoteProjects(m_projectsManager->remoteProjects());
+}
 
-//void ApplicationManager::aboutCreateNew()
-//{
-//	//
-//	// Спросить у пользователя хочет ли он сохранить проект
-//	//
-//	if (saveIfNeeded()) {
-//		//
-//		// Получим имя файла для нового проекта
-//		//
-//		QString newProjectFileName =
-//				QFileDialog::getSaveFileName(
-//					m_view,
-//					tr("Choose file for new project"),
-//					projectsFolderPath(),
-//					tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
-//					);
+void ApplicationManager::createNewProject(const QString& _projectName)
+{
+	//
+	// Спросить у пользователя хочет ли он сохранить проект
+	//
+	if (saveIfNeeded()) {
+		//
+		// Получим имя файла для нового проекта
+		//
+		const QDir projectsDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+		if (!projectsDir.exists()) {
+			QDir::root().mkpath(projectsDir.absolutePath());
+		}
+		QString newProjectFileName = projectsDir.absoluteFilePath(_projectName);
 
-//		//
-//		// Если файл выбран
-//		//
-//		if (!newProjectFileName.isEmpty()) {
-//			//
-//			// ... установим расширение, если не задано
-//			//
-//			if (!newProjectFileName.endsWith(PROJECT_FILE_EXTENSION)) {
-//				newProjectFileName.append(PROJECT_FILE_EXTENSION);
-//			}
+		//
+		// Если файл выбран
+		//
+		if (!newProjectFileName.isEmpty()) {
+			//
+			// ... закроем текущий проект
+			//
+			closeCurrentProject();
 
-//			//
-//			// ... закроем текущий проект
-//			//
-//			closeCurrentProject();
+			//
+			// ... если файл с таким именем существует, добавляем суффикс в название нового проекта
+			//
+			if (QFile::exists(newProjectFileName + PROJECT_FILE_EXTENSION)) {
+				int copyIndex = 0;
+				QString newProjectFileNameCorrected;
+				do {
+					++copyIndex;
+					newProjectFileNameCorrected =
+						QString("%1%2%3").arg(newProjectFileName).arg(copyIndex).arg(PROJECT_FILE_EXTENSION);
+				} while (QFile::exists(newProjectFileNameCorrected));
+				newProjectFileName = newProjectFileNameCorrected;
+			} else {
+				newProjectFileName += PROJECT_FILE_EXTENSION;
+			}
 
-//			//
-//			// ... если файл существовал, удалим его для удаления данных в нём
-//			//
-//			if (QFile::exists(newProjectFileName)) {
-//				QFile::remove(newProjectFileName);
-//			}
+			//
+			// ... создаём новую базу данных в файле и делаем её текущим проектом
+			//
+			m_projectsManager->setCurrentProject(newProjectFileName);
 
-//			//
-//			// ... создаём новую базу данных в файле и делаем её текущим проектом
-//			//
-//			m_projectsManager->setCurrentProject(newProjectFileName);
+			//
+			// ... перейдём к редактированию
+			//
+			goToEditCurrentProject();
+		}
+	}
+}
 
-//			//
-//			// ... сохраняем путь
-//			//
-//			saveProjectsFolderPath(newProjectFileName);
-
-//			//
-//			// ... перейдём к редактированию
-//			//
-//			goToEditCurrentProject();
-//		}
-//	}
-//}
-
-//void ApplicationManager::aboutSave()
-//{
-//	//
-//	// Если какие-то данные изменены
-//	//
-//	if (m_view->isWindowModified()) {
-//		//
-//		// Управляющие должны сохранить несохранённые данные
-//		//
-//		DatabaseLayer::Database::transaction();
-//		m_scenarioManager->saveCurrentProject();
+void ApplicationManager::saveProject()
+{
+	//
+	// Если какие-то данные изменены
+	//
+	if (m_view->isWindowModified()) {
+		//
+		// Управляющие должны сохранить несохранённые данные
+		//
+		DatabaseLayer::Database::transaction();
+		m_scenarioManager->saveCurrentProject();
 //		m_charactersManager->saveCharacters();
 //		m_locationsManager->saveLocations();
-//		DatabaseLayer::Database::commit();
+		DatabaseLayer::Database::commit();
 
 //		//
 //		// Для проекта из облака отправляем данные на сервер
@@ -224,17 +192,12 @@ void ApplicationManager::exec()
 //			m_synchronizationManager->aboutWorkSyncData();
 //		}
 
-//		//
-//		// Изменим статус окна на сохранение изменений
-//		//
-//		::updateWindowModified(m_view, false);
-
-//		//
-//		// Если необходимо создадим резервную копию закрываемого файла
-//		//
-//		m_backupHelper.saveBackup(ProjectsManager::currentProject().path());
-//	}
-//}
+		//
+		// Изменим статус окна на сохранение изменений
+		//
+		::updateWindowModified(m_view, false);
+	}
+}
 
 //void ApplicationManager::aboutLoad(const QString& _fileName)
 //{
@@ -297,52 +260,52 @@ void ApplicationManager::exec()
 //	QDesktopServices::openUrl(QUrl("https://kitscenarist.ru/help/"));
 //}
 
-//void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
-//{
-//	//
-//	// Если нужно сохранить проект
-//	//
-//	if (saveIfNeeded()) {
-//		//
-//		// ... закроем текущий проект
-//		//
-//		closeCurrentProject();
+void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
+{
+	//
+	// Если нужно сохранить проект
+	//
+	if (saveIfNeeded()) {
+		//
+		// ... закроем текущий проект
+		//
+		closeCurrentProject();
 
-//		//
-//		// ... переключаемся на работу с выбранным файлом
-//		//
-//		m_projectsManager->setCurrentProject(_projectIndex);
+		//
+		// ... переключаемся на работу с выбранным файлом
+		//
+		m_projectsManager->setCurrentProject(_projectIndex);
 
-//		//
-//		// ... перейдём к редактированию
-//		//
-//		goToEditCurrentProject();
-//	}
-//}
+		//
+		// ... перейдём к редактированию
+		//
+		goToEditCurrentProject();
+	}
+}
 
-//void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
-//{
-//	//
-//	// Если нужно сохранить проект
-//	//
-//	if (saveIfNeeded()) {
-//		//
-//		// ... закроем текущий проект
-//		//
-//		closeCurrentProject();
+void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
+{
+	//
+	// Если нужно сохранить проект
+	//
+	if (saveIfNeeded()) {
+		//
+		// ... закроем текущий проект
+		//
+		closeCurrentProject();
 
-//		//
-//		// ... переключаемся на работу с выбранным файлом
-//		//
-//		const bool isRemote = false;
-//		m_projectsManager->setCurrentProject(_projectIndex, isRemote);
+		//
+		// ... переключаемся на работу с выбранным файлом
+		//
+		const bool isRemote = false;
+		m_projectsManager->setCurrentProject(_projectIndex, isRemote);
 
-//		//
-//		// ... перейдём к редактированию
-//		//
-//		goToEditCurrentProject();
-//	}
-//}
+		//
+		// ... перейдём к редактированию
+		//
+		goToEditCurrentProject();
+	}
+}
 
 //void ApplicationManager::aboutUserUnlogged()
 //{
@@ -535,12 +498,12 @@ void ApplicationManager::exec()
 //	reloadApplicationSettings();
 //}
 
-//void ApplicationManager::aboutProjectChanged()
-//{
-//	::updateWindowModified(m_view, true);
+void ApplicationManager::aboutProjectChanged()
+{
+	::updateWindowModified(m_view, true);
 
 //	m_statisticsManager->scenarioTextChanged();
-//}
+}
 
 //void ApplicationManager::aboutShowFullscreen()
 //{
@@ -588,64 +551,59 @@ void ApplicationManager::exec()
 //	DataStorageLayer::StorageFacade::settingsStorage()->saveApplicationStateAndGeometry(m_view);
 //}
 
-//bool ApplicationManager::saveIfNeeded()
-//{
-//	bool success = true;
+bool ApplicationManager::saveIfNeeded()
+{
+	bool success = true;
 
-//	//
-//	// Если какие-то данные изменены
-//	//
-//	if (m_view->isWindowModified()) {
-//		//
-//		// ... спрашиваем пользователя, хочет ли он сохранить изменения
-//		//
-//		int questionResult =
-//				QLightBoxMessage::question(m_view, tr("Save project changes?"),
-//					tr("Project was modified. Save changes?"),
-//					QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
+	//
+	// Если какие-то данные изменены
+	//
+	if (m_view->isWindowModified()) {
+		//
+		// ... спрашиваем пользователя, хочет ли он сохранить изменения
+		//
+		int questionResult =
+				QLightBoxMessage::question(m_view, tr("Save project changes?"),
+					tr("Project was modified. Save changes?"),
+					QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
 
-//		if (questionResult != QDialogButtonBox::Cancel) {
-//			//
-//			// ... и сохраняем, если хочет
-//			//
-//			if (questionResult == QDialogButtonBox::Yes) {
-//				aboutSave();
-//			} else {
-//				::updateWindowModified(m_view, false);
-//			}
-//		} else {
-//			success = false;
-//		}
-//	}
+		if (questionResult != QDialogButtonBox::Cancel) {
+			//
+			// ... и сохраняем, если хочет
+			//
+			if (questionResult == QDialogButtonBox::Yes) {
+				saveProject();
+			} else {
+				::updateWindowModified(m_view, false);
+			}
+		} else {
+			success = false;
+		}
+	}
 
-//	return success;
-//}
+	return success;
+}
 
-//void ApplicationManager::goToEditCurrentProject()
-//{
-//	//
-//	// Покажем уведомление пользователю
-//	//
-//	ProgressWidget progress(m_view);
-//	progress.showProgress(tr("Loading Scenario"), tr("Please wait. Loading can take few minutes."));
+void ApplicationManager::goToEditCurrentProject()
+{
+	//
+	// Покажем уведомление пользователю
+	//
+	ProgressWidget progress(m_view);
+	progress.showProgress(tr("Loading Scenario"), tr("Please wait. Loading can take few minutes."));
 
-//	//
-//	// Установим заголовок
-//	//
-//	updateWindowTitle();
+	//
+	// Установим заголовок
+	//
+	updateWindowTitle();
 
-//	//
-//	// Настроим режим работы со сценарием
-//	//
-//	const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
-//	m_scenarioManager->setCommentOnly(isCommentOnly);
+	//
+	// Настроим режим работы со сценарием
+	//
+	const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
+	m_scenarioManager->setCommentOnly(isCommentOnly);
 //	m_charactersManager->setCommentOnly(isCommentOnly);
 //	m_locationsManager->setCommentOnly(isCommentOnly);
-
-//	//
-//	// Активируем вкладки
-//	//
-//	::enableActionsOnProjectOpen();
 
 //	//
 //	// Настроим индикатор
@@ -660,10 +618,10 @@ void ApplicationManager::exec()
 //		m_tabs->removeIndicator();
 //	}
 
-//	//
-//	// Загрузить данные из файла
-//	//
-//	m_scenarioManager->loadCurrentProject();
+	//
+	// Загрузить данные из файла
+	//
+	m_scenarioManager->loadCurrentProject();
 //	m_charactersManager->loadCurrentProject();
 //	m_locationsManager->loadCurrentProject();
 //	m_statisticsManager->loadCurrentProject();
@@ -688,130 +646,91 @@ void ApplicationManager::exec()
 //	//
 //	m_scenarioManager->startChangesHandling();
 
-//	//
-//	// Загрузить настройки файла
-//	//
-//	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
+	//
+	// Загрузить настройки файла
+	//
+	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 //	m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 
-//	//
-//	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
-//	//
-//	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
+	//
+	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
+	//
+	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
 
-//	//
-//	// Перейти на вкладку редактирования сценария
-//	//
-//	m_tabs->setCurrent(1);
+	//
+	// Активируем меню для проекта
+	//
+	m_menuManager->showProjectSubmenu(ProjectsManager::currentProject().displayName());
 
-//	//
-//	// Закроем уведомление
-//	//
-//	progress.finish();
-//}
+	//
+	// Перейти на вкладку редактирования сценария
+	//
+	m_view->setCurrentView(PROJECT_TEXT_VIEW_INDEX);
 
-//void ApplicationManager::closeCurrentProject()
-//{
-//	//
-//	// Сохраним настройки закрываемого проекта
-//	//
-//	m_scenarioManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+	//
+	// Закроем уведомление
+	//
+	progress.finish();
+}
+
+void ApplicationManager::closeCurrentProject()
+{
+	//
+	// Сохраним настройки закрываемого проекта
+	//
+	m_scenarioManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 //	m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 
-//	//
-//	// Закроем проект управляющими
-//	//
-//	m_scenarioManager->closeCurrentProject();
+	//
+	// Закроем проект управляющими
+	//
+	m_scenarioManager->closeCurrentProject();
 
-//	//
-//	// Очистим все загруженные на текущий момент данные
-//	//
-//	DataStorageLayer::StorageFacade::clearStorages();
+	//
+	// Очистим все загруженные на текущий момент данные
+	//
+	DataStorageLayer::StorageFacade::clearStorages();
 
-//	//
-//	// Если использовалась база данных, то удалим старое соединение
-//	//
-//	DatabaseLayer::Database::closeCurrentFile();
+	//
+	// Если использовалась база данных, то удалим старое соединение
+	//
+	DatabaseLayer::Database::closeCurrentFile();
 
-//	//
-//	// Информируем управляющего проектами, что текущий проект закрыт
-//	//
-//	m_projectsManager->closeCurrentProject();
+	//
+	// Информируем управляющего проектами, что текущий проект закрыт
+	//
+	m_projectsManager->closeCurrentProject();
 
-//	//
-//	// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
-//	//
-//	::disableActionsOnStart();
-//}
+	//
+	// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
+	//
+	m_menuManager->hideProjectSubmenu();
+}
 
 void ApplicationManager::initView()
 {
 	//
 	// Настроим представления
 	//
-	m_view->addView(m_scenarioManager->toolbar(), m_scenarioManager->view());
 	m_view->addView(m_startUpManager->toolbar(), m_startUpManager->view());
-
-//	//
-//	// Настроим меню
-//	//
-//	m_menu->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-//	m_menu->setText(tr("Menu"));
-//	m_menu->setPopupMode(QToolButton::MenuButtonPopup);
-//	m_menu->setMenu(createMenu());
-
-//	//
-//	// Настроим боковую панель
-//	//
-//	m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
-//	g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
-//	g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
-//	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
-//	g_disableOnStartActions << m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
-//	m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
-
-//	//
-//	// Настроим виджеты соответствующие вкладкам
-//	//
-//	m_tabsWidgets->addWidget(m_startUpManager->view());
-//	m_tabsWidgets->addWidget(m_scenarioManager->view());
-//	m_tabsWidgets->addWidget(m_charactersManager->view());
-//	m_tabsWidgets->addWidget(m_locationsManager->view());
-//	m_tabsWidgets->addWidget(m_statisticsManager->view());
-//	m_tabsWidgets->addWidget(m_settingsManager->view());
-
-//	//
-//	// Расположим всё на форме
-//	//
-//	QVBoxLayout* leftLayout = new QVBoxLayout;
-//	leftLayout->setContentsMargins(QMargins());
-//	leftLayout->setSpacing(0);
-//	leftLayout->addWidget(m_menu);
-//	leftLayout->addWidget(m_tabs);
-
-//	QHBoxLayout* layout = new QHBoxLayout;
-//	layout->setContentsMargins(QMargins());
-//	layout->setSpacing(0);
-//	layout->addLayout(leftLayout);
-//	layout->addWidget(m_tabsWidgets);
-
-//	m_view->setLayout(layout);
-
-//	//
-//	// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
-//	//
-//	::disableActionsOnStart();
-
-//	//
-//	// Настроим
-//	//
+	m_view->addView(m_scenarioManager->toolbar(), m_scenarioManager->view());
 }
 
 void ApplicationManager::initConnections()
 {
-	connect(m_view, &ApplicationView::menuClicked, [=](){
-			WAF::Animation::sideSlideIn(m_menuManager->view(), WAF::LeftSide);
-		});
+	connect(m_view, &ApplicationView::menuClicked, m_menuManager, &MenuManager::showMenu);
+
+	connect(m_menuManager, &MenuManager::projectsRequested, [=](){
+		m_view->setCurrentView(PROJECTS_VIEW_INDEX);
+	});
+	connect(m_menuManager, &MenuManager::projectTextRequested, [=](){
+		m_view->setCurrentView(PROJECT_TEXT_VIEW_INDEX);
+	});
+
+	connect(m_startUpManager, &StartUpManager::createProjectRequested, this, &ApplicationManager::createNewProject);
+	connect(m_startUpManager, &StartUpManager::openRecentProjectRequested, this, &ApplicationManager::aboutLoadFromRecent);
+	connect(m_startUpManager, &StartUpManager::openRemoteProjectRequested, this, &ApplicationManager::aboutLoadFromRemote);
+
 //	connect(m_view, SIGNAL(wantToClose()), this, SLOT(aboutExit()));
 
 //	connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
@@ -898,7 +817,7 @@ void ApplicationManager::initStyleSheet()
 	//
 	// Установим стиль на главный виджет приложения
 	//
-	m_view->setStyleSheet(styleSheet);
+	m_view->setStyleSheet(StyleSheetHelper::computeDeviceInpedendentSize(styleSheet));
 }
 
 //void ApplicationManager::reloadApplicationSettings()
@@ -1015,13 +934,13 @@ void ApplicationManager::initStyleSheet()
 //	m_backupHelper.setBackupDir(saveBackupsFolder);
 //}
 
-//void ApplicationManager::updateWindowTitle()
-//{
-//	QString projectFileName = ProjectsManager::currentProject().path();
-//	projectFileName = projectFileName.split(QDir::separator()).last();
-//#ifdef Q_OS_MAC
-//	m_view->setWindowTitle(projectFileName);
-//#else
-//	m_view->setWindowTitle(tr("%1[*] - KIT Scenarist").arg(projectFileName));
-//#endif
-//}
+void ApplicationManager::updateWindowTitle()
+{
+	QString projectFileName = ProjectsManager::currentProject().path();
+	projectFileName = projectFileName.split(QDir::separator()).last();
+#ifdef Q_OS_MAC
+	m_view->setWindowTitle(projectFileName);
+#else
+	m_view->setWindowTitle(tr("%1[*] - KIT Scenarist").arg(projectFileName));
+#endif
+}

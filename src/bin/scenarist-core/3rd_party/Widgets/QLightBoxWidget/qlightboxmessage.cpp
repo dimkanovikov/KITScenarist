@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QVariant>
 #include <QVBoxLayout>
 
 namespace {
@@ -53,6 +54,11 @@ QDialogButtonBox::StandardButton QLightBoxMessage::message(QWidget* _parent, con
 	if (_buttons.testFlag(_defaultButton)) {
 		message.m_buttons->button(_defaultButton)->setDefault(true);
 	}
+#ifndef Q_OS_ANDROID
+	foreach (QAbstractButton* button, message.m_buttons->buttons())	{
+		button->setProperty("flat", true);
+	}
+#endif
 
 	return (QDialogButtonBox::StandardButton)message.exec();
 }

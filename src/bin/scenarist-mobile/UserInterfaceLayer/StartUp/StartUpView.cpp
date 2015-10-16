@@ -133,4 +133,5 @@ void StartUpView::initConnections()
 
 void StartUpView::initStyleSheet()
 {
+	m_ui->toolbar->setProperty("toolbar", true);
 }

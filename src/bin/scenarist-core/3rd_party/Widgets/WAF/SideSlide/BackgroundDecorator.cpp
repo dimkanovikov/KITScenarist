@@ -22,70 +22,70 @@ using WAF::BackgroundDecorator;
 
 
 BackgroundDecorator::BackgroundDecorator(QWidget* _parent) :
-    QWidget(_parent)
+	QWidget(_parent)
 {
-    resize(maximumSize());
+	resize(maximumSize());
 
-    m_timeline.setDuration(300);
-    m_timeline.setUpdateInterval(80);
-    m_timeline.setCurveShape(QTimeLine::EaseInOutCurve);
-    m_timeline.setStartFrame(0);
-    m_timeline.setEndFrame(100);
+	m_timeline.setDuration(300);
+	m_timeline.setUpdateInterval(80);
+	m_timeline.setCurveShape(QTimeLine::EaseInOutCurve);
+	m_timeline.setStartFrame(0);
+	m_timeline.setEndFrame(100);
 
-    m_decorationColor = QColor(0, 0, 0, 0);
+	m_decorationColor = QColor(0, 0, 0, 0);
 
-    //
-    // Анимируем затемнение/осветление
-    //
-    connect(&m_timeline, &QTimeLine::frameChanged, [=](int _value){
-        m_decorationColor = QColor(0, 0, 0, _value);
-        repaint();
-    });
+	//
+	// Анимируем затемнение/осветление
+	//
+	connect(&m_timeline, &QTimeLine::frameChanged, [=](int _value){
+		m_decorationColor = QColor(0, 0, 0, _value);
+		repaint();
+	});
 
-    //
-    // После того, как осветлили фон, скрываем себя
-    //
-    connect(&m_timeline, &QTimeLine::finished, [=](){
-       if (m_timeline.currentFrame() == 0) {
-           hide();
-       }
-    });
+	//
+	// После того, как осветлили фон, скрываем себя
+	//
+	connect(&m_timeline, &QTimeLine::finished, [=](){
+	   if (m_timeline.currentFrame() == 0) {
+		   hide();
+	   }
+	});
 }
 
 void BackgroundDecorator::grabParent()
 {
 #ifdef Q_OS_ANDROID
-    //
-    // В андройде Qt не умеет рисовать прозрачные виджеты https://bugreports.qt.io/browse/QTBUG-43635
-    // поэтому сохранем картинку с изображением подложки
-    //
-    m_background = parentWidget()->grab();
+	//
+	// В андройде Qt не умеет рисовать прозрачные виджеты https://bugreports.qt.io/browse/QTBUG-43635
+	// поэтому сохранем картинку с изображением подложки
+	//
+	m_background = parentWidget()->grab();
 #endif
 }
 
 void BackgroundDecorator::decorate(bool _dark)
 {
-    if (m_timeline.state() == QTimeLine::Running) {
-        m_timeline.stop();
-    }
+	if (m_timeline.state() == QTimeLine::Running) {
+		m_timeline.stop();
+	}
 
-    m_timeline.setDirection(_dark ? QTimeLine::Forward : QTimeLine::Backward);
-    m_timeline.start();
+	m_timeline.setDirection(_dark ? QTimeLine::Forward : QTimeLine::Backward);
+	m_timeline.start();
 }
 
 void BackgroundDecorator::paintEvent(QPaintEvent* _event)
 {
-    QPainter painter(this);
-    painter.drawPixmap(0, 0, m_background);
-    painter.fillRect(rect(), m_decorationColor);
+	QPainter painter(this);
+	painter.drawPixmap(0, 0, m_background);
+	painter.fillRect(rect(), m_decorationColor);
 
-    QWidget::paintEvent(_event);
+	QWidget::paintEvent(_event);
 }
 
 void BackgroundDecorator::mousePressEvent(QMouseEvent *_event)
 {
-    emit clicked();
+	emit clicked();
 
-    QWidget::mousePressEvent(_event);
+	QWidget::mousePressEvent(_event);
 }
 

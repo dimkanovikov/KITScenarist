@@ -5,6 +5,7 @@
 
 namespace UserInterface {
 	class StartUpView;
+	class AddProjectDialog;
 }
 
 class QAbstractItemModel;
@@ -47,7 +48,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Создать проект
 		 */
-		void createProjectRequested();
+		void createProjectRequested(const QString& _projectName);
 
 		/**
 		 * @brief Открыть проект
@@ -66,6 +67,11 @@ namespace ManagementLayer
 
 	private:
 		/**
+		 * @brief Настроить представление
+		 */
+		void initView();
+
+		/**
 		 * @brief Настроить соединения
 		 */
 		void initConnections();
@@ -75,6 +81,11 @@ namespace ManagementLayer
 		 * @brief Представление для стартовой страницы
 		 */
 		UserInterface::StartUpView* m_view;
+
+		/**
+		 * @brief Диалог создания нового проекта
+		 */
+		UserInterface::AddProjectDialog* m_addProjectDialog;
 	};
 }
 

@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql xml widgets network
+QT += core gui sql xml widgets network
+android: QT += androidextras
 
 TARGET = Scenarist
 TEMPLATE = app
@@ -204,7 +205,16 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/BackgroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.cpp \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioManager.cpp \
-    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp
+    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp \
+    scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.cpp \
+    scenarist-mobile/UserInterfaceLayer/StartUp/AddProjectDialog.cpp \
+    scenarist-mobile/ManagementLayer/Project/Project.cpp \
+    scenarist-mobile/ManagementLayer/Project/ProjectsManager.cpp \
+    scenarist-mobile/ManagementLayer/Scenario/ScenarioNavigatorManager.cpp \
+    scenarist-mobile/ManagementLayer/Scenario/ScenarioTextEditManager.cpp \
+    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp
     scenarist-mobile/ManagementLayer/ApplicationManager.cpp
 
 HEADERS += \
@@ -364,7 +374,17 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/BackgroundDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.h \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioManager.h \
-    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.h
+    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.h \
+    scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
+    scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.h \
+    scenarist-mobile/UserInterfaceLayer/StartUp/AddProjectDialog.h \
+    scenarist-mobile/ManagementLayer/Project/Project.h \
+    scenarist-mobile/ManagementLayer/Project/ProjectsManager.h \
+    scenarist-mobile/ManagementLayer/Scenario/ScenarioNavigatorManager.h \
+    scenarist-mobile/ManagementLayer/Scenario/ScenarioTextEditManager.h \
+    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.h \
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.h
     scenarist-mobile/ManagementLayer/ApplicationManager.h
 
 
@@ -379,12 +399,15 @@ FORMS += \
     scenarist-mobile/UserInterfaceLayer/ApplicationView.ui \
     scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui \
     scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.ui \
-    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.ui
+    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.ui \
+    scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.ui \
+    scenarist-mobile/UserInterfaceLayer/StartUp/AddProjectDialog.ui \
+    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.ui
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = \
-        /Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Debug/libs/fileformats/libfileformats.so \
-        /Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Debug/libs/hunspell/libhunspell.so \
-        $$PWD/../../build/Debug/libs/webloader/libwebloader.so
+	/Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Debug/libs/fileformats/libfileformats.so \
+	/Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Debug/libs/hunspell/libhunspell.so \
+	$$PWD/../../build/Debug/libs/webloader/libwebloader.so
 }
 

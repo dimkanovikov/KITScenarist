@@ -11,6 +11,7 @@ namespace UserInterface {
 
 namespace ManagementLayer
 {
+	class ProjectsManager;
 	class MenuManager;
 	class StartUpManager;
 	class ScenarioManager;
@@ -33,21 +34,21 @@ namespace ManagementLayer
 		 */
 		void exec();
 
-//	private slots:
-//		/**
-//		 * @brief Обновить списки проектов на стартовой странице
-//		 */
-//		void aboutUpdateProjectsList();
+	private:
+		/**
+		 * @brief Обновить списки проектов на стартовой странице
+		 */
+		void aboutUpdateProjectsList();
 
-//		/**
-//		 * @brief Создать новый
-//		 */
-//		void aboutCreateNew();
+		/**
+		 * @brief Создать новый
+		 */
+		void createNewProject(const QString& _projectName);
 
-//		/**
-//		 * @brief Сохранить в файл
-//		 */
-//		void aboutSave();
+		/**
+		 * @brief Сохранить в файл
+		 */
+		void saveProject();
 
 //		/**
 //		 * @brief Загрузить
@@ -61,13 +62,13 @@ namespace ManagementLayer
 //		 */
 //		void aboutShowHelp();
 
-//		/**
-//		 * @brief Загрузить из списка
-//		 */
-//		/** @{ */
-//		void aboutLoadFromRecent(const QModelIndex& _projectIndex);
-//		void aboutLoadFromRemote(const QModelIndex& _projectIndex);
-//		/** @} */
+		/**
+		 * @brief Загрузить из списка
+		 */
+		/** @{ */
+		void aboutLoadFromRecent(const QModelIndex& _projectIndex);
+		void aboutLoadFromRemote(const QModelIndex& _projectIndex);
+		/** @} */
 
 //		/**
 //		 * @brief Обработка выхода пользователя
@@ -109,10 +110,10 @@ namespace ManagementLayer
 //		 */
 //		void aboutApplicationSettingsUpdated();
 
-//		/**
-//		 * @brief Проект был изменён
-//		 */
-//		void aboutProjectChanged();
+		/**
+		 * @brief Проект был изменён
+		 */
+		void aboutProjectChanged();
 
 //		/**
 //		 * @brief Включить/выключить полноэкранный режим
@@ -135,23 +136,23 @@ namespace ManagementLayer
 //		 */
 //		void saveViewState();
 
-//		/**
-//		 * @brief Если проект был изменён, но не сохранён предложить пользователю сохранить его
-//		 *
-//		 * Возвращает true, если пользователь хочет (Да) или не хочет (Нет) сохранять
-//		 * и false, если пользователь передумал (Отмена)
-//		 */
-//		bool saveIfNeeded();
+		/**
+		 * @brief Если проект был изменён, но не сохранён предложить пользователю сохранить его
+		 *
+		 * Возвращает true, если пользователь хочет (Да) или не хочет (Нет) сохранять
+		 * и false, если пользователь передумал (Отмена)
+		 */
+		bool saveIfNeeded();
 
-//		/**
-//		 * @brief Настроить текущий проект для редактирования
-//		 */
-//		void goToEditCurrentProject();
+		/**
+		 * @brief Настроить текущий проект для редактирования
+		 */
+		void goToEditCurrentProject();
 
-//		/**
-//		 * @brief Закрыть текущий проект
-//		 */
-//		void closeCurrentProject();
+		/**
+		 * @brief Закрыть текущий проект
+		 */
+		void closeCurrentProject();
 
 	private:
 		/**
@@ -174,10 +175,10 @@ namespace ManagementLayer
 //		 */
 //		void reloadApplicationSettings();
 
-//		/**
-//		 * @brief Обновить заголовок окна
-//		 */
-//		void updateWindowTitle();
+		/**
+		 * @brief Обновить заголовок окна
+		 */
+		void updateWindowTitle();
 
 	private:
 		/**
@@ -185,10 +186,10 @@ namespace ManagementLayer
 		 */
 		UserInterface::ApplicationView* m_view;
 
-//		/**
-//		 * @brief Управляющий проектами
-//		 */
-//		ProjectsManager* m_projectsManager;
+		/**
+		 * @brief Управляющий проектами
+		 */
+		ProjectsManager* m_projectsManager;
 
 		/**
 		 * @brief Управляющий меню навигации приложения

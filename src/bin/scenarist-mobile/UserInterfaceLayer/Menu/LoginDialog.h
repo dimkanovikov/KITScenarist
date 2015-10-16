@@ -1,7 +1,7 @@
 #ifndef LOGINDIALOG_H
 #define LOGINDIALOG_H
 
-#include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
+#include <QWidget>
 
 namespace Ui {
 	class LoginDialog;
@@ -13,7 +13,7 @@ namespace UserInterface
 	/**
 	 * @brief Класс диалога авторизации пользователя
 	 */
-	class LoginDialog : public QLightBoxDialog
+	class LoginDialog : public QWidget
 	{
 		Q_OBJECT
 
@@ -42,11 +42,22 @@ namespace UserInterface
 		 */
 		void setError(const QString& _error);
 
-	protected:
 		/**
-		 * @brief При запуске фокусируемся на поле ввода имени пользователя
+		 * @brief Установить видимость полосы загрузки
 		 */
-		QWidget* focusedOnExec() const;
+		/** @{ */
+		void showProgressBar();
+		void hideProgressBar();
+		/** @{ */
+
+	signals:
+		/**
+		 * @brief Сигналы нажатия кнопок
+		 */
+		/** @{ */
+		void loginClicked();
+		void cancelClicked();
+		/** @} */
 
 	private:
 		/**
@@ -59,8 +70,22 @@ namespace UserInterface
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Настроить внешний вид
+		 */
+		void initStyleSheet();
+
+		/**
+		 * @brief Скорректировать размер
+		 * @note Используется после отображения/сокрытия дополнительных виджетов
+		 */
+		void updateSize();
+
 	private:
-		Ui::LoginDialog *ui;
+		/**
+		 * @brief Интерфейс формы
+		 */
+		Ui::LoginDialog* m_ui;
 	};
 }
 

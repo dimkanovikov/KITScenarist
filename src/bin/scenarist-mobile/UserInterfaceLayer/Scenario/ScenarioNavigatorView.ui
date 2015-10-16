@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ScenarioTextView</class>
- <widget class="QWidget" name="ScenarioTextView">
+ <class>ScenarioNavigatorView</class>
+ <widget class="QWidget" name="ScenarioNavigatorView">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>470</height>
+    <width>281</width>
+    <height>469</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="navigator">
+       <widget class="QToolButton" name="text">
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -64,7 +64,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/Mobile/view-list.png</normaloff>:/Graphics/Icons/Mobile/view-list.png</iconset>
+          <normaloff>:/Graphics/Icons/Mobile/script.png</normaloff>:/Graphics/Icons/Mobile/script.png</iconset>
         </property>
        </widget>
       </item>
@@ -97,85 +97,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QStackedWidget" name="textEditContainer"/>
-   </item>
-   <item>
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>10</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QToolButton" name="tab">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/Mobile/keyboard-tab.png</normaloff>:/Graphics/Icons/Mobile/keyboard-tab.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="textStyles">
-        <item>
-         <property name="text">
-          <string>Scene Heading</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Action</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Character</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Dialogue</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Paratentical</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="enter">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/Mobile/keyboard-return.png</normaloff>:/Graphics/Icons/Mobile/keyboard-return.png</iconset>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+    <widget class="QTreeView" name="navigator"/>
    </item>
   </layout>
  </widget>

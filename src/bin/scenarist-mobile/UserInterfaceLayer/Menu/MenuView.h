@@ -21,6 +21,28 @@ namespace UserInterface
 		explicit MenuView(QWidget* _parent = 0);
 		~MenuView();
 
+		/**
+		 * @brief Показать пункты меню для проекта
+		 */
+		void showProjectSubmenu(const QString& _projectName);
+
+		/**
+		 * @brief Спрятать пункты меню проекта
+		 */
+		void hideProjectSubmenu();
+
+	signals:
+		/**
+		 * @brief Сигналы нажатий кнопок меню
+		 */
+		/** @{ */
+		void backClicked();
+		void signInClicked();
+		void projectsClicked();
+		void projectSaveClicked();
+		void projectTextClicked();
+		/** @} */
+
 	private:
 		/**
 		 * @brief Настроить представление

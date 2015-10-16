@@ -1,11 +1,101 @@
 /*
  *
  */
+QAbstractButton {
+    outline: none;
+}
+
 QToolButton {
     border: none;
-    min-width: 80px;
-    min-height: 80px;
-    icon-size: 74px;
+    min-width: 56dp;
+    min-height: 56dp;
+    icon-size: 24dp;
+    background-color: transparent;
+}
+
+QToolButton:checked, QPushButton:checked {
+    background-color: rgba(204, 204, 204, 155);
+}
+
+QToolButton:pressed, QPushButton:pressed {
+    background-color: rgba(221, 221, 221, 155);
+}
+
+QProgressBar {
+    border-radius: 0px;
+    border: none;
+    background-color: #DDF0DD;
+    max-height: 5dp;
+}
+
+QProgressBar::chunk {
+    background-color: #4CAF50;
+}
+
+QFrame {
+    background-color: palette(base);
+}
+
+QPushButton[side-nav-name=true] {
+    border: none;
+    height: 48dp;
+    icon-size: 24dp;
+    padding-left: 16dp;
+    color: rgba(0, 0, 0, 138);
+    text-align: left;
+    font-weight: 600;
+}
+
+QPushButton[side-nav-item=true] {
+    border: none;
+    height: 48dp;
+    icon-size: 24dp;
+    padding-left: 16dp;
+    text-align: left;
+    font-weight: 600;
+}
+
+QPushButton[side-nav-subheader=true] {
+    border: none;
+    border-top: 1px solid #E4E4E4;
+    height: 48dp;
+    padding-left: 16dp;
+    color: rgba(0, 0, 0, 138);
+    text-align: left;
+    font-weight: 600;
+}
+
+QPushButton[flat=true] {
+    min-width: 88dp;
+    height:32dp;
+    border: none;
+    color: #4CAF50;
+    font-weight: 600;
+}
+
+QPushButton:disabled[flat=true] {
+    color: rgba(0, 0, 0, 80);
+}
+
+QPushButton[raised=true] {
+    min-width: 88dp;
+    height:32dp;
+    border: 1px solid #BCBCBC;
+    font-weight: 600;
+}
+
+QPushButton:default[raised=true] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+QPushButton:disabled[raised=true] {
+    background-color: rgba(0, 0, 0, 25);
+    color: rgba(0, 0, 0, 80);
+}
+
+QPushButton:hover[flat=true], QPushButton:hover:!default[raised=true] {
+    background-color: rgba(204, 204, 204, 155);
 }
 
 QFrame[toolbar=true] {
