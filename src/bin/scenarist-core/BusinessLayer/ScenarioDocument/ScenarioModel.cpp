@@ -517,6 +517,35 @@ QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 
 // ********
 
+void ScenarioModelFiltered::setDragDropEnabled(bool _enabled)
+{
+    if (m_dragDropEnabled != _enabled) {
+        m_dragDropEnabled = _enabled;
+    }
+}
+
+Qt::DropActions ScenarioModelFiltered::supportedDragActions() const
+{
+    Qt::DropActions result;
+    if (m_dragDropEnabled) {
+        result = sourceModel()->supportedDragActions();
+    } else {
+        result = Qt::IgnoreAction;
+    }
+    return result;
+}
+
+Qt::DropActions ScenarioModelFiltered::supportedDropActions() const
+{
+    Qt::DropActions result;
+    if (m_dragDropEnabled) {
+        result = sourceModel()->supportedDropActions();
+    } else {
+        result = Qt::IgnoreAction;
+    }
+    return result;
+}
+
 bool ScenarioModelFiltered::filterAcceptsRow(int _sourceRow, const QModelIndex& _sourceParent) const
 {
 	QModelIndex index = sourceModel()->index(_sourceRow, 0, _sourceParent);

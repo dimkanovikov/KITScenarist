@@ -160,13 +160,30 @@ namespace BusinessLogic
 	class ScenarioModelFiltered : public QSortFilterProxyModel
 	{
 	public:
-		ScenarioModelFiltered(QObject* _parent = 0) : QSortFilterProxyModel(_parent) {}
+        ScenarioModelFiltered(QObject* _parent = 0) :
+            QSortFilterProxyModel(_parent),
+            m_dragDropEnabled(true) {}
+
+        /**
+         * @brief Настройка возможности перетаскивания элементов модели
+         */
+        /** @{ */
+        void setDragDropEnabled(bool _enabled);
+        Qt::DropActions supportedDragActions() const;
+        Qt::DropActions supportedDropActions() const;
+        /** @} */
 
 	protected:
 		/**
 		 * @brief Переопределяем фильтр для сокрытия не нужных элементов
 		 */
 		bool filterAcceptsRow(int _sourceRow, const QModelIndex& _sourceParent) const;
+
+    private:
+        /**
+         * @brief Доступна ли возможность перетаскивания элементов
+         */
+        bool m_dragDropEnabled;
 	};
 }
 

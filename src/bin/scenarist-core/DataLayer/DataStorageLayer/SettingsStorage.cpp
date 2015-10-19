@@ -58,10 +58,7 @@ void SettingsStorage::setValue(const QString& _key, const QString& _value, Setti
 	// Сохраняем его в заданное хранилище
 	//
 	if (_settingsPlace == ApplicationSettings) {
-		QSettings().setValue(_key.toUtf8().toHex(), _value);
-#ifdef Q_OS_ANDROID
-		QSettings().sync();
-#endif
+        QSettings().setValue(_key.toUtf8().toHex(), _value);
 	} else {
 		MapperFacade::settingsMapper()->setValue(_key, _value);
 	}
@@ -105,11 +102,7 @@ void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QSt
 		//
 		// Закроем группу
 		//
-		settings.endGroup();
-
-#ifdef Q_OS_ANDROID
-		QSettings().sync();
-#endif
+        settings.endGroup();
 	}
 	//
 	// В базу данных карта параметров не умеет сохраняться

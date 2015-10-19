@@ -381,7 +381,7 @@ void ScenarioTextView::initView()
 //	m_ui->textEdit->horizontalScrollBar()->hide();
 //	m_ui->textEdit->verticalScrollBar()->hide();
 
-	//	QScroller::grabGesture(m_ui->textEdit);
+//    QScroller::grabGesture(m_editorWrapper);
 }
 
 void ScenarioTextView::initStylesCombo()

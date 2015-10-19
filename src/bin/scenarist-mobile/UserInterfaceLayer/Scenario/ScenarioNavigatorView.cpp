@@ -103,7 +103,7 @@ void ScenarioNavigatorView::initView()
 	m_ui->navigator->setSelectionMode(QAbstractItemView::ContiguousSelection);
 	m_ui->navigator->setStyle(new ScenarioNavigatorProxyStyle(m_ui->navigator->style()));
 
-	QScroller::grabGesture(m_ui->navigator, QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(m_ui->navigator);
 }
 
 void ScenarioNavigatorView::initConnections()

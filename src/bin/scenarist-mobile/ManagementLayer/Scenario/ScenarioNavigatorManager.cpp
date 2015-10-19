@@ -27,6 +27,7 @@ ScenarioNavigatorManager::ScenarioNavigatorManager(QObject *_parent, QWidget* _p
 //	m_addItemDialog(new ScenarioItemDialog(m_view)),
 	m_isDraft(_isDraft)
 {
+    initData();
 	initView();
 	initConnections();
 	reloadNavigatorSettings();
@@ -150,7 +151,12 @@ void ScenarioNavigatorManager::aboutSceneChoosed(const QModelIndex& _index)
 
 void ScenarioNavigatorManager::aboutModelUpdated()
 {
-//	m_view->setScenesCount(m_scenarioModel->scenesCount());
+    //	m_view->setScenesCount(m_scenarioModel->scenesCount());
+}
+
+void ScenarioNavigatorManager::initData()
+{
+    m_scenarioModelProxy->setDragDropEnabled(false);
 }
 
 void ScenarioNavigatorManager::initView()

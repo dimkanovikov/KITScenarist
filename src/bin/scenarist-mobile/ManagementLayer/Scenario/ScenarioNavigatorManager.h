@@ -142,6 +142,11 @@ namespace ManagementLayer
 		void aboutModelUpdated();
 
 	private:
+        /**
+         * @brief Настроить данные
+         */
+        void initData();
+
 		/**
 		 * @brief Настроить представление
 		 */

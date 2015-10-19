@@ -24,6 +24,7 @@
 
 #include <QDir>
 #include <QFile>
+#include <QSettings>
 #include <QStandardPaths>
 
 using namespace ManagementLayer;
@@ -171,6 +172,11 @@ void ApplicationManager::createNewProject(const QString& _projectName)
 
 void ApplicationManager::saveProject()
 {
+    //
+    // Делаем это вручную, т.к. приложение не всегда корректно закрывается
+    //
+    QSettings().sync();
+
 	//
 	// Если какие-то данные изменены
 	//
