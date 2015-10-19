@@ -109,7 +109,7 @@ void ApplicationManager::createNewProject(const QString& _projectName)
 		//
 		// Получим имя файла для нового проекта
 		//
-		const QDir projectsDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+        const QDir projectsDir(QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).last());
 		if (!projectsDir.exists()) {
 			QDir::root().mkpath(projectsDir.absolutePath());
 		}

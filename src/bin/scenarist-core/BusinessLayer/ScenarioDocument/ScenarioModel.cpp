@@ -524,24 +524,11 @@ void ScenarioModelFiltered::setDragDropEnabled(bool _enabled)
     }
 }
 
-Qt::DropActions ScenarioModelFiltered::supportedDragActions() const
+Qt::ItemFlags ScenarioModelFiltered::flags(const QModelIndex &_index) const
 {
-    Qt::DropActions result;
-    if (m_dragDropEnabled) {
-        result = sourceModel()->supportedDragActions();
-    } else {
-        result = Qt::IgnoreAction;
-    }
-    return result;
-}
-
-Qt::DropActions ScenarioModelFiltered::supportedDropActions() const
-{
-    Qt::DropActions result;
-    if (m_dragDropEnabled) {
-        result = sourceModel()->supportedDropActions();
-    } else {
-        result = Qt::IgnoreAction;
+    Qt::ItemFlags result = sourceModel()->flags(_index);
+    if (!m_dragDropEnabled) {
+        result ^= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
     }
     return result;
 }

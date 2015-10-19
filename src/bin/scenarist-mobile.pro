@@ -413,3 +413,14 @@ contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
 	$$PWD/../../build/Debug/libs/webloader/libwebloader.so
 }
 
+DISTFILES += \
+    Scenarist-mobile/android/AndroidManifest.xml \
+    Scenarist-mobile/android/gradle/wrapper/gradle-wrapper.jar \
+    Scenarist-mobile/android/gradlew \
+    Scenarist-mobile/android/res/values/libs.xml \
+    Scenarist-mobile/android/build.gradle \
+    Scenarist-mobile/android/gradle/wrapper/gradle-wrapper.properties \
+    Scenarist-mobile/android/gradlew.bat
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/Scenarist-mobile
+

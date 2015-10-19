@@ -169,8 +169,7 @@ namespace BusinessLogic
          */
         /** @{ */
         void setDragDropEnabled(bool _enabled);
-        Qt::DropActions supportedDragActions() const;
-        Qt::DropActions supportedDropActions() const;
+        Qt::ItemFlags flags(const QModelIndex &_index) const;
         /** @} */
 
 	protected:
