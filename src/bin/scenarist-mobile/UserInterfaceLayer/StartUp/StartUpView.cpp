@@ -70,6 +70,17 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
 	m_ui->remoteFiles->setModel(_remoteProjectsModel);
 }
 
+void StartUpView::showRemoteProjects()
+{
+	m_ui->remoteProjects->show();
+}
+
+void StartUpView::hideRemoteProjects()
+{
+	m_ui->localProjects->setChecked(true);
+	m_ui->remoteProjects->hide();
+}
+
 bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
 {
 	bool result = false;

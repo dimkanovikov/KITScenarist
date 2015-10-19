@@ -22,6 +22,11 @@ namespace UserInterface
 		~LoginDialog();
 
 		/**
+		 * @brief Очистить диалог
+		 */
+		void clear();
+
+		/**
 		 * @brief Имя пользователя
 		 */
 		/** @{ */

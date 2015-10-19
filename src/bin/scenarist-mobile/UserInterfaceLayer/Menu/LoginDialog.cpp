@@ -23,6 +23,15 @@ LoginDialog::~LoginDialog()
 	delete m_ui;
 }
 
+void LoginDialog::clear()
+{
+	m_ui->error->hide();
+	m_ui->userName->clear();
+	m_ui->password->clear();
+	m_ui->progressBar->hide();
+	m_ui->content->setEnabled(true);
+}
+
 QString LoginDialog::userName() const
 {
 	return m_ui->userName->text();

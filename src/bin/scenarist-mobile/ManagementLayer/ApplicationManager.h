@@ -15,6 +15,7 @@ namespace ManagementLayer
 	class MenuManager;
 	class StartUpManager;
 	class ScenarioManager;
+	class SynchronizationManager;
 
 
 	/**
@@ -71,19 +72,14 @@ namespace ManagementLayer
 		/** @} */
 
 //		/**
-//		 * @brief Обработка выхода пользователя
-//		 */
-//		void aboutUserUnlogged();
-
-//		/**
 //		 * @brief Отобразить индикатор активной синхронизации
 //		 */
 //		void aboutShowSyncActiveIndicator();
 
-//		/**
-//		 * @brief Синхронизация остановленна с ошибкой
-//		 */
-//		void aboutSyncClosedWithError(int errorCode, const QString& _error = QString::null);
+		/**
+		 * @brief Синхронизация остановленна с ошибкой
+		 */
+		void syncClosedWithError(int errorCode, const QString& _error = QString::null);
 
 //		/**
 //		 * @brief Импортировать документ
@@ -236,10 +232,10 @@ namespace ManagementLayer
 //		 */
 //		ExportManager* m_exportManager;
 
-//		/**
-//		 * @brief Управляющий синхронизацией
-//		 */
-//		SynchronizationManager* m_synchronizationManager;
+		/**
+		 * @brief Управляющий синхронизацией
+		 */
+		SynchronizationManager* m_synchronizationManager;
 
 //		/**
 //		 * @brief Таймер автосохранения

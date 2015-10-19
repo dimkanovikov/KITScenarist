@@ -10,12 +10,13 @@
 //#include "Settings/SettingsManager.h"
 //#include "Import/ImportManager.h"
 //#include "Export/ExportManager.h"
-//#include "Synchronization/SynchronizationManager.h"
+#include "Synchronization/SynchronizationManager.h"
 
 #include <UserInterfaceLayer/ApplicationView.h>
 
 #include <DataLayer/Database/Database.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
 #include <3rd_party/Helpers/StyleSheetHelper.h>
@@ -43,27 +44,12 @@ namespace {
 	 * @brief Расширение файла проекта сценария
 	 */
 	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
-//	const char* MAC_CHANGED_SUFFIX =
-//			QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
-//	const bool SYNC_UNAVAILABLE = false;
+	const bool SYNC_UNAVAILABLE = false;
 
 	/**
 	 * @brief Обновить состояние изменённости текущего проекта
 	 */
 	static void updateWindowModified(QWidget* _widget, bool _modified) {
-#ifdef Q_OS_MAC
-		static const QString suffix =
-				QApplication::translate("ManagementLayer::ApplicationManager", MAC_CHANGED_SUFFIX);
-		if (_modified) {
-			if (!_widget->windowTitle().endsWith(suffix)) {
-				_widget->setWindowTitle(_widget->windowTitle() + suffix);
-			}
-		} else {
-			if (_widget->windowTitle().endsWith(suffix)) {
-				_widget->setWindowTitle(_widget->windowTitle().remove(suffix));
-			}
-		}
-#endif
 		_widget->setWindowModified(_modified);
 	}
 }
@@ -75,18 +61,15 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_projectsManager(new ProjectsManager(this)),
 	m_menuManager(new MenuManager(this, m_view)),
 	m_startUpManager(new StartUpManager(this, m_view)),
-	m_scenarioManager(new ScenarioManager(this, m_view))
+	m_scenarioManager(new ScenarioManager(this, m_view)),
+	m_synchronizationManager(new SynchronizationManager(this, m_view))
 	/*,
-	m_menu(new QToolButton(m_view)),
-	m_tabs(new SideTabBar(m_view)),
-	m_tabsWidgets(new QStackedWidget),
 	m_charactersManager(new CharactersManager(this, m_view)),
 	m_locationsManager(new LocationsManager(this, m_view)),
 	m_statisticsManager(new StatisticsManager(this, m_view)),
 	m_settingsManager(new SettingsManager(this, m_view)),
 	m_importManager(new ImportManager(this, m_view)),
-	m_exportManager(new ExportManager(this, m_view)),
-	m_synchronizationManager(new SynchronizationManager(this, m_view))*/
+	m_exportManager(new ExportManager(this, m_view))*/
 {
 	initView();
 	initConnections();
@@ -96,7 +79,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
 //	reloadApplicationSettings();
 
-//	QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
+	QTimer::singleShot(0, m_synchronizationManager, &SynchronizationManager::login);
 }
 
 ApplicationManager::~ApplicationManager()
@@ -172,10 +155,10 @@ void ApplicationManager::createNewProject(const QString& _projectName)
 
 void ApplicationManager::saveProject()
 {
-    //
-    // Делаем это вручную, т.к. приложение не всегда корректно закрывается
-    //
-    QSettings().sync();
+	//
+	// Делаем это вручную, т.к. приложение не всегда корректно закрывается
+	//
+	QSettings().sync();
 
 	//
 	// Если какие-то данные изменены
@@ -313,145 +296,136 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 	}
 }
 
-//void ApplicationManager::aboutUserUnlogged()
-//{
-//	//
-//	// Закрываем проект, если он из облака
-//	//
-//	if (m_projectsManager->currentProject().isRemote()) {
-//		closeCurrentProject();
-//	}
-//}
-
 //void ApplicationManager::aboutShowSyncActiveIndicator()
 //{
 //	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"), tr("Connection active"), tr("Project sinchronized"));
 //}
 
-//void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString& _error)
-//{
-//	bool switchToOfflineMode = false;
-//	QString title;
-//	QString error = _error;
-//	switch (_errorCode) {
-//		//
-//		// Нет связи с интернетом
-//		//
-//		case 0: {
-//			title = tr("Network error");
-//			error = tr("Can't estabilish network connection.\n"
-//					   "Continue working in offline mode.");
-//			switchToOfflineMode = true;
-//			break;
-//		}
+void ApplicationManager::syncClosedWithError(int _errorCode, const QString& _error)
+{
+	bool switchToOfflineMode = false;
+	QString title;
+	QString error = _error;
+	switch (_errorCode) {
+		//
+		// Нет связи с интернетом
+		//
+		case 0: {
+			title = tr("Network error");
+			error = tr("Can't estabilish network connection.\n"
+					   "Continue working in offline mode.");
+			switchToOfflineMode = true;
+			break;
+		}
 
-//		//
-//		// Проблемы с вводом логина и пароля
-//		//
-//		case 100:
-//		case 101: {
-//			error = tr("Incorrect username or password.");
-//			m_startUpManager->aboutRetryLogin(error);
-//			break;
-//		}
+		//
+		// Проблемы с вводом логина и пароля
+		//
+		case 100:
+		case 101: {
+			error = tr("Incorrect username or password.");
+			m_menuManager->retryLogin(error);
+			break;
+		}
 
-//		//
-//		// Закончилась подписка
-//		//
-//		case 102: {
-//			title = tr("Subscription ended");
-//			error = tr("Buyed subscription period is finished.\n"
-//					   "Continue working in offline mode.");
-//			QLightBoxMessage::information(m_view, title, error);
-//			switchToOfflineMode = true;
-//			break;
-//		}
+		//
+		// Закончилась подписка
+		//
+		case 102: {
+			title = tr("Subscription ended");
+			error = tr("Buyed subscription period is finished.\n"
+					   "Continue working in offline mode.");
+			QLightBoxMessage::information(m_view, title, error);
+			switchToOfflineMode = true;
+			break;
+		}
 
-//		//
-//		// Сессия закрыта
-//		//
-//		case 104: {
-//			if (QLightBoxMessage::question(m_view, tr("Session closed"),
-//					tr("New session for you account started at other device. Restart session?"))
-//				== QDialogButtonBox::Yes) {
-//				//
-//				// Переподключаемся
-//				//
-//				QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
-//				return;
-//			} else {
-//				//
-//				// Переходим в автономный режим
-//				//
-//				title = tr("Session closed");
-//				error = tr("New session for you account started at other device.\n"
-//						   "Continue working in offline mode.");
-//				QLightBoxMessage::information(m_view, title, error);
-//				switchToOfflineMode = true;
-//			}
-//			break;
-//		}
+		//
+		// Сессия закрыта
+		//
+		case 104: {
+			if (QLightBoxMessage::question(m_view, tr("Session closed"),
+					tr("New session for you account started at other device. Restart session?"))
+				== QDialogButtonBox::Yes) {
+				//
+				// Переподключаемся
+				//
+				QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
+				return;
+			} else {
+				//
+				// Переходим в автономный режим
+				//
+				title = tr("Session closed");
+				error = tr("New session for you account started at other device.\n"
+						   "Continue working in offline mode.");
+				QLightBoxMessage::information(m_view, title, error);
+				switchToOfflineMode = true;
+			}
+			break;
+		}
 
-//		//
-//		// Проект недоступен
-//		//
-//		case 201: {
-//			title = tr("Project not available");
-//			error = tr("Current project is not available for syncronization now.\n"
-//					   "Continue working with this project in offline mode.");
-//			QLightBoxMessage::information(m_view, title, error);
-//			m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
-//			break;
-//		}
+		//
+		// Проект недоступен
+		//
+		case 201: {
+			title = tr("Project not available");
+			error = tr("Current project is not available for syncronization now.\n"
+					   "Continue working with this project in offline mode.");
+			QLightBoxMessage::information(m_view, title, error);
+			m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
+			break;
+		}
 
-//		//
-//		// Остальное
-//		//
-//		default: {
-//			QLightBoxMessage::warning(m_view, tr("Error"), _error);
-//			break;
-//		}
-//	}
+		//
+		// Остальное
+		//
+		default: {
+			QLightBoxMessage::warning(m_view, tr("Error"), _error);
+			break;
+		}
+	}
 
 //	//
 //	// Сигнализируем об ошибке
 //	//
 //	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"), title, error);
 
-//	//
-//	// Если необходимо переключаемся в автономный режим
-//	//
-//	if (switchToOfflineMode) {
-//		const QString loginData =
-//			DataStorageLayer::StorageFacade::settingsStorage()->value(
-//				"application/user-name",
-//				DataStorageLayer::SettingsStorage::ApplicationSettings);
+	//
+	// Если необходимо переключаемся в автономный режим
+	//
+	if (switchToOfflineMode) {
+		const QString loginData =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/user-name",
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
 
-//		//
-//		// Если есть закэшированные данные о прошлой авторизации
-//		//
-//		if (!loginData.isEmpty()) {
-//			//
-//			// Имитируем успешную авторизацию
-//			//
-//			m_startUpManager->aboutUserLogged();
-//			//
-//			// и загружаем список доступных проектов из кэша
-//			//
-//			QByteArray cachedProjectsXml =
-//					QByteArray::fromBase64(
-//						DataStorageLayer::StorageFacade::settingsStorage()->value(
-//							"application/remote-projects",
-//							DataStorageLayer::SettingsStorage::ApplicationSettings).toUtf8()
-//						);
-//			m_projectsManager->setRemoteProjects(cachedProjectsXml);
-//			//
-//			// говорим, что все проекты недоступны к синхронизации
-//			//
-//			m_projectsManager->setRemoteProjectsSyncUnavailable();
-//		}
-//	}
-//}
+		//
+		// Если есть закэшированные данные о прошлой авторизации
+		//
+		if (!loginData.isEmpty()) {
+			//
+			// Имитируем успешную авторизацию
+			//
+			m_menuManager->userLogged();
+			m_startUpManager->showRemoteProjects();
+			//
+			// и загружаем список доступных проектов из кэша
+			//
+			QByteArray cachedProjectsXml =
+					QByteArray::fromBase64(
+						DataStorageLayer::StorageFacade::settingsStorage()->value(
+							"application/remote-projects",
+							DataStorageLayer::SettingsStorage::ApplicationSettings).toUtf8()
+						);
+			m_projectsManager->setRemoteProjects(cachedProjectsXml);
+			//
+			// говорим, что все проекты недоступны к синхронизации
+			//
+			m_projectsManager->setRemoteProjectsSyncUnavailable();
+		}
+	}
+}
 
 //void ApplicationManager::aboutImport()
 //{
@@ -632,25 +606,25 @@ void ApplicationManager::goToEditCurrentProject()
 //	m_locationsManager->loadCurrentProject();
 //	m_statisticsManager->loadCurrentProject();
 
-//	//
-//	// Синхронизируем проекты из облака
-//	//
-//	if (m_projectsManager->currentProject().isRemote()) {
-//		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
-//		m_synchronizationManager->aboutFullSyncScenario();
-//		m_synchronizationManager->aboutFullSyncData();
+	//
+	// Синхронизируем проекты из облака
+	//
+	if (m_projectsManager->currentProject().isRemote()) {
+		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
+		m_synchronizationManager->aboutFullSyncScenario();
+		m_synchronizationManager->aboutFullSyncData();
 
-//		//
-//		// Принудительно сохраняем текст сценария
-//		//
-//		m_view->setWindowModified(true);
-//		aboutSave();
-//	}
+		//
+		// Принудительно сохраняем текст сценария
+		//
+		m_view->setWindowModified(true);
+		saveProject();
+	}
 
-//	//
-//	// Запускаем обработку изменений сценария
-//	//
-//	m_scenarioManager->startChangesHandling();
+	//
+	// Запускаем обработку изменений сценария
+	//
+	m_scenarioManager->startChangesHandling();
 
 	//
 	// Загрузить настройки файла
@@ -726,9 +700,12 @@ void ApplicationManager::initConnections()
 {
 	connect(m_view, &ApplicationView::menuClicked, m_menuManager, &MenuManager::showMenu);
 
+	connect(m_menuManager, &MenuManager::loginRequested, m_synchronizationManager, &SynchronizationManager::aboutLogin);
+	connect(m_menuManager, &MenuManager::logoutRequested, m_synchronizationManager, &SynchronizationManager::aboutLogout);
 	connect(m_menuManager, &MenuManager::projectsRequested, [=](){
 		m_view->setCurrentView(PROJECTS_VIEW_INDEX);
 	});
+	connect(m_menuManager, &MenuManager::projectSaveRequested, this, &ApplicationManager::saveProject);
 	connect(m_menuManager, &MenuManager::projectTextRequested, [=](){
 		m_view->setCurrentView(PROJECT_TEXT_VIEW_INDEX);
 	});
@@ -742,10 +719,9 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, &StartUpManager::openRecentProjectRequested, this, &ApplicationManager::aboutLoadFromRecent);
 	connect(m_startUpManager, &StartUpManager::openRemoteProjectRequested, this, &ApplicationManager::aboutLoadFromRemote);
 
-//	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
-//	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncScenario()));
-//	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncData()));
-//	connect(m_scenarioManager, SIGNAL(cursorPositionUpdated(int,bool)), m_synchronizationManager, SLOT(aboutUpdateCursors(int,bool)));
+	connect(m_scenarioManager, &ScenarioManager::scenarioChangesSaved, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncScenario);
+	connect(m_scenarioManager, &ScenarioManager::scenarioChangesSaved, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncData);
+	connect(m_scenarioManager, &ScenarioManager::cursorPositionUpdated, m_synchronizationManager, &SynchronizationManager::aboutUpdateCursors);
 
 //	connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
 //			m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
@@ -778,22 +754,40 @@ void ApplicationManager::initConnections()
 //	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
 //	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
-//	connect(m_synchronizationManager, SIGNAL(loginAccepted()),
-//			m_startUpManager, SLOT(aboutUserLogged()));
-//	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
-//			m_startUpManager, SLOT(aboutUserUnlogged()));
-//	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
-//			this, SLOT(aboutUserUnlogged()));
-//	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
-//			m_projectsManager, SLOT(setRemoteProjects(QString)));
-//	connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),
-//			m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
-//	connect(m_synchronizationManager, SIGNAL(applyPatchesRequested(QList<QString>,bool)),
-//			m_scenarioManager, SLOT(aboutApplyPatches(QList<QString>,bool)));
-//	connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
-//			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
-//	connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
-//			this, SLOT(aboutSyncClosedWithError(int,QString)));
+	connect(m_synchronizationManager, &SynchronizationManager::loginAccepted, [=](){
+		//
+		// Покажем в меню, под каким логином авторизован пользователь
+		//
+		m_menuManager->userLogged();
+
+		//
+		// Покажем список проектов из облака
+		//
+		m_startUpManager->showRemoteProjects();
+	});
+	connect(m_synchronizationManager, &SynchronizationManager::logoutAccepted, [=](){
+		//
+		// Закрываем проект, если он из облака
+		//
+		if (m_projectsManager->currentProject().isRemote()) {
+			closeCurrentProject();
+		}
+
+		//
+		// Корректируем меню
+		//
+		m_menuManager->userUnlogged();
+
+		//
+		// Скрываем проекты из облака на экране проектов
+		//
+		m_startUpManager->hideRemoteProjects();
+	});
+	connect(m_synchronizationManager, &SynchronizationManager::remoteProjectsLoaded, m_projectsManager, &ProjectsManager::setRemoteProjects);
+	connect(m_synchronizationManager, &SynchronizationManager::applyPatchRequested, m_scenarioManager, &ScenarioManager::aboutApplyPatch);
+	connect(m_synchronizationManager, &SynchronizationManager::applyPatchesRequested, m_scenarioManager, &ScenarioManager::aboutApplyPatches);
+	connect(m_synchronizationManager, &SynchronizationManager::cursorsUpdated, m_scenarioManager, &ScenarioManager::aboutCursorsUpdated);
+	connect(m_synchronizationManager, &SynchronizationManager::syncClosedWithError, this, &ApplicationManager::syncClosedWithError);
 //	connect(m_synchronizationManager, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
 }
 

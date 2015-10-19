@@ -20,6 +20,17 @@ MenuView::~MenuView()
 	delete m_ui;
 }
 
+void MenuView::setUserLogged(bool _isLogged, const QString& _userName)
+{
+	QString btnText;
+	if (_isLogged) {
+		btnText = _userName;
+	} else {
+		btnText = tr("Sign In");
+	}
+	m_ui->signIn->setText("     " + btnText);
+}
+
 void MenuView::showProjectSubmenu(const QString& _projectName)
 {
 	m_ui->projectName->setText(_projectName);

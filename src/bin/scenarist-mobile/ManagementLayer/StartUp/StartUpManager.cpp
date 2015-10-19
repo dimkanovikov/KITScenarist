@@ -39,6 +39,16 @@ void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
 	m_view->setRemoteProjects(_model);
 }
 
+void StartUpManager::showRemoteProjects()
+{
+	m_view->showRemoteProjects();
+}
+
+void StartUpManager::hideRemoteProjects()
+{
+	m_view->hideRemoteProjects();
+}
+
 void StartUpManager::initView()
 {
 	m_addProjectDialog->hide();

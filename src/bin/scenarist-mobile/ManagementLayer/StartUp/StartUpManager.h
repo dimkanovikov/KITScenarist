@@ -33,7 +33,6 @@ namespace ManagementLayer
 		 */
 		QWidget* view() const;
 
-	public slots:
 		/**
 		 * @brief Установить список недавно используемых проектов
 		 */
@@ -43,6 +42,14 @@ namespace ManagementLayer
 		 * @brief Установить список проектов из облака
 		 */
 		void setRemoteProjects(QAbstractItemModel* _model);
+
+		/**
+		 * @brief Настроить видимость списка проектов из облака
+		 */
+		/** @{ */
+		void showRemoteProjects();
+		void hideRemoteProjects();
+		/** @} */
 
 	signals:
 		/**

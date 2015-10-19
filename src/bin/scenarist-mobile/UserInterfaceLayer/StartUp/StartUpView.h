@@ -38,6 +38,14 @@ namespace UserInterface
 		 */
 		void setRemoteProjects(QAbstractItemModel* _remoteProjectsModel);
 
+		/**
+		 * @brief Настроить видимость списка проектов из облака
+		 */
+		/** @{ */
+		void showRemoteProjects();
+		void hideRemoteProjects();
+		/** @} */
+
 	signals:
 		/**
 		 * @brief Нажата кнопка создать проект

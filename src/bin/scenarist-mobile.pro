@@ -214,7 +214,8 @@ SOURCES += \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioTextEditManager.cpp \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
-    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp \
+    scenarist-mobile/ManagementLayer/Synchronization/SynchronizationManager.cpp
     scenarist-mobile/ManagementLayer/ApplicationManager.cpp
 
 HEADERS += \
@@ -384,7 +385,8 @@ HEADERS += \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioTextEditManager.h \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.h \
     scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
-    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.h
+    scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
+    scenarist-mobile/ManagementLayer/Synchronization/SynchronizationManager.h
     scenarist-mobile/ManagementLayer/ApplicationManager.h
 
 
