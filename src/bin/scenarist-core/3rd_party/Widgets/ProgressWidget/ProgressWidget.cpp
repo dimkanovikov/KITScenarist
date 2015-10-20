@@ -11,7 +11,7 @@ ProgressWidget::ProgressWidget(QWidget* _parent, bool _followToHeadWidget) :
 	QLightBoxWidget(_parent, _followToHeadWidget)
 {
 	m_title = new QLabel("Title");
-	m_title->setStyleSheet("font-size: 28px; font-weight: bold; color: white; margin: 20px 0px 0px 12px;");
+	m_title->setStyleSheet("font-size: 20pt; font-weight: 500; color: white; margin: 20px 0px 0px 12px;");
 
 	QLabel* progress = new QLabel;
 	QMovie* progressMovie = new QMovie(":/Interface/UI/loader.gif");
@@ -20,7 +20,9 @@ ProgressWidget::ProgressWidget(QWidget* _parent, bool _followToHeadWidget) :
 
 	m_description = new QLabel("Description.");
 	m_description->setStyleSheet("color: white; margin: 0px 0px 0px 12px;");
+#ifndef MOBILE_OS
 	m_description->setFixedWidth(500);
+#endif
 	m_description->setWordWrap(true);
 
 	QGridLayout* layout = new QGridLayout;

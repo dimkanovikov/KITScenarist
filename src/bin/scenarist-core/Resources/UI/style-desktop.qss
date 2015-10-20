@@ -342,4 +342,5 @@ ctkBasePopupWidget {
 [lightBoxDialogCentralWidget=true] {
 	background-color: palette(window);
 	border: 1px solid palette(dark);
+	padding: 8px 20px 10px 20px;
 }

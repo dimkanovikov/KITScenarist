@@ -54,11 +54,16 @@ QDialogButtonBox::StandardButton QLightBoxMessage::message(QWidget* _parent, con
 	if (_buttons.testFlag(_defaultButton)) {
 		message.m_buttons->button(_defaultButton)->setDefault(true);
 	}
-#ifdef Q_OS_ANDROID
 	foreach (QAbstractButton* button, message.m_buttons->buttons())	{
 		button->setProperty("flat", true);
-	}
+
+#ifdef MOBILE_OS
+		//
+		// Для мобильных делаем кнопки в верхнем регистре и убераем ускорители
+		//
+		button->setText(button->text().toUpper().remove("&"));
 #endif
+	}
 
 	return (QDialogButtonBox::StandardButton)message.exec();
 }
@@ -75,21 +80,34 @@ QLightBoxMessage::QLightBoxMessage(QWidget* _parent) :
 
 void QLightBoxMessage::initView()
 {
+	m_icon->setProperty("lightBoxMessageIcon", true);
 	m_icon->setFixedSize(ICON_PIXMAP_SIZE);
+#ifdef MOBILE_OS
+	m_icon->hide();
+#endif
+
+	m_text->setProperty("lightBoxMessageText", true);
 	m_text->setWordWrap(true);
-#ifndef Q_OS_ANDROID
+#ifndef MOBILE_OS
 	m_text->setMinimumWidth(300);
 #endif
+
 	QHBoxLayout* topLayout = new QHBoxLayout;
+	topLayout->setContentsMargins(QMargins());
+	topLayout->setSpacing(0);
 	topLayout->addWidget(m_icon, 0, Qt::AlignLeft | Qt::AlignTop);
 	topLayout->addWidget(m_text, 1);
 	QVBoxLayout* layout = new QVBoxLayout;
+	layout->setContentsMargins(QMargins());
+	layout->setSpacing(0);
 	layout->addLayout(topLayout);
 	layout->addWidget(m_buttons);
 	setLayout(layout);
-#ifndef Q_OS_ANDROID
+
+#ifndef MOBILE_OS
 	setMinimumWidth(500);
 #endif
+
 	QLightBoxDialog::initView();
 }
 

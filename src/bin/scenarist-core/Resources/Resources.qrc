@@ -117,5 +117,6 @@
     </qresource>
     <qresource prefix="/Templates">
         <file>Templates/default.kitss</file>
+        <file>Templates/mobile.kitss</file>
     </qresource>
 </RCC>

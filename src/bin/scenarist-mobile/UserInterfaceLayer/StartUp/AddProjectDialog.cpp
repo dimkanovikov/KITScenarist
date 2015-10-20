@@ -38,6 +38,7 @@ void AddProjectDialog::initConnections()
 
 void AddProjectDialog::initStyleSheet()
 {
+	m_ui->content->setProperty("content-container", true);
 	m_ui->create->setProperty("raised", true);
 	m_ui->cancel->setProperty("raised", true);
 }

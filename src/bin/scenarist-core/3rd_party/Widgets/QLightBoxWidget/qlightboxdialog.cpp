@@ -111,6 +111,7 @@ bool QLightBoxDialog::event(QEvent* _event)
 void QLightBoxDialog::initView()
 {
 	m_title->setProperty("lightBoxDialogTitle", true);
+	m_title->setWordWrap(true);
 #ifdef Q_OS_MAC
 	m_title->setAlignment(Qt::AlignHCenter);
 #endif
@@ -123,7 +124,7 @@ void QLightBoxDialog::initView()
 		m_centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 		QLayout* centralWidgetLayout = layout();
-		centralWidgetLayout->setContentsMargins(20, 8, 20, 10);
+//		centralWidgetLayout->setContentsMargins(20, 8, 20, 10);
 		m_centralWidget->setLayout(centralWidgetLayout);
 
 		setMinimumSize(QSize(0, 0));

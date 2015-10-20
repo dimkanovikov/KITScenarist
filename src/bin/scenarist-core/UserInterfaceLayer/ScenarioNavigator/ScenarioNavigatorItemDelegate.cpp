@@ -4,6 +4,7 @@
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
 #include <3rd_party/Helpers/ImageHelper.h>
+#include <3rd_party/Helpers/StyleSheetHelper.h>
 
 #include <QPainter>
 
@@ -73,11 +74,11 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// Рисуем
 	//
-	const int TREE_INDICATOR_WIDTH = 18;
-	const int COLOR_RECT_WIDTH = 12;
-	const int MARGIN = 2;
-	const int RIGHT_MARGIN = 12;
-	const int ITEMS_SPACING = 4;
+	const int TREE_INDICATOR_WIDTH = StyleSheetHelper::dpToPx(18);
+	const int COLOR_RECT_WIDTH = StyleSheetHelper::dpToPx(12);
+	const int MARGIN = StyleSheetHelper::dpToPx(2);
+	const int RIGHT_MARGIN = StyleSheetHelper::dpToPx(12);
+	const int ITEMS_SPACING = StyleSheetHelper::dpToPx(4);
 	const int TEXT_LINE_HEIGHT = _painter->fontMetrics().height();
 	//
 	// ... фон
@@ -90,7 +91,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// ... иконка
 	//
-	const int iconSize =  20;
+	const int iconSize =  StyleSheetHelper::dpToPx(20);
 	const int iconTopMargin = MARGIN;
 	const QRect iconRect(MARGIN, iconTopMargin, iconSize, iconSize);
 	QPixmap icon = _index.data(Qt::DecorationRole).value<QPixmap>();
@@ -224,10 +225,10 @@ QSize ScenarioNavigatorItemDelegate::sizeHint(const QStyleOptionViewItem& _optio
 	// + отступы 3 сверху + 3 снизу + 2 между текстом
 	//
 	int lines = 1;
-	int additionalHeight = 3 + 3;
+	int additionalHeight = StyleSheetHelper::dpToPx(3 + 3);
 	if (m_showSceneDescription) {
 		lines += m_sceneDescriptionHeight;
-		additionalHeight += 2;
+		additionalHeight += StyleSheetHelper::dpToPx(2);
 	}
 	const int height = _option.fontMetrics.height() * lines + additionalHeight;
 	const int width = 50;

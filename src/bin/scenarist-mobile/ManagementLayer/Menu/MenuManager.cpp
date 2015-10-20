@@ -9,6 +9,8 @@
 #include <3rd_party/Helpers/PasswordStorage.h>
 #include <3rd_party/Widgets/WAF/Animation.h>
 
+#include <QApplication>
+
 using ManagementLayer::MenuManager;
 using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
@@ -34,6 +36,14 @@ QWidget* MenuManager::view() const
 
 void MenuManager::showMenu()
 {
+	//
+	// Скрываем виртуальную клавиатуру
+	//
+	QApplication::inputMethod()->hide();
+
+	//
+	// Выкатываем меню
+	//
 	WAF::Animation::sideSlideIn(m_view, WAF::LeftSide);
 }
 

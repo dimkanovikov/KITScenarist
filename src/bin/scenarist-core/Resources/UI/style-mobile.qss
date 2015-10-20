@@ -32,10 +32,6 @@ QProgressBar::chunk {
     background-color: #4CAF50;
 }
 
-QFrame {
-    background-color: palette(base);
-}
-
 QPushButton[side-nav-name=true] {
     border: none;
     height: 48dp;
@@ -43,7 +39,7 @@ QPushButton[side-nav-name=true] {
     padding-left: 16dp;
     color: rgba(0, 0, 0, 138);
     text-align: left;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 QPushButton[side-nav-item=true] {
@@ -52,7 +48,7 @@ QPushButton[side-nav-item=true] {
     icon-size: 24dp;
     padding-left: 16dp;
     text-align: left;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 QPushButton[side-nav-subheader=true] {
@@ -62,15 +58,15 @@ QPushButton[side-nav-subheader=true] {
     padding-left: 16dp;
     color: rgba(0, 0, 0, 138);
     text-align: left;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 QPushButton[flat=true] {
     min-width: 88dp;
-    height:32dp;
+    height:36dp;
     border: none;
     color: #4CAF50;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 QPushButton:disabled[flat=true] {
@@ -79,9 +75,9 @@ QPushButton:disabled[flat=true] {
 
 QPushButton[raised=true] {
     min-width: 88dp;
-    height:32dp;
+    height:36dp;
     border: 1px solid #BCBCBC;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 QPushButton:default[raised=true] {
@@ -106,18 +102,33 @@ QFrame[side-nav=true] {
     background-color: white;
 }
 
+QFrame[content-container=true] {
+    background-color: palette(base);
+}
+
 
 /*
  * Стили лайтбокса
  */
 [lightBoxDialogTitle=true] {
-	font-weight: 700;
-	background-color: palette(window);
-	padding: 7px 20px 7px 20px;
-	border: 1px solid palette(dark);
+    font-weight: 500;
+    font-size: 20pt;
+    background-color: white;
+    padding: 24dp 24dp 0dp 24dp;
+    border: none;
 }
 
 [lightBoxDialogCentralWidget=true] {
-	background-color: palette(window);
-	border: 1px solid palette(dark);
+    background-color: white;
+    border: none;
+    padding: 20dp 24dp 8dp 24dp;
+}
+
+[lightBoxMessageIcon=true] {
+    width: 0dp;
+    height: 0dp;
+}
+
+[lightBoxMessageText=true] {
+    padding: 0dp 0dp 24dp 0dp;
 }

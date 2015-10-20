@@ -925,12 +925,18 @@ ScenarioTemplateFacade::ScenarioTemplateFacade()
 	//
 	// Обновим шаблон по умолчанию
 	//
+	const QString defaultTemplateName =
+#ifndef MOBILE_OS
+			"default."
+#else
+			"mobile."
+#endif
+			;
 	const QString defaultTemplatePath =
-			templatesFolderPath + QDir::separator()
-			+ "default." + SCENARIO_TEMPLATE_FILE_EXTENSION;
+			templatesFolderPath + QDir::separator() + defaultTemplateName + SCENARIO_TEMPLATE_FILE_EXTENSION;
 	QFile defaultTemplateFile(defaultTemplatePath);
 	if (defaultTemplateFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-		QFile defaultTemplateRcFile(":/Templates/Templates/default." + SCENARIO_TEMPLATE_FILE_EXTENSION);
+		QFile defaultTemplateRcFile(":/Templates/Templates/" + defaultTemplateName + SCENARIO_TEMPLATE_FILE_EXTENSION);
 		if (defaultTemplateRcFile.open(QIODevice::ReadOnly)) {
 			defaultTemplateFile.write(defaultTemplateRcFile.readAll());
 			defaultTemplateRcFile.close();
