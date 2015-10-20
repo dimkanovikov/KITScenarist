@@ -135,32 +135,10 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="textStyles">
-        <item>
-         <property name="text">
-          <string>Scene Heading</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Action</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Character</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Dialogue</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Paratentical</string>
-         </property>
-        </item>
+       <widget class="QPushButton" name="textStyle">
+        <property name="text">
+         <string/>
+        </property>
        </widget>
       </item>
       <item>

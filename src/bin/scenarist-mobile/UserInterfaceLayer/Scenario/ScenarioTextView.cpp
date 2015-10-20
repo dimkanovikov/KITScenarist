@@ -14,6 +14,7 @@
 
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 
 #include <QCryptographicHash>
 #include <QKeyEvent>
@@ -286,7 +287,7 @@ void ScenarioTextView::updateStylesElements()
 	//
 	// Обновить выпадающий список стилей сценария
 	//
-	m_ui->textStyles->clear();
+	m_textTypes.clear();
 	initStylesCombo();
 }
 
@@ -327,11 +328,11 @@ void ScenarioTextView::aboutUpdateTextStyle()
 		currentType = ScenarioBlockStyle::FolderHeader;
 	}
 
-	for (int itemIndex = 0; itemIndex < m_ui->textStyles->count(); ++itemIndex) {
+	for (int itemIndex = 0; itemIndex < m_textTypes.size(); ++itemIndex) {
 		ScenarioBlockStyle::Type itemType =
-				(ScenarioBlockStyle::Type)m_ui->textStyles->itemData(itemIndex).toInt();
+				(ScenarioBlockStyle::Type)m_textTypes.value(itemIndex).second;
 		if (itemType == currentType) {
-			m_ui->textStyles->setCurrentIndex(itemIndex);
+			m_ui->textStyle->setText(m_textTypes.value(itemIndex).first);
 			break;
 		}
 	}
@@ -339,8 +340,21 @@ void ScenarioTextView::aboutUpdateTextStyle()
 
 void ScenarioTextView::aboutChangeTextStyle()
 {
-	ScenarioBlockStyle::Type type =
-			(ScenarioBlockStyle::Type)m_ui->textStyles->itemData(m_ui->textStyles->currentIndex()).toInt();
+	QStringList types;
+	QMap<QString, int> typesMap;
+	{
+		QPair<QString, int> type;
+		foreach (type, m_textTypes) {
+			types.append(type.first);
+			typesMap.insert(type.first, type.second);
+		}
+	}
+
+	const QString selectedType =
+		QLightBoxInputDialog::getItem(this, tr("Choose block type"), types, m_ui->textStyle->text());
+	const ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)typesMap.value(selectedType);
+
+	m_ui->textStyle->setText(selectedType);
 
 	//
 	// Меняем стиль блока, если это возможно
@@ -405,7 +419,7 @@ void ScenarioTextView::initStylesCombo()
 
 	foreach (ScenarioBlockStyle::Type type, types) {
 		if (style.blockStyle(type).isActive()) {
-			m_ui->textStyles->addItem(ScenarioBlockStyle::typeName(type, BEAUTIFY_NAME), type);
+			m_textTypes.append(QPair<QString, int>(ScenarioBlockStyle::typeName(type, BEAUTIFY_NAME), type));
 		}
 	}
 
@@ -414,11 +428,11 @@ void ScenarioTextView::initStylesCombo()
 
 void ScenarioTextView::updateStylesCombo()
 {
-	for (int index = 0; index < m_ui->textStyles->count(); ++index) {
-		ScenarioBlockStyle::Type blockType =
-				(ScenarioBlockStyle::Type)m_ui->textStyles->itemData(index).toInt();
-		m_ui->textStyles->setItemData(index, m_editor->shortcut(blockType), Qt::ToolTipRole);
-	}
+//	for (int index = 0; index < m_textStyles.size(); ++index) {
+//		ScenarioBlockStyle::Type blockType =
+//				(ScenarioBlockStyle::Type)m_textStyles.value(index).second;
+//		m_ui->textStyle->setText(m_textStyles.value(indexindex, m_editor->shortcut(blockType), Qt::ToolTipRole);
+//	}
 }
 
 void ScenarioTextView::initConnections()
@@ -427,6 +441,7 @@ void ScenarioTextView::initConnections()
 	connect(m_ui->tab, &QToolButton::clicked, [=](){
 	   qApp->sendEvent(m_editor, new QKeyEvent(QEvent::KeyPress, Qt::Key_Tab, Qt::NoModifier));
 	});
+	connect(m_ui->textStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
 	connect(m_ui->enter, &QToolButton::clicked, [=](){
 	   qApp->sendEvent(m_editor, new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier));
 	});

@@ -6,6 +6,7 @@
 class QDialogButtonBox;
 class QLabel;
 class QLineEdit;
+class QListWidget;
 class QPlainTextEdit;
 
 
@@ -21,13 +22,19 @@ public:
 	 * @brief Получить текст
 	 */
 	static QString getText(QWidget* _parent, const QString& _title, const QString& _label,
-		const QString& _text = QString());
+		const QString& _text = QString::null);
 
 	/**
-	 * @brief Получить большое текст
+	 * @brief Получить большой текст
 	 */
 	static QString getLongText(QWidget* _parent, const QString& _title, const QString& _label,
-		const QString& _text = QString());
+		const QString& _text = QString::null);
+
+	/**
+	 * @brief Выбор элемента из списка
+	 */
+	static QString getItem(QWidget* _parent, const QString& _title, const QStringList& _items,
+		const QString& _selectedItem = QString::null);
 
 private:
 	explicit QLightBoxInputDialog(QWidget* _parent = 0);
@@ -62,6 +69,11 @@ private:
 	 * @brief Поле для ввода большого кол-ва текста
 	 */
 	QPlainTextEdit* m_textEdit;
+
+	/**
+	 * @brief Виджет для обработки списковых операций
+	 */
+	QListWidget* m_listWidget;
 
 	/**
 	 * @brief Кнопки диалога

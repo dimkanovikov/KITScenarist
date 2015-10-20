@@ -2,6 +2,8 @@
 #define SCENARIOTEXTVIEW_H
 
 #include <QWidget>
+#include <QList>
+#include <QPair>
 
 class ScalableWrapper;
 
@@ -245,6 +247,11 @@ namespace UserInterface
 		 * @brief MD5-хэш текста сценария, используется для отслеживания изменённости текста
 		 */
 		QByteArray m_lastTextMd5Hash;
+
+		/**
+		 * @brief Список стилей блоков
+		 */
+		QList<QPair<QString, int> > m_textTypes;
 	};
 }
 

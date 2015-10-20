@@ -67,6 +67,7 @@ QPushButton[flat=true] {
     border: none;
     color: #4CAF50;
     font-weight: 500;
+    padding: 0dp 8dp 0 8dp;
 }
 
 QPushButton:disabled[flat=true] {
@@ -78,6 +79,7 @@ QPushButton[raised=true] {
     height:36dp;
     border: 1px solid #BCBCBC;
     font-weight: 500;
+    padding: 0dp 8dp 0 8dp;
 }
 
 QPushButton:default[raised=true] {
@@ -113,22 +115,18 @@ QFrame[content-container=true] {
 [lightBoxDialogTitle=true] {
     font-weight: 500;
     font-size: 20pt;
-    background-color: white;
+    background-color: palette(base);
     padding: 24dp 24dp 0dp 24dp;
     border: none;
 }
 
 [lightBoxDialogCentralWidget=true] {
-    background-color: white;
+    background-color: palette(base);
     border: none;
     padding: 20dp 24dp 8dp 24dp;
 }
 
-[lightBoxMessageIcon=true] {
-    width: 0dp;
-    height: 0dp;
-}
-
 [lightBoxMessageText=true] {
+    background-color: palette(base);
     padding: 0dp 0dp 24dp 0dp;
 }
