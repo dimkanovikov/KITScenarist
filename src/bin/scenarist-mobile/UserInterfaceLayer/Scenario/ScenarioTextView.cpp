@@ -12,6 +12,7 @@
 #include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.h>
 #include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditHelpers.h>
 
+#include <3rd_party/Helpers/ScrollerHelper.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
@@ -390,12 +391,13 @@ void ScenarioTextView::initView()
 //	//
 //	// Отключаем автоподсказки
 //	//
-//	m_ui->textEdit->setInputMethodHints(m_ui->textEdit->inputMethodHints() | Qt::ImhNoPredictiveText);
+//	m_editor->setInputMethodHints(m_ui->textEdit->inputMethodHints() | Qt::ImhNoPredictiveText);
 
 //	m_ui->textEdit->horizontalScrollBar()->hide();
 //	m_ui->textEdit->verticalScrollBar()->hide();
+	m_editor->setTextSelectionEnable(false);
 
-//    QScroller::grabGesture(m_editorWrapper);
+	ScrollerHelper::addScroller(m_editorWrapper);
 }
 
 void ScenarioTextView::initStylesCombo()
@@ -475,6 +477,7 @@ void ScenarioTextView::initStyleSheet()
 {
 	m_ui->toolbar->setProperty("toolbar", true);
 	m_ui->scenarioName->setProperty("toolbar", true);
+	m_ui->textStyle->setProperty("flat-black", true);
 	m_ui->search->hide();
 	m_ui->menu->hide();
 }

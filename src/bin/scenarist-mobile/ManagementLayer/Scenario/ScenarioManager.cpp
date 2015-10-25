@@ -1,9 +1,10 @@
 #include "ScenarioManager.h"
-
 #include "ScenarioNavigatorManager.h"
 //#include "ScenarioSceneSynopsisManager.h"
 //#include "ScenarioDataEditManager.h"
 #include "ScenarioTextEditManager.h"
+
+#include <ManagementLayer/Project/ProjectsManager.h>
 
 #include <Domain/Scenario.h>
 #include <Domain/ScenarioChange.h>
@@ -227,7 +228,7 @@ BusinessLogic::ScenarioDocument*ScenarioManager::scenarioDraft() const
 
 QString ScenarioManager::scenarioName() const
 {
-	return DataStorageLayer::StorageFacade::scenarioDataStorage()->name();
+	return ManagementLayer::ProjectsManager::currentProject().displayName();
 }
 
 int ScenarioManager::cursorPosition() const

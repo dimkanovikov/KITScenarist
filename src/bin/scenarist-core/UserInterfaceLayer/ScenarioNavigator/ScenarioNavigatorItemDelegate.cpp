@@ -10,6 +10,34 @@
 
 using UserInterface::ScenarioNavigatorItemDelegate;
 
+namespace {
+	/**
+	 * @brief Отступы
+	 */
+	static int margin() {
+		return StyleSheetHelper::dpToPx(
+#ifndef MOBILE_OS
+					3
+#else
+					9
+#endif
+					);
+	}
+
+	/**
+	 * @brief Расстояние между строками
+	 */
+	static int spacing() {
+		return StyleSheetHelper::dpToPx(
+#ifndef MOBILE_OS
+					4
+#else
+					8
+#endif
+					);
+	}
+}
+
 
 ScenarioNavigatorItemDelegate::ScenarioNavigatorItemDelegate(QObject* _parent) :
 	QStyledItemDelegate(_parent),
@@ -76,9 +104,9 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	const int TREE_INDICATOR_WIDTH = StyleSheetHelper::dpToPx(18);
 	const int COLOR_RECT_WIDTH = StyleSheetHelper::dpToPx(12);
-	const int MARGIN = StyleSheetHelper::dpToPx(2);
+	const int MARGIN = ::margin();
 	const int RIGHT_MARGIN = StyleSheetHelper::dpToPx(12);
-	const int ITEMS_SPACING = StyleSheetHelper::dpToPx(4);
+	const int ITEMS_SPACING = ::spacing();
 	const int TEXT_LINE_HEIGHT = _painter->fontMetrics().height();
 	//
 	// ... фон
@@ -225,10 +253,10 @@ QSize ScenarioNavigatorItemDelegate::sizeHint(const QStyleOptionViewItem& _optio
 	// + отступы 3 сверху + 3 снизу + 2 между текстом
 	//
 	int lines = 1;
-	int additionalHeight = StyleSheetHelper::dpToPx(3 + 3);
+	int additionalHeight = ::margin() + ::margin();
 	if (m_showSceneDescription) {
 		lines += m_sceneDescriptionHeight;
-		additionalHeight += StyleSheetHelper::dpToPx(2);
+		additionalHeight += ::spacing();
 	}
 	const int height = _option.fontMetrics.height() * lines + additionalHeight;
 	const int width = 50;

@@ -27,6 +27,8 @@
 #include <QFile>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QStyle>
+#include <QStyleFactory>
 
 using namespace ManagementLayer;
 using UserInterface::ApplicationView;
@@ -77,7 +79,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
 	aboutUpdateProjectsList();
 
-//	reloadApplicationSettings();
+	reloadApplicationSettings();
 
 	QTimer::singleShot(0, m_synchronizationManager, &SynchronizationManager::login);
 }
@@ -109,7 +111,7 @@ void ApplicationManager::createNewProject(const QString& _projectName)
 		//
 		// Получим имя файла для нового проекта
 		//
-		const QDir projectsDir(QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).last());
+		const QDir projectsDir(QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first());
 		if (!projectsDir.exists()) {
 			QDir::root().mkpath(projectsDir.absolutePath());
 		}
@@ -807,119 +809,83 @@ void ApplicationManager::initStyleSheet()
 	m_view->setStyleSheet(StyleSheetHelper::computeDeviceInpedendentSize(styleSheet));
 }
 
-//void ApplicationManager::reloadApplicationSettings()
-//{
-//	//
-//	// Внешний вид приложения
-//	//
-//	bool useDarkTheme =
-//			DataStorageLayer::StorageFacade::settingsStorage()->value(
-//				"application/use-dark-theme",
-//				DataStorageLayer::SettingsStorage::ApplicationSettings)
-//			.toInt();
+void ApplicationManager::reloadApplicationSettings()
+{
+	//
+	// Внешний вид приложения
+	//
+	bool useDarkTheme =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/use-dark-theme",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
 
-//	{
-//		//
-//		// Настраиваем палитру и стилевые надстройки в зависимости от темы
-//		//
-//		QPalette palette = QStyleFactory::create("Fusion")->standardPalette();
-//		QString styleSheet;
+	{
+		//
+		// Настраиваем палитру и стилевые надстройки в зависимости от темы
+		//
+		QPalette palette = QStyleFactory::create("Fusion")->standardPalette();
+		QString styleSheet;
 
-//		if (useDarkTheme) {
-//			palette.setColor(QPalette::Window, QColor("#26282a"));
-//			palette.setColor(QPalette::WindowText, QColor("#ebebeb"));
-//			palette.setColor(QPalette::Button, QColor("#414244"));
-//			palette.setColor(QPalette::ButtonText, QColor("#ebebeb"));
-//			palette.setColor(QPalette::Base, QColor("#404040"));
-//			palette.setColor(QPalette::AlternateBase, QColor("#353535"));
-//			palette.setColor(QPalette::Text, QColor("#ebebeb"));
-//			palette.setColor(QPalette::Highlight, QColor("#2b78da"));
-//			palette.setColor(QPalette::HighlightedText, QColor("#ffffff"));
-//			palette.setColor(QPalette::Light, QColor("#404040"));
-//			palette.setColor(QPalette::Midlight, QColor("#696765"));
-//			palette.setColor(QPalette::Dark, QColor("#696765"));
-//			palette.setColor(QPalette::Shadow, QColor("#1c2023"));
+		if (useDarkTheme) {
+			palette.setColor(QPalette::Window, QColor("#26282a"));
+			palette.setColor(QPalette::WindowText, QColor("#ebebeb"));
+			palette.setColor(QPalette::Button, QColor("#414244"));
+			palette.setColor(QPalette::ButtonText, QColor("#ebebeb"));
+			palette.setColor(QPalette::Base, QColor("#404040"));
+			palette.setColor(QPalette::AlternateBase, QColor("#353535"));
+			palette.setColor(QPalette::Text, QColor("#ebebeb"));
+			palette.setColor(QPalette::Highlight, QColor("#2b78da"));
+			palette.setColor(QPalette::HighlightedText, QColor("#ffffff"));
+			palette.setColor(QPalette::Light, QColor("#404040"));
+			palette.setColor(QPalette::Midlight, QColor("#696765"));
+			palette.setColor(QPalette::Dark, QColor("#696765"));
+			palette.setColor(QPalette::Shadow, QColor("#1c2023"));
 
-//			palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#a1a1a1"));
-//			palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#1b1e21"));
-//			palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#a1a1a1"));
-//			palette.setColor(QPalette::Disabled, QPalette::Base, QColor("#333333"));
-//			palette.setColor(QPalette::Inactive, QPalette::Text, QColor("#bcbdbf"));
-//			palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#666769"));
-//			palette.setColor(QPalette::Disabled, QPalette::Highlight, QColor("#eeeeee"));
-//		} else {
-//			palette.setColor(QPalette::Window, QColor("#f6f6f6"));
-//			palette.setColor(QPalette::WindowText, QColor("#38393a"));
-//			palette.setColor(QPalette::Button, QColor("#e4e4e4"));
-//			palette.setColor(QPalette::ButtonText, QColor("#38393a"));
-//			palette.setColor(QPalette::Base, QColor("#ffffff"));
-//			palette.setColor(QPalette::AlternateBase, QColor("#eeeeee"));
-//			palette.setColor(QPalette::Text, QColor("#38393a"));
-//			palette.setColor(QPalette::Highlight, QColor("#2b78da"));
-//			palette.setColor(QPalette::HighlightedText, QColor("#ffffff"));
-//			palette.setColor(QPalette::Light, QColor("#ffffff"));
-//			palette.setColor(QPalette::Midlight, QColor("#d6d6d6"));
-//			palette.setColor(QPalette::Dark, QColor("#bdbebf"));
-//			palette.setColor(QPalette::Mid, QColor("#a0a2a4"));
-//			palette.setColor(QPalette::Shadow, QColor("#585a5c"));
+			palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#a1a1a1"));
+			palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#1b1e21"));
+			palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#a1a1a1"));
+			palette.setColor(QPalette::Disabled, QPalette::Base, QColor("#333333"));
+			palette.setColor(QPalette::Inactive, QPalette::Text, QColor("#bcbdbf"));
+			palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#666769"));
+			palette.setColor(QPalette::Disabled, QPalette::Highlight, QColor("#eeeeee"));
+		} else {
+			palette.setColor(QPalette::Window, QColor("#f6f6f6"));
+			palette.setColor(QPalette::WindowText, QColor("#38393a"));
+			palette.setColor(QPalette::Button, QColor("#e4e4e4"));
+			palette.setColor(QPalette::ButtonText, QColor("#38393a"));
+			palette.setColor(QPalette::Base, QColor("#ffffff"));
+			palette.setColor(QPalette::AlternateBase, QColor("#eeeeee"));
+			palette.setColor(QPalette::Text, QColor("#38393a"));
+			palette.setColor(QPalette::Highlight, QColor("#2b78da"));
+			palette.setColor(QPalette::HighlightedText, QColor("#ffffff"));
+			palette.setColor(QPalette::Light, QColor("#ffffff"));
+			palette.setColor(QPalette::Midlight, QColor("#d6d6d6"));
+			palette.setColor(QPalette::Dark, QColor("#bdbebf"));
+			palette.setColor(QPalette::Mid, QColor("#a0a2a4"));
+			palette.setColor(QPalette::Shadow, QColor("#585a5c"));
 
-//			palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#acadaf"));
-//			palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#f6f6f6"));
-//			palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#acadaf"));
-//			palette.setColor(QPalette::Inactive, QPalette::Text, QColor("#595a5c"));
-//			palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#acadaf"));
-//			palette.setColor(QPalette::Disabled, QPalette::Highlight, QColor("#eeeeee"));
-//		}
+			palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#acadaf"));
+			palette.setColor(QPalette::Disabled, QPalette::Button, QColor("#f6f6f6"));
+			palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor("#acadaf"));
+			palette.setColor(QPalette::Inactive, QPalette::Text, QColor("#595a5c"));
+			palette.setColor(QPalette::Disabled, QPalette::Text, QColor("#acadaf"));
+			palette.setColor(QPalette::Disabled, QPalette::Highlight, QColor("#eeeeee"));
+		}
 
-//		//
-//		// Для всплывающей используем универсальный стиль
-//		//
-//		styleSheet += "QToolTip { color: palette(window-text); background-color: palette(window); border: 1px solid palette(highlight); } "
-//					 ;
+		//
+		// Для всплывающей используем универсальный стиль
+		//
+		styleSheet += "QToolTip { color: palette(window-text); background-color: palette(window); border: 1px solid palette(highlight); } "
+					 ;
 
-//		//
-//		// Применяем тему
-//		//
-//		qApp->setPalette(palette);
-//		qApp->setStyleSheet(styleSheet);
-//	}
-
-//	//
-//	// Автосохранение
-//	//
-//	bool autosave =
-//			DataStorageLayer::StorageFacade::settingsStorage()->value(
-//				"application/autosave",
-//				DataStorageLayer::SettingsStorage::ApplicationSettings)
-//			.toInt();
-//	int autosaveInterval =
-//			DataStorageLayer::StorageFacade::settingsStorage()->value(
-//				"application/autosave-interval",
-//				DataStorageLayer::SettingsStorage::ApplicationSettings)
-//			.toInt();
-
-//	m_autosaveTimer.stop();
-//	m_autosaveTimer.disconnect();
-//	if (autosave) {
-//		connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(aboutSave()));
-//		m_autosaveTimer.start(autosaveInterval * 60 * 1000); // Переводим минуты в миллисекунды
-//	}
-
-//	//
-//	// Создание резервных копий
-//	//
-//	bool saveBackups =
-//			DataStorageLayer::StorageFacade::settingsStorage()->value(
-//				"application/save-backups",
-//				DataStorageLayer::SettingsStorage::ApplicationSettings)
-//			.toInt();
-//	const QString saveBackupsFolder =
-//			DataStorageLayer::StorageFacade::settingsStorage()->value(
-//				"application/save-backups-folder",
-//				DataStorageLayer::SettingsStorage::ApplicationSettings);
-//	m_backupHelper.setIsActive(saveBackups);
-//	m_backupHelper.setBackupDir(saveBackupsFolder);
-//}
+		//
+		// Применяем тему
+		//
+		qApp->setPalette(palette);
+		qApp->setStyleSheet(styleSheet);
+	}
+}
 
 void ApplicationManager::updateWindowTitle()
 {

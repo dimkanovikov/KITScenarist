@@ -5,7 +5,6 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
-#include <QFont>
 #include <QFontDatabase>
 #include <QTranslator>
 
@@ -32,11 +31,6 @@ Application::Application(int& _argc, char** _argv) :
 	// Настроим перевод приложения
 	//
 	initTranslation();
-
-	//
-	// Применим шрифт робото
-	//
-//	setFont(QFont("Roboto", 12));
 }
 
 void Application::setupManager(ManagementLayer::ApplicationManager *_manager)

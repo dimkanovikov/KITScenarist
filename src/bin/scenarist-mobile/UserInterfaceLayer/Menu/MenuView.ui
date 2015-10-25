@@ -84,7 +84,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-             <normaloff>:/Graphics/Icons/Mobile/account.png</normaloff>:/Graphics/Icons/Mobile/account.png</iconset>
+             <normaloff>:/Graphics/Icons/Mobile/menu/account.png</normaloff>:/Graphics/Icons/Mobile/menu/account.png</iconset>
            </property>
           </widget>
          </item>
@@ -95,7 +95,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-             <normaloff>:/Graphics/Icons/Mobile/chevron-left.png</normaloff>:/Graphics/Icons/Mobile/chevron-left.png</iconset>
+             <normaloff>:/Graphics/Icons/Mobile/menu/chevron-left.png</normaloff>:/Graphics/Icons/Mobile/menu/chevron-left.png</iconset>
            </property>
           </widget>
          </item>
@@ -109,7 +109,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/Mobile/apps.png</normaloff>:/Graphics/Icons/Mobile/apps.png</iconset>
+          <normaloff>:/Graphics/Icons/Mobile/menu/apps.png</normaloff>:/Graphics/Icons/Mobile/menu/apps.png</iconset>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -136,7 +136,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/Mobile/content-save.png</normaloff>:/Graphics/Icons/Mobile/content-save.png</iconset>
+          <normaloff>:/Graphics/Icons/Mobile/menu/content-save.png</normaloff>:/Graphics/Icons/Mobile/menu/content-save.png</iconset>
         </property>
         <property name="checkable">
          <bool>false</bool>
@@ -153,7 +153,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/Mobile/script.png</normaloff>:/Graphics/Icons/Mobile/script.png</iconset>
+          <normaloff>:/Graphics/Icons/Mobile/menu/script.png</normaloff>:/Graphics/Icons/Mobile/menu/script.png</iconset>
         </property>
         <property name="checkable">
          <bool>true</bool>

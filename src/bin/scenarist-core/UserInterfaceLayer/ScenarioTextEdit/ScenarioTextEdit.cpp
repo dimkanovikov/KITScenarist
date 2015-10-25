@@ -72,6 +72,8 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	m_storeDataWhenEditing(true),
 	m_showSceneNumbers(false),
 	m_highlightCurrentLine(false),
+	m_autoReplacing(false),
+	m_textSelectionEnable(true),
 	m_shortcutsManager(new ShortcutsManager(this))
 {
 	setAttribute(Qt::WA_KeyCompression);
@@ -266,6 +268,13 @@ void ScenarioTextEdit::setAutoReplacing(bool _replacing)
 {
 	if (m_autoReplacing != _replacing) {
 		m_autoReplacing = _replacing;
+	}
+}
+
+void ScenarioTextEdit::setTextSelectionEnable(bool _enable)
+{
+	if (m_textSelectionEnable != _enable) {
+		m_textSelectionEnable = _enable;
 	}
 }
 
@@ -705,6 +714,13 @@ void ScenarioTextEdit::mousePressEvent(QMouseEvent* _event)
 		_event->accept();
 	} else {
 		CompletableTextEdit::mousePressEvent(_event);
+	}
+}
+
+void ScenarioTextEdit::mouseMoveEvent(QMouseEvent* _event)
+{
+	if (m_textSelectionEnable) {
+		CompletableTextEdit::mouseMoveEvent(_event);
 	}
 }
 

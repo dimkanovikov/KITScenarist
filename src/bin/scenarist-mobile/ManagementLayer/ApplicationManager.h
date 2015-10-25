@@ -166,10 +166,10 @@ namespace ManagementLayer
 		 */
 		void initStyleSheet();
 
-//		/**
-//		 * @brief Перезагрузить настройки приложения
-//		 */
-//		void reloadApplicationSettings();
+		/**
+		 * @brief Перезагрузить настройки приложения
+		 */
+		void reloadApplicationSettings();
 
 		/**
 		 * @brief Обновить заголовок окна
@@ -236,16 +236,6 @@ namespace ManagementLayer
 		 * @brief Управляющий синхронизацией
 		 */
 		SynchronizationManager* m_synchronizationManager;
-
-//		/**
-//		 * @brief Таймер автосохранения
-//		 */
-//		QTimer m_autosaveTimer;
-
-//		/**
-//		 * @brief Помощник резервного копирования
-//		 */
-//		BackupHelper m_backupHelper;
 	};
 }
 

@@ -17,7 +17,6 @@ QString QLightBoxInputDialog::getText(QWidget* _parent, const QString& _title, c
 	dialog.m_lineEdit->setText(_text);
 	dialog.m_textEdit->hide();
 	dialog.m_listWidget->hide();
-	dialog.m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
 	QString result;
 	if (dialog.exec() == QLightBoxDialog::Accepted) {
@@ -34,7 +33,6 @@ QString QLightBoxInputDialog::getLongText(QWidget* _parent, const QString& _titl
 	dialog.m_lineEdit->hide();
 	dialog.m_textEdit->setPlainText(_text);
 	dialog.m_listWidget->hide();
-	dialog.m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
 	QString result;
 	if (dialog.exec() == QLightBoxDialog::Accepted) {
@@ -66,7 +64,6 @@ QString QLightBoxInputDialog::getItem(QWidget* _parent, const QString& _title, c
 			radioButton->setChecked(true);
 		}
 	}
-	dialog.m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
 	QString result;
 	if (dialog.exec() == QLightBoxDialog::Accepted) {
@@ -98,10 +95,29 @@ QLightBoxInputDialog::QLightBoxInputDialog(QWidget* _parent) :
 void QLightBoxInputDialog::initView()
 {
 	m_lineEdit->setMinimumWidth(500);
+
 	m_textEdit->setMinimumWidth(500);
 	m_textEdit->setMinimumHeight(400);
 
+	m_listWidget->setProperty("dialog-container", true);
+	m_listWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+	m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	foreach (QAbstractButton* button, m_buttons->buttons())	{
+		button->setProperty("flat", true);
+
+#ifdef MOBILE_OS
+		//
+		// Для мобильных делаем кнопки в верхнем регистре и убераем ускорители
+		//
+		button->setText(button->text().toUpper().remove("&"));
+#endif
+	}
+
 	QVBoxLayout* layout = new QVBoxLayout;
+#ifdef MOBILE_OS
+	layout->setContentsMargins(QMargins());
+#endif
 	layout->addWidget(m_label);
 	layout->addWidget(m_lineEdit);
 	layout->addWidget(m_textEdit);

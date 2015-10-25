@@ -4,7 +4,7 @@
 #include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h>
 #include <UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.h>
 
-#include <QScroller>
+#include <3rd_party/Helpers/ScrollerHelper.h>
 
 using UserInterface::ScenarioNavigatorView;
 using UserInterface::ScenarioNavigatorItemDelegate;
@@ -103,7 +103,7 @@ void ScenarioNavigatorView::initView()
 	m_ui->navigator->setSelectionMode(QAbstractItemView::ContiguousSelection);
 	m_ui->navigator->setStyle(new ScenarioNavigatorProxyStyle(m_ui->navigator->style()));
 
-    QScroller::grabGesture(m_ui->navigator);
+	ScrollerHelper::addScroller(m_ui->navigator);
 }
 
 void ScenarioNavigatorView::initConnections()

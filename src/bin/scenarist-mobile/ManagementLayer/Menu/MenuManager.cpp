@@ -40,6 +40,7 @@ void MenuManager::showMenu()
 	// Скрываем виртуальную клавиатуру
 	//
 	QApplication::inputMethod()->hide();
+	QApplication::processEvents();
 
 	//
 	// Выкатываем меню

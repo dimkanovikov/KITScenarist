@@ -22,14 +22,52 @@ QToolButton:pressed, QPushButton:pressed {
 }
 
 QProgressBar {
-    border-radius: 0px;
+    border-radius: 0dp;
     border: none;
     background-color: #DDF0DD;
     max-height: 5dp;
 }
 
 QProgressBar::chunk {
-    background-color: #4CAF50;
+    background-color: palette(highlight);
+}
+
+QRadioButton {
+    spacing: 10dp;
+}
+
+QScrollBar {
+    border: none;
+    background: palette(window);
+}
+
+QScrollBar:horizontal {
+    height: 6dp;
+    margin: 1dp 0dp 1dp 0dp;
+}
+
+QScrollBar:vertical {
+    width: 6dp;
+    margin: 0dp 1dp 0dp 1dp;
+}
+
+QScrollBar::handle {
+    background: palette(dark);
+    min-height: 0dp;
+    min-width: 0dp;
+    border: none;
+}
+
+QScrollBar::handle:vertical {
+    min-height: 30dp;
+}
+
+QScrollBar::add-line {
+    height: 0dp;
+}
+
+QScrollBar::sub-line {
+    height: 0dp;
 }
 
 QPushButton[side-nav-name=true] {
@@ -53,7 +91,7 @@ QPushButton[side-nav-item=true] {
 
 QPushButton[side-nav-subheader=true] {
     border: none;
-    border-top: 1px solid #E4E4E4;
+    border-top: 1dp solid #E4E4E4;
     height: 48dp;
     padding-left: 16dp;
     color: rgba(0, 0, 0, 138);
@@ -65,7 +103,8 @@ QPushButton[flat=true] {
     min-width: 88dp;
     height:36dp;
     border: none;
-    color: #4CAF50;
+    background-color: palette(base);
+    color: palette(highlight);
     font-weight: 500;
     padding: 0dp 8dp 0 8dp;
 }
@@ -74,16 +113,27 @@ QPushButton:disabled[flat=true] {
     color: rgba(0, 0, 0, 80);
 }
 
+QPushButton[flat-black=true] {
+    min-width: 88dp;
+    height:36dp;
+    border: none;
+    background-color: palette(base);
+    color: black;
+    font-weight: 500;
+    padding: 0dp 8dp 0 8dp;
+}
+
 QPushButton[raised=true] {
     min-width: 88dp;
     height:36dp;
-    border: 1px solid #BCBCBC;
+    background-color: palette(base);
+    border: 1dp solid #BCBCBC;
     font-weight: 500;
     padding: 0dp 8dp 0 8dp;
 }
 
 QPushButton:default[raised=true] {
-    background-color: #4CAF50;
+    background-color: palette(highlight);
     color: white;
 }
 
@@ -92,12 +142,12 @@ QPushButton:disabled[raised=true] {
     color: rgba(0, 0, 0, 80);
 }
 
-QPushButton:hover[flat=true], QPushButton:hover:!default[raised=true] {
+QPushButton:hover[flat=true], QPushButton:hover[flat-black=true], QPushButton:hover:!default[raised=true] {
     background-color: rgba(204, 204, 204, 155);
 }
 
 QFrame[toolbar=true] {
-    background-color: #4CAF50;
+    background-color: #e4e4e4;
 }
 
 QFrame[side-nav=true] {
@@ -106,6 +156,20 @@ QFrame[side-nav=true] {
 
 QFrame[content-container=true] {
     background-color: palette(base);
+}
+
+QListView[dialog-container=true] {
+    border: none;
+    border-top: 1dp solid #E6E6E6;
+    border-bottom: 1dp solid #E6E6E6;
+}
+
+QListView::item[dialog-container=true] {
+    height: 36dp;
+    border: none;
+    background-color: palette(base);
+    color: black;
+    padding: 6dp 8dp 6dp 8dp;
 }
 
 
@@ -123,10 +187,10 @@ QFrame[content-container=true] {
 [lightBoxDialogCentralWidget=true] {
     background-color: palette(base);
     border: none;
-    padding: 20dp 24dp 8dp 24dp;
+    padding: 20dp 0dp 8dp 0dp;
 }
 
 [lightBoxMessageText=true] {
     background-color: palette(base);
-    padding: 0dp 0dp 24dp 0dp;
+    padding: 0dp 24dp 24dp 24dp;
 }

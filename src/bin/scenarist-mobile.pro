@@ -388,7 +388,8 @@ HEADERS += \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.h \
     scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
     scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
-    scenarist-mobile/ManagementLayer/Synchronization/SynchronizationManager.h
+    scenarist-mobile/ManagementLayer/Synchronization/SynchronizationManager.h \
+    scenarist-core/3rd_party/Helpers/ScrollerHelper.h
     scenarist-mobile/ManagementLayer/ApplicationManager.h
 
 
@@ -425,4 +426,6 @@ DISTFILES += \
     Scenarist-mobile/android/gradlew.bat
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/Scenarist-mobile
+
+OBJECTIVE_SOURCES +=
 

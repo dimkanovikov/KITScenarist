@@ -1,6 +1,8 @@
 #include "MenuView.h"
 #include "ui_MenuView.h"
 
+#include <3rd_party/Helpers/StyleSheetHelper.h>
+
 using UserInterface::MenuView;
 
 
@@ -51,7 +53,7 @@ void MenuView::hideProjectSubmenu()
 
 void MenuView::initView()
 {
-	setMinimumWidth(qMin(320, parentWidget()->width() - 56));
+	setMinimumWidth(qMin(StyleSheetHelper::dpToPx(400), parentWidget()->width() - StyleSheetHelper::dpToPx(56)));
 
 	QButtonGroup* menuButtonsGroup = new QButtonGroup(this);
 	menuButtonsGroup->setExclusive(true);

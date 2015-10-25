@@ -94,6 +94,11 @@ namespace UserInterface
 		void setAutoReplacing(bool _replacing);
 
 		/**
+		 * @brief Установить доступность выделения текста мышью
+		 */
+		void setTextSelectionEnable(bool _enable);
+
+		/**
 		 * @brief Обновить сочетания клавиш для переходов между блоками
 		 */
 		void updateShortcuts();
@@ -159,6 +164,11 @@ namespace UserInterface
 		 * @brief Переопределяется для обработки тройного клика
 		 */
 		void mousePressEvent(QMouseEvent* _event);
+
+		/**
+		 * @brief Переопределяется, для того, чтобы блокировать выделение текста мышкой
+		 */
+		void mouseMoveEvent(QMouseEvent* _event);
 
 		/**
 		 * @brief Переопределяем работу с буфером обмена для использования собственного майм типа данных
@@ -274,6 +284,11 @@ namespace UserInterface
 		 * @brief Использовать автозамены для особых случаев
 		 */
 		bool m_autoReplacing;
+
+		/**
+		 * @brief Включена ли возможность выделения текста
+		 */
+		bool m_textSelectionEnable;
 
 		/**
 		 * @brief Курсоры соавторов

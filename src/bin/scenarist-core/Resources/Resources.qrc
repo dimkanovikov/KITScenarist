@@ -88,13 +88,14 @@
         <file>Icons/Mobile/dots-vertical.png</file>
         <file>Icons/Mobile/magnify.png</file>
         <file>Icons/Mobile/keyboard-tab.png</file>
-        <file>Icons/Mobile/chevron-left.png</file>
         <file>Icons/Mobile/view-list.png</file>
-        <file>Icons/Mobile/account.png</file>
-        <file>Icons/Mobile/apps.png</file>
-        <file>Icons/Mobile/content-save.png</file>
         <file>Icons/Mobile/script.png</file>
         <file>Icons/Mobile/keyboard-return.png</file>
+        <file>Icons/Mobile/menu/account.png</file>
+        <file>Icons/Mobile/menu/apps.png</file>
+        <file>Icons/Mobile/menu/chevron-left.png</file>
+        <file>Icons/Mobile/menu/content-save.png</file>
+        <file>Icons/Mobile/menu/script.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
