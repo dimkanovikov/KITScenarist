@@ -295,7 +295,6 @@ void ScenarioTextView::updateStylesElements()
 void ScenarioTextView::updateShortcuts()
 {
 	m_editor->updateShortcuts();
-	updateStylesCombo();
 }
 
 void ScenarioTextView::setAdditionalCursors(const QMap<QString, int>& _cursors)
@@ -393,6 +392,8 @@ void ScenarioTextView::aboutStyleChanged()
 
 void ScenarioTextView::initView()
 {
+	m_ui->scenarioName->setElideMode(Qt::ElideRight);
+
 	m_ui->textEditContainer->addWidget(m_editorWrapper);
 
 //	//
@@ -431,17 +432,6 @@ void ScenarioTextView::initStylesCombo()
 			m_textTypes.append(QPair<QString, int>(ScenarioBlockStyle::typeName(type, BEAUTIFY_NAME), type));
 		}
 	}
-
-	updateStylesCombo();
-}
-
-void ScenarioTextView::updateStylesCombo()
-{
-//	for (int index = 0; index < m_textStyles.size(); ++index) {
-//		ScenarioBlockStyle::Type blockType =
-//				(ScenarioBlockStyle::Type)m_textStyles.value(index).second;
-//		m_ui->textStyle->setText(m_textStyles.value(indexindex, m_editor->shortcut(blockType), Qt::ToolTipRole);
-//	}
 }
 
 void ScenarioTextView::initConnections()

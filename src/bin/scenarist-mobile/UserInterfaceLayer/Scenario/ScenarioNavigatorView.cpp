@@ -93,6 +93,8 @@ void ScenarioNavigatorView::clearSelection()
 
 void ScenarioNavigatorView::initView()
 {
+	m_ui->scenarioName->setElideMode(Qt::ElideRight);
+
 	m_ui->navigator->setItemDelegate(m_navigatorDelegate);
 	m_ui->navigator->setDragDropMode(QAbstractItemView::DragDrop);
 	m_ui->navigator->setDragEnabled(true);

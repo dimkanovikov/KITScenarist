@@ -48,7 +48,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="scenarioName">
+       <widget class="ElidedLabel" name="scenarioName">
         <property name="text">
          <string>Scenario Name</string>
         </property>
@@ -117,6 +117,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ElidedLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">3rd_party/Widgets/ElidedLabel/ElidedLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>

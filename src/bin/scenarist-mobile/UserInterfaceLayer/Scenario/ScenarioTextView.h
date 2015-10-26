@@ -211,7 +211,6 @@ namespace UserInterface
 		 * @brief Настроить выпадающий список стилей в зависимости от текущего стиля
 		 */
 		void initStylesCombo();
-		void updateStylesCombo();
 
 		/**
 		 * @brief Настроить соединения для формы

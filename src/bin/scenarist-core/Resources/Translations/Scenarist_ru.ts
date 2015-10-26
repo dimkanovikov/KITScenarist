@@ -1461,12 +1461,12 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="83"/>
         <source>     Sign In</source>
-        <translation>Войти</translation>
+        <translation>     Войти</translation>
     </message>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="108"/>
         <source>     Projects</source>
-        <translation>Проекты</translation>
+        <translation>     Проекты</translation>
     </message>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="128"/>
@@ -1476,12 +1476,12 @@ Continue working with this project in offline mode.</source>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="135"/>
         <source>     Save</source>
-        <translation>Сохранить</translation>
+        <translation>     Сохранить</translation>
     </message>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="152"/>
         <source>     Text</source>
-        <translation>Текст</translation>
+        <translation>     Текст</translation>
     </message>
 </context>
 <context>

@@ -35,7 +35,10 @@ void MenuView::setUserLogged(bool _isLogged, const QString& _userName)
 
 void MenuView::showProjectSubmenu(const QString& _projectName)
 {
-	m_ui->projectName->setText(_projectName);
+	const QFontMetrics metrics = m_ui->projectName->fontMetrics();
+	const int margin =
+		m_ui->projectName->contentsMargins().left() + m_ui->projectName->contentsMargins().right();
+	m_ui->projectName->setText(metrics.elidedText(_projectName, Qt::ElideRight, width() - margin));
 
 	m_ui->projectName->show();
 	m_ui->projectSave->show();

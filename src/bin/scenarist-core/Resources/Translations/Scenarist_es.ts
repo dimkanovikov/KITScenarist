@@ -866,12 +866,12 @@
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.ui" line="82"/>
         <source>REGISTER</source>
-        <translation type="unfinished"></translation>
+        <translation>REGISTRAR</translation>
     </message>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.ui" line="102"/>
         <source>LOGIN</source>
-        <translation type="unfinished"></translation>
+        <translation>REGISTRARSE</translation>
     </message>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.ui" line="112"/>
@@ -1464,12 +1464,12 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="83"/>
         <source>     Sign In</source>
-        <translation type="unfinished"></translation>
+        <translation>     Registrarse</translation>
     </message>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="108"/>
         <source>     Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>     Proyectos</translation>
     </message>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="128"/>
@@ -1479,12 +1479,12 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="135"/>
         <source>     Save</source>
-        <translation>Guardar</translation>
+        <translation>     Guardar</translation>
     </message>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui" line="152"/>
         <source>     Text</source>
-        <translation>Texto</translation>
+        <translation>     Texto</translation>
     </message>
 </context>
 <context>
@@ -2580,7 +2580,7 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Menu/MenuView.cpp" line="31"/>
         <source>Sign In</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrarse</translation>
     </message>
 </context>
 <context>
@@ -2837,7 +2837,7 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp" line="357"/>
         <source>Choose block type</source>
-        <translation type="unfinished"></translation>
+        <translation>Elija tipo de Bloque</translation>
     </message>
 </context>
 <context>
