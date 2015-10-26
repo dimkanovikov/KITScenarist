@@ -1,4 +1,4 @@
 #/bin/sh
 
 ./update_ts
-~/Qt/5.5/gcc_64/bin/linguist ../bin/Scenarist/Resources/Translations/Scenarist_ru.ts ../bin/Scenarist/Resources/Translations/Scenarist_en.ts ../bin/Scenarist/Resources/Translations/Scenarist_es.ts
+~/Qt/5.5/gcc_64/bin/linguist ../bin/scenarist-core/Resources/Translations/Scenarist_ru.ts ../bin/scenarist-core/Resources/Translations/Scenarist_en.ts ../bin/scenarist-core/Resources/Translations/Scenarist_es.ts

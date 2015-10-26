@@ -29,7 +29,7 @@ public:
 		properties.setScrollMetric(QScrollerProperties::DragStartDistance, qreal(0.001));
 		properties.setScrollMetric(QScrollerProperties::MinimumVelocity, qreal(20.0 / 1000));
 		properties.setScrollMetric(QScrollerProperties::MaximumVelocity, qreal(350.0 / 1000));
-		properties.setScrollMetric(QScrollerProperties::MaximumClickThroughVelocity, qreal(20.0 / 1000));
+		properties.setScrollMetric(QScrollerProperties::MaximumClickThroughVelocity, qreal(1.0 / 1000));
 		properties.setScrollMetric(QScrollerProperties::AcceleratingFlickSpeedupFactor, qreal(2.0));
 		QVariant overshootPolicy = QVariant::fromValue<QScrollerProperties::OvershootPolicy>(QScrollerProperties::OvershootAlwaysOff);
 		properties.setScrollMetric(QScrollerProperties::HorizontalOvershootPolicy, overshootPolicy);

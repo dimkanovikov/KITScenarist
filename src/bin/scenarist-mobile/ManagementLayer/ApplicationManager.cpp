@@ -637,7 +637,9 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
-	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
+	// FIXME: В мобильной версии, эти данные пока не загружаются, сверяться нужно с десктопом
+	//
+//	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
 
 	//
 	// Активируем меню для проекта
