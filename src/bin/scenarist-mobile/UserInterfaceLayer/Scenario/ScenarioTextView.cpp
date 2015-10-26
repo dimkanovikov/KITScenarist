@@ -341,6 +341,9 @@ void ScenarioTextView::aboutUpdateTextStyle()
 
 void ScenarioTextView::aboutChangeTextStyle()
 {
+	//
+	// Показываем диалог выбора стиля для блока
+	//
 	QStringList types;
 	QMap<QString, int> typesMap;
 	{
@@ -350,18 +353,22 @@ void ScenarioTextView::aboutChangeTextStyle()
 			typesMap.insert(type.first, type.second);
 		}
 	}
-
 	const QString selectedType =
 		QLightBoxInputDialog::getItem(this, tr("Choose block type"), types, m_ui->textStyle->text());
-	const ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)typesMap.value(selectedType);
-
-	m_ui->textStyle->setText(selectedType);
 
 	//
-	// Меняем стиль блока, если это возможно
+	// Если стиль выбран
 	//
-	m_editor->changeScenarioBlockType(type);
-	m_editorWrapper->setFocus();
+	if (!selectedType.isEmpty()) {
+		m_ui->textStyle->setText(selectedType);
+
+		//
+		// Меняем стиль блока, если это возможно
+		//
+		const ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)typesMap.value(selectedType);
+		m_editor->changeScenarioBlockType(type);
+		m_editorWrapper->setFocus();
+	}
 }
 
 void ScenarioTextView::aboutCursorPositionChanged()

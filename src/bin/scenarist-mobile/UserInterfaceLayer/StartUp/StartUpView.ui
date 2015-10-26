@@ -98,7 +98,7 @@
     <widget class="QFrame" name="toolbar">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -113,34 +113,19 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QRadioButton" name="localProjects">
-        <property name="text">
-         <string>Projects from local computer</string>
+       <widget class="QComboBox" name="projectsStorage">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
+        <item>
+         <property name="text">
+          <string>Projects from local computer</string>
+         </property>
+        </item>
        </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="remoteProjects">
-        <property name="text">
-         <string>Projects from kitscenarist.ru</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
       <item>
        <widget class="QToolButton" name="createProject">

@@ -10,6 +10,16 @@
 using UserInterface::StartUpView;
 using UserInterface::RecentFilesDelegate;
 
+namespace {
+	/**
+	 * @brief Места расположения файлов проектов
+	 */
+	/** @{ */
+	const int LOCAL_STORAGE = 0;
+	const int REMOTE_STORAGE = 1;
+	/** @} */
+}
+
 
 StartUpView::StartUpView(QWidget *parent) :
 	QWidget(parent),
@@ -72,13 +82,14 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
 
 void StartUpView::showRemoteProjects()
 {
-	m_ui->remoteProjects->show();
+	m_ui->projectsStorage->addItem(tr("Projects from kitscenarist.ru"));
 }
 
 void StartUpView::hideRemoteProjects()
 {
-	m_ui->localProjects->setChecked(true);
-	m_ui->remoteProjects->hide();
+	m_ui->projectsStorage->setCurrentIndex(LOCAL_STORAGE);
+	m_ui->projectsStorage->removeItem(REMOTE_STORAGE);
+	aboutFilesSourceChanged();
 }
 
 bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
@@ -112,7 +123,7 @@ bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
 
 void StartUpView::aboutFilesSourceChanged()
 {
-	if (m_ui->localProjects->isChecked()) {
+	if (m_ui->projectsStorage->currentIndex() == LOCAL_STORAGE) {
 		m_ui->filesSouces->setCurrentWidget(m_ui->recentFilesPage);
 	} else {
 		m_ui->filesSouces->setCurrentWidget(m_ui->remoteFilesPage);
@@ -121,8 +132,6 @@ void StartUpView::aboutFilesSourceChanged()
 
 void StartUpView::initView()
 {
-	m_ui->remoteProjects->hide();
-
 	m_ui->filesSouces->setCurrentWidget(m_ui->recentFilesPage);
 
 	m_ui->recentFiles->setItemDelegate(new RecentFilesDelegate(m_ui->recentFiles));
@@ -137,7 +146,7 @@ void StartUpView::initConnections()
 {
 	connect(m_ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
 
-	connect(m_ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
+	connect(m_ui->projectsStorage, SIGNAL(activated(int)), this, SLOT(aboutFilesSourceChanged()));
 	connect(m_ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRecentProjectClicked(QModelIndex)));
 	connect(m_ui->remoteFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRemoteProjectClicked(QModelIndex)));
 }

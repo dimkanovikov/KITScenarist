@@ -62,7 +62,7 @@ void MenuManager::userLogged()
 
 	const bool isLogged = true;
 	m_view->setUserLogged(isLogged, m_userName);
-	WAF::Animation::sideSlideOut(m_loginDialog);
+	WAF::Animation::sideSlideOut(m_loginDialog, WAF::TopSide);
 }
 
 void MenuManager::retryLogin(const QString& _error)
@@ -148,7 +148,7 @@ void MenuManager::initConnections()
 		emit loginRequested(m_userName, m_password);
 	});
 	connect(m_loginDialog, &LoginDialog::cancelClicked, [=](){
-		WAF::Animation::sideSlideOut(m_loginDialog);
+		WAF::Animation::sideSlideOut(m_loginDialog, WAF::TopSide);
 	});
 }
 
