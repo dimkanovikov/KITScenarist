@@ -53,7 +53,7 @@ void MenuView::hideProjectSubmenu()
 
 void MenuView::initView()
 {
-	setMinimumWidth(qMin(StyleSheetHelper::dpToPx(400), parentWidget()->width() - StyleSheetHelper::dpToPx(56)));
+    setMinimumWidth(qMin(StyleSheetHelper::dpToPx(400), StyleSheetHelper::dpToPx(parentWidget()->width() - 56)));
 
 	QButtonGroup* menuButtonsGroup = new QButtonGroup(this);
 	menuButtonsGroup->setExclusive(true);
