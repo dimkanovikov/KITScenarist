@@ -2098,7 +2098,6 @@ Párrafo</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="402"/>
-        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.ui" line="125"/>
         <source>Projects from local computer</source>
         <translation>Proyecto desde una computadora local</translation>
     </message>
@@ -2111,6 +2110,11 @@ Párrafo</translation>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="434"/>
         <source>Update recent projects list</source>
         <translation>Actualizar lista de proyectos recientes</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.ui" line="125"/>
+        <source>On device</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2835,7 +2839,7 @@ Párrafo</translation>
         <translation>Borrador</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp" line="357"/>
+        <location filename="../../../scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp" line="356"/>
         <source>Choose block type</source>
         <translation>Elija tipo de Bloque</translation>
     </message>
@@ -2918,9 +2922,13 @@ Párrafo</translation>
         <translation>Cerrar sesión</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.cpp" line="85"/>
         <source>Projects from kitscenarist.ru</source>
-        <translation>Projecttos desde kitscenarist.ru</translation>
+        <translation type="vanished">Projecttos desde kitscenarist.ru</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.cpp" line="85"/>
+        <source>On cloud</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

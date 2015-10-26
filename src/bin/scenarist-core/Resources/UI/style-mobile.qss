@@ -7,8 +7,8 @@ QAbstractButton {
 
 QToolButton {
     border: none;
-    width: 56dp;
-    height: 56dp;
+    min-width: 56dp;
+    min-height: 56dp;
     icon-size: 24dp;
     background-color: transparent;
 }
@@ -97,7 +97,7 @@ QPushButton[side-nav-subheader=true] {
 
 QPushButton[flat=true] {
     min-width: 88dp;
-    height:36dp;
+    min-height:36dp;
     border: none;
     background-color: palette(base);
     color: palette(highlight);
@@ -111,7 +111,7 @@ QPushButton:disabled[flat=true] {
 
 QPushButton[flat-black=true] {
     min-width: 88dp;
-    height:36dp;
+    min-height:36dp;
     border: none;
     background-color: transparent;
     color: black;
@@ -121,7 +121,7 @@ QPushButton[flat-black=true] {
 
 QPushButton[raised=true] {
     min-width: 88dp;
-    height:36dp;
+    min-height:36dp;
     background-color: palette(base);
     border: 1dp solid #BCBCBC;
     font-weight: 500;
@@ -161,7 +161,7 @@ QListView[dialog-container=true] {
 }
 
 QListView::item[dialog-container=true] {
-    height: 36dp;
+    min-height: 36dp;
     border: none;
     background-color: transparent;
     color: black;
@@ -169,7 +169,7 @@ QListView::item[dialog-container=true] {
 }
 
 QComboBox[toolbar=true]  {
-    height: 56dp;
+    min-height: 56dp;
     border:none;
     background: transparent;
     padding-left: 16dp;
@@ -193,7 +193,7 @@ QComboBox[toolbar=true] QAbstractItemView {
 
 QComboBox::item[toolbar=true] {
     image: none;
-    height:56dp;
+    min-height: 56dp;
     border: none;
     padding-left: 16dp;
 }
@@ -207,10 +207,10 @@ QComboBox::item:checked[toolbar=true] {
 }
 
 QComboBox::indicator[toolbar=true] {
-    background-color:transparent;
-    selection-background-color:transparent;
-    color:transparent;
-    selection-color:transparent;
+    background-color: transparent;
+    selection-background-color: transparent;
+    color: transparent;
+    selection-color: transparent;
 }
 
 

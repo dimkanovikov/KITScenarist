@@ -2087,7 +2087,6 @@ Paragraph</source>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="402"/>
-        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.ui" line="125"/>
         <source>Projects from local computer</source>
         <translation></translation>
     </message>
@@ -2099,6 +2098,11 @@ Paragraph</source>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="434"/>
         <source>Update recent projects list</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.ui" line="125"/>
+        <source>On device</source>
         <translation></translation>
     </message>
 </context>
@@ -2815,7 +2819,7 @@ Paragraph</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp" line="357"/>
+        <location filename="../../../scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp" line="356"/>
         <source>Choose block type</source>
         <translation></translation>
     </message>
@@ -2899,7 +2903,7 @@ Paragraph</source>
     </message>
     <message>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.cpp" line="85"/>
-        <source>Projects from kitscenarist.ru</source>
+        <source>On cloud</source>
         <translation></translation>
     </message>
 </context>

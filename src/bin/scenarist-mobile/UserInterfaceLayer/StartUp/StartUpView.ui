@@ -122,7 +122,7 @@
         </property>
         <item>
          <property name="text">
-          <string>Projects from local computer</string>
+          <string>On device</string>
          </property>
         </item>
        </widget>

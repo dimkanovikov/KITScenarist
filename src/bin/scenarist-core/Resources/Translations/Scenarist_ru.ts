@@ -2090,7 +2090,6 @@ Paragraph</source>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="402"/>
-        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.ui" line="125"/>
         <source>Projects from local computer</source>
         <translation>Проекты на компьютере</translation>
     </message>
@@ -2108,6 +2107,11 @@ Paragraph</source>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="327"/>
         <source>Released version 0.0.0 &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
         <translation>Вышла новая версия 0.0.0 &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.ui" line="125"/>
+        <source>On device</source>
+        <translation>На устройстве</translation>
     </message>
 </context>
 <context>
@@ -2831,7 +2835,7 @@ Paragraph</source>
         <translation>ЧЕРНОВИК</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp" line="357"/>
+        <location filename="../../../scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp" line="356"/>
         <source>Choose block type</source>
         <translation>Выберите формат блока</translation>
     </message>
@@ -2914,9 +2918,13 @@ Paragraph</source>
         <translation>Выйти</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.cpp" line="85"/>
         <source>Projects from kitscenarist.ru</source>
-        <translation>Проекты на kitscenarist.ru</translation>
+        <translation type="vanished">Проекты на kitscenarist.ru</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.cpp" line="85"/>
+        <source>On cloud</source>
+        <translation>В облаке</translation>
     </message>
 </context>
 <context>

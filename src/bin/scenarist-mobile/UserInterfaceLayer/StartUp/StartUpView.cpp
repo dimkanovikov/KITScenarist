@@ -82,7 +82,7 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
 
 void StartUpView::showRemoteProjects()
 {
-	m_ui->projectsStorage->addItem(tr("Projects from kitscenarist.ru"));
+	m_ui->projectsStorage->addItem(tr("On cloud"));
 }
 
 void StartUpView::hideRemoteProjects()
