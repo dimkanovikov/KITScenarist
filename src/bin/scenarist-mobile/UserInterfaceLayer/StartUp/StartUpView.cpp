@@ -154,4 +154,5 @@ void StartUpView::initConnections()
 void StartUpView::initStyleSheet()
 {
 	m_ui->toolbar->setProperty("toolbar", true);
+	m_ui->projectsStorage->setProperty("toolbar", true);
 }

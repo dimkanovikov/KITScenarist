@@ -168,6 +168,51 @@ QListView::item[dialog-container=true] {
     padding: 6dp 8dp 6dp 8dp;
 }
 
+QComboBox[toolbar=true]  {
+    height: 56px;
+    border:none;
+    background: transparent;
+    padding-left: 16px;
+}
+
+QComboBox::drop-down[toolbar=true] {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    border-width: 0px;
+    padding-right: 4px;
+}
+
+QComboBox::down-arrow[toolbar=true] {
+    image: url(:/Interface/UI/menuarrow.png);
+}
+
+QComboBox[toolbar=true] QAbstractItemView {
+    background-color: palette(base);
+}
+
+QComboBox::item[toolbar=true] {
+    image: none;
+    height:56px;
+    border: none;
+    padding-left: 16px;
+}
+
+QComboBox::item:selected[toolbar=true] {
+    background-color: rgba(221, 221, 221, 155);
+}
+
+QComboBox::item:checked[toolbar=true] {
+
+}
+
+QComboBox::indicator[toolbar=true] {
+    background-color:transparent;
+    selection-background-color:transparent;
+    color:transparent;
+    selection-color:transparent;
+}
+
 
 /*
  * Стили лайтбокса
