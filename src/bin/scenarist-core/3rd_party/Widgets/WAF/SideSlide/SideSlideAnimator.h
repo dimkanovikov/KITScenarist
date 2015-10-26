@@ -28,7 +28,7 @@ class QPropertyAnimation;
  */
 namespace WAF
 {
-    class BackgroundDecorator;
+	class BackgroundDecorator;
 
 
 	/**
@@ -48,7 +48,7 @@ namespace WAF
 		 * @brief Выдвинуть виджет
 		 */
 		/** @{ */
-        void animateForward();
+		void animateForward();
 		void slideIn();
 		/** @} */
 
@@ -56,31 +56,37 @@ namespace WAF
 		 * @brief Задвинуть виджет
 		 */
 		/** @{ */
-        void animateBackward();
+		void animateBackward();
 		void slideOut();
 		/** @} */
 
-    private:
+	protected:
+		/**
+		 * @brief Переопределяется, чтобы корректировать размер выкатываемого виджета
+		 */
+		bool eventFilter(QObject* _object, QEvent* _event);
+
+	private:
 		/**
 		 * @brief Получить виджет, который нужно анимировать
 		 */
 		QWidget* widgetForSlide() const;
 
-    private:
-        /**
-         * @brief Сторона из-за которой выкатывать виджет
-         */
-        ApplicationSide m_side;
+	private:
+		/**
+		 * @brief Сторона из-за которой выкатывать виджет
+		 */
+		ApplicationSide m_side;
 
-        /**
-         * @brief Объект для анимирования выезжания
-         */
-        QPropertyAnimation* m_animation;
+		/**
+		 * @brief Объект для анимирования выезжания
+		 */
+		QPropertyAnimation* m_animation;
 
-        /**
-         * @brief Помошник затемняющий фон под выезжающим виджетом
-         */
-        BackgroundDecorator* m_decorator;
+		/**
+		 * @brief Помошник затемняющий фон под выезжающим виджетом
+		 */
+		BackgroundDecorator* m_decorator;
 	};
 }
 

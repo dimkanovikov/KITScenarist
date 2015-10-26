@@ -32,10 +32,6 @@ QProgressBar::chunk {
     background-color: palette(highlight);
 }
 
-QRadioButton {
-    spacing: 10dp;
-}
-
 QScrollBar {
     border: none;
     background: palette(window);
@@ -117,7 +113,7 @@ QPushButton[flat-black=true] {
     min-width: 88dp;
     height:36dp;
     border: none;
-    background-color: palette(base);
+    background-color: transparent;
     color: black;
     font-weight: 500;
     padding: 0dp 8dp 0 8dp;
@@ -167,7 +163,7 @@ QListView[dialog-container=true] {
 QListView::item[dialog-container=true] {
     height: 36dp;
     border: none;
-    background-color: palette(base);
+    background-color: transparent;
     color: black;
     padding: 6dp 8dp 6dp 8dp;
 }
@@ -180,8 +176,8 @@ QListView::item[dialog-container=true] {
     font-weight: 500;
     font-size: 20pt;
     background-color: palette(base);
-    padding: 24dp 24dp 0dp 24dp;
     border: none;
+    padding: 24dp 24dp 0dp 24dp;
 }
 
 [lightBoxDialogCentralWidget=true] {
@@ -192,5 +188,6 @@ QListView::item[dialog-container=true] {
 
 [lightBoxMessageText=true] {
     background-color: palette(base);
+    border: none;
     padding: 0dp 24dp 24dp 24dp;
 }

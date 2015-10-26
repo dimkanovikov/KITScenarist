@@ -11,15 +11,16 @@ ProgressWidget::ProgressWidget(QWidget* _parent, bool _followToHeadWidget) :
 	QLightBoxWidget(_parent, _followToHeadWidget)
 {
 	m_title = new QLabel("Title");
-	m_title->setStyleSheet("font-size: 20pt; font-weight: 500; background-color: transparent; color: white; margin: 20px 0px 0px 12px;");
+	m_title->setStyleSheet("font-size: 20pt; font-weight: 500; background-color: transparent; color: white; border: none; margin: 20px 0px 0px 12px;");
 
 	QLabel* progress = new QLabel;
+	progress->setStyleSheet("background-color: transparent; color: white; border: none;");
 	QMovie* progressMovie = new QMovie(":/Interface/UI/loader.gif");
 	progress->setMovie(progressMovie);
 	progressMovie->start();
 
 	m_description = new QLabel("Description.");
-	m_description->setStyleSheet("background-color: transparent; color: white; margin: 0px 0px 0px 12px;");
+	m_description->setStyleSheet("background-color: transparent; color: white; border: none; margin: 0px 0px 0px 12px;");
 #ifndef MOBILE_OS
 	m_description->setFixedWidth(500);
 #endif

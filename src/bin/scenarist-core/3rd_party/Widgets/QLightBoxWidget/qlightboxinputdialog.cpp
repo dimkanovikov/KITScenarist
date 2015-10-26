@@ -1,5 +1,7 @@
 #include "qlightboxinputdialog.h"
 
+#include <3rd_party/Helpers/ScrollerHelper.h>
+
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QLineEdit>
@@ -101,6 +103,9 @@ void QLightBoxInputDialog::initView()
 
 	m_listWidget->setProperty("dialog-container", true);
 	m_listWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+#ifdef MOBILE_OS
+	ScrollerHelper::addScroller(m_listWidget);
+#endif
 
 	m_buttons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	foreach (QAbstractButton* button, m_buttons->buttons())	{

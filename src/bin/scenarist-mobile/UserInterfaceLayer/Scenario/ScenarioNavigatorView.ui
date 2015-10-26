@@ -33,7 +33,7 @@
     <widget class="QFrame" name="toolbar">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
