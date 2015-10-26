@@ -7,8 +7,8 @@ QAbstractButton {
 
 QToolButton {
     border: none;
-    min-width: 56dp;
-    min-height: 56dp;
+    width: 56dp;
+    height: 56dp;
     icon-size: 24dp;
     background-color: transparent;
 }
@@ -169,18 +169,18 @@ QListView::item[dialog-container=true] {
 }
 
 QComboBox[toolbar=true]  {
-    height: 56px;
+    height: 56dp;
     border:none;
     background: transparent;
-    padding-left: 16px;
+    padding-left: 16dp;
 }
 
 QComboBox::drop-down[toolbar=true] {
     subcontrol-origin: padding;
     subcontrol-position: top right;
-    width: 15px;
-    border-width: 0px;
-    padding-right: 4px;
+    width: 15dp;
+    border-width: 0dp;
+    padding-right: 4dp;
 }
 
 QComboBox::down-arrow[toolbar=true] {
@@ -193,13 +193,13 @@ QComboBox[toolbar=true] QAbstractItemView {
 
 QComboBox::item[toolbar=true] {
     image: none;
-    height:56px;
+    height:56dp;
     border: none;
-    padding-left: 16px;
+    padding-left: 16dp;
 }
 
 QComboBox::item:selected[toolbar=true] {
-    background-color: rgba(221, 221, 221, 155);
+
 }
 
 QComboBox::item:checked[toolbar=true] {
