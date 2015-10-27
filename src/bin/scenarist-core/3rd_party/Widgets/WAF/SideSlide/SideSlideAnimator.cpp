@@ -251,6 +251,8 @@ bool SideSlideAnimator::eventFilter(QObject* _object, QEvent* _event)
 				break;
 			}
 		}
+
+		m_decorator->grabParent();
 	}
 
 	return QObject::eventFilter(_object, _event);
