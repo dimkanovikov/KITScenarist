@@ -21,16 +21,16 @@
 #define HAVE_ALLOCA_H 1
 
 /* Define to 1 if you have the `argz_count' function. */
-#define HAVE_ARGZ_COUNT 1
+/* #undef HAVE_ARGZ_COUNT */
 
 /* Define to 1 if you have the <argz.h> header file. */
-#define HAVE_ARGZ_H 1
+/* #undef HAVE_ARGZ_H */
 
 /* Define to 1 if you have the `argz_next' function. */
-#define HAVE_ARGZ_NEXT 1
+/* #undef HAVE_ARGZ_NEXT */
 
 /* Define to 1 if you have the `argz_stringify' function. */
-#define HAVE_ARGZ_STRINGIFY 1
+/* #undef HAVE_ARGZ_STRINGIFY */
 
 /* Define to 1 if you have the `asprintf' function. */
 #define HAVE_ASPRINTF 1
@@ -40,18 +40,18 @@
 
 /* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
    CoreFoundation framework. */
-/* #undef HAVE_CFLOCALECOPYCURRENT */
+#define HAVE_CFLOCALECOPYCURRENT 1
 
 /* Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in
    the CoreFoundation framework. */
-/* #undef HAVE_CFPREFERENCESCOPYAPPVALUE */
+#define HAVE_CFPREFERENCESCOPYAPPVALUE 1
 
 /* "Define if you have the <curses.h> header" */
 /* #undef HAVE_CURSES_H */
 
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */
-#define HAVE_DCGETTEXT 1
+/* #undef HAVE_DCGETTEXT */
 
 /* Define to 1 if you have the declaration of `feof_unlocked', and to 0 if you
    don't. */
@@ -59,7 +59,7 @@
 
 /* Define to 1 if you have the declaration of `fgets_unlocked', and to 0 if
    you don't. */
-#define HAVE_DECL_FGETS_UNLOCKED 1
+#define HAVE_DECL_FGETS_UNLOCKED 0
 
 /* Define to 1 if you have the declaration of `getc_unlocked', and to 0 if you
    don't. */
@@ -77,7 +77,7 @@
 #define HAVE_DLFCN_H 1
 
 /* Define to 1 if you have the <error.h> header file. */
-#define HAVE_ERROR_H 1
+/* #undef HAVE_ERROR_H */
 
 /* Define to 1 if you have the <fcntl.h> header file. */
 #define HAVE_FCNTL_H 1
@@ -101,7 +101,7 @@
 #define HAVE_GETPAGESIZE 1
 
 /* Define if the GNU gettext() function is already present or preinstalled. */
-#define HAVE_GETTEXT 1
+/* #undef HAVE_GETTEXT */
 
 /* Define to 1 if you have the `getuid' function. */
 #define HAVE_GETUID 1
@@ -126,7 +126,7 @@
 #define HAVE_LC_MESSAGES 1
 
 /* Define to 1 if you have the <libintl.h> header file. */
-#define HAVE_LIBINTL_H 1
+/* #undef HAVE_LIBINTL_H */
 
 /* Define to 1 if you have the <limits.h> header file. */
 #define HAVE_LIMITS_H 1
@@ -144,7 +144,7 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `mempcpy' function. */
-#define HAVE_MEMPCPY 1
+/* #undef HAVE_MEMPCPY */
 
 /* Define to 1 if you have a working `mmap' system call. */
 #define HAVE_MMAP 1
@@ -157,7 +157,7 @@
 
 /* Define if you have <langinfo.h> and it defines the NL_LOCALE_NAME macro if
    _GNU_SOURCE is defined. */
-#define HAVE_NL_LOCALE_NAME 1
+/* #undef HAVE_NL_LOCALE_NAME */
 
 /* Define if your printf() function supports format strings with positions. */
 #define HAVE_POSIX_PRINTF 1
@@ -255,7 +255,7 @@
 #define HAVE_WINT_T 1
 
 /* Define to 1 if you have the `__fsetlocking' function. */
-#define HAVE___FSETLOCKING 1
+/* #undef HAVE___FSETLOCKING */
 
 /* "Define if you use exterimental functions" */
 /* #undef HUNSPELL_EXPERIMENTAL */
@@ -320,7 +320,7 @@
 
 /* Define if references to the POSIX multithreading library should be made
    weak. */
-#define USE_POSIX_THREADS_WEAK 1
+/* #undef USE_POSIX_THREADS_WEAK */
 
 /* Define if the GNU Pth multithreading library can be used. */
 /* #undef USE_PTH_THREADS */

@@ -4,6 +4,7 @@
 #include "RecentFilesDelegate.h"
 
 #include <3rd_party/Helpers/ImageHelper.h>
+#include <3rd_party/Helpers/ScrollerHelper.h>
 
 #include <QStandardItemModel>
 
@@ -134,9 +135,12 @@ void StartUpView::initView()
 {
 	m_ui->filesSouces->setCurrentWidget(m_ui->recentFilesPage);
 
+    ScrollerHelper::addScroller(m_ui->recentFiles);
 	m_ui->recentFiles->setItemDelegate(new RecentFilesDelegate(m_ui->recentFiles));
 	m_ui->recentFiles->setMouseTracking(true);
 	m_ui->recentFiles->installEventFilter(this);
+
+    ScrollerHelper::addScroller(m_ui->remoteFiles);
 	m_ui->remoteFiles->setItemDelegate(new RecentFilesDelegate(m_ui->remoteFiles));
 	m_ui->remoteFiles->setMouseTracking(true);
 	m_ui->remoteFiles->installEventFilter(this);

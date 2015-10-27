@@ -66,6 +66,14 @@ QScrollBar::sub-line {
     height: 0dp;
 }
 
+QLineEdit {
+    background-color: palette(base);
+}
+
+QDialogButtonBox {
+    background-color: palette(base);
+}
+
 QPushButton[side-nav-name=true] {
     border: none;
     height: 48dp;
@@ -97,7 +105,7 @@ QPushButton[side-nav-subheader=true] {
 
 QPushButton[flat=true] {
     min-width: 88dp;
-    min-height:36dp;
+    height:40dp;
     border: none;
     background-color: palette(base);
     color: palette(highlight);
@@ -111,7 +119,7 @@ QPushButton:disabled[flat=true] {
 
 QPushButton[flat-black=true] {
     min-width: 88dp;
-    min-height:36dp;
+    height:40dp;
     border: none;
     background-color: transparent;
     color: black;
@@ -121,7 +129,7 @@ QPushButton[flat-black=true] {
 
 QPushButton[raised=true] {
     min-width: 88dp;
-    min-height:36dp;
+    height:40dp;
     background-color: palette(base);
     border: 1dp solid #BCBCBC;
     font-weight: 500;
@@ -161,7 +169,7 @@ QListView[dialog-container=true] {
 }
 
 QListView::item[dialog-container=true] {
-    min-height: 36dp;
+    height: 40dp;
     border: none;
     background-color: transparent;
     color: black;
@@ -169,7 +177,6 @@ QListView::item[dialog-container=true] {
 }
 
 QComboBox[toolbar=true]  {
-    min-height: 56dp;
     border:none;
     background: transparent;
     padding-left: 16dp;
@@ -192,8 +199,7 @@ QComboBox[toolbar=true] QAbstractItemView {
 }
 
 QComboBox::item[toolbar=true] {
-    image: none;
-    min-height: 56dp;
+    height: 56dp;
     border: none;
     padding-left: 16dp;
 }
