@@ -31,6 +31,13 @@ Application::Application(int& _argc, char** _argv) :
 	// Настроим перевод приложения
 	//
 	initTranslation();
+
+    //
+    // Настроим шрифт
+    //
+#ifdef Q_OS_ANDROID
+    setFont(QFont("Roboto", 14));
+#endif
 }
 
 void Application::setupManager(ManagementLayer::ApplicationManager *_manager)

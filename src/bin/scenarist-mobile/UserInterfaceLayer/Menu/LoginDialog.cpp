@@ -90,7 +90,7 @@ void LoginDialog::initConnections()
 
 void LoginDialog::initStyleSheet()
 {
-	m_ui->content->setProperty("content-container", true);
+    m_ui->content->setProperty("content-container", true);
 	m_ui->signUp->setProperty("flat", true);
 	m_ui->login->setProperty("raised", true);
 	m_ui->cancel->setProperty("raised", true);
