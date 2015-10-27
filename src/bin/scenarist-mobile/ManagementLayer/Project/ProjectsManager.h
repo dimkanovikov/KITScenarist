@@ -22,6 +22,11 @@ namespace ManagementLayer
 	 * @brief Ститическая часть класса
 	 */
 	public:
+        /**
+         * @brief Папка с файлами проектов
+         */
+        static QString localProjectsDir();
+
 		/**
 		 * @brief Получить текущий проект, с которым работает пользователь
 		 */

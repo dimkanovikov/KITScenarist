@@ -9,6 +9,7 @@
 #include <QFileInfo>
 #include <QList>
 #include <QStandardItemModel>
+#include <QStandardPaths>
 #include <QXmlStreamReader>
 
 using ManagementLayer::ProjectsManager;
@@ -20,6 +21,13 @@ namespace {
 	const QString RECENT_FILES_USING_SETTINGS_KEY = "application/recent-files/using";
 }
 
+
+QString ProjectsManager::localProjectsDir()
+{
+    return
+        QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation))
+            .absoluteFilePath("LocalProjects");
+}
 
 const ManagementLayer::Project& ProjectsManager::currentProject()
 {
@@ -81,7 +89,7 @@ bool ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 	//
 	// Приведём путь к нативному виду
 	//
-	const QString projectPath = QDir::toNativeSeparators(_path);
+    const QString projectPath = QDir::toNativeSeparators(_path);
 
 	//
 	// Проверяем можем ли мы открыть файл проекта
@@ -103,7 +111,7 @@ bool ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 			// Проверяем находится ли проект в списке недавно используемых
 			//
 			foreach (const Project& project, m_recentProjects) {
-				if (project.path().compare(projectPath) == 0) {
+                if (project.path().compare(projectPath) == 0) {
 					newCurrentProject = project;
 					break;
 				}
@@ -124,18 +132,18 @@ bool ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 				//
 				// Определим название проекта
 				//
-				QFileInfo fileInfo(projectPath);
+                QFileInfo fileInfo(projectPath);
 				QString projectName = fileInfo.completeBaseName();
 				//
 				// Создаём проект
 				//
-				newCurrentProject = Project(Project::Local, projectName, projectPath, QDateTime::currentDateTime());
-				//
-				// Если в списке больше допустимого кол-ва используемых файлов удалим давно используемый
-				//
-				if (m_recentProjects.size() >= MAX_RECENT_FILES_COUNT) {
-					m_recentProjects.removeLast();
-				}
+                newCurrentProject = Project(Project::Local, projectName, projectPath, QDateTime::currentDateTime());
+                //
+                // Если в списке больше допустимого кол-ва используемых файлов удалим давно используемый
+                //
+                if (m_recentProjects.size() >= MAX_RECENT_FILES_COUNT) {
+                    m_recentProjects.removeLast();
+                }
 				//
 				// Добавляем проект в список
 				//
@@ -325,42 +333,73 @@ void ProjectsManager::setRemoteProjectsSyncUnavailable()
 
 void ProjectsManager::loadRecentProjects()
 {
-	//
-	// Загрузим список недавних файлов из настроек
-	//
-	QMap<QString, QString> recentFiles =
-			DataStorageLayer::StorageFacade::settingsStorage()->values(
-				RECENT_FILES_LIST_SETTINGS_KEY,
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
-	QMap<QString, QString> recentFilesUsing =
-			DataStorageLayer::StorageFacade::settingsStorage()->values(
-				RECENT_FILES_USING_SETTINGS_KEY,
-				DataStorageLayer::SettingsStorage::ApplicationSettings
-				);
+    //
+    // Старый способ через настройки почему-то не работает
+    //
+//	//
+//	// Загрузим список недавних файлов из настроек
+//	//
+//	QMap<QString, QString> recentFiles =
+//			DataStorageLayer::StorageFacade::settingsStorage()->values(
+//				RECENT_FILES_LIST_SETTINGS_KEY,
+//				DataStorageLayer::SettingsStorage::ApplicationSettings
+//				);
+//	QMap<QString, QString> recentFilesUsing =
+//			DataStorageLayer::StorageFacade::settingsStorage()->values(
+//				RECENT_FILES_USING_SETTINGS_KEY,
+//				DataStorageLayer::SettingsStorage::ApplicationSettings
+//				);
 
-	m_recentProjects.clear();
+//	m_recentProjects.clear();
 
-	//
-	// Формируем список недавно используемых проектов в порядке убывания даты изменения
-	//
-	QStringList usingDates = recentFilesUsing.values();
-	qSort(usingDates.begin(), usingDates.end(), qGreater<QString>());
-	foreach (const QString& usingDate, usingDates) {
-		//
-		// Путь к проекту
-		//
-		const QString path = recentFilesUsing.key(usingDate);
-		//
-		// Название проекта
-		//
-		const QString name = recentFiles.value(path);
-		//
-		// Сам проект
-		//
-		m_recentProjects.append(
-			Project(Project::Local, name, path, QDateTime::fromString(usingDate, "yyyy-MM-dd hh:mm:ss")));
-	}
+//	//
+//	// Формируем список недавно используемых проектов в порядке убывания даты изменения
+//	//
+//	QStringList usingDates = recentFilesUsing.values();
+//	qSort(usingDates.begin(), usingDates.end(), qGreater<QString>());
+//	foreach (const QString& usingDate, usingDates) {
+//		//
+//		// Путь к проекту
+//		//
+//		const QString path = recentFilesUsing.key(usingDate);
+//		//
+//		// Название проекта
+//		//
+//		const QString name = recentFiles.value(path);
+//		//
+//		// Сам проект
+//		//
+//		m_recentProjects.append(
+//			Project(Project::Local, name, path, QDateTime::fromString(usingDate, "yyyy-MM-dd hh:mm:ss")));
+//	}
+
+    //
+    // Новый способ
+    //
+    m_recentProjects.clear();
+
+    //
+    // Загрузим список файлов из папки
+    //
+    const QDir projectsDir(localProjectsDir());
+    foreach (const QFileInfo& projectFileInfo, projectsDir.entryInfoList(QDir::Files, QDir::Time)) {
+        //
+        // Путь к проекту
+        //
+        const QString path = projectFileInfo.absoluteFilePath();
+        //
+        // Название проекта
+        //
+        const QString name = projectFileInfo.completeBaseName();
+        //
+        // Дата изменения
+        //
+        const QDateTime date = projectFileInfo.lastModified();
+        //
+        // Сам проект
+        //
+        m_recentProjects.append(Project(Project::Local, name, path, date));
+    }
 
 	//
 	// Уведомляем об обновлении

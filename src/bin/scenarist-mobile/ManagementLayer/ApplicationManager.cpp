@@ -110,8 +110,8 @@ void ApplicationManager::createNewProject(const QString& _projectName)
 	if (saveIfNeeded()) {
 		//
 		// Получим имя файла для нового проекта
-		//
-		const QDir projectsDir(QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first());
+        //
+        const QDir projectsDir(ProjectsManager::localProjectsDir());
 		if (!projectsDir.exists()) {
 			QDir::root().mkpath(projectsDir.absolutePath());
 		}

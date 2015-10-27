@@ -41,14 +41,12 @@ void RecentFilesDelegate::paint(QPainter* _painter, const QStyleOptionViewItem& 
 	// Настраиваем размер области отрисовки
 	//
 	m_fileWidget->resize(opt.rect.size());
-	m_fileWidget->setPalette(opt.palette);
+    m_fileWidget->setPalette(opt.palette);
 
-	QPoint cursorPos = opt.widget->mapFromGlobal(QCursor::pos());
-	QRect itemRect = opt.rect;
-	itemRect.setHeight(itemRect.height()-2);
-
-	bool mouseHover = itemRect.contains(cursorPos);
-	m_fileWidget->setMouseHover(mouseHover);
+    //
+    // Реализация альтернативных цветов в представлении
+    //
+    m_fileWidget->setBackground(opt.features.testFlag(QStyleOptionViewItemV2::Alternate));
 
 	//
 	// Отрисовываем виджет

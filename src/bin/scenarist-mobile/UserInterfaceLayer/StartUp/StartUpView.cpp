@@ -126,8 +126,10 @@ void StartUpView::aboutFilesSourceChanged()
 {
 	if (m_ui->projectsStorage->currentIndex() == LOCAL_STORAGE) {
 		m_ui->filesSouces->setCurrentWidget(m_ui->recentFilesPage);
+        m_ui->createProject->show();
 	} else {
 		m_ui->filesSouces->setCurrentWidget(m_ui->remoteFilesPage);
+        m_ui->createProject->hide();
 	}
 }
 

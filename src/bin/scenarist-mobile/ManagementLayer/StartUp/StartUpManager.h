@@ -83,6 +83,11 @@ namespace ManagementLayer
 		 */
 		void initConnections();
 
+        /**
+         * @brief Отправить статистику о запуске
+         */
+        void sendStatistics();
+
 	private:
 		/**
 		 * @brief Представление для стартовой страницы

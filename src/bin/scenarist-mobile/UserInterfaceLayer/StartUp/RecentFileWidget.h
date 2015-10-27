@@ -25,7 +25,7 @@ namespace UserInterface
 		/**
 		 * @brief Находится ли мышка над элементом
 		 */
-		void setMouseHover(bool _hover);
+        void setBackground(bool _alternate);
 
 	private:
 		/**

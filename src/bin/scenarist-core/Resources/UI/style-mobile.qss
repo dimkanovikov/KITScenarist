@@ -24,7 +24,7 @@ QToolButton:pressed, QPushButton:pressed {
 QProgressBar {
     border-radius: 0dp;
     border: none;
-    background-color: #DDF0DD;
+    background-color: #b3c4da;
     max-height: 5dp;
 }
 

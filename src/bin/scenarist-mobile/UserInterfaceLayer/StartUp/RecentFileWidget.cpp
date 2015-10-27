@@ -1,5 +1,6 @@
 #include "RecentFileWidget.h"
 
+#include <3rd_party/Helpers/StyleSheetHelper.h>
 #include <3rd_party/Widgets/ElidedLabel/ElidedLabel.h>
 
 #include <QLabel>
@@ -22,11 +23,12 @@ RecentFileWidget::RecentFileWidget(QWidget *parent) :
 	m_filePath->setStyleSheet("color: grey;");
 
 	QVBoxLayout* layout = new QVBoxLayout;
-	layout->addSpacing(4);
+    const int margin = StyleSheetHelper::dpToPx(8);
+    layout->addSpacing(margin);
 	layout->addWidget(m_projectName);
 	layout->addWidget(m_filePath);
-	layout->addSpacing(4);
-	layout->setContentsMargins(QMargins(8,2,8,2));
+    layout->addSpacing(margin);
+    layout->setContentsMargins(QMargins(margin, margin, margin, margin));
 
 	this->setLayout(layout);
 }
@@ -41,14 +43,14 @@ void RecentFileWidget::setFilePath(const QString& _filePath)
 	m_filePath->setText(_filePath);
 }
 
-void RecentFileWidget::setMouseHover(bool _hover)
+void RecentFileWidget::setBackground(bool _alternate)
 {
 	//
 	// Выделяем в случе необходимости
 	//
 
 	QString styleSheet;
-	if (_hover) {
+    if (_alternate) {
 		styleSheet = "background-color: palette(alternate-base);";
 	} else {
 		styleSheet = "background-color: palette(base);";

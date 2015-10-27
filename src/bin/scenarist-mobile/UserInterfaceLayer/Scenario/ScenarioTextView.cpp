@@ -396,13 +396,13 @@ void ScenarioTextView::initView()
 
 	m_ui->textEditContainer->addWidget(m_editorWrapper);
 
-//	//
-//	// Отключаем автоподсказки
-//	//
-//	m_editor->setInputMethodHints(m_ui->textEdit->inputMethodHints() | Qt::ImhNoPredictiveText);
+    //
+    // Отключаем автоподсказки
+    //
+    // QTBUG: В андройдах до 4 версии блокируется возможность переключения на другой язык
+    //
+//    m_editor->setInputMethodHints(m_editor->inputMethodHints() | Qt::ImhSensitiveData);
 
-//	m_ui->textEdit->horizontalScrollBar()->hide();
-//	m_ui->textEdit->verticalScrollBar()->hide();
 	m_editor->setTextSelectionEnable(false);
 
 	ScrollerHelper::addScroller(m_editorWrapper);
