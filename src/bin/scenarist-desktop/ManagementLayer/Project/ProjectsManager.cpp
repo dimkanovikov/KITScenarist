@@ -76,7 +76,7 @@ QAbstractItemModel* ProjectsManager::remoteProjects()
 	return remoteProjectsModel;
 }
 
-void ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
+bool ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 {
 	//
 	// Приведём путь к нативному виду
@@ -84,83 +84,91 @@ void ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 	const QString projectPath = QDir::toNativeSeparators(_path);
 
 	//
-	// Делаем проект текущим и загружаем из него БД
-	// или создаём, если ранее его не существовало
+	// Проверяем можем ли мы открыть файл проекта
 	//
-	DatabaseLayer::Database::setCurrentFile(projectPath);
+	bool canOpen = DatabaseLayer::Database::canOpenFile(projectPath, _isLocal);
+	if (canOpen) {
+		//
+		// Делаем проект текущим и загружаем из него БД
+		// или создаём, если ранее его не существовало
+		//
+		DatabaseLayer::Database::setCurrentFile(projectPath);
 
-	Project newCurrentProject;
-	//
-	// Для локальных файлов делаем обработку списка недавно используемых
-	//
-	if (_isLocal) {
+		Project newCurrentProject;
 		//
-		// Проверяем находится ли проект в списке недавно используемых
+		// Для локальных файлов делаем обработку списка недавно используемых
 		//
-		foreach (const Project& project, m_recentProjects) {
-            if (project.path().compare(projectPath) == 0) {
-				newCurrentProject = project;
-				break;
+		if (_isLocal) {
+			//
+			// Проверяем находится ли проект в списке недавно используемых
+			//
+			foreach (const Project& project, m_recentProjects) {
+				if (project.path().compare(projectPath) == 0) {
+					newCurrentProject = project;
+					break;
+				}
 			}
-		}
 
-		//
-		// Если проект был в списке недавних делаем его первым
-		//
-		if (newCurrentProject.type() != Project::Invalid) {
-			m_recentProjects.removeOne(newCurrentProject);
-			newCurrentProject.setLastEditDatetime(QDateTime::currentDateTime());
-			m_recentProjects.prepend(newCurrentProject);
+			//
+			// Если проект был в списке недавних делаем его первым
+			//
+			if (newCurrentProject.type() != Project::Invalid) {
+				m_recentProjects.removeOne(newCurrentProject);
+				newCurrentProject.setLastEditDatetime(QDateTime::currentDateTime());
+				m_recentProjects.prepend(newCurrentProject);
+			}
+			//
+			// Если не был добавляем в начало списка ранее используемых
+			//
+			else {
+				//
+				// Определим название проекта
+				//
+				QFileInfo fileInfo(projectPath);
+				QString projectName = fileInfo.completeBaseName();
+				//
+				// Создаём проект
+				//
+				newCurrentProject = Project(Project::Local, projectName, projectPath, QDateTime::currentDateTime());
+				//
+				// Если в списке больше допустимого кол-ва используемых файлов удалим давно используемый
+				//
+				if (m_recentProjects.size() >= MAX_RECENT_FILES_COUNT) {
+					m_recentProjects.removeLast();
+				}
+				//
+				// Добавляем проект в список
+				//
+				m_recentProjects.prepend(newCurrentProject);
+			}
+
+			//
+			// Уведомляем об обновлении
+			//
+			emit recentProjectsUpdated();
 		}
 		//
-		// Если не был добавляем в начало списка ранее используемых
+		// Для проектов из облака просто определяем сам проект
 		//
 		else {
-			//
-			// Определим название проекта
-			//
-			QFileInfo fileInfo(projectPath);
-			QString projectName = fileInfo.completeBaseName();
-			//
-			// Создаём проект
-			//
-			newCurrentProject = Project(Project::Local, projectName, projectPath, QDateTime::currentDateTime());
-			//
-			// Если в списке больше допустимого кол-ва используемых файлов удалим давно используемый
-			//
-			if (m_recentProjects.size() >= MAX_RECENT_FILES_COUNT) {
-				m_recentProjects.removeLast();
+			foreach (const Project& project, m_remoteProjects) {
+				if (project.path() == projectPath) {
+					newCurrentProject = project;
+					break;
+				}
 			}
-			//
-			// Добавляем проект в список
-			//
-			m_recentProjects.prepend(newCurrentProject);
 		}
 
 		//
-		// Уведомляем об обновлении
+		// Запоминаем проект, как текущий
 		//
-		emit recentProjectsUpdated();
-	}
-	//
-	// Для проектов из облака просто определяем сам проект
-	//
-	else {
-		foreach (const Project& project, m_remoteProjects) {
-			if (project.path() == projectPath) {
-				newCurrentProject = project;
-				break;
-			}
-		}
+		s_currentProject = newCurrentProject;
 	}
 
-	//
-	// Запоминаем проект, как текущий
-	//
-	s_currentProject = newCurrentProject;
+	return canOpen;
 }
 
-void ProjectsManager::setCurrentProject(const QModelIndex& _index, bool _isLocal)
+bool ProjectsManager::setCurrentProject(const QModelIndex& _index, bool _isLocal)
 {
 	//
 	// Определим проект
@@ -178,7 +186,7 @@ void ProjectsManager::setCurrentProject(const QModelIndex& _index, bool _isLocal
 	//
 	// ... и установим его текущим
 	//
-	setCurrentProject(newCurrentProjectPath, _isLocal);
+	return setCurrentProject(newCurrentProjectPath, _isLocal);
 }
 
 void ProjectsManager::setCurrentProjectName(const QString& _projectName)

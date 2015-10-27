@@ -10,6 +10,16 @@ namespace DatabaseLayer
 	{
 	public:
 		/**
+		 * @brief Можно ли открыть заданный файл
+		 */
+		static bool canOpenFile(const QString& _databaseFileName, bool _isLocal);
+
+		/**
+		 * @brief Текст ошибки открытия последнего загружаемого файла
+		 */
+		static QString openFileError();
+
+		/**
 		 * @brief Установить текущий файл базы данных
 		 */
 		static void setCurrentFile(const QString& _databaseFileName);
@@ -62,9 +72,14 @@ namespace DatabaseLayer
 					   DATABASE_NAME;
 
 		/**
+		 * @brief Текст ошибки открытия последнего загружаемого файла
+		 */
+		static QString s_openFileError;
+
+		/**
 		 * @brief Счётчик открытых транзакций
 		 */
-		static int openedTransactions;
+		static int s_openedTransactions;
 
 		/**
 		 * @brief Получить объект текущей базы данных

@@ -55,12 +55,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Установить текущий проект
 		 */
-		void setCurrentProject(const QString& _path, bool _isLocal = true);
+		bool setCurrentProject(const QString& _path, bool _isLocal = true);
 
 		/**
 		 * @brief Установить текущий проект из модели проектов
 		 */
-		void setCurrentProject(const QModelIndex& _index, bool _isLocal = true);
+		bool setCurrentProject(const QModelIndex& _index, bool _isLocal = true);
 
 		/**
 		 * @brief Установить название текущего проекта

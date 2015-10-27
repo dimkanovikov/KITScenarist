@@ -16,6 +16,71 @@
 
 using namespace DatabaseLayer;
 
+namespace {
+	/**
+	 * @brief Получить ключ хранения номера версии приложения
+	 */
+	static QString applicationVersionKey() {
+		return
+#ifdef MOBILE_OS
+				"application-version-mobile";
+#else
+				"application-version";
+#endif
+	}
+}
+
+
+bool Database::canOpenFile(const QString& _databaseFileName, bool _isLocal)
+{
+	bool canOpen = true;
+
+	//
+	// Проверки специфичные для локальных файлов
+	//
+	if (_isLocal) {
+		//
+		// Если файл был создан в настольной версии приложения, его нельзя открывать в мобильной и наоборот
+		//
+		QSqlDatabase database = QSqlDatabase::addDatabase(SQL_DRIVER, "tmp_database");
+		database.setDatabaseName(_databaseFileName);
+		database.open();
+
+		QSqlQuery q_checker(database);
+		if (q_checker.exec(
+#ifdef MOBILE_OS
+				"SELECT COUNT(value) AS cant_open FROM system_variables WHERE variable = 'application-version' "
+#else
+				"SELECT COUNT(value) AS cant_open FROM system_variables WHERE variable = 'application-version-mobile' "
+#endif
+				)
+			&& q_checker.next()
+			&& q_checker.record().value("cant_open").toBool() == true) {
+			//
+			// Если есть метка противоположного приложения, то открыть нельзя
+			//
+			canOpen = false;
+			//
+			// ... сформироуем сообщение об ошибке
+			//
+			s_openFileError =
+#ifdef MOBILE_OS
+					QApplication::translate("DatabaseLayer::Database", "Project was created in desktop version.");
+#else
+					QApplication::translate("DatabaseLayer::Database", "Project was created in mobile version.");
+#endif
+		}
+	}
+
+	QSqlDatabase::removeDatabase("tmp_database");
+
+	return canOpen;
+}
+
+QString Database::openFileError()
+{
+	return s_openFileError;
+}
 
 void Database::setCurrentFile(const QString& _databaseFileName)
 {
@@ -60,14 +125,14 @@ void Database::transaction()
 	//
 	// Для первого запроса открываем транзакцию
 	//
-	if (openedTransactions == 0) {
+	if (s_openedTransactions == 0) {
 		instanse().transaction();
 	}
 
 	//
 	// Увеличиваем счётчик открытых транзакций
 	//
-	++openedTransactions;
+	++s_openedTransactions;
 }
 
 void Database::commit()
@@ -75,12 +140,12 @@ void Database::commit()
 	//
 	// Уменьшаем счётчик транзакций
 	//
-	--openedTransactions;
+	--s_openedTransactions;
 
 	//
 	// При закрытии корневой транзакции фиксируем изменения в базе данных
 	//
-	if (openedTransactions == 0) {
+	if (s_openedTransactions == 0) {
 		instanse().commit();
 	}
 }
@@ -94,7 +159,8 @@ QString Database::CONNECTION_NAME = "local_database";
 QString Database::SQL_DRIVER      = "QSQLITE";
 QString Database::DATABASE_NAME   = ":memory:";
 
-int Database::openedTransactions = 0;
+QString Database::s_openFileError = QString::null;
+int Database::s_openedTransactions = 0;
 
 QSqlDatabase Database::instanse()
 {
@@ -162,9 +228,11 @@ Database::States Database::checkState(QSqlDatabase& _database)
 		//
 		// Проверка версии
 		//
-		if (q_checker.exec("SELECT value as version FROM system_variables WHERE variable = 'application-version' ") &&
-			q_checker.next() &&
-			q_checker.record().value("version").toString() != qApp->applicationVersion()) {
+		if (q_checker.exec(
+				QString("SELECT value as version FROM system_variables WHERE variable = '%1' ")
+				.arg(::applicationVersionKey()))
+			&& q_checker.next()
+			&& q_checker.record().value("version").toString() != QApplication::applicationVersion()) {
 			states = states | Database::OldVersionFlag;
 		}
 	}
@@ -314,15 +382,16 @@ void Database::createEnums(QSqlDatabase& _database)
 	QSqlQuery q_creator(_database);
 	_database.transaction();
 
-	// Версия программы
+	// Служебная информация
 	{
 		q_creator.exec(
 					QString("INSERT INTO system_variables VALUES ('application-version-on-create', '%1')")
-					.arg(qApp->applicationVersion())
+					.arg(QApplication::applicationVersion())
 					);
 		q_creator.exec(
-					QString("INSERT INTO system_variables VALUES ('application-version', '%1')")
-					.arg(qApp->applicationVersion())
+					QString("INSERT INTO system_variables VALUES ('%1', '%2')")
+					.arg(::applicationVersionKey())
+					.arg(QApplication::applicationVersion())
 					);
 	}
 
@@ -387,7 +456,10 @@ void Database::updateDatabase(QSqlDatabase& _database)
 	//
 	// Определим версию базы данных
 	//
-	q_checker.exec("SELECT value as version FROM system_variables WHERE variable = 'application-version' ");
+	q_checker.exec(
+				QString("SELECT value as version FROM system_variables WHERE variable = '%1' ")
+				.arg(::applicationVersionKey())
+				);
 	q_checker.next();
 	QString databaseVersion = q_checker.record().value("version").toString();
 	int versionMajor = databaseVersion.split(".").value(0, "0").toInt();
@@ -460,8 +532,9 @@ void Database::updateDatabase(QSqlDatabase& _database)
 	// Обновляется версия программы
 	//
 	q_checker.exec(
-				QString("INSERT INTO system_variables VALUES ('application-version', '%1')")
-				.arg(qApp->applicationVersion())
+				QString("INSERT INTO system_variables VALUES ('%1', '%2')")
+				.arg(::applicationVersionKey())
+				.arg(QApplication::applicationVersion())
 				);
 }
 

@@ -19,7 +19,7 @@ Application::Application(int& _argc, char** _argv) :
 	setOrganizationName("DimkaNovikov labs.");
 	setOrganizationDomain("dimkanovikov.pro");
 	setApplicationName("Scenarist");
-	setApplicationVersion("0.0.1");
+	setApplicationVersion("0.5.8");
 
 	//
 	// Загрузим Courier New в базу шрифтов программы, если его там ещё нет

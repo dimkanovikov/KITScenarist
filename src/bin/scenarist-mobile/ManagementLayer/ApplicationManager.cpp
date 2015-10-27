@@ -79,9 +79,9 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
 	aboutUpdateProjectsList();
 
-    reloadApplicationSettings();
+	reloadApplicationSettings();
 
-    QTimer::singleShot(0, m_synchronizationManager, &SynchronizationManager::login);
+	QTimer::singleShot(0, m_synchronizationManager, &SynchronizationManager::login);
 }
 
 ApplicationManager::~ApplicationManager()
@@ -93,7 +93,7 @@ ApplicationManager::~ApplicationManager()
 void ApplicationManager::exec()
 {
 //	loadViewState();
-    m_view->show();
+	m_view->show();
 }
 
 void ApplicationManager::aboutUpdateProjectsList()
@@ -265,12 +265,21 @@ void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
 		//
 		// ... переключаемся на работу с выбранным файлом
 		//
-		m_projectsManager->setCurrentProject(_projectIndex);
-
+		if (m_projectsManager->setCurrentProject(_projectIndex)) {
+			//
+			// ... перейдём к редактированию
+			//
+			goToEditCurrentProject();
+		}
 		//
-		// ... перейдём к редактированию
+		// Если переключиться не удалось, сообщаем пользователю об ошибке
 		//
-		goToEditCurrentProject();
+		else {
+			QLightBoxMessage::critical(
+				m_view,
+				tr("Can't open project file"),
+				DatabaseLayer::Database::openFileError());
+		}
 	}
 }
 
