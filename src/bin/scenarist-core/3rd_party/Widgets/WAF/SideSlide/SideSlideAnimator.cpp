@@ -38,9 +38,9 @@ SideSlideAnimator::SideSlideAnimator(QWidget* _widgetForSlide) :
 	m_decorator->hide();
 
 	connect(m_animation, &QPropertyAnimation::finished, [=](){
-	   if (m_decorator->isHidden()) {
-		   widgetForSlide()->hide();
-	   }
+		if (m_decorator->isHidden()) {
+			widgetForSlide()->hide();
+		}
 	});
 
 	connect(m_decorator, &BackgroundDecorator::clicked, this, &SideSlideAnimator::slideOut);
@@ -252,7 +252,14 @@ bool SideSlideAnimator::eventFilter(QObject* _object, QEvent* _event)
 			}
 		}
 
+#ifdef Q_OS_ANDROID
+		//
+		// В андройде нужно перерисовать фоновое изображение
+		//
+		m_decorator->hide();
 		m_decorator->grabParent();
+		m_decorator->show();
+#endif
 	}
 
 	return QObject::eventFilter(_object, _event);
