@@ -15,6 +15,8 @@ TEMPLATE = app
 #
 unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 
+QMAKE_MAC_SDK = macosx10.11
+
 #
 # Включить профилирование
 #

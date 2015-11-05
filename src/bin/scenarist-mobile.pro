@@ -20,6 +20,8 @@ DEFINES += MOBILE_OS
 #
 unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 
+QMAKE_MAC_SDK = macosx10.11
+
 #
 # Включить профилирование
 #
@@ -411,9 +413,8 @@ FORMS += \
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = \
-	/Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Debug/libs/fileformats/libfileformats.so \
-	/Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Debug/libs/hunspell/libhunspell.so \
-	$$PWD/../../build/Debug/libs/webloader/libwebloader.so
+        /Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Release/libs/hunspell/libhunspell.so \
+        $$PWD/../../build/Release/libs/webloader/libwebloader.so
 }
 
 DISTFILES += \

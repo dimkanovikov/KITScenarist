@@ -14,7 +14,7 @@ namespace UserInterface
 	/**
 	 * @brief Основная форма приложения
 	 */
-	class ApplicationView : public QWidget
+    class ApplicationView : public QWidget
 	{
 		Q_OBJECT
 
@@ -47,7 +47,7 @@ namespace UserInterface
 		/**
 		 * @brief Переопределяется для отлавливания события закрытия приложения
 		 */
-		void closeEvent(QCloseEvent* _event);
+        void closeEvent(QCloseEvent* _event);
 
 	private:
 		/**

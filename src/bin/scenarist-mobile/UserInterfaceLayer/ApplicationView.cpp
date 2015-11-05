@@ -7,14 +7,14 @@ using UserInterface::ApplicationView;
 
 
 ApplicationView::ApplicationView(QWidget *parent) :
-	QWidget(parent),
+    QWidget(parent),
 	m_ui(new Ui::ApplicationView)
 {
 	m_ui->setupUi(this);
 
 	initView();
 	initConnections();
-	initStyleSheet();
+    initStyleSheet();
 }
 
 ApplicationView::~ApplicationView()
@@ -41,7 +41,7 @@ void ApplicationView::closeEvent(QCloseEvent* _event)
 	//
 
 	_event->ignore();
-	emit wantToClose();
+    emit wantToClose();
 }
 
 void ApplicationView::initView()
