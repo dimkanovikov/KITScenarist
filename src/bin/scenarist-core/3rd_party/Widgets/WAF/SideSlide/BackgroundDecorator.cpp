@@ -46,9 +46,9 @@ BackgroundDecorator::BackgroundDecorator(QWidget* _parent) :
 	// После того, как осветлили фон, скрываем себя
 	//
 	connect(&m_timeline, &QTimeLine::finished, [=](){
-	   if (m_timeline.currentFrame() == 0) {
-		   hide();
-	   }
+		if (m_timeline.currentFrame() == 0) {
+			hide();
+		}
 	});
 }
 

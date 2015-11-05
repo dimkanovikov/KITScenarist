@@ -26,59 +26,59 @@
  */
 namespace WAF
 {
-    /**
-     * @brief Класс декорирующий задний план анимации выкатывания
-     */
-    class BackgroundDecorator : public QWidget
-    {
-        Q_OBJECT
+	/**
+	 * @brief Класс декорирующий задний план анимации выкатывания
+	 */
+	class BackgroundDecorator : public QWidget
+	{
+		Q_OBJECT
 
-    public:
-        explicit BackgroundDecorator(QWidget* _parent);
+	public:
+		explicit BackgroundDecorator(QWidget* _parent);
 
-        /**
-         * @brief Сохранить изображение родительского виджета
-         */
-        void grabParent();
+		/**
+		 * @brief Сохранить изображение родительского виджета
+		 */
+		void grabParent();
 
-        /**
-         * @brief Задекорировать фон
-         */
-        void decorate(bool _dark);
+		/**
+		 * @brief Задекорировать фон
+		 */
+		void decorate(bool _dark);
 
-    signals:
-        /**
-         * @brief На виджете произведён щелчёк мышью
-         */
-        void clicked();
+	signals:
+		/**
+		 * @brief На виджете произведён щелчёк мышью
+		 */
+		void clicked();
 
-    protected:
-        /**
-         * @brief Переопределяется для прорисовки декорации
-         */
-        void paintEvent(QPaintEvent* _event);
+	protected:
+		/**
+		 * @brief Переопределяется для прорисовки декорации
+		 */
+		void paintEvent(QPaintEvent* _event);
 
-        /**
-         * @brief Переопределяется для отлавливания щелчка мышью
-         */
-        void mousePressEvent(QMouseEvent* _event);
+		/**
+		 * @brief Переопределяется для отлавливания щелчка мышью
+		 */
+		void mousePressEvent(QMouseEvent* _event);
 
-    private:
-        /**
-         * @brief Таймлайн для реализации анимированного декорирования
-         */
-        QTimeLine m_timeline;
+	private:
+		/**
+		 * @brief Таймлайн для реализации анимированного декорирования
+		 */
+		QTimeLine m_timeline;
 
-        /**
-         * @brief Фоновое изображение
-         */
-        QPixmap m_background;
+		/**
+		 * @brief Фоновое изображение
+		 */
+		QPixmap m_background;
 
-        /**
-         * @brief Цвет декорирования фона
-         */
-        QColor m_decorationColor;
-    };
+		/**
+		 * @brief Цвет декорирования фона
+		 */
+		QColor m_decorationColor;
+	};
 }
 
 #endif // BACKGROUNDDECORATOR_H
