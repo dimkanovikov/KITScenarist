@@ -77,7 +77,7 @@
            <string>Application</string>
           </property>
           <property name="icon">
-           <iconset resource="../../Resources/Resources.qrc">
+           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
             <normaloff>:/Graphics/Icons/settings_application.png</normaloff>:/Graphics/Icons/settings_application.png</iconset>
           </property>
          </item>
@@ -86,7 +86,7 @@
            <string>Scenario Editor</string>
           </property>
           <property name="icon">
-           <iconset resource="../../Resources/Resources.qrc">
+           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
             <normaloff>:/Graphics/Icons/settings_text_editor.png</normaloff>:/Graphics/Icons/settings_text_editor.png</iconset>
           </property>
          </item>
@@ -95,7 +95,7 @@
            <string>Navigator</string>
           </property>
           <property name="icon">
-           <iconset resource="../../Resources/Resources.qrc">
+           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
             <normaloff>:/Graphics/Icons/settings_navigator.png</normaloff>:/Graphics/Icons/settings_navigator.png</iconset>
           </property>
          </item>
@@ -104,7 +104,7 @@
            <string>Chronometry/Counters</string>
           </property>
           <property name="icon">
-           <iconset resource="../../Resources/Resources.qrc">
+           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
             <normaloff>:/Graphics/Icons/settings_chronometry.png</normaloff>:/Graphics/Icons/settings_chronometry.png</iconset>
           </property>
          </item>
@@ -113,7 +113,7 @@
            <string>Templates Library</string>
           </property>
           <property name="icon">
-           <iconset resource="../../Resources/Resources.qrc">
+           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
             <normaloff>:/Graphics/Icons/style.png</normaloff>:/Graphics/Icons/style.png</iconset>
           </property>
          </item>
@@ -136,7 +136,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -255,7 +255,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../Resources/Resources.qrc">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -1250,7 +1250,7 @@ Replace quotes to language specific.</string>
                        <string/>
                       </property>
                       <property name="pixmap">
-                       <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                       <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
                       </property>
                       <property name="scaledContents">
                        <bool>true</bool>
@@ -1698,7 +1698,7 @@ Replace quotes to language specific.</string>
                       <string/>
                      </property>
                      <property name="pixmap">
-                      <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                      <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
                      </property>
                      <property name="scaledContents">
                       <bool>true</bool>
@@ -1731,7 +1731,7 @@ Replace quotes to language specific.</string>
                       <string/>
                      </property>
                      <property name="pixmap">
-                      <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                      <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
                      </property>
                      <property name="scaledContents">
                       <bool>true</bool>
@@ -1799,7 +1799,7 @@ Replace quotes to language specific.</string>
                       <string/>
                      </property>
                      <property name="pixmap">
-                      <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+                      <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
                      </property>
                      <property name="scaledContents">
                       <bool>true</bool>
@@ -2252,7 +2252,7 @@ Paragraph</string>
               <string>Apply</string>
              </property>
              <property name="icon">
-              <iconset resource="../../Resources/Resources.qrc">
+              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                <normaloff>:/Graphics/Icons/Editing/checkmark.png</normaloff>:/Graphics/Icons/Editing/checkmark.png</iconset>
              </property>
             </widget>
@@ -2266,7 +2266,7 @@ Paragraph</string>
               <string>New</string>
              </property>
              <property name="icon">
-              <iconset resource="../../Resources/Resources.qrc">
+              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                <normaloff>:/Graphics/Icons/Editing/add.png</normaloff>:/Graphics/Icons/Editing/add.png</iconset>
              </property>
             </widget>
@@ -2280,7 +2280,7 @@ Paragraph</string>
               <string>Edit</string>
              </property>
              <property name="icon">
-              <iconset resource="../../Resources/Resources.qrc">
+              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                <normaloff>:/Graphics/Icons/Editing/edit.png</normaloff>:/Graphics/Icons/Editing/edit.png</iconset>
              </property>
             </widget>
@@ -2294,7 +2294,7 @@ Paragraph</string>
               <string>Remove</string>
              </property>
              <property name="icon">
-              <iconset resource="../../Resources/Resources.qrc">
+              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                <normaloff>:/Graphics/Icons/Editing/delete.png</normaloff>:/Graphics/Icons/Editing/delete.png</iconset>
              </property>
             </widget>
@@ -2308,7 +2308,7 @@ Paragraph</string>
               <string>Load</string>
              </property>
              <property name="icon">
-              <iconset resource="../../Resources/Resources.qrc">
+              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                <normaloff>:/Graphics/Icons/folder.png</normaloff>:/Graphics/Icons/folder.png</iconset>
              </property>
             </widget>
@@ -2322,7 +2322,7 @@ Paragraph</string>
               <string>Save As...</string>
              </property>
              <property name="icon">
-              <iconset resource="../../Resources/Resources.qrc">
+              <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                <normaloff>:/Graphics/Icons/Editing/save.png</normaloff>:/Graphics/Icons/Editing/save.png</iconset>
              </property>
             </widget>
@@ -2441,7 +2441,8 @@ Paragraph</string>
   <tabstop>sceneDescriptionHeight</tabstop>
  </tabstops>
  <resources>
-  <include location="../../Resources/Resources.qrc"/>
+  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
+  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -341,6 +341,7 @@ void TemplateDialog::initView()
 	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::NoprintableText));
 	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneGroupHeader));
 	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::FolderHeader));
+	ui->blockStyles->setAutoFillBackground(true);
 
 	//
 	// Сформируем модель из списка шрифтов системы

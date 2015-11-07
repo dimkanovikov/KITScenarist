@@ -376,8 +376,8 @@ void SettingsView::setSimbolsCounterUsed(bool _value)
 void SettingsView::aboutChooseApplicationLanguage()
 {
 	UserInterface::LanguageDialog dlg(this, m_appLanguage);
-    if (dlg.exec() == QLightBoxDialog::Accepted
-        && dlg.language() != m_appLanguage) {
+	if (dlg.exec() == QLightBoxDialog::Accepted
+		&& dlg.language() != m_appLanguage) {
 		emit applicationLanguageChanged(dlg.language());
 	}
 }
@@ -712,7 +712,7 @@ void SettingsView::initStyleSheet()
 	QList<QWidget*> mainList;
 	mainList << ui->categories
 			 << ui->applicationPageWidget
-			 << ui->scenarioEditPageWidget
+			 << ui->ScenarioEditPageStack
 			 << ui->navigatorPageWidget
 			 << ui->chronometryPageWidget
 			 << ui->templatesLibraryPageWidget;

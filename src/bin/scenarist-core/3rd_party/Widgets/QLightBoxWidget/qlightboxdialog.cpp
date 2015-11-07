@@ -1,21 +1,41 @@
 #include "qlightboxdialog.h"
 
+#include <QAbstractScrollArea>
 #include <QEventLoop>
 #include <QGraphicsOpacityEffect>
 #include <QGridLayout>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QTimer>
+
+namespace {
+	/**
+	 * @brief Создать объект анимации появления/скрытия для заданного виджета
+	 */
+	static QPropertyAnimation* createOpacityAnimation(QWidget* _forWidget) {
+		QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect(_forWidget);
+
+		QPropertyAnimation* opacityAnimation = new QPropertyAnimation(opacityEffect, "opacity");
+		opacityAnimation->setDuration(260);
+		opacityAnimation->setEasingCurve(QEasingCurve::OutCirc);
+		opacityAnimation->setStartValue(0);
+		opacityAnimation->setEndValue(1);
+
+		opacityEffect->setOpacity(0);
+		_forWidget->setGraphicsEffect(opacityEffect);
+
+		return opacityAnimation;
+	}
+}
 
 
 QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget) :
 	QLightBoxWidget(parent, _followToHeadWidget),
 	m_title(new QLabel(this)),
 	m_centralWidget(0),
-	m_execResult(Rejected),
-	m_opacityEffect(new QGraphicsOpacityEffect(this)),
-	m_opacityAnimation(new QPropertyAnimation(m_opacityEffect, "opacity"))
+	m_execResult(Rejected)
 {
 	initView();
 	initConnections();
@@ -30,16 +50,7 @@ int QLightBoxDialog::exec()
 		m_title->hide();
 	}
 
-	show();
-
-	//
-	// Анимируем открытие
-	//
-	{
-//		m_opacityAnimation->setStartValue(0);
-//		m_opacityAnimation->setEndValue(1);
-//		m_opacityAnimation->start();
-	}
+	animateShow();
 
 	focusedOnExec()->setFocus();
 
@@ -49,20 +60,7 @@ int QLightBoxDialog::exec()
 	connect(this, SIGNAL(finished(int)), &dialogEventLoop, SLOT(quit()));
 	dialogEventLoop.exec();
 
-	//
-	// Анимируем закрытие
-	//
-	{
-//		m_opacityAnimation->setStartValue(1);
-//		m_opacityAnimation->setEndValue(0);
-//		m_opacityAnimation->start();
-
-//		QEventLoop hideEventLoop;
-//		connect(m_opacityAnimation, SIGNAL(finished()), &hideEventLoop, SLOT(quit()));
-//		hideEventLoop.exec();
-	}
-
-	hide();
+	animateHide();
 
 	return m_execResult;
 }
@@ -124,7 +122,6 @@ void QLightBoxDialog::initView()
 		m_centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 		QLayout* centralWidgetLayout = layout();
-//		centralWidgetLayout->setContentsMargins(20, 8, 20, 10);
 		m_centralWidget->setLayout(centralWidgetLayout);
 
 		setMinimumSize(QSize(0, 0));
@@ -140,11 +137,6 @@ void QLightBoxDialog::initView()
 		newLayout->setColumnStretch(2, 1);
 		setLayout(newLayout);
 	}
-
-//	m_opacityEffect->setOpacity(0);
-//	setGraphicsEffect(m_opacityEffect);
-//	m_opacityAnimation->setDuration(300);
-//	m_opacityAnimation->setEasingCurve(QEasingCurve::OutCirc);
 }
 
 void QLightBoxDialog::initConnections()
@@ -154,4 +146,59 @@ void QLightBoxDialog::initConnections()
 QWidget* QLightBoxDialog::focusedOnExec() const
 {
 	return m_centralWidget;
+}
+
+void QLightBoxDialog::animateShow()
+{
+	animate(true);
+}
+
+void QLightBoxDialog::animateHide()
+{
+	animate(false);
+}
+
+void QLightBoxDialog::animate(bool _forward)
+{
+	//
+	// Показываем виджет, если нужно
+	//
+	if (_forward) {
+		show();
+	}
+
+	//
+	// Приходится создавать несколько дополнительных анимаций помимо самого диалога
+	// так же для всех viewport'ов областей прокрутки, т.к. к ним не применяется эффект прозрачности
+	//
+	QParallelAnimationGroup opacityAnimationGroup;
+	opacityAnimationGroup.addAnimation(::createOpacityAnimation(this));
+	foreach (QAbstractScrollArea* scrollArea, findChildren<QAbstractScrollArea*>()) {
+		opacityAnimationGroup.addAnimation(::createOpacityAnimation(scrollArea->viewport()));
+	}
+	opacityAnimationGroup.setDirection(_forward ? QPropertyAnimation::Forward : QPropertyAnimation::Backward);
+	opacityAnimationGroup.start(QAbstractAnimation::DeleteWhenStopped);
+
+	//
+	// Ожидаем завершения анимации
+	//
+	QEventLoop animationEventLoop;
+	connect(&opacityAnimationGroup, SIGNAL(finished()), &animationEventLoop, SLOT(quit()));
+	animationEventLoop.exec();
+
+	//
+	// Скрываем виджет, если нужно
+	//
+	if (!_forward) {
+		hide();
+	}
+
+	//
+	// Удаляем эффект анимации, т.к. иногда из-за него коряво отрисовываются некоторые виджеты
+	//
+	setGraphicsEffect(0);
+	foreach (QAbstractScrollArea* scrollArea, findChildren<QAbstractScrollArea*>()) {
+		scrollArea->viewport()->setGraphicsEffect(0);
+		scrollArea->viewport()->repaint();
+	}
 }

@@ -4,9 +4,7 @@
 #include "qlightboxwidget.h"
 
 class QFrame;
-class QGraphicsOpacityEffect;
 class QLabel;
-class QPropertyAnimation;
 
 
 /**
@@ -84,6 +82,16 @@ protected:
 
 private:
 	/**
+	 * @brief Анимировать отображение/сокрытие диалога
+	 */
+	/** @{ */
+	void animateShow();
+	void animateHide();
+	void animate(bool _forward);
+	/** @} */
+
+private:
+	/**
 	 * @brief Заголовок диалога
 	 */
 	QLabel* m_title;
@@ -97,14 +105,6 @@ private:
 	 * @brief Актуальный код возврата
 	 */
 	int m_execResult;
-
-	/**
-	 * @brief Графический эффект для реализации эффекта плавного появления/скрытия
-	 */
-	/** @{ */
-	QGraphicsOpacityEffect* m_opacityEffect;
-	QPropertyAnimation* m_opacityAnimation;
-	/** @} */
 };
 
 #endif // QLIGHTBOXDIALOG_H
