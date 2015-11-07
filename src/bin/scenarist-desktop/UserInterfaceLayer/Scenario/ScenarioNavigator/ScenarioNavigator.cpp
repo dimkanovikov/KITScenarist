@@ -302,10 +302,12 @@ void ScenarioNavigator::initView()
 
 	m_middleTitle->setFixedWidth(1);
 
+	m_showDraft->setObjectName("navigatorShowDraft");
 	m_showDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"));
 	m_showDraft->setToolTip(tr("Show/hide draft"));
 	m_showDraft->setCheckable(true);
 
+	m_showNote->setObjectName("navigatorShowNote");
 	m_showNote->setIcons(QIcon(":/Graphics/Icons/Editing/note.png"));
 	m_showNote->setToolTip(tr("Show/hide scene note"));
 	m_showNote->setCheckable(true);

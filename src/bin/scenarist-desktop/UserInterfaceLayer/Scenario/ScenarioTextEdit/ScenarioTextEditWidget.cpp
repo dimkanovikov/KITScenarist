@@ -430,14 +430,18 @@ void ScenarioTextEditWidget::initView()
 	m_redo->setIcons(QIcon(":/Graphics/Icons/Editing/redo.png"));
 	m_redo->setToolTip(ShortcutHelper::makeToolTip(tr("Redo last action"), "Shift+Ctrl+Z"));
 
+	m_search->setObjectName("scenarioSearch");
 	m_search->setIcons(QIcon(":/Graphics/Icons/Editing/search.png"));
 	m_search->setToolTip(ShortcutHelper::makeToolTip(tr("Search and Replace"), "Ctrl+F"));
 	m_search->setCheckable(true);
 	m_search->setShortcut(QKeySequence("Ctrl+F"));
 
+	m_fastFormat->setObjectName("scenarioFastFormat");
 	m_fastFormat->setIcons(QIcon(":/Graphics/Icons/Editing/format.png"));
 	m_fastFormat->setToolTip(tr("Text Fast Format"));
 	m_fastFormat->setCheckable(true);
+
+	m_review->setObjectName("scenarioReview");
 
 	m_duration->setToolTip(tr("Duration from Start to Cursor Position | Full Duration"));
 	m_duration->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);

@@ -14,6 +14,7 @@
 #include <QStandardPaths>
 #include <QStringList>
 #include <QTableView>
+#include <QToolButton>
 #include <QTreeView>
 #include <QUuid>
 #include <QWidget>
@@ -234,6 +235,12 @@ void SettingsStorage::saveApplicationStateAndGeometry(QWidget* _widget)
 
 	settings.setValue("geometry", _widget->saveGeometry());
 
+	settings.beginGroup("toolbuttons");
+	foreach (QToolButton* toolButton, _widget->findChildren<QToolButton*>()) {
+		settings.setValue(toolButton->objectName() + "-checked", toolButton->isChecked());
+	}
+	settings.endGroup();
+
 	settings.beginGroup("splitters");
 	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
 		settings.setValue(splitter->objectName() + "-state", splitter->saveState());
@@ -261,6 +268,13 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 	settings.beginGroup(STATE_AND_GEOMETRY_KEY);
 
 	_widget->restoreGeometry(settings.value("geometry").toByteArray());
+
+
+	settings.beginGroup("toolbuttons");
+	foreach (QToolButton* toolButton, _widget->findChildren<QToolButton*>()) {
+		toolButton->setChecked(settings.value(toolButton->objectName() + "-checked", false).toBool());
+	}
+	settings.endGroup();
 
 	settings.beginGroup("splitters");
 	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {

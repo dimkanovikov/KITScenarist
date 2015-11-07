@@ -219,8 +219,9 @@ void ScenarioReviewPanel::aboutAddComment(const QColor& _color)
 
 void ScenarioReviewPanel::doneReview(bool _done)
 {
-	BusinessLogic::ScenarioReviewModel* model = reviewModel();
-	model->setReviewMarkIsDone(m_editor->textCursor().position(), _done);
+	if (BusinessLogic::ScenarioReviewModel* model = reviewModel()) {
+		model->setReviewMarkIsDone(m_editor->textCursor().position(), _done);
+	}
 }
 
 void ScenarioReviewPanel::clearReview()
