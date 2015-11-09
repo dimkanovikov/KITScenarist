@@ -856,7 +856,8 @@ void ApplicationManager::initView()
 	//
 	// Настроим боковую панель
 	//
-	m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
+    m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
+    g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
@@ -867,6 +868,7 @@ void ApplicationManager::initView()
 	// Настроим виджеты соответствующие вкладкам
 	//
 	m_tabsWidgets->addWidget(m_startUpManager->view());
+    m_tabsWidgets->addWidget(new QWidget(m_view));
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
 	m_tabsWidgets->addWidget(m_charactersManager->view());
 	m_tabsWidgets->addWidget(m_locationsManager->view());

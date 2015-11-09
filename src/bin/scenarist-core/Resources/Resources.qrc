@@ -96,6 +96,7 @@
         <file>Icons/Mobile/menu/chevron-left.png</file>
         <file>Icons/Mobile/menu/content-save.png</file>
         <file>Icons/Mobile/menu/script.png</file>
+        <file>Icons/research.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
