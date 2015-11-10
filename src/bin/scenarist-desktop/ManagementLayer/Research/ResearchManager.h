@@ -2,6 +2,7 @@
 #define RESEARCHMANAGER_H
 
 #include <QObject>
+#include <QMap>
 
 namespace UserInterface {
 	class ResearchView;
@@ -42,7 +43,7 @@ namespace ManagementLayer
 		void closeCurrentProject();
 
 		/**
-		 * @brief Сохранить локации проекта
+		 * @brief Сохранить разработки проекта
 		 */
 		void saveResearch();
 
@@ -53,35 +54,30 @@ namespace ManagementLayer
 
 	signals:
 		/**
-		 * @brief Была изменена локация
+		 * @brief Была изменена разарботка
 		 */
 		void researchChanged();
 
-		/**
-		 * @brief Было изменено название локации
-		 */
-		void researchNameChanged(const QString& _oldName, const QString& _newName);
-
-		/**
-		 * @brief Обновить список локаций
-		 */
-		void refreshResearch();
-
 	private:
 		/**
-		 * @brief Добавить локацию
+		 * @brief Добавить разработку
 		 */
 		void addResearch(const QModelIndex& _index);
 
 		/**
-		 * @brief Изменить локацию
+		 * @brief Изменить разработку
 		 */
 		void editResearch(const QModelIndex& _index);
 
 		/**
-		 * @brief Удалить локации
+		 * @brief Удалить разработку
 		 */
 		void removeResearch(const QModelIndex& _index);
+
+		/**
+		 * @brief Обновить данные сценария
+		 */
+		void updateScenarioData(const QString& _key, const QString& _value);
 
 	private:
 		/**
@@ -104,6 +100,11 @@ namespace ManagementLayer
 		 * @brief Диалог добавления элемента разработки
 		 */
 		UserInterface::ResearchItemDialog* m_dialog;
+
+		/**
+		 * @brief Данные сценария
+		 */
+		QMap<QString, QString> m_scenarioData;
 
 		/**
 		 * @brief Модель данных о разработке

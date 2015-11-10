@@ -26,6 +26,22 @@ using DataStorageLayer::StorageFacade;
 using UserInterface::ResearchView;
 using UserInterface::ResearchItemDialog;
 
+namespace {
+	/**
+	 * @brief Ключи для доступа к данным сценария
+	 */
+	/** @{ */
+	const QString NAME_KEY = "name";
+	const QString LOGLINE_KEY = "logline";
+	const QString ADDITIONAL_INFO_KEY = "additional_info";
+	const QString GENRE_KEY = "genre";
+	const QString AUTHOR_KEY = "author";
+	const QString CONTACTS_KEY = "contacts";
+	const QString YEAR_KEY = "year";
+	const QString SYNOPSIS_KEY = "synopsis";
+	/** @} */
+}
+
 
 ResearchManager::ResearchManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
@@ -46,26 +62,54 @@ QWidget* ResearchManager::view() const
 void ResearchManager::loadCurrentProject()
 {
 	//
+	// Загрузим данные сценария
+	//
+	m_scenarioData.insert(NAME_KEY, StorageFacade::scenarioDataStorage()->name());
+	m_scenarioData.insert(LOGLINE_KEY, StorageFacade::scenarioDataStorage()->logline());
+	m_scenarioData.insert(ADDITIONAL_INFO_KEY, StorageFacade::scenarioDataStorage()->additionalInfo());
+	m_scenarioData.insert(GENRE_KEY, StorageFacade::scenarioDataStorage()->genre());
+	m_scenarioData.insert(AUTHOR_KEY, StorageFacade::scenarioDataStorage()->author());
+	m_scenarioData.insert(CONTACTS_KEY, StorageFacade::scenarioDataStorage()->contacts());
+	m_scenarioData.insert(YEAR_KEY, StorageFacade::scenarioDataStorage()->year());
+	m_scenarioData.insert(SYNOPSIS_KEY, StorageFacade::scenarioDataStorage()->synopsis());
+
+	//
 	// Загрузим модель разработки
 	//
-	m_model->load(DataStorageLayer::StorageFacade::researchStorage()->all());
+	m_model->load(StorageFacade::researchStorage()->all());
 	m_view->setResearchModel(m_model);
 	editResearch(m_model->index(0, 0));
 }
 
 void ResearchManager::closeCurrentProject()
 {
+	m_scenarioData.clear();
 	m_model->clear();
 	m_view->setResearchModel(0);
 }
 
 void ResearchManager::saveResearch()
 {
-//	foreach (Domain::DomainObject* researchObject,
-//			 DataStorageLayer::StorageFacade::researchStorage()->all()->toList()) {
-//		Domain::Research* research = dynamic_cast<Domain::Research*>(researchObject);
-//		DataStorageLayer::StorageFacade::researchStorage()->updateResearch(research);
-//	}
+	//
+	// Сохраняем данные сценария
+	//
+	StorageFacade::scenarioDataStorage()->setName(m_scenarioData.value(NAME_KEY));
+	StorageFacade::scenarioDataStorage()->setLogline(m_scenarioData.value(LOGLINE_KEY));
+	StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_scenarioData.value(ADDITIONAL_INFO_KEY));
+	StorageFacade::scenarioDataStorage()->setGenre(m_scenarioData.value(GENRE_KEY));
+	StorageFacade::scenarioDataStorage()->setAuthor(m_scenarioData.value(AUTHOR_KEY));
+	StorageFacade::scenarioDataStorage()->setContacts(m_scenarioData.value(CONTACTS_KEY));
+	StorageFacade::scenarioDataStorage()->setYear(m_scenarioData.value(YEAR_KEY));
+	StorageFacade::scenarioDataStorage()->setSynopsis(m_scenarioData.value(SYNOPSIS_KEY));
+
+	//
+	// Сохраняем элементы разработки
+	//
+	foreach (Domain::DomainObject* researchObject,
+			 DataStorageLayer::StorageFacade::researchStorage()->all()->toList()) {
+		Domain::Research* research = dynamic_cast<Domain::Research*>(researchObject);
+		DataStorageLayer::StorageFacade::researchStorage()->updateResearch(research);
+	}
 }
 
 void ResearchManager::setCommentOnly(bool _isCommentOnly)
@@ -128,6 +172,8 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)
 		// Выбираем его в представлении
 		//
 		m_view->selectItem(m_model->indexForItem(newResearchItem));
+
+		emit researchChanged();
 	}
 }
 
@@ -146,24 +192,24 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 			switch (research->type()) {
 				case Research::Scenario: {
 					m_view->editScenario(
-						StorageFacade::scenarioDataStorage()->name(),
-						StorageFacade::scenarioDataStorage()->logline());
+						m_scenarioData.value(NAME_KEY),
+						m_scenarioData.value(LOGLINE_KEY));
 					break;
 				}
 
 				case Research::TitlePage: {
 					m_view->editTitlePage(
-						StorageFacade::scenarioDataStorage()->name(),
-						StorageFacade::scenarioDataStorage()->additionalInfo(),
-						StorageFacade::scenarioDataStorage()->genre(),
-						StorageFacade::scenarioDataStorage()->author(),
-						StorageFacade::scenarioDataStorage()->contacts(),
-						StorageFacade::scenarioDataStorage()->year());
+						m_scenarioData.value(NAME_KEY),
+						m_scenarioData.value(ADDITIONAL_INFO_KEY),
+						m_scenarioData.value(GENRE_KEY),
+						m_scenarioData.value(AUTHOR_KEY),
+						m_scenarioData.value(CONTACTS_KEY),
+						m_scenarioData.value(YEAR_KEY));
 					break;
 				}
 
 				case Research::Synopsis: {
-					m_view->editSynopsis(StorageFacade::scenarioDataStorage()->synopsis());
+					m_view->editSynopsis(m_scenarioData.value(SYNOPSIS_KEY));
 					break;
 				}
 
@@ -207,26 +253,22 @@ void ResearchManager::removeResearch(const QModelIndex& _index)
 		} else {
 			m_view->selectItem(_index.sibling(_index.row() - 1, _index.column()));
 		}
+
+		emit researchChanged();
+	}
+}
+
+void ResearchManager::updateScenarioData(const QString& _key, const QString& _value)
+{
+	if (m_scenarioData.value(_key) != _value) {
+		m_scenarioData.insert(_key, _value);
+		emit researchChanged();
 	}
 }
 
 void ResearchManager::initView()
 {
 
-
-//	m_viewSplitter->setObjectName("researchSplitter");
-//	m_viewSplitter->setHandleWidth(1);
-//	m_viewSplitter->setStretchFactor(1, 1);
-//	m_viewSplitter->setOpaqueResize(false);
-//	m_viewSplitter->addWidget(m_navigatorManager->view());
-//	m_viewSplitter->addWidget(m_dataEditManager->view());
-
-//	QHBoxLayout* layout = new QHBoxLayout;
-//	layout->setContentsMargins(QMargins());
-//	layout->setSpacing(0);
-//	layout->addWidget(m_viewSplitter);
-
-//	m_view->setLayout(layout);
 }
 
 void ResearchManager::initConnections()
@@ -235,15 +277,44 @@ void ResearchManager::initConnections()
 	connect(m_view, &ResearchView::editResearchRequested, this, &ResearchManager::editResearch);
 	connect(m_view, &ResearchView::removeResearchRequested, this, &ResearchManager::removeResearch);
 
+	connect(m_view, &ResearchView::scenarioNameChanged, [=](const QString& _name){
+		updateScenarioData(NAME_KEY, _name);
+	});
+	connect(m_view, &ResearchView::scenarioLoglineChanged, [=](const QString& _logline){
+		updateScenarioData(LOGLINE_KEY, _logline);
+	});
+	connect(m_view, &ResearchView::titlePageAdditionalInfoChanged, [=](const QString& _additionalInfo){
+		updateScenarioData(ADDITIONAL_INFO_KEY, _additionalInfo);
+	});
+	connect(m_view, &ResearchView::titlePageGenreChanged, [=](const QString& _genre){
+		updateScenarioData(GENRE_KEY, _genre);
+	});
+	connect(m_view, &ResearchView::titlePageAuthorChanged, [=](const QString& _author){
+		updateScenarioData(AUTHOR_KEY, _author);
+	});
+	connect(m_view, &ResearchView::titlePageContactsChanged, [=](const QString& _contacts){
+		updateScenarioData(CONTACTS_KEY, _contacts);
+	});
+	connect(m_view, &ResearchView::titlePageYearChanged, [=](const QString& _year){
+		updateScenarioData(YEAR_KEY, _year);
+	});
+	connect(m_view, &ResearchView::synopsisTextChanged, [=](const QString& _synopsis){
+		updateScenarioData(SYNOPSIS_KEY, _synopsis);
+	});
+
 	connect(m_view, &ResearchView::textNameChanged, [=](const QString& _name){
-		if (m_currentResearch != 0) {
+		if (m_currentResearch != 0
+			&& m_currentResearch->name() != _name) {
 			m_currentResearch->setName(_name);
 			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+			emit researchChanged();
 		}
 	});
 	connect(m_view, &ResearchView::textDescriptionChanged, [=](const QString& _description){
-		if (m_currentResearch != 0) {
+		if (m_currentResearch != 0
+			&& m_currentResearch->description() != _description) {
 			m_currentResearch->setDescription(_description);
+			emit researchChanged();
 		}
 	});
 }

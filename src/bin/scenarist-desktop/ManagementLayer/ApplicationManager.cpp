@@ -1007,6 +1007,7 @@ void ApplicationManager::initConnections()
 	connect(m_exportManager, SIGNAL(scenarioNameChanged(QString)),
 			m_scenarioManager, SLOT(aboutScenarioNameChanged(QString)));
 
+	connect(m_researchManager, SIGNAL(researchChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_charactersManager, SIGNAL(characterChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
