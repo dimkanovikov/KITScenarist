@@ -14,6 +14,7 @@ namespace {
 	 */
 	/** @{ */
 	const QString NAME_KEY = "name";
+	const QString LOGLINE_KEY = "logline";
 	const QString ADDITIONAL_INFO_KEY = "additional_info";
 	const QString GENRE_KEY = "genre";
 	const QString AUTHOR_KEY = "author";
@@ -45,6 +46,16 @@ QString ScenarioDataStorage::name() const
 void ScenarioDataStorage::setName(const QString& _name)
 {
 	saveData(NAME_KEY, _name);
+}
+
+QString ScenarioDataStorage::logline() const
+{
+	return data(LOGLINE_KEY)->value();
+}
+
+void ScenarioDataStorage::setLogline(const QString& _logline)
+{
+	saveData(LOGLINE_KEY, _logline);
 }
 
 QString ScenarioDataStorage::additionalInfo() const

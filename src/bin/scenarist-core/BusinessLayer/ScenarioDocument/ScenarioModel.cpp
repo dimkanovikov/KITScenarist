@@ -13,18 +13,15 @@ QString ScenarioModel::MIME_TYPE = "application/x-scenarist/scenario-tree";
 
 ScenarioModel::ScenarioModel(QObject *parent, ScenarioXml* _xmlHandler) :
 	QAbstractItemModel(parent),
-	m_rootItem(0),
-	m_scenarioItem(new ScenarioModelItem(0)),
+	m_rootItem(new ScenarioModelItem(0)),
 	m_xmlHandler(_xmlHandler),
 	m_lastMime(0),
 	m_scenesCount(0)
 {
 	Q_ASSERT(m_xmlHandler);
 
-	m_scenarioItem->setHeader(QObject::tr("Scenario"));
-	m_scenarioItem->setType(ScenarioModelItem::Scenario);
-	m_rootItem = m_scenarioItem;
-//	m_rootItem->appendItem(m_scenarioItem);
+	m_rootItem->setHeader(QObject::tr("Scenario"));
+	m_rootItem->setType(ScenarioModelItem::Scenario);
 }
 
 ScenarioModel::~ScenarioModel()
@@ -39,7 +36,7 @@ void ScenarioModel::prependItem(ScenarioModelItem* _item, ScenarioModelItem* _pa
 	// Если родитель не задан им становится сам сценарий
 	//
 	if (_parentItem == 0) {
-		_parentItem = m_scenarioItem;
+		_parentItem = m_rootItem;
 	}
 
 	//
@@ -61,7 +58,7 @@ void ScenarioModel::addItem(ScenarioModelItem* _item, ScenarioModelItem* _parent
 	// Если родитель не задан им становится сам сценарий
 	//
 	if (_parentItem == 0) {
-		_parentItem = m_scenarioItem;
+		_parentItem = m_rootItem;
 	}
 
 	//
@@ -450,8 +447,8 @@ namespace {
 void ScenarioModel::updateSceneNumbers()
 {
 	int sceneNumber = 0;
-	for (int itemIndex = 0; itemIndex < m_scenarioItem->childCount(); ++itemIndex) {
-		::updateSceneNumbers(m_scenarioItem->childAt(itemIndex), sceneNumber);
+	for (int itemIndex = 0; itemIndex < m_rootItem->childCount(); ++itemIndex) {
+		::updateSceneNumbers(m_rootItem->childAt(itemIndex), sceneNumber);
 	}
 
 	m_scenesCount = sceneNumber;
@@ -519,18 +516,18 @@ QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 
 void ScenarioModelFiltered::setDragDropEnabled(bool _enabled)
 {
-    if (m_dragDropEnabled != _enabled) {
-        m_dragDropEnabled = _enabled;
-    }
+	if (m_dragDropEnabled != _enabled) {
+		m_dragDropEnabled = _enabled;
+	}
 }
 
 Qt::ItemFlags ScenarioModelFiltered::flags(const QModelIndex &_index) const
 {
-    Qt::ItemFlags result = sourceModel()->flags(_index);
-    if (!m_dragDropEnabled) {
-        result ^= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
-    }
-    return result;
+	Qt::ItemFlags result = sourceModel()->flags(_index);
+	if (!m_dragDropEnabled) {
+		result ^= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+	}
+	return result;
 }
 
 bool ScenarioModelFiltered::filterAcceptsRow(int _sourceRow, const QModelIndex& _sourceParent) const

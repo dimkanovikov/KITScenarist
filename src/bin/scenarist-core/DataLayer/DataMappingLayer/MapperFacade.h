@@ -15,6 +15,7 @@ namespace DataMappingLayer
 	class ScenarioMapper;
 	class ScenarioChangeMapper;
 	class ScenarioDataMapper;
+	class ResearchMapper;
 	class SettingsMapper;
 	class DatabaseHistoryMapper;
 
@@ -32,6 +33,7 @@ namespace DataMappingLayer
 		static ScenarioMapper* scenarioMapper();
 		static ScenarioChangeMapper* scenarioChangeMapper();
 		static ScenarioDataMapper* scenarioDataMapper();
+		static ResearchMapper* researchMapper();
 		static SettingsMapper* settingsMapper();
 		static DatabaseHistoryMapper* databaseHistoryMapper();
 
@@ -47,6 +49,7 @@ namespace DataMappingLayer
 		static ScenarioMapper* s_scenarioMapper;
 		static ScenarioChangeMapper* s_scenarioChangeMapper;
 		static ScenarioDataMapper* s_scenarioDataMapper;
+		static ResearchMapper* s_researchMapper;
 		static SettingsMapper* s_settingsMapper;
 		static DatabaseHistoryMapper* s_databaseHistoryMapper;
 	};

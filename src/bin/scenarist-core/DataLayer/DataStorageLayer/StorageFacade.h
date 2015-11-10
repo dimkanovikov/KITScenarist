@@ -15,6 +15,7 @@ namespace DataStorageLayer
 	class ScenarioStorage;
 	class ScenarioChangeStorage;
 	class ScenarioDataStorage;
+	class ResearchStorage;
 	class SettingsStorage;
 	class DatabaseHistoryStorage;
 
@@ -43,6 +44,7 @@ namespace DataStorageLayer
 		static ScenarioStorage* scenarioStorage();
 		static ScenarioChangeStorage* scenarioChangeStorage();
 		static ScenarioDataStorage* scenarioDataStorage();
+		static ResearchStorage* researchStorage();
 		static SettingsStorage* settingsStorage();
 		static DatabaseHistoryStorage* databaseHistoryStorage();
 
@@ -58,6 +60,7 @@ namespace DataStorageLayer
 		static ScenarioStorage* s_scenarioStorage;
 		static ScenarioChangeStorage* s_scenarioChangeStorage;
 		static ScenarioDataStorage* s_scenarioDataStorage;
+		static ResearchStorage* s_researchStorage;
 		static SettingsStorage* s_settingsStorage;
 		static DatabaseHistoryStorage* s_databaseHistoryStorage;
 	};

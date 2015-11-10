@@ -24,7 +24,6 @@
         <file>Icons/scene_group.png</file>
         <file>Icons/characters.png</file>
         <file>Icons/locations.png</file>
-        <file>Icons/project.png</file>
         <file>Icons/script.png</file>
         <file>Icons/settings.png</file>
         <file>Icons/start.png</file>
@@ -42,7 +41,6 @@
         <file>Icons/Editing/redo.png</file>
         <file>Icons/Editing/undo.png</file>
         <file>Icons/note.png</file>
-        <file>Icons/unknown.png</file>
         <file>Icons/Editing/red_cross.png</file>
         <file>Icons/Editing/search.png</file>
         <file>Icons/Editing/format.png</file>
@@ -60,7 +58,6 @@
         <file>Icons/Editing/note.png</file>
         <file>Icons/Editing/fullscreen_active.png</file>
         <file>Icons/login.png</file>
-        <file>Icons/logout.png</file>
         <file>Icons/Editing/checkmark.png</file>
         <file>Icons/Editing/merge.png</file>
         <file>Icons/Editing/review.png</file>
@@ -97,6 +94,10 @@
         <file>Icons/Mobile/menu/content-save.png</file>
         <file>Icons/Mobile/menu/script.png</file>
         <file>Icons/research.png</file>
+        <file>Icons/research1.png</file>
+        <file>Icons/script1.png</file>
+        <file>Icons/file.png</file>
+        <file>Icons/file-document.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

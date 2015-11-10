@@ -11,6 +11,7 @@
 #include "ScenarioStorage.h"
 #include "ScenarioChangeStorage.h"
 #include "ScenarioDataStorage.h"
+#include "ResearchStorage.h"
 #include "SettingsStorage.h"
 #include "DatabaseHistoryStorage.h"
 
@@ -30,6 +31,7 @@ void StorageFacade::clearStorages()
 	scenarioStorage()->clear();
 	scenarioChangeStorage()->clear();
 	scenarioDataStorage()->clear();
+	researchStorage()->clear();
 }
 
 void StorageFacade::refreshStorages()
@@ -49,6 +51,7 @@ void StorageFacade::refreshStorages()
 //	scenarioStorage()->refresh();
 //	scenarioChangeStorage()->refresh();
 	scenarioDataStorage()->refresh();
+	researchStorage()->refresh();
 }
 
 PlaceStorage* StorageFacade::placeStorage()
@@ -139,6 +142,14 @@ ScenarioDataStorage* StorageFacade::scenarioDataStorage()
 	return s_scenarioDataStorage;
 }
 
+ResearchStorage* StorageFacade::researchStorage()
+{
+	if (s_researchStorage == 0) {
+		s_researchStorage = new ResearchStorage;
+	}
+	return s_researchStorage;
+}
+
 SettingsStorage* StorageFacade::settingsStorage()
 {
 	if (s_settingsStorage == 0) {
@@ -166,5 +177,6 @@ CharacterPhotoStorage* StorageFacade::s_characterPhotoStorage = 0;
 ScenarioStorage* StorageFacade::s_scenarioStorage = 0;
 ScenarioChangeStorage* StorageFacade::s_scenarioChangeStorage = 0;
 ScenarioDataStorage* StorageFacade::s_scenarioDataStorage = 0;
+ResearchStorage* StorageFacade::s_researchStorage = 0;
 SettingsStorage* StorageFacade::s_settingsStorage = 0;
 DatabaseHistoryStorage* StorageFacade::s_databaseHistoryStorage = 0;

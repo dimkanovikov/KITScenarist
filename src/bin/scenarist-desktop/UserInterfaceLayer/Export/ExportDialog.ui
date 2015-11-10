@@ -117,7 +117,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/alert.png</pixmap>
+         <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/alert.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>
@@ -133,7 +133,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="../../Resources/Resources.qrc">
+         <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
           <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
         </property>
         <property name="iconSize">
@@ -227,7 +227,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
+        <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/help.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -252,7 +252,7 @@
    <item row="5" column="0" colspan="2">
     <widget class="QTabWidget" name="additionalSettings">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="commonTab">
       <attribute name="title">
@@ -538,7 +538,8 @@
   <tabstop>exportTo</tabstop>
  </tabstops>
  <resources>
-  <include location="../../Resources/Resources.qrc"/>
+  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
+  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

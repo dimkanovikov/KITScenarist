@@ -125,16 +125,9 @@ namespace BusinessLogic
 
 	private:
 		/**
-		 * @brief Корневой элемент дерева, то же самое, что и m_scenarioItem
-		 *
-		 * TODO: избавиться от одного из них
+		 * @brief Корневой элемент дерева
 		 */
 		ScenarioModelItem* m_rootItem;
-
-		/**
-		 * @brief Обязательный элемент сценария
-		 */
-		ScenarioModelItem* m_scenarioItem;
 
 		/**
 		 * @brief Обработчик xml
@@ -160,17 +153,17 @@ namespace BusinessLogic
 	class ScenarioModelFiltered : public QSortFilterProxyModel
 	{
 	public:
-        ScenarioModelFiltered(QObject* _parent = 0) :
-            QSortFilterProxyModel(_parent),
-            m_dragDropEnabled(true) {}
+		ScenarioModelFiltered(QObject* _parent = 0) :
+			QSortFilterProxyModel(_parent),
+			m_dragDropEnabled(true) {}
 
-        /**
-         * @brief Настройка возможности перетаскивания элементов модели
-         */
-        /** @{ */
-        void setDragDropEnabled(bool _enabled);
-        Qt::ItemFlags flags(const QModelIndex &_index) const;
-        /** @} */
+		/**
+		 * @brief Настройка возможности перетаскивания элементов модели
+		 */
+		/** @{ */
+		void setDragDropEnabled(bool _enabled);
+		Qt::ItemFlags flags(const QModelIndex &_index) const;
+		/** @} */
 
 	protected:
 		/**
@@ -178,11 +171,11 @@ namespace BusinessLogic
 		 */
 		bool filterAcceptsRow(int _sourceRow, const QModelIndex& _sourceParent) const;
 
-    private:
-        /**
-         * @brief Доступна ли возможность перетаскивания элементов
-         */
-        bool m_dragDropEnabled;
+	private:
+		/**
+		 * @brief Доступна ли возможность перетаскивания элементов
+		 */
+		bool m_dragDropEnabled;
 	};
 }
 

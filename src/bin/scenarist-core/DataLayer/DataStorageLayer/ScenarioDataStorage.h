@@ -30,6 +30,14 @@ namespace DataStorageLayer
 		/** @} */
 
 		/**
+		 * @brief Логлайн сценария
+		 */
+		/** @{ */
+		QString logline() const;
+		void setLogline(const QString& _logline);
+		/** @} */
+
+		/**
 		 * @brief Дополнительная информация
 		 */
 		/** @{ */

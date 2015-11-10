@@ -11,6 +11,7 @@
 #include "ScenarioMapper.h"
 #include "ScenarioChangeMapper.h"
 #include "ScenarioDataMapper.h"
+#include "ResearchMapper.h"
 #include "SettingsMapper.h"
 #include "DatabaseHistoryMapper.h"
 
@@ -105,6 +106,14 @@ ScenarioDataMapper* MapperFacade::scenarioDataMapper()
 	return s_scenarioDataMapper;
 }
 
+ResearchMapper* MapperFacade::researchMapper()
+{
+	if (s_researchMapper == 0) {
+		s_researchMapper = new ResearchMapper;
+	}
+	return s_researchMapper;
+}
+
 SettingsMapper* MapperFacade::settingsMapper()
 {
 	if (s_settingsMapper == 0) {
@@ -132,5 +141,6 @@ CharacterPhotoMapper* MapperFacade::s_characterPhotoMapper = 0;
 ScenarioMapper* MapperFacade::s_scenarioMapper = 0;
 ScenarioChangeMapper* MapperFacade::s_scenarioChangeMapper = 0;
 ScenarioDataMapper* MapperFacade::s_scenarioDataMapper = 0;
+ResearchMapper* MapperFacade::s_researchMapper = 0;
 SettingsMapper* MapperFacade::s_settingsMapper = 0;
 DatabaseHistoryMapper* MapperFacade::s_databaseHistoryMapper = 0;

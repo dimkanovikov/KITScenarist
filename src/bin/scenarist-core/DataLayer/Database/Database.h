@@ -167,6 +167,12 @@ namespace DatabaseLayer
 		 */
 		static void updateDatabaseTo_0_5_6(QSqlDatabase& _database);
 
+		/**
+		 * @brief Обновить базу данных до версии 0.5.8
+		 *
+		 * - добавляется таблица research
+		 */
+		static void updateDatabaseTo_0_5_8(QSqlDatabase& _database);
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS( Database::States )

@@ -369,6 +369,20 @@ void Database::createTables(QSqlDatabase& _database)
 				   ")"
 				   );
 
+	//
+	// Таблица "Разработка"
+	//
+	q_creator.exec("CREATE TABLE research "
+				   "("
+				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "parent_id INTEGER DEFAULT(NULL), "
+				   "type INTEGER NOT NULL DEFAULT(0)" // 0 - папка, 1 - текст
+				   "name TEXT NOT NULL, "
+				   "description TEXT DEFAULT(NULL), "
+				   "sort_order INTEGER NOT NULL DEFAULT(0) "
+				   ")"
+				   );
+
 	_database.commit();
 }
 
@@ -524,6 +538,9 @@ void Database::updateDatabase(QSqlDatabase& _database)
 		if (versionMinor <= 5) {
 			if (versionBuild <= 5) {
 				updateDatabaseTo_0_5_6(_database);
+			}
+			if (versionBuild <= 7) {
+				updateDatabaseTo_0_5_8(_database);
 			}
 		}
 	}
@@ -903,6 +920,31 @@ void Database::updateDatabaseTo_0_5_6(QSqlDatabase& _database)
 			q_updater.addBindValue(id);
 			q_updater.exec();
 		}
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_5_8(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Добавляем таблицу "Разработка"
+		//
+		q_updater.exec("CREATE TABLE research "
+					   "("
+					   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+					   "parent_id INTEGER DEFAULT(NULL), "
+					   "type INTEGER NOT NULL DEFAULT(0), "
+					   "name TEXT NOT NULL, "
+					   "description TEXT DEFAULT(NULL), "
+					   "sort_order INTEGER NOT NULL DEFAULT(0) "
+					   ")"
+					   );
 	}
 
 	_database.commit();

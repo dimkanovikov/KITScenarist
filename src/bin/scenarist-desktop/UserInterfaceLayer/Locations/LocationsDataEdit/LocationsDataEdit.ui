@@ -40,7 +40,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../../../Resources/Resources.qrc">
+        <iconset resource="../../../../scenarist-core/Resources/Resources.qrc">
          <normaloff>:/Graphics/Icons/Editing/photo.png</normaloff>:/Graphics/Icons/Editing/photo.png</iconset>
        </property>
       </widget>
@@ -130,7 +130,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="SimpleTextEditor" name="description" native="true">
+         <widget class="SimpleTextEditor" name="description">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -148,10 +148,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SimpleTextEditor</class>
-   <extends>QWidget</extends>
-   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h</header>
-   <container>1</container>
+   <class>FlatButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
   </customwidget>
   <customwidget>
    <class>PhotosChooser</class>
@@ -165,16 +164,18 @@
    <header location="global">3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h</header>
   </customwidget>
   <customwidget>
-   <class>FlatButton</class>
-   <extends>QToolButton</extends>
-   <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
+   <class>SimpleTextEditor</class>
+   <extends>QTextEdit</extends>
+   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>name</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../Resources/Resources.qrc"/>
+  <include location="../../../../scenarist-core/Resources/Resources.qrc"/>
+  <include location="../../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

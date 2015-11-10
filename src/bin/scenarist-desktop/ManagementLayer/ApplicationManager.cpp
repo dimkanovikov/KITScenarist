@@ -2,6 +2,7 @@
 
 #include "Project/ProjectsManager.h"
 #include "StartUp/StartUpManager.h"
+#include "Research/ResearchManager.h"
 #include "Scenario/ScenarioManager.h"
 #include "Characters/CharactersManager.h"
 #include "Locations/LocationsManager.h"
@@ -124,6 +125,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_tabsWidgets(new QStackedWidget),
 	m_projectsManager(new ProjectsManager(this)),
 	m_startUpManager(new StartUpManager(this, m_view)),
+	m_researchManager(new ResearchManager(this, m_view)),
 	m_scenarioManager(new ScenarioManager(this, m_view)),
 	m_charactersManager(new CharactersManager(this, m_view)),
 	m_locationsManager(new LocationsManager(this, m_view)),
@@ -310,6 +312,7 @@ void ApplicationManager::aboutSave()
 		// Управляющие должны сохранить несохранённые данные
 		//
 		DatabaseLayer::Database::transaction();
+		m_researchManager->saveResearch();
 		m_scenarioManager->saveCurrentProject();
 		m_charactersManager->saveCharacters();
 		m_locationsManager->saveLocations();
@@ -737,6 +740,7 @@ void ApplicationManager::goToEditCurrentProject()
 	// Настроим режим работы со сценарием
 	//
 	const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
+	m_researchManager->setCommentOnly(isCommentOnly);
 	m_scenarioManager->setCommentOnly(isCommentOnly);
 	m_charactersManager->setCommentOnly(isCommentOnly);
 	m_locationsManager->setCommentOnly(isCommentOnly);
@@ -762,6 +766,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Загрузить данные из файла
 	//
+	m_researchManager->loadCurrentProject();
 	m_scenarioManager->loadCurrentProject();
 	m_charactersManager->loadCurrentProject();
 	m_locationsManager->loadCurrentProject();
@@ -820,6 +825,7 @@ void ApplicationManager::closeCurrentProject()
 	//
 	// Закроем проект управляющими
 	//
+	m_researchManager->closeCurrentProject();
 	m_scenarioManager->closeCurrentProject();
 
 	//
@@ -856,8 +862,8 @@ void ApplicationManager::initView()
 	//
 	// Настроим боковую панель
 	//
-    m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
+	m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
+	g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
@@ -868,7 +874,7 @@ void ApplicationManager::initView()
 	// Настроим виджеты соответствующие вкладкам
 	//
 	m_tabsWidgets->addWidget(m_startUpManager->view());
-    m_tabsWidgets->addWidget(new QWidget(m_view));
+	m_tabsWidgets->addWidget(m_researchManager->view());
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
 	m_tabsWidgets->addWidget(m_charactersManager->view());
 	m_tabsWidgets->addWidget(m_locationsManager->view());

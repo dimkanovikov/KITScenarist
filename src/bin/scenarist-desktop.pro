@@ -9,6 +9,8 @@ QT       += core gui sql xml widgets printsupport network
 TARGET = Scenarist
 TEMPLATE = app
 
+CONFIG += c++11
+
 #
 # Отключаем предупреждения о статических функциях и переменных
 # не используемых в собственных заголовочных файлах
@@ -264,7 +266,17 @@ SOURCES += \
     scenarist-core/BusinessLayer/Statistics/CharacterReport.cpp \
     scenarist-core/BusinessLayer/Statistics/SummaryReport.cpp \
     scenarist-core/3rd_party/Widgets/PopupWidget/PopupWidget.cpp \
-    scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.cpp \
+    scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.cpp \
+    scenarist-core/Domain/Research.cpp \
+    scenarist-core/DataLayer/DataStorageLayer/ResearchStorage.cpp \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchView.cpp \
+    scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp \
+    scenarist-core/BusinessLayer/Research/ResearchModel.cpp \
+    scenarist-core/BusinessLayer/Research/ResearchModelItem.cpp \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.cpp \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.cpp \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -471,7 +483,17 @@ HEADERS += \
     scenarist-core/BusinessLayer/Statistics/SummaryReport.h \
     scenarist-core/3rd_party/Widgets/PopupWidget/PopupWidget.h \
     scenarist-core/3rd_party/Widgets/PopupWidget/PopupWidget_p.h \
-    scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.h
+    scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.h \
+    scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.h \
+    scenarist-core/Domain/Research.h \
+    scenarist-core/DataLayer/DataStorageLayer/ResearchStorage.h \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchView.h \
+    scenarist-desktop/ManagementLayer/Research/ResearchManager.h \
+    scenarist-core/BusinessLayer/Research/ResearchModel.h \
+    scenarist-core/BusinessLayer/Research/ResearchModelItem.h \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.h \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.h \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -484,7 +506,9 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/LoginDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui \
-    scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui \
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui
 
 
 RESOURCES += \

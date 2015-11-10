@@ -18,7 +18,7 @@ namespace {
 		QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect(_forWidget);
 
 		QPropertyAnimation* opacityAnimation = new QPropertyAnimation(opacityEffect, "opacity");
-        opacityAnimation->setDuration(220);
+		opacityAnimation->setDuration(120);
 		opacityAnimation->setEasingCurve(QEasingCurve::OutCirc);
 		opacityAnimation->setStartValue(0);
 		opacityAnimation->setEndValue(1);

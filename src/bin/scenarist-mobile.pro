@@ -219,7 +219,10 @@ SOURCES += \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp \
-    scenarist-mobile/ManagementLayer/Synchronization/SynchronizationManager.cpp
+    scenarist-mobile/ManagementLayer/Synchronization/SynchronizationManager.cpp \
+    scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.cpp \
+    scenarist-core/DataLayer/DataStorageLayer/ResearchStorage.cpp \
+    scenarist-core/Domain/Research.cpp
     scenarist-mobile/ManagementLayer/ApplicationManager.cpp
 
 HEADERS += \
@@ -391,7 +394,10 @@ HEADERS += \
     scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorItemDelegate.h \
     scenarist-core/UserInterfaceLayer/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
     scenarist-mobile/ManagementLayer/Synchronization/SynchronizationManager.h \
-    scenarist-core/3rd_party/Helpers/ScrollerHelper.h
+    scenarist-core/3rd_party/Helpers/ScrollerHelper.h \
+    scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.h \
+    scenarist-core/DataLayer/DataStorageLayer/ResearchStorage.h \
+    scenarist-core/Domain/Research.h
     scenarist-mobile/ManagementLayer/ApplicationManager.h
 
 

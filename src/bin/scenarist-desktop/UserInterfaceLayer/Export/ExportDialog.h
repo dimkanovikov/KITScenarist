@@ -160,7 +160,7 @@ namespace UserInterface
 
 	private:
 		/**
-		 * @brief
+		 * @brief Настроить представление
 		 */
 		void initView();
 
