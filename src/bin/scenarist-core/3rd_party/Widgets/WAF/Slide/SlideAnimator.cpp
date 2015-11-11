@@ -27,6 +27,8 @@ using WAF::SlideBackgroundDecorator;
 
 SlideAnimator::SlideAnimator(QWidget* _widgetForSlide) :
 	AbstractAnimator(_widgetForSlide),
+	m_direction(WAF::FromLeftToRight),
+	m_isFixBackground(true),
 	m_animation(new QPropertyAnimation(_widgetForSlide, "maximumSize")),
 	m_decorator(new SlideBackgroundDecorator(_widgetForSlide))
 {
@@ -37,16 +39,23 @@ SlideAnimator::SlideAnimator(QWidget* _widgetForSlide) :
 
 	m_decorator->hide();
 
-    connect(m_animation, &QPropertyAnimation::finished, [=](){
-        setAnimatedStopped();
-        m_decorator->hide();
-    });
+	connect(m_animation, &QPropertyAnimation::finished, [=](){
+		setAnimatedStopped();
+		m_decorator->hide();
+	});
 }
 
 void SlideAnimator::setAnimationDirection(WAF::AnimationDirection _direction)
 {
 	if (m_direction != _direction) {
 		m_direction = _direction;
+	}
+}
+
+void SlideAnimator::setFixBackground(bool _fix)
+{
+	if (m_isFixBackground != _fix) {
+		m_isFixBackground = _fix;
 	}
 }
 
@@ -57,11 +66,11 @@ void SlideAnimator::animateForward()
 
 void SlideAnimator::slideIn()
 {
-    //
-    // Прерываем выполнение, если клиент хочет повторить его
-    //
-    if (isAnimated() && isAnimatedForward()) return;
-    setAnimatedForward();
+	//
+	// Прерываем выполнение, если клиент хочет повторить его
+	//
+	if (isAnimated() && isAnimatedForward()) return;
+	setAnimatedForward();
 
 	//
 	// Определим финальный размер выкатываемого виджета
@@ -94,17 +103,19 @@ void SlideAnimator::slideIn()
 	widgetForSlide()->setMaximumSize(currentSize);
 	widgetForSlide()->show();
 
-	//
-	// Позиционируем декоратор
-	//
-	m_decorator->move(0, 0);
-	m_decorator->show();
-	m_decorator->raise();
+	if (m_isFixBackground) {
+		//
+		// Позиционируем декоратор
+		//
+		m_decorator->move(0, 0);
+		m_decorator->show();
+		m_decorator->raise();
+	}
 
 	//
 	// Выкатываем виджет
 	//
-    if (m_animation->state() == QPropertyAnimation::Running) {
+	if (m_animation->state() == QPropertyAnimation::Running) {
 		//
 		// ... если ещё не закончилась предыдущая анимация реверсируем её
 		//
@@ -130,11 +141,11 @@ void SlideAnimator::animateBackward()
 
 void SlideAnimator::slideOut()
 {
-    //
-    // Прерываем выполнение, если клиент хочет повторить его
-    //
-    if (isAnimated() && !isAnimatedForward()) return;
-    setAnimatedBackward();
+	//
+	// Прерываем выполнение, если клиент хочет повторить его
+	//
+	if (isAnimated() && !isAnimatedForward()) return;
+	setAnimatedBackward();
 
 	//
 	// Определяем результирующий размер
@@ -159,12 +170,14 @@ void SlideAnimator::slideOut()
 	//
 	m_decorator->grabParent(widgetForSlide()->size());
 
-	//
-	// Позиционируем декоратор
-	//
-	m_decorator->move(0, 0);
-	m_decorator->show();
-	m_decorator->raise();
+	if (m_isFixBackground) {
+		//
+		// Позиционируем декоратор
+		//
+		m_decorator->move(0, 0);
+		m_decorator->show();
+		m_decorator->raise();
+	}
 
 	//
 	// Закатываем виджет

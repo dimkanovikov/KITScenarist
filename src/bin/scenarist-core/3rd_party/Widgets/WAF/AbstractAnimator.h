@@ -41,6 +41,49 @@ namespace WAF
 		 * @brief Выполнить обратную анимацию
 		 */
         virtual void animateBackward() = 0;
+
+    protected:
+        /**
+         * @brief Установить флаг выполнения анимации
+         */
+        /** @{ */
+        void setAnimatedForward() {
+            m_isAnimated = true;
+            m_isAnimatedForward = true;
+        }
+        void setAnimatedBackward() {
+            m_isAnimated = true;
+            m_isAnimatedForward = false;
+        }
+        void setAnimatedStopped() {
+            m_isAnimated = false;
+        }
+        /** @} */
+
+        /**
+         * @brief Выполняется ли анимация в данный момент
+         */
+        bool isAnimated() const {
+            return m_isAnimated;
+        }
+
+        /**
+         * @brief Направление последней анимации
+         */
+        bool isAnimatedForward() const {
+            return m_isAnimatedForward;
+        }
+
+    private:
+        /**
+         * @brief Выполняется ли анимация в данный момент
+         */
+        bool m_isAnimated = false;
+
+        /**
+         * @brief Направление последней анимации
+         */
+        bool m_isAnimatedForward = true;
 	};
 }
 

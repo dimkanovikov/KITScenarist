@@ -265,7 +265,6 @@ SOURCES += \
     scenarist-core/BusinessLayer/Statistics/CastReport.cpp \
     scenarist-core/BusinessLayer/Statistics/CharacterReport.cpp \
     scenarist-core/BusinessLayer/Statistics/SummaryReport.cpp \
-    scenarist-core/3rd_party/Widgets/PopupWidget/PopupWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.cpp \
     scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.cpp \
     scenarist-core/Domain/Research.cpp \
@@ -276,7 +275,13 @@ SOURCES += \
     scenarist-core/BusinessLayer/Research/ResearchModelItem.cpp \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.cpp \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.cpp \
-    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/SideSlide/BackgroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideBackgroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -481,8 +486,6 @@ HEADERS += \
     scenarist-core/BusinessLayer/Statistics/CastReport.h \
     scenarist-core/BusinessLayer/Statistics/CharacterReport.h \
     scenarist-core/BusinessLayer/Statistics/SummaryReport.h \
-    scenarist-core/3rd_party/Widgets/PopupWidget/PopupWidget.h \
-    scenarist-core/3rd_party/Widgets/PopupWidget/PopupWidget_p.h \
     scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.h \
     scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.h \
     scenarist-core/Domain/Research.h \
@@ -493,7 +496,18 @@ HEADERS += \
     scenarist-core/BusinessLayer/Research/ResearchModelItem.h \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.h \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.h \
-    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.h
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.h \
+    scenarist-core/3rd_party/Widgets/WAF/SideSlide/BackgroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideBackgroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation.h \
+    scenarist-core/3rd_party/Widgets/WAF/AnimationPrivate.h \
+    scenarist-core/3rd_party/Helpers/ScrollerHelper.h \
+    scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
+    scenarist-core/3rd_party/Helpers/Task.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

@@ -28,7 +28,7 @@ class QPropertyAnimation;
  */
 namespace WAF
 {
-	class BackgroundDecorator;
+	class SideSlideBackgroundDecorator;
 
 
 	/**
@@ -86,7 +86,7 @@ namespace WAF
 		/**
 		 * @brief Помошник затемняющий фон под выезжающим виджетом
 		 */
-		BackgroundDecorator* m_decorator;
+		SideSlideBackgroundDecorator* m_decorator;
 	};
 }
 

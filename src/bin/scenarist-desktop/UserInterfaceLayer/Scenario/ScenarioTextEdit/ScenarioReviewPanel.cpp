@@ -11,8 +11,8 @@
 
 #include <3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
-#include <3rd_party/Widgets/PopupWidget/PopupWidget.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
+#include <3rd_party/Widgets/WAF/Animation.h>
 
 #include <QApplication>
 #include <QEvent>
@@ -261,11 +261,12 @@ void ScenarioReviewPanel::initView()
 	m_clear->setIcons(QIcon(":/Graphics/Icons/Review/clear.png"));
 	m_clear->setToolTip(tr("Clear"));
 
-	PopupWidget* popup = new PopupWidget(this);
+	QFrame* popup = new QFrame(this);
 	popup->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	popup->setAlignment(Qt::AlignTop | Qt::AlignRight);
-	popup->setOrientation(Qt::Horizontal);
-	connect(m_activateButton, SIGNAL(toggled(bool)), popup, SLOT(showPopup(bool)));
+	connect(m_activateButton, &FlatButton::toggled, [=](bool _show){
+		const bool NOT_FIX_BACKGROUND = false;
+		WAF::Animation::slide(popup, WAF::FromLeftToRight, NOT_FIX_BACKGROUND, _show);
+	});
 
 	QHBoxLayout* popupLayout = new QHBoxLayout;
 	popupLayout->setContentsMargins(QMargins());
@@ -276,7 +277,7 @@ void ScenarioReviewPanel::initView()
 	popupLayout->addWidget(m_comment);
 	popupLayout->addWidget(m_done);
 	popupLayout->addWidget(m_clear);
-	popup->frame()->setLayout(popupLayout);
+	popup->setLayout(popupLayout);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -287,7 +288,7 @@ void ScenarioReviewPanel::initView()
 
 	aboutUpdateActionsEnable();
 
-	QTimer::singleShot(0, popup, SLOT(hidePopup()));
+	popup->setMaximumWidth(0);
 }
 
 void ScenarioReviewPanel::initConnections()

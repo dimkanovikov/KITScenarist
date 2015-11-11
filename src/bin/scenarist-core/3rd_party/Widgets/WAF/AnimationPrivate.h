@@ -29,6 +29,14 @@ namespace WAF
 {
 	class AbstractAnimator;
 
+	/**
+	 * @brief Виды аниматоров
+	 */
+	enum AnimatorType {
+		SideSlide,
+		Slide
+	};
+
 
 	/**
 	 * @brief Данные фасада анимаций
@@ -37,33 +45,43 @@ namespace WAF
 	{
 	public:
 		/**
-		 * @brief Есть ли аниматор выкатывания для заданного виджета
+		 * @brief Есть ли аниматор для заданного виджета
 		 */
-		bool hasSideSlideAnimator(QWidget* _widget) const {
-			return m_sideSlideAnimators.contains(_widget);
+		bool hasAnimator(QWidget* _widget, AnimatorType _animatorType) const {
+			bool contains = false;
+			if (m_animators.contains(_animatorType)) {
+				contains = m_animators.value(_animatorType).contains(_widget);
+			}
+			return contains;
 		}
 
 		/**
-		 * @brief Получить аниматор выкатывания для заданного виджета
+		 * @brief Получить аниматор для заданного виджета
 		 */
-		AbstractAnimator* sideSlideAnimator(QWidget* _widget) const {
-			return m_sideSlideAnimators.value(_widget, 0);
+		AbstractAnimator* animator(QWidget* _widget, AnimatorType _animatorType) const {
+			AbstractAnimator* animator = 0;
+			if (m_animators.contains(_animatorType)) {
+				animator = m_animators.value(_animatorType).value(_widget, 0);
+			}
+			return animator;
 		}
 
 		/**
-		 * @brief Сохранить аниматор выкатывания для заданного виджета
+		 * @brief Сохранить аниматор для заданного виджета
 		 */
-		void saveSideSlideAnimator(QWidget* _widget, AbstractAnimator* _animator) {
-			if (!hasSideSlideAnimator(_widget)) {
-				m_sideSlideAnimators.insert(_widget, _animator);
+		void saveAnimator(QWidget* _widget, AbstractAnimator* _animator, AnimatorType _animatorType) {
+			if (!hasAnimator(_widget, _animatorType)) {
+				QMap<QWidget*, AbstractAnimator*> animators = m_animators.value(_animatorType);
+				animators.insert(_widget, _animator);
+				m_animators.insert(_animatorType, animators);
 			}
 		}
 
 	private:
 		/**
-		 * @brief Карта аниматоров, связанных с управляемыми видежатами
+		 * @brief Карта аниматоров
 		 */
-		QMap<QWidget*, AbstractAnimator*> m_sideSlideAnimators;
+		QMap<AnimatorType, QMap<QWidget*, AbstractAnimator*> > m_animators;
 	};
 }
 

@@ -36,6 +36,16 @@ namespace WAF
 	};
 
 	/**
+	 * @brief Направление анимации
+	 */
+	enum AnimationDirection {
+		FromLeftToRight,
+		FromTopToBottom,
+		FromRightToLeft,
+		FromBottomToTop
+	};
+
+	/**
 	 * @brief Данные фасада
 	 */
 	class AnimationPrivate;
@@ -49,17 +59,34 @@ namespace WAF
 		/**
 		 * @brief Выкатить виджет из-за стороны приложения
 		 */
-        static void sideSlideIn(QWidget* _widget, ApplicationSide _side = LeftSide);
+		static void sideSlideIn(QWidget* _widget, ApplicationSide _side = LeftSide);
 
 		/**
 		 * @brief Закатить виджет из-за стороны приложения
 		 */
-        static void sideSlideOut(QWidget* _widget, ApplicationSide _side = LeftSide);
+		static void sideSlideOut(QWidget* _widget, ApplicationSide _side = LeftSide);
 
 		/**
-		 * @brief Закатить/выкатить виджет из-за стороны приложения
+		 * @brief Выкатить/закатить виджет из-за стороны приложения
 		 */
-        static void sideSlide(QWidget* _widget, ApplicationSide _side = LeftSide, bool _in = true);
+		static void sideSlide(QWidget* _widget, ApplicationSide _side = LeftSide, bool _in = true);
+
+		/****/
+
+		/**
+		 * @brief Выкатить виджет
+		 */
+		static void slideIn(QWidget* _widget, AnimationDirection _direction, bool _fixBackground = true);
+
+		/**
+		 * @brief Закатить виджет
+		 */
+		static void slideOut(QWidget* _widget, AnimationDirection _direction, bool _fixBackground = true);
+
+		/**
+		 * @brief Выкатить/закатить виджет
+		 */
+		static void slide(QWidget* _widget, AnimationDirection _direction, bool _fixBackground = true, bool _in = true);
 
 	private:
 		/**

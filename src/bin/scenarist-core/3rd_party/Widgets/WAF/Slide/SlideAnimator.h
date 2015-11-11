@@ -45,6 +45,11 @@ namespace WAF
 		void setAnimationDirection(AnimationDirection _direction);
 
 		/**
+		 * @brief Фиксировать фон при анимации (по умолчанию фон фиксируется)
+		 */
+		void setFixBackground(bool _fix);
+
+		/**
 		 * @brief Выдвинуть виджет
 		 */
 		/** @{ */
@@ -77,6 +82,11 @@ namespace WAF
 		 * @brief Направление, по которому выкатывать виджет
 		 */
 		AnimationDirection m_direction;
+
+		/**
+		 * @brief Фиксировать фон при анимации
+		 */
+		bool m_isFixBackground;
 
 		/**
 		 * @brief Объект для анимирования выезжания
