@@ -10,11 +10,28 @@ namespace {
 	 * @brief Ширина панели
 	 */
 	const int SIDEBAR_WIDTH = 90;
+	const int SIDEBAR_WIDTH_COMPACT = 50;
+	static int sidebarWidth(bool _compact) {
+		return _compact ? SIDEBAR_WIDTH_COMPACT : SIDEBAR_WIDTH;
+	}
 
 	/**
 	 * @brief Высота вкладки
 	 */
 	const int TAB_HEIGHT = 70;
+	const int TAB_HEIGHT_COMPACT = 40;
+	static int tabHeight(bool _compact) {
+		return _compact ? TAB_HEIGHT_COMPACT : TAB_HEIGHT;
+	}
+
+	/**
+	 * @brief Размер иконки вкладки
+	 */
+	const QSize TAB_ICON_SIZE(48, 48);
+	const QSize TAB_ICON_SIZE_COMPACT(36, 36);
+	static QSize tabIconSize(bool _compact) {
+		return _compact ? TAB_ICON_SIZE_COMPACT : TAB_ICON_SIZE;
+	}
 
 	/**
 	 * @brief Высота индикатора
@@ -63,103 +80,17 @@ namespace {
 
 SideTabBar::SideTabBar(QWidget *parent) :
 	QWidget(parent),
-	m_centerTabs(false),
 	m_pressedTab(0),
 	m_checkedTab(0),
+	m_compactMode(false),
 	m_indicator(new QAction(this))
 {
-	setFixedWidth(SIDEBAR_WIDTH);
+	setFixedWidth(::sidebarWidth(m_compactMode));
 
 	//
 	// По умолчанию индикатор скрыт
 	//
 	removeIndicator();
-}
-
-void SideTabBar::paintEvent(QPaintEvent *event)
-{
-	QPainter p(this);
-
-
-	//
-	// Фон
-	//
-	p.fillRect(event->rect(), palette().button());
-	//
-	// Границы сверху и справа
-	//
-	p.setPen(palette().dark().color());
-	p.drawLine(event->rect().topLeft(), event->rect().topRight());
-	p.drawLine(event->rect().topRight(), event->rect().bottomRight());
-
-
-	//
-	// Рисуем вкладки
-	//
-	int actions_height = m_tabs.size()*TAB_HEIGHT;
-	int action_y = m_centerTabs ? (event->rect().height()/2-actions_height/2) : 1;
-	foreach (QAction *action, m_tabs)
-	{
-		QRect actionRect(0, action_y, event->rect().width() - 1, TAB_HEIGHT);
-
-		//
-		// Текущая вкладка
-		//
-		if (action->isChecked()) {
-			p.fillRect(actionRect, palette().window());
-
-		}
-
-
-		int icon_size = 48;
-
-		QRect actionIconRect(0, action_y, event->rect().width(), TAB_HEIGHT-16);
-		QPixmap actionImage = action->icon().pixmap(icon_size);
-		// Если действие недоступно
-		if (!action->isEnabled()) {
-			actionImage = ::makeIconDisabled(actionImage);
-		}
-		// Если действие неактивно
-		else if (!action->isChecked()) {
-			actionImage = ::makeIconInactive(actionImage);
-		}
-		// Рисуем иконку
-		QIcon actionIcon(actionImage);
-		actionIcon.paint(&p, actionIconRect);
-		p.setOpacity(1);
-
-
-		p.setPen(QApplication::palette().color(QPalette::Inactive, QPalette::Text)); // неактивный текст
-		if (action->isChecked())
-			p.setPen(QApplication::palette().color(QPalette::Active, QPalette::Text)); // активный текст
-		if (!action->isEnabled())
-			p.setPen(QApplication::palette().color(QPalette::Disabled, QPalette::Text)); // недоступный текст
-		QRect actionTextRect(0, action_y+actionRect.height()-23, event->rect().width(), 18);
-		p.drawText(actionTextRect, Qt::AlignCenter, action->text());
-
-		action_y += actionRect.height();
-	}
-
-	//
-	// Рисуем индикатор
-	//
-	if (m_indicator->isVisible()) {
-		const QRect indicatorRect(0, height() - INDICATOR_HEIGHT, SIDEBAR_WIDTH, INDICATOR_HEIGHT);
-		//
-		// Граница сверху
-		//
-		p.setPen(palette().dark().color());
-		p.drawLine(indicatorRect.topLeft(), indicatorRect.topRight());
-		//
-		// Иконка индикатора
-		//
-		m_indicator->icon().paint(&p, indicatorRect);
-	}
-}
-
-QSize SideTabBar::minimumSizeHint() const
-{
-	return QSize(SIDEBAR_WIDTH, (m_tabs.size() * TAB_HEIGHT) + (m_indicator->isVisible() ? INDICATOR_HEIGHT : 0));
 }
 
 void SideTabBar::addTab(QAction *action)
@@ -214,6 +145,109 @@ void SideTabBar::removeIndicator()
 	addIndicator(QIcon());
 }
 
+void SideTabBar::setCompactMode(bool _compact)
+{
+	if (m_compactMode != _compact) {
+		m_compactMode = _compact;
+
+		setFixedWidth(::sidebarWidth(m_compactMode));
+
+		repaint();
+	}
+}
+
+void SideTabBar::paintEvent(QPaintEvent *event)
+{
+	QPainter p(this);
+
+
+	//
+	// Фон
+	//
+	p.fillRect(event->rect(), palette().button());
+	//
+	// Границы сверху и справа
+	//
+	p.setPen(palette().dark().color());
+	p.drawLine(event->rect().topLeft(), event->rect().topRight());
+	p.drawLine(event->rect().topRight(), event->rect().bottomRight());
+
+
+	//
+	// Рисуем вкладки
+	//
+	const int tabHeight = ::tabHeight(m_compactMode);
+	const int iconRectHeight = tabHeight - (m_compactMode ? 0 : 16);
+	int actionY = 1;
+	foreach (QAction *action, m_tabs)
+	{
+		const QRect actionRect(0, actionY, event->rect().width() - 1, tabHeight);
+
+		//
+		// Текущая вкладка
+		//
+		if (action->isChecked()) {
+			p.fillRect(actionRect, palette().window());
+		}
+
+		//
+		// Настроим иконку вкладки
+		//
+		const QRect actionIconRect(0, actionY, event->rect().width(), iconRectHeight);
+		QPixmap actionImage = action->icon().pixmap(::tabIconSize(m_compactMode));
+		//
+		// ... если действие недоступно
+		//
+		if (!action->isEnabled()) {
+			actionImage = ::makeIconDisabled(actionImage);
+		}
+		//
+		// ... если действие неактивно
+		//
+		else if (!action->isChecked()) {
+			actionImage = ::makeIconInactive(actionImage);
+		}
+
+		//
+		// Рисуем иконку
+		//
+		QIcon actionIcon(actionImage);
+		actionIcon.paint(&p, actionIconRect);
+		p.setOpacity(1);
+
+		//
+		// Рисуем текст
+		//
+		if (m_compactMode == false) {
+			p.setPen(QApplication::palette().color(QPalette::Inactive, QPalette::Text)); // неактивный текст
+			if (action->isChecked())
+				p.setPen(QApplication::palette().color(QPalette::Active, QPalette::Text)); // активный текст
+			if (!action->isEnabled())
+				p.setPen(QApplication::palette().color(QPalette::Disabled, QPalette::Text)); // недоступный текст
+			QRect actionTextRect(0, actionY+actionRect.height()-23, event->rect().width(), 18);
+			p.drawText(actionTextRect, Qt::AlignCenter, action->text());
+		}
+
+		actionY += tabHeight;
+	}
+
+	//
+	// Рисуем индикатор
+	//
+	if (m_indicator->isVisible()) {
+		const QRect indicatorRect(0, height() - INDICATOR_HEIGHT, ::sidebarWidth(m_compactMode), INDICATOR_HEIGHT);
+		//
+		// Граница сверху
+		//
+		p.setPen(palette().dark().color());
+		p.drawLine(indicatorRect.topLeft(), indicatorRect.topRight());
+		//
+		// Иконка индикатора
+		//
+		m_indicator->icon().paint(&p, indicatorRect);
+	}
+}
+
 void SideTabBar::mousePressEvent(QMouseEvent* _event)
 {
 	//
@@ -241,7 +275,7 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
 		label.setMargin(8);
 		menuText.setDefaultWidget(&label);
 		menu.addAction(&menuText);
-		menu.exec(mapToGlobal(QPoint(SIDEBAR_WIDTH, height() - menu.sizeHint().height())));
+		menu.exec(mapToGlobal(QPoint(::sidebarWidth(m_compactMode), height() - menu.sizeHint().height())));
 	}
 }
 
@@ -265,17 +299,22 @@ void SideTabBar::mouseReleaseEvent(QMouseEvent *event)
 	return;
 }
 
+QSize SideTabBar::minimumSizeHint() const
+{
+	const int width = ::sidebarWidth(m_compactMode);
+	const int height = (m_tabs.size() * ::tabHeight(m_compactMode)) + (m_indicator->isVisible() ? INDICATOR_HEIGHT : 0);
+	return QSize(width, height);
+}
+
 QAction* SideTabBar::tabAt(const QPoint &at)
 {
-	int actions_height = m_tabs.size()*TAB_HEIGHT;
-
-	int action_y = m_centerTabs ? (rect().height()/2-actions_height/2) : 0;
+	int actionY = 0;
 	foreach(QAction *action, m_tabs)
 	{
-		QRect actionRect(0, action_y, rect().width(), TAB_HEIGHT);
+		QRect actionRect(0, actionY, rect().width(), ::tabHeight(m_compactMode));
 		if(actionRect.contains(at))
 			return action;
-		action_y += actionRect.height();
+		actionY += actionRect.height();
 	}
 	return 0;
 }

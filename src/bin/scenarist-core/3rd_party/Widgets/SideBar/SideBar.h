@@ -32,7 +32,15 @@ public:
 	 */
 	void removeIndicator();
 
+	/**
+	 * @brief Установить компактный режим (по умолчанию установлен расширенный режим)
+	 */
+	void setCompactMode(bool _compact);
+
 signals:
+	/**
+	 * @brief Изменилась текущая вкладка
+	 */
 	void currentChanged(int index);
 
 protected:
@@ -45,10 +53,14 @@ private:
 	QAction* tabAt(const QPoint& at);
 
 private:
-	bool m_centerTabs;
 	QList<QAction*> m_tabs;
 	QAction* m_pressedTab;
 	QAction* m_checkedTab;
+
+	/**
+	 * @brief Флаг компактного режима
+	 */
+	bool m_compactMode;
 
 	/**
 	 * @brief Индикатор внизу панели
