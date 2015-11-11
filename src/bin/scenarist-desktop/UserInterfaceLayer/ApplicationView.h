@@ -15,6 +15,11 @@ namespace UserInterface
 	public:
 		explicit ApplicationView(QWidget* _parent = 0);
 
+		/**
+		 * @brief Добавить для сплитеров функциональность смены панелей местами
+		 */
+		void initSplittersRightClick();
+
 	signals:
 		/**
 		 * @brief Пользователь хочет закрыть приложение
@@ -26,6 +31,11 @@ namespace UserInterface
 		 * @brief Переопределяется для отлавливания события закрытия приложения
 		 */
 		void closeEvent(QCloseEvent* _event);
+
+		/**
+		 * @brief Переопределяется для того, чтобы добавить для сплитеров функциональность смены панелей местами
+		 */
+		bool eventFilter(QObject* _object, QEvent* _event);
 	};
 }
 

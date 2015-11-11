@@ -243,8 +243,18 @@ void SettingsStorage::saveApplicationStateAndGeometry(QWidget* _widget)
 
 	settings.beginGroup("splitters");
 	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
-		settings.setValue(splitter->objectName() + "-state", splitter->saveState());
-		settings.setValue(splitter->objectName() + "-geometry", splitter->saveGeometry());
+		settings.beginGroup(splitter->objectName());
+		settings.setValue("state", splitter->saveState());
+		settings.setValue("geometry", splitter->saveGeometry());
+		//
+		// Сохраняем расположение панелей
+		//
+		settings.beginGroup("splitter-widgets");
+		for (int widgetPos = 0; widgetPos < splitter->count(); ++widgetPos) {
+			settings.setValue(splitter->widget(widgetPos)->objectName(), widgetPos);
+		}
+		settings.endGroup(); // splitter-widgets
+		settings.endGroup(); // splitter->objectName()
 	}
 	settings.endGroup();
 
@@ -278,8 +288,30 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 
 	settings.beginGroup("splitters");
 	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
-		splitter->restoreState(settings.value(splitter->objectName() + "-state").toByteArray());
-		splitter->restoreGeometry(settings.value(splitter->objectName() + "-geometry").toByteArray());
+		settings.beginGroup(splitter->objectName());
+		splitter->restoreState(settings.value("state").toByteArray());
+		splitter->restoreGeometry(settings.value("geometry").toByteArray());
+		//
+		// Восстанавливаем расположение панелей
+		//
+		settings.beginGroup("splitter-widgets");
+		//
+		// ... сформируем карту позиционирования
+		//
+		QMap<int, QWidget*> splitterWidgets;
+		for (int widgetPos = 0; widgetPos < splitter->count(); ++widgetPos) {
+			QWidget* widget = splitter->widget(widgetPos);
+			const int position = settings.value(widget->objectName()).toInt();
+			splitterWidgets.insert(position, widget);
+		}
+		//
+		// ... позиционируем сами виджеты
+		//
+		foreach (int position, splitterWidgets.keys()) {
+			splitter->insertWidget(position, splitterWidgets.value(position));
+		}
+		settings.endGroup(); // splitter-widgets
+		settings.endGroup(); // splitter->objectName()
 	}
 	settings.endGroup();
 

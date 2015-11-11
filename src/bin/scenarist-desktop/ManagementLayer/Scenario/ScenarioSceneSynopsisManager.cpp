@@ -36,7 +36,7 @@ void ScenarioSceneSynopsisManager::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioSceneSynopsisManager::initView()
 {
-
+	m_view->setObjectName("scenarioSceneSynopsisView");
 }
 
 void ScenarioSceneSynopsisManager::initConnections()

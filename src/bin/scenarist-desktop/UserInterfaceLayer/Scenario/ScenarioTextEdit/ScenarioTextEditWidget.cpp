@@ -186,16 +186,16 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 		//
 		// Устанавливаем реальную позицию
 		//
-        if (_position < m_editor->document()->characterCount()) {
-            cursor.setPosition(_position);
-        } else {
-            cursor.movePosition(QTextCursor::End);
-        }
-        m_editor->setTextCursor(cursor);
+		if (_position < m_editor->document()->characterCount()) {
+			cursor.setPosition(_position);
+		} else {
+			cursor.movePosition(QTextCursor::End);
+		}
+		m_editor->setTextCursor(cursor);
 		m_editor->ensureCursorVisibleReimpl();
 		//
 		// Прокручиваем вниз, чтобы курсор стоял в верху экрана
-        //
+		//
 		m_editor->verticalScrollBar()->setValue(m_editor->verticalScrollBar()->maximum());
 
 		//
@@ -460,6 +460,7 @@ void ScenarioTextEditWidget::initView()
 	m_fastFormatWidget->setEditor(m_editor);
 	m_fastFormatWidget->hide();
 
+	m_reviewView->setObjectName("reviewView");
 	m_reviewView->setEditor(m_editor);
 	m_reviewView->hide();
 
@@ -486,6 +487,7 @@ void ScenarioTextEditWidget::initView()
 	mainSplitter->setHandleWidth(1);
 	mainSplitter->setOpaqueResize(false);
 	QWidget* mainLayoutWidget = new QWidget(this);
+	mainLayoutWidget->setObjectName("mainLayoutWidget");
 	mainLayoutWidget->setLayout(mainLayout);
 	mainSplitter->addWidget(mainLayoutWidget);
 	mainSplitter->addWidget(m_reviewView);

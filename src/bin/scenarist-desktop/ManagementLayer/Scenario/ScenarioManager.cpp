@@ -287,7 +287,7 @@ void ScenarioManager::loadCurrentProjectSettings(const QString& _projectPath)
 				QString("projects/%1/last-cursor-position").arg(_projectPath),
 				DataStorageLayer::SettingsStorage::ApplicationSettings
 				).toInt();
-    m_textEditManager->setCursorPosition(lastCursorPosition);
+	m_textEditManager->setCursorPosition(lastCursorPosition);
 }
 
 void ScenarioManager::saveCurrentProject()
@@ -766,6 +766,7 @@ void ScenarioManager::initView()
 	m_showFullscreen->setCheckable(true);
 
 	QWidget* rightWidget = new QWidget(m_view);
+	rightWidget->setObjectName("scenarioRightWidget");
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());

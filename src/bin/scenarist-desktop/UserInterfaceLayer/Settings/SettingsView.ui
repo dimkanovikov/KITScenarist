@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QSplitter" name="splitter">
+    <widget class="QSplitter" name="settingsSplitter">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -136,7 +136,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="gridLayout_9">
@@ -165,59 +165,48 @@
            <item row="1" column="0">
             <widget class="QWidget" name="applicationPageWidget" native="true">
              <layout class="QGridLayout" name="gridLayout_2">
-              <item row="4" column="1">
-               <spacer name="verticalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+              <item row="1" column="0" colspan="2">
+               <widget class="QCheckBox" name="useDarkTheme">
+                <property name="text">
+                 <string>Use Dark Theme</string>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>13</width>
-                  <height>13</height>
-                 </size>
-                </property>
-               </spacer>
+               </widget>
               </item>
-              <item row="2" column="0" colspan="2">
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item row="0" column="0" colspan="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_13">
                 <item>
-                 <widget class="QCheckBox" name="autosave">
+                 <widget class="QLabel" name="label_31">
                   <property name="text">
-                   <string>Automatically Save Every</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
+                   <string>Language:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="autosaveInterval">
-                  <property name="minimum">
-                   <number>2</number>
-                  </property>
-                  <property name="maximum">
-                   <number>30</number>
-                  </property>
-                  <property name="value">
-                   <number>5</number>
+                 <widget class="QLabel" name="applicationLanguage">
+                  <property name="text">
+                   <string>Russian</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="autosaveSiffix">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
+                 <widget class="QPushButton" name="changeLanguage">
                   <property name="text">
-                   <string>Minutes</string>
-                  </property>
-                  <property name="buddy">
-                   <cstring>autosaveInterval</cstring>
+                   <string>Change</string>
                   </property>
                  </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </item>
@@ -271,48 +260,66 @@
                 </item>
                </layout>
               </item>
-              <item row="0" column="0" colspan="2">
-               <layout class="QHBoxLayout" name="horizontalLayout_13">
+              <item row="2" column="0" colspan="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
-                 <widget class="QLabel" name="label_31">
+                 <widget class="QCheckBox" name="autosave">
                   <property name="text">
-                   <string>Language:</string>
+                   <string>Automatically Save Every</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="applicationLanguage">
-                  <property name="text">
-                   <string>Russian</string>
+                 <widget class="QSpinBox" name="autosaveInterval">
+                  <property name="minimum">
+                   <number>2</number>
+                  </property>
+                  <property name="maximum">
+                   <number>30</number>
+                  </property>
+                  <property name="value">
+                   <number>5</number>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="changeLanguage">
+                 <widget class="QLabel" name="autosaveSiffix">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
-                   <string>Change</string>
+                   <string>Minutes</string>
+                  </property>
+                  <property name="buddy">
+                   <cstring>autosaveInterval</cstring>
                   </property>
                  </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_5">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
                 </item>
                </layout>
               </item>
-              <item row="1" column="0" colspan="2">
-               <widget class="QCheckBox" name="useDarkTheme">
+              <item row="5" column="1">
+               <spacer name="verticalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>13</width>
+                  <height>13</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="4" column="0" colspan="2">
+               <widget class="QCheckBox" name="applicationTwoPanelMode">
                 <property name="text">
-                 <string>Use Dark Theme</string>
+                 <string>Two Panel Mode</string>
                 </property>
                </widget>
               </item>
@@ -2441,7 +2448,6 @@ Paragraph</string>
   <tabstop>sceneDescriptionHeight</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>
  <connections>

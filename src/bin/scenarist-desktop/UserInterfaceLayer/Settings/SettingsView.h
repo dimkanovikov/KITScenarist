@@ -53,6 +53,7 @@ namespace UserInterface
 		void setApplicationAutosaveInterval(int);
 		void setApplicationSaveBackups(bool _save);
 		void setApplicationSaveBackupsFolder(const QString& _folder);
+		void setApplicationTwoPanelMode(bool _use);
 
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditShowScenesNumbers(bool _value);
@@ -113,6 +114,7 @@ namespace UserInterface
 		void applicationAutosaveIntervalChanged(int);
 		void applicationSaveBackupsChanged(bool);
 		void applicationSaveBackupsFolderChanged(const QString&);
+		void applicationTwoPanelModeChanged(bool);
 
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditShowScenesNumbersChanged(bool);

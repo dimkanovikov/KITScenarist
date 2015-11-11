@@ -53,7 +53,7 @@ SettingsView::~SettingsView()
 
 QSplitter* SettingsView::splitter() const
 {
-	return ui->splitter;
+	return ui->settingsSplitter;
 }
 
 void SettingsView::setBlocksSettingsModel(QAbstractItemModel* _model, QAbstractItemModel* _modelForDelegate)
@@ -154,6 +154,11 @@ void SettingsView::setApplicationSaveBackups(bool _save)
 void SettingsView::setApplicationSaveBackupsFolder(const QString& _folder)
 {
 	ui->saveBackupsFolder->setText(_folder);
+}
+
+void SettingsView::setApplicationTwoPanelMode(bool _use)
+{
+	ui->applicationTwoPanelMode->setChecked(_use);
 }
 
 void SettingsView::setScenarioEditPageView(bool _value)
@@ -558,8 +563,9 @@ void SettingsView::initView()
 	ui->categories->setCurrentRow(0);
 	ui->categoriesWidgets->setCurrentIndex(0);
 
-	ui->splitter->setHandleWidth(1);
-	ui->splitter->setStretchFactor(1, 1);
+	ui->settingsSplitter->setHandleWidth(1);
+	ui->settingsSplitter->setOpaqueResize(false);
+	ui->settingsSplitter->setStretchFactor(1, 1);
 
 	ui->spellCheckingLanguage->setCurrentIndex(0);
 	ui->spellCheckingLanguage->setEnabled(false);
@@ -634,6 +640,7 @@ void SettingsView::initConnections()
 	connect(ui->autosaveInterval, SIGNAL(valueChanged(int)), this, SIGNAL(applicationAutosaveIntervalChanged(int)));
 	connect(ui->saveBackups, SIGNAL(toggled(bool)), this, SIGNAL(applicationSaveBackupsChanged(bool)));
 	connect(ui->saveBackupsFolder, SIGNAL(textChanged(QString)), this, SIGNAL(applicationSaveBackupsFolderChanged(QString)));
+	connect(ui->applicationTwoPanelMode, &QCheckBox::toggled, this, &SettingsView::applicationTwoPanelModeChanged);
 	// ... текстовый редактор
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->showScenesNumbersInEditor, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)));

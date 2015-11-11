@@ -245,6 +245,7 @@ void StatisticsView::initView()
 	statisticTypesMainLayout->addWidget(m_statisticTypes);
 
 	QWidget* statisticTypesPanel = new QWidget(this);
+	statisticTypesPanel->setObjectName("statisticTypesPanel");
 	statisticTypesPanel->setLayout(statisticTypesMainLayout);
 
 
@@ -268,6 +269,7 @@ void StatisticsView::initView()
 	statisticDataLayout->addWidget(m_statisticData, 1);
 
 	QWidget* statisticDataPanel = new QWidget(this);
+	statisticDataPanel->setObjectName("statisticDataPanel");
 	statisticDataPanel->setLayout(statisticDataLayout);
 
 

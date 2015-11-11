@@ -7,6 +7,8 @@
 #include <QTimer>
 
 class SideTabBar;
+class QLabel;
+class QSplitter;
 class QStackedWidget;
 class QToolButton;
 class QMenu;
@@ -160,6 +162,11 @@ namespace ManagementLayer
 		void saveViewState();
 
 		/**
+		 * @brief Изменился индекс текущей вкладки
+		 */
+		void currentTabIndexChanged();
+
+		/**
 		 * @brief Если проект был изменён, но не сохранён предложить пользователю сохранить его
 		 *
 		 * Возвращает true, если пользователь хочет (Да) или не хочет (Нет) сохранять
@@ -220,14 +227,34 @@ namespace ManagementLayer
 		QToolButton* m_menu;
 
 		/**
+		 * @brief Заглушка для верха правой панели
+		 */
+		QLabel* m_menuSecondary;
+
+		/**
 		 * @brief Панель вкладок
 		 */
 		SideTabBar* m_tabs;
 
 		/**
+		 * @brief Дополнительная панель вкладок
+		 */
+		SideTabBar* m_tabsSecondary;
+
+		/**
 		 * @brief Виджеты вкладок
 		 */
 		QStackedWidget* m_tabsWidgets;
+
+		/**
+		 * @brief Дополнительная панель для виджетов вкладок
+		 */
+		QStackedWidget* m_tabsWidgetsSecondary;
+
+		/**
+		 * @brief Разделитель основных и дополнительных элементов управления
+		 */
+		QSplitter* m_splitter;
 
 		/**
 		 * @brief Управляющий проектами

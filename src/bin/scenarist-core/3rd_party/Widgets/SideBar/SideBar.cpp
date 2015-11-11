@@ -83,6 +83,8 @@ SideTabBar::SideTabBar(QWidget *parent) :
 	m_pressedTab(0),
 	m_checkedTab(0),
 	m_compactMode(false),
+	m_currentIndex(0),
+	m_prevCurrentIndex(0),
 	m_indicator(new QAction(this))
 {
 	setFixedWidth(::sidebarWidth(m_compactMode));
@@ -112,19 +114,42 @@ QAction *SideTabBar::addTab(const QString &text, const QIcon &icon)
 	return action;
 }
 
-void SideTabBar::setCurrent(int _index)
+void SideTabBar::setCurrentTab(int _index)
 {
 	//
-	// Если индекс в допустимом пределе и выделено не текущая вкладка
+	// Если индекс в допустимом пределе и выделена не текущая вкладка
 	//
 	if (_index < m_tabs.size()
 		&& m_tabs.indexOf(m_checkedTab) != _index) {
+		//
+		// Запоминаем предыдущую активную вкладку
+		//
+		m_prevCurrentIndex = m_tabs.indexOf(m_checkedTab);
+
+		//
+		// Переключаемся на новую активную вкладку
+		//
 		m_checkedTab->setChecked(false);
 		m_checkedTab = m_tabs.at(_index);
 		m_checkedTab->setChecked(true);
 		update();
-		emit currentChanged(_index);
+
+		//
+		// Уведомляем об изменении активной вкладки
+		//
+		m_currentIndex = _index;
+		emit currentChanged(m_currentIndex);
 	}
+}
+
+int SideTabBar::currentTab() const
+{
+	return m_currentIndex;
+}
+
+int SideTabBar::prevCurrentTab() const
+{
+	return m_prevCurrentIndex;
 }
 
 QList<QAction*> SideTabBar::tabs() const
@@ -279,24 +304,25 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
 	}
 }
 
-void SideTabBar::mouseReleaseEvent(QMouseEvent *event)
+void SideTabBar::mouseReleaseEvent(QMouseEvent* _event)
 {
-	QAction* tempAction = tabAt(event->pos());
-	if(m_pressedTab != tempAction || tempAction == 0 || !tempAction->isEnabled())
-	{
+	QAction* pressedTab = tabAt(_event->pos());
+
+	//
+	// Если мышка была отпущена на другой вкладке, не на той на которой нажата - игнорируем событие
+	//
+	if (m_pressedTab != pressedTab
+		|| pressedTab == 0
+		|| !pressedTab->isEnabled()) {
 		m_pressedTab = 0;
 		return;
 	}
-	if(m_checkedTab != 0)
-		m_checkedTab->setChecked(false);
-	m_checkedTab = m_pressedTab;
-	if(m_checkedTab != 0)
-		m_checkedTab->setChecked(true);
-	update();
-	m_pressedTab = 0;
 
-	emit currentChanged(m_tabs.indexOf(m_checkedTab));
-	return;
+	//
+	// Активируем выбранную вкладку
+	//
+	setCurrentTab(m_tabs.indexOf(pressedTab));
+	m_pressedTab = 0;
 }
 
 QSize SideTabBar::minimumSizeHint() const

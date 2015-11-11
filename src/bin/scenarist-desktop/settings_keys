@@ -104,18 +104,7 @@ application/geometry - состояние главного окна и его в
 application/use-dark-theme - использовать тёмную тему
 application/save-backups - сохранять резервные копии
 application/save-backups-folder - папка сохранения резервных копий
-application/scenario/draft/geometry - разделитель навигатора и окна черновика
-application/scenario/draft/state
-application/scenario/left/geometry - разделитель навигатора и окна синопсиса
-application/scenario/left/state
-application/scenario/geometry - разделитель навигатора и основных редакторов
-application/scenario/state
-application/characters/geometry - разделитель списка персонажей и редакторов
-application/characters/state
-application/locations/geometry - разделитель списка локаций и редакторов
-application/locations/state
-application/settings/geometry - разделитель списка настроек и самих настроек
-application/settings/state
+application/two-panel-mode - режим разделения экрана на 2 панели (0 - выключен, 1 - включён)
 
 application/recent-files/list/... - последние использованые файлы программы (в виде ключ - путь, значение - название проекта (если не задано, то имя файла без расширения))
 application/recent-files/using/... - даты использования последних файлов (путь, дата)

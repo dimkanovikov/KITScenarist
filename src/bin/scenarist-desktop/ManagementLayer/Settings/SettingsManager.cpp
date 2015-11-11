@@ -170,6 +170,11 @@ void SettingsManager::applicationSaveBackupsFolderChanged(const QString& _value)
 	storeValue("application/save-backups-folder", _value);
 }
 
+void SettingsManager::applicationTwoPanelModeChanged(bool _value)
+{
+	storeValue("application/two-panel-mode", _value);
+}
+
 void SettingsManager::scenarioEditPageViewChanged(bool _value)
 {
 	storeValue("scenario-editor/page-view", _value);
@@ -563,6 +568,12 @@ void SettingsManager::initView()
 					"application/save-backups-folder",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
+	m_view->setApplicationTwoPanelMode(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/two-panel-mode",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 
 	//
 	// Настройки текстового редактора
@@ -889,6 +900,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SLOT(applicationAutosaveIntervalChanged(int)));
 	connect(m_view, SIGNAL(applicationSaveBackupsChanged(bool)), this, SLOT(applicationSaveBackupsChanged(bool)));
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SLOT(applicationSaveBackupsFolderChanged(QString)));
+	connect(m_view, &SettingsView::applicationTwoPanelModeChanged, this, &SettingsManager::applicationTwoPanelModeChanged);
 
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
@@ -948,6 +960,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationAutosaveIntervalChanged(int)), this, SIGNAL(applicationSettingsUpdated()));
 	connect(m_view, SIGNAL(applicationSaveBackupsChanged(bool)), this, SIGNAL(applicationSettingsUpdated()));
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SIGNAL(applicationSettingsUpdated()));
+	connect(m_view, &SettingsView::applicationTwoPanelModeChanged, this, &SettingsManager::applicationSettingsUpdated);
 
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));

@@ -50,6 +50,7 @@ namespace ManagementLayer
 		void applicationAutosaveIntervalChanged(int _value);
 		void applicationSaveBackupsChanged(bool _value);
 		void applicationSaveBackupsFolderChanged(const QString& _value);
+		void applicationTwoPanelModeChanged(bool _value);
 
 		void scenarioEditPageViewChanged(bool  _value);
 		void scenarioEditShowScenesNumbersChanged(bool  _value);

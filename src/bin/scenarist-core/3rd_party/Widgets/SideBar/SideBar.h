@@ -17,7 +17,20 @@ public:
 	void addTab(QAction* action);
 	QAction* addTab(const QString& text, const QIcon& icon = QIcon());
 
-	void setCurrent(int _index);
+	/**
+	 * @brief Установить текущую вкладку
+	 */
+	void setCurrentTab(int _index);
+
+	/**
+	 * @brief Получить индекс текущей вкладки
+	 */
+	int currentTab() const;
+
+	/**
+	 * @brief Получить индекс предыдущей активной вкладки
+	 */
+	int prevCurrentTab() const;
 
 	QList<QAction*> tabs() const;
 
@@ -46,7 +59,7 @@ signals:
 protected:
 	void paintEvent(QPaintEvent* event);
 	void mousePressEvent(QMouseEvent* _event);
-	void mouseReleaseEvent(QMouseEvent* event);
+	void mouseReleaseEvent(QMouseEvent* _event);
 	QSize minimumSizeHint() const;
 
 private:
@@ -61,6 +74,16 @@ private:
 	 * @brief Флаг компактного режима
 	 */
 	bool m_compactMode;
+
+	/**
+	 * @brief Индекс текущей вкладки
+	 */
+	int m_currentIndex;
+
+	/**
+	 * @brief Индекс предыдущей активной вкладки
+	 */
+	int m_prevCurrentIndex;
 
 	/**
 	 * @brief Индикатор внизу панели

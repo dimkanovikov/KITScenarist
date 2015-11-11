@@ -156,9 +156,10 @@ void ResearchView::initView()
 	m_ui->researchNavigator->setStyle(new ResearchNavigatorProxyStyle(m_ui->researchNavigator->style()));
 	m_ui->researchNavigator->installEventFilter(this);
 
-	m_ui->splitter->setObjectName("researchSplitter");
-	m_ui->splitter->setHandleWidth(1);
-	m_ui->splitter->setStretchFactor(1, 1);
+	m_ui->researchSplitter->setObjectName("researchSplitter");
+	m_ui->researchSplitter->setHandleWidth(1);
+	m_ui->researchSplitter->setOpaqueResize(false);
+	m_ui->researchSplitter->setStretchFactor(1, 1);
 }
 
 void ResearchView::initConnections()

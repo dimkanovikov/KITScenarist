@@ -71,7 +71,7 @@ void CharactersNavigatorManager::aboutAddCharacter()
 
 void CharactersNavigatorManager::initView()
 {
-
+	m_navigator->setObjectName("CharactersNavigator");
 }
 
 void CharactersNavigatorManager::initConnections()

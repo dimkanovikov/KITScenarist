@@ -31,7 +31,9 @@
 #include <QComboBox>
 #include <QDesktopServices>
 #include <QFileDialog>
+#include <QLabel>
 #include <QMenu>
+#include <QSplitter>
 #include <QStackedWidget>
 #include <QStandardItemModel>
 #include <QStyle>
@@ -40,13 +42,39 @@
 #include <QVBoxLayout>
 #include <QWidgetAction>
 
+#include <functional>
+
 using namespace ManagementLayer;
 using UserInterface::ApplicationView;
 
 namespace {
+	/**
+	 * @brief Номера вкладок
+	 */
+	/** @{ */
+	const int STARTUP_TAB_INDEX = 0;
+	const int RESEARCH_TAB_INDEX = 1;
+	const int SCENARIO_TAB_INDEX = 2;
+	const int CHARACTERS_TAB_INDEX = 3;
+	const int LOCATIONS_TAB_INDEX = 4;
+	const int STATISTICS_TAB_INDEX = 5;
+	const int SETTINGS_TAB_INDEX = 6;
+	/** @} */
+
+	/**
+	 * @brief Расширения файлов проекта
+	 */
 	const QString PROJECT_FILE_EXTENSION = ".kitsp"; // kit scenarist project
+
+	/**
+	 * @brief Суффикс "изменено" для заголовка окна добавляемый в маке
+	 */
 	const char* MAC_CHANGED_SUFFIX =
 			QT_TRANSLATE_NOOP("ManagementLayer::ApplicationManager", " - changed");
+
+	/**
+	 * @brief Флаг: синхронизация недоступна
+	 */
 	const bool SYNC_UNAVAILABLE = false;
 
 	/**
@@ -121,8 +149,12 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	QObject(parent),
 	m_view(new ApplicationView),
 	m_menu(new QToolButton(m_view)),
+	m_menuSecondary(new QLabel(m_view)),
 	m_tabs(new SideTabBar(m_view)),
-	m_tabsWidgets(new QStackedWidget),
+	m_tabsSecondary(new SideTabBar(m_view)),
+	m_tabsWidgets(new QStackedWidget(m_view)),
+	m_tabsWidgetsSecondary(new QStackedWidget(m_view)),
+	m_splitter(new QSplitter(m_view)),
 	m_projectsManager(new ProjectsManager(this)),
 	m_startUpManager(new StartUpManager(this, m_view)),
 	m_researchManager(new ResearchManager(this, m_view)),
@@ -682,12 +714,79 @@ void ApplicationManager::aboutPrepareScenarioForStatistics()
 
 void ApplicationManager::loadViewState()
 {
+	//
+	// Загрузим состояние
+	//
 	DataStorageLayer::StorageFacade::settingsStorage()->loadApplicationStateAndGeometry(m_view);
+
+	//
+	// Для всех сплитеров добавляем функциональность - двойной щелчок, разворачивает панели
+	//
+	m_view->initSplittersRightClick();
 }
 
 void ApplicationManager::saveViewState()
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->saveApplicationStateAndGeometry(m_view);
+}
+
+void ApplicationManager::currentTabIndexChanged()
+{
+	static bool processedNow = false;
+	if (!processedNow) {
+		processedNow = true;
+		if (SideTabBar* sidebar = qobject_cast<SideTabBar*>(sender())) {
+			//
+			// Если выбрана та вкладка, что открыта во вспомогательной панели,
+			// то нужно поменять их местами и наоборот
+			//
+			if (sidebar == m_tabs) {
+				if (m_tabs->currentTab() == m_tabsSecondary->currentTab()) {
+					m_tabsSecondary->setCurrentTab(m_tabs->prevCurrentTab());
+				}
+			} else {
+				if (m_tabsSecondary->currentTab() == m_tabs->currentTab()) {
+					m_tabs->setCurrentTab(m_tabsSecondary->prevCurrentTab());
+				}
+			}
+
+			//
+			// Функция для определения виджета для отображения по индексу вкладки
+			//
+
+			auto widgetForTab =
+				[=] (int _index) {
+				QWidget* result;
+				switch (_index) {
+					case STARTUP_TAB_INDEX: result = m_startUpManager->view(); break;
+					case RESEARCH_TAB_INDEX: result = m_researchManager->view(); break;
+					case SCENARIO_TAB_INDEX: result = m_scenarioManager->view(); break;
+					case CHARACTERS_TAB_INDEX: result = m_charactersManager->view(); break;
+					case LOCATIONS_TAB_INDEX: result = m_locationsManager->view(); break;
+					case STATISTICS_TAB_INDEX: result = m_statisticsManager->view(); break;
+					case SETTINGS_TAB_INDEX: result = m_settingsManager->view(); break;
+				}
+				return result;
+			};
+
+			//
+			// Установим виджеты в контейнеры
+			//
+			{
+				QWidget* widget = widgetForTab(m_tabs->currentTab());
+				m_tabsWidgets->addWidget(widget);
+				m_tabsWidgets->setCurrentWidget(widget);
+			}
+			//
+			{
+				QWidget* widget = widgetForTab(m_tabsSecondary->currentTab());
+				m_tabsWidgetsSecondary->addWidget(widget);
+				m_tabsWidgetsSecondary->setCurrentWidget(widget);
+			}
+		}
+
+		processedNow = false;
+	}
 }
 
 bool ApplicationManager::saveIfNeeded()
@@ -806,7 +905,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Перейти на вкладку редактирования сценария
 	//
-	m_tabs->setCurrent(1);
+	m_tabs->setCurrentTab(1);
 
 	//
 	// Закроем уведомление
@@ -858,9 +957,12 @@ void ApplicationManager::initView()
 	m_menu->setText(tr("Menu"));
 	m_menu->setPopupMode(QToolButton::MenuButtonPopup);
 	m_menu->setMenu(createMenu());
+	m_menuSecondary->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
 	//
 	// Настроим боковую панель
+	//
+	// ... основную
 	//
 	m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
@@ -869,32 +971,65 @@ void ApplicationManager::initView()
 	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
 	m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
+	//
+	// ... вспомогательную
+	//
+	m_tabsSecondary->setCompactMode(true);
+	m_tabsSecondary->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
+	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
+	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
+	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
+	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
+	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
+	m_tabsSecondary->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
+	m_tabsSecondary->setCurrentTab(SETTINGS_TAB_INDEX);
 
 	//
-	// Настроим виджеты соответствующие вкладкам
+	// Настроим виджеты соответствующие первоначальным активным вкладкам
 	//
+	m_tabsWidgets->setObjectName("tabsWidgets");
 	m_tabsWidgets->addWidget(m_startUpManager->view());
 	m_tabsWidgets->addWidget(m_researchManager->view());
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
 	m_tabsWidgets->addWidget(m_charactersManager->view());
 	m_tabsWidgets->addWidget(m_locationsManager->view());
 	m_tabsWidgets->addWidget(m_statisticsManager->view());
-	m_tabsWidgets->addWidget(m_settingsManager->view());
+	m_tabsWidgetsSecondary->setObjectName("tabsWidgetsSecondary");
+	m_tabsWidgetsSecondary->addWidget(m_settingsManager->view());
+
+	//
+	// Настроим разделитель панелей
+	//
+	m_splitter->setObjectName("mainWindowSplitter");
+	m_splitter->setHandleWidth(4);
+	m_splitter->setOpaqueResize(false);
+	m_splitter->addWidget(m_tabsWidgets);
+	m_splitter->addWidget(m_tabsWidgetsSecondary);
+	m_splitter->setStretchFactor(1, 1);
+	m_splitter->setCollapsible(0, false);
+	m_splitter->setCollapsible(1, false);
 
 	//
 	// Расположим всё на форме
 	//
-	QVBoxLayout* leftLayout = new QVBoxLayout;
-	leftLayout->setContentsMargins(QMargins());
-	leftLayout->setSpacing(0);
-	leftLayout->addWidget(m_menu);
-	leftLayout->addWidget(m_tabs);
+	QVBoxLayout* leftTabsLayout = new QVBoxLayout;
+	leftTabsLayout->setContentsMargins(QMargins());
+	leftTabsLayout->setSpacing(0);
+	leftTabsLayout->addWidget(m_menu);
+	leftTabsLayout->addWidget(m_tabs);
+
+	QVBoxLayout* rightTabsLayout = new QVBoxLayout;
+	rightTabsLayout->setContentsMargins(QMargins());
+	rightTabsLayout->setSpacing(0);
+	rightTabsLayout->addWidget(m_menuSecondary);
+	rightTabsLayout->addWidget(m_tabsSecondary);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
 	layout->setSpacing(0);
-	layout->addLayout(leftLayout);
-	layout->addWidget(m_tabsWidgets);
+	layout->addLayout(leftTabsLayout);
+	layout->addWidget(m_splitter);
+	layout->addLayout(rightTabsLayout);
 
 	m_view->setLayout(layout);
 
@@ -902,10 +1037,6 @@ void ApplicationManager::initView()
 	// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
 	//
 	::disableActionsOnStart();
-
-	//
-	// Настроим
-	//
 }
 
 QMenu* ApplicationManager::createMenu()
@@ -961,7 +1092,8 @@ void ApplicationManager::initConnections()
 	connect(m_view, SIGNAL(wantToClose()), this, SLOT(aboutExit()));
 
 	connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
-	connect(m_tabs, SIGNAL(currentChanged(int)), m_tabsWidgets, SLOT(setCurrentIndex(int)));
+	connect(m_tabs, &SideTabBar::currentChanged, this, &ApplicationManager::currentTabIndexChanged);
+	connect(m_tabsSecondary, &SideTabBar::currentChanged, this, &ApplicationManager::currentTabIndexChanged);
 
 	connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
 	connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
@@ -1053,6 +1185,10 @@ void ApplicationManager::initStyleSheet()
 	m_menu->setProperty("inTopPanel", true);
 	m_menu->setProperty("topPanelTopBordered", true);
 	m_menu->setProperty("topPanelRightBordered", true);
+	//
+	m_menuSecondary->setProperty("inTopPanel", true);
+	m_menuSecondary->setProperty("topPanelTopBordered", true);
+	m_menuSecondary->setProperty("topPanelRightBordered", true);
 }
 
 void ApplicationManager::reloadApplicationSettings()
@@ -1167,6 +1303,20 @@ void ApplicationManager::reloadApplicationSettings()
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
 	m_backupHelper.setIsActive(saveBackups);
 	m_backupHelper.setBackupDir(saveBackupsFolder);
+
+	//
+	// Разделение экрана на две панели
+	//
+	bool twoPanelsMode =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/two-panel-mode",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	m_splitter->setHandleWidth(twoPanelsMode ? 4 : 0);
+	m_splitter->handle(1)->setEnabled(twoPanelsMode);
+	m_splitter->setSizes(QList<int>() << 1 << (twoPanelsMode ? 1 : 0));
+	m_tabsSecondary->setVisible(twoPanelsMode);
+	m_tabsWidgetsSecondary->setVisible(twoPanelsMode);
 }
 
 void ApplicationManager::updateWindowTitle()

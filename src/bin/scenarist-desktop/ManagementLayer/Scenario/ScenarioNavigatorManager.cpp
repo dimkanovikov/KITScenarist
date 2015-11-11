@@ -155,6 +155,11 @@ void ScenarioNavigatorManager::aboutModelUpdated()
 
 void ScenarioNavigatorManager::initView()
 {
+	if (!m_isDraft) {
+		m_navigator->setObjectName("scenarioNavigator");
+	} else {
+		m_navigator->setObjectName("scenarioDraftNavigator");
+	}
 	m_navigator->setIsDraft(m_isDraft);
 }
 
