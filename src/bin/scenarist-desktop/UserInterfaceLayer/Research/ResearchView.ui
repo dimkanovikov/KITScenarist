@@ -116,14 +116,14 @@
        <item>
         <widget class="QStackedWidget" name="researchDataEditsContainer">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
            <item row="0" column="0">
             <widget class="QLabel" name="label">
              <property name="text">
-              <string>Name:</string>
+              <string>Scenario Name:</string>
              </property>
             </widget>
            </item>
@@ -151,8 +151,17 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>0</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
@@ -186,7 +195,7 @@
            <item>
             <widget class="QLabel" name="nameLabel">
              <property name="text">
-              <string>Name:</string>
+              <string>Scenario Name:</string>
              </property>
              <property name="buddy">
               <cstring>titlePageName</cstring>

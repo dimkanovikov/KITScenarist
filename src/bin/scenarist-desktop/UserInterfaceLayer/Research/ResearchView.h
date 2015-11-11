@@ -82,6 +82,11 @@ namespace UserInterface
 		void editResearchRequested(const QModelIndex& _index);
 
 		/**
+		 * @brief Пользователь открывает контекстное меню в навигаторе
+		 */
+		void navigatorContextMenuRequested(const QModelIndex& _index, const QPoint& _pos);
+
+		/**
 		 * @brief Сигналы об изменении данных
 		 */
 		/** @{ */
@@ -96,6 +101,12 @@ namespace UserInterface
 		void textNameChanged(const QString& _name);
 		void textDescriptionChanged(const QString& _description);
 		/** @{ */
+
+	protected:
+		/**
+		 * @brief Переопределяется для реализации контекстного меню дерева разработки
+		 */
+		bool eventFilter(QObject* _object, QEvent* _event);
 
 	private:
 		/**
@@ -113,6 +124,11 @@ namespace UserInterface
 		 * @brief Настроить представление
 		 */
 		void initView();
+
+		/**
+		 * @brief Настроить контекстное меню навигатора
+		 */
+		void initNavigatorContextMenu();
 
 		/**
 		 * @brief Настроить соединения для формы

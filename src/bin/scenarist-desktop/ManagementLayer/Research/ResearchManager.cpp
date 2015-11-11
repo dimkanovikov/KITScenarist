@@ -15,9 +15,10 @@
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
-#include <QWidget>
-#include <QSplitter>
 #include <QHBoxLayout>
+#include <QMenu>
+#include <QSplitter>
+#include <QWidget>
 
 using ManagementLayer::ResearchManager;
 using BusinessLogic::ResearchModel;
@@ -258,6 +259,45 @@ void ResearchManager::removeResearch(const QModelIndex& _index)
 	}
 }
 
+void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const QPoint& _pos)
+{
+	ResearchModelItem* researchItem = m_model->itemForIndex(_index);
+	bool showAdd = false;
+	bool showRemove = false;
+	switch (researchItem->research()->type()) {
+		case Research::ResearchRoot: {
+			showAdd = true;
+			break;
+		}
+
+		case Research::Folder:
+		case Research::Text: {
+			showAdd = true;
+			showRemove = true;
+			break;
+		}
+
+		default: {
+			break;
+		}
+	}
+
+	if (showAdd || showRemove) {
+		QMenu menu(m_view);
+		QAction* addAction = menu.addAction(tr("Add New"));
+		addAction->setVisible(showAdd);
+		QAction* removeAction = menu.addAction(tr("Remove"));
+		removeAction->setVisible(showRemove);
+
+		QAction* toggledAction = menu.exec(_pos);
+		if (toggledAction == addAction) {
+			addResearch(_index);
+		} else if (toggledAction == removeAction) {
+			removeResearch(_index);
+		}
+	}
+}
+
 void ResearchManager::updateScenarioData(const QString& _key, const QString& _value)
 {
 	if (m_scenarioData.value(_key) != _value) {
@@ -276,6 +316,7 @@ void ResearchManager::initConnections()
 	connect(m_view, &ResearchView::addResearchRequested, this, &ResearchManager::addResearch);
 	connect(m_view, &ResearchView::editResearchRequested, this, &ResearchManager::editResearch);
 	connect(m_view, &ResearchView::removeResearchRequested, this, &ResearchManager::removeResearch);
+	connect(m_view, &ResearchView::navigatorContextMenuRequested, this, &ResearchManager::showNavigatorContextMenu);
 
 	connect(m_view, &ResearchView::scenarioNameChanged, [=](const QString& _name){
 		updateScenarioData(NAME_KEY, _name);

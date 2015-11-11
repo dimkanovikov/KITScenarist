@@ -113,6 +113,18 @@ void ResearchView::editText(const QString& _name, const QString& _description)
 	setResearchManageButtonsVisible(true);
 }
 
+bool ResearchView::eventFilter(QObject* _object, QEvent* _event)
+{
+	if (_object == m_ui->researchNavigator
+		&& _event->type() == QEvent::ContextMenu) {
+		QContextMenuEvent* contextMenuEvent = dynamic_cast<QContextMenuEvent*>(_event);
+		emit navigatorContextMenuRequested(
+			currentResearchIndex(), m_ui->researchNavigator->mapToGlobal(contextMenuEvent->pos()));
+	}
+
+	return QWidget::eventFilter(_object, _event);
+}
+
 void ResearchView::setResearchManageButtonsVisible(bool _isVisible)
 {
 	m_ui->addResearchItem->setVisible(_isVisible);
@@ -142,6 +154,7 @@ void ResearchView::initView()
 	m_ui->researchNavigator->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	m_ui->researchNavigator->setSelectionMode(QAbstractItemView::SingleSelection);
 	m_ui->researchNavigator->setStyle(new ResearchNavigatorProxyStyle(m_ui->researchNavigator->style()));
+	m_ui->researchNavigator->installEventFilter(this);
 
 	m_ui->splitter->setObjectName("researchSplitter");
 	m_ui->splitter->setHandleWidth(1);

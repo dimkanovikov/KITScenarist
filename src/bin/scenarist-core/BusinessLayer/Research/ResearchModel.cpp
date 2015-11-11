@@ -4,6 +4,8 @@
 
 #include <Domain/Research.h>
 
+#include <QMimeData>
+
 using BusinessLogic::ResearchModel;
 using BusinessLogic::ResearchModelItem;
 using Domain::Research;
@@ -28,6 +30,8 @@ namespace {
 	}
 }
 
+
+QString ResearchModel::MIME_TYPE = "application/x-scenarist/research-tree";
 
 ResearchModel::ResearchModel(QObject* _parent = 0) :
 	QAbstractItemModel(_parent),
@@ -277,14 +281,32 @@ int ResearchModel::rowCount(const QModelIndex& _parent) const
 
 Qt::ItemFlags ResearchModel::flags(const QModelIndex& _index) const
 {
-	Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
+	Qt::ItemFlags flags = Qt::NoItemFlags;
+	if (_index.isValid()) {
+		flags |= Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
-//	ResearchModelItem* item = itemForIndex(_index);
-//	if (item->type() == ResearchModelItem::Folder
-//		|| item->type() == ResearchModelItem::SceneGroup
-//		|| item->type() == ResearchModelItem::Scenario) {
-//		flags |= Qt::ItemIsDropEnabled;
-//	}
+//		ResearchModelItem* item = itemForIndex(_index);
+//		switch (item->research()->type()) {
+//			case Research::ResearchRoot: {
+//				flags |= Qt::ItemIsDropEnabled;
+//				break;
+//			}
+
+//			case Research::Folder: {
+//				flags |= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+//				break;
+//			}
+
+//			case Research::Text: {
+//				flags |= Qt::ItemIsDragEnabled;
+//				break;
+//			}
+
+//			default: {
+//				break;
+//			}
+//		}
+	}
 
 	return flags;
 }
@@ -432,8 +454,6 @@ QVariant ResearchModel::data(const QModelIndex& _index, int _role) const
 //						m_xmlHandler->scenarioToXml(fromItem, toItem).toUtf8());
 //		}
 //	}
-
-//	m_lastMime = mimeData;
 
 //	return mimeData;
 //}

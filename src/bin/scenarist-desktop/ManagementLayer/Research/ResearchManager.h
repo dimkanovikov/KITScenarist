@@ -75,6 +75,11 @@ namespace ManagementLayer
 		void removeResearch(const QModelIndex& _index);
 
 		/**
+		 * @brief Показать контекстное меню навигатора
+		 */
+		void showNavigatorContextMenu(const QModelIndex& _index, const QPoint& _pos);
+
+		/**
 		 * @brief Обновить данные сценария
 		 */
 		void updateScenarioData(const QString& _key, const QString& _value);

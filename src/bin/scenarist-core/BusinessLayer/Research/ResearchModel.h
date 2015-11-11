@@ -20,6 +20,12 @@ namespace BusinessLogic
 		Q_OBJECT
 
 	public:
+		/**
+		 * @brief Майм-тип данных дерева сценария
+		 */
+		static QString MIME_TYPE;
+
+	public:
 		explicit ResearchModel(QObject* _parent);
 		~ResearchModel();
 
