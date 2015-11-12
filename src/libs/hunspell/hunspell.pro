@@ -7,6 +7,23 @@ TEMPLATE = lib
 CONFIG += qt thread warn_on
 QT -= core gui
 
+QMAKE_MAC_SDK = macosx10.11
+
+#
+# Конфигурируем расположение файлов сборки
+#
+CONFIG(debug, debug|release) {
+    DESTDIR = $$PWD/../../../build/Debug/libs/hunspell
+} else {
+    DESTDIR = $$PWD/../../../build/Release/libs/hunspell
+}
+
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
+RCC_DIR = $$DESTDIR/.qrc
+UI_DIR = $$DESTDIR/.ui
+#
+
 #
 # Настройка динамической линковки под Windows
 #
@@ -21,7 +38,6 @@ win32 {
 unix {
     system(./configure --quiet)
 }
-
 #
 # Для Win32 используем специализированную конфигурацию, поставляемую с hunspell
 #

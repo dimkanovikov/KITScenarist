@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StatisticsSettings</class>
+ <widget class="QStackedWidget" name="StatisticsSettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>357</width>
+    <height>178</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>StackedWidget</string>
+  </property>
+  <property name="currentIndex">
+   <number>6</number>
+  </property>
+  <widget class="QWidget" name="emptyPage"/>
+  <widget class="QWidget" name="summaryReportPage">
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="summaryText">
+      <property name="text">
+       <string>Summary text statistics</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="summaryScenes">
+      <property name="text">
+       <string>Scenes statistics</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="summaryLocations">
+      <property name="text">
+       <string>Locations statistics</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QCheckBox" name="summaryCharacters">
+      <property name="text">
+       <string>Characters statistics</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="scenesReportPage">
+   <layout class="QFormLayout" name="formLayout_2">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Sort scenes</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="sceneSortBy">
+      <property name="sizeAdjustPolicy">
+       <enum>QComboBox::AdjustToContents</enum>
+      </property>
+      <item>
+       <property name="text">
+        <string>by script order</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>by alphabetical order</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from longest to shortest scene</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from shortest to longest scene</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from massive to unmanned scene</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from unmanned to massive scene</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QCheckBox" name="sceneShowCharacters">
+      <property name="text">
+       <string>Show characters</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="locationsReportPage">
+   <layout class="QFormLayout" name="formLayout_3">
+    <item row="0" column="0" colspan="2">
+     <widget class="QCheckBox" name="locationExtendedView">
+      <property name="text">
+       <string>Extended view</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Sort locations</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="locationSortBy">
+      <property name="sizeAdjustPolicy">
+       <enum>QComboBox::AdjustToContents</enum>
+      </property>
+      <item>
+       <property name="text">
+        <string>by script order</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>by alphabetical order</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from most to least occurences</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from least to most occurences</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from longest to shortest chron</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from shortest to longest chron</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="castReportPage">
+   <layout class="QFormLayout" name="formLayout_4">
+    <item row="0" column="0" colspan="2">
+     <widget class="QCheckBox" name="castShowSpeakingAndNonspeakingScenes">
+      <property name="text">
+       <string>Show speaking and non-speaking scenes count</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Sort characters</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="castSortBy">
+      <property name="sizeAdjustPolicy">
+       <enum>QComboBox::AdjustToContents</enum>
+      </property>
+      <item>
+       <property name="text">
+        <string>by script order</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>by alphabetical order</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from most to least scenes</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from least to most scenes</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from most to least dialogues</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>from least to most dialogues</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="characterDialoguesPage">
+   <layout class="QFormLayout" name="formLayout_5">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Character:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QListView" name="characterName">
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="verticalScrollMode">
+       <enum>QAbstractItemView::ScrollPerItem</enum>
+      </property>
+      <property name="horizontalScrollMode">
+       <enum>QAbstractItemView::ScrollPerPixel</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="eventPlotPage">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QCheckBox" name="storyStructureAnalisysSceneChron">
+      <property name="text">
+       <string>Scene Duration</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="storyStructureAnalisysActionChron">
+      <property name="text">
+       <string>Action Duration</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="storyStructureAnalisysDialoguesChron">
+      <property name="text">
+       <string>Dialogues Duration</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="storyStructureAnalisysCharactersCount">
+      <property name="text">
+       <string>Characters Count</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="storyStructureAnalisysDialoguesCount">
+      <property name="text">
+       <string>Dialogues Count</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>38</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>summaryText</tabstop>
+  <tabstop>summaryScenes</tabstop>
+  <tabstop>summaryLocations</tabstop>
+  <tabstop>summaryCharacters</tabstop>
+  <tabstop>sceneSortBy</tabstop>
+  <tabstop>sceneShowCharacters</tabstop>
+  <tabstop>locationExtendedView</tabstop>
+  <tabstop>locationSortBy</tabstop>
+  <tabstop>castShowSpeakingAndNonspeakingScenes</tabstop>
+  <tabstop>castSortBy</tabstop>
+  <tabstop>characterName</tabstop>
+  <tabstop>storyStructureAnalisysSceneChron</tabstop>
+  <tabstop>storyStructureAnalisysActionChron</tabstop>
+  <tabstop>storyStructureAnalisysDialoguesChron</tabstop>
+  <tabstop>storyStructureAnalisysCharactersCount</tabstop>
+  <tabstop>storyStructureAnalisysDialoguesCount</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

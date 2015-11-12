@@ -1,0 +1,361 @@
+#include "ResearchManager.h"
+
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
+#include <Domain/Research.h>
+
+#include <BusinessLayer/Research/ResearchModel.h>
+#include <BusinessLayer/Research/ResearchModelItem.h>
+
+#include <UserInterfaceLayer/Research/ResearchView.h>
+#include <UserInterfaceLayer/Research/ResearchItemDialog.h>
+
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+
+#include <QHBoxLayout>
+#include <QMenu>
+#include <QSplitter>
+#include <QWidget>
+
+using ManagementLayer::ResearchManager;
+using BusinessLogic::ResearchModel;
+using BusinessLogic::ResearchModelItem;
+using DataStorageLayer::StorageFacade;
+using UserInterface::ResearchView;
+using UserInterface::ResearchItemDialog;
+
+namespace {
+	/**
+	 * @brief Ключи для доступа к данным сценария
+	 */
+	/** @{ */
+	const QString NAME_KEY = "name";
+	const QString LOGLINE_KEY = "logline";
+	const QString ADDITIONAL_INFO_KEY = "additional_info";
+	const QString GENRE_KEY = "genre";
+	const QString AUTHOR_KEY = "author";
+	const QString CONTACTS_KEY = "contacts";
+	const QString YEAR_KEY = "year";
+	const QString SYNOPSIS_KEY = "synopsis";
+	/** @} */
+}
+
+
+ResearchManager::ResearchManager(QObject* _parent, QWidget* _parentWidget) :
+	QObject(_parent),
+	m_view(new ResearchView(_parentWidget)),
+	m_dialog(new ResearchItemDialog(m_view)),
+	m_model(new ResearchModel(this)),
+	m_currentResearch(0)
+{
+	initView();
+	initConnections();
+}
+
+QWidget* ResearchManager::view() const
+{
+	return m_view;
+}
+
+void ResearchManager::loadCurrentProject()
+{
+	//
+	// Загрузим данные сценария
+	//
+	m_scenarioData.insert(NAME_KEY, StorageFacade::scenarioDataStorage()->name());
+	m_scenarioData.insert(LOGLINE_KEY, StorageFacade::scenarioDataStorage()->logline());
+	m_scenarioData.insert(ADDITIONAL_INFO_KEY, StorageFacade::scenarioDataStorage()->additionalInfo());
+	m_scenarioData.insert(GENRE_KEY, StorageFacade::scenarioDataStorage()->genre());
+	m_scenarioData.insert(AUTHOR_KEY, StorageFacade::scenarioDataStorage()->author());
+	m_scenarioData.insert(CONTACTS_KEY, StorageFacade::scenarioDataStorage()->contacts());
+	m_scenarioData.insert(YEAR_KEY, StorageFacade::scenarioDataStorage()->year());
+	m_scenarioData.insert(SYNOPSIS_KEY, StorageFacade::scenarioDataStorage()->synopsis());
+
+	//
+	// Загрузим модель разработки
+	//
+	m_model->load(StorageFacade::researchStorage()->all());
+	m_view->setResearchModel(m_model);
+	editResearch(m_model->index(0, 0));
+}
+
+void ResearchManager::closeCurrentProject()
+{
+	m_scenarioData.clear();
+	m_model->clear();
+	m_view->setResearchModel(0);
+}
+
+void ResearchManager::saveResearch()
+{
+	//
+	// Сохраняем данные сценария
+	//
+	StorageFacade::scenarioDataStorage()->setName(m_scenarioData.value(NAME_KEY));
+	StorageFacade::scenarioDataStorage()->setLogline(m_scenarioData.value(LOGLINE_KEY));
+	StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_scenarioData.value(ADDITIONAL_INFO_KEY));
+	StorageFacade::scenarioDataStorage()->setGenre(m_scenarioData.value(GENRE_KEY));
+	StorageFacade::scenarioDataStorage()->setAuthor(m_scenarioData.value(AUTHOR_KEY));
+	StorageFacade::scenarioDataStorage()->setContacts(m_scenarioData.value(CONTACTS_KEY));
+	StorageFacade::scenarioDataStorage()->setYear(m_scenarioData.value(YEAR_KEY));
+	StorageFacade::scenarioDataStorage()->setSynopsis(m_scenarioData.value(SYNOPSIS_KEY));
+
+	//
+	// Сохраняем элементы разработки
+	//
+	foreach (Domain::DomainObject* researchObject,
+			 DataStorageLayer::StorageFacade::researchStorage()->all()->toList()) {
+		Domain::Research* research = dynamic_cast<Domain::Research*>(researchObject);
+		DataStorageLayer::StorageFacade::researchStorage()->updateResearch(research);
+	}
+}
+
+void ResearchManager::setCommentOnly(bool _isCommentOnly)
+{
+//	m_navigatorManager->setCommentOnly(_isCommentOnly);
+//	m_dataEditManager->setCommentOnly(_isCommentOnly);
+}
+
+void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)
+{
+	QString selectedResearchName;
+	ResearchModelItem* selectedResearchItem = m_model->itemForIndex(_selectedItemIndex);
+	Research* selectedResearch = selectedResearchItem->research();
+	if (selectedResearch != 0
+		&& (selectedResearch->type() == Research::ResearchRoot
+			|| selectedResearch->type() == Research::Folder)) {
+		selectedResearchName = selectedResearch->name();
+	}
+
+	m_dialog->clear();
+	m_dialog->setInsertParent(selectedResearchName);
+	if (m_dialog->exec() == QLightBoxDialog::Accepted) {
+		//
+		// Определим родительский элемент
+		//
+		ResearchModelItem* parentResearchItem = 0;
+		int insertPosition = 0;
+		if (selectedResearchItem->research()->type() == Research::ResearchRoot
+			|| m_dialog->insertResearchInParent()) {
+			parentResearchItem = selectedResearchItem;
+			insertPosition = parentResearchItem->childCount();
+		} else {
+			parentResearchItem = selectedResearchItem->parent();
+			insertPosition = _selectedItemIndex.row() + 1;
+		}
+		Research* parentResearch = parentResearchItem->research();
+
+		//
+		// Создаём новый элемент
+		//
+		Research* newResearch =
+			StorageFacade::researchStorage()->storeResearch(
+				parentResearch,
+				(Research::Type)m_dialog->researchType(),
+				m_dialog->researchName(),
+				insertPosition);
+
+		//
+		// Добавляем его в дерево
+		//
+		ResearchModelItem* newResearchItem = new ResearchModelItem(newResearch);
+		if (selectedResearchItem->research()->type() == Research::ResearchRoot
+			|| m_dialog->insertResearchInParent()) {
+			m_model->addItem(newResearchItem, parentResearchItem);
+		} else {
+			m_model->insertItem(newResearchItem, selectedResearchItem);
+		}
+
+		//
+		// Выбираем его в представлении
+		//
+		m_view->selectItem(m_model->indexForItem(newResearchItem));
+
+		emit researchChanged();
+	}
+}
+
+void ResearchManager::editResearch(const QModelIndex& _index)
+{
+	//
+	// Определим какой элемент разработки нужно редактировать
+	//
+	if (ResearchModelItem* researchItem = m_model->itemForIndex(_index)) {
+		if (Research* research = researchItem->research()) {
+			m_currentResearch = research;
+
+			//
+			// В зависимости от типа элемента загрузим необходимые данные в редактор
+			//
+			switch (research->type()) {
+				case Research::Scenario: {
+					m_view->editScenario(
+						m_scenarioData.value(NAME_KEY),
+						m_scenarioData.value(LOGLINE_KEY));
+					break;
+				}
+
+				case Research::TitlePage: {
+					m_view->editTitlePage(
+						m_scenarioData.value(NAME_KEY),
+						m_scenarioData.value(ADDITIONAL_INFO_KEY),
+						m_scenarioData.value(GENRE_KEY),
+						m_scenarioData.value(AUTHOR_KEY),
+						m_scenarioData.value(CONTACTS_KEY),
+						m_scenarioData.value(YEAR_KEY));
+					break;
+				}
+
+				case Research::Synopsis: {
+					m_view->editSynopsis(m_scenarioData.value(SYNOPSIS_KEY));
+					break;
+				}
+
+				case Research::ResearchRoot: {
+					m_view->editResearchRoot();
+					break;
+				}
+
+				case Research::Folder:
+				case Research::Text: {
+					m_view->editText(research->name(), research->description());
+					break;
+				}
+			}
+		}
+	}
+}
+
+void ResearchManager::removeResearch(const QModelIndex& _index)
+{
+	//
+	// Если пользователь серьёзно намерен удалить разработку
+	//
+	ResearchModelItem* researchItem = m_model->itemForIndex(_index);
+	Research* research = researchItem->research();
+	if (QLightBoxMessage::question(m_view, QString::null,
+			tr("Are you shure to remove research: <b>%1</b>?").arg(research->name()),
+			QDialogButtonBox::Yes | QDialogButtonBox::No)
+		== QDialogButtonBox::Yes) {
+		//
+		// ... удалим
+		//
+		m_model->removeItem(researchItem);
+		DataStorageLayer::StorageFacade::researchStorage()->removeResearch(research);
+
+		//
+		// ... реактивируем редактор на родительский, или соседний элемент
+		//
+		if (_index.row() == 0) {
+			m_view->selectItem(_index.parent());
+		} else {
+			m_view->selectItem(_index.sibling(_index.row() - 1, _index.column()));
+		}
+
+		emit researchChanged();
+	}
+}
+
+void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const QPoint& _pos)
+{
+	ResearchModelItem* researchItem = m_model->itemForIndex(_index);
+	bool showAdd = false;
+	bool showRemove = false;
+	switch (researchItem->research()->type()) {
+		case Research::ResearchRoot: {
+			showAdd = true;
+			break;
+		}
+
+		case Research::Folder:
+		case Research::Text: {
+			showAdd = true;
+			showRemove = true;
+			break;
+		}
+
+		default: {
+			break;
+		}
+	}
+
+	if (showAdd || showRemove) {
+		QMenu menu(m_view);
+		QAction* addAction = menu.addAction(tr("Add New"));
+		addAction->setVisible(showAdd);
+		QAction* removeAction = menu.addAction(tr("Remove"));
+		removeAction->setVisible(showRemove);
+
+		QAction* toggledAction = menu.exec(_pos);
+		if (toggledAction == addAction) {
+			addResearch(_index);
+		} else if (toggledAction == removeAction) {
+			removeResearch(_index);
+		}
+	}
+}
+
+void ResearchManager::updateScenarioData(const QString& _key, const QString& _value)
+{
+	if (m_scenarioData.value(_key) != _value) {
+		m_scenarioData.insert(_key, _value);
+		emit researchChanged();
+	}
+}
+
+void ResearchManager::initView()
+{
+
+}
+
+void ResearchManager::initConnections()
+{
+	connect(m_view, &ResearchView::addResearchRequested, this, &ResearchManager::addResearch);
+	connect(m_view, &ResearchView::editResearchRequested, this, &ResearchManager::editResearch);
+	connect(m_view, &ResearchView::removeResearchRequested, this, &ResearchManager::removeResearch);
+	connect(m_view, &ResearchView::navigatorContextMenuRequested, this, &ResearchManager::showNavigatorContextMenu);
+
+	connect(m_view, &ResearchView::scenarioNameChanged, [=](const QString& _name){
+		updateScenarioData(NAME_KEY, _name);
+	});
+	connect(m_view, &ResearchView::scenarioLoglineChanged, [=](const QString& _logline){
+		updateScenarioData(LOGLINE_KEY, _logline);
+	});
+	connect(m_view, &ResearchView::titlePageAdditionalInfoChanged, [=](const QString& _additionalInfo){
+		updateScenarioData(ADDITIONAL_INFO_KEY, _additionalInfo);
+	});
+	connect(m_view, &ResearchView::titlePageGenreChanged, [=](const QString& _genre){
+		updateScenarioData(GENRE_KEY, _genre);
+	});
+	connect(m_view, &ResearchView::titlePageAuthorChanged, [=](const QString& _author){
+		updateScenarioData(AUTHOR_KEY, _author);
+	});
+	connect(m_view, &ResearchView::titlePageContactsChanged, [=](const QString& _contacts){
+		updateScenarioData(CONTACTS_KEY, _contacts);
+	});
+	connect(m_view, &ResearchView::titlePageYearChanged, [=](const QString& _year){
+		updateScenarioData(YEAR_KEY, _year);
+	});
+	connect(m_view, &ResearchView::synopsisTextChanged, [=](const QString& _synopsis){
+		updateScenarioData(SYNOPSIS_KEY, _synopsis);
+	});
+
+	connect(m_view, &ResearchView::textNameChanged, [=](const QString& _name){
+		if (m_currentResearch != 0
+			&& m_currentResearch->name() != _name) {
+			m_currentResearch->setName(_name);
+			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+			emit researchChanged();
+		}
+	});
+	connect(m_view, &ResearchView::textDescriptionChanged, [=](const QString& _description){
+		if (m_currentResearch != 0
+			&& m_currentResearch->description() != _description) {
+			m_currentResearch->setDescription(_description);
+			emit researchChanged();
+		}
+	});
+}

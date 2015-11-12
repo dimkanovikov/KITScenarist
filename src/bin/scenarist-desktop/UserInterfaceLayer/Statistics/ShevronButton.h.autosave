@@ -1,0 +1,24 @@
+#ifndef SHEVRONBUTTON_H
+#define SHEVRONBUTTON_H
+
+#include <QRadioButton>
+
+
+/**
+ * @brief Кнопка с шевроном
+ */
+class ShevronButton : public QRadioButton
+{
+	Q_OBJECT
+	
+public:
+	explicit ShevronButton(QWidget* _parent = 0);
+	
+protected:
+	/**
+	 * @brief Переопределяется для прорисовки шеврона
+	 */
+	void paintEvent(QPaintEvent* _event);
+};
+
+#endif // SHEVRONBUTTON_H
