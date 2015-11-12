@@ -51,6 +51,11 @@ namespace ManagementLayer
 		void applicationSaveBackupsChanged(bool _value);
 		void applicationSaveBackupsFolderChanged(const QString& _value);
 		void applicationTwoPanelModeChanged(bool _value);
+		void applicationModuleResearchChanged(bool _value);
+		void applicationModuleScenarioChanged(bool _value);
+		void applicationModuleCharactersChanged(bool _value);
+		void applicationModuleLocationsChanged(bool _value);
+		void applicationModuleStatisticsChanged(bool _value);
 
 		void scenarioEditPageViewChanged(bool  _value);
 		void scenarioEditShowScenesNumbersChanged(bool  _value);

@@ -342,6 +342,11 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("application/save-backups", "0");
 	m_defaultValues.insert("application/save-backups-folder",
 		QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+	m_defaultValues.insert("application/modules/research", "1");
+	m_defaultValues.insert("application/modules/scenario", "1");
+	m_defaultValues.insert("application/modules/characters", "1");
+	m_defaultValues.insert("application/modules/locations", "1");
+	m_defaultValues.insert("application/modules/statistics", "1");
 
 	m_defaultValues.insert("navigator/show-scenes-numbers", "1");
 	m_defaultValues.insert("navigator/show-scene-description", "1");

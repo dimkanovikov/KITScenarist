@@ -105,6 +105,12 @@ application/use-dark-theme - использовать тёмную тему
 application/save-backups - сохранять резервные копии
 application/save-backups-folder - папка сохранения резервных копий
 application/two-panel-mode - режим разделения экрана на 2 панели (0 - выключен, 1 - включён)
+application/modules/... - включённые/выключенные модули
+application/modules/research
+application/modules/scenario
+application/modules/characters
+application/modules/locations
+application/modules/statistics
 
 application/recent-files/list/... - последние использованые файлы программы (в виде ключ - путь, значение - название проекта (если не задано, то имя файла без расширения))
 application/recent-files/using/... - даты использования последних файлов (путь, дата)

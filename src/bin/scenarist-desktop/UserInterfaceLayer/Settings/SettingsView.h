@@ -54,6 +54,11 @@ namespace UserInterface
 		void setApplicationSaveBackups(bool _save);
 		void setApplicationSaveBackupsFolder(const QString& _folder);
 		void setApplicationTwoPanelMode(bool _use);
+		void setApplicationModuleResearch(bool _use);
+		void setApplicationModuleScenario(bool _use);
+		void setApplicationModuleCharacters(bool _use);
+		void setApplicationModuleLocations(bool _use);
+		void setApplicationModuleStatistics(bool _use);
 
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditShowScenesNumbers(bool _value);
@@ -115,6 +120,11 @@ namespace UserInterface
 		void applicationSaveBackupsChanged(bool);
 		void applicationSaveBackupsFolderChanged(const QString&);
 		void applicationTwoPanelModeChanged(bool);
+		void applicationModuleResearchChanged(bool);
+		void applicationModuleScenarioChanged(bool);
+		void applicationModuleCharactersChanged(bool);
+		void applicationModuleLocationsChanged(bool);
+		void applicationModuleStatisticsChanged(bool);
 
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditShowScenesNumbersChanged(bool);
@@ -267,6 +277,11 @@ namespace UserInterface
 		 * @brief Язык приложения
 		 */
 		int m_appLanguage;
+
+		/**
+		 * @brief Переключатель вкладок для настроек приложения
+		 */
+		TabBar* m_applicationTabs;
 
 		/**
 		 * @brief Переключатель вкладок для настроек редактора сценария

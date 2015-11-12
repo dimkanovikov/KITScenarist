@@ -175,6 +175,31 @@ void SettingsManager::applicationTwoPanelModeChanged(bool _value)
 	storeValue("application/two-panel-mode", _value);
 }
 
+void SettingsManager::applicationModuleResearchChanged(bool _value)
+{
+	storeValue("application/modules/research", _value);
+}
+
+void SettingsManager::applicationModuleScenarioChanged(bool _value)
+{
+	storeValue("application/modules/scenario", _value);
+}
+
+void SettingsManager::applicationModuleCharactersChanged(bool _value)
+{
+	storeValue("application/modules/characters", _value);
+}
+
+void SettingsManager::applicationModuleLocationsChanged(bool _value)
+{
+	storeValue("application/modules/locations", _value);
+}
+
+void SettingsManager::applicationModuleStatisticsChanged(bool _value)
+{
+	storeValue("application/modules/statistics", _value);
+}
+
 void SettingsManager::scenarioEditPageViewChanged(bool _value)
 {
 	storeValue("scenario-editor/page-view", _value);
@@ -533,6 +558,8 @@ void SettingsManager::initView()
 	//
 	// Настройки приложения
 	//
+	// ... общие
+	//
 	m_view->setApplicationLanguage(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"application/language",
@@ -571,6 +598,39 @@ void SettingsManager::initView()
 	m_view->setApplicationTwoPanelMode(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"application/two-panel-mode",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	//
+	// ... модули
+	//
+	m_view->setApplicationModuleResearch(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/modules/research",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setApplicationModuleScenario(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/modules/scenario",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setApplicationModuleCharacters(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/modules/characters",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setApplicationModuleLocations(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/modules/locations",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setApplicationModuleStatistics(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/modules/statistics",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
@@ -901,6 +961,11 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationSaveBackupsChanged(bool)), this, SLOT(applicationSaveBackupsChanged(bool)));
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SLOT(applicationSaveBackupsFolderChanged(QString)));
 	connect(m_view, &SettingsView::applicationTwoPanelModeChanged, this, &SettingsManager::applicationTwoPanelModeChanged);
+	connect(m_view, &SettingsView::applicationModuleResearchChanged, this, &SettingsManager::applicationModuleResearchChanged);
+	connect(m_view, &SettingsView::applicationModuleScenarioChanged, this, &SettingsManager::applicationModuleScenarioChanged);
+	connect(m_view, &SettingsView::applicationModuleCharactersChanged, this, &SettingsManager::applicationModuleCharactersChanged);
+	connect(m_view, &SettingsView::applicationModuleLocationsChanged, this, &SettingsManager::applicationModuleLocationsChanged);
+	connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationModuleStatisticsChanged);
 
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
@@ -961,6 +1026,11 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationSaveBackupsChanged(bool)), this, SIGNAL(applicationSettingsUpdated()));
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SIGNAL(applicationSettingsUpdated()));
 	connect(m_view, &SettingsView::applicationTwoPanelModeChanged, this, &SettingsManager::applicationSettingsUpdated);
+	connect(m_view, &SettingsView::applicationModuleResearchChanged, this, &SettingsManager::applicationSettingsUpdated);
+	connect(m_view, &SettingsView::applicationModuleScenarioChanged, this, &SettingsManager::applicationSettingsUpdated);
+	connect(m_view, &SettingsView::applicationModuleCharactersChanged, this, &SettingsManager::applicationSettingsUpdated);
+	connect(m_view, &SettingsView::applicationModuleLocationsChanged, this, &SettingsManager::applicationSettingsUpdated);
+	connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationSettingsUpdated);
 
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));

@@ -114,31 +114,51 @@ QAction *SideTabBar::addTab(const QString &text, const QIcon &icon)
 	return action;
 }
 
+QAction* SideTabBar::tab(int _index) const
+{
+	QAction* result = 0;
+	if (_index < m_tabs.size()) {
+		result = m_tabs.at(_index);
+	}
+	return result;
+}
+
 void SideTabBar::setCurrentTab(int _index)
 {
 	//
 	// Если индекс в допустимом пределе и выделена не текущая вкладка
 	//
 	if (_index < m_tabs.size()
-		&& m_tabs.indexOf(m_checkedTab) != _index) {
+		&& m_checkedTab != m_tabs.at(_index)) {
 		//
-		// Запоминаем предыдущую активную вкладку
+		// Переключаемся только на видимую вкладку
 		//
-		m_prevCurrentIndex = m_tabs.indexOf(m_checkedTab);
+		if (m_tabs.at(_index)->isVisible()) {
+			//
+			// Запоминаем предыдущую активную вкладку
+			//
+			m_prevCurrentIndex = m_tabs.indexOf(m_checkedTab);
 
-		//
-		// Переключаемся на новую активную вкладку
-		//
-		m_checkedTab->setChecked(false);
-		m_checkedTab = m_tabs.at(_index);
-		m_checkedTab->setChecked(true);
-		update();
+			//
+			// Переключаемся на новую активную вкладку
+			//
+			m_checkedTab->setChecked(false);
+			m_checkedTab = m_tabs.at(_index);
+			m_checkedTab->setChecked(true);
+			update();
 
+			//
+			// Уведомляем об изменении активной вкладки
+			//
+			m_currentIndex = _index;
+			emit currentChanged(m_currentIndex);
+		}
 		//
-		// Уведомляем об изменении активной вкладки
+		// Если вкладка невидима, переключаемся на следующую за ней
 		//
-		m_currentIndex = _index;
-		emit currentChanged(m_currentIndex);
+		else {
+			setCurrentTab(_index + 1);
+		}
 	}
 }
 
@@ -150,11 +170,6 @@ int SideTabBar::currentTab() const
 int SideTabBar::prevCurrentTab() const
 {
 	return m_prevCurrentIndex;
-}
-
-QList<QAction*> SideTabBar::tabs() const
-{
-	return m_tabs;
 }
 
 void SideTabBar::addIndicator(const QIcon& _icon, const QString& _title, const QString& _message)
@@ -203,57 +218,62 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 	//
 	const int tabHeight = ::tabHeight(m_compactMode);
 	const int iconRectHeight = tabHeight - (m_compactMode ? 0 : 16);
-	int actionY = 1;
-	foreach (QAction *action, m_tabs)
+	int tabY = 1;
+	foreach (QAction* tab, m_tabs)
 	{
-		const QRect actionRect(0, actionY, event->rect().width() - 1, tabHeight);
+		//
+		// Рисуем только видимые вкладки
+		//
+		if (tab->isVisible()) {
+			const QRect tabRect(0, tabY, event->rect().width() - 1, tabHeight);
 
-		//
-		// Текущая вкладка
-		//
-		if (action->isChecked()) {
-			p.fillRect(actionRect, palette().window());
+			//
+			// Текущая вкладка
+			//
+			if (tab->isChecked()) {
+				p.fillRect(tabRect, palette().window());
+			}
+
+			//
+			// Настроим иконку вкладки
+			//
+			const QRect tabIconRect(0, tabY, event->rect().width(), iconRectHeight);
+			QPixmap tabImage = tab->icon().pixmap(::tabIconSize(m_compactMode));
+			//
+			// ... если действие недоступно
+			//
+			if (!tab->isEnabled()) {
+				tabImage = ::makeIconDisabled(tabImage);
+			}
+			//
+			// ... если действие неактивно
+			//
+			else if (!tab->isChecked()) {
+				tabImage = ::makeIconInactive(tabImage);
+			}
+
+			//
+			// Рисуем иконку
+			//
+			QIcon tabIcon(tabImage);
+			tabIcon.paint(&p, tabIconRect);
+			p.setOpacity(1);
+
+			//
+			// Рисуем текст
+			//
+			if (m_compactMode == false) {
+				p.setPen(QApplication::palette().color(QPalette::Inactive, QPalette::Text)); // неактивный текст
+				if (tab->isChecked())
+					p.setPen(QApplication::palette().color(QPalette::Active, QPalette::Text)); // активный текст
+				if (!tab->isEnabled())
+					p.setPen(QApplication::palette().color(QPalette::Disabled, QPalette::Text)); // недоступный текст
+				QRect tabTextRect(0, tabY + tabRect.height() - 23, event->rect().width(), 18);
+				p.drawText(tabTextRect, Qt::AlignCenter, tab->text());
+			}
+
+			tabY += tabHeight;
 		}
-
-		//
-		// Настроим иконку вкладки
-		//
-		const QRect actionIconRect(0, actionY, event->rect().width(), iconRectHeight);
-		QPixmap actionImage = action->icon().pixmap(::tabIconSize(m_compactMode));
-		//
-		// ... если действие недоступно
-		//
-		if (!action->isEnabled()) {
-			actionImage = ::makeIconDisabled(actionImage);
-		}
-		//
-		// ... если действие неактивно
-		//
-		else if (!action->isChecked()) {
-			actionImage = ::makeIconInactive(actionImage);
-		}
-
-		//
-		// Рисуем иконку
-		//
-		QIcon actionIcon(actionImage);
-		actionIcon.paint(&p, actionIconRect);
-		p.setOpacity(1);
-
-		//
-		// Рисуем текст
-		//
-		if (m_compactMode == false) {
-			p.setPen(QApplication::palette().color(QPalette::Inactive, QPalette::Text)); // неактивный текст
-			if (action->isChecked())
-				p.setPen(QApplication::palette().color(QPalette::Active, QPalette::Text)); // активный текст
-			if (!action->isEnabled())
-				p.setPen(QApplication::palette().color(QPalette::Disabled, QPalette::Text)); // недоступный текст
-			QRect actionTextRect(0, actionY+actionRect.height()-23, event->rect().width(), 18);
-			p.drawText(actionTextRect, Qt::AlignCenter, action->text());
-		}
-
-		actionY += tabHeight;
 	}
 
 	//
@@ -332,15 +352,20 @@ QSize SideTabBar::minimumSizeHint() const
 	return QSize(width, height);
 }
 
-QAction* SideTabBar::tabAt(const QPoint &at)
+QAction* SideTabBar::tabAt(const QPoint& _pos)
 {
-	int actionY = 0;
-	foreach(QAction *action, m_tabs)
+	QAction* tabAtPos = 0;
+	int tabY = 0;
+	foreach(QAction* tab, m_tabs)
 	{
-		QRect actionRect(0, actionY, rect().width(), ::tabHeight(m_compactMode));
-		if(actionRect.contains(at))
-			return action;
-		actionY += actionRect.height();
+		if (tab->isVisible()) {
+			QRect tabRect(0, tabY, rect().width(), ::tabHeight(m_compactMode));
+			if (tabRect.contains(_pos)) {
+				tabAtPos = tab;
+				break;
+			}
+			tabY += tabRect.height();
+		}
 	}
-	return 0;
+	return tabAtPos;
 }

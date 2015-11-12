@@ -1307,7 +1307,7 @@ void ApplicationManager::reloadApplicationSettings()
 	//
 	// Разделение экрана на две панели
 	//
-	bool twoPanelsMode =
+	const bool twoPanelsMode =
 			DataStorageLayer::StorageFacade::settingsStorage()->value(
 				"application/two-panel-mode",
 				DataStorageLayer::SettingsStorage::ApplicationSettings)
@@ -1317,6 +1317,49 @@ void ApplicationManager::reloadApplicationSettings()
 	m_splitter->setSizes(QList<int>() << 1 << (twoPanelsMode ? 1 : 0));
 	m_tabsSecondary->setVisible(twoPanelsMode);
 	m_tabsWidgetsSecondary->setVisible(twoPanelsMode);
+
+	//
+	// Активация/деактивация модулей модули
+	//
+	const bool showResearchModule =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/modules/research",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	m_tabs->tab(RESEARCH_TAB_INDEX)->setVisible(showResearchModule);
+	m_tabsSecondary->tab(RESEARCH_TAB_INDEX)->setVisible(showResearchModule);
+	//
+	const bool showScenarioModule =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/modules/scenario",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	m_tabs->tab(SCENARIO_TAB_INDEX)->setVisible(showScenarioModule);
+	m_tabsSecondary->tab(SCENARIO_TAB_INDEX)->setVisible(showScenarioModule);
+	//
+	const bool showCharactersModule =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/modules/characters",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	m_tabs->tab(CHARACTERS_TAB_INDEX)->setVisible(showCharactersModule);
+	m_tabsSecondary->tab(CHARACTERS_TAB_INDEX)->setVisible(showCharactersModule);
+	//
+	const bool showLocationsModule =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/modules/locations",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	m_tabs->tab(LOCATIONS_TAB_INDEX)->setVisible(showLocationsModule);
+	m_tabsSecondary->tab(LOCATIONS_TAB_INDEX)->setVisible(showLocationsModule);
+	//
+	const bool showStatisticsModule =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/modules/statistics",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	m_tabs->tab(STATISTICS_TAB_INDEX)->setVisible(showStatisticsModule);
+	m_tabsSecondary->tab(STATISTICS_TAB_INDEX)->setVisible(showStatisticsModule);
 }
 
 void ApplicationManager::updateWindowTitle()

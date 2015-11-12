@@ -35,6 +35,7 @@ SettingsView::SettingsView(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::SettingsView),
 	m_appLanguage(-1),
+	m_applicationTabs(new TabBar(this)),
 	m_scenarioEditorTabs(new TabBar(this)),
 	m_jumpsTableHeader(new HierarchicalHeaderView(Qt::Horizontal, this))
 {
@@ -159,6 +160,31 @@ void SettingsView::setApplicationSaveBackupsFolder(const QString& _folder)
 void SettingsView::setApplicationTwoPanelMode(bool _use)
 {
 	ui->applicationTwoPanelMode->setChecked(_use);
+}
+
+void SettingsView::setApplicationModuleResearch(bool _use)
+{
+	ui->applicationModuleResearch->setChecked(_use);
+}
+
+void SettingsView::setApplicationModuleScenario(bool _use)
+{
+	ui->applicationModuleScenario->setChecked(_use);
+}
+
+void SettingsView::setApplicationModuleCharacters(bool _use)
+{
+	ui->applicationModuleCharacters->setChecked(_use);
+}
+
+void SettingsView::setApplicationModuleLocations(bool _use)
+{
+	ui->applicationModuleLocations->setChecked(_use);
+}
+
+void SettingsView::setApplicationModuleStatistics(bool _use)
+{
+	ui->applicationModuleStatistics->setChecked(_use);
 }
 
 void SettingsView::setScenarioEditPageView(bool _value)
@@ -574,13 +600,20 @@ void SettingsView::initView()
 	ui->lightTheme->setChecked(true);
 	aboutColorThemeChanged();
 
+	m_applicationTabs->addTab(tr("Common"));
+	m_applicationTabs->addTab(tr("Modules"));
+	m_applicationTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+	ui->applicationPageLayout->addWidget(m_applicationTabs, 0, 0);
+	ui->applicationPageLayout->addWidget(ui->topRightEmptyLabel_1, 0, 1);
+	ui->applicationPageStack->setCurrentIndex(0);
+
 	m_scenarioEditorTabs->addTab(tr("Common"));
 	m_scenarioEditorTabs->addTab(tr("Shortcuts Settings"));
 	m_scenarioEditorTabs->addTab(tr("Review"));
 	m_scenarioEditorTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 	ui->scenarioEditPageLayout->addWidget(m_scenarioEditorTabs, 0, 0);
 	ui->scenarioEditPageLayout->addWidget(ui->topRightEmptyLabel_2, 0, 1);
-	ui->ScenarioEditPageStack->setCurrentIndex(0);
+	ui->scenarioEditPageStack->setCurrentIndex(0);
 
 	m_jumpsTableHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
 	ui->scenarioEditBlockSettingsTable->setHorizontalHeader(m_jumpsTableHeader);
@@ -599,6 +632,8 @@ void SettingsView::initConnections()
 	// Настроим соединения формы
 	//
 	connect(ui->categories, SIGNAL(currentRowChanged(int)), ui->categoriesWidgets, SLOT(setCurrentIndex(int)));
+	// ... смена вкладок страницы настроек приложения
+	connect(m_applicationTabs, &TabBar::currentChanged, ui->applicationPageStack, &QStackedWidget::setCurrentIndex);
 	// ... активация автосохранения
 	connect(ui->autosave, SIGNAL(toggled(bool)), ui->autosaveInterval, SLOT(setEnabled(bool)));
 	// ... активация проверки орфографии
@@ -608,7 +643,7 @@ void SettingsView::initConnections()
 	// ... выбор папки сохранения резервных копий
 	connect(ui->browseBackupFolder, SIGNAL(clicked()), this, SLOT(aboutBrowseSaveBackupsFolder()));
 	// ... смена вкладок страницы настройки редактора сценария
-	connect(m_scenarioEditorTabs, SIGNAL(currentChanged(int)), ui->ScenarioEditPageStack, SLOT(setCurrentIndex(int)));
+	connect(m_scenarioEditorTabs, SIGNAL(currentChanged(int)), ui->scenarioEditPageStack, SLOT(setCurrentIndex(int)));
 	// ... выбор цвета элементов редактора сценария
 	connect(ui->textColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseTextColor()));
 	connect(ui->backgroundColor, SIGNAL(clicked()), this, SLOT(aboutScenarioEditChooseBackgroundColor()));
@@ -641,6 +676,11 @@ void SettingsView::initConnections()
 	connect(ui->saveBackups, SIGNAL(toggled(bool)), this, SIGNAL(applicationSaveBackupsChanged(bool)));
 	connect(ui->saveBackupsFolder, SIGNAL(textChanged(QString)), this, SIGNAL(applicationSaveBackupsFolderChanged(QString)));
 	connect(ui->applicationTwoPanelMode, &QCheckBox::toggled, this, &SettingsView::applicationTwoPanelModeChanged);
+	connect(ui->applicationModuleResearch, &QCheckBox::toggled, this, &SettingsView::applicationModuleResearchChanged);
+	connect(ui->applicationModuleScenario, &QCheckBox::toggled, this, &SettingsView::applicationModuleScenarioChanged);
+	connect(ui->applicationModuleCharacters, &QCheckBox::toggled, this, &SettingsView::applicationModuleCharactersChanged);
+	connect(ui->applicationModuleLocations, &QCheckBox::toggled, this, &SettingsView::applicationModuleLocationsChanged);
+	connect(ui->applicationModuleStatistics, &QCheckBox::toggled, this, &SettingsView::applicationModuleStatisticsChanged);
 	// ... текстовый редактор
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->showScenesNumbersInEditor, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)));
@@ -706,7 +746,8 @@ void SettingsView::initStyleSheet()
 				 << ui->topRightEmptyLabel_3
 				 << ui->topRightEmptyLabel_4
 				 << ui->topRightEmptyLabel_5
-				 << ui->topRightEmptyLabel_7;
+				 << ui->topRightEmptyLabel_7
+				 << ui->topRightEmptyLabel_8;
 
 	foreach (QWidget* topEmpty, topEmptyList) {
 		topEmpty->setProperty("inTopPanel", true);
@@ -718,8 +759,8 @@ void SettingsView::initStyleSheet()
 	//
 	QList<QWidget*> mainList;
 	mainList << ui->categories
-			 << ui->applicationPageWidget
-			 << ui->ScenarioEditPageStack
+			 << ui->applicationPageStack
+			 << ui->scenarioEditPageStack
 			 << ui->navigatorPageWidget
 			 << ui->chronometryPageWidget
 			 << ui->templatesLibraryPageWidget;
@@ -745,5 +786,6 @@ void SettingsView::initStyleSheet()
 	//
 	// Вкладки
 	//
+	m_applicationTabs->setProperty("inTopPanel", true);
 	m_scenarioEditorTabs->setProperty("inTopPanel", true);
 }

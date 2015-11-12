@@ -14,8 +14,18 @@ class SideTabBar : public QWidget
 public:
 	SideTabBar(QWidget *parent = 0);
 
+	/**
+	 * @brief Добавить вкладку
+	 */
+	/** @{ */
 	void addTab(QAction* action);
 	QAction* addTab(const QString& text, const QIcon& icon = QIcon());
+	/** @} */
+
+	/**
+	 * @brief Получить вкладку по заданному индексу
+	 */
+	QAction* tab(int _index) const;
 
 	/**
 	 * @brief Установить текущую вкладку
@@ -32,11 +42,9 @@ public:
 	 */
 	int prevCurrentTab() const;
 
-	QList<QAction*> tabs() const;
-
 	/**
 	 * @brief Добавить индикатор вниз панели
-	 * @note Вызов с пустыми параметрами, равен вызову функции removeIndicator
+	 * @note Вызов с пустыми параметрами удаляет индикатор
 	 */
 	void addIndicator(const QIcon& _icon, const QString& _title = QString::null, const QString& _message = QString::null);
 
@@ -54,7 +62,7 @@ signals:
 	/**
 	 * @brief Изменилась текущая вкладка
 	 */
-	void currentChanged(int index);
+	void currentChanged(int _index);
 
 protected:
 	void paintEvent(QPaintEvent* event);
@@ -63,11 +71,26 @@ protected:
 	QSize minimumSizeHint() const;
 
 private:
-	QAction* tabAt(const QPoint& at);
+	/**
+	 * @brief Определить вкладку в заданной координате
+	 */
+	QAction* tabAt(const QPoint& _pos);
 
 private:
+	/**
+	 * @brief Список вкладок
+	 */
 	QList<QAction*> m_tabs;
+
+	/**
+	 * @brief Вкладка на которой был выполнен клик мышкой
+	 * @note Используется для внутренних нужд
+	 */
 	QAction* m_pressedTab;
+
+	/**
+	 * @brief Текущая активная вкладка
+	 */
 	QAction* m_checkedTab;
 
 	/**
