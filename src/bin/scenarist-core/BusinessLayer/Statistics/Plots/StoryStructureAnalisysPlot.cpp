@@ -196,11 +196,21 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 	QVector<double> dialogsChronY;
 	QVector<double> charactersCountY;
 	QVector<double> dialogsCountY;
+	const int SECONDS_IN_MINUTE = 60;
+	double lastX = 0;
 	foreach (SceneData* data, reportScenesDataList) {
-		x << data->number;
-		sceneChronY << data->chron;
-		actionChronY << data->actionChron;
-		dialogsChronY << data->dialogsChron;
+		//
+		// По иксу откладываем длительность
+		//
+		x << lastX + (double)data->chron / SECONDS_IN_MINUTE;
+		lastX = x.last();
+		//
+		// Хронометраж считаем в минутах
+		//
+		sceneChronY << (double)data->chron / SECONDS_IN_MINUTE;
+		actionChronY << (double)data->actionChron / SECONDS_IN_MINUTE;
+		dialogsChronY << (double)data->dialogsChron / SECONDS_IN_MINUTE;
+
 		charactersCountY << data->characters.size();
 		int dialogsCounter = 0;
 		foreach (const SceneCharacter& character, data->characters) {
