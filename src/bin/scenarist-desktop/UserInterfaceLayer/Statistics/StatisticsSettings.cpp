@@ -28,7 +28,7 @@ void StatisticsSettings::setCharacters(QAbstractItemModel* _characters)
 	}
 }
 
-const BusinessLogic::ReportParameters& StatisticsSettings::settings() const
+const BusinessLogic::StatisticsParameters& StatisticsSettings::settings() const
 {
 	m_settings.summaryText = ui->summaryText->isChecked();
 	m_settings.summaryScenes = ui->summaryScenes->isChecked();
@@ -48,6 +48,12 @@ const BusinessLogic::ReportParameters& StatisticsSettings::settings() const
 			ui->characterName->model()->rowCount() > 0
 			? ui->characterName->currentIndex().data().toString()
 			: QString::null;
+
+	m_settings.storyStructureAnalisysSceneChron = ui->storyStructureAnalisysSceneChron->isChecked();
+	m_settings.storyStructureAnalisysActionChron = ui->storyStructureAnalisysActionChron->isChecked();
+	m_settings.storyStructureAnalisysDialoguesChron = ui->storyStructureAnalisysDialoguesChron->isChecked();
+	m_settings.storyStructureAnalisysCharactersCount = ui->storyStructureAnalisysCharactersCount->isChecked();
+	m_settings.storyStructureAnalisysDialoguesCount = ui->storyStructureAnalisysDialoguesCount->isChecked();
 
 	return m_settings;
 }
@@ -72,4 +78,10 @@ void StatisticsSettings::initConnections()
 
 	connect(ui->castShowSpeakingAndNonspeakingScenes, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 	connect(ui->castSortBy, SIGNAL(currentIndexChanged(int)), this, SIGNAL(settingsChanged()));
+
+	connect(ui->storyStructureAnalisysSceneChron, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+	connect(ui->storyStructureAnalisysActionChron, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+	connect(ui->storyStructureAnalisysDialoguesChron, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+	connect(ui->storyStructureAnalisysCharactersCount, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+	connect(ui->storyStructureAnalisysDialoguesCount, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
 }

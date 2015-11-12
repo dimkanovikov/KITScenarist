@@ -21,7 +21,7 @@ namespace {
 using UserInterface::ReportButton;
 
 
-ReportButton::ReportButton(const QString& _text, BusinessLogic::ReportParameters::Type _type, int _subtype,
+ReportButton::ReportButton(const QString& _text, BusinessLogic::StatisticsParameters::Type _type, int _subtype,
 	QWidget* _parent) :
 	QRadioButton(_text, _parent),
 	m_type(_type),
@@ -30,7 +30,7 @@ ReportButton::ReportButton(const QString& _text, BusinessLogic::ReportParameters
 	init();
 }
 
-BusinessLogic::ReportParameters::Type ReportButton::type() const
+BusinessLogic::StatisticsParameters::Type ReportButton::type() const
 {
 	return m_type;
 }

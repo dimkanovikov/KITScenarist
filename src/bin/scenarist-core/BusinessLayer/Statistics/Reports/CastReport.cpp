@@ -25,13 +25,13 @@ namespace {
 }
 
 
-QString CastReport::reportName(const ReportParameters&) const
+QString CastReport::reportName(const StatisticsParameters&) const
 {
 	return QApplication::translate("BusinessLogic::CastReport", "Cast Report");
 }
 
 QString CastReport::makeReport(QTextDocument* _scenario,
-	const BusinessLogic::ReportParameters& _parameters) const
+	const BusinessLogic::StatisticsParameters& _parameters) const
 {
 	//
 	// Сформируем регулярное выражение для выуживания молчаливых персонажей

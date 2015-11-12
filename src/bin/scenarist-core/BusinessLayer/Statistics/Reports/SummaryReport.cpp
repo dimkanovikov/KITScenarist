@@ -61,12 +61,12 @@ namespace {
 }
 
 
-QString SummaryReport::reportName(const BusinessLogic::ReportParameters&) const
+QString SummaryReport::reportName(const BusinessLogic::StatisticsParameters&) const
 {
 	return QApplication::translate("BusinessLogic::SummaryReport", "Summary report");
 }
 
-QString SummaryReport::makeReport(QTextDocument* _scenario, const BusinessLogic::ReportParameters& _parameters) const
+QString SummaryReport::makeReport(QTextDocument* _scenario, const BusinessLogic::StatisticsParameters& _parameters) const
 {
 	//
 	// Бежим по документу и собираем статистику

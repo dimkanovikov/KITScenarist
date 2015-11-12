@@ -1,28 +1,29 @@
-#ifndef SCENEREPORT_H
-#define SCENEREPORT_H
+#ifndef STORYSTRUCTUREANALISYSPLOT_H
+#define STORYSTRUCTUREANALISYSPLOT_H
 
-#include "AbstractReport.h"
+#include "AbstractPlot.h"
 
 
 namespace BusinessLogic
 {
 	/**
-	 * @brief Отчёт по сценам
+	 * @brief График структурного анализа истории
 	 */
-	class SceneReport : public AbstractReport
+	class StoryStructureAnalisysPlot : public AbstractPlot
 	{
 	public:
-		SceneReport() {}
+		StoryStructureAnalisysPlot() {}
 
 		/**
-		 * @brief Название
+		 * @brief Получить название графика
 		 */
-		QString reportName(const ReportParameters&) const;
+		QString plotName(const StatisticsParameters& _parameters) const;
 
 		/**
-		 * @brief Подготовить отчёт
+		 * @brief Сформировать график по заданному сценарию с установленными параметрами
 		 */
-		QString makeReport(QTextDocument *_scenario, const ReportParameters &_parameters) const;
+		QVector<PlotData> makePlot(QTextDocument* _scenario,
+			const StatisticsParameters& _parameters) const;
 
 	private:
 		/**
@@ -61,7 +62,7 @@ namespace BusinessLogic
 		 */
 		class SceneData {
 		public:
-			SceneData() : page(0), number(0), chron(0) {}
+			SceneData() : page(0), number(0), chron(0), actionChron(0), dialogsChron(0) {}
 
 			/**
 			 * @brief Название
@@ -82,6 +83,16 @@ namespace BusinessLogic
 			 * @brief Хронометраж
 			 */
 			int chron;
+
+			/**
+			 * @brief Хронометраж действий
+			 */
+			int actionChron;
+
+			/**
+			 * @brief Хронометраж реплик
+			 */
+			int dialogsChron;
 
 			/**
 			 * @brief Персонажи сцены
@@ -126,4 +137,4 @@ namespace BusinessLogic
 	};
 }
 
-#endif // SCENEREPORT_H
+#endif // STORYSTRUCTUREANALISYSPLOT_H

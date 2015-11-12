@@ -1,7 +1,8 @@
 #include "StatisticsManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
-#include <BusinessLayer/Statistics/ReportFacade.h>
+#include <BusinessLayer/Statistics/StatisticsFacade.h>
+#include <BusinessLayer/Statistics/Reports/AbstractReport.h>
 
 #include <Domain/Character.h>
 
@@ -69,7 +70,7 @@ void StatisticsManager::setExportedScenario(QTextDocument* _scenario)
 	}
 }
 
-void StatisticsManager::aboutMakeReport(const BusinessLogic::ReportParameters& _parameters)
+void StatisticsManager::aboutMakeReport(const BusinessLogic::StatisticsParameters& _parameters)
 {
 	//
 	// Уведомляем пользователя, о том, что началась генерация отчёта
@@ -83,16 +84,35 @@ void StatisticsManager::aboutMakeReport(const BusinessLogic::ReportParameters& _
 		emit needNewExportedScenario();
 	}
 
-	//
-	// Формируем отчёт
-	//
-	const QString reportHtml = BusinessLogic::ReportFacade::makeReport(m_exportedScenario, _parameters);
+	switch (_parameters.type) {
+		case BusinessLogic::StatisticsParameters::Report: {
+			//
+			// Формируем отчёт
+			//
+			const QString reportHtml = BusinessLogic::StatisticsFacade::makeReport(m_exportedScenario, _parameters);
 
+			//
+			// Устанавливаем отчёт в форму
+			//
+			m_view->setReport(reportHtml);
 
-	//
-	// Устанавливаем отчёт в форму
-	//
-	m_view->setReport(reportHtml);
+			break;
+		}
+
+		case BusinessLogic::StatisticsParameters::Plot: {
+			//
+			// Формируем данные
+			//
+			QVector<BusinessLogic::PlotData> plotData = BusinessLogic::StatisticsFacade::makePlot(m_exportedScenario, _parameters);
+
+			//
+			// Рисуем график по данным
+			//
+			m_view->setPlot(plotData);
+
+			break;
+		}
+	}
 
 
 	//
@@ -108,6 +128,6 @@ void StatisticsManager::initView()
 
 void StatisticsManager::initConnections()
 {
-	connect(m_view, SIGNAL(makeReport(BusinessLogic::ReportParameters)), this, SLOT(aboutMakeReport(BusinessLogic::ReportParameters)));
+	connect(m_view, SIGNAL(makeReport(BusinessLogic::StatisticsParameters)), this, SLOT(aboutMakeReport(BusinessLogic::StatisticsParameters)));
 }
 

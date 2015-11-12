@@ -1,7 +1,7 @@
 #ifndef STATISTICSSETTINGS_H
 #define STATISTICSSETTINGS_H
 
-#include <BusinessLayer/Statistics/AbstractReport.h>
+#include <BusinessLayer/Statistics/Reports/AbstractReport.h>
 
 #include <QStackedWidget>
 
@@ -33,7 +33,7 @@ namespace UserInterface
 		/**
 		 * @brief Получить параметры отчётов
 		 */
-		const BusinessLogic::ReportParameters& settings() const;
+		const BusinessLogic::StatisticsParameters& settings() const;
 
 	signals:
 		/**
@@ -58,7 +58,7 @@ namespace UserInterface
 		/**
 		 * @brief Параметры отчёта
 		 */
-		mutable BusinessLogic::ReportParameters m_settings;
+		mutable BusinessLogic::StatisticsParameters m_settings;
 	};
 }
 

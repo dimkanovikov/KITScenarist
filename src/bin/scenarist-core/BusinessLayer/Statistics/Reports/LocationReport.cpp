@@ -23,13 +23,13 @@ namespace {
 }
 
 
-QString LocationReport::reportName(const ReportParameters&) const
+QString LocationReport::reportName(const StatisticsParameters&) const
 {
 	return QApplication::translate("BusinessLogic::LocationReport", "Location Report");
 }
 
 QString LocationReport::makeReport(QTextDocument* _scenario,
-	const BusinessLogic::ReportParameters& _parameters) const
+	const BusinessLogic::StatisticsParameters& _parameters) const
 {
 
 	PagesTextEdit edit;

@@ -6,10 +6,13 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <BusinessLayer/Statistics/Plots/AbstractPlot.h>
+
 #include <3rd_party/Widgets/Ctk/ctkCollapsibleButton.h>
 #include <3rd_party/Widgets/Ctk/ctkPopupWidget.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Widgets/QCutomPlot/qcustomplot.h>
 
 #include <QApplication>
 #include <QButtonGroup>
@@ -30,7 +33,7 @@
 using UserInterface::StatisticsView;
 using UserInterface::StatisticsSettings;
 using UserInterface::ReportButton;
-using BusinessLogic::ReportParameters;
+using BusinessLogic::StatisticsParameters;
 
 namespace {
 	/**
@@ -74,10 +77,12 @@ StatisticsView::StatisticsView(QWidget* _parent) :
 	m_settings(new FlatButton(this)),
 	m_print(new FlatButton(this)),
 	m_save(new FlatButton(this)),
+	m_update(new FlatButton(this)),
 	m_statisticTypes(new QFrame(this)),
 	m_statisticSettings(new StatisticsSettings(this)),
 	m_statisticData(new QStackedWidget(this)),
 	m_reportData(new QTextBrowser(this)),
+	m_plotData(new QCustomPlot(this)),
 	m_progress(new ProgressWidget(m_statisticData, false))
 {
 	initView();
@@ -95,6 +100,37 @@ void StatisticsView::setReport(const QString& _html)
 	m_reportData->setHtml(_html);
 }
 
+void StatisticsView::setPlot(const QVector<BusinessLogic::PlotData>& _plotData)
+{
+	m_plotData->clearGraphs();
+
+	int plotIndex = 0;
+	foreach (const BusinessLogic::PlotData& singlePlotData, _plotData) {
+		//
+		// Добавляем график и настраиваем его
+		//
+		m_plotData->addGraph();
+		m_plotData->graph(plotIndex)->setName(singlePlotData.name);
+		m_plotData->graph(plotIndex)->setPen(QPen(singlePlotData.color, 2));
+
+		//
+		// Отправляем данные в график
+		//
+		m_plotData->graph(plotIndex)->setData(singlePlotData.x, singlePlotData.y);
+
+		plotIndex += 1;
+	}
+
+	//
+	// Позволим графику самому масштабироваться для лучшего вида
+	//
+	for (plotIndex = 0; plotIndex < m_plotData->graphCount(); ++plotIndex) {
+		m_plotData->graph(plotIndex)->rescaleAxes(plotIndex > 0 ? true : false);
+	}
+
+	m_plotData->replot();
+}
+
 void StatisticsView::showProgress()
 {
 	m_progress->showProgress(tr("Preparing report"), tr("Please wait. Preparing report to preview can take few minutes."));
@@ -109,12 +145,10 @@ void StatisticsView::hideProgress()
 void StatisticsView::aboutInitDataPanel()
 {
 	if (ReportButton* button = qobject_cast<ReportButton*>(sender())) {
-		if (button->type() == BusinessLogic::ReportParameters::Report) {
+		if (button->type() == BusinessLogic::StatisticsParameters::Report) {
 			m_statisticData->setCurrentWidget(m_reportData);
 		} else {
-			//
-			// TODO: график
-			//
+			m_statisticData->setCurrentWidget(m_plotData);
 		}
 
 		m_statisticSettings->setCurrentIndex(button->group()->checkedId());
@@ -128,14 +162,12 @@ void StatisticsView::aboutInitDataPanel()
 void StatisticsView::aboutMakeReport()
 {
 	if (ReportButton* button = qobject_cast<ReportButton*>(m_reports.first()->group()->checkedButton())) {
-		BusinessLogic::ReportParameters parameters = m_statisticSettings->settings();
+		BusinessLogic::StatisticsParameters parameters = m_statisticSettings->settings();
 		parameters.type = button->type();
-		if (parameters.type == BusinessLogic::ReportParameters::Report) {
-			parameters.reportType = (BusinessLogic::ReportParameters::ReportType)button->subtype();
+		if (parameters.type == BusinessLogic::StatisticsParameters::Report) {
+			parameters.reportType = (BusinessLogic::StatisticsParameters::ReportType)button->subtype();
 		} else {
-			//
-			// TODO: график
-			//
+			parameters.plotType = (BusinessLogic::StatisticsParameters::PlotType)button->subtype();
 		}
 
 		emit makeReport(parameters);
@@ -202,6 +234,8 @@ void StatisticsView::initView()
 	m_print->setToolTip(tr("Print preview"));
 	m_save->setIcons(QIcon(":/Graphics/Icons/Editing/download.png"));
 	m_save->setToolTip(tr("Save report to file"));
+	m_update->setIcons(QIcon(":/Graphics/Icons/Editing/refresh.png"));
+	m_update->setToolTip(tr("Update current report"));
 
 
 	//
@@ -211,30 +245,60 @@ void StatisticsView::initView()
 	reports->setIndicatorAlignment(Qt::AlignRight);
 	reports->setProperty("reportButton", true);
 
-	m_reports << new ReportButton(tr("Statistics report"), ReportParameters::Report, ReportParameters::SummaryReport, reports);
-	m_reports << new ReportButton(tr("Scene report"), ReportParameters::Report, ReportParameters::SceneReport, reports);
-	m_reports << new ReportButton(tr("Location report"), ReportParameters::Report, ReportParameters::LocationReport, reports);
-	m_reports << new ReportButton(tr("Cast report"), ReportParameters::Report, ReportParameters::CastReport, reports);
-	m_reports << new ReportButton(tr("Character report"), ReportParameters::Report, ReportParameters::CharacterReport, reports);
+	const int REPORTS_MIN = m_reports.size();
+	m_reports << new ReportButton(tr("Summary statistics"), StatisticsParameters::Report, StatisticsParameters::SummaryReport, reports);
+	m_reports << new ReportButton(tr("Scene report"), StatisticsParameters::Report, StatisticsParameters::SceneReport, reports);
+	m_reports << new ReportButton(tr("Location report"), StatisticsParameters::Report, StatisticsParameters::LocationReport, reports);
+	m_reports << new ReportButton(tr("Cast report"), StatisticsParameters::Report, StatisticsParameters::CastReport, reports);
+	m_reports << new ReportButton(tr("Character dialogues"), StatisticsParameters::Report, StatisticsParameters::CharacterReport, reports);
+	const int REPORTS_MAX = m_reports.size();
 
 	QVBoxLayout* reportsLayout = new QVBoxLayout;
 	reportsLayout->setContentsMargins(QMargins());
 	reportsLayout->setSpacing(0);
-	foreach (ReportButton* button, m_reports) {
-		reportsLayout->addWidget(button);
+	for (int reportIndex = REPORTS_MIN; reportIndex < REPORTS_MAX; ++reportIndex) {
+		reportsLayout->addWidget(m_reports.at(reportIndex));
 	}
 	reports->setLayout(reportsLayout);
 
-	QButtonGroup* group = new QButtonGroup(this);
-	int buttonId = 1;
-	foreach (ReportButton* button, m_reports) {
-		group->addButton(button, buttonId++);
+	//
+	// Настраиваем панель со списком графиков
+	//
+	ctkCollapsibleButton* plots = new ctkCollapsibleButton(tr("Plots"), this);
+	plots->setIndicatorAlignment(Qt::AlignRight);
+	plots->setProperty("reportButton", true);
+
+	const int PLOTS_MIN = m_reports.size();
+	m_reports << new ReportButton(tr("Story structure analysis"), StatisticsParameters::Plot, StatisticsParameters::StoryStructureAnalisysPlot, plots);
+	const int PLOTS_MAX = m_reports.size();
+
+	QVBoxLayout* plotsLayout = new QVBoxLayout;
+	plotsLayout->setContentsMargins(QMargins());
+	plotsLayout->setSpacing(0);
+	for (int plotIndex = PLOTS_MIN; plotIndex < PLOTS_MAX; ++plotIndex) {
+		plotsLayout->addWidget(m_reports.at(plotIndex));
+	}
+	plots->setLayout(plotsLayout);
+
+	//
+	// Помещаем всех отчёты и графики в группу
+	//
+	QButtonGroup* reportsGroup = new QButtonGroup(reports);
+	{
+		int reportId = 1;
+		for (int reportIndex = 0; reportIndex < m_reports.size(); ++reportIndex) {
+			reportsGroup->addButton(m_reports.at(reportIndex), reportId++);
+		}
 	}
 
+	//
+	// Настраиваем общую панель с группами отчётов
+	//
 	QVBoxLayout* statisticTypesLayout = new QVBoxLayout;
 	statisticTypesLayout->setContentsMargins(QMargins());
 	statisticTypesLayout->setSpacing(0);
 	statisticTypesLayout->addWidget(reports);
+	statisticTypesLayout->addWidget(plots);
 	statisticTypesLayout->addStretch();
 	m_statisticTypes->setLayout(statisticTypesLayout);
 
@@ -248,11 +312,39 @@ void StatisticsView::initView()
 	statisticTypesPanel->setObjectName("statisticTypesPanel");
 	statisticTypesPanel->setLayout(statisticTypesMainLayout);
 
+	//
+	// Настраиваем контейнеры отчётов
+	//
+//	// configure right and top axis to show ticks but no labels:
+//	// (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
+//	m_plotData->xAxis2->setVisible(true);
+//	m_plotData->xAxis2->setTickLabels(false);
+//	m_plotData->yAxis2->setVisible(true);
+//	m_plotData->yAxis2->setTickLabels(false);
+//	// make left and bottom axes always transfer their ranges to right and top axes:
+//	connect(m_plotData->xAxis, SIGNAL(rangeChanged(QCPRange)), m_plotData->xAxis2, SLOT(setRange(QCPRange)));
+//	connect(m_plotData->yAxis, SIGNAL(rangeChanged(QCPRange)), m_plotData->yAxis2, SLOT(setRange(QCPRange)));
+	//
+//	m_plotData->xAxis->setAutoTickLabels(true);
+//	m_plotData->xAxis->setAutoTickStep(false);
+//	m_plotData->xAxis->setAutoTickCount(20);
+//	m_plotData->xAxis->setAutoSubTicks(false);
+//	m_plotData->xAxis->setSubTickCount(0);
+	// setup legend:
+//	m_plotData->legend->setFont(QFont(font().family(), 7));
+	m_plotData->legend->setIconSize(50, 20);
+	m_plotData->legend->setVisible(true);
+	// Note: we could have also just called customPlot->rescaleAxes(); instead
+	// Allow user to drag axis ranges with mouse, zoom with mouse wheel and select graphs by clicking:
+	m_plotData->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+	m_plotData->axisRect()->setRangeZoom(Qt::Horizontal);
+	m_plotData->axisRect()->setRangeDragAxes(m_plotData->xAxis, 0);
 
 	//
 	// Настраиваем панель с данными по отчётам
 	//
 	m_statisticData->addWidget(m_reportData);
+	m_statisticData->addWidget(m_plotData);
 
 	QHBoxLayout* toolbarLayout = new QHBoxLayout;
 	toolbarLayout->setContentsMargins(QMargins());
@@ -260,6 +352,7 @@ void StatisticsView::initView()
 	toolbarLayout->addWidget(m_settings);
 	toolbarLayout->addWidget(m_print);
 	toolbarLayout->addWidget(m_save);
+	toolbarLayout->addWidget(m_update);
 	toolbarLayout->addWidget(m_rightTopEmptyLabel);
 
 	QVBoxLayout* statisticDataLayout = new QVBoxLayout;
@@ -301,6 +394,7 @@ void StatisticsView::initConnections()
 
 	connect(m_print, SIGNAL(clicked(bool)), this, SLOT(aboutPrintReport()));
 	connect(m_save, SIGNAL(clicked(bool)), this, SLOT(aboutSaveReport()));
+	connect(m_update, &FlatButton::clicked, this, &StatisticsView::aboutMakeReport);
 }
 
 void StatisticsView::initStyleSheet()
@@ -311,6 +405,7 @@ void StatisticsView::initStyleSheet()
 	m_settings->setProperty("inTopPanel", true);
 	m_print->setProperty("inTopPanel", true);
 	m_save->setProperty("inTopPanel", true);
+	m_update->setProperty("inTopPanel", true);
 
 	m_rightTopEmptyLabel->setProperty("inTopPanel", true);
 	m_rightTopEmptyLabel->setProperty("topPanelTopBordered", true);

@@ -30,13 +30,13 @@ namespace {
 }
 
 
-QString SceneReport::reportName(const ReportParameters&) const
+QString SceneReport::reportName(const StatisticsParameters&) const
 {
 	return QApplication::translate("BusinessLogic::SceneReport", "Scene Report");
 }
 
 QString SceneReport::makeReport(QTextDocument* _scenario,
-	const BusinessLogic::ReportParameters& _parameters) const
+	const BusinessLogic::StatisticsParameters& _parameters) const
 {
 	PagesTextEdit edit;
 	edit.setUsePageMode(true);

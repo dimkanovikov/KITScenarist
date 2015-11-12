@@ -1,7 +1,7 @@
 #ifndef REPORTBUTTON_H
 #define REPORTBUTTON_H
 
-#include <BusinessLayer/Statistics/AbstractReport.h>
+#include <BusinessLayer/Statistics/Reports/AbstractReport.h>
 
 #include <QRadioButton>
 
@@ -17,13 +17,13 @@ namespace UserInterface
 
 	public:
 		explicit ReportButton(const QString& _text,
-			BusinessLogic::ReportParameters::Type _type = BusinessLogic::ReportParameters::Report,
+			BusinessLogic::StatisticsParameters::Type _type = BusinessLogic::StatisticsParameters::Report,
 			int _subtype = 0, QWidget* _parent = 0);
 
 		/**
 		 * @brief Получить тип кнопки
 		 */
-		BusinessLogic::ReportParameters::Type type() const;
+		BusinessLogic::StatisticsParameters::Type type() const;
 
 		/**
 		 * @brief Получить подтип кнопки
@@ -46,7 +46,7 @@ namespace UserInterface
 		/**
 		 * @brief Тип кнопки
 		 */
-		BusinessLogic::ReportParameters::Type m_type;
+		BusinessLogic::StatisticsParameters::Type m_type;
 
 		/**
 		 * @brief Подтип отчёта или графика

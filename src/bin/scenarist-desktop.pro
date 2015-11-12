@@ -259,12 +259,11 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.cpp \
     scenarist-desktop/UserInterfaceLayer/Statistics/ReportButton.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.cpp \
-    scenarist-core/BusinessLayer/Statistics/LocationReport.cpp \
-    scenarist-core/BusinessLayer/Statistics/SceneReport.cpp \
-    scenarist-core/BusinessLayer/Statistics/ReportFacade.cpp \
-    scenarist-core/BusinessLayer/Statistics/CastReport.cpp \
-    scenarist-core/BusinessLayer/Statistics/CharacterReport.cpp \
-    scenarist-core/BusinessLayer/Statistics/SummaryReport.cpp \
+    scenarist-core/BusinessLayer/Statistics/Reports/LocationReport.cpp \
+    scenarist-core/BusinessLayer/Statistics/Reports/SceneReport.cpp \
+    scenarist-core/BusinessLayer/Statistics/Reports/CastReport.cpp \
+    scenarist-core/BusinessLayer/Statistics/Reports/CharacterReport.cpp \
+    scenarist-core/BusinessLayer/Statistics/Reports/SummaryReport.cpp \
     scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.cpp \
     scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.cpp \
     scenarist-core/Domain/Research.cpp \
@@ -281,7 +280,10 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Slide/SlideBackgroundDecorator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Animation.cpp
+    scenarist-core/3rd_party/Widgets/WAF/Animation.cpp \
+    scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.cpp \
+    scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp \
+    scenarist-core/BusinessLayer/Statistics/StatisticsFacade.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -477,15 +479,14 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/Ctk/ctkBasePopupWidget_p.h \
     scenarist-core/3rd_party/Widgets/Ctk/ctkPimpl.h \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.h \
-    scenarist-core/BusinessLayer/Statistics/AbstractReport.h \
+    scenarist-core/BusinessLayer/Statistics/Reports/AbstractReport.h \
     scenarist-desktop/UserInterfaceLayer/Statistics/ReportButton.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.h \
-    scenarist-core/BusinessLayer/Statistics/LocationReport.h \
-    scenarist-core/BusinessLayer/Statistics/SceneReport.h \
-    scenarist-core/BusinessLayer/Statistics/ReportFacade.h \
-    scenarist-core/BusinessLayer/Statistics/CastReport.h \
-    scenarist-core/BusinessLayer/Statistics/CharacterReport.h \
-    scenarist-core/BusinessLayer/Statistics/SummaryReport.h \
+    scenarist-core/BusinessLayer/Statistics/Reports/LocationReport.h \
+    scenarist-core/BusinessLayer/Statistics/Reports/SceneReport.h \
+    scenarist-core/BusinessLayer/Statistics/Reports/CastReport.h \
+    scenarist-core/BusinessLayer/Statistics/Reports/CharacterReport.h \
+    scenarist-core/BusinessLayer/Statistics/Reports/SummaryReport.h \
     scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.h \
     scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.h \
     scenarist-core/Domain/Research.h \
@@ -507,7 +508,12 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/AnimationPrivate.h \
     scenarist-core/3rd_party/Helpers/ScrollerHelper.h \
     scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
-    scenarist-core/3rd_party/Helpers/Task.h
+    scenarist-core/3rd_party/Helpers/Task.h \
+    scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.h \
+    scenarist-core/BusinessLayer/Statistics/Plots/AbstractPlot.h \
+    scenarist-core/BusinessLayer/Statistics/StatisticsParameters.h \
+    scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.h \
+    scenarist-core/BusinessLayer/Statistics/StatisticsFacade.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

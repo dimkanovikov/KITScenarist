@@ -3,6 +3,8 @@
 
 #include "AbstractReport.h"
 
+#include <QStringList>
+
 
 namespace BusinessLogic
 {
@@ -17,12 +19,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Название
 		 */
-		QString reportName(const ReportParameters &_parameters) const;
+		QString reportName(const StatisticsParameters &_parameters) const;
 
 		/**
 		 * @brief Подготовить отчёт
 		 */
-		QString makeReport(QTextDocument *_scenario, const ReportParameters &_parameters) const;
+		QString makeReport(QTextDocument *_scenario, const StatisticsParameters &_parameters) const;
 
 	private:
 		/**

@@ -20,7 +20,7 @@ namespace {
 }
 
 
-QString CharacterReport::reportName(const ReportParameters& _parameters) const
+QString CharacterReport::reportName(const StatisticsParameters& _parameters) const
 {
 	QString name = QApplication::translate("BusinessLogic::CharacterReport", "Character Report");
 	name.append(" - ");
@@ -29,7 +29,7 @@ QString CharacterReport::reportName(const ReportParameters& _parameters) const
 }
 
 QString CharacterReport::makeReport(QTextDocument* _scenario,
-	const BusinessLogic::ReportParameters& _parameters) const
+	const BusinessLogic::StatisticsParameters& _parameters) const
 {
 	if (_parameters.characterName.isEmpty()) {
 		return QString::null;

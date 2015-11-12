@@ -1,9 +1,7 @@
-#ifndef ABSTRACTREPORT
-#define ABSTRACTREPORT
+#ifndef STATISTICSPARAMETERS
+#define STATISTICSPARAMETERS
 
-#include <QStringList>
-
-class QTextDocument;
+#include <QString>
 
 
 namespace BusinessLogic
@@ -11,10 +9,10 @@ namespace BusinessLogic
 	/**
 	 * @brief Параметры отчёта
 	 */
-	class ReportParameters
+	class StatisticsParameters
 	{
 	public:
-		ReportParameters() {}
+		StatisticsParameters() {}
 
 		/**
 		 * @brief Вид отчёта
@@ -34,6 +32,13 @@ namespace BusinessLogic
 			CastReport,
 			CharacterReport
 		} reportType;
+
+		/**
+		 * @brief Тип графика
+		 */
+		enum PlotType {
+			StoryStructureAnalisysPlot
+		} plotType;
 
 		/**
 		 * @brief Параметры отчёта по статистике сценария
@@ -75,28 +80,19 @@ namespace BusinessLogic
 		/** @{ */
 		QString characterName;
 		/** @} */
-	};
-
-	/**
-	 * @brief Базовый класс для отчёта
-	 */
-	class AbstractReport
-	{
-	public:
-		virtual ~AbstractReport() {}
 
 		/**
-		 * @brief Получить название отчёта
+		 * @brief Параметры графика структурного анализа истории
 		 */
-		virtual QString reportName(const ReportParameters& _parameters) const = 0;
-
-		/**
-		 * @brief Сформировать отчёт по заданному сценарию с установленными параметрами
-		 */
-		virtual QString makeReport(QTextDocument* _scenario,
-			const ReportParameters& _parameters) const = 0;
+		/** @{ */
+		bool storyStructureAnalisysSceneChron;
+		bool storyStructureAnalisysActionChron;
+		bool storyStructureAnalisysDialoguesChron;
+		bool storyStructureAnalisysCharactersCount;
+		bool storyStructureAnalisysDialoguesCount;
+		/** @} */
 	};
 }
 
-#endif // ABSTRACTREPORT
+#endif // STATISTICSPARAMETERS
 

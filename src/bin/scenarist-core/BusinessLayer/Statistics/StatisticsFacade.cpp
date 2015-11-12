@@ -1,11 +1,14 @@
-#include "ReportFacade.h"
+#include "StatisticsFacade.h"
 
-#include "AbstractReport.h"
-#include "SummaryReport.h"
-#include "SceneReport.h"
-#include "LocationReport.h"
-#include "CastReport.h"
-#include "CharacterReport.h"
+#include "Reports/AbstractReport.h"
+#include "Reports/SummaryReport.h"
+#include "Reports/SceneReport.h"
+#include "Reports/LocationReport.h"
+#include "Reports/CastReport.h"
+#include "Reports/CharacterReport.h"
+
+#include "Plots/AbstractPlot.h"
+#include "Plots/StoryStructureAnalisysPlot.h"
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
@@ -16,39 +19,39 @@
 #include <QFileInfo>
 
 
-QString BusinessLogic::ReportFacade::makeReport(QTextDocument* _scenario, const BusinessLogic::ReportParameters& _parameters)
+QString BusinessLogic::StatisticsFacade::makeReport(QTextDocument* _scenario, const BusinessLogic::StatisticsParameters& _parameters)
 {
 	QString result;
 	switch (_parameters.type) {
 		default:
-		case ReportParameters::Report: {
+		case StatisticsParameters::Report: {
 			//
 			// Определим отчёт
 			//
 			AbstractReport* report = 0;
 			switch (_parameters.reportType) {
 				default:
-				case ReportParameters::SummaryReport: {
+				case StatisticsParameters::SummaryReport: {
 					report = new SummaryReport;
 					break;
 				}
 
-				case ReportParameters::SceneReport: {
+				case StatisticsParameters::SceneReport: {
 					report = new SceneReport;
 					break;
 				}
 
-				case ReportParameters::LocationReport: {
+				case StatisticsParameters::LocationReport: {
 					report = new LocationReport;
 					break;
 				}
 
-				case ReportParameters::CastReport: {
+				case StatisticsParameters::CastReport: {
 					report = new CastReport;
 					break;
 				}
 
-				case ReportParameters::CharacterReport: {
+				case StatisticsParameters::CharacterReport: {
 					report = new CharacterReport;
 					break;
 				}
@@ -74,6 +77,40 @@ QString BusinessLogic::ReportFacade::makeReport(QTextDocument* _scenario, const 
 			result.append("<hr width=\"100%\"></hr>");
 			result.append(report->makeReport(_scenario, _parameters));
 			result.append("</div>");
+
+			delete report;
+			report = 0;
+
+			break;
+		}
+	}
+
+	return result;
+}
+
+QVector<BusinessLogic::PlotData> BusinessLogic::StatisticsFacade::makePlot(
+	QTextDocument* _scenario, const BusinessLogic::StatisticsParameters& _parameters)
+{
+	QVector<BusinessLogic::PlotData> result;
+	switch (_parameters.type) {
+		default:
+		case StatisticsParameters::Plot: {
+			//
+			// Определим отчёт
+			//
+			AbstractPlot* plot = 0;
+			switch (_parameters.plotType) {
+				default:
+				case StatisticsParameters::StoryStructureAnalisysPlot: {
+					plot = new StoryStructureAnalisysPlot;
+					break;
+				}
+			}
+
+			result = plot->makePlot(_scenario, _parameters);
+
+			delete plot;
+			plot = 0;
 
 			break;
 		}

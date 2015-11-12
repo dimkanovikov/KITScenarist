@@ -6,6 +6,7 @@
 class FlatButton;
 class ProgressWidget;
 class QAbstractItemModel;
+class QCustomPlot;
 class QFrame;
 class QLabel;
 class QPrinter;
@@ -13,7 +14,8 @@ class QStackedWidget;
 class QTextBrowser;
 
 namespace BusinessLogic {
-	class ReportParameters;
+	class StatisticsParameters;
+	class PlotData;
 }
 
 namespace UserInterface
@@ -43,6 +45,11 @@ namespace UserInterface
 		void setReport(const QString& _html);
 
 		/**
+		 * @brief Установить данные графиков
+		 */
+		void setPlot(const QVector<BusinessLogic::PlotData>& _plotData);
+
+		/**
 		 * @brief Функции управленя индикатором информирования пользователя о подготовке отчёта
 		 */
 		/** @{ */
@@ -54,7 +61,7 @@ namespace UserInterface
 		/**
 		 * @brief Необходимо сформировать отчёт по заданным параметрам
 		 */
-		void makeReport(const BusinessLogic::ReportParameters& _parameters);
+		void makeReport(const BusinessLogic::StatisticsParameters& _parameters);
 
 	private slots:
 		/**
@@ -121,6 +128,11 @@ namespace UserInterface
 		FlatButton* m_save;
 
 		/**
+		 * @brief Кнопка "обновить отчёт"
+		 */
+		FlatButton* m_update;
+
+		/**
 		 * @brief Панель с видами отчётов
 		 */
 		QFrame* m_statisticTypes;
@@ -144,6 +156,11 @@ namespace UserInterface
 		 * @brief Данные отчёта
 		 */
 		QTextBrowser* m_reportData;
+
+		/**
+		 * @brief График
+		 */
+		QCustomPlot* m_plotData;
 
 		/**
 		 * @brief Виджет перекрытие для отображения сообщения о формирующемся отчёте

@@ -10,7 +10,7 @@ namespace UserInterface {
 }
 
 namespace BusinessLogic {
-	class ReportParameters;
+	class StatisticsParameters;
 }
 
 
@@ -54,7 +54,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Сформировать отчёт
 		 */
-		void aboutMakeReport(const BusinessLogic::ReportParameters& _parameters);
+		void aboutMakeReport(const BusinessLogic::StatisticsParameters& _parameters);
 
 	private:
 		/**

@@ -57,32 +57,32 @@
 <context>
     <name>BusinessLogic::CastReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="30"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CastReport.cpp" line="30"/>
         <source>Cast Report</source>
-        <translation>Отчёт по персонажам</translation>
+        <translation>Список персонажей</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="226"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CastReport.cpp" line="226"/>
         <source>Character</source>
         <translation>Персонаж</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="228"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CastReport.cpp" line="228"/>
         <source>Total Dialogues</source>
         <translation>Всего реплик</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="231"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CastReport.cpp" line="231"/>
         <source>Speaking Scenes</source>
         <translation>Сцен с репликами</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="233"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CastReport.cpp" line="233"/>
         <source>Non-Sp. Scenes</source>
         <translation>Сцен без реплик</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CastReport.cpp" line="236"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CastReport.cpp" line="236"/>
         <source>Total Scenes</source>
         <translation>Всего сцен</translation>
     </message>
@@ -90,27 +90,27 @@
 <context>
     <name>BusinessLogic::CharacterReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="25"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CharacterReport.cpp" line="25"/>
         <source>Character Report</source>
-        <translation>Отчёт по персонажу</translation>
+        <translation>Диалоги персонажа</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="100"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CharacterReport.cpp" line="100"/>
         <source>Scene/Dialogue</source>
         <translation>Сцена/Реплика</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="102"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CharacterReport.cpp" line="102"/>
         <source>Number</source>
         <translation>Номер</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="104"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CharacterReport.cpp" line="104"/>
         <source>Page</source>
         <translation>Страница</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/CharacterReport.cpp" line="114"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/CharacterReport.cpp" line="114"/>
         <source>[UNDEFINED]</source>
         <translation>[НЕ ОПРЕДЕЛЕНО]</translation>
     </message>
@@ -136,38 +136,38 @@
 <context>
     <name>BusinessLogic::LocationReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="28"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/LocationReport.cpp" line="28"/>
         <source>Location Report</source>
-        <translation>Отчёт по локациям</translation>
+        <translation>Список локаций</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="146"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/LocationReport.cpp" line="146"/>
         <source>Location/Scene</source>
         <translation>Локация/Сцена</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="148"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/LocationReport.cpp" line="148"/>
         <source>Number</source>
         <translation>Номер</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="150"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/LocationReport.cpp" line="150"/>
         <source>Page</source>
         <translation>Страница</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="152"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/LocationReport.cpp" line="152"/>
         <source>Scenes</source>
         <translation>Сцен</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="154"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/LocationReport.cpp" line="154"/>
         <source>Chron</source>
         <translation>Хрон</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="163"/>
-        <location filename="../../BusinessLayer/Statistics/LocationReport.cpp" line="207"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/LocationReport.cpp" line="163"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/LocationReport.cpp" line="207"/>
         <source>[UNDEFINED]</source>
         <translation>[НЕ ОПРЕДЕЛЕНО]</translation>
     </message>
@@ -175,7 +175,7 @@
 <context>
     <name>BusinessLogic::ReportFacade</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/ReportFacade.cpp" line="71"/>
+        <location filename="../../BusinessLayer/Statistics/StatisticsFacade.cpp" line="74"/>
         <source>generated</source>
         <translation>сформировано</translation>
     </message>
@@ -298,142 +298,175 @@
 <context>
     <name>BusinessLogic::SceneReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="35"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SceneReport.cpp" line="35"/>
         <source>Scene Report</source>
-        <translation>Отчёт по сценам</translation>
+        <translation>Список сцен</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="235"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SceneReport.cpp" line="235"/>
         <source>Scene/Characters</source>
         <translation>Сцена/Персонажи</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="237"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SceneReport.cpp" line="237"/>
         <source>Number</source>
         <translation>Номер</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="239"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SceneReport.cpp" line="239"/>
         <source>Page</source>
         <translation>Страница</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="241"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SceneReport.cpp" line="241"/>
         <source>Characters</source>
         <translation>Персонажей</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="243"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SceneReport.cpp" line="243"/>
         <source>Chron</source>
         <translation>Хрон</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SceneReport.cpp" line="257"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SceneReport.cpp" line="257"/>
         <source>[UNDEFINED]</source>
         <translation>[НЕ ОПРЕДЕЛЕНО]</translation>
     </message>
 </context>
 <context>
+    <name>BusinessLogic::StoryStructureAnalisysPlot</name>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="36"/>
+        <source>Story Structure Analisys Plot</source>
+        <translation>График структурного анализа истории</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="218"/>
+        <source>Scene Duration</source>
+        <translation>Хронометраж сцены</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="229"/>
+        <source>Action Duration</source>
+        <translation>Хронометраж действия</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="240"/>
+        <source>Dialogues Duration</source>
+        <translation>Хронометраж реплик</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="251"/>
+        <source>Characters Count</source>
+        <translation>Кол-во персонажей</translation>
+    </message>
+    <message>
+        <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="262"/>
+        <source>Dialogs Count</source>
+        <translation>Кол-во реплик</translation>
+    </message>
+</context>
+<context>
     <name>BusinessLogic::SummaryReport</name>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="66"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="66"/>
         <source>Summary report</source>
         <translation>Суммарная информация</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="154"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="154"/>
         <source>Chronometry</source>
         <translation>Хронометраж</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="156"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="156"/>
         <source>Pages</source>
         <translation>Страниц</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="158"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="179"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="158"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="179"/>
         <source>Words</source>
         <translation>Слов</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="160"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="160"/>
         <source>Characters with/without spaces</source>
         <translation>Символов с/без пробелов</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="171"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="171"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="175"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="175"/>
         <source>Paragraph</source>
         <translation>Параграф</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="177"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="234"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="294"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="358"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="177"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="234"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="294"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="358"/>
         <source>Size</source>
         <translation>Кол-во</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="181"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="236"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="296"/>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="360"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="181"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="236"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="296"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="360"/>
         <source>Percents</source>
         <translation>Процентов</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="208"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="208"/>
         <source>Scenes</source>
         <translation>Сцен</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="232"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="232"/>
         <source>Time</source>
         <translation>Время действия</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="249"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="249"/>
         <source>[UNDEFINED]</source>
         <translation>[НЕ ОПРЕДЕЛЕНО]</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="268"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="268"/>
         <source>Locations</source>
         <translation>Локации</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="292"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="292"/>
         <source>Place</source>
         <translation>Тип локации</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="325"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="325"/>
         <source>Characters</source>
         <translation>Персонажи</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="356"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="356"/>
         <source>Dialogues count</source>
         <translation>Количество реплик</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="370"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="370"/>
         <source>More 10 dialogues</source>
         <translation>Более 10 реплик</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="377"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="377"/>
         <source>About 10 dialogues</source>
         <translation>Менее 10 реплик</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/Statistics/SummaryReport.cpp" line="384"/>
+        <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="384"/>
         <source>Nonspeaking</source>
         <translation>Молчаливые</translation>
     </message>
@@ -2440,6 +2473,31 @@ Paragraph</source>
         <source>Character:</source>
         <translation>Персонаж:</translation>
     </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="270"/>
+        <source>Scene Duration</source>
+        <translation>Хронометраж сцены</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="280"/>
+        <source>Action Duration</source>
+        <translation>Хронометраж действия</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="290"/>
+        <source>Dialogues Duration</source>
+        <translation>Хронометраж реплик</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="300"/>
+        <source>Characters Count</source>
+        <translation>Количество персонажей</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="310"/>
+        <source>Dialogues Count</source>
+        <translation>Количество реплик</translation>
+    </message>
 </context>
 <context>
     <name>TemplateDialog</name>
@@ -3130,74 +3188,97 @@ Paragraph</source>
 <context>
     <name>UserInterface::StatisticsView</name>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="100"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="136"/>
         <source>Preparing report</source>
         <translation>Подготовка отчёта</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="100"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="136"/>
         <source>Please wait. Preparing report to preview can take few minutes.</source>
         <translation>Немного терпения. Подготовка отчёта может длиться несколько минут.</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="167"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="199"/>
         <source>Save report</source>
         <translation>Сохранить отчёт</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="166"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="198"/>
         <source>Report.pdf</source>
         <translation>Отчёт.pdf</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="167"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="199"/>
         <source>PDF files (*.pdf)</source>
         <translation>Файлы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="189"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="221"/>
         <source>Report settings</source>
         <translation>Параметры отчёта</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="202"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="234"/>
         <source>Print preview</source>
         <translation>Предпросмотр</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="204"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="236"/>
         <source>Save report to file</source>
         <translation>Сохранить отчёт в файл</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="210"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="238"/>
+        <source>Update current report</source>
+        <translation>Структурный анализ истории</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="244"/>
         <source>Reports</source>
         <translation>Отчёты</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="214"/>
-        <source>Statistics report</source>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="249"/>
+        <source>Summary statistics</source>
         <translation>Суммарная информация</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="215"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="253"/>
+        <source>Character dialogues</source>
+        <translation>Реплики персонажа</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="267"/>
+        <source>Plots</source>
+        <translation>Графики</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="272"/>
+        <source>Story structure analysis</source>
+        <translation>Структурный анализ сюжета</translation>
+    </message>
+    <message>
+        <source>Statistics report</source>
+        <translation type="vanished">Суммарная информация</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="250"/>
         <source>Scene report</source>
-        <translation>По сценам</translation>
+        <translation>Список сцен</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="216"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="251"/>
         <source>Location report</source>
-        <translation>По локациям</translation>
+        <translation>Список локаций</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="217"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="252"/>
         <source>Cast report</source>
-        <translation>По персонажам</translation>
+        <translation>Список персонажей</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="218"/>
         <source>Character report</source>
-        <translation>По персонажу</translation>
+        <translation type="vanished">По персонажу</translation>
     </message>
 </context>
 <context>
