@@ -289,8 +289,6 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 	settings.beginGroup("splitters");
 	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
 		settings.beginGroup(splitter->objectName());
-		splitter->restoreState(settings.value("state").toByteArray());
-		splitter->restoreGeometry(settings.value("geometry").toByteArray());
 		//
 		// Восстанавливаем расположение панелей
 		//
@@ -311,6 +309,16 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 			splitter->insertWidget(position, splitterWidgets.value(position));
 		}
 		settings.endGroup(); // splitter-widgets
+
+		//
+		// Восстанавливаем состояние и геометрию разделителя
+		//
+		// Это необходимо делать только после восстановления расположения панелей, т.к. некоторые
+		// панели имеют определённый минимальный размер, соответственно этот размер задаётся и
+		// области разделителя, в которой он находится
+		//
+		splitter->restoreState(settings.value("state").toByteArray());
+		splitter->restoreGeometry(settings.value("geometry").toByteArray());
 		settings.endGroup(); // splitter->objectName()
 	}
 	settings.endGroup();
