@@ -91,7 +91,7 @@ Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const Busine
 	QTextCursor cursor = edit.textCursor();
 	QList<SceneData*> scenesDataList;
 	SceneData* currentData = 0;
-	QStringList sceneCharacters;
+	QStringList currentSceneCharacters;
 	while (block.isValid()) {
 		if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::SceneHeading) {
 			currentData = new SceneData;
@@ -106,7 +106,7 @@ Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const Busine
 				currentData->number = info->sceneNumber();
 			}
 			//
-			sceneCharacters.clear();
+			currentSceneCharacters.clear();
 		}
 		//
 		if (currentData != 0) {
@@ -116,7 +116,8 @@ Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const Busine
 			if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::SceneCharacters) {
 				const QStringList sceneCharacters = SceneCharactersParser::characters(block.text().toUpper());
 				foreach (const QString& character, sceneCharacters) {
-					if (!sceneCharacters.contains(character)) {
+					if (!currentSceneCharacters.contains(character)) {
+						currentSceneCharacters.append(character);
 						currentData->charactersCount += 1;
 					}
 				}
@@ -126,7 +127,8 @@ Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const Busine
 			//
 			else if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::Character) {
 				const QString character = CharacterParser::name(block.text().toUpper());
-				if (!sceneCharacters.contains(character)) {
+				if (!currentSceneCharacters.contains(character)) {
+					currentSceneCharacters.append(character);
 					currentData->charactersCount += 1;
 				}
 			}
@@ -140,7 +142,8 @@ Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const Busine
 					//
 					// Первое появление
 					//
-					if (!sceneCharacters.contains(character)) {
+					if (!currentSceneCharacters.contains(character)) {
+						currentSceneCharacters.append(character);
 						currentData->charactersCount += 1;
 					}
 
