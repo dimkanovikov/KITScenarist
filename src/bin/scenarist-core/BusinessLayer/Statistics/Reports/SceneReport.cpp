@@ -262,13 +262,13 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->number));
 			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->page));
 			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(data->characters.size()));
-			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(ChronometerFacade::secondsToTime(data->chron)));
+			html.append(QString("<td width=\"8%\" align=\"center\"><b>%1</b></td>").arg(ChronometerFacade::secondsToTime(qRound(data->chron))));
 		} else {
 			html.append(QString("<td>%1</td>").arg(sceneName));
 			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(data->number));
 			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(data->page));
 			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(data->characters.size()));
-			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(ChronometerFacade::secondsToTime(data->chron)));
+			html.append(QString("<td width=\"8%\" align=\"center\">%1</td>").arg(ChronometerFacade::secondsToTime(qRound(data->chron))));
 		}
 		html.append("</tr>");
 

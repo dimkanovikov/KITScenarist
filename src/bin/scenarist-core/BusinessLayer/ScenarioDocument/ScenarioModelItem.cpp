@@ -99,12 +99,12 @@ void ScenarioModelItem::setText(const QString& _text)
 	}
 }
 
-int ScenarioModelItem::duration() const
+qreal ScenarioModelItem::duration() const
 {
 	return m_duration;
 }
 
-void ScenarioModelItem::setDuration(int _duration)
+void ScenarioModelItem::setDuration(qreal _duration)
 {
 	if (m_duration != _duration) {
 		m_duration = _duration;
@@ -228,7 +228,7 @@ void ScenarioModelItem::updateParentDuration()
 	if (hasChildren()) {
 		int duration = 0;
 		foreach (ScenarioModelItem* child, m_children) {
-			duration += child->duration();
+			duration += qRound(child->duration());
 		}
 		setDuration(duration);
 	}

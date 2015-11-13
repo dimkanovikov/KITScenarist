@@ -53,17 +53,17 @@ namespace BusinessLogic
 			/**
 			 * @brief Хронометраж
 			 */
-			int chron;
+			qreal chron;
 
 			/**
 			 * @brief Хронометраж действий
 			 */
-			int actionChron;
+			qreal actionChron;
 
 			/**
 			 * @brief Хронометраж реплик
 			 */
-			int dialoguesChron;
+			qreal dialoguesChron;
 
 			/**
 			 * @brief Количество персонажей

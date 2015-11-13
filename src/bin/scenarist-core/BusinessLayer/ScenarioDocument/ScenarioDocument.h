@@ -57,7 +57,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Посчитать длительность сценария до указанной позиции
 		 */
-		int durationAtPosition(int _position) const;
+		qreal durationAtPosition(int _position) const;
 
 		/**
 		 * @brief Длительность всего сценария

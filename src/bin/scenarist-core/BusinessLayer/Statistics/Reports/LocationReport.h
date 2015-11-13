@@ -51,7 +51,7 @@ namespace BusinessLogic
 			/**
 			 * @brief Хронометраж
 			 */
-			int chron;
+			qreal chron;
 
 			/**
 			 * @brief Вложенные элементы

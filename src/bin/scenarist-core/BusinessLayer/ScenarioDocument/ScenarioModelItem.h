@@ -69,8 +69,8 @@ namespace BusinessLogic
 		/**
 		 * @brief Длительность элемента
 		 */
-		int duration() const;
-		void setDuration(int _duration);
+		qreal duration() const;
+		void setDuration(qreal _duration);
 
 		/**
 		 * @brief Тип элемента
@@ -156,7 +156,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Длительность элемента
 		 */
-		int m_duration;
+		qreal m_duration;
 
 		/**
 		 * @brief Тип элемента

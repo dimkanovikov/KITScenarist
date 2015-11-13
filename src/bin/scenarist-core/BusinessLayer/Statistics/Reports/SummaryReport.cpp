@@ -136,7 +136,7 @@ QString SummaryReport::makeReport(QTextDocument* _scenario, const BusinessLogic:
 		edit.setPageMargins(::editorStyle().pageMargins());
 		edit.setDocument(_scenario->clone());
 
-		const int chron = ChronometerFacade::calculate(_scenario);
+		const qreal chron = ChronometerFacade::calculate(_scenario);
 		const int pageCount = edit.document()->pageCount();
 		const Counter counter = CountersFacade::calculateFull(_scenario);
 

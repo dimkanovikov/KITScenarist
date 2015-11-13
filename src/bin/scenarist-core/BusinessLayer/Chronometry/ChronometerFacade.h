@@ -25,27 +25,30 @@ namespace BusinessLogic
 		/**
 		 * @brief Вычислить хронометраж последовательности ограниченной заданным блоком
 		 */
-		static int calculate(const QTextBlock& _block);
+		static qreal calculate(const QTextBlock& _block);
 
 		/**
 		 * @brief Вычислить хронометраж последовательности ограниченной заданными блоками
 		 */
-		static int calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock);
+		static qreal calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock);
 
 		/**
 		 * @brief Вычислить хронометраж последовательности ограниченной заданными позициями
 		 */
-		static int calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition);
+		static qreal calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition);
 
 		/**
 		 * @brief Вычислить хронометраж всего документа
 		 */
-		static int calculate(QTextDocument* _document);
+		static qreal calculate(QTextDocument* _document);
 
 		/**
 		 * @brief Получить строковое представление для заданного количества секунд
 		 */
+		/** @{ */
 		static QString secondsToTime(int _seconds);
+		static QString secondsToTime(qreal _seconds);
+		/** @} */
 
 	private:
 		/**

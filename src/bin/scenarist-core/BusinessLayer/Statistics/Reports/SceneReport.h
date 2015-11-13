@@ -83,7 +83,7 @@ namespace BusinessLogic
 			/**
 			 * @brief Хронометраж
 			 */
-			int chron;
+			qreal chron;
 
 			/**
 			 * @brief Персонажи сцены

@@ -60,44 +60,44 @@ int ScenarioDocument::scenesCount() const
 	return m_model->scenesCount();
 }
 
-int ScenarioDocument::durationAtPosition(int _position) const
+qreal ScenarioDocument::durationAtPosition(int _position) const
 {
-	int duration = 0;
+	qreal duration = 0;
 
 	if (!m_modelItems.isEmpty()) {
 		//
 		// Определим сцену, в которой находится курсор
 		//
 		QMap<int, ScenarioModelItem*>::const_iterator iter = m_modelItems.lowerBound(_position);
-        if (iter == m_modelItems.end()
-            || (iter.key() > _position
-                && iter != m_modelItems.begin())) {
+		if (iter == m_modelItems.end()
+			|| (iter.key() > _position
+				&& iter != m_modelItems.begin())) {
 			--iter;
 		}
 
-        //
-        // Запомним позицию начала сцены
-        //
-        int startPositionInLastScene = iter.key();
+		//
+		// Запомним позицию начала сцены
+		//
+		int startPositionInLastScene = iter.key();
 
-        //
-        // Посчитаем хронометраж всех предыдущих сцен
-        //
-        if (iter.value()->type() == ScenarioModelItem::Scene) {
-            iter.value()->duration();
-        }
-        while (iter != m_modelItems.begin()) {
-            --iter;
-            if (iter.value()->type() == ScenarioModelItem::Scene) {
-                duration += iter.value()->duration();
-            }
-        }
+		//
+		// Посчитаем хронометраж всех предыдущих сцен
+		//
+		if (iter.value()->type() == ScenarioModelItem::Scene) {
+			iter.value()->duration();
+		}
+		while (iter != m_modelItems.begin()) {
+			--iter;
+			if (iter.value()->type() == ScenarioModelItem::Scene) {
+				duration += iter.value()->duration();
+			}
+		}
 
-        //
-        // Добавим к суммарному хрономертажу хронометраж от начала сцены
-        //
-        duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
-    }
+		//
+		// Добавим к суммарному хрономертажу хронометраж от начала сцены
+		//
+		duration += ChronometerFacade::calculate(m_document, startPositionInLastScene, _position);
+	}
 
 	return duration;
 }
@@ -889,7 +889,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	doc.setHtml(itemSynopsis(_item));
 	QString synopsis = doc.toPlainText().simplified();
 	// ... длительность
-	int itemDuration = 0;
+	qreal itemDuration = 0;
 	if (itemType == ScenarioModelItem::Scene) {
 		itemDuration = ChronometerFacade::calculate(m_document, _itemStartPos, _itemEndPos);
 	}

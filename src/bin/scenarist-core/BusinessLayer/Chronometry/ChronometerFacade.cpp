@@ -24,12 +24,12 @@ bool ChronometerFacade::chronometryUsed()
 				SettingsStorage::ApplicationSettings).toInt();
 }
 
-int ChronometerFacade::calculate(const QTextBlock& _block)
+qreal ChronometerFacade::calculate(const QTextBlock& _block)
 {
 	return calculate(_block, _block);
 }
 
-int ChronometerFacade::calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock)
+qreal ChronometerFacade::calculate(const QTextBlock& _fromBlock, const QTextBlock& _toBlock)
 {
 	return calculate(
 				const_cast<QTextDocument*>(_fromBlock.document()),
@@ -37,9 +37,9 @@ int ChronometerFacade::calculate(const QTextBlock& _fromBlock, const QTextBlock&
 				_toBlock.position() + _toBlock.length() - 1);
 }
 
-int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition)
+qreal ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPosition, int _toCursorPosition)
 {
-	float chronometry = -1;
+	qreal chronometry = -1;
 
 	if (chronometryUsed()) {
 		chronometry = 0;
@@ -53,14 +53,13 @@ int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPositi
 				// Перейти к следующему, если это не первый шаг цикла
 				//
 				if (!isFirstStep) {
-					cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
-					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-					if (cursor.position() > _toCursorPosition) {
-						cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
-					}
+					cursor.movePosition(QTextCursor::NextBlock);
 				} else {
 					isFirstStep = false;
-					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+				}
+				cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+				if (cursor.position() > _toCursorPosition) {
+					cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
 				}
 
 				//
@@ -81,14 +80,12 @@ int ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPositi
 			} while (!cursor.atEnd()
 					 && cursor.position() < _toCursorPosition);
 		}
-
-		chronometry = qRound(chronometry);
 	}
 
 	return chronometry;
 }
 
-int ChronometerFacade::calculate(QTextDocument* _document)
+qreal ChronometerFacade::calculate(QTextDocument* _document)
 {
 	return calculate(_document, 0, _document->characterCount());
 }
@@ -105,6 +102,11 @@ QString ChronometerFacade::secondsToTime(int _seconds)
 				.arg(time.toString("ss"));
 	}
 	return timeString;
+}
+
+QString ChronometerFacade::secondsToTime(qreal _seconds)
+{
+	return secondsToTime(qRound(_seconds));
 }
 
 AbstractChronometer* ChronometerFacade::chronometer()
