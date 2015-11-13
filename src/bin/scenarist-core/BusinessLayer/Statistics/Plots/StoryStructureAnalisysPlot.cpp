@@ -89,13 +89,13 @@ Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const Busine
 	//
 	QTextBlock block = _scenario->begin();
 	QTextCursor cursor = edit.textCursor();
-	QList<SceneData*> reportScenesDataList;
+	QList<SceneData*> scenesDataList;
 	SceneData* currentData = 0;
 	QStringList sceneCharacters;
 	while (block.isValid()) {
 		if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::SceneHeading) {
 			currentData = new SceneData;
-			reportScenesDataList.append(currentData);
+			scenesDataList.append(currentData);
 			//
 			currentData->name = block.text().toUpper();
 			//
@@ -183,7 +183,7 @@ Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const Busine
 	double lastX = 0;
 	QMap<double, QStringList> info;
 	info.insert(lastX, QStringList());
-	foreach (SceneData* data, reportScenesDataList) {
+	foreach (SceneData* data, scenesDataList) {
 		//
 		// Информация
 		//
@@ -302,6 +302,11 @@ Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const Busine
 		data.y = dialogsCountY;
 		resultPlot.data.append(data);
 	}
+
+	//
+	// Очищаем память
+	//
+	qDeleteAll(scenesDataList);
 
 	return resultPlot;
 }

@@ -152,8 +152,10 @@ void StatisticsView::aboutInitDataPanel()
 {
 	if (ReportButton* button = qobject_cast<ReportButton*>(sender())) {
 		if (button->type() == BusinessLogic::StatisticsParameters::Report) {
+			m_print->show();
 			m_statisticData->setCurrentWidget(m_reportData);
 		} else {
+			m_print->hide();
 			m_statisticData->setCurrentWidget(m_plotData);
 		}
 
@@ -201,19 +203,39 @@ void StatisticsView::aboutPrint(QPrinter* _printer)
 
 void StatisticsView::aboutSaveReport()
 {
-	const QString saveFileName = ::reportFilePath(tr("Report.pdf"));
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Save report"), saveFileName, tr("PDF files (*.pdf)"));
-	if (!fileName.isEmpty()) {
-		if (!fileName.endsWith(".pdf")) {
-			fileName.append(".pdf");
-		}
-		QPrinter printer;
-		printer.setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
-		printer.setOutputFormat(QPrinter::PdfFormat);
-		printer.setOutputFileName(fileName);
-		m_reportData->print(&printer);
+	//
+	// Сохраняем отчёт
+	//
+	if (m_statisticData->currentWidget() == m_reportData) {
+		const QString saveFileName = ::reportFilePath(tr("Report.pdf"));
+		QString fileName = QFileDialog::getSaveFileName(this, tr("Save report"), saveFileName, tr("PDF files (*.pdf)"));
+		if (!fileName.isEmpty()) {
+			if (!fileName.endsWith(".pdf")) {
+				fileName.append(".pdf");
+			}
+			QPrinter printer;
+			printer.setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
+			printer.setOutputFormat(QPrinter::PdfFormat);
+			printer.setOutputFileName(fileName);
+			m_reportData->print(&printer);
 
-		::saveReportsFolderPath(fileName);
+			::saveReportsFolderPath(fileName);
+		}
+	}
+	//
+	// Сохраняем график
+	//
+	else {
+		const QString saveFileName = ::reportFilePath(tr("Plot.png"));
+		QString fileName = QFileDialog::getSaveFileName(this, tr("Save plot"), saveFileName, tr("PNG files (*.png)"));
+		if (!fileName.isEmpty()) {
+			if (!fileName.endsWith(".png")) {
+				fileName.append(".png");
+			}
+			m_plotData->savePng(fileName);
+
+			::saveReportsFolderPath(fileName);
+		}
 	}
 }
 
