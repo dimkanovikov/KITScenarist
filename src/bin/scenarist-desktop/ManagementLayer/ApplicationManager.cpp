@@ -1312,11 +1312,12 @@ void ApplicationManager::reloadApplicationSettings()
 				"application/two-panel-mode",
 				DataStorageLayer::SettingsStorage::ApplicationSettings)
 			.toInt();
-	m_splitter->setHandleWidth(twoPanelsMode ? 4 : 0);
-	m_splitter->handle(1)->setEnabled(twoPanelsMode);
-	m_splitter->setSizes(QList<int>() << 1 << (twoPanelsMode ? 1 : 0));
+	m_menuSecondary->setVisible(twoPanelsMode);
 	m_tabsSecondary->setVisible(twoPanelsMode);
 	m_tabsWidgetsSecondary->setVisible(twoPanelsMode);
+	m_splitter->handle(1)->setEnabled(twoPanelsMode);
+	m_splitter->setHandleWidth(twoPanelsMode ? 4 : 0);
+	m_splitter->setSizes(QList<int>() << 1 << (twoPanelsMode ? 1 : 0));
 
 	//
 	// Активация/деактивация модулей модули
