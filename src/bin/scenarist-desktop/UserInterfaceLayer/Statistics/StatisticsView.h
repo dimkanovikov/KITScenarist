@@ -6,7 +6,7 @@
 class FlatButton;
 class ProgressWidget;
 class QAbstractItemModel;
-class QCustomPlot;
+class QCustomPlotExtended;
 class QFrame;
 class QLabel;
 class QPrinter;
@@ -15,7 +15,7 @@ class QTextBrowser;
 
 namespace BusinessLogic {
 	class StatisticsParameters;
-	class PlotData;
+	class Plot;
 }
 
 namespace UserInterface
@@ -47,7 +47,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить данные графиков
 		 */
-		void setPlot(const QVector<BusinessLogic::PlotData>& _plotData);
+		void setPlot(const BusinessLogic::Plot& _plot);
 
 		/**
 		 * @brief Функции управленя индикатором информирования пользователя о подготовке отчёта
@@ -92,6 +92,11 @@ namespace UserInterface
 		 * @brief Настроить представление
 		 */
 		void initView();
+
+		/**
+		 * @brief Настроить оформление графика
+		 */
+		void initPlot();
 
 		/**
 		 * @brief Настроить соединения для формы
@@ -160,7 +165,7 @@ namespace UserInterface
 		/**
 		 * @brief График
 		 */
-		QCustomPlot* m_plotData;
+		QCustomPlotExtended* m_plotData;
 
 		/**
 		 * @brief Виджет перекрытие для отображения сообщения о формирующемся отчёте

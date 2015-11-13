@@ -210,7 +210,9 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 	//
 	p.setPen(palette().dark().color());
 	p.drawLine(event->rect().topLeft(), event->rect().topRight());
+	p.drawLine(event->rect().topLeft(), event->rect().bottomLeft());
 	p.drawLine(event->rect().topRight(), event->rect().bottomRight());
+	p.drawLine(event->rect().bottomLeft(), event->rect().bottomRight());
 
 
 	//
@@ -225,7 +227,7 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 		// Рисуем только видимые вкладки
 		//
 		if (tab->isVisible()) {
-			const QRect tabRect(0, tabY, event->rect().width() - 1, tabHeight);
+			const QRect tabRect(1, tabY, event->rect().width() - 2, tabHeight);
 
 			//
 			// Текущая вкладка

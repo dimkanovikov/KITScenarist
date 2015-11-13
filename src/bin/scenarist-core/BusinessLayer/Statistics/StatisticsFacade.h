@@ -24,7 +24,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Сформировать график
 		 */
-		static QVector<PlotData> makePlot(QTextDocument* _scenario, const StatisticsParameters& _parameters);
+		static Plot makePlot(QTextDocument* _scenario, const StatisticsParameters& _parameters);
 	};
 }
 

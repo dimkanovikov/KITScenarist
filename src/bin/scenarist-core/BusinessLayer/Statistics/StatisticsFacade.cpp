@@ -88,10 +88,10 @@ QString BusinessLogic::StatisticsFacade::makeReport(QTextDocument* _scenario, co
 	return result;
 }
 
-QVector<BusinessLogic::PlotData> BusinessLogic::StatisticsFacade::makePlot(
+BusinessLogic::Plot BusinessLogic::StatisticsFacade::makePlot(
 	QTextDocument* _scenario, const BusinessLogic::StatisticsParameters& _parameters)
 {
-	QVector<BusinessLogic::PlotData> result;
+	BusinessLogic::Plot result;
 	switch (_parameters.type) {
 		default:
 		case StatisticsParameters::Plot: {

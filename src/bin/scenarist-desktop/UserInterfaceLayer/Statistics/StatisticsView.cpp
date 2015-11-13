@@ -12,7 +12,7 @@
 #include <3rd_party/Widgets/Ctk/ctkPopupWidget.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
-#include <3rd_party/Widgets/QCutomPlot/qcustomplot.h>
+#include <3rd_party/Widgets/QCutomPlot/qcustomplotextended.h>
 
 #include <QApplication>
 #include <QButtonGroup>
@@ -82,10 +82,11 @@ StatisticsView::StatisticsView(QWidget* _parent) :
 	m_statisticSettings(new StatisticsSettings(this)),
 	m_statisticData(new QStackedWidget(this)),
 	m_reportData(new QTextBrowser(this)),
-	m_plotData(new QCustomPlot(this)),
+	m_plotData(new QCustomPlotExtended(this)),
 	m_progress(new ProgressWidget(m_statisticData, false))
 {
 	initView();
+	initPlot();
 	initConnections();
 	initStyleSheet();
 }
@@ -100,31 +101,36 @@ void StatisticsView::setReport(const QString& _html)
 	m_reportData->setHtml(_html);
 }
 
-void StatisticsView::setPlot(const QVector<BusinessLogic::PlotData>& _plotData)
+void StatisticsView::setPlot(const BusinessLogic::Plot& _plot)
 {
+	//
+	// Очищаем график и настраиваем цвета в соответствии с палитрой
+	//
 	m_plotData->clearGraphs();
+	initPlot();
 
-	int plotIndex = 0;
-	foreach (const BusinessLogic::PlotData& singlePlotData, _plotData) {
+	//
+	// Загружаем информацию и данные
+	//
+	m_plotData->setPlotInfo(_plot.info);
+	foreach (const BusinessLogic::PlotData& singlePlotData, _plot.data) {
 		//
 		// Добавляем график и настраиваем его
 		//
-		m_plotData->addGraph();
-		m_plotData->graph(plotIndex)->setName(singlePlotData.name);
-		m_plotData->graph(plotIndex)->setPen(QPen(singlePlotData.color, 2));
+		QCPGraph* plot = m_plotData->addGraph();
+		plot->setName(singlePlotData.name);
+		plot->setPen(QPen(singlePlotData.color, 2));
 
 		//
 		// Отправляем данные в график
 		//
-		m_plotData->graph(plotIndex)->setData(singlePlotData.x, singlePlotData.y);
-
-		plotIndex += 1;
+		plot->setData(singlePlotData.x, singlePlotData.y);
 	}
 
 	//
 	// Позволим графику самому масштабироваться для лучшего вида
 	//
-	for (plotIndex = 0; plotIndex < m_plotData->graphCount(); ++plotIndex) {
+	for (int plotIndex = 0; plotIndex < m_plotData->graphCount(); ++plotIndex) {
 		m_plotData->graph(plotIndex)->rescaleAxes(plotIndex > 0 ? true : false);
 	}
 
@@ -313,34 +319,6 @@ void StatisticsView::initView()
 	statisticTypesPanel->setLayout(statisticTypesMainLayout);
 
 	//
-	// Настраиваем контейнеры отчётов
-	//
-//	// configure right and top axis to show ticks but no labels:
-//	// (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
-//	m_plotData->xAxis2->setVisible(true);
-//	m_plotData->xAxis2->setTickLabels(false);
-//	m_plotData->yAxis2->setVisible(true);
-//	m_plotData->yAxis2->setTickLabels(false);
-//	// make left and bottom axes always transfer their ranges to right and top axes:
-//	connect(m_plotData->xAxis, SIGNAL(rangeChanged(QCPRange)), m_plotData->xAxis2, SLOT(setRange(QCPRange)));
-//	connect(m_plotData->yAxis, SIGNAL(rangeChanged(QCPRange)), m_plotData->yAxis2, SLOT(setRange(QCPRange)));
-	//
-//	m_plotData->xAxis->setAutoTickLabels(true);
-//	m_plotData->xAxis->setAutoTickStep(false);
-//	m_plotData->xAxis->setAutoTickCount(20);
-//	m_plotData->xAxis->setAutoSubTicks(false);
-//	m_plotData->xAxis->setSubTickCount(0);
-	// setup legend:
-//	m_plotData->legend->setFont(QFont(font().family(), 7));
-	m_plotData->legend->setIconSize(50, 20);
-	m_plotData->legend->setVisible(true);
-	// Note: we could have also just called customPlot->rescaleAxes(); instead
-	// Allow user to drag axis ranges with mouse, zoom with mouse wheel and select graphs by clicking:
-	m_plotData->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
-	m_plotData->axisRect()->setRangeZoom(Qt::Horizontal);
-	m_plotData->axisRect()->setRangeDragAxes(m_plotData->xAxis, 0);
-
-	//
 	// Настраиваем панель с данными по отчётам
 	//
 	m_statisticData->addWidget(m_reportData);
@@ -381,6 +359,62 @@ void StatisticsView::initView()
 	layout->setSpacing(0);
 	layout->addWidget(splitter);
 	setLayout(layout);
+}
+
+void StatisticsView::initPlot()
+{
+	//
+	// Настроим легенду
+	//
+	m_plotData->legend->setIconSize(50, 20);
+	m_plotData->legend->setVisible(true);
+	//
+	// Настроим оси координат
+	//
+	m_plotData->xAxis->setLabel(tr("Duration, minutes"));
+	m_plotData->xAxis2->setVisible(true);
+	m_plotData->xAxis2->setTickLabels(false);
+	m_plotData->yAxis2->setVisible(true);
+	m_plotData->yAxis2->setTickLabels(false);
+	//
+	// Настроим возможности взаимодействия с графиком
+	//
+	m_plotData->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+	m_plotData->axisRect()->setRangeZoom(Qt::Horizontal);
+	m_plotData->axisRect()->setRangeDragAxes(m_plotData->xAxis, 0);
+	m_plotData->setNoAntialiasingOnDrag(true);
+	//
+	// Настроим цвета в соответствии с палитрой
+	//
+	m_plotData->xAxis->setBasePen(QPen(palette().text(), 1));
+	m_plotData->yAxis->setBasePen(QPen(palette().text(), 1));
+	m_plotData->xAxis->setTickPen(QPen(palette().text(), 1));
+	m_plotData->yAxis->setTickPen(QPen(palette().text(), 1));
+	m_plotData->xAxis->setSubTickPen(QPen(palette().text(), 1));
+	m_plotData->yAxis->setSubTickPen(QPen(palette().text(), 1));
+	m_plotData->xAxis->setTickLabelColor(palette().text().color());
+	m_plotData->yAxis->setTickLabelColor(palette().text().color());
+	m_plotData->xAxis->grid()->setPen(QPen(palette().text(), 1, Qt::DotLine));
+	m_plotData->yAxis->grid()->setPen(QPen(palette().text(), 1, Qt::DotLine));
+	m_plotData->xAxis->grid()->setSubGridPen(QPen(palette().dark(), 1, Qt::DotLine));
+	m_plotData->yAxis->grid()->setSubGridPen(QPen(palette().dark(), 1, Qt::DotLine));
+	m_plotData->xAxis->grid()->setSubGridVisible(true);
+	m_plotData->yAxis->grid()->setSubGridVisible(true);
+	m_plotData->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+	m_plotData->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+	m_plotData->xAxis->setLabelColor(palette().text().color());
+	m_plotData->yAxis->setLabelColor(palette().text().color());
+	m_plotData->xAxis2->setBasePen(QPen(palette().text(), 1));
+	m_plotData->yAxis2->setBasePen(QPen(palette().text(), 1));
+	m_plotData->xAxis2->setTickPen(QPen(palette().text(), 1));
+	m_plotData->yAxis2->setTickPen(QPen(palette().text(), 1));
+	m_plotData->xAxis2->setSubTickPen(QPen(palette().text(), 1));
+	m_plotData->yAxis2->setSubTickPen(QPen(palette().text(), 1));
+	m_plotData->legend->setTextColor(palette().text().color());
+	m_plotData->legend->setBrush(palette().base());
+	m_plotData->legend->setBorderPen(QPen(palette().text(), 1));
+	m_plotData->setBackground(palette().base());
+	m_plotData->axisRect()->setBackground(palette().base());
 }
 
 void StatisticsView::initConnections()

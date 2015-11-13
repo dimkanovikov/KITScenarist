@@ -4,7 +4,8 @@
 #include "../StatisticsParameters.h"
 
 #include <QColor>
-#include <QString>
+#include <QMap>
+#include <QStringList>
 #include <QVector>
 
 class QTextDocument;
@@ -39,6 +40,26 @@ namespace BusinessLogic
 	};
 
 	/**
+	 * @brief Дополнительная информация о графике
+	 */
+	class Plot
+	{
+	public:
+		Plot() {}
+
+		/**
+		 * @brief Дополнительная информация о графике
+		 * @note Используется в качестве подсказки в QCustomPlotExtended
+		 */
+		QMap<double, QStringList> info;
+
+		/**
+		 * @brief Данные о графике
+		 */
+		QVector<PlotData> data;
+	};
+
+	/**
 	 * @brief Базовый класс для графика
 	 */
 	class AbstractPlot
@@ -54,7 +75,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Сформировать график по заданному сценарию с установленными параметрами
 		 */
-		virtual QVector<PlotData> makePlot(QTextDocument* _scenario,
+		virtual Plot makePlot(QTextDocument* _scenario,
 			const StatisticsParameters& _parameters) const = 0;
 	};
 }

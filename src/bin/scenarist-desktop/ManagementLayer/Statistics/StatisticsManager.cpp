@@ -103,12 +103,12 @@ void StatisticsManager::aboutMakeReport(const BusinessLogic::StatisticsParameter
 			//
 			// Формируем данные
 			//
-			QVector<BusinessLogic::PlotData> plotData = BusinessLogic::StatisticsFacade::makePlot(m_exportedScenario, _parameters);
+			BusinessLogic::Plot plot = BusinessLogic::StatisticsFacade::makePlot(m_exportedScenario, _parameters);
 
 			//
 			// Рисуем график по данным
 			//
-			m_view->setPlot(plotData);
+			m_view->setPlot(plot);
 
 			break;
 		}

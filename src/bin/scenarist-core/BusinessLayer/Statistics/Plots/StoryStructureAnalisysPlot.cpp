@@ -27,6 +27,27 @@ namespace {
 	static ScenarioTemplate editorStyle() {
 		return ScenarioTemplateFacade::getTemplate();
 	}
+
+	/**
+	 * @brief Названия графиков
+	 */
+	/** @{ */
+	static QString sceneChronLabel() {
+		return QApplication::translate("BusinessLogic::StoryStructureAnalisysPlot", "Scene Duration");
+	}
+	static QString actionChronLabel() {
+		return QApplication::translate("BusinessLogic::StoryStructureAnalisysPlot", "Action Duration");
+	}
+	static QString dialoguesChronLabel() {
+		return QApplication::translate("BusinessLogic::StoryStructureAnalisysPlot", "Dialogues Duration");
+	}
+	static QString charactersCountLabel() {
+		return QApplication::translate("BusinessLogic::StoryStructureAnalisysPlot", "Characters Count");
+	}
+	static QString dialoguesCountLabel() {
+		return QApplication::translate("BusinessLogic::StoryStructureAnalisysPlot", "Dialogs Count");
+	}
+	/** @} */
 }
 
 
@@ -36,7 +57,7 @@ QString StoryStructureAnalisysPlot::plotName(const BusinessLogic::StatisticsPara
 	return QApplication::translate("BusinessLogic::StoryStructureAnalisysPlot", "Story Structure Analisys Plot");
 }
 
-QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const BusinessLogic::StatisticsParameters& _parameters) const
+Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const BusinessLogic::StatisticsParameters& _parameters) const
 {
 	PagesTextEdit edit;
 	edit.setUsePageMode(true);
@@ -70,7 +91,7 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 	QTextCursor cursor = edit.textCursor();
 	QList<SceneData*> reportScenesDataList;
 	SceneData* currentData = 0;
-	QStringList characters;
+	QStringList sceneCharacters;
 	while (block.isValid()) {
 		if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::SceneHeading) {
 			currentData = new SceneData;
@@ -84,6 +105,8 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 			if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(block.userData())) {
 				currentData->number = info->sceneNumber();
 			}
+			//
+			sceneCharacters.clear();
 		}
 		//
 		if (currentData != 0) {
@@ -93,22 +116,8 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 			if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::SceneCharacters) {
 				const QStringList sceneCharacters = SceneCharactersParser::characters(block.text().toUpper());
 				foreach (const QString& character, sceneCharacters) {
-					//
-					// Первое появление
-					//
-					if (!characters.contains(character)) {
-						characters.append(character);
-						currentData->characters.append(SceneCharacter(character));
-					}
-					//
-					// Повторное появление
-					//
-					else {
-						int characterIndex = currentData->characterIndex(character);
-						if (characterIndex == -1) {
-							currentData->characters.append(SceneCharacter(character));
-							currentData->characters.last().isFirstOccurence = false;
-						}
+					if (!sceneCharacters.contains(character)) {
+						currentData->charactersCount += 1;
 					}
 				}
 			}
@@ -117,26 +126,8 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 			//
 			else if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::Character) {
 				const QString character = CharacterParser::name(block.text().toUpper());
-				//
-				// Первое появление
-				//
-				if (!characters.contains(character)) {
-					characters.append(character);
-					currentData->characters.append(SceneCharacter(character));
-					currentData->characters.last().dialogsCount += 1;
-				}
-				//
-				// Повторное появление
-				//
-				else {
-					int characterIndex = currentData->characterIndex(character);
-					if (characterIndex == -1) {
-						currentData->characters.append(SceneCharacter(character));
-						currentData->characters.last().isFirstOccurence = false;
-						currentData->characters.last().dialogsCount += 1;
-					} else {
-						currentData->characters[characterIndex].dialogsCount += 1;
-					}
+				if (!sceneCharacters.contains(character)) {
+					currentData->charactersCount += 1;
 				}
 			}
 			//
@@ -149,19 +140,8 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 					//
 					// Первое появление
 					//
-					if (!characters.contains(character)) {
-						characters.append(character);
-						currentData->characters.append(SceneCharacter(character));
-					}
-					//
-					// Повторное появление
-					//
-					else {
-						int characterIndex = currentData->characterIndex(character);
-						if (characterIndex == -1) {
-							currentData->characters.append(SceneCharacter(character));
-							currentData->characters.last().isFirstOccurence = false;
-						}
+					if (!sceneCharacters.contains(character)) {
+						currentData->charactersCount += 1;
 					}
 
 					//
@@ -173,10 +153,11 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 				currentData->actionChron += ChronometerFacade::calculate(block);
 			}
 			//
-			// Реплика, просто считываем хронометраж
+			// Реплика
 			//
 			else if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::Dialogue) {
-				currentData->dialogsChron += ChronometerFacade::calculate(block);
+				currentData->dialoguesChron += ChronometerFacade::calculate(block);
+				currentData->dialoguesCount += 1;
 			}
 
 			currentData->chron += ChronometerFacade::calculate(block);
@@ -188,17 +169,63 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 	//
 	// Формируем данные для визуализации
 	//
+	QVector<double> initializedVector = QVector<double>() << 0;
 	// ... х - общий для всех
-	QVector<double> x;
+	QVector<double> x = initializedVector;
 	// ... y
-	QVector<double> sceneChronY;
-	QVector<double> actionChronY;
-	QVector<double> dialogsChronY;
-	QVector<double> charactersCountY;
-	QVector<double> dialogsCountY;
+	QVector<double> sceneChronY = initializedVector;
+	QVector<double> actionChronY = initializedVector;
+	QVector<double> dialogsChronY = initializedVector;
+	QVector<double> charactersCountY = initializedVector;
+	QVector<double> dialogsCountY = initializedVector;
+	//
 	const int SECONDS_IN_MINUTE = 60;
 	double lastX = 0;
+	QMap<double, QStringList> info;
+	info.insert(lastX, QStringList());
 	foreach (SceneData* data, reportScenesDataList) {
+		//
+		// Информация
+		//
+		QString infoTitle =
+			QString("%1 %2")
+					.arg(QApplication::translate("BusinessLogic::StoryStructureAnalisysPlot", "Scene"))
+					.arg(data->number);
+		QString infoText;
+		{
+			if (_parameters.storyStructureAnalisysSceneChron) {
+				if (!infoText.isEmpty()) {
+					infoText.append("\n");
+				}
+				infoText.append(QString("%1: %2").arg(::sceneChronLabel()).arg(ChronometerFacade::secondsToTime(data->chron)));
+			}
+			if (_parameters.storyStructureAnalisysActionChron) {
+				if (!infoText.isEmpty()) {
+					infoText.append("\n");
+				}
+				infoText.append(QString("%1: %2").arg(::actionChronLabel()).arg(ChronometerFacade::secondsToTime(data->actionChron)));
+			}
+			if (_parameters.storyStructureAnalisysDialoguesChron) {
+				if (!infoText.isEmpty()) {
+					infoText.append("\n");
+				}
+				infoText.append(QString("%1: %2").arg(::dialoguesChronLabel()).arg(ChronometerFacade::secondsToTime(data->dialoguesChron)));
+			}
+			if (_parameters.storyStructureAnalisysCharactersCount) {
+				if (!infoText.isEmpty()) {
+					infoText.append("\n");
+				}
+				infoText.append(QString("%1: %2").arg(::charactersCountLabel()).arg(data->charactersCount));
+			}
+			if (_parameters.storyStructureAnalisysDialoguesCount) {
+				if (!infoText.isEmpty()) {
+					infoText.append("\n");
+				}
+				infoText.append(QString("%1: %2").arg(::dialoguesCountLabel()).arg(data->dialoguesCount));
+			}
+		}
+		info.insert(lastX, QStringList() << infoTitle << infoText);
+
 		//
 		// По иксу откладываем длительность
 		//
@@ -209,17 +236,17 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 		//
 		sceneChronY << (double)data->chron / SECONDS_IN_MINUTE;
 		actionChronY << (double)data->actionChron / SECONDS_IN_MINUTE;
-		dialogsChronY << (double)data->dialogsChron / SECONDS_IN_MINUTE;
-
-		charactersCountY << data->characters.size();
-		int dialogsCounter = 0;
-		foreach (const SceneCharacter& character, data->characters) {
-			dialogsCounter += character.dialogsCount;
-		}
-		dialogsCountY << dialogsCounter;
+		dialogsChronY << (double)data->dialoguesChron / SECONDS_IN_MINUTE;
+		//
+		// Количества как есть
+		//
+		charactersCountY << data->charactersCount;
+		dialogsCountY << data->dialoguesCount;
 	}
+	info.insert(lastX, QStringList());
 	//
-	QVector<BusinessLogic::PlotData> result;
+	Plot resultPlot;
+	resultPlot.info = info;
 	//
 	// ... хронометраж сцены
 	//
@@ -229,7 +256,7 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 		data.color = QColor("#FF3030");
 		data.x = x;
 		data.y = sceneChronY;
-		result.append(data);
+		resultPlot.data.append(data);
 	}
 	//
 	// ... хронометраж действий
@@ -240,7 +267,7 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 		data.color = QColor("#FFC600");
 		data.x = x;
 		data.y = actionChronY;
-		result.append(data);
+		resultPlot.data.append(data);
 	}
 	//
 	// ... хронометраж реплик
@@ -251,7 +278,7 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 		data.color = QColor("#BF6DE8");
 		data.x = x;
 		data.y = dialogsChronY;
-		result.append(data);
+		resultPlot.data.append(data);
 	}
 	//
 	// ... количество персонажей
@@ -262,7 +289,7 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 		data.color = QColor("#95D900");
 		data.x = x;
 		data.y = charactersCountY;
-		result.append(data);
+		resultPlot.data.append(data);
 	}
 	//
 	// ... хронометраж действий
@@ -273,8 +300,8 @@ QVector<BusinessLogic::PlotData> StoryStructureAnalisysPlot::makePlot(QTextDocum
 		data.color = QColor("#00B6F7");
 		data.x = x;
 		data.y = dialogsCountY;
-		result.append(data);
+		resultPlot.data.append(data);
 	}
 
-	return result;
+	return resultPlot;
 }
