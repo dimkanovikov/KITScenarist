@@ -379,6 +379,8 @@ void Database::createTables(QSqlDatabase& _database)
 				   "type INTEGER NOT NULL DEFAULT(0)" // 0 - папка, 1 - текст
 				   "name TEXT NOT NULL, "
 				   "description TEXT DEFAULT(NULL), "
+				   "url TEXT DEFAULT(NULL), "
+				   "image BLOB DEFAULT(NULL), "
 				   "sort_order INTEGER NOT NULL DEFAULT(0) "
 				   ")"
 				   );
@@ -942,6 +944,8 @@ void Database::updateDatabaseTo_0_5_8(QSqlDatabase& _database)
 					   "type INTEGER NOT NULL DEFAULT(0), "
 					   "name TEXT NOT NULL, "
 					   "description TEXT DEFAULT(NULL), "
+					   "url TEXT DEFAULT(NULL), "
+					   "image BLOB DEFAULT(NULL), "
 					   "sort_order INTEGER NOT NULL DEFAULT(0) "
 					   ")"
 					   );
