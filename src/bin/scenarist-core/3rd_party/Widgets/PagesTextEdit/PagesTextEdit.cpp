@@ -172,8 +172,8 @@ void PagesTextEdit::ensureCursorVisibleReimpl(bool _upAndDown)
 		// Если необходимо прокручиваем ещё немного
 		//
 		{
-			const int DETECT_DELTA = 10;
-			const int SCROLL_DELTA = 200;
+			const int DETECT_DELTA = verticalScrollBar()->singleStep() * 2;
+			const int SCROLL_DELTA = verticalScrollBar()->singleStep() * 5;
 			QRect cursorRect = this->cursorRect();
 			if (cursorRect.y() - DETECT_DELTA <= 0
 				&& _upAndDown) {
