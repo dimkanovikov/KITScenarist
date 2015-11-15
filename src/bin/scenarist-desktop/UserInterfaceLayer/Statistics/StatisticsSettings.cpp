@@ -1,14 +1,17 @@
 #include "StatisticsSettings.h"
 #include "ui_StatisticsSettings.h"
 
+#include <QSortFilterProxyModel>
+
 using UserInterface::StatisticsSettings;
 
 
 StatisticsSettings::StatisticsSettings(QWidget *parent) :
 	QStackedWidget(parent),
-	ui(new Ui::StatisticsSettings)
+	m_ui(new Ui::StatisticsSettings),
+	m_charactersModel(new QSortFilterProxyModel(this))
 {
-	ui->setupUi(this);
+	m_ui->setupUi(this);
 
 	initView();
 	initConnections();
@@ -16,44 +19,52 @@ StatisticsSettings::StatisticsSettings(QWidget *parent) :
 
 StatisticsSettings::~StatisticsSettings()
 {
-	delete ui;
+	delete m_ui;
 }
 
 void StatisticsSettings::setCharacters(QAbstractItemModel* _characters)
 {
-	ui->characterName->setModel(_characters);
+	m_charactersModel->setSourceModel(_characters);
 	if (_characters != 0) {
-		ui->characterName->setCurrentIndex(_characters->index(0, 0));
-		connect(ui->characterName->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SIGNAL(settingsChanged()));
+		m_charactersModel->sort(0);
+		m_ui->characterName->setCurrentIndex(_characters->index(0, 0));
+		m_ui->characterActivityNames->selectAll();
 	}
 }
 
 const BusinessLogic::StatisticsParameters& StatisticsSettings::settings() const
 {
-	m_settings.summaryText = ui->summaryText->isChecked();
-	m_settings.summaryScenes = ui->summaryScenes->isChecked();
-	m_settings.summaryLocations = ui->summaryLocations->isChecked();
-	m_settings.summaryCharacters = ui->summaryCharacters->isChecked();
+	m_settings.summaryText = m_ui->summaryText->isChecked();
+	m_settings.summaryScenes = m_ui->summaryScenes->isChecked();
+	m_settings.summaryLocations = m_ui->summaryLocations->isChecked();
+	m_settings.summaryCharacters = m_ui->summaryCharacters->isChecked();
 
-	m_settings.sceneShowCharacters = ui->sceneShowCharacters->isChecked();
-	m_settings.sceneSortByColumn = ui->sceneSortBy->currentIndex();
+	m_settings.sceneShowCharacters = m_ui->sceneShowCharacters->isChecked();
+	m_settings.sceneSortByColumn = m_ui->sceneSortBy->currentIndex();
 
-	m_settings.locationExtendedView = ui->locationExtendedView->isChecked();
-	m_settings.locationSortByColumn = ui->locationSortBy->currentIndex();
+	m_settings.locationExtendedView = m_ui->locationExtendedView->isChecked();
+	m_settings.locationSortByColumn = m_ui->locationSortBy->currentIndex();
 
-	m_settings.castShowSpeakingAndNonspeakingScenes = ui->castShowSpeakingAndNonspeakingScenes->isChecked();
-	m_settings.castSortByColumn = ui->castSortBy->currentIndex();
+	m_settings.castShowSpeakingAndNonspeakingScenes = m_ui->castShowSpeakingAndNonspeakingScenes->isChecked();
+	m_settings.castSortByColumn = m_ui->castSortBy->currentIndex();
 
 	m_settings.characterName =
-			ui->characterName->model()->rowCount() > 0
-			? ui->characterName->currentIndex().data().toString()
+			m_ui->characterName->model()->rowCount() > 0
+			? m_ui->characterName->currentIndex().data().toString()
 			: QString::null;
 
-	m_settings.storyStructureAnalisysSceneChron = ui->storyStructureAnalisysSceneChron->isChecked();
-	m_settings.storyStructureAnalisysActionChron = ui->storyStructureAnalisysActionChron->isChecked();
-	m_settings.storyStructureAnalisysDialoguesChron = ui->storyStructureAnalisysDialoguesChron->isChecked();
-	m_settings.storyStructureAnalisysCharactersCount = ui->storyStructureAnalisysCharactersCount->isChecked();
-	m_settings.storyStructureAnalisysDialoguesCount = ui->storyStructureAnalisysDialoguesCount->isChecked();
+	m_settings.storyStructureAnalisysSceneChron = m_ui->storyStructureAnalisysSceneChron->isChecked();
+	m_settings.storyStructureAnalisysActionChron = m_ui->storyStructureAnalisysActionChron->isChecked();
+	m_settings.storyStructureAnalisysDialoguesChron = m_ui->storyStructureAnalisysDialoguesChron->isChecked();
+	m_settings.storyStructureAnalisysCharactersCount = m_ui->storyStructureAnalisysCharactersCount->isChecked();
+	m_settings.storyStructureAnalisysDialoguesCount = m_ui->storyStructureAnalisysDialoguesCount->isChecked();
+
+	m_settings.charactersActivityNames.clear();
+	if (m_ui->characterActivityNames->selectionModel() != 0) {
+		foreach (const QModelIndex& index, m_ui->characterActivityNames->selectionModel()->selectedIndexes()) {
+			m_settings.charactersActivityNames.append(index.data().toString());
+		}
+	}
 
 	return m_settings;
 }
@@ -61,27 +72,34 @@ const BusinessLogic::StatisticsParameters& StatisticsSettings::settings() const
 void StatisticsSettings::initView()
 {
 	setCurrentIndex(0);
+
+	m_ui->characterName->setModel(m_charactersModel);
+	m_ui->characterActivityNames->setModel(m_charactersModel);
 }
 
 void StatisticsSettings::initConnections()
 {
-	connect(ui->summaryText, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
-	connect(ui->summaryScenes, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
-	connect(ui->summaryLocations, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
-	connect(ui->summaryCharacters, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->summaryText, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->summaryScenes, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->summaryLocations, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->summaryCharacters, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 
-	connect(ui->sceneShowCharacters, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
-	connect(ui->sceneSortBy, SIGNAL(currentIndexChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->sceneShowCharacters, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->sceneSortBy, SIGNAL(currentIndexChanged(int)), this, SIGNAL(settingsChanged()));
 
-	connect(ui->locationExtendedView, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
-	connect(ui->locationSortBy, SIGNAL(currentIndexChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->locationExtendedView, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->locationSortBy, SIGNAL(currentIndexChanged(int)), this, SIGNAL(settingsChanged()));
 
-	connect(ui->castShowSpeakingAndNonspeakingScenes, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
-	connect(ui->castSortBy, SIGNAL(currentIndexChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->castShowSpeakingAndNonspeakingScenes, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_ui->castSortBy, SIGNAL(currentIndexChanged(int)), this, SIGNAL(settingsChanged()));
 
-	connect(ui->storyStructureAnalisysSceneChron, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
-	connect(ui->storyStructureAnalisysActionChron, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
-	connect(ui->storyStructureAnalisysDialoguesChron, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
-	connect(ui->storyStructureAnalisysCharactersCount, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
-	connect(ui->storyStructureAnalisysDialoguesCount, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+	connect(m_ui->characterName->selectionModel(), &QItemSelectionModel::selectionChanged, this, &StatisticsSettings::settingsChanged);
+
+	connect(m_ui->storyStructureAnalisysSceneChron, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+	connect(m_ui->storyStructureAnalisysActionChron, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+	connect(m_ui->storyStructureAnalisysDialoguesChron, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+	connect(m_ui->storyStructureAnalisysCharactersCount, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+	connect(m_ui->storyStructureAnalisysDialoguesCount, &QCheckBox::toggled, this, &StatisticsSettings::settingsChanged);
+
+	connect(m_ui->characterActivityNames->selectionModel(), &QItemSelectionModel::selectionChanged, this, &StatisticsSettings::settingsChanged);
 }

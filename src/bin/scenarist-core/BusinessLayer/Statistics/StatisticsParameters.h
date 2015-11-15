@@ -1,7 +1,7 @@
 #ifndef STATISTICSPARAMETERS
 #define STATISTICSPARAMETERS
 
-#include <QString>
+#include <QStringList>
 
 
 namespace BusinessLogic
@@ -37,7 +37,8 @@ namespace BusinessLogic
 		 * @brief Тип графика
 		 */
 		enum PlotType {
-			StoryStructureAnalisysPlot
+			StoryStructureAnalisysPlot,
+			CharactersActivityPlot
 		} plotType;
 
 		/**
@@ -91,6 +92,11 @@ namespace BusinessLogic
 		bool storyStructureAnalisysCharactersCount;
 		bool storyStructureAnalisysDialoguesCount;
 		/** @} */
+
+		/**
+		 * @brief Список персонажей, для отображения в графике активности
+		 */
+		QStringList charactersActivityNames;
 	};
 }
 

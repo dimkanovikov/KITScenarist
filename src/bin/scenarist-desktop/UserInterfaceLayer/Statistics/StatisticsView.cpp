@@ -120,6 +120,9 @@ void StatisticsView::setPlot(const BusinessLogic::Plot& _plot)
 		QCPGraph* plot = m_plotData->addGraph();
 		plot->setName(singlePlotData.name);
 		plot->setPen(QPen(singlePlotData.color, 2));
+		if (_plot.useBrush) {
+			plot->setBrush(singlePlotData.color);
+		}
 
 		//
 		// Отправляем данные в график
@@ -298,6 +301,7 @@ void StatisticsView::initView()
 
 	const int PLOTS_MIN = m_reports.size();
 	m_reports << new ReportButton(tr("Story structure analysis"), StatisticsParameters::Plot, StatisticsParameters::StoryStructureAnalisysPlot, plots);
+	m_reports << new ReportButton(tr("Characters activity"), StatisticsParameters::Plot, StatisticsParameters::CharactersActivityPlot, plots);
 	const int PLOTS_MAX = m_reports.size();
 
 	QVBoxLayout* plotsLayout = new QVBoxLayout;

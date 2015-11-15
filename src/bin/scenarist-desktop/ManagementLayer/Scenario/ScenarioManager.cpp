@@ -856,6 +856,7 @@ void ScenarioManager::initConnections()
 void ScenarioManager::initStyleSheet()
 {
 	m_viewEditorsTabs->setProperty("inTopPanel", true);
+	m_viewEditorsTabs->setProperty("topPanelRightBordered", true);
 
 	m_showFullscreen->setProperty("inTopPanel", true);
 	m_showFullscreen->setProperty("topPanelTopBordered", true);

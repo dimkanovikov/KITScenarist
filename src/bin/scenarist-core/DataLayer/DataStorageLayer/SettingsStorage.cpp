@@ -299,8 +299,10 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 		QMap<int, QWidget*> splitterWidgets;
 		for (int widgetPos = 0; widgetPos < splitter->count(); ++widgetPos) {
 			QWidget* widget = splitter->widget(widgetPos);
-			const int position = settings.value(widget->objectName()).toInt();
-			splitterWidgets.insert(position, widget);
+			if (!settings.value(widget->objectName()).isNull()) {
+				const int position = settings.value(widget->objectName()).toInt();
+				splitterWidgets.insert(position, widget);
+			}
 		}
 		//
 		// ... позиционируем сами виджеты

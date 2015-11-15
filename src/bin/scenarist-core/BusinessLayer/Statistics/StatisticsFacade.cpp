@@ -9,6 +9,7 @@
 
 #include "Plots/AbstractPlot.h"
 #include "Plots/StoryStructureAnalisysPlot.h"
+#include "Plots/CharactersActivityPlot.h"
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
@@ -103,6 +104,11 @@ BusinessLogic::Plot BusinessLogic::StatisticsFacade::makePlot(
 				default:
 				case StatisticsParameters::StoryStructureAnalisysPlot: {
 					plot = new StoryStructureAnalisysPlot;
+					break;
+				}
+
+				case StatisticsParameters::CharactersActivityPlot: {
+					plot = new CharactersActivityPlot;
 					break;
 				}
 			}

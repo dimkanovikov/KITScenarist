@@ -57,6 +57,11 @@ namespace BusinessLogic
 		 * @brief Данные о графике
 		 */
 		QVector<PlotData> data;
+
+		/**
+		 * @brief Использовать ли заливку по иксу
+		 */
+		bool useBrush = false;
 	};
 
 	/**

@@ -179,7 +179,7 @@ QRadioButton:checked[inTopPanel="true"] {
 }
 
 /*
- * Табулятор
+ * Табы
  */
 QTabBar[inTopPanel="true"] {
 	background-color: palette(button);
@@ -197,7 +197,7 @@ QTabBar::tab[inTopPanel="true"] {
 	padding-right: 7px;
 }
 
-QTabBar::tab:last[inTopPanel="true"] {
+QTabBar::tab:last[topPanelRightBordered="true"] {
 	border-right-width: 1px;
 	border-right-style: solid;
 	border-right-color: palette(dark);

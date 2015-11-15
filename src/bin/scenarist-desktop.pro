@@ -284,7 +284,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.cpp \
     scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp \
     scenarist-core/BusinessLayer/Statistics/StatisticsFacade.cpp \
-    scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplotextended.cpp
+    scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplotextended.cpp \
+    scenarist-core/BusinessLayer/Statistics/Plots/CharactersActivityPlot.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -515,7 +516,8 @@ HEADERS += \
     scenarist-core/BusinessLayer/Statistics/StatisticsParameters.h \
     scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.h \
     scenarist-core/BusinessLayer/Statistics/StatisticsFacade.h \
-    scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplotextended.h
+    scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplotextended.h \
+    scenarist-core/BusinessLayer/Statistics/Plots/CharactersActivityPlot.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

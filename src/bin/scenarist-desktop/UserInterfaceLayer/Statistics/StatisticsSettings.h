@@ -6,6 +6,7 @@
 #include <QStackedWidget>
 
 class QAbstractItemModel;
+class QSortFilterProxyModel;
 
 namespace Ui {
 	class StatisticsSettings;
@@ -53,7 +54,12 @@ namespace UserInterface
 		void initConnections();
 
 	private:
-		Ui::StatisticsSettings *ui;
+		Ui::StatisticsSettings* m_ui;
+
+		/**
+		 * @brief Отсортированная модель персонажей
+		 */
+		QSortFilterProxyModel* m_charactersModel;
 
 		/**
 		 * @brief Параметры отчёта
