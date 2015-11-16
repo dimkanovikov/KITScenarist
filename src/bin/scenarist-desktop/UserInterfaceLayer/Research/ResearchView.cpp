@@ -113,6 +113,23 @@ void ResearchView::editText(const QString& _name, const QString& _description)
 	setResearchManageButtonsVisible(true);
 }
 
+void ResearchView::setCommentOnly(bool _isCommentOnly)
+{
+	m_ui->addResearchItem->setEnabled(_isCommentOnly);
+	m_ui->removeResearchItem->setEnabled(_isCommentOnly);
+	m_ui->scenarioName->setReadOnly(_isCommentOnly);
+	m_ui->scenarioLogline->setReadOnly(_isCommentOnly);
+	m_ui->titlePageName->setReadOnly(_isCommentOnly);
+	m_ui->titlePageAdditionalInfo->lineEdit()->setReadOnly(_isCommentOnly);
+	m_ui->titlePageAuthor->setReadOnly(_isCommentOnly);
+	m_ui->titlePageContacts->setReadOnly(_isCommentOnly);
+	m_ui->titlePageGenre->setReadOnly(_isCommentOnly);
+	m_ui->titlePageYear->setReadOnly(_isCommentOnly);
+	m_ui->synopsisText->setReadOnly(_isCommentOnly);
+	m_ui->textName->setReadOnly(_isCommentOnly);
+	m_ui->textDescription->setReadOnly(_isCommentOnly);
+}
+
 bool ResearchView::eventFilter(QObject* _object, QEvent* _event)
 {
 	if (_object == m_ui->researchNavigator

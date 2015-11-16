@@ -100,8 +100,7 @@ void ResearchManager::saveResearch()
 
 void ResearchManager::setCommentOnly(bool _isCommentOnly)
 {
-//	m_navigatorManager->setCommentOnly(_isCommentOnly);
-	//	m_dataEditManager->setCommentOnly(_isCommentOnly);
+	m_view->setCommentOnly(_isCommentOnly);
 }
 
 QString ResearchManager::scenarioName() const
