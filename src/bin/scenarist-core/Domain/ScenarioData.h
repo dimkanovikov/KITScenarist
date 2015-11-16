@@ -14,6 +14,21 @@ namespace Domain
 	class ScenarioData : public DomainObject
 	{
 	public:
+		/**
+		 * @brief Ключи для доступа к данным сценария
+		 */
+		/** @{ */
+		static const QString NAME_KEY;
+		static const QString LOGLINE_KEY;
+		static const QString ADDITIONAL_INFO_KEY;
+		static const QString GENRE_KEY;
+		static const QString AUTHOR_KEY;
+		static const QString CONTACTS_KEY;
+		static const QString YEAR_KEY;
+		static const QString SYNOPSIS_KEY;
+		/** @} */
+
+	public:
 		ScenarioData(const Identifier& _id, const QString& _name, const QString& _value);
 
 		/**

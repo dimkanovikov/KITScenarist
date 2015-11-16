@@ -5,6 +5,15 @@
 using namespace Domain;
 
 
+const QString ScenarioData::NAME_KEY = "name";
+const QString ScenarioData::LOGLINE_KEY= "logline";
+const QString ScenarioData::ADDITIONAL_INFO_KEY= "additional_info";
+const QString ScenarioData::GENRE_KEY= "genre";
+const QString ScenarioData::AUTHOR_KEY= "author";
+const QString ScenarioData::CONTACTS_KEY= "contacts";
+const QString ScenarioData::YEAR_KEY= "year";
+const QString ScenarioData::SYNOPSIS_KEY= "synopsis";
+
 ScenarioData::ScenarioData(const Domain::Identifier& _id, const QString& _name,
 	const QString& _value) :
 	DomainObject(_id),

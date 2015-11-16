@@ -625,12 +625,12 @@ void ApplicationManager::aboutImport()
 
 void ApplicationManager::aboutExportTo()
 {
-	m_exportManager->exportScenario(m_scenarioManager->scenario());
+	m_exportManager->exportScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
 }
 
 void ApplicationManager::aboutPrintPreview()
 {
-	m_exportManager->printPreviewScenario(m_scenarioManager->scenario());
+	m_exportManager->printPreviewScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
 }
 
 void ApplicationManager::aboutExit()
@@ -900,7 +900,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
-	m_projectsManager->setCurrentProjectName(m_scenarioManager->scenarioName());
+	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
 
 	//
 	// Перейти на вкладку редактирования сценария
@@ -1135,9 +1135,6 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(countersSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutCountersSettingsUpdated()));
-
-	connect(m_exportManager, SIGNAL(scenarioNameChanged(QString)),
-			m_scenarioManager, SLOT(aboutScenarioNameChanged(QString)));
 
 	connect(m_researchManager, SIGNAL(researchChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));

@@ -132,66 +132,6 @@ void ExportDialog::setPrintTitle(bool _isChecked)
 	ui->printTitle->setChecked(_isChecked);
 }
 
-QString ExportDialog::scenarioName() const
-{
-	return ui->name->text();
-}
-
-void ExportDialog::setScenarioName(const QString& _name)
-{
-	ui->name->setText(_name);
-}
-
-QString ExportDialog::scenarioAdditionalInfo() const
-{
-	return ui->additionalInfo->currentText();
-}
-
-void ExportDialog::setScenarioAdditionalInfo(const QString& _additionalInfo)
-{
-	ui->additionalInfo->setEditText(_additionalInfo);
-}
-
-QString ExportDialog::scenarioGenre() const
-{
-	return ui->genre->text();
-}
-
-void ExportDialog::setScenarioGenre(const QString& _genre)
-{
-	ui->genre->setText(_genre);
-}
-
-QString ExportDialog::scenarioAuthor() const
-{
-	return ui->author->text();
-}
-
-void ExportDialog::setScenarioAuthor(const QString _author)
-{
-	ui->author->setText(_author);
-}
-
-QString ExportDialog::scenarioContacts() const
-{
-	return ui->contacts->toPlainText();
-}
-
-void ExportDialog::setScenarioContacts(const QString& _contacts)
-{
-	ui->contacts->setPlainText(_contacts);
-}
-
-QString ExportDialog::scenarioYear() const
-{
-	return ui->year->text();
-}
-
-void ExportDialog::setScenarioYear(const QString& _year)
-{
-	ui->year->setText(_year);
-}
-
 BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 {
 	BusinessLogic::ExportParameters exportParameters;
@@ -199,12 +139,6 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 	exportParameters.checkPageBreaks = ui->checkPageBreaks->isChecked();
 	exportParameters.style = ui->styles->currentText();
 	exportParameters.printTilte = ui->printTitle->isChecked();
-	exportParameters.scenarioName = ui->name->text();
-	exportParameters.scenarioAdditionalInfo = ui->additionalInfo->currentText();
-	exportParameters.scenarioGenre = ui->genre->text();
-	exportParameters.scenarioAuthor = ui->author->text();
-	exportParameters.scenarioContacts = ui->contacts->toPlainText();
-	exportParameters.scenarioYear = ui->year->text();
 	exportParameters.printPagesNumbers = ui->pageNumbering->isChecked();
 	exportParameters.printScenesNumbers = ui->scenesNumbering->isChecked();
 	exportParameters.scenesPrefix = ui->scenesPrefix->text();
@@ -269,7 +203,6 @@ void ExportDialog::initView()
 {
 	ui->browseFile->updateIcons();
 
-	ui->additionalSettings->setCurrentWidget(ui->commonTab);
 	ui->additionalSettings->hide();
 
 	resize(width(), sizeHint().height());

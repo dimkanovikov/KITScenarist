@@ -6,6 +6,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <Domain/Research.h>
+#include <Domain/ScenarioData.h>
 
 #include <BusinessLayer/Research/ResearchModel.h>
 #include <BusinessLayer/Research/ResearchModelItem.h>
@@ -26,22 +27,6 @@ using BusinessLogic::ResearchModelItem;
 using DataStorageLayer::StorageFacade;
 using UserInterface::ResearchView;
 using UserInterface::ResearchItemDialog;
-
-namespace {
-	/**
-	 * @brief Ключи для доступа к данным сценария
-	 */
-	/** @{ */
-	const QString NAME_KEY = "name";
-	const QString LOGLINE_KEY = "logline";
-	const QString ADDITIONAL_INFO_KEY = "additional_info";
-	const QString GENRE_KEY = "genre";
-	const QString AUTHOR_KEY = "author";
-	const QString CONTACTS_KEY = "contacts";
-	const QString YEAR_KEY = "year";
-	const QString SYNOPSIS_KEY = "synopsis";
-	/** @} */
-}
 
 
 ResearchManager::ResearchManager(QObject* _parent, QWidget* _parentWidget) :
@@ -65,14 +50,14 @@ void ResearchManager::loadCurrentProject()
 	//
 	// Загрузим данные сценария
 	//
-	m_scenarioData.insert(NAME_KEY, StorageFacade::scenarioDataStorage()->name());
-	m_scenarioData.insert(LOGLINE_KEY, StorageFacade::scenarioDataStorage()->logline());
-	m_scenarioData.insert(ADDITIONAL_INFO_KEY, StorageFacade::scenarioDataStorage()->additionalInfo());
-	m_scenarioData.insert(GENRE_KEY, StorageFacade::scenarioDataStorage()->genre());
-	m_scenarioData.insert(AUTHOR_KEY, StorageFacade::scenarioDataStorage()->author());
-	m_scenarioData.insert(CONTACTS_KEY, StorageFacade::scenarioDataStorage()->contacts());
-	m_scenarioData.insert(YEAR_KEY, StorageFacade::scenarioDataStorage()->year());
-	m_scenarioData.insert(SYNOPSIS_KEY, StorageFacade::scenarioDataStorage()->synopsis());
+	m_scenarioData.insert(ScenarioData::NAME_KEY, StorageFacade::scenarioDataStorage()->name());
+	m_scenarioData.insert(ScenarioData::LOGLINE_KEY, StorageFacade::scenarioDataStorage()->logline());
+	m_scenarioData.insert(ScenarioData::ADDITIONAL_INFO_KEY, StorageFacade::scenarioDataStorage()->additionalInfo());
+	m_scenarioData.insert(ScenarioData::GENRE_KEY, StorageFacade::scenarioDataStorage()->genre());
+	m_scenarioData.insert(ScenarioData::AUTHOR_KEY, StorageFacade::scenarioDataStorage()->author());
+	m_scenarioData.insert(ScenarioData::CONTACTS_KEY, StorageFacade::scenarioDataStorage()->contacts());
+	m_scenarioData.insert(ScenarioData::YEAR_KEY, StorageFacade::scenarioDataStorage()->year());
+	m_scenarioData.insert(ScenarioData::SYNOPSIS_KEY, StorageFacade::scenarioDataStorage()->synopsis());
 
 	//
 	// Загрузим модель разработки
@@ -94,14 +79,14 @@ void ResearchManager::saveResearch()
 	//
 	// Сохраняем данные сценария
 	//
-	StorageFacade::scenarioDataStorage()->setName(m_scenarioData.value(NAME_KEY));
-	StorageFacade::scenarioDataStorage()->setLogline(m_scenarioData.value(LOGLINE_KEY));
-	StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_scenarioData.value(ADDITIONAL_INFO_KEY));
-	StorageFacade::scenarioDataStorage()->setGenre(m_scenarioData.value(GENRE_KEY));
-	StorageFacade::scenarioDataStorage()->setAuthor(m_scenarioData.value(AUTHOR_KEY));
-	StorageFacade::scenarioDataStorage()->setContacts(m_scenarioData.value(CONTACTS_KEY));
-	StorageFacade::scenarioDataStorage()->setYear(m_scenarioData.value(YEAR_KEY));
-	StorageFacade::scenarioDataStorage()->setSynopsis(m_scenarioData.value(SYNOPSIS_KEY));
+	StorageFacade::scenarioDataStorage()->setName(m_scenarioData.value(ScenarioData::NAME_KEY));
+	StorageFacade::scenarioDataStorage()->setLogline(m_scenarioData.value(ScenarioData::LOGLINE_KEY));
+	StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY));
+	StorageFacade::scenarioDataStorage()->setGenre(m_scenarioData.value(ScenarioData::GENRE_KEY));
+	StorageFacade::scenarioDataStorage()->setAuthor(m_scenarioData.value(ScenarioData::AUTHOR_KEY));
+	StorageFacade::scenarioDataStorage()->setContacts(m_scenarioData.value(ScenarioData::CONTACTS_KEY));
+	StorageFacade::scenarioDataStorage()->setYear(m_scenarioData.value(ScenarioData::YEAR_KEY));
+	StorageFacade::scenarioDataStorage()->setSynopsis(m_scenarioData.value(ScenarioData::SYNOPSIS_KEY));
 
 	//
 	// Сохраняем элементы разработки
@@ -115,8 +100,17 @@ void ResearchManager::saveResearch()
 
 void ResearchManager::setCommentOnly(bool _isCommentOnly)
 {
-//	m_navigatorManager->setCommentOnly(_isCommentOnly);
-//	m_dataEditManager->setCommentOnly(_isCommentOnly);
+	m_view->setCommentOnly(_isCommentOnly);
+}
+
+QString ResearchManager::scenarioName() const
+{
+	return m_scenarioData.value(ScenarioData::NAME_KEY);
+}
+
+QMap<QString, QString> ResearchManager::scenarioData() const
+{
+	return m_scenarioData;
 }
 
 void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)
@@ -193,24 +187,24 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 			switch (research->type()) {
 				case Research::Scenario: {
 					m_view->editScenario(
-						m_scenarioData.value(NAME_KEY),
-						m_scenarioData.value(LOGLINE_KEY));
+						m_scenarioData.value(ScenarioData::NAME_KEY),
+						m_scenarioData.value(ScenarioData::LOGLINE_KEY));
 					break;
 				}
 
 				case Research::TitlePage: {
 					m_view->editTitlePage(
-						m_scenarioData.value(NAME_KEY),
-						m_scenarioData.value(ADDITIONAL_INFO_KEY),
-						m_scenarioData.value(GENRE_KEY),
-						m_scenarioData.value(AUTHOR_KEY),
-						m_scenarioData.value(CONTACTS_KEY),
-						m_scenarioData.value(YEAR_KEY));
+						m_scenarioData.value(ScenarioData::NAME_KEY),
+						m_scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY),
+						m_scenarioData.value(ScenarioData::GENRE_KEY),
+						m_scenarioData.value(ScenarioData::AUTHOR_KEY),
+						m_scenarioData.value(ScenarioData::CONTACTS_KEY),
+						m_scenarioData.value(ScenarioData::YEAR_KEY));
 					break;
 				}
 
 				case Research::Synopsis: {
-					m_view->editSynopsis(m_scenarioData.value(SYNOPSIS_KEY));
+					m_view->editSynopsis(m_scenarioData.value(ScenarioData::SYNOPSIS_KEY));
 					break;
 				}
 
@@ -319,28 +313,28 @@ void ResearchManager::initConnections()
 	connect(m_view, &ResearchView::navigatorContextMenuRequested, this, &ResearchManager::showNavigatorContextMenu);
 
 	connect(m_view, &ResearchView::scenarioNameChanged, [=](const QString& _name){
-		updateScenarioData(NAME_KEY, _name);
+		updateScenarioData(ScenarioData::NAME_KEY, _name);
 	});
 	connect(m_view, &ResearchView::scenarioLoglineChanged, [=](const QString& _logline){
-		updateScenarioData(LOGLINE_KEY, _logline);
+		updateScenarioData(ScenarioData::LOGLINE_KEY, _logline);
 	});
 	connect(m_view, &ResearchView::titlePageAdditionalInfoChanged, [=](const QString& _additionalInfo){
-		updateScenarioData(ADDITIONAL_INFO_KEY, _additionalInfo);
+		updateScenarioData(ScenarioData::ADDITIONAL_INFO_KEY, _additionalInfo);
 	});
 	connect(m_view, &ResearchView::titlePageGenreChanged, [=](const QString& _genre){
-		updateScenarioData(GENRE_KEY, _genre);
+		updateScenarioData(ScenarioData::GENRE_KEY, _genre);
 	});
 	connect(m_view, &ResearchView::titlePageAuthorChanged, [=](const QString& _author){
-		updateScenarioData(AUTHOR_KEY, _author);
+		updateScenarioData(ScenarioData::AUTHOR_KEY, _author);
 	});
 	connect(m_view, &ResearchView::titlePageContactsChanged, [=](const QString& _contacts){
-		updateScenarioData(CONTACTS_KEY, _contacts);
+		updateScenarioData(ScenarioData::CONTACTS_KEY, _contacts);
 	});
 	connect(m_view, &ResearchView::titlePageYearChanged, [=](const QString& _year){
-		updateScenarioData(YEAR_KEY, _year);
+		updateScenarioData(ScenarioData::YEAR_KEY, _year);
 	});
 	connect(m_view, &ResearchView::synopsisTextChanged, [=](const QString& _synopsis){
-		updateScenarioData(SYNOPSIS_KEY, _synopsis);
+		updateScenarioData(ScenarioData::SYNOPSIS_KEY, _synopsis);
 	});
 
 	connect(m_view, &ResearchView::textNameChanged, [=](const QString& _name){

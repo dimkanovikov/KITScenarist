@@ -29,12 +29,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Экспортировать документ
 		 */
-		void exportScenario(BusinessLogic::ScenarioDocument* _scenario);
+		void exportScenario(BusinessLogic::ScenarioDocument* _scenario, const QMap<QString, QString>& _scenarioData);
 
 		/**
 		 * @brief Предварительный просмотр документа
 		 */
-		void printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario);
+		void printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario, const QMap<QString, QString>& _scenarioData);
 
 		/**
 		 * @brief Загрузим настройки экспорта для текущего проекта
@@ -84,11 +84,6 @@ namespace ManagementLayer
 		 */
 		void initExportDialog();
 
-		/**
-		 * @brief Сохранить информацию о титульном листе, если изменилась
-		 */
-		void saveTitleListInfo();
-
 	private:
 		/**
 		 * @brief Текущий экспортируемый сценарий
@@ -99,6 +94,11 @@ namespace ManagementLayer
 		 * @brief Диалог экспорта
 		 */
 		UserInterface::ExportDialog* m_exportDialog;
+
+		/**
+		 * @brief Данные о сценарии, используются для печати титульной страницы
+		 */
+		QMap<QString, QString> m_scenarioData;
 	};
 }
 

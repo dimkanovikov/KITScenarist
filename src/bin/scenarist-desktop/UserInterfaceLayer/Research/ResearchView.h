@@ -65,6 +65,11 @@ namespace UserInterface
 		 */
 		void editText(const QString& _name, const QString& _description);
 
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
 	signals:
 		/**
 		 * @brief Нажата кнопка добавления элемента разработки

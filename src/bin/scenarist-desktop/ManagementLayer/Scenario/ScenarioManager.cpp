@@ -2,7 +2,6 @@
 
 #include "ScenarioNavigatorManager.h"
 #include "ScenarioSceneSynopsisManager.h"
-#include "ScenarioDataEditManager.h"
 #include "ScenarioTextEditManager.h"
 
 #include <Domain/Scenario.h>
@@ -194,7 +193,6 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
 	m_draftNavigatorManager(new ScenarioNavigatorManager(this, m_view, IS_DRAFT)),
 	m_sceneSynopsisManager(new ScenarioSceneSynopsisManager(this, m_view)),
-	m_dataEditManager(new ScenarioDataEditManager(this, m_view)),
 	m_textEditManager(new ScenarioTextEditManager(this, m_view)),
 	m_workModeIsDraft(false)
 {
@@ -217,11 +215,6 @@ BusinessLogic::ScenarioDocument* ScenarioManager::scenario() const
 BusinessLogic::ScenarioDocument*ScenarioManager::scenarioDraft() const
 {
 	return m_scenarioDraft;
-}
-
-QString ScenarioManager::scenarioName() const
-{
-	return m_dataEditManager->scenarioName();
 }
 
 int ScenarioManager::cursorPosition() const
@@ -251,10 +244,6 @@ void ScenarioManager::loadCurrentProject()
 	//
 	m_navigatorManager->setNavigationModel(m_scenario->model());
 	m_draftNavigatorManager->setNavigationModel(m_scenarioDraft->model());
-	if (currentScenario != 0) {
-		m_dataEditManager->setScenarioName(DataStorageLayer::StorageFacade::scenarioDataStorage()->name());
-		m_dataEditManager->setScenarioSynopsis(DataStorageLayer::StorageFacade::scenarioDataStorage()->synopsis());
-	}
 	m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
 	m_textEditManager->setScenarioDocument(m_scenario->document());
 
@@ -309,12 +298,6 @@ void ScenarioManager::saveCurrentProject()
 	//
 	aboutSaveScenarioChanges();
 	DataStorageLayer::StorageFacade::scenarioChangeStorage()->store();
-
-	//
-	// Сохраняем данные
-	//
-	DataStorageLayer::StorageFacade::scenarioDataStorage()->setName(m_dataEditManager->scenarioName());
-	DataStorageLayer::StorageFacade::scenarioDataStorage()->setSynopsis(m_dataEditManager->scenarioSynopsis());
 }
 
 void ScenarioManager::saveCurrentProjectSettings(const QString& _projectPath)
@@ -340,7 +323,6 @@ void ScenarioManager::closeCurrentProject()
 	//
 	m_navigatorManager->setNavigationModel(0);
 	m_draftNavigatorManager->setNavigationModel(0);
-	m_dataEditManager->clear();
 	m_textEditManager->setScenarioDocument(0);
 
 	//
@@ -356,7 +338,6 @@ void ScenarioManager::setCommentOnly(bool _isCommentOnly)
 	m_draftNavigatorManager->setCommentOnly(_isCommentOnly);
 	m_sceneSynopsisManager->setCommentOnly(_isCommentOnly);
 	m_textEditManager->setCommentOnly(_isCommentOnly);
-	m_dataEditManager->setCommentOnly(_isCommentOnly);
 }
 
 void ScenarioManager::aboutTextEditSettingsUpdated()
@@ -521,11 +502,6 @@ void ScenarioManager::aboutRefreshLocations()
 	}
 }
 
-void ScenarioManager::aboutScenarioNameChanged(const QString& _name)
-{
-	m_dataEditManager->setScenarioName(_name);
-}
-
 void ScenarioManager::aboutApplyPatch(const QString& _patch, bool _isDraft)
 {
 	if (_isDraft) {
@@ -598,12 +574,6 @@ void ScenarioManager::aboutUpdateCurrentSynopsis(int _cursorPosition)
 void ScenarioManager::aboutUpdateCurrentSceneSynopsis(const QString& _synopsis)
 {
 	workingScenario()->setItemSynopsisAtPosition(m_textEditManager->cursorPosition(), _synopsis);
-}
-
-void ScenarioManager::aboutBuildSynopsisFromScenes()
-{
-	QString synopsis = m_scenario->builSynopsisFromScenes();
-	m_dataEditManager->setScenarioSynopsisFromScenes(synopsis);
 }
 
 void ScenarioManager::aboutSelectItemInNavigator(int _cursorPosition)
@@ -739,24 +709,11 @@ void ScenarioManager::initView()
 {
 	m_view->setTabOrder(0, m_textEditManager->view());
 
-	m_viewEditorsTabs = new TabBar(m_view);
-	m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-	int tabIndex = -1;
-	tabIndex = m_viewEditorsTabs->addTab(tr("Text"));
-	m_viewEditorsTabs->setTabToolTip(tabIndex, tr("Edit Scenario Text"));
-
-	tabIndex = m_viewEditorsTabs->addTab(tr("Data"));
-	m_viewEditorsTabs->setTabToolTip(tabIndex, tr("Edit Scenario Data"));
-
 	m_viewEditorsToolbars = new QStackedWidget(m_view);
-	m_viewEditorsTabs->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 	m_viewEditorsToolbars->addWidget(m_textEditManager->toolbar());
-	m_viewEditorsToolbars->addWidget(m_dataEditManager->toolbar());
 
 	m_viewEditors = new QStackedWidget(m_view);
 	m_viewEditors->addWidget(m_textEditManager->view());
-	m_viewEditors->addWidget(m_dataEditManager->view());
 
 	m_showFullscreen = new FlatButton(m_view);
 	m_showFullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
@@ -772,7 +729,6 @@ void ScenarioManager::initView()
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
 	topLayout->addWidget(m_viewEditorsToolbars);
-	topLayout->addWidget(m_viewEditorsTabs);
 	topLayout->addWidget(m_showFullscreen);
 	QVBoxLayout* rightLayout = new QVBoxLayout(rightWidget);
 	rightLayout->setContentsMargins(QMargins());
@@ -810,9 +766,6 @@ void ScenarioManager::initView()
 
 void ScenarioManager::initConnections()
 {
-	connect(m_viewEditorsTabs, SIGNAL(currentChanged(int)), m_viewEditorsToolbars, SLOT(setCurrentIndex(int)));
-	connect(m_viewEditorsTabs, SIGNAL(currentChanged(int)), m_viewEditors, SLOT(setCurrentIndex(int)));
-
 	connect(m_showFullscreen, SIGNAL(clicked()), this, SIGNAL(showFullscreen()));
 
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
@@ -835,8 +788,6 @@ void ScenarioManager::initConnections()
 
 	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SLOT(aboutUpdateCurrentSceneSynopsis(QString)));
 
-	connect(m_dataEditManager, SIGNAL(buildSynopsisFromScenes()), this, SLOT(aboutBuildSynopsisFromScenes()));
-
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSynopsis(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
@@ -848,16 +799,11 @@ void ScenarioManager::initConnections()
 	// Настраиваем отслеживание изменений документа
 	//
 	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SIGNAL(scenarioChanged()));
-	connect(m_dataEditManager, SIGNAL(scenarioNameChanged()), this, SIGNAL(scenarioChanged()));
-	connect(m_dataEditManager, SIGNAL(scenarioSynopsisChanged()), this, SIGNAL(scenarioChanged()));
 	connect(m_textEditManager, SIGNAL(textChanged()), this, SIGNAL(scenarioChanged()));
 }
 
 void ScenarioManager::initStyleSheet()
 {
-	m_viewEditorsTabs->setProperty("inTopPanel", true);
-	m_viewEditorsTabs->setProperty("topPanelRightBordered", true);
-
 	m_showFullscreen->setProperty("inTopPanel", true);
 	m_showFullscreen->setProperty("topPanelTopBordered", true);
 	m_showFullscreen->setProperty("topPanelRightBordered", true);
