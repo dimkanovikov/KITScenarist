@@ -889,7 +889,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Запускаем обработку изменений сценария
 	//
-	m_scenarioManager->startChangesHandling();
+    m_scenarioManager->startChangesHandling();
 
 	//
 	// Загрузить настройки файла
