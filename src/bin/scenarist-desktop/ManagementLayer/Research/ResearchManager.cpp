@@ -116,7 +116,12 @@ void ResearchManager::saveResearch()
 void ResearchManager::setCommentOnly(bool _isCommentOnly)
 {
 //	m_navigatorManager->setCommentOnly(_isCommentOnly);
-//	m_dataEditManager->setCommentOnly(_isCommentOnly);
+	//	m_dataEditManager->setCommentOnly(_isCommentOnly);
+}
+
+QString ResearchManager::scenarioName() const
+{
+	return m_scenarioData.value(NAME_KEY);
 }
 
 void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)

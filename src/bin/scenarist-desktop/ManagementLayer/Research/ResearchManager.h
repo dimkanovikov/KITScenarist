@@ -52,6 +52,11 @@ namespace ManagementLayer
 		 */
 		void setCommentOnly(bool _isCommentOnly);
 
+		/**
+		 * @brief Получить название сценария
+		 */
+		QString scenarioName() const;
+
 	signals:
 		/**
 		 * @brief Была изменена разарботка

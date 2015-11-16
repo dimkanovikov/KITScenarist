@@ -47,11 +47,6 @@ namespace ManagementLayer
 		BusinessLogic::ScenarioDocument* scenarioDraft() const;
 
 		/**
-		 * @brief Получить название сценария
-		 */
-		QString scenarioName() const;
-
-		/**
 		 * @brief Получить текущую позицию курсора
 		 */
 		int cursorPosition() const;
@@ -133,11 +128,6 @@ namespace ManagementLayer
 		void aboutRefreshLocations();
 
 		/**
-		 * @brief Изменено название сценария
-		 */
-		void aboutScenarioNameChanged(const QString& _name);
-
-		/**
 		 * @brief Применить патч к сценарию
 		 */
 		/** @{ */
@@ -192,11 +182,6 @@ namespace ManagementLayer
 		 * @brief Текст синопсиса текущей сцены был изменён
 		 */
 		void aboutUpdateCurrentSceneSynopsis(const QString& _synopsis);
-
-		/**
-		 * @brief Собрать синопсис из сцен и установить его в редактор данных сценария
-		 */
-		void aboutBuildSynopsisFromScenes();
 
 		/**
 		 * @brief Выделить текущую сцену в навигаторе
@@ -289,11 +274,6 @@ namespace ManagementLayer
 		/** @} */
 
 		/**
-		 * @brief Вкладки редакторов
-		 */
-		TabBar* m_viewEditorsTabs;
-
-		/**
 		 * @brief Кнопка перехода в полноэкранный режим
 		 */
 		FlatButton* m_showFullscreen;
@@ -332,11 +312,6 @@ namespace ManagementLayer
 		 * @brief Управляющий синопсисом сцены
 		 */
 		ScenarioSceneSynopsisManager* m_sceneSynopsisManager;
-
-		/**
-		 * @brief Управляющий редактированием информации о сценарие
-		 */
-		ScenarioDataEditManager* m_dataEditManager;
 
 		/**
 		 * @brief Управляющий редактированием сценария

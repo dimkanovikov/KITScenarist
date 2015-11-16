@@ -92,8 +92,6 @@ SOURCES += \
     scenarist-desktop/ManagementLayer/StartUp/StartUpManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.cpp \
-    scenarist-desktop/ManagementLayer/Scenario/ScenarioDataEditManager.cpp \
     scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.cpp \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.cpp \
@@ -301,8 +299,6 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/StartUp/StartUpManager.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEdit.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.h \
-    scenarist-desktop/ManagementLayer/Scenario/ScenarioDataEditManager.h \
     scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.h \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.h \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.h \
