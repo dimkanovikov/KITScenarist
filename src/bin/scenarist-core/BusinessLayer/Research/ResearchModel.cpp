@@ -33,7 +33,7 @@ namespace {
 
 QString ResearchModel::MIME_TYPE = "application/x-scenarist/research-tree";
 
-ResearchModel::ResearchModel(QObject* _parent = 0) :
+ResearchModel::ResearchModel(QObject* _parent) :
 	QAbstractItemModel(_parent),
 	m_rootItem(new ResearchModelItem),
 	m_researchRoot(0)

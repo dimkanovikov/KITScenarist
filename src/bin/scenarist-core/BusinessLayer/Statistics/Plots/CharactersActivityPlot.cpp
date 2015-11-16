@@ -188,14 +188,13 @@ Plot CharactersActivityPlot::makePlot(QTextDocument* _scenario, const BusinessLo
 
 	//
 	// Формируем данные для визуализации
-	//
-	QVector<double> initializedVector = QVector<double>() << 0;
+    //
 	// ... х - общий для всех
-	QVector<double> x = initializedVector;
+    QVector<double> x;
 	// ... y
 	QList<QVector<double> > charactersY;
 	for (int characterIndex = 0; characterIndex < characters.size(); ++characterIndex) {
-		charactersY.append(initializedVector);
+        charactersY.append(QVector<double>());
 	}
 	//
 	const int SECONDS_IN_MINUTE = 60;

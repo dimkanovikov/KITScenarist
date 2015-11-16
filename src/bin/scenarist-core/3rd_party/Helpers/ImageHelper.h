@@ -75,8 +75,8 @@ public:
 			QPixmap newIconPixmap = baseIconPixmap;
 
 			QPainter painter(&newIconPixmap);
-			painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-			painter.fillRect(newIconPixmap.rect(), _color);
+            painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+            painter.fillRect(newIconPixmap.rect(), _color);
 			painter.end();
 
 			_icon = QIcon(newIconPixmap);
