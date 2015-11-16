@@ -694,7 +694,7 @@ void ScenarioTemplate::updateBlocksColors()
 	// Обновим цвета блоков
 	//
 	foreach (ScenarioBlockStyle::Type blockStyleType, m_blockStyles.keys()) {
-		ScenarioBlockStyle blockStyle = m_blockStyles.value(blockStyleType);
+        ScenarioBlockStyle& blockStyle = m_blockStyles[blockStyleType];
 		switch (blockStyleType) {
 
 			default: {
@@ -713,8 +713,7 @@ void ScenarioTemplate::updateBlocksColors()
 				blockStyle.setBackgroundColor(folderBackgroundColor);
 				break;
 			}
-		}
-		m_blockStyles.insert(blockStyleType, blockStyle);
+        }
 	}
 }
 
@@ -810,9 +809,7 @@ ScenarioTemplate ScenarioTemplateFacade::getTemplate(const QString& _templateNam
 		// может возникнуть ситуация с передачей стандартного шаблона на другом языке
 		//
 		result = s_instance->m_templates.value(_templateName, s_instance->m_defaultTemplate);
-	}
-
-	result.updateBlocksColors();
+    }
 
 	return result;
 }
@@ -906,7 +903,16 @@ void ScenarioTemplateFacade::removeTemplate(const QString& _templateName)
 	//
 	// Удалим файл с шаблоном
 	//
-	QFile::remove(templateFilePath);
+    QFile::remove(templateFilePath);
+}
+
+void ScenarioTemplateFacade::updateTemplatesColors()
+{
+    init();
+
+    foreach (const QString& templateName, s_instance->m_templates.keys()) {
+        s_instance->m_templates[templateName].updateBlocksColors();
+    }
 }
 
 ScenarioTemplateFacade::ScenarioTemplateFacade()

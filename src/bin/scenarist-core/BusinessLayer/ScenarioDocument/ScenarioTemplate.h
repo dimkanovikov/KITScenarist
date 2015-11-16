@@ -533,6 +533,11 @@ namespace BusinessLogic
 		 */
 		static void removeTemplate(const QString& _templateName);
 
+        /**
+         * @brief Обновить цвета блоков текста для всех шаблонов
+         */
+        static void updateTemplatesColors();
+
 	private:
 		ScenarioTemplateFacade();
 		static ScenarioTemplateFacade* s_instance;

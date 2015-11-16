@@ -1088,5 +1088,5 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(templateLibraryEditPressed(QModelIndex)), this, SLOT(templateLibraryEditPressed(QModelIndex)));
 	connect(m_view, SIGNAL(templateLibraryRemovePressed(QModelIndex)), this, SLOT(templateLibraryRemovePressed(QModelIndex)));
 	connect(m_view, SIGNAL(templateLibraryLoadPressed()), this, SLOT(templateLibraryLoadPressed()));
-	connect(m_view, SIGNAL(templateLibrarySavePressed(QModelIndex)), this, SLOT(templateLibrarySavePressed(QModelIndex)));
+    connect(m_view, SIGNAL(templateLibrarySavePressed(QModelIndex)), this, SLOT(templateLibrarySavePressed(QModelIndex)));
 }
