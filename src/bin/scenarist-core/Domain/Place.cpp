@@ -7,6 +7,9 @@ Place::Place(const Identifier& _id, const QString& _name) :
 	DomainObject(_id),
 	m_name(_name)
 {
+	if (!m_name.endsWith(".")) {
+		m_name.append(".");
+	}
 }
 
 QString Place::name() const
@@ -18,6 +21,10 @@ void Place::setName(const QString& _name)
 {
 	if (m_name != _name) {
 		m_name = _name;
+
+		if (!m_name.endsWith(".")) {
+			m_name.append(".");
+		}
 
 		changesNotStored();
 	}

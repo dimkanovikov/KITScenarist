@@ -69,7 +69,7 @@ void SceneHeadingHandler::handleEnter(QKeyEvent*)
 		//
 		switch (currentSection) {
 			case SceneHeadingParser::SectionPlace: {
-				cursor.insertText(". ");
+				cursor.insertText(" ");
 				break;
 			}
 
