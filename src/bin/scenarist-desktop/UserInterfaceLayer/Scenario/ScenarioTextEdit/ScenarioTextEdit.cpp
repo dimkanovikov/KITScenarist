@@ -368,8 +368,8 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	// Получим курсор в текущем положении
 	// Начнём блок операций
 	//
-	QTextCursor cursor = textCursor();
-	cursor.beginEditBlock();
+//	QTextCursor cursor = textCursor();
+//	cursor.beginEditBlock();
 
 	//
 	// Подготовка к обработке
@@ -409,7 +409,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Завершим блок операций
 	//
-	cursor.endEditBlock();
+//	cursor.endEditBlock();
 
 	//
 	// Убедимся, что курсор виден

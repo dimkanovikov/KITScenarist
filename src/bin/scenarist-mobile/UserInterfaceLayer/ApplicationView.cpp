@@ -7,7 +7,7 @@ using UserInterface::ApplicationView;
 
 
 ApplicationView::ApplicationView(QWidget *parent) :
-    QWidget(parent),
+    QOpenGLWidget(parent),
 	m_ui(new Ui::ApplicationView)
 {
 	m_ui->setupUi(this);
@@ -15,6 +15,7 @@ ApplicationView::ApplicationView(QWidget *parent) :
 	initView();
 	initConnections();
     initStyleSheet();
+	setAutoFillBackground(false);
 }
 
 ApplicationView::~ApplicationView()

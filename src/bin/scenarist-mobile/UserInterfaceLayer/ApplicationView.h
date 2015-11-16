@@ -1,7 +1,7 @@
 #ifndef APPLICATIONVIEW_H
 #define APPLICATIONVIEW_H
 
-#include <QWidget>
+#include <QOpenGLWidget>
 #include <QMap>
 
 namespace Ui {
@@ -14,7 +14,7 @@ namespace UserInterface
 	/**
 	 * @brief Основная форма приложения
 	 */
-    class ApplicationView : public QWidget
+    class ApplicationView : public QOpenGLWidget
 	{
 		Q_OBJECT
 

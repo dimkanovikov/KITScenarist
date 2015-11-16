@@ -64,7 +64,10 @@ namespace DataStorageLayer
 		/**
 		 * @brief Кэшированные значения параметров
 		 */
-		QMap<QString, QVariant> m_cachedValues;
+		/** @{ */
+		QMap<QString, QVariant> m_cachedValuesApp;
+		QMap<QString, QVariant> m_cachedValuesDb;
+		/** @} */
 
 		/**
 		 * @brief Загрузить параметр из кэша

@@ -97,7 +97,7 @@ void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QSt
 		//
 		foreach (const QString& key, _values.keys()) {
 			settings.setValue(key.toUtf8().toHex(), _values.value(key));
-			m_cachedValues.insert(key.toUtf8().toHex(), _values.value(key));
+			m_cachedValuesApp.insert(key, _values.value(key));
 		}
 
 		//
@@ -208,15 +208,15 @@ QMap<QString, QString> SettingsStorage::values(const QString& _valuesGroup, Sett
 
 void SettingsStorage::resetValues(SettingsStorage::SettingsPlace _settingsPlace)
 {
-	//
-	// Сбрасываем кэш
-	//
-	m_cachedValues.clear();
-
-	//
-	// Восстанавливаем значения по умолчанию
-	//
 	if (_settingsPlace == ApplicationSettings) {
+		//
+		// Сбрасываем кэш
+		//
+		m_cachedValuesApp.clear();
+
+		//
+		// Восстанавливаем значения по умолчанию
+		//
 		foreach (const QString& key, m_defaultValues.keys()) {
 			setValue(key, m_defaultValues.value(key), _settingsPlace);
 			QApplication::processEvents();
@@ -473,15 +473,22 @@ SettingsStorage::SettingsStorage()
 
 QVariant SettingsStorage::getCachedValue(const QString& _key, SettingsStorage::SettingsPlace _settingsPlace, bool& _ok)
 {
-	const QString key = QString("%1:%2").arg(_settingsPlace == ApplicationSettings ? "app" : "db").arg(_key);
-	const QString keyHex = key.toUtf8().toHex();
-	_ok = m_cachedValues.contains(keyHex);
-	return m_cachedValues.value(keyHex);
+	QVariant result;
+	if (_settingsPlace == SettingsStorage::ApplicationSettings) {
+		_ok = m_cachedValuesApp.contains(_key);
+		result = m_cachedValuesApp.value(_key);
+	} else {
+		_ok = m_cachedValuesDb.contains(_key);
+		result = m_cachedValuesDb.value(_key);
+	}
+	return result;
 }
 
 void SettingsStorage::cacheValue(const QString& _key, const QVariant& _value, SettingsStorage::SettingsPlace _settingsPlace)
 {
-	const QString key = QString("%1:%2").arg(_settingsPlace == ApplicationSettings ? "app" : "db").arg(_key);
-	const QString keyHex = key.toUtf8().toHex();
-	m_cachedValues.insert(keyHex, _value);
+	if (_settingsPlace == SettingsStorage::ApplicationSettings) {
+		m_cachedValuesApp.insert(_key, _value);
+	} else {
+		m_cachedValuesDb.insert(_key, _value);
+	}
 }
