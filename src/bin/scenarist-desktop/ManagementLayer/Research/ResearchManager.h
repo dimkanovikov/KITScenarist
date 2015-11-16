@@ -57,6 +57,11 @@ namespace ManagementLayer
 		 */
 		QString scenarioName() const;
 
+		/**
+		 * @brief Получить данные о сценарии
+		 */
+		QMap<QString, QString> scenarioData() const;
+
 	signals:
 		/**
 		 * @brief Была изменена разарботка

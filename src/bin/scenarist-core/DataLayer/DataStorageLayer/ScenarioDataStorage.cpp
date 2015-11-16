@@ -8,22 +8,6 @@
 using DataStorageLayer::ScenarioDataStorage;
 using namespace DataMappingLayer;
 
-namespace {
-	/**
-	 * @brief Ключи для доступа к данным
-	 */
-	/** @{ */
-	const QString NAME_KEY = "name";
-	const QString LOGLINE_KEY = "logline";
-	const QString ADDITIONAL_INFO_KEY = "additional_info";
-	const QString GENRE_KEY = "genre";
-	const QString AUTHOR_KEY = "author";
-	const QString CONTACTS_KEY = "contacts";
-	const QString YEAR_KEY = "year";
-	const QString SYNOPSIS_KEY = "synopsis";
-	/** @} */
-}
-
 
 void ScenarioDataStorage::clear()
 {
@@ -40,82 +24,82 @@ void ScenarioDataStorage::refresh()
 
 QString ScenarioDataStorage::name() const
 {
-	return data(NAME_KEY)->value();
+	return data(ScenarioData::NAME_KEY)->value();
 }
 
 void ScenarioDataStorage::setName(const QString& _name)
 {
-	saveData(NAME_KEY, _name);
+	saveData(ScenarioData::NAME_KEY, _name);
 }
 
 QString ScenarioDataStorage::logline() const
 {
-	return data(LOGLINE_KEY)->value();
+	return data(ScenarioData::LOGLINE_KEY)->value();
 }
 
 void ScenarioDataStorage::setLogline(const QString& _logline)
 {
-	saveData(LOGLINE_KEY, _logline);
+	saveData(ScenarioData::LOGLINE_KEY, _logline);
 }
 
 QString ScenarioDataStorage::additionalInfo() const
 {
-	return data(ADDITIONAL_INFO_KEY)->value();
+	return data(ScenarioData::ADDITIONAL_INFO_KEY)->value();
 }
 
 void ScenarioDataStorage::setAdditionalInfo(const QString& _additionalInfo)
 {
-	saveData(ADDITIONAL_INFO_KEY, _additionalInfo);
+	saveData(ScenarioData::ADDITIONAL_INFO_KEY, _additionalInfo);
 }
 
 QString ScenarioDataStorage::genre() const
 {
-	return data(GENRE_KEY)->value();
+	return data(ScenarioData::GENRE_KEY)->value();
 }
 
 void ScenarioDataStorage::setGenre(const QString& _genre)
 {
-	saveData(GENRE_KEY, _genre);
+	saveData(ScenarioData::GENRE_KEY, _genre);
 }
 
 QString ScenarioDataStorage::author() const
 {
-	return data(AUTHOR_KEY)->value();
+	return data(ScenarioData::AUTHOR_KEY)->value();
 }
 
 void ScenarioDataStorage::setAuthor(const QString _author)
 {
-	saveData(AUTHOR_KEY, _author);
+	saveData(ScenarioData::AUTHOR_KEY, _author);
 }
 
 QString ScenarioDataStorage::contacts() const
 {
-	return data(CONTACTS_KEY)->value();
+	return data(ScenarioData::CONTACTS_KEY)->value();
 }
 
 void ScenarioDataStorage::setContacts(const QString& _contacts)
 {
-	saveData(CONTACTS_KEY, _contacts);
+	saveData(ScenarioData::CONTACTS_KEY, _contacts);
 }
 
 QString ScenarioDataStorage::year() const
 {
-	return data(YEAR_KEY)->value();
+	return data(ScenarioData::YEAR_KEY)->value();
 }
 
 void ScenarioDataStorage::setYear(const QString& _year)
 {
-	saveData(YEAR_KEY, _year);
+	saveData(ScenarioData::YEAR_KEY, _year);
 }
 
 QString ScenarioDataStorage::synopsis() const
 {
-	return data(SYNOPSIS_KEY)->value();
+	return data(ScenarioData::SYNOPSIS_KEY)->value();
 }
 
 void ScenarioDataStorage::setSynopsis(const QString& _synopsis)
 {
-	saveData(SYNOPSIS_KEY, _synopsis);
+	saveData(ScenarioData::SYNOPSIS_KEY, _synopsis);
 }
 
 ScenarioDataTable* ScenarioDataStorage::all() const

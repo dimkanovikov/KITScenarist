@@ -14,6 +14,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <Domain/Scenario.h>
+#include <Domain/ScenarioData.h>
 
 #include <UserInterfaceLayer/Export/ExportDialog.h>
 
@@ -46,9 +47,11 @@ ExportManager::ExportManager(QObject* _parent, QWidget* _parentWidget) :
 	initConnections();
 }
 
-void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
+void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
+	const QMap<QString, QString>& _scenarioData)
 {
 	m_currentScenario = _scenario;
+	m_scenarioData = _scenarioData;
 	initExportDialog();
 
 	if (m_exportDialog->exec() == QLightBoxDialog::Accepted) {
@@ -58,9 +61,18 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 		ProgressWidget progress(m_exportDialog->parentWidget());
 		progress.showProgress(tr("Export"), tr("Please wait. Export can take few minutes."));
 
+		//
+		// Настроим параметры экспорта
+		//
 		BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
-		const QString filePath = exportParameters.filePath;
+		exportParameters.scenarioName = _scenarioData.value(ScenarioData::NAME_KEY);
+		exportParameters.scenarioAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
+		exportParameters.scenarioGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
+		exportParameters.scenarioAuthor = _scenarioData.value(ScenarioData::AUTHOR_KEY);
+		exportParameters.scenarioContacts = _scenarioData.value(ScenarioData::CONTACTS_KEY);
+		exportParameters.scenarioYear = _scenarioData.value(ScenarioData::YEAR_KEY);
 
+		const QString filePath = exportParameters.filePath;
 		if (!filePath.isEmpty()) {
 			const QFileInfo fileInfo(filePath);
 
@@ -109,15 +121,12 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario)
 		progress.finish();
 	}
 
-	//
-	// Сохраняем информацию о титульном листе
-	//
-	saveTitleListInfo();
-
 	m_currentScenario = 0;
+	m_scenarioData.clear();
 }
 
-void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario)
+void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scenario,
+	const QMap<QString, QString>& _scenarioData)
 {
 	initExportDialog();
 
@@ -127,8 +136,22 @@ void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scena
 	ProgressWidget progress(m_exportDialog->parentWidget());
 	progress.showProgress(tr("Print Preview"), tr("Please wait. Preparing document to preview can take few minutes."));
 
+	//
+	// Настроим параметры экспорта
+	//
+	BusinessLogic::ExportParameters exportParameters = m_exportDialog->exportParameters();
+	exportParameters.scenarioName = _scenarioData.value(ScenarioData::NAME_KEY);
+	exportParameters.scenarioAdditionalInfo = _scenarioData.value(ScenarioData::ADDITIONAL_INFO_KEY);
+	exportParameters.scenarioGenre = _scenarioData.value(ScenarioData::GENRE_KEY);
+	exportParameters.scenarioAuthor = _scenarioData.value(ScenarioData::AUTHOR_KEY);
+	exportParameters.scenarioContacts = _scenarioData.value(ScenarioData::CONTACTS_KEY);
+	exportParameters.scenarioYear = _scenarioData.value(ScenarioData::YEAR_KEY);
+
+	//
+	// Формируем предварительный просмот
+	//
 	BusinessLogic::PdfExporter exporter;
-	exporter.printPreview(_scenario, m_exportDialog->exportParameters());
+	exporter.printPreview(_scenario, exportParameters);
 
 	//
 	// Закроем уведомление
@@ -237,15 +260,10 @@ void ExportManager::aboutExportStyleChanged(const QString& _styleName)
 void ExportManager::aboutPrintPreview()
 {
 	//
-	// Сохраняем информацию о титульном листе
-	//
-	saveTitleListInfo();
-
-	//
 	// Скрываем окно настроек, показываем предпросмотр, а потом вновь показываем его
 	//
 	m_exportDialog->hide();
-	printPreviewScenario(m_currentScenario);
+	printPreviewScenario(m_currentScenario, m_scenarioData);
 	m_exportDialog->show();
 }
 
@@ -284,53 +302,4 @@ void ExportManager::initExportDialog()
 		exportFileName = fileInfo.completeBaseName();
 	}
 	m_exportDialog->setExportFileName(exportFileName);
-
-	//
-	// Установка информации о титульном листе
-	//
-	m_exportDialog->setScenarioName(StorageFacade::scenarioDataStorage()->name());
-	m_exportDialog->setScenarioAdditionalInfo(StorageFacade::scenarioDataStorage()->additionalInfo());
-	m_exportDialog->setScenarioGenre(StorageFacade::scenarioDataStorage()->genre());
-	m_exportDialog->setScenarioAuthor(StorageFacade::scenarioDataStorage()->author());
-	m_exportDialog->setScenarioContacts(StorageFacade::scenarioDataStorage()->contacts());
-	m_exportDialog->setScenarioYear(StorageFacade::scenarioDataStorage()->year());
-}
-
-void ExportManager::saveTitleListInfo()
-{
-	//
-	// Сохраняем информацию о титульном листе
-	//
-	bool isTitleListDataChanged = false;
-	if (StorageFacade::scenarioDataStorage()->name() != m_exportDialog->scenarioName()) {
-		StorageFacade::scenarioDataStorage()->setName(m_exportDialog->scenarioName());
-		emit scenarioNameChanged(StorageFacade::scenarioDataStorage()->name());
-		isTitleListDataChanged = true;
-	}
-	if (StorageFacade::scenarioDataStorage()->additionalInfo() != m_exportDialog->scenarioAdditionalInfo()) {
-		StorageFacade::scenarioDataStorage()->setAdditionalInfo(m_exportDialog->scenarioAdditionalInfo());
-		isTitleListDataChanged = true;
-	}
-	if (StorageFacade::scenarioDataStorage()->genre() != m_exportDialog->scenarioGenre()) {
-		StorageFacade::scenarioDataStorage()->setGenre(m_exportDialog->scenarioGenre());
-		isTitleListDataChanged = true;
-	}
-	if (StorageFacade::scenarioDataStorage()->author() != m_exportDialog->scenarioAuthor()) {
-		StorageFacade::scenarioDataStorage()->setAuthor(m_exportDialog->scenarioAuthor());
-		isTitleListDataChanged = true;
-	}
-	if (StorageFacade::scenarioDataStorage()->contacts() != m_exportDialog->scenarioContacts()) {
-		StorageFacade::scenarioDataStorage()->setContacts(m_exportDialog->scenarioContacts());
-		isTitleListDataChanged = true;
-	}
-	if (StorageFacade::scenarioDataStorage()->year() != m_exportDialog->scenarioYear()) {
-		StorageFacade::scenarioDataStorage()->setYear(m_exportDialog->scenarioYear());
-		isTitleListDataChanged = true;
-	}
-	//
-	// ... если есть изменения
-	//
-	if (isTitleListDataChanged) {
-		emit scenarioTitleListDataChanged();
-	}
 }

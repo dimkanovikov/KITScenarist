@@ -625,12 +625,12 @@ void ApplicationManager::aboutImport()
 
 void ApplicationManager::aboutExportTo()
 {
-	m_exportManager->exportScenario(m_scenarioManager->scenario());
+	m_exportManager->exportScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
 }
 
 void ApplicationManager::aboutPrintPreview()
 {
-	m_exportManager->printPreviewScenario(m_scenarioManager->scenario());
+	m_exportManager->printPreviewScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
 }
 
 void ApplicationManager::aboutExit()
