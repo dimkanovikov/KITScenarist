@@ -25,6 +25,7 @@
 #include <QStyleHints>
 #include <QTextBlock>
 #include <QTextCursor>
+#include <QTextDocumentFragment>
 #include <QTimer>
 #include <QWheelEvent>
 
@@ -736,7 +737,7 @@ QMimeData* ScenarioTextEdit::createMimeDataFromSelection() const
 												  textCursor().selectionEnd()).toUtf8());
 	}
 
-	mimeData->setData("text/plain", textCursor().selectedText().toUtf8());
+	mimeData->setData("text/plain", textCursor().selection().toPlainText().toUtf8());
 	return mimeData;
 }
 
