@@ -21,6 +21,11 @@ using DatabaseLayer::DatabaseHelper;
 
 namespace {
 	/**
+	 * @brief Доступный размер изменений в редакторе
+	 */
+	const int MAX_UNDO_REDO_STACK_SIZE = 50;
+
+	/**
 	 * @brief Получить хэш текста
 	 */
 	static QByteArray textMd5Hash(const QString& _text) {
@@ -214,6 +219,9 @@ Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
 			//
 			// Корректируем стеки последних действий
 			//
+			if (m_undoStack.size() == MAX_UNDO_REDO_STACK_SIZE)  {
+				m_undoStack.takeFirst();
+			}
 			m_undoStack.append(change);
 			m_redoStack.clear();
 		}
