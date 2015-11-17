@@ -77,41 +77,54 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
 			const QFileInfo fileInfo(filePath);
 
 			//
-			// Проверяем возможность записи в файл
+			// Проверяем существование папки, в которую пользователь экспортирует
 			//
-			QFile file(filePath);
-			const bool canWrite = file.open(QIODevice::WriteOnly);
-			file.close();
+			if (fileInfo.dir().exists()) {
+				//
+				// Проверяем возможность записи в файл
+				//
+				QFile file(filePath);
+				const bool canWrite = file.open(QIODevice::WriteOnly);
+				file.close();
 
-			//
-			// Если возможна запись в файл
-			//
-			if (canWrite) {
 				//
-				// Определим экспортирующего
+				// Если возможна запись в файл
 				//
-				BusinessLogic::AbstractExporter* exporter = 0;
-				if (fileInfo.suffix() == "docx") {
-					exporter = new BusinessLogic::DocxExporter;
-				} else if (fileInfo.suffix() == "pdf") {
-					exporter = new BusinessLogic::PdfExporter;
-				} else {
-					Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Unknown file extension: " + fileInfo.suffix()));
+				if (canWrite) {
+					//
+					// Определим экспортирующего
+					//
+					BusinessLogic::AbstractExporter* exporter = 0;
+					if (fileInfo.suffix() == "docx") {
+						exporter = new BusinessLogic::DocxExporter;
+					} else if (fileInfo.suffix() == "pdf") {
+						exporter = new BusinessLogic::PdfExporter;
+					} else {
+						Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Unknown file extension: " + fileInfo.suffix()));
+					}
+
+					//
+					// Экспортируем документ
+					//
+					exporter->exportTo(_scenario, exportParameters);
+					delete exporter;
+					exporter = 0;
 				}
-
 				//
-				// Экспортируем документ
+				// Если невозможно записать в файл, предупреждаем пользователя и отваливаемся
 				//
-				exporter->exportTo(_scenario, exportParameters);
-				delete exporter;
-				exporter = 0;
+				else {
+					QLightBoxMessage::critical(&progress, tr("Export error"),
+						tr("Can't write to file. Maybe it opened in other application. Please, close it and restart export."));
+				}
 			}
 			//
-			// Если невозможно записать в файл, предупреждаем пользователя и отваливаемся
+			// Если папки не существует, уведомляем и отваливаемся
 			//
 			else {
 				QLightBoxMessage::critical(&progress, tr("Export error"),
-					tr("Can't write to file. Maybe it opened in other application. Please, close it and restart export."));
+					tr("You try export to nonexistent folder <b>%1</b>. Please, choose other location for exported file.")
+					.arg(fileInfo.dir().absolutePath()));
 			}
 		}
 
