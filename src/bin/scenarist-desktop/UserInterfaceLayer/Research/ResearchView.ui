@@ -342,7 +342,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="label_6">
              <property name="text">
-              <string>Add research materials such as text, url or image gallery in tree. Used toolbar buttons and context menu for add or remove research materials in tree.</string>
+              <string>Add research materials such as text (in next release will be available url and images) in tree. Use toolbar buttons and context menu for add or remove research materials in tree.</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
