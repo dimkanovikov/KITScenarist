@@ -540,6 +540,9 @@ void DocxReader::readRun()
 			} else if (m_xml.qualifiedName() == "w:cr") {
 				m_cursor.insertText(QChar(0x2028), m_current_style.char_format);
 				m_xml.skipCurrentElement();
+			} else if (m_xml.qualifiedName() == "w:noBreakHyphen") {
+				m_cursor.insertText(QChar(0x2013), m_current_style.char_format);
+				m_xml.skipCurrentElement();
 			} else if (m_xml.qualifiedName() == "w:commentReference") {
 				const QString comment_id = m_xml.attributes().value("w:id").toString();
 				m_current_comment.text = m_comments.value(comment_id).text;
