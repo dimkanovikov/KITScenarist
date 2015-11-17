@@ -1,6 +1,8 @@
 #include "ResearchView.h"
 #include "ui_ResearchView.h"
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 #include "ResearchNavigatorItemDelegate.h"
 #include "ResearchNavigatorProxyStyle.h"
 
@@ -209,7 +211,7 @@ void ResearchView::initConnections()
 	//
 	connect(m_ui->scenarioName, &QLineEdit::textChanged, this, &ResearchView::scenarioNameChanged);
 	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=](){
-		emit scenarioLoglineChanged(m_ui->scenarioLogline->toHtml());
+		emit scenarioLoglineChanged(TextEditHelper::removeDocumentTags(m_ui->scenarioLogline->toHtml()));
 	});
 	//
 	// ... титульная страница
@@ -226,14 +228,14 @@ void ResearchView::initConnections()
 	// ... синопсис
 	//
 	connect(m_ui->synopsisText, &SimpleTextEditor::textChanged, [=](){
-		emit synopsisTextChanged(m_ui->synopsisText->toHtml());
+		emit synopsisTextChanged(TextEditHelper::removeDocumentTags(m_ui->synopsisText->toHtml()));
 	});
 	//
 	// ... текстовый элемент
 	//
 	connect(m_ui->textName, &QLineEdit::textChanged, this, &ResearchView::textNameChanged);
 	connect(m_ui->textDescription, &SimpleTextEditor::textChanged, [=](){
-		emit textDescriptionChanged(m_ui->textDescription->toHtml());
+		emit textDescriptionChanged(TextEditHelper::removeDocumentTags(m_ui->textDescription->toHtml()));
 	});
 }
 

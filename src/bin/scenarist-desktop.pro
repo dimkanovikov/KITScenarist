@@ -22,8 +22,8 @@ QMAKE_MAC_SDK = macosx10.11
 #
 # Включить профилирование
 #
-#QMAKE_CXXFLAGS_DEBUG += -pg
-#QMAKE_LFLAGS_DEBUG += -pg
+QMAKE_CXXFLAGS_DEBUG += -pg
+QMAKE_LFLAGS_DEBUG += -pg
 #
 
 #

@@ -11,6 +11,7 @@
 #include <QMimeData>
 #include <QContextMenuEvent>
 #include <QSettings>
+#include <QShortcut>
 
 
 SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
@@ -36,6 +37,19 @@ SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
 	//
 	QSettings settings;
 	setZoomRange(settings.value("simple-editor/zoom-range", 0).toInt());
+
+	//
+	// Добавляем возможность масштабирования при помощи комбинаций Ctrl +/-
+	//
+	auto zoomInFunc = [=] { setZoomRange(m_zoomRange + 1); };
+	QShortcut* zoomInShortcut1 = new QShortcut(QKeySequence("Ctrl++"), this, 0, 0, Qt::WidgetShortcut);
+	connect(zoomInShortcut1, &QShortcut::activated, zoomInFunc);
+	QShortcut* zoomInShortcut2 = new QShortcut(QKeySequence("Ctrl+="), this, 0, 0, Qt::WidgetShortcut);
+	connect(zoomInShortcut2, &QShortcut::activated, zoomInFunc);
+	//
+	auto zoomOutFunc = [=] { setZoomRange(m_zoomRange - 1); };
+	QShortcut* zoomOutShortcut = new QShortcut(QKeySequence("Ctrl+-"), this, 0, 0, Qt::WidgetShortcut);
+	connect(zoomOutShortcut, &QShortcut::activated, zoomOutFunc);
 }
 
 bool SimpleTextEditor::event(QEvent *_event)
@@ -54,15 +68,10 @@ void SimpleTextEditor::setZoomRange(int _zoomRange)
 {
 	if (m_zoomRange != _zoomRange) {
 		//
-		// Отменить предыдущее масштабирование
+		// Применить масштабирование
 		//
-		zoomOut(m_zoomRange);
-
-		//
-		// Применить новое масштабирование
-		//
+		zoomIn(_zoomRange - m_zoomRange);
 		m_zoomRange = _zoomRange;
-		zoomIn(m_zoomRange);
 
 		//
 		// Для каждого редактора применить коэффициент
@@ -75,7 +84,9 @@ void SimpleTextEditor::setZoomRange(int _zoomRange)
 		// Сохранить значение масштаба
 		//
 		QSettings settings;
-		settings.setValue("simple-editor/zoom-range", m_zoomRange);
+		if (settings.value("simple-editor/zoom-range") != m_zoomRange) {
+			settings.setValue("simple-editor/zoom-range", m_zoomRange);
+		}
 	}
 }
 

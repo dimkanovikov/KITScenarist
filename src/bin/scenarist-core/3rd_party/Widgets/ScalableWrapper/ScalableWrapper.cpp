@@ -72,11 +72,11 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	//
 	// Добавляем возможность масштабирования при помощи комбинаций Ctrl +/-
 	//
-	QShortcut* zoomInShortcut1 = new QShortcut(QKeySequence("Ctrl++"), this);
+	QShortcut* zoomInShortcut1 = new QShortcut(QKeySequence("Ctrl++"), this, 0, 0, Qt::WidgetShortcut);
 	connect(zoomInShortcut1, SIGNAL(activated()), this, SLOT(zoomIn()));
-	QShortcut* zoomInShortcut2 = new QShortcut(QKeySequence("Ctrl+="), this);
+	QShortcut* zoomInShortcut2 = new QShortcut(QKeySequence("Ctrl+="), this, 0, 0, Qt::WidgetShortcut);
 	connect(zoomInShortcut2, SIGNAL(activated()), this, SLOT(zoomIn()));
-	QShortcut* zoomOutShortcut = new QShortcut(QKeySequence("Ctrl+-"), this);
+	QShortcut* zoomOutShortcut = new QShortcut(QKeySequence("Ctrl+-"), this, 0, 0, Qt::WidgetShortcut);
 	connect(zoomOutShortcut, SIGNAL(activated()), this, SLOT(zoomOut()));
 }
 
@@ -250,34 +250,6 @@ void ScalableWrapper::gestureEvent(QGestureEvent* _event)
 			}
 
 			_event->accept();
-		}
-	}
-
-	//
-	// Жест прокрутки
-	//
-	if (QGesture* gesture = _event->gesture(Qt::SwipeGesture)) {
-		if (QSwipeGesture* swipe = qobject_cast<QSwipeGesture*>(gesture)) {
-			qreal dx = 0;
-			if (swipe->horizontalDirection() == QSwipeGesture::Left) {
-				dx = -1 * swipe->swipeAngle();
-			} else if (swipe->horizontalDirection() == QSwipeGesture::Right) {
-				dx = swipe->swipeAngle();
-			}
-
-			qreal dy = 0;
-			if (swipe->verticalDirection() == QSwipeGesture::Up) {
-				dy = -1 * swipe->swipeAngle();
-			} else if (swipe->verticalDirection() == QSwipeGesture::Down) {
-				dy = swipe->swipeAngle();
-			}
-
-			//
-			// Прокручиваем, если нужно
-			//
-			if (dx != 0 || dy != 0) {
-				m_editor->scroll(dx, dy);
-			}
 		}
 	}
 }
