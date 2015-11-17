@@ -2,6 +2,7 @@
 
 #include "SettingsStorage.h"
 
+#include <DataLayer/Database/Database.h>
 #include <DataLayer/DataMappingLayer/MapperFacade.h>
 #include <DataLayer/DataMappingLayer/ScenarioChangeMapper.h>
 
@@ -40,6 +41,10 @@ ScenarioChange* ScenarioChangeStorage::append(const QString& _id, const QString&
 	// Добавляем его в список всех изменений
 	//
 	all()->append(change);
+	//
+	// ... и на сохранение
+	//
+	allToSave()->append(change);
 
 	//
 	// Сохраняем идентификатор в списке
@@ -65,18 +70,27 @@ void ScenarioChangeStorage::store()
 	//
 	// Сохраняем все несохранённые изменения
 	//
-	foreach (DomainObject* domainObject, all()->toList()) {
+	foreach (DomainObject* domainObject, m_allToSave->toList()) {
 		ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject);
 		if (!change->id().isValid()) {
 			MapperFacade::scenarioChangeMapper()->insert(change);
 		}
 	}
+
+	//
+	// Очищаем список на сохранение
+	//
+	const bool DONT_REMOVE_ITEMS = false;
+	allToSave()->clear(DONT_REMOVE_ITEMS);
 }
 
 void ScenarioChangeStorage::clear()
 {
 	delete m_all;
 	m_all = 0;
+
+	delete m_allToSave;
+	m_allToSave = 0;
 
 	MapperFacade::scenarioChangeMapper()->clear();
 }
@@ -145,7 +159,16 @@ ScenarioChange ScenarioChangeStorage::change(const QString& _uuid)
 	return MapperFacade::scenarioChangeMapper()->change(_uuid);
 }
 
+ScenarioChangesTable* ScenarioChangeStorage::allToSave()
+{
+	if (m_allToSave == 0) {
+		m_allToSave = new ScenarioChangesTable;
+	}
+	return m_allToSave;
+}
+
 ScenarioChangeStorage::ScenarioChangeStorage() :
-	m_all(0)
+	m_all(0),
+	m_allToSave(0)
 {
 }

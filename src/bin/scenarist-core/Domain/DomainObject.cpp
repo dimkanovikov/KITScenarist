@@ -133,10 +133,23 @@ bool DomainObjectsItemModel::contains(DomainObject* domainObject) const
 	return contains;
 }
 
-void DomainObjectsItemModel::clear()
+void DomainObjectsItemModel::clear(bool _removeItems)
 {
-	for (int index = m_domainObjects.count()-1; index >= 0; --index) {
-		remove(m_domainObjects.value(index));
+	//
+	// Удаляем элементы
+	//
+	if (_removeItems) {
+		for (int index = m_domainObjects.count()-1; index >= 0; --index) {
+			remove(m_domainObjects.value(index));
+		}
+	}
+	//
+	// Просто очищаем список
+	//
+	else {
+		emit beginRemoveRows(QModelIndex(), 0, size() - 1);
+		m_domainObjects.clear();
+		emit endRemoveRows();
 	}
 }
 

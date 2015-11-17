@@ -65,7 +65,17 @@ namespace DataStorageLayer
 		ScenarioChange change(const QString& _uuid);
 
 	private:
+		/**
+		 * @brief Список загруженных изменений
+		 */
 		ScenarioChangesTable* m_all;
+
+		/**
+		 * @brief Список изменений к сохранению
+		 * @note Используется только внутри данного хранилища, исключительно для оптимизации
+		 */
+		ScenarioChangesTable* allToSave();
+		ScenarioChangesTable* m_allToSave;
 
 		/**
 		 * @brief Список изменений не сохранённых в БД

@@ -91,7 +91,11 @@ namespace Domain
 		int size() const;
 
 		bool contains(DomainObject*) const;
-		void clear();
+
+		/**
+		 * @brief Очистить таблицу и если \p _removeItems равен true, то удалить все элементы
+		 */
+		void clear(bool _removeItems = true);
 
 	public:
 		virtual void append(DomainObject*);
