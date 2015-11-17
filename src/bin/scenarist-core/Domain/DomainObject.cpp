@@ -155,6 +155,12 @@ void DomainObjectsItemModel::remove(DomainObject* domainObject)
 	endRemoveRows();
 }
 
+void DomainObjectsItemModel::itemChanged(DomainObject* _domainObject)
+{
+	const QModelIndex itemIndex = indexForItem(_domainObject);
+	emit dataChanged(itemIndex, itemIndex);
+}
+
 QList<DomainObject*> DomainObjectsItemModel::domainObjects() const
 {
 	return m_domainObjects;

@@ -72,6 +72,17 @@ void CharactersDataEditManager::aboutSave()
 		// Уведомим об изменении названия персонажа
 		//
 		if (previousName != m_character->name()) {
+			//
+			// Обновим заголовок в панели с данными
+			//
+			m_editor->setName(m_character->name());
+			//
+			// Пусть модель знает, что данные изменились
+			//
+			DataStorageLayer::StorageFacade::characterStorage()->all()->itemChanged(m_character);
+			//
+			// Отправляем сигнал, чтобы обновить имена персонажей в тексте сценария
+			//
 			emit characterNameChanged(previousName, m_character->name());
 		}
 

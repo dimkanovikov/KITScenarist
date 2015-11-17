@@ -72,6 +72,17 @@ void LocationsDataEditManager::aboutSave()
 		// Уведомим об изменении названия локации
 		//
 		if (previousName != m_location->name()) {
+			//
+			// Обновим заголовок в панели с данными
+			//
+			m_editor->setName(m_location->name());
+			//
+			// Пусть модель знает, что данные изменились
+			//
+			DataStorageLayer::StorageFacade::locationStorage()->all()->itemChanged(m_location);
+			//
+			// Отправляем сигнал, чтобы обновить имена персонажей в тексте сценария
+			//
 			emit locationNameChanged(previousName, m_location->name());
 		}
 

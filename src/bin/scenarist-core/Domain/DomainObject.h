@@ -97,6 +97,11 @@ namespace Domain
 		virtual void append(DomainObject*);
 		void remove(DomainObject*);
 
+		/**
+		 * @brief Элемент изменился, модели необходимо уведомить клиентов об этом
+		 */
+		void itemChanged(DomainObject*);
+
 	protected:
 		QList<DomainObject*> domainObjects() const;
 
