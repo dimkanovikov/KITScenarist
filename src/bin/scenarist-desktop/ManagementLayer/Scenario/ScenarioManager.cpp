@@ -196,12 +196,12 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	m_textEditManager(new ScenarioTextEditManager(this, m_view)),
 	m_workModeIsDraft(false)
 {
+	BusinessLogic::ScenarioTemplateFacade::updateTemplatesColors();
+
 	initData();
 	initView();
 	initConnections();
 	initStyleSheet();
-
-    BusinessLogic::ScenarioTemplateFacade::updateTemplatesColors();
 }
 
 QWidget* ScenarioManager::view() const
@@ -344,11 +344,11 @@ void ScenarioManager::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioManager::aboutTextEditSettingsUpdated()
 {
+	BusinessLogic::ScenarioTemplateFacade::updateTemplatesColors();
+
 	m_scenario->refresh();
 	m_scenarioDraft->refresh();
 	m_textEditManager->reloadTextEditSettings();
-
-    BusinessLogic::ScenarioTemplateFacade::updateTemplatesColors();
 }
 
 void ScenarioManager::aboutNavigatorSettingsUpdated()
