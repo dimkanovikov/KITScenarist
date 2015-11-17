@@ -492,10 +492,12 @@ void Database::updateDatabase(QSqlDatabase& _database)
 		// 0.0.X
 		//
 		if (versionMinor <= 0) {
-			if (versionBuild <= 1) {
+			if (versionMinor < 0
+				|| versionBuild <= 1) {
 				updateDatabaseTo_0_0_2(_database);
 			}
-			if (versionBuild <= 4) {
+			if (versionMinor < 0
+				|| versionBuild <= 4) {
 				updateDatabaseTo_0_0_5(_database);
 			}
 		}
@@ -503,7 +505,8 @@ void Database::updateDatabase(QSqlDatabase& _database)
 		// 0.1.X
 		//
 		if (versionMinor <= 1) {
-			if (versionBuild <= 0) {
+			if (versionMinor < 1
+				|| versionBuild <= 0) {
 				updateDatabaseTo_0_1_0(_database);
 			}
 		}
@@ -511,7 +514,8 @@ void Database::updateDatabase(QSqlDatabase& _database)
 		// 0.2.X
 		//
 		if (versionMinor <= 2) {
-			if (versionBuild <= 7) {
+			if (versionMinor < 2
+				|| versionBuild <= 7) {
 				updateDatabaseTo_0_2_8(_database);
 			}
 		}
@@ -519,7 +523,8 @@ void Database::updateDatabase(QSqlDatabase& _database)
 		// 0.3.X
 		//
 		if (versionMinor <= 3) {
-			if (versionBuild <= 2) {
+			if (versionMinor < 3
+				|| versionBuild <= 2) {
 				updateDatabaseTo_0_3_3(_database);
 			}
 		}
@@ -527,10 +532,12 @@ void Database::updateDatabase(QSqlDatabase& _database)
 		// 0.4.X
 		//
 		if (versionMinor <= 4) {
-			if (versionBuild <= 4) {
+			if (versionMinor < 4
+				|| versionBuild <= 4) {
 				updateDatabaseTo_0_4_5(_database);
 			}
-			if (versionBuild <= 9) {
+			if (versionMinor < 4
+				|| versionBuild <= 9) {
 				updateDatabaseTo_0_5_0(_database);
 			}
 		}
@@ -538,10 +545,12 @@ void Database::updateDatabase(QSqlDatabase& _database)
 		// 0.5.x
 		//
 		if (versionMinor <= 5) {
-			if (versionBuild <= 5) {
+			if (versionMinor < 5
+				|| versionBuild <= 5) {
 				updateDatabaseTo_0_5_6(_database);
 			}
-			if (versionBuild <= 7) {
+			if (versionMinor < 5
+				|| versionBuild <= 7) {
 				updateDatabaseTo_0_5_8(_database);
 			}
 		}
