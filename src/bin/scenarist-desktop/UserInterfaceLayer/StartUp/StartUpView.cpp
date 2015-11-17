@@ -135,12 +135,14 @@ void StartUpView::aboutFilesSourceChanged()
 
 void StartUpView::initView()
 {
-#ifdef Q_OS_MAC
-    QFont versionFont = ui->version->font();
-    versionFont.setPointSize(12);
-    ui->version->setFont(versionFont);
-    ui->version_2->setFont(versionFont);
+	QFont versionFont = ui->version->font();
+#ifdef Q_OS_LINUX
+	versionFont.setPointSize(10);
+#elif Q_OS_MAC
+	versionFont.setPointSize(12);
 #endif
+	ui->version->setFont(versionFont);
+	ui->version_2->setFont(versionFont);
 
 	ui->version->setText(QApplication::applicationVersion());
 

@@ -100,19 +100,19 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Images/logo.png</pixmap>
+            <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Images/logo.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>false</bool>
            </property>
           </widget>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <property name="geometry">
             <rect>
              <x>160</x>
              <y>0</y>
              <width>101</width>
-             <height>26</height>
+             <height>29</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout">
@@ -125,15 +125,10 @@
                <bool>false</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
               </property>
               <property name="text">
                <string>version</string>
@@ -159,11 +154,6 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
               </property>
               <property name="text">
                <string>0.0.0</string>
@@ -200,7 +190,7 @@
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/login.png</pixmap>
+             <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/login.png</pixmap>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -219,7 +209,7 @@
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../Resources/Resources.qrc">:/Graphics/Icons/login.png</pixmap>
+             <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/login.png</pixmap>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -235,7 +225,7 @@
              <string>Create Project</string>
             </property>
             <property name="icon">
-             <iconset resource="../../Resources/Resources.qrc">
+             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
               <normaloff>:/Graphics/Icons/project_new.png</normaloff>:/Graphics/Icons/project_new.png</iconset>
             </property>
             <property name="iconSize">
@@ -255,7 +245,7 @@
              <string>Open Project</string>
             </property>
             <property name="icon">
-             <iconset resource="../../Resources/Resources.qrc">
+             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
               <normaloff>:/Graphics/Icons/project_open.png</normaloff>:/Graphics/Icons/project_open.png</iconset>
             </property>
             <property name="iconSize">
@@ -275,7 +265,7 @@
              <string>Help</string>
             </property>
             <property name="icon">
-             <iconset resource="../../Resources/Resources.qrc">
+             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
               <normaloff>:/Graphics/Icons/help_startpage.png</normaloff>:/Graphics/Icons/help_startpage.png</iconset>
             </property>
             <property name="iconSize">
@@ -437,7 +427,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../Resources/Resources.qrc">
+            <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
              <normaloff>:/Graphics/Icons/Editing/refresh_green.png</normaloff>:/Graphics/Icons/Editing/refresh_green.png</iconset>
            </property>
            <property name="iconSize">
@@ -523,23 +513,11 @@
     </widget>
    </item>
   </layout>
+  <zorder>mainContainer</zorder>
   <zorder>topEmptyLabel</zorder>
-  <zorder>widget_4</zorder>
-  <zorder>logoutIcon</zorder>
-  <zorder>login</zorder>
-  <zorder>logout</zorder>
-  <zorder>loginIcon</zorder>
-  <zorder>createProject</zorder>
-  <zorder>updateInfo</zorder>
-  <zorder>openProject</zorder>
-  <zorder>help</zorder>
-  <zorder>verticalSpacer_2</zorder>
-  <zorder>verticalSpacer</zorder>
-  <zorder>recentFiles</zorder>
-  <zorder>projectsWidget</zorder>
  </widget>
  <resources>
-  <include location="../../Resources/Resources.qrc"/>
+  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>
