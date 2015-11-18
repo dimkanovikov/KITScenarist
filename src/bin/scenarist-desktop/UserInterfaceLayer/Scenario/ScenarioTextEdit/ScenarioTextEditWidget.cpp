@@ -192,7 +192,7 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 			cursor.movePosition(QTextCursor::End);
 		}
 		m_editor->setTextCursor(cursor);
-		m_editor->ensureCursorVisibleReimpl();
+		m_editor->ensureCursorVisible();
 		//
 		// Прокручиваем вниз, чтобы курсор стоял в верху экрана
 		//
@@ -201,7 +201,7 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 		//
 		// Возвращаем курсор в поле зрения
 		//
-		m_editor->ensureCursorVisibleReimpl();
+		m_editor->ensureCursorVisible();
 		m_editorWrapper->setFocus();
 	}
 	//

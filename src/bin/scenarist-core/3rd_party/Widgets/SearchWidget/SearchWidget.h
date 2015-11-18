@@ -3,9 +3,9 @@
 
 #include <QFrame>
 
+class PageTextEdit;
 class QPushButton;
 class QLineEdit;
-class QTextEdit;
 class QLabel;
 
 
@@ -22,7 +22,7 @@ public:
 	/**
 	 * @brief Установить документ для поиска
 	 */
-	void setEditor(QTextEdit* _editor);
+	void setEditor(PageTextEdit* _editor);
 
 	/**
 	 * @brief Выделить искомый текст
@@ -66,7 +66,7 @@ private:
 	/**
 	 * @brief Редактор текста, в котором производится поиск
 	 */
-	QTextEdit* m_editor;
+	PageTextEdit* m_editor;
 
 	/**
 	 * @brief Поле для ввода искомого текста

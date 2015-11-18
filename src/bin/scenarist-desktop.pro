@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql xml widgets printsupport network
+QT       += core core-private gui gui-private sql xml widgets widgets-private printsupport network
 
 TARGET = Scenarist
 TEMPLATE = app
@@ -190,7 +190,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp \
-    scenarist-core/3rd_party/Widgets/PagesTextEdit/PagesTextEdit.cpp \
     scenarist-core/3rd_party/Widgets/SearchWidget/SearchWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.cpp \
@@ -283,7 +282,8 @@ SOURCES += \
     scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp \
     scenarist-core/BusinessLayer/Statistics/StatisticsFacade.cpp \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplotextended.cpp \
-    scenarist-core/BusinessLayer/Statistics/Plots/CharactersActivityPlot.cpp
+    scenarist-core/BusinessLayer/Statistics/Plots/CharactersActivityPlot.cpp \
+    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -400,7 +400,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h \
-    scenarist-core/3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h \
     scenarist-core/3rd_party/Widgets/SearchWidget/SearchWidget.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.h \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.h \
@@ -513,7 +512,9 @@ HEADERS += \
     scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.h \
     scenarist-core/BusinessLayer/Statistics/StatisticsFacade.h \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplotextended.h \
-    scenarist-core/BusinessLayer/Statistics/Plots/CharactersActivityPlot.h
+    scenarist-core/BusinessLayer/Statistics/Plots/CharactersActivityPlot.h \
+    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit.h \
+    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit_p.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

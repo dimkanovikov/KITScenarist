@@ -169,11 +169,6 @@ namespace UserInterface
 		void insertFromMimeData(const QMimeData* _source);
 		/** @} */
 
-		/**
-		 * @brief Переопределяем для возвращения указателя на экран (а то скроллинг сбивается)
-		 */
-		void resizeEvent(QResizeEvent* _event);
-
 	private slots:
 		/**
 		 * @brief Вспомогательный слот для корректировки отображения больших документов

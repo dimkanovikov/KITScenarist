@@ -11,7 +11,7 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/CharacterStorage.h>
 
-#include <3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h>
+#include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
 #include <QApplication>
 #include <QTextBlock>
@@ -130,7 +130,7 @@ QString SummaryReport::makeReport(QTextDocument* _scenario, const BusinessLogic:
 		//
 		// Статистика по текстовой состовляющей
 		//
-		PagesTextEdit edit;
+		PageTextEdit edit;
 		edit.setUsePageMode(true);
 		edit.setPageFormat(::editorStyle().pageSizeId());
 		edit.setPageMargins(::editorStyle().pageMargins());

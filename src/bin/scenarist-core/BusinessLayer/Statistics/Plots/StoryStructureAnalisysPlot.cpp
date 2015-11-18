@@ -10,7 +10,7 @@
 
 #include <Domain/Character.h>
 
-#include <3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h>
+#include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
 #include <QApplication>
 #include <QTextBlock>
@@ -59,7 +59,7 @@ QString StoryStructureAnalisysPlot::plotName(const BusinessLogic::StatisticsPara
 
 Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const BusinessLogic::StatisticsParameters& _parameters) const
 {
-	PagesTextEdit edit;
+	PageTextEdit edit;
 	edit.setUsePageMode(true);
 	edit.setPageFormat(::editorStyle().pageSizeId());
 	edit.setPageMargins(::editorStyle().pageMargins());

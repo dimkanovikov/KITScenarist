@@ -5,7 +5,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
-#include <3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h>
+#include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
 #include <QApplication>
 #include <QTextBlock>
@@ -32,7 +32,7 @@ QString LocationReport::makeReport(QTextDocument* _scenario,
 	const BusinessLogic::StatisticsParameters& _parameters) const
 {
 
-	PagesTextEdit edit;
+	PageTextEdit edit;
 	edit.setUsePageMode(true);
 	edit.setPageFormat(::editorStyle().pageSizeId());
 	edit.setPageMargins(::editorStyle().pageMargins());

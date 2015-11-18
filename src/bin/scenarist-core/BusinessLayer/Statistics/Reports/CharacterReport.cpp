@@ -2,7 +2,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
-#include <3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h>
+#include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
 #include <QApplication>
 #include <QTextBlock>
@@ -36,7 +36,7 @@ QString CharacterReport::makeReport(QTextDocument* _scenario,
 	}
 
 
-	PagesTextEdit edit;
+	PageTextEdit edit;
 	edit.setUsePageMode(true);
 	edit.setPageFormat(::editorStyle().pageSizeId());
 	edit.setPageMargins(::editorStyle().pageMargins());

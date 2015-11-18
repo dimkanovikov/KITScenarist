@@ -17,7 +17,7 @@ namespace {
 }
 
 SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
-	PagesTextEdit(_parent),
+	PageTextEdit(_parent),
 	m_spellChecker(0),
 	m_spellCheckHighlighter(0)
 {

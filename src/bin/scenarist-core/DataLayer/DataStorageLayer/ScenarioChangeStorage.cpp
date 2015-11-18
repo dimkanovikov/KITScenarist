@@ -21,7 +21,8 @@ ScenarioChangesTable* ScenarioChangeStorage::all()
 	// сделанными с момента открытия проекта
 	//
 	if (m_all == 0) {
-		m_all = MapperFacade::scenarioChangeMapper()->findLastOne();
+//		m_all = MapperFacade::scenarioChangeMapper()->findLastOne();
+		m_all = MapperFacade::scenarioChangeMapper()->findAll();
 	}
 	return m_all;
 }
@@ -70,7 +71,7 @@ void ScenarioChangeStorage::store()
 	//
 	// Сохраняем все несохранённые изменения
 	//
-	foreach (DomainObject* domainObject, m_allToSave->toList()) {
+	foreach (DomainObject* domainObject, allToSave()->toList()) {
 		ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject);
 		if (!change->id().isValid()) {
 			MapperFacade::scenarioChangeMapper()->insert(change);

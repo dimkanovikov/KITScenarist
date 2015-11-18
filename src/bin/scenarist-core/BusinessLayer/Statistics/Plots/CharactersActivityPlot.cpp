@@ -10,7 +10,7 @@
 
 #include <Domain/Character.h>
 
-#include <3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h>
+#include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
 #include <QApplication>
 #include <QTextBlock>
@@ -52,7 +52,7 @@ QString CharactersActivityPlot::plotName(const BusinessLogic::StatisticsParamete
 
 Plot CharactersActivityPlot::makePlot(QTextDocument* _scenario, const BusinessLogic::StatisticsParameters& _parameters) const
 {
-	PagesTextEdit edit;
+	PageTextEdit edit;
 	edit.setUsePageMode(true);
 	edit.setPageFormat(::editorStyle().pageSizeId());
 	edit.setPageMargins(::editorStyle().pageMargins());
@@ -188,13 +188,13 @@ Plot CharactersActivityPlot::makePlot(QTextDocument* _scenario, const BusinessLo
 
 	//
 	// Формируем данные для визуализации
-    //
+	//
 	// ... х - общий для всех
-    QVector<double> x;
+	QVector<double> x;
 	// ... y
 	QList<QVector<double> > charactersY;
 	for (int characterIndex = 0; characterIndex < characters.size(); ++characterIndex) {
-        charactersY.append(QVector<double>());
+		charactersY.append(QVector<double>());
 	}
 	//
 	const int SECONDS_IN_MINUTE = 60;

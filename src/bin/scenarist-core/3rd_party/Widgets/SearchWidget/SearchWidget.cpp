@@ -1,6 +1,7 @@
 #include "SearchWidget.h"
 
-#include <QTextEdit>
+#include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
+
 #include <QPushButton>
 #include <QLineEdit>
 #include <QHBoxLayout>
@@ -94,7 +95,7 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	setLayout(layout);
 }
 
-void SearchWidget::setEditor(QTextEdit* _editor)
+void SearchWidget::setEditor(PageTextEdit* _editor)
 {
 	if (m_editor != _editor) {
 		m_editor = _editor;

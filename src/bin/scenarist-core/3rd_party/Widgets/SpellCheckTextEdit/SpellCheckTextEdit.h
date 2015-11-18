@@ -1,7 +1,7 @@
 #ifndef SPELLCHECKTEXTEDIT_H
 #define SPELLCHECKTEXTEDIT_H
 
-#include <3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h>
+#include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
 #include "SpellChecker.h"
 
@@ -11,7 +11,7 @@ class SpellCheckHighlighter;
 /**
  * @brief Класс текстового редактора с проверкой орфографии
  */
-class SpellCheckTextEdit : public PagesTextEdit
+class SpellCheckTextEdit : public PageTextEdit
 {
 	Q_OBJECT
 

@@ -369,8 +369,8 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	// Получим курсор в текущем положении
 	// Начнём блок операций
 	//
-//	QTextCursor cursor = textCursor();
-//	cursor.beginEditBlock();
+	QTextCursor cursor = textCursor();
+	cursor.beginEditBlock();
 
 	//
 	// Подготовка к обработке
@@ -410,16 +410,16 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Завершим блок операций
 	//
-//	cursor.endEditBlock();
+	cursor.endEditBlock();
 
 	//
 	// Убедимся, что курсор виден
 	//
 	if (handler->needEnsureCursorVisible()) {
-		ensureCursorVisibleReimpl();
+		ensureCursorVisible();
 	}
 }
-#include <QDebug>
+
 bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 {
 	bool isEventHandled = true;
@@ -790,15 +790,6 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 	}
 
 	cursor.endEditBlock();
-}
-
-void ScenarioTextEdit::resizeEvent(QResizeEvent* _event)
-{
-	CompletableTextEdit::resizeEvent(_event);
-
-	QTimer::singleShot(10, this, SLOT(ensureCursorVisibleReimpl()));
-
-	s_firstRepaintUpdate = true;
 }
 
 void ScenarioTextEdit::aboutCorrectRepaint()
