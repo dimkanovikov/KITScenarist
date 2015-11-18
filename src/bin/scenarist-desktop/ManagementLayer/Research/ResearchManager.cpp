@@ -28,6 +28,13 @@ using DataStorageLayer::StorageFacade;
 using UserInterface::ResearchView;
 using UserInterface::ResearchItemDialog;
 
+namespace {
+	/**
+	 * @brief Флаг загрузки проекта
+	 */
+	static bool g_isProjectLoading = false;
+}
+
 
 ResearchManager::ResearchManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
@@ -47,6 +54,8 @@ QWidget* ResearchManager::view() const
 
 void ResearchManager::loadCurrentProject()
 {
+	g_isProjectLoading = true;
+
 	//
 	// Загрузим данные сценария
 	//
@@ -65,6 +74,8 @@ void ResearchManager::loadCurrentProject()
 	m_model->load(StorageFacade::researchStorage()->all());
 	m_view->setResearchModel(m_model);
 	editResearch(m_model->index(0, 0));
+
+	g_isProjectLoading = false;
 }
 
 void ResearchManager::closeCurrentProject()
@@ -294,7 +305,11 @@ void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const 
 
 void ResearchManager::updateScenarioData(const QString& _key, const QString& _value)
 {
-	if (m_scenarioData.value(_key) != _value) {
+	//
+	// Обновляем данные, если это не загрузка проекта
+	//
+	if (g_isProjectLoading == false
+		&& m_scenarioData.value(_key) != _value) {
 		m_scenarioData.insert(_key, _value);
 		emit researchChanged();
 	}

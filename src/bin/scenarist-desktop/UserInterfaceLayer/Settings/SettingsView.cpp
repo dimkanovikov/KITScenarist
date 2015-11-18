@@ -624,6 +624,7 @@ void SettingsView::initView()
 	ui->loadTemplate->updateIcons();
 	ui->removeTemplate->updateIcons();
 	ui->applyTemplate->updateIcons();
+	ui->templates->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 void SettingsView::initConnections()

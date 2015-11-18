@@ -612,7 +612,7 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="26"/>
         <source>Export Scenario</source>
-        <translation>Exportar el Escenario</translation>
+        <translation>Exportar el Guión</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="112"/>
@@ -1702,7 +1702,7 @@ Continue trabajando fuera de linea.</translation>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="259"/>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="263"/>
         <source>Original scenario</source>
-        <translation>Escenario original</translation>
+        <translation>Guión original</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="271"/>
@@ -1856,7 +1856,7 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="86"/>
         <source>Scenario Editor</source>
-        <translation>Editor de escenario</translation>
+        <translation>Editor de Guión</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="95"/>
@@ -2520,7 +2520,7 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.ui" line="14"/>
         <source>Edit Scenario Template</source>
-        <translation>editar el Template del Escenario</translation>
+        <translation>editar el Template del Guión</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.ui" line="20"/>
@@ -2829,7 +2829,7 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp" line="118"/>
         <source>Find All Locations From Scenario</source>
-        <translation>Encontrar Todas las Locaciones del Escenario</translation>
+        <translation>Encontrar Todas las Locaciones del Guión</translation>
     </message>
 </context>
 <context>
@@ -2962,7 +2962,7 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="298"/>
         <source>Add Scenario Item After Selected</source>
-        <translation>Agregar un Elemento en el Escenario Después de Seleccionado</translation>
+        <translation>Agregar un Elemento en el Guión Después de Seleccionado</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp" line="301"/>

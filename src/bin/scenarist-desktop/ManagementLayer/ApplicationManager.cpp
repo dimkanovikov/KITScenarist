@@ -889,7 +889,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Запускаем обработку изменений сценария
 	//
-    m_scenarioManager->startChangesHandling();
+	m_scenarioManager->startChangesHandling();
 
 	//
 	// Загрузить настройки файла
@@ -903,7 +903,7 @@ void ApplicationManager::goToEditCurrentProject()
 	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
 
 	//
-	// Перейти на вкладку редактирования сценария
+	// Перейти на вкладку следующую после стартовой
 	//
 	m_tabs->setCurrentTab(1);
 
