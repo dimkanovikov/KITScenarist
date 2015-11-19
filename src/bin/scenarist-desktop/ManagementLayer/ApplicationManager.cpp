@@ -1362,8 +1362,7 @@ void ApplicationManager::reloadApplicationSettings()
 
 void ApplicationManager::updateWindowTitle()
 {
-	QString projectFileName = ProjectsManager::currentProject().path();
-	projectFileName = projectFileName.split(QDir::separator()).last();
+	const QString projectFileName = ProjectsManager::currentProject().name();
 #ifdef Q_OS_MAC
 	m_view->setWindowTitle(projectFileName);
 #else

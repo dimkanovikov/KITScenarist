@@ -76,7 +76,7 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 		//
 		// ... формируем путь к файлу проекта
 		//
-		m_path = remoteProjectsFolderPath + QDir::separator() + m_name + PROJECT_FILE_EXTENSION;
+		m_path = remoteProjectsFolderPath + QDir::separator() + QString::number(m_id) + PROJECT_FILE_EXTENSION;
 		//
 		// ... корректируем путь
 		//
