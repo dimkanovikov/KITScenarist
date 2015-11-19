@@ -615,12 +615,12 @@
         <translation>Экспортировать сценарий</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="311"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="334"/>
         <source>Print Title Page</source>
         <translation>Печатать титульную страницу</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="324"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="317"/>
         <source>Template:</source>
         <translation>Шаблон:</translation>
     </message>
@@ -631,11 +631,6 @@
     <message>
         <source>Additional:</source>
         <translation type="vanished">Дополнительно:</translation>
-    </message>
-    <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="143"/>
-        <source>DOCX</source>
-        <translation></translation>
     </message>
     <message>
         <source>Common</source>
@@ -726,13 +721,23 @@
         <translation>Корректировка текста на разрывах страниц может привести к увеличению кол-ва страниц сценария.</translation>
     </message>
     <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="143"/>
+        <source>DOCX</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="153"/>
+        <source>PDF</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="181"/>
         <source>Format:</source>
         <translation>Формат:</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="153"/>
-        <source>PDF</source>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="232"/>
+        <source>...</source>
         <translation></translation>
     </message>
     <message>
@@ -749,11 +754,6 @@
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="229"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
-    </message>
-    <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="232"/>
-        <source>...</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="112"/>
@@ -872,12 +872,12 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="46"/>
         <source>Español</source>
-        <translation></translation>
+        <translation>Испанский</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="60"/>
         <source>English</source>
-        <translation></translation>
+        <translation>Английский</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1173,7 @@ Continue working with this project in offline mode.</source>
         <translation>Предпросмотр</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1370"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1369"/>
         <source>%1[*] - KIT Scenarist</source>
         <translation>%1 [*] - КИТ Сценарист</translation>
     </message>
@@ -1327,17 +1327,17 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>ManagementLayer::ResearchManager</name>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="234"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="245"/>
         <source>Are you shure to remove research: &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Удалить элемент разработки: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="281"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="292"/>
         <source>Add New</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="283"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="294"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -1810,37 +1810,37 @@ Continue working with this project in offline mode.</source>
 <context>
     <name>SearchWidget</name>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="40"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="41"/>
         <source>Find...</source>
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="48"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="49"/>
         <source>Case Sensitive</source>
         <translation>Учитывать регистр</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="59"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="60"/>
         <source>Find Prev</source>
         <translation>Найти предыдущее совпадение</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="71"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="72"/>
         <source>Find Next</source>
         <translation>Найти следующее совпадение</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="74"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="75"/>
         <source>Replace with...</source>
         <translation>Заменить на...</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="76"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="77"/>
         <source>Replace</source>
         <translation>Заменить</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="80"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="81"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
@@ -1887,11 +1887,6 @@ Continue working with this project in offline mode.</source>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="281"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
-    </message>
-    <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="284"/>
-        <source>...</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="368"/>
@@ -2023,9 +2018,22 @@ Replace quotes to language specific.</source>
         <translation>Хронометраж</translation>
     </message>
     <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1941"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2004"/>
+        <source>=</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2077"/>
         <source>Scene Heading</source>
         <translation>Место и время</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2114"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2158"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2191"/>
+        <source>+</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2347"/>
@@ -2124,6 +2132,11 @@ Replace quotes to language specific.</source>
         <translation>Отображать номера сцен</translation>
     </message>
     <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="284"/>
+        <source>...</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="389"/>
         <source>Locations module</source>
         <translation>Локации</translation>
@@ -2147,12 +2160,6 @@ Replace quotes to language specific.</source>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1934"/>
         <source>Page</source>
         <translation>Страница</translation>
-    </message>
-    <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1941"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2004"/>
-        <source>=</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1955"/>
@@ -2186,13 +2193,6 @@ Replace quotes to language specific.</source>
 Paragraph</source>
         <translation>Секунд
 за абзац</translation>
-    </message>
-    <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2114"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2158"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2191"/>
-        <source>+</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="104"/>
@@ -2311,6 +2311,11 @@ Paragraph</source>
         <translation>версия</translation>
     </message>
     <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="159"/>
+        <source>0.0.0</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="225"/>
         <source>Create Project</source>
         <translation>Создать новый проект</translation>
@@ -2351,11 +2356,6 @@ Paragraph</source>
         <translation>Проекты на kitscenarist.ru</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="159"/>
-        <source>0.0.0</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui" line="317"/>
         <source>Released version 0.0.0 &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;download&lt;/a&gt; or &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;read more&lt;/a&gt;.</source>
         <translation>Вышла новая версия 0.0.0 &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;скачать&lt;/a&gt; или &lt;a href=&quot;#&quot; style=&quot;color:#2b78da;&quot;&gt;узнать подробности&lt;/a&gt;.</translation>
@@ -2367,11 +2367,6 @@ Paragraph</source>
 </context>
 <context>
     <name>StatisticsSettings</name>
-    <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="14"/>
-        <source>StackedWidget</source>
-        <translation></translation>
-    </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="25"/>
         <source>Summary text statistics</source>
@@ -2401,6 +2396,11 @@ Paragraph</source>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="69"/>
         <source>Sort scenes</source>
         <translation>Сортировать сцены</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="14"/>
+        <source>StackedWidget</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="80"/>
@@ -3281,7 +3281,7 @@ Paragraph</source>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="269"/>
         <source>Update current report</source>
-        <translation>Структурный анализ истории</translation>
+        <translation>Обновить отчёт</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="275"/>

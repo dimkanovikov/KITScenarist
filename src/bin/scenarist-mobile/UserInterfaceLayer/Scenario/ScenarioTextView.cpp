@@ -16,9 +16,11 @@
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
+#include <3rd_party/Widgets/WAF/Animation.h>
 
 #include <QCryptographicHash>
 #include <QKeyEvent>
+#include <QScrollBar>
 #include <QScroller>
 
 using UserInterface::ScenarioTextView;
@@ -178,7 +180,7 @@ void ScenarioTextView::setCursorPosition(int _position)
 		//
 		cursor.setPosition(_position);
 		m_editor->setTextCursor(cursor);
-		m_editor->ensureCursorVisibleReimpl();
+		m_editor->ensureCursorVisible();
 		//
 		// Прокручиваем вниз, чтобы курсор стоял в верху экрана
 		//
@@ -187,7 +189,7 @@ void ScenarioTextView::setCursorPosition(int _position)
 		//
 		// Возвращаем курсор в поле зрения
 		//
-		m_editor->ensureCursorVisibleReimpl();
+		m_editor->ensureCursorVisible();
 		m_editorWrapper->setFocus();
 	}
 	//
@@ -393,14 +395,14 @@ void ScenarioTextView::aboutStyleChanged()
 void ScenarioTextView::initView()
 {
 	m_ui->scenarioName->setElideMode(Qt::ElideRight);
-
+	m_ui->editingToolbar->setMaximumHeight(0);
 	m_ui->textEditContainer->addWidget(m_editorWrapper);
 
-    //
-    // Отключаем автоподсказки
-    //
-    // QTBUG: В андройдах до 4 версии блокируется возможность переключения на другой язык
-    //
+	//
+	// Отключаем автоподсказки
+	//
+	// QTBUG: В андройдах до 4 версии блокируется возможность переключения на другой язык
+	//
 //    m_editor->setInputMethodHints(m_editor->inputMethodHints() | Qt::ImhSensitiveData);
 
 	m_editor->setTextSelectionEnable(false);
@@ -437,12 +439,22 @@ void ScenarioTextView::initStylesCombo()
 void ScenarioTextView::initConnections()
 {
 	connect(m_ui->navigator, &QToolButton::clicked, this, &ScenarioTextView::showNavigatorClicked);
-	connect(m_ui->tab, &QToolButton::clicked, [=](){
+	connect(m_ui->tab, &QToolButton::clicked, [=] {
 	   qApp->sendEvent(m_editor, new QKeyEvent(QEvent::KeyPress, Qt::Key_Tab, Qt::NoModifier));
 	});
 	connect(m_ui->textStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->enter, &QToolButton::clicked, [=](){
+	connect(m_ui->enter, &QToolButton::clicked, [=] {
 	   qApp->sendEvent(m_editor, new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier));
+	});
+
+	//
+	// Настраиваем отображение панелей в зависимости от того открыта ли клавиатура
+	//
+	connect(QApplication::inputMethod(), &QInputMethod::visibleChanged, [=] {
+		const bool keyboardVisible = QApplication::inputMethod()->isVisible();
+		const bool FIX_BACKGROUND = true;
+		WAF::Animation::slide(m_ui->toolbar, WAF::FromBottomToTop, FIX_BACKGROUND, !keyboardVisible);
+		WAF::Animation::slide(m_ui->editingToolbar, WAF::FromBottomToTop, FIX_BACKGROUND, keyboardVisible);
 	});
 
 	initEditorConnections();

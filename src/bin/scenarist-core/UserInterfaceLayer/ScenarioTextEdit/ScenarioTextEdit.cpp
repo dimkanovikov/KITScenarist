@@ -25,6 +25,7 @@
 #include <QStyleHints>
 #include <QTextBlock>
 #include <QTextCursor>
+#include <QTextDocumentFragment>
 #include <QTimer>
 #include <QWheelEvent>
 
@@ -424,10 +425,10 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	// Убедимся, что курсор виден
 	//
 	if (handler->needEnsureCursorVisible()) {
-		ensureCursorVisibleReimpl();
+		ensureCursorVisible();
 	}
 }
-#include <QDebug>
+
 bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 {
 	bool isEventHandled = true;
@@ -752,7 +753,7 @@ QMimeData* ScenarioTextEdit::createMimeDataFromSelection() const
 												  textCursor().selectionEnd()).toUtf8());
 	}
 
-	mimeData->setData("text/plain", textCursor().selectedText().toUtf8());
+	mimeData->setData("text/plain", textCursor().selection().toPlainText().toUtf8());
 	return mimeData;
 }
 
@@ -805,15 +806,6 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 	}
 
 	cursor.endEditBlock();
-}
-
-void ScenarioTextEdit::resizeEvent(QResizeEvent* _event)
-{
-	CompletableTextEdit::resizeEvent(_event);
-
-	QTimer::singleShot(10, this, SLOT(ensureCursorVisibleReimpl()));
-
-	s_firstRepaintUpdate = true;
 }
 
 void ScenarioTextEdit::aboutCorrectRepaint()

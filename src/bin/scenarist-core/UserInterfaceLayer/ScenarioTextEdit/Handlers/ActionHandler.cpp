@@ -175,7 +175,7 @@ void ActionHandler::handleOther(QKeyEvent* _event)
 		// Если было введено какое-либо значение из списка мест (ИНТ./НАТ. и т.п.)
 		// то необходимо преобразовать блок во время и место
 		//
-		QString maybePlace = cursorBackwardText.remove(".").toUpper();
+		QString maybePlace = cursorBackwardText.toUpper();
 		if (DataStorageLayer::StorageFacade::placeStorage()->hasPlace(maybePlace)) {
 			editor()->changeScenarioBlockType(ScenarioBlockStyle::SceneHeading);
 		}

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui sql xml widgets network
+QT += core core-private gui gui-private sql xml widgets widgets-private network
 android: QT += androidextras
 
 TARGET = Scenarist
@@ -90,11 +90,10 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.cpp \
     scenarist-core/3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.cpp \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.cpp \
-    scenarist-core/3rd_party/Widgets/PagesTextEdit/PagesTextEdit.cpp \
+    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit.cpp \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotoPreview.cpp \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotosChooser.cpp \
-    scenarist-core/3rd_party/Widgets/PopupWidget/PopupWidget.cpp \
     scenarist-core/3rd_party/Widgets/ProgressWidget/ProgressWidget.cpp \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.cpp \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.cpp \
@@ -126,12 +125,6 @@ SOURCES += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextDocument.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioXml.cpp \
-    scenarist-core/BusinessLayer/Statistics/CastReport.cpp \
-    scenarist-core/BusinessLayer/Statistics/CharacterReport.cpp \
-    scenarist-core/BusinessLayer/Statistics/LocationReport.cpp \
-    scenarist-core/BusinessLayer/Statistics/ReportFacade.cpp \
-    scenarist-core/BusinessLayer/Statistics/SceneReport.cpp \
-    scenarist-core/BusinessLayer/Statistics/SummaryReport.cpp \
     scenarist-core/DataLayer/Database/Database.cpp \
     scenarist-core/DataLayer/DataMappingLayer/AbstractMapper.cpp \
     scenarist-core/DataLayer/DataMappingLayer/CharacterMapper.cpp \
@@ -206,8 +199,10 @@ SOURCES += \
     scenarist-mobile/UserInterfaceLayer/StartUp/RecentFileWidget.cpp \
     scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/BackgroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideBackgroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.cpp \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioManager.cpp \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp \
     scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.cpp \
@@ -255,12 +250,11 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h \
     scenarist-core/3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.h \
-    scenarist-core/3rd_party/Widgets/PagesTextEdit/PagesTextEdit.h \
+    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit.h \
+    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit_p.h \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotoLabel.h \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotoPreview.h \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotosChooser.h \
-    scenarist-core/3rd_party/Widgets/PopupWidget/PopupWidget.h \
-    scenarist-core/3rd_party/Widgets/PopupWidget/PopupWidget_p.h \
     scenarist-core/3rd_party/Widgets/ProgressWidget/ProgressWidget.h \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h \
@@ -294,13 +288,6 @@ HEADERS += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextDocument.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioXml.h \
-    scenarist-core/BusinessLayer/Statistics/AbstractReport.h \
-    scenarist-core/BusinessLayer/Statistics/CastReport.h \
-    scenarist-core/BusinessLayer/Statistics/CharacterReport.h \
-    scenarist-core/BusinessLayer/Statistics/LocationReport.h \
-    scenarist-core/BusinessLayer/Statistics/ReportFacade.h \
-    scenarist-core/BusinessLayer/Statistics/SceneReport.h \
-    scenarist-core/BusinessLayer/Statistics/SummaryReport.h \
     scenarist-core/DataLayer/Database/Database.h \
     scenarist-core/DataLayer/Database/DatabaseHelper.h \
     scenarist-core/DataLayer/DataMappingLayer/AbstractMapper.h \
@@ -379,8 +366,10 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation.h \
     scenarist-core/3rd_party/Widgets/WAF/AnimationPrivate.h \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/BackgroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideBackgroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.h \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioManager.h \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.h \
     scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
@@ -419,8 +408,8 @@ FORMS += \
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = \
-        /Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Release/libs/hunspell/libhunspell.so \
-        $$PWD/../../build/Release/libs/webloader/libwebloader.so
+	/Users/macuser/dev/dimkanovikov/Scenarist/src/bin/../../build/Release/libs/hunspell/libhunspell.so \
+	$$PWD/../../build/Release/libs/webloader/libwebloader.so
 }
 
 DISTFILES += \

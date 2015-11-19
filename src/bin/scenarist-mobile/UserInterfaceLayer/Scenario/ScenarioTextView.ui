@@ -97,10 +97,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QStackedWidget" name="textEditContainer"/>
-   </item>
-   <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="editingToolbar">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -161,6 +158,9 @@
      </layout>
     </widget>
    </item>
+   <item>
+    <widget class="QStackedWidget" name="textEditContainer"/>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -171,7 +171,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>
  <connections/>
