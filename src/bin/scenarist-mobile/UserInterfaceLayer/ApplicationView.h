@@ -1,7 +1,7 @@
 #ifndef APPLICATIONVIEW_H
 #define APPLICATIONVIEW_H
 
-#include <QOpenGLWidget>
+#include <QWidget>
 #include <QMap>
 
 namespace Ui {
@@ -14,7 +14,7 @@ namespace UserInterface
 	/**
 	 * @brief Основная форма приложения
 	 */
-    class ApplicationView : public QOpenGLWidget
+	class ApplicationView : public QWidget
 	{
 		Q_OBJECT
 
@@ -47,7 +47,7 @@ namespace UserInterface
 		/**
 		 * @brief Переопределяется для отлавливания события закрытия приложения
 		 */
-        void closeEvent(QCloseEvent* _event);
+		void closeEvent(QCloseEvent* _event);
 
 	private:
 		/**

@@ -120,7 +120,7 @@
     <message>
         <location filename="../../BusinessLayer/Statistics/Plots/CharactersActivityPlot.cpp" line="50"/>
         <source>Characters Activity Plot</source>
-        <translation type="unfinished"></translation>
+        <translation>Actividad del personaje en la trama</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Plots/CharactersActivityPlot.cpp" line="210"/>
@@ -219,7 +219,7 @@
         <location filename="../../BusinessLayer/Research/ResearchModel.cpp" line="77"/>
         <location filename="../../BusinessLayer/Research/ResearchModel.cpp" line="128"/>
         <source>Research</source>
-        <translation type="unfinished"></translation>
+        <translation>Investigación</translation>
     </message>
 </context>
 <context>
@@ -356,37 +356,37 @@
     <message>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="57"/>
         <source>Story Structure Analisys Plot</source>
-        <translation type="unfinished"></translation>
+        <translation>Estructura de la Historia/ Analisis de la Trama</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="36"/>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="258"/>
         <source>Scene Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Duración de la escena</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="39"/>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="269"/>
         <source>Action Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Duaración de la acción</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="42"/>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="280"/>
         <source>Dialogues Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Duración del Dialogo</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="45"/>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="291"/>
         <source>Characters Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Cantidad de Personajes</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="48"/>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="302"/>
         <source>Dialogs Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Cantidad de Dialogos</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp" line="195"/>
@@ -537,12 +537,12 @@
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="68"/>
         <source>Project was created in desktop version.</source>
-        <translation type="unfinished"></translation>
+        <translation>El proyecto fue creado con la versión de escritorio.</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="70"/>
         <source>Project was created in mobile version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este proyecto fue hecho con la versión de celular.</translation>
     </message>
     <message>
         <location filename="../../DataLayer/Database/Database.cpp" line="418"/>
@@ -655,7 +655,7 @@
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="311"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="334"/>
         <source>Print Title Page</source>
         <translation>Imprimir vista Título de la lista</translation>
     </message>
@@ -684,7 +684,7 @@
         <translation type="vanished">Común</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="324"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui" line="317"/>
         <source>Template:</source>
         <translation>Template:</translation>
     </message>
@@ -814,7 +814,7 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.ui" line="48"/>
         <source>...</source>
-        <translation></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.ui" line="71"/>
@@ -877,7 +877,7 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="60"/>
         <source>English</source>
-        <translation></translation>
+        <translation>Ingles</translation>
     </message>
 </context>
 <context>
@@ -1104,7 +1104,7 @@ Continue trabajando fuera de linea.</translation>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="968"/>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="979"/>
         <source>Research</source>
-        <translation type="unfinished"></translation>
+        <translation>Investigación</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="969"/>
@@ -1172,7 +1172,7 @@ Continue trabajando fuera de linea.</translation>
         <translation>Vista previa</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1370"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="1369"/>
         <source>%1[*] - KIT Scenarist</source>
         <translation>%1[*] - KIT Scenarist</translation>
     </message>
@@ -1238,7 +1238,7 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/Export/ExportManager.cpp" line="126"/>
         <source>You try export to nonexistent folder &lt;b&gt;%1&lt;/b&gt;. Please, choose other location for exported file.</source>
-        <translation type="unfinished"></translation>
+        <translation>La carpeta para exportar.&lt;b&gt;%1&lt;/b&gt; no existe, por favor, seleccióna otro lugar.</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/Export/ExportManager.cpp" line="150"/>
@@ -1326,17 +1326,17 @@ Continue trabajando fuera de linea.</translation>
 <context>
     <name>ManagementLayer::ResearchManager</name>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="234"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="245"/>
         <source>Are you shure to remove research: &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Estas seguro para sacar la investigacón: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="281"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="292"/>
         <source>Add New</source>
         <translation>Agregar nuevo</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="283"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Research/ResearchManager.cpp" line="294"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
@@ -1612,7 +1612,7 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui" line="20"/>
         <source>Add Research Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar items de investigación</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui" line="28"/>
@@ -1632,7 +1632,7 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui" line="76"/>
         <source>Insert into &quot;Folder name&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Instertar en&quot;nombre del archivo&quot;</translation>
     </message>
 </context>
 <context>
@@ -1645,7 +1645,7 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="54"/>
         <source>Research</source>
-        <translation type="unfinished"></translation>
+        <translation>Investigación</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="126"/>
@@ -1656,7 +1656,7 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="142"/>
         <source>Logline:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frase gancho:</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="161"/>
@@ -1727,7 +1727,7 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="345"/>
         <source>Add research materials such as text (in next release will be available url and images) in tree. Use toolbar buttons and context menu for add or remove research materials in tree.</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar investigación como textos(proxima versión con url y imagenes) poder agregar el material con ramificaciónes o quitarlo.</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui" line="362"/>
@@ -1805,37 +1805,37 @@ Continue trabajando fuera de linea.</translation>
 <context>
     <name>SearchWidget</name>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="40"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="41"/>
         <source>Find...</source>
         <translation>Buscar...</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="48"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="49"/>
         <source>Case Sensitive</source>
         <translation>Caso Sensible</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="59"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="60"/>
         <source>Find Prev</source>
         <translation>Buscar Previa</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="71"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="72"/>
         <source>Find Next</source>
         <translation>Buscar siguiente</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="74"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="75"/>
         <source>Replace with...</source>
         <translation>Remplazar con...</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="76"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="77"/>
         <source>Replace</source>
         <translation>Remplazar</translation>
     </message>
     <message>
-        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="80"/>
+        <location filename="../../3rd_party/Widgets/SearchWidget/SearchWidget.cpp" line="81"/>
         <source>All</source>
         <translation>Todo</translation>
     </message>
@@ -1911,22 +1911,22 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="368"/>
         <source>Research module</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulo de investigación</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="375"/>
         <source>Scenario module</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulo del guíon</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="382"/>
         <source>Characters module</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulo de personajes</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="396"/>
         <source>Statistics module</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulo de estadísticas</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1288"/>
@@ -1947,7 +1947,7 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="389"/>
         <source>Locations module</source>
-        <translation type="unfinished"></translation>
+        <translation>Locación de modulos</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="497"/>
@@ -2037,7 +2037,7 @@ Continue trabajando fuera de linea.</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="306"/>
         <source>Two Panel Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo en dos paneles</translation>
     </message>
     <message>
         <source>Scenario</source>
@@ -2492,27 +2492,27 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="270"/>
         <source>Scene Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Duración en escena</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="280"/>
         <source>Action Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Duración de la acción</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="290"/>
         <source>Dialogues Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Duración del diálogo</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="300"/>
         <source>Characters Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Cantidad de personajes</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui" line="310"/>
         <source>Dialogues Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Cantidad de diálogos</translation>
     </message>
 </context>
 <context>
@@ -3172,7 +3172,7 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="604"/>
         <source>Modules</source>
-        <translation type="unfinished"></translation>
+        <translation>Modulos</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="611"/>
@@ -3227,12 +3227,12 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="232"/>
         <source>Plot.png</source>
-        <translation type="unfinished"></translation>
+        <translation>Argumento.png</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="233"/>
         <source>Save plot</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar argumento</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="233"/>
@@ -3257,7 +3257,7 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="269"/>
         <source>Update current report</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar informe</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="275"/>
@@ -3277,22 +3277,22 @@ Párrafo</translation>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="298"/>
         <source>Plots</source>
-        <translation type="unfinished"></translation>
+        <translation>Argumento</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="303"/>
         <source>Story structure analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>Estructura de la historia y análisis</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="304"/>
         <source>Characters activity</source>
-        <translation type="unfinished"></translation>
+        <translation>Actividades del personaje</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsView.cpp" line="400"/>
         <source>Duration, minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Duración en minutos</translation>
     </message>
     <message>
         <source>Statistics report</source>
