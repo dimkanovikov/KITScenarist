@@ -138,7 +138,7 @@ void StartUpView::initView()
 	QFont versionFont = ui->version->font();
 #ifdef Q_OS_LINUX
 	versionFont.setPointSize(10);
-#elif Q_OS_MAC
+#elif defined Q_OS_MAC
 	versionFont.setPointSize(12);
 #endif
 	ui->version->setFont(versionFont);

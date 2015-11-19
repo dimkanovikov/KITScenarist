@@ -54,7 +54,7 @@ class PageTextEditPrivate;
 class QMimeData;
 class QPagedPaintDevice;
 
-class Q_WIDGETS_EXPORT PageTextEdit : public QAbstractScrollArea
+class PageTextEdit : public QAbstractScrollArea
 {
 	Q_OBJECT
 	Q_DECLARE_PRIVATE(PageTextEdit)
