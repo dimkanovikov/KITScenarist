@@ -117,8 +117,8 @@ void ResearchView::editText(const QString& _name, const QString& _description)
 
 void ResearchView::setCommentOnly(bool _isCommentOnly)
 {
-	m_ui->addResearchItem->setEnabled(_isCommentOnly);
-	m_ui->removeResearchItem->setEnabled(_isCommentOnly);
+	m_ui->addResearchItem->setEnabled(!_isCommentOnly);
+	m_ui->removeResearchItem->setEnabled(!_isCommentOnly);
 	m_ui->scenarioName->setReadOnly(_isCommentOnly);
 	m_ui->scenarioLogline->setReadOnly(_isCommentOnly);
 	m_ui->titlePageName->setReadOnly(_isCommentOnly);
@@ -186,10 +186,10 @@ void ResearchView::initConnections()
 	//
 	// Реакции на нажатие кнопок
 	//
-	connect(m_ui->addResearchItem, &FlatButton::clicked, [=](){
+	connect(m_ui->addResearchItem, &FlatButton::clicked, [=] {
 		emit addResearchRequested(currentResearchIndex());
 	});
-	connect(m_ui->removeResearchItem, &FlatButton::clicked, [=](){
+	connect(m_ui->removeResearchItem, &FlatButton::clicked, [=] {
 		emit removeResearchRequested(currentResearchIndex());
 	});
 
@@ -197,7 +197,7 @@ void ResearchView::initConnections()
 	// Внутренние соединения формы
 	//
 	connect(m_ui->scenarioName, &QLineEdit::textChanged, m_ui->titlePageName, &QLineEdit::setText);
-	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=](){
+	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=] {
 		const QString textToSplit = m_ui->scenarioLogline->toPlainText().simplified();
 		const int wordsCount = textToSplit.split(QRegExp("([^\\w,^\\\\]|(?=\\\\))+"), QString::SkipEmptyParts).size();
 		m_ui->scenarioLoglineWords->setText(QString::number(wordsCount));
@@ -210,7 +210,7 @@ void ResearchView::initConnections()
 	// ... сценарий
 	//
 	connect(m_ui->scenarioName, &QLineEdit::textChanged, this, &ResearchView::scenarioNameChanged);
-	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=](){
+	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=] {
 		emit scenarioLoglineChanged(TextEditHelper::removeDocumentTags(m_ui->scenarioLogline->toHtml()));
 	});
 	//
@@ -220,21 +220,21 @@ void ResearchView::initConnections()
 	connect(m_ui->titlePageAdditionalInfo, &QComboBox::editTextChanged, this, &ResearchView::titlePageAdditionalInfoChanged);
 	connect(m_ui->titlePageGenre, &QLineEdit::textChanged, this, &ResearchView::titlePageGenreChanged);
 	connect(m_ui->titlePageAuthor, &QLineEdit::textChanged, this, &ResearchView::titlePageAuthorChanged);
-	connect(m_ui->titlePageContacts, &QPlainTextEdit::textChanged, [=](){
+	connect(m_ui->titlePageContacts, &QPlainTextEdit::textChanged, [=] {
 		emit titlePageContactsChanged(m_ui->titlePageContacts->toPlainText());
 	});
 	connect(m_ui->titlePageYear, &QLineEdit::textChanged, this, &ResearchView::titlePageYearChanged);
 	//
 	// ... синопсис
 	//
-	connect(m_ui->synopsisText, &SimpleTextEditor::textChanged, [=](){
+	connect(m_ui->synopsisText, &SimpleTextEditor::textChanged, [=] {
 		emit synopsisTextChanged(TextEditHelper::removeDocumentTags(m_ui->synopsisText->toHtml()));
 	});
 	//
 	// ... текстовый элемент
 	//
 	connect(m_ui->textName, &QLineEdit::textChanged, this, &ResearchView::textNameChanged);
-	connect(m_ui->textDescription, &SimpleTextEditor::textChanged, [=](){
+	connect(m_ui->textDescription, &SimpleTextEditor::textChanged, [=] {
 		emit textDescriptionChanged(TextEditHelper::removeDocumentTags(m_ui->textDescription->toHtml()));
 	});
 }

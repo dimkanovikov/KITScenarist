@@ -901,7 +901,7 @@ conftest.c:56:1: warning: null argument where non-null required (argument 1) [-W
 conftest.c:57:12: warning: null argument where non-null required (argument 1) [-Wnonnull]
             pthread_mutexattr_init((pthread_mutexattr_t*)0);
             ^
-/tmp/ccDEtFEy.o: In function `main':
+/tmp/ccaRYOnj.o: In function `main':
 /home/dimkanovikov/dev/dimkanovikov/desktop/KITScenarist/src/libs/hunspell/conftest.c:57: undefined reference to `pthread_mutexattr_init'
 collect2: error: ld returned 1 exit status
 configure:16783: $? = 1
