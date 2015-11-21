@@ -90,7 +90,6 @@ SOURCES += \
     scenarist-desktop/ManagementLayer/Characters/CharactersNavigatorManager.cpp \
     scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp \
     scenarist-desktop/ManagementLayer/StartUp/StartUpManager.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp \
     scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.cpp \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.cpp \
@@ -134,22 +133,6 @@ SOURCES += \
     scenarist-core/Domain/Scenario.cpp \
     scenarist-core/Domain/ScenarioDay.cpp \
     scenarist-core/Domain/Time.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/AbstractKeyHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/ActionHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/CharacterHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/DialogHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/FolderFooterHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/FolderHeaderHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/KeyPressHandlerFacade.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoteHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/ParentheticalHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/PreHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/PrepareHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/StandardKeyHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TransitionHandler.cpp \
     scenarist-core/3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.cpp \
@@ -182,19 +165,16 @@ SOURCES += \
     scenarist-core/Domain/CharacterPhoto.cpp \
     scenarist-core/DataLayer/DataMappingLayer/CharacterPhotoMapper.cpp \
     scenarist-core/DataLayer/DataStorageLayer/CharacterPhotoStorage.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.cpp \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneSynopsisManager.cpp \
     scenarist-core/3rd_party/Widgets/TabBar/TabBar.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp \
     scenarist-core/3rd_party/Widgets/SearchWidget/SearchWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.cpp \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.cpp \
     scenarist-desktop/ManagementLayer/Export/ExportManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.cpp \
     scenarist-core/Domain/CharacterState.cpp \
@@ -217,7 +197,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.cpp \
     scenarist-core/3rd_party/Widgets/FlatButton/FlatButton.cpp \
     scenarist-core/3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditPrivate.cpp \
     scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.cpp \
     scenarist-desktop/ManagementLayer/Settings/SettingsTemplatesManager.cpp \
@@ -237,7 +216,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.cpp \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.cpp \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.cpp \
     scenarist-core/3rd_party/Widgets/ToolTipLabel/ToolTipLabel.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioReviewModel.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.cpp \
@@ -255,7 +233,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/Ctk/ctkBasePopupWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.cpp \
     scenarist-desktop/UserInterfaceLayer/Statistics/ReportButton.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.cpp \
     scenarist-core/BusinessLayer/Statistics/Reports/LocationReport.cpp \
     scenarist-core/BusinessLayer/Statistics/Reports/SceneReport.cpp \
     scenarist-core/BusinessLayer/Statistics/Reports/CastReport.cpp \
@@ -283,7 +260,30 @@ SOURCES += \
     scenarist-core/BusinessLayer/Statistics/StatisticsFacade.cpp \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplotextended.cpp \
     scenarist-core/BusinessLayer/Statistics/Plots/CharactersActivityPlot.cpp \
-    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit.cpp
+    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/AbstractKeyHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/ActionHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/CharacterHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/DialogHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/FolderFooterHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/FolderHeaderHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/KeyPressHandlerFacade.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/NoprintableTextHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/NoteHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/ParentheticalHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/PreHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/PrepareHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneCharactersHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneHeadingHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/StandardKeyHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/TitleHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/TransitionHandler.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioLineEdit.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditHelpers.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditPrivate.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -297,7 +297,6 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/Characters/CharactersNavigatorManager.h \
     scenarist-desktop/ManagementLayer/Settings/SettingsManager.h \
     scenarist-desktop/ManagementLayer/StartUp/StartUpManager.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEdit.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.h \
     scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.h \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.h \
@@ -342,23 +341,6 @@ HEADERS += \
     scenarist-core/Domain/Scenario.h \
     scenarist-core/Domain/ScenarioDay.h \
     scenarist-core/Domain/Time.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/AbstractKeyHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/ActionHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/CharacterHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/DialogHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/FolderFooterHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/FolderHeaderHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/KeyPressHandlerFacade.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoteHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/ParentheticalHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/PreHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/PrepareHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/StandardKeyHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TitleHeaderHandler.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/TransitionHandler.h \
     scenarist-core/3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SpellCheckHighlighter.h \
@@ -392,20 +374,17 @@ HEADERS += \
     scenarist-core/Domain/CharacterPhoto.h \
     scenarist-core/DataLayer/DataMappingLayer/CharacterPhotoMapper.h \
     scenarist-core/DataLayer/DataStorageLayer/CharacterPhotoStorage.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditHelpers.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.h \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneSynopsisManager.h \
     scenarist-core/3rd_party/Widgets/TabBar/TabBar.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioLineEdit.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h \
     scenarist-core/3rd_party/Widgets/SearchWidget/SearchWidget.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioFastFormatWidget.h \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageMetrics.h \
     scenarist-core/3rd_party/Helpers/TextEditHelper.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigatorProxyStyle.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneCharactersHandler.h \
     scenarist-desktop/ManagementLayer/Export/ExportManager.h \
     scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.h \
     scenarist-core/Domain/CharacterState.h \
@@ -430,7 +409,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/FlatButton/FlatButton.h \
     scenarist-core/3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.h \
     scenarist-core/3rd_party/Helpers/ShortcutHelper.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditPrivate.h \
     scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManager.h \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.h \
     scenarist-desktop/ManagementLayer/Settings/SettingsTemplatesManager.h \
@@ -454,7 +432,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/NoprintableTextHandler.h \
     scenarist-core/3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioReviewModel.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioReviewPanel.h \
@@ -478,7 +455,6 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.h \
     scenarist-core/BusinessLayer/Statistics/Reports/AbstractReport.h \
     scenarist-desktop/UserInterfaceLayer/Statistics/ReportButton.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/Handlers/SceneHeadingHandler.h \
     scenarist-core/BusinessLayer/Statistics/Reports/LocationReport.h \
     scenarist-core/BusinessLayer/Statistics/Reports/SceneReport.h \
     scenarist-core/BusinessLayer/Statistics/Reports/CastReport.h \
@@ -514,7 +490,31 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplotextended.h \
     scenarist-core/BusinessLayer/Statistics/Plots/CharactersActivityPlot.h \
     scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit.h \
-    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit_p.h
+    scenarist-core/3rd_party/Widgets/PagesTextEdit/PageTextEdit_p.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/AbstractKeyHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/ActionHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/CharacterHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/DialogHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/FolderFooterHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/FolderHeaderHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/KeyPressHandlerFacade.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/NoprintableTextHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/NoteHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/ParentheticalHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/PreHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/PrepareHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneCharactersHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneHeadingHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/StandardKeyHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/TitleHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/TitleHeaderHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/TransitionHandler.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioLineEdit.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditHelpers.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditPrivate.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
