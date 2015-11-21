@@ -30,8 +30,8 @@ Kernel configured for up to 2 processors.
 Processor type: i486 (Intel 80486)
 Processors active: 0 1
 Primary memory available: 4.00 gigabytes
-Default processor set: 203 tasks, 757 threads, 2 processors
-Load average: 1.34, Mach factor: 0.64
+Default processor set: 189 tasks, 723 threads, 2 processors
+Load average: 1.41, Mach factor: 0.65
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -1104,7 +1104,7 @@ configure:16730: checking whether imported symbols can be declared weak
 configure:16745: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_xyzzy", referenced from:
-      _main in conftest-2273d8.o
+      _main in conftest-32cd61.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16745: $? = 1
@@ -1462,7 +1462,7 @@ configure:18070: checking for mempcpy
 configure:18070: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_mempcpy", referenced from:
-      _main in conftest-603eaf.o
+      _main in conftest-7ced02.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:18070: $? = 1
@@ -1611,7 +1611,7 @@ configure:18070: checking for argz_count
 configure:18070: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_argz_count", referenced from:
-      _main in conftest-497d4f.o
+      _main in conftest-f768e9.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:18070: $? = 1
@@ -1727,7 +1727,7 @@ configure:18070: checking for argz_stringify
 configure:18070: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_argz_stringify", referenced from:
-      _main in conftest-65d1c1.o
+      _main in conftest-66bb4b.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:18070: $? = 1
@@ -1843,7 +1843,7 @@ configure:18070: checking for argz_next
 configure:18070: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_argz_next", referenced from:
-      _main in conftest-071388.o
+      _main in conftest-9c4d0e.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:18070: $? = 1
@@ -1959,7 +1959,7 @@ configure:18070: checking for __fsetlocking
 configure:18070: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "___fsetlocking", referenced from:
-      _main in conftest-717603.o
+      _main in conftest-b45dea.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:18070: $? = 1
@@ -2169,11 +2169,11 @@ configure:18194: checking for iconv
 configure:18216: gcc -o conftest -g -O2   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_iconv", referenced from:
-      _main in conftest-4c69cb.o
+      _main in conftest-bc3e9b.o
   "_iconv_close", referenced from:
-      _main in conftest-4c69cb.o
+      _main in conftest-bc3e9b.o
   "_iconv_open", referenced from:
-      _main in conftest-4c69cb.o
+      _main in conftest-bc3e9b.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:18216: $? = 1
@@ -2282,7 +2282,7 @@ char* cs = nl_langinfo(_NL_LOCALE_NAME(LC_MESSAGES));
 1 warning generated.
 Undefined symbols for architecture x86_64:
   "__NL_LOCALE_NAME", referenced from:
-      _main in conftest-678fb9.o
+      _main in conftest-e10308.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:18437: $? = 1
