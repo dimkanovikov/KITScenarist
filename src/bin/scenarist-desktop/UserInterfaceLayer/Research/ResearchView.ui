@@ -116,7 +116,7 @@
        <item>
         <widget class="QStackedWidget" name="researchDataEditsContainer">
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">

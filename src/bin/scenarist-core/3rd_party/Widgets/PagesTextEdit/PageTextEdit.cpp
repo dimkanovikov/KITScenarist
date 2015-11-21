@@ -1716,17 +1716,118 @@ void PageTextEditPrivate::paintPagesView(QPainter *_painter)
 
 void PageTextEditPrivate::paintPageNumbers(QPainter* _painter)
 {
+	Q_Q(PageTextEdit);
 
+	//
+	// Номера страниц рисуются только тогда, когда редактор находится в постраничном режиме,
+	// если заданы поля и включена опция отображения номеров
+	//
+	if (m_usePageMode && !m_pageMetrics.pxPageMargins().isNull() && m_showPageNumbers) {
+		//
+		// Нарисовать номера страниц
+		//
+
+		QSizeF pageSize(m_pageMetrics.pxPageSize());
+		QMarginsF pageMargins(m_pageMetrics.pxPageMargins());
+
+		_painter->setFont(control->document()->defaultFont());
+		_painter->setPen(QPen(control->palette().text(), 1));
+
+		//
+		// Текущие высота и ширина которые отображаются на экране
+		//
+		qreal curHeight = pageSize.height() - (vbar->value() % (int)pageSize.height());
+
+		//
+		// Начало поля должно учитывать смещение полосы прокрутки
+		//
+		qreal leftMarginPosition = pageMargins.left() - hbar->value();
+		//
+		// Итоговая ширина поля
+		//
+		qreal marginWidth = pageSize.width() - pageMargins.left() - pageMargins.right();
+
+		//
+		// Номер первой видимой на экране страницы
+		//
+		int pageNumber = vbar->value() / pageSize.height() + 1;
+
+		//
+		// Верхнее поле первой страницы на экране, когда не видно предыдущей страницы
+		//
+		if (curHeight - pageMargins.top() >= 0) {
+			QRectF topMarginRect(leftMarginPosition, curHeight - pageSize.height(), marginWidth, pageMargins.top());
+			paintPageNumber(_painter, topMarginRect, true, pageNumber);
+		}
+
+		//
+		// Для всех видимых страниц
+		//
+		while (curHeight < q->height()) {
+			//
+			// Определить прямоугольник нижнего поля
+			//
+			QRect bottomMarginRect(leftMarginPosition, curHeight - pageMargins.bottom(), marginWidth, pageMargins.bottom());
+			paintPageNumber(_painter, bottomMarginRect, false, pageNumber);
+
+			//
+			// Переход к следующей странице
+			//
+			++pageNumber;
+
+			//
+			// Определить прямоугольник верхнего поля следующей страницы
+			//
+			QRect topMarginRect(leftMarginPosition, curHeight, marginWidth, pageMargins.top());
+			paintPageNumber(_painter, topMarginRect, true, pageNumber);
+
+			curHeight += pageSize.height();
+		}
+	}
 }
 
 void PageTextEditPrivate::paintPageNumber(QPainter* _painter, const QRectF& _rect, bool _isHeader, int _number)
 {
-
+	//
+	// Верхнее поле
+	//
+	if (_isHeader) {
+		//
+		// Если нумерация рисуется в верхнем поле
+		//
+		if (m_pageNumbersAlignment.testFlag(Qt::AlignTop)) {
+			_painter->drawText(_rect, Qt::AlignVCenter | (m_pageNumbersAlignment ^ Qt::AlignTop),
+				QString::number(_number));
+		}
+	}
+	//
+	// Нижнее поле
+	//
+	else {
+		//
+		// Если нумерация рисуется в нижнем поле
+		//
+		if (m_pageNumbersAlignment.testFlag(Qt::AlignBottom)) {
+			_painter->drawText(_rect, Qt::AlignVCenter | (m_pageNumbersAlignment ^ Qt::AlignBottom),
+				QString::number(_number));
+		}
+	}
 }
 
 void PageTextEditPrivate::paintWatermark(QPainter* _painter)
 {
+	if (!m_watermark.isEmpty()) {
+		QColor watermarkColor = QColor("#C9C5C2");
+		watermarkColor.setAlpha(50);
 
+		//
+		// Рисуем водяные знаки
+		//
+		_painter->setFont(QFont("Sans", 58, QFont::Black));
+		_painter->setPen(watermarkColor);
+		_painter->rotate(45);
+		_painter->drawText(0, 0, m_watermarkMulti);
+	}
 }
 
 void PageTextEditPrivate::paint(QPainter *p, QPaintEvent *e)

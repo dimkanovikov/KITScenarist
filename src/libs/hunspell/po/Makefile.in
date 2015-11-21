@@ -35,29 +35,29 @@ INSTALL_DATA = ${INSTALL} -m 644
 # We use $(mkdir_p).
 # In automake <= 1.9.x, $(mkdir_p) is defined either as "mkdir -p --" or as
 # "$(mkinstalldirs)" or as "$(install_sh) -d". For these automake versions,
-# ${SHELL} /Users/macuser/dev/dimkanovikov/Scenarist/src/libs/hunspell/install-sh does not start with $(SHELL), so we add it.
-# In automake >= 1.10, $(top_builddir)/./install-sh -c -d is derived from ${MKDIR_P}, which is defined
+# ${SHELL} /home/dimkanovikov/dev/dimkanovikov/desktop/KITScenarist/src/libs/hunspell/install-sh does not start with $(SHELL), so we add it.
+# In automake >= 1.10, /bin/mkdir -p is derived from ${MKDIR_P}, which is defined
 # either as "/path/to/mkdir -p" or ".../install-sh -c -d". For these automake
 # versions, $(mkinstalldirs) and $(install_sh) are unused.
-mkinstalldirs = $(SHELL) ${SHELL} /Users/macuser/dev/dimkanovikov/Scenarist/src/libs/hunspell/install-sh -d
-install_sh = $(SHELL) ${SHELL} /Users/macuser/dev/dimkanovikov/Scenarist/src/libs/hunspell/install-sh
-MKDIR_P = .././install-sh -c -d
-mkdir_p = $(top_builddir)/./install-sh -c -d
+mkinstalldirs = $(SHELL) ${SHELL} /home/dimkanovikov/dev/dimkanovikov/desktop/KITScenarist/src/libs/hunspell/install-sh -d
+install_sh = $(SHELL) ${SHELL} /home/dimkanovikov/dev/dimkanovikov/desktop/KITScenarist/src/libs/hunspell/install-sh
+MKDIR_P = /bin/mkdir -p
+mkdir_p = /bin/mkdir -p
 
-GMSGFMT_ = :
-GMSGFMT_no = :
-GMSGFMT_yes = :
+GMSGFMT_ = /usr/bin/msgfmt
+GMSGFMT_no = /usr/bin/msgfmt
+GMSGFMT_yes = /usr/bin/msgfmt
 GMSGFMT = $(GMSGFMT_$(USE_MSGCTXT))
-MSGFMT_ = :
-MSGFMT_no = :
-MSGFMT_yes = :
+MSGFMT_ = /usr/bin/msgfmt
+MSGFMT_no = /usr/bin/msgfmt
+MSGFMT_yes = /usr/bin/msgfmt
 MSGFMT = $(MSGFMT_$(USE_MSGCTXT))
-XGETTEXT_ = :
-XGETTEXT_no = :
-XGETTEXT_yes = :
+XGETTEXT_ = /usr/bin/xgettext
+XGETTEXT_no = /usr/bin/xgettext
+XGETTEXT_yes = /usr/bin/xgettext
 XGETTEXT = $(XGETTEXT_$(USE_MSGCTXT))
 MSGMERGE = msgmerge
-MSGMERGE_UPDATE = : --update
+MSGMERGE_UPDATE = /usr/bin/msgmerge --update
 MSGINIT = msginit
 MSGCONV = msgconv
 MSGFILTER = msgfilter
