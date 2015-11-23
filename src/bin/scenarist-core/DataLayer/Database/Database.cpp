@@ -376,7 +376,7 @@ void Database::createTables(QSqlDatabase& _database)
 				   "("
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "parent_id INTEGER DEFAULT(NULL), "
-				   "type INTEGER NOT NULL DEFAULT(0)" // 0 - папка, 1 - текст
+				   "type INTEGER NOT NULL DEFAULT(0), " // 0 - папка, 1 - текст
 				   "name TEXT NOT NULL, "
 				   "description TEXT DEFAULT(NULL), "
 				   "url TEXT DEFAULT(NULL), "

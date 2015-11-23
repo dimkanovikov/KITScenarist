@@ -1646,6 +1646,8 @@ void PageTextEditPrivate::paintPagesView(QPainter *_painter)
 	// Оформление рисуется только тогда, когда редактор находится в постраничном режиме
 	//
 	if (m_usePageMode) {
+		_painter->save();
+
 		//
 		// Нарисовать линии разрыва страниц
 		//
@@ -1711,6 +1713,8 @@ void PageTextEditPrivate::paintPagesView(QPainter *_painter)
 			// ... правая
 			_painter->drawLine(x - horizontalDelta, curHeight-pageHeight, x - horizontalDelta, q->height());
 		}
+
+		_painter->restore();
 	}
 }
 
@@ -1723,6 +1727,8 @@ void PageTextEditPrivate::paintPageNumbers(QPainter* _painter)
 	// если заданы поля и включена опция отображения номеров
 	//
 	if (m_usePageMode && !m_pageMetrics.pxPageMargins().isNull() && m_showPageNumbers) {
+		_painter->save();
+
 		//
 		// Нарисовать номера страниц
 		//
@@ -1783,6 +1789,8 @@ void PageTextEditPrivate::paintPageNumbers(QPainter* _painter)
 
 			curHeight += pageSize.height();
 		}
+
+		_painter->restore();
 	}
 }
 
@@ -1817,6 +1825,8 @@ void PageTextEditPrivate::paintPageNumber(QPainter* _painter, const QRectF& _rec
 void PageTextEditPrivate::paintWatermark(QPainter* _painter)
 {
 	if (!m_watermark.isEmpty()) {
+		_painter->save();
+
 		QColor watermarkColor = QColor("#C9C5C2");
 		watermarkColor.setAlpha(50);
 
@@ -1827,6 +1837,8 @@ void PageTextEditPrivate::paintWatermark(QPainter* _painter)
 		_painter->setPen(watermarkColor);
 		_painter->rotate(45);
 		_painter->drawText(0, 0, m_watermarkMulti);
+
+		_painter->restore();
 	}
 }
 
