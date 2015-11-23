@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1027</width>
+    <width>890</width>
     <height>605</height>
    </rect>
   </property>
@@ -109,9 +109,9 @@
           <widget class="QWidget" name="layoutWidget">
            <property name="geometry">
             <rect>
-             <x>160</x>
+             <x>0</x>
              <y>0</y>
-             <width>101</width>
+             <width>251</width>
              <height>29</height>
             </rect>
            </property>
@@ -119,6 +119,19 @@
             <property name="spacing">
              <number>0</number>
             </property>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
             <item>
              <widget class="QLabel" name="version_2">
               <property name="enabled">
@@ -148,12 +161,6 @@
              <widget class="QLabel" name="version">
               <property name="enabled">
                <bool>false</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
               </property>
               <property name="text">
                <string>0.0.0</string>
