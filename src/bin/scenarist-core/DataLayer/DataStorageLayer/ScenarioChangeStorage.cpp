@@ -71,12 +71,14 @@ void ScenarioChangeStorage::store()
 	//
 	// Сохраняем все несохранённые изменения
 	//
+	DatabaseLayer::Database::transaction();
 	foreach (DomainObject* domainObject, allToSave()->toList()) {
 		ScenarioChange* change = dynamic_cast<ScenarioChange*>(domainObject);
 		if (!change->id().isValid()) {
 			MapperFacade::scenarioChangeMapper()->insert(change);
 		}
 	}
+	DatabaseLayer::Database::commit();
 
 	//
 	// Очищаем список на сохранение

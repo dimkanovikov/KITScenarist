@@ -1309,6 +1309,14 @@ void ApplicationManager::reloadApplicationSettings()
 				"application/two-panel-mode",
 				DataStorageLayer::SettingsStorage::ApplicationSettings)
 			.toInt();
+	//
+	// Если не применять этот хак, то в редакторе сценария пропадает курсор
+	// Возникает, только когда редактор сценария был на экране, при отключении второй панели
+	//
+	if (!twoPanelsMode
+		&& m_tabsWidgetsSecondary->currentWidget() == m_scenarioManager->view()) {
+		m_tabsWidgets->insertWidget(SCENARIO_TAB_INDEX, m_scenarioManager->view());
+	}
 	m_menuSecondary->setVisible(twoPanelsMode);
 	m_tabsSecondary->setVisible(twoPanelsMode);
 	m_tabsWidgetsSecondary->setVisible(twoPanelsMode);
