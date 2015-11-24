@@ -523,7 +523,7 @@ void ScenarioModelFiltered::setDragDropEnabled(bool _enabled)
 
 Qt::ItemFlags ScenarioModelFiltered::flags(const QModelIndex &_index) const
 {
-	Qt::ItemFlags result = sourceModel()->flags(_index);
+	Qt::ItemFlags result = sourceModel()->flags(mapToSource(_index));
 	if (!m_dragDropEnabled) {
 		result ^= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
 	}
