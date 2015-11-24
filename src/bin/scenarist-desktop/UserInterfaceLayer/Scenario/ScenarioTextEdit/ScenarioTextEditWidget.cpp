@@ -1,10 +1,11 @@
 #include "ScenarioTextEditWidget.h"
 
-#include "ScenarioTextEdit.h"
-#include "ScenarioTextEditHelpers.h"
 #include "ScenarioFastFormatWidget.h"
 #include "ScenarioReviewPanel.h"
 #include "ScenarioReviewView.h"
+
+#include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.h>
+#include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditHelpers.h>
 
 #include <3rd_party/Helpers/ShortcutHelper.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
@@ -504,7 +505,7 @@ void ScenarioTextEditWidget::initView()
 
 void ScenarioTextEditWidget::initStylesCombo()
 {
-	ScenarioTemplate style = ScenarioTemplateFacade::getTemplate();
+	ScenarioTemplate usedTemplate = ScenarioTemplateFacade::getTemplate();
 	const bool BEAUTIFY_NAME = true;
 
 	QList<ScenarioBlockStyle::Type> types;
@@ -522,7 +523,7 @@ void ScenarioTextEditWidget::initStylesCombo()
 		  << ScenarioBlockStyle::FolderHeader;
 
 	foreach (ScenarioBlockStyle::Type type, types) {
-		if (style.blockStyle(type).isActive()) {
+		if (usedTemplate.blockStyle(type).isActive()) {
 			m_textStyles->addItem(ScenarioBlockStyle::typeName(type, BEAUTIFY_NAME), type);
 		}
 	}
