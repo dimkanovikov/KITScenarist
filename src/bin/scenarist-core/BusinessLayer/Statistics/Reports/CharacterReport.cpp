@@ -2,6 +2,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 #include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
 #include <QApplication>
@@ -67,7 +68,7 @@ QString CharacterReport::makeReport(QTextDocument* _scenario,
 		//
 		if (currentData != 0) {
 			if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::Character) {
-				if (block.text().toUpper() == _parameters.characterName) {
+				if (CharacterParser::name(block.text().toUpper()) == _parameters.characterName) {
 					saveDialogues = true;
 					if (!currentData->dialogues.isEmpty()) {
 						currentData->dialogues.append(QString::null);
