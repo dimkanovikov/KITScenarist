@@ -1,6 +1,6 @@
 #include "ScenarioItemDialog.h"
 
-#include "../ScenarioTextEdit/ScenarioLineEdit.h"
+#include <UserInterfaceLayer/ScenarioTextEdit/ScenarioLineEdit.h>
 
 #include <3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>

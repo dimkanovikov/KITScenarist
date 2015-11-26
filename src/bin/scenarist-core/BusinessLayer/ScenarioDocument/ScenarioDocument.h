@@ -168,12 +168,6 @@ namespace BusinessLogic
 		/** @{ */
 		//! Определить позицию вставки майм-данных в документ
 		int positionToInsertMime(ScenarioModelItem* _insertParent, ScenarioModelItem* _insertBefore) const;
-
-		//! Определить начальную позицию элемента в тексте
-		int itemStartPosition(ScenarioModelItem* _item) const;
-
-		//! Получить последнюю позицию элемента в тексте
-		int itemEndPosition(ScenarioModelItem* _item) const;
 		/** @} */
 
 	private slots:

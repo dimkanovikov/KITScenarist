@@ -282,17 +282,11 @@ void ScenarioTextEditWidget::removeText(int _from, int _to)
 	// Если остаётся пустой блок, стираем его тоже
 	//
 	if (cursor.block().text().isEmpty()) {
-		//
-		// Стирать необходимо через имитацию удаления редактором,
-		// для корректного обновления модели сцен
-		//
-		QKeyEvent* event = 0;
 		if (cursor.atStart()) {
-			event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Delete, Qt::NoModifier);
+			cursor.deleteChar();
 		} else {
-			event = new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier);
+			cursor.deletePreviousChar();
 		}
-		QApplication::sendEvent(m_editor, event);
 	}
 
 	cursor.endEditBlock();

@@ -130,7 +130,7 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
 	cursor.endEditBlock();
 }
 
-void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockType)
+void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockType, bool _forced)
 {
 	if (scenarioBlockType() == _blockType) {
 		return;
@@ -143,9 +143,10 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockTy
 	// Нельзя сменить стиль заголовка титра и конечных элементов групп и папок
 	//
 	bool canChangeType =
-			(scenarioBlockType() != ScenarioBlockStyle::TitleHeader)
-			&& (scenarioBlockType() != ScenarioBlockStyle::SceneGroupFooter)
-			&& (scenarioBlockType() != ScenarioBlockStyle::FolderFooter);
+			_forced
+			|| ((scenarioBlockType() != ScenarioBlockStyle::TitleHeader)
+				&& (scenarioBlockType() != ScenarioBlockStyle::SceneGroupFooter)
+				&& (scenarioBlockType() != ScenarioBlockStyle::FolderFooter));
 
 	//
 	// Если текущий вид можно сменить

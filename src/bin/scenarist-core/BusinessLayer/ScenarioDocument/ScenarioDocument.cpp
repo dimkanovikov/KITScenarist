@@ -122,13 +122,13 @@ QModelIndex ScenarioDocument::itemIndexAtPosition(int _position) const
 int ScenarioDocument::itemStartPosition(const QModelIndex& _index) const
 {
 	ScenarioModelItem* item = m_model->itemForIndex(_index);
-	return itemStartPosition(item);
+	return item->position();
 }
 
 int ScenarioDocument::itemEndPosition(const QModelIndex& _index) const
 {
 	ScenarioModelItem* item = m_model->itemForIndex(_index);
-	return itemEndPosition(item);
+	return item->endPosition();
 }
 
 QString ScenarioDocument::itemHeaderAtPosition(int _position) const
@@ -363,9 +363,9 @@ int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, Sce
 	else {
 		if (_insertParent->hasChildren()) {
 			ScenarioModelItem* lastChild = _insertParent->childAt(_insertParent->childCount() - 1);
-			insertPosition = itemEndPosition(lastChild);
+			insertPosition = lastChild->endPosition();
 		} else {
-			int parentStartPosition = itemStartPosition(_insertParent);
+			int parentStartPosition = _insertParent->position();
 			QTextCursor cursor(m_document);
 			cursor.setPosition(parentStartPosition);
 			cursor.movePosition(QTextCursor::EndOfBlock);
@@ -381,117 +381,6 @@ int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, Sce
 	}
 
 	return insertPosition;
-}
-
-int ScenarioDocument::itemStartPosition(ScenarioModelItem* _item) const
-{
-	return m_modelItems.key(_item, 0);
-}
-
-int ScenarioDocument::itemEndPosition(ScenarioModelItem* _item) const
-{
-	int endPosition = 0;
-
-	//
-	// Для сцены просто идём до следующего начального/конечного блока
-	//
-	if (_item->type() == ScenarioModelItem::Scene) {
-		QTextCursor cursor(m_document);
-		cursor.setPosition(m_modelItems.key(_item));
-
-		//
-		// От следующего за началом элемента блока
-		//
-		cursor.movePosition(QTextCursor::EndOfBlock);
-		cursor.movePosition(QTextCursor::NextBlock);
-
-		//
-		// Пока не дошли до сигнального блока
-		//
-		ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(cursor.block());
-		while (currentType != ScenarioBlockStyle::SceneHeading
-			   && currentType != ScenarioBlockStyle::SceneGroupHeader
-			   && currentType != ScenarioBlockStyle::SceneGroupFooter
-			   && currentType != ScenarioBlockStyle::FolderHeader
-			   && currentType != ScenarioBlockStyle::FolderFooter
-			   && !cursor.atEnd()) {
-			cursor.movePosition(QTextCursor::EndOfBlock);
-			cursor.movePosition(QTextCursor::NextBlock);
-			currentType = ScenarioBlockStyle::forBlock(cursor.block());
-		}
-
-		//
-		// Если не конец документа, то сместимся на один символ назад,
-		// т.к. мы перешли к следующему блоку
-		//
-		if (!cursor.atEnd()) {
-			cursor.movePosition(QTextCursor::Left);
-		}
-
-		//
-		// Это и будет позиция конца элемента
-		//
-		endPosition = cursor.position();
-	}
-	//
-	// Для остальных идём до закрывающего элемента
-	//
-	else {
-		QTextCursor cursor(m_document);
-		cursor.setPosition(m_modelItems.key(_item));
-
-		//
-		// Сохраним стиль блока для последующего поиска парного элемента
-		//
-		ScenarioBlockStyle blockStyle =
-				ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(cursor.block()));
-
-		//
-		// От следующего за началом элемента блока
-		//
-		cursor.movePosition(QTextCursor::NextBlock);
-		cursor.movePosition(QTextCursor::EndOfBlock);
-
-		//
-		// Счётчик открытых групп на пути к закрывающему элементу
-		//
-		int openedItems = 0;
-		//
-		// Пока не конец документа
-		//
-		ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(cursor.block());
-		while (!cursor.atEnd()) {
-			//
-			// Если встретился открывающий блок, увеличим счётчик
-			//
-			if (currentType == blockStyle.type()) {
-				++openedItems;
-			}
-			//
-			// Если встретился закрывающий блок, уменьшим счётчик
-			//
-			if (currentType == blockStyle.embeddableFooter()) {
-				//
-				// Если нет открытых групп, то этот блок является завершающим
-				//
-				if (openedItems == 0) {
-					break;
-				}
-				--openedItems;
-			}
-
-			cursor.movePosition(QTextCursor::NextBlock);
-			cursor.movePosition(QTextCursor::EndOfBlock);
-			currentType = ScenarioBlockStyle::forBlock(cursor.block());
-		}
-
-		//
-		// Это и будет позиция конца элемента
-		//
-		endPosition = cursor.position();
-	}
-
-	return endPosition;
 }
 
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
@@ -523,6 +412,8 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		// строки, или со следующего за курсором, если курсор не в начале строки
 		//
 		QMap<int, ScenarioModelItem*>::iterator iter = m_modelItems.lowerBound(_position);
+		const int charsAddedDelta = _charsAdded - _charsRemoved;
+		const int charsRemovedDelta = _charsRemoved - _charsAdded;
 		while (iter != m_modelItems.end()
 			   && iter.key() >= _position
 			   && iter.key() < (_position + _charsRemoved)) {
@@ -537,11 +428,11 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				// кто был удалён тут по причине не самого оптимального алгоритма
 				//
 				const int charsModified = itemToDelete->endPosition() - _position;
-				if (charsModified > _charsAdded) {
-					_charsAdded = charsModified;
+				if (_charsAdded < charsModified + charsAddedDelta) {
+					_charsAdded = charsModified + charsAddedDelta;
 				}
-				if (charsModified > _charsRemoved) {
-					_charsRemoved = charsModified;
+				if (_charsRemoved < charsModified - charsRemovedDelta) {
+					_charsRemoved = charsModified - charsRemovedDelta;
 				}
 
 				//
@@ -826,9 +717,9 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						currentParent = currentItem->parent();
 
 						//
-						// Обновляем позицию конца группирующего блока
+						// Сохраняем окончание группирующего блока
 						//
-						currentItem->setEndPosition(cursor.position() + cursor.block().length());
+						currentItem->setFooter(cursor.block().text());
 						break;
 					}
 
@@ -884,6 +775,8 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	cursor.movePosition(QTextCursor::NextBlock);
 	while (!cursor.atEnd()
 		   && cursor.position() < _itemEndPos) {
+		cursor.movePosition(QTextCursor::EndOfBlock);
+
 		if (!itemText.isEmpty()) {
 			itemText.append(" ");
 		}
@@ -896,7 +789,6 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			: cursor.block().text();
 
 		cursor.movePosition(QTextCursor::NextBlock);
-		cursor.movePosition(QTextCursor::EndOfBlock);
 	}
 	// ... синопсис
 	QTextDocument doc;
@@ -925,7 +817,6 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	//
 	// Обновим данные элемента
 	//
-	_item->setEndPosition(_itemEndPos);
 	_item->setType(itemType);
 	_item->setHeader(itemHeader);
 	_item->setColors(colors);
