@@ -340,11 +340,6 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	}
 
 	//
-	// Начинаем операцию удаления
-	//
-	cursor.beginEditBlock();
-
-	//
 	// Определим границы выделения
 	//
 	// ... верхнюю
@@ -445,7 +440,9 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 		if (topBlock == bottomBlock) {
 			targetType = topStyle.type();
 		} else {
-			if (!topBlock.text().isEmpty()) {
+			if (topStyle.isEmbeddable() && !bottomStyle.isEmbeddable()) {
+				targetType = bottomStyle.type();
+			} else if (!topBlock.text().isEmpty()) {
 				targetType = topStyle.type();
 			} else if (!bottomBlock.text().isEmpty()) {
 				targetType = bottomStyle.type();
@@ -456,11 +453,15 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	//
 	// Собственно удаление
 	//
+	cursor.beginEditBlock();
 	{
 		//
 		// Подсчитать количество группирующих элементов входящих в выделение
 		//
-		QList<int> groupsToDeleteCounts = findGroupCountsToDelete(topCursorPosition, bottomCursorPosition);
+		QList<int> groupsToDeleteCounts;
+		if (topBlock != bottomBlock) {
+			groupsToDeleteCounts = findGroupCountsToDelete(topCursorPosition, bottomCursorPosition);
+		}
 
 		//
 		// Удалить текст
@@ -472,13 +473,32 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 		//
 		// Удалить вторые половинки группирующих элементов
 		//
-		removeGroupsPairs(cursor.position(), groupsToDeleteCounts);
+		if (topBlock != bottomBlock) {
+			removeGroupsPairs(cursor.position(), groupsToDeleteCounts);
+		}
 	}
 
 	//
 	// Применим финальный стиль
 	//
 	editor()->applyScenarioTypeToBlockText(targetType);
+
+	//
+	// Если и верхний и нижний блоки являются группирующими,
+	// то нужно стереть то, что после них остаётся (а как правило это одна половинка)
+	//
+	if (topBlock != bottomBlock && topStyle.isEmbeddable() && bottomStyle.isEmbeddable()) {
+		if (cursor.block().text().isEmpty()) {
+			if (cursor.atStart()) {
+				cursor.deleteChar();
+			} else {
+				cursor.deletePreviousChar();
+			}
+		} else {
+			cursor.select(QTextCursor::BlockUnderCursor);
+			cursor.removeSelectedText();
+		}
+	}
 
 	//
 	// Завершим операцию удаления
@@ -504,70 +524,49 @@ QList<int> StandardKeyHandler::findGroupCountsToDelete(int _topCursorPosition, i
 	QTextCursor searchGroupsCursor(editor()->document());
 	searchGroupsCursor.setPosition(_topCursorPosition);
 
-	//
-	// Если стартовая позиция не в начале блока, перейдём к следующему блоку,
-	// т.к. нас интересуют полные вхождения блоков
-	//
-	if (!searchGroupsCursor.atBlockStart()) {
-		searchGroupsCursor.movePosition(QTextCursor::NextBlock);
-	}
-
-	//
-	// Позиция конца блока
-	//
-	int endSearchBlockPosition = searchGroupsCursor.position() + searchGroupsCursor.block().length() - 1;
-
-	while (endSearchBlockPosition <= _bottomCursorPosition
+	while (searchGroupsCursor.position() <= _bottomCursorPosition
 		   && !searchGroupsCursor.atEnd()) {
 		//
-		// Для удаления группы может быть захвачен символ как сверху, так и снизу
+		// Определим тип блока
 		//
-		if ((searchGroupsCursor.position() - 1 >= _topCursorPosition)
-			|| (endSearchBlockPosition + 1 <= _bottomCursorPosition)) {
-			//
-			// Определим тип блока
-			//
-			ScenarioBlockStyle::Type currentType =
-					ScenarioBlockStyle::forBlock(searchGroupsCursor.block());
+		ScenarioBlockStyle::Type currentType =
+				ScenarioBlockStyle::forBlock(searchGroupsCursor.block());
 
-			//
-			// Если найден блок открывающий группу, то нужно удалить закрывающий блок
-			//
-			if (currentType == ScenarioBlockStyle::SceneGroupHeader) {
-				++groupCountsToDelete[SCENE_GROUP_FOOTER];
-			} else if (currentType == ScenarioBlockStyle::FolderHeader) {
-				++groupCountsToDelete[FOLDER_FOOTER];
+		//
+		// Если найден блок открывающий группу, то нужно удалить закрывающий блок
+		//
+		if (currentType == ScenarioBlockStyle::SceneGroupHeader) {
+			++groupCountsToDelete[SCENE_GROUP_FOOTER];
+		} else if (currentType == ScenarioBlockStyle::FolderHeader) {
+			++groupCountsToDelete[FOLDER_FOOTER];
+		}
+
+		//
+		// Если найден блок закрывающий группу
+		// ... если все группы закрыты, нужно удалить предыдущую открытую
+		// ... в противном случае закрываем открытую группу
+		//
+		else if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
+			if (groupCountsToDelete.value(SCENE_GROUP_FOOTER) == 0) {
+				++groupCountsToDelete[SCENE_GROUP_HEADER];
 			}
-
-			//
-			// Если найден блок закрывающий группу
-			// ... если все группы закрыты, нужно удалить предыдущую открытую
-			// ... в противном случае закрываем открытую группу
-			//
-			else if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
-				if (groupCountsToDelete.value(SCENE_GROUP_FOOTER) == 0) {
-					++groupCountsToDelete[SCENE_GROUP_HEADER];
-				}
-				else {
-					--groupCountsToDelete[SCENE_GROUP_FOOTER];
-				}
-			} else if (currentType == ScenarioBlockStyle::FolderFooter) {
-				if (groupCountsToDelete.value(FOLDER_FOOTER) == 0) {
-					++groupCountsToDelete[FOLDER_HEADER];
-				}
-				else {
-					--groupCountsToDelete[FOLDER_FOOTER];
-				}
+			else {
+				--groupCountsToDelete[SCENE_GROUP_FOOTER];
+			}
+		} else if (currentType == ScenarioBlockStyle::FolderFooter) {
+			if (groupCountsToDelete.value(FOLDER_FOOTER) == 0) {
+				++groupCountsToDelete[FOLDER_HEADER];
+			}
+			else {
+				--groupCountsToDelete[FOLDER_FOOTER];
 			}
 		}
 
 		//
 		// Перейдём к следующему блоку или концу блока
 		//
-		if (!searchGroupsCursor.movePosition(QTextCursor::NextBlock)) {
-			searchGroupsCursor.movePosition(QTextCursor::EndOfBlock);
-		}
-		endSearchBlockPosition = searchGroupsCursor.position() + searchGroupsCursor.block().length() - 1;
+		searchGroupsCursor.movePosition(QTextCursor::EndOfBlock);
+		searchGroupsCursor.movePosition(QTextCursor::NextBlock);
 	}
 
 	return groupCountsToDelete;
@@ -665,6 +664,10 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 				if (openedGroups == 0) {
 					cursor.select(QTextCursor::BlockUnderCursor);
 					cursor.deleteChar();
+					//
+					// Т.к. курсор после удаления уже находится в предыдущем блоке, смещаем его вперёд
+					//
+					cursor.movePosition(QTextCursor::NextBlock);
 
 					//
 					// Если это был самый первый блок
@@ -705,6 +708,10 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 				if (openedGroups == 0) {
 					cursor.select(QTextCursor::BlockUnderCursor);
 					cursor.deleteChar();
+					//
+					// Т.к. курсор после удаления уже находится в предыдущем блоке, смещаем его вперёд
+					//
+					cursor.movePosition(QTextCursor::NextBlock);
 
 					//
 					// Если это был самый первый блок
