@@ -11,6 +11,7 @@ namespace {
 
 ScenarioModelItem::ScenarioModelItem(int _position) :
 	m_position(_position),
+	m_endPosition(_position),
 	m_sceneNumber(0),
 	m_duration(0),
 	m_type(Scene),
@@ -33,6 +34,18 @@ void ScenarioModelItem::setPosition(int _position)
 {
 	if (m_position != _position) {
 		m_position = _position;
+	}
+}
+
+int ScenarioModelItem::endPosition() const
+{
+	return m_endPosition;
+}
+
+void ScenarioModelItem::setEndPosition(int _endPosition)
+{
+	if (m_endPosition != _endPosition) {
+		m_endPosition = _endPosition;
 	}
 }
 

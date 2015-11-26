@@ -104,6 +104,18 @@ void ScenarioModel::insertItem(ScenarioModelItem* _item, ScenarioModelItem* _aft
 
 void ScenarioModel::removeItem(ScenarioModelItem* _item)
 {
+	//
+	// Спрева удаляем всех детей
+	//
+	if (_item->hasChildren()) {
+		for (int childIndex = _item->childCount()-1; childIndex >= 0; --childIndex) {
+			removeItem(_item->childAt(childIndex));
+		}
+	}
+
+	//
+	// Затем удаляем сам элемент
+	//
 	ScenarioModelItem* itemParent = _item->parent();
 	QModelIndex itemParentIndex = indexForItem(_item).parent();
 	int itemRowIndex = itemParent->rowOfChild(_item);

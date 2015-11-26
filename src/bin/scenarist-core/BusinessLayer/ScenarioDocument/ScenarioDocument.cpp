@@ -531,19 +531,28 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			//
 			ScenarioModelItem* itemToDelete = iter.value();
 
-			//
-			// Если удаляется элемент содержащий потомков, необходимо вынести потомков на уровень выше
-			//
-			if (itemToDelete->hasChildren()) {
-				for (int childIndex = itemToDelete->childCount()-1; childIndex >= 0; --childIndex) {
-					m_model->insertItem(itemToDelete->childAt(childIndex), itemToDelete);
+			if (itemToDelete != 0) {
+				//
+				// Расширяем диапозон последующего построения дерева, для включения в него всех
+				// кто был удалён тут по причине не самого оптимального алгоритма
+				//
+				const int charsModified = itemToDelete->endPosition() - _position;
+				if (charsModified > _charsAdded) {
+					_charsAdded = charsModified;
 				}
+				if (charsModified > _charsRemoved) {
+					_charsRemoved = charsModified;
+				}
+
+				//
+				// Удалим элемент из модели
+				//
+				m_model->removeItem(iter.value());
 			}
 
 			//
 			// Удалим элемент из кэша
 			//
-			m_model->removeItem(iter.value());
 			iter = m_modelItems.erase(iter);
 		}
 	}
@@ -815,6 +824,11 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 							currentItem = currentItem->parent();
 						}
 						currentParent = currentItem->parent();
+
+						//
+						// Обновляем позицию конца группирующего блока
+						//
+						currentItem->setEndPosition(cursor.position() + cursor.block().length());
 						break;
 					}
 
@@ -841,7 +855,7 @@ void ScenarioDocument::removeConnections()
 	disconnect(m_document, SIGNAL(contentsChange(int,int,int)),
 			   this, SLOT(aboutContentsChange(int,int,int)));
 }
-#include <QDebug>
+
 void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos)
 {
 	//
@@ -911,6 +925,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	//
 	// Обновим данные элемента
 	//
+	_item->setEndPosition(_itemEndPos);
 	_item->setType(itemType);
 	_item->setHeader(itemHeader);
 	_item->setColors(colors);

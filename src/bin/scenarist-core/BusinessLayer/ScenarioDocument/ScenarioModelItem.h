@@ -37,6 +37,12 @@ namespace BusinessLogic
 		void setPosition(int _position);
 
 		/**
+		 * @brief Позиция конца элемента
+		 */
+		int endPosition() const;
+		void setEndPosition(int _endPosition);
+
+		/**
 		 * @brief Номер сцены
 		 */
 		int sceneNumber() const;
@@ -127,6 +133,11 @@ namespace BusinessLogic
 		 * @brief Позиция элемента в тексте
 		 */
 		int m_position;
+
+		/**
+		 * @brief Позиция конца элемента в тексте
+		 */
+		int m_endPosition;
 
 		/**
 		 * @brief Номер сцены
