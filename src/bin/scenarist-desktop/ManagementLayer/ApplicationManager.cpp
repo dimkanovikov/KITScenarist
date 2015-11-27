@@ -756,7 +756,7 @@ void ApplicationManager::currentTabIndexChanged()
 
 			auto widgetForTab =
 				[=] (int _index) {
-				QWidget* result;
+                QWidget* result = 0;
 				switch (_index) {
 					case STARTUP_TAB_INDEX: result = m_startUpManager->view(); break;
 					case RESEARCH_TAB_INDEX: result = m_researchManager->view(); break;
