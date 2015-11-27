@@ -548,13 +548,22 @@ int ScenarioXml::removeLastMime()
 
 	if (m_lastMimeFrom != m_lastMimeTo
 		&& m_lastMimeFrom < m_lastMimeTo) {
+		const int documentCharactersCount = m_scenario->document()->characterCount();
+
 		//
 		// Расширим область чтобы не оставалось пустых строк
 		//
 		if (m_lastMimeFrom > 0) {
 			--m_lastMimeFrom;
-		} else if (m_lastMimeTo != (m_scenario->document()->characterCount() - 1)){
+		} else if (m_lastMimeTo != (documentCharactersCount - 1)){
 			++m_lastMimeTo;
+		}
+
+		//
+		// Проверяем, чтобы область не выходила за границы документа
+		//
+		if (m_lastMimeTo >= documentCharactersCount) {
+			m_lastMimeTo = documentCharactersCount - 1;
 		}
 
 		QTextCursor cursor(m_scenario->document());
