@@ -785,23 +785,6 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 					}
 
 					//
-					// NOTE: С версии 0.5.4 заголовок титра сохраняется
-					//		 и восстанавливается как обычный абзац
-					/*
-						//
-						// Если нужно добавим заголовок стиля
-						//
-						if (currentStyle.hasHeader()) {
-							ScenarioBlockStyle headerStyle = ScenarioTemplateFacade::getTemplate().blockStyle(currentStyle.headerType());
-							cursor.setBlockFormat(headerStyle.blockFormat());
-							cursor.setBlockCharFormat(headerStyle.charFormat());
-							cursor.setCharFormat(headerStyle.charFormat());
-							cursor.insertText(currentStyle.header());
-							cursor.insertBlock();
-						}
-					*/
-
-					//
 					// Если необходимо сменить тип блока
 					//
 					if ((firstBlockHandling && needChangeFirstBlockType)
@@ -912,7 +895,7 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 
 			case QXmlStreamReader::Characters: {
 				if (!reader.isWhitespace()) {
-					QString textToInsert = reader.text().toString().simplified();
+					QString textToInsert = reader.text().toString();
 
 					//
 					// Если необходимо так же вставляем префикс и постфикс стиля
