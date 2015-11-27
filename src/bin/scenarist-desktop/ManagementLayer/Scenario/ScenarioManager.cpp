@@ -196,8 +196,6 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	m_textEditManager(new ScenarioTextEditManager(this, m_view)),
 	m_workModeIsDraft(false)
 {
-	BusinessLogic::ScenarioTemplateFacade::updateTemplatesColors();
-
 	initData();
 	initView();
 	initConnections();
@@ -711,6 +709,8 @@ void ScenarioManager::initData()
 
 void ScenarioManager::initView()
 {
+	BusinessLogic::ScenarioTemplateFacade::updateTemplatesColors();
+
 	m_view->setTabOrder(0, m_textEditManager->view());
 
 	m_viewEditorsToolbars = new QStackedWidget(m_view);

@@ -1,7 +1,8 @@
 #include "ScenarioReviewView.h"
 
 #include "ScenarioReviewItemDelegate.h"
-#include "ScenarioTextEdit.h"
+
+#include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioReviewModel.h>

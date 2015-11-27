@@ -1,6 +1,6 @@
 #include "ScenarioReviewPanel.h"
 
-#include "ScenarioTextEdit.h"
+#include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>

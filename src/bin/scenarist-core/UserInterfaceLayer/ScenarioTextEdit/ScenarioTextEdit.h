@@ -40,7 +40,7 @@ namespace UserInterface
 		 * @brief Установить вид текущего блока
 		 * @param Тип блока
 		 */
-		void changeScenarioBlockType(BusinessLogic::ScenarioBlockStyle::Type _blockType);
+		void changeScenarioBlockType(BusinessLogic::ScenarioBlockStyle::Type _blockType, bool _forced = false);
 
 		/**
 		 * @brief Применить тип блока ко всему тексту в блоке

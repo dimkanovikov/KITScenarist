@@ -1,6 +1,6 @@
 #include "ScenarioFastFormatWidget.h"
 
-#include "ScenarioTextEdit.h"
+#include <UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 

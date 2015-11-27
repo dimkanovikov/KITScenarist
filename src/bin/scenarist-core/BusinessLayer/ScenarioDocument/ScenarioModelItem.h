@@ -37,6 +37,16 @@ namespace BusinessLogic
 		void setPosition(int _position);
 
 		/**
+		 * @brief Позиция конца элемента
+		 */
+		int endPosition() const;
+
+		/**
+		 * @brief Длина элемента
+		 */
+		int length() const;
+
+		/**
 		 * @brief Номер сцены
 		 */
 		int sceneNumber() const;
@@ -47,6 +57,12 @@ namespace BusinessLogic
 		 */
 		QString header() const;
 		void setHeader(const QString& _header);
+
+		/**
+		 * @brief Окончание элемента
+		 */
+		QString footer() const;
+		void setFooter(const QString& _footer);
 
 		/**
 		 * @brief Цвета элемента
@@ -139,6 +155,11 @@ namespace BusinessLogic
 		QString m_header;
 
 		/**
+		 * @brief Окончание элемента
+		 */
+		QString m_footer;
+
+		/**
 		 * @brief Цвета элемента
 		 */
 		QString m_colors;
@@ -152,6 +173,11 @@ namespace BusinessLogic
 		 * @brief Текст элемента
 		 */
 		QString m_text;
+
+		/**
+		 * @brief Размер текста элемента
+		 */
+		int m_textLength;
 
 		/**
 		 * @brief Длительность элемента

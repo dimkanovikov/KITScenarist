@@ -441,11 +441,11 @@ QString ScenarioXml::scenarioToXml(ScenarioModelItem* _fromItem, ScenarioModelIt
 	// Определить интервал текста из которого нужно создать xml-представление
 	//
 	// ... начало
-	int startPosition = m_scenario->itemStartPosition(_fromItem);
+	int startPosition = _fromItem->position();
 	// ... конец
-	int endPosition = m_scenario->itemEndPosition(_fromItem);
+	int endPosition = _fromItem->endPosition();
 
-	int toItemEndPosition = m_scenario->itemEndPosition(_toItem);
+	int toItemEndPosition = _toItem->endPosition();
 	if (endPosition < toItemEndPosition) {
 		endPosition = toItemEndPosition;
 	}

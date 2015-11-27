@@ -12,6 +12,7 @@ namespace {
 ScenarioModelItem::ScenarioModelItem(int _position) :
 	m_position(_position),
 	m_sceneNumber(0),
+	m_textLength(0),
 	m_duration(0),
 	m_type(Scene),
 	m_hasNote(false),
@@ -36,6 +37,36 @@ void ScenarioModelItem::setPosition(int _position)
 	}
 }
 
+int ScenarioModelItem::endPosition() const
+{
+	return position() + length();
+}
+
+int ScenarioModelItem::length() const
+{
+	int length = 0;
+	//
+	// Единица тут добавляются, за символ переноса строки после заголовка
+	//
+	length += m_header.length() + 1;
+	if (m_type == Scene) {
+		length += m_textLength;
+	} else if (m_type == Folder || m_type == SceneGroup) {
+		length += m_footer.length();
+	}
+
+	//
+	// Ещё один перенос после каждого вложенного элемента
+	//
+	if (hasChildren()) {
+		foreach (ScenarioModelItem* child, m_children) {
+			length += child->length() + 1;
+		}
+	}
+
+	return length;
+}
+
 int ScenarioModelItem::sceneNumber() const
 {
 	return m_sceneNumber;
@@ -57,6 +88,19 @@ void ScenarioModelItem::setHeader(const QString& _header)
 {
 	if (m_header != _header) {
 		m_header = _header;
+		updateParentText();
+	}
+}
+
+QString ScenarioModelItem::footer() const
+{
+	return m_footer;
+}
+
+void ScenarioModelItem::setFooter(const QString& _footer)
+{
+	if (m_footer != _footer) {
+		m_footer = _footer;
 		updateParentText();
 	}
 }
@@ -92,6 +136,7 @@ QString ScenarioModelItem::text() const
 
 void ScenarioModelItem::setText(const QString& _text)
 {
+	m_textLength = _text.length();
 	const QString newText = _text.left(MAX_TEXT_LENGTH);
 	if (m_text != newText) {
 		m_text = newText;
@@ -272,6 +317,7 @@ void ScenarioModelItem::clear()
 {
 	m_header.clear();
 	m_text.clear();
+	m_footer.clear();
 	updateParentText();
 
 	m_duration = 0;

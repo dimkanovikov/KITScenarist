@@ -72,7 +72,7 @@ void WebRequest::addAttributeFile( QString name, QString filePath )
 	attributeFile.second = filePath;
 	addAttributeFile( attributeFile );
 }
-#include <QDebug>
+
 QNetworkRequest WebRequest::networkRequest( bool addContentHeaders )
 {
 	QNetworkRequest request( urlToLoad() );
