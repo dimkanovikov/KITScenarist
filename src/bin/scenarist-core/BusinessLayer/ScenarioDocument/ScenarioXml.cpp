@@ -144,6 +144,13 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 		// Для некоторого текста, посимвольно
 		//
 		else {
+			//
+			// ... перебегаем на следующий блок, чтобы не захватыывать символ переноса строки
+			//
+			if (!cursor.hasSelection()
+				&& cursor.atBlockEnd()) {
+				cursor.movePosition(QTextCursor::Right);
+			}
 			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
 		}
 
