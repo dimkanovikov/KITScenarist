@@ -130,8 +130,7 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)
 	ResearchModelItem* selectedResearchItem = m_model->itemForIndex(_selectedItemIndex);
 	Research* selectedResearch = selectedResearchItem->research();
 	if (selectedResearch != 0
-		&& (selectedResearch->type() == Research::ResearchRoot
-			|| selectedResearch->type() == Research::Folder)) {
+		&& selectedResearch->type() == Research::Folder) {
 		selectedResearchName = selectedResearch->name();
 	}
 
@@ -227,6 +226,16 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 				case Research::Folder:
 				case Research::Text: {
 					m_view->editText(research->name(), research->description());
+					break;
+				}
+
+				case Research::Url: {
+					m_view->editUrl(research->name(), research->url(), research->description());
+					break;
+				}
+
+				case Research::ImagesGallery: {
+					m_view->editImagesGallery(research->name()/*, research->childImages()*/);
 					break;
 				}
 			}
@@ -364,6 +373,31 @@ void ResearchManager::initConnections()
 		if (m_currentResearch != 0
 			&& m_currentResearch->description() != _description) {
 			m_currentResearch->setDescription(_description);
+			emit researchChanged();
+		}
+	});
+
+	connect(m_view, &ResearchView::urlNameChanged, [=](const QString& _name){
+		if (m_currentResearch != 0
+			&& m_currentResearch->name() != _name) {
+			m_currentResearch->setName(_name);
+			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+			emit researchChanged();
+		}
+	});
+	connect(m_view, &ResearchView::urlLinkChanged, [=](const QString& _urlLink){
+		if (m_currentResearch != 0
+			&& m_currentResearch->url() != _urlLink) {
+			m_currentResearch->setUrl(_urlLink);
+			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+			emit researchChanged();
+		}
+	});
+	connect(m_view, &ResearchView::urlContentChanged, [=](const QString& _html){
+		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::Url
+			&& m_currentResearch->description() != _html) {
+			m_currentResearch->setDescription(_html);
 			emit researchChanged();
 		}
 	});

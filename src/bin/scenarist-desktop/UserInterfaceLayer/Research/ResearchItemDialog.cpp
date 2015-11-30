@@ -42,8 +42,12 @@ int ResearchItemDialog::researchType() const
 	Domain::Research::Type type;
 	if (m_ui->folder->isChecked()) {
 		type = Domain::Research::Folder;
-	} else {
+	} else if (m_ui->text->isChecked()) {
 		type = Domain::Research::Text;
+	} else if (m_ui->url->isChecked()) {
+		type = Domain::Research::Url;
+	} else if (m_ui->image->isChecked()) {
+		type = Domain::Research::ImagesGallery;
 	}
 	return type;
 }

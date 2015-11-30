@@ -66,6 +66,16 @@ namespace UserInterface
 		void editText(const QString& _name, const QString& _description);
 
 		/**
+		 * @brief Включить режим редактирования ссылки
+		 */
+		void editUrl(const QString& _name, const QString& _url, const QString& _cachedContent);
+
+		/**
+		 * @brief Включить режим редактирования галереи изображений
+		 */
+		void editImagesGallery(const QString& _name);
+
+		/**
 		 * @brief Установить режим работы со сценарием
 		 */
 		void setCommentOnly(bool _isCommentOnly);
@@ -105,6 +115,10 @@ namespace UserInterface
 		void synopsisTextChanged(const QString& _synopsis);
 		void textNameChanged(const QString& _name);
 		void textDescriptionChanged(const QString& _description);
+		void urlNameChanged(const QString& _name);
+		void urlLinkChanged(const QString& _name);
+		void urlContentChanged(const QString& _description);
+		void imagesGalleryNameChanged(const QString& _name);
 		/** @{ */
 
 	protected:
@@ -147,6 +161,11 @@ namespace UserInterface
 
 	private:
 		Ui::ResearchView* m_ui;
+
+		/**
+		 * @brief Кэшированные данные страницы
+		 */
+		QString m_cachedUrlContent;
 	};
 }
 

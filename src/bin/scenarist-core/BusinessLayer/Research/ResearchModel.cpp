@@ -25,7 +25,12 @@ namespace {
 		// Прорабатываем всех его детей
 		//
 		foreach (Research* researchChild, _researchMap.value(_research)) {
-			populateResearchTree(researchItem, researchChild, _researchMap);
+			//
+			// ... не раскрываем изображения, они находятся в группах
+			//
+			if (researchItem->research()->type() != Research::Image) {
+				populateResearchTree(researchItem, researchChild, _researchMap);
+			}
 		}
 	}
 }
@@ -43,9 +48,7 @@ ResearchModel::ResearchModel(QObject* _parent) :
 	//
 	ResearchModelItem* scenarioItem =
 		new ResearchModelItem(
-			new Research(
-				Domain::Identifier(), 0, Research::Scenario, tr("Scenario"), QString::null, 0
-			)
+			new Research(Domain::Identifier(), 0, Research::Scenario, tr("Scenario"))
 		);
 	m_rootItem->appendItem(scenarioItem);
 	//
@@ -53,9 +56,7 @@ ResearchModel::ResearchModel(QObject* _parent) :
 	//
 	ResearchModelItem* titlePageItem =
 		new ResearchModelItem(
-			new Research(
-				Domain::Identifier(), 0, Research::TitlePage, tr("Title Page"), QString::null, 0
-			)
+			new Research(Domain::Identifier(), 0, Research::TitlePage, tr("Title Page"))
 		);
 	scenarioItem->appendItem(titlePageItem);
 	//
@@ -64,7 +65,8 @@ ResearchModel::ResearchModel(QObject* _parent) :
 	ResearchModelItem* synopsisItem =
 		new ResearchModelItem(
 			new Research(
-				Domain::Identifier(), 0, Research::Synopsis, tr("Synopsis"), QString::null, 1
+				Domain::Identifier(), 0, Research::Synopsis, tr("Synopsis"), QString::null,
+				QString::null, 1
 			)
 		);
 	scenarioItem->appendItem(synopsisItem);
@@ -74,7 +76,8 @@ ResearchModel::ResearchModel(QObject* _parent) :
 	m_researchRoot =
 		new ResearchModelItem(
 			new Research(
-				Domain::Identifier(), 0, Research::ResearchRoot, tr("Research"), QString::null, 1
+				Domain::Identifier(), 0, Research::ResearchRoot, tr("Research"), QString::null,
+				QString::null, 1
 			)
 		);
 	m_rootItem->appendItem(m_researchRoot);
@@ -125,7 +128,8 @@ void ResearchModel::clear()
 	m_researchRoot =
 		new ResearchModelItem(
 			new Research(
-				Domain::Identifier(), 0, Research::ResearchRoot, tr("Research"), QString::null, 1
+				Domain::Identifier(), 0, Research::ResearchRoot, tr("Research"), QString::null,
+				QString::null, 1
 			)
 		);
 	m_rootItem->appendItem(m_researchRoot);

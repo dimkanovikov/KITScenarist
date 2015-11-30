@@ -23,12 +23,16 @@ namespace Domain
 			Synopsis,
 			ResearchRoot,
 			Folder,
-			Text
+			Text,
+			Url,
+			ImagesGallery,
+			Image
 		};
 
 	public:
 		Research(const Identifier& _id, Research* _parent, Type _type, const QString& _name,
-			const QString& _description, int _sortOrder);
+			const QString& _description = QString::null, const QString& _url = QString::null,
+			int _sortOrder = 0);
 
 		/**
 		 * @brief Получить родителя
@@ -71,6 +75,16 @@ namespace Domain
 		void setDescription(const QString& _description);
 
 		/**
+		 * @brief Получить ссылку
+		 */
+		QString url() const;
+
+		/**
+		 * @brief Установить ссылку
+		 */
+		void setUrl(const QString& _url);
+
+		/**
 		 * @brief Получить позицию сортировки
 		 */
 		int sortOrder() const;
@@ -98,9 +112,15 @@ namespace Domain
 
 		/**
 		 * @brief Описание
-		 * @note Html-форматированный текст
+		 * @note Html-форматированный текст. Если в элементе хранится ссылка на интернет-ресурс,
+		 *		 то в этом поле кэшируется содержимое интернет-страницы
 		 */
 		QString m_description;
+
+		/**
+		 * @brief Ссылка на интернет-ресурс
+		 */
+		QString m_url;
 
 		/**
 		 * @brief Порядок сортировки

@@ -37,7 +37,8 @@ Research* ResearchStorage::storeResearch(Research* _parent, int _researchType,
 	// Создаём новую разработку
 	//
 	Research* newResearch =
-		new Research(Identifier(), _parent, (Research::Type)_researchType, _researchName, QString::null, _sortOrder);
+		new Research(Identifier(), _parent, (Research::Type)_researchType, _researchName,
+					 QString::null, QString::null, _sortOrder);
 
 	//
 	// И сохраняем её

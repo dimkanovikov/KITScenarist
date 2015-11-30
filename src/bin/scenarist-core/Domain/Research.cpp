@@ -4,12 +4,13 @@ using namespace Domain;
 
 
 Research::Research(const Identifier& _id, Research* _parent, Research::Type _type,
-	const QString& _name, const QString& _description, int _sortOrder) :
+	const QString& _name, const QString& _description, const QString& _url, int _sortOrder) :
 	DomainObject(_id),
 	m_parent(_parent),
 	m_type(_type),
 	m_name(_name),
 	m_description(_description),
+	m_url(_url),
 	m_sortOrder(_sortOrder)
 {
 }
@@ -65,6 +66,20 @@ void Research::setDescription(const QString& _description)
 {
 	if (m_description != _description) {
 		m_description = _description;
+
+		changesNotStored();
+	}
+}
+
+QString Research::url() const
+{
+	return m_url;
+}
+
+void Research::setUrl(const QString& _url)
+{
+	if (m_url != _url) {
+		m_url = _url;
 
 		changesNotStored();
 	}

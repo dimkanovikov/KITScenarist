@@ -6,7 +6,7 @@ using namespace DataMappingLayer;
 
 
 namespace {
-	const QString COLUMNS = " id, parent_id, type, name, description, sort_order ";
+	const QString COLUMNS = " id, parent_id, type, name, description, url, sort_order ";
 	const QString TABLE_NAME = " research ";
 }
 
@@ -61,7 +61,7 @@ QString ResearchMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (" + COLUMNS + ") "
-					" VALUES(?, ?, ?, ?, ?, ?) "
+					" VALUES(?, ?, ?, ?, ?, ?, ?) "
 					);
 
 	Research* research = dynamic_cast<Research*>(_subject );
@@ -71,6 +71,7 @@ QString ResearchMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 	_insertValues.append(research->type());
 	_insertValues.append(research->name());
 	_insertValues.append(research->description());
+	_insertValues.append(research->url());
 	_insertValues.append(research->sortOrder());
 
 	return insertStatement;
@@ -84,6 +85,7 @@ QString ResearchMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 					" type = ?, "
 					" name = ?, "
 					" description = ?, "
+					" url = ?, "
 					" sort_order =? "
 					" WHERE id = ? "
 					);
@@ -94,6 +96,7 @@ QString ResearchMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 	_updateValues.append(research->type());
 	_updateValues.append(research->name());
 	_updateValues.append(research->description());
+	_updateValues.append(research->url());
 	_updateValues.append(research->sortOrder());
 	_updateValues.append(research->id().value());
 
@@ -119,9 +122,10 @@ DomainObject* ResearchMapper::doLoad(const Identifier& _id, const QSqlRecord& _r
 	const Research::Type type = (Research::Type)_record.value("type").toInt();
 	const QString name = _record.value("name").toString();
 	const QString description = _record.value("description").toString();
+	const QString url = _record.value("url").toString();
 	const int sortOrder = _record.value("sort_order").toInt();
 
-	return new Research(_id, parent, type, name, description, sortOrder);
+	return new Research(_id, parent, type, name, description, url, sortOrder);
 }
 
 void ResearchMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
@@ -141,6 +145,9 @@ void ResearchMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _reco
 
 		const QString description = _record.value("description").toString();
 		research->setDescription(description);
+
+		const QString url = _record.value("url").toString();
+		research->setUrl(url);
 
 		const int sortOrder = _record.value("sort_order").toInt();
 		research->setSortOrder(sortOrder);
