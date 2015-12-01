@@ -61,6 +61,11 @@ QPixmap ResearchModelItem::icon() const
 				break;
 			}
 
+			case Research::Image: {
+				iconPath = ":/Graphics/Icons/file-image.png";
+				break;
+			}
+
 			default: {
 				iconPath = ":/Graphics/Icons/file.png";
 				break;

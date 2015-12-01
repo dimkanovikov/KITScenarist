@@ -120,16 +120,40 @@ void ResearchView::editUrl(const QString& _name, const QString& _url, const QStr
 	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->urlEdit);
 	m_ui->urlName->setText(_name);
 	m_ui->urlLink->setText(_url);
-	m_ui->urlContent->load(QUrl(_url));
+	if (m_ui->urlContent->url().toString() != _url) {
+		m_ui->urlContent->load(QUrl(_url));
+	}
 	m_cachedUrlContent = _cachedContent;
 
 	setResearchManageButtonsVisible(true);
 }
 
-void ResearchView::editImagesGallery(const QString& _name)
+void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>& _images)
 {
 	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->imagesGalleryEdit);
 	m_ui->imagesGalleryName->setText(_name);
+
+	//
+	// Загружаем изображения и для этого сначала отключаем уведомления о изменении галереи,
+	// а после того, как всё загрузим, включаем вновь
+	//
+	disconnect(m_ui->imagesGalleryPane, &ImagesPane::imageAdded, this, &ResearchView::imagesGalleryImageAdded);
+	disconnect(m_ui->imagesGalleryPane, &ImagesPane::imageRemoved, this, &ResearchView::imagesGalleryImageRemoved);
+	m_ui->imagesGalleryPane->clear();
+	foreach (const QPixmap& image, _images) {
+		m_ui->imagesGalleryPane->addImage(image);
+	}
+	connect(m_ui->imagesGalleryPane, &ImagesPane::imageAdded, this, &ResearchView::imagesGalleryImageAdded);
+	connect(m_ui->imagesGalleryPane, &ImagesPane::imageRemoved, this, &ResearchView::imagesGalleryImageRemoved);
+
+	setResearchManageButtonsVisible(true);
+}
+
+void ResearchView::editImage(const QString& _name, const QPixmap& _image)
+{
+	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->imageEdit);
+	m_ui->imageName->setText(_name);
+	m_ui->imagePreview->setImage(_image);
 
 	setResearchManageButtonsVisible(true);
 }
@@ -198,6 +222,8 @@ void ResearchView::initView()
 	m_ui->researchSplitter->setHandleWidth(1);
 	m_ui->researchSplitter->setOpaqueResize(false);
 	m_ui->researchSplitter->setStretchFactor(1, 1);
+
+	m_ui->imagePreview->setReadOnly(true);
 }
 
 void ResearchView::initConnections()
@@ -293,7 +319,13 @@ void ResearchView::initConnections()
 	//
 	// ... галерея изображений
 	//
+	//....... уведомления об изменении самой галереи, настраиваются в методе editImagesGallery
+	//
 	connect(m_ui->imagesGalleryName, &QLineEdit::textChanged, this, &ResearchView::imagesGalleryNameChanged);
+	//
+	// ... изображение
+	//
+	connect(m_ui->imageName, &QLineEdit::textChanged, this, &ResearchView::imageNameChanged);
 }
 
 void ResearchView::initStyleSheet()

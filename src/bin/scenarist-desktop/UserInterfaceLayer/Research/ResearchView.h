@@ -73,7 +73,12 @@ namespace UserInterface
 		/**
 		 * @brief Включить режим редактирования галереи изображений
 		 */
-		void editImagesGallery(const QString& _name);
+		void editImagesGallery(const QString& _name, const QList<QPixmap>& _images);
+
+		/**
+		 * @brief Включить режим редактирования изображения
+		 */
+		void editImage(const QString& _name, const QPixmap& _image);
 
 		/**
 		 * @brief Установить режим работы со сценарием
@@ -119,6 +124,9 @@ namespace UserInterface
 		void urlLinkChanged(const QString& _name);
 		void urlContentChanged(const QString& _description);
 		void imagesGalleryNameChanged(const QString& _name);
+		void imagesGalleryImageAdded(const QPixmap& _image, int _sortOrder);
+		void imagesGalleryImageRemoved(const QPixmap& _image, int _sortOrder);
+		void imageNameChanged(const QString& _name);
 		/** @{ */
 
 	protected:

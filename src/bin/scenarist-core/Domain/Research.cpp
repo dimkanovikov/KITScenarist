@@ -3,14 +3,15 @@
 using namespace Domain;
 
 
-Research::Research(const Identifier& _id, Research* _parent, Research::Type _type,
-	const QString& _name, const QString& _description, const QString& _url, int _sortOrder) :
+Research::Research(const Identifier& _id, Research* _parent, Research::Type _type, int _sortOrder,
+	const QString& _name, const QString& _description, const QString& _url, const QPixmap& _image) :
 	DomainObject(_id),
 	m_parent(_parent),
 	m_type(_type),
 	m_name(_name),
 	m_description(_description),
 	m_url(_url),
+	m_image(_image),
 	m_sortOrder(_sortOrder)
 {
 }
@@ -80,6 +81,20 @@ void Research::setUrl(const QString& _url)
 {
 	if (m_url != _url) {
 		m_url = _url;
+
+		changesNotStored();
+	}
+}
+
+QPixmap Research::image() const
+{
+	return m_image;
+}
+
+void Research::setImage(const QPixmap& _image)
+{
+	if (m_image.toImage() != _image.toImage()) {
+		m_image = _image;
 
 		changesNotStored();
 	}

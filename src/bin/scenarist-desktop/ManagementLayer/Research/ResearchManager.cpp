@@ -41,6 +41,7 @@ ResearchManager::ResearchManager(QObject* _parent, QWidget* _parentWidget) :
 	m_view(new ResearchView(_parentWidget)),
 	m_dialog(new ResearchItemDialog(m_view)),
 	m_model(new ResearchModel(this)),
+	m_currentResearchItem(0),
 	m_currentResearch(0)
 {
 	initView();
@@ -159,8 +160,8 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)
 			StorageFacade::researchStorage()->storeResearch(
 				parentResearch,
 				(Research::Type)m_dialog->researchType(),
-				m_dialog->researchName(),
-				insertPosition);
+				insertPosition,
+				m_dialog->researchName());
 
 		//
 		// Добавляем его в дерево
@@ -188,6 +189,7 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 	// Определим какой элемент разработки нужно редактировать
 	//
 	if (ResearchModelItem* researchItem = m_model->itemForIndex(_index)) {
+		m_currentResearchItem = researchItem;
 		if (Research* research = researchItem->research()) {
 			m_currentResearch = research;
 
@@ -235,7 +237,21 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 				}
 
 				case Research::ImagesGallery: {
-					m_view->editImagesGallery(research->name()/*, research->childImages()*/);
+					//
+					// Формируем список изображений от вложенных элементов
+					//
+					QList<QPixmap> images;
+					if (researchItem->hasChildren()) {
+						for (int childIndex = 0; childIndex < researchItem->childCount(); ++childIndex) {
+							images.append(researchItem->childAt(childIndex)->research()->image());
+						}
+					}
+					m_view->editImagesGallery(research->name(), images);
+					break;
+				}
+
+				case Research::Image: {
+					m_view->editImage(research->name(), research->image());
 					break;
 				}
 			}
@@ -376,7 +392,9 @@ void ResearchManager::initConnections()
 			emit researchChanged();
 		}
 	});
-
+	//
+	// ... ссылка
+	//
 	connect(m_view, &ResearchView::urlNameChanged, [=](const QString& _name){
 		if (m_currentResearch != 0
 			&& m_currentResearch->name() != _name) {
@@ -399,6 +417,58 @@ void ResearchManager::initConnections()
 			&& m_currentResearch->description() != _html) {
 			m_currentResearch->setDescription(_html);
 			emit researchChanged();
+		}
+	});
+	//
+	// ... галерея изображений
+	//
+	connect(m_view, &ResearchView::imagesGalleryNameChanged, [=](const QString& _name){
+		if (m_currentResearch != 0
+			&& m_currentResearch->name() != _name) {
+			m_currentResearch->setName(_name);
+			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+			emit researchChanged();
+		}
+	});
+	connect(m_view, &ResearchView::imagesGalleryImageAdded, [=](const QPixmap& _image, int _sortOrder){
+		if (m_currentResearch != 0) {
+			//
+			// Создаём новый элемент
+			//
+			Research* newResearch =
+				StorageFacade::researchStorage()->storeResearch(
+					m_currentResearch, Research::Image, _sortOrder, tr("Unnamed image"));
+			newResearch->setImage(_image);
+
+			//
+			// Добавляем его в дерево
+			//
+			ResearchModelItem* newResearchItem = new ResearchModelItem(newResearch);
+			m_model->addItem(newResearchItem, m_currentResearchItem);
+
+			emit researchChanged();
+		}
+	});
+	connect(m_view, &ResearchView::imagesGalleryImageRemoved, [=](const QPixmap&, int _sortOrder){
+		if (m_currentResearch != 0) {
+			//
+			// Получим ребёнка, которого удаляют
+			//
+			ResearchModelItem* researchItemToDelete = m_currentResearchItem->childAt(_sortOrder);
+			Research* researchToDelete = researchItemToDelete->research();
+			//
+			// ... удалим
+			//
+			m_model->removeItem(researchItemToDelete);
+			DataStorageLayer::StorageFacade::researchStorage()->removeResearch(researchToDelete);
+
+			//
+			// ... обновляем индексы сортировок для всех последующих изображений
+			//
+			for (int childIndex = _sortOrder; childIndex < m_currentResearchItem->childCount(); ++childIndex) {
+				Research* research = m_currentResearchItem->childAt(childIndex)->research();
+				research->setSortOrder(research->sortOrder() - 1);
+			}
 		}
 	});
 }

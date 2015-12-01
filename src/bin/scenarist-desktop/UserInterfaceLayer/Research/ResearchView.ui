@@ -116,7 +116,7 @@
        <item>
         <widget class="QStackedWidget" name="researchDataEditsContainer">
          <property name="currentIndex">
-          <number>6</number>
+          <number>7</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -447,6 +447,16 @@
          </widget>
          <widget class="QWidget" name="imagesGalleryEdit">
           <layout class="QGridLayout" name="gridLayout_6">
+           <item row="3" column="0">
+            <widget class="ImagesPane" name="imagesGalleryPane" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label_9">
              <property name="text">
@@ -458,12 +468,59 @@
             <widget class="QLineEdit" name="imagesGalleryName"/>
            </item>
            <item row="2" column="0">
-            <widget class="ImagesPane" name="imagesGalleryPane" native="true">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Images:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="imageEdit">
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>Name:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QLineEdit" name="imageName"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_12">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Image:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="pushButton">
+             <property name="text">
+              <string>Choose...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="2">
+            <widget class="ImageLabel" name="imagePreview">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -500,6 +557,11 @@
    <extends>QWidget</extends>
    <header location="global">3rd_party/Widgets/ImagesPane/ImagesPane.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ImageLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">3rd_party/Widgets/ImagesPane/ImageLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

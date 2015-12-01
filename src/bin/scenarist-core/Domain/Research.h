@@ -3,6 +3,7 @@
 
 #include "DomainObject.h"
 
+#include <QPixmap>
 #include <QString>
 
 
@@ -30,9 +31,9 @@ namespace Domain
 		};
 
 	public:
-		Research(const Identifier& _id, Research* _parent, Type _type, const QString& _name,
-			const QString& _description = QString::null, const QString& _url = QString::null,
-			int _sortOrder = 0);
+		Research(const Identifier& _id, Research* _parent, Type _type, int _sortOrder,
+			const QString& _name, const QString& _description = QString::null,
+			const QString& _url = QString::null, const QPixmap& _image = QPixmap());
 
 		/**
 		 * @brief Получить родителя
@@ -85,6 +86,16 @@ namespace Domain
 		void setUrl(const QString& _url);
 
 		/**
+		 * @brief Получить изображение
+		 */
+		QPixmap image() const;
+
+		/**
+		 * @brief Установить изображение
+		 */
+		void setImage(const QPixmap& _image);
+
+		/**
 		 * @brief Получить позицию сортировки
 		 */
 		int sortOrder() const;
@@ -121,6 +132,11 @@ namespace Domain
 		 * @brief Ссылка на интернет-ресурс
 		 */
 		QString m_url;
+
+		/**
+		 * @brief Изображение
+		 */
+		QPixmap m_image;
 
 		/**
 		 * @brief Порядок сортировки

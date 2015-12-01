@@ -11,7 +11,8 @@
 ImageLabel::ImageLabel(QWidget* _parent) :
 	QLabel(_parent),
 	m_sortOrder(0),
-	m_clearButton(new QToolButton(this))
+	m_clearButton(new QToolButton(this)),
+	m_isReadOnly(false)
 {
 	setCursor(Qt::PointingHandCursor);
 
@@ -78,12 +79,19 @@ int ImageLabel::sortOrder() const
 	return m_sortOrder;
 }
 
+void ImageLabel::setReadOnly(bool _readOnly)
+{
+	if (m_isReadOnly != _readOnly) {
+		m_isReadOnly = _readOnly;
+	}
+}
+
 void ImageLabel::enterEvent(QEvent* _event)
 {
 	//
 	// Если фотография установлена покажем кнопку удаления
 	//
-	if (!m_image.isNull()) {
+	if (!m_isReadOnly && !m_image.isNull()) {
 		m_clearButton->move(this->width() - m_clearButton->width(), 0);
 		m_clearButton->show();
 	}
@@ -103,7 +111,9 @@ void ImageLabel::leaveEvent(QEvent* _event)
 
 void ImageLabel::mousePressEvent(QMouseEvent* _event)
 {
-	emit clicked();
+	if (!m_isReadOnly) {
+		emit clicked();
+	}
 
 	QLabel::mousePressEvent(_event);
 }

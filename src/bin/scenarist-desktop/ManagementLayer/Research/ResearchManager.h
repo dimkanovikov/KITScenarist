@@ -15,6 +15,7 @@ namespace Domain {
 
 namespace BusinessLogic {
 	class ResearchModel;
+	class ResearchModelItem;
 }
 
 
@@ -129,6 +130,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Текущий элемент разработки
 		 */
+		BusinessLogic::ResearchModelItem* m_currentResearchItem;
 		Domain::Research* m_currentResearch;
 	};
 }

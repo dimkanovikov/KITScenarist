@@ -42,12 +42,12 @@ signals:
 	/**
 	 * @brief Изображение добавлено
 	 */
-	void imageAdded();
+	void imageAdded(const QPixmap& _image, int sortOrder);
 
 	/**
 	 * @brief Изображение удалено
 	 */
-	void imageRemoved();
+	void imageRemoved(const QPixmap& _image, int sortOrder);
 
 private slots:
 	/**

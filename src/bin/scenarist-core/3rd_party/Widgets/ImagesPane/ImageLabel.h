@@ -36,6 +36,11 @@ public:
 	 */
 	int sortOrder() const;
 
+	/**
+	 * @brief Установить режим "только для чтения"
+	 */
+	void setReadOnly(bool _readOnly);
+
 signals:
 	/**
 	 * @brief Сигнал щелчка по изображению
@@ -83,6 +88,11 @@ private:
 	 * @brief Кнопка очистки фотографии
 	 */
 	QToolButton* m_clearButton;
+
+	/**
+	 * @brief Режим "только для чтения"
+	 */
+	bool m_isReadOnly;
 };
 
 #endif // PHOTOLABEL_H

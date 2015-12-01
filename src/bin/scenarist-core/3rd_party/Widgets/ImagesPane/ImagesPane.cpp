@@ -22,7 +22,7 @@ void ImagesPane::clear()
 	// Закрываем виджеты изображений
 	//
 	while (m_layout->count() > 1) {
-		QLayoutItem* layoutItem = m_layout->takeAt(1);
+		QLayoutItem* layoutItem = m_layout->takeAt(0);
 
 		QWidget* imageButton = layoutItem->widget();
 		imageButton->close();
@@ -42,19 +42,21 @@ void ImagesPane::clear()
 
 void ImagesPane::addImage(const QPixmap& _image)
 {
+	const int imageSortOrder = m_images.size();
+
 	m_images.append(_image);
 
 	ImageLabel* imageLabel = new ImageLabel(this);
 	imageLabel->setFixedSize(200, 150);
 	imageLabel->setImage(_image);
-	imageLabel->setSortOrder(m_images.size() - 1);
+	imageLabel->setSortOrder(imageSortOrder);
 
 	connect(imageLabel, &ImageLabel::clicked, this, &ImagesPane::showImage);
 	connect(imageLabel, &ImageLabel::removeRequested, this, &ImagesPane::removeImage);
 
 	m_layout->insertWidget(m_layout->count() - 1, imageLabel);
 
-	emit imageAdded();
+	emit imageAdded(_image, imageSortOrder);
 }
 
 void ImagesPane::addImageFromFile(const QString& _imagePath)
@@ -84,16 +86,19 @@ void ImagesPane::showImage()
 void ImagesPane::removeImage()
 {
 	if (ImageLabel* imageLabel = qobject_cast<ImageLabel*>(sender())) {
+		const QPixmap removedImage = imageLabel->image();
+		const int removedImageSortOrder = imageLabel->sortOrder();
+
 		//
 		// Убираем изображение из списка
 		//
-		m_images.removeAt(imageLabel->sortOrder());
+		m_images.removeAt(removedImageSortOrder);
 
 		//
 		// Закрываем и удаляем кнопку
 		//
-		int imageButtonIndex = m_layout->indexOf(imageLabel);
-		QLayoutItem* layoutItem = m_layout->takeAt(imageButtonIndex);
+		int imageLabelIndex = m_layout->indexOf(imageLabel);
+		QLayoutItem* layoutItem = m_layout->takeAt(imageLabelIndex);
 
 		imageLabel->close();
 
@@ -103,7 +108,7 @@ void ImagesPane::removeImage()
 		delete layoutItem;
 		layoutItem = NULL;
 
-		emit imageRemoved();
+		emit imageRemoved(removedImage, removedImageSortOrder);
 	}
 }
 

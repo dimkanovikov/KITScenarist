@@ -35,8 +35,9 @@ void AddImageButton::choosePhoto()
 
 void AddImageButton::initView()
 {
-	setIcon(QIcon(":/Graphics/Icons/Editing/add.png"));
-	setText(tr("Add image"));
+	setIcon(QIcon(":/Graphics/Icons/plus.png"));
+	setIconSize(QSize(100, 100));
+//	setText(tr("Add image"));
 }
 
 void AddImageButton::initConnections()
