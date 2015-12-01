@@ -15,6 +15,11 @@ AddImageButton::AddImageButton(QWidget *_parent) :
 	initConnections();
 }
 
+void AddImageButton::setLastSelectedImagePath(const QString& _path)
+{
+	g_lastPath = _path;
+}
+
 void AddImageButton::choosePhoto()
 {
 	QStringList images =
@@ -37,7 +42,6 @@ void AddImageButton::initView()
 {
 	setIcon(QIcon(":/Graphics/Icons/plus.png"));
 	setIconSize(QSize(100, 100));
-//	setText(tr("Add image"));
 }
 
 void AddImageButton::initConnections()

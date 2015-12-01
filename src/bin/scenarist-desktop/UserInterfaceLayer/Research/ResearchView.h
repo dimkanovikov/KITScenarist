@@ -127,6 +127,7 @@ namespace UserInterface
 		void imagesGalleryImageAdded(const QPixmap& _image, int _sortOrder);
 		void imagesGalleryImageRemoved(const QPixmap& _image, int _sortOrder);
 		void imageNameChanged(const QString& _name);
+		void imagePreviewChanged(const QPixmap& _image);
 		/** @{ */
 
 	protected:

@@ -502,9 +502,9 @@
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="imageChange">
              <property name="text">
-              <string>Choose...</string>
+              <string>Change</string>
              </property>
             </widget>
            </item>

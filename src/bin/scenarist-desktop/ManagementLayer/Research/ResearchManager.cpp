@@ -471,4 +471,21 @@ void ResearchManager::initConnections()
 			}
 		}
 	});
+	//
+	// ... изображение
+	//
+	connect(m_view, &ResearchView::imageNameChanged, [=](const QString& _name){
+		if (m_currentResearch != 0
+			&& m_currentResearch->name() != _name) {
+			m_currentResearch->setName(_name);
+			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+			emit researchChanged();
+		}
+	});
+	connect(m_view, &ResearchView::imagePreviewChanged, [=](const QPixmap& _image){
+		if (m_currentResearch != 0) {
+			m_currentResearch->setImage(_image);
+			emit researchChanged();
+		}
+	});
 }

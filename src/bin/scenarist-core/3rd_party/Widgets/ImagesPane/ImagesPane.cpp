@@ -5,6 +5,9 @@
 #include "ImageLabel.h"
 #include "ImagePreview.h"
 
+#include <QDragEnterEvent>
+#include <QMimeData>
+
 
 ImagesPane::ImagesPane(QWidget* _parent) :
 	QScrollArea(_parent),
@@ -61,12 +64,58 @@ void ImagesPane::addImage(const QPixmap& _image)
 
 void ImagesPane::addImageFromFile(const QString& _imagePath)
 {
+	m_lastSelectedImagePath = _imagePath;
 	addImage(QPixmap(_imagePath));
 }
 
 QList<QPixmap> ImagesPane::images() const
 {
 	return m_images;
+}
+
+QString ImagesPane::lastSelectedImagePath() const
+{
+	return m_lastSelectedImagePath;
+}
+
+void ImagesPane::setLastSelectedImagePath(const QString& _path)
+{
+	if (m_lastSelectedImagePath != _path) {
+		m_lastSelectedImagePath = _path;
+
+		m_addImageButton->setLastSelectedImagePath(m_lastSelectedImagePath);
+	}
+}
+
+void ImagesPane::dragEnterEvent(QDragEnterEvent* _event)
+{
+	//
+	// TODO: редко когда бывает, что приходит именно само изображение, как правило - это ссылка или путь к файлу
+	//
+	if (_event->mimeData()->hasImage()) {
+		_event->acceptProposedAction();
+	}
+}
+
+void ImagesPane::dropEvent(QDropEvent* _event)
+{
+	if (_event->mimeData()->hasImage()) {
+		QImage image = qvariant_cast<QImage>(_event->mimeData()->imageData());
+		addImage(QPixmap::fromImage(image));
+	}
+}
+
+bool ImagesPane::eventFilter(QObject* _object, QEvent* _event)
+{
+	if (_object == viewport()) {
+		if (_event->type() == QEvent::DragEnter) {
+			dragEnterEvent(static_cast<QDragEnterEvent*>(_event));
+		} else if (_event->type() == QEvent::Drop) {
+			dropEvent(static_cast<QDropEvent*>(_event));
+		}
+	}
+
+	return QScrollArea::eventFilter(_object, _event);
 }
 
 void ImagesPane::showImage()
@@ -115,6 +164,10 @@ void ImagesPane::removeImage()
 void ImagesPane::initView()
 {
 	setWidgetResizable(true);
+	setAcceptDrops(true);
+
+	viewport()->installEventFilter(this);
+	viewport()->setAcceptDrops(true);
 
 	m_addImageButton->setFixedSize(150, 150);
 

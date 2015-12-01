@@ -83,6 +83,8 @@ void ImageLabel::setReadOnly(bool _readOnly)
 {
 	if (m_isReadOnly != _readOnly) {
 		m_isReadOnly = _readOnly;
+
+		setCursor(_readOnly ? Qt::ArrowCursor : Qt::PointingHandCursor);
 	}
 }
 

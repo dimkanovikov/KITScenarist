@@ -1,14 +1,48 @@
 #include "ResearchView.h"
 #include "ui_ResearchView.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <3rd_party/Helpers/TextEditHelper.h>
 
 #include "ResearchNavigatorItemDelegate.h"
 #include "ResearchNavigatorProxyStyle.h"
 
+#include <QFileDialog>
+#include <QStandardPaths>
+
 using UserInterface::ResearchView;
 using UserInterface::ResearchNavigatorItemDelegate;
 using UserInterface::ResearchNavigatorProxyStyle;
+
+namespace {
+	/**
+	 * @brief Получить путь к последней используемой папке с изображениями
+	 */
+	static QString imagesFolderPath() {
+		QString imagesFolderPath =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"research/images-folder",
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+		if (imagesFolderPath.isEmpty()) {
+			imagesFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+		}
+		return imagesFolderPath;
+	}
+
+	/**
+	 * @brief Сохранить путь к последней используемой папке с изображениями
+	 */
+	static void saveImagesFolderPath(const QString& _path) {
+		QFileInfo info(_path);
+
+		DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+					"research/images-folder",
+					info.isFile() ? info.absoluteDir().absolutePath() : _path,
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+	}
+}
 
 
 ResearchView::ResearchView(QWidget *parent) :
@@ -223,6 +257,8 @@ void ResearchView::initView()
 	m_ui->researchSplitter->setOpaqueResize(false);
 	m_ui->researchSplitter->setStretchFactor(1, 1);
 
+	m_ui->imagesGalleryPane->setLastSelectedImagePath(::imagesFolderPath());
+
 	m_ui->imagePreview->setReadOnly(true);
 }
 
@@ -248,6 +284,9 @@ void ResearchView::initConnections()
 		m_ui->scenarioLoglineWords->setText(QString::number(wordsCount));
 	});
 	connect(m_ui->titlePageName, &QLineEdit::textChanged, m_ui->scenarioName, &QLineEdit::setText);
+	//
+	// ... загрузка ссылки
+	//
 	auto loadUrlFunction = [=]{
 		QUrl url(m_ui->urlLink->text());
 		if (url.scheme().isEmpty()) {
@@ -260,6 +299,25 @@ void ResearchView::initConnections()
 	connect(m_ui->urlLink, &QLineEdit::returnPressed, loadUrlFunction);
 	connect(m_ui->urlLoad, &QPushButton::clicked, loadUrlFunction);
 	connect(m_ui->urlContent, &QWebEngineView::loadProgress, m_ui->urlLoadProgress, &QProgressBar::setValue);
+	//
+	// ... смена изображения
+	//
+	connect(m_ui->imageChange, &QPushButton::clicked, [=]{
+		QString imagePath =
+				QFileDialog::getOpenFileName(
+					this,
+					tr("Choose image"),
+					::imagesFolderPath(),
+					tr("Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)"));
+		if (!imagePath.isEmpty()) {
+			::saveImagesFolderPath(imagePath);
+			m_ui->imagesGalleryPane->setLastSelectedImagePath(imagePath);
+
+			QPixmap newImage(imagePath);
+			m_ui->imagePreview->setImage(newImage);
+			emit imagePreviewChanged(newImage);
+		}
+	});
 
 
 	//
@@ -322,6 +380,9 @@ void ResearchView::initConnections()
 	//....... уведомления об изменении самой галереи, настраиваются в методе editImagesGallery
 	//
 	connect(m_ui->imagesGalleryName, &QLineEdit::textChanged, this, &ResearchView::imagesGalleryNameChanged);
+	connect(m_ui->imagesGalleryPane, &ImagesPane::imageAdded, [=]{
+		::saveImagesFolderPath(m_ui->imagesGalleryPane->lastSelectedImagePath());
+	});
 	//
 	// ... изображение
 	//

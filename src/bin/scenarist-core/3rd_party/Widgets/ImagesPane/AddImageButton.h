@@ -10,6 +10,8 @@ class AddImageButton : public QPushButton
 public:
 	explicit AddImageButton(QWidget* _parent = 0);
 
+	void setLastSelectedImagePath(const QString& _path);
+
 signals:
 	void fileChoosed(const QString& _fileName);
 

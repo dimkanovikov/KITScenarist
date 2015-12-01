@@ -38,6 +38,26 @@ public:
 	 */
 	QList<QPixmap> images() const;
 
+	/**
+	 * @brief Получить путь последнего выбранного изображения
+	 */
+	QString lastSelectedImagePath() const;
+
+	/**
+	 * @brief Установить путь последнего выбранного изображения
+	 */
+	void setLastSelectedImagePath(const QString& _path);
+
+protected:
+	/**
+	 * @brief Переопределяются для возможности затаскивания изображений прямо в панель
+	 */
+	/** @{ */
+	void dragEnterEvent(QDragEnterEvent* _event);
+	void dropEvent(QDropEvent* _event);
+	bool eventFilter(QObject* _object, QEvent* _event);
+	/** @} */
+
 signals:
 	/**
 	 * @brief Изображение добавлено
@@ -91,6 +111,11 @@ private:
 	 * @brief Список изображений галереи
 	 */
 	QList<QPixmap> m_images;
+
+	/**
+	 * @brief Путь к последнему загруженному изображению
+	 */
+	QString m_lastSelectedImagePath;
 };
 
 #endif // IMAGESPANE_H
