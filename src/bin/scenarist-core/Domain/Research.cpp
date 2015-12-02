@@ -1,5 +1,7 @@
 #include "Research.h"
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
 using namespace Domain;
 
 
@@ -93,7 +95,7 @@ QPixmap Research::image() const
 
 void Research::setImage(const QPixmap& _image)
 {
-	if (m_image.toImage() != _image.toImage()) {
+	if (!ImageHelper::isImagesEqual(m_image, _image)) {
 		m_image = _image;
 
 		changesNotStored();

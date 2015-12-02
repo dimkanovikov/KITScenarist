@@ -82,6 +82,27 @@ public:
 			_icon = QIcon(newIconPixmap);
 		}
 	}
+
+	/**
+	 * @brief Сравнить два изображения
+	 */
+	static bool isImagesEqual(const QPixmap& _lhs, const QPixmap& _rhs) {
+		return bytesFromImage(_lhs) == bytesFromImage(_rhs);
+	}
+
+	/**
+	 * @brief Сравнить два списка изображений
+	 */
+	static bool isImageListsEqual(const QList<QPixmap>& _lhs, const QList<QPixmap>& _rhs) {
+		QList<QByteArray> lhs, rhs;
+		foreach (const QPixmap& pixmap, _lhs) {
+			lhs.append(bytesFromImage(pixmap));
+		}
+		foreach (const QPixmap& pixmap, _rhs) {
+			rhs.append(bytesFromImage(pixmap));
+		}
+		return lhs == rhs;
+	}
 };
 
 #endif // IMAGEHELPER

@@ -2,6 +2,8 @@
 
 #include "Location.h"
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
 using namespace Domain;
 
 
@@ -23,12 +25,17 @@ Location* LocationPhoto::location() const
 	return m_location;
 }
 
-void LocationPhoto::setLocation(Location* _location)
+void LocationPhoto::setLocation(Location* _location, bool _onLoad)
 {
 	if (m_location != _location) {
 		m_location = _location;
 
-		changesNotStored();
+		//
+		// Помечается, как изменённый, только если это не загрузка объекта из БД
+		//
+		if (!_onLoad) {
+			changesNotStored();
+		}
 	}
 }
 
@@ -39,9 +46,11 @@ QPixmap LocationPhoto::photo() const
 
 void LocationPhoto::setPhoto(const QPixmap& _photo)
 {
-	m_photo = _photo;
+	if (!ImageHelper::isImagesEqual(m_photo, _photo)) {
+		m_photo = _photo;
 
-	changesNotStored();
+		changesNotStored();
+	}
 }
 
 int LocationPhoto::sortOrder() const
@@ -62,6 +71,7 @@ void LocationPhoto::setSortOrder(int _sortOrder)
 
 namespace {
 	const int COLUMN_COUNT = 2;
+	const bool ON_LOAD = true;
 }
 
 LocationPhotosTable::LocationPhotosTable(QObject* _parent) :
@@ -74,7 +84,7 @@ void LocationPhotosTable::setLocation(Domain::Location* _location)
 {
 	foreach(DomainObject* domainObject, domainObjects()) {
 		LocationPhoto* photo = dynamic_cast<LocationPhoto*>(domainObject);
-		photo->setLocation(_location);
+		photo->setLocation(_location, ON_LOAD);
 	}
 }
 

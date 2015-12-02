@@ -2,6 +2,8 @@
 
 #include "Character.h"
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
 using namespace Domain;
 
 
@@ -23,12 +25,17 @@ Character* CharacterPhoto::character() const
 	return m_character;
 }
 
-void CharacterPhoto::setCharacter(Character* _character)
+void CharacterPhoto::setCharacter(Character* _character, bool _onLoad)
 {
 	if (m_character != _character) {
 		m_character = _character;
 
-		changesNotStored();
+		//
+		// Помечается, как изменённый, только если это не загрузка объекта из БД
+		//
+		if (!_onLoad) {
+			changesNotStored();
+		}
 	}
 }
 
@@ -39,9 +46,11 @@ QPixmap CharacterPhoto::photo() const
 
 void CharacterPhoto::setPhoto(const QPixmap& _photo)
 {
-	m_photo = _photo;
+	if (!ImageHelper::isImagesEqual(m_photo, _photo)) {
+		m_photo = _photo;
 
-	changesNotStored();
+		changesNotStored();
+	}
 }
 
 int CharacterPhoto::sortOrder() const
@@ -62,6 +71,7 @@ void CharacterPhoto::setSortOrder(int _sortOrder)
 
 namespace {
 	const int COLUMN_COUNT = 2;
+	const bool ON_LOAD = true;
 }
 
 CharacterPhotosTable::CharacterPhotosTable(QObject* _parent) :
@@ -74,7 +84,7 @@ void CharacterPhotosTable::setCharacter(Domain::Character* _character)
 {
 	foreach(DomainObject* domainObject, domainObjects()) {
 		CharacterPhoto* photo = dynamic_cast<CharacterPhoto*>(domainObject);
-		photo->setCharacter(_character);
+		photo->setCharacter(_character, ON_LOAD);
 	}
 }
 
