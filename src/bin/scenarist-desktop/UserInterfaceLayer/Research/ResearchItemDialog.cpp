@@ -69,7 +69,8 @@ QWidget* ResearchItemDialog::focusedOnExec() const
 
 void ResearchItemDialog::initView()
 {
-
+	m_ui->url->hide();
+	m_ui->image->hide();
 
 	QLightBoxDialog::initView();
 }
