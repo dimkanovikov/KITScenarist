@@ -30,14 +30,14 @@ Research* ResearchStorage::research(const QString& _name)
 	return resultResearch;
 }
 
-Research* ResearchStorage::storeResearch(Research* _parent, int _researchType,
-	const QString& _researchName, int _sortOrder)
+Research* ResearchStorage::storeResearch(Research* _parent, int _researchType, int _sortOrder,
+	const QString& _researchName)
 {
 	//
 	// Создаём новую разработку
 	//
 	Research* newResearch =
-		new Research(Identifier(), _parent, (Research::Type)_researchType, _researchName, QString::null, _sortOrder);
+		new Research(Identifier(), _parent, (Research::Type)_researchType, _sortOrder, _researchName);
 
 	//
 	// И сохраняем её

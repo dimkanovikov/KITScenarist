@@ -3,6 +3,7 @@
 
 #include "DomainObject.h"
 
+#include <QPixmap>
 #include <QString>
 
 
@@ -23,12 +24,16 @@ namespace Domain
 			Synopsis,
 			ResearchRoot,
 			Folder,
-			Text
+			Text,
+			Url,
+			ImagesGallery,
+			Image
 		};
 
 	public:
-		Research(const Identifier& _id, Research* _parent, Type _type, const QString& _name,
-			const QString& _description, int _sortOrder);
+		Research(const Identifier& _id, Research* _parent, Type _type, int _sortOrder,
+			const QString& _name, const QString& _description = QString::null,
+			const QString& _url = QString::null, const QPixmap& _image = QPixmap());
 
 		/**
 		 * @brief Получить родителя
@@ -71,6 +76,26 @@ namespace Domain
 		void setDescription(const QString& _description);
 
 		/**
+		 * @brief Получить ссылку
+		 */
+		QString url() const;
+
+		/**
+		 * @brief Установить ссылку
+		 */
+		void setUrl(const QString& _url);
+
+		/**
+		 * @brief Получить изображение
+		 */
+		QPixmap image() const;
+
+		/**
+		 * @brief Установить изображение
+		 */
+		void setImage(const QPixmap& _image);
+
+		/**
 		 * @brief Получить позицию сортировки
 		 */
 		int sortOrder() const;
@@ -98,9 +123,20 @@ namespace Domain
 
 		/**
 		 * @brief Описание
-		 * @note Html-форматированный текст
+		 * @note Html-форматированный текст. Если в элементе хранится ссылка на интернет-ресурс,
+		 *		 то в этом поле кэшируется содержимое интернет-страницы
 		 */
 		QString m_description;
+
+		/**
+		 * @brief Ссылка на интернет-ресурс
+		 */
+		QString m_url;
+
+		/**
+		 * @brief Изображение
+		 */
+		QPixmap m_image;
 
 		/**
 		 * @brief Порядок сортировки

@@ -142,19 +142,6 @@ void CharactersDataEdit::setCommentOnly(bool _isCommentOnly)
 	ui->description->setReadOnly(_isCommentOnly);
 }
 
-namespace {
-	static bool isEqualPixmapLists(const QList<QPixmap>& _lhs, const QList<QPixmap>& _rhs) {
-		QList<QImage> lhs, rhs;
-		foreach (const QPixmap& pixmap, _lhs) {
-			lhs.append(pixmap.toImage());
-		}
-		foreach (const QPixmap& pixmap, _rhs) {
-			rhs.append(pixmap.toImage());
-		}
-		return lhs == rhs;
-	}
-}
-
 void CharactersDataEdit::aboutCharacterChanged()
 {
 	//

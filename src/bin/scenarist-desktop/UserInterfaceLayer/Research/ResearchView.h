@@ -66,6 +66,21 @@ namespace UserInterface
 		void editText(const QString& _name, const QString& _description);
 
 		/**
+		 * @brief Включить режим редактирования ссылки
+		 */
+		void editUrl(const QString& _name, const QString& _url, const QString& _cachedContent);
+
+		/**
+		 * @brief Включить режим редактирования галереи изображений
+		 */
+		void editImagesGallery(const QString& _name, const QList<QPixmap>& _images);
+
+		/**
+		 * @brief Включить режим редактирования изображения
+		 */
+		void editImage(const QString& _name, const QPixmap& _image);
+
+		/**
 		 * @brief Установить режим работы со сценарием
 		 */
 		void setCommentOnly(bool _isCommentOnly);
@@ -105,6 +120,14 @@ namespace UserInterface
 		void synopsisTextChanged(const QString& _synopsis);
 		void textNameChanged(const QString& _name);
 		void textDescriptionChanged(const QString& _description);
+		void urlNameChanged(const QString& _name);
+		void urlLinkChanged(const QString& _name);
+		void urlContentChanged(const QString& _description);
+		void imagesGalleryNameChanged(const QString& _name);
+		void imagesGalleryImageAdded(const QPixmap& _image, int _sortOrder);
+		void imagesGalleryImageRemoved(const QPixmap& _image, int _sortOrder);
+		void imageNameChanged(const QString& _name);
+		void imagePreviewChanged(const QPixmap& _image);
 		/** @{ */
 
 	protected:
@@ -147,6 +170,11 @@ namespace UserInterface
 
 	private:
 		Ui::ResearchView* m_ui;
+
+		/**
+		 * @brief Кэшированные данные страницы
+		 */
+		QString m_cachedUrlContent;
 	};
 }
 

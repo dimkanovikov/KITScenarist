@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core core-private gui gui-private sql xml widgets widgets-private printsupport network
+QT       += core core-private gui gui-private sql xml widgets widgets-private printsupport network webengine webenginewidgets
 
 TARGET = Scenarist
 TEMPLATE = app
@@ -283,7 +283,12 @@ SOURCES += \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioLineEdit.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditHelpers.cpp \
-    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditPrivate.cpp
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditPrivate.cpp \
+    scenarist-core/3rd_party/Widgets/ImagesPane/AddImageButton.cpp \
+    scenarist-core/3rd_party/Widgets/ImagesPane/ImagesPane.cpp \
+    scenarist-core/3rd_party/Widgets/ImagesPane/ImagePreview.cpp \
+    scenarist-core/3rd_party/Widgets/ImagesPane/FlowLayout.cpp \
+    scenarist-core/3rd_party/Widgets/ImagesPane/ImageLabel.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -514,7 +519,12 @@ HEADERS += \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioLineEdit.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEdit.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditHelpers.h \
-    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditPrivate.h
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/ScenarioTextEditPrivate.h \
+    scenarist-core/3rd_party/Widgets/ImagesPane/ImagesPane.h \
+    scenarist-core/3rd_party/Widgets/ImagesPane/ImagePreview.h \
+    scenarist-core/3rd_party/Widgets/ImagesPane/AddImageButton.h \
+    scenarist-core/3rd_party/Widgets/ImagesPane/FlowLayout.h \
+    scenarist-core/3rd_party/Widgets/ImagesPane/ImageLabel.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

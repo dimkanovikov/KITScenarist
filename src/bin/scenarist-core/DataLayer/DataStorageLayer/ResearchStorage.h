@@ -31,7 +31,7 @@ namespace DataStorageLayer
 		/**
 		 * @brief Сохранить разработку
 		 */
-		Research* storeResearch(Research* _parent, int _researchType, const QString& _researchName, int _sortOrder);
+		Research* storeResearch(Research* _parent, int _researchType, int _sortOrder, const QString& _researchName);
 
 		/**
 		 * @brief Обновить разработку

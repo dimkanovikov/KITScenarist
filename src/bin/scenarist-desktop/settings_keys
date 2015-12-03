@@ -127,6 +127,7 @@ projects/[project_name]/export/scenes-prefix - приставка сцен
 projects/[project_name]/export/print-title - печатать ли титульную страницу
 projects/[project_name]/export/save-review-marks - сохранять редакторские пометки
 
+research/images-folder - последняя используемая папка для выбора фотографий разработки
 locations/images-folder - последняя используемая папка для выбора фотографий локаций
 characters/images-folder - последняя используемая папка для выбора фотографий персонажей
 reports/save-folder - папка для сохранения отчётов

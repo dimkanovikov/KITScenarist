@@ -98,6 +98,10 @@
         <file>Icons/script1.png</file>
         <file>Icons/file.png</file>
         <file>Icons/file-document.png</file>
+        <file>Icons/file-web.png</file>
+        <file>Icons/file-images.png</file>
+        <file>Icons/plus.png</file>
+        <file>Icons/file-image.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

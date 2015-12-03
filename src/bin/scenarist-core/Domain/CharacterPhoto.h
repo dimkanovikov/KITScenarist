@@ -24,7 +24,7 @@ namespace Domain
 				);
 
 		Character* character() const;
-		void setCharacter(Character* _character);
+		void setCharacter(Character* _character, bool _onLoad = false);
 
 		QPixmap photo() const;
 		void setPhoto(const QPixmap& _photo);

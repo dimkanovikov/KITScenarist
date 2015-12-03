@@ -480,7 +480,7 @@ void Database::updateDatabase(QSqlDatabase& _database)
 	QString databaseVersion = q_checker.record().value("version").toString();
 	int versionMajor = databaseVersion.split(".").value(0, "0").toInt();
 	int versionMinor = databaseVersion.split(".").value(1, "0").toInt();
-	int versionBuild = databaseVersion.split(".").value(2, "1").toInt();
+	int versionBuild = databaseVersion.split(".").value(2, "1").split(" ").value(0, "1").toInt();
 
 	//
 	// Вызываются необходимые процедуры обновления БД в зависимости от её версии

@@ -24,7 +24,7 @@ namespace Domain
 				);
 
 		Location* location() const;
-		void setLocation(Location* _location);
+		void setLocation(Location* _location, bool _onLoad = false);
 
 		QPixmap photo() const;
 		void setPhoto(const QPixmap& _photo);

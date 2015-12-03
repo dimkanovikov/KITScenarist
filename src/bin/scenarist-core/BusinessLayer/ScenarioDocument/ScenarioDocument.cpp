@@ -427,12 +427,14 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				// Расширяем диапозон последующего построения дерева, для включения в него всех
 				// кто был удалён тут по причине не самого оптимального алгоритма
 				//
-				const int charsModified = itemToDelete->endPosition() - _position;
-				if (_charsAdded < charsModified + charsAddedDelta) {
-					_charsAdded = charsModified + charsAddedDelta;
-				}
-				if (_charsRemoved < charsModified - charsRemovedDelta) {
-					_charsRemoved = charsModified - charsRemovedDelta;
+				if (itemToDelete->hasChildren()) {
+					const int charsModified = itemToDelete->endPosition() - _position;
+					if (_charsAdded < charsModified + charsAddedDelta) {
+						_charsAdded = charsModified + charsAddedDelta;
+					}
+					if (_charsRemoved < charsModified - charsRemovedDelta) {
+						_charsRemoved = charsModified - charsRemovedDelta;
+					}
 				}
 
 				//

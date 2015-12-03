@@ -1,14 +1,48 @@
 #include "ResearchView.h"
 #include "ui_ResearchView.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <3rd_party/Helpers/TextEditHelper.h>
 
 #include "ResearchNavigatorItemDelegate.h"
 #include "ResearchNavigatorProxyStyle.h"
 
+#include <QFileDialog>
+#include <QStandardPaths>
+
 using UserInterface::ResearchView;
 using UserInterface::ResearchNavigatorItemDelegate;
 using UserInterface::ResearchNavigatorProxyStyle;
+
+namespace {
+	/**
+	 * @brief Получить путь к последней используемой папке с изображениями
+	 */
+	static QString imagesFolderPath() {
+		QString imagesFolderPath =
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"research/images-folder",
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+		if (imagesFolderPath.isEmpty()) {
+			imagesFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+		}
+		return imagesFolderPath;
+	}
+
+	/**
+	 * @brief Сохранить путь к последней используемой папке с изображениями
+	 */
+	static void saveImagesFolderPath(const QString& _path) {
+		QFileInfo info(_path);
+
+		DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+					"research/images-folder",
+					info.isFile() ? info.absoluteDir().absolutePath() : _path,
+					DataStorageLayer::SettingsStorage::ApplicationSettings);
+	}
+}
 
 
 ResearchView::ResearchView(QWidget *parent) :
@@ -115,6 +149,49 @@ void ResearchView::editText(const QString& _name, const QString& _description)
 	setResearchManageButtonsVisible(true);
 }
 
+void ResearchView::editUrl(const QString& _name, const QString& _url, const QString& _cachedContent)
+{
+	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->urlEdit);
+	m_ui->urlName->setText(_name);
+	m_ui->urlLink->setText(_url);
+	if (m_ui->urlContent->url().toString() != _url) {
+		m_ui->urlContent->load(QUrl(_url));
+	}
+	m_cachedUrlContent = _cachedContent;
+
+	setResearchManageButtonsVisible(true);
+}
+
+void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>& _images)
+{
+	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->imagesGalleryEdit);
+	m_ui->imagesGalleryName->setText(_name);
+
+	//
+	// Загружаем изображения и для этого сначала отключаем уведомления о изменении галереи,
+	// а после того, как всё загрузим, включаем вновь
+	//
+	disconnect(m_ui->imagesGalleryPane, &ImagesPane::imageAdded, this, &ResearchView::imagesGalleryImageAdded);
+	disconnect(m_ui->imagesGalleryPane, &ImagesPane::imageRemoved, this, &ResearchView::imagesGalleryImageRemoved);
+	m_ui->imagesGalleryPane->clear();
+	foreach (const QPixmap& image, _images) {
+		m_ui->imagesGalleryPane->addImage(image);
+	}
+	connect(m_ui->imagesGalleryPane, &ImagesPane::imageAdded, this, &ResearchView::imagesGalleryImageAdded);
+	connect(m_ui->imagesGalleryPane, &ImagesPane::imageRemoved, this, &ResearchView::imagesGalleryImageRemoved);
+
+	setResearchManageButtonsVisible(true);
+}
+
+void ResearchView::editImage(const QString& _name, const QPixmap& _image)
+{
+	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->imageEdit);
+	m_ui->imageName->setText(_name);
+	m_ui->imagePreview->setImage(_image);
+
+	setResearchManageButtonsVisible(true);
+}
+
 void ResearchView::setCommentOnly(bool _isCommentOnly)
 {
 	m_ui->addResearchItem->setEnabled(!_isCommentOnly);
@@ -179,6 +256,10 @@ void ResearchView::initView()
 	m_ui->researchSplitter->setHandleWidth(1);
 	m_ui->researchSplitter->setOpaqueResize(false);
 	m_ui->researchSplitter->setStretchFactor(1, 1);
+
+	m_ui->imagesGalleryPane->setLastSelectedImagePath(::imagesFolderPath());
+
+	m_ui->imagePreview->setReadOnly(true);
 }
 
 void ResearchView::initConnections()
@@ -203,6 +284,41 @@ void ResearchView::initConnections()
 		m_ui->scenarioLoglineWords->setText(QString::number(wordsCount));
 	});
 	connect(m_ui->titlePageName, &QLineEdit::textChanged, m_ui->scenarioName, &QLineEdit::setText);
+	//
+	// ... загрузка ссылки
+	//
+	auto loadUrlFunction = [=]{
+		QUrl url(m_ui->urlLink->text());
+		if (url.scheme().isEmpty()) {
+			url = QUrl("http://" + m_ui->urlLink->text());
+			m_ui->urlLink->setText(url.toString());
+			emit urlLinkChanged(url.toString());
+		}
+		m_ui->urlContent->load(url);
+	};
+	connect(m_ui->urlLink, &QLineEdit::returnPressed, loadUrlFunction);
+	connect(m_ui->urlLoad, &QPushButton::clicked, loadUrlFunction);
+	connect(m_ui->urlContent, &QWebEngineView::loadProgress, m_ui->urlLoadProgress, &QProgressBar::setValue);
+	//
+	// ... смена изображения
+	//
+	connect(m_ui->imageChange, &QPushButton::clicked, [=]{
+		QString imagePath =
+				QFileDialog::getOpenFileName(
+					this,
+					tr("Choose image"),
+					::imagesFolderPath(),
+					tr("Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)"));
+		if (!imagePath.isEmpty()) {
+			::saveImagesFolderPath(imagePath);
+			m_ui->imagesGalleryPane->setLastSelectedImagePath(imagePath);
+
+			QPixmap newImage(imagePath);
+			m_ui->imagePreview->setImage(newImage);
+			emit imagePreviewChanged(newImage);
+		}
+	});
+
 
 	//
 	// Сигналы об изменении данных
@@ -210,7 +326,7 @@ void ResearchView::initConnections()
 	// ... сценарий
 	//
 	connect(m_ui->scenarioName, &QLineEdit::textChanged, this, &ResearchView::scenarioNameChanged);
-	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=] {
+	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=]{
 		emit scenarioLoglineChanged(TextEditHelper::removeDocumentTags(m_ui->scenarioLogline->toHtml()));
 	});
 	//
@@ -220,14 +336,14 @@ void ResearchView::initConnections()
 	connect(m_ui->titlePageAdditionalInfo, &QComboBox::editTextChanged, this, &ResearchView::titlePageAdditionalInfoChanged);
 	connect(m_ui->titlePageGenre, &QLineEdit::textChanged, this, &ResearchView::titlePageGenreChanged);
 	connect(m_ui->titlePageAuthor, &QLineEdit::textChanged, this, &ResearchView::titlePageAuthorChanged);
-	connect(m_ui->titlePageContacts, &QPlainTextEdit::textChanged, [=] {
+	connect(m_ui->titlePageContacts, &QPlainTextEdit::textChanged, [=]{
 		emit titlePageContactsChanged(m_ui->titlePageContacts->toPlainText());
 	});
 	connect(m_ui->titlePageYear, &QLineEdit::textChanged, this, &ResearchView::titlePageYearChanged);
 	//
 	// ... синопсис
 	//
-	connect(m_ui->synopsisText, &SimpleTextEditor::textChanged, [=] {
+	connect(m_ui->synopsisText, &SimpleTextEditor::textChanged, [=]{
 		emit synopsisTextChanged(TextEditHelper::removeDocumentTags(m_ui->synopsisText->toHtml()));
 	});
 	//
@@ -237,6 +353,40 @@ void ResearchView::initConnections()
 	connect(m_ui->textDescription, &SimpleTextEditor::textChanged, [=] {
 		emit textDescriptionChanged(TextEditHelper::removeDocumentTags(m_ui->textDescription->toHtml()));
 	});
+	//
+	// ... интернет-страница
+	//
+	connect(m_ui->urlName, &QLineEdit::textChanged, this, &ResearchView::urlNameChanged);
+	connect(m_ui->urlLink, &QLineEdit::textEdited, this, &ResearchView::urlLinkChanged);
+	connect(m_ui->urlContent, &QWebEngineView::loadFinished, [=](bool _success) {
+		//
+		// Если страница загрузилась успешно, кэшируем её содержимое
+		//
+		if (_success) {
+			m_ui->urlContent->page()->toHtml([=](const QString& _html){
+				emit urlContentChanged(_html);
+			});
+		}
+		//
+		// Если не удалось загрузить, загружаем информацию из кэша
+		//
+		else {
+			m_ui->urlContent->page()->setHtml(m_cachedUrlContent);
+		}
+	});
+	//
+	// ... галерея изображений
+	//
+	//....... уведомления об изменении самой галереи, настраиваются в методе editImagesGallery
+	//
+	connect(m_ui->imagesGalleryName, &QLineEdit::textChanged, this, &ResearchView::imagesGalleryNameChanged);
+	connect(m_ui->imagesGalleryPane, &ImagesPane::imageAdded, [=]{
+		::saveImagesFolderPath(m_ui->imagesGalleryPane->lastSelectedImagePath());
+	});
+	//
+	// ... изображение
+	//
+	connect(m_ui->imageName, &QLineEdit::textChanged, this, &ResearchView::imageNameChanged);
 }
 
 void ResearchView::initStyleSheet()

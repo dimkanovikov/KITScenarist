@@ -43,9 +43,7 @@ ResearchModel::ResearchModel(QObject* _parent) :
 	//
 	ResearchModelItem* scenarioItem =
 		new ResearchModelItem(
-			new Research(
-				Domain::Identifier(), 0, Research::Scenario, tr("Scenario"), QString::null, 0
-			)
+			new Research(Domain::Identifier(), 0, Research::Scenario, 0, tr("Scenario"))
 		);
 	m_rootItem->appendItem(scenarioItem);
 	//
@@ -53,9 +51,7 @@ ResearchModel::ResearchModel(QObject* _parent) :
 	//
 	ResearchModelItem* titlePageItem =
 		new ResearchModelItem(
-			new Research(
-				Domain::Identifier(), 0, Research::TitlePage, tr("Title Page"), QString::null, 0
-			)
+			new Research(Domain::Identifier(), 0, Research::TitlePage, 0, tr("Title Page"))
 		);
 	scenarioItem->appendItem(titlePageItem);
 	//
@@ -63,9 +59,7 @@ ResearchModel::ResearchModel(QObject* _parent) :
 	//
 	ResearchModelItem* synopsisItem =
 		new ResearchModelItem(
-			new Research(
-				Domain::Identifier(), 0, Research::Synopsis, tr("Synopsis"), QString::null, 1
-			)
+			new Research(Domain::Identifier(), 0, Research::Synopsis, 1, tr("Synopsis"))
 		);
 	scenarioItem->appendItem(synopsisItem);
 	//
@@ -73,9 +67,7 @@ ResearchModel::ResearchModel(QObject* _parent) :
 	//
 	m_researchRoot =
 		new ResearchModelItem(
-			new Research(
-				Domain::Identifier(), 0, Research::ResearchRoot, tr("Research"), QString::null, 1
-			)
+			new Research(Domain::Identifier(), 0, Research::ResearchRoot, 1, tr("Research"))
 		);
 	m_rootItem->appendItem(m_researchRoot);
 }
@@ -124,9 +116,7 @@ void ResearchModel::clear()
 	//
 	m_researchRoot =
 		new ResearchModelItem(
-			new Research(
-				Domain::Identifier(), 0, Research::ResearchRoot, tr("Research"), QString::null, 1
-			)
+			new Research(Domain::Identifier(), 0, Research::ResearchRoot, 1, tr("Research"))
 		);
 	m_rootItem->appendItem(m_researchRoot);
 }

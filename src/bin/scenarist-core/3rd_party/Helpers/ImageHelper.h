@@ -19,12 +19,12 @@ namespace {
 	/**
 	 * @brief Формат сохраняемых изображений
 	 */
-	const char* IMAGE_FILE_FORMAT = "PNG";
+	const char* IMAGE_FILE_FORMAT = "JPG";
 
 	/**
 	 * @brief Используем минимальное качество изображения (всё-таки у нас приложение не для фотографов)
 	 */
-	const int IMAGE_FILE_QUALITY = 0;
+	const int IMAGE_FILE_QUALITY = 20;
 }
 
 
@@ -44,7 +44,7 @@ public:
 		QPixmap imageScaled = _image;
 		if (imageScaled.width() > IMAGE_MAX_WIDTH
 			|| imageScaled.height() > IMAGE_MAX_HEIGHT) {
-			imageScaled = imageScaled.scaled(IMAGE_MAX_WIDTH, IMAGE_MAX_HEIGHT, Qt::KeepAspectRatio);
+			imageScaled = imageScaled.scaled(IMAGE_MAX_WIDTH, IMAGE_MAX_HEIGHT, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 		}
 
 		//
@@ -75,12 +75,33 @@ public:
 			QPixmap newIconPixmap = baseIconPixmap;
 
 			QPainter painter(&newIconPixmap);
-            painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-            painter.fillRect(newIconPixmap.rect(), _color);
+			painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+			painter.fillRect(newIconPixmap.rect(), _color);
 			painter.end();
 
 			_icon = QIcon(newIconPixmap);
 		}
+	}
+
+	/**
+	 * @brief Сравнить два изображения
+	 */
+	static bool isImagesEqual(const QPixmap& _lhs, const QPixmap& _rhs) {
+		return bytesFromImage(_lhs) == bytesFromImage(_rhs);
+	}
+
+	/**
+	 * @brief Сравнить два списка изображений
+	 */
+	static bool isImageListsEqual(const QList<QPixmap>& _lhs, const QList<QPixmap>& _rhs) {
+		QList<QByteArray> lhs, rhs;
+		foreach (const QPixmap& pixmap, _lhs) {
+			lhs.append(bytesFromImage(pixmap));
+		}
+		foreach (const QPixmap& pixmap, _rhs) {
+			rhs.append(bytesFromImage(pixmap));
+		}
+		return lhs == rhs;
 	}
 };
 

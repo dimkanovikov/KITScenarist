@@ -329,6 +329,17 @@ ctkBasePopupWidget {
 	border: 1px solid palette(dark);
 }
 
+QProgressBar {
+    border-radius: 0px;
+    border: none;
+    background-color: #b3c4da;
+    max-height: 5px;
+}
+
+QProgressBar::chunk {
+    background-color: palette(highlight);
+}
+
 /*
  * Стили лайтбокса
  */
