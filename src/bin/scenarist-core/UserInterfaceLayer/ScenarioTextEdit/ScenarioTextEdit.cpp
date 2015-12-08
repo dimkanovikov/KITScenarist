@@ -280,6 +280,24 @@ void ScenarioTextEdit::setTextSelectionEnable(bool _enable)
 	}
 }
 
+bool ScenarioTextEdit::outlineMode() const
+{
+	return m_document == 0 ? true : m_document->outlineMode();
+}
+
+void ScenarioTextEdit::setOutlineMode(bool _outlineMode)
+{
+	if (m_document != 0) {
+		m_document->setOutlineMode(_outlineMode);
+		relayoutDocument();
+	}
+}
+
+QList<ScenarioBlockStyle::Type> ScenarioTextEdit::visibleBlocksTypes() const
+{
+	return m_document == 0 ? QList<ScenarioBlockStyle::Type>() : m_document->visibleBlocksTypes();
+}
+
 void ScenarioTextEdit::updateShortcuts()
 {
 	m_shortcutsManager->update();
@@ -565,7 +583,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 				//
 				const ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(block);
 
-				{
+				if (block.isVisible()) {
 					cursor.setPosition(block.position());
 					QRect cursorR = cursorRect(cursor);
 
@@ -961,6 +979,14 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 
 void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockType)
 {
+	//
+	// Если находимся в режиме поэпизодника, то заменить все описания действия на описания сцены
+	//
+	if (outlineMode() && _blockType == ScenarioBlockStyle::Action) {
+		_blockType = ScenarioBlockStyle::SceneDescription;
+	}
+
+
 	QTextCursor cursor = textCursor();
 	ScenarioBlockStyle newBlockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(_blockType);
 

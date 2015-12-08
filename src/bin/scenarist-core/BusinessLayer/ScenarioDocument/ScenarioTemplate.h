@@ -36,7 +36,8 @@ namespace BusinessLogic
 			SceneGroupHeader,	//!< Заголовок группы сцен
 			SceneGroupFooter,	//!< Окончание группы сцен
 			FolderHeader,	//!< Заголовок папки
-			FolderFooter	//!< Окончание папки
+			FolderFooter,	//!< Окончание папки
+			SceneDescription		//!< Описание элемента сценария
 		};
 
 		/**
@@ -533,10 +534,10 @@ namespace BusinessLogic
 		 */
 		static void removeTemplate(const QString& _templateName);
 
-        /**
-         * @brief Обновить цвета блоков текста для всех шаблонов
-         */
-        static void updateTemplatesColors();
+		/**
+		 * @brief Обновить цвета блоков текста для всех шаблонов
+		 */
+		static void updateTemplatesColors();
 
 	private:
 		ScenarioTemplateFacade();

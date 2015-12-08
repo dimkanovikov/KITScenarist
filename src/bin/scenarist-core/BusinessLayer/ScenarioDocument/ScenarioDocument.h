@@ -100,24 +100,19 @@ namespace BusinessLogic
 		void setItemColorsAtPosition(int _position, const QString& _colors);
 
 		/**
-		 * @brief Синопсис сцены в позиции
+		 * @brief Описание сцены в позиции
 		 */
-		QString itemSynopsisAtPosition(int _position) const;
+		QString itemDescriptionAtPosition(int _position) const;
 
 		/**
-		 * @brief Синопсис сцены
+		 * @brief Описание сцены
 		 */
-		QString itemSynopsis(ScenarioModelItem* _item) const;
+		QString itemDescription(ScenarioModelItem* _item) const;
 
 		/**
-		 * @brief Установить синопсис для сцены в указанной позиции курсора
+		 * @brief Установить описание для сцены в указанной позиции курсора
 		 */
-		void setItemSynopsisAtPosition(int _position, const QString& _synopsis);
-
-		/**
-		 * @brief Построить синопсис из синопсисов сцен
-		 */
-		QString builSynopsisFromScenes() const;
+		void setItemDescriptionAtPosition(int _position, const QString& _description);
 
 		/**
 		 * @brief Загрузить документ из сценария
@@ -238,6 +233,11 @@ namespace BusinessLogic
 		 * @brief MD5-хэш текста сценария, используется для отслеживания изменённости текста
 		 */
 		QByteArray m_lastTextMd5Hash;
+
+		/**
+		 * @brief Флаг операции обновления описания сцены, для предотвращения рекурсии
+		 */
+		bool m_inSceneDescriptionUpdate;
 	};
 }
 

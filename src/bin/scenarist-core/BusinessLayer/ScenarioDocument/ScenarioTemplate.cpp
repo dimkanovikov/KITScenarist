@@ -53,6 +53,7 @@ namespace {
 			s_typeNames.insert(ScenarioBlockStyle::SceneGroupFooter, "scene_group_footer");
 			s_typeNames.insert(ScenarioBlockStyle::FolderHeader, "folder_header");
 			s_typeNames.insert(ScenarioBlockStyle::FolderFooter, "folder_footer");
+			s_typeNames.insert(ScenarioBlockStyle::SceneDescription, "scene_description");
 		}
 		return s_typeNames;
 	}
@@ -79,6 +80,7 @@ namespace {
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneGroupFooter, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Group Footer"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::FolderHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Folder"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::FolderFooter, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Folder Footer"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneDescription, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Description"));
 		}
 		return s_beautifyTypeNames;
 	}

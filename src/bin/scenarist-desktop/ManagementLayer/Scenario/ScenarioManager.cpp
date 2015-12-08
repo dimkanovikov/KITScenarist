@@ -1,7 +1,7 @@
 #include "ScenarioManager.h"
 
 #include "ScenarioNavigatorManager.h"
-#include "ScenarioSceneSynopsisManager.h"
+#include "ScenarioSceneDescriptionManager.h"
 #include "ScenarioTextEditManager.h"
 
 #include <Domain/Scenario.h>
@@ -44,7 +44,7 @@
 
 using ManagementLayer::ScenarioManager;
 using ManagementLayer::ScenarioNavigatorManager;
-using ManagementLayer::ScenarioSceneSynopsisManager;
+using ManagementLayer::ScenarioSceneDescriptionManager;
 using ManagementLayer::ScenarioDataEditManager;
 using ManagementLayer::ScenarioTextEditManager;
 using BusinessLogic::ScenarioDocument;
@@ -192,7 +192,7 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	m_scenarioDraft(new ScenarioDocument(this)),
 	m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
 	m_draftNavigatorManager(new ScenarioNavigatorManager(this, m_view, IS_DRAFT)),
-	m_sceneSynopsisManager(new ScenarioSceneSynopsisManager(this, m_view)),
+	m_sceneDescriptionManager(new ScenarioSceneDescriptionManager(this, m_view)),
 	m_textEditManager(new ScenarioTextEditManager(this, m_view)),
 	m_workModeIsDraft(false)
 {
@@ -336,7 +336,7 @@ void ScenarioManager::setCommentOnly(bool _isCommentOnly)
 {
 	m_navigatorManager->setCommentOnly(_isCommentOnly);
 	m_draftNavigatorManager->setCommentOnly(_isCommentOnly);
-	m_sceneSynopsisManager->setCommentOnly(_isCommentOnly);
+	m_sceneDescriptionManager->setCommentOnly(_isCommentOnly);
 	m_textEditManager->setCommentOnly(_isCommentOnly);
 }
 
@@ -567,15 +567,15 @@ void ScenarioManager::aboutUpdateCounters()
 void ScenarioManager::aboutUpdateCurrentSynopsis(int _cursorPosition)
 {
 	QString itemHeader = workingScenario()->itemHeaderAtPosition(_cursorPosition);
-	m_sceneSynopsisManager->setHeader(itemHeader);
+	m_sceneDescriptionManager->setHeader(itemHeader);
 
-	QString synopsis = workingScenario()->itemSynopsisAtPosition(_cursorPosition);
-	m_sceneSynopsisManager->setSynopsis(synopsis);
+	QString synopsis = workingScenario()->itemDescriptionAtPosition(_cursorPosition);
+	m_sceneDescriptionManager->setDescription(synopsis);
 }
 
-void ScenarioManager::aboutUpdateCurrentSceneSynopsis(const QString& _synopsis)
+void ScenarioManager::aboutUpdateCurrentSceneDescription(const QString& _synopsis)
 {
-	workingScenario()->setItemSynopsisAtPosition(m_textEditManager->cursorPosition(), _synopsis);
+	workingScenario()->setItemDescriptionAtPosition(m_textEditManager->cursorPosition(), _synopsis);
 }
 
 void ScenarioManager::aboutSelectItemInNavigator(int _cursorPosition)
@@ -750,7 +750,7 @@ void ScenarioManager::initView()
 	m_noteViewSplitter->setHandleWidth(1);
 	m_noteViewSplitter->setOrientation(Qt::Vertical);
 	m_noteViewSplitter->addWidget(m_draftViewSplitter);
-	m_noteViewSplitter->addWidget(m_sceneSynopsisManager->view());
+	m_noteViewSplitter->addWidget(m_sceneDescriptionManager->view());
 
 	m_mainViewSplitter->setObjectName("mainScenarioEditSplitter");
 	m_mainViewSplitter->setHandleWidth(1);
@@ -790,7 +790,7 @@ void ScenarioManager::initConnections()
 	connect(m_draftNavigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
 	connect(m_draftNavigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
 
-	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SLOT(aboutUpdateCurrentSceneSynopsis(QString)));
+	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneDescription);
 
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSynopsis(int)));
@@ -802,7 +802,7 @@ void ScenarioManager::initConnections()
 	//
 	// Настраиваем отслеживание изменений документа
 	//
-	connect(m_sceneSynopsisManager, SIGNAL(synopsisChanged(QString)), this, SIGNAL(scenarioChanged()));
+	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::scenarioChanged);
 	connect(m_textEditManager, SIGNAL(textChanged()), this, SIGNAL(scenarioChanged()));
 }
 

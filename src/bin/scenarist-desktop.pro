@@ -166,8 +166,6 @@ SOURCES += \
     scenarist-core/DataLayer/DataMappingLayer/CharacterPhotoMapper.cpp \
     scenarist-core/DataLayer/DataStorageLayer/CharacterPhotoStorage.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.cpp \
-    scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneSynopsisManager.cpp \
     scenarist-core/3rd_party/Widgets/TabBar/TabBar.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.cpp \
@@ -288,7 +286,10 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ImagesPane/ImagesPane.cpp \
     scenarist-core/3rd_party/Widgets/ImagesPane/ImagePreview.cpp \
     scenarist-core/3rd_party/Widgets/ImagesPane/FlowLayout.cpp \
-    scenarist-core/3rd_party/Widgets/ImagesPane/ImageLabel.cpp
+    scenarist-core/3rd_party/Widgets/ImagesPane/ImageLabel.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.cpp \
+    scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -380,8 +381,6 @@ HEADERS += \
     scenarist-core/DataLayer/DataMappingLayer/CharacterPhotoMapper.h \
     scenarist-core/DataLayer/DataStorageLayer/CharacterPhotoStorage.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneSynopsis/ScenarioSceneSynopsis.h \
-    scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneSynopsisManager.h \
     scenarist-core/3rd_party/Widgets/TabBar/TabBar.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioItemDialog.h \
@@ -524,7 +523,10 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ImagesPane/ImagePreview.h \
     scenarist-core/3rd_party/Widgets/ImagesPane/AddImageButton.h \
     scenarist-core/3rd_party/Widgets/ImagesPane/FlowLayout.h \
-    scenarist-core/3rd_party/Widgets/ImagesPane/ImageLabel.h
+    scenarist-core/3rd_party/Widgets/ImagesPane/ImageLabel.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.h \
+    scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

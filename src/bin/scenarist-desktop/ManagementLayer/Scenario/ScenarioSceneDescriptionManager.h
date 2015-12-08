@@ -4,21 +4,21 @@
 #include <QObject>
 
 namespace UserInterface {
-	class ScenarioSceneSynopsis;
+	class ScenarioSceneDescription;
 }
 
 
 namespace ManagementLayer
 {
 	/**
-	 * @brief Управляющий редактором синопсиса сцены
+	 * @brief Управляющий редактором описания сцены
 	 */
-	class ScenarioSceneSynopsisManager : public QObject
+	class ScenarioSceneDescriptionManager : public QObject
 	{
 		Q_OBJECT
 
 	public:
-		explicit ScenarioSceneSynopsisManager(QObject* _parent, QWidget* _parentWidget);
+		explicit ScenarioSceneDescriptionManager(QObject* _parent, QWidget* _parentWidget);
 
 		QWidget* view() const;
 
@@ -28,9 +28,9 @@ namespace ManagementLayer
 		void setHeader(const QString& _header);
 
 		/**
-		 * @brief Установить синопсис
+		 * @brief Установить описание
 		 */
-		void setSynopsis(const QString& _synopsis);
+		void setDescription(const QString& _description);
 
 		/**
 		 * @brief Установить режим работы со сценарием
@@ -39,9 +39,9 @@ namespace ManagementLayer
 
 	signals:
 		/**
-		 * @brief Текст синопсиса изменился
+		 * @brief Текст описания изменился
 		 */
-		void synopsisChanged(const QString& _synopsis);
+		void descriptionChanged(const QString& _description);
 
 	private:
 		/**
@@ -56,9 +56,9 @@ namespace ManagementLayer
 
 	private:
 		/**
-		 * @brief Редактор синопсиса
+		 * @brief Редактор описания
 		 */
-		UserInterface::ScenarioSceneSynopsis* m_view;
+		UserInterface::ScenarioSceneDescription* m_view;
 	};
 }
 

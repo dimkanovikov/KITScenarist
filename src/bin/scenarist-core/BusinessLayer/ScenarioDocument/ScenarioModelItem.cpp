@@ -49,6 +49,9 @@ int ScenarioModelItem::length() const
 	// Единица тут добавляется, за символ переноса строки после заголовка
 	//
 	length += m_header.length();
+	if (!m_description.isNull()) {
+		length += 1 + m_description.length();
+	}
 	if (m_type == Scene && !m_text.isNull()) {
 		length += 1 + m_textLength;
 	} else if (m_type == Folder || m_type == SceneGroup) {

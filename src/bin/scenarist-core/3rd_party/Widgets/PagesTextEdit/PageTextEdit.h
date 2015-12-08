@@ -364,6 +364,11 @@ public Q_SLOTS:
 	 * @brief Установить водяной знак
 	 */
 	void setWatermark(const QString& _watermark);
+
+	/**
+	 * @brief Перестроить документ
+	 */
+	void relayoutDocument();
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(PageTextEdit::AutoFormatting)

@@ -40,7 +40,8 @@ ScenarioDocument::ScenarioDocument(QObject* _parent) :
 	m_scenario(0),
 	m_xmlHandler(new ScenarioXml(this)),
 	m_document(new ScenarioTextDocument(this, m_xmlHandler)),
-	m_model(new ScenarioModel(this, m_xmlHandler))
+	m_model(new ScenarioModel(this, m_xmlHandler)),
+	m_inSceneDescriptionUpdate(false)
 {
 	initConnections();
 }
@@ -178,81 +179,105 @@ void ScenarioDocument::setItemColorsAtPosition(int _position, const QString& _co
 	}
 }
 
-QString ScenarioDocument::itemSynopsisAtPosition(int _position) const
+QString ScenarioDocument::itemDescriptionAtPosition(int _position) const
 {
-	QString synopsis;
+	QString description;
 	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
-		synopsis = itemSynopsis(item);
+		description = itemDescription(item);
 	}
-	return synopsis;
+	return description;
 }
 
-QString ScenarioDocument::itemSynopsis(ScenarioModelItem* _item) const
+QString ScenarioDocument::itemDescription(ScenarioModelItem* _item) const
 {
 	QTextCursor cursor(m_document);
 	cursor.setPosition(_item->position());
 
-	QString synopsis;
+	QString description;
 	QTextBlockUserData* textBlockData = cursor.block().userData();
 	if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
-		synopsis = info->description();
+		description = info->description();
 	}
-	return synopsis;
+	return description;
 }
 
-void ScenarioDocument::setItemSynopsisAtPosition(int _position, const QString& _synopsis)
+void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString& _description)
 {
-	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
-		//
-		// Установить синопсис в элемент
-		//
-		QTextDocument synopsisDoc;
-		synopsisDoc.setHtml(_synopsis);
-		item->setDescription(synopsisDoc.toPlainText().simplified());
-		m_model->updateItem(item);
+	if (!m_inSceneDescriptionUpdate) {
+		m_inSceneDescriptionUpdate = true;
 
-		//
-		// Установить синопсис в документ
-		//
-		QTextCursor cursor(m_document);
-		cursor.setPosition(item->position());
+		if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+			//
+			// Установить описание в элемент
+			//
+			QTextDocument descriptionDoc;
+			descriptionDoc.setHtml(_description);
+			const QString descriptionPlainText = descriptionDoc.toPlainText();
+			item->setDescription(descriptionPlainText.simplified());
+			m_model->updateItem(item);
 
-		QTextBlockUserData* textBlockData = cursor.block().userData();
-		ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
-		if (info == 0) {
-			info = new ScenarioTextBlockInfo;
+			//
+			// Установить описание в документ
+			//
+			QTextCursor cursor(m_document);
+			cursor.setPosition(item->position());
+
+			QTextBlockUserData* textBlockData = cursor.block().userData();
+			ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+			if (info == 0) {
+				info = new ScenarioTextBlockInfo;
+			}
+			info->setDescription(_description);
+			cursor.block().setUserData(info);
+
+			//
+			// Обновить описание внутри текста
+			//
+			cursor.beginEditBlock();
+			ScenarioBlockStyle descriptionBlockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::SceneDescription);
+			cursor.movePosition(QTextCursor::NextBlock);
+			if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
+				cursor.movePosition(QTextCursor::NextBlock);
+			}
+			//
+			// ... затираем старый текст
+			//
+			ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
+			if (currentBlockType == ScenarioBlockStyle::SceneDescription) {
+				while (currentBlockType == ScenarioBlockStyle::SceneDescription
+					   && !cursor.atEnd()) {
+					cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+					currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
+				}
+				if (!cursor.atEnd()) {
+					cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
+				}
+				cursor.removeSelectedText();
+			} else {
+				if (!cursor.atEnd()) {
+					cursor.movePosition(QTextCursor::Left);
+				}
+				cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
+			}
+			//
+			// ... вставляем новый
+			//
+			if (descriptionPlainText.isEmpty()) {
+				cursor.deletePreviousChar();
+			} else {
+				foreach (const QString& descriptionLine, descriptionPlainText.split("\n")) {
+					if (!cursor.block().text().isEmpty()) {
+						cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
+					}
+					cursor.block().setVisible(m_document->outlineMode());
+					cursor.insertText(descriptionLine);
+				}
+			}
+			cursor.endEditBlock();
 		}
-		info->setDescription(_synopsis);
-		cursor.block().setUserData(info);
+
+		m_inSceneDescriptionUpdate = false;
 	}
-}
-
-namespace {
-	const QString EMPTY_HTML_PARAGRAPH =
-			"<p style=\"-qt-paragraph-type:empty;margin-top:0px;margin-bottom:0px;margin-left:0px;"
-			"margin-right:0px;-qt-block-indent:0;text-indent:0px;\"><br/></p>";
-}
-
-QString ScenarioDocument::builSynopsisFromScenes() const
-{
-	QString synopsis;
-
-	//
-	// Строим синопсис
-	//
-	foreach (ScenarioModelItem* item, m_modelItems.values()) {
-		QString curItemSynopsis = itemSynopsis(item);
-		synopsis.append(curItemSynopsis);
-
-		//
-		// Добавляем разделяющую строку
-		//
-		if (!curItemSynopsis.isEmpty()) {
-			synopsis.append(EMPTY_HTML_PARAGRAPH);
-		}
-	}
-
-	return synopsis;
 }
 
 void ScenarioDocument::load(Domain::Scenario* _scenario)
@@ -772,30 +797,63 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	QString itemHeader = cursor.block().text().simplified();
 	// ... цвет
 	const QString colors = itemColors(_item);
-	// ... текст
+	// ... текст и описание
 	QString itemText;
+	QString description;
 	cursor.movePosition(QTextCursor::NextBlock);
 	while (!cursor.atEnd()
 		   && cursor.position() < _itemEndPos) {
 		cursor.movePosition(QTextCursor::EndOfBlock);
 
-		if (!itemText.isEmpty()) {
-			itemText.append(" ");
-		}
-
 		ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
-		ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
-		itemText +=
-			blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
-			? cursor.block().text().toUpper()
-			: cursor.block().text();
+		//
+		// ... исключаем из текста описание
+		//
+		if (blockType != ScenarioBlockStyle::SceneDescription) {
+			if (!itemText.isEmpty()) {
+				itemText.append(" ");
+			}
+			ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
+			itemText +=
+					blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
+					? cursor.block().text().toUpper()
+					: cursor.block().text();
+		} else {
+			if (!description.isEmpty()) {
+				description.append("\n");
+			}
+			description.append(cursor.block().text());
+		}
 
 		cursor.movePosition(QTextCursor::NextBlock);
 	}
-	// ... синопсис
-	QTextDocument doc;
-	doc.setHtml(itemSynopsis(_item));
-	QString synopsis = doc.toPlainText().simplified();
+	//
+	// ... описание в зависимости от способа его обновления
+	//
+	if (m_inSceneDescriptionUpdate) {
+		QTextDocument doc;
+		doc.setHtml(itemDescription(_item));
+		description = doc.toPlainText().simplified();
+	} else {
+		//
+		// TODO: какое безобразие, нужно это явно сделать красиво!
+		//
+		QTextCursor descriptionCursor = cursor;
+		descriptionCursor.setPosition(_itemStartPos);
+		QTextBlockUserData* textBlockData = descriptionCursor.block().userData();
+		ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+		if (info == 0) {
+			info = new ScenarioTextBlockInfo;
+		}
+		info->setPlainDescription(description);
+		descriptionCursor.block().setUserData(info);
+
+		//
+		// ... убираем переносы строк
+		//
+		description = description.simplified();
+	}
+
 	// ... длительность
 	qreal itemDuration = 0;
 	if (itemType == ScenarioModelItem::Scene) {
@@ -823,7 +881,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setHeader(itemHeader);
 	_item->setColors(colors);
 	_item->setText(itemText);
-	_item->setDescription(synopsis);
+	_item->setDescription(description);
 	_item->setDuration(itemDuration);
 	_item->setHasNote(hasNote);
 	_item->setCounter(counter);

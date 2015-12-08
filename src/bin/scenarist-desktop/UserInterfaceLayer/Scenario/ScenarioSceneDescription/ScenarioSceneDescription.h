@@ -10,14 +10,14 @@ class SimpleTextEditor;
 namespace UserInterface
 {
 	/**
-	 * @brief Редактор синопсиса сцены
+	 * @brief Редактор описания сцены
 	 */
-	class ScenarioSceneSynopsis : public QWidget
+	class ScenarioSceneDescription : public QWidget
 	{
 		Q_OBJECT
 
 	public:
-		explicit ScenarioSceneSynopsis(QWidget* _parent = 0);
+		explicit ScenarioSceneDescription(QWidget* _parent = 0);
 
 		/**
 		 * @brief Установить заголовок
@@ -25,9 +25,9 @@ namespace UserInterface
 		void setHeader(const QString& _header);
 
 		/**
-		 * @brief Установить синопсис
+		 * @brief Установить описание
 		 */
-		void setSynopsis(const QString& _synopsis);
+		void setDescription(const QString& _description);
 
 		/**
 		 * @brief Установить режим работы со сценарием
@@ -36,15 +36,15 @@ namespace UserInterface
 
 	signals:
 		/**
-		 * @brief Текст синопсиса изменился
+		 * @brief Текст описания изменился
 		 */
-		void synopsisChanged(const QString& _synopsis);
+		void descriptionChanged(const QString& _description);
 
 	private slots:
 		/**
-		 * @brief Обработка изменения текста синопсиса
+		 * @brief Обработка изменения текста описания
 		 */
-		void aboutSynopsisChanged();
+		void aboutDescriptionChanged();
 
 	private:
 		/**
@@ -67,15 +67,16 @@ namespace UserInterface
 		 * @brief Заголовок редактора
 		 */
 		ElidedLabel* m_title;
-		/**
-		 * @brief Редактор синопсиса
-		 */
-		SimpleTextEditor* m_synopsis;
 
 		/**
-		 * @brief Исходный текст синопсиса, используется для контроля изменений
+		 * @brief Редактор описания
 		 */
-		QString m_sourceSynopsis;
+		SimpleTextEditor* m_description;
+
+		/**
+		 * @brief Исходный текст описания, используется для контроля изменений
+		 */
+		QString m_sourceDescription;
 	};
 }
 

@@ -11,6 +11,7 @@
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
+#include <3rd_party/Widgets/TabBar/TabBar.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
@@ -44,6 +45,11 @@ namespace {
 	const int SCROLL_DELTA = 140;
 
 	/**
+	 * @brief Вкладка режима поэпизодника
+	 */
+	const int OUTLINE_MODE = 0;
+
+	/**
 	 * @brief Получить хэш текста
 	 */
 	static QByteArray textMd5Hash(const QString& _text) {
@@ -59,6 +65,7 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_editor(new ScenarioTextEdit(this)),
 	m_editorWrapper(new ScalableWrapper(m_editor, this)),
 	m_toolbar(new QWidget(this)),
+	m_textMode(new TabBar(this)),
 	m_textStyles(new QComboBox(this)),
 	m_undo(new FlatButton(this)),
 	m_redo(new FlatButton(this)),
@@ -297,7 +304,6 @@ void ScenarioTextEditWidget::updateStylesElements()
 	//
 	// Обновить выпадающий список стилей сценария
 	//
-	m_textStyles->clear();
 	initStylesCombo();
 
 	//
@@ -363,6 +369,13 @@ void ScenarioTextEditWidget::aboutShowFastFormat()
 	}
 }
 
+void ScenarioTextEditWidget::updateTextMode(int _currentMode)
+{
+	m_editor->setOutlineMode(_currentMode == OUTLINE_MODE);
+
+	initStylesCombo();
+}
+
 void ScenarioTextEditWidget::aboutUpdateTextStyle()
 {
 	ScenarioBlockStyle::Type currentType = m_editor->scenarioBlockType();
@@ -418,6 +431,10 @@ void ScenarioTextEditWidget::aboutStyleChanged()
 
 void ScenarioTextEditWidget::initView()
 {
+	m_textMode->addTab(tr("Outline"));
+	m_textMode->addTab(tr("Scenario"));
+	m_textMode->setSizePolicy(m_textMode->sizePolicy().horizontalPolicy(), QSizePolicy::Preferred);
+
 	m_textStyles->setToolTip(tr("Current Text Block Style"));
 	m_textStyles->setSizePolicy(m_textStyles->sizePolicy().horizontalPolicy(), QSizePolicy::Preferred);
 
@@ -462,6 +479,7 @@ void ScenarioTextEditWidget::initView()
 	QHBoxLayout* topLayout = new QHBoxLayout(m_toolbar);
 	topLayout->setContentsMargins(QMargins());
 	topLayout->setSpacing(0);
+	topLayout->addWidget(m_textMode);
 	topLayout->addWidget(m_textStyles);
 	topLayout->addWidget(m_undo);
 	topLayout->addWidget(m_redo);
@@ -499,25 +517,30 @@ void ScenarioTextEditWidget::initView()
 
 void ScenarioTextEditWidget::initStylesCombo()
 {
+	m_textStyles->clear();
+
 	ScenarioTemplate usedTemplate = ScenarioTemplateFacade::getTemplate();
 	const bool BEAUTIFY_NAME = true;
 
-	QList<ScenarioBlockStyle::Type> types;
-	types << ScenarioBlockStyle::SceneHeading
-		  << ScenarioBlockStyle::SceneCharacters
-		  << ScenarioBlockStyle::Action
-		  << ScenarioBlockStyle::Character
-		  << ScenarioBlockStyle::Dialogue
-		  << ScenarioBlockStyle::Parenthetical
-		  << ScenarioBlockStyle::Title
-		  << ScenarioBlockStyle::Note
-		  << ScenarioBlockStyle::Transition
-		  << ScenarioBlockStyle::NoprintableText
-		  << ScenarioBlockStyle::SceneGroupHeader
-		  << ScenarioBlockStyle::FolderHeader;
+	static QList<ScenarioBlockStyle::Type> s_types =
+		QList<ScenarioBlockStyle::Type>()
+			<< ScenarioBlockStyle::SceneHeading
+			<< ScenarioBlockStyle::SceneCharacters
+			<< ScenarioBlockStyle::Action
+			<< ScenarioBlockStyle::Character
+			<< ScenarioBlockStyle::Dialogue
+			<< ScenarioBlockStyle::Parenthetical
+			<< ScenarioBlockStyle::Title
+			<< ScenarioBlockStyle::Note
+			<< ScenarioBlockStyle::Transition
+			<< ScenarioBlockStyle::NoprintableText
+			<< ScenarioBlockStyle::SceneGroupHeader
+			<< ScenarioBlockStyle::FolderHeader
+			<< ScenarioBlockStyle::SceneDescription;
 
-	foreach (ScenarioBlockStyle::Type type, types) {
-		if (usedTemplate.blockStyle(type).isActive()) {
+	foreach (ScenarioBlockStyle::Type type, s_types) {
+		if (usedTemplate.blockStyle(type).isActive()
+			&& m_editor->visibleBlocksTypes().contains(type)) {
 			m_textStyles->addItem(ScenarioBlockStyle::typeName(type, BEAUTIFY_NAME), type);
 		}
 	}
@@ -550,6 +573,7 @@ void ScenarioTextEditWidget::initConnections()
 
 void ScenarioTextEditWidget::initEditorConnections()
 {
+	connect(m_textMode, &TabBar::currentChanged, this, &ScenarioTextEditWidget::updateTextMode);
 	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
@@ -561,6 +585,7 @@ void ScenarioTextEditWidget::initEditorConnections()
 
 void ScenarioTextEditWidget::removeEditorConnections()
 {
+	disconnect(m_textMode, &TabBar::currentChanged, this, &ScenarioTextEditWidget::updateTextMode);
 	disconnect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
@@ -572,6 +597,9 @@ void ScenarioTextEditWidget::removeEditorConnections()
 
 void ScenarioTextEditWidget::initStyleSheet()
 {
+	m_textMode->setProperty("inTopPanel", true);
+	m_textMode->setProperty("topPanelRightBordered", true);
+
 	m_textStyles->setProperty("inTopPanel", true);
 	m_textStyles->setProperty("topPanelTopBordered", true);
 	m_textStyles->setProperty("topPanelRightBordered", true);

@@ -99,6 +99,21 @@ namespace UserInterface
 		void setTextSelectionEnable(bool _enable);
 
 		/**
+		 * @brief Редактор в режиме отображения поэпизодника или сценария
+		 */
+		bool outlineMode() const;
+
+		/**
+		 * @brief Установить режим отображения поэпизодника или сценария
+		 */
+		void setOutlineMode(bool _outlineMode);
+
+		/**
+		 * @brief Получить список видимых блоков в зависимости от режима отображения поэпизодника или сценария
+		 */
+		QList<BusinessLogic::ScenarioBlockStyle::Type> visibleBlocksTypes() const;
+
+		/**
 		 * @brief Обновить сочетания клавиш для переходов между блоками
 		 */
 		void updateShortcuts();

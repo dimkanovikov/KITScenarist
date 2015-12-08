@@ -79,7 +79,7 @@ QString ScenarioXml::scenarioToXml()
 	const bool NO_CORRECT_LAST_MIME = false;
 	return scenarioToXml(0, 0, NO_CORRECT_LAST_MIME);
 }
-
+#include <QDebug>
 QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _correctLastMime)
 {
 	QString resultXml;
@@ -438,6 +438,8 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 	//
 	writer.writeEndElement(); // scenario
 	writer.writeEndDocument();
+
+//	qDebug() << "*******\n" << resultXml;
 
 	return resultXml;
 }
@@ -828,6 +830,13 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 							info->setColors(reader.attributes().value(ATTRIBUTE_COLOR).toString());
 						}
 						cursor.block().setUserData(info);
+					}
+
+					//
+					// Скрываем блоки, которых не должно быть видно в текщем режиме сценария
+					//
+					if (!m_scenario->document()->visibleBlocksTypes().contains(tokenType)) {
+						cursor.block().setVisible(false);
 					}
 				}
 				//

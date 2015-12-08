@@ -1598,8 +1598,16 @@ void PageTextEditPrivate::relayoutDocument()
 		}
 	}
 
-	if (!m_usePageMode)
+	//
+	// Сбрасываем размер, чтобы перерисовка произошла корректно
+	//
+	if (m_usePageMode) {
+		QSizeF lastSize = doc->pageSize();
 		doc->setPageSize(QSize(width, -1));
+		doc->setPageSize(lastSize);
+	} else {
+		doc->setPageSize(QSize(width, -1));
+	}
 
 	if (tlayout)
 		tlayout->ensureLayouted(verticalOffset() + viewport->height());
@@ -3086,6 +3094,13 @@ void PageTextEdit::setWatermark(const QString& _watermark)
 
 		d->relayoutDocument();
 	}
+}
+
+void PageTextEdit::relayoutDocument()
+{
+	Q_D(PageTextEdit);
+
+	d->relayoutDocument();
 }
 
 

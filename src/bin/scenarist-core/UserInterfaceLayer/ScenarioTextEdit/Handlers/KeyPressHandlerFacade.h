@@ -31,6 +31,7 @@ namespace KeyProcessingLayer
 	class SceneGroupFooterHandler;
 	class FolderHeaderHandler;
 	class FolderFooterHandler;
+	class SceneDescriptionHandler;
 
 	/**
 	 * @brief Класс обработчика нажатия клавиш в текстовом редакторе
@@ -91,6 +92,7 @@ namespace KeyProcessingLayer
 		SceneGroupFooterHandler* m_sceneGroupFooterHandler;
 		FolderHeaderHandler* m_folderHeaderHandler;
 		FolderFooterHandler* m_folderFooterHandler;
+		SceneDescriptionHandler* m_sceneDescriptionHandler;
 
 	/**
 	 * @brief Одиночка

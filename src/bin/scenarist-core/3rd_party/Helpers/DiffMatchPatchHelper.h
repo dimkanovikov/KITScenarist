@@ -384,6 +384,7 @@ private:
 			addTag("folder", s_tagsMap, s_charIndex);
 			addTag("folder_header", s_tagsMap, s_charIndex);
 			addTag("folder_footer", s_tagsMap, s_charIndex);
+			addTag("scene_description", s_tagsMap, s_charIndex);
 
 			s_tagsMap.insert("<![CDATA[", QChar(s_charIndex++));
 			s_tagsMap.insert("]]>", QChar(s_charIndex++));

@@ -17,6 +17,7 @@
 #include "SceneGroupFooterHandler.h"
 #include "FolderHeaderHandler.h"
 #include "FolderFooterHandler.h"
+#include "SceneDescriptionHandler.h"
 
 #include "../ScenarioTextEdit.h"
 
@@ -84,6 +85,7 @@ KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :
 	m_sceneGroupFooterHandler = new SceneGroupFooterHandler(_editor);
 	m_folderHeaderHandler = new FolderHeaderHandler(_editor);
 	m_folderFooterHandler = new FolderFooterHandler(_editor);
+	m_sceneDescriptionHandler = new SceneDescriptionHandler(_editor);
 }
 
 AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioBlockStyle::Type _type)
@@ -162,6 +164,11 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioBlockStyle::Type _
 
 		case ScenarioBlockStyle::FolderFooter: {
 			handler = m_folderFooterHandler;
+			break;
+		}
+
+		case ScenarioBlockStyle::SceneDescription: {
+			handler = m_sceneDescriptionHandler;
 			break;
 		}
 

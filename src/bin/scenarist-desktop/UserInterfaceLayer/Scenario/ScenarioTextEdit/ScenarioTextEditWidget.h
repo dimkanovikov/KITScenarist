@@ -8,6 +8,7 @@ class QComboBox;
 class QLabel;
 class ScalableWrapper;
 class SearchWidget;
+class TabBar;
 
 namespace BusinessLogic {
 	class ScenarioTextDocument;
@@ -176,6 +177,11 @@ namespace UserInterface
 
 	private slots:
 		/**
+		 * @brief Обновить текущий режим (поэпизодник или текст)
+		 */
+		void updateTextMode(int _currentMode);
+
+		/**
 		 * @brief Обновить текущий стиль текста
 		 */
 		void aboutUpdateTextStyle();
@@ -239,6 +245,11 @@ namespace UserInterface
 		 * @brief Панель инструментов
 		 */
 		QWidget* m_toolbar;
+
+		/**
+		 * @brief Режим текста
+		 */
+		TabBar* m_textMode;
 
 		/**
 		 * @brief Стили текста документа

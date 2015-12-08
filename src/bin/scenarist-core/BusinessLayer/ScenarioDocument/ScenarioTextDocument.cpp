@@ -15,6 +15,7 @@
 #include <3rd_party/Helpers/PasswordStorage.h>
 
 #include <QCryptographicHash>
+#include <QTextBlock>
 
 using namespace BusinessLogic;
 using DatabaseLayer::DatabaseHelper;
@@ -51,7 +52,8 @@ ScenarioTextDocument::ScenarioTextDocument(QObject *parent, ScenarioXml* _xmlHan
 	QTextDocument(parent),
 	m_xmlHandler(_xmlHandler),
 	m_isPatchApplyProcessed(false),
-	m_reviewModel(new ScenarioReviewModel(this))
+	m_reviewModel(new ScenarioReviewModel(this)),
+	m_outlineMode(true)
 {
 	connect(m_reviewModel, SIGNAL(reviewChanged()), this, SIGNAL(reviewChanged()));
 }
@@ -297,4 +299,64 @@ void ScenarioTextDocument::setCursorPosition(QTextCursor& _cursor, int _position
 ScenarioReviewModel*ScenarioTextDocument::reviewModel() const
 {
 	return m_reviewModel;
+}
+
+bool ScenarioTextDocument::outlineMode() const
+{
+	return m_outlineMode;
+}
+
+void ScenarioTextDocument::setOutlineMode(bool _outlineMode)
+{
+	if (m_outlineMode != _outlineMode) {
+		m_outlineMode = _outlineMode;
+
+		//
+		// Сформируем список типов блоков для отображения
+		//
+		QList<ScenarioBlockStyle::Type> visibleBlocksTypes = this->visibleBlocksTypes();
+
+		//
+		// Пробегаем документ и настраиваем видимые и невидимые блоки
+		//
+		QTextCursor cursor(this);
+		while (!cursor.atEnd()) {
+			QTextBlock block = cursor.block();
+			block.setVisible(visibleBlocksTypes.contains(ScenarioBlockStyle::forBlock(block)));
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			cursor.movePosition(QTextCursor::NextBlock);
+		}
+	}
+}
+
+QList<ScenarioBlockStyle::Type> ScenarioTextDocument::visibleBlocksTypes() const
+{
+	static QList<ScenarioBlockStyle::Type> s_outlineVisibleBlocksTypes =
+		QList<ScenarioBlockStyle::Type>()
+		<< ScenarioBlockStyle::SceneHeading
+		<< ScenarioBlockStyle::SceneCharacters
+		<< ScenarioBlockStyle::SceneGroupHeader
+		<< ScenarioBlockStyle::SceneGroupFooter
+		<< ScenarioBlockStyle::FolderHeader
+		<< ScenarioBlockStyle::FolderFooter
+		<< ScenarioBlockStyle::SceneDescription;
+
+	static QList<ScenarioBlockStyle::Type> s_scenarioVisibleBlocksTypes =
+		QList<ScenarioBlockStyle::Type>()
+			<< ScenarioBlockStyle::SceneHeading
+			<< ScenarioBlockStyle::SceneCharacters
+			<< ScenarioBlockStyle::Action
+			<< ScenarioBlockStyle::Character
+			<< ScenarioBlockStyle::Dialogue
+			<< ScenarioBlockStyle::Parenthetical
+			<< ScenarioBlockStyle::Title
+			<< ScenarioBlockStyle::Note
+			<< ScenarioBlockStyle::Transition
+			<< ScenarioBlockStyle::NoprintableText
+			<< ScenarioBlockStyle::SceneGroupHeader
+			<< ScenarioBlockStyle::SceneGroupFooter
+			<< ScenarioBlockStyle::FolderHeader
+			<< ScenarioBlockStyle::FolderFooter;
+
+	return m_outlineMode ? s_outlineVisibleBlocksTypes : s_scenarioVisibleBlocksTypes;
 }

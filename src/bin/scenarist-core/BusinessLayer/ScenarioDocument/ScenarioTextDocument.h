@@ -1,6 +1,8 @@
 #ifndef SCENARIOTEXTDOCUMENT_H
 #define SCENARIOTEXTDOCUMENT_H
 
+#include "ScenarioTemplate.h"
+
 #include <QTextDocument>
 #include <QTextCursor>
 
@@ -82,6 +84,21 @@ namespace BusinessLogic
 		 */
 		ScenarioReviewModel* reviewModel() const;
 
+		/**
+		 * @brief Документ в режиме отображения поэпизодника или сценария
+		 */
+		bool outlineMode() const;
+
+		/**
+		 * @brief Установить режим отображения поэпизодника или сценария
+		 */
+		void setOutlineMode(bool _outlineMode);
+
+		/**
+		 * @brief Получить список видимых блоков в зависимости от режима отображения поэпизодника или сценария
+		 */
+		QList<BusinessLogic::ScenarioBlockStyle::Type> visibleBlocksTypes() const;
+
 	signals:
 		/**
 		 * @brief Сигналы уведомляющие об этапах применения патчей
@@ -129,6 +146,11 @@ namespace BusinessLogic
 		 * @brief Модель редакторских правок документа
 		 */
 		ScenarioReviewModel* m_reviewModel;
+
+		/**
+		 * @brief Включён ли режим отображения поэпизодного плана (true) или сценария (false)
+		 */
+		bool m_outlineMode;
 	};
 }
 

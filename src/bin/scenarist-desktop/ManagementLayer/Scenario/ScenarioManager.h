@@ -19,7 +19,7 @@ namespace BusinessLogic {
 namespace ManagementLayer
 {
 	class ScenarioNavigatorManager;
-	class ScenarioSceneSynopsisManager;
+	class ScenarioSceneDescriptionManager;
 	class ScenarioDataEditManager;
 	class ScenarioTextEditManager;
 
@@ -181,7 +181,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Текст синопсиса текущей сцены был изменён
 		 */
-		void aboutUpdateCurrentSceneSynopsis(const QString& _synopsis);
+		void aboutUpdateCurrentSceneDescription(const QString& _synopsis);
 
 		/**
 		 * @brief Выделить текущую сцену в навигаторе
@@ -311,7 +311,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Управляющий синопсисом сцены
 		 */
-		ScenarioSceneSynopsisManager* m_sceneSynopsisManager;
+		ScenarioSceneDescriptionManager* m_sceneDescriptionManager;
 
 		/**
 		 * @brief Управляющий редактированием сценария

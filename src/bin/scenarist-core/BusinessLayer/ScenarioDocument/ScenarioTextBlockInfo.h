@@ -44,6 +44,11 @@ namespace BusinessLogic
 		void setDescription(const QString& _description, bool htmlEscaped = false);
 
 		/**
+		 * @brief Установить описание в виде простого текста
+		 */
+		void setPlainDescription(const QString& _description);
+
+		/**
 		 * @brief Создать дубликат
 		 */
 		ScenarioTextBlockInfo* clone() const;
