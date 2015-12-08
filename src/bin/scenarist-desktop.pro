@@ -558,3 +558,8 @@ macx {
     ICON = scenarist-desktop/logo.icns
     QMAKE_INFO_PLIST = scenarist-desktop/Info.plist
 }
+
+#
+# Включаем поддержку компиляции под Windows XP для MSVC 2012+
+#
+QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
