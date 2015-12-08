@@ -19,11 +19,12 @@ QString CharactersChronometer::name() const
 float CharactersChronometer::calculateFrom(BusinessLogic::ScenarioBlockStyle::Type _type, const QString& _text) const
 {
 	//
-	// Не включаем в хронометраж непечатный текст, заголовок и окончание папки
+	// Не включаем в хронометраж непечатный текст, заголовок и окончание папки, а также описание сцены
 	//
 	if (_type == ScenarioBlockStyle::NoprintableText
 		|| _type == ScenarioBlockStyle::FolderHeader
-		|| _type == ScenarioBlockStyle::FolderFooter) {
+		|| _type == ScenarioBlockStyle::FolderFooter
+		|| _type == ScenarioBlockStyle::SceneDescription) {
 		return 0;
 	}
 

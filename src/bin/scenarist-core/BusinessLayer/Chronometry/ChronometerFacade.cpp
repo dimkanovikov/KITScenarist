@@ -63,7 +63,7 @@ qreal ChronometerFacade::calculate(QTextDocument* _document, int _fromCursorPosi
 				}
 
 				//
-				// Получить текст одного блока
+				// Поссчитать хронометраж текущего блока, если он видим
 				//
 				if (cursor.atBlockEnd()
 					|| cursor.position() == _toCursorPosition) {
