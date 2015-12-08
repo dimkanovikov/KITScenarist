@@ -53,7 +53,7 @@ ScenarioTextDocument::ScenarioTextDocument(QObject *parent, ScenarioXml* _xmlHan
 	m_xmlHandler(_xmlHandler),
 	m_isPatchApplyProcessed(false),
 	m_reviewModel(new ScenarioReviewModel(this)),
-	m_outlineMode(true)
+	m_outlineMode(false)
 {
 	connect(m_reviewModel, SIGNAL(reviewChanged()), this, SIGNAL(reviewChanged()));
 }

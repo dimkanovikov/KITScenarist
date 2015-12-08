@@ -828,13 +828,25 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		cursor.movePosition(QTextCursor::NextBlock);
 	}
 	//
-	// ... описание в зависимости от способа его обновления
+	// ... обновляем описание в зависимости от способа его обновления
 	//
-	if (m_inSceneDescriptionUpdate) {
+	if (!m_inSceneDescriptionUpdate && description.isEmpty()) {
+		//
+		// ... при переходе к новому формату в описании есть текст, но он ещё не в сценарии, как xml
+		//
+		setItemDescriptionAtPosition(_itemStartPos, itemDescription(_item));
+	} else if (m_inSceneDescriptionUpdate) {
+		//
+		// ... пользователь изменил описание в окошке
+		//
 		QTextDocument doc;
 		doc.setHtml(itemDescription(_item));
 		description = doc.toPlainText().simplified();
 	} else {
+		//
+		// ... пользователь изменил описание прямо в редакторе сценария
+		//
+
 		//
 		// TODO: какое безобразие, нужно это явно сделать красиво!
 		//

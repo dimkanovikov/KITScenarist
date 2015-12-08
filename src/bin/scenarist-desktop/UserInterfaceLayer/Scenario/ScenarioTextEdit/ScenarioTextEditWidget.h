@@ -8,7 +8,6 @@ class QComboBox;
 class QLabel;
 class ScalableWrapper;
 class SearchWidget;
-class TabBar;
 
 namespace BusinessLogic {
 	class ScenarioTextDocument;
@@ -179,7 +178,7 @@ namespace UserInterface
 		/**
 		 * @brief Обновить текущий режим (поэпизодник или текст)
 		 */
-		void updateTextMode(int _currentMode);
+		void updateTextMode(bool _outlineMode);
 
 		/**
 		 * @brief Обновить текущий стиль текста
@@ -247,9 +246,9 @@ namespace UserInterface
 		QWidget* m_toolbar;
 
 		/**
-		 * @brief Режим текста
+		 * @brief Кнопка включения режима поэпизодника
 		 */
-		TabBar* m_textMode;
+		FlatButton* m_outline;
 
 		/**
 		 * @brief Стили текста документа
