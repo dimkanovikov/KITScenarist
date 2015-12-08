@@ -1,7 +1,7 @@
 #ifndef SIMPLETEXTEDITOR_H
 #define SIMPLETEXTEDITOR_H
 
-#include <QTextEdit>
+#include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
 class QGestureEvent;
 
@@ -9,7 +9,7 @@ class QGestureEvent;
 /**
  * @brief Простейший редактор текста
  */
-class SimpleTextEditor : public QTextEdit
+class SimpleTextEditor : public PageTextEdit
 {
 	Q_OBJECT
 

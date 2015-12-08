@@ -15,10 +15,11 @@
 
 
 SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
-	QTextEdit(parent),
+	PageTextEdit(parent),
 	m_zoomRange(0),
 	m_gestureZoomInertionBreak(0)
 {
+	setUsePageMode(false);
 	setTabChangesFocus(true);
 
 	grabGesture(Qt::PinchGesture);
@@ -58,7 +59,7 @@ bool SimpleTextEditor::event(QEvent *_event)
 	if (_event->type() == QEvent::Gesture) {
 		gestureEvent(static_cast<QGestureEvent*>(_event));
 	} else {
-		result = QTextEdit::event(_event);
+		result = PageTextEdit::event(_event);
 	}
 
 	return result;
@@ -132,7 +133,7 @@ void SimpleTextEditor::wheelEvent(QWheelEvent* _event)
 			_event->accept();
 		}
 	} else {
-		QTextEdit::wheelEvent(_event);
+		PageTextEdit::wheelEvent(_event);
 	}
 }
 

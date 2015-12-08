@@ -143,6 +143,11 @@ namespace UserInterface
 		void setResearchManageButtonsVisible(bool _isVisible);
 
 		/**
+		 * @brief Скрыть/показать кнопку поиска и панель поиска
+		 */
+		void setSearchVisible(bool _isVisible);
+
+		/**
 		 * @brief Изменён текущий объект разработки
 		 */
 		void currentResearchChanged();

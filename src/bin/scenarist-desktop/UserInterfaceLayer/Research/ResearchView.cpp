@@ -105,6 +105,7 @@ void ResearchView::editScenario(const QString& _name, const QString& _logline)
 	m_ui->scenarioLogline->setText(_logline);
 
 	setResearchManageButtonsVisible(false);
+	setSearchVisible(false);
 }
 
 void ResearchView::editTitlePage(const QString& _name, const QString& _additionalInfo,
@@ -119,6 +120,7 @@ void ResearchView::editTitlePage(const QString& _name, const QString& _additiona
 	m_ui->titlePageYear->setText(_year);
 
 	setResearchManageButtonsVisible(false);
+	setSearchVisible(false);
 }
 
 void ResearchView::editSynopsis(const QString& _synopsis)
@@ -127,6 +129,7 @@ void ResearchView::editSynopsis(const QString& _synopsis)
 	m_ui->synopsisText->setHtml(_synopsis);
 
 	setResearchManageButtonsVisible(false);
+	setSearchVisible(false);
 }
 
 void ResearchView::editResearchRoot()
@@ -138,6 +141,7 @@ void ResearchView::editResearchRoot()
 	//
 	setResearchManageButtonsVisible(true);
 	m_ui->removeResearchItem->hide();
+	setSearchVisible(false);
 }
 
 void ResearchView::editText(const QString& _name, const QString& _description)
@@ -147,6 +151,7 @@ void ResearchView::editText(const QString& _name, const QString& _description)
 	m_ui->textDescription->setHtml(_description);
 
 	setResearchManageButtonsVisible(true);
+	setSearchVisible(true);
 }
 
 void ResearchView::editUrl(const QString& _name, const QString& _url, const QString& _cachedContent)
@@ -160,6 +165,7 @@ void ResearchView::editUrl(const QString& _name, const QString& _url, const QStr
 	m_cachedUrlContent = _cachedContent;
 
 	setResearchManageButtonsVisible(true);
+	setSearchVisible(false);
 }
 
 void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>& _images)
@@ -181,6 +187,7 @@ void ResearchView::editImagesGallery(const QString& _name, const QList<QPixmap>&
 	connect(m_ui->imagesGalleryPane, &ImagesPane::imageRemoved, this, &ResearchView::imagesGalleryImageRemoved);
 
 	setResearchManageButtonsVisible(true);
+	setSearchVisible(false);
 }
 
 void ResearchView::editImage(const QString& _name, const QPixmap& _image)
@@ -190,6 +197,7 @@ void ResearchView::editImage(const QString& _name, const QPixmap& _image)
 	m_ui->imagePreview->setImage(_image);
 
 	setResearchManageButtonsVisible(true);
+	setSearchVisible(false);
 }
 
 void ResearchView::setCommentOnly(bool _isCommentOnly)
@@ -227,6 +235,12 @@ void ResearchView::setResearchManageButtonsVisible(bool _isVisible)
 	m_ui->removeResearchItem->setVisible(_isVisible);
 }
 
+void ResearchView::setSearchVisible(bool _isVisible)
+{
+	m_ui->search->setVisible(_isVisible);
+	m_ui->searchWidget->setVisible(m_ui->search->isVisible() && m_ui->search->isChecked());
+}
+
 void ResearchView::currentResearchChanged()
 {
 	QModelIndex selectedResearchIndex = currentResearchIndex();
@@ -257,9 +271,14 @@ void ResearchView::initView()
 	m_ui->researchSplitter->setOpaqueResize(false);
 	m_ui->researchSplitter->setStretchFactor(1, 1);
 
+	m_ui->search->setIcons(m_ui->search->icon());
+
 	m_ui->imagesGalleryPane->setLastSelectedImagePath(::imagesFolderPath());
 
 	m_ui->imagePreview->setReadOnly(true);
+
+	m_ui->searchWidget->setEditor(m_ui->textDescription);
+	m_ui->searchWidget->hide();
 }
 
 void ResearchView::initConnections()
@@ -273,6 +292,7 @@ void ResearchView::initConnections()
 	connect(m_ui->removeResearchItem, &FlatButton::clicked, [=] {
 		emit removeResearchRequested(currentResearchIndex());
 	});
+	connect(m_ui->search, &FlatButton::toggled, m_ui->searchWidget, &SearchWidget::setVisible);
 
 	//
 	// Внутренние соединения формы
@@ -400,6 +420,8 @@ void ResearchView::initStyleSheet()
 
 	m_ui->addResearchItem->setProperty("inTopPanel", true);
 	m_ui->removeResearchItem->setProperty("inTopPanel", true);
+
+	m_ui->search->setProperty("inTopPanel", true);
 
 	m_ui->researchNavigator->setProperty("mainContainer", true);
 	m_ui->researchDataEditsContainer->setProperty("mainContainer", true);
