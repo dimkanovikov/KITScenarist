@@ -8,6 +8,7 @@
 #include <QPainter>
 #include <QPushButton>
 #include <QShortcut>
+#include <QTextBlock>
 #include <QVBoxLayout>
 
 
@@ -156,8 +157,11 @@ void ScenarioFastFormatWidget::aboutGoToNextBlock()
 {
 	if (m_editor != 0) {
 		QTextCursor cursor = m_editor->textCursor();
-		cursor.movePosition(QTextCursor::NextBlock);
-		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		do {
+			cursor.movePosition(QTextCursor::NextBlock);
+			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		} while (!cursor.atEnd()
+				 && !cursor.block().isVisible());
 		m_editor->setTextCursor(cursor);
 		catchFocusIfNeeded();
 	}
@@ -167,8 +171,11 @@ void ScenarioFastFormatWidget::aboutGoToPrevBlock()
 {
 	if (m_editor != 0) {
 		QTextCursor cursor = m_editor->textCursor();
-		cursor.movePosition(QTextCursor::PreviousBlock);
-		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		do {
+			cursor.movePosition(QTextCursor::PreviousBlock);
+			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		} while (cursor.selectionStart() != 0
+				 && !cursor.block().isVisible());
 		m_editor->setTextCursor(cursor);
 		catchFocusIfNeeded();
 	}

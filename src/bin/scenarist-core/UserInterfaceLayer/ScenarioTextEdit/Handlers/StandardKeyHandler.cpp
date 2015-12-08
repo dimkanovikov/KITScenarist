@@ -144,7 +144,16 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 		//
 		// В данный момент курсор либо в начале документа, либо поднялся к концу предыдущей строки
 		//
+
 		if (!cursor.atStart()) {
+			//
+			// Если мы поднялись на строку вверх, но попали в невидимый блок, перейдём к предыдущему видимому
+			//
+			while (!cursor.atStart() && !cursor.block().isVisible()) {
+				cursor.movePosition(QTextCursor::PreviousBlock);
+				cursor.movePosition(QTextCursor::EndOfBlock);
+			}
+
 			//
 			// Сместим курсор в предыдущей строке на то кол-во символов, на которое он был смещён прежде
 			//
@@ -240,7 +249,15 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 		//
 		// В данный момент курсор либо в конце документа, либо перешёл к началу следующей строки
 		//
+
 		if (!cursor.atEnd()) {
+			//
+			// Если мы опустились на строку вниз, но попали в невидимый блок, перейдём к следующему видимому
+			//
+			while (!cursor.atEnd() && !cursor.block().isVisible()) {
+				cursor.movePosition(QTextCursor::NextBlock);
+			}
+
 			//
 			// Сместим курсор в следующей строке на то кол-во символов, на которое он был смещён прежде
 			//
