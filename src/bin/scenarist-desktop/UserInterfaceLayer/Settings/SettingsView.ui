@@ -136,7 +136,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">
@@ -189,7 +189,7 @@
               <item row="0" column="0" colspan="2">
                <widget class="QStackedWidget" name="applicationPageStack">
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="applicationPageCommon">
                  <layout class="QGridLayout" name="gridLayout_18">
@@ -1720,8 +1720,8 @@ Replace quotes to language specific.</string>
          <widget class="QWidget" name="chronometryPage">
           <property name="styleSheet">
            <string notr="true">#pagesChronometryGroup, #charactersChronometryGroup, #configurableChronometryGroup {
-    border: 1px solid lightgray;
     margin-top: 0ex; /* leave space at the top for the title */
+    border: 1px solid palette(dark);
 }</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_12">

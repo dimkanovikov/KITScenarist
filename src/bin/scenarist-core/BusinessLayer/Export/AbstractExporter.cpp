@@ -89,6 +89,38 @@ namespace {
 	}
 
 	/**
+	 * @brief Определить, нужно ли записать блок с заданным типом в результирующий файл
+	 */
+	static bool needPrintBlock(ScenarioBlockStyle::Type _blockType, bool _outline) {
+		static QList<ScenarioBlockStyle::Type> s_outlinePrintableBlocksTypes =
+			QList<ScenarioBlockStyle::Type>()
+			<< ScenarioBlockStyle::SceneHeading
+			<< ScenarioBlockStyle::SceneCharacters
+			<< ScenarioBlockStyle::SceneGroupHeader
+			<< ScenarioBlockStyle::SceneGroupFooter
+			<< ScenarioBlockStyle::SceneDescription;
+
+		static QList<ScenarioBlockStyle::Type> s_scenarioPrintableBlocksTypes =
+			QList<ScenarioBlockStyle::Type>()
+			<< ScenarioBlockStyle::SceneHeading
+			<< ScenarioBlockStyle::SceneCharacters
+			<< ScenarioBlockStyle::Action
+			<< ScenarioBlockStyle::Character
+			<< ScenarioBlockStyle::Dialogue
+			<< ScenarioBlockStyle::Parenthetical
+			<< ScenarioBlockStyle::Title
+			<< ScenarioBlockStyle::Note
+			<< ScenarioBlockStyle::Transition
+			<< ScenarioBlockStyle::SceneGroupHeader
+			<< ScenarioBlockStyle::SceneGroupFooter;
+
+		return
+				_outline
+				? s_outlinePrintableBlocksTypes.contains(_blockType)
+				: s_scenarioPrintableBlocksTypes.contains(_blockType);
+	}
+
+	/**
 	 * @brief Типы строк документа
 	 */
 	enum LineType {
@@ -309,7 +341,7 @@ namespace {
 	}
 
 	/**
-	 * @brief Проверка переноса блока "Описание действия" на разрыве страниц
+	 * @brief Проверка переноса блока "Описание действия" и "Описания сцены" на разрыве страниц
 	 *
 	 * Правила:
 	 * - минимум три строчки оставить на предыдущей странице, разделяется по точке
@@ -841,7 +873,8 @@ namespace {
 		//
 		// Для блока "Описание действия"
 		//
-		else if (currentBlockType == ScenarioBlockStyle::Action) {
+		else if (currentBlockType == ScenarioBlockStyle::Action
+				 || currentBlockType == ScenarioBlockStyle::SceneDescription) {
 			checkPageBreakForAction(_sourceDocumentCursor, _destDocumentCursor, blockFormat,
 				charFormat, blockLines, linesToEndOfPageCount);
 		}
@@ -1011,9 +1044,7 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 		//
 		// Если блок содержит текст, который необходимо вывести на печать
 		//
-		if (currentBlockType != ScenarioBlockStyle::NoprintableText
-			&& currentBlockType != ScenarioBlockStyle::FolderHeader
-			&& currentBlockType != ScenarioBlockStyle::FolderFooter) {
+		if (::needPrintBlock(currentBlockType, _exportParameters.outline)) {
 
 			//
 			// Определим стили и настроим курсор

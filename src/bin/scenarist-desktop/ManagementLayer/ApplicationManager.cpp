@@ -623,14 +623,9 @@ void ApplicationManager::aboutImport()
 	m_importManager->importScenario(m_scenarioManager->scenario(), m_scenarioManager->cursorPosition());
 }
 
-void ApplicationManager::aboutExportTo()
+void ApplicationManager::aboutExport()
 {
 	m_exportManager->exportScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
-}
-
-void ApplicationManager::aboutPrintPreview()
-{
-	m_exportManager->printPreviewScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
 }
 
 void ApplicationManager::aboutExit()
@@ -756,7 +751,7 @@ void ApplicationManager::currentTabIndexChanged()
 
 			auto widgetForTab =
 				[=] (int _index) {
-                QWidget* result = 0;
+				QWidget* result = 0;
 				switch (_index) {
 					case STARTUP_TAB_INDEX: result = m_startUpManager->view(); break;
 					case RESEARCH_TAB_INDEX: result = m_researchManager->view(); break;
@@ -1060,10 +1055,6 @@ QMenu* ApplicationManager::createMenu()
 	// ... экспорт
 	QAction* exportTo = menu->addAction(tr("Export to..."));
 	g_disableOnStartActions << exportTo;
-	// ... предварительный просмотр
-	QAction* printPreview = menu->addAction(tr("Print Preview"));
-	printPreview->setShortcut(QKeySequence(Qt::Key_F12));
-	g_disableOnStartActions << printPreview;
 
 	//
 	// Настроим соединения
@@ -1073,8 +1064,7 @@ QMenu* ApplicationManager::createMenu()
 	connect(saveProject, SIGNAL(triggered()), this, SLOT(aboutSave()));
 	connect(saveProjectAs, SIGNAL(triggered()), this, SLOT(aboutSaveAs()));
 	connect(import, SIGNAL(triggered()), this, SLOT(aboutImport()));
-	connect(exportTo, SIGNAL(triggered()), this, SLOT(aboutExportTo()));
-	connect(printPreview, SIGNAL(triggered()), this, SLOT(aboutPrintPreview()));
+	connect(exportTo, SIGNAL(triggered()), this, SLOT(aboutExport()));
 
 #ifdef Q_OS_MAC
 	//

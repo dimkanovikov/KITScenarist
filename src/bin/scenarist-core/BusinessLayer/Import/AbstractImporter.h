@@ -13,10 +13,16 @@ namespace BusinessLogic
 	{
 	public:
 		ImportParameters() :
+			outline(false),
 			removeScenesNumbers(true),
 			insertionMode(ReplaceDocument),
 			findCharactersAndLocations(true)
 		{}
+
+		/**
+		 * @brief Режим текста: true - поэпизодник, false - сценарий
+		 */
+		bool outline;
 
 		/**
 		 * @brief Путь к импортируемому файлу

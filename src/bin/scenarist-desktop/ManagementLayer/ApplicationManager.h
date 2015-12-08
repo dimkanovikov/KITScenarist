@@ -118,12 +118,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Экспортировать документ
 		 */
-		void aboutExportTo();
-
-		/**
-		 * @brief Предварительный просмотр и печать
-		 */
-		void aboutPrintPreview();
+		void aboutExport();
 
 		/**
 		 * @brief Закрыть приложение

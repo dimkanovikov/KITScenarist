@@ -135,6 +135,7 @@ void ExportDialog::setPrintTitle(bool _isChecked)
 BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 {
 	BusinessLogic::ExportParameters exportParameters;
+	exportParameters.outline = ui->outline->isChecked();
 	exportParameters.filePath = ui->file->text();
 	exportParameters.checkPageBreaks = ui->checkPageBreaks->isChecked();
 	exportParameters.style = ui->styles->currentText();

@@ -64,7 +64,8 @@ namespace {
 	 *		  с указанием предыдущего типа и количества предшествующих пустых строк
 	 */
 	static ScenarioBlockStyle::Type typeForTextCursor(const QTextCursor& _cursor,
-		ScenarioBlockStyle::Type _lastBlockType, int _prevEmptyLines, int _minLeftMargin) {
+		ScenarioBlockStyle::Type _lastBlockType, int _prevEmptyLines, int _minLeftMargin,
+		bool _outline) {
 		//
 		// Определим текст блока
 		//
@@ -168,6 +169,17 @@ namespace {
 						blockType = ScenarioBlockStyle::Transition;
 					}
 				}
+			}
+		}
+
+		//
+		// В режиме поэпизодного плана все блоки, кроме "Место и время" и "Персонажи сцены"
+		// определяются, как "Описание сцены"
+		//
+		if (_outline) {
+			if (blockType != ScenarioBlockStyle::SceneHeading
+				&& blockType != ScenarioBlockStyle::SceneCharacters) {
+				blockType = ScenarioBlockStyle::SceneDescription;
 			}
 		}
 
@@ -300,7 +312,8 @@ QString DocumentImporter::importScenario(const ImportParameters& _importParamete
 			// ... определяем тип
 			//
 			const ScenarioBlockStyle::Type blockType =
-					::typeForTextCursor(cursor, lastBlockType, emptyLines, minLeftMargin);
+				::typeForTextCursor(cursor, lastBlockType, emptyLines, minLeftMargin,
+					_importParameters.outline);
 			const QString blockTypeName = ScenarioBlockStyle::typeName(blockType);
 			QString blockText = cursor.block().text().simplified();
 

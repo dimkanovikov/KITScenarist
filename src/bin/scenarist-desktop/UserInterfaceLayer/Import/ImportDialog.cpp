@@ -76,6 +76,7 @@ ImportDialog::~ImportDialog()
 BusinessLogic::ImportParameters ImportDialog::importParameters() const
 {
 	BusinessLogic::ImportParameters importParameters;
+	importParameters.outline = ui->outline->isChecked();
 	importParameters.filePath = ui->file->text();
 	importParameters.removeScenesNumbers = ui->removeScenesNumbers->isChecked();
 	if (ui->replaceScenario->isChecked()) {

@@ -17,12 +17,18 @@ namespace BusinessLogic
 	{
 	public:
 		ExportParameters() :
+			outline(false),
 			checkPageBreaks(false),
 			printTilte(false),
 			printPagesNumbers(false),
 			printScenesNumbers(false),
 			saveReviewMarks(true)
 		{}
+
+		/**
+		 * @brief Режим текста: true - поэпизодник, false - сценарий
+		 */
+		bool outline;
 
 		/**
 		 * @brief Путь к файлу

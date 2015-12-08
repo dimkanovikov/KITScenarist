@@ -19,16 +19,46 @@
   <property name="windowTitle">
    <string>Import Scenario</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#filePanel {
+margin-top: 0ex;
+border: 1px solid palette(dark);
+}</string>
+  </property>
   <layout class="QFormLayout" name="formLayout">
    <property name="fieldGrowthPolicy">
     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
    </property>
-   <item row="0" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox">
+   <item row="0" column="0">
+    <widget class="QRadioButton" name="scenario">
+     <property name="text">
+      <string>Scenario</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QRadioButton" name="outline">
+     <property name="text">
+      <string>Outline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="filePanel">
      <property name="title">
-      <string>File</string>
+      <string/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>File:</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QLineEdit" name="file">
         <property name="text">
@@ -48,7 +78,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="../../Resources/Resources.qrc">
+         <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
           <normaloff>:/Graphics/Icons/browse.png</normaloff>:/Graphics/Icons/browse.png</iconset>
         </property>
         <property name="iconSize">
@@ -65,7 +95,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="2" column="0" colspan="2">
     <widget class="QCheckBox" name="removeScenesNumbers">
      <property name="text">
       <string>Remove scenes numbers</string>
@@ -75,7 +105,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="3" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
       <string>Insert To</string>
@@ -108,7 +138,7 @@
      </layout>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="4" column="0" colspan="2">
     <widget class="QCheckBox" name="findCharactersAndLocations">
      <property name="text">
       <string>Find characters and locations</string>
@@ -119,19 +149,19 @@
     </widget>
    </item>
    <item row="5" column="0" colspan="2">
-    <widget class="QDialogButtonBox" name="buttons">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel</set>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
     <widget class="QCheckBox" name="saveReviewMarks">
      <property name="text">
       <string>Save review marks</string>
      </property>
      <property name="checked">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttons">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel</set>
      </property>
     </widget>
    </item>
@@ -145,6 +175,8 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>scenario</tabstop>
+  <tabstop>outline</tabstop>
   <tabstop>file</tabstop>
   <tabstop>browseFile</tabstop>
   <tabstop>removeScenesNumbers</tabstop>
@@ -152,9 +184,10 @@
   <tabstop>currentCursorPosition</tabstop>
   <tabstop>endOfScenario</tabstop>
   <tabstop>findCharactersAndLocations</tabstop>
+  <tabstop>saveReviewMarks</tabstop>
  </tabstops>
  <resources>
-  <include location="../../Resources/Resources.qrc"/>
+  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>
