@@ -360,6 +360,8 @@ void ScenarioManager::aboutChronometrySettingsUpdated()
 	m_scenario->refresh();
 	m_scenarioDraft->refresh();
 	aboutUpdateDuration(m_textEditManager->cursorPosition());
+
+	m_textEditManager->reloadTextEditSettings();
 }
 
 void ScenarioManager::aboutCountersSettingsUpdated()
@@ -367,6 +369,8 @@ void ScenarioManager::aboutCountersSettingsUpdated()
 	m_scenario->refresh();
 	m_scenarioDraft->refresh();
 	aboutUpdateCounters();
+
+	m_textEditManager->reloadTextEditSettings();
 }
 
 void ScenarioManager::aboutCharacterNameChanged(const QString& _oldName, const QString& _newName)
