@@ -393,7 +393,21 @@ int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, Sce
 			int parentStartPosition = _insertParent->position();
 			QTextCursor cursor(m_document);
 			cursor.setPosition(parentStartPosition);
-			cursor.movePosition(QTextCursor::EndOfBlock);
+			//
+			// ... переходим к концу блока заголовка
+			//
+			cursor.movePosition(QTextCursor::NextBlock);
+			//
+			// ... переходим к концу описания элемента
+			//
+			while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription) {
+				cursor.movePosition(QTextCursor::NextBlock);
+			}
+			//
+			// ... возвращаемся в конец последнего блока
+			//
+			cursor.movePosition(QTextCursor::Left);
+
 			insertPosition = cursor.position();
 		}
 	}
@@ -830,15 +844,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	//
 	// ... обновляем описание в зависимости от способа его обновления
 	//
-	if (!m_inSceneDescriptionUpdate && description.isEmpty()) {
-		//
-		// ... при переходе к новому формату в описании есть текст, но он ещё не в сценарии, как xml
-		//
-		description = itemDescription(_item);
-		if (!description.isEmpty()) {
-			setItemDescriptionAtPosition(_itemStartPos, description);
-		}
-	} else if (m_inSceneDescriptionUpdate) {
+	if (m_inSceneDescriptionUpdate) {
 		//
 		// ... пользователь изменил описание в окошке
 		//

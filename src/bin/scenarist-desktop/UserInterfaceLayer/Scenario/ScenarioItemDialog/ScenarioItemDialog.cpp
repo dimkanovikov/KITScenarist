@@ -7,8 +7,9 @@
 
 #include <QApplication>
 #include <QDialogButtonBox>
-#include <QRadioButton>
 #include <QHBoxLayout>
+#include <QLabel>
+#include <QRadioButton>
 #include <QVBoxLayout>
 
 using UserInterface::ScenarioItemDialog;
@@ -121,6 +122,7 @@ void ScenarioItemDialog::initView()
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->addLayout(topLayout);
 	layout->addLayout(headerLayout);
+	layout->addWidget(new QLabel(tr("Scene Description"), this));
 	layout->addWidget(m_description);
 	layout->addWidget(m_buttons);
 
@@ -135,7 +137,13 @@ void ScenarioItemDialog::initConnections()
 	connect(m_scenesGroup, SIGNAL(clicked()), this, SLOT(aboutUpdateCurrentTextStyle()));
 	connect(m_scene, SIGNAL(clicked()), this, SLOT(aboutUpdateCurrentTextStyle()));
 
-	connect(m_buttons, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(m_buttons, &QDialogButtonBox::accepted, [=] {
+		if (m_header->toPlainText().isEmpty()) {
+			m_header->setFocus();
+		} else {
+			accept();
+		}
+	});
 	connect(m_buttons, SIGNAL(rejected()), this, SLOT(reject()));
 
 	QLightBoxDialog::initConnections();

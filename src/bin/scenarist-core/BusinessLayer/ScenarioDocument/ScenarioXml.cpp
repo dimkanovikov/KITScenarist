@@ -702,7 +702,7 @@ void ScenarioXml::xmlToScenarioV0(int _position, const QString& _xml)
 
 			case QXmlStreamReader::Characters: {
 				if (!reader.isWhitespace()) {
-					QString textToInsert = reader.text().toString().simplified();
+					QString textToInsert = reader.text().toString();
 
 					//
 					// Если необходимо так же вставляем префикс и постфикс стиля

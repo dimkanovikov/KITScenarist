@@ -3,6 +3,8 @@
 #include <3rd_party/Widgets/ElidedLabel/ElidedLabel.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 #include <QVBoxLayout>
 
 using namespace UserInterface;
@@ -25,21 +27,15 @@ void ScenarioSceneDescription::setHeader(const QString& _header)
 	m_title->setToolTip(newHeader);
 }
 
-
-
 void ScenarioSceneDescription::setDescription(const QString& _description)
 {
-	QTextDocument descriptionDoc;
-	descriptionDoc.setHtml(_description);
-	const QString descriptionHtml = descriptionDoc.toHtml();
-
-	if (m_description->toHtml() != descriptionHtml) {
+	if (currentDescription() != _description) {
 		disconnect(m_description, SIGNAL(textChanged()), this, SLOT(aboutDescriptionChanged()));
 
 		//
 		// Сформируем значение описания, для корректности последующих сравнений
 		//
-		m_sourceDescription = descriptionHtml;
+		m_sourceDescription = _description;
 
 		m_description->setHtml(_description);
 
@@ -54,10 +50,15 @@ void ScenarioSceneDescription::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioSceneDescription::aboutDescriptionChanged()
 {
-	if (m_sourceDescription != m_description->toHtml()
+	if (m_sourceDescription != currentDescription()
 		|| m_description->toPlainText().isEmpty()) {
 		emit descriptionChanged(m_description->toHtml());
 	}
+}
+
+QString ScenarioSceneDescription::currentDescription() const
+{
+	return TextEditHelper::removeDocumentTags(m_description->toHtml());
 }
 
 void ScenarioSceneDescription::initView()

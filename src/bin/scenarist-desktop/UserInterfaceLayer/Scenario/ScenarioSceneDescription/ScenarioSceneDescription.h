@@ -48,6 +48,12 @@ namespace UserInterface
 
 	private:
 		/**
+		 * @brief Текущее описание
+		 */
+		QString currentDescription() const;
+
+	private:
+		/**
 		 * @brief Настроить представление
 		 */
 		void initView();

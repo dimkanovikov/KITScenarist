@@ -20,6 +20,7 @@ SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
 	m_gestureZoomInertionBreak(0)
 {
 	setUsePageMode(false);
+	setAddSpaceToBottom(false);
 	setTabChangesFocus(true);
 
 	grabGesture(Qt::PinchGesture);
