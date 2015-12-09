@@ -150,7 +150,10 @@ void SceneCharactersHandler::handleOther(QKeyEvent*)
 	// ... уберём префикс
 	ScenarioBlockStyle style = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::SceneCharacters);
 	QString stylePrefix = style.prefix();
-	cursorBackwardTextToComma.remove(QRegularExpression(QString("^[%1]").arg(stylePrefix)));
+	if (!stylePrefix.isEmpty()
+		&& cursorBackwardTextToComma.startsWith(stylePrefix)) {
+		cursorBackwardTextToComma.remove(QRegularExpression(QString("^[%1]").arg(stylePrefix)));
+	}
 
 	//
 	// Получим модель подсказок для текущей секции и выведем пользователю

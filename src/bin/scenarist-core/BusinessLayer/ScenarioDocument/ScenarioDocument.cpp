@@ -834,7 +834,10 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		//
 		// ... при переходе к новому формату в описании есть текст, но он ещё не в сценарии, как xml
 		//
-		setItemDescriptionAtPosition(_itemStartPos, itemDescription(_item));
+		description = itemDescription(_item);
+		if (!description.isEmpty()) {
+			setItemDescriptionAtPosition(_itemStartPos, description);
+		}
 	} else if (m_inSceneDescriptionUpdate) {
 		//
 		// ... пользователь изменил описание в окошке
