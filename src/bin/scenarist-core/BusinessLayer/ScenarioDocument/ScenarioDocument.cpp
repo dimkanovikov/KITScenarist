@@ -213,7 +213,7 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
 			QTextDocument descriptionDoc;
 			descriptionDoc.setHtml(_description);
 			const QString descriptionPlainText = descriptionDoc.toPlainText();
-			item->setDescription(descriptionPlainText.simplified());
+			item->setDescription(descriptionPlainText);
 			m_model->updateItem(item);
 
 			//
@@ -794,7 +794,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		itemType = ScenarioModelItem::Folder;
 	}
 	// ... заголовок
-	QString itemHeader = cursor.block().text().simplified();
+	QString itemHeader = cursor.block().text();
 	// ... цвет
 	const QString colors = itemColors(_item);
 	// ... текст и описание
@@ -844,7 +844,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		//
 		QTextDocument doc;
 		doc.setHtml(itemDescription(_item));
-		description = doc.toPlainText().simplified();
+		description = doc.toPlainText().replace("\n", " ");
 	} else {
 		//
 		// ... пользователь изменил описание прямо в редакторе сценария
@@ -866,7 +866,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		//
 		// ... убираем переносы строк
 		//
-		description = description.simplified();
+		description.replace("\n", " ");
 	}
 
 	// ... длительность
