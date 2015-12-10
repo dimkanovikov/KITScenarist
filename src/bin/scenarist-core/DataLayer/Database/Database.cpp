@@ -553,6 +553,10 @@ void Database::updateDatabase(QSqlDatabase& _database)
 				|| versionBuild <= 7) {
 				updateDatabaseTo_0_5_8(_database);
 			}
+			if (versionMinor < 5
+				|| versionBuild <= 8) {
+				updateDatabaseTo_0_5_9(_database);
+			}
 		}
 	}
 
@@ -958,6 +962,118 @@ void Database::updateDatabaseTo_0_5_8(QSqlDatabase& _database)
 					   "sort_order INTEGER NOT NULL DEFAULT(0) "
 					   ")"
 					   );
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_5_9(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Извлекаем текст сценария
+		//
+		q_updater.exec("SELECT id, text FROM scenario");
+		QMap<int, QString> scenarioTexts;
+		while (q_updater.next()) {
+			const int id = q_updater.record().value("id").toInt();
+			QString text = q_updater.record().value("text").toString();
+
+			//
+			// Вытаскиваем описание папок/групп/сцен и вставляем после заголовков или персонажей сцен
+			//
+
+			QStringList textLines = text.split("\n");
+			QString lastDescription;
+			const QString folderPrefix = "<folder_header description=\"";
+			const QString sceneGroupPrefix = "<scene_group_header description=\"";
+			const QString scenePrefix = "<scene_heading description=\"";
+			const QString postfix = "\">";
+
+			for (int lineNumber = 0; lineNumber < textLines.size(); ++lineNumber) {
+				const QString& lineText = textLines.at(lineNumber);
+				QString prefix;
+				if (lineText.startsWith(scenePrefix)) {
+					prefix = scenePrefix;
+				} else if (lineText.startsWith(folderPrefix)) {
+					prefix = folderPrefix;
+				} else if (lineText.startsWith(sceneGroupPrefix)) {
+					prefix = sceneGroupPrefix;
+				}
+				//
+				// ... если в блоке есть описание, вытаскиваем его
+				//
+				if (!prefix.isEmpty()) {
+					lastDescription = lineText.mid(prefix.length());
+					lastDescription = lastDescription.left(lastDescription.length() - postfix.length());
+					//
+					// ... если для элемента задан цвет, нужно и его отрезать от описания
+					//	   там получается вот такой текст [" color="#cc0000]
+					//
+					if (lastDescription.right(16).left(10) == "\" color=\"#") {
+						lastDescription = lastDescription.left(lastDescription.length() - 16);
+					}
+				}
+				//
+				// ... проверяем не пора ли вставить описание
+				//
+				else if (!lastDescription.isEmpty()) {
+					bool needInsert = false;
+					//
+					// ... после сцены
+					//
+					if (lineText == "</scene_heading>") {
+						if (textLines.at(lineNumber + 1) == "<scene_characters>") {
+							while (textLines.at(++lineNumber) != "</scene_characters>");
+						}
+						needInsert = true;
+					}
+					//
+					// ... после папки или группы
+					//
+					else if (lineText == "</folder_header>"
+							 || lineText == "</scene_group_header>") {
+						needInsert = true;
+					}
+
+					//
+					// ... вставляем, если нужно
+					//
+					if (needInsert) {
+						QTextDocument descriptionDoc;
+						descriptionDoc.setHtml(lastDescription);
+						QStringList descriptionLines = descriptionDoc.toPlainText().split("\n");
+
+						foreach (const QString& descriptionLine, descriptionLines) {
+							textLines.insert(++lineNumber, "<scene_description>");
+							textLines.insert(++lineNumber, QString("<v><![CDATA[%1]]></v>").arg(descriptionLine));
+							textLines.insert(++lineNumber, "<reviews/>");
+							textLines.insert(++lineNumber, "</scene_description>");
+						}
+
+						//
+						// ... очищаем, чтобы не вставлять его же в следующие сцены
+						//
+						lastDescription.clear();
+					}
+				}
+			}
+			text = textLines.join("\n");
+			scenarioTexts.insert(id, text);
+		}
+		//
+		// ... обновим данные
+		//
+		q_updater.prepare("UPDATE scenario SET text = ? WHERE id = ?");
+		foreach (int id, scenarioTexts.keys()) {
+			q_updater.addBindValue(scenarioTexts.value(id));
+			q_updater.addBindValue(id);
+			q_updater.exec();
+		}
 	}
 
 	_database.commit();
