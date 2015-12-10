@@ -369,6 +369,14 @@ public Q_SLOTS:
 	 * @brief Перестроить документ
 	 */
 	void relayoutDocument();
+
+private:
+	/**
+	 * @brief Скорректировать позицию мыши
+	 * @note Используется в событиях связанных с мышью из-за того, что при наличии невидимых блоков
+	 *		 в документе, стандартная реализация иногда скачет сильно вниз
+	 */
+	QMouseEvent* correctMousePosition(QMouseEvent* _event);
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(PageTextEdit::AutoFormatting)

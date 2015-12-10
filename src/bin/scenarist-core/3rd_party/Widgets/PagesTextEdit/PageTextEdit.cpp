@@ -60,6 +60,7 @@
 #include <limits.h>
 #include <qtexttable.h>
 #include <qvariant.h>
+#include <qscopedpointer.h>
 
 #endif
 
@@ -1931,7 +1932,8 @@ void PageTextEdit::mousePressEvent(QMouseEvent *e)
 	if (QApplication::keypadNavigationEnabled() && !hasEditFocus())
 		setEditFocus(true);
 #endif
-	d->sendControlEvent(e);
+	QScopedPointer<QMouseEvent> correctedEvent(correctMousePosition(e));
+	d->sendControlEvent(correctedEvent.data());
 }
 
 /*! \reimp
@@ -1940,8 +1942,9 @@ void PageTextEdit::mouseMoveEvent(QMouseEvent *e)
 {
 	Q_D(PageTextEdit);
 	d->inDrag = false; // paranoia
+	QScopedPointer<QMouseEvent> correctedEvent(correctMousePosition(e));
+	d->sendControlEvent(correctedEvent.data());
 	const QPoint pos = e->pos();
-	d->sendControlEvent(e);
 	if (!(e->buttons() & Qt::LeftButton))
 		return;
 	if (e->source() == Qt::MouseEventNotSynthesized) {
@@ -1958,7 +1961,8 @@ void PageTextEdit::mouseMoveEvent(QMouseEvent *e)
 void PageTextEdit::mouseReleaseEvent(QMouseEvent *e)
 {
 	Q_D(PageTextEdit);
-	d->sendControlEvent(e);
+	QScopedPointer<QMouseEvent> correctedEvent(correctMousePosition(e));
+	d->sendControlEvent(correctedEvent.data());
 	if (e->source() == Qt::MouseEventNotSynthesized && d->autoScrollTimer.isActive()) {
 		d->autoScrollTimer.stop();
 		ensureCursorVisible();
@@ -1973,7 +1977,8 @@ void PageTextEdit::mouseReleaseEvent(QMouseEvent *e)
 void PageTextEdit::mouseDoubleClickEvent(QMouseEvent *e)
 {
 	Q_D(PageTextEdit);
-	d->sendControlEvent(e);
+	QScopedPointer<QMouseEvent> correctedEvent(correctMousePosition(e));
+	d->sendControlEvent(correctedEvent.data());
 }
 
 /*! \reimp
@@ -3099,8 +3104,36 @@ void PageTextEdit::setWatermark(const QString& _watermark)
 void PageTextEdit::relayoutDocument()
 {
 	Q_D(PageTextEdit);
-
 	d->relayoutDocument();
+}
+
+QMouseEvent* PageTextEdit::correctMousePosition(QMouseEvent* _event)
+{
+	//
+	// Когда в документе присутствуют невидимые блоки, то при щелчке мышъю на межстрочном отступе
+	// курсор улетает далеко вниз от того места где был произведён щелчёк, по видимому это какой-то
+	// внутренний баг, исправить который можно только через QTextDocumentLayout. Сделать это малой
+	// кровью мне не удалось, поэтому пришлось придумать данную заплатку.
+	//
+	// Суть её заключается в том, что позиция мыши сдвигается вниз, пока не наткнётся на ближайшую
+	// строку. Этот метод используется в событиях нажатия, отпускания и перетаскивания мыши.
+	//
+
+	int replies = 0;
+	const int MAX_REPLIES = 4;
+	const int Y_DELTA = 10;
+	QPointF localPos = _event->localPos();
+	QTextCursor cursor = textCursor();
+	do {
+		if (replies > 0) {
+			localPos.setY(localPos.y() + Y_DELTA);
+		}
+		const int pos = document()->documentLayout()->hitTest(localPos, Qt::FuzzyHit);
+		cursor.setPosition(pos);
+	} while (replies++ < MAX_REPLIES
+			 && abs(localPos.y() - cursorRect(cursor).top()) > Y_DELTA);
+
+	return new QMouseEvent(_event->type(), localPos, _event->button(), _event->buttons(), _event->modifiers());
 }
 
 
