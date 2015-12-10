@@ -25,7 +25,8 @@ public:
 		Belorussian,
 		EnglishGB,
 		EnglishUS,
-		Spanish
+		Spanish,
+		French
 	};
 
 public:

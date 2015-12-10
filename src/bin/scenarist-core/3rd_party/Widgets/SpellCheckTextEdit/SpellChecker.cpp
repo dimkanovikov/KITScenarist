@@ -189,6 +189,9 @@ QString SpellChecker::dictionaryFilePath(
 		case Spanish:
 			fileName += "es_ES";
 			break;
+		case French:
+			fileName += "fr_FR";
+			break;
 	}
 
 	//

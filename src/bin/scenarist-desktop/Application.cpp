@@ -107,6 +107,9 @@ void Application::initTranslation()
 	} else if (language == 2) {
 		translationSuffix = "en";
 		currentLanguage = QLocale::English;
+	} else if (language == 3) {
+		translationSuffix = "fr";
+		currentLanguage = QLocale::French;
 	}
 
 	QLocale::setDefault(QLocale(currentLanguage));

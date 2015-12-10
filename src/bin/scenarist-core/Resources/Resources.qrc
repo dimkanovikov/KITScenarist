@@ -17,6 +17,8 @@
         <file>HunspellDictionaries/en_GB.dic</file>
         <file>HunspellDictionaries/en_US.dic</file>
         <file>HunspellDictionaries/en_US.aff</file>
+        <file>HunspellDictionaries/fr_FR.dic</file>
+        <file>HunspellDictionaries/fr_FR.aff</file>
     </qresource>
     <qresource prefix="/Graphics">
         <file>Icons/folder.png</file>
@@ -115,6 +117,9 @@
         <file>Translations/Scenarist_fr.ts</file>
         <file>Translations/Scenarist_en.ts</file>
         <file>Translations/Scenarist_en.qm</file>
+        <file>Translations/Scenarist_fr.qm</file>
+        <file>Translations/qtbase_fr.qm</file>
+        <file>Translations/qt_fr.qm</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/menuarrow.png</file>

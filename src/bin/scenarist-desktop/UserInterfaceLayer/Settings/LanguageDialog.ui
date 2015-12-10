@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>177</height>
+    <height>209</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,13 +20,17 @@
    <string>Choose application language</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QRadioButton" name="system">
+   <item row="3" column="0">
+    <widget class="QRadioButton" name="spanish">
      <property name="text">
-      <string>Detect language from system locale</string>
+      <string>Español</string>
      </property>
-     <property name="checked">
-      <bool>true</bool>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QDialogButtonBox" name="buttons">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
@@ -40,20 +44,6 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QRadioButton" name="spanish">
-     <property name="text">
-      <string>Español</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QDialogButtonBox" name="buttons">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0">
     <widget class="QRadioButton" name="english">
      <property name="text">
@@ -61,6 +51,23 @@
      </property>
      <property name="checked">
       <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QRadioButton" name="system">
+     <property name="text">
+      <string>Detect language from system locale</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QRadioButton" name="french">
+     <property name="text">
+      <string>Français</string>
      </property>
     </widget>
    </item>

@@ -582,6 +582,7 @@ void SettingsView::initData()
 	ui->spellCheckingLanguage->addItem(tr("English (GB)"), SpellChecker::EnglishGB);
 	ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);
 	ui->spellCheckingLanguage->addItem(tr("Spanish"), SpellChecker::Spanish);
+	ui->spellCheckingLanguage->addItem(tr("French"), SpellChecker::French);
 }
 
 void SettingsView::initView()

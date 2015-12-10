@@ -21,6 +21,8 @@ LanguageDialog::LanguageDialog(QWidget *parent, int _language) :
 		ui->spanish->setChecked(true);
 	} else if (_language == 2) {
 		ui->english->setChecked(true);
+	} else if (_language == 3) {
+		ui->french->setChecked(true);
 	}
 }
 
@@ -40,6 +42,8 @@ int LanguageDialog::language() const
 		result = 1;
 	} else if (ui->english->isChecked()) {
 		result = 2;
+	} else if (ui->french->isChecked()) {
+		result = 3;
 	}
 
 	return result;
@@ -47,8 +51,6 @@ int LanguageDialog::language() const
 
 void LanguageDialog::initView()
 {
-
-
 	QLightBoxDialog::initView();
 }
 
