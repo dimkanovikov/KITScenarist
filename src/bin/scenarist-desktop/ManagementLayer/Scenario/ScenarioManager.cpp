@@ -825,15 +825,27 @@ void ScenarioManager::setWorkingMode(QObject* _sender)
 		if (m_workModeIsDraft != workingModeIsDraft) {
 			m_workModeIsDraft = workingModeIsDraft;
 
+			BusinessLogic::ScenarioTextDocument* prevTextDocument = 0;
+			BusinessLogic::ScenarioTextDocument* nextTextDocument = 0;
+			QMap<QString, int> additionalCursors;
+			ScenarioNavigatorManager* prevNavigatorManager = 0;
+
 			if (!m_workModeIsDraft) {
-				m_textEditManager->setScenarioDocument(m_scenario->document());
-				m_textEditManager->setAdditionalCursors(m_cleanCursors);
-				m_draftNavigatorManager->clearSelection();
+				prevTextDocument = m_scenarioDraft->document();
+				nextTextDocument = m_scenario->document();
+				additionalCursors = m_cleanCursors;
+				prevNavigatorManager = m_draftNavigatorManager;
 			} else {
-				m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
-				m_textEditManager->setAdditionalCursors(m_draftCursors);
-				m_navigatorManager->clearSelection();
+				prevTextDocument = m_scenario->document();
+				nextTextDocument = m_scenarioDraft->document();
+				additionalCursors = m_draftCursors;
+				prevNavigatorManager = m_navigatorManager;
 			}
+
+			nextTextDocument->setOutlineMode(prevTextDocument->outlineMode());
+			m_textEditManager->setScenarioDocument(nextTextDocument);
+			m_textEditManager->setAdditionalCursors(additionalCursors);
+			prevNavigatorManager->clearSelection();
 
 			emit scenarioChanged();
 		}
