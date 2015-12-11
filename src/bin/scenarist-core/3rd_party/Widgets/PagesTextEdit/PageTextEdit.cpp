@@ -3115,23 +3115,110 @@ QMouseEvent* PageTextEdit::correctMousePosition(QMouseEvent* _event)
 	// внутренний баг, исправить который можно только через QTextDocumentLayout. Сделать это малой
 	// кровью мне не удалось, поэтому пришлось придумать данную заплатку.
 	//
-	// Суть её заключается в том, что позиция мыши сдвигается вниз, пока не наткнётся на ближайшую
-	// строку. Этот метод используется в событиях нажатия, отпускания и перетаскивания мыши.
+	// Суть её заключается в том, чтобы найти ближайшую корректную позицию мыши.
 	//
 
-	int replies = 0;
-	const int MAX_REPLIES = 4;
-	const int Y_DELTA = 10;
-	QPointF localPos = _event->localPos();
+	QPoint localPos = viewport()->mapFromParent(_event->pos());
+	//
+	// Получим позицию курсора от компоновщика документа
+	//
+	const int pos = document()->documentLayout()->hitTest(localPos, Qt::FuzzyHit);
 	QTextCursor cursor = textCursor();
-	do {
-		if (replies > 0) {
-			localPos.setY(localPos.y() + Y_DELTA);
+	cursor.setPosition(pos);
+	//
+	// Если получили блок над указателем
+	//
+	if (cursorRect(cursor).bottom() < localPos.y()) {
+		//
+		// Ищем ближайший к указателю блок
+		//
+		cursor.movePosition(QTextCursor::StartOfBlock);
+		int minSpace = INT_MAX;
+		while (!cursor.atEnd()) {
+			if (cursor.block().isVisible()) {
+				const int space = abs(localPos.y() - cursorRect(cursor).center().y());
+				//
+				// Если верхний и нижний блоки одинаково близки, используем нижний
+				//
+				if (minSpace >= space) {
+					minSpace = space;
+				} else {
+					if (cursor.atBlockStart()) {
+						do {
+							cursor.movePosition(QTextCursor::PreviousBlock);
+						} while (!cursor.atStart() && !cursor.block().isVisible());
+					}
+					break;
+				}
+			}
+			cursor.movePosition(cursor.atBlockStart() ? QTextCursor::EndOfBlock : QTextCursor::NextBlock);
 		}
-		const int pos = document()->documentLayout()->hitTest(localPos, Qt::FuzzyHit);
-		cursor.setPosition(pos);
-	} while (replies++ < MAX_REPLIES
-			 && abs(localPos.y() - cursorRect(cursor).top()) > Y_DELTA);
+	}
+	//
+	// Если получили блок под указателем
+	//
+	else {
+		//
+		// Ищем ближайший к указателю блок
+		//
+		cursor.movePosition(QTextCursor::EndOfBlock);
+		int minSpace = INT_MAX;
+		while (!cursor.atStart()) {
+			if (cursor.block().isVisible()) {
+				const int space = abs(localPos.y() - cursorRect(cursor).center().y());
+				//
+				// Всегда используем более низкий блок
+				//
+				if (minSpace > space
+					|| (minSpace == space && cursor.atBlockStart())) {
+					minSpace = space;
+				} else {
+					if (cursor.atBlockEnd()) {
+						do {
+							cursor.movePosition(QTextCursor::NextBlock);
+							cursor.movePosition(QTextCursor::EndOfBlock);
+						} while (!cursor.atEnd() && !cursor.block().isVisible());
+					}
+					break;
+				}
+			}
+			cursor.movePosition(cursor.atBlockStart() ? QTextCursor::PreviousCharacter : QTextCursor::StartOfBlock);
+		}
+	}
+
+	//
+	// Обрабатываем случай, когда курсор убежал в самый низ и стоит в невидимом блоке.
+	// Просто идём назад, до первого видимого блока
+	//
+	if (cursor.atEnd() && !cursor.block().isVisible()) {
+		while (!cursor.atStart() && !cursor.block().isVisible()) {
+			cursor.movePosition(QTextCursor::PreviousBlock);
+		}
+	}
+
+	//
+	// Ищем наилучшее совпадение внутри блока, т.к. он может быть многострочным
+	//
+	cursor.movePosition(QTextCursor::StartOfBlock);
+	int minSpace = INT_MAX;
+	do {
+		const int space = abs(localPos.y() - cursorRect(cursor).center().y());
+		if (minSpace >= space) {
+			minSpace = space;
+		} else {
+			if (!cursor.atBlockStart()) {
+				cursor.movePosition(QTextCursor::PreviousCharacter);
+			}
+			break;
+		}
+		cursor.movePosition(QTextCursor::NextCharacter);
+	} while (!cursor.atBlockEnd());
+
+	//
+	// Настраиваем координаты найденной точки
+	//
+	localPos.setY(cursorRect(cursor).center().y());
+	localPos = viewport()->mapToParent(localPos);
 
 	return new QMouseEvent(_event->type(), localPos, _event->button(), _event->buttons(), _event->modifiers());
 }

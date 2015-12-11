@@ -22,7 +22,8 @@ void ApplicationView::initSplittersRightClick()
 	// Для всех сплитеров добавляем функциональность - щелчок правой кнопкой, разворачивает панели
 	//
 	foreach (QSplitter* splitter, findChildren<QSplitter*>()) {
-		if (splitter->objectName() != "mainWindowSplitter") {
+		if (splitter->objectName() != "mainWindowSplitter"
+			&& splitter->objectName() != "draftScenarioEditSplitter") {
 			splitter->handle(1)->installEventFilter(this);
 		}
 	}
