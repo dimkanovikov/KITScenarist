@@ -1425,8 +1425,8 @@ void PageTextEditPrivate::updateViewportMargins()
 		//
 		// Рассчитываем отступы для viewport
 		//
-		const int DEFAULT_TOP_MARGIN = 20;
-		const int DEFAULT_BOTTOM_MARGIN = 20;
+		const int DEFAULT_TOP_MARGIN = 0;
+		const int DEFAULT_BOTTOM_MARGIN = 0;
 		{
 			int leftMargin = 0;
 			int rightMargin = 0;
