@@ -127,9 +127,7 @@ void SearchWidget::aboutFindPrev()
 void SearchWidget::aboutReplaceOne()
 {
 	const QString replaceText = m_replaceText->text();
-	if (!replaceText.isEmpty()
-		&& m_editor) {
-
+	if (m_editor) {
 		const QString searchText = m_searchText->text();
 		QTextCursor cursor = m_editor->textCursor();
 		bool selectedTextEqual =
@@ -146,9 +144,7 @@ void SearchWidget::aboutReplaceOne()
 void SearchWidget::aboutReplaceAll()
 {
 	const QString replaceText = m_replaceText->text();
-	if (!replaceText.isEmpty()
-		&& m_editor) {
-
+	if (m_editor) {
 		aboutFindNext();
 		QTextCursor cursor = m_editor->textCursor();
 		while (cursor.hasSelection()) {
