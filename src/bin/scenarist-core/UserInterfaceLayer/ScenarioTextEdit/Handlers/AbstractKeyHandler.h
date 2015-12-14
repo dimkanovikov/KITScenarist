@@ -24,11 +24,12 @@ namespace KeyProcessingLayer
 		 */
 		void handle(QKeyEvent* _event);
 
-	protected:
 		/**
 		 * @brief Подготовка к обработке
 		 */
 		virtual void prepareForHandle() {}
+
+	protected:
 
 		/**
 		 * @brief Необходимые действия при нажатии конкретной клавиши/сочетания

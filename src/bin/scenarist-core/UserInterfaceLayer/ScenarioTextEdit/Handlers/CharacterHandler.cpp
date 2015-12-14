@@ -12,6 +12,7 @@
 #include <DataLayer/DataStorageLayer/CharacterStateStorage.h>
 
 #include <QKeyEvent>
+#include <QStringListModel>
 #include <QTextBlock>
 
 using namespace KeyProcessingLayer;
@@ -23,6 +24,66 @@ using UserInterface::ScenarioTextEdit;
 CharacterHandler::CharacterHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
 {
+}
+
+void CharacterHandler::prepareForHandle()
+{
+	//
+	// Получим необходимые значения
+	//
+	// ... курсор в текущем положении
+	QTextCursor cursor = editor()->textCursor();
+	// ... блок текста в котором находится курсор
+	QTextBlock currentBlock = cursor.block();
+	// ... текст блока
+	QString currentBlockText = currentBlock.text().trimmed();
+
+	//
+	// Пробуем определить кто сейчас должен говорить
+	//
+	if (currentBlockText.isEmpty()) {
+		QString character;
+
+		//
+		// ... для этого ищем предпоследнего персонажа сцены
+		//
+		cursor.movePosition(QTextCursor::PreviousBlock);
+		bool previousCharacterFinded = false;
+		while (!cursor.atStart()
+			   && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneHeading) {
+			if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
+				//
+				// Нашли предыдущего персонажа
+				//
+				if (previousCharacterFinded == false) {
+					previousCharacterFinded = true;
+				}
+				//
+				// Нашли потенциального говорящего
+				//
+				else {
+					//
+					// Выберем его в списке вариантов
+					//
+					character = CharacterParser::name(cursor.block().text());
+					break;
+				}
+			}
+
+			cursor.movePosition(QTextCursor::PreviousBlock);
+		}
+
+		//
+		// Показываем всплывающую подсказку
+		//
+		QAbstractItemModel* model = 0;
+		if (character.isEmpty()) {
+			model = StorageFacade::characterStorage()->all();
+		} else {
+			model = new QStringListModel(QStringList() << character, editor());
+		}
+		editor()->complete(model, QString::null);
+	}
 }
 
 void CharacterHandler::handleEnter(QKeyEvent*)

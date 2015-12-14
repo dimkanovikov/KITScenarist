@@ -14,6 +14,11 @@ namespace KeyProcessingLayer
 	public:
 		CharacterHandler(UserInterface::ScenarioTextEdit* _editor);
 
+		/**
+		 * @brief При входе в блок, пробуем определить персонажа, который будет говорить
+		 */
+		void prepareForHandle();
+
 	protected:
 		/**
 		 * @brief Реализация интерфейса AbstractKeyHandler

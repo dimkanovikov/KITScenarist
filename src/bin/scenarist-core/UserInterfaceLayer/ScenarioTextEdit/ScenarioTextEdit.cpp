@@ -446,6 +446,13 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	if (handler->needEnsureCursorVisible()) {
 		ensureCursorVisible();
 	}
+
+	//
+	// Подготовим следующий блок к обработке
+	//
+	if (handler->needPrepareForHandle()) {
+		handler->prepareForHandle();
+	}
 }
 
 bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)

@@ -50,9 +50,14 @@ namespace KeyProcessingLayer
 		void prehandle(QKeyEvent* _event);
 
 		/**
+		 * @brief Подготовить к обработке
+		 */
+		void prepareForHandle();
+
+		/**
 		 * @brief Обработка
 		 */
-		void handle(QKeyEvent* _event);
+		void handle(QKeyEvent* _event, bool _prepare = false);
 
 		/**
 		 * @brief Нужно ли отправлять событие в базовый класс
@@ -63,6 +68,11 @@ namespace KeyProcessingLayer
 		 * @brief Нужно ли чтобы курсор был обязательно видим пользователю
 		 */
 		bool needEnsureCursorVisible() const;
+
+		/**
+		 * @brief Нужно ли делать подготовку к обработке блока
+		 */
+		bool needPrepareForHandle() const;
 
 	private:
 		KeyPressHandlerFacade(UserInterface::ScenarioTextEdit* _editor);
