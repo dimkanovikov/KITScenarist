@@ -15,7 +15,7 @@ PrepareHandler::PrepareHandler(ScenarioTextEdit* _editor) :
 	AbstractKeyHandler(_editor),
 	m_needSendEventToBaseClass(true),
 	m_needEnsureCursorVisible(true),
-	m_needPrepareForHandle(true)
+	m_needPrehandle(true)
 {
 }
 
@@ -29,15 +29,16 @@ bool PrepareHandler::needEnsureCursorVisible() const
 	return m_needEnsureCursorVisible;
 }
 
-bool PrepareHandler::needPrepareForHandle() const
+bool PrepareHandler::needPrehandle() const
 {
-	return m_needPrepareForHandle;
+	return m_needPrehandle;
 }
 
 void PrepareHandler::prepareForHandle()
 {
 	m_needSendEventToBaseClass = true;
 	m_needEnsureCursorVisible = true;
+	m_needPrehandle = true;
 }
 
 void PrepareHandler::handleEnter(QKeyEvent*)
@@ -99,7 +100,7 @@ void PrepareHandler::handleBackspace(QKeyEvent*)
 void PrepareHandler::handleEscape(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
-	m_needPrepareForHandle = false;
+	m_needPrehandle = false;
 }
 
 void PrepareHandler::handleUp(QKeyEvent*)

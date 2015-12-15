@@ -26,7 +26,7 @@ CharacterHandler::CharacterHandler(ScenarioTextEdit* _editor) :
 {
 }
 
-void CharacterHandler::prepareForHandle()
+void CharacterHandler::prehandle()
 {
 	//
 	// Получим необходимые значения
@@ -42,21 +42,20 @@ void CharacterHandler::prepareForHandle()
 	// Пробуем определить кто сейчас должен говорить
 	//
 	if (currentBlockText.isEmpty()) {
-		QString character;
+		QString previousCharacter, character;
 
 		//
 		// ... для этого ищем предпоследнего персонажа сцены
 		//
 		cursor.movePosition(QTextCursor::PreviousBlock);
-		bool previousCharacterFinded = false;
 		while (!cursor.atStart()
 			   && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneHeading) {
 			if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
 				//
 				// Нашли предыдущего персонажа
 				//
-				if (previousCharacterFinded == false) {
-					previousCharacterFinded = true;
+				if (previousCharacter.isEmpty()) {
+					previousCharacter = CharacterParser::name(cursor.block().text());
 				}
 				//
 				// Нашли потенциального говорящего
@@ -66,7 +65,9 @@ void CharacterHandler::prepareForHandle()
 					// Выберем его в списке вариантов
 					//
 					character = CharacterParser::name(cursor.block().text());
-					break;
+					if (character != previousCharacter) {
+						break;
+					}
 				}
 			}
 
@@ -80,12 +81,11 @@ void CharacterHandler::prepareForHandle()
 		if (character.isEmpty()) {
 			model = StorageFacade::characterStorage()->all();
 		} else {
-			model = new QStringListModel(QStringList() << character, editor());
+			model = new QStringListModel(QStringList() << character.toUpper(), editor());
 		}
 		editor()->complete(model, QString::null);
 	}
 }
-
 void CharacterHandler::handleEnter(QKeyEvent*)
 {
 	//

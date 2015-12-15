@@ -408,7 +408,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Предварительная обработка
 	//
-	handler->prehandle(_event);
+	handler->prepareForHandle(_event);
 
 	//
 	// Отправить событие в базовый класс
@@ -450,8 +450,8 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Подготовим следующий блок к обработке
 	//
-	if (handler->needPrepareForHandle()) {
-		handler->prepareForHandle();
+	if (handler->needPrehandle()) {
+		handler->prehandle();
 	}
 }
 

@@ -17,7 +17,7 @@ namespace KeyProcessingLayer
 		/**
 		 * @brief При входе в блок, пробуем определить персонажа, который будет говорить
 		 */
-		void prepareForHandle();
+		void prehandle();
 
 	protected:
 		/**

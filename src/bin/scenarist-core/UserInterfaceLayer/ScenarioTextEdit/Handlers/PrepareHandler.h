@@ -27,7 +27,7 @@ namespace KeyProcessingLayer
 		/**
 		 * @brief Нужно ли делать подготовку к обработке блока
 		 */
-		bool needPrepareForHandle() const;
+		bool needPrehandle() const;
 
 		/**
 		 * @brief Изменилась ли структура сценария
@@ -61,7 +61,7 @@ namespace KeyProcessingLayer
 	private:
 		bool m_needSendEventToBaseClass;
 		bool m_needEnsureCursorVisible;
-		bool m_needPrepareForHandle;
+		bool m_needPrehandle;
 	};
 }
 

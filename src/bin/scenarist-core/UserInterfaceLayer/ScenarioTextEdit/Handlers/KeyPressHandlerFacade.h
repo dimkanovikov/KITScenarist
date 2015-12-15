@@ -47,17 +47,17 @@ namespace KeyProcessingLayer
 		/**
 		 * @brief Предварительная обработка
 		 */
-		void prehandle(QKeyEvent* _event);
+		void prepareForHandle(QKeyEvent* _event);
 
 		/**
 		 * @brief Подготовить к обработке
 		 */
-		void prepareForHandle();
+		void prehandle();
 
 		/**
 		 * @brief Обработка
 		 */
-		void handle(QKeyEvent* _event, bool _prepare = false);
+		void handle(QKeyEvent* _event, bool _pre = false);
 
 		/**
 		 * @brief Нужно ли отправлять событие в базовый класс
@@ -72,7 +72,7 @@ namespace KeyProcessingLayer
 		/**
 		 * @brief Нужно ли делать подготовку к обработке блока
 		 */
-		bool needPrepareForHandle() const;
+		bool needPrehandle() const;
 
 	private:
 		KeyPressHandlerFacade(UserInterface::ScenarioTextEdit* _editor);

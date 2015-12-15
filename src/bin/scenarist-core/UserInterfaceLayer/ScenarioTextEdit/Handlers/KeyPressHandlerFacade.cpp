@@ -34,34 +34,26 @@ void KeyPressHandlerFacade::prepare(QKeyEvent* _event)
 	m_prepareHandler->handle(_event);
 }
 
-void KeyPressHandlerFacade::prehandle(QKeyEvent* _event)
+void KeyPressHandlerFacade::prepareForHandle(QKeyEvent* _event)
 {
 	m_preHandler->handle(_event);
 }
 
-void KeyPressHandlerFacade::prepareForHandle()
+void KeyPressHandlerFacade::prehandle()
 {
 	const bool PREPARE = true;
 	handle(0, PREPARE);
-
-	QTextBlock currentBlock = m_editor->textCursor().block();
-	ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(currentBlock);
-	AbstractKeyHandler* currentHandler = handlerFor(currentType);
-
-	if (currentHandler != 0) {
-		currentHandler->prepareForHandle();
-	}
 }
 
-void KeyPressHandlerFacade::handle(QKeyEvent* _event, bool _prepare)
+void KeyPressHandlerFacade::handle(QKeyEvent* _event, bool _pre)
 {
 	QTextBlock currentBlock = m_editor->textCursor().block();
 	ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(currentBlock);
 	AbstractKeyHandler* currentHandler = handlerFor(currentType);
 
 	if (currentHandler != 0) {
-		if (_prepare) {
-			currentHandler->prepareForHandle();
+		if (_pre) {
+			currentHandler->prehandle();
 		} else {
 			currentHandler->handle(_event);
 		}
@@ -78,9 +70,9 @@ bool KeyPressHandlerFacade::needEnsureCursorVisible() const
 	return m_prepareHandler->needEnsureCursorVisible();
 }
 
-bool KeyPressHandlerFacade::needPrepareForHandle() const
+bool KeyPressHandlerFacade::needPrehandle() const
 {
-	return m_prepareHandler->needPrepareForHandle();
+	return m_prepareHandler->needPrehandle();
 }
 
 // ******** private ********

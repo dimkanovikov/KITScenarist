@@ -20,16 +20,20 @@ namespace KeyProcessingLayer
 		virtual ~AbstractKeyHandler();
 
 		/**
+		 * @brief Предварительная обработка
+		 */
+		virtual void prehandle() {}
+
+		/**
 		 * @brief Обработка события нажатия клавиши
 		 */
 		void handle(QKeyEvent* _event);
 
+	protected:
 		/**
 		 * @brief Подготовка к обработке
 		 */
 		virtual void prepareForHandle() {}
-
-	protected:
 
 		/**
 		 * @brief Необходимые действия при нажатии конкретной клавиши/сочетания
