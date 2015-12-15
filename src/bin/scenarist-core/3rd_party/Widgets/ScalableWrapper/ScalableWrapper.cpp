@@ -115,11 +115,10 @@ bool ScalableWrapper::event(QEvent* _event)
 		gestureEvent(static_cast<QGestureEvent*>(_event));
 	}
 	//
-	// Для событий showEvent и paintEvent отключаем синхронизацию полос прокрутки,
+	// Для события showEvent отключаем синхронизацию полос прокрутки,
 	// т.к. в стандартной реализации QGraphicsView они сбиваются для нас
 	//
-	else if (_event->type() == QEvent::Show
-			 || _event->type() == QEvent::Paint) {
+	else if (_event->type() == QEvent::Show) {
 		setupScrollingSynchronization(false);
 
 		result = QGraphicsView::event(_event);

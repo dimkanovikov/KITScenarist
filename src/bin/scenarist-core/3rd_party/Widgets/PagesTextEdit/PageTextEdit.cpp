@@ -61,6 +61,7 @@
 #include <qtexttable.h>
 #include <qvariant.h>
 #include <qscopedpointer.h>
+#include <qpropertyanimation.h>
 
 #endif
 
@@ -2951,7 +2952,7 @@ void PageTextEdit::append(const QString &text)
 	Ensures that the cursor is visible by scrolling the text edit if
 	necessary.
 */
-void PageTextEdit::ensureCursorVisible(bool _upAndDown)
+void PageTextEdit::ensureCursorVisible()
 {
 	Q_D(PageTextEdit);
 	d->control->ensureCursorVisible();
@@ -2963,8 +2964,7 @@ void PageTextEdit::ensureCursorVisible(bool _upAndDown)
 		const int DETECT_DELTA = d->vbar->singleStep() * 2;
 		const int SCROLL_DELTA = d->vbar->singleStep() * 5;
 		QRect cursorRect = this->cursorRect();
-		if (cursorRect.y() - DETECT_DELTA <= 0
-			&& _upAndDown) {
+		if (cursorRect.y() - DETECT_DELTA <= 0) {
 			d->vbar->setValue(d->vbar->value() - SCROLL_DELTA);
 		}
 		else if (cursorRect.height() + cursorRect.y() + DETECT_DELTA >= d->viewport->height()) {
@@ -2980,13 +2980,41 @@ void PageTextEdit::ensureCursorVisible(bool _upAndDown)
 			else if (d->vbar->maximum() - d->vbar->value() > 0) {
 				d->vbar->setValue(d->vbar->maximum());
 			}
-//			//
-//			// В противном случае ожидаем увеличения длины полосы прокрутки и пробуем снова
-//			//
-//			else {
-//				QTimer::singleShot(10, this, &PageTextEdit::ensureCursorVisible);
-//			}
 		}
+	}
+}
+
+void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate)
+{
+	Q_D(PageTextEdit);
+
+	int lastVbarValue = d->vbar->value();
+	setTextCursor(_cursor);
+	QPoint top = cursorRect().topLeft();
+	int nextVbarValue = top.y() + d->vbar->value();
+
+	//
+	// Прокручиваем ещё немного
+	//
+	const int SCROLL_DELTA = d->vbar->singleStep() * 5;
+	nextVbarValue -= SCROLL_DELTA;
+
+	//
+	// Если нужно, анимируем
+	//
+	if (_animate) {
+		QPropertyAnimation* animation = new QPropertyAnimation(d->vbar, "value", this);
+		qreal delta = log(abs(nextVbarValue - lastVbarValue) / 500);
+		if (delta <= 0) {
+			delta = 1;
+		}
+		animation->setDuration(300 * delta);
+		animation->setEasingCurve(QEasingCurve::OutCubic);
+		animation->setStartValue(lastVbarValue);
+		animation->setEndValue(nextVbarValue);
+		animation->start();
+	} else {
+		d->vbar->setValue(nextVbarValue);
 	}
 }
 

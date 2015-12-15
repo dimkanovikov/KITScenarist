@@ -121,8 +121,7 @@ void ScenarioReviewView::aboutMoveCursorToMark(const QModelIndex& _index)
 			const int cursorPosition = reviewModel->markStartPosition(_index);
 			QTextCursor cursor = m_editor->textCursor();
 			cursor.setPosition(cursorPosition);
-			m_editor->setTextCursorReimpl(cursor);
-			m_editor->ensureCursorVisible(true);
+			m_editor->ensureCursorVisible(cursor);
 			m_editor->clearFocus();
 			m_editor->setFocus();
 		}

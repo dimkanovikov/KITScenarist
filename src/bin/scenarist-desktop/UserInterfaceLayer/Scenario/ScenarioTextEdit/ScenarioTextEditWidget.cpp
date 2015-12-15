@@ -28,6 +28,7 @@
 #include <QScrollBar>
 #include <QSplitter>
 #include <QTextBlock>
+#include <QTimer>
 #include <QTreeView>
 #include <QHeaderView>
 #include <QStandardItemModel>
@@ -178,6 +179,16 @@ int ScenarioTextEditWidget::cursorPosition() const
 void ScenarioTextEditWidget::setCursorPosition(int _position)
 {
 	//
+	// Если виджет пока ещё не видно, откладываем событие назначения позиции до этого момента.
+	// Делаем это потому что иногда установка курсора происходит до первой отрисовки обёртки
+	// масштабирования, что приводит в свою очередь к тому, что полосы прокрутки остаются в начале.
+	//
+	if (!isVisible()) {
+		QTimer::singleShot(300, Qt::PreciseTimer, [=] { setCursorPosition(_position); });
+		return;
+	}
+
+	//
 	// Устанавливаем позицию курсора
 	//
 	QTextCursor cursor = m_editor->textCursor();
@@ -187,6 +198,11 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	//
 	if (cursor.position() != _position) {
 		//
+		// Прокручиваем вниз, чтобы курсор стоял в верху экрана
+		//
+//		m_editor->verticalScrollBar()->setValue(m_editor->verticalScrollBar()->maximum());
+
+		//
 		// Устанавливаем реальную позицию
 		//
 		if (_position < m_editor->document()->characterCount()) {
@@ -194,17 +210,13 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 		} else {
 			cursor.movePosition(QTextCursor::End);
 		}
-		m_editor->setTextCursor(cursor);
-		m_editor->ensureCursorVisible();
-		//
-		// Прокручиваем вниз, чтобы курсор стоял в верху экрана
-		//
-		m_editor->verticalScrollBar()->setValue(m_editor->verticalScrollBar()->maximum());
+//		m_editor->setTextCursor(cursor);
 
 		//
 		// Возвращаем курсор в поле зрения
 		//
-		m_editor->ensureCursorVisible();
+//		m_editor->ensureCursorVisible(true);
+		m_editor->ensureCursorVisible(cursor);
 		m_editorWrapper->setFocus();
 	}
 	//
