@@ -24,6 +24,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QStandardItemModel>
+#include <QTimer>
 
 using ManagementLayer::ExportManager;
 using ManagementLayer::ProjectsManager;
@@ -77,54 +78,59 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
 			const QFileInfo fileInfo(filePath);
 
 			//
-			// Проверяем существование папки, в которую пользователь экспортирует
+			// Проверяем возможность записи в файл
 			//
-			if (fileInfo.dir().exists()) {
+			QFile file(filePath);
+			const bool canWrite = file.open(QIODevice::WriteOnly);
+			file.close();
+
+			//
+			// Если возможна запись в файл
+			//
+			if (canWrite) {
 				//
-				// Проверяем возможность записи в файл
+				// Определим экспортирующего
 				//
-				QFile file(filePath);
-				const bool canWrite = file.open(QIODevice::WriteOnly);
-				file.close();
+				BusinessLogic::AbstractExporter* exporter = 0;
+				if (fileInfo.suffix() == "docx") {
+					exporter = new BusinessLogic::DocxExporter;
+				} else if (fileInfo.suffix() == "pdf") {
+					exporter = new BusinessLogic::PdfExporter;
+				} else {
+					Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Unknown file extension: " + fileInfo.suffix()));
+				}
 
 				//
-				// Если возможна запись в файл
+				// Экспортируем документ
 				//
-				if (canWrite) {
-					//
-					// Определим экспортирующего
-					//
-					BusinessLogic::AbstractExporter* exporter = 0;
-					if (fileInfo.suffix() == "docx") {
-						exporter = new BusinessLogic::DocxExporter;
-					} else if (fileInfo.suffix() == "pdf") {
-						exporter = new BusinessLogic::PdfExporter;
-					} else {
-						Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Unknown file extension: " + fileInfo.suffix()));
-					}
-
-					//
-					// Экспортируем документ
-					//
-					exporter->exportTo(_scenario, exportParameters);
-					delete exporter;
-					exporter = 0;
-				}
-				//
-				// Если невозможно записать в файл, предупреждаем пользователя и отваливаемся
-				//
-				else {
-					QLightBoxMessage::critical(&progress, tr("Export error"),
-						tr("Can't write to file. Maybe it opened in other application. Please, close it and restart export."));
-				}
+				exporter->exportTo(_scenario, exportParameters);
+				delete exporter;
+				exporter = 0;
 			}
 			//
-			// Если папки не существует, уведомляем и отваливаемся
+			// Если невозможно записать в файл
 			//
 			else {
-				QLightBoxMessage::critical(&progress, tr("Export error"),
-					tr("You try export to nonexistent folder <b>%1</b>. Please, choose other location for exported file.")
-					.arg(fileInfo.dir().absolutePath()));
+				//
+				// ... предупреждаем
+				//
+				QString errorMessage;
+				if (!fileInfo.dir().exists()) {
+					errorMessage =
+						tr("You try export to nonexistent folder <b>%1</b>. Please, choose other location for exported file.")
+						.arg(fileInfo.dir().absolutePath());
+				} else if (fileInfo.exists()) {
+					errorMessage =
+						tr("Can't write to file. Maybe it opened in other application. Please, close it and retry export.");
+				} else {
+					errorMessage =
+						tr("Can't write to file. Check permissions to write in choosed folder. Please, choose other folder.");
+				}
+				QLightBoxMessage::critical(&progress, tr("Export error"), errorMessage);
+				//
+				// ... и перезапускаем экспорт
+				//
+				QTimer::singleShot(0, [=] { exportScenario(_scenario, _scenarioData); });
 			}
 		}
 
