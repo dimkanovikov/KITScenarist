@@ -199,6 +199,23 @@ public:
 	 */
 	QString m_watermark;
 	QString m_watermarkMulti;
+
+//
+// Дополнения для корректной работы с мышью при наличии невидимых текстовых блоков в документе
+//
+public:
+	/**
+	 * @brief Отправить скорректированное событие о взаимодействии мышью
+	 */
+	void sendControlMouseEvent(QMouseEvent *e);
+
+private:
+	/**
+	 * @brief Скорректировать позицию мыши
+	 * @note Используется в событиях связанных с мышью из-за того, что при наличии невидимых блоков
+	 *		 в документе, стандартная реализация иногда скачет сильно вниз
+	 */
+	QMouseEvent* correctMousePosition(QMouseEvent* _event);
 };
 #endif // QT_NO_TEXTEDIT
 
