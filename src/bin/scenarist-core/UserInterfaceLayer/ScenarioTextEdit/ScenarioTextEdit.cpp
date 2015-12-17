@@ -516,20 +516,60 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 	}
 	//
 	// Поднятие/опускание регистра букв
+	// Работает в три шага:
+	// 1. ВСЕ ЗАГЛАВНЫЕ
+	// 2. Первая заглавная
+	// 3. все строчные
 	//
 	else if (_event->modifiers().testFlag(Qt::ControlModifier)
 			 && (_event->key() == Qt::Key_Up
-				 || _event->key() == Qt::Key_Down)
-			 && textCursor().hasSelection()) {
-		const bool toUpper = _event->key() == Qt::Key_Up;
-		const int from = qMin(textCursor().selectionStart(), textCursor().selectionEnd());
-		const int to = qMax(textCursor().selectionStart(), textCursor().selectionEnd());
+				 || _event->key() == Qt::Key_Down)) {
+		//
+		// Нужно ли убирать выделение после операции
+		//
+		bool clearSelection = false;
+		//
+		// Если выделения нет, работаем со словом под курсором
+		//
 		QTextCursor cursor = textCursor();
-		for (int position = from; position < to; ++position) {
-			cursor.setPosition(position);
-			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
-			cursor.insertText(toUpper ? cursor.selectedText().toUpper() : cursor.selectedText().toLower());
+		const int sourcePosition = cursor.position();
+		if (!cursor.hasSelection()) {
+			cursor.select(QTextCursor::WordUnderCursor);
+			clearSelection = true;
 		}
+
+		const bool toUpper = _event->key() == Qt::Key_Up;
+		const QString selectedText = cursor.selectedText();
+		const QChar firstChar = selectedText.at(0);
+		const bool firstToUpper = firstChar.toUpper() != firstChar;
+		const bool textInUpper = (selectedText.length() > 1) && (selectedText.toUpper() == selectedText);
+		const int fromPosition = qMin(cursor.selectionStart(), cursor.selectionEnd());
+		const int toPosition = qMax(cursor.selectionStart(), cursor.selectionEnd());
+		for (int position = fromPosition; position < toPosition; ++position) {
+			cursor.setPosition(position);
+			cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+			if (toUpper) {
+				if (firstToUpper) {
+					cursor.insertText(position == fromPosition ? cursor.selectedText().toUpper() : cursor.selectedText().toLower());
+				} else {
+					cursor.insertText(cursor.selectedText().toUpper());
+				}
+			} else {
+				if (textInUpper) {
+					cursor.insertText(position == fromPosition ? cursor.selectedText().toUpper() : cursor.selectedText().toLower());
+				} else {
+					cursor.insertText(cursor.selectedText().toLower());
+				}
+			}
+		}
+
+		if (clearSelection) {
+			cursor.setPosition(sourcePosition);
+		} else {
+			cursor.setPosition(fromPosition);
+			cursor.setPosition(toPosition, QTextCursor::KeepAnchor);
+		}
+		setTextCursor(cursor);
 	}
 	else {
 		isEventHandled = false;
