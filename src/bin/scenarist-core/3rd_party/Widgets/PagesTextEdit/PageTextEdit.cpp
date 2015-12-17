@@ -2988,7 +2988,10 @@ void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate
 {
 	Q_D(PageTextEdit);
 
+#ifndef NO_ANIMATIONS
 	int lastVbarValue = d->vbar->value();
+#endif
+
 	setTextCursor(_cursor);
 	QPoint top = cursorRect().topLeft();
 	int nextVbarValue = top.y() + d->vbar->value();
@@ -2999,6 +3002,7 @@ void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate
 	const int SCROLL_DELTA = d->vbar->singleStep() * 5;
 	nextVbarValue -= SCROLL_DELTA;
 
+#ifndef NO_ANIMATIONS
 	//
 	// Если нужно, анимируем
 	//
@@ -3016,6 +3020,9 @@ void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate
 	} else {
 		d->vbar->setValue(nextVbarValue);
 	}
+#else
+	d->vbar->setValue(nextVbarValue);
+#endif
 }
 
 /*!

@@ -50,7 +50,11 @@ int QLightBoxDialog::exec()
 		m_title->hide();
 	}
 
+#ifndef NO_ANIMATIONS
 	animateShow();
+#else
+	show();
+#endif
 
 	focusedOnExec()->setFocus();
 
@@ -60,7 +64,11 @@ int QLightBoxDialog::exec()
 	connect(this, SIGNAL(finished(int)), &dialogEventLoop, SLOT(quit()));
 	dialogEventLoop.exec();
 
+#ifndef NO_ANIMATIONS
 	animateHide();
+#else
+	hide();
+#endif
 
 	return m_execResult;
 }

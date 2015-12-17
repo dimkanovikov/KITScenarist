@@ -42,6 +42,11 @@ UI_DIR = $$DESTDIR/.ui
 #
 
 #
+# Отключаем анимации
+#
+DEFINES += NO_ANIMATIONS
+
+#
 # Подключаем библиотеку HUNSPELL
 #
 win32:CONFIG(release, debug|release): LIBS += -L$$DESTDIR/../../libs/hunspell/release/ -lhunspell
