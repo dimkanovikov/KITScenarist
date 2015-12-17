@@ -69,11 +69,23 @@ void ScenarioTextDocument::load(const QString& _scenarioXml)
 	}
 
 	//
+	// Сохраняем текущий режим, для последующего восстановления
+	// FIXME: Так нужно делать, чтобы в режиме поэпизодника не скакал курсор, если этот режим активен
+	//
+	bool outlineMode = m_outlineMode;
+	setOutlineMode(false);
+
+	//
 	// Загружаем проект
 	//
 	m_xmlHandler->xmlToScenario(0, scenarioXml);
 	m_lastScenarioXml = scenarioXml;
 	m_lastScenarioXmlHash = ::textMd5Hash(scenarioXml);
+
+	//
+	// Восстанавливаем режим
+	//
+	setOutlineMode(outlineMode);
 
 	m_undoStack.clear();
 	m_redoStack.clear();

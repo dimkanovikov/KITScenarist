@@ -475,13 +475,18 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 	//
 	// ... перевод курсора к концу строки
 	//
-	else if (_event == QKeySequence::MoveToEndOfLine) {
+	else if (_event == QKeySequence::MoveToEndOfLine
+			 || _event == QKeySequence::SelectEndOfLine) {
 		QTextCursor cursor = textCursor();
 		const int startY = cursorRect(cursor).y();
-		while (!cursor.atEnd()) {
-			cursor.movePosition(QTextCursor::Right);
+		const QTextCursor::MoveMode keepAncor =
+			_event->modifiers().testFlag(Qt::ShiftModifier)
+				? QTextCursor::KeepAnchor
+				: QTextCursor::MoveAnchor;
+		while (!cursor.atBlockEnd()) {
+			cursor.movePosition(QTextCursor::NextCharacter, keepAncor);
 			if (cursorRect(cursor).y() > startY) {
-				cursor.movePosition(QTextCursor::Left);
+				cursor.movePosition(QTextCursor::PreviousCharacter, keepAncor);
 				setTextCursor(cursor);
 				break;
 			}
@@ -491,13 +496,18 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 	//
 	// ... перевод курсора к началу строки
 	//
-	else if (_event == QKeySequence::MoveToStartOfLine) {
+	else if (_event == QKeySequence::MoveToStartOfLine
+			 || _event == QKeySequence::SelectStartOfLine) {
 		QTextCursor cursor = textCursor();
 		const int startY = cursorRect(cursor).y();
-		while (!cursor.atEnd()) {
-			cursor.movePosition(QTextCursor::Left);
+		const QTextCursor::MoveMode keepAncor =
+			_event->modifiers().testFlag(Qt::ShiftModifier)
+				? QTextCursor::KeepAnchor
+				: QTextCursor::MoveAnchor;
+		while (!cursor.atBlockStart()) {
+			cursor.movePosition(QTextCursor::PreviousCharacter, keepAncor);
 			if (cursorRect(cursor).y() < startY) {
-				cursor.movePosition(QTextCursor::Right);
+				cursor.movePosition(QTextCursor::NextCharacter, keepAncor);
 				setTextCursor(cursor);
 				break;
 			}
