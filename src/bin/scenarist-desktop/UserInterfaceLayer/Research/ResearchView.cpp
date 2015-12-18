@@ -303,7 +303,17 @@ void ResearchView::initConnections()
 	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=] {
 		const QString textToSplit = m_ui->scenarioLogline->toPlainText().simplified();
 		const int wordsCount = textToSplit.split(QRegExp("([^\\w,^\\\\]|(?=\\\\))+"), QString::SkipEmptyParts).size();
+		m_ui->scenarioLoglineWords->setVisible(wordsCount > 0);
+		m_ui->scenarioLoglineWordsLabel->setVisible(wordsCount > 0);
 		m_ui->scenarioLoglineWords->setText(QString::number(wordsCount));
+		const QString color =
+				wordsCount <= 25
+				? "green"
+				: wordsCount <= 30
+				  ? "palette(text)"
+				  : "red";
+		m_ui->scenarioLoglineWords->setStyleSheet("color: " + color);
+		m_ui->scenarioLoglineWordsLabel->setStyleSheet("color: " + color);
 	});
 	connect(m_ui->titlePageName, &QLineEdit::textChanged, m_ui->scenarioName, &QLineEdit::setText);
 	//

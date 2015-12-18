@@ -20,13 +20,6 @@ unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 QMAKE_MAC_SDK = macosx10.11
 
 #
-# Включить профилирование
-#
-QMAKE_CXXFLAGS_DEBUG += -pg
-QMAKE_LFLAGS_DEBUG += -pg
-#
-
-#
 # Конфигурируем расположение файлов сборки
 #
 CONFIG(debug, debug|release) {
@@ -45,6 +38,13 @@ UI_DIR = $$DESTDIR/.ui
 # Отключаем анимации
 #
 DEFINES += NO_ANIMATIONS
+
+#
+# Включить профилирование
+#
+#QMAKE_CXXFLAGS_DEBUG += -pg
+#QMAKE_LFLAGS_DEBUG += -pg
+#
 
 #
 # Подключаем библиотеку HUNSPELL

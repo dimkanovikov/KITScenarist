@@ -1887,11 +1887,14 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 		//
 		cursor.movePosition(QTextCursor::StartOfBlock);
 		int minSpace = INT_MAX;
+		bool firstStep = true;
 		do {
 			//
 			// Если это не первый проход, смещаем курсор
 			//
-			if (minSpace != INT_MAX) {
+			if (firstStep) {
+				firstStep = false;
+			} else {
 				cursor.movePosition(cursor.atBlockEnd() ? QTextCursor::NextBlock : QTextCursor::EndOfBlock);
 			}
 
@@ -1922,11 +1925,14 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 		//
 		cursor.movePosition(QTextCursor::EndOfBlock);
 		int minSpace = INT_MAX;
+		bool firstStep = true;
 		do {
 			//
 			// Если это не первый проход, смещаем курсор
 			//
-			if (minSpace != INT_MAX) {
+			if (firstStep) {
+				firstStep = false;
+			} else {
 				cursor.movePosition(cursor.atBlockStart() ? QTextCursor::PreviousCharacter : QTextCursor::StartOfBlock);
 			}
 
