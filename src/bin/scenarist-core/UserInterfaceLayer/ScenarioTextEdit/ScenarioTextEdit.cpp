@@ -925,27 +925,37 @@ void ScenarioTextEdit::aboutSaveEditorState()
 
 void ScenarioTextEdit::aboutLoadEditorState()
 {
-	const QRect prevCursorRect = property(CURSOR_RECT).toRect();
-	QRect currentCursorRect = cursorRect();
+	//
+	// FIXME: задумано это для того, чтобы твой курсор не смещался вниз, если вверху текст редактирует соавтор,
+	//		  но при отмене собственных изменений работает ужасно, поэтому пока отключим данный код.
+	//		  Возможно это из-за того, что при отмене собственных изменений курсор не отправляется к
+	//		  месту, где заканчивается изменение, а остаётся в своей позиции. Но тогда нужно как-то
+	//		  разводить собственные патчи и патчи соавторов
+	//
+//	QApplication::processEvents();
+//	const QRect prevCursorRect = property(CURSOR_RECT).toRect();
+//	QRect currentCursorRect = cursorRect();
 
-	//
-	// Корректируем позицию курсора, пока
-	// - не восстановим предыдущее значение
-	// - не сдвинем прокрутку в самый верх
-	// - не сдвинем прокрутку в самый низ
-	//
-	while (prevCursorRect.y() != currentCursorRect.y()
-		   && verticalScrollBar()->value() != verticalScrollBar()->minimum()
-		   && verticalScrollBar()->value() != verticalScrollBar()->maximum()) {
-		int verticalDelta = 0;
-		if (prevCursorRect.y() < currentCursorRect.y()) {
-			verticalDelta = 1;
-		} else {
-			verticalDelta = -1;
-		}
-		verticalScrollBar()->setValue(verticalScrollBar()->value() + verticalDelta);
-		currentCursorRect = cursorRect();
-	}
+//	//
+//	// Корректируем позицию курсора, пока
+//	// - не восстановим предыдущее значение
+//	// - не сдвинем прокрутку в самый верх
+//	// - не сдвинем прокрутку в самый низ
+//	//
+//	while (prevCursorRect.y() != currentCursorRect.y()
+//		   && verticalScrollBar()->value() != verticalScrollBar()->minimum()
+//		   && verticalScrollBar()->value() != verticalScrollBar()->maximum()) {
+//		int verticalDelta = 0;
+//		if (prevCursorRect.y() < currentCursorRect.y()) {
+//			verticalDelta = 1;
+//		} else {
+//			verticalDelta = -1;
+//		}
+//		verticalScrollBar()->setValue(verticalScrollBar()->value() + verticalDelta);
+//		currentCursorRect = cursorRect();
+//		qDebug() << cursorRect() << prevCursorRect;
+//	}
+
 }
 
 void ScenarioTextEdit::cleanScenarioTypeFromBlock()
