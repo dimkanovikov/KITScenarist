@@ -15,7 +15,6 @@ using ManagementLayer::ProjectsManager;
 using ManagementLayer::Project;
 
 namespace {
-	const int MAX_RECENT_FILES_COUNT = 10;
 	const QString RECENT_FILES_LIST_SETTINGS_KEY = "application/recent-files/list";
 	const QString RECENT_FILES_USING_SETTINGS_KEY = "application/recent-files/using";
 }
@@ -130,12 +129,6 @@ bool ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 				// Создаём проект
 				//
 				newCurrentProject = Project(Project::Local, projectName, projectPath, QDateTime::currentDateTime());
-				//
-				// Если в списке больше допустимого кол-ва используемых файлов удалим давно используемый
-				//
-				if (m_recentProjects.size() >= MAX_RECENT_FILES_COUNT) {
-					m_recentProjects.removeLast();
-				}
 				//
 				// Добавляем проект в список
 				//
