@@ -11,7 +11,7 @@
 
 ImagesPane::ImagesPane(QWidget* _parent) :
 	QScrollArea(_parent),
-	m_layout(new FlowLayout(viewport())),
+	m_layout(0),
 	m_addImageButton(new AddImageButton(viewport())),
 	m_imagePreview(0)
 {
@@ -166,12 +166,14 @@ void ImagesPane::initView()
 	setWidgetResizable(true);
 	setAcceptDrops(true);
 
-	viewport()->installEventFilter(this);
-	viewport()->setAcceptDrops(true);
-
 	m_addImageButton->setFixedSize(150, 150);
 
+	QWidget* contents = new QWidget(this);
+	contents->installEventFilter(this);
+	contents->setAcceptDrops(true);
+	m_layout = new FlowLayout(contents);
 	m_layout->addWidget(m_addImageButton);
+	setWidget(contents);
 }
 
 void ImagesPane::initConnections()

@@ -278,6 +278,11 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	}
 
 	cursor.endEditBlock();
+
+	//
+	// Фокусируемся на редакторе
+	//
+	m_editorWrapper->setFocus();
 }
 
 void ScenarioTextEditWidget::removeText(int _from, int _to)

@@ -140,6 +140,8 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 					localeSuffix = "_en";
 				} else if (QLocale().language() == QLocale::Spanish) {
 					localeSuffix = "_es";
+				} else if (QLocale().language() == QLocale::French) {
+					localeSuffix = "_fr";
 				}
 				QString updateInfo =
 						tr("Released version %1 ").arg(maxVersion)
