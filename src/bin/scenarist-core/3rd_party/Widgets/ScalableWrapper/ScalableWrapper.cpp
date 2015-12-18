@@ -296,19 +296,20 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 		menuProxy->setPos(QCursor::pos());
 
 		//
-		// Если меню вываливается за экран, корректируем его позицию
+		// Если меню вываливается за границы виджета, корректируем его позицию
+		// Так необходимо делать, поскольку меню теперь не попап, а вложенный виджет
 		//
 		QRectF menuRect(QCursor::pos(), menu->sizeHint());
 		//
 		// ... по вертикали
 		//
-		if (menuRect.bottom() > QApplication::primaryScreen()->size().height()) {
+		if (menuRect.bottom() > mapToGlobal(pos()).y() + height()) {
 			menuRect.moveBottom(menuRect.top());
 		}
 		//
 		// ... по горизонтали
 		//
-		if (menuRect.right() > QApplication::primaryScreen()->size().width()) {
+		if (menuRect.right() > mapToGlobal(pos()).x() + width()) {
 			menuRect.moveRight(menuRect.left());
 		}
 		menuProxy->setPos(menuRect.topLeft());

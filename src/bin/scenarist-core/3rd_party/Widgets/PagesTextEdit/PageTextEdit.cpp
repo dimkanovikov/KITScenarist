@@ -1887,7 +1887,14 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 		//
 		cursor.movePosition(QTextCursor::StartOfBlock);
 		int minSpace = INT_MAX;
-		while (!cursor.atEnd()) {
+		do {
+			//
+			// Если это не первый проход, смещаем курсор
+			//
+			if (minSpace != INT_MAX) {
+				cursor.movePosition(cursor.atBlockEnd() ? QTextCursor::NextBlock : QTextCursor::EndOfBlock);
+			}
+
 			if (cursor.block().isVisible()) {
 				const int space = abs(localPos.y() - q->cursorRect(cursor).center().y());
 				//
@@ -1904,8 +1911,7 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 					break;
 				}
 			}
-			cursor.movePosition(cursor.atBlockEnd() ? QTextCursor::NextBlock : QTextCursor::EndOfBlock);
-		}
+		} while (!cursor.atEnd());
 	}
 	//
 	// Если получили блок под указателем
@@ -1916,7 +1922,14 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 		//
 		cursor.movePosition(QTextCursor::EndOfBlock);
 		int minSpace = INT_MAX;
-		while (!cursor.atStart()) {
+		do {
+			//
+			// Если это не первый проход, смещаем курсор
+			//
+			if (minSpace != INT_MAX) {
+				cursor.movePosition(cursor.atBlockStart() ? QTextCursor::PreviousCharacter : QTextCursor::StartOfBlock);
+			}
+
 			if (cursor.block().isVisible()) {
 				const int space = abs(localPos.y() - q->cursorRect(cursor).center().y());
 				//
@@ -1935,8 +1948,7 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 					break;
 				}
 			}
-			cursor.movePosition(cursor.atBlockStart() ? QTextCursor::PreviousCharacter : QTextCursor::StartOfBlock);
-		}
+		} while (!cursor.atStart());
 	}
 
 	//

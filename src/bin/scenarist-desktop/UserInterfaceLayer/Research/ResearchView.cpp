@@ -126,7 +126,9 @@ void ResearchView::editTitlePage(const QString& _name, const QString& _additiona
 void ResearchView::editSynopsis(const QString& _synopsis)
 {
 	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->synopsisEdit);
-	m_ui->synopsisText->setHtml(_synopsis);
+	if (TextEditHelper::removeDocumentTags(m_ui->synopsisText->toHtml()) != _synopsis) {
+		m_ui->synopsisText->setHtml(_synopsis);
+	}
 
 	setResearchManageButtonsVisible(false);
 	setSearchVisible(false);
