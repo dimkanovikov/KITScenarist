@@ -185,15 +185,13 @@ void ScenarioNavigator::aboutContextMenuRequested(const QPoint& _pos)
 	//
 	QString colorsNames =
 			m_navigationTree->currentIndex().data(BusinessLogic::ScenarioModel::ColorIndex).toString();
-	QAction* colors = menu->addAction(tr("Colors"));
-	QMenu* colorsMenu = new QMenu(this);
 	int colorIndex = 1;
 	QList<GoogleColorsPane*> colorsPanesList;
 	//
 	// ... добавляем каждый цвет
 	//
 	foreach (const QString& colorName, colorsNames.split(";", QString::SkipEmptyParts)) {
-		QAction* color = colorsMenu->addAction(tr("Color %1").arg(colorIndex));
+		QAction* color = menu->addAction(tr("Color %1").arg(colorIndex));
 		QMenu* colorMenu = new QMenu(this);
 		QAction* removeColor = colorMenu->addAction(tr("Remove"));
 		removeColor->setData(QString("removeColor:%1").arg(colorIndex));
@@ -214,7 +212,7 @@ void ScenarioNavigator::aboutContextMenuRequested(const QPoint& _pos)
 	// ... пункт для нового цвета
 	//
 	{
-		QAction* color = colorsMenu->addAction(tr("Add color"));
+		QAction* color = menu->addAction(tr("Add color"));
 		QMenu* colorMenu = new QMenu(this);
 		QWidgetAction* wa = new QWidgetAction(colorMenu);
 		GoogleColorsPane* colorsPane = new GoogleColorsPane(colorMenu);
@@ -226,8 +224,6 @@ void ScenarioNavigator::aboutContextMenuRequested(const QPoint& _pos)
 
 		colorsPanesList.append(colorsPane);
 	}
-	//
-	colors->setMenu(colorsMenu);
 
 	//
 	// Остальное
