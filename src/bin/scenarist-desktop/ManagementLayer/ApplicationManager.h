@@ -76,11 +76,21 @@ namespace ManagementLayer
 		void aboutSave();
 
 		/**
+		 * @brief Сохранить настройки текущего проекта
+		 */
+		void saveCurrentProjectSettings(const QString& _projectPath);
+
+		/**
 		 * @brief Загрузить
 		 *
 		 * Если имя файла не задано, то будет вызван диалог выбора файла
 		 */
 		void aboutLoad(const QString& _fileName = QString());
+
+		/**
+		 * @brief Загрузить настройки текущего проекта
+		 */
+		void loadCurrentProjectSettings(const QString& _projectPath);
 
 		/**
 		 * @brief Открыть справку

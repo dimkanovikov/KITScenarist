@@ -406,6 +406,29 @@ void ApplicationManager::aboutSave()
 	}
 }
 
+void ApplicationManager::saveCurrentProjectSettings(const QString& _projectPath)
+{
+	//
+	// Сохраним используемые модули
+	//
+
+	int tabIndexToSave = m_tabs->currentTab();
+	if (tabIndexToSave == STARTUP_TAB_INDEX) {
+		tabIndexToSave = m_tabs->prevCurrentTab();
+	}
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+		QString("projects/%1/last-active-module_left").arg(_projectPath),
+		QString::number(tabIndexToSave),
+		DataStorageLayer::SettingsStorage::ApplicationSettings
+		);
+
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+		QString("projects/%1/last-active-module_right").arg(_projectPath),
+		QString::number(m_tabsSecondary->currentTab()),
+		DataStorageLayer::SettingsStorage::ApplicationSettings
+		);
+}
+
 void ApplicationManager::aboutLoad(const QString& _fileName)
 {
 	//
@@ -460,6 +483,29 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 		//
 		::updateWindowModified(m_view, false);
 	}
+}
+
+void ApplicationManager::loadCurrentProjectSettings(const QString& _projectPath)
+{
+	//
+	// Восстановим используемые модули
+	//
+
+	const int lastModuleLeft =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				QString("projects/%1/last-active-module_left").arg(_projectPath),
+				DataStorageLayer::SettingsStorage::ApplicationSettings,
+				QString::number(RESEARCH_TAB_INDEX)
+				).toInt();
+	m_tabs->setCurrentTab(lastModuleLeft);
+
+	const int lastModuleRight =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				QString("projects/%1/last-active-module_right").arg(_projectPath),
+				DataStorageLayer::SettingsStorage::ApplicationSettings,
+				QString::number(SCENARIO_TAB_INDEX)
+				).toInt();
+	m_tabsSecondary->setCurrentTab(lastModuleRight);
 }
 
 void ApplicationManager::aboutShowHelp()
@@ -924,19 +970,16 @@ void ApplicationManager::goToEditCurrentProject()
 
 	//
 	// Загрузить настройки файла
+	// Порядок загрузки важен - сначала настройки каждого модуля, потом активные вкладки
 	//
 	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
+	loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 
 	//
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
 	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
-
-	//
-	// Перейти на вкладку следующую после стартовой
-	//
-	m_tabs->setCurrentTab(1);
 
 	//
 	// Закроем уведомление
@@ -951,6 +994,7 @@ void ApplicationManager::closeCurrentProject()
 	//
 	m_scenarioManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+	saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 
 	//
 	// Закроем проект управляющими
