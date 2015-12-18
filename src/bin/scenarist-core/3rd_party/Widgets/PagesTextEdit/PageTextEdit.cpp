@@ -1555,11 +1555,6 @@ void PageTextEdit::resizeEvent(QResizeEvent *e)
 	}
 	else
 		d->_q_adjustScrollbars();
-
-	//
-	// Восстанавливаем позицию курсора
-	//
-//	ensureCursorVisible();
 }
 
 void PageTextEditPrivate::relayoutDocument()

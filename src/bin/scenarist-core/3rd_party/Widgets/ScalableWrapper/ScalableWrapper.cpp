@@ -118,10 +118,38 @@ bool ScalableWrapper::event(QEvent* _event)
 	// Для события showEvent отключаем синхронизацию полос прокрутки,
 	// т.к. в стандартной реализации QGraphicsView они сбиваются для нас
 	//
-	else if (_event->type() == QEvent::Show) {
+	else if (_event->type() == QEvent::Show
+			 || _event->type() == QEvent::Paint
+			 || _event->type() == QEvent::Resize) {
+		//
+		// Корректируем размер встроеного редактора
+		//
+		if (_event->type() == QEvent::Paint) {
+			updateTextEditSize();
+		}
+
+		//
+		// Перед событием отключаем синхронизацию полос прокрутки и отматываем полосу прокрутки
+		// представление наверх, для того, чтобы не смещались координаты сцены и виджет редактора
+		// не уезжал за пределы видимости обёртки
+		//
+
 		setupScrollingSynchronization(false);
 
+		int verticalValue = m_editor->verticalScrollBar()->value();
+		int horizontalValue = m_editor->horizontalScrollBar()->value();
+
+		verticalScrollBar()->setValue(0);
+		horizontalScrollBar()->setValue(0);
+
 		result = QGraphicsView::event(_event);
+
+		//
+		// А после события, восстанавливаем положения полос прокрутки и включаем синхронизацию
+		//
+
+		verticalScrollBar()->setValue(verticalValue);
+		horizontalScrollBar()->setValue(horizontalValue);
 
 		setupScrollingSynchronization(true);
 	}
@@ -141,32 +169,6 @@ bool ScalableWrapper::event(QEvent* _event)
 	}
 
 	return result;
-}
-
-void ScalableWrapper::paintEvent(QPaintEvent* _event)
-{
-	updateTextEditSize();
-
-	//
-	// Перед прорисовкой отключаем синхронизацию полос прокрутки и отматываем полосу прокрутки
-	// представление наверх, для того, чтобы не смещались координаты сцены и виджет редактора
-	// не уезжал за пределы видимости обёртки
-	//
-
-	setupScrollingSynchronization(false);
-
-	int verticalValue = m_editor->verticalScrollBar()->value();
-	int horizontalValue = m_editor->horizontalScrollBar()->value();
-
-	verticalScrollBar()->setValue(0);
-	horizontalScrollBar()->setValue(0);
-
-	QGraphicsView::paintEvent(_event);
-
-	verticalScrollBar()->setValue(verticalValue);
-	horizontalScrollBar()->setValue(horizontalValue);
-
-	setupScrollingSynchronization(true);
 }
 
 void ScalableWrapper::wheelEvent(QWheelEvent* _event)

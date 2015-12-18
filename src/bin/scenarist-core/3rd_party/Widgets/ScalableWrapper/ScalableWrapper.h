@@ -51,11 +51,6 @@ protected:
 	bool event(QEvent* _event);
 
 	/**
-	 * @brief Переопределяется для того, чтобы скорректировать размер встроеного редактора
-	 */
-	void paintEvent(QPaintEvent* _event);
-
-	/**
 	 * @brief Переопределяется для реализации увеличения/уменьшения
 	 */
 	void wheelEvent(QWheelEvent* _event);
