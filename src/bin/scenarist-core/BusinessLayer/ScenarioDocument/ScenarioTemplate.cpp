@@ -619,6 +619,11 @@ ScenarioBlockStyle ScenarioTemplate::blockStyle(ScenarioBlockStyle::Type _forTyp
 	return m_blockStyles.value(_forType);
 }
 
+BusinessLogic::ScenarioBlockStyle ScenarioTemplate::blockStyle(const QTextBlock& _forBlock) const
+{
+	return blockStyle(ScenarioBlockStyle::forBlock(_forBlock));
+}
+
 void ScenarioTemplate::setName(const QString& _name)
 {
 	if (m_name != _name) {

@@ -3131,9 +3131,7 @@ void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate
 {
 	Q_D(PageTextEdit);
 
-#ifndef NO_ANIMATIONS
-	int lastVbarValue = d->vbar->value();
-#endif
+	const int lastVbarValue = d->vbar->value();
 
 	setTextCursor(_cursor);
 	QPoint top = cursorRect().topLeft();
@@ -3145,7 +3143,6 @@ void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate
 	const int SCROLL_DELTA = d->vbar->singleStep() * 5;
 	nextVbarValue -= SCROLL_DELTA;
 
-#ifndef NO_ANIMATIONS
 	//
 	// Если нужно, анимируем
 	//
@@ -3163,9 +3160,6 @@ void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate
 	} else {
 		d->vbar->setValue(nextVbarValue);
 	}
-#else
-	d->vbar->setValue(nextVbarValue);
-#endif
 }
 
 /*!
@@ -3206,8 +3200,10 @@ void PageTextEdit::setPageFormat(QPageSize::PageSizeId _pageFormat)
 void PageTextEdit::setPageMargins(const QMarginsF& _margins)
 {
 	Q_D(PageTextEdit);
-	d->m_pageMetrics.update(d->m_pageMetrics.pageFormat(), _margins);
-	d->relayoutDocument();
+	if (d->m_pageMetrics.mmPageMargins() != _margins) {
+		d->m_pageMetrics.update(d->m_pageMetrics.pageFormat(), _margins);
+		d->relayoutDocument();
+	}
 }
 
 bool PageTextEdit::usePageMode() const

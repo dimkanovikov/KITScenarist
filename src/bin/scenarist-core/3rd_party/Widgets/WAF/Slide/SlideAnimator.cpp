@@ -35,11 +35,7 @@ SlideAnimator::SlideAnimator(QWidget* _widgetForSlide) :
 	Q_ASSERT(_widgetForSlide);
 	_widgetForSlide->installEventFilter(this);
 
-#ifndef NO_ANIMATIONS
 	m_animation->setDuration(300);
-#else
-	m_animation->setDuration(0);
-#endif
 
 	m_decorator->hide();
 

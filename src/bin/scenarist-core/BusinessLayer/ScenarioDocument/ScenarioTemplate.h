@@ -428,6 +428,11 @@ namespace BusinessLogic
 		ScenarioBlockStyle blockStyle(ScenarioBlockStyle::Type _forType) const;
 
 		/**
+		 * @brief Получить стиль заданного блока
+		 */
+		ScenarioBlockStyle blockStyle(const QTextBlock& _forBlock) const;
+
+		/**
 		 * @brief Установить наименование
 		 */
 		void setName(const QString& _name);

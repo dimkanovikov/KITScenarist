@@ -33,11 +33,7 @@ SideSlideAnimator::SideSlideAnimator(QWidget* _widgetForSlide) :
 	Q_ASSERT(_widgetForSlide);
 	_widgetForSlide->parentWidget()->installEventFilter(this);
 
-#ifndef NO_ANIMATIONS
 	m_animation->setDuration(420);
-#else
-	m_animation->setDuration(0);
-#endif
 
 	m_decorator->hide();
 

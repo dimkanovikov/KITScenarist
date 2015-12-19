@@ -771,14 +771,16 @@ void ScenarioTextEdit::mousePressEvent(QMouseEvent* _event)
 	// Событие о клике приходит на 1, 3, 5 и т.д. кликов
 	//
 
-	const qint64 curMouseClickTime = QDateTime::currentMSecsSinceEpoch();
-	const qint64 timeDelta = curMouseClickTime - m_lastMouseClickTime;
-	if (timeDelta <= (QApplication::styleHints()->mouseDoubleClickInterval())) {
-		m_mouseClicks += 2;
-	} else {
-		m_mouseClicks = 1;
+	if (_event->button() == Qt::LeftButton) {
+		const qint64 curMouseClickTime = QDateTime::currentMSecsSinceEpoch();
+		const qint64 timeDelta = curMouseClickTime - m_lastMouseClickTime;
+		if (timeDelta <= (QApplication::styleHints()->mouseDoubleClickInterval())) {
+			m_mouseClicks += 2;
+		} else {
+			m_mouseClicks = 1;
+		}
+		m_lastMouseClickTime = curMouseClickTime;
 	}
-	m_lastMouseClickTime = curMouseClickTime;
 
 	//
 	// Тройной клик обрабатываем самостоятельно

@@ -179,6 +179,23 @@ namespace {
 			}
 		}
 	}
+
+	/**
+	 * @brief Обновить цвета текста и фона блоков для заданного документа
+	 */
+	static void updateDocumentBlocksColors(QTextDocument* _document) {
+		QTextCursor cursor(_document);
+		do {
+			cursor.movePosition(QTextCursor::StartOfBlock);
+			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+			ScenarioBlockStyle blockStyle =
+				BusinessLogic::ScenarioTemplateFacade::getTemplate().blockStyle(cursor.block());
+			cursor.mergeCharFormat(blockStyle.charFormat());
+			cursor.mergeBlockCharFormat(blockStyle.charFormat());
+			cursor.mergeBlockFormat(blockStyle.blockFormat());
+			cursor.movePosition(QTextCursor::NextBlock);
+		} while (!cursor.atEnd());
+	}
 }
 
 
@@ -339,9 +356,10 @@ void ScenarioManager::aboutTextEditSettingsUpdated()
 {
 	BusinessLogic::ScenarioTemplateFacade::updateTemplatesColors();
 
-	m_scenario->refresh();
-	m_scenarioDraft->refresh();
 	m_textEditManager->reloadTextEditSettings();
+
+	::updateDocumentBlocksColors(m_scenario->document());
+	::updateDocumentBlocksColors(m_scenarioDraft->document());
 }
 
 void ScenarioManager::aboutNavigatorSettingsUpdated()
@@ -352,8 +370,6 @@ void ScenarioManager::aboutNavigatorSettingsUpdated()
 
 void ScenarioManager::aboutChronometrySettingsUpdated()
 {
-	m_scenario->refresh();
-	m_scenarioDraft->refresh();
 	aboutUpdateDuration(m_textEditManager->cursorPosition());
 
 	m_textEditManager->reloadTextEditSettings();
@@ -361,8 +377,6 @@ void ScenarioManager::aboutChronometrySettingsUpdated()
 
 void ScenarioManager::aboutCountersSettingsUpdated()
 {
-	m_scenario->refresh();
-	m_scenarioDraft->refresh();
 	aboutUpdateCounters();
 
 	m_textEditManager->reloadTextEditSettings();
