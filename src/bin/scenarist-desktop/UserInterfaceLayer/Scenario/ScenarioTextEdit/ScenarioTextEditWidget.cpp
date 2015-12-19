@@ -129,25 +129,27 @@ void ScenarioTextEditWidget::setAutoReplacing(bool _replacing)
 
 void ScenarioTextEditWidget::setUsePageView(bool _use)
 {
-	//
-	// Установка постраничного режима так же тянет за собой ряд настроек
-	//
-	QMarginsF pageMargins(15, 5, 5, 5);
-	Qt::Alignment pageNumbersAlign;
-	if (_use) {
-		pageMargins = ScenarioTemplateFacade::getTemplate().pageMargins();
-		pageNumbersAlign = ScenarioTemplateFacade::getTemplate().numberingAlignment();
+	if (m_editor->usePageMode() != _use) {
+		//
+		// Установка постраничного режима так же тянет за собой ряд настроек
+		//
+		QMarginsF pageMargins(15, 5, 5, 5);
+		Qt::Alignment pageNumbersAlign;
+		if (_use) {
+			pageMargins = ScenarioTemplateFacade::getTemplate().pageMargins();
+			pageNumbersAlign = ScenarioTemplateFacade::getTemplate().numberingAlignment();
+		}
+
+		m_editor->setUsePageMode(_use);
+		m_editor->setPageMargins(pageMargins);
+		m_editor->setPageNumbersAlignment(pageNumbersAlign);
+
+		//
+		// В дополнение установим шрифт по умолчанию для документа (шрифтом будет рисоваться нумерация)
+		//
+		m_editor->document()->setDefaultFont(
+					ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::Action).font());
 	}
-
-	m_editor->setUsePageMode(_use);
-	m_editor->setPageMargins(pageMargins);
-	m_editor->setPageNumbersAlignment(pageNumbersAlign);
-
-	//
-	// В дополнение установим шрифт по умолчанию для документа (шрифтом будет рисоваться нумерация)
-	//
-	m_editor->document()->setDefaultFont(
-		ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::Action).font());
 }
 
 void ScenarioTextEditWidget::setUseSpellChecker(bool _use)

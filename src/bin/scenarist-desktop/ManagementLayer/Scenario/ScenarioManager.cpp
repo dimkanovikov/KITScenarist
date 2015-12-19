@@ -248,11 +248,6 @@ void ScenarioManager::loadCurrentProject()
 	m_textEditManager->setScenarioDocument(m_scenario->document());
 
 	//
-	// Возврат всех окон в исходное положение - навигатор на верх, данные сценария вперёд
-	//
-	m_textEditManager->setCursorPosition(0);
-
-	//
 	// Обновим счётчики, когда данные полностью загрузятся
 	//
 	QTimer::singleShot(100, this, SLOT(aboutUpdateCounters()));

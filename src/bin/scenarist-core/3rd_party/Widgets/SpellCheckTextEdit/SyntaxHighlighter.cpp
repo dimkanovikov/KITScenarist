@@ -354,7 +354,7 @@ void SyntaxHighlighter::setDocument(QTextDocument *doc)
 		connect(d->doc, SIGNAL(contentsChange(int,int,int)),
 				d, SLOT(_q_reformatBlocks(int,int,int)));
 		d->rehighlightPending = true;
-		QTimer::singleShot(0, d, SLOT(_q_delayedRehighlight()));
+		rehighlight();
 	}
 }
 

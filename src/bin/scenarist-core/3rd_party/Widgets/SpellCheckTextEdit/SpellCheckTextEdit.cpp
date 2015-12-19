@@ -65,7 +65,7 @@ void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 		//
 		// Заново выделим слова не проходящие проверку орфографии вновь заданного языка
 		//
-		m_spellCheckHighlighter->setSpellChecker(m_spellChecker);
+		m_spellCheckHighlighter->rehighlight();
 	}
 }
 
