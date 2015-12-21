@@ -94,6 +94,14 @@ Section "App files section" SecFiles
   SetOutPath "$INSTDIR"
   File "${pkgdir}\msvcp120.dll"
   File "${pkgdir}\msvcr120.dll"
+  
+  File "${pkgdir}\libeay32.dll"
+  File "${pkgdir}\ssleay32.dll"
+  
+  File "${pkgdir}\libEGL.dll"
+  File "${pkgdir}\libGLESv2.dll"
+  File "${pkgdir}\opengl32sw.dll"
+  
   File "${pkgdir}\Qt5Core.dll"
   File "${pkgdir}\Qt5Gui.dll"
   File "${pkgdir}\Qt5Network.dll"
@@ -108,9 +116,6 @@ Section "App files section" SecFiles
   File "${pkgdir}\Qt5WebEngineWidgets.dll"
   File "${pkgdir}\Qt5Widgets.dll"
   File "${pkgdir}\Qt5Xml.dll"
-  
-  File "${pkgdir}\libeay32.dll"
-  File "${pkgdir}\ssleay32.dll"
   
   File "${pkgdir}\hunspell.dll"
   File "${pkgdir}\fileformats.dll"
