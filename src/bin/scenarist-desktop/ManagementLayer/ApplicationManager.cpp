@@ -343,24 +343,29 @@ void ApplicationManager::aboutSaveAs()
 			//
 			// ... скопируем текущую базу в указанный файл
 			//
-			QFile::copy(ProjectsManager::currentProject().path(), saveAsProjectFileName);
+			if (QFile::copy(ProjectsManager::currentProject().path(), saveAsProjectFileName)) {
 
-			//
-			// ... переключаемся на использование другого файла
-			//
-			DatabaseLayer::Database::setCurrentFile(saveAsProjectFileName);
-			m_projectsManager->setCurrentProject(saveAsProjectFileName);
+				//
+				// ... переключаемся на использование другого файла
+				//
+				DatabaseLayer::Database::setCurrentFile(saveAsProjectFileName);
+				m_projectsManager->setCurrentProject(saveAsProjectFileName);
 
-			//
-			// ... сохраняем изменения
-			//
-			aboutSave();
-			m_view->setWindowModified(true);
+				//
+				// ... сохраняем изменения
+				//
+				aboutSave();
+				m_view->setWindowModified(true);
 
-			//
-			// ... обновим заголовок
-			//
-			updateWindowTitle();
+				//
+				// ... обновим заголовок
+				//
+				updateWindowTitle();
+			} else {
+				QLightBoxMessage::critical(m_view, tr("Saving error"),
+					tr("Can't save project as <b>%1</b>.<br/> Please check permissions and retry.")
+					.arg(saveAsProjectFileName));
+			}
 		}
 
 		//

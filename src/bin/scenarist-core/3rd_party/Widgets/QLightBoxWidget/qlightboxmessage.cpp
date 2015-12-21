@@ -94,7 +94,7 @@ void QLightBoxMessage::initView()
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
 	topLayout->setContentsMargins(QMargins());
-	topLayout->setSpacing(0);
+	topLayout->setSpacing(20);
 	topLayout->addWidget(m_icon, 0, Qt::AlignLeft | Qt::AlignTop);
 	topLayout->addWidget(m_text, 1);
 	QVBoxLayout* layout = new QVBoxLayout;

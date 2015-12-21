@@ -88,7 +88,7 @@ void BackupHelper::saveBackup(const QString& _filePath)
 				// Храним всего 10 копий, удаляя более старые
 				//
 				QSqlQuery backuper(db);
-				backuper.exec("CREATE TABLE versions (id INTEGER PRIMARY KEY, version TEXT NOT NULL, datetime TEXT NOT NULL)");
+				backuper.exec("CREATE TABLE IF NOT EXISTS versions (id INTEGER, version TEXT NOT NULL, datetime TEXT NOT NULL)");
 				backuper.exec("UPDATE versions SET id = (id + 1)");
 				backuper.exec("DELETE FROM versions WHERE id = 11");
 
