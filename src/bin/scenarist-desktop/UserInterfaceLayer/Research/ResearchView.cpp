@@ -294,7 +294,12 @@ void ResearchView::initConnections()
 	connect(m_ui->removeResearchItem, &FlatButton::clicked, [=] {
 		emit removeResearchRequested(currentResearchIndex());
 	});
-	connect(m_ui->search, &FlatButton::toggled, m_ui->searchWidget, &SearchWidget::setVisible);
+	connect(m_ui->search, &FlatButton::toggled, [=] (bool _visible) {
+		m_ui->searchWidget->setVisible(_visible);
+		if (_visible) {
+			m_ui->searchWidget->setFocus();
+		}
+	});
 
 	//
 	// Внутренние соединения формы
