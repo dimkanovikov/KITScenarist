@@ -3,6 +3,8 @@
 
 #include "StandardKeyHandler.h"
 
+class QStringListModel;
+
 
 namespace KeyProcessingLayer
 {
@@ -31,6 +33,12 @@ namespace KeyProcessingLayer
 
 	private:
 		void storeCharacter() const;
+
+	private:
+		/**
+		 * @brief Модель персонажей текущей сцены
+		 */
+		QStringListModel* m_sceneCharactersModel;
 	};
 }
 

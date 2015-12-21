@@ -22,7 +22,8 @@ using UserInterface::ScenarioTextEdit;
 
 
 CharacterHandler::CharacterHandler(ScenarioTextEdit* _editor) :
-	StandardKeyHandler(_editor)
+	StandardKeyHandler(_editor),
+	m_sceneCharactersModel(new QStringListModel(_editor))
 {
 }
 
@@ -81,7 +82,8 @@ void CharacterHandler::prehandle()
 		if (character.isEmpty()) {
 			model = StorageFacade::characterStorage()->all();
 		} else {
-			model = new QStringListModel(QStringList() << character.toUpper(), editor());
+			m_sceneCharactersModel->setStringList(QStringList() << character.toUpper());
+			model = m_sceneCharactersModel;
 		}
 		editor()->complete(model, QString::null);
 	}
@@ -305,7 +307,42 @@ void CharacterHandler::handleOther(QKeyEvent*)
 
 	switch (currentSection) {
 		case CharacterParser::SectionName: {
-			sectionModel = StorageFacade::characterStorage()->all();
+			QStringList sceneCharacters;
+			//
+			// Когда введён один символ имени пробуем оптимизировать поиск персонажей из текущей сцены
+			//
+			if (cursorBackwardText.length() < 2) {
+				cursor.movePosition(QTextCursor::PreviousBlock);
+				while (!cursor.atStart()
+					   && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneHeading) {
+					if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
+						const QString character = CharacterParser::name(cursor.block().text());
+						if (character.startsWith(cursorBackwardText, Qt::CaseInsensitive)
+							&& !sceneCharacters.contains(character)) {
+							sceneCharacters.append(character.toUpper());
+						}
+					} else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
+						const QStringList characters = SceneCharactersParser::characters(cursor.block().text());
+						foreach (const QString& character, characters) {
+							if (character.startsWith(cursorBackwardText, Qt::CaseInsensitive)
+								&& !sceneCharacters.contains(character)) {
+								sceneCharacters.append(character.toUpper());
+							}
+						}
+					}
+					cursor.movePosition(QTextCursor::PreviousBlock);
+				}
+			}
+
+			//
+			// По возможности используем список персонажей сцены
+			//
+			if (!sceneCharacters.isEmpty()) {
+				m_sceneCharactersModel->setStringList(sceneCharacters);
+				sectionModel = m_sceneCharactersModel;
+			} else {
+				sectionModel = StorageFacade::characterStorage()->all();
+			}
 			sectionText = CharacterParser::name(currentBlockText);
 			break;
 		}

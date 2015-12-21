@@ -3148,8 +3148,8 @@ void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate
 	//
 	if (_animate) {
 		QPropertyAnimation* animation = new QPropertyAnimation(d->vbar, "value", this);
-		qreal delta = log(abs(nextVbarValue - lastVbarValue) / 500);
-		if (delta <= 0) {
+		qreal delta = log(abs(nextVbarValue - lastVbarValue) / 300) / 2;
+		if (delta < 1) {
 			delta = 1;
 		}
 		animation->setDuration(300 * delta);

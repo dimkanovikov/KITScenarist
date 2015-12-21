@@ -102,40 +102,6 @@ namespace TextEditHelper
 	}
 
 	/**
-	 * @brief Украшения документа
-	 *
-	 * Например подмена многоточий и т.п.
-	 */
-	static void beautifyDocument(QTextDocument* _document) {
-		if (_document != 0) {
-			QTextCursor cursor(_document);
-
-			while (!cursor.isNull() && !cursor.atEnd()) {
-				cursor = _document->find("...", cursor);
-
-				if (!cursor.isNull()) {
-					cursor.insertText("…");
-				}
-			}
-
-			while (!cursor.isNull() && !cursor.atEnd()) {
-				cursor = _document->find("\"", cursor);
-
-				if (!cursor.isNull()) {
-					QTextCursor cursorCopy = cursor;
-					cursorCopy.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
-					if (cursorCopy.selectedText().isEmpty()
-						|| cursorCopy.selectedText().endsWith(" ")) {
-						cursor.insertText("«");
-					} else {
-						cursor.insertText("»");
-					}
-				}
-			}
-		}
-	}
-
-	/**
 	 * @brief Функции для получения корректных кавычек в зависимости от локали приложения
 	 */
 	/** @{ */
@@ -148,7 +114,8 @@ namespace TextEditHelper
 			}
 
 			case QLocale::Russian:
-			case QLocale::Spanish: {
+			case QLocale::Spanish:
+			case QLocale::French: {
 				if (_open) {
 					quote = "«";
 				} else {
@@ -172,6 +139,63 @@ namespace TextEditHelper
 	static QString localOpenQuote() { return localeQuote(true); }
 	static QString localCloseQuote() { return localeQuote(false); }
 	/** @{ */
+
+	/**
+	 * @brief Украшения документа
+	 *
+	 * Например подмена многоточий и т.п.
+	 */
+	static void beautifyDocument(QTextDocument* _document) {
+		if (_document != 0) {
+			QTextCursor cursor(_document);
+
+			//
+			// Заменяем три точки на многоточие
+			//
+			while (!cursor.isNull() && !cursor.atEnd()) {
+				cursor = _document->find("...", cursor);
+
+				if (!cursor.isNull()) {
+					cursor.insertText("…");
+				}
+			}
+
+			//
+			// Ставим пробелы после многоточий
+			//
+			cursor = QTextCursor(_document);
+			while (!cursor.isNull() && !cursor.atEnd()) {
+				cursor = _document->find("…", cursor);
+
+				if (!cursor.isNull() && !cursor.atBlockEnd()) {
+					cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+					if (cursor.selectedText() != "… ") {
+						cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+						cursor.insertText("… ");
+					}
+				}
+			}
+
+			//
+			// Корректируем кавычки
+			//
+			cursor = QTextCursor(_document);
+			while (!cursor.isNull() && !cursor.atEnd()) {
+				cursor = _document->find("\"", cursor);
+
+				if (!cursor.isNull()) {
+					QTextCursor cursorCopy = cursor;
+					cursorCopy.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
+					if (cursorCopy.selectedText().isEmpty()
+						|| cursorCopy.selectedText().endsWith(" ")) {
+						cursor.insertText(localOpenQuote());
+					} else {
+						cursor.insertText(localCloseQuote());
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * @brief Украшения документа при вводе текста
