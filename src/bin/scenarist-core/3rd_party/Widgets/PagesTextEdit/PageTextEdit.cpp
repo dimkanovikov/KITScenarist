@@ -58,6 +58,7 @@
 #include <qdatetime.h>
 #include <qapplication.h>
 #include <limits.h>
+#include <math.h>
 #include <qtexttable.h>
 #include <qvariant.h>
 #include <qscopedpointer.h>

@@ -316,17 +316,19 @@ void CharacterHandler::handleOther(QKeyEvent*)
 				while (!cursor.atStart()
 					   && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneHeading) {
 					if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
-						const QString character = CharacterParser::name(cursor.block().text());
+                        const QString character = CharacterParser::name(cursor.block().text());
+                        const QString characterName = character.toUpper().simplified();
 						if (character.startsWith(cursorBackwardText, Qt::CaseInsensitive)
-							&& !sceneCharacters.contains(character)) {
-							sceneCharacters.append(character.toUpper());
+                            && !sceneCharacters.contains(characterName)) {
+                            sceneCharacters.append(characterName);
 						}
 					} else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
 						const QStringList characters = SceneCharactersParser::characters(cursor.block().text());
 						foreach (const QString& character, characters) {
-							if (character.startsWith(cursorBackwardText, Qt::CaseInsensitive)
-								&& !sceneCharacters.contains(character)) {
-								sceneCharacters.append(character.toUpper());
+                            const QString characterName = character.toUpper().simplified();
+                            if (characterName.startsWith(cursorBackwardText, Qt::CaseInsensitive)
+                                && !sceneCharacters.contains(characterName)) {
+                                sceneCharacters.append(characterName);
 							}
 						}
 					}
@@ -338,7 +340,7 @@ void CharacterHandler::handleOther(QKeyEvent*)
 			// По возможности используем список персонажей сцены
 			//
 			if (!sceneCharacters.isEmpty()) {
-				m_sceneCharactersModel->setStringList(sceneCharacters);
+                m_sceneCharactersModel->setStringList(sceneCharacters);
 				sectionModel = m_sceneCharactersModel;
 			} else {
 				sectionModel = StorageFacade::characterStorage()->all();
