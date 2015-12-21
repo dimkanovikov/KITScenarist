@@ -185,6 +185,7 @@ namespace {
 	 */
 	static void updateDocumentBlocksColors(QTextDocument* _document) {
 		QTextCursor cursor(_document);
+		cursor.beginEditBlock();
 		do {
 			cursor.movePosition(QTextCursor::StartOfBlock);
 			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
@@ -195,6 +196,7 @@ namespace {
 			cursor.mergeBlockFormat(blockStyle.blockFormat());
 			cursor.movePosition(QTextCursor::NextBlock);
 		} while (!cursor.atEnd());
+		cursor.endEditBlock();
 	}
 }
 
