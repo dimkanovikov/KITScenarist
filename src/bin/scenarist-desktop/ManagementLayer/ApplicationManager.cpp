@@ -344,6 +344,12 @@ void ApplicationManager::aboutSaveAs()
 			// ... скопируем текущую базу в указанный файл
 			//
 			if (QFile::copy(ProjectsManager::currentProject().path(), saveAsProjectFileName)) {
+				//
+				// ... отключаем индикатор соединения, если мы работали с облаком
+				//
+				if (m_projectsManager->currentProject().isRemote()) {
+					m_tabs->removeIndicator();
+				}
 
 				//
 				// ... переключаемся на использование другого файла

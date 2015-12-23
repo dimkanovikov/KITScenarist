@@ -138,6 +138,13 @@ bool ScalableWrapper::event(QEvent* _event)
 		result = QGraphicsView::event(_event);
 
 		//
+		// Корректируем размер сцены, чтобы исключить внезапные смещения редактора на ней
+		//
+		if (m_scene->sceneRect() != viewport()->rect()) {
+			m_scene->setSceneRect(viewport()->rect());
+		}
+
+		//
 		// А после события, восстанавливаем положения полос прокрутки и включаем синхронизацию
 		//
 
