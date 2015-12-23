@@ -148,3 +148,39 @@ void SceneDescriptionHandler::handleTab(QKeyEvent*)
 		}
 	}
 }
+
+void SceneDescriptionHandler::handleOther(QKeyEvent* _event)
+{
+	//
+	// Получим необходимые значения
+	//
+	// ... курсор в текущем положении
+	QTextCursor cursor = editor()->textCursor();
+	// ... блок текста в котором находится курсор
+	QTextBlock currentBlock = cursor.block();
+	// ... текст до курсора
+	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
+
+
+	//
+	// Обработка
+	//
+	if (cursorBackwardText.endsWith(".")
+		&& _event != 0
+		&& _event->text() == ".") {
+		//! Если нажата точка
+
+		//
+		// Если было введено какое-либо значение из списка мест (ИНТ./НАТ. и т.п.)
+		// то необходимо преобразовать блок во время и место
+		//
+		QString maybePlace = cursorBackwardText.toUpper();
+		if (DataStorageLayer::StorageFacade::placeStorage()->hasPlace(maybePlace)) {
+			editor()->changeScenarioBlockType(ScenarioBlockStyle::SceneHeading);
+		}
+	} else {
+		//! В противном случае, обрабатываем в базовом классе
+
+		StandardKeyHandler::handleOther(_event);
+	}
+}

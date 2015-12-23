@@ -109,8 +109,37 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
 {
-	QTextCursor cursor = textCursor();
-	cursor.beginEditBlock();
+	textCursor().beginEditBlock();
+
+	//
+	// Если работаем в режиме поэпизодника и добавляется заголовок новой сцены, группы сцен,
+	// или папки, то нужно сдвинуть курсор до конца текущей сцены
+	//
+	if (outlineMode()
+		&& scenarioBlockType() == ScenarioBlockStyle::SceneDescription
+		&& (_blockType == ScenarioBlockStyle::SceneHeading
+			|| _blockType == ScenarioBlockStyle::SceneGroupHeader
+			|| _blockType == ScenarioBlockStyle::FolderHeader)) {
+		ScenarioBlockStyle::Type currentBlockType = scenarioBlockType();
+		while (!textCursor().atEnd()
+			   && currentBlockType != ScenarioBlockStyle::SceneHeading
+			   && currentBlockType != ScenarioBlockStyle::SceneGroupHeader
+			   && currentBlockType != ScenarioBlockStyle::SceneGroupFooter
+			   && currentBlockType != ScenarioBlockStyle::FolderFooter
+			   && currentBlockType != ScenarioBlockStyle::FolderHeader) {
+			moveCursor(QTextCursor::NextBlock);
+			moveCursor(QTextCursor::EndOfBlock);
+			currentBlockType = scenarioBlockType();
+		}
+		//
+		// Если дошли не до конца документа, а до начала новой сцены,
+		// возвращаем курсор в конец предыдущего блока
+		//
+		if (!textCursor().atEnd()) {
+			moveCursor(QTextCursor::PreviousBlock);
+			moveCursor(QTextCursor::EndOfBlock);
+		}
+	}
 
 	//
 	// Вставим блок
@@ -127,65 +156,109 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
 	//
 	emit currentStyleChanged();
 
-	cursor.endEditBlock();
+	textCursor().endEditBlock();
 }
 
 void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockType, bool _forced)
 {
-	if (scenarioBlockType() == _blockType) {
-		return;
-	}
 
 	QTextCursor cursor = textCursor();
 	cursor.beginEditBlock();
 
 	//
-	// Нельзя сменить стиль заголовка титра и конечных элементов групп и папок
+	// Если работаем в режиме поэпизодника и описание сцены меняется на заголовок сцены,
+	// группы сцен, или папки, то текущий блок нужно перенести в конец текущей сцены
 	//
-	bool canChangeType =
-			_forced
-			|| ((scenarioBlockType() != ScenarioBlockStyle::TitleHeader)
-				&& (scenarioBlockType() != ScenarioBlockStyle::SceneGroupFooter)
-				&& (scenarioBlockType() != ScenarioBlockStyle::FolderFooter));
-
-	//
-	// Если текущий вид можно сменить
-	//
-	if (canChangeType) {
+	if (outlineMode()
+		&& scenarioBlockType() == ScenarioBlockStyle::SceneDescription
+		&& (_blockType == ScenarioBlockStyle::SceneHeading
+			|| _blockType == ScenarioBlockStyle::SceneGroupHeader
+			|| _blockType == ScenarioBlockStyle::FolderHeader)) {
 		//
-		// Закроем подсказку
+		// Сохраним текст блока, а сам блок удалим
 		//
-		closeCompleter();
-
-		ScenarioBlockStyle oldStyle = ScenarioTemplateFacade::getTemplate().blockStyle(scenarioBlockType());
-		ScenarioBlockStyle newStyle = ScenarioTemplateFacade::getTemplate().blockStyle(_blockType);
+		const QString blockText = cursor.block().text();
+		moveCursor(QTextCursor::StartOfBlock);
+		moveCursor(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		moveCursor(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+		textCursor().deleteChar();
 
 		//
-		// Если необходимо сменить группирующий стиль на аналогичный
+		// Если блок был не в конце документа, перейдём к предыдущему
 		//
-		if (oldStyle.isEmbeddableHeader()
-			&& newStyle.isEmbeddableHeader()) {
-			applyScenarioGroupTypeToGroupBlock(_blockType);
+		if (!textCursor().atEnd()) {
+			moveCursor(QTextCursor::PreviousBlock);
+			moveCursor(QTextCursor::EndOfBlock);
 		}
-		//
-		// Во всех остальных случаях
-		//
-		else {
-			//
-			// Обработаем предшествующий установленный стиль
-			//
-			cleanScenarioTypeFromBlock();
 
-			//
-			// Применим новый стиль к блоку
-			//
-			applyScenarioTypeToBlock(_blockType);
-		}
+		//
+		// Вставляем блок
+		//
+		addScenarioBlock(_blockType);
+
+		//
+		// Восстанавливаем текст
+		//
+		textCursor().insertText(blockText);
 
 		//
 		// Уведомим о том, что стиль сменился
 		//
 		emit currentStyleChanged();
+	}
+
+	if (scenarioBlockType() != _blockType) {
+		//
+		// Нельзя сменить стиль заголовка титра и конечных элементов групп и папок
+		//
+		bool canChangeType =
+				_forced
+				|| ((scenarioBlockType() != ScenarioBlockStyle::TitleHeader)
+					&& (scenarioBlockType() != ScenarioBlockStyle::SceneGroupFooter)
+					&& (scenarioBlockType() != ScenarioBlockStyle::FolderFooter));
+
+		//
+		// Если текущий вид можно сменить
+		//
+		if (canChangeType) {
+			//
+			// Закроем подсказку
+			//
+			closeCompleter();
+
+			//
+			// Определим стили
+			//
+			ScenarioBlockStyle oldStyle = ScenarioTemplateFacade::getTemplate().blockStyle(scenarioBlockType());
+			ScenarioBlockStyle newStyle = ScenarioTemplateFacade::getTemplate().blockStyle(_blockType);
+
+			//
+			// Если необходимо сменить группирующий стиль на аналогичный
+			//
+			if (oldStyle.isEmbeddableHeader()
+				&& newStyle.isEmbeddableHeader()) {
+				applyScenarioGroupTypeToGroupBlock(_blockType);
+			}
+			//
+			// Во всех остальных случаях
+			//
+			else {
+				//
+				// Обработаем предшествующий установленный стиль
+				//
+				cleanScenarioTypeFromBlock();
+
+				//
+				// Применим новый стиль к блоку
+				//
+				applyScenarioTypeToBlock(_blockType);
+			}
+
+			//
+			// Уведомим о том, что стиль сменился
+			//
+			emit currentStyleChanged();
+		}
 	}
 
 	cursor.endEditBlock();
