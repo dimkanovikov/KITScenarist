@@ -854,7 +854,7 @@ void ScenarioManager::setWorkingMode(QObject* _sender)
 			}
 
 			nextTextDocument->setOutlineMode(prevTextDocument->outlineMode());
-			m_textEditManager->setScenarioDocument(nextTextDocument);
+			m_textEditManager->setScenarioDocument(nextTextDocument, workingModeIsDraft);
 			m_textEditManager->setAdditionalCursors(additionalCursors);
 			prevNavigatorManager->clearSelection();
 
