@@ -79,11 +79,14 @@ void CharacterHandler::prehandle()
 		// Показываем всплывающую подсказку
 		//
 		QAbstractItemModel* model = 0;
-		if (character.isEmpty()) {
-			model = StorageFacade::characterStorage()->all();
-		} else {
+		if (!character.isEmpty()) {
 			m_sceneCharactersModel->setStringList(QStringList() << character.toUpper());
 			model = m_sceneCharactersModel;
+		} else if (!previousCharacter.isEmpty()) {
+			m_sceneCharactersModel->setStringList(QStringList() << previousCharacter.toUpper());
+			model = m_sceneCharactersModel;
+		} else {
+			model = StorageFacade::characterStorage()->all();
 		}
 		editor()->complete(model, QString::null);
 	}
@@ -316,19 +319,19 @@ void CharacterHandler::handleOther(QKeyEvent*)
 				while (!cursor.atStart()
 					   && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneHeading) {
 					if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::Character) {
-                        const QString character = CharacterParser::name(cursor.block().text());
-                        const QString characterName = character.toUpper().simplified();
+						const QString character = CharacterParser::name(cursor.block().text());
+						const QString characterName = character.toUpper().simplified();
 						if (character.startsWith(cursorBackwardText, Qt::CaseInsensitive)
-                            && !sceneCharacters.contains(characterName)) {
-                            sceneCharacters.append(characterName);
+							&& !sceneCharacters.contains(characterName)) {
+							sceneCharacters.append(characterName);
 						}
 					} else if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
 						const QStringList characters = SceneCharactersParser::characters(cursor.block().text());
 						foreach (const QString& character, characters) {
-                            const QString characterName = character.toUpper().simplified();
-                            if (characterName.startsWith(cursorBackwardText, Qt::CaseInsensitive)
-                                && !sceneCharacters.contains(characterName)) {
-                                sceneCharacters.append(characterName);
+							const QString characterName = character.toUpper().simplified();
+							if (characterName.startsWith(cursorBackwardText, Qt::CaseInsensitive)
+								&& !sceneCharacters.contains(characterName)) {
+								sceneCharacters.append(characterName);
 							}
 						}
 					}
@@ -340,7 +343,7 @@ void CharacterHandler::handleOther(QKeyEvent*)
 			// По возможности используем список персонажей сцены
 			//
 			if (!sceneCharacters.isEmpty()) {
-                m_sceneCharactersModel->setStringList(sceneCharacters);
+				m_sceneCharactersModel->setStringList(sceneCharacters);
 				sectionModel = m_sceneCharactersModel;
 			} else {
 				sectionModel = StorageFacade::characterStorage()->all();
