@@ -122,6 +122,7 @@ void ScenarioNavigator::setCommentOnly(bool _isCommentOnly)
 	m_removeItem->setVisible(!_isCommentOnly);
 	m_navigationTree->setDragDropMode(_isCommentOnly ? QAbstractItemView::NoDragDrop : QAbstractItemView::DragDrop);
 	m_navigationTree->setSelectionMode(_isCommentOnly ? QAbstractItemView::SingleSelection : QAbstractItemView::ContiguousSelection);
+	m_navigationTree->setContextMenuPolicy(_isCommentOnly ? Qt::PreventContextMenu : Qt::CustomContextMenu);
 }
 
 bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)

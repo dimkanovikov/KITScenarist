@@ -79,43 +79,47 @@ ScenarioBlockStyle::Type StandardKeyHandler::changeForEnter(ScenarioBlockStyle::
 
 void StandardKeyHandler::handleDelete(QKeyEvent* _event)
 {
-	//
-	// TODO: как быть с невидимыми блоками?
-	//
+	if (!editor()->isReadOnly()) {
+		//
+		// TODO: как быть с невидимыми блоками?
+		//
 
-	//
-	// Удаление
-	//
-	removeCharacters(false);
+		//
+		// Удаление
+		//
+		removeCharacters(false);
 
-	//
-	// Покажем подсказку, если это возможно
-	//
-	handleOther(_event);
+		//
+		// Покажем подсказку, если это возможно
+		//
+		handleOther(_event);
+	}
 }
 
 void StandardKeyHandler::handleBackspace(QKeyEvent* _event)
 {
-	//
-	// Удаление
-	//
-	removeCharacters(true);
+	if (!editor()->isReadOnly()) {
+		//
+		// Удаление
+		//
+		removeCharacters(true);
 
-	//
-	// Переходим к видимому блоку
-	//
-	QTextCursor cursor = editor()->textCursor();
-	while (!cursor.atStart()
-		   && !cursor.block().isVisible()) {
-		cursor.movePosition(QTextCursor::StartOfBlock);
-		cursor.movePosition(QTextCursor::Left);
+		//
+		// Переходим к видимому блоку
+		//
+		QTextCursor cursor = editor()->textCursor();
+		while (!cursor.atStart()
+			   && !cursor.block().isVisible()) {
+			cursor.movePosition(QTextCursor::StartOfBlock);
+			cursor.movePosition(QTextCursor::Left);
+		}
+		editor()->setTextCursor(cursor);
+
+		//
+		// Покажем подсказку, если это возможно
+		//
+		handleOther(_event);
 	}
-	editor()->setTextCursor(cursor);
-
-	//
-	// Покажем подсказку, если это возможно
-	//
-	handleOther(_event);
 }
 
 void StandardKeyHandler::handleEscape(QKeyEvent*)

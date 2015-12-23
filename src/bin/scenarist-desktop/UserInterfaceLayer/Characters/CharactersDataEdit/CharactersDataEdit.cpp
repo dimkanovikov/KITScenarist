@@ -123,7 +123,7 @@ void CharactersDataEdit::setPhotos(const QList<QPixmap>& _photos)
 	//
 	// Обновим состояние доступности кнопки добавления фотографий
 	//
-	bool addPhotoVisible = ui->photos->canAddPhoto();
+	bool addPhotoVisible = ui->photos->canAddPhoto() && !ui->name->isReadOnly();
 	ui->addPhoto->setVisible(addPhotoVisible);
 
 	initConnections();

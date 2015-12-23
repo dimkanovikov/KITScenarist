@@ -204,6 +204,7 @@ void ResearchView::editImage(const QString& _name, const QPixmap& _image)
 
 void ResearchView::setCommentOnly(bool _isCommentOnly)
 {
+	m_ui->researchNavigator->setContextMenuPolicy(_isCommentOnly ? Qt::PreventContextMenu : Qt::DefaultContextMenu);
 	m_ui->addResearchItem->setEnabled(!_isCommentOnly);
 	m_ui->removeResearchItem->setEnabled(!_isCommentOnly);
 	m_ui->scenarioName->setReadOnly(_isCommentOnly);
@@ -217,6 +218,7 @@ void ResearchView::setCommentOnly(bool _isCommentOnly)
 	m_ui->synopsisText->setReadOnly(_isCommentOnly);
 	m_ui->textName->setReadOnly(_isCommentOnly);
 	m_ui->textDescription->setReadOnly(_isCommentOnly);
+	m_ui->searchWidget->setSearchOnly(_isCommentOnly);
 }
 
 bool ResearchView::eventFilter(QObject* _object, QEvent* _event)
