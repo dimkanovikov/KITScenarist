@@ -210,13 +210,16 @@ void SpellCheckTextEdit::aboutAddWordToUserDictionary() const
 	m_spellCheckHighlighter->rehighlight();
 }
 
-void SpellCheckTextEdit::aboutReplaceWordOnSuggestion() const
+void SpellCheckTextEdit::aboutReplaceWordOnSuggestion()
 {
 	if (QAction* suggestAction = qobject_cast<QAction*>(sender())) {
-		QTextCursor tc = cursorForPosition(m_lastCursorPosition);
-		tc.select(QTextCursor::WordUnderCursor);
-		tc.removeSelectedText();
-		tc.insertText(suggestAction->text());
+		QTextCursor cursor = cursorForPosition(m_lastCursorPosition);
+		cursor.beginEditBlock();
+		cursor.select(QTextCursor::WordUnderCursor);
+		cursor.removeSelectedText();
+		cursor.insertText(suggestAction->text());
+		setTextCursor(cursor);
+		cursor.endEditBlock();
 	}
 }
 

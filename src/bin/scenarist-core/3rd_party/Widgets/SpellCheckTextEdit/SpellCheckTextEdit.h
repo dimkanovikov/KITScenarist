@@ -70,7 +70,7 @@ private slots:
 	/**
 	 * @brief Заменить слово под курсором на выбранный вариант из предложенных
 	 */
-	void aboutReplaceWordOnSuggestion() const;
+	void aboutReplaceWordOnSuggestion();
 
 private:
 	/**

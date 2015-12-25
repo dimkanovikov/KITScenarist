@@ -129,6 +129,11 @@ void SettingsView::setApplicationLanguage(int _value)
 			ui->applicationLanguage->setText(tr("English"));
 			break;
 		}
+
+		case 3: {
+			ui->applicationLanguage->setText(tr("French"));
+			break;
+		}
 	}
 }
 

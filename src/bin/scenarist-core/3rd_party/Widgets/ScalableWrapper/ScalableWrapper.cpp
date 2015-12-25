@@ -313,6 +313,9 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 		//
 		if (menuRect.bottom() > mapToGlobal(pos()).y() + height()) {
 			menuRect.moveBottom(menuRect.top());
+			if (menuRect.top() < mapToGlobal(QPoint(0, 0)).y()) {
+				menuRect.moveTop(mapToGlobal(QPoint(0, 0)).y());
+			}
 		}
 		//
 		// ... по горизонтали
