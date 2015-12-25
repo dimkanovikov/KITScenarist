@@ -31,12 +31,11 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
 
 	//
-	// Нажата клавиша "Control" в сочетании с какой-либо другой,
-	// или Shift + Delete
+	// Нажата клавиша "Control" или "Shift"
 	//
 	//
 	if (pressedModifiers.testFlag(Qt::ControlModifier)
-		|| (pressedModifiers.testFlag(Qt::ShiftModifier) && pressedKey == Qt::Key_Delete)) {
+		|| pressedModifiers.testFlag(Qt::ShiftModifier)) {
 		//
 		// Ни чего не делаем, обработкой сочетаний клавиш занимаются ответственные за это классы
 		//

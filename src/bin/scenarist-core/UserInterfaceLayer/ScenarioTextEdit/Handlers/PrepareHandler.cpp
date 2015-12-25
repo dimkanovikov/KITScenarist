@@ -38,22 +38,25 @@ void PrepareHandler::prepareForHandle()
 {
 	m_needSendEventToBaseClass = true;
 	m_needEnsureCursorVisible = true;
-	m_needPrehandle = true;
+	m_needPrehandle = false;
 }
 
 void PrepareHandler::handleEnter(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
+	m_needPrehandle = true;
 }
 
 void PrepareHandler::handleTab(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
+	m_needPrehandle = true;
 }
 
 void PrepareHandler::handleDelete(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
+	m_needPrehandle = true;
 
 	//
 	// Получим необходимые значения
@@ -77,6 +80,7 @@ void PrepareHandler::handleDelete(QKeyEvent*)
 void PrepareHandler::handleBackspace(QKeyEvent*)
 {
 	m_needSendEventToBaseClass = false;
+	m_needPrehandle = true;
 
 	//
 	// Получим необходимые значения
@@ -125,6 +129,8 @@ void PrepareHandler::handlePageDown(QKeyEvent*)
 
 void PrepareHandler::handleOther(QKeyEvent* _event)
 {
+	m_needPrehandle = true;
+
 	//
 	// Получим необходимые значения
 	//
