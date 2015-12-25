@@ -10,6 +10,7 @@
 #include "ResearchNavigatorProxyStyle.h"
 
 #include <QFileDialog>
+#include <QScrollBar>
 #include <QStandardPaths>
 
 using UserInterface::ResearchView;
@@ -148,12 +149,34 @@ void ResearchView::editResearchRoot()
 
 void ResearchView::editText(const QString& _name, const QString& _description)
 {
+	//
+	// Сохраняем позицию предыдущего текста
+	//
+	const QString oldText = TextEditHelper::removeDocumentTags(m_ui->textDescription->toHtml());
+	m_textScrollingMap[oldText] = m_ui->textDescription->verticalScrollBar()->value();
+
+	//
+	// Загружаем новые данные
+	//
 	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->textDataEdit);
 	m_ui->textName->setText(_name);
 	m_ui->textDescription->setHtml(_description);
 
+	//
+	// Настраиваем интерфейс
+	//
 	setResearchManageButtonsVisible(true);
 	setSearchVisible(true);
+	//
+	// ... восстанавливаем позицию прокрутки текста, если это возможно
+	//
+	if (m_textScrollingMap.contains(_description)) {
+		m_ui->textDescription->verticalScrollBar()->setValue(m_textScrollingMap[_description]);
+		//
+		// Удаляем себя из карты, чтобы не засорять память, т.к. текст может быть изменён
+		//
+		m_textScrollingMap.remove(_description);
+	}
 }
 
 void ResearchView::editUrl(const QString& _name, const QString& _url, const QString& _cachedContent)

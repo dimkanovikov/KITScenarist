@@ -180,6 +180,12 @@ namespace UserInterface
 		 * @brief Кэшированные данные страницы
 		 */
 		QString m_cachedUrlContent;
+
+		/**
+		 * @brief Карта прокруток текстовых документов
+		 * @note Используется для восстановления положения прокрутки при возвращении к заданному тексту
+		 */
+		QHash<QString, int> m_textScrollingMap;
 	};
 }
 
