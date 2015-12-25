@@ -94,6 +94,11 @@ namespace UserInterface
 		void setAutoReplacing(bool _replacing);
 
 		/**
+		 * @brief Показывать ли автодополнения в пустых блоках
+		 */
+		void setShowSuggestionsInEmptyBlocks(bool _show);
+
+		/**
 		 * @brief Установить доступность выделения текста мышью
 		 */
 		void setTextSelectionEnable(bool _enable);
@@ -193,6 +198,12 @@ namespace UserInterface
 		QMimeData* createMimeDataFromSelection() const;
 		void insertFromMimeData(const QMimeData* _source);
 		/** @} */
+
+		/**
+		 * @brief Переопределяем, чтобы запрещать дополнять в пустых блоках при установке
+		 *		  соответствующего флага
+		 */
+		bool canComplete() const;
 
 	private slots:
 		/**
@@ -294,6 +305,11 @@ namespace UserInterface
 		 * @brief Использовать автозамены для особых случаев
 		 */
 		bool m_autoReplacing;
+
+		/**
+		 * @brief Показывать автодополения в пустых блоках
+		 */
+		bool m_showSuggestionsInEmptyBlocks;
 
 		/**
 		 * @brief Включена ли возможность выделения текста

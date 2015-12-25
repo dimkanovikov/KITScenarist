@@ -74,6 +74,7 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	m_showSceneNumbers(false),
 	m_highlightCurrentLine(false),
 	m_autoReplacing(false),
+	m_showSuggestionsInEmptyBlocks(false),
 	m_textSelectionEnable(true),
 	m_shortcutsManager(new ShortcutsManager(this))
 {
@@ -343,6 +344,13 @@ void ScenarioTextEdit::setAutoReplacing(bool _replacing)
 {
 	if (m_autoReplacing != _replacing) {
 		m_autoReplacing = _replacing;
+	}
+}
+
+void ScenarioTextEdit::setShowSuggestionsInEmptyBlocks(bool _show)
+{
+	if (m_showSuggestionsInEmptyBlocks != _show) {
+		m_showSuggestionsInEmptyBlocks = _show;
 	}
 }
 
@@ -957,6 +965,19 @@ void ScenarioTextEdit::insertFromMimeData(const QMimeData* _source)
 	}
 
 	cursor.endEditBlock();
+}
+
+bool ScenarioTextEdit::canComplete() const
+{
+	bool result = true;
+	//
+	// Если нельзя показывать в пустих блоках, проверяем не пуст ли блок
+	//
+	if (!m_showSuggestionsInEmptyBlocks) {
+		result = textCursor().block().text().isEmpty() == false;
+	}
+
+	return result;
 }
 
 void ScenarioTextEdit::aboutCorrectRepaint()

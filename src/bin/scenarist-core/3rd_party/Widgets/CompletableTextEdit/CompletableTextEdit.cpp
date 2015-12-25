@@ -44,59 +44,61 @@ bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _c
 {
 	bool success = false;
 
-	if (_model != 0) {
-		//
-		// Настроим завершателя, если необходимо
-		//
-		bool settedNewModel = m_completer->model() != _model;
-		bool oldModelWasChanged = false;
-		if (!settedNewModel
-			&& _model != 0) {
-			oldModelWasChanged = m_completer->model()->rowCount() == _model->rowCount();
-		}
+	if (canComplete()) {
+		if (_model != 0) {
+			//
+			// Настроим завершателя, если необходимо
+			//
+			bool settedNewModel = m_completer->model() != _model;
+			bool oldModelWasChanged = false;
+			if (!settedNewModel
+				&& _model != 0) {
+				oldModelWasChanged = m_completer->model()->rowCount() == _model->rowCount();
+			}
 
-		if (settedNewModel
-			|| oldModelWasChanged) {
-			m_completer->setModel(_model);
-			m_completer->setModelSorting(QCompleter::UnsortedModel);
-			m_completer->setCaseSensitivity(Qt::CaseInsensitive);
-		}
-		m_completer->setCompletionPrefix(_completionPrefix);
-
-		//
-		// Если в модели для дополнения есть элементы
-		//
-		bool hasCompletions = m_completer->completionModel()->rowCount() > 0;
-		bool alreadyComplete = _completionPrefix.toLower().endsWith(m_completer->currentCompletion().toLower());
-
-		if (hasCompletions
-			&& !alreadyComplete) {
-			m_completer->popup()->setCurrentIndex(
-						m_completer->completionModel()->index(0, 0));
+			if (settedNewModel
+				|| oldModelWasChanged) {
+				m_completer->setModel(_model);
+				m_completer->setModelSorting(QCompleter::UnsortedModel);
+				m_completer->setCaseSensitivity(Qt::CaseInsensitive);
+			}
+			m_completer->setCompletionPrefix(_completionPrefix);
 
 			//
-			// ... отобразим завершателя
+			// Если в модели для дополнения есть элементы
 			//
-			QRect rect = cursorRect();
-			rect.moveTo(mapToGlobal(viewport()->mapToParent(rect.topLeft())));
-			rect.moveLeft(rect.left() + verticalScrollBar()->width());
-			rect.moveTop(rect.top() + QFontMetricsF(currentCharFormat().font()).height());
-			rect.setWidth(
-				m_completer->popup()->sizeHintForColumn(0)
-				+ m_completer->popup()->verticalScrollBar()->sizeHint().width());
+			bool hasCompletions = m_completer->completionModel()->rowCount() > 0;
+			bool alreadyComplete = _completionPrefix.toLower().endsWith(m_completer->currentCompletion().toLower());
 
-			MyCompleter* myCompleter = static_cast<MyCompleter*>(m_completer);
-			myCompleter->completeReimpl(rect);
+			if (hasCompletions
+				&& !alreadyComplete) {
+				m_completer->popup()->setCurrentIndex(
+							m_completer->completionModel()->index(0, 0));
 
-			success = true;
+				//
+				// ... отобразим завершателя
+				//
+				QRect rect = cursorRect();
+				rect.moveTo(mapToGlobal(viewport()->mapToParent(rect.topLeft())));
+				rect.moveLeft(rect.left() + verticalScrollBar()->width());
+				rect.moveTop(rect.top() + QFontMetricsF(currentCharFormat().font()).height());
+				rect.setWidth(
+							m_completer->popup()->sizeHintForColumn(0)
+							+ m_completer->popup()->verticalScrollBar()->sizeHint().width());
+
+				MyCompleter* myCompleter = static_cast<MyCompleter*>(m_completer);
+				myCompleter->completeReimpl(rect);
+
+				success = true;
+			}
 		}
-	}
 
-	if (!success) {
-		//
-		// ... скроем, если был отображён
-		//
-		closeCompleter();
+		if (!success) {
+			//
+			// ... скроем, если был отображён
+			//
+			closeCompleter();
+		}
 	}
 
 	return success;
@@ -140,4 +142,9 @@ void CompletableTextEdit::applyCompletion(const QString& _completion)
 void CompletableTextEdit::closeCompleter()
 {
 	m_completer->popup()->hide();
+}
+
+bool CompletableTextEdit::canComplete() const
+{
+	return true;
 }

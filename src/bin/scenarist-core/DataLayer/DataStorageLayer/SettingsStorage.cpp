@@ -400,6 +400,7 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/shortcuts/folder_header", ShortcutHelper::makeShortcut("Ctrl+Space"));
 	//
 	m_defaultValues.insert("scenario-editor/auto-styles-jumping", "1");
+	m_defaultValues.insert("scenario-editor/show-suggestions-in-empty-blocks", "1");
 	//
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_heading-by-tab", QString::number(ScenarioBlockStyle::SceneCharacters));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_heading-by-enter", QString::number(ScenarioBlockStyle::Action));

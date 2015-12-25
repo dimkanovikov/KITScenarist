@@ -115,6 +115,12 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toDouble());
 
+	m_view->setShowSuggestionsInEmptyBlocks(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/show-suggestions-in-empty-blocks",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt());
+
 	m_view->updateStylesElements();
 	m_view->updateShortcuts();
 }

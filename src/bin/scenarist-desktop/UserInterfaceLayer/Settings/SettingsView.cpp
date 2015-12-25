@@ -290,6 +290,11 @@ void SettingsView::setScenarioEditAutoJumpToNextBlock(bool _value)
 	ui->autoJumpToNextBlock->setChecked(_value);
 }
 
+void SettingsView::setScenarioEditShowSuggestionsInEmptyBlocks(bool _value)
+{
+	ui->showSuggestionsInEmptyBlocks->setChecked(_value);
+}
+
 void SettingsView::setScenarioEditReviewUseWordHighlight(bool _value)
 {
 	ui->reviewUseWordHighlight->setChecked(_value);
@@ -697,6 +702,7 @@ void SettingsView::initConnections()
 	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
 	connect(ui->currentScenarioTemplate, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentTemplateChanged(QString)));
 	connect(ui->autoJumpToNextBlock, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)));
+	connect(ui->showSuggestionsInEmptyBlocks, &QCheckBox::toggled, this, &SettingsView::scenarioEditShowSuggestionsInEmptyBlocksChanged);
 	connect(ui->reviewUseWordHighlight, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)));
 	// ... навигатор
 	connect(ui->showScenesNumbersInNavigator, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));

@@ -1044,9 +1044,15 @@ void Database::updateDatabaseTo_0_5_9(QSqlDatabase& _database)
 					// ... вставляем, если нужно
 					//
 					if (needInsert) {
+						//
+						// ... убираем спецсимволы и тэги, пока не дойдём до содержимого
+						//
 						QTextDocument descriptionDoc;
 						descriptionDoc.setHtml(lastDescription);
-						QStringList descriptionLines = descriptionDoc.toPlainText().split("\n");
+						descriptionDoc.setHtml(descriptionDoc.toPlainText());
+						descriptionDoc.setHtml(descriptionDoc.toPlainText());
+						//
+						QStringList descriptionLines = descriptionDoc.toPlainText().split("\n", QString::SkipEmptyParts);
 
 						foreach (const QString& descriptionLine, descriptionLines) {
 							textLines.insert(++lineNumber, "<scene_description>");

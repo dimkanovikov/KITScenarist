@@ -45,6 +45,12 @@ public slots:
 	 */
 	void closeCompleter();
 
+protected:
+	/**
+	 * @brief Можно ли показывать автодополнение
+	 */
+	virtual bool canComplete() const;
+
 private:
 	/**
 	 * @brief Подстановщик для завершения текста

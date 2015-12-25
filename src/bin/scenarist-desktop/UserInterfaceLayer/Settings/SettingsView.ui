@@ -136,7 +136,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">
@@ -471,7 +471,7 @@
            <item row="2" column="0" colspan="2">
             <widget class="QStackedWidget" name="scenarioEditPageStack">
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="scenarioEditCommon">
               <layout class="QGridLayout" name="gridLayout_10">
@@ -1511,7 +1511,7 @@ Replace quotes to language specific.</string>
                 </widget>
                </item>
                <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_12">
+                <layout class="QVBoxLayout" name="verticalLayout_6">
                  <property name="leftMargin">
                   <number>9</number>
                  </property>
@@ -1528,6 +1528,16 @@ Replace quotes to language specific.</string>
                   <widget class="QCheckBox" name="autoJumpToNextBlock">
                    <property name="text">
                     <string>Automatically jump to next paragraph (in scene headings and characters)</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="showSuggestionsInEmptyBlocks">
+                   <property name="text">
+                    <string>Show suggestions in empty blocks</string>
                    </property>
                    <property name="checked">
                     <bool>true</bool>

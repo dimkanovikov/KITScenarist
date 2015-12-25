@@ -41,6 +41,7 @@ scenario-editor/shortcuts/nonprintable
 scenario-editor/shortcuts/scenes-group
 scenario-editor/shortcuts/folder
 scenario-editor/auto-styles-jumping - при возможности автоматически переходить к следующему блоку
+scenario-editor/show-suggestions-in-empty-blocks - показывать подсказки в пустом блоке, или только при введённом тексте
 scenario-editor/styles-jumping/... - к каким блокам переходить редактору сценария
 scenario-editor/styles-jumping/from-scene_heading-by-tab
 scenario-editor/styles-jumping/from-scene_heading-by-enter

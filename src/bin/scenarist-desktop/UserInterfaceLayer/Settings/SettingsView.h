@@ -78,6 +78,7 @@ namespace UserInterface
 		void setScenarioEditFolderBackgroundColorDark(const QColor& _color);
 		void setScenarioEditCurrentTemplate(const QString& _styleName);
 		void setScenarioEditAutoJumpToNextBlock(bool _value);
+		void setScenarioEditShowSuggestionsInEmptyBlocks(bool _value);
 		void setScenarioEditReviewUseWordHighlight(bool _value);
 
 		void setNavigatorShowScenesNumbers(bool _value);
@@ -144,6 +145,7 @@ namespace UserInterface
 		void scenarioEditFolderBackgroundColorDarkChanged(const QColor&);
 		void scenarioEditCurrentTemplateChanged(const QString&);
 		void scenarioEditAutoJumpToNextBlockChanged(bool);
+		void scenarioEditShowSuggestionsInEmptyBlocksChanged(bool);
 		void scenarioEditBlockSettingsChanged(const QString& _block, const QString& _shortcut,
 			const QString& _tab, const QString& _enter, const QString& _changeTab,
 			const QString& _changeEnter);

@@ -290,6 +290,11 @@ void SettingsManager::scenarioEditAutoJumpToNextBlockChanged(bool _value)
 	storeValue("scenario-editor/auto-styles-jumping", _value);
 }
 
+void SettingsManager::scenarioEditShowSuggestionsInEmptyBlocksChanged(bool _value)
+{
+	storeValue("scenario-editor/show-suggestions-in-empty-blocks", _value);
+}
+
 void SettingsManager::scenarioEditBlockSettingsChanged(const QString& _block, const QString& _shortcut, const QString& _jumpTab,
 	const QString& _jumpEnter, const QString& _changeTab, const QString& _changeEnter)
 {
@@ -758,6 +763,13 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	// ... показывать ли подсказки в пустых блоках
+	m_view->setScenarioEditShowSuggestionsInEmptyBlocks(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/show-suggestions-in-empty-blocks",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	// ... рецензирование
 	m_view->setScenarioEditReviewUseWordHighlight(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
@@ -985,6 +997,8 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SLOT(scenarioEditFolderBackgroundColorDarkChanged(QColor)));
 	connect(m_view, SIGNAL(scenarioEditCurrentTemplateChanged(QString)), this, SLOT(scenarioEditCurrentTemplateChanged(QString)));
 	connect(m_view, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)), this, SLOT(scenarioEditAutoJumpToNextBlockChanged(bool)));
+	connect(m_view, &SettingsView::scenarioEditShowSuggestionsInEmptyBlocksChanged,
+			this, &SettingsManager::scenarioEditShowSuggestionsInEmptyBlocksChanged);
 	connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)),
 			this, SLOT(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)));
 	connect(m_view, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)), this, SLOT(scenarioEditReviewUseWordHighlightChanged(bool)));
@@ -1050,6 +1064,8 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditFolderTextColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditFolderBackgroundColorDarkChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditCurrentTemplateChanged(QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, &SettingsView::scenarioEditShowSuggestionsInEmptyBlocksChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
 	connect(m_view, SIGNAL(scenarioEditBlockSettingsChanged(QString,QString,QString,QString,QString,QString)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
@@ -1088,5 +1104,5 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(templateLibraryEditPressed(QModelIndex)), this, SLOT(templateLibraryEditPressed(QModelIndex)));
 	connect(m_view, SIGNAL(templateLibraryRemovePressed(QModelIndex)), this, SLOT(templateLibraryRemovePressed(QModelIndex)));
 	connect(m_view, SIGNAL(templateLibraryLoadPressed()), this, SLOT(templateLibraryLoadPressed()));
-    connect(m_view, SIGNAL(templateLibrarySavePressed(QModelIndex)), this, SLOT(templateLibrarySavePressed(QModelIndex)));
+	connect(m_view, SIGNAL(templateLibrarySavePressed(QModelIndex)), this, SLOT(templateLibrarySavePressed(QModelIndex)));
 }

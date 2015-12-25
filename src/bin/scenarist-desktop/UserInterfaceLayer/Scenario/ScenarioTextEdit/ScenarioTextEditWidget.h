@@ -82,6 +82,11 @@ namespace UserInterface
 		void setUseSpellChecker(bool _use);
 
 		/**
+		 * @brief Показывать ли автодополнения в пустых блоках
+		 */
+		void setShowSuggestionsInEmptyBlocks(bool _show);
+
+		/**
 		 * @brief Установить язык проверки орфографии
 		 */
 		void setSpellCheckLanguage(int _language);
