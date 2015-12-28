@@ -371,6 +371,12 @@ void ScenarioTextEdit::setOutlineMode(bool _outlineMode)
 	if (m_document != 0) {
 		m_document->setOutlineMode(_outlineMode);
 		relayoutDocument();
+
+		//
+		// Убедимся, что курсор виден, а так же делаем так, чтобы он не скакал по экрану
+		//
+		verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+		ensureCursorVisible();
 	}
 }
 
