@@ -20,7 +20,7 @@ AbstractKeyHandler::~AbstractKeyHandler()
 
 void AbstractKeyHandler::handle(QKeyEvent* _event)
 {
-	prepareForHandle();
+	prepareForHandle(_event);
 
 	//
 	// Получим необходимые переменные
@@ -34,17 +34,17 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	// Нажата клавиша "Control" или "Shift"
 	//
 	//
-    if (pressedModifiers.testFlag(Qt::ControlModifier)
-        || pressedModifiers.testFlag(Qt::ShiftModifier)) {
-        //
-        // Ни чего не делаем, обработкой сочетаний клавиш занимаются ответственные за это классы
-        //
-    }
+	if (pressedModifiers.testFlag(Qt::ControlModifier)
+		|| pressedModifiers.testFlag(Qt::ShiftModifier)) {
+		//
+		// Ни чего не делаем, обработкой сочетаний клавиш занимаются ответственные за это классы
+		//
+	}
 
 	//
 	// Нажата клавиша "Enter"
 	//
-    else if (pressedKey == Qt::Key_Enter
+	else if (pressedKey == Qt::Key_Enter
 			 || pressedKey == Qt::Key_Return) {
 		handleEnter(_event);
 	}

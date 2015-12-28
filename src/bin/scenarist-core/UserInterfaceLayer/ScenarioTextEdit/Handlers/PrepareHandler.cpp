@@ -34,11 +34,18 @@ bool PrepareHandler::needPrehandle() const
 	return m_needPrehandle;
 }
 
-void PrepareHandler::prepareForHandle()
+void PrepareHandler::prepareForHandle(QKeyEvent* _event)
 {
 	m_needSendEventToBaseClass = true;
 	m_needEnsureCursorVisible = true;
 	m_needPrehandle = false;
+
+	//
+	// Если нажат шифт, то не нужно прокручивать окно редактора к тому месту, где установлен курсор
+	//
+	if (_event->key() == Qt::Key_Shift) {
+		m_needEnsureCursorVisible = false;
+	}
 }
 
 void PrepareHandler::handleEnter(QKeyEvent*)
@@ -160,12 +167,5 @@ void PrepareHandler::handleOther(QKeyEvent* _event)
 		m_needSendEventToBaseClass = topStyle.isCanModify() && bottomStyle.isCanModify() ;
 	} else {
 		m_needSendEventToBaseClass = true;
-	}
-
-	//
-	// Если нажат шифт, то не нужно прокручивать окно редактора к тому месту, где установлен курсор
-	//
-	if (_event->key() == Qt::Key_Shift) {
-		m_needEnsureCursorVisible = false;
 	}
 }

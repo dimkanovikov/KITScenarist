@@ -33,7 +33,7 @@ namespace KeyProcessingLayer
 		/**
 		 * @brief Подготовка к обработке
 		 */
-		virtual void prepareForHandle() {}
+		virtual void prepareForHandle(QKeyEvent* = 0) {}
 
 		/**
 		 * @brief Необходимые действия при нажатии конкретной клавиши/сочетания
