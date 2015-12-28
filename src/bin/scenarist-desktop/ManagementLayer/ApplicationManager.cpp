@@ -33,6 +33,7 @@
 #include <QFileDialog>
 #include <QLabel>
 #include <QMenu>
+#include <QMenuBar>
 #include <QSplitter>
 #include <QStackedWidget>
 #include <QStandardItemModel>
@@ -1135,7 +1136,12 @@ QMenu* ApplicationManager::createMenu()
 	//
 	// Сформируем меню
 	//
-	QMenu* menu = new QMenu(m_menu);
+#ifdef Q_OS_MAC
+    QMenuBar *menuBar = new QMenuBar(0);
+    QMenu* menu = menuBar->addMenu(tr("File"));
+#else
+    QMenu* menu = new QMenu(m_menu);
+#endif
 	QAction* createNewProject = menu->addAction(tr("New"));
 	QAction* openProject = menu->addAction(tr("Open"));
 	QAction* saveProject = menu->addAction(tr("Save"));

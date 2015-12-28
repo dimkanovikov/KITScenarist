@@ -503,7 +503,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	if (handler->needSendEventToBaseClass()) {
 		if (!keyPressEventReimpl(_event)) {
 			SpellCheckTextEdit::keyPressEvent(_event);
-		}
+        }
 
 		updateEnteredText(_event);
 
@@ -520,7 +520,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	// Событие дошло по назначению
 	//
-	_event->accept();
+    _event->accept();
 
 	//
 	// Завершим блок операций
