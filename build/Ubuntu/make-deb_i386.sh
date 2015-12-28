@@ -33,3 +33,11 @@ echo Build Spanish version
 cp -f translations/i386/es/control scenarist_i386/DEBIAN/
 fakeroot dpkg-deb --build scenarist_i386
 mv -f scenarist_i386.deb scenarist-setup-$1_es_i386.deb
+
+#
+# Make French installer
+#
+echo Build French version
+cp -f translations/i386/fr/control scenarist_i386/DEBIAN/
+fakeroot dpkg-deb --build scenarist_i386
+mv -f scenarist_i386.deb scenarist-setup-$1_fr_i386.deb

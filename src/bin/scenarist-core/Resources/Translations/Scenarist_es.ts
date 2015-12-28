@@ -1507,50 +1507,50 @@ Continue trabajando fuera de linea.</translation>
         <translation>El idioma va a cambiar después que el programa se reinicie.</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="479"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="484"/>
         <source>Choose file to load</source>
         <translation>Elegi un archivo para cargar</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="480"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="504"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="485"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="509"/>
         <source>Scenario Template Files (*.%1)</source>
         <translation>Archivos Template del Guión (*.%1)</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="503"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="508"/>
         <source>Choose file to save</source>
         <translation>Elegir archivo para guardar</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="771"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="783"/>
         <source>Press in paragraph&apos;s end</source>
         <translation>Presiona en el fin del parrafo</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="773"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="778"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="785"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="790"/>
         <source>Tab</source>
         <translation>Tabulador</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="774"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="779"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="786"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="791"/>
         <source>Enter</source>
         <translation>Enter</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="776"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="788"/>
         <source>Press in empty paragraph</source>
         <translation>Presiona en el parrafo vacio</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="782"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="794"/>
         <source>Block Name</source>
         <translation>Nombre del Bloque</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="783"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="795"/>
         <source>Shortcut</source>
         <translation>Atajos de teclado</translation>
     </message>
@@ -1984,7 +1984,7 @@ Continue trabajando fuera de linea.</translation>
     <name>SettingsView</name>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="14"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1996"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2006"/>
         <source>Dialog</source>
         <translation>Dialogo</translation>
     </message>
@@ -2071,7 +2071,7 @@ Continue trabajando fuera de linea.</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1320"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1599"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1609"/>
         <source>Show Scenes Numbers</source>
         <translation>Mostrar Numeración de la Escena</translation>
     </message>
@@ -2151,12 +2151,12 @@ Continue trabajando fuera de linea.</translation>
         <translation>Saltar Automaticamente al Proximo parrafo(de tiempo lugar y personajes)</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1966"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1976"/>
         <source>Scene Heading</source>
         <translation>Escena Título</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1546"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1556"/>
         <source>Use MS Word like highlighting colors</source>
         <translation>Usar un color como MS Word para pintar el texto</translation>
     </message>
@@ -2203,190 +2203,195 @@ Remplazar trespuntos solos por un carácter de tres puntos.
 Remplazar citas por términos específicos.</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1625"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1635"/>
         <source>Show scene description</source>
         <translation>Mostrar Descripción de la Escena</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1636"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1646"/>
         <source>Scene text</source>
         <translation>Texto de Escena</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1646"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1656"/>
         <source>Scene synopsis</source>
         <translation>Sinopsis de la Escena</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1670"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1680"/>
         <source>Description height, lines:</source>
         <translation>Descripción altura, lineas:</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2193"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2203"/>
         <source>Counters</source>
         <translation>Contador</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2201"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2211"/>
         <source>Simbols Counter</source>
         <translation>Contador de Caracteres</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2214"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2224"/>
         <source>Simbols without spaces | Simbols with spaces</source>
         <translation>Caracteres sin espacios | Caracteres con espacios</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2234"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2244"/>
         <source>Pages Counter</source>
         <translation>Contador de Páginas</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2247"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2257"/>
         <source>Pages Mode only</source>
         <translation>Modo de Página sola</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2265"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2275"/>
         <source>Words Counter</source>
         <translation>Contador de Pálabras</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1756"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1766"/>
         <source>Chronometry</source>
         <translation>Duración</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1767"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1540"/>
+        <source>Show suggestions in empty blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1777"/>
         <source>Pages Chronometry</source>
         <translation>Duración por Páginas</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1783"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1793"/>
         <source>For standard template and compatible</source>
         <translation>Para template estandar y compatible</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1823"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1833"/>
         <source>Page</source>
         <translation>Página</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1830"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1893"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1840"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1903"/>
         <source>=</source>
         <translation>=</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1844"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1907"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1854"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1917"/>
         <source>Seconds</source>
         <translation>Segundos</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1870"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1880"/>
         <source>Characters Chronometry</source>
         <translation>Duración por carácter</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1914"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1924"/>
         <source>Characters</source>
         <translation>Carácteres</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1921"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1931"/>
         <source>Consider Spaces</source>
         <translation>espacios comprendidos</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1950"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="1960"/>
         <source>Configurable Chronometry</source>
         <translation>Configurar Duración</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2003"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2047"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2080"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2013"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2057"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2090"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2013"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2023"/>
         <source>Seconds per
 50 characters</source>
         <translation>Segundos cada
 50 carácteres</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2040"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2050"/>
         <source>Action</source>
         <translation>Acción</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2127"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2137"/>
         <source>Seconds for
 Paragraph</source>
         <translation>Segundos por
 Párrafo</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2347"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2357"/>
         <source>Apply Selected Template</source>
         <translation>Aplicar Template seleccionado</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2350"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2360"/>
         <source>Apply</source>
         <translation>Aplicar</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2361"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2371"/>
         <source>Add Template</source>
         <translation>Agregar Template</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2364"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2374"/>
         <source>New</source>
         <translation>Nuevo</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2375"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2385"/>
         <source>Edit Selected Template</source>
         <translation>Editar Template Selecciónado</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2378"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2388"/>
         <source>Edit</source>
         <translation>Edición</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2389"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2399"/>
         <source>Delete Selected Template</source>
         <translation>Borrar Template Selecciónado</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2392"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2402"/>
         <source>Remove</source>
         <translation>Quitar</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2403"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2413"/>
         <source>Load Template From File</source>
         <translation>Cargar Templates desde Archivo</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2406"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2416"/>
         <source>Load</source>
         <translation>Cargar</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2417"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2427"/>
         <source>Save Template To File</source>
         <translation>Salvar Template en Carpeta</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2420"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui" line="2430"/>
         <source>Save As...</source>
         <translation>Guardar como...</translation>
     </message>
@@ -2999,12 +3004,12 @@ Párrafo</translation>
 <context>
     <name>UserInterface::ResearchView</name>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.cpp" line="348"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.cpp" line="371"/>
         <source>Choose image</source>
         <translation>Elejir imagen</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.cpp" line="350"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Research/ResearchView.cpp" line="373"/>
         <source>Images (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</source>
         <translation>Imagenes (*.png *.jpeg *.jpg *.bmp *.tiff *.tif *.gif)</translation>
     </message>
@@ -3233,37 +3238,37 @@ Párrafo</translation>
         <translation>Borrador</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="448"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="453"/>
         <source>Outline mode</source>
         <translation>Modo sin linea</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="451"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="456"/>
         <source>Current Text Block Style</source>
         <translation>Texto actual con el Estilo Marcado de Bloque</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="457"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="462"/>
         <source>Undo last action</source>
         <translation>Deshacer</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="460"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="465"/>
         <source>Redo last action</source>
         <translation>Repetir Ultima acción</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="464"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="469"/>
         <source>Search and Replace</source>
         <translation>Buscar y Reemplazar</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="470"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="475"/>
         <source>Text Fast Format</source>
         <translation>Formato Rapido</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="475"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="480"/>
         <source>Duration from Start to Cursor Position | Full Duration</source>
         <translation>Duracón desde el principio hasta la posición del cursor | Duracion Total</translation>
     </message>
@@ -3282,34 +3287,34 @@ Párrafo</translation>
 <context>
     <name>UserInterface::SettingsView</name>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="433"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="443"/>
         <source>Choose backups saving folder</source>
         <translation>Elejir carpeta de respaldo</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="578"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="588"/>
         <source>Russian with Yo</source>
         <translation>Ruso con ё</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="119"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="579"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="589"/>
         <source>Russian</source>
         <translation>Ruso</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="580"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="590"/>
         <source>Ukrainian</source>
         <translation>Ukraniano</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="581"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="591"/>
         <source>Belorussian</source>
         <translation>Beloruso</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="124"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="584"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="594"/>
         <source>Spanish</source>
         <translation>Español</translation>
     </message>
@@ -3324,38 +3329,39 @@ Párrafo</translation>
         <translation>Ingles</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="582"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="592"/>
         <source>English (GB)</source>
         <translation>Ingles (GB)</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="583"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="593"/>
         <source>English (US)</source>
         <translation>Ingles (US)</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="585"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="134"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="595"/>
         <source>French</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="604"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="611"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="614"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="621"/>
         <source>Common</source>
         <translation>Común</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="605"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="615"/>
         <source>Modules</source>
         <translation>Modulos</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="612"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="622"/>
         <source>Shortcuts Settings</source>
         <translation>Atajos de Teclado</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="613"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="623"/>
         <source>Review</source>
         <translation>Revisión</translation>
     </message>

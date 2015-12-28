@@ -33,3 +33,11 @@ echo Build Spanish version
 cp -f translations/amd64/es/control scenarist_amd64/DEBIAN/
 fakeroot dpkg-deb --build scenarist_amd64
 mv -f scenarist_amd64.deb scenarist-setup-$1_es_amd64.deb
+
+#
+# Make French installer
+#
+echo Build French version
+cp -f translations/amd64/fr/control scenarist_amd64/DEBIAN/
+fakeroot dpkg-deb --build scenarist_amd64
+mv -f scenarist_amd64.deb scenarist-setup-$1_fr_amd64.deb

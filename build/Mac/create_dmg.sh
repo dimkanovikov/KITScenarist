@@ -63,5 +63,11 @@ mv -f Scenarist.dmg scenarist-setup-$1_en.dmg
 ./make_dmg.sh -i ../../src/bin/scenarist-desktop/logo.icns -b cover_es.png -c "462:252:176:258" -s "640:400"  Scenarist.app 
 mv -f Scenarist.dmg scenarist-setup-$1_es.dmg
 
+#
+# Создаём французский dmg-файл
+#
+./make_dmg.sh -i ../../src/bin/scenarist-desktop/logo.icns -b cover_fr.png -c "462:252:176:258" -s "640:400"  Scenarist.app 
+mv -f Scenarist.dmg scenarist-setup-$1_fr.dmg
+
 # удалить app-файл
 rm -R ./Scenarist.app
