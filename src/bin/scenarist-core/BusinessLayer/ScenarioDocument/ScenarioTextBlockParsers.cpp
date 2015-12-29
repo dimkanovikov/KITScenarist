@@ -30,7 +30,7 @@ QString CharacterParser::name(const QString& _text)
 	//
 
 	QString name = _text;
-	return name.remove(QRegularExpression("[(](.*)")).simplified();
+	return name.remove(QRegularExpression("[(](.*)")).simplified().toUpper();
 }
 
 QString CharacterParser::state(const QString& _text)

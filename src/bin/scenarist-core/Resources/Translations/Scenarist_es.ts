@@ -332,6 +332,15 @@
     </message>
 </context>
 <context>
+    <name>BusinessLogic::ScenarioTextCorrector</name>
+    <message>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTextCorrector.cpp" line="17"/>
+        <source>CONT&apos;D</source>
+        <extracomment>Continued</extracomment>
+        <translation>A Continuación</translation>
+    </message>
+</context>
+<context>
     <name>BusinessLogic::SceneReport</name>
     <message>
         <location filename="../../BusinessLayer/Statistics/Reports/SceneReport.cpp" line="35"/>
@@ -923,12 +932,12 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="50"/>
         <source>English</source>
-        <translation>Ingles</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="70"/>
         <source>Français</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1687,13 +1696,13 @@ Continue trabajando fuera de linea.</translation>
         <translation>Titulo:</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="419"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="428"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation>FINAL DEL GRUPO</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="430"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="439"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation>FINAL DE LA CARPETA</translation>
@@ -3347,7 +3356,7 @@ Párrafo</translation>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="134"/>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="595"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Francés</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="614"/>

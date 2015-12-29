@@ -67,7 +67,9 @@ namespace BusinessLogic
 			PropertyIsDone,			//!< Правка помечена как выполненная
 			PropertyComments,		//!< Список комментариев к правке
 			PropertyCommentsAuthors,//!< Список авторов комментариев
-			PropertyCommentsDates	//!< Список дат комментариев
+			PropertyCommentsDates,	//!< Список дат комментариев
+			//
+			PropertyIsCorrection	//!< Корректирующий текст блоков
 		};
 
 		/**

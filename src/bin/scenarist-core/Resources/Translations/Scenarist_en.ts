@@ -306,6 +306,15 @@
     </message>
 </context>
 <context>
+    <name>BusinessLogic::ScenarioTextCorrector</name>
+    <message>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTextCorrector.cpp" line="17"/>
+        <source>CONT&apos;D</source>
+        <extracomment>Continued</extracomment>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>BusinessLogic::SceneReport</name>
     <message>
         <location filename="../../BusinessLayer/Statistics/Reports/SceneReport.cpp" line="35"/>
@@ -844,7 +853,7 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="26"/>
         <source>Español</source>
-        <translation>Spanish</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="50"/>
@@ -854,7 +863,7 @@
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui" line="70"/>
         <source>Français</source>
-        <translation>French</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1539,13 +1548,13 @@ Continue working with this project in offline mode.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="419"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="428"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="430"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="439"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation></translation>

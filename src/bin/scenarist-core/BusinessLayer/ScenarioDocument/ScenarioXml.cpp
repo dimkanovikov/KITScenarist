@@ -174,6 +174,15 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			// Получить текст под курсором
 			//
 			QString textToSave = cursor.selectedText();
+			//
+			// ... удаляем вспомогательный текст
+			//
+			foreach (const QTextLayout::FormatRange& range, cursor.block().textFormats()) {
+				if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsCorrection)) {
+					textToSave.remove(range.start, range.length);
+					break;
+				}
+			}
 
 			//
 			// Определить параметры текущего абзаца

@@ -7,6 +7,7 @@
 #include "ScenarioTemplate.h"
 #include "ScenarioTextBlockInfo.h"
 #include "ScenarioTextBlockParsers.h"
+#include "ScenarioTextCorrector.h"
 
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 #include <BusinessLayer/Counters/CountersFacade.h>
@@ -774,6 +775,11 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	}
 
 	updateDocumentScenesNumbers();
+
+	//
+	// Корректируем текст сценария
+	//
+	ScenarioTextCorrector().correctScenarioText(m_document, _position);
 }
 
 void ScenarioDocument::initConnections()
