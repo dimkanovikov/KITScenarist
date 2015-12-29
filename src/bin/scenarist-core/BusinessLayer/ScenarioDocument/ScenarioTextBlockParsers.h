@@ -73,9 +73,9 @@ namespace BusinessLogic
 		static QString placeName(const QString& _text);
 
 		/**
-		 * @brief Получить название локации
+		 * @brief Получить название локации, если задан \p _force, то берём текст до конца
 		 */
-		static QString locationName(const QString& _text);
+		static QString locationName(const QString& _text, bool _force = false);
 
 		/**
 		 * @brief Получить название сценарного дня

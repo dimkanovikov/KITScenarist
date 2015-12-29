@@ -83,15 +83,17 @@ QString SceneHeadingParser::placeName(const QString& _text)
 	return placeName;
 }
 
-QString SceneHeadingParser::locationName(const QString& _text)
+QString SceneHeadingParser::locationName(const QString& _text, bool _force)
 {
 	QString locationName;
 
 	if (_text.split(". ").count() > 1) {
-		locationName = _text.mid(_text.indexOf(". ") + 1);
-		const QString suffix = locationName.split(" - ").last();
-		locationName = locationName.remove(" - " + suffix);
-		locationName = locationName.simplified();
+		locationName = _text.mid(_text.indexOf(". ") + 2);
+		if (!_force) {
+			const QString suffix = locationName.split(" - ").last();
+			locationName = locationName.remove(" - " + suffix);
+			locationName = locationName.simplified();
+		}
 	}
 
 	return locationName;

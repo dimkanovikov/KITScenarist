@@ -24,6 +24,33 @@ using namespace KeyProcessingLayer;
 using namespace BusinessLogic;
 using UserInterface::ScenarioTextEdit;
 
+namespace {
+	/**
+	 * @brief Более продвинутый метод определения текущей секции блока
+	 */
+	SceneHeadingParser::Section section(const QString _blockText) {
+		SceneHeadingParser::Section section = SceneHeadingParser::section(_blockText);
+		if (section == SceneHeadingParser::SectionTime) {
+			//
+			// Возможно пользователь предпочитает обозначать локации и подлокации через минус,
+			// поэтому проверяем нет ли уже сохранённых локаций такого рода, и если есть, и они
+			// подходят под дополнение, то считаем текущую секцию за локацию
+			//
+			const bool FORCE = true;
+			const QString locationFromBlock = SceneHeadingParser::locationName(_blockText, FORCE);
+			foreach (DomainObject* object, StorageFacade::locationStorage()->all()->toList()) {
+				if (Location* location = dynamic_cast<Location*>(object)) {
+					if (location->name().startsWith(locationFromBlock, Qt::CaseInsensitive)) {
+						section = SceneHeadingParser::SectionLocation;
+						break;
+					}
+				}
+			}
+		}
+		return section;
+	}
+}
+
 
 SceneHeadingHandler::SceneHeadingHandler(ScenarioTextEdit* _editor) :
 	StandardKeyHandler(_editor)
@@ -44,8 +71,7 @@ void SceneHeadingHandler::handleEnter(QKeyEvent*)
 	// ... текст после курсора
 	QString cursorForwardText = currentBlock.text().mid(cursor.positionInBlock());
 	// ... текущая секция
-	SceneHeadingParser::Section currentSection =
-			SceneHeadingParser::section(cursorBackwardText);
+	SceneHeadingParser::Section currentSection = ::section(cursorBackwardText);
 
 
 	//
@@ -212,9 +238,9 @@ void SceneHeadingHandler::handleTab(QKeyEvent*)
 					//! В конце блока
 
 					//
-					// Если нет времени, то добавление " - " и отображение подсказки
+					// Если в секции локации, то добавление " - " и отображение подсказки
 					//
-					if (SceneHeadingParser::timeName(cursorBackwardText).isEmpty()) {
+					if (::section(cursorBackwardText) == SceneHeadingParser::SectionLocation) {
 						//
 						// Добавим необходимый текст в зависимости от того, что ввёл пользователь
 						//
@@ -272,7 +298,7 @@ void SceneHeadingHandler::handleOther(QKeyEvent*)
 	// ... текст до курсора
 	QString cursorBackwardText = currentBlock.text().left(cursor.positionInBlock());
 	// ... текущая секция
-	SceneHeadingParser::Section currentSection = SceneHeadingParser::section(cursorBackwardText);
+	SceneHeadingParser::Section currentSection = ::section(cursorBackwardText);
 
 
 	//
@@ -293,7 +319,8 @@ void SceneHeadingHandler::handleOther(QKeyEvent*)
 
 		case SceneHeadingParser::SectionLocation: {
 			sectionModel = StorageFacade::locationStorage()->all();
-			sectionText = SceneHeadingParser::locationName(currentBlockText);
+			bool force = SceneHeadingParser::section(cursorBackwardText) == SceneHeadingParser::SectionTime;
+			sectionText = SceneHeadingParser::locationName(currentBlockText, force);
 			break;
 		}
 
@@ -304,8 +331,33 @@ void SceneHeadingHandler::handleOther(QKeyEvent*)
 		}
 
 		case SceneHeadingParser::SectionTime: {
-			sectionModel = StorageFacade::timeStorage()->all();
-			sectionText = SceneHeadingParser::timeName(currentBlockText);
+			//
+			// Возможно пользователь предпочитает обозначать локации и подлокации через минус,
+			// поэтому проверяем нет ли уже сохранённых локаций такого рода, и если есть, и они
+			// подходят под дополнение, то используем их
+			//
+			bool useLocations = false;
+			const bool FORCE = true;
+			const QString locationFromBlock = SceneHeadingParser::locationName(currentBlockText, FORCE);
+			foreach (DomainObject* object, StorageFacade::locationStorage()->all()->toList()) {
+				if (Location* location = dynamic_cast<Location*>(object)) {
+					if (location->name().startsWith(locationFromBlock, Qt::CaseInsensitive)) {
+						useLocations = true;
+						break;
+					}
+				}
+			}
+			if (useLocations) {
+				sectionModel = StorageFacade::locationStorage()->all();
+				sectionText = locationFromBlock;
+			}
+			//
+			// Во всех остальных случаях используем дополнение по времени действия
+			//
+			else {
+				sectionModel = StorageFacade::timeStorage()->all();
+				sectionText = SceneHeadingParser::timeName(currentBlockText);
+			}
 			break;
 		}
 
