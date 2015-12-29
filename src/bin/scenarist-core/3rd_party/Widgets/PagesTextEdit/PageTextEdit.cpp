@@ -3099,6 +3099,20 @@ void PageTextEdit::append(const QString &text)
 void PageTextEdit::ensureCursorVisible()
 {
 	Q_D(PageTextEdit);
+
+	//
+	// Если курсор в невидимом блоке, откручиваем его назад до тех пор пока он не войдёт в видимый блок
+	//
+	{
+		QTextCursor cursor = textCursor();
+		while (!cursor.atStart() && !cursor.block().isVisible()) {
+			cursor.movePosition(QTextCursor::PreviousBlock);
+		}
+		if (cursor.position() != textCursor().position()) {
+			setTextCursor(cursor);
+		}
+	}
+
 	d->control->ensureCursorVisible();
 
 	//
