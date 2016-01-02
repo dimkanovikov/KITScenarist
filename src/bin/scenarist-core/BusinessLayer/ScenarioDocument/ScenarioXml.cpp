@@ -79,7 +79,7 @@ QString ScenarioXml::scenarioToXml()
 	const bool NO_CORRECT_LAST_MIME = false;
 	return scenarioToXml(0, 0, NO_CORRECT_LAST_MIME);
 }
-#include <QDebug>
+
 QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _correctLastMime)
 {
 	QString resultXml;
@@ -278,6 +278,14 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				default: {
 					break;
 				}
+			}
+
+			//
+			// Если это декорация, не сохраняем
+			//
+			if (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
+				|| currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection)) {
+				needWrite = false;
 			}
 
 			//

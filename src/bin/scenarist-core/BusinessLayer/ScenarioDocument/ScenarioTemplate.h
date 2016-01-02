@@ -37,7 +37,7 @@ namespace BusinessLogic
 			SceneGroupFooter,	//!< Окончание группы сцен
 			FolderHeader,	//!< Заголовок папки
 			FolderFooter,	//!< Окончание папки
-			SceneDescription		//!< Описание элемента сценария
+			SceneDescription	//!< Описание элемента сценария
 		};
 
 		/**
@@ -69,7 +69,9 @@ namespace BusinessLogic
 			PropertyCommentsAuthors,//!< Список авторов комментариев
 			PropertyCommentsDates,	//!< Список дат комментариев
 			//
-			PropertyIsCorrection	//!< Корректирующий текст блоков
+			PropertyIsInlineCorrection,	//!< Корректирующий текст внутри блоков
+			PropertyIsBreakCorrection,	//!< Разрывающий текст блок
+			PropertyIsCorrection		//!< Не разрывающий текст блок
 		};
 
 		/**

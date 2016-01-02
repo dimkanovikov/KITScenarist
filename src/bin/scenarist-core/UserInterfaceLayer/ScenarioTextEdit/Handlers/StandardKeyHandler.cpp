@@ -168,7 +168,10 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 			//
 			// Если мы поднялись на строку вверх, но попали в невидимый блок, перейдём к предыдущему видимому
 			//
-			while (!cursor.atStart() && !cursor.block().isVisible()) {
+			while (!cursor.atStart()
+				   && (!cursor.block().isVisible()
+					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
+					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection))) {
 				cursor.movePosition(QTextCursor::PreviousBlock);
 				cursor.movePosition(QTextCursor::EndOfBlock);
 			}
@@ -273,7 +276,10 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 			//
 			// Если мы опустились на строку вниз, но попали в невидимый блок, перейдём к следующему видимому
 			//
-			while (!cursor.atEnd() && !cursor.block().isVisible()) {
+			while (!cursor.atEnd()
+				   && (!cursor.block().isVisible()
+					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
+					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection))) {
 				cursor.movePosition(QTextCursor::NextBlock);
 			}
 

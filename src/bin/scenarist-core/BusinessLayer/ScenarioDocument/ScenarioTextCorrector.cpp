@@ -5,12 +5,13 @@
 
 #include <QAbstractTextDocumentLayout>
 #include <QApplication>
+#include <QPair>
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QTextDocument>
 
 using namespace BusinessLogic;
-
+#include <QDebug>
 namespace {
 	/**
 	 * @brief Автоматически добавляемые продолжения в диалогах
@@ -30,24 +31,30 @@ namespace {
 	}
 
 	/**
-	 * @brief Получить номер страницы, на которой находится блок
+	 * @brief Получить номер страницы, на которой находится начало и конец блока
 	 */
-	static int blockPage(QTextDocument* _document, const QTextBlock& _block) {
-		QAbstractTextDocumentLayout* layout = _document->documentLayout();
+	typedef QPair<int, int> BlockPages;
+	static BlockPages blockPages(const QTextBlock& _block) {
+		QAbstractTextDocumentLayout* layout = _block.document()->documentLayout();
 		const QRectF blockRect = layout->blockBoundingRect(_block);
-		const qreal PAGE_HEIGHT = _document->pageSize().height();
-		int blockPage = blockRect.top() / PAGE_HEIGHT;
-		int positionOnPage = blockRect.top() - (blockPage * PAGE_HEIGHT);
+		const qreal PAGE_HEIGHT = _block.document()->pageSize().height();
+		int topPage = blockRect.top() / PAGE_HEIGHT;
+		int bottomPage = blockRect.bottom() / PAGE_HEIGHT;
 
 		//
-		// Если не влезает в конце страницы, то значит он будет располагаться на следующей
+		// Если не влезает в начале или в конце страницы, то значит он будет располагаться
+		// на предыдущей или следующей
 		//
-		static const int PAGES_SPACING = 2;
-		if (PAGE_HEIGHT - positionOnPage <= _document->rootFrame()->frameFormat().bottomMargin() + PAGES_SPACING) {
-			++blockPage;
+		const int positionOnTopPage = blockRect.top() - (topPage * PAGE_HEIGHT);
+		const qreal availableSpace =
+			_block.document()->rootFrame()->frameFormat().bottomMargin()
+			+ _block.blockFormat().topMargin();
+		if (PAGE_HEIGHT - positionOnTopPage <= availableSpace) {
+			++topPage;
+			++bottomPage;
 		}
 
-		return blockPage;
+		return BlockPages(topPage, bottomPage);
 	}
 }
 
@@ -61,7 +68,6 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 {
 	QTextCursor mainCursor(_document);
 	mainCursor.setPosition(_startPosition);
-	mainCursor.beginEditBlock();
 
 	//
 	// Сперва нужно подняться до начала сцены и начинать корректировки с этого положения
@@ -78,6 +84,7 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 	//
 	{
 		QTextCursor cursor = mainCursor;
+		cursor.beginEditBlock();
 
 		//
 		// Храним последнего персонажа сцены
@@ -99,7 +106,7 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 					if (lastSceneCharacter.isEmpty()
 						|| character != lastSceneCharacter) {
 						foreach (const QTextLayout::FormatRange& range, cursor.block().textFormats()) {
-							if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsCorrection)) {
+							if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsInlineCorrection)) {
 								cursor.setPosition(cursor.block().position() + range.start);
 								cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, range.length);
 								cursor.removeSelectedText();
@@ -125,7 +132,7 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 							//
 							cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, textForInsert.length());
 							QTextCharFormat format;
-							format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
+							format.setProperty(ScenarioBlockStyle::PropertyIsInlineCorrection, true);
 							cursor.mergeCharFormat(format);
 						}
 					}
@@ -143,6 +150,8 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 			cursor.movePosition(QTextCursor::NextBlock);
 			cursor.movePosition(QTextCursor::EndOfBlock);
 		}
+
+		cursor.endEditBlock();
 	}
 
 
@@ -150,56 +159,132 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 	// Обрабатываем блоки находящиеся в конце страницы
 	//
 	if (_document->pageSize().isValid()) {
+		//
+		// Удаляем блоки с дополнительными декорациями
+		//
+		{
+			QTextCursor cursor = mainCursor;
+			cursor.beginEditBlock();
 
-		QTextCursor cursor = mainCursor;
-		QTextBlock currentBlock = cursor.block();
-		while (currentBlock.isValid()) {
-			//
-			// Определим следующий видимый блок
-			//
-			QTextBlock nextBlock = currentBlock.next();
-			while (nextBlock.isValid() && !nextBlock.isVisible()) {
-				nextBlock = nextBlock.next();
+			while (!cursor.atEnd()) {
+				//
+				// Если текущий блок декорация, то убираем его
+				//
+				const QTextBlockFormat blockFormat = cursor.block().blockFormat();
+				if (blockFormat.boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
+					|| blockFormat.boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection)) {
+					//
+					// ... запоминаем формат предыдущего блока
+					//
+					cursor.movePosition(QTextCursor::PreviousBlock);
+					QTextBlockFormat previousBlockFormat = cursor.blockFormat();
+					//
+					// ... удаляем блок декорации
+					//
+					cursor.movePosition(QTextCursor::EndOfBlock);
+					cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+					cursor.deletePreviousChar();
+					//
+					// ... если это блок разрывающий текст, то соединим разорванные блоки
+					//
+					if (blockFormat.boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection)) {
+						cursor.deleteChar();
+					}
+					//
+					// ... восстанавливаем формат блока
+					//
+					cursor.setBlockFormat(previousBlockFormat);
+				}
+				//
+				// Если текущий блок не декорация, просто переходим к следующему
+				//
+				else {
+					cursor.movePosition(QTextCursor::EndOfBlock);
+					cursor.movePosition(QTextCursor::NextCharacter);
+				}
 			}
 
-			//
-			// Если текущий блок декорация, то убираем его
-			//
-			if (0) {
+			cursor.endEditBlock();
+		}
 
-			}
-			//
-			// В противном случае проверяем не находится ли текущий блок в конце страницы
-			//
-			else {
-				int currentBlockPage = ::blockPage(_document, currentBlock);
-				int nextBlockPage = ::blockPage(_document, nextBlock);
+		//
+		// Корректируем обрывы строк
+		//
+		{
+			QTextCursor cursor = mainCursor;
+
+			QTextBlock currentBlock = cursor.block();
+			while (currentBlock.isValid()) {
+				//
+				// Определим следующий видимый блок
+				//
+				QTextBlock nextBlock = currentBlock.next();
+				while (nextBlock.isValid() && !nextBlock.isVisible()) {
+					nextBlock = nextBlock.next();
+				}
+
+				//
+				// Проверяем не находится ли текущий блок в конце страницы
+				//
+				BlockPages currentBlockPages = ::blockPages(currentBlock);
+				BlockPages nextBlockPages = ::blockPages(nextBlock);
 
 				//
 				// Нашли конец страницы, обрабатываем его соответствующим для типа блока образом
 				//
-				if (currentBlockPage != nextBlockPage) {
+				if (currentBlockPages.first != nextBlockPages.first) {
+					//
+					// Время и место
+					// переносим на следующую страницу
+					// - если в конце предыдущей страницы
+					//
+					if (ScenarioBlockStyle::forBlock(currentBlock) == ScenarioBlockStyle::SceneHeading) {
+						cursor.setPosition(currentBlock.position());
+						cursor.insertBlock();
+						cursor.movePosition(QTextCursor::PreviousBlock);
+						QTextBlockFormat format = cursor.blockFormat();
+						format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::Action);
+						format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
+						cursor.setBlockFormat(format);
+					}
 
+					//
+					// Описание действия
+					// - если находится на обеих страницах
+					// -- если на странице можно оставить текст, который займёт 2 и более строк,
+					//    оставляем максимум, а остальное переносим. Разрываем по предложениям
+					// -- в остальном случае переносим полностью
+					// --- если перед описанием действия идёт время и место, переносим и его тоже
+					//
 
 					//
-					// Переносить время и место на следующую страницу
+					// Имя персонажа
+					// переносим на следующую страницу
+					// - если в конце предыдущей страницы
 					//
 
 					//
-					// Разрывать описание действия, или переносить
+					// Ремарка
+					// - если перед ремаркой идёт имя персонажа, переносим их вместе на след. страницу
+					// - если перед ремаркой идёт реплика, вместо ремарки пишем ДАЛЬШЕ, а на следующую
+					//	 страницу добавляем сперва имя персонажа с (ПРОД), а затем саму ремарку
 					//
 
 					//
-					// Разрывать диалоги, или переносить
+					// Диалог
+					// - если можно, то оставляем текст так, чтобы он занимал не менее 2 строк,
+					//	 добавляем ДАЛЬШЕ и на следующей странице имя персонажа с (ПРОД) и см диалог
+					// - в противном случае
+					// -- если перед диалогом идёт имя персонажа, то переносим их вместе на след.
+					// -- если перед диалогом идёт ремарка, то разрываем по ремарке, пишем вместо неё
+					//	  ДАЛЬШЕ, а на следующей странице имя персонажа с (ПРОД), ремарку и сам диалог
 					//
 				}
-			}
 
-			currentBlock = nextBlock;
+				currentBlock = nextBlock;
+			}
 		}
 	}
-
-
-	mainCursor.endEditBlock();
 }
 
