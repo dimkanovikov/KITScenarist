@@ -3,6 +3,7 @@
 #include "ScenarioTemplate.h"
 #include "ScenarioTextBlockParsers.h"
 
+#include <QAbstractTextDocumentLayout>
 #include <QApplication>
 #include <QTextBlock>
 #include <QTextCursor>
@@ -26,6 +27,27 @@ namespace {
 				|| ScenarioBlockStyle::forBlock(_cursor.block()) == ScenarioBlockStyle::SceneGroupFooter
 				|| ScenarioBlockStyle::forBlock(_cursor.block()) == ScenarioBlockStyle::FolderHeader
 				|| ScenarioBlockStyle::forBlock(_cursor.block()) == ScenarioBlockStyle::FolderFooter;
+	}
+
+	/**
+	 * @brief Получить номер страницы, на которой находится блок
+	 */
+	static int blockPage(QTextDocument* _document, const QTextBlock& _block) {
+		QAbstractTextDocumentLayout* layout = _document->documentLayout();
+		const QRectF blockRect = layout->blockBoundingRect(_block);
+		const qreal PAGE_HEIGHT = _document->pageSize().height();
+		int blockPage = blockRect.top() / PAGE_HEIGHT;
+		int positionOnPage = blockRect.top() - (blockPage * PAGE_HEIGHT);
+
+		//
+		// Если не влезает в конце страницы, то значит он будет располагаться на следующей
+		//
+		static const int PAGES_SPACING = 2;
+		if (PAGE_HEIGHT - positionOnPage <= _document->rootFrame()->frameFormat().bottomMargin() + PAGES_SPACING) {
+			++blockPage;
+		}
+
+		return blockPage;
 	}
 }
 
@@ -125,16 +147,57 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 
 
 	//
-	// Переносить время и место на следующую страницу
+	// Обрабатываем блоки находящиеся в конце страницы
 	//
+	if (_document->pageSize().isValid()) {
 
-	//
-	// Разрывать описание действия, или переносить
-	//
+		QTextCursor cursor = mainCursor;
+		QTextBlock currentBlock = cursor.block();
+		while (currentBlock.isValid()) {
+			//
+			// Определим следующий видимый блок
+			//
+			QTextBlock nextBlock = currentBlock.next();
+			while (nextBlock.isValid() && !nextBlock.isVisible()) {
+				nextBlock = nextBlock.next();
+			}
 
-	//
-	// Разрывать диалоги, или переносить
-	//
+			//
+			// Если текущий блок декорация, то убираем его
+			//
+			if (0) {
+
+			}
+			//
+			// В противном случае проверяем не находится ли текущий блок в конце страницы
+			//
+			else {
+				int currentBlockPage = ::blockPage(_document, currentBlock);
+				int nextBlockPage = ::blockPage(_document, nextBlock);
+
+				//
+				// Нашли конец страницы, обрабатываем его соответствующим для типа блока образом
+				//
+				if (currentBlockPage != nextBlockPage) {
+
+
+					//
+					// Переносить время и место на следующую страницу
+					//
+
+					//
+					// Разрывать описание действия, или переносить
+					//
+
+					//
+					// Разрывать диалоги, или переносить
+					//
+				}
+			}
+
+			currentBlock = nextBlock;
+		}
+	}
 
 
 	mainCursor.endEditBlock();

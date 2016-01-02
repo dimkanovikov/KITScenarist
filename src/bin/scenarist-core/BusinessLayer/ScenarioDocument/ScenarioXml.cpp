@@ -178,7 +178,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			// ... удаляем вспомогательный текст
 			//
 			foreach (const QTextLayout::FormatRange& range, cursor.block().textFormats()) {
-				if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsCorrection)) {
+				if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsInlineCorrection)) {
 					textToSave.remove(range.start, range.length);
 					break;
 				}
