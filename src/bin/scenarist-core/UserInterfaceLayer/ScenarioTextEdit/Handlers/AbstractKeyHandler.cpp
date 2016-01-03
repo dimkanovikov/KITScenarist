@@ -31,11 +31,12 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
 
 	//
-	// Нажата клавиша "Control" или "Shift"
+	// Нажата клавиша "Control" или "Shift" и событие не добавляет текст
 	//
 	//
-	if (pressedModifiers.testFlag(Qt::ControlModifier)
-		|| pressedModifiers.testFlag(Qt::ShiftModifier)) {
+	if ((pressedModifiers.testFlag(Qt::ControlModifier)
+		|| pressedModifiers.testFlag(Qt::ShiftModifier))
+		&& _event->text().isEmpty()) {
 		//
 		// Ни чего не делаем, обработкой сочетаний клавиш занимаются ответственные за это классы
 		//

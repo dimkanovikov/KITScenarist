@@ -11,7 +11,7 @@
 #include <QTextDocument>
 
 using namespace BusinessLogic;
-#include <QDebug>
+
 namespace {
 	/**
 	 * @brief Автоматически добавляемые продолжения в диалогах
