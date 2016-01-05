@@ -19,6 +19,7 @@
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QTextBlock>
+#include <QTimer>
 
 using namespace BusinessLogic;
 
@@ -438,6 +439,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			return;
 		}
 	}
+
 	//
 	// Сохранить md5 хэш текста документа
 	//
@@ -779,7 +781,9 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	//
 	// Корректируем текст сценария
 	//
-	ScenarioTextCorrector().correctScenarioText(m_document, _position);
+	QTimer::singleShot(0, Qt::PreciseTimer, [=] {
+		ScenarioTextCorrector().correctScenarioText(m_document, _position);
+	});
 }
 
 void ScenarioDocument::initConnections()
