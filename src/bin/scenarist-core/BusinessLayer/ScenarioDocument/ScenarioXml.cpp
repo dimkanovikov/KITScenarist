@@ -151,7 +151,12 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				&& cursor.atBlockEnd()) {
 				cursor.movePosition(QTextCursor::Right);
 			}
-			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+			//
+			// ... если текущий блок не пуст, выделяем его текст
+			//
+			if (!cursor.block().text().isEmpty()) {
+				cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+			}
 		}
 
 		//

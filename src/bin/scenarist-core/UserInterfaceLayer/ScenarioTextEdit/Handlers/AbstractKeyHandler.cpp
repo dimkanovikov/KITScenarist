@@ -35,8 +35,7 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	//
 	//
 	if ((pressedModifiers.testFlag(Qt::ControlModifier)
-		|| pressedModifiers.testFlag(Qt::ShiftModifier))
-		&& _event->text().isEmpty()) {
+		|| (pressedModifiers.testFlag(Qt::ShiftModifier) && _event->text().isEmpty()))) {
 		//
 		// Ни чего не делаем, обработкой сочетаний клавиш занимаются ответственные за это классы
 		//

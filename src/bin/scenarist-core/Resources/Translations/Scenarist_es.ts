@@ -334,7 +334,7 @@
 <context>
     <name>BusinessLogic::ScenarioTextCorrector</name>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTextCorrector.cpp" line="17"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTextCorrector.cpp" line="21"/>
         <source>CONT&apos;D</source>
         <extracomment>Continued</extracomment>
         <translation>A Continuación</translation>
@@ -1696,13 +1696,13 @@ Continue trabajando fuera de linea.</translation>
         <translation>Titulo:</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="428"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="436"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation>FINAL DEL GRUPO</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="439"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="447"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation>FINAL DE LA CARPETA</translation>
@@ -3252,37 +3252,37 @@ Párrafo</translation>
         <translation>Borrador</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="453"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="446"/>
         <source>Outline mode</source>
         <translation>Modo sin linea</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="456"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="449"/>
         <source>Current Text Block Style</source>
         <translation>Texto actual con el Estilo Marcado de Bloque</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="462"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="455"/>
         <source>Undo last action</source>
         <translation>Deshacer</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="465"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="458"/>
         <source>Redo last action</source>
         <translation>Repetir Ultima acción</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="469"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="462"/>
         <source>Search and Replace</source>
         <translation>Buscar y Reemplazar</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="475"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="468"/>
         <source>Text Fast Format</source>
         <translation>Formato Rapido</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="480"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp" line="473"/>
         <source>Duration from Start to Cursor Position | Full Duration</source>
         <translation>Duracón desde el principio hasta la posición del cursor | Duracion Total</translation>
     </message>

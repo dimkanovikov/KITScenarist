@@ -988,17 +988,17 @@ void ScenarioDocument::load(const QString& _scenario)
 	// Очищаем модель и документ
 	//
 	{
-		int documentCharactersCount = m_document->characterCount();
-		aboutContentsChange(0, documentCharactersCount, 0);
+		aboutContentsChange(0, m_document->characterCount(), 0);
 		m_document->clear();
 	}
 
 	//
 	// Загружаем сценарий
 	//
-	m_document->load(_scenario);
-	int documentCharactersCount = m_document->characterCount();
-	aboutContentsChange(0, 0, documentCharactersCount);
+	{
+		m_document->load(_scenario);
+		aboutContentsChange(0, 0, m_document->characterCount());
+	}
 
 	//
 	// Подключаем необходимые сигналы
