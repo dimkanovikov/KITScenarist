@@ -133,7 +133,9 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 	// Если подстановщик скрыт - имитируем действие обычного редактора
 	//
 	if (!editor()->isCompleterVisible()) {
-		bool isShiftPressed = _event->modifiers().testFlag(Qt::ShiftModifier);
+		const bool isShiftPressed = _event->modifiers().testFlag(Qt::ShiftModifier);
+		const QTextCursor::MoveMode cursorMoveMode =
+				isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor;
 
 		QTextCursor cursor = editor()->textCursor();
 		cursor.beginEditBlock();
@@ -151,8 +153,7 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 			int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 			while (!cursor.atStart()
 				   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-				cursor.movePosition(QTextCursor::Left,
-									isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+				cursor.movePosition(QTextCursor::Left, cursorMoveMode);
 			}
 			marginFromLineStart =
 					initCursorPosition
@@ -172,8 +173,8 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 				   && (!cursor.block().isVisible()
 					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
 					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection))) {
-				cursor.movePosition(QTextCursor::PreviousBlock);
-				cursor.movePosition(QTextCursor::EndOfBlock);
+				cursor.movePosition(QTextCursor::PreviousBlock, cursorMoveMode);
+				cursor.movePosition(QTextCursor::EndOfBlock, cursorMoveMode);
 			}
 
 			//
@@ -184,30 +185,21 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 				int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 				while (!cursor.atStart()
 					   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-					cursor.movePosition(
-								QTextCursor::Left,
-								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+					cursor.movePosition(QTextCursor::Left, cursorMoveMode);
 				}
 
 				//
 				// Возвратим курсор на одну позицию назад, т.к. в предыдущем цикле мы перешли на новую строку
 				//
 				if (!cursor.atStart()) {
-					cursor.movePosition(
-								QTextCursor::Right,
-								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+					cursor.movePosition(QTextCursor::Right, cursorMoveMode);
 				}
 
 				int currentLineStartPosition = cursor.position();
 				if (currentLineStartPosition + marginFromLineStart < currentLineEndPosition) {
-					cursor.movePosition(
-								QTextCursor::Right,
-								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor,
-								marginFromLineStart);
+					cursor.movePosition(QTextCursor::Right, cursorMoveMode, marginFromLineStart);
 				} else {
-					cursor.setPosition(
-								currentLineEndPosition,
-								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+					cursor.setPosition(currentLineEndPosition, cursorMoveMode);
 				}
 			}
 		}
@@ -223,7 +215,9 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 	// Если подстановщик скрыт - имитируем действие обычного редактора
 	//
 	if (!editor()->isCompleterVisible()) {
-		bool isShiftPressed = _event->modifiers().testFlag(Qt::ShiftModifier);
+		const bool isShiftPressed = _event->modifiers().testFlag(Qt::ShiftModifier);
+		const QTextCursor::MoveMode cursorMoveMode =
+				isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor;
 
 		QTextCursor cursor = editor()->textCursor();
 		cursor.beginEditBlock();
@@ -241,8 +235,7 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 			int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 			while (!cursor.atStart()
 				   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-				cursor.movePosition(QTextCursor::Left,
-									isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+				cursor.movePosition(QTextCursor::Left, cursorMoveMode);
 			}
 			marginFromLineStart =
 					initCursorPosition
@@ -253,8 +246,7 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 		//
 		// Вернём курсор в исходное положение
 		//
-		cursor.setPosition(initCursorPosition,
-						   isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+		cursor.setPosition(initCursorPosition, cursorMoveMode);
 
 		//
 		// Сместим курсор к следующей строке или к концу документа
@@ -263,8 +255,7 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 			int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 			while (!cursor.atEnd()
 				   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-				cursor.movePosition(QTextCursor::Right,
-									isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+				cursor.movePosition(QTextCursor::Right, cursorMoveMode);
 			}
 		}
 
@@ -280,7 +271,7 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 				   && (!cursor.block().isVisible()
 					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
 					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection))) {
-				cursor.movePosition(QTextCursor::NextBlock);
+				cursor.movePosition(QTextCursor::NextBlock, cursorMoveMode);
 			}
 
 			//
@@ -291,30 +282,22 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 				int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 				while (!cursor.atEnd()
 					   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-					cursor.movePosition(
-								QTextCursor::Right,
-								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+					cursor.movePosition(QTextCursor::Right, cursorMoveMode);
 				}
 
 				//
 				// Возвратим курсор на одну позицию назад, т.к. в предыдущем цикле мы перешли на новую строку
 				//
 				if (!cursor.atEnd()) {
-					cursor.movePosition(
-								QTextCursor::Left,
-								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+					cursor.movePosition(QTextCursor::Left, cursorMoveMode);
 				}
 
 				int currentLineEndPosition = cursor.position();
 				if (currentLineStartPosition + marginFromLineStart < currentLineEndPosition) {
-					cursor.movePosition(
-								QTextCursor::Left,
-								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor,
-								currentLineEndPosition - currentLineStartPosition - marginFromLineStart);
+					const int moveRepeats = currentLineEndPosition - currentLineStartPosition - marginFromLineStart;
+					cursor.movePosition(QTextCursor::Left, cursorMoveMode, moveRepeats);
 				} else {
-					cursor.setPosition(
-								currentLineEndPosition,
-								isShiftPressed ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+					cursor.setPosition(currentLineEndPosition, cursorMoveMode);
 				}
 			}
 		}

@@ -31,11 +31,17 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	Qt::KeyboardModifiers pressedModifiers = _event->modifiers();
 
 	//
-	// Нажата клавиша "Control" или "Shift" и событие не добавляет текст
+	// Нажата клавиша Control
+	// или Shift и событие не добавляет текст и не является выделением части текста
 	//
-	//
+	static const QList<Qt::Key> keyboardNavigation({
+		Qt::Key_Left, Qt::Key_Up, Qt::Key_Right, Qt::Key_Down , Qt::Key_PageUp, Qt::Key_PageDown
+	});
 	if ((pressedModifiers.testFlag(Qt::ControlModifier)
-		|| (pressedModifiers.testFlag(Qt::ShiftModifier) && _event->text().isEmpty()))) {
+		|| (pressedModifiers.testFlag(Qt::ShiftModifier)
+			&& !keyboardNavigation.contains(pressedKey)
+			&& _event->text().isEmpty()
+			))) {
 		//
 		// Ни чего не делаем, обработкой сочетаний клавиш занимаются ответственные за это классы
 		//

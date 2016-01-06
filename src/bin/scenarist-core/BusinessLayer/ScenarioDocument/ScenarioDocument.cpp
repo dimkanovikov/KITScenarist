@@ -779,11 +779,11 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	updateDocumentScenesNumbers();
 
 	//
-	// Корректируем текст сценария
+	// TODO: Корректируем текст сценария
 	//
-	QTimer::singleShot(0, Qt::PreciseTimer, [=] {
-		ScenarioTextCorrector().correctScenarioText(m_document, _position);
-	});
+//	QTimer::singleShot(0, Qt::PreciseTimer, [=] {
+//		ScenarioTextCorrector().correctScenarioText(m_document, _position);
+//	});
 }
 
 void ScenarioDocument::initConnections()
