@@ -1042,7 +1042,7 @@ Continue working in offline mode.</source>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="659"/>
-        <source>Current project is not available for syncronization now.
+        <source>Current project is not available for syncronization now, because project&apos;s owner subscription is ended.
 Continue working with this project in offline mode.</source>
         <translation></translation>
     </message>
@@ -1548,13 +1548,13 @@ Continue working with this project in offline mode.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="436"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="441"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="447"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="452"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation></translation>

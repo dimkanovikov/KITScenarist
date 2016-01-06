@@ -1133,11 +1133,16 @@ Continue working in offline mode.</source>
         <translation>Proyecto no disponible</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="659"/>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
-        <translation>El proyecto actual no esta disponible para sincronizarse ahora.
+        <translation type="vanished">El proyecto actual no esta disponible para sincronizarse ahora.
 Continue trabajando fuera de linea.</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="659"/>
+        <source>Current project is not available for syncronization now, because project&apos;s owner subscription is ended.
+Continue working with this project in offline mode.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="670"/>
@@ -1696,13 +1701,13 @@ Continue trabajando fuera de linea.</translation>
         <translation>Titulo:</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="436"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="441"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation>FINAL DEL GRUPO</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="447"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="452"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation>FINAL DE LA CARPETA</translation>

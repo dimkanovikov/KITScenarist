@@ -1049,6 +1049,13 @@ Continue working in offline mode.</source>
 Работаем в автономном режиме.</translation>
     </message>
     <message>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="659"/>
+        <source>Current project is not available for syncronization now, because project&apos;s owner subscription is ended.
+Continue working with this project in offline mode.</source>
+        <translation>Проект недоступен для синхронизации, т.к. у владельца проекта закончился срок подписки.
+Работаем с проектом в автономном режиме.</translation>
+    </message>
+    <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="893"/>
         <source>Save project changes?</source>
         <translation>Сохранить изменения проекта?</translation>
@@ -1150,10 +1157,9 @@ Continue working in offline mode.</source>
         <translation>Проект недоступен</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="659"/>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
-        <translation>Проект недоступен для синхронизации.
+        <translation type="vanished">Проект недоступен для синхронизации.
 Работаем с ним в автономном режиме.</translation>
     </message>
     <message>
@@ -1692,13 +1698,13 @@ Continue working with this project in offline mode.</source>
         <translation>Сценарий</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="436"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="441"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation>КОНЕЦ ГРУППЫ</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="447"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="452"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation>КОНЕЦ ПАПКИ</translation>

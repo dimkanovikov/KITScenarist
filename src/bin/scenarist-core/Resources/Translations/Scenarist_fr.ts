@@ -1087,10 +1087,15 @@ Continuer à travailler en mode déconnecté.</translation>
         <translation>Projet pas disponible</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="659"/>
         <source>Current project is not available for syncronization now.
 Continue working with this project in offline mode.</source>
-        <translation>Projet en cours ne sont pas disponibles pour la synchronisation maintenant. Continuer à travailler à ce projet en mode déconnecté.</translation>
+        <translation type="vanished">Projet en cours ne sont pas disponibles pour la synchronisation maintenant. Continuer à travailler à ce projet en mode déconnecté.</translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="659"/>
+        <source>Current project is not available for syncronization now, because project&apos;s owner subscription is ended.
+Continue working with this project in offline mode.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/ManagementLayer/ApplicationManager.cpp" line="670"/>
@@ -1618,13 +1623,13 @@ Continue working with this project in offline mode.</source>
         <translation>Titre:</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="436"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="441"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation>FIN DE GROUPE</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="447"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="452"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation>FIN DU DOSSIER</translation>

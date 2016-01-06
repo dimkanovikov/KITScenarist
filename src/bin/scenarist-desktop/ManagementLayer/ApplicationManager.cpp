@@ -656,7 +656,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		//
 		case 201: {
 			title = tr("Project not available");
-			error = tr("Current project is not available for syncronization now.\n"
+			error = tr("Current project is not available for syncronization now, because project's owner subscription is ended.\n"
 					   "Continue working with this project in offline mode.");
 			QLightBoxMessage::information(m_view, title, error);
 			m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
@@ -1137,10 +1137,10 @@ QMenu* ApplicationManager::createMenu()
 	// Сформируем меню
 	//
 #ifdef Q_OS_MAC
-    QMenuBar *menuBar = new QMenuBar(0);
-    QMenu* menu = menuBar->addMenu(tr("File"));
+	QMenuBar *menuBar = new QMenuBar(0);
+	QMenu* menu = menuBar->addMenu(tr("File"));
 #else
-    QMenu* menu = new QMenu(m_menu);
+	QMenu* menu = new QMenu(m_menu);
 #endif
 	QAction* createNewProject = menu->addAction(tr("New"));
 	QAction* openProject = menu->addAction(tr("Open"));
