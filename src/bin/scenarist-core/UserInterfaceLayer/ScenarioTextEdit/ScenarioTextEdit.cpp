@@ -683,6 +683,15 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 		}
 		setTextCursor(cursor);
 	}
+	//
+	// Делаем собственную обработку операции вставить, т.к. стандартная всегда
+	// уводит полосу прокрутки в начало
+	//
+	else if (_event == QKeySequence::Paste) {
+		const int lastVBarValue = verticalScrollBar()->value();
+		paste();
+		verticalScrollBar()->setValue(lastVBarValue);
+	}
 	else {
 		isEventHandled = false;
 	}
