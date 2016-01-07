@@ -45,7 +45,7 @@ void PrepareHandler::prepareForHandle(QKeyEvent* _event)
 	//
 	if (_event->key() == Qt::Key_Shift) {
 		m_needEnsureCursorVisible = false;
-	}
+    }
 }
 
 void PrepareHandler::handleEnter(QKeyEvent*)

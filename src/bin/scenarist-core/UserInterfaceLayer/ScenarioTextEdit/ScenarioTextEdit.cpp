@@ -518,9 +518,11 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	handler->handle(_event);
 
 	//
-	// Событие дошло по назначению
+    // Событие дошло по назначению, если это не шорткат
 	//
-	_event->accept();
+    if (!_event->modifiers().testFlag(Qt::ControlModifier)) {
+        _event->accept();
+    }
 
 	//
 	// Завершим блок операций
