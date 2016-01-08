@@ -45,7 +45,8 @@ QString QLightBoxInputDialog::getLongText(QWidget* _parent, const QString& _titl
 
 QString QLightBoxInputDialog::getItem(QWidget* _parent, const QString& _title, const QStringList& _items, const QString& _selectedItem)
 {
-	QLightBoxInputDialog dialog(_parent);
+	const bool STRETCH_LIST_WIDGET = true;
+	QLightBoxInputDialog dialog(_parent, STRETCH_LIST_WIDGET);
 	dialog.setWindowTitle(_title);
 	dialog.m_label->hide();
 	dialog.m_lineEdit->hide();
@@ -82,8 +83,8 @@ QString QLightBoxInputDialog::getItem(QWidget* _parent, const QString& _title, c
 	return result;
 }
 
-QLightBoxInputDialog::QLightBoxInputDialog(QWidget* _parent) :
-	QLightBoxDialog(_parent),
+QLightBoxInputDialog::QLightBoxInputDialog(QWidget* _parent, bool _isContentStretchable) :
+	QLightBoxDialog(_parent, true, _isContentStretchable),
 	m_label(new QLabel(this)),
 	m_lineEdit(new QLineEdit(this)),
 	m_textEdit(new QPlainTextEdit(this)),

@@ -24,7 +24,8 @@ public:
 	};
 
 public:
-	explicit QLightBoxDialog(QWidget *parent = 0, bool _followToHeadWidget = true);
+	explicit QLightBoxDialog(QWidget *parent = 0, bool _followToHeadWidget = true,
+		bool _isContentStretchable = false);
 
 public slots:
 	/**
@@ -100,6 +101,11 @@ private:
 	 * @brief Виджет диалога
 	 */
 	QFrame* m_centralWidget;
+
+	/**
+	 * @brief Нужно ли расстягивать виджет с содержимым диалога
+	 */
+	bool m_isContentStretchable;
 
 	/**
 	 * @brief Актуальный код возврата

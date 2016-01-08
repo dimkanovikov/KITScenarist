@@ -37,7 +37,7 @@ public:
 		const QString& _selectedItem = QString::null);
 
 private:
-	explicit QLightBoxInputDialog(QWidget* _parent = 0);
+	explicit QLightBoxInputDialog(QWidget* _parent = 0, bool _isContentStretchable = false);
 
 	/**
 	 * @brief Настроить представление

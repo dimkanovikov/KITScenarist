@@ -31,10 +31,11 @@ namespace {
 }
 
 
-QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget) :
+QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget, bool _isContentStretchable) :
 	QLightBoxWidget(parent, _followToHeadWidget),
 	m_title(new QLabel(this)),
 	m_centralWidget(0),
+	m_isContentStretchable(_isContentStretchable),
 	m_execResult(Rejected)
 {
 	initView();
@@ -140,6 +141,9 @@ void QLightBoxDialog::initView()
 		newLayout->addWidget(m_title, 1, 1);
 		newLayout->addWidget(m_centralWidget, 2, 1);
 		newLayout->setRowStretch(0, 1);
+		if (m_isContentStretchable) {
+			newLayout->setRowStretch(2, 8);
+		}
 		newLayout->setRowStretch(3, 1);
 		newLayout->setColumnStretch(0, 1);
 		newLayout->setColumnStretch(2, 1);
