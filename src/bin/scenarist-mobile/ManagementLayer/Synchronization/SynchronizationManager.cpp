@@ -112,12 +112,29 @@ SynchronizationManager::SynchronizationManager(QObject* _parent, QWidget* _paren
 	initConnections();
 }
 
+bool SynchronizationManager::canLogin(QString& _userName, QString& _password) const
+{
+	_userName =
+			StorageFacade::settingsStorage()->value(
+				"application/user-name",
+				SettingsStorage::ApplicationSettings);
+	_password =
+			PasswordStorage::load(
+				StorageFacade::settingsStorage()->value(
+					"application/password",
+					SettingsStorage::ApplicationSettings),
+				_userName
+				);
+
+	return !_userName.isEmpty() && !_password.isEmpty();
+}
+
 void SynchronizationManager::login()
 {
 	//
 	// Авторизуемся, если параметры сохранены
 	//
-	const QString login =
+	const QString userName =
 			StorageFacade::settingsStorage()->value(
 				"application/user-name",
 				SettingsStorage::ApplicationSettings);
@@ -126,11 +143,11 @@ void SynchronizationManager::login()
 				StorageFacade::settingsStorage()->value(
 					"application/password",
 					SettingsStorage::ApplicationSettings),
-				login
+				userName
 				);
 
-	if (!login.isEmpty() && !password.isEmpty()) {
-		aboutLogin(login, password);
+	if (!userName.isEmpty() && !password.isEmpty()) {
+		aboutLogin(userName, password);
 	}
 }
 

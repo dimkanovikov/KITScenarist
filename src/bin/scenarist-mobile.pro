@@ -217,8 +217,10 @@ SOURCES += \
     scenarist-mobile/ManagementLayer/Synchronization/SynchronizationManager.cpp \
     scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.cpp \
     scenarist-core/DataLayer/DataStorageLayer/ResearchStorage.cpp \
-    scenarist-core/Domain/Research.cpp
-    scenarist-mobile/ManagementLayer/ApplicationManager.cpp
+    scenarist-core/Domain/Research.cpp \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.cpp \
+    scenarist-mobile/UserInterfaceLayer/Cabin/LoginView.cpp \
+    scenarist-mobile/ManagementLayer/Cabin/LoginManager.cpp
 
 HEADERS += \
     scenarist-mobile/Application.h \
@@ -386,8 +388,10 @@ HEADERS += \
     scenarist-core/3rd_party/Helpers/ScrollerHelper.h \
     scenarist-core/DataLayer/DataMappingLayer/ResearchMapper.h \
     scenarist-core/DataLayer/DataStorageLayer/ResearchStorage.h \
-    scenarist-core/Domain/Research.h
-    scenarist-mobile/ManagementLayer/ApplicationManager.h
+    scenarist-core/Domain/Research.h \
+    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.h \
+    scenarist-mobile/UserInterfaceLayer/Cabin/LoginView.h \
+    scenarist-mobile/ManagementLayer/Cabin/LoginManager.h
 
 
 RESOURCES += \
@@ -404,7 +408,8 @@ FORMS += \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.ui \
     scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.ui \
     scenarist-mobile/UserInterfaceLayer/StartUp/AddProjectDialog.ui \
-    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.ui
+    scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.ui \
+    scenarist-mobile/UserInterfaceLayer/Cabin/LoginView.ui
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = \

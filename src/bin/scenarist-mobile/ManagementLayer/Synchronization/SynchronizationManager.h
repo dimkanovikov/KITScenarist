@@ -25,6 +25,11 @@ namespace ManagementLayer
 	public:
 		explicit SynchronizationManager(QObject* _parent, QWidget* _parentView);
 
+		/**
+		 * @brief Можем ли авторизоваться
+		 */
+		bool canLogin(QString& _userName, QString& _password) const;
+
 	public slots:
 		/**
 		 * @brief Авторизоваться используя сохранённые параметры авторизации

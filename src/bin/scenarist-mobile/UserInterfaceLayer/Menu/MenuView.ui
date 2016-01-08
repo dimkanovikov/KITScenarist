@@ -72,7 +72,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="signIn">
+          <widget class="QPushButton" name="cabin">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -80,7 +80,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>     Sign In</string>
+            <string>     Cabin</string>
            </property>
            <property name="icon">
             <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
@@ -161,6 +161,20 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="settings">
+        <property name="text">
+         <string>     Settings</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+          <normaloff>:/Graphics/Icons/Mobile/menu/settings.png</normaloff>:/Graphics/Icons/Mobile/menu/settings.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -179,7 +193,6 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../scenarist-core/Resources/Resources.qrc"/>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>
  <connections/>

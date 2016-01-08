@@ -34,15 +34,6 @@ namespace ManagementLayer
 		 */
 		void userLogged();
 
-		/**
-		 * @brief Попробовать повторно авторизоваться, после неудачной попытки
-		 */
-		void retryLogin(const QString& _error);
-
-		/**
-		 * @brief Пользователь закрыл авторизацию
-		 */
-		void userUnlogged();
 
 		/**
 		 * @brief Показать пункты меню для проекта
@@ -55,16 +46,6 @@ namespace ManagementLayer
 		void hideProjectSubmenu();
 
 	signals:
-		/**
-		 * @brief Пользователь хочет авторизоваться
-		 */
-		void loginRequested(const QString& _userName, const QString& _password);
-
-		/**
-		 * @brief Пользователь хочет выйти
-		 */
-		void logoutRequested();
-
 		/**
 		 * @brief Сигналы о нажатии соответствующих кнопок в меню
 		 */
@@ -100,21 +81,6 @@ namespace ManagementLayer
 		 * @brief Представление меню
 		 */
 		UserInterface::MenuView* m_view;
-
-		/**
-		 * @brief Диалог авторизации
-		 */
-		UserInterface::LoginDialog* m_loginDialog;
-
-		/**
-		 * @brief Логин введённый при авторизации
-		 */
-		QString m_userName;
-
-		/**
-		 * @brief Пароль введённый при авторизации
-		 */
-		QString m_password;
 	};
 }
 

@@ -612,7 +612,7 @@ void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bo
 
 void ScenarioManager::aboutUpdateCurrentSceneSynopsis(const QString& _synopsis)
 {
-	workingScenario()->setItemSynopsisAtPosition(m_textEditManager->cursorPosition(), _synopsis);
+	workingScenario()->setItemDescriptionAtPosition(m_textEditManager->cursorPosition(), _synopsis);
 }
 
 //void ScenarioManager::aboutBuildSynopsisFromScenes()

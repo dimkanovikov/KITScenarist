@@ -19,7 +19,7 @@ Application::Application(int& _argc, char** _argv) :
 	setOrganizationName("DimkaNovikov labs.");
 	setOrganizationDomain("dimkanovikov.pro");
 	setApplicationName("Scenarist");
-	setApplicationVersion("0.5.8");
+	setApplicationVersion("0.5.9");
 
 	//
 	// Загрузим Courier New в базу шрифтов программы, если его там ещё нет
@@ -32,11 +32,11 @@ Application::Application(int& _argc, char** _argv) :
 	//
 	initTranslation();
 
-    //
-    // Настроим шрифт
-    //
+	//
+	// Настроим шрифт
+	//
 #ifdef Q_OS_ANDROID
-    setFont(QFont("Roboto", 14));
+	setFont(QFont("Roboto", 14));
 #endif
 }
 

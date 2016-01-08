@@ -87,7 +87,7 @@
         <file>Icons/Mobile/dots-vertical.png</file>
         <file>Icons/Mobile/magnify.png</file>
         <file>Icons/Mobile/keyboard-tab.png</file>
-        <file>Icons/Mobile/view-list.png</file>
+        <file>Icons/Mobile/outline.png</file>
         <file>Icons/Mobile/script.png</file>
         <file>Icons/Mobile/keyboard-return.png</file>
         <file>Icons/Mobile/menu/account.png</file>
@@ -105,6 +105,8 @@
         <file>Icons/plus.png</file>
         <file>Icons/file-image.png</file>
         <file>Icons/Editing/outline.png</file>
+        <file>Icons/Mobile/navigator.png</file>
+        <file>Icons/Mobile/menu/settings.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

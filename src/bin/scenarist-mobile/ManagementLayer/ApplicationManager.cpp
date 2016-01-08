@@ -1,6 +1,7 @@
 #include "ApplicationManager.h"
 
 #include "Project/ProjectsManager.h"
+#include "Cabin/LoginManager.h"
 #include "Menu/MenuManager.h"
 #include "StartUp/StartUpManager.h"
 #include "Scenario/ScenarioManager.h"
@@ -38,8 +39,9 @@ namespace {
 	 * @brief Индексы представлений в общем стэке
 	 */
 	/** @{ */
-	const int PROJECTS_VIEW_INDEX = 0;
-	const int PROJECT_TEXT_VIEW_INDEX = 1;
+	const int LOGIN_VIEW_INDEX = 0;
+	const int PROJECTS_VIEW_INDEX = 1;
+	const int PROJECT_TEXT_VIEW_INDEX = 2;
 	/** @} */
 
 	/**
@@ -61,6 +63,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	QObject(parent),
 	m_view(new ApplicationView),
 	m_projectsManager(new ProjectsManager(this)),
+	m_loginManager(new LoginManager(this, m_view)),
 	m_menuManager(new MenuManager(this, m_view)),
 	m_startUpManager(new StartUpManager(this, m_view)),
 	m_scenarioManager(new ScenarioManager(this, m_view)),
@@ -80,8 +83,6 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	aboutUpdateProjectsList();
 
 	reloadApplicationSettings();
-
-	QTimer::singleShot(0, m_synchronizationManager, &SynchronizationManager::login);
 }
 
 ApplicationManager::~ApplicationManager()
@@ -94,6 +95,18 @@ void ApplicationManager::exec()
 {
 //	loadViewState();
 	m_view->show();
+
+	//
+	// Пробуем авторизоваться
+	//
+	QString userName, password;
+	if (m_synchronizationManager->canLogin(userName, password)) {
+		m_loginManager->setUserName(userName);
+		m_loginManager->setPassword(password);
+		m_loginManager->showProgressBar();
+
+		m_synchronizationManager->login();
+	}
 }
 
 void ApplicationManager::aboutUpdateProjectsList()
@@ -110,8 +123,8 @@ void ApplicationManager::createNewProject(const QString& _projectName)
 	if (saveIfNeeded()) {
 		//
 		// Получим имя файла для нового проекта
-        //
-        const QDir projectsDir(ProjectsManager::localProjectsDir());
+		//
+		const QDir projectsDir(ProjectsManager::localProjectsDir());
 		if (!projectsDir.exists()) {
 			QDir::root().mkpath(projectsDir.absolutePath());
 		}
@@ -335,7 +348,8 @@ void ApplicationManager::syncClosedWithError(int _errorCode, const QString& _err
 		case 100:
 		case 101: {
 			error = tr("Incorrect username or password.");
-			m_menuManager->retryLogin(error);
+			m_loginManager->setError(error);
+			m_view->setCurrentView(LOGIN_VIEW_INDEX);
 			break;
 		}
 
@@ -705,16 +719,20 @@ void ApplicationManager::initView()
 	//
 	// Настроим представления
 	//
+	m_view->addView(m_loginManager->toolbar(), m_loginManager->view());
 	m_view->addView(m_startUpManager->toolbar(), m_startUpManager->view());
 	m_view->addView(m_scenarioManager->toolbar(), m_scenarioManager->view());
+
+	m_view->setCurrentView(LOGIN_VIEW_INDEX);
 }
 
 void ApplicationManager::initConnections()
 {
 	connect(m_view, &ApplicationView::menuClicked, m_menuManager, &MenuManager::showMenu);
 
-	connect(m_menuManager, &MenuManager::loginRequested, m_synchronizationManager, &SynchronizationManager::aboutLogin);
-	connect(m_menuManager, &MenuManager::logoutRequested, m_synchronizationManager, &SynchronizationManager::aboutLogout);
+	connect(m_loginManager, &LoginManager::loginRequested, m_synchronizationManager, &SynchronizationManager::aboutLogin);
+	connect(m_loginManager, &LoginManager::logoutRequested, m_synchronizationManager, &SynchronizationManager::aboutLogout);
+
 	connect(m_menuManager, &MenuManager::projectsRequested, [=](){
 		m_view->setCurrentView(PROJECTS_VIEW_INDEX);
 	});
@@ -777,6 +795,8 @@ void ApplicationManager::initConnections()
 		// Покажем список проектов из облака
 		//
 		m_startUpManager->showRemoteProjects();
+
+		m_view->setCurrentView(PROJECTS_VIEW_INDEX);
 	});
 	connect(m_synchronizationManager, &SynchronizationManager::logoutAccepted, [=](){
 		//
@@ -787,14 +807,10 @@ void ApplicationManager::initConnections()
 		}
 
 		//
-		// Корректируем меню
+		// Показываем страницу авторизации
 		//
-		m_menuManager->userUnlogged();
-
-		//
-		// Скрываем проекты из облака на экране проектов
-		//
-		m_startUpManager->hideRemoteProjects();
+		m_loginManager->clear();
+		m_view->setCurrentView(LOGIN_VIEW_INDEX);
 	});
 	connect(m_synchronizationManager, &SynchronizationManager::remoteProjectsLoaded, m_projectsManager, &ProjectsManager::setRemoteProjects);
 	connect(m_synchronizationManager, &SynchronizationManager::applyPatchRequested, m_scenarioManager, &ScenarioManager::aboutApplyPatch);

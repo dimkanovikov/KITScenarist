@@ -12,6 +12,7 @@ namespace UserInterface {
 namespace ManagementLayer
 {
 	class ProjectsManager;
+	class LoginManager;
 	class MenuManager;
 	class StartUpManager;
 	class ScenarioManager;
@@ -188,12 +189,17 @@ namespace ManagementLayer
 		ProjectsManager* m_projectsManager;
 
 		/**
+		 * @brief Управляющий страницей авторизации
+		 */
+		LoginManager* m_loginManager;
+
+		/**
 		 * @brief Управляющий меню навигации приложения
 		 */
 		MenuManager* m_menuManager;
 
 		/**
-		 * @brief Управляющий стартовой страницей
+		 * @brief Управляющий страницей с проектами
 		 */
 		StartUpManager* m_startUpManager;
 

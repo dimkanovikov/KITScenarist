@@ -22,21 +22,15 @@ MenuView::~MenuView()
 	delete m_ui;
 }
 
-void MenuView::setUserLogged(bool _isLogged, const QString& _userName)
+void MenuView::setUserLogged(const QString& _userName)
 {
-	QString btnText;
-	if (_isLogged) {
-		btnText = _userName;
-	} else {
-		btnText = tr("Sign In");
-	}
-	m_ui->signIn->setText("     " + btnText);
+	m_ui->cabin->setText("     " + _userName);
 }
 
 void MenuView::showProjectSubmenu(const QString& _projectName)
 {
 	const QFontMetrics metrics = m_ui->projectName->fontMetrics();
-    const int margin = 80;
+	const int margin = 80;
 	m_ui->projectName->setText(metrics.elidedText(_projectName, Qt::ElideRight, width() - margin));
 
 	m_ui->projectName->show();
@@ -74,18 +68,20 @@ void MenuView::initView()
 void MenuView::initConnections()
 {
 	connect(m_ui->close, &QToolButton::clicked, this, &MenuView::backClicked);
-	connect(m_ui->signIn, &QToolButton::clicked, this, &MenuView::signInClicked);
+	connect(m_ui->cabin, &QToolButton::clicked, this, &MenuView::cabinClicked);
 	connect(m_ui->projects, &QToolButton::clicked, this, &MenuView::projectsClicked);
 	connect(m_ui->projectSave, &QToolButton::clicked, this, &MenuView::projectSaveClicked);
 	connect(m_ui->projectText, &QToolButton::clicked, this, &MenuView::projectTextClicked);
+	connect(m_ui->settings, &QToolButton::clicked, this, &MenuView::settingsClicked);
 }
 
 void MenuView::initStyleSheet()
 {
 	m_ui->content->setProperty("side-nav", true);
-	m_ui->signIn->setProperty("side-nav-name", true);
+	m_ui->cabin->setProperty("side-nav-name", true);
 	m_ui->projects->setProperty("side-nav-item", true);
 	m_ui->projectName->setProperty("side-nav-subheader", true);
 	m_ui->projectSave->setProperty("side-nav-item", true);
 	m_ui->projectText->setProperty("side-nav-item", true);
+	m_ui->settings->setProperty("side-nav-item", true);
 }

@@ -22,9 +22,9 @@ namespace UserInterface
 		~MenuView();
 
 		/**
-		 * @brief Установить информацию о том, авторизован пользователь или нет
+		 * @brief Установить логин авторизованного пользователя
 		 */
-		void setUserLogged(bool _isLogged, const QString& _userName = QString::null);
+		void setUserLogged(const QString& _userName = QString::null);
 
 		/**
 		 * @brief Показать пункты меню для проекта
@@ -42,10 +42,11 @@ namespace UserInterface
 		 */
 		/** @{ */
 		void backClicked();
-		void signInClicked();
+		void cabinClicked();
 		void projectsClicked();
 		void projectSaveClicked();
 		void projectTextClicked();
+		void settingsClicked();
 		/** @} */
 
 	private:

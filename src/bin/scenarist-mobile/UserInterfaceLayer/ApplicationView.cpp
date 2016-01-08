@@ -5,6 +5,13 @@
 
 using UserInterface::ApplicationView;
 
+namespace {
+	/**
+	 * @brief Индекс страницы авторизации
+	 */
+	const int LOGIN_VIEW_INDEX = 0;
+}
+
 
 ApplicationView::ApplicationView(QWidget *parent) :
 	QWidget(parent),
@@ -30,6 +37,7 @@ void ApplicationView::addView(QWidget* _toolbar, QWidget* _view)
 
 void ApplicationView::setCurrentView(int _index)
 {
+	m_ui->toolbar->setVisible(_index != LOGIN_VIEW_INDEX);
 	m_ui->toolbarsContainer->setCurrentIndex(_index);
 	m_ui->viewsContainer->setCurrentIndex(_index);
 }
