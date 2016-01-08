@@ -27,7 +27,7 @@ StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	initView();
 	initConnections();
 
-    sendStatistics();
+	sendStatistics();
 }
 
 QWidget* StartUpManager::toolbar() const
@@ -40,24 +40,9 @@ QWidget* StartUpManager::view() const
 	return m_view;
 }
 
-void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
-{
-	m_view->setRecentProjects(_model);
-}
-
 void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
 {
 	m_view->setRemoteProjects(_model);
-}
-
-void StartUpManager::showRemoteProjects()
-{
-	m_view->showRemoteProjects();
-}
-
-void StartUpManager::hideRemoteProjects()
-{
-	m_view->hideRemoteProjects();
 }
 
 void StartUpManager::initView()
@@ -70,64 +55,62 @@ void StartUpManager::initConnections()
 	connect(m_view, &StartUpView::createProjectClicked, [=](){
 		WAF::Animation::sideSlideIn(m_addProjectDialog, WAF::TopSide);
 	});
-	connect(m_view, SIGNAL(openRecentProjectClicked(QModelIndex)),
-			this, SIGNAL(openRecentProjectRequested(QModelIndex)));
 	connect(m_view, SIGNAL(openRemoteProjectClicked(QModelIndex)),
 			this, SIGNAL(openRemoteProjectRequested(QModelIndex)));
 
 
 	connect(m_addProjectDialog, &AddProjectDialog::createClicked, [=](){
-        //
-        // Создаём проект, если имя задано
-        //
-        if (!m_addProjectDialog->projectName().isEmpty()) {
-            WAF::Animation::sideSlideOut(m_addProjectDialog);
-            emit createProjectRequested(m_addProjectDialog->projectName());
-        }
+		//
+		// Создаём проект, если имя задано
+		//
+		if (!m_addProjectDialog->projectName().isEmpty()) {
+			WAF::Animation::sideSlideOut(m_addProjectDialog);
+			emit createProjectRequested(m_addProjectDialog->projectName());
+		}
 	});
 	connect(m_addProjectDialog, &AddProjectDialog::cancelClicked, [=](){
 		WAF::Animation::sideSlideOut(m_addProjectDialog);
-    });
+	});
 }
 
 void StartUpManager::sendStatistics()
 {
-    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+	QNetworkAccessManager* manager = new QNetworkAccessManager(this);
 
-    //
-    // Сформируем uuid для приложения, по которому будем идентифицировать данного пользователя
-    //
-    QString uuid
-            = DataStorageLayer::StorageFacade::settingsStorage()->value(
-                  "application/uuid", DataStorageLayer::SettingsStorage::ApplicationSettings);
-    DataStorageLayer::StorageFacade::settingsStorage()->setValue(
-        "application/uuid", uuid, DataStorageLayer::SettingsStorage::ApplicationSettings);
+	//
+	// Сформируем uuid для приложения, по которому будем идентифицировать данного пользователя
+	//
+	QString uuid
+			= DataStorageLayer::StorageFacade::settingsStorage()->value(
+				  "application/uuid", DataStorageLayer::SettingsStorage::ApplicationSettings);
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+		"application/uuid", uuid, DataStorageLayer::SettingsStorage::ApplicationSettings);
 
-    //
-    // Построим ссылку, чтобы учитывать запрос на проверку обновлений
-    //
-    QString url = QString("https://kitscenarist.ru/api/app/updates/");
+	//
+	// Построим ссылку, чтобы учитывать запрос на проверку обновлений
+	//
+	QString url = QString("https://kitscenarist.ru/api/app/updates/");
 
-    url.append("?system_type=");
-    url.append(
+	url.append("?system_type=");
+	url.append(
 #ifdef Q_OS_ANDROID
-                "android"
+				"android"
 #elif defined Q_OS_IOS
-                "ios"
+				"ios"
 #else
-                QSysInfo::kernelType()
+				QSysInfo::kernelType()
 #endif
-                );
+				);
 
-    url.append("&system_name=");
-    url.append(QSysInfo::prettyProductName().toUtf8().toPercentEncoding());
+	url.append("&system_name=");
+	url.append(QSysInfo::prettyProductName().toUtf8().toPercentEncoding());
 
-    url.append("&uuid=");
-    url.append(uuid);
+	url.append("&uuid=");
+	url.append(uuid);
 
-    url.append("&application_version=");
-    url.append(QApplication::applicationVersion());
+	url.append("&application_version=");
+	url.append(QApplication::applicationVersion());
 
-    QNetworkRequest request = QNetworkRequest(QUrl(url));
-    manager->get(request);
+	QNetworkRequest request = QNetworkRequest(QUrl(url));
+	manager->get(request);
 }

@@ -50,9 +50,11 @@ namespace ManagementLayer
 		 * @brief Сигналы о нажатии соответствующих кнопок в меню
 		 */
 		/** @{ */
+		void cabinRequested();
 		void projectsRequested();
 		void projectSaveRequested();
 		void projectTextRequested();
+		void settingsRequested();
 		/** @} */
 
 	private:

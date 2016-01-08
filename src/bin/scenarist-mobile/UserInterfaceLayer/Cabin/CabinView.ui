@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>StartUpView</class>
- <widget class="QWidget" name="StartUpView">
+ <class>CabinView</class>
+ <widget class="QWidget" name="CabinView">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>495</width>
-    <height>305</height>
+    <width>287</width>
+    <height>363</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -26,38 +29,7 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <item row="1" column="0">
-    <widget class="QListView" name="remoteFiles">
-     <property name="cursor" stdset="0">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: palette(window)</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="verticalScrollMode">
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-     <property name="horizontalScrollMode">
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
+   <item>
     <widget class="QFrame" name="toolbar">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
@@ -76,28 +48,48 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="ElidedLabel" name="title">
         <property name="text">
-         <string>Projects</string>
+         <string>User Cabinet</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="createProject">
+       <widget class="QToolButton" name="logout">
         <property name="text">
          <string/>
         </property>
         <property name="icon">
          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-          <normaloff>:/Graphics/Icons/Mobile/plus.png</normaloff>:/Graphics/Icons/Mobile/plus.png</iconset>
+          <normaloff>:/Graphics/Icons/Mobile/logout.png</normaloff>:/Graphics/Icons/Mobile/logout.png</iconset>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ElidedLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">3rd_party/Widgets/ElidedLabel/ElidedLabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>

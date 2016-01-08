@@ -29,33 +29,15 @@ namespace UserInterface
 		QWidget* toolbar() const;
 
 		/**
-		 * @brief Установить недавно использованные файлы
-		 */
-		void setRecentProjects(QAbstractItemModel* _recentProjectsModel);
-
-		/**
 		 * @brief Установить список доступных проектов
 		 */
 		void setRemoteProjects(QAbstractItemModel* _remoteProjectsModel);
-
-		/**
-		 * @brief Настроить видимость списка проектов из облака
-		 */
-		/** @{ */
-		void showRemoteProjects();
-		void hideRemoteProjects();
-		/** @} */
 
 	signals:
 		/**
 		 * @brief Нажата кнопка создать проект
 		 */
 		void createProjectClicked();
-
-		/**
-		 * @brief Выбран один из недавно используемых проектов для открытия
-		 */
-		void openRecentProjectClicked(const QModelIndex& _projectIndex);
 
 		/**
 		 * @brief Выбран один из проектов из облака для открытия
@@ -67,12 +49,6 @@ namespace UserInterface
 		 * @brief Переопределяется для фиксации события когда мышка покидает виджет недавних проектов
 		 */
 		bool eventFilter(QObject* _watched, QEvent* _event);
-
-	private slots:
-		/**
-		 * @brief Пользователь сменил источник отображаемых проектов
-		 */
-		void aboutFilesSourceChanged();
 
 	private:
 		/**

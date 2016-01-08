@@ -61,6 +61,7 @@ void MenuView::initView()
 	menuButtonsGroup->setExclusive(true);
 	menuButtonsGroup->addButton(m_ui->projects);
 	menuButtonsGroup->addButton(m_ui->projectText);
+	menuButtonsGroup->addButton(m_ui->settings);
 
 	hideProjectSubmenu();
 }

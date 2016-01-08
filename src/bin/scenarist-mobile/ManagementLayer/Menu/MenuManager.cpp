@@ -78,25 +78,28 @@ void MenuManager::initView()
 
 void MenuManager::initConnections()
 {
-	connect(m_view, &MenuView::backClicked, [=](){
+	connect(m_view, &MenuView::backClicked, [=] {
 		WAF::Animation::sideSlideOut(m_view);
 	});
-	connect(m_view, &MenuView::cabinClicked, [=](){
-		//
-		// TODO:
-		//
+	connect(m_view, &MenuView::cabinClicked, [=] {
+		WAF::Animation::sideSlideOut(m_view);
+		emit cabinRequested();
 	});
-	connect(m_view, &MenuView::projectsClicked, [=](){
+	connect(m_view, &MenuView::projectsClicked, [=] {
 		WAF::Animation::sideSlideOut(m_view);
 		emit projectsRequested();
 	});
-	connect(m_view, &MenuView::projectSaveClicked, [=](){
+	connect(m_view, &MenuView::projectSaveClicked, [=] {
 		WAF::Animation::sideSlideOut(m_view);
 		emit projectSaveRequested();
 	});
-	connect(m_view, &MenuView::projectTextClicked, [=](){
+	connect(m_view, &MenuView::projectTextClicked, [=] {
 		WAF::Animation::sideSlideOut(m_view);
 		emit projectTextRequested();
+	});
+	connect(m_view, &MenuView::settingsClicked, [=] {
+		WAF::Animation::sideSlideOut(m_view);
+		emit settingsRequested();
 	});
 }
 

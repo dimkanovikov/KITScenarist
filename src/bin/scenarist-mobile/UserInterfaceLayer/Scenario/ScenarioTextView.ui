@@ -13,9 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="mainLayout">
    <property name="spacing">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -97,6 +97,9 @@
     </widget>
    </item>
    <item>
+    <widget class="QStackedWidget" name="textEditContainer"/>
+   </item>
+   <item>
     <widget class="QFrame" name="editingToolbar">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -157,9 +160,6 @@
       </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <widget class="QStackedWidget" name="textEditContainer"/>
    </item>
   </layout>
  </widget>

@@ -14,9 +14,11 @@ namespace ManagementLayer
 	class ProjectsManager;
 	class LoginManager;
 	class MenuManager;
+	class CabinManager;
 	class StartUpManager;
 	class ScenarioManager;
 	class SynchronizationManager;
+	class SettingsManager;
 
 
 	/**
@@ -101,11 +103,6 @@ namespace ManagementLayer
 		 * @brief Закрыть приложение
 		 */
 		void aboutExit();
-
-//		/**
-//		 * @brief Обновлены общие настройки приложения
-//		 */
-//		void aboutApplicationSettingsUpdated();
 
 		/**
 		 * @brief Проект был изменён
@@ -199,6 +196,11 @@ namespace ManagementLayer
 		MenuManager* m_menuManager;
 
 		/**
+		 * @brief Управляющий личным кабинетом пользователя
+		 */
+		CabinManager* m_cabinManager;
+
+		/**
 		 * @brief Управляющий страницей с проектами
 		 */
 		StartUpManager* m_startUpManager;
@@ -223,10 +225,10 @@ namespace ManagementLayer
 //		 */
 //		StatisticsManager* m_statisticsManager;
 
-//		/**
-//		 * @brief Управляющий настройками
-//		 */
-//		SettingsManager* m_settingsManager;
+		/**
+		 * @brief Управляющий настройками
+		 */
+		SettingsManager* m_settingsManager;
 
 //		/**
 //		 * @brief Управляющий импортом

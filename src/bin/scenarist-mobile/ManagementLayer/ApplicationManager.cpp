@@ -3,12 +3,13 @@
 #include "Project/ProjectsManager.h"
 #include "Cabin/LoginManager.h"
 #include "Menu/MenuManager.h"
+#include "Cabin/CabinManager.h"
 #include "StartUp/StartUpManager.h"
 #include "Scenario/ScenarioManager.h"
 //#include "Characters/CharactersManager.h"
 //#include "Locations/LocationsManager.h"
 //#include "Statistics/StatisticsManager.h"
-//#include "Settings/SettingsManager.h"
+#include "Settings/SettingsManager.h"
 //#include "Import/ImportManager.h"
 //#include "Export/ExportManager.h"
 #include "Synchronization/SynchronizationManager.h"
@@ -40,8 +41,10 @@ namespace {
 	 */
 	/** @{ */
 	const int LOGIN_VIEW_INDEX = 0;
-	const int PROJECTS_VIEW_INDEX = 1;
-	const int PROJECT_TEXT_VIEW_INDEX = 2;
+	const int CABIN_VIEW_INDEX = 1;
+	const int PROJECTS_VIEW_INDEX = 2;
+	const int PROJECT_TEXT_VIEW_INDEX = 3;
+	const int SETTINGS_VIEW_INDEX = 4;
 	/** @} */
 
 	/**
@@ -65,14 +68,15 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_projectsManager(new ProjectsManager(this)),
 	m_loginManager(new LoginManager(this, m_view)),
 	m_menuManager(new MenuManager(this, m_view)),
+	m_cabinManager(new CabinManager(this, m_view)),
 	m_startUpManager(new StartUpManager(this, m_view)),
 	m_scenarioManager(new ScenarioManager(this, m_view)),
+	m_settingsManager(new SettingsManager(this, m_view)),
 	m_synchronizationManager(new SynchronizationManager(this, m_view))
 	/*,
 	m_charactersManager(new CharactersManager(this, m_view)),
 	m_locationsManager(new LocationsManager(this, m_view)),
 	m_statisticsManager(new StatisticsManager(this, m_view)),
-	m_settingsManager(new SettingsManager(this, m_view)),
 	m_importManager(new ImportManager(this, m_view)),
 	m_exportManager(new ExportManager(this, m_view))*/
 {
@@ -111,7 +115,6 @@ void ApplicationManager::exec()
 
 void ApplicationManager::aboutUpdateProjectsList()
 {
-	m_startUpManager->setRecentProjects(m_projectsManager->recentProjects());
 	m_startUpManager->setRemoteProjects(m_projectsManager->remoteProjects());
 }
 
@@ -433,7 +436,6 @@ void ApplicationManager::syncClosedWithError(int _errorCode, const QString& _err
 			// Имитируем успешную авторизацию
 			//
 			m_menuManager->userLogged();
-			m_startUpManager->showRemoteProjects();
 			//
 			// и загружаем список доступных проектов из кэша
 			//
@@ -497,11 +499,6 @@ void ApplicationManager::aboutExit()
 		QApplication::quit();
 	}
 }
-
-//void ApplicationManager::aboutApplicationSettingsUpdated()
-//{
-//	reloadApplicationSettings();
-//}
 
 void ApplicationManager::aboutProjectChanged()
 {
@@ -720,8 +717,10 @@ void ApplicationManager::initView()
 	// Настроим представления
 	//
 	m_view->addView(m_loginManager->toolbar(), m_loginManager->view());
+	m_view->addView(m_cabinManager->toolbar(), m_cabinManager->view());
 	m_view->addView(m_startUpManager->toolbar(), m_startUpManager->view());
 	m_view->addView(m_scenarioManager->toolbar(), m_scenarioManager->view());
+	m_view->addView(m_settingsManager->toolbar(), m_settingsManager->view());
 
 	m_view->setCurrentView(LOGIN_VIEW_INDEX);
 }
@@ -729,19 +728,26 @@ void ApplicationManager::initView()
 void ApplicationManager::initConnections()
 {
 	connect(m_view, &ApplicationView::menuClicked, m_menuManager, &MenuManager::showMenu);
+	connect(m_view, &ApplicationView::wantToClose, this, &ApplicationManager::aboutExit);
 
 	connect(m_loginManager, &LoginManager::loginRequested, m_synchronizationManager, &SynchronizationManager::aboutLogin);
 	connect(m_loginManager, &LoginManager::logoutRequested, m_synchronizationManager, &SynchronizationManager::aboutLogout);
 
-	connect(m_menuManager, &MenuManager::projectsRequested, [=](){
+	connect(m_menuManager, &MenuManager::cabinRequested, [=] {
+		m_view->setCurrentView(CABIN_VIEW_INDEX);
+	});
+	connect(m_menuManager, &MenuManager::projectsRequested, [=] {
 		m_view->setCurrentView(PROJECTS_VIEW_INDEX);
 	});
 	connect(m_menuManager, &MenuManager::projectSaveRequested, this, &ApplicationManager::saveProject);
-	connect(m_menuManager, &MenuManager::projectTextRequested, [=](){
+	connect(m_menuManager, &MenuManager::projectTextRequested, [=] {
 		m_view->setCurrentView(PROJECT_TEXT_VIEW_INDEX);
 	});
+	connect(m_menuManager, &MenuManager::settingsRequested, [=] {
+		m_view->setCurrentView(SETTINGS_VIEW_INDEX);
+	});
 
-	connect(m_view, &ApplicationView::wantToClose, this, &ApplicationManager::aboutExit);
+	connect(m_cabinManager, &CabinManager::logoutRequested, m_synchronizationManager, &SynchronizationManager::aboutLogout);
 
 	connect(m_projectsManager, &ProjectsManager::recentProjectsUpdated, this, &ApplicationManager::aboutUpdateProjectsList);
 	connect(m_projectsManager, &ProjectsManager::remoteProjectsUpdated, this, &ApplicationManager::aboutUpdateProjectsList);
@@ -766,16 +772,11 @@ void ApplicationManager::initConnections()
 
 //	connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
 
-//	connect(m_settingsManager, SIGNAL(applicationSettingsUpdated()),
-//			this, SLOT(aboutApplicationSettingsUpdated()));
-//	connect(m_settingsManager, SIGNAL(scenarioEditSettingsUpdated()),
-//			m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
-//	connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),
-//			m_scenarioManager, SLOT(aboutNavigatorSettingsUpdated()));
-//	connect(m_settingsManager, SIGNAL(chronometrySettingsUpdated()),
-//			m_scenarioManager, SLOT(aboutChronometrySettingsUpdated()));
-//	connect(m_settingsManager, SIGNAL(countersSettingsUpdated()),
-//			m_scenarioManager, SLOT(aboutCountersSettingsUpdated()));
+	connect(m_settingsManager, &SettingsManager::applicationSettingsUpdated, this, &ApplicationManager::reloadApplicationSettings);
+	connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated, m_scenarioManager, &ScenarioManager::aboutTextEditSettingsUpdated);
+	connect(m_settingsManager, &SettingsManager::navigatorSettingsUpdated, m_scenarioManager, &ScenarioManager::aboutNavigatorSettingsUpdated);
+	connect(m_settingsManager, &SettingsManager::chronometrySettingsUpdated, m_scenarioManager, &ScenarioManager::aboutChronometrySettingsUpdated);
+	connect(m_settingsManager, &SettingsManager::countersSettingsUpdated, m_scenarioManager, &ScenarioManager::aboutCountersSettingsUpdated);
 
 //	connect(m_exportManager, SIGNAL(scenarioNameChanged(QString)),
 //			m_scenarioManager, SLOT(aboutScenarioNameChanged(QString)));
@@ -792,10 +793,8 @@ void ApplicationManager::initConnections()
 		m_menuManager->userLogged();
 
 		//
-		// Покажем список проектов из облака
+		// Покажем страницу со списком проектов
 		//
-		m_startUpManager->showRemoteProjects();
-
 		m_view->setCurrentView(PROJECTS_VIEW_INDEX);
 	});
 	connect(m_synchronizationManager, &SynchronizationManager::logoutAccepted, [=](){

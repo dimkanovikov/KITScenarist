@@ -34,22 +34,9 @@ namespace ManagementLayer
 		QWidget* view() const;
 
 		/**
-		 * @brief Установить список недавно используемых проектов
-		 */
-		void setRecentProjects(QAbstractItemModel* _model);
-
-		/**
 		 * @brief Установить список проектов из облака
 		 */
 		void setRemoteProjects(QAbstractItemModel* _model);
-
-		/**
-		 * @brief Настроить видимость списка проектов из облака
-		 */
-		/** @{ */
-		void showRemoteProjects();
-		void hideRemoteProjects();
-		/** @} */
 
 	signals:
 		/**
@@ -83,10 +70,10 @@ namespace ManagementLayer
 		 */
 		void initConnections();
 
-        /**
-         * @brief Отправить статистику о запуске
-         */
-        void sendStatistics();
+		/**
+		 * @brief Отправить статистику о запуске
+		 */
+		void sendStatistics();
 
 	private:
 		/**

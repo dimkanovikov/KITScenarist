@@ -12,7 +12,7 @@ TEMPLATE = app
 
 CONFIG += c++11
 
-DEFINES += MOBILE_OS
+DEFINES += MOBILE_OS NO_ANIMATIONS
 
 #
 # Отключаем предупреждения о статических функциях и переменных
@@ -205,7 +205,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.cpp \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioManager.cpp \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp \
-    scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.cpp \
     scenarist-mobile/UserInterfaceLayer/StartUp/AddProjectDialog.cpp \
     scenarist-mobile/ManagementLayer/Project/Project.cpp \
     scenarist-mobile/ManagementLayer/Project/ProjectsManager.cpp \
@@ -220,7 +219,12 @@ SOURCES += \
     scenarist-core/Domain/Research.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.cpp \
     scenarist-mobile/UserInterfaceLayer/Cabin/LoginView.cpp \
-    scenarist-mobile/ManagementLayer/Cabin/LoginManager.cpp
+    scenarist-mobile/ManagementLayer/Cabin/LoginManager.cpp \
+    scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp \
+    scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp \
+    scenarist-mobile/UserInterfaceLayer/Settings/LanguageDialog.cpp \
+    scenarist-mobile/UserInterfaceLayer/Cabin/CabinView.cpp \
+    scenarist-mobile/ManagementLayer/Cabin/CabinManager.cpp
 
 HEADERS += \
     scenarist-mobile/Application.h \
@@ -375,7 +379,6 @@ HEADERS += \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioManager.h \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.h \
     scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
-    scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.h \
     scenarist-mobile/UserInterfaceLayer/StartUp/AddProjectDialog.h \
     scenarist-mobile/ManagementLayer/Project/Project.h \
     scenarist-mobile/ManagementLayer/Project/ProjectsManager.h \
@@ -391,7 +394,12 @@ HEADERS += \
     scenarist-core/Domain/Research.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.h \
     scenarist-mobile/UserInterfaceLayer/Cabin/LoginView.h \
-    scenarist-mobile/ManagementLayer/Cabin/LoginManager.h
+    scenarist-mobile/ManagementLayer/Cabin/LoginManager.h \
+    scenarist-mobile/ManagementLayer/Settings/SettingsManager.h \
+    scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.h \
+    scenarist-mobile/UserInterfaceLayer/Settings/LanguageDialog.h \
+    scenarist-mobile/UserInterfaceLayer/Cabin/CabinView.h \
+    scenarist-mobile/ManagementLayer/Cabin/CabinManager.h
 
 
 RESOURCES += \
@@ -406,10 +414,12 @@ FORMS += \
     scenarist-mobile/UserInterfaceLayer/Menu/MenuView.ui \
     scenarist-mobile/UserInterfaceLayer/StartUp/StartUpView.ui \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.ui \
-    scenarist-mobile/UserInterfaceLayer/Menu/LoginDialog.ui \
     scenarist-mobile/UserInterfaceLayer/StartUp/AddProjectDialog.ui \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioNavigatorView.ui \
-    scenarist-mobile/UserInterfaceLayer/Cabin/LoginView.ui
+    scenarist-mobile/UserInterfaceLayer/Cabin/LoginView.ui \
+    scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.ui \
+    scenarist-mobile/UserInterfaceLayer/Settings/LanguageDialog.ui \
+    scenarist-mobile/UserInterfaceLayer/Cabin/CabinView.ui
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = \

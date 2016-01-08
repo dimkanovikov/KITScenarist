@@ -395,7 +395,6 @@ void ScenarioTextView::aboutStyleChanged()
 void ScenarioTextView::initView()
 {
 	m_ui->scenarioName->setElideMode(Qt::ElideRight);
-	m_ui->editingToolbar->setMaximumHeight(0);
 	m_ui->textEditContainer->addWidget(m_editorWrapper);
 
 	//
@@ -451,10 +450,13 @@ void ScenarioTextView::initConnections()
 	// Настраиваем отображение панелей в зависимости от того открыта ли клавиатура
 	//
 	connect(QApplication::inputMethod(), &QInputMethod::visibleChanged, [=] {
-		const bool keyboardVisible = QApplication::inputMethod()->isVisible();
-		const bool FIX_BACKGROUND = true;
-		WAF::Animation::slide(m_ui->toolbar, WAF::FromBottomToTop, FIX_BACKGROUND, !keyboardVisible);
-		WAF::Animation::slide(m_ui->editingToolbar, WAF::FromBottomToTop, FIX_BACKGROUND, keyboardVisible);
+		if (QApplication::inputMethod()->isVisible()) {
+			m_ui->toolbar->hide();
+			m_ui->mainLayout->insertWidget(1, m_ui->editingToolbar);
+		} else {
+			m_ui->toolbar->show();
+			m_ui->mainLayout->insertWidget(2, m_ui->editingToolbar);
+		}
 	});
 
 	initEditorConnections();

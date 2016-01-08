@@ -107,6 +107,7 @@
         <file>Icons/Editing/outline.png</file>
         <file>Icons/Mobile/navigator.png</file>
         <file>Icons/Mobile/menu/settings.png</file>
+        <file>Icons/Mobile/logout.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
