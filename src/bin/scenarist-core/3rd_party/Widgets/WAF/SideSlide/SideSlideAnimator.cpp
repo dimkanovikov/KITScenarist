@@ -248,8 +248,9 @@ void SideSlideAnimator::slideOut()
 
 bool SideSlideAnimator::eventFilter(QObject* _object, QEvent* _event)
 {
-	if (_object == widgetForSlide()->parentWidget()
-		&& _event->type() == QEvent::Resize) {
+    if (widgetForSlide()->isVisible()
+        && _object == widgetForSlide()->parentWidget()
+        && _event->type() == QEvent::Resize) {
 		QWidget* widgetForSlideParent = widgetForSlide()->parentWidget();
 		switch (m_side) {
 			case WAF::LeftSide:
