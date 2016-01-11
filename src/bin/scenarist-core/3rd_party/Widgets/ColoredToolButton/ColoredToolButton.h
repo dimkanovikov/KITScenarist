@@ -40,6 +40,7 @@ public:
 public slots:
 	/**
 	 * @brief Установить цвет
+	 * @note Если устанавливается невалидный цвет, панель переходит в режим "цвет не выбран"
 	 */
 	void setColor(const QColor& _color);
 
@@ -73,10 +74,9 @@ private:
 	QIcon m_icon;
 
 	/**
-	 * @brief Используется ли "цвет по-умолчанию"
-	 * @note Если да, то цвет иконки задаётся как цвет текста из палитры виджета
+	 * @brief Индиктор того, что никакой цвет ещё не выбран
 	 */
-	bool m_defaultColor;
+	bool m_colorNotChoosedYet;
 
 	/**
 	 * @brief Цветовая палитра

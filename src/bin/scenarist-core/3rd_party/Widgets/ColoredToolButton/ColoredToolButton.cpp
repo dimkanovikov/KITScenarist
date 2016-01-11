@@ -15,21 +15,12 @@
 ColoredToolButton::ColoredToolButton(const QIcon& _icon, QWidget* _parent) :
 	QToolButton(_parent),
 	m_icon(_icon),
-	m_defaultColor(true),
+	m_colorNotChoosedYet(true),
 	m_colorsPane(0)
 {
 	setIcon(_icon);
 	setFocusPolicy(Qt::NoFocus);
 	aboutUpdateIcon(palette().text().color());
-
-//	setStyleSheet("QToolButton { border: 1px solid transparent; min-width: 26px; padding: 3px; } "
-//				  "QToolButton[popupMode=\"1\"] { padding-right: 16px; }"
-//				  "QToolButton::menu-button { border: 1px solid transparent; width: 16px; }"
-//				  "QToolButton:hover { border: 1px solid palette(dark); }"
-//				  "QToolButton[popupMode=\"1\"]:hover { border-right: 1px solid transparent; }"
-//				  "QToolButton::menu-button:hover { border: 1px solid palette(dark); }"
-//				  "QToolButton:pressed, QToolButton::menu-button:pressed { background-color: palette(dark); }"
-//				  "QToolButton:checked, QToolButton::menu-button:checked { background-color: palette(dark); }");
 
 	connect(this, SIGNAL(clicked()), this, SLOT(aboutClicked()));
 }
@@ -98,15 +89,26 @@ void ColoredToolButton::setColorsPane(ColoredToolButton::ColorsPaneType _pane)
 
 QColor ColoredToolButton::currentColor() const
 {
-	return m_colorsPane->currentColor();
+	QColor result;
+	if (m_colorNotChoosedYet == false) {
+		result = m_colorsPane->currentColor();
+	}
+	return result;
 }
 
 void ColoredToolButton::setColor(const QColor& _color)
 {
-	m_defaultColor = false;
+	QColor newColor;
+	if (_color.isValid()) {
+		m_colorNotChoosedYet = false;
+		newColor = _color;
+	} else {
+		m_colorNotChoosedYet = true;
+		newColor = palette().text().color();
+	}
 
 	if (m_colorsPane != 0) {
-		m_colorsPane->setCurrentColor(_color);
+		m_colorsPane->setCurrentColor(newColor);
 		menu()->close();
 	}
 
@@ -117,7 +119,7 @@ void ColoredToolButton::setColor(const QColor& _color)
 
 bool ColoredToolButton::event(QEvent* _event)
 {
-	if (m_defaultColor) {
+	if (m_colorNotChoosedYet) {
 		if (_event->type() == QEvent::PaletteChange) {
 			aboutUpdateIcon(palette().text().color());
 		}

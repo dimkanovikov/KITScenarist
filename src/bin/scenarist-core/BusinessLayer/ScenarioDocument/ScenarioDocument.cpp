@@ -854,18 +854,16 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	//
 	// ... обновляем описание в зависимости от способа его обновления
 	//
-	if (m_inSceneDescriptionUpdate) {
-		//
-		// ... пользователь изменил описание в окошке
-		//
+	if (m_inSceneDescriptionUpdate // ... пользователь изменил описание в окошке
+		|| description.isEmpty()) { // ... или установил в диалоге добавления элемента
 		QTextDocument doc;
 		doc.setHtml(itemDescription(_item));
 		description = doc.toPlainText().replace("\n", " ");
-	} else {
-		//
-		// ... пользователь изменил описание прямо в редакторе сценария
-		//
-
+	}
+	//
+	// ... пользователь изменил описание прямо в редакторе сценария
+	//
+	else {
 		//
 		// TODO: какое безобразие, нужно это явно сделать красиво!
 		//
