@@ -67,61 +67,8 @@ Section "App files section" SecFiles
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "DisplayIcon" "$INSTDIR\Scenarist.exe"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist" "UninstallString" "$INSTDIR\Uninstall.exe"
   
-  ; Исполняемые файлы и плагины
-  SetOutPath "$INSTDIR\iconengines"
-  File "${pkgdir}\iconengines\qsvgicon.dll"
-
-  SetOutPath "$INSTDIR\imageformats"
-  File "${pkgdir}\imageformats\qgif.dll"
-  File "${pkgdir}\imageformats\qico.dll"
-  File "${pkgdir}\imageformats\qjpeg.dll"
-  File "${pkgdir}\imageformats\qmng.dll"
-  File "${pkgdir}\imageformats\qsvg.dll"
-  File "${pkgdir}\imageformats\qtga.dll"
-  File "${pkgdir}\imageformats\qtiff.dll"
-  File "${pkgdir}\imageformats\qwbmp.dll"
-  
-  SetOutPath "$INSTDIR\platforms"
-  File "${pkgdir}\platforms\qminimal.dll"
-  File "${pkgdir}\platforms\qoffscreen.dll"
-  File "${pkgdir}\platforms\qwindows.dll"
-  
-  SetOutPath "$INSTDIR\printsupport"
-  File "${pkgdir}\printsupport\windowsprintersupport.dll"
-
-  SetOutPath "$INSTDIR\sqldrivers"
-  File "${pkgdir}\sqldrivers\qsqlite.dll"
-
   SetOutPath "$INSTDIR"
-  File "${pkgdir}\msvcp120.dll"
-  File "${pkgdir}\msvcr120.dll"
-  
-  File "${pkgdir}\libeay32.dll"
-  File "${pkgdir}\ssleay32.dll"
-  
-  File "${pkgdir}\libEGL.dll"
-  File "${pkgdir}\libGLESv2.dll"
-  File "${pkgdir}\opengl32sw.dll"
-  
-  File "${pkgdir}\Qt5Core.dll"
-  File "${pkgdir}\Qt5Gui.dll"
-  File "${pkgdir}\Qt5Network.dll"
-  File "${pkgdir}\Qt5Positioning.dll"
-  File "${pkgdir}\Qt5PrintSupport.dll"
-  File "${pkgdir}\Qt5Qml.dll"
-  File "${pkgdir}\Qt5Quick.dll"
-  File "${pkgdir}\Qt5Sql.dll"
-  File "${pkgdir}\Qt5WebChannel.dll"
-  File "${pkgdir}\Qt5WebEngine.dll"
-  File "${pkgdir}\Qt5WebEngineCore.dll"
-  File "${pkgdir}\Qt5WebEngineWidgets.dll"
-  File "${pkgdir}\Qt5Widgets.dll"
-  File "${pkgdir}\Qt5Xml.dll"
-  
-  File "${pkgdir}\hunspell.dll"
-  File "${pkgdir}\fileformats.dll"
-  File "${pkgdir}\webloader.dll"
-  File "${pkgdir}\Scenarist.exe"
+  File /r "${pkgdir}\"
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -158,27 +105,37 @@ Section "Uninstall"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Scenarist"
   
   ; Удаляем все файлы кроме базы данных
+  Delete "$INSTDIR\bearer\*.*"
   Delete "$INSTDIR\iconengines\*.*"
   Delete "$INSTDIR\imageformats\*.*"
   Delete "$INSTDIR\platforms\*.*"
+  Delete "$INSTDIR\position\*.*"
   Delete "$INSTDIR\printsupport\*.*"
+  Delete "$INSTDIR\qtwebengine\*.*"
   Delete "$INSTDIR\sqldrivers\*.*"
+  Delete "$INSTDIR\translations\qtwebengine_locales\*.*"
   Delete "$INSTDIR\*.dll"
   Delete "$INSTDIR\*.exe"
   Delete "$INSTDIR\*.ico"
+  Delete "$INSTDIR\*.dat"
+  Delete "$INSTDIR\*.pak"
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\KIT\Scenarist\*.*"
   Delete "$DESKTOP\Scenarist.lnk"
 
   ; Remove directories used
-  RMDir "$SMPROGRAMS\KIT\Scenarist"
+  RMDir "$INSTDIR\bearer"
   RMDir "$INSTDIR\iconengines"
   RMDir "$INSTDIR\imageformats"
   RMDir "$INSTDIR\platforms"
+  RMDir "$INSTDIR\position"
   RMDir "$INSTDIR\printsupport"
+  RMDir "$INSTDIR\qtwebengine"
   RMDir "$INSTDIR\sqldrivers"
+  RMDir /r "$INSTDIR\translations"
   RMDir "$INSTDIR"
+  RMDir "$SMPROGRAMS\KIT\Scenarist"
   
   ; Отменяем зарегистрированные ассоциации файлов
   ${unregisterExtension} ".kitsp" "Проект сценария"
