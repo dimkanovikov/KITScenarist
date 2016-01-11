@@ -2,6 +2,7 @@
 #define SCALABLEWRAPPER_H
 
 #include <QGraphicsView>
+#include <QVariant>
 
 class QGestureEvent;
 class SpellCheckTextEdit;
@@ -26,6 +27,14 @@ public:
 	 * @brief Установить коэффициент масштабирование
 	 */
 	void setZoomRange(qreal _zoomRange);
+
+    /**
+     * @brief Дополнительные вещи для корректной работы в андройде
+     */
+    /** @{ */
+    QVariant inputMethodQuery(Qt::InputMethodQuery _query) const;
+    Q_INVOKABLE QVariant inputMethodQuery(Qt::InputMethodQuery _query, QVariant _argument) const;
+    /** @} */
 
 public slots:
 	/**

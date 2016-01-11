@@ -169,6 +169,11 @@ namespace UserInterface
 		 */
 		void keyPressEvent(QKeyEvent* _event);
 
+        /**
+         * @brief Переопределяем, чтобы самостоятельно обрабатывать вводимый пользователем текст
+         */
+        void inputMethodEvent(QInputMethodEvent* _event);
+
 		/**
 		 * @brief Дополнительная функция для обработки нажатий самим редактором
 		 * @return Обработано ли событие

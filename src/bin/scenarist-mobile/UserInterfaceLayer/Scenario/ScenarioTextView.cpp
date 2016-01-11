@@ -449,15 +449,20 @@ void ScenarioTextView::initConnections()
 	//
 	// Настраиваем отображение панелей в зависимости от того открыта ли клавиатура
 	//
-	connect(QApplication::inputMethod(), &QInputMethod::visibleChanged, [=] {
-		if (QApplication::inputMethod()->isVisible()) {
-			m_ui->toolbar->hide();
-			m_ui->mainLayout->insertWidget(1, m_ui->editingToolbar);
-		} else {
-			m_ui->toolbar->show();
-			m_ui->mainLayout->insertWidget(2, m_ui->editingToolbar);
-		}
-	});
+    connect(QApplication::inputMethod(), &QInputMethod::visibleChanged, [=] {
+        if (isVisible()) {
+            QWidget* topToolbar = m_ui->toolbar->parentWidget()->parentWidget()->parentWidget();
+            QVBoxLayout* layout = m_ui->mainLayout;
+            layout->takeAt(layout->indexOf(m_ui->editingToolbar));
+            if (QApplication::inputMethod()->isVisible()) {
+                topToolbar->hide();
+                layout->insertWidget(0, m_ui->editingToolbar);
+            } else {
+                topToolbar->show();
+                layout->addWidget(m_ui->editingToolbar);
+            }
+        }
+    });
 
 	initEditorConnections();
 }

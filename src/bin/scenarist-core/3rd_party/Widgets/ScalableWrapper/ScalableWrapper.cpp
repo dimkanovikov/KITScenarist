@@ -95,6 +95,23 @@ void ScalableWrapper::setZoomRange(qreal _zoomRange)
 	}
 }
 
+QVariant ScalableWrapper::inputMethodQuery(Qt::InputMethodQuery _query) const
+{
+    return inputMethodQuery(_query, QVariant());
+}
+
+QVariant ScalableWrapper::inputMethodQuery(Qt::InputMethodQuery _query, QVariant _argument) const
+{
+    QVariant result;
+    if (m_editor != 0) {
+        result = m_editor->inputMethodQuery(_query, _argument);
+    } else {
+        result = QWidget::inputMethodQuery(_query);
+    }
+
+    return result;
+}
+
 void ScalableWrapper::zoomIn()
 {
 	setZoomRange(m_zoomRange + 0.1);

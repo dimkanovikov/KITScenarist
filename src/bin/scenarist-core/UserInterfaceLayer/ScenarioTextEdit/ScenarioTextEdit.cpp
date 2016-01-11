@@ -541,7 +541,29 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	//
 	if (handler->needPrehandle()) {
 		handler->prehandle();
-	}
+    }
+}
+#include <QDebug>
+void ScenarioTextEdit::inputMethodEvent(QInputMethodEvent *_event)
+{
+    qDebug() << _event->preeditString() << _event->commitString() << _event->replacementStart() << _event->replacementLength();
+
+    CompletableTextEdit::inputMethodEvent(_event);
+//    if (!_event->preeditString().isEmpty()) {
+//        QInputMethodEvent* replaceEvent = new QInputMethodEvent;
+//        replaceEvent->setCommitString(_event->preeditString(), 0, _event->preeditString().length());
+//        QApplication::postEvent(this, replaceEvent);
+//    }
+
+//    _event->accept();
+//    const QString eventText = _event->preeditString().isEmpty() ? _event->commitString() : _event->preeditString();
+
+//    qDebug() << _event->preeditString() << _event->commitString() << _event->replacementStart() << _event->replacementLength();
+    if (!_event->commitString().isEmpty()) {
+        QKeyEvent keyEvent(QKeyEvent::KeyPress, Qt::Key_unknown, Qt::NoModifier, _event->commitString());
+        updateEnteredText(&keyEvent);
+    }
+
 }
 
 bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
