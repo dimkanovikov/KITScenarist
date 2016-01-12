@@ -17,6 +17,14 @@
 #include <QCryptographicHash>
 #include <QTextBlock>
 
+//
+// Для отладки работы с патчами
+//
+//#define PATCH_DEBUG
+#ifdef PATCH_DEBUG
+#include <QDebug>
+#endif
+
 using namespace BusinessLogic;
 using DatabaseLayer::DatabaseHelper;
 
@@ -89,6 +97,15 @@ void ScenarioTextDocument::load(const QString& _scenarioXml)
 
 	m_undoStack.clear();
 	m_redoStack.clear();
+
+#ifdef PATCH_DEBUG
+	foreach (DomainObject* obj, DataStorageLayer::StorageFacade::scenarioChangeStorage()->all()->toList()) {
+		ScenarioChange* ch = dynamic_cast<ScenarioChange*>(obj);
+		if (!ch->isDraft()) {
+			m_redoStack.prepend(ch);
+		}
+	}
+#endif
 }
 
 QString ScenarioTextDocument::mimeFromSelection(int _startPosition, int _endPosition) const
@@ -137,6 +154,15 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	setCursorPosition(cursor, xmlsForUpdate.first.plainPos);
 	const int selectionEndPos = xmlsForUpdate.first.plainPos + xmlsForUpdate.first.plainLength;
 	setCursorPosition(cursor, selectionEndPos, QTextCursor::KeepAnchor);
+
+#ifdef PATCH_DEBUG
+	qDebug() << "*******************************************************************";
+	qDebug() << cursor.selectedText();
+	qDebug() << "###################################################################";
+	qDebug() << xmlsForUpdate.first.xml;
+	qDebug() << "###################################################################";
+	qDebug() << xmlsForUpdate.second.xml;
+#endif
 
 	//
 	// Замещаем его обновлённым
@@ -263,7 +289,12 @@ void ScenarioTextDocument::undoReimpl()
 
 void ScenarioTextDocument::redoReimpl()
 {
-	if (!m_redoStack.isEmpty()) {
+#ifdef PATCH_DEBUG
+	while
+#else
+	if
+#endif
+			(!m_redoStack.isEmpty()) {
 		Domain::ScenarioChange* change = m_redoStack.takeLast();
 		m_undoStack.append(change);
 		applyPatch(change->redoPatch());

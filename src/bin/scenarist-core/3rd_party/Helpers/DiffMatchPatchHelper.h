@@ -330,6 +330,8 @@ private:
 	static QString xmlToPlain(const QString& _xml) {
 		//
 		// TODO: искать тэги и добавлять их в карту, чтобы ещё более корректной была замена
+		//		 Может быть не самой лучшей идеей, если работают одновременно несколько авторов их
+		//		 карты замен будут разными и тогда сценарии не сойдутся
 		//
 		QString plain = _xml;
 		foreach (const QString& key, tagsMap().keys()) {
@@ -367,6 +369,10 @@ private:
 		static QHash<QString,QString> s_tagsMap;
 		static int s_charIndex = 44032;
 		if (s_tagsMap.isEmpty()) {
+			//
+			// WARNING: Добавлять новые теги, только в конец карты, ни в коем случае не в начало,
+			//			или середину, иначе это порушит совместимость со всеми предыдущими патчами
+			//
 			addTag("scene_heading", s_tagsMap, s_charIndex);
 			addTag("scene_characters", s_tagsMap, s_charIndex);
 			addTag("action", s_tagsMap, s_charIndex);
@@ -384,10 +390,12 @@ private:
 			addTag("folder", s_tagsMap, s_charIndex);
 			addTag("folder_header", s_tagsMap, s_charIndex);
 			addTag("folder_footer", s_tagsMap, s_charIndex);
-			addTag("scene_description", s_tagsMap, s_charIndex);
 
 			s_tagsMap.insert("<![CDATA[", QChar(s_charIndex++));
 			s_tagsMap.insert("]]>", QChar(s_charIndex++));
+
+			addTag("scene_description", s_tagsMap, s_charIndex);
+			addTag("undefined", s_tagsMap, s_charIndex);
 		}
 		return s_tagsMap;
 	}

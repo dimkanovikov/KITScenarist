@@ -44,14 +44,14 @@ namespace {
 
 QString ScenarioXml::defaultXml()
 {
-	return makeMimeFromXml("<scene_heading description=\"\"><![CDATA[]]></scene_heading>\n");
+	return makeMimeFromXml("<scene_heading>\n<v><![CDATA[]]></v>\n</scene_heading>\n");
 }
 
 QString ScenarioXml::makeMimeFromXml(const QString& _xml)
 {
-	const QString XML_HEADER = "<?xml version=\"1.0\"?>";
-	const QString SCENARIO_HEADER = "<scenario version=\"1.0\">";
-	const QString SCENARIO_FOOTER = "</scenario>";
+	const QString XML_HEADER = "<?xml version=\"1.0\"?>\n";
+	const QString SCENARIO_HEADER = "<scenario version=\"1.0\">\n";
+	const QString SCENARIO_FOOTER = "</scenario>\n";
 
 	QString mimeXml = _xml;
 	if (!mimeXml.contains(XML_HEADER)) {

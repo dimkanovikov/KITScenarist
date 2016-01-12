@@ -21,8 +21,8 @@ ScenarioChangesTable* ScenarioChangeStorage::all()
 	// сделанными с момента открытия проекта
 	//
 	if (m_all == 0) {
-//		m_all = MapperFacade::scenarioChangeMapper()->findLastOne();
-		m_all = MapperFacade::scenarioChangeMapper()->findAll();
+		m_all = MapperFacade::scenarioChangeMapper()->findLastOne();
+//		m_all = MapperFacade::scenarioChangeMapper()->findAll();
 	}
 	return m_all;
 }
