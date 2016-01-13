@@ -206,7 +206,6 @@ SOURCES += \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioManager.cpp \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.cpp \
     scenarist-mobile/UserInterfaceLayer/StartUp/AddProjectDialog.cpp \
-    scenarist-mobile/ManagementLayer/Project/Project.cpp \
     scenarist-mobile/ManagementLayer/Project/ProjectsManager.cpp \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioNavigatorManager.cpp \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioTextEditManager.cpp \
@@ -224,7 +223,8 @@ SOURCES += \
     scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp \
     scenarist-mobile/UserInterfaceLayer/Settings/LanguageDialog.cpp \
     scenarist-mobile/UserInterfaceLayer/Cabin/CabinView.cpp \
-    scenarist-mobile/ManagementLayer/Cabin/CabinManager.cpp
+    scenarist-mobile/ManagementLayer/Cabin/CabinManager.cpp \
+    scenarist-core/ManagementLayer/Project/Project.cpp
 
 HEADERS += \
     scenarist-mobile/Application.h \
@@ -380,7 +380,6 @@ HEADERS += \
     scenarist-mobile/UserInterfaceLayer/Scenario/ScenarioTextView.h \
     scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
     scenarist-mobile/UserInterfaceLayer/StartUp/AddProjectDialog.h \
-    scenarist-mobile/ManagementLayer/Project/Project.h \
     scenarist-mobile/ManagementLayer/Project/ProjectsManager.h \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioNavigatorManager.h \
     scenarist-mobile/ManagementLayer/Scenario/ScenarioTextEditManager.h \
@@ -399,7 +398,8 @@ HEADERS += \
     scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.h \
     scenarist-mobile/UserInterfaceLayer/Settings/LanguageDialog.h \
     scenarist-mobile/UserInterfaceLayer/Cabin/CabinView.h \
-    scenarist-mobile/ManagementLayer/Cabin/CabinManager.h
+    scenarist-mobile/ManagementLayer/Cabin/CabinManager.h \
+    scenarist-core/ManagementLayer/Project/Project.h
 
 
 RESOURCES += \

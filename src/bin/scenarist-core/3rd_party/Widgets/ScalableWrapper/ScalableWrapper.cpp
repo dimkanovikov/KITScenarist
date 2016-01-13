@@ -154,12 +154,14 @@ bool ScalableWrapper::event(QEvent* _event)
 
 		result = QGraphicsView::event(_event);
 
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
 		//
 		// Корректируем размер сцены, чтобы исключить внезапные смещения редактора на ней
 		//
-		if (m_scene->sceneRect() != viewport()->rect()) {
-			m_scene->setSceneRect(viewport()->rect());
-		}
+        if (m_scene->sceneRect() != viewport()->rect()) {
+            m_scene->setSceneRect(viewport()->rect());
+        }
+#endif
 
 		//
 		// А после события, восстанавливаем положения полос прокрутки и включаем синхронизацию

@@ -1542,5 +1542,5 @@ void ScenarioTextEdit::initConnections()
 	//
 	// При перемещении курсора может меняться стиль блока
 	//
-	connect(this, SIGNAL(cursorPositionChanged()), this, SIGNAL(currentStyleChanged()), Qt::UniqueConnection);
+    connect(this, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextEdit::currentStyleChanged, Qt::UniqueConnection);
 }

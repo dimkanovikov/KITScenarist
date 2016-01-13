@@ -790,10 +790,11 @@ void ScenarioManager::initConnections()
 
 //	connect(m_dataEditManager, SIGNAL(buildSynopsisFromScenes()), this, SLOT(aboutBuildSynopsisFromScenes()));
 
-//	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
-//	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSynopsis(int)));
-	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
-//	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCounters()));
+//	connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutUpdateDuration);
+//	connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutUpdateCurrentSynopsis);
+    connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged,
+            this, &ScenarioManager::aboutSelectItemInNavigator, Qt::QueuedConnection);
+//	connect(m_textEditManager, &ScenarioTextEditManager::cursorPositionChanged, this, &ScenarioManager::aboutUpdateCounters);
 
 	connect(&m_saveChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSaveScenarioChanges()));
 

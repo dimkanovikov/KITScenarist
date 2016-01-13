@@ -406,7 +406,7 @@ void ScenarioTextView::initView()
 
 	m_editor->setTextSelectionEnable(false);
 
-	ScrollerHelper::addScroller(m_editorWrapper);
+    ScrollerHelper::addScroller(m_editorWrapper);
 }
 
 void ScenarioTextView::initStylesCombo()
@@ -469,24 +469,24 @@ void ScenarioTextView::initConnections()
 
 void ScenarioTextView::initEditorConnections()
 {
-	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
-	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
-	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
-	connect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
-	connect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
-	connect(m_editor, SIGNAL(reviewChanged()), this, SIGNAL(textChanged()));
-	connect(m_editorWrapper, SIGNAL(zoomRangeChanged(qreal)), this, SIGNAL(zoomRangeChanged(qreal)));
+    connect(m_editor, &ScenarioTextEdit::currentStyleChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
+    connect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
+    connect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutCursorPositionChanged);
+    connect(m_editor, &ScenarioTextEdit::textChanged, this, &ScenarioTextView::aboutTextChanged);
+    connect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextView::aboutStyleChanged);
+    connect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextView::textChanged);
+    connect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextView::zoomRangeChanged);
 }
 
 void ScenarioTextView::removeEditorConnections()
 {
-	disconnect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
-	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
-	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
-	disconnect(m_editor, SIGNAL(textChanged()), this, SLOT(aboutTextChanged()));
-	disconnect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
-	disconnect(m_editor, SIGNAL(reviewChanged()), this, SIGNAL(textChanged()));
-	disconnect(m_editorWrapper, SIGNAL(zoomRangeChanged(qreal)), this, SIGNAL(zoomRangeChanged(qreal)));
+    disconnect(m_editor, &ScenarioTextEdit::currentStyleChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
+    disconnect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
+    disconnect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutCursorPositionChanged);
+    disconnect(m_editor, &ScenarioTextEdit::textChanged, this, &ScenarioTextView::aboutTextChanged);
+    disconnect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextView::aboutStyleChanged);
+    disconnect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextView::textChanged);
+    disconnect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextView::zoomRangeChanged);
 }
 
 void ScenarioTextView::initStyleSheet()
