@@ -341,6 +341,7 @@ void ApplicationManager::syncClosedWithError(int _errorCode, const QString& _err
 			title = tr("Network error");
 			error = tr("Can't estabilish network connection.\n"
 					   "Continue working in offline mode.");
+            QLightBoxMessage::information(m_view, title, error);
 			switchToOfflineMode = true;
 			break;
 		}
@@ -450,6 +451,11 @@ void ApplicationManager::syncClosedWithError(int _errorCode, const QString& _err
 			// говорим, что все проекты недоступны к синхронизации
 			//
 			m_projectsManager->setRemoteProjectsSyncUnavailable();
+
+            //
+            // Показываем вкладку со списком проектов
+            //
+            m_view->setCurrentView(PROJECTS_VIEW_INDEX);
 		}
 	}
 }
