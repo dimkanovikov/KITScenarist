@@ -51,6 +51,11 @@ namespace BusinessLogic
 		static ScenarioBlockStyle::Type typeForName(const QString& _typeName, bool _beautify = false);
 
 		/**
+		 * @brief Получить краткое название типа
+		 */
+		static QString shortTypeName(ScenarioBlockStyle::Type _type);
+
+		/**
 		 * @brief Дополнительные свойства стилей текстовых блоков
 		 */
 		enum Property {

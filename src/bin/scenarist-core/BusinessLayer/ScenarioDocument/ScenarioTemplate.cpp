@@ -72,7 +72,7 @@ namespace {
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Parenthetical, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Parenthetical"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Dialogue, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Dialog"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Transition, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Transition"));
-			s_beautifyTypeNames.insert(ScenarioBlockStyle::Note, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Note"));
+			s_beautifyTypeNames.insert(ScenarioBlockStyle::Note, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Shot"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::TitleHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Title Header"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Title, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Title"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::NoprintableText, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Noprintable Text"));
@@ -83,6 +83,49 @@ namespace {
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneDescription, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Description"));
 		}
 		return s_beautifyTypeNames;
+	}
+
+	/**
+	 * @brief Получить карту типов и их кратких текстовых отображений
+	 */
+	static QMap<ScenarioBlockStyle::Type, QString> shortTypeNames() {
+		static QMap<ScenarioBlockStyle::Type, QString> s_shortTypeNames;
+		if (s_shortTypeNames.isEmpty()) {
+			s_shortTypeNames.insert(ScenarioBlockStyle::Undefined, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Undefined"));
+			//: Reduction of Scene Heading
+			s_shortTypeNames.insert(ScenarioBlockStyle::SceneHeading, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "SH"));
+			//: Reduction of Scene Characters
+			s_shortTypeNames.insert(ScenarioBlockStyle::SceneCharacters, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "SC"));
+			//: Reduction of Action
+			s_shortTypeNames.insert(ScenarioBlockStyle::Action, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "A"));
+			//: Reduction of Character
+			s_shortTypeNames.insert(ScenarioBlockStyle::Character, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "C"));
+			//: Reduction of Parenthetical
+			s_shortTypeNames.insert(ScenarioBlockStyle::Parenthetical, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "P"));
+			//: Reduction of Dialog
+			s_shortTypeNames.insert(ScenarioBlockStyle::Dialogue, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "D"));
+			//: Reduction of Transition
+			s_shortTypeNames.insert(ScenarioBlockStyle::Transition, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Tr"));
+			//: Reduction of Shot
+			s_shortTypeNames.insert(ScenarioBlockStyle::Note, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "S"));
+			//: Reduction of Title Header
+			s_shortTypeNames.insert(ScenarioBlockStyle::TitleHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "TH"));
+			//: Reduction of Title
+			s_shortTypeNames.insert(ScenarioBlockStyle::Title, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Ti"));
+			//: Reduction of Noprintable Text
+			s_shortTypeNames.insert(ScenarioBlockStyle::NoprintableText, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "NT"));
+			//: Reduction of Scene Group
+			s_shortTypeNames.insert(ScenarioBlockStyle::SceneGroupHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "SG"));
+			//: Reduction of Scene Group Footer
+			s_shortTypeNames.insert(ScenarioBlockStyle::SceneGroupFooter, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "SGF"));
+			//: Reduction of Folder
+			s_shortTypeNames.insert(ScenarioBlockStyle::FolderHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "F"));
+			//: Reduction of Folder Footer
+			s_shortTypeNames.insert(ScenarioBlockStyle::FolderFooter, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "FF"));
+			//: Reduction of Scene Description
+			s_shortTypeNames.insert(ScenarioBlockStyle::SceneDescription, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "SD"));
+		}
+		return s_shortTypeNames;
 	}
 
 	/**
@@ -140,6 +183,11 @@ QString ScenarioBlockStyle::typeName(ScenarioBlockStyle::Type _type, bool _beaut
 ScenarioBlockStyle::Type ScenarioBlockStyle::typeForName(const QString& _typeName, bool _beautify)
 {
 	return _beautify ? ::beautifyTypeNames().key(_typeName) : ::typeNames().key(_typeName);
+}
+
+QString ScenarioBlockStyle::shortTypeName(ScenarioBlockStyle::Type _type)
+{
+	return ::shortTypeNames().value(_type);
 }
 
 ScenarioBlockStyle::Type ScenarioBlockStyle::forBlock(const QTextBlock& _block)

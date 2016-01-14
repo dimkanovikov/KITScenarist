@@ -31,7 +31,10 @@ using BusinessLogic::ScenarioBlockStyle;
 using BusinessLogic::ScenarioTextBlockInfo;
 
 namespace {
-	const int SCROLL_DELTA = 140;
+	/**
+	 * @brief Название свойства, под которым кнопки хранят задаваемые стили
+	 */
+	const char* BLOCK_STYLE = "propertyScenarioBlockStyle";
 
 	/**
 	 * @brief Получить хэш текста
@@ -321,6 +324,9 @@ void ScenarioTextView::aboutRedo()
 
 void ScenarioTextView::aboutUpdateTextStyle()
 {
+	//
+	// Определим текущий стиль
+	//
 	ScenarioBlockStyle::Type currentType = m_editor->scenarioBlockType();
 	if (currentType == ScenarioBlockStyle::TitleHeader) {
 		currentType = ScenarioBlockStyle::Title;
@@ -330,44 +336,84 @@ void ScenarioTextView::aboutUpdateTextStyle()
 		currentType = ScenarioBlockStyle::FolderHeader;
 	}
 
-	for (int itemIndex = 0; itemIndex < m_textTypes.size(); ++itemIndex) {
-		ScenarioBlockStyle::Type itemType =
-				(ScenarioBlockStyle::Type)m_textTypes.value(itemIndex).second;
-		if (itemType == currentType) {
-			m_ui->textStyle->setText(m_textTypes.value(itemIndex).first);
-			break;
+	//
+	// Включим необходимую кнопку стиля
+	//
+	switch (currentType) {
+		case ScenarioBlockStyle::SceneHeading: m_ui->sceneHeadingStyle->setChecked(true); break;
+		case ScenarioBlockStyle::SceneCharacters: m_ui->sceneCharactersStyle->setChecked(true); break;
+		case ScenarioBlockStyle::Action: m_ui->actionStyle->setChecked(true); break;
+		case ScenarioBlockStyle::Character: m_ui->characterStyle->setChecked(true); break;
+		case ScenarioBlockStyle::Dialogue: m_ui->dialogueStyle->setChecked(true); break;
+		case ScenarioBlockStyle::Parenthetical: m_ui->parentheticalStyle->setChecked(true); break;
+		default: m_ui->textStyle->setChecked(true); break;
+	}
+
+	//
+	// Обновим отображение кнопок
+	//
+	QButtonGroup* buttonGroup = m_ui->textStyle->group();
+	foreach (QAbstractButton* styleButton, buttonGroup->buttons()) {
+		if (styleButton->isChecked()) {
+			styleButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+			static const bool BEAUTIFY = true;
+			styleButton->setText(
+				ScenarioBlockStyle::typeName(currentType, BEAUTIFY)
+				+ (styleButton == m_ui->textStyle ? " ..." : ""));
+		} else {
+			styleButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+			styleButton->setText(
+				styleButton == m_ui->textStyle
+				? "..."
+				: ScenarioBlockStyle::shortTypeName((ScenarioBlockStyle::Type)styleButton->property(BLOCK_STYLE).toInt()));
 		}
 	}
 }
 
 void ScenarioTextView::aboutChangeTextStyle()
 {
+	ScenarioBlockStyle::Type selectedType = ScenarioBlockStyle::Undefined;
+
 	//
-	// Показываем диалог выбора стиля для блока
+	// Если это нажатие на кнопку с заданным стилем, то просто применяем его
 	//
-	QStringList types;
-	QMap<QString, int> typesMap;
-	{
-		QPair<QString, int> type;
-		foreach (type, m_textTypes) {
-			types.append(type.first);
-			typesMap.insert(type.first, type.second);
+	if (sender()->property(BLOCK_STYLE).isValid()) {
+		selectedType = (ScenarioBlockStyle::Type)sender()->property(BLOCK_STYLE).toInt();
+	}
+	//
+	// В противном случае покажем диалог для выбора стиля, который нужно установить
+	//
+	else {
+		//
+		// Показываем диалог выбора стиля для блока
+		//
+		QStringList types;
+		QMap<QString, int> typesMap;
+		{
+			QPair<QString, int> type;
+			foreach (type, m_textTypes) {
+				types.append(type.first);
+				typesMap.insert(type.first, type.second);
+			}
+		}
+		QString currentTypeName = m_ui->textStyle->text();
+		currentTypeName = currentTypeName.remove("...").simplified();
+		const QString selectedTypeName =
+				QLightBoxInputDialog::getItem(this, tr("Choose block type"), types, currentTypeName);
+
+		//
+		// Если стиль выбран
+		//
+		if (!selectedTypeName.isEmpty()) {
+			selectedType = (ScenarioBlockStyle::Type)typesMap.value(selectedTypeName);
 		}
 	}
-	const QString selectedType =
-		QLightBoxInputDialog::getItem(this, tr("Choose block type"), types, m_ui->textStyle->text());
 
 	//
-	// Если стиль выбран
+	// Меняем стиль блока, если это возможно
 	//
-	if (!selectedType.isEmpty()) {
-		m_ui->textStyle->setText(selectedType);
-
-		//
-		// Меняем стиль блока, если это возможно
-		//
-		const ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)typesMap.value(selectedType);
-		m_editor->changeScenarioBlockType(type);
+	if (selectedType != ScenarioBlockStyle::Undefined) {
+		m_editor->changeScenarioBlockType(selectedType);
 		m_editorWrapper->setFocus();
 	}
 }
@@ -397,8 +443,24 @@ void ScenarioTextView::initView()
 	m_ui->scenarioName->setElideMode(Qt::ElideRight);
 	m_ui->textEditContainer->addWidget(m_editorWrapper);
 
-    m_editor->setTextSelectionEnable(false);
-    ScrollerHelper::addScroller(m_editor);
+	m_editor->setTextSelectionEnable(false);
+	ScrollerHelper::addScroller(m_editor);
+
+	m_ui->sceneHeadingStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::SceneHeading);
+	m_ui->sceneCharactersStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::SceneCharacters);
+	m_ui->actionStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::Action);
+	m_ui->characterStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::Character);
+	m_ui->dialogueStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::Dialogue);
+	m_ui->parentheticalStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::Parenthetical);
+
+	QButtonGroup* stylesGroup = new QButtonGroup(this);
+	stylesGroup->addButton(m_ui->sceneHeadingStyle);
+	stylesGroup->addButton(m_ui->sceneCharactersStyle);
+	stylesGroup->addButton(m_ui->actionStyle);
+	stylesGroup->addButton(m_ui->characterStyle);
+	stylesGroup->addButton(m_ui->dialogueStyle);
+	stylesGroup->addButton(m_ui->parentheticalStyle);
+	stylesGroup->addButton(m_ui->textStyle);
 }
 
 void ScenarioTextView::initStylesCombo()
@@ -407,13 +469,7 @@ void ScenarioTextView::initStylesCombo()
 	const bool BEAUTIFY_NAME = true;
 
 	QList<ScenarioBlockStyle::Type> types;
-	types << ScenarioBlockStyle::SceneHeading
-		  << ScenarioBlockStyle::SceneCharacters
-		  << ScenarioBlockStyle::Action
-		  << ScenarioBlockStyle::Character
-		  << ScenarioBlockStyle::Dialogue
-		  << ScenarioBlockStyle::Parenthetical
-		  << ScenarioBlockStyle::Title
+	types << ScenarioBlockStyle::Title
 		  << ScenarioBlockStyle::Note
 		  << ScenarioBlockStyle::Transition
 		  << ScenarioBlockStyle::NoprintableText
@@ -430,65 +486,75 @@ void ScenarioTextView::initStylesCombo()
 void ScenarioTextView::initConnections()
 {
 	connect(m_ui->navigator, &QToolButton::clicked, this, &ScenarioTextView::showNavigatorClicked);
-	connect(m_ui->tab, &QToolButton::clicked, [=] {
-	   qApp->sendEvent(m_editor, new QKeyEvent(QEvent::KeyPress, Qt::Key_Tab, Qt::NoModifier));
-	});
+
+	//
+	// Настраиваем применения стилей
+	//
+	connect(m_ui->sceneHeadingStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+	connect(m_ui->sceneCharactersStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+	connect(m_ui->actionStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+	connect(m_ui->characterStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+	connect(m_ui->dialogueStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+	connect(m_ui->parentheticalStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
 	connect(m_ui->textStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->enter, &QToolButton::clicked, [=] {
-	   qApp->sendEvent(m_editor, new QKeyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier));
-	});
 
 	//
 	// Настраиваем отображение панелей в зависимости от того открыта ли клавиатура
 	//
-    connect(QApplication::inputMethod(), &QInputMethod::visibleChanged, [=] {
-        if (isVisible()) {
-            while (QApplication::inputMethod()->isAnimating()) {
-                QApplication::processEvents();
-            }
+	connect(QApplication::inputMethod(), &QInputMethod::visibleChanged, [=] {
+		if (isVisible()) {
+			while (QApplication::inputMethod()->isAnimating()) {
+				QApplication::processEvents();
+			}
 
-            QWidget* topToolbar = m_ui->toolbar->parentWidget()->parentWidget()->parentWidget();
-            QVBoxLayout* layout = m_ui->mainLayout;
-            layout->takeAt(layout->indexOf(m_ui->editingToolbar));
-            if (QApplication::inputMethod()->isVisible()) {
-                topToolbar->hide();
-                layout->insertWidget(0, m_ui->editingToolbar);
-            } else {
-                topToolbar->show();
-                layout->addWidget(m_ui->editingToolbar);
-            }
-        }
-    });
+			QWidget* topToolbar = m_ui->toolbar->parentWidget()->parentWidget()->parentWidget();
+			QVBoxLayout* layout = m_ui->mainLayout;
+			layout->takeAt(layout->indexOf(m_ui->editingToolbar));
+			if (QApplication::inputMethod()->isVisible()) {
+				topToolbar->hide();
+				layout->insertWidget(0, m_ui->editingToolbar);
+			} else {
+				topToolbar->show();
+				layout->addWidget(m_ui->editingToolbar);
+			}
+		}
+	});
 
 	initEditorConnections();
 }
 
 void ScenarioTextView::initEditorConnections()
 {
-    connect(m_editor, &ScenarioTextEdit::currentStyleChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
-    connect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
-    connect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutCursorPositionChanged);
-    connect(m_editor, &ScenarioTextEdit::textChanged, this, &ScenarioTextView::aboutTextChanged);
-    connect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextView::aboutStyleChanged);
-    connect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextView::textChanged);
-    connect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextView::zoomRangeChanged);
+	connect(m_editor, &ScenarioTextEdit::currentStyleChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
+	connect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
+	connect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutCursorPositionChanged);
+	connect(m_editor, &ScenarioTextEdit::textChanged, this, &ScenarioTextView::aboutTextChanged);
+	connect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextView::aboutStyleChanged);
+	connect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextView::textChanged);
+	connect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextView::zoomRangeChanged);
 }
 
 void ScenarioTextView::removeEditorConnections()
 {
-    disconnect(m_editor, &ScenarioTextEdit::currentStyleChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
-    disconnect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
-    disconnect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutCursorPositionChanged);
-    disconnect(m_editor, &ScenarioTextEdit::textChanged, this, &ScenarioTextView::aboutTextChanged);
-    disconnect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextView::aboutStyleChanged);
-    disconnect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextView::textChanged);
-    disconnect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextView::zoomRangeChanged);
+	disconnect(m_editor, &ScenarioTextEdit::currentStyleChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
+	disconnect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutUpdateTextStyle);
+	disconnect(m_editor, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextView::aboutCursorPositionChanged);
+	disconnect(m_editor, &ScenarioTextEdit::textChanged, this, &ScenarioTextView::aboutTextChanged);
+	disconnect(m_editor, &ScenarioTextEdit::styleChanged, this, &ScenarioTextView::aboutStyleChanged);
+	disconnect(m_editor, &ScenarioTextEdit::reviewChanged, this, &ScenarioTextView::textChanged);
+	disconnect(m_editorWrapper, &ScalableWrapper::zoomRangeChanged, this, &ScenarioTextView::zoomRangeChanged);
 }
 
 void ScenarioTextView::initStyleSheet()
 {
 	m_ui->toolbar->setProperty("toolbar", true);
 	m_ui->scenarioName->setProperty("toolbar", true);
+	m_ui->sceneHeadingStyle->setProperty("flat-black", true);
+	m_ui->sceneCharactersStyle->setProperty("flat-black", true);
+	m_ui->actionStyle->setProperty("flat-black", true);
+	m_ui->characterStyle->setProperty("flat-black", true);
+	m_ui->dialogueStyle->setProperty("flat-black", true);
+	m_ui->parentheticalStyle->setProperty("flat-black", true);
 	m_ui->textStyle->setProperty("flat-black", true);
 	m_ui->search->hide();
 	m_ui->menu->hide();
