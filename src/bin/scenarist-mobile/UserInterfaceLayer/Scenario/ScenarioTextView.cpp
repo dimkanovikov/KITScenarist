@@ -443,6 +443,10 @@ void ScenarioTextView::initConnections()
 	//
     connect(QApplication::inputMethod(), &QInputMethod::visibleChanged, [=] {
         if (isVisible()) {
+            while (QApplication::inputMethod()->isAnimating()) {
+                QApplication::processEvents();
+            }
+
             QWidget* topToolbar = m_ui->toolbar->parentWidget()->parentWidget()->parentWidget();
             QVBoxLayout* layout = m_ui->mainLayout;
             layout->takeAt(layout->indexOf(m_ui->editingToolbar));
