@@ -97,6 +97,8 @@ void LoginView::initConnections()
 
 void LoginView::initStyleSheet()
 {
+    m_ui->content->setProperty("content-container", true);
+    m_ui->logo->setProperty("content-container", true);
 	m_ui->signUp->setProperty("flat", true);
 	m_ui->login->setProperty("raised", true);
 }

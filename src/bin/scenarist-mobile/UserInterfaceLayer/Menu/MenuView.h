@@ -19,7 +19,7 @@ namespace UserInterface
 
 	public:
 		explicit MenuView(QWidget* _parent = 0);
-		~MenuView();
+        ~MenuView();
 
 		/**
 		 * @brief Установить логин авторизованного пользователя

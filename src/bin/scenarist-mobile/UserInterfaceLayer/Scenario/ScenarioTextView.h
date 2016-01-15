@@ -179,7 +179,7 @@ namespace UserInterface
 		/**
 		 * @brief Переопределяем для того, чтобы обновить панель стилей блоков при повороте экрана
 		 */
-		void resizeEvent(QResizeEvent* _event);
+        void resizeEvent(QResizeEvent* _event);
 
 	private slots:
 		/**

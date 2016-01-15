@@ -323,9 +323,9 @@ void ScenarioTextView::aboutRedo()
 
 void ScenarioTextView::resizeEvent(QResizeEvent* _event)
 {
-	QWidget::resizeEvent(_event);
+    QWidget::resizeEvent(_event);
 
-	aboutUpdateTextStyle();
+    aboutUpdateTextStyle();
 }
 
 void ScenarioTextView::aboutUpdateTextStyle()
@@ -471,6 +471,7 @@ void ScenarioTextView::initView()
 	m_ui->textEditContainer->addWidget(m_editorWrapper);
 
 	m_editor->setTextSelectionEnable(false);
+    m_editor->setUseCompleter(false);
 	ScrollerHelper::addScroller(m_editor);
 
 	m_ui->sceneHeadingStyle->setFocusPolicy(Qt::NoFocus);
@@ -523,16 +524,16 @@ void ScenarioTextView::initConnections()
 	//
 	// Настраиваем применения стилей
 	//
-	connect(m_ui->sceneHeadingStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->sceneCharactersStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->actionStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->characterStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->dialogueStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->parentheticalStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->textStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->sceneHeadingStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->sceneCharactersStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->actionStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->characterStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->dialogueStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->parentheticalStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->textStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
 
-	//
-	// Настраиваем отображение панелей в зависимости от того открыта ли клавиатура
+    //
+    // Настраиваем отображение панелей в зависимости от того открыта ли клавиатура
 	//
 	connect(QApplication::inputMethod(), &QInputMethod::visibleChanged, [=] {
 		if (isVisible()) {
@@ -540,16 +541,18 @@ void ScenarioTextView::initConnections()
 				QApplication::processEvents();
 			}
 
-			QWidget* topToolbar = m_ui->toolbar->parentWidget()->parentWidget()->parentWidget();
-			QVBoxLayout* layout = m_ui->mainLayout;
-			layout->takeAt(layout->indexOf(m_ui->editingToolbar));
-			if (QApplication::inputMethod()->isVisible()) {
-				topToolbar->hide();
-				layout->insertWidget(0, m_ui->editingToolbar);
-			} else {
-				topToolbar->show();
-				layout->addWidget(m_ui->editingToolbar);
-			}
+            QWidget* topToolbar = m_ui->toolbar->parentWidget()->parentWidget()->parentWidget();
+            QVBoxLayout* layout = m_ui->mainLayout;
+            layout->takeAt(layout->indexOf(m_ui->editingToolbar));
+            if (QApplication::inputMethod()->isVisible()) {
+                topToolbar->hide();
+                layout->insertWidget(0, m_ui->editingToolbar);
+            } else {
+                topToolbar->show();
+                layout->addWidget(m_ui->editingToolbar);
+            }
+
+            m_editor->ensureCursorVisible();
 		}
 	});
 
@@ -582,13 +585,13 @@ void ScenarioTextView::initStyleSheet()
 {
 	m_ui->toolbar->setProperty("toolbar", true);
 	m_ui->scenarioName->setProperty("toolbar", true);
-//	m_ui->sceneHeadingStyle->setProperty("flat-black", true);
-//	m_ui->sceneCharactersStyle->setProperty("flat-black", true);
-//	m_ui->actionStyle->setProperty("flat-black", true);
-//	m_ui->characterStyle->setProperty("flat-black", true);
-//	m_ui->dialogueStyle->setProperty("flat-black", true);
-//	m_ui->parentheticalStyle->setProperty("flat-black", true);
-//	m_ui->textStyle->setProperty("flat-black", true);
+    m_ui->sceneHeadingStyle->setProperty("flat-black", true);
+    m_ui->sceneCharactersStyle->setProperty("flat-black", true);
+    m_ui->actionStyle->setProperty("flat-black", true);
+    m_ui->characterStyle->setProperty("flat-black", true);
+    m_ui->dialogueStyle->setProperty("flat-black", true);
+    m_ui->parentheticalStyle->setProperty("flat-black", true);
+    m_ui->textStyle->setProperty("flat-black", true);
 	m_ui->search->hide();
 	m_ui->menu->hide();
 }

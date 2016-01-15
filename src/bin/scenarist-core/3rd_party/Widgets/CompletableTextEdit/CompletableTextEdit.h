@@ -17,6 +17,11 @@ class CompletableTextEdit : public SpellCheckTextEdit
 public:
 	explicit CompletableTextEdit(QWidget* _parent = 0);
 
+    /**
+     * @brief Установить необходимость использования подстановщика
+     */
+    void setUseCompleter(bool _use);
+
 	/**
 	 * @brief Получить подстановщика
 	 */
@@ -52,10 +57,15 @@ protected:
 	virtual bool canComplete() const;
 
 private:
+    /**
+     * @brief Использовать ли подстановщик
+     */
+    bool m_useCompleter;
+
 	/**
 	 * @brief Подстановщик для завершения текста
 	 */
-	QCompleter* m_completer;
+    QCompleter* m_completer;
 };
 
 #endif // COMPLETABLETEXTEDIT_H

@@ -37,11 +37,13 @@ void MenuManager::showMenu()
 	// Скрываем виртуальную клавиатуру
 	//
 	QApplication::inputMethod()->hide();
-	QApplication::processEvents();
+    while (QApplication::inputMethod()->isAnimating()) {
+        QApplication::processEvents();
+    }
 
 	//
 	// Выкатываем меню
-	//
+    //
 	WAF::Animation::sideSlideIn(m_view, WAF::LeftSide);
 }
 

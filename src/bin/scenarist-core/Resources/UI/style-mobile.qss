@@ -118,7 +118,7 @@ QPushButton:disabled[flat=true] {
 }
 
 QPushButton[flat-black=true] {
-    min-width: 30dp;
+    min-width: 40dp;
     height: 56dp;
     border: none;
     background-color: transparent;

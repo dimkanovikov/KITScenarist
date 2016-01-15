@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>597</width>
-    <height>470</height>
+    <width>308</width>
+    <height>369</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -118,7 +118,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QToolButton" name="sceneHeadingStyle">
+       <widget class="QPushButton" name="sceneHeadingStyle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -134,7 +134,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="sceneCharactersStyle">
+       <widget class="QPushButton" name="sceneCharactersStyle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -150,7 +150,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="actionStyle">
+       <widget class="QPushButton" name="actionStyle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -166,7 +166,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="characterStyle">
+       <widget class="QPushButton" name="characterStyle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -182,7 +182,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="dialogueStyle">
+       <widget class="QPushButton" name="dialogueStyle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -198,7 +198,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="parentheticalStyle">
+       <widget class="QPushButton" name="parentheticalStyle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -214,7 +214,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="textStyle">
+       <widget class="QPushButton" name="textStyle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>

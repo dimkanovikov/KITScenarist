@@ -47,7 +47,7 @@ public:
 	 * @brief Преобразовать значение в девайсонезависимые пиксели
 	 */
 	static qreal dpToPx(int _pixelValue) {
-		return _pixelValue * dp();
+        return _pixelValue * dp();
 	}
 
 private:
@@ -55,7 +55,7 @@ private:
 	 * @brief Кэшированное значение коэффициента девайсонезависимых пикселей
 	 */
 	static qreal dp() {
-		static qreal s_dp = [](){
+        static qreal s_dp = [] {
 			//
 			// Рассчитаем dp
 			//

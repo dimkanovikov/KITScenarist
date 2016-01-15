@@ -19,7 +19,7 @@ MenuView::MenuView(QWidget* _parent) :
 
 MenuView::~MenuView()
 {
-	delete m_ui;
+    delete m_ui;
 }
 
 void MenuView::setUserLogged(const QString& _userName)
@@ -49,13 +49,9 @@ void MenuView::hideProjectSubmenu()
 
 void MenuView::initView()
 {
-	setFixedWidth(
-		StyleSheetHelper::dpToPx(
-			qMin(400,
-				 qMin(parentWidget()->width(), parentWidget()->height()) - 56
-				 )
-			)
-		);
+    setFixedWidth(
+        qMin(StyleSheetHelper::dpToPx(400),
+             parentWidget()->width() - StyleSheetHelper::dpToPx(56)));
 
 	QButtonGroup* menuButtonsGroup = new QButtonGroup(this);
 	menuButtonsGroup->setExclusive(true);
