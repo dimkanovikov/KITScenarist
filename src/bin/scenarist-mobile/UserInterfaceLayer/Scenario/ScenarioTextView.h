@@ -175,6 +175,12 @@ namespace UserInterface
 		 */
 		void zoomRangeChanged(qreal _zoomRange);
 
+	protected:
+		/**
+		 * @brief Переопределяем для того, чтобы обновить панель стилей блоков при повороте экрана
+		 */
+		void resizeEvent(QResizeEvent* _event);
+
 	private slots:
 		/**
 		 * @brief Обновить текущий стиль текста
