@@ -64,6 +64,8 @@ void MenuView::initView()
 	menuButtonsGroup->addButton(m_ui->settings);
 
 	hideProjectSubmenu();
+
+    m_ui->settings->hide();
 }
 
 void MenuView::initConnections()

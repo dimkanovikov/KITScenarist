@@ -1,8 +1,6 @@
 #include "ScenarioTextView.h"
 #include "ui_ScenarioTextView.h"
 
-
-
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
@@ -14,6 +12,7 @@
 
 #include <3rd_party/Helpers/ScrollerHelper.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>
+#include <3rd_party/Helpers/StyleSheetHelper.h>
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 #include <3rd_party/Widgets/WAF/Animation.h>
@@ -355,13 +354,28 @@ void ScenarioTextView::aboutUpdateTextStyle()
 	QButtonGroup* buttonGroup = m_ui->textStyle->group();
 	foreach (QAbstractButton* styleButton, buttonGroup->buttons()) {
 		if (styleButton->isChecked()) {
-			styleButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-			static const bool BEAUTIFY = true;
-			styleButton->setText(
-				ScenarioBlockStyle::typeName(currentType, BEAUTIFY)
-				+ (styleButton == m_ui->textStyle ? " ..." : ""));
+            styleButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+            //
+            // Отображаем полное название стиля, только если место позволяет
+            //
+            static const int MIN_HEIGHT_FOR_FULL_NAMES = StyleSheetHelper::dpToPx(420);
+            if (width() >= MIN_HEIGHT_FOR_FULL_NAMES) {
+                static const bool BEAUTIFY = true;
+                styleButton->setText(
+                    ScenarioBlockStyle::typeName(currentType, BEAUTIFY)
+                    + (styleButton == m_ui->textStyle ? " ..." : ""));
+            }
+            //
+            // Если места мало, то используем сокращённые названия стилей блоков
+            //
+            else {
+                styleButton->setText(
+                    ScenarioBlockStyle::shortTypeName(currentType)
+                    + (styleButton == m_ui->textStyle ? " ..." : ""));
+            }
 		} else {
-			styleButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+            styleButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 			styleButton->setText(
 				styleButton == m_ui->textStyle
 				? "..."
@@ -415,7 +429,13 @@ void ScenarioTextView::aboutChangeTextStyle()
 	if (selectedType != ScenarioBlockStyle::Undefined) {
 		m_editor->changeScenarioBlockType(selectedType);
 		m_editorWrapper->setFocus();
-	}
+    }
+    //
+    // Если нет, то просто обновляем текущий стиль
+    //
+    else {
+        aboutUpdateTextStyle();
+    }
 }
 
 void ScenarioTextView::aboutCursorPositionChanged()
@@ -446,11 +466,17 @@ void ScenarioTextView::initView()
 	m_editor->setTextSelectionEnable(false);
 	ScrollerHelper::addScroller(m_editor);
 
+    m_ui->sceneHeadingStyle->setFocusPolicy(Qt::NoFocus);
 	m_ui->sceneHeadingStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::SceneHeading);
-	m_ui->sceneCharactersStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::SceneCharacters);
+    m_ui->sceneCharactersStyle->setFocusPolicy(Qt::NoFocus);
+    m_ui->sceneCharactersStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::SceneCharacters);
+    m_ui->actionStyle->setFocusPolicy(Qt::NoFocus);
 	m_ui->actionStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::Action);
+    m_ui->characterStyle->setFocusPolicy(Qt::NoFocus);
 	m_ui->characterStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::Character);
+    m_ui->dialogueStyle->setFocusPolicy(Qt::NoFocus);
 	m_ui->dialogueStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::Dialogue);
+    m_ui->parentheticalStyle->setFocusPolicy(Qt::NoFocus);
 	m_ui->parentheticalStyle->setProperty(BLOCK_STYLE, ScenarioBlockStyle::Parenthetical);
 
 	QButtonGroup* stylesGroup = new QButtonGroup(this);
@@ -490,13 +516,13 @@ void ScenarioTextView::initConnections()
 	//
 	// Настраиваем применения стилей
 	//
-	connect(m_ui->sceneHeadingStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->sceneCharactersStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->actionStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->characterStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->dialogueStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->parentheticalStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
-	connect(m_ui->textStyle, &QPushButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->sceneHeadingStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->sceneCharactersStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->actionStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->characterStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->dialogueStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->parentheticalStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
+    connect(m_ui->textStyle, &QToolButton::clicked, this, &ScenarioTextView::aboutChangeTextStyle);
 
 	//
 	// Настраиваем отображение панелей в зависимости от того открыта ли клавиатура
