@@ -206,7 +206,7 @@ SOURCES += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/LoginDialog.cpp \
     scenarist-desktop/ManagementLayer/Project/ProjectsManager.cpp \
-    scenarist-desktop/ManagementLayer/Project/Project.cpp \
+    scenarist-core/ManagementLayer/Project/Project.cpp \
     scenarist-core/DataLayer/DataMappingLayer/DatabaseHistoryMapper.cpp \
     scenarist-core/DataLayer/DataStorageLayer/DatabaseHistoryStorage.cpp \
     scenarist-core/Domain/ScenarioChange.cpp \
@@ -426,7 +426,7 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/LoginDialog.h \
     scenarist-core/3rd_party/Helpers/PasswordStorage.h \
     scenarist-desktop/ManagementLayer/Project/ProjectsManager.h \
-    scenarist-desktop/ManagementLayer/Project/Project.h \
+    scenarist-core/ManagementLayer/Project/Project.h \
     scenarist-core/3rd_party/Helpers/QVariantMapWriter.h \
     scenarist-core/3rd_party/Helpers/ImageHelper.h \
     scenarist-core/DataLayer/DataMappingLayer/DatabaseHistoryMapper.h \

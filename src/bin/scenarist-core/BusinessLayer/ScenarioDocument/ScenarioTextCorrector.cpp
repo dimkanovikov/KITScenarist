@@ -5,6 +5,7 @@
 
 #include <QAbstractTextDocumentLayout>
 #include <QApplication>
+#include <QDebug>
 #include <QFontMetricsF>
 #include <QPair>
 #include <QTextBlock>
@@ -37,8 +38,11 @@ namespace {
 	class BlockInfo
 	{
 	public:
-		BlockInfo() : topPage(0), bottomPage(0) {}
-		BlockInfo(int _top, int _bottom, const QRectF& _rect) : topPage(_top), bottomPage(_bottom), rect(_rect) {}
+        BlockInfo() : topPage(0), bottomPage(0), topLinesCount(0), bottomLinesCount(0), width(0) {}
+        BlockInfo(int _top, int _bottom, int _topLines, int _bottomLines, int _width)
+            : topPage(_top), bottomPage(_bottom), topLinesCount(_topLines),
+              bottomLinesCount(_bottomLines), width(_width)
+        {}
 
 		/**
 		 * @brief Страница, на которой начинается блок
@@ -50,10 +54,20 @@ namespace {
 		 */
 		int bottomPage;
 
-		/**
-		 * @brief Область блока
-		 */
-		QRectF rect;
+        /**
+         * @brief Количество строк, занимаемых блоком на начальной странице
+         */
+        int topLinesCount;
+
+        /**
+         * @brief Количество строк, занимаемых блоком на конечной странице
+         */
+        int bottomLinesCount;
+
+        /**
+         * @brief Ширина блока
+         */
+        int width;
 	};
 
 	/**
@@ -62,23 +76,43 @@ namespace {
 	static BlockInfo blockPages(const QTextBlock& _block) {
 		QAbstractTextDocumentLayout* layout = _block.document()->documentLayout();
 		const QRectF blockRect = layout->blockBoundingRect(_block);
-		const qreal PAGE_HEIGHT = _block.document()->pageSize().height();
-		int topPage = blockRect.top() / PAGE_HEIGHT;
-		int bottomPage = blockRect.bottom() / PAGE_HEIGHT;
+        const qreal pageHeight = _block.document()->pageSize().height();
+        int topPage = blockRect.top() / pageHeight;
+        int bottomPage = blockRect.bottom() / pageHeight;
 
 		//
 		// Если хотя бы одна строка не влезает в конце текущей страницы,
 		// то значит блок будет располагаться на следующей странице
 		//
-		const int positionOnTopPage = blockRect.top() - (topPage * PAGE_HEIGHT);
-		const qreal bottomMargin = _block.document()->rootFrame()->frameFormat().bottomMargin();
-		const qreal lineHeight = QFontMetricsF(_block.charFormat().font()).height();
-		if (PAGE_HEIGHT - positionOnTopPage - lineHeight < bottomMargin) {
-			++topPage;
-			++bottomPage;
-		}
+        const qreal positionOnTopPage = blockRect.top() - (topPage * pageHeight);
+        const qreal pageBottomMargin = _block.document()->rootFrame()->frameFormat().bottomMargin();
+        const qreal lineHeight = _block.blockFormat().lineHeight();
+        if (pageHeight - positionOnTopPage - pageBottomMargin < lineHeight) {
+            if (topPage == bottomPage) {
+                ++topPage;
+                ++bottomPage;
+            } else {
+                ++topPage;
+            }
+        }
 
-		return BlockInfo(topPage, bottomPage, blockRect);
+        //
+        // Определим кол-во строк на страницах
+        //
+        int topLinesCount = (pageHeight - positionOnTopPage - pageBottomMargin) / lineHeight;
+        int bottomLinesCount = 0;
+        if (topPage == bottomPage) {
+            bottomLinesCount = blockRect.height() / lineHeight - topLinesCount;
+        } else {
+            const qreal pagesInterval =
+                pageBottomMargin + _block.document()->rootFrame()->frameFormat().topMargin();
+            bottomLinesCount = (blockRect.height() - pagesInterval) / lineHeight - topLinesCount;
+        }
+
+        //
+        // NOTE: Номера страниц ночинаются с нуля
+        //
+        return BlockInfo(topPage, bottomPage, topLinesCount, bottomLinesCount, blockRect.width());
 	}
 }
 
@@ -279,13 +313,13 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 						//
 						// Проверяем не находится ли текущий блок в конце страницы
 						//
-						BlockInfo currentBlockPages = ::blockPages(currentBlock);
-						BlockInfo nextBlockPages = ::blockPages(nextBlock);
+                        BlockInfo currentBlockInfo = ::blockPages(currentBlock);
+                        BlockInfo nextBlockInfo = ::blockPages(nextBlock);
 
 						//
 						// Нашли конец страницы, обрабатываем его соответствующим для типа блока образом
 						//
-						if (currentBlockPages.topPage != nextBlockPages.topPage) {
+                        if (currentBlockInfo.topPage != nextBlockInfo.topPage) {
 
 							//
 							// Время и место
@@ -295,13 +329,15 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 							if (ScenarioBlockStyle::forBlock(currentBlock) == ScenarioBlockStyle::SceneHeading) {
 								cursor.beginEditBlock();
 
-								cursor.setPosition(currentBlock.position());
-								cursor.insertBlock();
-								cursor.movePosition(QTextCursor::PreviousBlock);
-								QTextBlockFormat format = cursor.blockFormat();
-								format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::Action);
-								format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
-								cursor.setBlockFormat(format);
+                                for (int reply = 0; reply < currentBlockInfo.topLinesCount; ++reply) {
+                                    cursor.setPosition(currentBlock.position());
+                                    cursor.insertBlock();
+                                    cursor.movePosition(QTextCursor::PreviousBlock);
+                                    QTextBlockFormat format = cursor.blockFormat();
+                                    format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::Action);
+                                    format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
+                                    cursor.setBlockFormat(format);
+                                }
 
 								cursor.endEditBlock();
 							}
@@ -315,7 +351,7 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 							// --- если перед описанием действия идёт время и место, переносим и его тоже
 							//
 							else if (ScenarioBlockStyle::forBlock(currentBlock) == ScenarioBlockStyle::Action
-									 && currentBlockPages.topPage != currentBlockPages.bottomPage) {
+                                     && currentBlockInfo.topPage != currentBlockInfo.bottomPage) {
 
 							}
 
@@ -327,13 +363,15 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 							else if (ScenarioBlockStyle::forBlock(currentBlock) == ScenarioBlockStyle::Character) {
 								cursor.beginEditBlock();
 
-								cursor.setPosition(currentBlock.position());
-								cursor.insertBlock();
-								cursor.movePosition(QTextCursor::PreviousBlock);
-								QTextBlockFormat format = cursor.blockFormat();
-								format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::Action);
-								format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
-								cursor.setBlockFormat(format);
+                                for (int reply = 0; reply < currentBlockInfo.topLinesCount; ++reply) {
+                                    cursor.setPosition(currentBlock.position());
+                                    cursor.insertBlock();
+                                    cursor.movePosition(QTextCursor::PreviousBlock);
+                                    QTextBlockFormat format = cursor.blockFormat();
+                                    format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::Action);
+                                    format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
+                                    cursor.setBlockFormat(format);
+                                }
 
 								cursor.endEditBlock();
 							}
