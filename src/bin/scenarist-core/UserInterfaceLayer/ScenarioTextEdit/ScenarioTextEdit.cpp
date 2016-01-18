@@ -579,8 +579,7 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 		moveCursor(QTextCursor::NextCharacter);
 		while (!textCursor().atEnd()
 			   && (!textCursor().block().isVisible()
-				   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
-				   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection))) {
+				   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection))) {
 			moveCursor(QTextCursor::NextBlock);
 		}
 	}
@@ -591,8 +590,7 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 		moveCursor(QTextCursor::PreviousCharacter);
 		while (!textCursor().atStart()
 			   && (!textCursor().block().isVisible()
-				   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
-				   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection))) {
+				   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection))) {
 			moveCursor(QTextCursor::StartOfBlock);
 			moveCursor(QTextCursor::PreviousCharacter);
 		}
@@ -790,7 +788,6 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 						// Прорисовка символа пустой строки
 						//
 						if (!block.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
-							&& !block.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection)
 							&& block.text().simplified().isEmpty()) {
 							//
 							// Определим область для отрисовки и выведем символ в редактор
@@ -948,8 +945,7 @@ void ScenarioTextEdit::mouseReleaseEvent(QMouseEvent* _event)
 	//
 	while (!textCursor().atEnd()
 		   && (!textCursor().block().isVisible()
-			   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
-			   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection))) {
+			   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection))) {
 		moveCursor(QTextCursor::EndOfBlock);
 		moveCursor(QTextCursor::NextCharacter);
 	}
@@ -1542,5 +1538,5 @@ void ScenarioTextEdit::initConnections()
 	//
 	// При перемещении курсора может меняться стиль блока
 	//
-    connect(this, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextEdit::currentStyleChanged, Qt::UniqueConnection);
+	connect(this, &ScenarioTextEdit::cursorPositionChanged, this, &ScenarioTextEdit::currentStyleChanged, Qt::UniqueConnection);
 }

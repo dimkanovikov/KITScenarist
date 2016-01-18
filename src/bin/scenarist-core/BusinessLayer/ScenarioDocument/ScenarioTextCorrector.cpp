@@ -73,7 +73,7 @@ namespace {
 	/**
 	 * @brief Получить номер страницы, на которой находится начало и конец блока
 	 */
-	static BlockInfo blockPages(const QTextBlock& _block) {
+	static BlockInfo blockInfo(const QTextBlock& _block) {
 		QAbstractTextDocumentLayout* layout = _block.document()->documentLayout();
 		const QRectF blockRect = layout->blockBoundingRect(_block);
 		const qreal pageHeight = _block.document()->pageSize().height();
@@ -135,6 +135,30 @@ namespace {
 			result = _linesWithText;
 		}
 		return result;
+	}
+
+	/**
+	 * @brief Узнать сколько строк занимает текст
+	 */
+	static int linesCount(const QString _text, const QFont& _font, int _width) {
+		static QTextLayout textLayout;
+
+		textLayout.clearLayout();
+		textLayout.setText(_text);
+		textLayout.setFont(_font);
+
+		textLayout.beginLayout();
+		forever {
+			QTextLine line = textLayout.createLine();
+			if (!line.isValid()) {
+				break;
+			}
+
+			line.setLineWidth(_width);
+		}
+		textLayout.endLayout();
+
+		return textLayout.lineCount();
 	}
 }
 
@@ -273,8 +297,7 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 					// Если текущий блок декорация, то убираем его
 					//
 					const QTextBlockFormat blockFormat = cursor.block().blockFormat();
-					if (blockFormat.boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
-						|| blockFormat.boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection)) {
+					if (blockFormat.boolProperty(ScenarioBlockStyle::PropertyIsCorrection)) {
 						//
 						// ... запоминаем формат предыдущего блока
 						//
@@ -288,15 +311,38 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 						cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 						cursor.deletePreviousChar();
 						//
-						// ... если это блок разрывающий текст, то соединим разорванные блоки
-						//
-						if (blockFormat.boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection)) {
-							cursor.deleteChar();
-						}
-						//
 						// ... восстанавливаем формат блока
 						//
 						cursor.setBlockFormat(previousBlockFormat);
+					}
+					//
+					// Если в текущем блоке начинается разрыв, пробуем его вернуть
+					//
+					else if (blockFormat.boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionStart)) {
+						cursor.movePosition(QTextCursor::EndOfBlock);
+						do {
+							cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+						} while (cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection));
+						//
+						// ... если дошли до конца разрыва, то сшиваем его
+						//
+						if (cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionEnd)) {
+							cursor.insertText(" ");
+						}
+						//
+						// ... а если после начала разрыва идёт другой блок, то просто убираем декорации
+						//
+						else {
+							cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+							cursor.deleteChar();
+						}
+						//
+						// ... очищаем значения обрывов
+						//
+						QTextBlockFormat cleanFormat = blockFormat;
+						cleanFormat.setProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionStart, QVariant());
+						cleanFormat.setProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionStart, QVariant());
+						cursor.setBlockFormat(cleanFormat);
 					}
 					//
 					// Если текущий блок не декорация, просто переходим к следующему
@@ -335,8 +381,8 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 						//
 						// Проверяем не находится ли текущий блок в конце страницы
 						//
-						BlockInfo currentBlockInfo = ::blockPages(currentBlock);
-						BlockInfo nextBlockInfo = ::blockPages(nextBlock);
+						BlockInfo currentBlockInfo = ::blockInfo(currentBlock);
+						BlockInfo nextBlockInfo = ::blockInfo(nextBlock);
 
 						//
 						// Нашли конец страницы, обрабатываем его соответствующим для типа блока образом
@@ -354,13 +400,13 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 								|| ScenarioBlockStyle::forBlock(currentBlock) == ScenarioBlockStyle::Character) {
 								cursor.beginEditBlock();
 
-								int emptyBlocksCount = ::neededEmptyBlocks(cursor.blockFormat(), currentBlockInfo.topLinesCount);
+								int emptyBlocksCount = ::neededEmptyBlocks(currentBlock.blockFormat(), currentBlockInfo.topLinesCount);
 								while (emptyBlocksCount-- > 0) {
 									cursor.setPosition(currentBlock.position());
 									cursor.insertBlock();
 									cursor.movePosition(QTextCursor::PreviousBlock);
-									QTextBlockFormat format = cursor.blockFormat();
-									format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::Action);
+									QTextBlockFormat format = currentBlock.blockFormat();
+									format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::SceneHeadingShadow);
 									format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
 									cursor.setBlockFormat(format);
 								}
@@ -369,16 +415,115 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 							}
 
 							//
+							// Участники сцены
+							//
+							// переносим на следующую страницу
+							// - если в конце предыдущей страницы
+							// - если перед участниками стоит время и место, переносим и его тоже
+							//
+
+
+
+							//
 							// Описание действия
 							// - если находится на обеих страницах
 							// -- если на странице можно оставить текст, который займёт 2 и более строк,
 							//    оставляем максимум, а остальное переносим. Разрываем по предложениям
 							// -- в остальном случае переносим полностью
 							// --- если перед описанием действия идёт время и место, переносим и его тоже
+							// --- если перед описанием действия идёт список участников, то переносим их
+							//	   вместе с предыдущим блоком время и место
 							//
 							else if (ScenarioBlockStyle::forBlock(currentBlock) == ScenarioBlockStyle::Action
 									 && currentBlockInfo.topPage != currentBlockInfo.bottomPage) {
+								cursor.beginEditBlock();
 
+								//
+								// Пробуем разорвать так, чтобы часть текста осталась на предыдущей странице
+								//
+								const int availableLinesOnPageEnd = 2;
+								bool breakSuccess = false;
+								if (currentBlockInfo.topLinesCount >= availableLinesOnPageEnd) {
+									QStringList prevPageSentences = currentBlock.text().split(". ", QString::SkipEmptyParts);
+									QStringList nextPageSentences;
+									while (!prevPageSentences.isEmpty()) {
+										nextPageSentences << prevPageSentences.takeLast();
+										const QString newText = prevPageSentences.join(". ") + ".";
+										int linesCount = ::linesCount(newText, currentBlock.charFormat().font(), currentBlockInfo.width);
+										if (linesCount <= currentBlockInfo.topLinesCount
+											&& linesCount >= availableLinesOnPageEnd) {
+											cursor.setPosition(currentBlock.position());
+											const QTextBlockFormat format = currentBlock.blockFormat();
+											//
+											// ... корректируем текст в оставшемся блоке
+											//
+											{
+												cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+												cursor.insertText(newText);
+												QTextBlockFormat breakFormat = format;
+												breakFormat.setProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionStart, true);
+												cursor.setBlockFormat(breakFormat);
+											}
+											//
+											// ... добавляем новый блок с оторванным текстом
+											//
+											{
+												cursor.insertBlock();
+												cursor.insertText(nextPageSentences.join(". "));
+												QTextBlockFormat breakFormat = format;
+												breakFormat.setProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionEnd, true);
+												cursor.setBlockFormat(breakFormat);
+											}
+											breakSuccess = true;
+											break;
+										}
+									}
+								}
+								//
+								// Если блок не удалось разорвать переносим его на следующую страницу
+								//
+								if (breakSuccess == false) {
+									int startPosition = currentBlock.position();
+
+									//
+									// Если перед описанием действия идёт время и место и его тоже переносим
+									//
+									QTextBlock previousBlock = currentBlock.previous();
+									while (previousBlock.isValid() && !previousBlock.isVisible()) {
+										previousBlock = previousBlock.previous();
+									}
+									if (previousBlock.isValid()) {
+										BlockInfo previousBlockInfo = ::blockInfo(previousBlock);
+										if (ScenarioBlockStyle::forBlock(previousBlock) == ScenarioBlockStyle::SceneHeading) {
+											startPosition = previousBlock.position();
+											int emptyBlocksCount = ::neededEmptyBlocks(previousBlock.blockFormat(), previousBlockInfo.topLinesCount);
+											while (emptyBlocksCount-- > 0) {
+												cursor.setPosition(startPosition);
+												cursor.insertBlock();
+												cursor.movePosition(QTextCursor::PreviousBlock);
+												QTextBlockFormat format = previousBlock.blockFormat();
+												format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::SceneHeadingShadow);
+												format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
+												cursor.setBlockFormat(format);
+											}
+										}
+									}
+
+									//
+									// Делаем пропуски необходимые для переноса самого описания действия
+									//
+									int emptyBlocksCount = ::neededEmptyBlocks(currentBlock.blockFormat(), currentBlockInfo.topLinesCount);
+									while (emptyBlocksCount-- > 0) {
+										cursor.setPosition(startPosition);
+										cursor.insertBlock();
+										cursor.movePosition(QTextCursor::PreviousBlock);
+										QTextBlockFormat format = currentBlock.blockFormat();
+										format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
+										cursor.setBlockFormat(format);
+									}
+								}
+
+								cursor.endEditBlock();
 							}
 
 							//
@@ -391,11 +536,13 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 							//
 							// Диалог
 							// - если можно, то оставляем текст так, чтобы он занимал не менее 2 строк,
-							//	 добавляем ДАЛЬШЕ и на следующей странице имя персонажа с (ПРОД) и см диалог
+							//	 добавляем ДАЛЬШЕ и на следующей странице имя персонажа с (ПРОД) и сам диалог
 							// - в противном случае
 							// -- если перед диалогом идёт имя персонажа, то переносим их вместе на след.
-							// -- если перед диалогом идёт ремарка, то разрываем по ремарке, пишем вместо неё
-							//	  ДАЛЬШЕ, а на следующей странице имя персонажа с (ПРОД), ремарку и сам диалог
+							// -- если перед диалогом идёт ремарка
+							// --- если перед ремаркой идёт имя персонажа, то переносим их всех вместе
+							// --- если перед ремаркой идёт диалог, то разрываем по ремарке, пишем вместо неё
+							//	   ДАЛЬШЕ, а на следующей странице имя персонажа с (ПРОД), ремарку и сам диалог
 							//
 
 							//

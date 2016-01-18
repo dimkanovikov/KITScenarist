@@ -23,6 +23,7 @@ namespace BusinessLogic
 		enum Type {
 			Undefined,		//!< Неопределён
 			SceneHeading,	//!< Время - место
+			SceneHeadingShadow,	//!< Время - место, для вспомогательных разрывов
 			SceneCharacters,//!< Персонажи сцены
 			Action,			//!< Описание действия
 			Character,		//!< Имя героя
@@ -75,7 +76,8 @@ namespace BusinessLogic
 			PropertyCommentsDates,	//!< Список дат комментариев
 			//
 			PropertyIsInlineCorrection,	//!< Корректирующий текст внутри блоков
-			PropertyIsBreakCorrection,	//!< Разрывающий текст блок
+			PropertyIsBreakCorrectionStart,	//!< Разрывающий текст блок в начале разрыва
+			PropertyIsBreakCorrectionEnd,	//!< Разрывающий текст блок в конце разрыва
 			PropertyIsCorrection		//!< Не разрывающий текст блок
 		};
 

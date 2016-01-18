@@ -171,6 +171,11 @@ namespace BusinessLogic
 		 */
 		void aboutContentsChange(int _position, int _charsRemoved, int _charsAdded);
 
+		/**
+		 * @brief Скорректировать текст сценария
+		 */
+		void correctText();
+
 	private:
 		/**
 		 * @brief Настроить необходимые соединения
@@ -238,6 +243,12 @@ namespace BusinessLogic
 		 * @brief Флаг операции обновления описания сцены, для предотвращения рекурсии
 		 */
 		bool m_inSceneDescriptionUpdate;
+
+		/**
+		 * @brief Позиция начала последнего изменения
+		 * @note Используется для корректировок текста после изменения текста документа
+		 */
+		int m_lastChangeStartPosition;
 	};
 }
 

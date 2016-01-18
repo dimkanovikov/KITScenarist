@@ -171,8 +171,7 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 			//
 			while (!cursor.atStart()
 				   && (!cursor.block().isVisible()
-					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
-					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection))) {
+					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection))) {
 				cursor.movePosition(QTextCursor::PreviousBlock, cursorMoveMode);
 				cursor.movePosition(QTextCursor::EndOfBlock, cursorMoveMode);
 			}
@@ -269,8 +268,7 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 			//
 			while (!cursor.atEnd()
 				   && (!cursor.block().isVisible()
-					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
-					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrection))) {
+					   || cursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection))) {
 				cursor.movePosition(QTextCursor::NextBlock, cursorMoveMode);
 			}
 
@@ -506,7 +504,9 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 	//
 	// Применим финальный стиль
 	//
-	editor()->applyScenarioTypeToBlockText(targetType);
+	if (ScenarioBlockStyle::forBlock(editor()->textCursor().block()) != targetType) {
+		editor()->applyScenarioTypeToBlockText(targetType);
+	}
 
 	//
 	// Если и верхний и нижний блоки являются группирующими,

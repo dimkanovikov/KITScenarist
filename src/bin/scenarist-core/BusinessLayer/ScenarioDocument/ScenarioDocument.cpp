@@ -43,7 +43,8 @@ ScenarioDocument::ScenarioDocument(QObject* _parent) :
 	m_xmlHandler(new ScenarioXml(this)),
 	m_document(new ScenarioTextDocument(this, m_xmlHandler)),
 	m_model(new ScenarioModel(this, m_xmlHandler)),
-	m_inSceneDescriptionUpdate(false)
+	m_inSceneDescriptionUpdate(false),
+	m_lastChangeStartPosition(0)
 {
 	initConnections();
 }
@@ -441,6 +442,11 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	}
 
 	//
+	// Сохраняем позицию начала правок для последующей корректировки
+	//
+	m_lastChangeStartPosition = _position;
+
+	//
 	// Сохранить md5 хэш текста документа
 	//
 	m_lastTextMd5Hash = currentTextMd5Hash;
@@ -777,25 +783,24 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	}
 
 	updateDocumentScenesNumbers();
+}
 
-	//
-	// TODO: Корректируем текст сценария
-	//
-    QTimer::singleShot(0, Qt::PreciseTimer, [=] {
-        ScenarioTextCorrector().correctScenarioText(m_document, _position);
-    });
+void ScenarioDocument::correctText()
+{
+	static ScenarioTextCorrector s_textCorrector;
+	s_textCorrector.correctScenarioText(m_document, m_lastChangeStartPosition);
 }
 
 void ScenarioDocument::initConnections()
 {
-	connect(m_document, SIGNAL(contentsChange(int,int,int)),
-			this, SLOT(aboutContentsChange(int,int,int)));
+	connect(m_document, &ScenarioTextDocument::contentsChange, this, &ScenarioDocument::aboutContentsChange);
+	connect(m_document, &ScenarioTextDocument::contentsChanged, this, &ScenarioDocument::correctText);
 }
 
 void ScenarioDocument::removeConnections()
 {
-	disconnect(m_document, SIGNAL(contentsChange(int,int,int)),
-			   this, SLOT(aboutContentsChange(int,int,int)));
+	disconnect(m_document, &ScenarioTextDocument::contentsChange, this, &ScenarioDocument::aboutContentsChange);
+	disconnect(m_document, &ScenarioTextDocument::contentsChanged, this, &ScenarioDocument::correctText);
 }
 
 void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, int _itemEndPos)
