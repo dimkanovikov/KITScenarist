@@ -75,10 +75,9 @@ namespace BusinessLogic
 			PropertyCommentsAuthors,//!< Список авторов комментариев
 			PropertyCommentsDates,	//!< Список дат комментариев
 			//
-			PropertyIsInlineCorrection,	//!< Корректирующий текст внутри блоков
+			PropertyIsCorrection,	//!< Не разрывающий текст блок
 			PropertyIsBreakCorrectionStart,	//!< Разрывающий текст блок в начале разрыва
-			PropertyIsBreakCorrectionEnd,	//!< Разрывающий текст блок в конце разрыва
-			PropertyIsCorrection		//!< Не разрывающий текст блок
+			PropertyIsBreakCorrectionEnd	//!< Разрывающий текст блок в конце разрыва
 		};
 
 		/**

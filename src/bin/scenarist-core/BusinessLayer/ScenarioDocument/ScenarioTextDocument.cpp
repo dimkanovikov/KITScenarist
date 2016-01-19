@@ -2,6 +2,7 @@
 
 #include "ScenarioReviewModel.h"
 #include "ScenarioXml.h"
+#include "ScenarioTextCorrector.h"
 
 #include <Domain/ScenarioChange.h>
 
@@ -102,6 +103,12 @@ void ScenarioTextDocument::load(const QString& _scenarioXml)
 	foreach (DomainObject* obj, DataStorageLayer::StorageFacade::scenarioChangeStorage()->all()->toList()) {
 		ScenarioChange* ch = dynamic_cast<ScenarioChange*>(obj);
 		if (!ch->isDraft()) {
+			m_undoStack.append(ch);
+		}
+	}
+	foreach (DomainObject* obj, DataStorageLayer::StorageFacade::scenarioChangeStorage()->all()->toList()) {
+		ScenarioChange* ch = dynamic_cast<ScenarioChange*>(obj);
+		if (!ch->isDraft()) {
 			m_redoStack.prepend(ch);
 		}
 	}
@@ -151,8 +158,17 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	// Выделяем текст сценария, соответствующий xml для обновления
 	//
 	QTextCursor cursor(this);
-	setCursorPosition(cursor, xmlsForUpdate.first.plainPos);
-	const int selectionEndPos = xmlsForUpdate.first.plainPos + xmlsForUpdate.first.plainLength;
+	cursor.beginEditBlock();
+	const int selectionStartPos = xmlsForUpdate.first.plainPos;
+	const int selectionEndPos = selectionStartPos + xmlsForUpdate.first.plainLength;
+	//
+	// ... удаляем все декорации, и сшиваем разрывы в том месте, куда должен быть наложен патч
+	//
+	ScenarioTextCorrector::removeDecorations(cursor, selectionStartPos, selectionEndPos);
+	//
+	// ... собственно выделение
+	//
+	setCursorPosition(cursor, selectionStartPos);
 	setCursorPosition(cursor, selectionEndPos, QTextCursor::KeepAnchor);
 
 #ifdef PATCH_DEBUG
@@ -167,7 +183,6 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	//
 	// Замещаем его обновлённым
 	//
-	cursor.beginEditBlock();
 	cursor.removeSelectedText();
 	m_xmlHandler->xmlToScenario(xmlsForUpdate.first.plainPos,
 		ScenarioXml::makeMimeFromXml(xmlsForUpdate.second.xml));
@@ -289,12 +304,7 @@ void ScenarioTextDocument::undoReimpl()
 
 void ScenarioTextDocument::redoReimpl()
 {
-#ifdef PATCH_DEBUG
-	while
-#else
-	if
-#endif
-			(!m_redoStack.isEmpty()) {
+	if (!m_redoStack.isEmpty()) {
 		Domain::ScenarioChange* change = m_redoStack.takeLast();
 		m_undoStack.append(change);
 		applyPatch(change->redoPatch());

@@ -787,8 +787,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 
 void ScenarioDocument::correctText()
 {
-	static ScenarioTextCorrector s_textCorrector;
-	s_textCorrector.correctScenarioText(m_document, m_lastChangeStartPosition);
+	ScenarioTextCorrector::correctScenarioText(m_document, m_lastChangeStartPosition);
 }
 
 void ScenarioDocument::initConnections()

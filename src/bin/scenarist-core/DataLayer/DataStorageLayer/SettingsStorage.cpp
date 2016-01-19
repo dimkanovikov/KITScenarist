@@ -59,6 +59,7 @@ void SettingsStorage::setValue(const QString& _key, const QString& _value, Setti
 	// Сохраняем его в заданное хранилище
 	//
 	if (_settingsPlace == ApplicationSettings) {
+		QString text = _key.toUtf8().toHex();
 		QSettings().setValue(_key.toUtf8().toHex(), _value);
 	} else {
 		MapperFacade::settingsMapper()->setValue(_key, _value);

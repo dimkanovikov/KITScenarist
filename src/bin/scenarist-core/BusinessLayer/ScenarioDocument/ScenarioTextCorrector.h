@@ -1,6 +1,8 @@
 #ifndef SCENARIOTEXTCORRECTOR_H
 #define SCENARIOTEXTCORRECTOR_H
 
+class QTextBlock;
+class QTextCursor;
 class QTextDocument;
 
 
@@ -12,12 +14,22 @@ namespace BusinessLogic
 	class ScenarioTextCorrector
 	{
 	public:
-		ScenarioTextCorrector();
+		/**
+		 * @brief Удалить декорации в заданном интервале текста. Если _endPosition равен нулю, то
+		 *		  удалять до конца.
+		 */
+		static void removeDecorations(const QTextCursor& _cursor, int _startPosition = 0, int _endPosition = 0);
 
 		/**
 		 * @brief Скорректировать документ на разрывах страниц
 		 */
-		void correctScenarioText(QTextDocument* _document, int _startPosition);
+		static void correctScenarioText(QTextDocument* _document, int _startPosition);
+
+	private:
+		/**
+		 * @brief Проверить по месту ли находится декорация
+		 */
+		static bool checkCorrectionBlock(QTextDocument* _document, const QTextBlock& _currentBlock);
 	};
 }
 
