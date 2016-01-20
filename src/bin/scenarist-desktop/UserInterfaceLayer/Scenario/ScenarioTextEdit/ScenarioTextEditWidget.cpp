@@ -386,6 +386,19 @@ void ScenarioTextEditWidget::updateTextMode(bool _outlineMode)
 	m_editor->setOutlineMode(_outlineMode);
 
 	initStylesCombo();
+
+	//
+	// Включаем/выключаем доступ к панели быстрого форматирования
+	//
+	if (_outlineMode) {
+		m_fastFormat->hide();
+		m_fastFormatWidget->hide();
+	} else {
+		m_fastFormat->show();
+		if (m_fastFormat->isChecked()) {
+			m_fastFormatWidget->show();
+		}
+	}
 }
 
 void ScenarioTextEditWidget::aboutUpdateTextStyle()
@@ -594,6 +607,8 @@ void ScenarioTextEditWidget::initEditorConnections()
 	connect(m_editor, SIGNAL(styleChanged()), this, SLOT(aboutStyleChanged()));
 	connect(m_editor, SIGNAL(reviewChanged()), this, SIGNAL(textChanged()));
 	connect(m_editorWrapper, SIGNAL(zoomRangeChanged(qreal)), this, SIGNAL(zoomRangeChanged(qreal)));
+
+	updateTextMode(m_outline->isChecked());
 }
 
 void ScenarioTextEditWidget::removeEditorConnections()

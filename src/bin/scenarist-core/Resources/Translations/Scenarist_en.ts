@@ -441,6 +441,11 @@
         <extracomment>Continued</extracomment>
         <translation></translation>
     </message>
+    <message>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTextCorrector.cpp" line="30"/>
+        <source>MORE</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>BusinessLogic::SceneReport</name>
@@ -1824,13 +1829,13 @@ Continue working with this project in offline mode.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="458"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="449"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="469"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="460"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation></translation>

@@ -445,6 +445,11 @@
         <extracomment>Continued</extracomment>
         <translation>Ci-dessous</translation>
     </message>
+    <message>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTextCorrector.cpp" line="30"/>
+        <source>MORE</source>
+        <translation>PLUS</translation>
+    </message>
 </context>
 <context>
     <name>BusinessLogic::SceneReport</name>
@@ -542,7 +547,7 @@
     <message>
         <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="156"/>
         <source>Pages</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pages</translation>
     </message>
     <message>
         <location filename="../../BusinessLayer/Statistics/Reports/SummaryReport.cpp" line="158"/>
@@ -1898,13 +1903,13 @@ Continue working with this project in offline mode.</source>
         <translation>Titre:</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="458"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="449"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation>FIN DE GROUPE</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="469"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="460"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation>FIN DU DOSSIER</translation>

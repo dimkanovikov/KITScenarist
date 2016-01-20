@@ -19,7 +19,18 @@ namespace {
 	 * @brief Автоматически добавляемые продолжения в диалогах
 	 */
 	//: Continued
-	static const char* DIALOG_CONTINUED = QT_TRANSLATE_NOOP("BusinessLogic::ScenarioTextCorrector", "CONT'D");
+	static const char* CONTINUED = QT_TRANSLATE_NOOP("BusinessLogic::ScenarioTextCorrector", "CONT'D");
+	static const QString continuedTerm() {
+		return QString(" (%1)").arg(QApplication::translate("BusinessLogic::ScenarioTextCorrector", CONTINUED));
+	}
+
+	/**
+	 * @brief Автоматически добавляемые продолжения в диалогах
+	 */
+	static const char* MORE = QT_TRANSLATE_NOOP("BusinessLogic::ScenarioTextCorrector", "MORE");
+	static const QString moreTerm() {
+		return QApplication::translate("BusinessLogic::ScenarioTextCorrector", MORE);
+	}
 
 	/**
 	 * @brief Курсор находится на границе сцены
@@ -181,9 +192,75 @@ namespace {
 			_cursor.insertBlock();
 			_cursor.movePosition(QTextCursor::PreviousBlock);
 			QTextBlockFormat format = _block.blockFormat();
-			format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::SceneHeadingShadow);
+			if (ScenarioBlockStyle::forBlock(_block) == ScenarioBlockStyle::SceneHeading) {
+				format.setProperty(ScenarioBlockStyle::PropertyType, ScenarioBlockStyle::SceneHeadingShadow);
+			}
 			format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
 			_cursor.setBlockFormat(format);
+		}
+	}
+
+	/**
+	 * @brief Сместить блок вниз при помощи блоков декораций внутри диалога
+	 * @note Этот метод используется только для блоков ремарки и диалога
+	 */
+	static void moveBlockDownInDialogue(QTextBlock& _block, QTextCursor& _cursor, int _position) {
+		if (ScenarioBlockStyle::forBlock(_block) == ScenarioBlockStyle::Parenthetical
+			|| ScenarioBlockStyle::forBlock(_block) == ScenarioBlockStyle::Dialogue) {
+
+			BlockInfo blockInfo = ::blockInfo(_block);
+			int emptyBlocksCount = ::neededEmptyBlocks(_block.blockFormat(), blockInfo.topLinesCount);
+			bool isFirstDecoration = true;
+			while (emptyBlocksCount-- > 0) {
+				_cursor.setPosition(_position);
+				//
+				// Первый вставляемый блок оформляем как ремарку и добавляем туда текст ДАЛЬШЕ
+				//
+				_cursor.insertBlock();
+				_cursor.movePosition(QTextCursor::PreviousBlock);
+				QTextBlockFormat format = _block.blockFormat();
+				if (isFirstDecoration) {
+					isFirstDecoration = false;
+
+					ScenarioBlockStyle parentheticalStyle =
+						ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::Parenthetical);
+					format = parentheticalStyle.blockFormat();
+
+					_cursor.insertText(moreTerm());
+
+					//
+					// Обновляем позицию курсора, чтобы остальной текст добавлялся ниже
+					//
+					_position += moreTerm().length();
+				}
+
+				format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
+				_cursor.setBlockFormat(format);
+			}
+
+			//
+			// Когда перешли на новую страницу - добавляем блок с именем персонажа и (ПРОД)
+			// и делаем его декорацией
+			//
+			QTextBlock characterBlock = _block.previous();
+			while (characterBlock.isValid()
+				   && ScenarioBlockStyle::forBlock(characterBlock) != ScenarioBlockStyle::Character) {
+				characterBlock = characterBlock.previous();
+			}
+			if (characterBlock.isValid()) {
+				QString characterName = CharacterParser::name(characterBlock.text());
+
+				_cursor.insertBlock();
+
+				ScenarioBlockStyle characterStyle =
+						ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::Character);
+				QTextBlockFormat format = characterStyle.blockFormat();
+				format.setProperty(ScenarioBlockStyle::PropertyIsCorrection, true);
+				_cursor.setBlockFormat(format);
+
+				_cursor.insertText(characterName + continuedTerm());
+				_cursor.movePosition(QTextCursor::EndOfBlock);
+			}
 		}
 	}
 }
@@ -300,9 +377,6 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 		// Для имён персонажей, нужно добавлять ПРОД (только, если имя полностью идентично предыдущему)
 		//
 		{
-			static const QString dialogueContinued =
-					QString(" (%1)").arg(QApplication::translate("BusinessLogic::ScenarioTextCorrector", DIALOG_CONTINUED));
-
 			QTextCursor cursor = mainCursor;
 			cursor.beginEditBlock();
 
@@ -326,8 +400,8 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 						if (lastSceneCharacter.isEmpty()
 							|| character != lastSceneCharacter) {
 							QString blockText = cursor.block().text();
-							if (blockText.endsWith(dialogueContinued, Qt::CaseInsensitive)) {
-								cursor.setPosition(cursor.block().position() + blockText.indexOf(dialogueContinued, 0, Qt::CaseInsensitive));
+							if (blockText.endsWith(continuedTerm(), Qt::CaseInsensitive)) {
+								cursor.setPosition(cursor.block().position() + blockText.indexOf(continuedTerm(), 0, Qt::CaseInsensitive));
 								cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 								cursor.removeSelectedText();
 							}
@@ -342,7 +416,7 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 								// ... вставляем текст
 								//
 								cursor.movePosition(QTextCursor::EndOfBlock);
-								cursor.insertText(dialogueContinued);
+								cursor.insertText(continuedTerm());
 							}
 						}
 
@@ -514,7 +588,7 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 								int startPosition = currentBlock.position();
 
 								//
-								// Если перед участниками сцены идёт время и место и его тоже переносим
+								// Проверяем предыдущий блок
 								//
 								{
 									QTextBlock previousBlock = currentBlock.previous();
@@ -522,8 +596,13 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 										previousBlock = previousBlock.previous();
 									}
 									if (previousBlock.isValid()) {
-										startPosition = previousBlock.position();
-										::moveBlockDown(previousBlock, cursor, startPosition);
+										//
+										// Если перед участниками сцены идёт время и место и его тоже переносим
+										//
+										if (ScenarioBlockStyle::forBlock(previousBlock) == ScenarioBlockStyle::SceneHeading) {
+											startPosition = previousBlock.position();
+											::moveBlockDown(previousBlock, cursor, startPosition);
+										}
 									}
 								}
 
@@ -658,6 +737,43 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 							// - если перед ремаркой идёт реплика, вместо ремарки пишем ДАЛЬШЕ, а на следующую
 							//	 страницу добавляем сперва имя персонажа с (ПРОД), а затем саму ремарку
 							//
+							else if (ScenarioBlockStyle::forBlock(currentBlock) == ScenarioBlockStyle::Parenthetical) {
+								cursor.beginEditBlock();
+
+								int startPosition = currentBlock.position();
+
+								//
+								// Проверяем предыдущий блок
+								//
+								{
+									QTextBlock previousBlock = currentBlock.previous();
+									while (previousBlock.isValid() && !previousBlock.isVisible()) {
+										previousBlock = previousBlock.previous();
+									}
+									if (previousBlock.isValid()) {
+										//
+										// Если перед ремаркой идёт имя персонажа и его тоже переносим
+										//
+										if (ScenarioBlockStyle::forBlock(previousBlock) == ScenarioBlockStyle::Character) {
+											startPosition = previousBlock.position();
+											::moveBlockDown(previousBlock, cursor, startPosition);
+
+											//
+											// Делаем пропуски необходимые для переноса самой ремарки
+											//
+											::moveBlockDown(currentBlock, cursor, startPosition);
+										}
+										//
+										// Если перед ремаркой идёт диалог, то переносим по правилам
+										//
+										else if (ScenarioBlockStyle::forBlock(previousBlock) == ScenarioBlockStyle::Dialogue) {
+											::moveBlockDownInDialogue(currentBlock, cursor, startPosition);
+										}
+									}
+								}
+
+								cursor.endEditBlock();
+							}
 
 
 							//

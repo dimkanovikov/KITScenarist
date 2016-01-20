@@ -445,6 +445,11 @@
         <extracomment>Continued</extracomment>
         <translation>A Continuación</translation>
     </message>
+    <message>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioTextCorrector.cpp" line="30"/>
+        <source>MORE</source>
+        <translation>MÁS</translation>
+    </message>
 </context>
 <context>
     <name>BusinessLogic::SceneReport</name>
@@ -1923,13 +1928,13 @@ Continue working with this project in offline mode.</source>
         <translation>Titulo:</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="458"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="449"/>
         <source>END OF GROUP</source>
         <comment>ScenarioXml</comment>
         <translation>FINAL DEL GRUPO</translation>
     </message>
     <message>
-        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="469"/>
+        <location filename="../../BusinessLayer/ScenarioDocument/ScenarioXml.cpp" line="460"/>
         <source>END OF FOLDER</source>
         <comment>ScenarioXml</comment>
         <translation>FINAL DE LA CARPETA</translation>
