@@ -147,10 +147,20 @@ void SearchWidget::aboutReplaceAll()
 	if (m_editor) {
 		aboutFindNext();
 		QTextCursor cursor = m_editor->textCursor();
+		const int firstCursorPosition = cursor.selectionStart();
 		while (cursor.hasSelection()) {
 			cursor.insertText(replaceText);
 			aboutFindNext();
 			cursor = m_editor->textCursor();
+
+			//
+			// Прерываем случай, когда пользователь пытается заменить слово без учёта регистра
+			// на такое же, например "иван" на "Иван", но т.к. поиск производится без учёта регистра,
+			// он зацикливается
+			//
+			if (cursor.selectionStart() == firstCursorPosition) {
+				break;
+			}
 		}
 	}
 }
