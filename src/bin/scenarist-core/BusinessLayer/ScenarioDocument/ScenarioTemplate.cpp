@@ -664,6 +664,9 @@ void ScenarioTemplate::saveToFile(const QString& _filePath) const
 
 ScenarioBlockStyle ScenarioTemplate::blockStyle(ScenarioBlockStyle::Type _forType) const
 {
+	if (_forType == ScenarioBlockStyle::SceneHeadingShadow) {
+		_forType = ScenarioBlockStyle::SceneHeading;
+	}
 	return m_blockStyles.value(_forType);
 }
 

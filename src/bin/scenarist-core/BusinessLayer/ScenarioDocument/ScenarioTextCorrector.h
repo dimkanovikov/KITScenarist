@@ -24,12 +24,6 @@ namespace BusinessLogic
 		 * @brief Скорректировать документ на разрывах страниц
 		 */
 		static void correctScenarioText(QTextDocument* _document, int _startPosition);
-
-	private:
-		/**
-		 * @brief Проверить по месту ли находится декорация
-		 */
-		static bool checkCorrectionBlock(QTextDocument* _document, const QTextBlock& _currentBlock);
 	};
 }
 
