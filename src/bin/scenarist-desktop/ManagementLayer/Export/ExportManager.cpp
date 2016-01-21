@@ -190,11 +190,6 @@ void ExportManager::loadCurrentProjectSettings(const QString& _projectPath)
 					QString("%1/file-path").arg(projectKey),
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				);
-	m_exportDialog->setCheckPageBreaks(
-				StorageFacade::settingsStorage()->value(
-					QString("%1/check-page-breaks").arg(projectKey),
-					DataStorageLayer::SettingsStorage::ApplicationSettings).toInt()
-				);
 	m_exportDialog->setCurrentStyle(
 				StorageFacade::settingsStorage()->value(
 					QString("%1/style").arg(projectKey),
@@ -239,10 +234,6 @@ void ExportManager::saveCurrentProjectSettings(const QString& _projectPath)
 	StorageFacade::settingsStorage()->setValue(
 				QString("%1/file-path").arg(projectKey),
 				exportParameters.filePath,
-				DataStorageLayer::SettingsStorage::ApplicationSettings);
-	StorageFacade::settingsStorage()->setValue(
-				QString("%1/check-page-breaks").arg(projectKey),
-				exportParameters.checkPageBreaks ? "1" : "0",
 				DataStorageLayer::SettingsStorage::ApplicationSettings);
 	StorageFacade::settingsStorage()->setValue(
 				QString("%1/style").arg(projectKey),

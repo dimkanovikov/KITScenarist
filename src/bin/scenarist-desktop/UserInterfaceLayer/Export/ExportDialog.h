@@ -38,11 +38,6 @@ namespace UserInterface
 		void setExportFileName(const QString& _fileName);
 
 		/**
-		 * @brief Установить необходимость проверять переносы страниц
-		 */
-		void setCheckPageBreaks(bool _check);
-
-		/**
 		 * @brief Установить модель стилей
 		 */
 		void setStylesModel(QAbstractItemModel* _model);

@@ -18,7 +18,6 @@ namespace BusinessLogic
 	public:
 		ExportParameters() :
 			outline(false),
-			checkPageBreaks(false),
 			printTilte(false),
 			printPagesNumbers(false),
 			printScenesNumbers(false),
@@ -34,11 +33,6 @@ namespace BusinessLogic
 		 * @brief Путь к файлу
 		 */
 		QString filePath;
-
-		/**
-		 * @brief Проверять ли переносы страниц
-		 */
-		bool checkPageBreaks;
 
 		/**
 		 * @brief Название стиля экспорта
