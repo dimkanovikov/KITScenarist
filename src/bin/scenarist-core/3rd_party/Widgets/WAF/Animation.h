@@ -59,17 +59,17 @@ namespace WAF
 		/**
 		 * @brief Выкатить виджет из-за стороны приложения
 		 */
-		static void sideSlideIn(QWidget* _widget, ApplicationSide _side = LeftSide);
+		static void sideSlideIn(QWidget* _widget, ApplicationSide _side = LeftSide, bool _decorateBackground = true);
 
 		/**
 		 * @brief Закатить виджет из-за стороны приложения
 		 */
-		static void sideSlideOut(QWidget* _widget, ApplicationSide _side = LeftSide);
+		static void sideSlideOut(QWidget* _widget, ApplicationSide _side = LeftSide, bool _decorateBackground = true);
 
 		/**
 		 * @brief Выкатить/закатить виджет из-за стороны приложения
 		 */
-		static void sideSlide(QWidget* _widget, ApplicationSide _side = LeftSide, bool _in = true);
+		static void sideSlide(QWidget* _widget, ApplicationSide _side = LeftSide, bool _decorateBackground = true, bool _in = true);
 
 		/****/
 

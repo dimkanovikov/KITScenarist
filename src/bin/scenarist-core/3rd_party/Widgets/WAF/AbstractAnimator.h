@@ -28,62 +28,64 @@ namespace WAF
 	 * @brief Абстрактный класс аниматора
 	 */
 	class AbstractAnimator : public QObject
-    {
+	{
+		Q_OBJECT
+
 	public:
-        explicit AbstractAnimator(QObject* _parent = 0) : QObject(_parent) {}
+		explicit AbstractAnimator(QObject* _parent = 0) : QObject(_parent) {}
 
 		/**
 		 * @brief Выполнить прямую анимацию
 		 */
-        virtual void animateForward() = 0;
+		virtual void animateForward() = 0;
 
 		/**
 		 * @brief Выполнить обратную анимацию
 		 */
-        virtual void animateBackward() = 0;
+		virtual void animateBackward() = 0;
 
-    protected:
-        /**
-         * @brief Установить флаг выполнения анимации
-         */
-        /** @{ */
-        void setAnimatedForward() {
-            m_isAnimated = true;
-            m_isAnimatedForward = true;
-        }
-        void setAnimatedBackward() {
-            m_isAnimated = true;
-            m_isAnimatedForward = false;
-        }
-        void setAnimatedStopped() {
-            m_isAnimated = false;
-        }
-        /** @} */
+	protected:
+		/**
+		 * @brief Установить флаг выполнения анимации
+		 */
+		/** @{ */
+		void setAnimatedForward() {
+			m_isAnimated = true;
+			m_isAnimatedForward = true;
+		}
+		void setAnimatedBackward() {
+			m_isAnimated = true;
+			m_isAnimatedForward = false;
+		}
+		void setAnimatedStopped() {
+			m_isAnimated = false;
+		}
+		/** @} */
 
-        /**
-         * @brief Выполняется ли анимация в данный момент
-         */
-        bool isAnimated() const {
-            return m_isAnimated;
-        }
+		/**
+		 * @brief Выполняется ли анимация в данный момент
+		 */
+		bool isAnimated() const {
+			return m_isAnimated;
+		}
 
-        /**
-         * @brief Направление последней анимации
-         */
-        bool isAnimatedForward() const {
-            return m_isAnimatedForward;
-        }
+		/**
+		 * @brief Направление последней анимации
+		 */
+		bool isAnimatedForward() const {
+			return m_isAnimatedForward;
+		}
 
-    private:
-        /**
-         * @brief Выполняется ли анимация в данный момент
-         */
-        bool m_isAnimated = false;
+	private:
+		/**
+		 * @brief Выполняется ли анимация в данный момент
+		 */
+		bool m_isAnimated = false;
 
-        /**
-         * @brief Направление последней анимации
-         */
-        bool m_isAnimatedForward = true;
+		/**
+		 * @brief Направление последней анимации
+		 */
+		bool m_isAnimatedForward = true;
 	};
 }
 

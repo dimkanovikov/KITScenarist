@@ -36,6 +36,8 @@ namespace WAF
 	 */
 	class SideSlideAnimator : public AbstractAnimator
 	{
+		Q_OBJECT
+
 	public:
 		explicit SideSlideAnimator(QWidget* _widgetForSlide);
 
@@ -43,6 +45,11 @@ namespace WAF
 		 * @brief Установить сторону, откуда выдвигать виджет
 		 */
 		void setApplicationSide(ApplicationSide _side);
+
+		/**
+		 * @brief Использовать ли декорирование фона
+		 */
+		void setDecorateBackground(bool _decorate);
 
 		/**
 		 * @brief Выдвинуть виджет
@@ -77,6 +84,11 @@ namespace WAF
 		 * @brief Сторона из-за которой выкатывать виджет
 		 */
 		ApplicationSide m_side;
+
+		/**
+		 * @brief Необходимо ли декорировать фон
+		 */
+		bool m_decorateBackground;
 
 		/**
 		 * @brief Объект для анимирования выезжания

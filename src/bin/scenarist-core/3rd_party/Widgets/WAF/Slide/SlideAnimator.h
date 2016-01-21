@@ -36,6 +36,8 @@ namespace WAF
 	 */
 	class SlideAnimator : public AbstractAnimator
 	{
+		Q_OBJECT
+
 	public:
 		explicit SlideAnimator(QWidget* _widgetForSlide);
 

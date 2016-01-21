@@ -42,6 +42,17 @@ SlideAnimator::SlideAnimator(QWidget* _widgetForSlide) :
 	connect(m_animation, &QPropertyAnimation::finished, [=](){
 		setAnimatedStopped();
 		m_decorator->hide();
+
+		//
+		// Отменяем фиксацию размера в направлении, которое может изменяться
+		//
+		const int max = 16777215;
+		if (m_direction == WAF::FromLeftToRight
+			|| m_direction == WAF::FromRightToLeft) {
+			widgetForSlide()->setMaximumSize(max, max);
+		} else {
+			widgetForSlide()->setMaximumWidth(max);
+		}
 	});
 }
 

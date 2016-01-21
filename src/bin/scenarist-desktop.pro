@@ -252,7 +252,6 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.cpp \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.cpp \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/BackgroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.cpp \
@@ -481,7 +480,6 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.h \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.h \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.h \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/BackgroundDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.h \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.h \

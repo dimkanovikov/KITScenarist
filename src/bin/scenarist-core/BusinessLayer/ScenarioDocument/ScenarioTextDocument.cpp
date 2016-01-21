@@ -164,7 +164,7 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	//
 	// ... удаляем все декорации, и сшиваем разрывы в том месте, куда должен быть наложен патч
 	//
-	ScenarioTextCorrector::removeDecorations(cursor, selectionStartPos, selectionEndPos);
+//	ScenarioTextCorrector::removeDecorations(cursor, selectionStartPos, selectionEndPos);
 	//
 	// ... собственно выделение
 	//

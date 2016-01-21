@@ -28,27 +28,32 @@ using WAF::SideSlideAnimator;
 using WAF::SlideAnimator;
 
 
-void Animation::sideSlideIn(QWidget* _widget, WAF::ApplicationSide _side)
+void Animation::sideSlideIn(QWidget* _widget, WAF::ApplicationSide _side, bool _decorateBackground)
 {
 	const bool IN = true;
-	sideSlide(_widget, _side, IN);
+	sideSlide(_widget, _side, _decorateBackground, IN);
 }
 
-void Animation::sideSlideOut(QWidget* _widget, WAF::ApplicationSide _side)
+void Animation::sideSlideOut(QWidget* _widget, WAF::ApplicationSide _side, bool _decorateBackground)
 {
 	const bool OUT = false;
-	sideSlide(_widget, _side, OUT);
+	sideSlide(_widget, _side, _decorateBackground, OUT);
 }
 
-void Animation::sideSlide(QWidget* _widget, WAF::ApplicationSide _side, bool _in)
+void Animation::sideSlide(QWidget* _widget, WAF::ApplicationSide _side, bool _decorateBackground, bool _in)
 {
 	const WAF::AnimatorType animatorType = WAF::SideSlide;
 	AbstractAnimator* animator = 0;
 	if (pimpl()->hasAnimator(_widget, animatorType)) {
 		animator = pimpl()->animator(_widget, animatorType);
+		if (SideSlideAnimator* sideSlideAnimator = qobject_cast<SideSlideAnimator*>(animator)) {
+			sideSlideAnimator->setApplicationSide(_side);
+			sideSlideAnimator->setDecorateBackground(_decorateBackground);
+		}
 	} else {
 		SideSlideAnimator* sideSlideAnimator = new SideSlideAnimator(_widget);
 		sideSlideAnimator->setApplicationSide(_side);
+		sideSlideAnimator->setDecorateBackground(_decorateBackground);
 		animator = sideSlideAnimator;
 
 		pimpl()->saveAnimator(_widget, animator, animatorType);
@@ -79,6 +84,10 @@ void Animation::slide(QWidget* _widget, WAF::AnimationDirection _direction, bool
 	AbstractAnimator* animator = 0;
 	if (pimpl()->hasAnimator(_widget, animatorType)) {
 		animator = pimpl()->animator(_widget, animatorType);
+		if (SlideAnimator* slideAnimator = qobject_cast<SlideAnimator*>(animator)) {
+			slideAnimator->setAnimationDirection(_direction);
+			slideAnimator->setFixBackground(_fixBackground);
+		}
 	} else {
 		SlideAnimator* slideAnimator = new SlideAnimator(_widget);
 		slideAnimator->setAnimationDirection(_direction);
