@@ -49,7 +49,7 @@ SlideAnimator::SlideAnimator(QWidget* _widgetForSlide) :
 		const int max = 16777215;
 		if (m_direction == WAF::FromLeftToRight
 			|| m_direction == WAF::FromRightToLeft) {
-			widgetForSlide()->setMaximumSize(max, max);
+			widgetForSlide()->setMaximumHeight(max);
 		} else {
 			widgetForSlide()->setMaximumWidth(max);
 		}
