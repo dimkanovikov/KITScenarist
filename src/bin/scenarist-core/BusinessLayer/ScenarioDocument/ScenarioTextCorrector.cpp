@@ -127,7 +127,7 @@ namespace {
 	/**
 	 * @brief Получить номер страницы, на которой находится начало и конец блока
 	 */
-	static BlockInfo blockInfo(const QTextBlock& _block) {
+	static BlockInfo getBlockInfo(const QTextBlock& _block) {
 		QAbstractTextDocumentLayout* layout = _block.document()->documentLayout();
 		const QRectF blockRect = layout->blockBoundingRect(_block);
 		const qreal pageHeight = _block.document()->pageSize().height();
@@ -170,6 +170,9 @@ namespace {
 		return BlockInfo(onPageTop, topPage, bottomPage, topLinesCount, bottomLinesCount, blockRect.width());
 	}
 
+	/**
+	 * @brief Проверить по месту ли распологается блок с декорацией
+	 */
 	static bool checkCorrectionBlock(QTextDocument* _document, const QTextBlock& _block)
 	{
 		bool result = false;
@@ -178,8 +181,8 @@ namespace {
 		QTextBlock nextBlock = _block.next();
 
 		while (nextBlock.isValid()) {
-			BlockInfo currentBlockInfo = ::blockInfo(currentBlock);
-			BlockInfo nextBlockInfo = ::blockInfo(nextBlock);
+			BlockInfo currentBlockInfo = getBlockInfo(currentBlock);
+			BlockInfo nextBlockInfo = getBlockInfo(nextBlock);
 
 			//
 			// Если декорация в конце страницы
@@ -193,7 +196,7 @@ namespace {
 					//
 					// ... то удалим его и проверим новый следующий
 					//
-					::removeTextBlock(_document, nextBlock);
+					removeTextBlock(_document, nextBlock);
 					nextBlock = currentBlock.next();
 				}
 				//
@@ -229,7 +232,7 @@ namespace {
 						//
 						// ... то удалим его и проверим новый следующий
 						//
-						::removeTextBlock(_document, nextBlock);
+						removeTextBlock(_document, nextBlock);
 						nextBlock = currentBlock.next();
 					}
 				}
@@ -299,12 +302,12 @@ namespace {
 	 * @brief Сместить блок вниз при помощи блоков декораций
 	 */
 	static void moveBlockDown(QTextBlock& _block, QTextCursor& _cursor, int _position) {
-		BlockInfo blockInfo = ::blockInfo(_block);
+		BlockInfo blockInfo = getBlockInfo(_block);
 		//
 		// Смещаем блок, если он не в начале страницы
 		//
 		if (!blockInfo.onPageTop) {
-			int emptyBlocksCount = ::neededEmptyBlocks(_block.blockFormat(), blockInfo.topLinesCount);
+			int emptyBlocksCount = neededEmptyBlocks(_block.blockFormat(), blockInfo.topLinesCount);
 			while (emptyBlocksCount-- > 0) {
 				_cursor.setPosition(_position);
 				_cursor.insertBlock();
@@ -327,8 +330,8 @@ namespace {
 		if (ScenarioBlockStyle::forBlock(_block) == ScenarioBlockStyle::Parenthetical
 			|| ScenarioBlockStyle::forBlock(_block) == ScenarioBlockStyle::Dialogue) {
 
-			BlockInfo blockInfo = ::blockInfo(_block);
-			int emptyBlocksCount = ::neededEmptyBlocks(_block.blockFormat(), blockInfo.topLinesCount);
+			BlockInfo blockInfo = getBlockInfo(_block);
+			int emptyBlocksCount = neededEmptyBlocks(_block.blockFormat(), blockInfo.topLinesCount);
 			bool isFirstDecoration = true;
 			while (emptyBlocksCount-- > 0) {
 				_cursor.setPosition(_position);
@@ -677,8 +680,8 @@ void ScenarioTextCorrector::correctScenarioText(QTextDocument* _document, int _s
 						//
 						// Проверяем не находится ли текущий блок в конце страницы
 						//
-						BlockInfo currentBlockInfo = ::blockInfo(currentBlock);
-						BlockInfo nextBlockInfo = ::blockInfo(nextBlock);
+						BlockInfo currentBlockInfo = getBlockInfo(currentBlock);
+						BlockInfo nextBlockInfo = getBlockInfo(nextBlock);
 
 						//
 						// Нашли конец страницы, обрабатываем его соответствующим для типа блока образом
