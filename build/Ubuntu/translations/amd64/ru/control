@@ -3,7 +3,7 @@ Version: 0.5.9
 Provides: scenarist
 Maintainer: Dimka Novikov <to@dimkanovikov.pro>
 Architecture: amd64
-Installed-Size: 80379
+Installed-Size: 181240
 Priority: optional
 Section: text
 Homepage: https://kitscenarist.ru
