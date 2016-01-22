@@ -11,4 +11,5 @@ CONFIG(debug, debug|release) {
 #
 
 SUBDIRS = hunspell fileformats \
-    webloader
+    webloader \
+    mythes
