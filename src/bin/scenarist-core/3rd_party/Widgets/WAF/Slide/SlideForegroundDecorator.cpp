@@ -14,35 +14,29 @@
  * Full license: https://github.com/dimkanovikov/WidgetAnimationFramework/blob/master/LICENSE
  */
 
-#include "SlideBackgroundDecorator.h"
+#include "SlideForegroundDecorator.h"
 
 #include <QPainter>
 
-using WAF::SlideBackgroundDecorator;
+using WAF::SlideForegroundDecorator;
 
 
-SlideBackgroundDecorator::SlideBackgroundDecorator(QWidget* _parent) :
+SlideForegroundDecorator::SlideForegroundDecorator(QWidget* _parent) :
 	QWidget(_parent)
 {
 }
 
-void SlideBackgroundDecorator::grabParent(const QSize& _size)
+void SlideForegroundDecorator::grabParent(const QSize& _size)
 {
 	resize(_size);
-	m_background = QPixmap(_size);
-
-//	m_background = parentWidget()->grab(QRect(QPoint(), _size));
-
-	QPainter painter;
-	painter.begin(&m_background);
-	parentWidget()->render(&painter, QPoint(), QRegion(QRect(QPoint(), _size)));
-	painter.end();
+	m_foreground = QPixmap(_size);
+	parentWidget()->render(&m_foreground, QPoint(), QRegion(QRect(QPoint(), _size)));
 }
 
-void SlideBackgroundDecorator::paintEvent(QPaintEvent* _event)
+void SlideForegroundDecorator::paintEvent(QPaintEvent* _event)
 {
 	QPainter painter(this);
-	painter.drawPixmap(0, 0, m_background);
+	painter.drawPixmap(0, 0, m_foreground);
 
 	QWidget::paintEvent(_event);
 }

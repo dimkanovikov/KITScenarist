@@ -30,12 +30,12 @@ namespace WAF
 	 * @brief Класс перекрывающий передний план выкатываемого виджета
 	 * @note Делается это для того, чтобы скрыть деформации компоновщика, при изменении размера виджета
 	 */
-	class SlideBackgroundDecorator : public QWidget
+	class SlideForegroundDecorator : public QWidget
 	{
 		Q_OBJECT
 
 	public:
-		explicit SlideBackgroundDecorator(QWidget* _parent);
+		explicit SlideForegroundDecorator(QWidget* _parent);
 
 		/**
 		 * @brief Сохранить изображение родительского виджета
@@ -52,7 +52,7 @@ namespace WAF
 		/**
 		 * @brief Фоновое изображение
 		 */
-		QPixmap m_background;
+		QPixmap m_foreground;
 	};
 }
 
