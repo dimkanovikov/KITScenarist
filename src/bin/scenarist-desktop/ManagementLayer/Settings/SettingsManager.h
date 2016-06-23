@@ -60,8 +60,11 @@ namespace ManagementLayer
 		void scenarioEditPageViewChanged(bool  _value);
 		void scenarioEditShowScenesNumbersChanged(bool  _value);
 		void scenarioEditHighlightCurrentLineChanged(bool _value);
-		void scenarioEditEnableAutoReplacing(bool  _value);
-		void scenarioEditSpellCheckChanged(bool  _value);
+		void scenarioEditCapitalizeFirstWordChanged(bool _value);
+		void scenarioEditCorrectDoubleCapitalsChanged(bool _value);
+		void scenarioEditReplaceThreeDotsChanged(bool _value);
+		void scenarioEditSmartQuotesChanged(bool _value);
+		void scenarioEditSpellCheckChanged(bool _value);
 		void scenarioEditSpellCheckLanguageChanged(int _value);
 		void scenarioEditTextColorChanged(const QColor& _value);
 		void scenarioEditBackgroundColorChanged(const QColor& _value);

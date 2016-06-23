@@ -73,7 +73,19 @@ void ScenarioTextEditManager::reloadTextEditSettings()
 				.toInt());
 	m_view->setAutoReplacing(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/auto-replacing",
+					"scenario-editor/capitalize-first-word",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt(),
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/correct-double-capitals",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt(),
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/replace-three-dots",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt(),
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/smart-quotes",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt());
 	m_view->setUseSpellChecker(

@@ -145,18 +145,20 @@ namespace TextEditHelper
 	 *
 	 * Например подмена многоточий и т.п.
 	 */
-	static void beautifyDocument(QTextDocument* _document) {
+	static void beautifyDocument(QTextDocument* _document, bool _replaceThreeDots, bool _smartQuotes) {
 		if (_document != 0) {
 			QTextCursor cursor(_document);
 
 			//
 			// Заменяем три точки на многоточие
 			//
-			while (!cursor.isNull() && !cursor.atEnd()) {
-				cursor = _document->find("...", cursor);
+			if (_replaceThreeDots) {
+				while (!cursor.isNull() && !cursor.atEnd()) {
+					cursor = _document->find("...", cursor);
 
-				if (!cursor.isNull()) {
-					cursor.insertText("…");
+					if (!cursor.isNull()) {
+						cursor.insertText("…");
+					}
 				}
 			}
 
@@ -179,18 +181,20 @@ namespace TextEditHelper
 			//
 			// Корректируем кавычки
 			//
-			cursor = QTextCursor(_document);
-			while (!cursor.isNull() && !cursor.atEnd()) {
-				cursor = _document->find("\"", cursor);
+			if (_smartQuotes) {
+				cursor = QTextCursor(_document);
+				while (!cursor.isNull() && !cursor.atEnd()) {
+					cursor = _document->find("\"", cursor);
 
-				if (!cursor.isNull()) {
-					QTextCursor cursorCopy = cursor;
-					cursorCopy.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
-					if (cursorCopy.selectedText().isEmpty()
-						|| cursorCopy.selectedText().endsWith(" ")) {
-						cursor.insertText(localOpenQuote());
-					} else {
-						cursor.insertText(localCloseQuote());
+					if (!cursor.isNull()) {
+						QTextCursor cursorCopy = cursor;
+						cursorCopy.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
+						if (cursorCopy.selectedText().isEmpty()
+							|| cursorCopy.selectedText().endsWith(" ")) {
+							cursor.insertText(localOpenQuote());
+						} else {
+							cursor.insertText(localCloseQuote());
+						}
 					}
 				}
 			}
@@ -202,8 +206,9 @@ namespace TextEditHelper
 	 *
 	 * Оптимизация, чтобы не просматривать весь документ
 	 */
-	static void beautifyDocument(QTextCursor _cursor, const QString& _enteredText) {
-		if (_enteredText == ".") {
+	static void beautifyDocument(QTextCursor _cursor, const QString& _enteredText,
+		bool _replaceThreeDots, bool _smartQuotes) {
+		if (_replaceThreeDots && _enteredText == ".") {
 			//
 			// 3 предшествующих символа
 			//
@@ -212,7 +217,7 @@ namespace TextEditHelper
 			if (_cursor.selectedText() == "...") {
 				_cursor.insertText("…");
 			}
-		} else if (_enteredText == "\"") {
+		} else if (_smartQuotes && _enteredText == "\"") {
 			//
 			// Выделим введённый символ
 			//

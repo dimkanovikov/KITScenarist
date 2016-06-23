@@ -207,9 +207,24 @@ void SettingsView::setScenarioEditHighlightCurrentLine(bool _value)
 	ui->highlightCurrentLine->setChecked(_value);
 }
 
-void SettingsView::setScenarioEditEnableAutoReplacing(bool _value)
+void SettingsView::setScenarioEditCapitalizeFirstWord(bool _value)
 {
-	ui->enableAutoReplacing->setChecked(_value);
+	ui->capitalizeFirstWord->setChecked(_value);
+}
+
+void SettingsView::setScenarioEditCorrectDoubleCapitals(bool _value)
+{
+	ui->correctDoubleCapitals->setChecked(_value);
+}
+
+void SettingsView::setScenarioEditReplaceThreeDots(bool _value)
+{
+	ui->replaceThreeDots->setChecked(_value);
+}
+
+void SettingsView::setScenarioEditSmartQuotes(bool _value)
+{
+	ui->smartQuotes->setChecked(_value);
 }
 
 void SettingsView::setScenarioEditSpellCheck(bool _value)
@@ -428,15 +443,6 @@ void SettingsView::aboutScenarioEditSpellCheckLanguageChanged()
 	emit scenarioEditSpellCheckLanguageChanged(ui->spellCheckingLanguage->currentData().toInt());
 }
 
-void SettingsView::aboutColorThemeChanged()
-{
-	if (ui->lightTheme->isChecked()) {
-		ui->colors->setCurrentWidget(ui->lightThemeColors);
-	} else {
-		ui->colors->setCurrentWidget(ui->darkThemeColors);
-	}
-}
-
 void SettingsView::aboutBrowseSaveBackupsFolder()
 {
 	const QString folder =
@@ -608,9 +614,6 @@ void SettingsView::initView()
 	ui->spellCheckingLanguage->setEnabled(false);
 	ui->browseBackupFolder->updateIcons();
 
-	ui->lightTheme->setChecked(true);
-	aboutColorThemeChanged();
-
 	m_applicationTabs->addTab(tr("Common"));
 	m_applicationTabs->addTab(tr("Modules"));
 	m_applicationTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
@@ -619,8 +622,8 @@ void SettingsView::initView()
 	ui->applicationPageStack->setCurrentIndex(0);
 
 	m_scenarioEditorTabs->addTab(tr("Common"));
-	m_scenarioEditorTabs->addTab(tr("Shortcuts Settings"));
-	m_scenarioEditorTabs->addTab(tr("Review"));
+	m_scenarioEditorTabs->addTab(tr("Editing"));
+	m_scenarioEditorTabs->addTab(tr("Shortcuts"));
 	m_scenarioEditorTabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
 	ui->scenarioEditPageLayout->addWidget(m_scenarioEditorTabs, 0, 0);
 	ui->scenarioEditPageLayout->addWidget(ui->topRightEmptyLabel_2, 0, 1);
@@ -650,8 +653,6 @@ void SettingsView::initConnections()
 	connect(ui->autosave, SIGNAL(toggled(bool)), ui->autosaveInterval, SLOT(setEnabled(bool)));
 	// ... активация проверки орфографии
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), ui->spellCheckingLanguage, SLOT(setEnabled(bool)));
-	// ... смена текущей цветовой темы
-	connect(ui->lightTheme, SIGNAL(toggled(bool)), this, SLOT(aboutColorThemeChanged()));
 	// ... выбор папки сохранения резервных копий
 	connect(ui->browseBackupFolder, SIGNAL(clicked()), this, SLOT(aboutBrowseSaveBackupsFolder()));
 	// ... смена вкладок страницы настройки редактора сценария
@@ -697,7 +698,10 @@ void SettingsView::initConnections()
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->showScenesNumbersInEditor, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)));
 	connect(ui->highlightCurrentLine, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)));
-	connect(ui->enableAutoReplacing, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditEnableAutoReplacing(bool)));
+	connect(ui->capitalizeFirstWord, &QCheckBox::toggled, this, &SettingsView::scenarioEditCapitalizeFirstWordChanged);
+	connect(ui->correctDoubleCapitals, &QCheckBox::toggled, this, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged);
+	connect(ui->replaceThreeDots, &QCheckBox::toggled, this, &SettingsView::scenarioEditReplaceThreeDotsChanged);
+	connect(ui->smartQuotes, &QCheckBox::toggled, this, &SettingsView::scenarioEditSmartQuotesChanged);
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
 	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
 	connect(ui->currentScenarioTemplate, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentTemplateChanged(QString)));

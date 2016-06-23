@@ -73,7 +73,10 @@ ScenarioTextEdit::ScenarioTextEdit(QWidget* _parent) :
 	m_storeDataWhenEditing(true),
 	m_showSceneNumbers(false),
 	m_highlightCurrentLine(false),
-	m_autoReplacing(false),
+	m_capitalizeFirstWord(false),
+	m_correctDoubleCapitals(false),
+	m_replaceThreeDots(false),
+	m_smartQuotes(false),
 	m_showSuggestionsInEmptyBlocks(false),
 	m_textSelectionEnable(true),
 	m_shortcutsManager(new ShortcutsManager(this))
@@ -101,9 +104,7 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 
 	setHighlighterDocument(m_document);
 
-	if (m_autoReplacing) {
-		TextEditHelper::beautifyDocument(m_document);
-	}
+	TextEditHelper::beautifyDocument(m_document, m_replaceThreeDots, m_smartQuotes);
 
 	s_firstRepaintUpdate = true;
 }
@@ -340,10 +341,20 @@ void ScenarioTextEdit::setHighlightCurrentLine(bool _highlight)
 	}
 }
 
-void ScenarioTextEdit::setAutoReplacing(bool _replacing)
+void ScenarioTextEdit::setAutoReplacing(bool _capitalizeFirstWord, bool _correctDoubleCapitals,
+	bool _replaceThreeDots, bool _smartQuotes)
 {
-	if (m_autoReplacing != _replacing) {
-		m_autoReplacing = _replacing;
+	if (m_capitalizeFirstWord != _capitalizeFirstWord) {
+		m_capitalizeFirstWord = _capitalizeFirstWord;
+	}
+	if (m_correctDoubleCapitals != _correctDoubleCapitals) {
+		m_correctDoubleCapitals = _correctDoubleCapitals;
+	}
+	if (m_replaceThreeDots != _replaceThreeDots) {
+		m_replaceThreeDots = _replaceThreeDots;
+	}
+	if (m_smartQuotes != _smartQuotes) {
+		m_smartQuotes = _smartQuotes;
 	}
 }
 
@@ -507,9 +518,7 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 
 		updateEnteredText(_event);
 
-		if (m_autoReplacing) {
-			TextEditHelper::beautifyDocument(textCursor(), _event->text());
-		}
+		TextEditHelper::beautifyDocument(textCursor(), _event->text(), m_replaceThreeDots, m_smartQuotes);
 	}
 
 	//
@@ -1402,7 +1411,7 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 	//
 	if (!eventText.isEmpty()) {
 		//
-		// Определяем необходимость установки верхнего регистра для первого символа
+		// Определяем необходимость установки верхнего регистра для первого символа блока
 		//
 		if (cursorBackwardText == eventText
 			|| cursorBackwardText == (currentCharFormat.stringProperty(ScenarioBlockStyle::PropertyPrefix)
@@ -1429,16 +1438,15 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 			cursor.insertText(correctedText);
 			setTextCursor(cursor);
 		}
-
 		//
-		// Делаем буквы в начале предложения заглавными
+		// Иначе обрабатываем по обычным правилам
 		//
 		else {
 			//
 			// Если перед нами конец предложения и не сокращение
 			//
 			QString endOfSentancePattern = QString("([.]|[?]|[!]|[…]) %1$").arg(eventText);
-			if (m_autoReplacing
+			if (m_capitalizeFirstWord
 				&& cursorBackwardText.contains(QRegularExpression(endOfSentancePattern))
 				&& !stringEndsWithAbbrev(cursorBackwardText)) {
 				//
@@ -1446,6 +1454,31 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 				//
 				QString correctedText = eventText;
 				correctedText[0] = correctedText[0].toUpper();
+
+				//
+				// Стираем предыдущий введённый текст
+				//
+				for (int repeats = 0; repeats < eventText.length(); ++repeats) {
+					cursor.deletePreviousChar();
+				}
+
+				//
+				// Выводим необходимый
+				//
+				cursor.insertText(correctedText);
+				setTextCursor(cursor);
+			}
+			//
+			// Исправляем проблему ДВойных ЗАглавных
+			//
+			else if (m_correctDoubleCapitals
+					 && cursorBackwardText.right(2).simplified().length() == 2
+					 && cursorBackwardText.right(2) == cursorBackwardText.right(2).toUpper()) {
+				//
+				// Сделаем последнюю букву строчной
+				//
+				QString correctedText = eventText;
+				correctedText[correctedText.length() - 1] = correctedText[correctedText.length() - 1].toLower();
 
 				//
 				// Стираем предыдущий введённый текст

@@ -11,7 +11,10 @@ scenario-editor/zoom-range - коэффициент масштабировани
 scenario-editor/page-view - используется ли режим постраничного отображения
 scenario-editor/show-scenes-numbers - показывать номера сцен в редакторе сценария
 scenario-editor/highlight-current-line - подсвечивать текущую строку редактора
-scenario-editor/auto-replacing - включена ли автоматическая замена для заглавных букв предложений, для многоточий и для кавычек
+scenario-editor/capitalize-first-word - делать первые буквы предложений заглавными
+scenario-editor/correct-double-capitals - корректировать двойные заглавные буквы в словах
+scenario-editor/replace-three-dots - заменять три точки на символ многоточия
+scenario-editor/smart-quotes - заменять кавычки на типографские
 scenario-editor/spell-checking - включена ли проверка орфографии
 scenario-editor/spell-checking-language - язык проверки орфографии
 scenario-editor/text-color - цвет текста редактора сценария для светлой темы

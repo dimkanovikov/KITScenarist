@@ -69,7 +69,8 @@ namespace UserInterface
 		/**
 		 * @brief Установить необходимость автоматических замен
 		 */
-		void setAutoReplacing(bool _replacing);
+		void setAutoReplacing(bool _capitalizeFirstWord, bool _correctDoubleCapitals,
+			bool _replaceThreeDots, bool _smartQuotes);
 
 		/**
 		 * @brief Включить/выключить постраничное отображение

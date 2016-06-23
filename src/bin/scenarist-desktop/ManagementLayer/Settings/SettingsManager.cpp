@@ -215,9 +215,24 @@ void SettingsManager::scenarioEditHighlightCurrentLineChanged(bool _value)
 	storeValue("scenario-editor/highlight-current-line", _value);
 }
 
-void SettingsManager::scenarioEditEnableAutoReplacing(bool _value)
+void SettingsManager::scenarioEditCapitalizeFirstWordChanged(bool _value)
 {
-	storeValue("scenario-editor/auto-replacing", _value);
+	storeValue("scenario-editor/capitalize-first-word", _value);
+}
+
+void SettingsManager::scenarioEditCorrectDoubleCapitalsChanged(bool _value)
+{
+	storeValue("scenario-editor/correct-double-capitals", _value);
+}
+
+void SettingsManager::scenarioEditReplaceThreeDotsChanged(bool _value)
+{
+	storeValue("scenario-editor/replace-three-dots", _value);
+}
+
+void SettingsManager::scenarioEditSmartQuotesChanged(bool _value)
+{
+	storeValue("scenario-editor/smart-quotes", _value);
 }
 
 void SettingsManager::scenarioEditSpellCheckChanged(bool _value)
@@ -661,9 +676,27 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
-	m_view->setScenarioEditEnableAutoReplacing(
+	m_view->setScenarioEditCapitalizeFirstWord(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"scenario-editor/auto-replacing",
+					"scenario-editor/capitalize-first-word",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setScenarioEditCorrectDoubleCapitals(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/correct-double-capitals",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setScenarioEditReplaceThreeDots(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/replace-three-dots",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setScenarioEditSmartQuotes(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"scenario-editor/smart-quotes",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
@@ -982,7 +1015,10 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SLOT(scenarioEditHighlightCurrentLineChanged(bool)));
-	connect(m_view, SIGNAL(scenarioEditEnableAutoReplacing(bool)), this, SLOT(scenarioEditEnableAutoReplacing(bool)));
+	connect(m_view, &SettingsView::scenarioEditCapitalizeFirstWordChanged, this, &SettingsManager::scenarioEditCapitalizeFirstWordChanged);
+	connect(m_view, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged, this, &SettingsManager::scenarioEditCorrectDoubleCapitalsChanged);
+	connect(m_view, &SettingsView::scenarioEditReplaceThreeDotsChanged, this, &SettingsManager::scenarioEditReplaceThreeDotsChanged);
+	connect(m_view, &SettingsView::scenarioEditSmartQuotesChanged, this, &SettingsManager::scenarioEditSmartQuotesChanged);
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SLOT(scenarioEditSpellCheckChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckLanguageChanged(int)), this, SLOT(scenarioEditSpellCheckLanguageChanged(int)));
 	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SLOT(scenarioEditTextColorChanged(QColor)));
@@ -1050,7 +1086,10 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
-	connect(m_view, SIGNAL(scenarioEditEnableAutoReplacing(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
+	connect(m_view, &SettingsView::scenarioEditCapitalizeFirstWordChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+	connect(m_view, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+	connect(m_view, &SettingsView::scenarioEditReplaceThreeDotsChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
+	connect(m_view, &SettingsView::scenarioEditSmartQuotesChanged, this, &SettingsManager::scenarioEditSettingsUpdated);
 	connect(m_view, SIGNAL(scenarioEditSpellCheckChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditSpellCheckLanguageChanged(int)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditTextColorChanged(QColor)), this, SIGNAL(scenarioEditSettingsUpdated()));

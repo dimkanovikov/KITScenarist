@@ -63,7 +63,10 @@ namespace UserInterface
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditShowScenesNumbers(bool _value);
 		void setScenarioEditHighlightCurrentLine(bool _value);
-		void setScenarioEditEnableAutoReplacing(bool _value);
+		void setScenarioEditCapitalizeFirstWord(bool _value);
+		void setScenarioEditCorrectDoubleCapitals(bool _value);
+		void setScenarioEditReplaceThreeDots(bool _value);
+		void setScenarioEditSmartQuotes(bool _value);
 		void setScenarioEditSpellCheck(bool _value);
 		void setScenarioEditSpellCheckLanguage(int _value);
 		void setScenarioEditTextColor(const QColor& _color);
@@ -130,7 +133,10 @@ namespace UserInterface
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditShowScenesNumbersChanged(bool);
 		void scenarioEditHighlightCurrentLineChanged(bool);
-		void scenarioEditEnableAutoReplacing(bool);
+		void scenarioEditCapitalizeFirstWordChanged(bool);
+		void scenarioEditCorrectDoubleCapitalsChanged(bool);
+		void scenarioEditReplaceThreeDotsChanged(bool);
+		void scenarioEditSmartQuotesChanged(bool);
 		void scenarioEditSpellCheckChanged(bool);
 		void scenarioEditSpellCheckLanguageChanged(int);
 		void scenarioEditTextColorChanged(const QColor&);
@@ -195,11 +201,6 @@ namespace UserInterface
 		 * @brief Обработка смены языка для проверки орфографии
 		 */
 		void aboutScenarioEditSpellCheckLanguageChanged();
-
-		/**
-		 * @brief Сменилась выбранная цветовая схема
-		 */
-		void aboutColorThemeChanged();
 
 		/**
 		 * @brief Запрос на открытие диалога выбора папки сохранения резервных копий

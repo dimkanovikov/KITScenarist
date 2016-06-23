@@ -122,9 +122,11 @@ void ScenarioTextEditWidget::setHighlightCurrentLine(bool _highlight)
 	m_editor->setHighlightCurrentLine(_highlight);
 }
 
-void ScenarioTextEditWidget::setAutoReplacing(bool _replacing)
+void ScenarioTextEditWidget::setAutoReplacing(bool _capitalizeFirstWord,
+	bool _correctDoubleCapitals, bool _replaceThreeDots, bool _smartQuotes)
 {
-	m_editor->setAutoReplacing(_replacing);
+	m_editor->setAutoReplacing(_capitalizeFirstWord, _correctDoubleCapitals, _replaceThreeDots,
+		_smartQuotes);
 }
 
 void ScenarioTextEditWidget::setUsePageView(bool _use)

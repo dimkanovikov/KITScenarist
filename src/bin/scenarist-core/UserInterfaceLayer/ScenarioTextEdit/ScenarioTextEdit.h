@@ -91,7 +91,8 @@ namespace UserInterface
 		/**
 		 * @brief Установить необходимость автоматических замен
 		 */
-		void setAutoReplacing(bool _replacing);
+		void setAutoReplacing(bool _capitalizeFirstWord, bool _correctDoubleCapitals,
+			bool _replaceThreeDots, bool _smartQuotes);
 
 		/**
 		 * @brief Показывать ли автодополнения в пустых блоках
@@ -169,10 +170,10 @@ namespace UserInterface
 		 */
 		void keyPressEvent(QKeyEvent* _event);
 
-        /**
-         * @brief Переопределяем, чтобы самостоятельно обрабатывать вводимый пользователем текст
-         */
-        void inputMethodEvent(QInputMethodEvent* _event);
+		/**
+		 * @brief Переопределяем, чтобы самостоятельно обрабатывать вводимый пользователем текст
+		 */
+		void inputMethodEvent(QInputMethodEvent* _event);
 
 		/**
 		 * @brief Дополнительная функция для обработки нажатий самим редактором
@@ -315,7 +316,12 @@ namespace UserInterface
 		/**
 		 * @brief Использовать автозамены для особых случаев
 		 */
-		bool m_autoReplacing;
+		/** @{ */
+		bool m_capitalizeFirstWord;
+		bool m_correctDoubleCapitals;
+		bool m_replaceThreeDots;
+		bool m_smartQuotes;
+		/** @} */
 
 		/**
 		 * @brief Показывать автодополения в пустых блоках
