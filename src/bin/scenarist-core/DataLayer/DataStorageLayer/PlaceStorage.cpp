@@ -32,7 +32,7 @@ Place* PlaceStorage::storePlace(const QString& _placeName)
 		//
 		foreach (DomainObject* domainObject, all()->toList()) {
 			Place* place = dynamic_cast<Place*>(domainObject);
-			if (place->name() == placeName) {
+			if (place->equal(placeName)) {
 				newPlace = place;
 				break;
 			}
@@ -64,7 +64,7 @@ bool PlaceStorage::hasPlace(const QString& _name)
 	bool contains = false;
 	foreach (DomainObject* domainObject, all()->toList()) {
 		Place* place = dynamic_cast<Place*>(domainObject);
-		if (place->name() == _name) {
+		if (place->equal(_name)) {
 			contains = true;
 			break;
 		}

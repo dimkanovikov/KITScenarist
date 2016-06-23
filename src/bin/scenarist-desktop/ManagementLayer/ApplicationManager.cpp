@@ -477,17 +477,26 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
 			//
 			// ... переключаемся на работу с выбранным файлом
 			//
-			m_projectsManager->setCurrentProject(loadProjectFileName);
+			if (m_projectsManager->setCurrentProject(loadProjectFileName)) {
+				//
+				// ... сохраняем путь
+				//
+				saveProjectsFolderPath(loadProjectFileName);
 
+				//
+				// ... перейдём к редактированию
+				//
+				goToEditCurrentProject();
+			}
 			//
-			// ... сохраняем путь
+			// Если переключиться не удалось, сообщаем пользователю об ошибке
 			//
-			saveProjectsFolderPath(loadProjectFileName);
-
-			//
-			// ... перейдём к редактированию
-			//
-			goToEditCurrentProject();
+			else {
+				QLightBoxMessage::critical(
+					m_view,
+					tr("Can't open project file"),
+					DatabaseLayer::Database::openFileError());
+			}
 		}
 
 		//
@@ -539,12 +548,22 @@ void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
 		//
 		// ... переключаемся на работу с выбранным файлом
 		//
-		m_projectsManager->setCurrentProject(_projectIndex);
+		if (m_projectsManager->setCurrentProject(_projectIndex)) {
 
+			//
+			// ... перейдём к редактированию
+			//
+			goToEditCurrentProject();
+		}
 		//
-		// ... перейдём к редактированию
+		// Если переключиться не удалось, сообщаем пользователю об ошибке
 		//
-		goToEditCurrentProject();
+		else {
+			QLightBoxMessage::critical(
+				m_view,
+				tr("Can't open project file"),
+				DatabaseLayer::Database::openFileError());
+		}
 	}
 }
 
@@ -563,12 +582,21 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 		// ... переключаемся на работу с выбранным файлом
 		//
 		const bool isRemote = false;
-		m_projectsManager->setCurrentProject(_projectIndex, isRemote);
-
+		if (m_projectsManager->setCurrentProject(_projectIndex, isRemote)) {
+			//
+			// ... перейдём к редактированию
+			//
+			goToEditCurrentProject();
+		}
 		//
-		// ... перейдём к редактированию
+		// Если переключиться не удалось, сообщаем пользователю об ошибке
 		//
-		goToEditCurrentProject();
+		else {
+			QLightBoxMessage::critical(
+				m_view,
+				tr("Can't open project file"),
+				DatabaseLayer::Database::openFileError());
+		}
 	}
 }
 

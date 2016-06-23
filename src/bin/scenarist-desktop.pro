@@ -266,7 +266,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideBackgroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation.cpp \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.cpp \
     scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp \
@@ -494,7 +493,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.h \
     scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.h \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideBackgroundDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation.h \
     scenarist-core/3rd_party/Widgets/WAF/AnimationPrivate.h \

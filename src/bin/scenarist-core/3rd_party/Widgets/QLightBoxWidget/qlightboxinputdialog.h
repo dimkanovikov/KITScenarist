@@ -7,7 +7,7 @@ class QDialogButtonBox;
 class QLabel;
 class QLineEdit;
 class QListWidget;
-class QPlainTextEdit;
+class SimpleTextEditor;
 
 
 /**
@@ -68,7 +68,7 @@ private:
 	/**
 	 * @brief Поле для ввода большого кол-ва текста
 	 */
-	QPlainTextEdit* m_textEdit;
+	SimpleTextEditor* m_textEdit;
 
 	/**
 	 * @brief Виджет для обработки списковых операций

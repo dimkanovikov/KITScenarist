@@ -1,6 +1,7 @@
 #include "qlightboxinputdialog.h"
 
 #include <3rd_party/Helpers/ScrollerHelper.h>
+#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
 
 #include <QDialogButtonBox>
 #include <QLabel>
@@ -87,7 +88,7 @@ QLightBoxInputDialog::QLightBoxInputDialog(QWidget* _parent, bool _isContentStre
 	QLightBoxDialog(_parent, true, _isContentStretchable),
 	m_label(new QLabel(this)),
 	m_lineEdit(new QLineEdit(this)),
-	m_textEdit(new QPlainTextEdit(this)),
+	m_textEdit(new SimpleTextEditor(this)),
 	m_listWidget(new QListWidget(this)),
 	m_buttons(new QDialogButtonBox(this))
 {

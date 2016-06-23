@@ -15,6 +15,7 @@ class SimpleTextEditor : public PageTextEdit
 
 public:
 	explicit SimpleTextEditor(QWidget *parent = 0);
+	~SimpleTextEditor();
 
 protected:
 	/**

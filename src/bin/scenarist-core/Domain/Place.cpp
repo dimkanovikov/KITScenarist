@@ -30,6 +30,17 @@ void Place::setName(const QString& _name)
 	}
 }
 
+bool Place::equal(const QString& _name) const
+{
+	bool equal = false;
+	if (_name.endsWith(".")) {
+		equal = m_name == _name;
+	} else {
+		equal = m_name == (_name + ".");
+	}
+	return equal;
+}
+
 // ****
 
 namespace {

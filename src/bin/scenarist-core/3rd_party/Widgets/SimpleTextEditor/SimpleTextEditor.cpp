@@ -54,6 +54,11 @@ SimpleTextEditor::SimpleTextEditor(QWidget *parent) :
 	connect(zoomOutShortcut, &QShortcut::activated, zoomOutFunc);
 }
 
+SimpleTextEditor::~SimpleTextEditor()
+{
+	s_editors.removeOne(this);
+}
+
 bool SimpleTextEditor::event(QEvent *_event)
 {
 	bool result = true;

@@ -26,6 +26,11 @@ namespace Domain
 		 */
 		void setName(const QString& _name);
 
+		/**
+		 * @brief Проверить на равенство
+		 */
+		bool equal(const QString& _name) const;
+
 	private:
 		/**
 		 * @brief Название места

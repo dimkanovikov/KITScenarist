@@ -47,7 +47,7 @@ QString CharacterParser::state(const QString& _text)
 		state = match.captured(0);
 		state = state.remove("(").remove(")");
 	}
-	return state;
+	return state.toUpper();
 }
 
 // ****
@@ -80,7 +80,7 @@ QString SceneHeadingParser::placeName(const QString& _text)
 		placeName = _text.split(". ").value(0);
 	}
 
-	return placeName;
+	return placeName.toUpper();
 }
 
 QString SceneHeadingParser::locationName(const QString& _text, bool _force)
@@ -96,7 +96,7 @@ QString SceneHeadingParser::locationName(const QString& _text, bool _force)
 		}
 	}
 
-	return locationName;
+	return locationName.toUpper();
 }
 
 QString SceneHeadingParser::scenarioDayName(const QString& _text)
@@ -107,7 +107,7 @@ QString SceneHeadingParser::scenarioDayName(const QString& _text)
 		scenarioDayName = _text.split(", ").last();
 	}
 
-	return scenarioDayName;
+	return scenarioDayName.toUpper();
 }
 
 QString SceneHeadingParser::timeName(const QString& _text)
@@ -118,7 +118,7 @@ QString SceneHeadingParser::timeName(const QString& _text)
 		timeName = _text.split(" - ").last().split(",").first();
 	}
 
-	return timeName;
+	return timeName.toUpper();
 }
 
 // ****
@@ -148,7 +148,7 @@ QStringList SceneCharactersParser::characters(const QString& _text)
 	// Убираем символы пробелов
 	//
 	for (int index = 0; index < charactersList.size(); ++index) {
-		charactersList[index] = charactersList[index].simplified();
+		charactersList[index] = charactersList[index].simplified().toUpper();
 	}
 
 	return charactersList;

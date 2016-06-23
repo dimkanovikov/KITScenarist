@@ -39,14 +39,15 @@ bool Database::canOpenFile(const QString& _databaseFileName, bool _isLocal)
 	// Проверки специфичные для локальных файлов
 	//
 	if (_isLocal) {
-		//
-		// Если файл был создан в настольной версии приложения, его нельзя открывать в мобильной и наоборот
-		//
 		QSqlDatabase database = QSqlDatabase::addDatabase(SQL_DRIVER, "tmp_database");
 		database.setDatabaseName(_databaseFileName);
 		database.open();
 
 		QSqlQuery q_checker(database);
+
+		//
+		// 1. Если файл был создан в настольной версии приложения, его нельзя открывать в мобильной и наоборот
+		//
 		if (q_checker.exec(
 #ifdef MOBILE_OS
 				"SELECT COUNT(value) AS cant_open FROM system_variables WHERE variable = 'application-version' "
@@ -65,10 +66,21 @@ bool Database::canOpenFile(const QString& _databaseFileName, bool _isLocal)
 			//
 			s_openFileError =
 #ifdef MOBILE_OS
-					QApplication::translate("DatabaseLayer::Database", "Project was created in desktop version.");
+				QApplication::translate("DatabaseLayer::Database", "Project was created in desktop version.");
 #else
-					QApplication::translate("DatabaseLayer::Database", "Project was created in mobile version.");
+				QApplication::translate("DatabaseLayer::Database", "Project was created in mobile version.");
 #endif
+		}
+		//
+		// 2. Если файл был создан в более поздней версии приложения, его нельзя открывать
+		//
+		else if (q_checker.exec("SELECT value FROM system_variables WHERE variable = 'application-version' ")
+				 && q_checker.next()
+				 && q_checker.value("value").toString().split(" ").first() > QApplication::applicationVersion()) {
+			canOpen = false;
+			s_openFileError =
+				QApplication::translate("DatabaseLayer::Database",
+					"Project was modified in higher version. You need update application to latest version for open it.");
 		}
 	}
 
