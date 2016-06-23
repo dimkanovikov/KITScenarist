@@ -28,7 +28,7 @@ class QPropertyAnimation;
  */
 namespace WAF
 {
-	class SlideBackgroundDecorator;
+	class SlideForegroundDecorator;
 
 
 	/**
@@ -98,7 +98,7 @@ namespace WAF
 		/**
 		 * @brief Помошник перекрывающий анимируемый виджет
 		 */
-		SlideBackgroundDecorator* m_decorator;
+		SlideForegroundDecorator* m_decorator;
 	};
 }
 
