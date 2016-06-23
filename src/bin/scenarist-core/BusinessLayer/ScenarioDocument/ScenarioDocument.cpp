@@ -7,7 +7,6 @@
 #include "ScenarioTemplate.h"
 #include "ScenarioTextBlockInfo.h"
 #include "ScenarioTextBlockParsers.h"
-#include "ScenarioTextCorrector.h"
 
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 #include <BusinessLayer/Counters/CountersFacade.h>

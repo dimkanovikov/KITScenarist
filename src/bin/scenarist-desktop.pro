@@ -293,8 +293,7 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ImagesPane/ImageLabel.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.cpp \
-    scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.cpp \
-    scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextCorrector.cpp
+    scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -530,8 +529,7 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ImagesPane/ImageLabel.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.h \
-    scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.h \
-    scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextCorrector.h
+    scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

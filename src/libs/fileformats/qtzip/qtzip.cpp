@@ -48,7 +48,7 @@
 #include <QtGlobal>
 #include <qplatformdefs.h>
 
-#if defined(Q_OS_MAC) || defined(Q_OS_ANDROID)
+#ifndef Q_OS_WIN
 #include <zlib.h>
 #else
 #include <QtZlib/zlib.h>

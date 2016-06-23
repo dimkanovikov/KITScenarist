@@ -2,7 +2,6 @@
 
 #include "ScenarioReviewModel.h"
 #include "ScenarioXml.h"
-#include "ScenarioTextCorrector.h"
 
 #include <Domain/ScenarioChange.h>
 

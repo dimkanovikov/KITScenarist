@@ -306,11 +306,12 @@ protected:
 
 private:
 	Q_DISABLE_COPY(PageTextEdit)
-	Q_PRIVATE_SLOT(d_func(), void _q_repaintContents(const QRectF &r))
-	Q_PRIVATE_SLOT(d_func(), void _q_currentCharFormatChanged(const QTextCharFormat &))
-	Q_PRIVATE_SLOT(d_func(), void _q_adjustScrollbars())
-	Q_PRIVATE_SLOT(d_func(), void _q_ensureVisible(const QRectF &))
-	Q_PRIVATE_SLOT(d_func(), void _q_cursorPositionChanged())
+	Q_SLOT void _q_repaintContents(const QRectF &r);
+	Q_SLOT void _q_currentCharFormatChanged(const QTextCharFormat &cf);
+	Q_SLOT void _q_adjustScrollbars();
+	Q_SLOT void _q_ensureVisible(const QRectF &);
+	Q_SLOT void _q_cursorPositionChanged();
+
 	friend class PageTextEditControl;
 	friend class QTextDocument;
 	friend class QWidgetTextControl;

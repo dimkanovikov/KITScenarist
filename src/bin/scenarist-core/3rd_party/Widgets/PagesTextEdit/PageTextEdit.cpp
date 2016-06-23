@@ -2821,6 +2821,36 @@ void PageTextEdit::zoomInF(float range)
 	setFont(f);
 }
 
+void PageTextEdit::_q_repaintContents(const QRectF& r)
+{
+	Q_D(PageTextEdit);
+	d->_q_repaintContents(r);
+}
+
+void PageTextEdit::_q_currentCharFormatChanged(const QTextCharFormat& cf)
+{
+	Q_D(PageTextEdit);
+	d->_q_currentCharFormatChanged(cf);
+}
+
+void PageTextEdit::_q_adjustScrollbars()
+{
+	Q_D(PageTextEdit);
+	d->_q_adjustScrollbars();
+}
+
+void PageTextEdit::_q_ensureVisible(const QRectF& rect)
+{
+	Q_D(PageTextEdit);
+	d->_q_ensureVisible(rect);
+}
+
+void PageTextEdit::_q_cursorPositionChanged()
+{
+	Q_D(PageTextEdit);
+	d->_q_cursorPositionChanged();
+}
+
 /*!
 	\since 4.2
 	Moves the cursor by performing the given \a operation.
