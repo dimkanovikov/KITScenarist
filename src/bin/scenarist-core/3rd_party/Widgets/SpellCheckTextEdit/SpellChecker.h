@@ -1,6 +1,8 @@
 #ifndef SPELLCHECKER_H
 #define SPELLCHECKER_H
 
+#include <QMap>
+#include <QSet>
 #include <QString>
 
 class Hunspell;
@@ -52,6 +54,11 @@ public:
 	 */
 	QStringList suggestionsForWord(const QString& _word) const;
 
+//	/**
+//	 * @brief Получить список синонимов для заданного слова
+//	 */
+//	QMap<QString, QSet<QString> > synonimsForWord(const QString& _word) const;
+
 	/**
 	 * @brief Игнорировать слово
 	 * @param Слово, проверку которого необходимо игнорировать
@@ -73,8 +80,9 @@ private:
 	/**
 	 * @brief Тип словаря
 	 */
-	enum DictionaryType {
+	enum FileType {
 		Affinity,
+		Indexes,
 		Dictionary
 	};
 
@@ -84,9 +92,19 @@ private:
 	 * @param Тип словаря
 	 * @return Путь к файлу словаря
 	 */
-	QString dictionaryFilePath(
+	QString hunspellFilePath(
 			SpellChecker::Language _language,
-			SpellChecker::DictionaryType _dictionaryType) const;
+			SpellChecker::FileType _fileType) const;
+
+	/**
+	 * @brief Получить путь к файлу со словарём
+	 * @param Язык словаря
+	 * @param Тип словаря
+	 * @return Путь к файлу словаря
+	 */
+	QString mythesFilePath(
+			SpellChecker::Language _language,
+			SpellChecker::FileType _fileType) const;
 
 	/**
 	 * @brief Добавить слово в словарный запас проверяющего

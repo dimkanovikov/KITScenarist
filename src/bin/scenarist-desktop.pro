@@ -57,6 +57,17 @@ INCLUDEPATH += $$PWD/../libs/hunspell/src
 DEPENDPATH += $$PWD/../libs/hunspell
 #
 
+##
+## Подключаем библиотеку MYTHES
+##
+#win32:CONFIG(release, debug|release): LIBS += -L$$DESTDIR/../../libs/mythes/release/ -lmythes
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$DESTDIR/../../libs/mythes/debug/ -lmythes
+#else:unix: LIBS += -L$$DESTDIR/../../libs/mythes/ -lmythes
+
+#INCLUDEPATH += $$PWD/../libs/mythes
+#DEPENDPATH += $$PWD/../libs/mythes
+##
+
 #
 # Подключаем библиотеку fileformats
 #

@@ -133,6 +133,48 @@ QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos)
 			menu->insertAction(actionInsertBefore, m_addWordToUserDictionaryAction);
 			menu->insertSeparator(actionInsertBefore);
 		}
+		//
+		// TODO: тезаурус готов, нужны доработки по визуализации и по качеству самой базы слов
+		//
+//		//
+//		// Если проходит проверку, то добавляем вхождения из тезауруса
+//		//
+//		else {
+//			QMap<QString, QSet<QString> > thesaurusEntries =
+//				m_spellChecker->synonimsForWord(wordWithoutPunct.toLower());
+//			QMenu* thesaurusMenu = new QMenu(menu);
+//			//
+//			// Если есть вхождения, то показываем меню с ними
+//			//
+//			if (!thesaurusEntries.isEmpty()) {
+//				QList<QString> entries = thesaurusEntries.keys();
+//				qSort(entries);
+//				foreach (const QString& entry, entries) {
+//					QMenu* entryMenu = new QMenu(menu);
+//					QList<QString> entryItems = thesaurusEntries.value(entry).toList();
+//					qSort(entryItems);
+//					foreach (const QString& entryItem, entryItems) {
+//						entryMenu->addAction(entryItem);
+//					}
+//					QAction* entryAction = thesaurusMenu->addAction(entry);
+//					entryAction->setMenu(entryMenu);
+//				}
+//			}
+//			//
+//			// Если нет вхождений, то так и говорим
+//			//
+//			else {
+//				QAction* entryAction = thesaurusMenu->addAction(tr("No available information."));
+//				entryAction->setEnabled(false);
+//			}
+
+//			QAction* thesaurusAction =
+//				new QAction(tr("%1 in dictionary").arg(wordWithoutPunct), menu);
+//			thesaurusAction->setMenu(thesaurusMenu);
+//			QAction* actionInsertBefore = menu->actions().first();
+//			menu->insertAction(actionInsertBefore, thesaurusAction);
+//			menu->insertSeparator(actionInsertBefore);
+//		}
 	}
 
 	return menu;
