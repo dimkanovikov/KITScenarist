@@ -282,6 +282,9 @@ void ResearchView::currentResearchChanged()
 
 void ResearchView::initView()
 {
+	m_ui->addResearchItem->setIcons(m_ui->addResearchItem->icon());
+	m_ui->removeResearchItem->setIcons(m_ui->removeResearchItem->icon());
+
 	m_ui->researchNavigator->setItemDelegate(new ResearchNavigatorItemDelegate(m_ui->researchNavigator));
 	m_ui->researchNavigator->setDragDropMode(QAbstractItemView::DragDrop);
 	m_ui->researchNavigator->setDragEnabled(true);

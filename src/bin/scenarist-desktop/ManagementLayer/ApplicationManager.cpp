@@ -980,13 +980,13 @@ void ApplicationManager::goToEditCurrentProject()
 	}
 
 	//
-	// Загрузить данные из файла
+	// FIXME: Сделать загрузку сценария  сразу в БД, это заодно позволит избавиться
+	//		  и от необходимости сохранять проект после синхронизации
 	//
-	m_researchManager->loadCurrentProject();
+	// Загружаем текст сценария
+	// Это нужно делать перед синхронизацией текста
+	//
 	m_scenarioManager->loadCurrentProject();
-	m_charactersManager->loadCurrentProject();
-	m_locationsManager->loadCurrentProject();
-	m_statisticsManager->loadCurrentProject();
 
 	//
 	// Синхронизируем проекты из облака
@@ -995,10 +995,21 @@ void ApplicationManager::goToEditCurrentProject()
 		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
 		m_synchronizationManager->aboutFullSyncScenario();
 		m_synchronizationManager->aboutFullSyncData();
+	}
 
-		//
-		// Принудительно сохраняем текст сценария
-		//
+	//
+	// Загрузить данные из файла
+	// Делать это нужно после того, как все данные синхронизировались
+	//
+	m_researchManager->loadCurrentProject();
+	m_charactersManager->loadCurrentProject();
+	m_locationsManager->loadCurrentProject();
+	m_statisticsManager->loadCurrentProject();
+
+	//
+	// После того, как все данные загружены и синхронизированы, сохраняем проект
+	//
+	if (m_projectsManager->currentProject().isRemote()) {
 		m_view->setWindowModified(true);
 		aboutSave();
 	}
