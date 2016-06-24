@@ -831,7 +831,9 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 				if (tokenType != ScenarioBlockStyle::Undefined) {
 					ScenarioBlockStyle currentStyle = ScenarioTemplateFacade::getTemplate().blockStyle(tokenType);
 
-					if (!firstBlockHandling) {
+					if (firstBlockHandling) {
+						cursor.block().setVisible(true);
+					} else {
 						cursor.insertBlock();
 					}
 
