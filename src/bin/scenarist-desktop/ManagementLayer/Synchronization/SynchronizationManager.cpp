@@ -448,7 +448,7 @@ void SynchronizationManager::aboutFullSyncScenario()
 				emit applyPatchesRequested(cleanPatches, IS_CLEAN);
 			}
 			if (!draftPatches.isEmpty()) {
-				emit applyPatchesRequested(cleanPatches, IS_DRAFT);
+				emit applyPatchesRequested(draftPatches, IS_DRAFT);
 			}
 
 			//
