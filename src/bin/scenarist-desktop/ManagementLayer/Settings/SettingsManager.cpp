@@ -537,6 +537,12 @@ void SettingsManager::templateLibrarySavePressed(const QModelIndex& _templateInd
 		}
 		ScenarioTemplateFacade::getTemplate(templateToSaveName).saveToFile(templateFilePath);
 	}
+
+	//
+	// Сигнализируем редактору сценария, чтобы обновил настройки, т.к. в нём может использоваться
+	// изменённый шаблон
+	//
+	emit scenarioEditSettingsUpdated();
 }
 
 void SettingsManager::storeValue(const QString& _key, bool _value)
