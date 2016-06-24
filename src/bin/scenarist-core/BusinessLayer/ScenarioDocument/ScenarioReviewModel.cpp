@@ -29,6 +29,58 @@ namespace {
 					DataStorageLayer::SettingsStorage::ApplicationSettings);
 		return username;
 	}
+
+	/**
+	 * @brief Сформировать заготовку формата редакторской заметки
+	 */
+	static QTextCharFormat makeFormat(const QTextCursor& _cursor) {
+		QTextCharFormat format;
+		format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
+		//
+		// Если это добавление заметки, а не смена цвета, добавим информацию о пользователе
+		//
+		if (!_cursor.charFormat().hasProperty(ScenarioBlockStyle::PropertyComments)) {
+			format.setProperty(ScenarioBlockStyle::PropertyComments, QStringList() << "");
+			format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, QStringList() << ::userName());
+			format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, QStringList() << QDateTime::currentDateTime().toString(Qt::ISODate));
+		}
+
+		return format;
+	}
+
+	/**
+	 * @brief Сформировать формат выделения цвета текста
+	 */
+	static QTextCharFormat makeForegroundFormat(const QTextCursor& _cursor, const QColor& _color) {
+		QTextCharFormat format = makeFormat(_cursor);
+		format.setForeground(_color);
+
+		return format;
+	}
+
+	/**
+	 * @brief Сформировать формат заливки фона
+	 */
+	static QTextCharFormat makeBackgroundFormat(const QTextCursor& _cursor, const QColor& _color) {
+		QTextCharFormat format = makeFormat(_cursor);
+		format.setBackground(_color);
+		//
+		// Принудительно стираем цвет текста
+		//
+		format.setForeground(QColor());
+
+		return format;
+	}
+
+	/**
+	 * @brief Сформировать формат выделения фона
+	 */
+	static QTextCharFormat makeHighlightFormat(const QTextCursor& _cursor, const QColor& _color) {
+		QTextCharFormat format = makeBackgroundFormat(_cursor, _color);
+		format.setProperty(ScenarioBlockStyle::PropertyIsHighlight, true);
+
+		return format;
+	}
 }
 
 
@@ -133,14 +185,7 @@ void ScenarioReviewModel::setReviewMarkTextColor(int _startPosition, int _length
 	cursor.setPosition(_startPosition);
 	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().foreground() != _color) {
-		QTextCharFormat format;
-		format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
-		format.setForeground(_color);
-		format.setProperty(ScenarioBlockStyle::PropertyComments, QStringList() << "");
-		format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, QStringList() << ::userName());
-		format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, QStringList() << QDateTime::currentDateTime().toString(Qt::ISODate));
-		cursor.mergeCharFormat(format);
-
+		cursor.mergeCharFormat(::makeForegroundFormat(cursor, _color));
 		emit reviewChanged();
 	}
 }
@@ -152,18 +197,7 @@ void ScenarioReviewModel::setReviewMarkTextBgColor(int _startPosition, int _leng
 	cursor.setPosition(_startPosition);
 	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().background() != _color) {
-		QTextCharFormat format;
-		format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
-		format.setBackground(_color);
-		//
-		// Принудительно стираем цвет текста
-		//
-		format.setForeground(QColor());
-		format.setProperty(ScenarioBlockStyle::PropertyComments, QStringList() << "");
-		format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, QStringList() << ::userName());
-		format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, QStringList() << QDateTime::currentDateTime().toString(Qt::ISODate));
-		cursor.mergeCharFormat(format);
-
+		cursor.mergeCharFormat(::makeBackgroundFormat(cursor, _color));
 		emit reviewChanged();
 	}
 }
@@ -174,19 +208,7 @@ void ScenarioReviewModel::setReviewMarkTextHighlight(int _startPosition, int _le
 	cursor.setPosition(_startPosition);
 	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().background() != _color) {
-		QTextCharFormat format;
-		format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
-		format.setProperty(ScenarioBlockStyle::PropertyIsHighlight, true);
-		format.setBackground(_color);
-		//
-		// Принудительно стираем цвет текста
-		//
-		format.setForeground(QColor());
-		format.setProperty(ScenarioBlockStyle::PropertyComments, QStringList() << "");
-		format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, QStringList() << ::userName());
-		format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, QStringList() << QDateTime::currentDateTime().toString(Qt::ISODate));
-		cursor.mergeCharFormat(format);
-
+		cursor.mergeCharFormat(::makeHighlightFormat(cursor, _color));
 		emit reviewChanged();
 	}
 }
@@ -416,6 +438,34 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 	//
 	if (startMarkIndex < m_reviewMarks.size()) {
 		//
+		// Смена формата
+		//
+		if (_removed == _added) {
+			//
+			// Если есть заметка, которая попадает в изменение формата, удаляем её
+			//
+			const int endPosition = _position + _added;
+			for (int markIndex = startMarkIndex; markIndex < m_reviewMarks.size(); ++markIndex) {
+				ReviewMarkInfo& mark = m_reviewMarks[markIndex];
+				if (mark.startPosition < endPosition
+						 && mark.endPosition() > _position) {
+					//
+					// Расширим область проверки
+					//
+					_added = _removed = mark.endPosition() - _position;
+
+					//
+					// Удалим заметку
+					//
+					beginRemoveRows(QModelIndex(), markIndex, markIndex);
+					m_reviewMarks.removeAt(markIndex);
+					endRemoveRows();
+					--markIndex;
+				}
+			}
+		}
+
+		//
 		// Прорабатываем удаление
 		//
 		if (_removed > 0) {
@@ -461,7 +511,6 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 				}
 			}
 		}
-
 
 		//
 		// Прорабатываем добавление

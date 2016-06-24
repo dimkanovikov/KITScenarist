@@ -128,7 +128,7 @@ namespace BusinessLogic {
 		 */
 		class ReviewMarkInfo {
 		public:
-			ReviewMarkInfo() : startPosition(0), length(0), isDone(false) {}
+			ReviewMarkInfo() : startPosition(0), length(0), isDone(false), needUpdate(false) {}
 
 			/**
 			 * @brief Позиция начала
@@ -172,6 +172,11 @@ namespace BusinessLogic {
 			 * @brief Даты заметок
 			 */
 			QStringList dates;
+
+			/**
+			 * @brief Заметку нужно обновить
+			 */
+			bool needUpdate;
 		};
 
 		/**
