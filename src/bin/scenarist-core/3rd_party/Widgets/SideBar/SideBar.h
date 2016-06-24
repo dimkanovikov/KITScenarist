@@ -49,6 +49,11 @@ public:
 	void addIndicator(const QIcon& _icon, const QString& _title = QString::null, const QString& _message = QString::null);
 
 	/**
+	 * @brief Установить дополнительную информацию для отображения в индикаторе
+	 */
+	void setIndicatorAdditionalInfo(const QString& _info);
+
+	/**
 	 * @brief Убрать индикатор из панели
 	 */
 	void removeIndicator();

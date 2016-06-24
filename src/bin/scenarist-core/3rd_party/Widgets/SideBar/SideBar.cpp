@@ -180,6 +180,12 @@ void SideTabBar::addIndicator(const QIcon& _icon, const QString& _title, const Q
 	update();
 }
 
+void SideTabBar::setIndicatorAdditionalInfo(const QString& _info)
+{
+	m_indicator->setWhatsThis(QString("<p style='font-size:small;font-weight:bold;'>%1</p>").arg(_info));
+	update();
+}
+
 void SideTabBar::removeIndicator()
 {
 	addIndicator(QIcon());
@@ -318,7 +324,7 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
 		//
 		QMenu menu(this);
 		QWidgetAction menuText(&menu);
-		QLabel label(m_indicator->text());
+		QLabel label(m_indicator->text() + m_indicator->whatsThis());
 		label.setMargin(14);
 		label.setWordWrap(true);
 		menuText.setDefaultWidget(&label);

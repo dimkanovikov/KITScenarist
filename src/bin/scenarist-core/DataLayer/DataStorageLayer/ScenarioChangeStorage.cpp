@@ -27,6 +27,11 @@ ScenarioChangesTable* ScenarioChangeStorage::all()
 	return m_all;
 }
 
+ScenarioChange* ScenarioChangeStorage::last()
+{
+	return all()->last();
+}
+
 ScenarioChange* ScenarioChangeStorage::append(const QString& _id, const QString& _datetime,
 	const QString& _user, const QString& _undoPatch, const QString& _redoPatch, bool _isDraft)
 {

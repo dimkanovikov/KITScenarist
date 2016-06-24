@@ -24,6 +24,11 @@ namespace DataStorageLayer
 		ScenarioChangesTable* all();
 
 		/**
+		 * @brief Последнее изменение сценария
+		 */
+		ScenarioChange* last();
+
+		/**
 		 * @brief Добавить изменение
 		 */
 		/** @{ */

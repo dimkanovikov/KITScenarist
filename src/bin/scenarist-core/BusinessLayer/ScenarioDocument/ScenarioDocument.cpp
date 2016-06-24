@@ -167,6 +167,9 @@ void ScenarioDocument::setItemColorsAtPosition(int _position, const QString& _co
 		}
 		info->setColors(_colors);
 		cursor.block().setUserData(info);
+
+		ScenarioTextDocument::updateBlockRevision(cursor);
+		aboutContentsChange(cursor.block().position(), 0, 0);
 	}
 }
 

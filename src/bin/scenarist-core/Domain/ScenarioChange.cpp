@@ -140,6 +140,15 @@ QVariant ScenarioChangesTable::data(const QModelIndex& _index, int _role) const
 	return resultData;
 }
 
+ScenarioChange* ScenarioChangesTable::last() const
+{
+	ScenarioChange* lastChange = 0;
+	if (!domainObjects().isEmpty()) {
+		lastChange = dynamic_cast<ScenarioChange*>(domainObjects().last());
+	}
+	return lastChange;
+}
+
 ScenarioChangesTable::Column ScenarioChangesTable::sectionToColumn(int _section) const
 {
 	Column column = Undefined;

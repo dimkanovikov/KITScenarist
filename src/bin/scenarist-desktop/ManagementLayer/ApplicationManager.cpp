@@ -17,9 +17,13 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Export/PdfExporter.h>
 
+#include <Domain/ScenarioChange.h>
+
 #include <DataLayer/Database/Database.h>
-#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/DatabaseHistoryStorage.h>
+#include <DataLayer/DataStorageLayer/ScenarioChangeStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
 
 #include <3rd_party/Helpers/Task.h>
 
@@ -627,6 +631,21 @@ void ApplicationManager::aboutShowSyncActiveIndicator()
 	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"), tr("Connection active"), tr("Project sinchronized"));
 }
 
+void ApplicationManager::aboutUpdateLastChangeInfo()
+{
+	ScenarioChange* scenarioChange = DataStorageLayer::StorageFacade::scenarioChangeStorage()->last();
+
+	QString lastChange;
+	if (scenarioChange != 0) {
+		lastChange =
+			QString("%1: %2 %3")
+			.arg(tr("Modified"))
+			.arg(scenarioChange->datetime().toString("dd.MM.yyyy hh:mm:ss"))
+			.arg(scenarioChange->user());
+	}
+	m_tabs->setIndicatorAdditionalInfo(lastChange);
+}
+
 void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString& _error)
 {
 	bool switchToOfflineMode = false;
@@ -964,21 +983,21 @@ bool ApplicationManager::saveIfNeeded()
 	if (m_view->isWindowModified()) {
 		int questionResult = QDialogButtonBox::Cancel;
 
-//		//
-//		// ... если работаем с проектом из облака, сохраняем без вопросов
-//		//
-//		if (m_projectsManager->currentProject().isRemote()) {
-//			questionResult = QDialogButtonBox::Yes;
-//		}
-//		//
-//		// ... для локальных проектов спрашиваем пользователя, хочет ли он сохранить изменения
-//		//
-//		else {
+		//
+		// ... если работаем с проектом из облака, сохраняем без вопросов
+		//
+		if (m_projectsManager->currentProject().isRemote()) {
+			questionResult = QDialogButtonBox::Yes;
+		}
+		//
+		// ... для локальных проектов спрашиваем пользователя, хочет ли он сохранить изменения
+		//
+		else {
 			questionResult =
 					QLightBoxMessage::question(m_view, tr("Save project changes?"),
 						tr("Project was modified. Save changes?"),
 						QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
-//		}
+		}
 
 		if (questionResult != QDialogButtonBox::Cancel) {
 			//
@@ -1310,6 +1329,7 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(openRemoteProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRemote(QModelIndex)));
 
 	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
+	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), this, SLOT(aboutUpdateLastChangeInfo()));
 	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncScenario()));
 	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncData()));
 	connect(m_scenarioManager, SIGNAL(cursorPositionUpdated(int,bool)), m_synchronizationManager, SLOT(aboutUpdateCursors(int,bool)));

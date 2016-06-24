@@ -147,14 +147,14 @@ namespace ManagementLayer
 		void scenarioChanged();
 
 		/**
-		 * @brief Перейти в полноэкранный режим
-		 */
-		void showFullscreen();
-
-		/**
 		 * @brief Изменения сценария сохранены
 		 */
 		void scenarioChangesSaved();
+
+		/**
+		 * @brief Перейти в полноэкранный режим
+		 */
+		void showFullscreen();
 
 		/**
 		 * @brief Обновлена позиция курсора

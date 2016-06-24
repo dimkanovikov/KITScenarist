@@ -118,6 +118,11 @@ namespace Domain
 		int columnCount(const QModelIndex&) const;
 		QVariant data(const QModelIndex& _index, int _role) const;
 
+		/**
+		 * @brief Получить последнее изменение
+		 */
+		ScenarioChange* last() const;
+
 	private:
 		Column sectionToColumn(int _section) const;
 	};

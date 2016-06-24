@@ -116,6 +116,11 @@ namespace ManagementLayer
 		void aboutShowSyncActiveIndicator();
 
 		/**
+		 * @brief Обновить информацию о последнем изменении в индикаторе синхронизации
+		 */
+		void aboutUpdateLastChangeInfo();
+
+		/**
 		 * @brief Синхронизация остановленна с ошибкой
 		 */
 		void aboutSyncClosedWithError(int errorCode, const QString& _error = QString::null);
