@@ -88,12 +88,302 @@ ScenarioXml::ScenarioXml(ScenarioDocument* _scenario) :
 	m_lastMimeTo(0)
 {
 	Q_ASSERT(m_scenario);
+
+	m_xmlCache.setMaxCost(2000);
 }
 
 QString ScenarioXml::scenarioToXml()
 {
-	const bool NO_CORRECT_LAST_MIME = false;
-	return scenarioToXml(0, 0, NO_CORRECT_LAST_MIME);
+	QString resultXml;
+
+	//
+	// Подсчитаем кол-во незакрытых групп и папок, и закроем, если необходимо
+	//
+	int openedGroups = 0;
+	int openedFolders = 0;
+
+	QString currentXml;
+	QXmlStreamWriter writer(&currentXml);
+	writer.setAutoFormatting(true);
+	writer.setAutoFormattingIndent(0);
+	writer.writeStartDocument();
+	writer.writeStartElement(NODE_SCENARIO);
+	writer.writeAttribute(ATTRIBUTE_VERSION, "1.0");
+	resultXml.append(currentXml);
+	currentXml.clear();
+
+	QTextBlock currentBlock = m_scenario->document()->begin();
+	do {
+		const uint currentBlockHash = qHash(currentBlock);
+
+		//
+		// Если для блока есть кэш, используем его
+		//
+		if (m_xmlCache.contains(currentBlockHash)) {
+			resultXml.append(m_xmlCache[currentBlockHash]);
+		}
+		//
+		// В противном случае формируем xml
+		//
+		else {
+			//
+			// Определим тип текущего блока
+			//
+			ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::forBlock(currentBlock);
+
+			//
+			// Получить текст под курсором
+			//
+			QString textToSave = currentBlock.text();
+
+			//
+			// Определить параметры текущего абзаца
+			//
+			bool needWrite = true; // пишем абзац?
+			QString parentNode; // если задано, то вкладываем в ячейку с этим именем
+			bool needCloseParentNode = false; // нужно ли закрыть дополнительную ячейку
+			QString currentNode = ScenarioBlockStyle::typeName(currentType); // имя текущей ячейки
+			bool canHaveColors = false; // может иметь цвета
+			switch (currentType) {
+				case ScenarioBlockStyle::SceneHeading: {
+					canHaveColors = true;
+					break;
+				}
+
+				case ScenarioBlockStyle::Parenthetical: {
+					needWrite = !textToSave.isEmpty();
+					break;
+				}
+
+				case ScenarioBlockStyle::Dialogue: {
+					break;
+				}
+
+				case ScenarioBlockStyle::Transition:{
+					break;
+				}
+
+				case ScenarioBlockStyle::Note: {
+					break;
+				}
+
+				case ScenarioBlockStyle::TitleHeader: {
+					break;
+				}
+
+				case ScenarioBlockStyle::Title: {
+					break;
+				}
+
+				case ScenarioBlockStyle::NoprintableText: {
+					break;
+				}
+
+				case ScenarioBlockStyle::SceneGroupHeader: {
+					parentNode = NODE_SCENE_GROUP;
+					canHaveColors = true;
+
+					++openedGroups;
+
+					break;
+				}
+
+				case ScenarioBlockStyle::SceneGroupFooter: {
+					//
+					// Закрываем группы, если были открыты, то просто корректируем счётчик,
+					// а если открытых нет, то не записываем и конец
+					//
+					if (openedGroups > 0) {
+						--openedGroups;
+
+						needCloseParentNode = true;
+					} else {
+						needWrite = false;
+					}
+					break;
+				}
+
+				case ScenarioBlockStyle::FolderHeader: {
+					parentNode = NODE_FOLDER;
+					canHaveColors = true;
+
+					++openedFolders;
+
+					break;
+				}
+
+				case ScenarioBlockStyle::FolderFooter: {
+					//
+					// Закрываем папки, если были открыты, то просто корректируем счётчик,
+					// а если открытых нет, то не записываем и конец
+					//
+					if (openedFolders > 0) {
+						--openedFolders;
+
+						needCloseParentNode = true;
+					} else {
+						needWrite = false;
+					}
+					break;
+				}
+
+				default: {
+					break;
+				}
+			}
+
+			//
+			// Если это декорация, не сохраняем
+			//
+			if (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)) {
+				needWrite = false;
+			}
+
+			//
+			// Если разрыв, пробуем сшить
+			//
+			if (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionStart)) {
+				do {
+					currentBlock = currentBlock.next();
+				} while (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection));
+				//
+				// ... если дошли до конца разрыва, то сшиваем его
+				//
+				if (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionEnd)) {
+					textToSave += " " + currentBlock.text();
+				}
+			}
+
+			//
+			// Дописать xml
+			//
+			if (needWrite) {
+				//
+				// Обернуть в ячейку
+				//
+				if (!parentNode.isEmpty()) {
+					writer.writeStartElement(parentNode);
+				}
+
+				//
+				// Открыть ячейку текущего элемента
+				//
+				writer.writeStartElement(currentNode);
+
+				//
+				// Если возможно, сохраним цвета элемента
+				//
+				if (canHaveColors) {
+					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
+						if (!info->colors().isEmpty()) {
+							writer.writeAttribute(ATTRIBUTE_COLOR, info->colors());
+						}
+					}
+				}
+
+				//
+				// Пишем текст текущего элемента
+				//
+				writer.writeStartElement(NODE_VALUE);
+				writer.writeCDATA(textToSave);
+				writer.writeEndElement();
+
+				//
+				// Пишем редакторские комментарии, если они есть в блоке
+				//
+				if (::hasReviewMarks(currentBlock)) {
+					writer.writeStartElement(NODE_REVIEW_GROUP);
+					foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
+						bool isReviewMark =
+							range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark);
+
+						//
+						// Все редакторские правки, и только, если выделен записываемый текст
+						//
+						if (isReviewMark) {
+							writer.writeStartElement(NODE_REVIEW);
+							writer.writeAttribute(ATTRIBUTE_REVIEW_FROM, QString::number(range.start));
+							writer.writeAttribute(ATTRIBUTE_REVIEW_LENGTH, QString::number(range.length));
+							if (range.format.hasProperty(QTextFormat::ForegroundBrush)) {
+								writer.writeAttribute(ATTRIBUTE_REVIEW_COLOR, range.format.foreground().color().name());
+							}
+							if (range.format.hasProperty(QTextFormat::BackgroundBrush)) {
+								writer.writeAttribute(ATTRIBUTE_REVIEW_BGCOLOR, range.format.background().color().name());
+							}
+							writer.writeAttribute(ATTRIBUTE_REVIEW_IS_HIGHLIGHT,
+								range.format.boolProperty(ScenarioBlockStyle::PropertyIsHighlight) ? "true" : "false");
+							writer.writeAttribute(ATTRIBUTE_REVIEW_DONE,
+								range.format.boolProperty(ScenarioBlockStyle::PropertyIsDone) ? "true" : "false");
+							//
+							// ... комментарии
+							//
+							const QStringList comments = range.format.property(ScenarioBlockStyle::PropertyComments).toStringList();
+							const QStringList authors = range.format.property(ScenarioBlockStyle::PropertyCommentsAuthors).toStringList();
+							const QStringList dates = range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
+							for (int commentIndex = 0; commentIndex < comments.size(); ++commentIndex) {
+								writer.writeEmptyElement(NODE_REVIEW_COMMENT);
+								writer.writeAttribute(ATTRIBUTE_REVIEW_COMMENT, comments.at(commentIndex));
+								writer.writeAttribute(ATTRIBUTE_REVIEW_AUTHOR, authors.at(commentIndex));
+								writer.writeAttribute(ATTRIBUTE_REVIEW_DATE, dates.at(commentIndex));
+							}
+							//
+							writer.writeEndElement();
+						}
+					}
+					writer.writeEndElement();
+				}
+
+				//
+				// Закрываем текущий элемент
+				//
+				writer.writeEndElement();
+
+				//
+				// Закрываем родителя, если были обёрнуты
+				//
+				if (needCloseParentNode) {
+					writer.writeEndElement();
+				}
+			}
+
+			m_xmlCache.insert(currentBlockHash, new QString(currentXml));
+			resultXml.append(currentXml);
+			currentXml.clear();
+		}
+		currentBlock = currentBlock.next();
+	} while (currentBlock.isValid());
+
+	//
+	// Закроем открытые группы
+	//
+	while (openedGroups > 0) {
+		writer.writeStartElement("scene_group_footer");
+		writer.writeCDATA(QObject::tr("END OF GROUP", "ScenarioXml"));
+		writer.writeEndElement();
+		writer.writeEndElement(); // scene_group
+		--openedGroups;
+	}
+
+	//
+	// Закроем открытые папки
+	//
+	while (openedFolders > 0) {
+		writer.writeStartElement("folder_footer");
+		writer.writeCDATA(QObject::tr("END OF FOLDER", "ScenarioXml"));
+		writer.writeEndElement();
+		writer.writeEndElement(); // folder
+		--openedFolders;
+	}
+
+	//
+	// Добавим корневой элемент
+	//
+	writer.writeEndElement(); // scenario
+	writer.writeEndDocument();
+
+	resultXml.append(currentXml);
+
+	return resultXml;
 }
 
 QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _correctLastMime)

@@ -1,7 +1,9 @@
 #ifndef SCENARIOXML_H
 #define SCENARIOXML_H
 
+#include <QCache>
 #include <QString>
+#include <QTextBlock>
 
 
 namespace BusinessLogic
@@ -93,7 +95,19 @@ namespace BusinessLogic
 		int m_lastMimeFrom;
 		int m_lastMimeTo;
 		/** @} */
+
+		/**
+		 * @brief Закешированное xml-содержимое блоков
+		 * @note Используется, для ускорения формирования xml всего сценария
+		 */
+		QCache<uint, QString> m_xmlCache;
 	};
+}
+
+
+inline uint qHash(const QTextBlock& _key)
+{
+	return qHash(_key.text(), _key.revision());
 }
 
 #endif // SCENARIOXML_H
