@@ -179,6 +179,8 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	qDebug() << "###################################################################";
 	qDebug() << xmlsForUpdate.first.xml;
 	qDebug() << "###################################################################";
+	qDebug() << qPrintable(QByteArray::fromPercentEncoding(patchUncopressed.toUtf8()));
+	qDebug() << "###################################################################";
 	qDebug() << xmlsForUpdate.second.xml;
 #endif
 

@@ -67,12 +67,6 @@ void ScenarioTextBlockInfo::setDescription(const QString& _description, bool htm
 	}
 }
 
-void ScenarioTextBlockInfo::setPlainDescription(const QString& _description)
-{
-	QString description = _description;
-	setDescription(description.replace("\n", "<br/>"));
-}
-
 ScenarioTextBlockInfo* ScenarioTextBlockInfo::clone() const
 {
 	ScenarioTextBlockInfo* copy = new ScenarioTextBlockInfo;

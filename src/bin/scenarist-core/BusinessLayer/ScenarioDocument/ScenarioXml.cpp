@@ -39,6 +39,22 @@ namespace {
 	const QString ATTRIBUTE_REVIEW_DATE = "date";
 
 	const QString SCENARIO_XML_VERSION = "1.0";
+
+	/**
+	 * @brief Есть ли в блоке редакторские заметки
+	 */
+	static bool hasReviewMarks(const QTextBlock& _block) {
+		bool hasMarks = false;
+		if (!_block.textFormats().isEmpty()) {
+			foreach (const QTextLayout::FormatRange& range, _block.textFormats()) {
+				if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)) {
+					hasMarks = true;
+					break;
+				}
+			}
+		}
+		return hasMarks;
+	}
 }
 
 
@@ -187,10 +203,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			QString parentNode; // если задано, то вкладываем в ячейку с этим именем
 			bool needCloseParentNode = false; // нужно ли закрыть дополнительную ячейку
 			QString currentNode = ScenarioBlockStyle::typeName(currentType); // имя текущей ячейки
-			bool canHaveDescription = false; // может иметь описание
+			bool canHaveColors = false; // может иметь цвета
 			switch (currentType) {
 				case ScenarioBlockStyle::SceneHeading: {
-					canHaveDescription = true;
+					canHaveColors = true;
 					break;
 				}
 
@@ -225,7 +241,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 
 				case ScenarioBlockStyle::SceneGroupHeader: {
 					parentNode = NODE_SCENE_GROUP;
-					canHaveDescription = true;
+					canHaveColors = true;
 
 					++openedGroups;
 
@@ -249,7 +265,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 
 				case ScenarioBlockStyle::FolderHeader: {
 					parentNode = NODE_FOLDER;
-					canHaveDescription = true;
+					canHaveColors = true;
 
 					++openedFolders;
 
@@ -318,14 +334,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				writer.writeStartElement(currentNode);
 
 				//
-				// Если возможно, сохраним описание
+				// Если возможно, сохраним цвета элемента
 				//
-				if (canHaveDescription) {
+				if (canHaveColors) {
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
-						bool htmlEscaped = true;
-						if (!info->description(htmlEscaped).isEmpty()) {
-							writer.writeAttribute(ATTRIBUTE_DESCRIPTION, info->description(htmlEscaped));
-						}
 						if (!info->colors().isEmpty()) {
 							writer.writeAttribute(ATTRIBUTE_COLOR, info->colors());
 						}
@@ -340,9 +352,9 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				writer.writeEndElement();
 
 				//
-				// Пишем редакторские комментарии
+				// Пишем редакторские комментарии, если они есть в блоке
 				//
-				if (!currentBlock.textFormats().isEmpty()) {
+				if (::hasReviewMarks(currentBlock)) {
 					writer.writeStartElement(NODE_REVIEW_GROUP);
 					foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
 						bool isReviewMark =
@@ -851,11 +863,6 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 						|| tokenType == ScenarioBlockStyle::SceneGroupHeader
 						|| tokenType == ScenarioBlockStyle::FolderHeader) {
 						ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
-						if (reader.attributes().hasAttribute(ATTRIBUTE_DESCRIPTION)) {
-							QString synopsis = reader.attributes().value(ATTRIBUTE_DESCRIPTION).toString();
-							bool htmlEscaped = true;
-							info->setDescription(synopsis, htmlEscaped);
-						}
 						if (reader.attributes().hasAttribute(ATTRIBUTE_COLOR)) {
 							info->setColors(reader.attributes().value(ATTRIBUTE_COLOR).toString());
 						}
