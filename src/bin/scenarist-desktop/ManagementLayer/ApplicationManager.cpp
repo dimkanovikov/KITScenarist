@@ -21,6 +21,8 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <3rd_party/Helpers/Task.h>
+
 #include <3rd_party/Widgets/SideBar/SideBar.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
@@ -414,7 +416,9 @@ void ApplicationManager::aboutSave()
 		//
 		// Если необходимо создадим резервную копию закрываемого файла
 		//
-		m_backupHelper.saveBackup(ProjectsManager::currentProject().path());
+		Task::run([=] {
+			m_backupHelper.saveBackup(ProjectsManager::currentProject().path());
+		}).then([=] {});
 	}
 }
 
@@ -914,13 +918,23 @@ bool ApplicationManager::saveIfNeeded()
 	// Если какие-то данные изменены
 	//
 	if (m_view->isWindowModified()) {
+		int questionResult = QDialogButtonBox::Cancel;
+
 		//
-		// ... спрашиваем пользователя, хочет ли он сохранить изменения
+		// ... если работаем с проектом из облака, сохраняем без вопросов
 		//
-		int questionResult =
-				QLightBoxMessage::question(m_view, tr("Save project changes?"),
-					tr("Project was modified. Save changes?"),
-					QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
+		if (m_projectsManager->currentProject().isRemote()) {
+			questionResult = QDialogButtonBox::Yes;
+		}
+		//
+		// ... для локальных проектов спрашиваем пользователя, хочет ли он сохранить изменения
+		//
+		else {
+			questionResult =
+					QLightBoxMessage::question(m_view, tr("Save project changes?"),
+						tr("Project was modified. Save changes?"),
+						QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
+		}
 
 		if (questionResult != QDialogButtonBox::Cancel) {
 			//

@@ -82,17 +82,11 @@ ResearchModel::~ResearchModel()
 void ResearchModel::load(Domain::ResearchTable* _data)
 {
 	if (m_researchData != _data) {
+		m_researchData = _data;
+
 		//
 		// TODO: делать корректные обновления, а не перестроение всей модели
 		//
-
-		if (m_researchData != 0) {
-			disconnect(m_researchData, &Domain::ResearchTable::rowsInserted, this, &ResearchModel::reload);
-			disconnect(m_researchData, &Domain::ResearchTable::rowsRemoved, this, &ResearchModel::reload);
-			disconnect(m_researchData, &Domain::ResearchTable::dataChanged, this, &ResearchModel::reload);
-		}
-
-		m_researchData = _data;
 
 		if (m_researchData != 0) {
 			connect(m_researchData, &Domain::ResearchTable::rowsInserted, this, &ResearchModel::reload);

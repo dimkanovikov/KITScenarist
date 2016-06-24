@@ -50,15 +50,16 @@
  * 1. .get()   This method runs the wrapped function on the current thread
  *             and could block the thread and hang GUI.
  *
- * 2. .then()  This method does the following:
+ * 2. .then()  This method does three things:
  *
- *            1. Registers a method to be called when a wrapped function finish running.
+ *             1. Registers a method to be called when a wrapped function finish running.
  *
- *            2. Runs the wrapped function on a background thread.
+ *             2. Runs the wrapped function on a background thread.
  *
- *            3. Runs the registered event on the current thread when the wrapped function finish running.
+ *             3. Runs the registered method on the current thread when the wrapped function finish
+ *                running.
  *
- * 3. .await() This method does the following:
+ * 3. .await() This method does three things:
  *
  *             1. Suspends the current thread at a point where this method is called.
  *
@@ -74,8 +75,8 @@
  *             recommending reading up on C#'s await keyword to get a sense of how this feature works.
  *
  *
- * The future is of type "Task::future<T>&" or "Task::future<void>&" and "std::reference_wrapper" class
- * can be used if they are to be managed in some sort of a container that can not handle references.
+ * The future is of type "Task::future<T>&" or "Task::future<void>&" and "std::reference_wrapper"[1]
+ * class can be used if they are to be managed in a container that can not handle references.
  *
  * [1] http://en.cppreference.com/w/cpp/utility/functional/reference_wrapper
  */
@@ -104,9 +105,9 @@ namespace Task
 	class future
 	{
 	public:
-		future( std::function< void() > start,
-			std::function< void() > cancel,
-			std::function< void( T& ) > get ) :
+		future( std::function< void() >&& start,
+			std::function< void() >&& cancel,
+			std::function< void( T& ) >&& get ) :
 			m_start ( std::move( start ) ),
 			m_cancel( std::move( cancel ) ),
 			m_get   ( std::move( get ) )
@@ -129,7 +130,7 @@ namespace Task
 
 			T q ;
 
-			m_function = [ & ]( T r ){ q = std::move( r ) ; p.exit() ; } ;
+			m_function = [ & ]( T&& r ){ q = std::move( r ) ; p.exit() ; } ;
 
 			this->start() ;
 
@@ -145,12 +146,12 @@ namespace Task
 		{
 			m_cancel() ;
 		}
-		void run( T r )
+		void run( T&& r )
 		{
 			m_function( std::move( r ) ) ;
 		}
 	private:
-		std::function< void( T ) > m_function = []( T t ){ Q_UNUSED( t ) ; } ;
+		std::function< void( T ) > m_function = []( T&& t ){ Q_UNUSED( t ) ; } ;
 		std::function< void() > m_start ;
 		std::function< void() > m_cancel ;
 		std::function< void( T& ) > m_get ;
@@ -160,7 +161,7 @@ namespace Task
 	class ThreadHelper : public Thread
 	{
 	public:
-		ThreadHelper( std::function< T() > function ) :
+		ThreadHelper( std::function< T() >&& function ) :
 			m_function( std::move( function ) ),
 			m_future( [ this ](){ this->start() ; },
 				  [ this ](){ this->deleteLater() ; },
@@ -178,7 +179,7 @@ namespace Task
 		}
 		void run()
 		{
-			m_result =  m_function() ;
+			m_result = m_function() ;
 		}
 		std::function< T() > m_function ;
 		future<T> m_future ;
@@ -189,9 +190,9 @@ namespace Task
 	class future< void >
 	{
 	public:
-		future( std::function< void() > start,
-			std::function< void() > cancel,
-			std::function< void() > get ) :
+		future( std::function< void() >&& start,
+			std::function< void() >&& cancel,
+			std::function< void() >&& get ) :
 			m_start ( std::move( start ) ),
 			m_cancel( std::move( cancel ) ),
 			m_get   ( std::move( get ) )
@@ -239,7 +240,7 @@ namespace Task
 	class ThreadHelper< void > : public Thread
 	{
 	public:
-		ThreadHelper( std::function< void() > function ) :
+		ThreadHelper( std::function< void() >&& function ) :
 			m_function( std::move( function ) ),
 			m_future( [ this ](){ this->start() ; },
 				  [ this ](){ this->deleteLater() ; },
@@ -264,37 +265,55 @@ namespace Task
 	};
 
 	/*
-	 * Below API's wrappes a function around a future and then returns the future.
+	 *
+	 * Below APIs wrappes a function around a future and then returns the future.
+	 *
 	 */
+
 	template< typename T >
 	future<T>& run( std::function< T() > function )
 	{
 		return ( new ThreadHelper<T>( std::move( function ) ) )->Future() ;
 	}
 
+	template< typename T,typename ... Args >
+	future<T>& run( std::function< T( Args ... ) > function,Args ... args )
+	{
+		return Task::run<T>( std::bind( std::move( function ),std::move( args ) ... ) ) ;
+	}
+
 	static inline future< void >& run( std::function< void() > function )
 	{
-		return ( new ThreadHelper< void >( std::move( function ) ) )->Future() ;
+		return Task::run< void >( std::move( function ) ) ;
+	}
+
+	template< typename ... Args >
+	future< void >& run( std::function< void( Args ... ) > function,Args ... args )
+	{
+		return Task::run< void >( std::bind( std::move( function ),std::move( args ) ... ) ) ;
 	}
 
 	/*
+	 *
 	 * A few useful helper functions
+	 *
 	 */
-
-	static inline void await( Task::future<void>& e )
-	{
-		e.await() ;
-	}
-
-	static inline void await( std::function< void() > function )
-	{
-		Task::run( std::move( function ) ).await() ;
-	}
 
 	template< typename T >
 	T await( std::function< T() > function )
 	{
 		return Task::run<T>( std::move( function ) ).await() ;
+	}
+
+	template< typename T,typename ... Args >
+	T await( std::function< T( Args ... ) > function,Args ... args )
+	{
+		return Task::await<T>( std::bind( std::move( function ),std::move( args ) ... ) ) ;
+	}
+
+	static inline void await( std::function< void() > function )
+	{
+		Task::await< void >( std::move( function ) ) ;
 	}
 
 	template< typename T >
@@ -304,19 +323,25 @@ namespace Task
 	}
 
 	template< typename T >
-	T await( std::future<T>&& t )
+	T await( std::future<T> t )
 	{
 		return Task::await<T>( [ & ](){ return t.get() ; } ) ;
 	}
 
 	/*
-	 * This method runs its argument in a separate thread and does not offer
+	 * These methods run their arguments in a separate thread and does not offer
 	 * continuation feature.Useful when wanting to just run a function in a
 	 * different thread.
 	 */
 	static inline void exec( std::function< void() > function )
 	{
 		Task::run( std::move( function ) ).start() ;
+	}
+
+	template< typename T,typename ... Args >
+	void exec( std::function< T( Args ... ) > function,Args ... args )
+	{
+		Task::exec( std::bind( std::move( function ),std::move( args ) ... ) ) ;
 	}
 }
 
@@ -398,6 +423,36 @@ int r = e.await() ;
 alternatively,
 
 int r = Task::run<int>( _a ).await() ;
+
+*******************************************************************
+* Example use cases on how to use lambda that requires an argument
+*******************************************************************
+
+/*
+ * declaring "meaw" with an auto keyword will not be sufficient here
+ * and the full std::function<blablabla> is required.
+ *
+ * For the same reason,just plugging in a lambda that requires arguments
+ * into Task::run() will not be sufficent and the plugged in lambda must
+ * be casted to std::function<blablabla> for it to compile.
+ *
+ * Why the above restriction? No idea but i suspect it has to do with
+ * variadic template type deduction failing to see something.
+ */
+
+std::function< int( int ) > meaw = []( int x ){
+
+	return x + 1 ;
+} ;
+
+Task::run( meaw,6 ).then( []( int r ){
+
+	qDebug() << r ;
+} ) ;
+
+alternatively,
+
+r = Task::await( meaw,6 ) ;
 
 #endif //end example block
 
