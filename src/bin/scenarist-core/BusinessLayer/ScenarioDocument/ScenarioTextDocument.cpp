@@ -200,14 +200,14 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	setCursorPosition(cursor, selectionEndPos, QTextCursor::KeepAnchor);
 
 #ifdef PATCH_DEBUG
-	qDebug() << "*******************************************************************";
+	qDebug() << "===================================================================";
 	qDebug() << cursor.selectedText();
 	qDebug() << "###################################################################";
-	qDebug() << xmlsForUpdate.first.xml;
+	qDebug() << qPrintable(xmlsForUpdate.first.xml);
 	qDebug() << "###################################################################";
 	qDebug() << qPrintable(QByteArray::fromPercentEncoding(patchUncopressed.toUtf8()));
 	qDebug() << "###################################################################";
-	qDebug() << xmlsForUpdate.second.xml;
+	qDebug() << qPrintable(xmlsForUpdate.second.xml);
 #endif
 
 	//
@@ -263,6 +263,8 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 	//
 	m_scenarioXml = m_xmlHandler->scenarioToXml();
 	m_scenarioXmlHash = ::textMd5Hash(m_scenarioXml);
+	m_lastSavedScenarioXml = m_scenarioXml;
+	m_lastSavedScenarioXmlHash = m_scenarioXmlHash;
 
 
 	m_isPatchApplyProcessed = false;
@@ -332,6 +334,12 @@ void ScenarioTextDocument::redoReimpl()
 {
 	if (!m_redoStack.isEmpty()) {
 		Domain::ScenarioChange* change = m_redoStack.takeLast();
+
+#ifdef PATCH_DEBUG
+		qDebug() << "*******************************************************************";
+		qDebug() << change->uuid().toString() << change->user() << characterCount();
+#endif
+
 		m_undoStack.append(change);
 		applyPatch(change->redoPatch());
 
