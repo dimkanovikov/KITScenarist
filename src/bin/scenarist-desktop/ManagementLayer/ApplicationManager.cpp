@@ -964,21 +964,21 @@ bool ApplicationManager::saveIfNeeded()
 	if (m_view->isWindowModified()) {
 		int questionResult = QDialogButtonBox::Cancel;
 
-		//
-		// ... если работаем с проектом из облака, сохраняем без вопросов
-		//
-		if (m_projectsManager->currentProject().isRemote()) {
-			questionResult = QDialogButtonBox::Yes;
-		}
-		//
-		// ... для локальных проектов спрашиваем пользователя, хочет ли он сохранить изменения
-		//
-		else {
+//		//
+//		// ... если работаем с проектом из облака, сохраняем без вопросов
+//		//
+//		if (m_projectsManager->currentProject().isRemote()) {
+//			questionResult = QDialogButtonBox::Yes;
+//		}
+//		//
+//		// ... для локальных проектов спрашиваем пользователя, хочет ли он сохранить изменения
+//		//
+//		else {
 			questionResult =
 					QLightBoxMessage::question(m_view, tr("Save project changes?"),
 						tr("Project was modified. Save changes?"),
 						QDialogButtonBox::Cancel | QDialogButtonBox::Yes | QDialogButtonBox::No);
-		}
+//		}
 
 		if (questionResult != QDialogButtonBox::Cancel) {
 			//

@@ -39,7 +39,7 @@ Application::Application(int& _argc, char** _argv) :
 	setOrganizationName("DimkaNovikov labs.");
 	setOrganizationDomain("dimkanovikov.pro");
 	setApplicationName("Scenarist");
-	setApplicationVersion("0.5.9");
+	setApplicationVersion("0.6.0 beta 1");
 
 	//
 	// Настроим стиль отображения внешнего вида приложения
@@ -83,7 +83,9 @@ bool Application::notify(QObject* _object, QEvent* _event)
 		|| _event->type() == QEvent::MouseButtonPress
 		|| _event->type() == QEvent::MouseButtonDblClick
 		|| _event->type() == QEvent::KeyPress
-		|| _event->type() == QEvent::InputMethod) {
+		|| _event->type() == QEvent::InputMethod
+		|| _event->type() == QEvent::Wheel
+		|| _event->type() == QEvent::Gesture) {
 		m_idleTimer.start();
 	}
 
