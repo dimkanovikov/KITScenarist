@@ -37,11 +37,11 @@ void AbstractKeyHandler::handle(QKeyEvent* _event)
 	static const QList<Qt::Key> keyboardNavigation({
 		Qt::Key_Left, Qt::Key_Up, Qt::Key_Right, Qt::Key_Down , Qt::Key_PageUp, Qt::Key_PageDown
 	});
-	if ((pressedModifiers.testFlag(Qt::ControlModifier)
+	if (pressedModifiers.testFlag(Qt::ControlModifier)
 		|| (pressedModifiers.testFlag(Qt::ShiftModifier)
 			&& !keyboardNavigation.contains(pressedKey)
 			&& _event->text().isEmpty()
-			))) {
+			)) {
 		//
 		// Ни чего не делаем, обработкой сочетаний клавиш занимаются ответственные за это классы
 		//

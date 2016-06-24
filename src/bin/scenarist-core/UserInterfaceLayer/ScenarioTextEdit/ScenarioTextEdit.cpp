@@ -97,14 +97,13 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 
 	m_document = _document;
 	setDocument(m_document);
+	setHighlighterDocument(m_document);
 
 	if (m_document != 0) {
 		initEditor();
+
+		TextEditHelper::beautifyDocument(m_document, m_replaceThreeDots, m_smartQuotes);
 	}
-
-	setHighlighterDocument(m_document);
-
-	TextEditHelper::beautifyDocument(m_document, m_replaceThreeDots, m_smartQuotes);
 
 	s_firstRepaintUpdate = true;
 }
@@ -725,6 +724,24 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 		paste();
 		verticalScrollBar()->setValue(lastVBarValue);
 	}
+#ifdef Q_OS_MAC
+	//
+	// Особая комбинация для вставки точки независимо от раскладки
+	//
+	else if (_event->modifiers().testFlag(Qt::MetaModifier)
+			 && _event->modifiers().testFlag(Qt::AltModifier)
+			 && _event->key() == Qt::Key_Period) {
+		insertPlainText(".");
+	}
+	//
+	// Особая комбинация для вставки запятой независимо от раскладки
+	//
+	else if (_event->modifiers().testFlag(Qt::MetaModifier)
+			 && _event->modifiers().testFlag(Qt::AltModifier)
+			 && _event->key() == Qt::Key_Comma) {
+		insertPlainText(",");
+	}
+#endif
 	else {
 		isEventHandled = false;
 	}

@@ -44,6 +44,7 @@ void PrepareHandler::prepareForHandle(QKeyEvent* _event)
 	// Если нажат альт, шифт, или контрол, то не нужно прокручивать окно редактора к тому месту, где установлен курсор
 	//
 	if (_event->key() == Qt::Key_Alt
+		|| _event->key() == Qt::Key_Meta
 		|| _event->key() == Qt::Key_Shift
 		|| _event->key() == Qt::Key_Control) {
 		m_needEnsureCursorVisible = false;

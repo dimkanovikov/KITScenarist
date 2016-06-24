@@ -31,6 +31,7 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
 
+#include <QApplication>
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -761,6 +762,17 @@ void ScenarioManager::aboutSaveScenarioChanges()
 	if (changeDraft != 0) {
 		changeDraft->setIsDraft(true);
 	}
+
+#ifdef Q_OS_MAC
+	//
+	// Если есть открытый диалог сохранения, или открытия, то он закрывается
+	// после испускания последующих сигналов, так что мы просто их игнорируем,
+	// пока не будет закрыт диалог
+	//
+	if (QApplication::activeModalWidget() != 0) {
+		return;
+	}
+#endif
 
 	emit scenarioChangesSaved();
 	emit cursorPositionUpdated(cursorPosition(), m_workModeIsDraft);
