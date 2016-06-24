@@ -288,6 +288,11 @@ void ScenarioTextEdit::applyScenarioTypeToBlockText(ScenarioBlockStyle::Type _bl
 	cursor.select(QTextCursor::BlockUnderCursor);
 	cursor.mergeCharFormat(newBlockStyle.charFormat());
 
+	//
+	// Принудительно обновим ревизию блока
+	//
+	ScenarioTextDocument::updateBlockRevision(cursor);
+
 	cursor.endEditBlock();
 
 	emit styleChanged();
@@ -1237,6 +1242,8 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 
 
 	QTextCursor cursor = textCursor();
+	cursor.beginEditBlock();
+
 	ScenarioBlockStyle newBlockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(_blockType);
 
 	//
@@ -1306,6 +1313,11 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 	}
 
 	//
+	// Принудительно обновим ревизию блока
+	//
+	ScenarioTextDocument::updateBlockRevision(cursor);
+
+	//
 	// Вставим заголовок, если необходимо
 	//
 	if (newBlockStyle.hasHeader()) {
@@ -1348,6 +1360,8 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 		QKeyEvent empyEvent(QEvent::KeyPress, -1, Qt::NoModifier);
 		keyPressEvent(&empyEvent);
 	}
+
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEdit::applyScenarioGroupTypeToGroupBlock(ScenarioBlockStyle::Type _blockType)
