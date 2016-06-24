@@ -66,7 +66,11 @@ namespace {
 		result = result.remove("<review_comment/>\n");
 
 		foreach (const QString& tag, _tagsMap.keys()) {
-			result = result.remove(tag + "\n");
+			//
+			// Для CDATA не убираем перенос строки
+			//
+			const QString suffix = ::isTag(tag) ? "\n" : "";
+			result = result.remove(tag + suffix);
 		}
 
 		result = result.remove(QRegularExpression("<scene_heading(.*)>\n"));
@@ -310,6 +314,7 @@ public:
 			int newStartPosForPlain = newStartPosForXml - (newXmlPartLength - newPlainPartLength);
 
 
+//			qDebug() << oldStartPosForXml << oldXmlPartLength << oldPlainPartLength << oldStartPosForPlain << "\n\n\n" << oldXmlPart;
 //			qDebug() << qPrintable(oldXml) << "\n\n\n" << qPrintable(newXml) << "\n\n\n" << qPrintable(oldXmlForUpdate) << "\n\n\n" << qPrintable(newXmlForUpdate) << "\n\n\n****\n\n\n";
 
 
@@ -391,8 +396,8 @@ private:
 			addTag("folder_header", s_tagsMap, s_charIndex);
 			addTag("folder_footer", s_tagsMap, s_charIndex);
 
-			s_tagsMap.insert("<![CDATA[", QChar(s_charIndex++));
-			s_tagsMap.insert("]]>", QChar(s_charIndex++));
+			s_tagsMap.insert("<v><![CDATA[", QChar(s_charIndex++));
+			s_tagsMap.insert("]]></v>", QChar(s_charIndex++));
 
 			addTag("scene_description", s_tagsMap, s_charIndex);
 			addTag("undefined", s_tagsMap, s_charIndex);
