@@ -268,7 +268,7 @@ QString SummaryReport::makeReport(QTextDocument* _scenario, const BusinessLogic:
 					.arg(QApplication::translate("BusinessLogic::SummaryReport", "Locations")));
 		QMap<QString, int> locationPlaces;
 		foreach (const QString& scene, scenes) {
-			const QString place = SceneHeadingParser::placeName(scene);
+			const QString place = SceneHeadingParser::placeName(scene).simplified();
 			if (!locationPlaces.contains(place)) {
 				locationPlaces.insert(place, 0);
 			}

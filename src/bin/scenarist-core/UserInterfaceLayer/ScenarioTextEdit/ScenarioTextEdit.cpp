@@ -1460,9 +1460,10 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 		//
 		// Определяем необходимость установки верхнего регистра для первого символа блока
 		//
-		if (cursorBackwardText == eventText
-			|| cursorBackwardText == (currentCharFormat.stringProperty(ScenarioBlockStyle::PropertyPrefix)
-									  + eventText)) {
+		if (cursorBackwardText != " "
+			&& (cursorBackwardText == eventText
+				|| cursorBackwardText == (currentCharFormat.stringProperty(ScenarioBlockStyle::PropertyPrefix)
+										  + eventText))) {
 			//
 			// Сформируем правильное представление строки
 			//
@@ -1552,9 +1553,11 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
 			}
 
 			//
-			// Если была попытка ввести несколько пробелов подряд, отменяем последнее действие
+			// Если была попытка ввести несколько пробелов подряд, или пробел в начале строки,
+			// удаляем этот лишний пробел
 			//
-			if (cursorBackwardText.endsWith("  ")) {
+			if (cursorBackwardText == " "
+				|| cursorBackwardText.endsWith("  ")) {
 				cursor.deletePreviousChar();
 			}
 		}
