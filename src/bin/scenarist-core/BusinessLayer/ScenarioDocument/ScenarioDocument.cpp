@@ -518,7 +518,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		//
 		while (removeIter.hasNext()) {
 			removeIter.next();
-			if (removeIter.key() > position) {
+			if (removeIter.key() >= position) {
 				ScenarioModelItem* item = removeIter.value();
 				item->setPosition(removeIter.key() - _charsRemoved + _charsAdded);
 				updatedItems.insert(item->position(), item);
