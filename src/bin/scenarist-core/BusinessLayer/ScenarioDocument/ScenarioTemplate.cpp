@@ -811,14 +811,25 @@ void ScenarioTemplate::load(const QString& _fromFile)
 			//
 			while (reader.readNextStartElement() && (reader.name() == "block"))
 			{
-				ScenarioBlockStyle block(reader.attributes());
-				m_blockStyles.insert(block.type(), block);
+				ScenarioBlockStyle blockStyle(reader.attributes());
+				m_blockStyles.insert(blockStyle.type(), blockStyle);
 
 				//
 				// Если ещё не находимся в конце элемента, то остальное пропускаем
 				//
 				if (!reader.isEndElement())
 					reader.skipCurrentElement();
+			}
+
+			//
+			// NOTE: Для файлов шаблона созданных в старых версиях программы, проверяем наличие
+			//		 стиля для описания сцены, если его нет, то копируем из описания действия
+			//
+			if (!m_blockStyles.contains(ScenarioBlockStyle::SceneDescription)) {
+				ScenarioBlockStyle sceneDescriptionStyle = m_blockStyles.value(ScenarioBlockStyle::Action);
+				sceneDescriptionStyle.m_type = ScenarioBlockStyle::SceneDescription;
+				sceneDescriptionStyle.m_blockFormat.setProperty(ScenarioBlockStyle::PropertyType, sceneDescriptionStyle.type());
+				m_blockStyles.insert(sceneDescriptionStyle.type(), sceneDescriptionStyle);
 			}
 		}
 	}
