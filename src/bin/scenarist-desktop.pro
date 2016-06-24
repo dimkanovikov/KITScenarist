@@ -49,9 +49,7 @@ DEFINES += NO_ANIMATIONS
 #
 # Подключаем библиотеку HUNSPELL
 #
-win32:CONFIG(release, debug|release): LIBS += -L$$DESTDIR/../../libs/hunspell/release/ -lhunspell
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$DESTDIR/../../libs/hunspell/debug/ -lhunspell
-else:unix: LIBS += -L$$DESTDIR/../../libs/hunspell/ -lhunspell
+LIBS += -L$$DESTDIR/../../libs/hunspell/ -lhunspell
 
 INCLUDEPATH += $$PWD/../libs/hunspell/src
 DEPENDPATH += $$PWD/../libs/hunspell
@@ -60,9 +58,7 @@ DEPENDPATH += $$PWD/../libs/hunspell
 ##
 ## Подключаем библиотеку MYTHES
 ##
-#win32:CONFIG(release, debug|release): LIBS += -L$$DESTDIR/../../libs/mythes/release/ -lmythes
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$DESTDIR/../../libs/mythes/debug/ -lmythes
-#else:unix: LIBS += -L$$DESTDIR/../../libs/mythes/ -lmythes
+#LIBS += -L$$DESTDIR/../../libs/mythes/ -lmythes
 
 #INCLUDEPATH += $$PWD/../libs/mythes
 #DEPENDPATH += $$PWD/../libs/mythes
@@ -71,9 +67,7 @@ DEPENDPATH += $$PWD/../libs/hunspell
 #
 # Подключаем библиотеку fileformats
 #
-win32:CONFIG(release, debug|release): LIBS += -L$$DESTDIR/../../libs/fileformats/release/ -lfileformats
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$DESTDIR/../../libs/fileformats/debug/ -lfileformats
-else:unix: LIBS += -L$$DESTDIR/../../libs/fileformats/ -lfileformats
+LIBS += -L$$DESTDIR/../../libs/fileformats/ -lfileformats
 
 INCLUDEPATH += $$PWD/../libs/fileformats
 DEPENDPATH += $$PWD/../libs/fileformats
@@ -82,9 +76,7 @@ DEPENDPATH += $$PWD/../libs/fileformats
 #
 # Подключаем библилотеку WebLoader
 #
-win32:CONFIG(release, debug|release): LIBS += -L$$DESTDIR/../../libs/webloader/release/ -lwebloader
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$DESTDIR/../../libs/webloader/debug/ -lwebloader
-else:unix: LIBS += -L$$DESTDIR/../../libs/webloader/ -lwebloader
+LIBS += -L$$DESTDIR/../../libs/webloader/ -lwebloader
 
 INCLUDEPATH += $$PWD/../libs/webloader
 DEPENDPATH += $$PWD/../libs/webloader

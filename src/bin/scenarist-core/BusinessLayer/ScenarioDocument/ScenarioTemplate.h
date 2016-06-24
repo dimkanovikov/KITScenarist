@@ -56,6 +56,11 @@ namespace BusinessLogic
 		static QString shortTypeName(ScenarioBlockStyle::Type _type);
 
 		/**
+		 * @brief Получить тип блока
+		 */
+		static ScenarioBlockStyle::Type forBlock(const QTextBlock& _block);
+
+		/**
 		 * @brief Дополнительные свойства стилей текстовых блоков
 		 */
 		enum Property {
@@ -87,11 +92,6 @@ namespace BusinessLogic
 
 	public:
 		ScenarioBlockStyle() : m_type(Undefined), m_font(QFont("Courier New", 12)) {}
-
-		/**
-		 * @brief Получить тип блока
-		 */
-		static ScenarioBlockStyle::Type forBlock(const QTextBlock& _block);
 
 		/**
 		 * @brief Получить тип блока

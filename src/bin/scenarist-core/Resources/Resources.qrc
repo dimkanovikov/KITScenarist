@@ -124,6 +124,8 @@
         <file>Translations/Scenarist_fr.qm</file>
         <file>Translations/qtbase_fr.qm</file>
         <file>Translations/qt_fr.qm</file>
+        <file>Translations/Scenarist_kz.qm</file>
+        <file>Translations/Scenarist_kz.ts</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/menuarrow.png</file>

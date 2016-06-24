@@ -118,6 +118,7 @@ void Application::initTranslation()
 			.toInt();
 	QString translationSuffix = QLocale::system().name();
 	translationSuffix.truncate(translationSuffix.lastIndexOf('_'));
+	QString qtTranslationSuffix = translationSuffix;
 	//
 	// ... если не удалось определить локаль, используем англоязычный перевод
 	//
@@ -139,6 +140,10 @@ void Application::initTranslation()
 	} else if (language == 3) {
 		translationSuffix = "fr";
 		currentLanguage = QLocale::French;
+	} else if (language == 4) {
+		translationSuffix = "kz";
+		qtTranslationSuffix = "ru";
+		currentLanguage = QLocale::Kazakh;
 	}
 
 	QLocale::setDefault(QLocale(currentLanguage));
@@ -151,14 +156,14 @@ void Application::initTranslation()
 		// Подключим файл переводов Qt
 		//
 		QTranslator* qtTranslator = new QTranslator;
-		qtTranslator->load(":/Translations/Translations/qt_" + translationSuffix + ".qm");
+		qtTranslator->load(":/Translations/Translations/qt_" + qtTranslationSuffix + ".qm");
 		installTranslator(qtTranslator);
 
 		//
 		// Подключим дополнительный файл переводов Qt
 		//
 		QTranslator* qtBaseTranslator = new QTranslator;
-		qtBaseTranslator->load(":/Translations/Translations/qtbase_" + translationSuffix + ".qm");
+		qtBaseTranslator->load(":/Translations/Translations/qtbase_" + qtTranslationSuffix + ".qm");
 		installTranslator(qtBaseTranslator);
 	}
 
