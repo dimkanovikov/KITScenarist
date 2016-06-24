@@ -372,11 +372,6 @@ SettingsStorage::SettingsStorage()
 						   );
 	m_defaultValues.insert("scenario-editor/zoom-range", "1");
 	m_defaultValues.insert("scenario-editor/show-scenes-numbers", "1");
-	m_defaultValues.insert("scenario-editor/capitalize-first-word", "1");
-	m_defaultValues.insert("scenario-editor/correct-double-capitals", "1");
-	m_defaultValues.insert("scenario-editor/replace-three-dots", "1");
-	m_defaultValues.insert("scenario-editor/smart-quotes", "1");
-	m_defaultValues.insert("scenario-editor/spell-checking", "0");
 	m_defaultValues.insert("scenario-editor/text-color", "#000000");
 	m_defaultValues.insert("scenario-editor/background-color", "#FEFEFE");
 	m_defaultValues.insert("scenario-editor/nonprintable-text-color", "#0AC139");
@@ -387,6 +382,14 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/nonprintable-text-color-dark", "#0AC139");
 	m_defaultValues.insert("scenario-editor/folder-text-color-dark", "#EBEBEB");
 	m_defaultValues.insert("scenario-editor/folder-background-color-dark", "#8D2DC4");
+	m_defaultValues.insert("scenario-editor/capitalize-first-word", "1");
+	m_defaultValues.insert("scenario-editor/correct-double-capitals", "1");
+	m_defaultValues.insert("scenario-editor/replace-three-dots", "1");
+	m_defaultValues.insert("scenario-editor/smart-quotes", "1");
+	m_defaultValues.insert("scenario-editor/auto-styles-jumping", "1");
+	m_defaultValues.insert("scenario-editor/show-suggestions-in-empty-blocks", "1");
+	m_defaultValues.insert("scenario-editor/spell-checking", "0");
+	m_defaultValues.insert("scenario-editor/spell-checking-language", "2");
 	m_defaultValues.insert("scenario-editor/zoom-range", "0");
 	//
 	m_defaultValues.insert("scenario-editor/shortcuts/scene_heading", ShortcutHelper::makeShortcut("Ctrl+Return"));
@@ -401,9 +404,6 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("scenario-editor/shortcuts/noprintable_text", ShortcutHelper::makeShortcut("Ctrl+Esc"));
 	m_defaultValues.insert("scenario-editor/shortcuts/scene_group_header", ShortcutHelper::makeShortcut("Ctrl+D"));
 	m_defaultValues.insert("scenario-editor/shortcuts/folder_header", ShortcutHelper::makeShortcut("Ctrl+Space"));
-	//
-	m_defaultValues.insert("scenario-editor/auto-styles-jumping", "1");
-	m_defaultValues.insert("scenario-editor/show-suggestions-in-empty-blocks", "1");
 	//
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_heading-by-tab", QString::number(ScenarioBlockStyle::SceneCharacters));
 	m_defaultValues.insert("scenario-editor/styles-jumping/from-scene_heading-by-enter", QString::number(ScenarioBlockStyle::Action));
