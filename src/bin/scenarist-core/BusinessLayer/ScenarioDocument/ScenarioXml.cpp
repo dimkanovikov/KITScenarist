@@ -6,6 +6,8 @@
 #include "ScenarioTemplate.h"
 #include "ScenarioTextBlockInfo.h"
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 #include <QApplication>
 #include <QTextDocument>
 #include <QTextCursor>
@@ -270,7 +272,8 @@ QString ScenarioXml::scenarioToXml()
 							const QStringList dates = range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
 							for (int commentIndex = 0; commentIndex < comments.size(); ++commentIndex) {
 								currentBlockXml.append(QString("<%1").arg(NODE_REVIEW_COMMENT));
-								currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_COMMENT, comments.at(commentIndex)));
+								currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_COMMENT,
+									TextEditHelper::toHtmlEscaped(comments.at(commentIndex))));
 								currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_AUTHOR, authors.at(commentIndex)));
 								currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_DATE, dates.at(commentIndex)));
 								currentBlockXml.append("/>\n");
