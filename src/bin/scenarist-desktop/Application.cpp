@@ -56,6 +56,17 @@ Application::Application(int& _argc, char** _argv) :
 	// Настроим перевод приложения
 	//
 	initTranslation();
+
+	//
+	// Настроим таймер определения простоя приложения
+	//
+	m_idleTimer.setInterval(3000);
+	connect(&m_idleTimer, &QTimer::timeout, [=] {
+		if (m_applicationManager != 0) {
+			postEvent(m_applicationManager, new QEvent(QEvent::User));
+		}
+	});
+	m_idleTimer.start();
 }
 
 void Application::setupManager(ManagementLayer::ApplicationManager *_manager)
@@ -63,7 +74,23 @@ void Application::setupManager(ManagementLayer::ApplicationManager *_manager)
 	m_applicationManager = _manager;
 }
 
-bool Application::event(QEvent *_event)
+bool Application::notify(QObject* _object, QEvent* _event)
+{
+	//
+	// Работа с таймером определяющим простой приложения
+	//
+	if (_event->type() == QEvent::MouseMove
+		|| _event->type() == QEvent::MouseButtonPress
+		|| _event->type() == QEvent::MouseButtonDblClick
+		|| _event->type() == QEvent::KeyPress
+		|| _event->type() == QEvent::InputMethod) {
+		m_idleTimer.start();
+	}
+
+	return QApplication::notify(_object, _event);
+}
+
+bool Application::event(QEvent* _event)
 {
 	bool result = true;
 	if (_event->type() == QEvent::FileOpen

@@ -155,6 +155,12 @@ namespace ManagementLayer
 		 */
 		void aboutPrepareScenarioForStatistics();
 
+	protected:
+		/**
+		 * @brief Переопределяем, для перехвата события простоя приложения
+		 */
+		bool event(QEvent* _event);
+
 	private:
 		/**
 		 * @brief Загрузить состояние окна

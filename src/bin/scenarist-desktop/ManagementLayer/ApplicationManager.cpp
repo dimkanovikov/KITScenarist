@@ -848,6 +848,22 @@ void ApplicationManager::aboutPrepareScenarioForStatistics()
 	m_statisticsManager->setExportedScenario(m_scenarioManager->scenario()->document());
 }
 
+bool ApplicationManager::event(QEvent* _event)
+{
+	bool result = false;
+	if (_event->type() == QEvent::User) {
+		if (m_autosaveTimer.isActive()) {
+			aboutSave();
+		}
+		_event->accept();
+		result = true;
+	} else {
+		result = QObject::event(_event);
+	}
+
+	return result;
+}
+
 void ApplicationManager::loadViewState()
 {
 	//
