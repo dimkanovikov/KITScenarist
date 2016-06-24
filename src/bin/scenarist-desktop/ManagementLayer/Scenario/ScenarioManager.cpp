@@ -188,12 +188,33 @@ namespace {
 		cursor.beginEditBlock();
 		do {
 			cursor.movePosition(QTextCursor::StartOfBlock);
-			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 			ScenarioBlockStyle blockStyle =
 				BusinessLogic::ScenarioTemplateFacade::getTemplate().blockStyle(cursor.block());
-			cursor.mergeCharFormat(blockStyle.charFormat());
-			cursor.mergeBlockCharFormat(blockStyle.charFormat());
-			cursor.mergeBlockFormat(blockStyle.blockFormat());
+			//
+			// Если в блоке есть выделения, обновляем цвет только тех частей, которые не входят в выделения
+			//
+			QTextBlock currentBlock = cursor.block();
+			if (!currentBlock.textFormats().isEmpty()) {
+				foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
+					if (!range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)) {
+						cursor.setPosition(currentBlock.position() + range.start);
+						cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, range.length);
+						cursor.mergeCharFormat(blockStyle.charFormat());
+						cursor.mergeBlockCharFormat(blockStyle.charFormat());
+						cursor.mergeBlockFormat(blockStyle.blockFormat());
+					}
+				}
+				cursor.movePosition(QTextCursor::EndOfBlock);
+			}
+			//
+			// Если выделений нет, обновляем блок целиком
+			//
+			else {
+				cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+				cursor.mergeCharFormat(blockStyle.charFormat());
+				cursor.mergeBlockCharFormat(blockStyle.charFormat());
+				cursor.mergeBlockFormat(blockStyle.blockFormat());
+			}
 			cursor.movePosition(QTextCursor::NextBlock);
 		} while (!cursor.atEnd());
 		cursor.endEditBlock();

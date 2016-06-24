@@ -1248,11 +1248,35 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 	//
 	// Применим стиль текста ко всему блоку, выделив его,
 	// т.к. в блоке могут находиться фрагменты в другом стиле
+	// + сохраняем форматирование выделений
 	//
-	cursor.movePosition(QTextCursor::StartOfBlock);
-	cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-	cursor.mergeCharFormat(newBlockStyle.charFormat());
-	cursor.clearSelection();
+	{
+		cursor.movePosition(QTextCursor::StartOfBlock);
+
+		//
+		// Если в блоке есть выделения, обновляем цвет только тех частей, которые не входят в выделения
+		//
+		QTextBlock currentBlock = cursor.block();
+		if (!currentBlock.textFormats().isEmpty()) {
+			foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
+				if (!range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)) {
+					cursor.setPosition(currentBlock.position() + range.start);
+					cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, range.length);
+					cursor.mergeCharFormat(newBlockStyle.charFormat());
+				}
+			}
+			cursor.movePosition(QTextCursor::EndOfBlock);
+		}
+		//
+		// Если выделений нет, обновляем блок целиком
+		//
+		else {
+			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+			cursor.mergeCharFormat(newBlockStyle.charFormat());
+		}
+
+		cursor.clearSelection();
+	}
 
 	//
 	// Вставим префикс и постфикс стиля, если необходимо

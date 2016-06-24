@@ -67,7 +67,7 @@ namespace {
 		//
 		// Принудительно стираем цвет текста
 		//
-		format.setForeground(QColor());
+		format.setForeground(Qt::black);
 
 		return format;
 	}
