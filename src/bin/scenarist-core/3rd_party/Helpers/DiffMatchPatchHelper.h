@@ -401,6 +401,51 @@ private:
 
 			addTag("scene_description", s_tagsMap, s_charIndex);
 			addTag("undefined", s_tagsMap, s_charIndex);
+
+			/*
+				("<scene_heading>", "가")
+				("</scene_heading>", "각")
+				("<scene_characters>", "갂")
+				("</scene_characters>", "갃")
+				("<action>", "간")
+				("</action>", "갅")
+				("<character>", "갆")
+				("</character>", "갇")
+				("<parenthetical>", "갈")
+				("</parenthetical>", "갉")
+				("<dialog>", "갊")
+				("</dialog>", "갋")
+				("<transition>", "갌")
+				("</transition>", "갍")
+				("<note>", "갎"))
+				("</note>", "갏")
+				("<title_header>", "감")
+				("</title_header>", "갑")
+				("<title>", "값")
+				("</title>", "갓")
+				("<noprintable_text>", "갔")
+				("</noprintable_text>", "강")
+				("<scene_group>", "갖")
+				("</scene_group>", "갗")
+				("<scene_group_header>", "갘")
+				("</scene_group_header>", "같")
+				("<scene_group_footer>", "갚")
+				("</scene_group_footer>", "갛")
+				("<folder>", "개")
+				("</folder>", "객")
+				("<folder_header>", "갞")
+				("</folder_header>", "갟")
+				("<folder_footer>", "갠")
+				("</folder_footer>", "갡")
+
+				("<v><![CDATA[", "갢")
+				("]]></v>", "갣")
+
+				("<scene_description>", "갤")
+				("</scene_description>", "갥")
+				("<undefined>", "갦")
+				("</undefined>", "갧")
+			 */
 		}
 		return s_tagsMap;
 	}

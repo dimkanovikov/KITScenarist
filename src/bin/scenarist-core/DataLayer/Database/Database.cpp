@@ -1078,7 +1078,6 @@ void Database::updateDatabaseTo_0_5_9(QSqlDatabase& _database)
 						foreach (const QString& descriptionLine, descriptionLines) {
 							textLines.insert(++lineNumber, "<scene_description>");
 							textLines.insert(++lineNumber, QString("<v><![CDATA[%1]]></v>").arg(descriptionLine));
-							textLines.insert(++lineNumber, "<reviews/>");
 							textLines.insert(++lineNumber, "</scene_description>");
 						}
 
