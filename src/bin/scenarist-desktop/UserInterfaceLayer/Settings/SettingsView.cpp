@@ -6,6 +6,7 @@
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QSignalMapper>
+#include <QShortcut>
 
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h>
 #include <3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h>
@@ -639,6 +640,16 @@ void SettingsView::initView()
 	ui->removeTemplate->updateIcons();
 	ui->applyTemplate->updateIcons();
 	ui->templates->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+	//
+	// Переключаем в двухпанельный режим при помощи F2
+	//
+	QShortcut* twoPanelModeShortcut = new QShortcut(this->parentWidget());
+	twoPanelModeShortcut->setKey(QKeySequence(Qt::Key_F2));
+	twoPanelModeShortcut->setContext(Qt::ApplicationShortcut);
+	connect(twoPanelModeShortcut, &QShortcut::activated, [=] {
+		ui->applicationTwoPanelMode->setChecked(!ui->applicationTwoPanelMode->isChecked());
+	});
 }
 
 void SettingsView::initConnections()

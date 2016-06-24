@@ -2,9 +2,10 @@
 
 #include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
-#include <QPushButton>
-#include <QLineEdit>
 #include <QHBoxLayout>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QTextBlock>
 
 
 SearchWidget::SearchWidget(QWidget* _parent) :
@@ -147,6 +148,7 @@ void SearchWidget::aboutReplaceAll()
 	if (m_editor) {
 		aboutFindNext();
 		QTextCursor cursor = m_editor->textCursor();
+		cursor.beginEditBlock();
 		const int firstCursorPosition = cursor.selectionStart();
 		while (cursor.hasSelection()) {
 			cursor.insertText(replaceText);
@@ -162,6 +164,7 @@ void SearchWidget::aboutReplaceAll()
 				break;
 			}
 		}
+		cursor.endEditBlock();
 	}
 }
 
@@ -195,20 +198,28 @@ void SearchWidget::findText(bool _backward)
 		//
 		// Поиск
 		//
-		cursor = m_editor->document()->find(searchText, cursor, findFlags);
-		if (!cursor.isNull()) {
-			m_editor->setTextCursor(cursor);
-		} else {
-			//
-			// Если достигнут конец, или начало документа зацикливаем поиск
-			//
-			cursor = m_editor->textCursor();
-			cursor.movePosition(_backward ? QTextCursor::End : QTextCursor::Start);
+		bool searchRestarted = false;
+		do {
 			cursor = m_editor->document()->find(searchText, cursor, findFlags);
 			if (!cursor.isNull()) {
 				m_editor->setTextCursor(cursor);
+			} else {
+				//
+				// Если достигнут конец, или начало документа зацикливаем поиск, если это первый проход
+				//
+				if (searchRestarted == false) {
+					searchRestarted = true;
+					cursor = m_editor->textCursor();
+					cursor.movePosition(_backward ? QTextCursor::End : QTextCursor::Start);
+					cursor = m_editor->document()->find(searchText, cursor, findFlags);
+					if (!cursor.isNull()) {
+						m_editor->setTextCursor(cursor);
+					}
+				} else {
+					break;
+				}
 			}
-		}
+		} while (!cursor.block().isVisible());
 	}
 
 	//

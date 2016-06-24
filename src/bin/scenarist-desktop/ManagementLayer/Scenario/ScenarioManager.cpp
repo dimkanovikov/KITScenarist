@@ -283,6 +283,16 @@ void ScenarioManager::startChangesHandling()
 void ScenarioManager::loadCurrentProjectSettings(const QString& _projectPath)
 {
 	//
+	// Загрузим режим чистовик/черновик
+	//
+	const bool lastScenarioModeIsDraft =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				QString("projects/%1/last-scenario-mode-is-draft").arg(_projectPath),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				).toInt();
+	setWorkingMode(lastScenarioModeIsDraft ? m_draftNavigatorManager : m_navigatorManager);
+
+	//
 	// Загрузим позицию курсора
 	//
 	const int lastCursorPosition =
@@ -316,6 +326,14 @@ void ScenarioManager::saveCurrentProject()
 
 void ScenarioManager::saveCurrentProjectSettings(const QString& _projectPath)
 {
+	//
+	// Сохраним текущий режим чистовик/черновик
+	//
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+				QString("projects/%1/last-scenario-mode-is-draft").arg(_projectPath),
+				m_workModeIsDraft ? "1" : "0",
+				DataStorageLayer::SettingsStorage::ApplicationSettings);
+
 	//
 	// Сохраним позицию курсора
 	//

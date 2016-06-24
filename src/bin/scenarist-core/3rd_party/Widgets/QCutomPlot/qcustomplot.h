@@ -19,8 +19,8 @@
 ****************************************************************************
 **           Author: Emanuel Eichhammer                                   **
 **  Website/Contact: http://www.qcustomplot.com/                          **
-**             Date: 25.04.15                                             **
-**          Version: 1.3.1                                                **
+**             Date: 22.12.15                                             **
+**          Version: 1.3.2                                                **
 ****************************************************************************/
 
 #ifndef QCUSTOMPLOT_H
@@ -51,7 +51,7 @@
 #  include <QPrintEngine>
 #else
 #  include <QtNumeric>
-#  include <QtPrintSupport>
+#  include <QtPrintSupport/QtPrintSupport>
 #endif
 
 class QCPPainter;
@@ -3615,6 +3615,7 @@ protected:
   QPixmap mPixmap;
   QPixmap mScaledPixmap;
   bool mScaled;
+  bool mScaledPixmapInvalidated;
   Qt::AspectRatioMode mAspectRatioMode;
   Qt::TransformationMode mTransformationMode;
   QPen mPen, mSelectedPen;
