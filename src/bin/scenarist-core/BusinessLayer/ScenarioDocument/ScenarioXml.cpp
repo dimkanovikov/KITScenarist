@@ -232,28 +232,6 @@ QString ScenarioXml::scenarioToXml()
 			}
 
 			//
-			// Если это декорация, не сохраняем
-			//
-			if (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)) {
-				needWrite = false;
-			}
-
-			//
-			// Если разрыв, пробуем сшить
-			//
-			if (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionStart)) {
-				do {
-					currentBlock = currentBlock.next();
-				} while (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection));
-				//
-				// ... если дошли до конца разрыва, то сшиваем его
-				//
-				if (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionEnd)) {
-					textToSave += " " + currentBlock.text();
-				}
-			}
-
-			//
 			// Дописать xml
 			//
 			if (needWrite) {
@@ -570,31 +548,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 
 				default: {
 					break;
-				}
-			}
-
-			//
-			// Если это декорация, не сохраняем
-			//
-			if (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)) {
-				needWrite = false;
-			}
-
-			//
-			// Если разрыв, пробуем сшить
-			//
-			if (currentBlock.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionStart)) {
-				QTextCursor breakCursor = cursor;
-				do {
-					breakCursor.movePosition(QTextCursor::NextBlock);
-				} while (breakCursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection));
-				//
-				// ... если дошли до конца разрыва, то сшиваем его
-				//
-				if (breakCursor.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsBreakCorrectionEnd)) {
-					textToSave += " " + breakCursor.block().text();
-					breakCursor.movePosition(QTextCursor::EndOfBlock);
-					cursor = breakCursor;
 				}
 			}
 

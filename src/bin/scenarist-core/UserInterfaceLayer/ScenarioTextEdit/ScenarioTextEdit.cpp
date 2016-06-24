@@ -602,8 +602,7 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 	if (_event == QKeySequence::MoveToNextChar) {
 		moveCursor(QTextCursor::NextCharacter);
 		while (!textCursor().atEnd()
-			   && (!textCursor().block().isVisible()
-				   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection))) {
+			   && !textCursor().block().isVisible()) {
 			moveCursor(QTextCursor::NextBlock);
 		}
 	}
@@ -613,8 +612,7 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 	else if (_event == QKeySequence::MoveToPreviousChar) {
 		moveCursor(QTextCursor::PreviousCharacter);
 		while (!textCursor().atStart()
-			   && (!textCursor().block().isVisible()
-				   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection))) {
+			   && !textCursor().block().isVisible()) {
 			moveCursor(QTextCursor::StartOfBlock);
 			moveCursor(QTextCursor::PreviousCharacter);
 		}
@@ -811,8 +809,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 						//
 						// Прорисовка символа пустой строки
 						//
-						if (!block.blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection)
-							&& block.text().simplified().isEmpty()) {
+						if (block.text().simplified().isEmpty()) {
 							//
 							// Определим область для отрисовки и выведем символ в редактор
 							//
@@ -957,21 +954,6 @@ void ScenarioTextEdit::mouseMoveEvent(QMouseEvent* _event)
 {
 	if (m_textSelectionEnable) {
 		CompletableTextEdit::mouseMoveEvent(_event);
-	}
-}
-
-void ScenarioTextEdit::mouseReleaseEvent(QMouseEvent* _event)
-{
-	CompletableTextEdit::mouseReleaseEvent(_event);
-
-	//
-	// Смещаем курсор с блока с декорацией
-	//
-	while (!textCursor().atEnd()
-		   && (!textCursor().block().isVisible()
-			   || textCursor().blockFormat().boolProperty(ScenarioBlockStyle::PropertyIsCorrection))) {
-		moveCursor(QTextCursor::EndOfBlock);
-		moveCursor(QTextCursor::NextCharacter);
 	}
 }
 

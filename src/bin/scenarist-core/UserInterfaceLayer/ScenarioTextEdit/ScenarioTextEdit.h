@@ -197,12 +197,6 @@ namespace UserInterface
 		void mouseMoveEvent(QMouseEvent* _event);
 
 		/**
-		 * @brief Переопределяется для того, чтобы корректировать позицию курсора, если пользователь
-		 *		  установил курсор в блок с декорацией
-		 */
-		void mouseReleaseEvent(QMouseEvent* _event);
-
-		/**
 		 * @brief Переопределяем работу с буфером обмена для использования собственного майм типа данных
 		 */
 		/** @{ */
