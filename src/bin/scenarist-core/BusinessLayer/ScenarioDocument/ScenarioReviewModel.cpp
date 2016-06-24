@@ -150,7 +150,7 @@ bool ScenarioReviewModel::removeRows(int _row, int _count, const QModelIndex& _p
 				// Для каждого блока по отдельности
 				//
 				while (cursor.position() <= review.endPosition()) {
-					cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+					cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
 					//
 					// Если ещё в текущем блоке, очищаем формат
 					//
@@ -185,7 +185,7 @@ void ScenarioReviewModel::setReviewMarkTextColor(int _startPosition, int _length
 {
 	QTextCursor cursor(m_document);
 	cursor.setPosition(_startPosition);
-	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, _length);
+	cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().foreground() != _color) {
 		cursor.mergeCharFormat(::makeForegroundFormat(cursor, _color));
 		emit reviewChanged();
@@ -197,7 +197,7 @@ void ScenarioReviewModel::setReviewMarkTextBgColor(int _startPosition, int _leng
 
 	QTextCursor cursor(m_document);
 	cursor.setPosition(_startPosition);
-	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, _length);
+	cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().background() != _color) {
 		cursor.mergeCharFormat(::makeBackgroundFormat(cursor, _color));
 		emit reviewChanged();
@@ -208,7 +208,7 @@ void ScenarioReviewModel::setReviewMarkTextHighlight(int _startPosition, int _le
 {
 	QTextCursor cursor(m_document);
 	cursor.setPosition(_startPosition);
-	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, _length);
+	cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().background() != _color) {
 		cursor.mergeCharFormat(::makeHighlightFormat(cursor, _color));
 		emit reviewChanged();
@@ -220,7 +220,7 @@ void ScenarioReviewModel::setReviewMarkComment(int _startPosition, int _length, 
 
 	QTextCursor cursor(m_document);
 	cursor.setPosition(_startPosition);
-	cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, _length);
+	cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().toolTip() != _comment) {
 		QTextCharFormat format;
 		format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
@@ -250,7 +250,7 @@ void ScenarioReviewModel::addReviewMarkComment(const QModelIndex& _index, const 
 
 		QTextCursor cursor(m_document);
 		cursor.setPosition(mark.startPosition);
-		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, mark.length);
+		cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, mark.length);
 
 		QTextCharFormat format = cursor.charFormat();
 		QStringList comments = format.property(ScenarioBlockStyle::PropertyComments).toStringList();
@@ -279,7 +279,7 @@ void ScenarioReviewModel::updateReviewMarkComment(const QModelIndex& _index, int
 
 		QTextCursor cursor(m_document);
 		cursor.setPosition(mark.startPosition);
-		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, mark.length);
+		cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, mark.length);
 
 		QTextCharFormat format = cursor.charFormat();
 		QStringList comments = format.property(ScenarioBlockStyle::PropertyComments).toStringList();
@@ -315,7 +315,7 @@ void ScenarioReviewModel::setReviewMarkIsDone(const QModelIndex& _index, bool _i
 
 		QTextCursor cursor(m_document);
 		cursor.setPosition(mark.startPosition);
-		cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, mark.length);
+		cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, mark.length);
 		if (cursor.charFormat().boolProperty(ScenarioBlockStyle::PropertyIsDone) != _isDone) {
 			QTextCharFormat format;
 			format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
@@ -365,7 +365,7 @@ void ScenarioReviewModel::removeMark(const QModelIndex& _index, int _commentInde
 
 			QTextCursor cursor(m_document);
 			cursor.setPosition(mark.startPosition);
-			cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, mark.length);
+			cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, mark.length);
 
 			QTextCharFormat format = cursor.charFormat();
 			QStringList comments = format.property(ScenarioBlockStyle::PropertyComments).toStringList();

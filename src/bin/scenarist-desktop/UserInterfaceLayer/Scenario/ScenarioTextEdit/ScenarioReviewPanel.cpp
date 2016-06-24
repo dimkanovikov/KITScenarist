@@ -161,7 +161,7 @@ void ScenarioReviewPanel::aboutChangeTextColor(const QColor& _color)
 		const int length = qMax(selectionStart, selectionEnd) - startPosition;
 		model->setReviewMarkTextColor(startPosition, length, _color);
 
-		m_editor->moveCursor(QTextCursor::Right);
+		m_editor->moveCursor(QTextCursor::NextCharacter);
 	}
 }
 
@@ -177,7 +177,7 @@ void ScenarioReviewPanel::aboutChangeTextBgColor(const QColor& _color)
 		const int length = qMax(selectionStart, selectionEnd) - startPosition;
 		model->setReviewMarkTextBgColor(startPosition, length, _color);
 
-		m_editor->moveCursor(QTextCursor::Right);
+		m_editor->moveCursor(QTextCursor::NextCharacter);
 	}
 }
 
@@ -193,7 +193,7 @@ void ScenarioReviewPanel::aboutChangeTextHighlight(const QColor& _color)
 		const int length = qMax(selectionStart, selectionEnd) - startPosition;
 		model->setReviewMarkTextHighlight(startPosition, length, _color);
 
-		m_editor->moveCursor(QTextCursor::Right);
+		m_editor->moveCursor(QTextCursor::NextCharacter);
 	}
 }
 
@@ -212,7 +212,7 @@ void ScenarioReviewPanel::aboutAddComment(const QColor& _color)
 			model->setReviewMarkTextBgColor(startPosition, length, _color);
 			model->setReviewMarkComment(startPosition, length, comment);
 
-			m_editor->moveCursor(QTextCursor::Right);
+			m_editor->moveCursor(QTextCursor::NextCharacter);
 		}
 	}
 }

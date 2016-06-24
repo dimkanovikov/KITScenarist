@@ -411,7 +411,7 @@ QString DocumentImporter::importScenario(const ImportParameters& _importParamete
 			++emptyLines;
 		}
 
-		cursor.movePosition(QTextCursor::Right);
+		cursor.movePosition(QTextCursor::NextCharacter);
 	} while (!cursor.atEnd());
 
 	writer.writeEndElement(); // scenario

@@ -70,11 +70,11 @@ void SceneGroupHeaderHandler::handleEnter(QKeyEvent*)
 					// Вставить блок время и место перед группой
 					//
 					cursor.insertBlock();
-					cursor.movePosition(QTextCursor::Left);
+					cursor.movePosition(QTextCursor::PreviousCharacter);
 					cursor.setBlockFormat(QTextBlockFormat());
 					editor()->setTextCursor(cursor);
 					editor()->changeScenarioBlockType(ScenarioBlockStyle::SceneHeading);
-					editor()->moveCursor(QTextCursor::Right);
+					editor()->moveCursor(QTextCursor::NextCharacter);
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 

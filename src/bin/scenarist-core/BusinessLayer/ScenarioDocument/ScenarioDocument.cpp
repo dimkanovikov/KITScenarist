@@ -244,12 +244,12 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
 					currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
 				}
 				if (!cursor.atEnd()) {
-					cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
+					cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
 				}
 				cursor.removeSelectedText();
 			} else {
 				if (!cursor.atEnd()) {
-					cursor.movePosition(QTextCursor::Left);
+					cursor.movePosition(QTextCursor::PreviousCharacter);
 				}
 				cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
 			}
@@ -399,7 +399,7 @@ int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, Sce
 			//
 			// ... возвращаемся в конец последнего блока
 			//
-			cursor.movePosition(QTextCursor::Left);
+			cursor.movePosition(QTextCursor::PreviousCharacter);
 
 			insertPosition = cursor.position();
 		}

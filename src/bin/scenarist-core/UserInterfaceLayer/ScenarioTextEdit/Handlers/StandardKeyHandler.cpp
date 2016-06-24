@@ -110,8 +110,8 @@ void StandardKeyHandler::handleBackspace(QKeyEvent* _event)
 		QTextCursor cursor = editor()->textCursor();
 		while (!cursor.atStart()
 			   && !cursor.block().isVisible()) {
+			cursor.movePosition(QTextCursor::PreviousBlock);
 			cursor.movePosition(QTextCursor::StartOfBlock);
-			cursor.movePosition(QTextCursor::Left);
 		}
 		editor()->setTextCursor(cursor);
 
@@ -153,7 +153,7 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 			int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 			while (!cursor.atStart()
 				   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-				cursor.movePosition(QTextCursor::Left, cursorMoveMode);
+				cursor.movePosition(QTextCursor::PreviousCharacter, cursorMoveMode);
 			}
 			marginFromLineStart =
 					initCursorPosition
@@ -183,19 +183,19 @@ void StandardKeyHandler::handleUp(QKeyEvent* _event)
 				int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 				while (!cursor.atStart()
 					   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-					cursor.movePosition(QTextCursor::Left, cursorMoveMode);
+					cursor.movePosition(QTextCursor::PreviousCharacter, cursorMoveMode);
 				}
 
 				//
 				// Возвратим курсор на одну позицию назад, т.к. в предыдущем цикле мы перешли на новую строку
 				//
 				if (!cursor.atStart()) {
-					cursor.movePosition(QTextCursor::Right, cursorMoveMode);
+					cursor.movePosition(QTextCursor::NextCharacter, cursorMoveMode);
 				}
 
 				int currentLineStartPosition = cursor.position();
 				if (currentLineStartPosition + marginFromLineStart < currentLineEndPosition) {
-					cursor.movePosition(QTextCursor::Right, cursorMoveMode, marginFromLineStart);
+					cursor.movePosition(QTextCursor::NextCharacter, cursorMoveMode, marginFromLineStart);
 				} else {
 					cursor.setPosition(currentLineEndPosition, cursorMoveMode);
 				}
@@ -233,7 +233,7 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 			int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 			while (!cursor.atStart()
 				   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-				cursor.movePosition(QTextCursor::Left, cursorMoveMode);
+				cursor.movePosition(QTextCursor::PreviousCharacter, cursorMoveMode);
 			}
 			marginFromLineStart =
 					initCursorPosition
@@ -253,7 +253,7 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 			int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 			while (!cursor.atEnd()
 				   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-				cursor.movePosition(QTextCursor::Right, cursorMoveMode);
+				cursor.movePosition(QTextCursor::NextCharacter, cursorMoveMode);
 			}
 		}
 
@@ -278,20 +278,20 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 				int currentLineYCoordinate = editor()->cursorRect(cursor).y();
 				while (!cursor.atEnd()
 					   && editor()->cursorRect(cursor).y() == currentLineYCoordinate) {
-					cursor.movePosition(QTextCursor::Right, cursorMoveMode);
+					cursor.movePosition(QTextCursor::NextCharacter, cursorMoveMode);
 				}
 
 				//
 				// Возвратим курсор на одну позицию назад, т.к. в предыдущем цикле мы перешли на новую строку
 				//
 				if (!cursor.atEnd()) {
-					cursor.movePosition(QTextCursor::Left, cursorMoveMode);
+					cursor.movePosition(QTextCursor::PreviousCharacter, cursorMoveMode);
 				}
 
 				int currentLineEndPosition = cursor.position();
 				if (currentLineStartPosition + marginFromLineStart < currentLineEndPosition) {
 					const int moveRepeats = currentLineEndPosition - currentLineStartPosition - marginFromLineStart;
-					cursor.movePosition(QTextCursor::Left, cursorMoveMode, moveRepeats);
+					cursor.movePosition(QTextCursor::PreviousCharacter, cursorMoveMode, moveRepeats);
 				} else {
 					cursor.setPosition(currentLineEndPosition, cursorMoveMode);
 				}
@@ -428,7 +428,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 
 			while (topBlock == topCursor.block()
 				   && !topCursor.atStart()) {
-				topCursor.movePosition(QTextCursor::Left);
+				topCursor.movePosition(QTextCursor::PreviousCharacter);
 				topStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(topCursor.block()));
 			}
 
@@ -445,7 +445,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 
 			while (bottomBlock == bottomCursor.block()
 				   && !bottomCursor.atEnd()) {
-				bottomCursor.movePosition(QTextCursor::Right);
+				bottomCursor.movePosition(QTextCursor::NextCharacter);
 				bottomStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::forBlock(bottomCursor.block()));
 			}
 

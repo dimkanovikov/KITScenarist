@@ -1910,6 +1910,7 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 					if (cursor.atBlockStart()) {
 						do {
 							cursor.movePosition(QTextCursor::PreviousBlock);
+							cursor.movePosition(QTextCursor::StartOfBlock);
 						} while (!cursor.atStart() && !cursor.block().isVisible());
 					}
 					break;
@@ -1965,6 +1966,7 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 	if (cursor.atEnd() && !cursor.block().isVisible()) {
 		while (!cursor.atStart() && !cursor.block().isVisible()) {
 			cursor.movePosition(QTextCursor::PreviousBlock);
+			cursor.movePosition(QTextCursor::StartOfBlock);
 		}
 	}
 
@@ -3137,6 +3139,7 @@ void PageTextEdit::ensureCursorVisible()
 		QTextCursor cursor = textCursor();
 		while (!cursor.atStart() && !cursor.block().isVisible()) {
 			cursor.movePosition(QTextCursor::PreviousBlock);
+			cursor.movePosition(QTextCursor::StartOfBlock);
 		}
 		if (cursor.position() != textCursor().position()) {
 			setTextCursor(cursor);

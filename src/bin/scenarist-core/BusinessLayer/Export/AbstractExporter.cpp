@@ -431,7 +431,7 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 						foreach (const QTextLayout::FormatRange& range, sourceDocumentCursor.block().textFormats()) {
 							if (range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)) {
 								destDocumentCursor.setPosition(startBlockPosition + range.start);
-								destDocumentCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, range.length);
+								destDocumentCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, range.length);
 								destDocumentCursor.mergeCharFormat(range.format);
 							}
 						}

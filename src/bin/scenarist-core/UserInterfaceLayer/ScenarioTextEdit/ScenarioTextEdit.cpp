@@ -1189,7 +1189,7 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 	if (oldBlockStyle.hasHeader()) {
 		QTextCursor headerCursor = cursor;
 		headerCursor.movePosition(QTextCursor::StartOfBlock);
-		headerCursor.movePosition(QTextCursor::Left);
+		headerCursor.movePosition(QTextCursor::PreviousCharacter);
 		if (ScenarioBlockStyle::forBlock(headerCursor.block()) == oldBlockStyle.headerType()) {
 			headerCursor.select(QTextCursor::BlockUnderCursor);
 			headerCursor.deleteChar();
@@ -1324,7 +1324,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 
 		cursor.movePosition(QTextCursor::StartOfBlock);
 		cursor.insertBlock();
-		cursor.movePosition(QTextCursor::Left);
+		cursor.movePosition(QTextCursor::PreviousCharacter);
 
 		cursor.setBlockCharFormat(headerStyle.charFormat());
 		cursor.setBlockFormat(headerStyle.blockFormat());

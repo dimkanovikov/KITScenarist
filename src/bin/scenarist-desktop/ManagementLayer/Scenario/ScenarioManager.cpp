@@ -109,7 +109,7 @@ namespace {
 						if (checkCursor.atBlockStart()) {
 							atLeftAllOk = true;
 						} else {
-							checkCursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor);
+							checkCursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
 							if (checkCursor.selectedText() == " "
 								|| checkCursor.selectedText() == ",") {
 								atLeftAllOk = true;
@@ -123,7 +123,7 @@ namespace {
 						if (checkCursor.atBlockEnd()) {
 							atRightAllOk = true;
 						} else {
-							checkCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+							checkCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
 							if (checkCursor.selectedText() == " "
 								|| checkCursor.selectedText() == ",") {
 								atRightAllOk = true;

@@ -212,7 +212,7 @@ namespace TextEditHelper
 			//
 			// 3 предшествующих символа
 			//
-			_cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 3);
+			_cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, 3);
 
 			if (_cursor.selectedText() == "...") {
 				_cursor.insertText("…");
@@ -221,7 +221,7 @@ namespace TextEditHelper
 			//
 			// Выделим введённый символ
 			//
-			_cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 1);
+			_cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, 1);
 			//
 			// Определим предшествующий текст
 			//

@@ -24,17 +24,17 @@ namespace {
 
 
 CompletableTextEdit::CompletableTextEdit(QWidget* _parent) :
-    SpellCheckTextEdit(_parent), m_useCompleter(true), m_completer(new MyCompleter(this))
+	SpellCheckTextEdit(_parent), m_useCompleter(true), m_completer(new MyCompleter(this))
 {
 	m_completer->setWidget(this);
-    connect(m_completer, SIGNAL(activated(QString)), this, SLOT(applyCompletion(QString)));
+	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(applyCompletion(QString)));
 }
 
 void CompletableTextEdit::setUseCompleter(bool _use)
 {
-    if (m_useCompleter != _use) {
-        m_useCompleter = _use;
-    }
+	if (m_useCompleter != _use) {
+		m_useCompleter = _use;
+	}
 }
 
 QCompleter* CompletableTextEdit::completer() const
@@ -51,7 +51,7 @@ bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _c
 {
 	bool success = false;
 
-    if (m_useCompleter && canComplete()) {
+	if (m_useCompleter && canComplete()) {
 		if (_model != 0) {
 			//
 			// Настроим завершателя, если необходимо
@@ -140,7 +140,7 @@ void CompletableTextEdit::applyCompletion(const QString& _completion)
 		if (cursor.selectedText().endsWith(m_completer->completionPrefix())) {
 			break;
 		}
-		moveCursor(QTextCursor::Right);
+		moveCursor(QTextCursor::NextCharacter);
 	}
 
 	textCursor().insertText(textToInsert);

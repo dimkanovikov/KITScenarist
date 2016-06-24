@@ -424,13 +424,13 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			//
 			if (!cursor.hasSelection()
 				&& cursor.atBlockEnd()) {
-				cursor.movePosition(QTextCursor::Right);
+				cursor.movePosition(QTextCursor::NextCharacter);
 			}
 			//
 			// ... если текущий блок не пуст, выделяем его текст
 			//
 			if (!cursor.block().text().isEmpty()) {
-				cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+				cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
 			}
 		}
 
@@ -1170,7 +1170,7 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 							startDelta = _position - reviewCursor.block().position();
 						}
 						reviewCursor.setPosition(reviewCursor.block().position() + start + startDelta);
-						reviewCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, length);
+						reviewCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, length);
 						reviewCursor.mergeCharFormat(reviewFormat);
 					}
 				}

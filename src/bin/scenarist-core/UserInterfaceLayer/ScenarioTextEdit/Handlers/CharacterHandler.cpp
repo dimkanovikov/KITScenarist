@@ -73,6 +73,7 @@ void CharacterHandler::prehandle()
 			}
 
 			cursor.movePosition(QTextCursor::PreviousBlock);
+			cursor.movePosition(QTextCursor::StartOfBlock);
 		}
 
 		//
@@ -336,6 +337,7 @@ void CharacterHandler::handleOther(QKeyEvent*)
 						}
 					}
 					cursor.movePosition(QTextCursor::PreviousBlock);
+					cursor.movePosition(QTextCursor::StartOfBlock);
 				}
 			}
 
