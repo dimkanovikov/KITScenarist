@@ -88,7 +88,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="name"/>
+    <widget class="QLineEdit" name="name">
+     <property name="maxLength">
+      <number>300</number>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="isInsert">

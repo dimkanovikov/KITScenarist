@@ -136,7 +136,7 @@
        <item row="1" column="0" colspan="2">
         <widget class="QStackedWidget" name="researchDataEditsContainer">
          <property name="currentIndex">
-          <number>0</number>
+          <number>7</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -183,7 +183,11 @@
             </widget>
            </item>
            <item row="1" column="0" colspan="4">
-            <widget class="QLineEdit" name="scenarioName"/>
+            <widget class="QLineEdit" name="scenarioName">
+             <property name="maxLength">
+              <number>300</number>
+             </property>
+            </widget>
            </item>
            <item row="3" column="0" colspan="4">
             <widget class="SimpleTextEditor" name="scenarioLogline"/>
@@ -227,6 +231,9 @@
              <property name="toolTip">
               <string>Scenario name.</string>
              </property>
+             <property name="maxLength">
+              <number>300</number>
+             </property>
             </widget>
            </item>
            <item>
@@ -244,6 +251,9 @@
              <property name="toolTip">
               <string>Scenario genre.</string>
              </property>
+             <property name="maxLength">
+              <number>100</number>
+             </property>
             </widget>
            </item>
            <item>
@@ -260,6 +270,9 @@
             <widget class="QLineEdit" name="titlePageAuthor">
              <property name="toolTip">
               <string>Scenario author.</string>
+             </property>
+             <property name="maxLength">
+              <number>300</number>
              </property>
             </widget>
            </item>
@@ -326,6 +339,9 @@
              <property name="toolTip">
               <string>Scenario wirting year.</string>
              </property>
+             <property name="maxLength">
+              <number>40</number>
+             </property>
             </widget>
            </item>
            <item>
@@ -384,7 +400,11 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="textName"/>
+            <widget class="QLineEdit" name="textName">
+             <property name="maxLength">
+              <number>300</number>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QLabel" name="label_5">
@@ -408,7 +428,11 @@
             </widget>
            </item>
            <item row="1" column="0" colspan="2">
-            <widget class="QLineEdit" name="urlName"/>
+            <widget class="QLineEdit" name="urlName">
+             <property name="maxLength">
+              <number>300</number>
+             </property>
+            </widget>
            </item>
            <item row="2" column="0">
             <widget class="QLabel" name="label_8">
@@ -485,7 +509,11 @@
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLineEdit" name="imagesGalleryName"/>
+            <widget class="QLineEdit" name="imagesGalleryName">
+             <property name="maxLength">
+              <number>300</number>
+             </property>
+            </widget>
            </item>
            <item row="2" column="0">
             <widget class="QLabel" name="label_10">
@@ -506,7 +534,11 @@
             </widget>
            </item>
            <item row="1" column="0" colspan="2">
-            <widget class="QLineEdit" name="imageName"/>
+            <widget class="QLineEdit" name="imageName">
+             <property name="maxLength">
+              <number>300</number>
+             </property>
+            </widget>
            </item>
            <item row="2" column="0">
             <widget class="QLabel" name="label_12">

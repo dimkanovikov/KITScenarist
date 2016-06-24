@@ -34,6 +34,12 @@ namespace UserInterface
 		 */
 		void changeTextBlock(int _blockType) const;
 
+    private:
+        /**
+         * @brief Создать или обновить комбинацию для заданного типа
+         */
+        void createOrUpdateShortcut(int _forBlockType);
+
 	private:
 		/**
 		 * @brief Редактор сценария

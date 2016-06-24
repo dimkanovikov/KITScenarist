@@ -23,23 +23,22 @@ ShortcutsManager::ShortcutsManager(UserInterface::ScenarioTextEdit* _editor) :
 	//
 	// Создаём шорткаты
 	//
-	m_shortcuts.insert(ScenarioBlockStyle::SceneHeading, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::SceneCharacters, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::Action, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::Character, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::Parenthetical, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::Dialogue, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::Transition, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::Note, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::Title, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::NoprintableText, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::SceneGroupHeader, new QShortcut(_editor));
-	m_shortcuts.insert(ScenarioBlockStyle::FolderHeader, new QShortcut(_editor));
+	createOrUpdateShortcut(ScenarioBlockStyle::SceneHeading);
+	createOrUpdateShortcut(ScenarioBlockStyle::SceneCharacters);
+	createOrUpdateShortcut(ScenarioBlockStyle::Action);
+	createOrUpdateShortcut(ScenarioBlockStyle::Character);
+	createOrUpdateShortcut(ScenarioBlockStyle::Parenthetical);
+	createOrUpdateShortcut(ScenarioBlockStyle::Dialogue);
+	createOrUpdateShortcut(ScenarioBlockStyle::Transition);
+	createOrUpdateShortcut(ScenarioBlockStyle::Note);
+	createOrUpdateShortcut(ScenarioBlockStyle::Title);
+	createOrUpdateShortcut(ScenarioBlockStyle::NoprintableText);
+	createOrUpdateShortcut(ScenarioBlockStyle::SceneGroupHeader);
+	createOrUpdateShortcut(ScenarioBlockStyle::FolderHeader);
 
 	//
 	// Настраиваем их
 	//
-	update();
 	QSignalMapper* mapper = new QSignalMapper(this);
 	foreach (int type, m_shortcuts.keys()) {
 		QShortcut* shortcut = m_shortcuts.value(type);
@@ -55,16 +54,7 @@ void ShortcutsManager::update()
 	// Обновим сочетания клавиш для всех блоков
 	//
 	foreach (int type, m_shortcuts.keys()) {
-		ScenarioBlockStyle::Type blockType = (ScenarioBlockStyle::Type)type;
-		const QString typeShortName = ScenarioBlockStyle::typeName(blockType);
-		const QString keySequence =
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					QString("scenario-editor/shortcuts/%1").arg(typeShortName),
-					DataStorageLayer::SettingsStorage::ApplicationSettings
-					);
-
-		QShortcut* shortcut = m_shortcuts.value(type);
-		shortcut->setKey(QKeySequence(keySequence));
+		createOrUpdateShortcut(type);
 	}
 }
 
@@ -83,4 +73,26 @@ void ShortcutsManager::changeTextBlock(int _blockType) const
 		ScenarioBlockStyle::Type blockType = (ScenarioBlockStyle::Type)_blockType;
 		m_editor->changeScenarioBlockType(blockType);
 	}
+}
+
+void ShortcutsManager::createOrUpdateShortcut(int _forBlockType)
+{
+	ScenarioBlockStyle::Type blockType = (ScenarioBlockStyle::Type)_forBlockType;
+	const QString typeShortName = ScenarioBlockStyle::typeName(blockType);
+	const QString keySequenceText =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				QString("scenario-editor/shortcuts/%1").arg(typeShortName),
+				DataStorageLayer::SettingsStorage::ApplicationSettings
+				);
+	const QKeySequence keySequence(keySequenceText);
+
+	QShortcut* shortcut = 0;
+	if (m_shortcuts.contains(_forBlockType)) {
+		shortcut = m_shortcuts.value(_forBlockType);
+		shortcut->setKey(keySequence);
+	} else {
+		shortcut = new QShortcut(keySequence, m_editor->parentWidget(), 0, 0, Qt::WidgetWithChildrenShortcut);
+	}
+
+	m_shortcuts[_forBlockType] = shortcut;
 }
