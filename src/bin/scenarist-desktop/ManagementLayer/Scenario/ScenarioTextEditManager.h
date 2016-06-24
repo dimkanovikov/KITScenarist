@@ -110,6 +110,11 @@ namespace ManagementLayer
 		 */
 		void redoPressed();
 
+		/**
+		 * @brief Изменился режим отображения сценария
+		 */
+		void textModeChanged();
+
 	private slots:
 		/**
 		 * @brief Реакция на изменение коэффициента масштабирования редактора сценария

@@ -140,6 +140,11 @@ namespace BusinessLogic
 		void clear();
 
 		/**
+		 * @brief Обновить сценарий
+		 */
+		void refresh();
+
+		/**
 		 * @brief Найти всех персонажей сценария
 		 */
 		QStringList findCharacters() const;

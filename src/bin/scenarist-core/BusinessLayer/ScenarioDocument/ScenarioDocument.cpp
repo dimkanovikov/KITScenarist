@@ -304,6 +304,11 @@ void ScenarioDocument::clear()
 	cursor.removeSelectedText();
 }
 
+void ScenarioDocument::refresh()
+{
+	aboutContentsChange(0, 0, m_document->characterCount());
+}
+
 QStringList ScenarioDocument::findCharacters() const
 {
 	//

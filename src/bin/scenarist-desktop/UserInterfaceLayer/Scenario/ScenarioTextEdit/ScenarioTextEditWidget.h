@@ -166,6 +166,11 @@ namespace UserInterface
 
 	signals:
 		/**
+		 * @brief Изменился режим отображения сценария
+		 */
+		void textModeChanged();
+
+		/**
 		 * @brief Изменился текст сценария
 		 */
 		void textChanged();

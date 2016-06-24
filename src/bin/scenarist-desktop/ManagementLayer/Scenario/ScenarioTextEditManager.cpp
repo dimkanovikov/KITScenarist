@@ -188,7 +188,8 @@ void ScenarioTextEditManager::initView()
 
 void ScenarioTextEditManager::initConnections()
 {
-	connect(m_view, SIGNAL(textChanged()), this, SIGNAL(textChanged()));
-	connect(m_view, SIGNAL(cursorPositionChanged(int)), this, SIGNAL(cursorPositionChanged(int)));
-	connect(m_view, SIGNAL(zoomRangeChanged(qreal)), this, SLOT(aboutTextEditZoomRangeChanged(qreal)));
+	connect(m_view, &ScenarioTextEditWidget::textModeChanged, this, &ScenarioTextEditManager::textModeChanged);
+	connect(m_view, &ScenarioTextEditWidget::textChanged, this, &ScenarioTextEditManager::textChanged);
+	connect(m_view, &ScenarioTextEditWidget::cursorPositionChanged, this, &ScenarioTextEditManager::cursorPositionChanged);
+	connect(m_view, &ScenarioTextEditWidget::zoomRangeChanged, this, &ScenarioTextEditManager::aboutTextEditZoomRangeChanged);
 }

@@ -24,6 +24,9 @@ namespace BusinessLogic
 				m_words = _count;
 			}
 		}
+		void addWords(int _count) {
+			m_words += _count;
+		}
 
 		/**
 		 * @brief Количество символов с пробелами
@@ -34,6 +37,9 @@ namespace BusinessLogic
 				m_charactersWithSpaces = _count;
 			}
 		}
+		void addCharactersWithSpaces(int _count) {
+			m_charactersWithSpaces += _count;
+		}
 
 		/**
 		 * @brief Количество символов без пробелов
@@ -43,6 +49,9 @@ namespace BusinessLogic
 			if (m_charactersWithoutSpaces != _count) {
 				m_charactersWithoutSpaces = _count;
 			}
+		}
+		void addCharactersWithoutSpaces(int _count) {
+			m_charactersWithoutSpaces += _count;
 		}
 
 	private:

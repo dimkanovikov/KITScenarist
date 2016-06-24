@@ -411,15 +411,13 @@ void ScenarioManager::aboutNavigatorSettingsUpdated()
 
 void ScenarioManager::aboutChronometrySettingsUpdated()
 {
-	aboutUpdateDuration(m_textEditManager->cursorPosition());
-
+	aboutRefreshDuration(m_textEditManager->cursorPosition());
 	m_textEditManager->reloadTextEditSettings();
 }
 
 void ScenarioManager::aboutCountersSettingsUpdated()
 {
-	aboutUpdateCounters();
-
+	aboutRefreshCounters();
 	m_textEditManager->reloadTextEditSettings();
 }
 
@@ -599,6 +597,14 @@ void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bo
 	}
 }
 
+void ScenarioManager::aboutRefreshDuration(int _cursorPosition)
+{
+	if (BusinessLogic::ChronometerFacade::chronometryUsed()) {
+		m_scenario->refresh();
+	}
+	aboutUpdateDuration(_cursorPosition);
+}
+
 void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 {
 	QString duration;
@@ -611,6 +617,12 @@ void ScenarioManager::aboutUpdateDuration(int _cursorPosition)
 	}
 
 	m_textEditManager->setDuration(duration);
+}
+
+void ScenarioManager::aboutRefreshCounters()
+{
+	m_scenario->refresh();
+	aboutUpdateCounters();
 }
 
 void ScenarioManager::aboutUpdateCounters()
@@ -846,6 +858,7 @@ void ScenarioManager::initConnections()
 
 	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneDescription);
 
+	connect(m_textEditManager, SIGNAL(textModeChanged()), this, SLOT(aboutRefreshCounters()));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSynopsis(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);

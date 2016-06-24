@@ -38,24 +38,23 @@ Counter CountersFacade::calculate(QTextDocument* _document, int _fromCursorPosit
 		//
 		QTextCursor cursor(_document);
 		cursor.setPosition(_fromCursorPosition);
-		cursor.setPosition(_toCursorPosition, QTextCursor::KeepAnchor);
-		QString text = cursor.selectedText();
+		do {
+			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 
-		if (calculateWords) {
-			counter.setWords(wordsCount(text.simplified()));
-		}
+			if (cursor.block().isVisible()) {
+				QString text = cursor.selectedText();
+				if (calculateWords) {
+					counter.addWords(wordsCount(text));
+				}
+				if (calculateCharacters) {
+					counter.addCharactersWithSpaces(charactersWithSpacesCount(text));
+					counter.addCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
+				}
+			}
 
-		if (calculateCharacters) {
-			//
-			// Когда текст получаем из QTextCursor'а, то строки в нём разделяются не \n,
-			// а UTF-символом разрыва параграфов
-			//
-			static const QChar paragraphSeparator(8233);
-			text = text.remove(paragraphSeparator);
-			counter.setCharactersWithSpaces(charactersWithSpacesCount(text));
-			text = text.simplified();
-			counter.setCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
-		}
+			cursor.movePosition(QTextCursor::NextCharacter);
+		} while (!cursor.atEnd()
+				 && cursor.position() < _toCursorPosition);
 	}
 
 	return counter;
@@ -64,28 +63,15 @@ Counter CountersFacade::calculate(QTextDocument* _document, int _fromCursorPosit
 BusinessLogic::Counter CountersFacade::calculateFull(QTextDocument* _document)
 {
 	Counter counter;
-	//
-	// Определим текст, который необходимо обсчитать
-	//
-	QTextCursor cursor(_document);
-	cursor.setPosition(0);
-	cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
-	QString text = cursor.selectedText();
-	//
-	// ... слова
-	//
-	counter.setWords(wordsCount(text.simplified()));
-	//
-	// ... символы
-	//
-	// Когда текст получаем из QTextCursor'а, то строки в нём разделяются не \n,
-	// а UTF-символом разрыва параграфов
-	//
-	static const QChar paragraphSeparator(8233);
-	text = text.remove(paragraphSeparator);
-	counter.setCharactersWithSpaces(charactersWithSpacesCount(text));
-	text = text.simplified();
-	counter.setCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
+	QTextBlock block = _document->begin();
+	while (block.isValid()) {
+		const Counter blockCounter = calculateFull(block);
+		counter.addWords(blockCounter.words());
+		counter.addCharactersWithoutSpaces(blockCounter.charactersWithoutSpaces());
+		counter.addCharactersWithSpaces(blockCounter.charactersWithSpaces());
+
+		block = block.next();
+	}
 
 	return counter;
 }
@@ -94,24 +80,23 @@ BusinessLogic::Counter CountersFacade::calculateFull(const QTextBlock& _block)
 {
 	Counter counter;
 	//
-	// Определим текст, который необходимо обсчитать
+	// Считаем только видимые блоки
 	//
-	QString text = _block.text();
-	//
-	// ... слова
-	//
-	counter.setWords(wordsCount(text.simplified()));
-	//
-	// ... символы
-	//
-	// Когда текст получаем из QTextCursor'а, то строки в нём разделяются не \n,
-	// а UTF-символом разрыва параграфов
-	//
-	static const QChar paragraphSeparator(8233);
-	text = text.remove(paragraphSeparator);
-	counter.setCharactersWithSpaces(charactersWithSpacesCount(text));
-	text = text.simplified();
-	counter.setCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
+	if (_block.isVisible()) {
+		//
+		// Определим текст, который необходимо обсчитать
+		//
+		QString text = _block.text();
+		//
+		// ... слова
+		//
+		counter.setWords(wordsCount(text));
+		//
+		// ... символы
+		//
+		counter.setCharactersWithSpaces(charactersWithSpacesCount(text));
+		counter.setCharactersWithoutSpaces(charactersWithoutSpacesCount(text));
+	}
 
 	return counter;
 }

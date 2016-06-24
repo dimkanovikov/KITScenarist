@@ -166,12 +166,18 @@ namespace ManagementLayer
 		/**
 		 * @brief Обновить хронометраж
 		 */
+		/** @{ */
+		void aboutRefreshDuration(int _cursorPosition);
 		void aboutUpdateDuration(int _cursorPosition);
+		/** @} */
 
 		/**
 		 * @brief Обновить счётчики
 		 */
+		/** @{ */
+		void aboutRefreshCounters();
 		void aboutUpdateCounters();
+		/** @} */
 
 		/**
 		 * @brief Обновить синопсис, если сменилась сцена

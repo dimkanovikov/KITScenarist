@@ -44,15 +44,6 @@ using BusinessLogic::ScenarioTextBlockInfo;
 
 namespace {
 	const int SCROLL_DELTA = 140;
-
-	/**
-	 * @brief Получить хэш текста
-	 */
-	static QByteArray textMd5Hash(const QString& _text) {
-		QCryptographicHash hash(QCryptographicHash::Md5);
-		hash.addData(_text.toUtf8());
-		return hash.result();
-	}
 }
 
 
@@ -96,7 +87,7 @@ void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocu
 	m_editor->setScenarioDocument(_document);
 	m_editor->setWatermark(_isDraft ? tr("DRAFT") : QString::null);
 	if (_document != 0) {
-		m_lastTextMd5Hash = ::textMd5Hash(_document->toPlainText());
+		m_lastTextMd5Hash = _document->scenarioXmlHash();
 	}
 
 	initEditorConnections();
@@ -401,6 +392,8 @@ void ScenarioTextEditWidget::updateTextMode(bool _outlineMode)
 			m_fastFormatWidget->show();
 		}
 	}
+
+	emit textModeChanged();
 }
 
 void ScenarioTextEditWidget::aboutUpdateTextStyle()
@@ -443,11 +436,13 @@ void ScenarioTextEditWidget::aboutCursorPositionChanged()
 
 void ScenarioTextEditWidget::aboutTextChanged()
 {
-	QByteArray currentTextMd5Hash = textMd5Hash(m_editor->document()->toPlainText());
-	if (m_lastTextMd5Hash != currentTextMd5Hash) {
-		emit textChanged();
-
-		m_lastTextMd5Hash = currentTextMd5Hash;
+	if (BusinessLogic::ScenarioTextDocument* scenario =
+		qobject_cast<BusinessLogic::ScenarioTextDocument*>(m_editor->document())) {
+		const QByteArray currentTextMd5Hash = scenario->scenarioXmlHash();
+		if (m_lastTextMd5Hash != currentTextMd5Hash) {
+			emit textChanged();
+			m_lastTextMd5Hash = currentTextMd5Hash;
+		}
 	}
 }
 
