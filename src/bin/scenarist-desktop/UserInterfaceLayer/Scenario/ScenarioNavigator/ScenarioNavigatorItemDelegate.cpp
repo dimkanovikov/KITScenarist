@@ -24,7 +24,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// Получим настройки стиля
 	//
-	QStyleOptionViewItemV4 opt = _option;
+	QStyleOptionViewItem opt = _option;
 	initStyleOption(&opt, _index);
 
 	//

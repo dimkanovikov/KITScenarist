@@ -22,9 +22,9 @@ namespace {
 	const char* IMAGE_FILE_FORMAT = "JPG";
 
 	/**
-	 * @brief Используем минимальное качество изображения (всё-таки у нас приложение не для фотографов)
+	 * @brief Используем низкое качество изображения (всё-таки у нас приложение не для фотографов)
 	 */
-	const int IMAGE_FILE_QUALITY = 20;
+	const int IMAGE_FILE_QUALITY = 30;
 }
 
 

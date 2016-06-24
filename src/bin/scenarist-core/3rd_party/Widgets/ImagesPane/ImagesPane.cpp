@@ -158,6 +158,16 @@ void ImagesPane::removeImage()
 		layoutItem = NULL;
 
 		emit imageRemoved(removedImage, removedImageSortOrder);
+
+		//
+		// Обновляем порядок сортировки для последующих изображений
+		//
+		for (int imageIndex = removedImageSortOrder; imageIndex < m_images.size(); ++imageIndex) {
+			QLayoutItem* imageForUpdateItem = m_layout->itemAt(imageIndex);
+			if (ImageLabel* imageForUpdate = qobject_cast<ImageLabel*>(imageForUpdateItem->widget())) {
+				imageForUpdate->setSortOrder(imageForUpdate->sortOrder() - 1);
+			}
+		}
 	}
 }
 

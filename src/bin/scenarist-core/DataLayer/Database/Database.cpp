@@ -573,6 +573,15 @@ void Database::updateDatabase(QSqlDatabase& _database)
 	}
 
 	//
+	// Сохраняем информацию об обновлении версии
+	//
+	q_checker.exec(
+		QString("INSERT INTO system_variables VALUES ('application-updated-to-version-%1', '%2')")
+			   .arg(QApplication::applicationVersion())
+			   .arg(QDateTime::currentDateTime().toString(Qt::ISODate))
+		);
+
+	//
 	// Обновляется версия программы
 	//
 	q_checker.exec(

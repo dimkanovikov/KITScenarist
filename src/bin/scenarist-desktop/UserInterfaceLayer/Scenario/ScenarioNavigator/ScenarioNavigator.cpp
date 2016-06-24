@@ -49,6 +49,11 @@ void ScenarioNavigator::setScenesCount(int _scenesCount)
 void ScenarioNavigator::setModel(QAbstractItemModel* _model)
 {
 	m_navigationTree->setModel(_model);
+
+	//
+	// Обновляем размер колонки со списком сцен, чтобы не появлялось горизонтальной прокрутки
+	//
+	m_navigationTree->resizeColumnToContents(0);
 }
 
 void ScenarioNavigator::setCurrentIndex(const QModelIndex& _index)

@@ -228,6 +228,7 @@ void ScenarioFastFormatWidget::catchFocusIfNeeded()
 			QTextCursor cursor = m_editor->textCursor();
 			cursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
 			m_editor->setTextCursor(cursor);
+			m_editor->clearFocus();
 			m_editor->setFocus();
 		}
 	}
