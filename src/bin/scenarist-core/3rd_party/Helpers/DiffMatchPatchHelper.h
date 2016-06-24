@@ -80,6 +80,7 @@ namespace {
 		result = result.remove(QRegularExpression("<review_comment(.*)>\n"));
 
 		result = TextEditHelper::removeXmlTags(result);
+		result = TextEditHelper::fromHtmlEscaped(result);
 		return result;
 	}
 }

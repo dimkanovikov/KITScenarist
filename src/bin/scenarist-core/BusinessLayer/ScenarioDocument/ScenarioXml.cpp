@@ -177,7 +177,7 @@ QString ScenarioXml::scenarioToXml()
 			//
 			// Получить текст под курсором
 			//
-			QString textToSave = currentBlock.text();
+			QString textToSave = TextEditHelper::toHtmlEscaped(currentBlock.text());
 
 			//
 			// Определить параметры текущего абзаца
@@ -398,7 +398,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			//
 			// Получить текст под курсором
 			//
-			QString textToSave = cursor.selectedText();
+			QString textToSave = TextEditHelper::toHtmlEscaped(cursor.selectedText());
 
 			//
 			// Определить параметры текущего абзаца
@@ -1084,7 +1084,7 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 
 			case QXmlStreamReader::Characters: {
 				if (!reader.isWhitespace()) {
-					QString textToInsert = reader.text().toString();
+					QString textToInsert = TextEditHelper::fromHtmlEscaped(reader.text().toString());
 
 					//
 					// Если необходимо так же вставляем префикс и постфикс стиля
