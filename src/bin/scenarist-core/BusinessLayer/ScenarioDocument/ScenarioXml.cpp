@@ -527,9 +527,12 @@ int ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelIt
 	int insertPosition = m_scenario->positionToInsertMime(_insertParent, _insertBefore);
 
 	//
+	// Если документ пуст
+	// Если происходит копирование, или вставка из другого источника
 	// Если пользователь не пытается вставить данные на своё же место
 	//
 	if (m_scenario->document()->isEmpty()
+		|| !_removeLastMime
 		|| (insertPosition != m_lastMimeFrom
 			&& insertPosition != m_lastMimeTo)) {
 		//
