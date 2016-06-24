@@ -18,7 +18,9 @@
 
 #include <UserInterfaceLayer/Export/ExportDialog.h>
 
-#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Helpers/FileHelper.h>
+
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <QDir>
@@ -59,7 +61,7 @@ void ExportManager::exportScenario(BusinessLogic::ScenarioDocument* _scenario,
 		//
 		// Покажем уведомление пользователю
 		//
-		ProgressWidget progress(m_exportDialog->parentWidget());
+		QLightBoxProgress progress(m_exportDialog->parentWidget());
 		progress.showProgress(tr("Export"), tr("Please wait. Export can take few minutes."));
 
 		//
@@ -152,7 +154,7 @@ void ExportManager::printPreviewScenario(BusinessLogic::ScenarioDocument* _scena
 	//
 	// Покажем уведомление пользователю
 	//
-	ProgressWidget progress(m_exportDialog->parentWidget());
+	QLightBoxProgress progress(m_exportDialog->parentWidget());
 	progress.showProgress(tr("Print Preview"), tr("Please wait. Preparing document to preview can take few minutes."));
 
 	//
@@ -311,5 +313,5 @@ void ExportManager::initExportDialog()
 		QFileInfo fileInfo(ProjectsManager::currentProject().path());
 		exportFileName = fileInfo.completeBaseName();
 	}
-	m_exportDialog->setExportFileName(exportFileName);
+	m_exportDialog->setExportFileName(FileHelper::systemSavebleFileName(exportFileName));
 }

@@ -14,7 +14,7 @@
 #include <Domain/Scenario.h>
 #include <Domain/ScenarioChange.h>
 
-#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Helpers/PasswordStorage.h>
 
 #include <WebLoader.h>
@@ -139,7 +139,7 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	//
 	// Информация для пользователя
 	//
-	ProgressWidget progress(m_view);
+	QLightBoxProgress progress(m_view);
 	progress.showProgress(tr("Authorizing"), tr("Checking correction of user name and password."));
 
 	//
@@ -219,7 +219,7 @@ void SynchronizationManager::aboutLogout()
 	//
 	// Информация для пользователя
 	//
-	ProgressWidget progress(m_view);
+	QLightBoxProgress progress(m_view);
 	progress.showProgress(tr("Authorizing"), tr("Close working session."));
 
 	//
@@ -263,7 +263,7 @@ void SynchronizationManager::aboutLoadProjects()
 		//
 		// Информация для пользователя
 		//
-		ProgressWidget progress(m_view);
+		QLightBoxProgress progress(m_view);
 		progress.showProgress(tr("Loading"), tr("Loading projects list from remote server."));
 
 		//

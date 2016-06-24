@@ -1,7 +1,7 @@
-#ifndef PROGRESSWIDGET_H
-#define PROGRESSWIDGET_H
+#ifndef QLIGHTBOXPROGRESS_H
+#define QLIGHTBOXPROGRESS_H
 
-#include <3rd_party/Widgets/QLightBoxWidget/qlightboxwidget.h>
+#include "qlightboxwidget.h"
 
 class QLabel;
 
@@ -9,12 +9,13 @@ class QLabel;
 /**
  * @brief Виджет прогресса
  */
-class ProgressWidget : public QLightBoxWidget
+class QLightBoxProgress : public QLightBoxWidget
 {
 	Q_OBJECT
 
 public:
-	explicit ProgressWidget(QWidget* _parent = 0, bool _followToHeadWidget = true);
+	explicit QLightBoxProgress(QWidget* _parent, bool _folowToHeadWidget = true);
+	~QLightBoxProgress();
 
 	/**
 	 * @brief Показать виджет с заданными заголовком и описание
@@ -27,11 +28,22 @@ public:
 	void setProgressText(const QString& _title, const QString& _description);
 
 	/**
+	 * @brief Установить значение прогресса
+	 * @note Если значение меньше нуля, или больше ста, то значение прогресса не отображается
+	 */
+	static void setProgressValue(int _value);
+
+	/**
 	 * @brief Скрыть виджет и просигнализировать пользователю, о том, что операция завершилась
 	 */
 	void finish();
 
 private:
+	/**
+	 * @brief Последний использовавшийся виджет прогресса
+	 */
+	static QLightBoxProgress* s_lastUsedWidget;
+
 	/**
 	 * @brief Заголовок
 	 */
@@ -43,4 +55,4 @@ private:
 	QLabel* m_description;
 };
 
-#endif // PROGRESSWIDGET_H
+#endif // QLIGHTBOXPROGRESS_H

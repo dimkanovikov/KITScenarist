@@ -12,7 +12,7 @@
 
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h>
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h>
-#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <QApplication>
@@ -117,7 +117,7 @@ QWidget* SettingsManager::view() const
 
 void SettingsManager::aboutResetSettings()
 {
-	ProgressWidget progress(m_view);
+	QLightBoxProgress progress(m_view);
 	progress.showProgress(tr("Restoring"),
 		tr("Please wait. Restoring settings to default values can take few minutes."));
 

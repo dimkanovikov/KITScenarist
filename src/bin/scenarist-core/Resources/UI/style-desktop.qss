@@ -330,15 +330,33 @@ ctkBasePopupWidget {
 }
 
 QProgressBar {
-    border-radius: 0px;
-    border: none;
-    background-color: #b3c4da;
-    max-height: 5px;
+	border-radius: 0px;
+	border: none;
+	background-color: #b3c4da;
+	max-height: 5px;
 }
 
 QProgressBar::chunk {
     background-color: palette(highlight);
 }
+
+/*
+ * Редактор строки маскирующийся под метку, когда он не в фокусе
+ */
+[editableLabel=true] {
+    font-weight: 800;
+}
+
+[editableLabel=true]::!hover {
+    border: none;
+    padding: 2px 1px 1px 0px;
+    background-color: palette(window);
+}
+
+[editableLabel=true]::hover, [editableLabel=true]::focus {
+    background-color: palette(base);
+}
+
 
 /*
  * Стили лайтбокса
@@ -354,4 +372,26 @@ QProgressBar::chunk {
 	background-color: palette(window);
 	border: 1px solid palette(dark);
 	padding: 8px 20px 10px 20px;
+}
+
+[lightBoxProgressTitle=true] {
+	font-size: 20pt;
+	font-weight: 500;
+	background-color: transparent;
+	color: white;
+	border: none;
+	margin: 20px 0px 0px 12px;
+}
+
+[lightBoxProgressIndicator=true] {
+	background-color: transparent;
+	color: white;
+	border: none;
+}
+
+[lightBoxProgressDescription=true] {
+	background-color: transparent;
+	color: white;
+	border: none;
+	margin: 0px 0px 0px 12px;
 }

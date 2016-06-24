@@ -16,7 +16,7 @@
 
 #include <UserInterfaceLayer/Import/ImportDialog.h>
 
-#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <QApplication>
@@ -50,7 +50,7 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 			//
 			// Покажем уведомление пользователю
 			//
-			ProgressWidget progress(m_importDialog->parentWidget());
+			QLightBoxProgress progress(m_importDialog->parentWidget());
 			progress.showProgress(tr("Import"), tr("Please wait. Import can take few minutes."));
 
 			//

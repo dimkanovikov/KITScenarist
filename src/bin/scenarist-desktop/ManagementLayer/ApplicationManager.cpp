@@ -22,7 +22,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Widgets/SideBar/SideBar.h>
-#include <3rd_party/Widgets/ProgressWidget/ProgressWidget.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <UserInterfaceLayer/ApplicationView.h>
@@ -759,7 +759,7 @@ void ApplicationManager::aboutExit()
 		//
 		// Выводим информацию для пользователя, о закрытии программы
 		//
-		ProgressWidget progress(m_view);
+		QLightBoxProgress progress(m_view);
 		progress.showProgress(tr("Exit from Application"), tr("Closing Databse Connections and Remove Temporatry Files."));
 
 		//
@@ -944,7 +944,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Покажем уведомление пользователю
 	//
-	ProgressWidget progress(m_view);
+	QLightBoxProgress progress(m_view);
 	progress.showProgress(tr("Loading Scenario"), tr("Please wait. Loading can take few minutes."));
 
 	//

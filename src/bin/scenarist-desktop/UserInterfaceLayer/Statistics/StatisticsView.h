@@ -4,11 +4,11 @@
 #include <QWidget>
 
 class FlatButton;
-class ProgressWidget;
 class QAbstractItemModel;
 class QCustomPlotExtended;
 class QFrame;
 class QLabel;
+class QLightBoxProgress;
 class QPrinter;
 class QStackedWidget;
 class QTextBrowser;
@@ -170,7 +170,7 @@ namespace UserInterface
 		/**
 		 * @brief Виджет перекрытие для отображения сообщения о формирующемся отчёте
 		 */
-		ProgressWidget* m_progress;
+		QLightBoxProgress* m_progress;
 	};
 }
 

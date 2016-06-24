@@ -14,6 +14,9 @@
 #include <3rd_party/Helpers/DiffMatchPatchHelper.h>
 #include <3rd_party/Helpers/PasswordStorage.h>
 
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
+
+#include <QApplication>
 #include <QCryptographicHash>
 #include <QTextBlock>
 
@@ -213,9 +216,12 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 	// Применяем патчи
 	//
 	QString newXml = currentXml;
+	int currentIndex = 0, max = _patches.size();
 	foreach (const QString& patch, _patches) {
 		const QString patchUncopressed = DatabaseHelper::uncompress(patch);
 		newXml = DiffMatchPatchHelper::applyPatchXml(newXml, patchUncopressed);
+		QLightBoxProgress::setProgressValue(++currentIndex * 100 / max);
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 	}
 
 	//
