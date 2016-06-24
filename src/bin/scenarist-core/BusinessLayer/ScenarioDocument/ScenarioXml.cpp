@@ -560,7 +560,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 							const QStringList dates = range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
 							for (int commentIndex = 0; commentIndex < comments.size(); ++commentIndex) {
 								writer.writeEmptyElement(NODE_REVIEW_COMMENT);
-								writer.writeAttribute(ATTRIBUTE_REVIEW_COMMENT, comments.at(commentIndex));
+								writer.writeAttribute(ATTRIBUTE_REVIEW_COMMENT, TextEditHelper::toHtmlEscaped(comments.at(commentIndex)));
 								writer.writeAttribute(ATTRIBUTE_REVIEW_AUTHOR, authors.at(commentIndex));
 								writer.writeAttribute(ATTRIBUTE_REVIEW_DATE, dates.at(commentIndex));
 							}
@@ -593,7 +593,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 		writer.writeStartElement("scene_group_footer");
 		writer.writeCDATA(QObject::tr("END OF GROUP", "ScenarioXml"));
 		writer.writeEndElement();
-		writer.writeEndElement(); // scene_group
 		--openedGroups;
 	}
 
@@ -604,7 +603,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 		writer.writeStartElement("folder_footer");
 		writer.writeCDATA(QObject::tr("END OF FOLDER", "ScenarioXml"));
 		writer.writeEndElement();
-		writer.writeEndElement(); // folder
 		--openedFolders;
 	}
 
