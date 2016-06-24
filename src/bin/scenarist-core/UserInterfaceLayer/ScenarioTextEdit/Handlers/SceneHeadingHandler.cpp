@@ -57,7 +57,7 @@ SceneHeadingHandler::SceneHeadingHandler(ScenarioTextEdit* _editor) :
 {
 }
 
-void SceneHeadingHandler::handleEnter(QKeyEvent*)
+void SceneHeadingHandler::handleEnter(QKeyEvent* _event)
 {
 	//
 	// Получим необходимые значения
@@ -112,7 +112,8 @@ void SceneHeadingHandler::handleEnter(QKeyEvent*)
 		//
 		// Если нужно автоматически перепрыгиваем к следующему блоку
 		//
-		if (autoJumpToNextBlock()
+		if (_event != 0 // ... чтобы таб не переводил на новую строку
+			&& autoJumpToNextBlock()
 			&& currentSection == SceneHeadingParser::SectionTime) {
 			//
 			// Сохраним параметры сцены

@@ -92,7 +92,7 @@ void CharacterHandler::prehandle()
 		editor()->complete(model, QString::null);
 	}
 }
-void CharacterHandler::handleEnter(QKeyEvent*)
+void CharacterHandler::handleEnter(QKeyEvent* _event)
 {
 	//
 	// Получим необходимые значения
@@ -144,7 +144,8 @@ void CharacterHandler::handleEnter(QKeyEvent*)
 		//
 		// Если нужно автоматически перепрыгиваем к следующему блоку
 		//
-		if (autoJumpToNextBlock()
+		if (_event != 0 // ... чтобы таб не переводил на новую строку
+			&& autoJumpToNextBlock()
 			&& currentSection == CharacterParser::SectionName) {
 			cursor.movePosition(QTextCursor::EndOfBlock);
 			editor()->setTextCursor(cursor);
