@@ -42,6 +42,7 @@ void StorageFacade::refreshStorages()
 	locationPhotoStorage()->refresh();
 	characterPhotoStorage()->refresh();
 
+	researchStorage()->refresh();
 	placeStorage()->refresh();
 	locationStorage()->refresh();
 	scenarioDayStorage()->refresh();
@@ -51,7 +52,6 @@ void StorageFacade::refreshStorages()
 //	scenarioStorage()->refresh();
 //	scenarioChangeStorage()->refresh();
 	scenarioDataStorage()->refresh();
-	researchStorage()->refresh();
 }
 
 PlaceStorage* StorageFacade::placeStorage()

@@ -56,6 +56,13 @@ void AbstractMapper::refresh(DomainObjectsItemModel* _model)
 		if (!_model->contains(domainObject)) {
 			_model->append(domainObject);
 		}
+		//
+		// ... уведомляем клиентов модели, что объект обновлися
+		//
+		else {
+			const QModelIndex domainObjectIndex = _model->indexForItem(domainObject);
+			emit _model->dataChanged(domainObjectIndex, domainObjectIndex);
+		}
 	}
 
 	//

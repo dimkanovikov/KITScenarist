@@ -48,7 +48,7 @@ namespace BusinessLogic
 		 * @brief Добавить элемент в сценарий
 		 * @note Позиция вставки определяется по позиции элемента в тексте
 		 */
-		void addItem(ResearchModelItem* _item, ResearchModelItem* _parentItem = 0);
+		void appendItem(ResearchModelItem* _item, ResearchModelItem* _parentItem = 0);
 
 		/**
 		 * @brief Вставить элемент после родственика
@@ -95,6 +95,12 @@ namespace BusinessLogic
 
 	private:
 		/**
+		 * @brief Перезагрузить данные разработки
+		 */
+		void reload();
+
+	private:
+		/**
 		 * @brief Корневой элемент дерева
 		 */
 		ResearchModelItem* m_rootItem;
@@ -103,6 +109,11 @@ namespace BusinessLogic
 		 * @brief Корневой элемент, для ветви разработки
 		 */
 		ResearchModelItem* m_researchRoot;
+
+		/**
+		 * @brief Таблица с данными разработки
+		 */
+		Domain::ResearchTable* m_researchData;
 	};
 }
 

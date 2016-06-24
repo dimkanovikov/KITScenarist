@@ -36,7 +36,8 @@ QString ResearchModel::MIME_TYPE = "application/x-scenarist/research-tree";
 ResearchModel::ResearchModel(QObject* _parent) :
 	QAbstractItemModel(_parent),
 	m_rootItem(new ResearchModelItem),
-	m_researchRoot(0)
+	m_researchRoot(0),
+	m_researchData(0)
 {
 	//
 	// Сценарий
@@ -80,30 +81,54 @@ ResearchModel::~ResearchModel()
 
 void ResearchModel::load(Domain::ResearchTable* _data)
 {
-	//
-	// Формируем карту разработок
-	// первыми в ней будут идти корневые элементы
-	//
-	QMap<Research*, QList<Research*> > researchMap;
-	foreach (Domain::DomainObject* domainObject, _data->toList()) {
-		if (Research* research = dynamic_cast<Research*>(domainObject)) {
-			if (researchMap.contains(research->parent())) {
-				QList<Research*> childs = researchMap.value(research->parent());
-				childs.append(research);
-				researchMap[research->parent()] = childs;
-			} else {
-				QList<Research*> childs;
-				childs.append(research);
-				researchMap[research->parent()] = childs;
-			}
+	if (m_researchData != _data) {
+		//
+		// TODO: делать корректные обновления, а не перестроение всей модели
+		//
+
+		if (m_researchData != 0) {
+			disconnect(m_researchData, &Domain::ResearchTable::rowsInserted, this, &ResearchModel::reload);
+			disconnect(m_researchData, &Domain::ResearchTable::rowsRemoved, this, &ResearchModel::reload);
+			disconnect(m_researchData, &Domain::ResearchTable::dataChanged, this, &ResearchModel::reload);
+		}
+
+		m_researchData = _data;
+
+		if (m_researchData != 0) {
+			connect(m_researchData, &Domain::ResearchTable::rowsInserted, this, &ResearchModel::reload);
+			connect(m_researchData, &Domain::ResearchTable::rowsRemoved, this, &ResearchModel::reload);
+			connect(m_researchData, &Domain::ResearchTable::dataChanged, this, &ResearchModel::reload);
 		}
 	}
 
-	//
-	// Обходим только корневые элементы дерева разработки
-	//
-	foreach (Research* research, researchMap.value(0)) {
-		::populateResearchTree(m_researchRoot, research, researchMap);
+	clear();
+
+	if (m_researchData != 0) {
+		//
+		// Формируем карту разработок
+		// первыми в ней будут идти корневые элементы
+		//
+		QMap<Research*, QList<Research*> > researchMap;
+		foreach (Domain::DomainObject* domainObject, m_researchData->toList()) {
+			if (Research* research = dynamic_cast<Research*>(domainObject)) {
+				if (researchMap.contains(research->parent())) {
+					QList<Research*> childs = researchMap.value(research->parent());
+					childs.append(research);
+					researchMap[research->parent()] = childs;
+				} else {
+					QList<Research*> childs;
+					childs.append(research);
+					researchMap[research->parent()] = childs;
+				}
+			}
+		}
+
+		//
+		// Обходим только корневые элементы дерева разработки
+		//
+		foreach (Research* research, researchMap.value(0)) {
+			::populateResearchTree(m_researchRoot, research, researchMap);
+		}
 	}
 }
 
@@ -143,7 +168,7 @@ void ResearchModel::prependItem(ResearchModelItem* _item, ResearchModelItem* _pa
 	}
 }
 
-void ResearchModel::addItem(ResearchModelItem* _item, ResearchModelItem* _parentItem)
+void ResearchModel::appendItem(ResearchModelItem* _item, ResearchModelItem* _parentItem)
 {
 	//
 	// Если родитель не задан им становится сам сценарий
@@ -498,4 +523,11 @@ QModelIndex ResearchModel::indexForItem(ResearchModelItem* _item) const
 	}
 
 	return index(row, 0, parent);
+}
+
+void ResearchModel::reload()
+{
+	emit beginResetModel();
+	load(m_researchData);
+	emit endResetModel();
 }

@@ -169,7 +169,7 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)
 		ResearchModelItem* newResearchItem = new ResearchModelItem(newResearch);
 		if (selectedResearchItem->research()->type() == Research::ResearchRoot
 			|| m_dialog->insertResearchInParent()) {
-			m_model->addItem(newResearchItem, parentResearchItem);
+			m_model->appendItem(newResearchItem, parentResearchItem);
 		} else {
 			m_model->insertItem(newResearchItem, selectedResearchItem);
 		}
@@ -444,7 +444,7 @@ void ResearchManager::initConnections()
 			// Добавляем его в дерево
 			//
 			ResearchModelItem* newResearchItem = new ResearchModelItem(newResearch);
-			m_model->addItem(newResearchItem, m_currentResearchItem);
+			m_model->appendItem(newResearchItem, m_currentResearchItem);
 
 			emit researchChanged();
 		}
