@@ -93,7 +93,7 @@ void ScenarioReviewItemDelegate::paint(QPainter* _painter, const QStyleOptionVie
 	//
 	// Получим настройки стиля
 	//
-	QStyleOptionViewItemV4 opt = _option;
+	QStyleOptionViewItem opt = _option;
 	initStyleOption(&opt, _index);
 
 	//

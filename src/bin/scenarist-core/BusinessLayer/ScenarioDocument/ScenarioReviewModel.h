@@ -146,6 +146,11 @@ namespace BusinessLogic {
 			int endPosition() const;
 
 			/**
+			 * @brief Позиция перед концом
+			 */
+			int beforeEndPosition() const;
+
+			/**
 			 * @brief Цвет выделения
 			 */
 			/** @{ */

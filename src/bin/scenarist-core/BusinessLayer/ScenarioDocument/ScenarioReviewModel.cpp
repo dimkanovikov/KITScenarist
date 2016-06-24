@@ -466,6 +466,11 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 		}
 
 		//
+		// Перенос строки
+		//
+		const bool lineBreak = _added > 1 && (_added - _removed == 1);
+
+		//
 		// Прорабатываем удаление
 		//
 		if (_removed > 0) {
@@ -478,16 +483,21 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 				if (mark.startPosition < _position
 					&& mark.endPosition() > _position) {
 					//
-					// ... тело
+					// корректируем, только  если это не перенос строки
 					//
-					if (mark.endPosition() > removeEndPosition) {
-						mark.length -= _removed;
-					}
-					//
-					// ... конец
-					//
-					else {
-						mark.length -= mark.endPosition() - _position;
+					if (!lineBreak) {
+						//
+						// ... тело
+						//
+						if (mark.endPosition() > removeEndPosition) {
+							mark.length -= _removed;
+						}
+						//
+						// ... конец
+						//
+						else {
+							mark.length = _position - mark.startPosition;
+						}
 					}
 				}
 				//
@@ -522,12 +532,16 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 				// Скорректировать размер, если текст вставлен внутри заметки
 				//
 				if (mark.startPosition < _position && mark.endPosition() >= _position) {
-					mark.length += _added;
+					if (lineBreak) {
+						mark.length += 1;
+					} else {
+						mark.length += _added;
+					}
 				}
 				//
 				// Скорректировать позицию заметки после вставленного текст
 				//
-				else if (mark.startPosition > _position) {
+				else {
 					mark.startPosition += _added;
 				}
 			}
@@ -542,7 +556,7 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 	for (int markIndex = 0; markIndex < m_reviewMarks.size(); ++markIndex) {
 		const ReviewMarkInfo& mark = m_reviewMarks[markIndex];
 		m_reviewMap.insert(mark.startPosition, markIndex);
-		m_reviewMap.insert(mark.endPosition(), markIndex);
+		m_reviewMap.insert(mark.beforeEndPosition(), markIndex);
 	}
 
 
@@ -567,6 +581,9 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 							QMap<int, int>::iterator iter = m_reviewMap.lowerBound(startPosition);
 							if (iter != m_reviewMap.end()) {
 								insertPosition = iter.value();
+								if (m_reviewMarks[insertPosition].startPosition < startPosition) {
+									++insertPosition;
+								}
 							}
 
 							ReviewMarkInfo newMark;
@@ -584,32 +601,49 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 							newMark.dates = range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
 
 							//
-							// Если возможно, объединяем заметку с предыдущей
+							// Если это не первая заметка
 							//
 							if (insertPosition > 0) {
 								const int prevMarkIndex = insertPosition - 1;
 								ReviewMarkInfo& prevMark = m_reviewMarks[prevMarkIndex];
-								if ((prevMark.startPosition + prevMark.length) == (newMark.startPosition - 1)
-									&& prevMark.foreground == newMark.foreground
+								//
+								// Если стили одинаковы
+								//
+								if (prevMark.foreground == newMark.foreground
 									&& prevMark.background == newMark.background
 									&& prevMark.comments == newMark.comments
 									&& prevMark.authors == newMark.authors
 									&& prevMark.dates == newMark.dates) {
 									//
-									// Обновляем сохранённую заметку
+									// Проверяем, можно ли её объединить с предыдущей
 									//
-									const int oldEndPos = prevMark.endPosition();
-									prevMark.length += 1 + newMark.length;
-									//
-									// Обновляем карту
-									//
-									m_reviewMap.remove(oldEndPos);
-									m_reviewMap.insert(prevMark.endPosition(), prevMarkIndex);
+									if (prevMark.endPosition() == newMark.startPosition - 1) {
+										//
+										// Обновляем сохранённую заметку
+										//
+										const int oldEndPos = prevMark.endPosition();
+										prevMark.length += 1 + newMark.length;
+										//
+										// Обновляем карту
+										//
+										m_reviewMap.remove(oldEndPos);
+										m_reviewMap.insert(prevMark.beforeEndPosition(), prevMarkIndex);
 
+										//
+										// Переходим к обработке следующего элемента
+										//
+										continue;
+									}
 									//
-									// Переходим к обработке следующего элемента
+									// А может быть она итак уже в неё входит
 									//
-									continue;
+									else if (prevMark.startPosition < newMark.startPosition
+											 && prevMark.endPosition() >= newMark.endPosition()) {
+										//
+										// Тогда просто игнорируем эту заметку
+										//
+										continue;
+									}
 								}
 							}
 
@@ -618,7 +652,7 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 							m_reviewMarks.insert(insertPosition, newMark);
 							//
 							m_reviewMap.insert(newMark.startPosition, insertPosition);
-							m_reviewMap.insert(newMark.endPosition(), insertPosition);
+							m_reviewMap.insert(newMark.beforeEndPosition(), insertPosition);
 							while (iter != m_reviewMap.end()) {
 								*iter = iter.value() + 1;
 								++iter;
@@ -637,5 +671,10 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 
 int ScenarioReviewModel::ReviewMarkInfo::endPosition() const
 {
-	return startPosition + length - 1;
+	return startPosition + length;
+}
+
+int ScenarioReviewModel::ReviewMarkInfo::beforeEndPosition() const
+{
+	return endPosition() - 1;
 }
