@@ -637,10 +637,12 @@ void ApplicationManager::aboutUpdateLastChangeInfo()
 
 	QString lastChange;
 	if (scenarioChange != 0) {
+		QDateTime changeDatetime = scenarioChange->datetime();
+		changeDatetime.setTimeSpec(Qt::UTC);
 		lastChange =
 			QString("%1: %2 %3")
 			.arg(tr("Modified"))
-			.arg(scenarioChange->datetime().toString("dd.MM.yyyy hh:mm:ss"))
+			.arg(changeDatetime.toLocalTime().toString("dd.MM.yyyy hh:mm:ss"))
 			.arg(scenarioChange->user());
 	}
 	m_tabs->setIndicatorAdditionalInfo(lastChange);
