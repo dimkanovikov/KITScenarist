@@ -1850,7 +1850,8 @@ void PageTextEditPrivate::paintWatermark(QPainter* _painter)
 
 void PageTextEditPrivate::sendControlMouseEvent(QMouseEvent* e)
 {
-	QScopedPointer<QMouseEvent> correctedEvent(correctMousePosition(e));
+	QScopedPointer<QMouseEvent> correctedEvent(
+		new QMouseEvent(e->type(), correctMousePosition(e->pos()), e->button(), e->buttons(), e->modifiers()));
 	sendControlEvent(correctedEvent.data());
 	if (correctedEvent->isAccepted()) {
 		e->accept();
@@ -1859,7 +1860,19 @@ void PageTextEditPrivate::sendControlMouseEvent(QMouseEvent* e)
 	}
 }
 
-QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
+void PageTextEditPrivate::sendControlContextMenuEvent(QContextMenuEvent* e)
+{
+	QScopedPointer<QContextMenuEvent> correctedEvent(
+		new QContextMenuEvent(e->reason(), correctMousePosition(e->pos())));
+	sendControlEvent(correctedEvent.data());
+	if (correctedEvent->isAccepted()) {
+		e->accept();
+	} else {
+		e->ignore();
+	}
+}
+
+QPoint PageTextEditPrivate::correctMousePosition(const QPoint& _eventPos)
 {
 	Q_Q(PageTextEdit);
 
@@ -1872,7 +1885,7 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 	// Суть её заключается в том, чтобы найти ближайшую корректную позицию мыши.
 	//
 
-	QPoint localPos = viewport->mapFromParent(_event->pos());
+	QPoint localPos = viewport->mapFromParent(_eventPos);
 	QTextCursor cursor = q->textCursor();
 	//
 	// Если получили блок над указателем
@@ -1994,7 +2007,8 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 	localPos.setY(q->cursorRect(cursor).center().y());
 	localPos = viewport->mapToParent(localPos);
 
-	return new QMouseEvent(_event->type(), localPos, _event->button(), _event->buttons(), _event->modifiers());
+	return localPos;
+//	return new QMouseEvent(_event->type(), localPos, _event->button(), _event->buttons(), _event->modifiers());
 }
 
 void PageTextEditPrivate::paint(QPainter *p, QPaintEvent *e)
@@ -2152,7 +2166,7 @@ bool PageTextEdit::focusNextPrevChild(bool next)
 void PageTextEdit::contextMenuEvent(QContextMenuEvent *e)
 {
 	Q_D(PageTextEdit);
-	d->sendControlEvent(e);
+	d->sendControlContextMenuEvent(e);
 }
 #endif // QT_NO_CONTEXTMENU
 

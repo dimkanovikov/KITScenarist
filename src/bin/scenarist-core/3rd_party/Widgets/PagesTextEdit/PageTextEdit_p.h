@@ -207,7 +207,10 @@ public:
 	/**
 	 * @brief Отправить скорректированное событие о взаимодействии мышью
 	 */
+	/** @{ */
 	void sendControlMouseEvent(QMouseEvent *e);
+	void sendControlContextMenuEvent(QContextMenuEvent *e);
+	/** @} */
 
 private:
 	/**
@@ -215,7 +218,7 @@ private:
 	 * @note Используется в событиях связанных с мышью из-за того, что при наличии невидимых блоков
 	 *		 в документе, стандартная реализация иногда скачет сильно вниз
 	 */
-	QMouseEvent* correctMousePosition(QMouseEvent* _event);
+	QPoint correctMousePosition(const QPoint& _eventPos);
 };
 #endif // QT_NO_TEXTEDIT
 
