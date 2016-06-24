@@ -268,6 +268,7 @@ void StandardKeyHandler::handleDown(QKeyEvent* _event)
 			while (!cursor.atEnd()
 				   && !cursor.block().isVisible()) {
 				cursor.movePosition(QTextCursor::NextBlock, cursorMoveMode);
+				cursor.movePosition(QTextCursor::EndOfBlock, cursorMoveMode);
 			}
 
 			//
