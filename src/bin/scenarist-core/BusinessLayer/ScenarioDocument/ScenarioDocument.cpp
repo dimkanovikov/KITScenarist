@@ -442,16 +442,28 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	// Если были удалены данные
 	//
 	if (_charsRemoved > 0) {
+		int position = _position;
+
+		//
+		// Если бэкспейс или делит, то нужно сместить все элементы, включая тот, после блока в
+		// котором он нажат
+		//
+		if (_charsAdded == 0 && _charsRemoved == 1 && _position > 0) {
+			if (m_document->characterAt(_position) == QChar(QChar::ParagraphSeparator)) {
+				++position;
+			}
+		}
+
 		//
 		// Удаляем элементы начиная с того, который находится под курсором, если курсор в начале
 		// строки, или со следующего за курсором, если курсор не в начале строки
 		//
-		QMap<int, ScenarioModelItem*>::iterator iter = m_modelItems.lowerBound(_position);
+		QMap<int, ScenarioModelItem*>::iterator iter = m_modelItems.lowerBound(position);
 		const int charsAddedDelta = _charsAdded - _charsRemoved;
 		const int charsRemovedDelta = _charsRemoved - _charsAdded;
 		while (iter != m_modelItems.end()
-			   && iter.key() >= _position
-			   && iter.key() < (_position + _charsRemoved)) {
+			   && iter.key() >= position
+			   && iter.key() < (position + _charsRemoved)) {
 			//
 			// Элемент для удаления
 			//
@@ -463,7 +475,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				// кто был удалён тут по причине не самого оптимального алгоритма
 				//
 				if (itemToDelete->hasChildren()) {
-					const int charsModified = itemToDelete->endPosition() - _position;
+					const int charsModified = itemToDelete->endPosition() - position;
 					if (_charsAdded < charsModified + charsAddedDelta) {
 						_charsAdded = charsModified + charsAddedDelta;
 					}
@@ -503,11 +515,13 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 
 		//
 		// Если нажат энтер, то нужно сместить все элементы, включая тот, перед блоком
-		// которого он нажат
+		// которого он нажат, а если не энтер, то все, после нажатого символа
 		//
 		if (_charsAdded == 1 && _charsRemoved == 0) {
 			if (m_document->characterAt(_position) == QChar(QChar::ParagraphSeparator)) {
 				--position;
+			} else {
+				++position;
 			}
 		}
 
