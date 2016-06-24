@@ -486,6 +486,30 @@ void ScenarioTextEdit::redoReimpl()
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 {
 	//
+	// Отмену и повтор последнего действия, делаем без последующей обработки
+	//
+	// Если так не делать, то это приведёт к вставке странных символов, которые непонятно откуда берутся :(
+	// Например:
+	// 1. после реплики идёт время и место
+	// 2. вставляем после реплики описание действия
+	// 3. отменяем последнее действие
+	// 4. в последующем времени и месте появляется символ "кружочек со стрелочкой"
+	//
+	// FIXME: разобраться
+	//
+	if (_event == QKeySequence::Undo
+		|| _event == QKeySequence::Redo) {
+		if (_event == QKeySequence::Undo) {
+			undoReimpl();
+		}
+		else if (_event == QKeySequence::Redo) {
+			redoReimpl();
+		}
+		_event->accept();
+		return;
+	}
+
+	//
 	// Получим обработчик
 	//
 	KeyProcessingLayer::KeyPressHandlerFacade* handler =
@@ -568,21 +592,9 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 	//
 	// Переопределяем
 	//
-	// ... отмену последнего действия
-	//
-	if (_event == QKeySequence::Undo) {
-		undoReimpl();
-	}
-	//
-	// ... повтор последнего действия
-	//
-	else if (_event == QKeySequence::Redo) {
-		redoReimpl();
-	}
-	//
 	// ... перевод курсора к следующему символу
 	//
-	else if (_event == QKeySequence::MoveToNextChar) {
+	if (_event == QKeySequence::MoveToNextChar) {
 		moveCursor(QTextCursor::NextCharacter);
 		while (!textCursor().atEnd()
 			   && (!textCursor().block().isVisible()
