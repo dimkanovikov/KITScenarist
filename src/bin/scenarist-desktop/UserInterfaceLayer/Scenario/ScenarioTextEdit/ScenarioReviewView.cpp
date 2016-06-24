@@ -153,15 +153,39 @@ void ScenarioReviewView::aboutContextMenuRequested(const QPoint& _pos)
 	QAction* reply = menu->addAction(tr("Reply"));
 	QAction* done = menu->addAction(tr("Done"));
 	done->setCheckable(true);
-	done->setChecked(model()->data(currentIndex(), ScenarioReviewModel::IsDoneRole).toBool());
 	menu->addSeparator();
 	QAction* remove = menu->addAction(tr("Remove"));
+
+	//
+	// Если выделено несколько элементов
+	//
+	if (selectedIndexes().size() > 1) {
+		edit->setEnabled(false);
+		reply->setEnabled(false);
+		bool isDone = true;
+		foreach (const QModelIndex& index, selectedIndexes()) {
+			if (index.data(ScenarioReviewModel::IsDoneRole).toBool() == false) {
+				isDone = false;
+				break;
+			}
+		}
+		done->setChecked(isDone);
+	}
+	//
+	// Если выделен один элемент
+	//
+	else {
+		done->setChecked(model()->data(currentIndex(), ScenarioReviewModel::IsDoneRole).toBool());
+	}
 
 	//
 	// Определим комментарий над коротым нажата кнопка мыши
 	//
 	const int y = _pos.y() - visualRect(currentIndex()).top();
-	const int commentIndex = ScenarioReviewItemDelegate::commentIndexFor(currentIndex(), y, this);
+	const int commentIndex =
+		selectedIndexes().size() > 1
+			? 0
+			: ScenarioReviewItemDelegate::commentIndexFor(currentIndex(), y, this);
 
 	QAction* toggled = menu->exec(mapToGlobal(_pos));
 	if (toggled != 0) {
@@ -221,17 +245,28 @@ void ScenarioReviewView::aboutReply()
 
 void ScenarioReviewView::aboutDone(bool _done)
 {
-	if (currentIndex().isValid()) {
-		ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model());
-		reviewModel->setReviewMarkIsDone(currentIndex(), _done);
+	foreach (const QModelIndex& index, selectedIndexes()) {
+		if (index.isValid()) {
+			ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model());
+			reviewModel->setReviewMarkIsDone(index, _done);
+		}
 	}
 }
 
 void ScenarioReviewView::aboutDelete(int _commentIndex)
 {
-	if (currentIndex().isValid()) {
-		ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model());
-		reviewModel->removeMark(currentIndex(), _commentIndex);
+	//
+	// Перед удалением, сортируем список индексов в обратном порядке,
+	// чтобы не пересчитывать индексы после удаления
+	//
+	QModelIndexList indexesToDelete = selectedIndexes();
+	qSort(indexesToDelete.begin(), indexesToDelete.end(), qGreater<QModelIndex>());
+
+	foreach (const QModelIndex& index, indexesToDelete) {
+		if (index.isValid()) {
+			ScenarioReviewModel* reviewModel = qobject_cast<ScenarioReviewModel*>(model());
+			reviewModel->removeMark(index, _commentIndex);
+		}
 	}
 }
 
@@ -239,6 +274,7 @@ void ScenarioReviewView::initView()
 {
 	setContextMenuPolicy(Qt::CustomContextMenu);
 
+	setSelectionMode(QAbstractItemView::ExtendedSelection);
 	setItemDelegate(new ScenarioReviewItemDelegate(this));
 	setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	setResizeMode(QListView::Adjust);

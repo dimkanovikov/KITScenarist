@@ -209,8 +209,7 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	// Замещаем его обновлённым
 	//
 	cursor.removeSelectedText();
-	m_xmlHandler->xmlToScenario(xmlsForUpdate.first.plainPos,
-		ScenarioXml::makeMimeFromXml(xmlsForUpdate.second.xml));
+	m_xmlHandler->xmlToScenario(selectionStartPos, ScenarioXml::makeMimeFromXml(xmlsForUpdate.second.xml));
 	cursor.endEditBlock();
 
 	//

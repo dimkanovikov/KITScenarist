@@ -81,6 +81,14 @@ namespace {
 
 		return format;
 	}
+
+	/**
+	 * @brief Обновить ревизию блока
+	 * @note Это приходится делать вручную, т.к. свойства рецнзирования не отслеживаются автоматически
+	 */
+	static void updateBlockRevision(QTextCursor& _cursor) {
+		_cursor.block().setRevision(_cursor.block().revision() + 1);
+	}
 }
 
 
@@ -157,6 +165,8 @@ bool ScenarioReviewModel::removeRows(int _row, int _count, const QModelIndex& _p
 					if (!cursor.atBlockStart()) {
 						const ScenarioBlockStyle::Type type = ScenarioBlockStyle::forBlock(cursor.block());
 						const ScenarioBlockStyle style = ScenarioTemplateFacade::getTemplate().blockStyle(type);
+
+						::updateBlockRevision(cursor);
 						cursor.setCharFormat(style.charFormat());
 					}
 					//
@@ -225,6 +235,8 @@ void ScenarioReviewModel::setReviewMarkComment(int _startPosition, int _length, 
 		format.setProperty(ScenarioBlockStyle::PropertyComments, QStringList() << _comment);
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, QStringList() << ::userName());
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, QStringList() << QDateTime::currentDateTime().toString(Qt::ISODate));
+
+		::updateBlockRevision(cursor);
 		cursor.mergeCharFormat(format);
 
 		emit reviewChanged();
@@ -260,6 +272,8 @@ void ScenarioReviewModel::addReviewMarkComment(const QModelIndex& _index, const 
 		format.setProperty(ScenarioBlockStyle::PropertyComments, comments);
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, authors);
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, dates);
+
+		::updateBlockRevision(cursor);
 		cursor.mergeCharFormat(format);
 
 		emit reviewChanged();
@@ -288,6 +302,8 @@ void ScenarioReviewModel::updateReviewMarkComment(const QModelIndex& _index, int
 		format.setProperty(ScenarioBlockStyle::PropertyComments, comments);
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsAuthors, authors);
 		format.setProperty(ScenarioBlockStyle::PropertyCommentsDates, dates);
+
+		::updateBlockRevision(cursor);
 		cursor.mergeCharFormat(format);
 
 		emit reviewChanged();
@@ -312,6 +328,8 @@ void ScenarioReviewModel::setReviewMarkIsDone(const QModelIndex& _index, bool _i
 			QTextCharFormat format;
 			format.setProperty(ScenarioBlockStyle::PropertyIsReviewMark, true);
 			format.setProperty(ScenarioBlockStyle::PropertyIsDone, _isDone);
+
+			::updateBlockRevision(cursor);
 			cursor.mergeCharFormat(format);
 
 			emit reviewChanged();
@@ -623,6 +641,7 @@ void ScenarioReviewModel::aboutUpdateReviewModel(int _position, int _removed, in
 										//
 										const int oldEndPos = prevMark.endPosition();
 										prevMark.length += 1 + newMark.length;
+										prevMark.isDone = newMark.isDone;
 										//
 										// Обновляем карту
 										//
