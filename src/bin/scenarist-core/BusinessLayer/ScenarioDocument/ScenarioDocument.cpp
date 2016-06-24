@@ -555,9 +555,9 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	}
 
 	//
-	// Если были добавлены данные
+	// Если были изменены данные
 	//
-	if (_charsAdded > 0) {
+	if (_charsAdded > 0 || _charsRemoved > 0) {
 		//
 		// получить первый блок и обновить/создать его
 		// идти по документу, до конца вставленных символов и добавлять блоки

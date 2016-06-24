@@ -40,7 +40,7 @@ float PagesChronometer::calculateFrom(
 			.toInt();
 
 	//
-	// Высчитываем длительность строки на странице, из расчёта что на одной странице - 50 строк
+	// Высчитываем длительность строки на странице, из знания о том, сколько строк на странице
 	//
 	const float LINES_IN_PAGE = 54;
 	const float LINE_CHRON = seconds / LINES_IN_PAGE;
