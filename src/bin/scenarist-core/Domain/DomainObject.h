@@ -74,7 +74,7 @@ namespace Domain
 		explicit DomainObjectsItemModel(QObject* _parent = 0);
 
 	public:
-		virtual QModelIndex index(int _row, int _column, const QModelIndex& _parent) const;
+		virtual QModelIndex index(int _row, int _column, const QModelIndex& _parent = QModelIndex()) const;
 		virtual QModelIndex parent(const QModelIndex &) const;
 		virtual int rowCount(const QModelIndex&) const;
 		virtual int columnCount(const QModelIndex&) const;

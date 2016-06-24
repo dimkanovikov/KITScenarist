@@ -154,30 +154,13 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)
 		Research* parentResearch = parentResearchItem->research();
 
 		//
-		// Создаём новый элемент
+		// Сохраняем новый элемент
 		//
-		Research* newResearch =
-			StorageFacade::researchStorage()->storeResearch(
-				parentResearch,
-				(Research::Type)m_dialog->researchType(),
-				insertPosition,
-				m_dialog->researchName());
-
-		//
-		// Добавляем его в дерево
-		//
-		ResearchModelItem* newResearchItem = new ResearchModelItem(newResearch);
-		if (selectedResearchItem->research()->type() == Research::ResearchRoot
-			|| m_dialog->insertResearchInParent()) {
-			m_model->appendItem(newResearchItem, parentResearchItem);
-		} else {
-			m_model->insertItem(newResearchItem, selectedResearchItem);
-		}
-
-		//
-		// Выбираем его в представлении
-		//
-		m_view->selectItem(m_model->indexForItem(newResearchItem));
+		StorageFacade::researchStorage()->storeResearch(
+			parentResearch,
+			(Research::Type)m_dialog->researchType(),
+			insertPosition,
+			m_dialog->researchName());
 
 		emit researchChanged();
 	}
@@ -273,7 +256,6 @@ void ResearchManager::removeResearch(const QModelIndex& _index)
 		//
 		// ... удалим
 		//
-		m_model->removeItem(researchItem);
 		DataStorageLayer::StorageFacade::researchStorage()->removeResearch(research);
 
 		//
@@ -301,7 +283,10 @@ void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const 
 		}
 
 		case Research::Folder:
-		case Research::Text: {
+		case Research::Text:
+		case Research::Url:
+		case Research::ImagesGallery:
+		case Research::Image: {
 			showAdd = true;
 			showRemove = true;
 			break;

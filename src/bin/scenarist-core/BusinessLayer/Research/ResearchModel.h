@@ -4,6 +4,7 @@
 #include <QAbstractItemModel>
 
 namespace Domain {
+	class Research;
 	class ResearchTable;
 }
 
@@ -98,6 +99,26 @@ namespace BusinessLogic
 		 * @brief Перезагрузить данные разработки
 		 */
 		void reload();
+
+		/**
+		 * @brief Найти элемент модели, в который вложен заданный элемент разработки
+		 */
+		ResearchModelItem* findResearchModelItem(ResearchModelItem* _item, Domain::Research* _researchParent);
+
+		/**
+		 * @brief В таблицу разработки были добавлены данные
+		 */
+		void researchRowsInserted(const QModelIndex& _parent, int _first, int _last);
+
+		/**
+		 * @brief Из таблицы разработки были удалены данные
+		 */
+		void researchRowsRemoved(const QModelIndex& _parent, int _first, int _last);
+
+		/**
+		 * @brief В таблице разработки были изменены данные
+		 */
+		void researchDataChanged(const QModelIndex& _topLeft, const QModelIndex& _bottomRight);
 
 	private:
 		/**

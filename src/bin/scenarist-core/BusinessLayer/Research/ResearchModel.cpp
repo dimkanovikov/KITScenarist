@@ -85,13 +85,13 @@ void ResearchModel::load(Domain::ResearchTable* _data)
 		m_researchData = _data;
 
 		//
-		// TODO: делать корректные обновления, а не перестроение всей модели
+		// Делаем обновления модели разработки, при изменении данных таблицы с данными
 		//
 
 		if (m_researchData != 0) {
-			connect(m_researchData, &Domain::ResearchTable::rowsInserted, this, &ResearchModel::reload);
-			connect(m_researchData, &Domain::ResearchTable::rowsRemoved, this, &ResearchModel::reload);
-			connect(m_researchData, &Domain::ResearchTable::dataChanged, this, &ResearchModel::reload);
+			connect(m_researchData, &Domain::ResearchTable::rowsInserted, this, &ResearchModel::researchRowsInserted);
+			connect(m_researchData, &Domain::ResearchTable::rowsAboutToBeRemoved, this, &ResearchModel::researchRowsRemoved);
+			connect(m_researchData, &Domain::ResearchTable::dataChanged, this, &ResearchModel::researchDataChanged);
 		}
 	}
 
@@ -524,4 +524,161 @@ void ResearchModel::reload()
 	emit beginResetModel();
 	load(m_researchData);
 	emit endResetModel();
+}
+
+ResearchModelItem* ResearchModel::findResearchModelItem(ResearchModelItem* _item, Research* _researchParent)
+{
+	ResearchModelItem* result = 0;
+	//
+	// Если текущий элемент искомый
+	//
+	if (_item->research() == _researchParent) {
+		result = _item;
+	}
+	//
+	// Если нет, то проверяем его детей
+	//
+	else if (_item->hasChildren()) {
+		for (int childIndex = 0; childIndex < _item->childCount(); ++childIndex) {
+			result = findResearchModelItem(_item->childAt(childIndex), _researchParent);
+			if (result != 0) {
+				break;
+			}
+		}
+	}
+
+	return result;
+}
+
+void ResearchModel::researchRowsInserted(const QModelIndex& _parent, int _first, int _last)
+{
+	Q_UNUSED(_parent);
+
+	//
+	// Получим добавленные элементы разработки
+	//
+	for (int row = _first; row <= _last; ++row) {
+		QModelIndex itemIndex = m_researchData->index(row, 0);
+		Domain::DomainObject* domainObject = m_researchData->itemForIndex(itemIndex);
+		if (Research* research = dynamic_cast<Research*>(domainObject)) {
+			//
+			// Определим родителя
+			//
+			ResearchModelItem* researchParent = 0;
+			if (research->parent() == 0) {
+				researchParent = m_researchRoot;
+			} else {
+				researchParent = findResearchModelItem(m_researchRoot, research->parent());
+			}
+			//
+			// Добавим в модель
+			//
+			bool isPrepend = false;
+			ResearchModelItem* researchSibling = 0;
+			if (researchParent->hasChildren()) {
+				for (int childIndex = 0; childIndex < researchParent->childCount(); ++childIndex) {
+					if (researchParent->childAt(childIndex)->research()->sortOrder() > research->sortOrder()) {
+						if (childIndex == 0) {
+							isPrepend = true;
+						} else {
+							//
+							// Нам нужен сосед, после которого будет вставлен текущий элемент
+							//
+							researchSibling = researchParent->childAt(childIndex - 1);
+						}
+						break;
+					}
+				}
+			}
+			ResearchModelItem* researchItem = new ResearchModelItem(research);
+			if (isPrepend) {
+				prependItem(researchItem, researchParent);
+			} else if (researchSibling == 0) {
+				appendItem(researchItem, researchParent);
+			} else {
+				insertItem(researchItem, researchSibling);
+			}
+		}
+	}
+}
+
+void ResearchModel::researchRowsRemoved(const QModelIndex& _parent, int _first, int _last)
+{
+	Q_UNUSED(_parent);
+
+	//
+	// Получим удаляемые элементы разработки
+	//
+	for (int row = _last; row >= _first; --row) {
+		QModelIndex itemIndex = m_researchData->index(row, 0);
+		Domain::DomainObject* domainObject = m_researchData->itemForIndex(itemIndex);
+		if (Research* research = dynamic_cast<Research*>(domainObject)) {
+			//
+			// Определим родителя
+			//
+			ResearchModelItem* researchParent = 0;
+			if (research->parent() == 0) {
+				researchParent = m_researchRoot;
+			} else {
+				researchParent = findResearchModelItem(m_researchRoot, research->parent());
+			}
+
+			//
+			// Удалим из модели
+			//
+			ResearchModelItem* researchToRemove = 0;
+			if (researchParent->hasChildren()) {
+				for (int childIndex = 0; childIndex < researchParent->childCount(); ++childIndex) {
+					if (researchParent->childAt(childIndex)->research() == research) {
+						researchToRemove = researchParent->childAt(childIndex);
+						break;
+					}
+				}
+			}
+			if (researchToRemove != 0) {
+				removeItem(researchToRemove);
+			}
+		}
+	}
+}
+
+void ResearchModel::researchDataChanged(const QModelIndex& _topLeft, const QModelIndex& _bottomRight)
+{
+	const int first = _topLeft.row();
+	const int last = _bottomRight.row();
+
+	//
+	// Получим обновлённые элементы разработки
+	//
+	for (int row = first; row <= last; ++row) {
+		QModelIndex itemIndex = m_researchData->index(row, 0);
+		Domain::DomainObject* domainObject = m_researchData->itemForIndex(itemIndex);
+		if (Research* research = dynamic_cast<Research*>(domainObject)) {
+			//
+			// Определим родителя
+			//
+			ResearchModelItem* researchParent = 0;
+			if (research->parent() == 0) {
+				researchParent = m_researchRoot;
+			} else {
+				researchParent = findResearchModelItem(m_researchRoot, research->parent());
+			}
+
+			//
+			// Обновим
+			//
+			ResearchModelItem* researchToUpdate = 0;
+			if (researchParent->hasChildren()) {
+				for (int childIndex = 0; childIndex < researchParent->childCount(); ++childIndex) {
+					if (researchParent->childAt(childIndex)->research() == research) {
+						researchToUpdate = researchParent->childAt(childIndex);
+						break;
+					}
+				}
+			}
+			if (researchToUpdate != 0) {
+				updateItem(researchToUpdate);
+			}
+		}
+	}
 }
