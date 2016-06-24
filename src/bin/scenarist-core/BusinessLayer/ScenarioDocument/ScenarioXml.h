@@ -104,10 +104,4 @@ namespace BusinessLogic
 	};
 }
 
-
-inline uint qHash(const QTextBlock& _key)
-{
-	return qHash(_key.text(), _key.revision());
-}
-
 #endif // SCENARIOXML_H

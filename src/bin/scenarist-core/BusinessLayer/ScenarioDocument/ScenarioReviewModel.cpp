@@ -187,6 +187,7 @@ void ScenarioReviewModel::setReviewMarkTextColor(int _startPosition, int _length
 	cursor.setPosition(_startPosition);
 	cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().foreground() != _color) {
+		ScenarioTextDocument::updateBlockRevision(cursor);
 		cursor.mergeCharFormat(::makeForegroundFormat(cursor, _color));
 		emit reviewChanged();
 	}
@@ -199,6 +200,7 @@ void ScenarioReviewModel::setReviewMarkTextBgColor(int _startPosition, int _leng
 	cursor.setPosition(_startPosition);
 	cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().background() != _color) {
+		ScenarioTextDocument::updateBlockRevision(cursor);
 		cursor.mergeCharFormat(::makeBackgroundFormat(cursor, _color));
 		emit reviewChanged();
 	}
@@ -210,6 +212,7 @@ void ScenarioReviewModel::setReviewMarkTextHighlight(int _startPosition, int _le
 	cursor.setPosition(_startPosition);
 	cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, _length);
 	if (cursor.charFormat().background() != _color) {
+		ScenarioTextDocument::updateBlockRevision(cursor);
 		cursor.mergeCharFormat(::makeHighlightFormat(cursor, _color));
 		emit reviewChanged();
 	}

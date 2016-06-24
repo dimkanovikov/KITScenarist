@@ -18,8 +18,6 @@ using namespace BusinessLogic;
 
 namespace {
 	const QString NODE_SCENARIO = "scenario";
-	const QString NODE_SCENE_GROUP = "scene_group";
-	const QString NODE_FOLDER = "folder";
 	const QString NODE_VALUE = "v";
 	const QString NODE_REVIEW_GROUP = "reviews";
 	const QString NODE_REVIEW = "review";
@@ -54,6 +52,56 @@ namespace {
 			}
 		}
 		return hasMarks;
+	}
+
+	/**
+	 * @brief Сформировать хэш для текстового блока
+	 */
+	static inline uint blockHash(const QTextBlock& _block)
+	{
+		//
+		// Формируем уникальную строку, главное, чтобы два разных блока не имели одинакового хэша,
+		// но в то же время, нельзя опираться на позицию блока, т.к. при смещение текста на абзац
+		// вниз, придётся пересчитывать хэши всех остальных блоков
+		//
+		QString hash;
+		hash.append(_block.text());
+		hash.append("#");
+		hash.append(_block.revision());
+		if (ScenarioTextBlockInfo* blockInfo = dynamic_cast<ScenarioTextBlockInfo*>(_block.userData())) {
+			hash.append("#");
+			hash.append(QString::number(blockInfo->sceneNumber()));
+			hash.append("#");
+			hash.append(blockInfo->colors());
+			hash.append("#");
+			hash.append(blockInfo->description());
+		}
+		foreach (const QTextLayout::FormatRange& range, _block.textFormats()) {
+			hash.append("#");
+			hash.append(QString::number(range.start));
+			hash.append("#");
+			hash.append(QString::number(range.length));
+			hash.append("#");
+			hash.append(range.format.foreground().color().name());
+			hash.append("#");
+			hash.append(range.format.background().color().name());
+			hash.append("#");
+			hash.append(range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark) ? "true" : "false");
+			hash.append("#");
+			hash.append(range.format.boolProperty(ScenarioBlockStyle::PropertyIsHighlight) ? "true" : "false");
+			hash.append("#");
+			hash.append(range.format.boolProperty(ScenarioBlockStyle::PropertyIsDone) ? "true" : "false");
+			hash.append("#");
+			hash.append(range.format.property(ScenarioBlockStyle::PropertyComments).toStringList().join("#"));
+			hash.append("#");
+			hash.append(range.format.property(ScenarioBlockStyle::PropertyCommentsAuthors).toStringList().join("#"));
+			hash.append("#");
+			hash.append(range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList().join("#"));
+		}
+		hash.append("#");
+		hash.append(ScenarioBlockStyle::forBlock(_block));
+
+		return qHash(hash);
 	}
 }
 
@@ -103,17 +151,11 @@ QString ScenarioXml::scenarioToXml()
 
 	QString resultXml;
 
-	//
-	// Подсчитаем кол-во незакрытых групп и папок, и закроем, если необходимо
-	//
-	int openedGroups = 0;
-	int openedFolders = 0;
-
 	QTextBlock currentBlock = m_scenario->document()->begin();
 	QString currentBlockXml;
 	do {
 		currentBlockXml.clear();
-		const uint currentBlockHash = qHash(currentBlock);
+		const uint currentBlockHash = ::blockHash(currentBlock);
 
 		//
 		// Если для блока есть кэш, используем его
@@ -139,8 +181,6 @@ QString ScenarioXml::scenarioToXml()
 			// Определить параметры текущего абзаца
 			//
 			bool needWrite = true; // пишем абзац?
-			QString parentNode; // если задано, то вкладываем в ячейку с этим именем
-			bool needCloseParentNode = false; // нужно ли закрыть дополнительную ячейку
 			QString currentNode = ScenarioBlockStyle::typeName(currentType); // имя текущей ячейки
 			bool canHaveColors = false; // может иметь цвета
 			switch (currentType) {
@@ -154,75 +194,13 @@ QString ScenarioXml::scenarioToXml()
 					break;
 				}
 
-				case ScenarioBlockStyle::Dialogue: {
-					break;
-				}
-
-				case ScenarioBlockStyle::Transition:{
-					break;
-				}
-
-				case ScenarioBlockStyle::Note: {
-					break;
-				}
-
-				case ScenarioBlockStyle::TitleHeader: {
-					break;
-				}
-
-				case ScenarioBlockStyle::Title: {
-					break;
-				}
-
-				case ScenarioBlockStyle::NoprintableText: {
-					break;
-				}
-
 				case ScenarioBlockStyle::SceneGroupHeader: {
-					parentNode = NODE_SCENE_GROUP;
 					canHaveColors = true;
-
-					++openedGroups;
-
-					break;
-				}
-
-				case ScenarioBlockStyle::SceneGroupFooter: {
-					//
-					// Закрываем группы, если были открыты, то просто корректируем счётчик,
-					// а если открытых нет, то не записываем и конец
-					//
-					if (openedGroups > 0) {
-						--openedGroups;
-
-						needCloseParentNode = true;
-					} else {
-						needWrite = false;
-					}
 					break;
 				}
 
 				case ScenarioBlockStyle::FolderHeader: {
-					parentNode = NODE_FOLDER;
 					canHaveColors = true;
-
-					++openedFolders;
-
-					break;
-				}
-
-				case ScenarioBlockStyle::FolderFooter: {
-					//
-					// Закрываем папки, если были открыты, то просто корректируем счётчик,
-					// а если открытых нет, то не записываем и конец
-					//
-					if (openedFolders > 0) {
-						--openedFolders;
-
-						needCloseParentNode = true;
-					} else {
-						needWrite = false;
-					}
 					break;
 				}
 
@@ -235,13 +213,6 @@ QString ScenarioXml::scenarioToXml()
 			// Дописать xml
 			//
 			if (needWrite) {
-				//
-				// Обернуть в ячейку
-				//
-				if (!parentNode.isEmpty()) {
-					currentBlockXml.append(QString("<%1>\n").arg(parentNode));
-				}
-
 				//
 				// Если возможно, сохраним цвета элемента
 				//
@@ -315,13 +286,6 @@ QString ScenarioXml::scenarioToXml()
 				// Закрываем текущий элемент
 				//
 				currentBlockXml.append(QString("</%1>\n").arg(currentNode));
-
-				//
-				// Закрываем родителя, если были обёрнуты
-				//
-				if (needCloseParentNode) {
-					currentBlockXml.append(QString("</%1>\n").arg(parentNode));
-				}
 			}
 
 			m_xmlCache.insert(currentBlockHash, new QString(currentBlockXml));
@@ -329,28 +293,6 @@ QString ScenarioXml::scenarioToXml()
 		}
 		currentBlock = currentBlock.next();
 	} while (currentBlock.isValid());
-
-	//
-	// Закроем открытые группы
-	//
-	while (openedGroups > 0) {
-		resultXml.append(QString("<%1>\n").arg("scene_group_footer"));
-		resultXml.append(QString("<%1><![CDATA[%2]]></%1>\n").arg(NODE_VALUE, QObject::tr("END OF GROUP", "ScenarioXml")));
-		resultXml.append(QString("</%1>\n").arg("scene_group_footer"));
-		resultXml.append(QString("</%1>\n").arg("scene_group"));
-		--openedGroups;
-	}
-
-	//
-	// Закроем открытые папки
-	//
-	while (openedFolders > 0) {
-		resultXml.append(QString("<%1>\n").arg("folder_footer"));
-		resultXml.append(QString("<%1><![CDATA[%2]]></%1>\n").arg(NODE_VALUE, QObject::tr("END OF FOLDER", "ScenarioXml")));
-		resultXml.append(QString("</%1>\n").arg("folder_footer"));
-		resultXml.append(QString("</%1>\n").arg("folder"));
-		--openedFolders;
-	}
 
 	return makeMimeFromXml(resultXml);
 }
@@ -459,8 +401,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			// Определить параметры текущего абзаца
 			//
 			bool needWrite = true; // пишем абзац?
-			QString parentNode; // если задано, то вкладываем в ячейку с этим именем
-			bool needCloseParentNode = false; // нужно ли закрыть дополнительную ячейку
 			QString currentNode = ScenarioBlockStyle::typeName(currentType); // имя текущей ячейки
 			bool canHaveColors = false; // может иметь цвета
 			switch (currentType) {
@@ -474,32 +414,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 					break;
 				}
 
-				case ScenarioBlockStyle::Dialogue: {
-					break;
-				}
-
-				case ScenarioBlockStyle::Transition:{
-					break;
-				}
-
-				case ScenarioBlockStyle::Note: {
-					break;
-				}
-
-				case ScenarioBlockStyle::TitleHeader: {
-					break;
-				}
-
-				case ScenarioBlockStyle::Title: {
-					break;
-				}
-
-				case ScenarioBlockStyle::NoprintableText: {
-					break;
-				}
-
 				case ScenarioBlockStyle::SceneGroupHeader: {
-					parentNode = NODE_SCENE_GROUP;
 					canHaveColors = true;
 
 					++openedGroups;
@@ -514,8 +429,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 					//
 					if (openedGroups > 0) {
 						--openedGroups;
-
-						needCloseParentNode = true;
 					} else {
 						needWrite = false;
 					}
@@ -523,7 +436,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				}
 
 				case ScenarioBlockStyle::FolderHeader: {
-					parentNode = NODE_FOLDER;
 					canHaveColors = true;
 
 					++openedFolders;
@@ -538,8 +450,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 					//
 					if (openedFolders > 0) {
 						--openedFolders;
-
-						needCloseParentNode = true;
 					} else {
 						needWrite = false;
 					}
@@ -555,13 +465,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			// Дописать xml
 			//
 			if (needWrite) {
-				//
-				// Обернуть в ячейку
-				//
-				if (!parentNode.isEmpty()) {
-					writer.writeStartElement(parentNode);
-				}
-
 				//
 				// Открыть ячейку текущего элемента
 				//
@@ -669,13 +572,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				// Закрываем текущий элемент
 				//
 				writer.writeEndElement();
-
-				//
-				// Закрываем родителя, если были обёрнуты
-				//
-				if (needCloseParentNode) {
-					writer.writeEndElement();
-				}
 			}
 
 			//

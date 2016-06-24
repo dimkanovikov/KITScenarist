@@ -1873,12 +1873,7 @@ QMouseEvent* PageTextEditPrivate::correctMousePosition(QMouseEvent* _event)
 	//
 
 	QPoint localPos = viewport->mapFromParent(_event->pos());
-	//
-	// Получим позицию курсора от компоновщика документа
-	//
-	const int pos = control->document()->documentLayout()->hitTest(localPos, Qt::FuzzyHit);
 	QTextCursor cursor = q->textCursor();
-	cursor.setPosition(pos);
 	//
 	// Если получили блок над указателем
 	//
