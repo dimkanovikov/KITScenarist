@@ -22,7 +22,8 @@ namespace TextEditHelper
 		escapedText = escapedText
 					  .replace("<", "&lt;")
 					  .replace(">", "&gt;")
-					  .replace("\"", "&quot;");
+					  .replace("\"", "&quot;")
+					  .replace("\n", "&#10;");
 		return escapedText;
 	}
 
@@ -34,9 +35,10 @@ namespace TextEditHelper
 		QString text = _escapedText;
 		text = text.replace("&amp;", "&");
 		text = text
-				.replace("&lt;", "<")
-				.replace("&gt;", ">")
-				.replace("&quot;", "\"");
+			   .replace("&lt;", "<")
+			   .replace("&gt;", ">")
+			   .replace("&quot;", "\"")
+			   .replace("&#10;", "\n");
 		return text;
 	}
 

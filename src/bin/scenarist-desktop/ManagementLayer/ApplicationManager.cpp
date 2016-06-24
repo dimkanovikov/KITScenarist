@@ -931,7 +931,8 @@ void ApplicationManager::currentTabIndexChanged()
 					m_tabsSecondary->setCurrentTab(m_tabs->prevCurrentTab());
 				}
 			} else {
-				if (m_tabsSecondary->currentTab() == m_tabs->currentTab()) {
+				if (m_tabsSecondary->isVisible()
+					&& m_tabsSecondary->currentTab() == m_tabs->currentTab()) {
 					m_tabs->setCurrentTab(m_tabsSecondary->prevCurrentTab());
 				}
 			}
@@ -964,7 +965,7 @@ void ApplicationManager::currentTabIndexChanged()
 				m_tabsWidgets->setCurrentWidget(widget);
 			}
 			//
-			{
+			if (m_tabsSecondary->isVisible()) {
 				QWidget* widget = widgetForTab(m_tabsSecondary->currentTab());
 				m_tabsWidgetsSecondary->addWidget(widget);
 				m_tabsWidgetsSecondary->setCurrentWidget(widget);

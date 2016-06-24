@@ -425,12 +425,6 @@ void ResearchManager::initConnections()
 					m_currentResearch, Research::Image, _sortOrder, tr("Unnamed image"));
 			newResearch->setImage(_image);
 
-			//
-			// Добавляем его в дерево
-			//
-			ResearchModelItem* newResearchItem = new ResearchModelItem(newResearch);
-			m_model->appendItem(newResearchItem, m_currentResearchItem);
-
 			emit researchChanged();
 		}
 	});
@@ -444,7 +438,6 @@ void ResearchManager::initConnections()
 			//
 			// ... удалим
 			//
-			m_model->removeItem(researchItemToDelete);
 			DataStorageLayer::StorageFacade::researchStorage()->removeResearch(researchToDelete);
 
 			//
