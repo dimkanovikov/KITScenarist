@@ -34,7 +34,7 @@ public slots:
 	 * @brief Создать контекстное меню
 	 * @note Управление памятью передаётся вызывающему метод
 	 */
-	virtual QMenu* createContextMenu(const QPoint& _pos);
+	virtual QMenu* createContextMenu(const QPoint& _pos, QWidget* _parent = 0);
 
 protected:
 	/**

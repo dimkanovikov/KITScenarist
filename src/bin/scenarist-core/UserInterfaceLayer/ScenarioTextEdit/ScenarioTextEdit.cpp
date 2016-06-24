@@ -406,13 +406,13 @@ QString ScenarioTextEdit::shortcut(ScenarioBlockStyle::Type _forType) const
 	return m_shortcutsManager->shortcut(_forType);
 }
 
-QMenu* ScenarioTextEdit::createContextMenu(const QPoint& _pos)
+QMenu* ScenarioTextEdit::createContextMenu(const QPoint& _pos, QWidget* _parent)
 {
 	//
 	// Формируем стандартное меню, чтобы добраться до действий отмены и повтора последнего действия
 	// и присоединить их к собственным функциям повтора/отмены послденего действия
 	//
-	QMenu* menu = CompletableTextEdit::createContextMenu(_pos);
+	QMenu* menu = CompletableTextEdit::createContextMenu(_pos, _parent);
 	foreach (QAction* menuAction, menu->findChildren<QAction*>()) {
 		if (menuAction->text().endsWith(QKeySequence(QKeySequence::Undo).toString(QKeySequence::NativeText))) {
 			menuAction->disconnect();

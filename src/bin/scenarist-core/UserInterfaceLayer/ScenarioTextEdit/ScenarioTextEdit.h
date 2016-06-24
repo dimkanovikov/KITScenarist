@@ -132,7 +132,7 @@ namespace UserInterface
 		/**
 		 * @brief Переопределяем для корректировки вызова отмены/повтора последнего действия
 		 */
-		QMenu* createContextMenu(const QPoint &_pos);
+		QMenu* createContextMenu(const QPoint &_pos, QWidget* _parent = 0);
 
 		/**
 		 * @brief Установить список дополнительных курсоров для отрисовки

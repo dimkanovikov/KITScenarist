@@ -173,8 +173,8 @@ public:
 
 	Q_INVOKABLE virtual QVariant loadResource(int type, const QUrl &name);
 #ifndef QT_NO_CONTEXTMENU
-	QMenu *createStandardContextMenu();
-	QMenu *createStandardContextMenu(const QPoint &position);
+	QMenu *createStandardContextMenu(QWidget* _parent = 0);
+	QMenu *createStandardContextMenu(const QPoint &position, QWidget* _parent = 0);
 #endif
 
 	QTextCursor cursorForPosition(const QPoint &pos) const;

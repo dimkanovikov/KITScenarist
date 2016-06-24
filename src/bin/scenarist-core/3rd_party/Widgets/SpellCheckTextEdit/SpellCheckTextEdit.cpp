@@ -69,7 +69,7 @@ void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 	}
 }
 
-QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos)
+QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos, QWidget* _parent)
 {
 	//
 	// Запомним позицию курсора
@@ -79,7 +79,7 @@ QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos)
 	//
 	// Сформируем стандартное контекстное меню
 	//
-	QMenu* menu = createStandardContextMenu();
+	QMenu* menu = createStandardContextMenu(_parent);
 
 	if (m_spellCheckHighlighter->useSpellChecker()) {
 		//
@@ -119,15 +119,19 @@ QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos)
 			foreach (const QString& suggestion, suggestions) {
 				if (addedSuggestionsCount < SUGGESTIONS_ACTIONS_MAX_COUNT) {
 					m_suggestionsActions.at(addedSuggestionsCount)->setText(suggestion);
+					m_suggestionsActions.at(addedSuggestionsCount)->setEnabled(true);
 					menu->insertAction(actionInsertBefore, m_suggestionsActions.at(addedSuggestionsCount));
 					++addedSuggestionsCount;
 				} else {
 					break;
 				}
 			}
-			if (addedSuggestionsCount > 0) {
-				menu->insertSeparator(actionInsertBefore);
+			if (addedSuggestionsCount == 0) {
+				m_suggestionsActions.first()->setText(tr("Suggestions not found"));
+				m_suggestionsActions.first()->setEnabled(false);
+				menu->insertAction(actionInsertBefore, m_suggestionsActions.first());
 			}
+			menu->insertSeparator(actionInsertBefore);
 			// ... вставляем дополнительные действия
 			menu->insertAction(actionInsertBefore, m_ignoreWordAction);
 			menu->insertAction(actionInsertBefore, m_addWordToUserDictionaryAction);
@@ -136,9 +140,9 @@ QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos)
 		//
 		// TODO: тезаурус готов, нужны доработки по визуализации и по качеству самой базы слов
 		//
-//		//
-//		// Если проходит проверку, то добавляем вхождения из тезауруса
-//		//
+		//
+		// Если проходит проверку, то добавляем вхождения из тезауруса
+		//
 //		else {
 //			QMap<QString, QSet<QString> > thesaurusEntries =
 //				m_spellChecker->synonimsForWord(wordWithoutPunct.toLower());

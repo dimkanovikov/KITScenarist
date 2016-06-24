@@ -97,19 +97,19 @@ void ScalableWrapper::setZoomRange(qreal _zoomRange)
 
 QVariant ScalableWrapper::inputMethodQuery(Qt::InputMethodQuery _query) const
 {
-    return inputMethodQuery(_query, QVariant());
+	return inputMethodQuery(_query, QVariant());
 }
 
 QVariant ScalableWrapper::inputMethodQuery(Qt::InputMethodQuery _query, QVariant _argument) const
 {
-    QVariant result;
-    if (m_editor != 0) {
-        result = m_editor->inputMethodQuery(_query, _argument);
-    } else {
-        result = QWidget::inputMethodQuery(_query);
-    }
+	QVariant result;
+	if (m_editor != 0) {
+		result = m_editor->inputMethodQuery(_query, _argument);
+	} else {
+		result = QWidget::inputMethodQuery(_query);
+	}
 
-    return result;
+	return result;
 }
 
 void ScalableWrapper::zoomIn()
@@ -158,9 +158,9 @@ bool ScalableWrapper::event(QEvent* _event)
 		//
 		// Корректируем размер сцены, чтобы исключить внезапные смещения редактора на ней
 		//
-        if (m_scene->sceneRect() != viewport()->rect()) {
-            m_scene->setSceneRect(viewport()->rect());
-        }
+		if (m_scene->sceneRect() != viewport()->rect()) {
+			m_scene->setSceneRect(viewport()->rect());
+		}
 #endif
 
 		//
@@ -285,11 +285,11 @@ void ScalableWrapper::gestureEvent(QGestureEvent* _event)
 bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 {
 	bool needShowMenu = false;
-	QPoint cursorPos = QCursor::pos();
+	QPoint cursorGlobalPos = QCursor::pos();
 	switch (_event->type()) {
 		case QEvent::ContextMenu: {
 			QContextMenuEvent* contextMenuEvent = static_cast<QContextMenuEvent*>(_event);
-			cursorPos = m_editor->viewport()->mapFromGlobal(contextMenuEvent->globalPos());
+			cursorGlobalPos = contextMenuEvent->globalPos();
 			needShowMenu = true;
 			break;
 		}
@@ -297,7 +297,7 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 		case QEvent::MouseButtonPress: {
 			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(_event);
 			if (mouseEvent->button() == Qt::RightButton) {
-				cursorPos = m_editor->viewport()->mapFromGlobal(mouseEvent->globalPos());
+				cursorGlobalPos = mouseEvent->globalPos();
 				needShowMenu = true;
 			}
 			break;
@@ -311,40 +311,11 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 	bool result = false;
 
 	//
-	// Если необходимо, то показываем контекстное меню в отдельном прокси элементе,
-	// предварительно вернув ему 100% масштаб
+	// Если необходимо, то показываем контекстное меню
 	//
 	if (needShowMenu) {
-		QMenu* menu = m_editor->createContextMenu(cursorPos);
-		QGraphicsProxyWidget* menuProxy = m_editorProxy->createProxyForChildWidget(menu);
-
-		const qreal antiZoom = 1. / m_zoomRange;
-		menuProxy->setScale(antiZoom);
-		menuProxy->setPos(QCursor::pos());
-
-		//
-		// Если меню вываливается за границы виджета, корректируем его позицию
-		// Так необходимо делать, поскольку меню теперь не попап, а вложенный виджет
-		//
-		QRectF menuRect(QCursor::pos(), menu->sizeHint());
-		//
-		// ... по вертикали
-		//
-		if (menuRect.bottom() > mapToGlobal(pos()).y() + height()) {
-			menuRect.moveBottom(menuRect.top());
-			if (menuRect.top() < mapToGlobal(QPoint(0, 0)).y()) {
-				menuRect.moveTop(mapToGlobal(QPoint(0, 0)).y());
-			}
-		}
-		//
-		// ... по горизонтали
-		//
-		if (menuRect.right() > mapToGlobal(pos()).x() + width()) {
-			menuRect.moveRight(menuRect.left());
-		}
-		menuProxy->setPos(menuRect.topLeft());
-
-		menu->exec();
+		QMenu* menu = m_editor->createContextMenu(m_editor->viewport()->mapFromGlobal(cursorGlobalPos), this);
+		menu->exec(QCursor::pos());
 		delete menu;
 
 		m_editor->clearFocus();

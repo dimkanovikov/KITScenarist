@@ -2347,10 +2347,10 @@ void PageTextEdit::wheelEvent(QWheelEvent *e)
   which will enable the actions that are sensitive to where the user clicked.
 */
 
-QMenu *PageTextEdit::createStandardContextMenu()
+QMenu *PageTextEdit::createStandardContextMenu(QWidget* _parent)
 {
 	Q_D(PageTextEdit);
-	return d->control->createStandardContextMenu(QPointF(), this);
+	return d->control->createStandardContextMenu(QPoint(), _parent == 0 ? this : _parent);
 }
 
 /*!
@@ -2363,10 +2363,10 @@ QMenu *PageTextEdit::createStandardContextMenu()
   The popup menu's ownership is transferred to the caller.
 */
 
-QMenu *PageTextEdit::createStandardContextMenu(const QPoint &position)
+QMenu *PageTextEdit::createStandardContextMenu(const QPoint &position, QWidget* _parent)
 {
 	Q_D(PageTextEdit);
-	return d->control->createStandardContextMenu(position, this);
+	return d->control->createStandardContextMenu(position, _parent == 0 ? this : _parent);
 }
 #endif // QT_NO_CONTEXTMENU
 
