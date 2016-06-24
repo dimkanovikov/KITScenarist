@@ -69,7 +69,7 @@ namespace {
 			//
 			// Для CDATA не убираем перенос строки
 			//
-			const QString suffix = ::isTag(tag) ? "\n" : "";
+			const QString suffix = isTag(tag) ? "\n" : "";
 			result = result.remove(tag + suffix);
 		}
 
