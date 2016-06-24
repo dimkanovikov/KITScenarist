@@ -37,8 +37,6 @@ namespace {
 	 * @brief Ссылки для запросов
 	 */
 	/** @{ */
-	const QUrl URL_CHECK_INTERNET_CONNECTION = QUrl("https://www.google.ru/");
-
 	const QUrl URL_LOGIN = QUrl("https://kitscenarist.ru/api/account/login/");
 	const QUrl URL_LOGOUT = QUrl("https://kitscenarist.ru/api/account/logout/");
 	const QUrl URL_PROJECTS = QUrl("https://kitscenarist.ru/api/projects/");

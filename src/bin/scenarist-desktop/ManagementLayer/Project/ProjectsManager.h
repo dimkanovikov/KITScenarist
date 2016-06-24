@@ -70,7 +70,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Установить флаг возможна ли синхронизация текущего проекта
 		 */
-		void setCurrentProjectSyncAvailable(bool _syncAvailable);
+		void setCurrentProjectSyncAvailable(bool _syncAvailable, int _errorCode = 0);
 
 		/**
 		 * @brief Текущий проект закрыт

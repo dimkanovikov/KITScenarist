@@ -159,15 +159,19 @@ bool Project::isCommentOnly() const
 	return m_role == Commentator;
 }
 
-bool Project::isSyncAvailable() const
+bool Project::isSyncAvailable(int* _errorCode) const
 {
+	if (_errorCode != 0) {
+		*_errorCode = m_errorCode;
+	}
 	return m_isSyncAvailable;
 }
 
-void Project::setSyncAvailable(bool _syncAvailable)
+void Project::setSyncAvailable(bool _syncAvailable, int _errorCode)
 {
 	if (m_isSyncAvailable != _syncAvailable) {
 		m_isSyncAvailable = _syncAvailable;
+		m_errorCode = _errorCode;
 	}
 }
 

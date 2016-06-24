@@ -102,8 +102,8 @@ namespace ManagementLayer
 		 * @brief Возможна ли синхронизация
 		 */
 		/** @{ */
-		bool isSyncAvailable() const;
-		void setSyncAvailable(bool _syncAvailable);
+		bool isSyncAvailable(int* _errorCode = 0) const;
+		void setSyncAvailable(bool _syncAvailable, int _errorCode = 0);
 		/** @} */
 
 	private:
@@ -145,7 +145,10 @@ namespace ManagementLayer
 		/**
 		 * @brief Возможна ли синхронизация
 		 */
+		/** @{ */
 		bool m_isSyncAvailable;
+		int m_errorCode;
+		/** @} */
 	};
 
 	/**

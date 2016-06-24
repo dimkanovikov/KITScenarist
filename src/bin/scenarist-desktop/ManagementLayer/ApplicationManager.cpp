@@ -999,10 +999,11 @@ void ApplicationManager::goToEditCurrentProject()
 	// Настроим индикатор
 	//
 	if (m_projectsManager->currentProject().isRemote()) {
-		if (m_projectsManager->currentProject().isSyncAvailable()) {
+		int errorCode = 0;
+		if (m_projectsManager->currentProject().isSyncAvailable(&errorCode)) {
 			aboutShowSyncActiveIndicator();
 		} else {
-			aboutSyncClosedWithError(201);
+			aboutSyncClosedWithError(errorCode);
 		}
 	} else {
 		m_tabs->removeIndicator();
