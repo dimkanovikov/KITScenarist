@@ -69,6 +69,30 @@ ScenarioTextDocument::ScenarioTextDocument(QObject *parent, ScenarioXml* _xmlHan
 	connect(m_reviewModel, SIGNAL(reviewChanged()), this, SIGNAL(reviewChanged()));
 }
 
+void ScenarioTextDocument::updateScenarioXml()
+{
+	const QString newScenarioXml = m_xmlHandler->scenarioToXml();
+	const QByteArray newScenarioXmlHash = ::textMd5Hash(newScenarioXml);
+
+	//
+	// Если текущий текст сценария отличается от последнего сохранённого
+	//
+	if (newScenarioXmlHash != m_scenarioXmlHash) {
+		m_scenarioXml = newScenarioXml;
+		m_scenarioXmlHash = newScenarioXmlHash;
+	}
+}
+
+QString ScenarioTextDocument::scenarioXml() const
+{
+	return m_scenarioXml;
+}
+
+QByteArray ScenarioTextDocument::scenarioXmlHash() const
+{
+	return m_scenarioXmlHash;
+}
+
 void ScenarioTextDocument::load(const QString& _scenarioXml)
 {
 	//
@@ -90,8 +114,10 @@ void ScenarioTextDocument::load(const QString& _scenarioXml)
 	// Загружаем проект
 	//
 	m_xmlHandler->xmlToScenario(0, scenarioXml);
-	m_lastScenarioXml = scenarioXml;
-	m_lastScenarioXmlHash = ::textMd5Hash(scenarioXml);
+	m_scenarioXml = scenarioXml;
+	m_scenarioXmlHash = ::textMd5Hash(scenarioXml);
+	m_lastSavedScenarioXml = m_scenarioXml;
+	m_lastSavedScenarioXmlHash = m_scenarioXmlHash;
 
 	//
 	// Восстанавливаем режим
@@ -151,10 +177,9 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	//
 	// Определим xml для применения патча
 	//
-	const QString currentXml = m_xmlHandler->scenarioToXml();
 	QPair<DiffMatchPatchHelper::ChangeXml, DiffMatchPatchHelper::ChangeXml> xmlsForUpdate;
 	const QString patchUncopressed = DatabaseHelper::uncompress(_patch);
-	xmlsForUpdate = DiffMatchPatchHelper::changedXml(currentXml, patchUncopressed);
+	xmlsForUpdate = DiffMatchPatchHelper::changedXml(m_scenarioXml, patchUncopressed);
 
 	//
 	// Выделяем текст сценария, соответствующий xml для обновления
@@ -163,10 +188,6 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	cursor.beginEditBlock();
 	const int selectionStartPos = xmlsForUpdate.first.plainPos;
 	const int selectionEndPos = selectionStartPos + xmlsForUpdate.first.plainLength;
-	//
-	// ... удаляем все декорации, и сшиваем разрывы в том месте, куда должен быть наложен патч
-	//
-//	ScenarioTextCorrector::removeDecorations(cursor, selectionStartPos, selectionEndPos);
 	//
 	// ... собственно выделение
 	//
@@ -195,8 +216,8 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	//
 	// Запомним новый текст
 	//
-	m_lastScenarioXml = m_xmlHandler->scenarioToXml();
-	m_lastScenarioXmlHash = ::textMd5Hash(m_lastScenarioXml);
+	m_scenarioXml = m_xmlHandler->scenarioToXml();
+	m_scenarioXmlHash = ::textMd5Hash(m_scenarioXml);
 
 
 	m_isPatchApplyProcessed = false;
@@ -210,14 +231,9 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 
 
 	//
-	// Определим xml для применения патчей
-	//
-	const QString currentXml = m_xmlHandler->scenarioToXml();
-
-	//
 	// Применяем патчи
 	//
-	QString newXml = currentXml;
+	QString newXml = m_scenarioXml;
 	int currentIndex = 0, max = _patches.size();
 	foreach (const QString& patch, _patches) {
 		const QString patchUncopressed = DatabaseHelper::uncompress(patch);
@@ -239,8 +255,8 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 	//
 	// Запомним новый текст
 	//
-	m_lastScenarioXml = m_xmlHandler->scenarioToXml();
-	m_lastScenarioXmlHash = ::textMd5Hash(m_lastScenarioXml);
+	m_scenarioXml = m_xmlHandler->scenarioToXml();
+	m_scenarioXmlHash = ::textMd5Hash(m_scenarioXml);
 
 
 	m_isPatchApplyProcessed = false;
@@ -252,19 +268,16 @@ Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
 	Domain::ScenarioChange* change = 0;
 
 	if (!m_isPatchApplyProcessed) {
-		const QString newScenarioXml = m_xmlHandler->scenarioToXml();
-		const QByteArray newScenarioXmlHash = ::textMd5Hash(newScenarioXml);
-
 		//
 		// Если текущий текст сценария отличается от последнего сохранённого
 		//
-		if (newScenarioXmlHash != m_lastScenarioXmlHash) {
+		if (m_scenarioXmlHash != m_lastSavedScenarioXmlHash) {
 			//
 			// Сформируем изменения
 			//
-			const QString undoPatch = DiffMatchPatchHelper::makePatchXml(newScenarioXml, m_lastScenarioXml);
+			const QString undoPatch = DiffMatchPatchHelper::makePatchXml(m_scenarioXml, m_lastSavedScenarioXml);
 			const QString undoPatchCompressed = DatabaseHelper::compress(undoPatch);
-			const QString redoPatch = DiffMatchPatchHelper::makePatchXml(m_lastScenarioXml, newScenarioXml);
+			const QString redoPatch = DiffMatchPatchHelper::makePatchXml(m_lastSavedScenarioXml, m_scenarioXml);
 			const QString redoPatchCompressed = DatabaseHelper::compress(redoPatch);
 
 			//
@@ -275,8 +288,8 @@ Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
 			//
 			// Запомним новый текст
 			//
-			m_lastScenarioXml = newScenarioXml;
-			m_lastScenarioXmlHash = newScenarioXmlHash;
+			m_lastSavedScenarioXml = m_scenarioXml;
+			m_lastSavedScenarioXmlHash = m_scenarioXmlHash;
 
 			//
 			// Корректируем стеки последних действий

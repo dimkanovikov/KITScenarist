@@ -630,7 +630,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		//
 		case 0: {
 			title = tr("Network error");
-			error = tr("Can't estabilish network connection.\n"
+			error = tr("Can't estabilish network connection.\n\n"
 					   "Continue working in offline mode.");
 			switchToOfflineMode = true;
 			break;
@@ -651,7 +651,22 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		//
 		case 102: {
 			title = tr("Subscription ended");
-			error = tr("Buyed subscription period is finished.\n"
+			error = tr("Buyed subscription period is finished.\n\n"
+					   "Continue working in offline mode.");
+			QLightBoxMessage::information(m_view, title, error);
+			switchToOfflineMode = true;
+			break;
+		}
+
+		//
+		// Не задан ключ сессии
+		// NOTE: Такая проблема может возникать при проблемах с провайдером,
+		//		 когда данные портятся на каком-либо из узлов связи
+		//
+		case 103: {
+			title = tr("Network Error");
+			error = tr("Can't correct load all data from service. "
+					   "Please check your internet connection quality and refresh synchronization.\n\n"
 					   "Continue working in offline mode.");
 			QLightBoxMessage::information(m_view, title, error);
 			switchToOfflineMode = true;
@@ -675,7 +690,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 				// Переходим в автономный режим
 				//
 				title = tr("Session closed");
-				error = tr("New session for you account started at other device.\n"
+				error = tr("New session for you account started at other device.\n\n"
 						   "Continue working in offline mode.");
 				QLightBoxMessage::information(m_view, title, error);
 				switchToOfflineMode = true;
@@ -688,8 +703,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		//
 		case 201: {
 			title = tr("Project not available");
-			error = tr("Current project is not available for syncronization now, because project's owner subscription is ended.\n"
-					   "Continue working with this project in offline mode.");
+			error = tr("Current project is not available for syncronization now, because project's owner subscription is ended.\n\n"
+					   "Continue working in offline mode.");
 			QLightBoxMessage::information(m_view, title, error);
 			m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
 			break;

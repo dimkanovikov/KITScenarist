@@ -135,11 +135,6 @@ namespace BusinessLogic
 		QString save() const;
 
 		/**
-		 * @brief Перезагрузить сценарий
-		 */
-		void refresh();
-
-		/**
 		 * @brief Очистить сценарий
 		 */
 		void clear();

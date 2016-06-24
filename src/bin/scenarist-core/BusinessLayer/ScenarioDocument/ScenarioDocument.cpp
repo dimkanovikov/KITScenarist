@@ -23,17 +23,6 @@
 using namespace BusinessLogic;
 
 
-namespace {
-	/**
-	 * @brief Получить хэш текста
-	 */
-	static QByteArray textMd5Hash(const QString& _text) {
-		QCryptographicHash hash(QCryptographicHash::Md5);
-		hash.addData(_text.toUtf8());
-		return hash.result();
-	}
-}
-
 QString ScenarioDocument::MIME_TYPE = "application/x-scenarist/scenario";
 
 ScenarioDocument::ScenarioDocument(QObject* _parent) :
@@ -305,13 +294,7 @@ void ScenarioDocument::setScenario(Domain::Scenario* _scenario)
 
 QString ScenarioDocument::save() const
 {
-	return m_xmlHandler->scenarioToXml();
-}
-
-void ScenarioDocument::refresh()
-{
-	QString scenario = save();
-	load(scenario);
+	return m_document->scenarioXml();
 }
 
 void ScenarioDocument::clear()
@@ -427,9 +410,14 @@ int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, Sce
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
 	//
+	// Сохраняем изменённый xml и его хэш
+	//
+	m_document->updateScenarioXml();
+
+	//
 	// Прерываем ситуация, когда в редактор помещается документ, но для него уже создана модель
 	//
-	const QByteArray currentTextMd5Hash = ::textMd5Hash(m_document->toPlainText());
+	const QByteArray currentTextMd5Hash = m_document->scenarioXmlHash();
 	if (_position == 0 && _charsRemoved == _charsAdded
 		&& _charsAdded == m_document->characterCount() && !m_modelItems.isEmpty()) {
 		//

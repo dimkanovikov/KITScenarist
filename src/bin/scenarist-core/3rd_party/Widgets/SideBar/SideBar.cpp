@@ -319,7 +319,8 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
 		QMenu menu(this);
 		QWidgetAction menuText(&menu);
 		QLabel label(m_indicator->text());
-		label.setMargin(8);
+		label.setMargin(14);
+		label.setWordWrap(true);
 		menuText.setDefaultWidget(&label);
 		menu.addAction(&menuText);
 		menu.exec(mapToGlobal(QPoint(::sidebarWidth(m_compactMode), height() - menu.sizeHint().height())));

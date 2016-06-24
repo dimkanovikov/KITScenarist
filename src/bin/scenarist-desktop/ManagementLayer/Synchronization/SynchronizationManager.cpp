@@ -872,10 +872,12 @@ void SynchronizationManager::handleError(const QByteArray& _response)
 	//
 	// Закрываем сессию, если
 	// - закончилась подписка
+	// - проблемы с подключением к серверу
 	// - закрыта сессия
 	//
 	switch (errorCode) {
 		case 102:
+		case 103:
 		case 104: {
 			m_sessionKey.clear();
 			break;
@@ -1189,10 +1191,12 @@ void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUui
 
 void SynchronizationManager::checkInternetConnection()
 {
-	if (QNetworkConfigurationManager().isOnline()) {
+	static QNetworkConfigurationManager s_networkConfigurationManager;
+	if (s_networkConfigurationManager.isOnline()) {
 		m_isInternetConnectionActive = true;
 		emit syncRestarted();
 	} else {
+		s_networkConfigurationManager.updateConfigurations();
 		QTimer::singleShot(5000, this, SLOT(checkInternetConnection()));
 	}
 }

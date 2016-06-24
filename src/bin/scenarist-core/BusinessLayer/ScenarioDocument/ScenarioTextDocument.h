@@ -27,6 +27,21 @@ namespace BusinessLogic
 		explicit ScenarioTextDocument(QObject *parent, ScenarioXml* _xmlHandler);
 
 		/**
+		 * @brief Сформировать xml из сценария и рассчитать его хэш
+		 */
+		void updateScenarioXml();
+
+		/**
+		 * @brief Получить xml сценария
+		 */
+		QString scenarioXml() const;
+
+		/**
+		 * @brief Получить текущий хэш сценария
+		 */
+		QByteArray scenarioXmlHash() const;
+
+		/**
 		 * @brief Загрузить сценарий
 		 */
 		void load(const QString& _scenarioXml);
@@ -125,14 +140,20 @@ namespace BusinessLogic
 		bool m_isPatchApplyProcessed;
 
 		/**
-		 * @brief Текст сценария с сохранёнными изменениями
+		 * @brief  Xml текст сценария и его MD5-хэш
 		 */
-		QString m_lastScenarioXml;
+		/** @{ */
+		QString m_scenarioXml;
+		QByteArray m_scenarioXmlHash;
+		/** @} */
 
 		/**
-		 * @brief MD5-хэш текста сценария с сохранёнными изменениями
+		 * @brief Xml текст сценария и его MD5-хэш на момент последнего сохранения изменений
 		 */
-		QByteArray m_lastScenarioXmlHash;
+		/** @{ */
+		QString m_lastSavedScenarioXml;
+		QByteArray m_lastSavedScenarioXmlHash;
+		/** @} */
 
 		/**
 		 * @brief Стеки для отмены/повтора последнего действия
