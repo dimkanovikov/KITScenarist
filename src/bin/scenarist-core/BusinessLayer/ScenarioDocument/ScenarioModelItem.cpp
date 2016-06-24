@@ -52,10 +52,10 @@ int ScenarioModelItem::length() const
 	if (!m_description.isNull()) {
 		length += 1 + m_description.length();
 	}
-	if (m_type == Scene && !m_text.isNull()) {
-		length += 1 + m_textLength;
-	} else if (m_type == Folder || m_type == SceneGroup) {
+	if (m_type == Folder || m_type == SceneGroup) {
 		length += 1 + m_footer.length();
+	} else if (!m_text.isNull()) {
+		length += 1 + m_textLength;
 	}
 
 	//

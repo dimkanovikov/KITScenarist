@@ -481,8 +481,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 	writer.writeEndElement(); // scenario
 	writer.writeEndDocument();
 
-//	qDebug() << "*******\n" << resultXml;
-
 	return resultXml;
 }
 
