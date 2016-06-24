@@ -89,7 +89,10 @@ namespace UserInterface {
 		/**
 		 * @brief Удалить
 		 */
+		/** @{ */
 		void aboutDelete(int _commentIndex);
+		void aboutDeleteSelected();
+		/** @} */
 
 	private:
 		/**

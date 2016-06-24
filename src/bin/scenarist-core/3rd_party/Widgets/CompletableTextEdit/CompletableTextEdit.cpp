@@ -137,7 +137,7 @@ void CompletableTextEdit::applyCompletion(const QString& _completion)
 	while (!textCursor().atBlockEnd()) {
 		QTextCursor cursor = textCursor();
 		cursor.movePosition(QTextCursor::StartOfBlock, QTextCursor::KeepAnchor);
-		if (cursor.selectedText().endsWith(m_completer->completionPrefix())) {
+		if (cursor.selectedText().endsWith(m_completer->completionPrefix(), Qt::CaseInsensitive)) {
 			break;
 		}
 		moveCursor(QTextCursor::NextCharacter);
