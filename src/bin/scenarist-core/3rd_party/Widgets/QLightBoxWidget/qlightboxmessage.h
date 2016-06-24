@@ -49,6 +49,11 @@ private:
 	 */
 	void initConnections();
 
+	/**
+	 * @brief Устанавливаем фокус на кнопки
+	 */
+	QWidget* focusedOnExec() const;
+
 private slots:
 	/**
 	 * @brief Нажата кнопка

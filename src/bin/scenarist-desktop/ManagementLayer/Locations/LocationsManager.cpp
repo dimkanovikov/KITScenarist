@@ -95,6 +95,11 @@ void LocationsManager::aboutRemoveLocations(const QStringList& _names)
 		//
 		m_dataEditManager->clean();
 	}
+
+	//
+	// Возвращаем фокус на список
+	//
+	m_navigatorManager->view()->setFocus();
 }
 
 void LocationsManager::initView()

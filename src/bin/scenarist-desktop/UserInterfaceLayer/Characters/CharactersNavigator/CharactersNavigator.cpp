@@ -104,6 +104,8 @@ QStringList CharactersNavigator::selectedCharactersNames() const
 
 void CharactersNavigator::initView()
 {
+	setFocusProxy(m_navigator);
+
 	m_title = new QLabel(tr("Characters"), this);
 	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_endTitle->setFixedWidth(1);

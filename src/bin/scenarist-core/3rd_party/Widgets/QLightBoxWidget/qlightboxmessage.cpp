@@ -118,6 +118,21 @@ void QLightBoxMessage::initConnections()
 	QLightBoxDialog::initConnections();
 }
 
+QWidget* QLightBoxMessage::focusedOnExec() const
+{
+	QWidget* focusedOn = m_buttons;
+	if (m_buttons->standardButtons().testFlag(QDialogButtonBox::Ok)) {
+		focusedOn = m_buttons->button(QDialogButtonBox::Ok);
+	} else if (m_buttons->standardButtons().testFlag(QDialogButtonBox::Open)) {
+		focusedOn = m_buttons->button(QDialogButtonBox::Open);
+	} else if (m_buttons->standardButtons().testFlag(QDialogButtonBox::Save)) {
+		focusedOn = m_buttons->button(QDialogButtonBox::Save);
+	} else if (m_buttons->standardButtons().testFlag(QDialogButtonBox::Yes)) {
+		focusedOn = m_buttons->button(QDialogButtonBox::Yes);
+	}
+	return focusedOn;
+}
+
 void QLightBoxMessage::aboutClicked(QAbstractButton* _button)
 {
 	done(m_buttons->standardButton(_button));

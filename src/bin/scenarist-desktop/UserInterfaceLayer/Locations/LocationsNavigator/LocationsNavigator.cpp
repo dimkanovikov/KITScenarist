@@ -103,6 +103,8 @@ QStringList LocationsNavigator::selectedLocationsNames() const
 
 void LocationsNavigator::initView()
 {
+	setFocusProxy(m_navigator);
+
 	m_title->setText(tr("Locations"));
 	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	m_endTitle->setFixedWidth(1);
