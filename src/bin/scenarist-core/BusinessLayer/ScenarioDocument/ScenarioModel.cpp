@@ -285,7 +285,13 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		// Видимость элемента
 		//
 		case VisibilityIndex: {
-			result = !(item->type() == ScenarioModelItem::Undefined);
+			result = true;
+			//
+			// Скрываем только первый блок, если он содержит текст ИЗ ЗТМ
+			//
+			if (item->type() == ScenarioModelItem::Undefined && item->header().toUpper() == tr("FADE IN")) {
+				result = false;
+			}
 			break;
 		}
 

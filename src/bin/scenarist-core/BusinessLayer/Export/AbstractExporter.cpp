@@ -103,7 +103,6 @@ namespace {
 		static QList<ScenarioBlockStyle::Type> s_scenarioPrintableBlocksTypes =
 			QList<ScenarioBlockStyle::Type>()
 			<< ScenarioBlockStyle::SceneHeading
-			<< ScenarioBlockStyle::SceneHeadingShadow
 			<< ScenarioBlockStyle::SceneCharacters
 			<< ScenarioBlockStyle::Action
 			<< ScenarioBlockStyle::Character

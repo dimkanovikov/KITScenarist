@@ -934,7 +934,9 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 				//
 				// Обновим последний использовавшийся тип блока
 				//
-				lastTokenType = tokenType;
+				if (tokenName != NODE_VALUE) {
+					lastTokenType = tokenType;
+				}
 
 				break;
 			}
