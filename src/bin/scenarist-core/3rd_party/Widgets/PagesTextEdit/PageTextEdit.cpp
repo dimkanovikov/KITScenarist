@@ -1661,7 +1661,7 @@ void PageTextEditPrivate::paintPagesView(QPainter *_painter)
 		qreal pageWidth = m_pageMetrics.pxPageSize().width();
 		qreal pageHeight = m_pageMetrics.pxPageSize().height();
 
-		QPen spacePen(control->palette().window(), 9);
+		QPen spacePen(control->palette().window(), 8);
 		QPen borderPen(control->palette().dark(), 1);
 
 		qreal curHeight = pageHeight - (vbar->value() % (int)pageHeight);
@@ -1762,7 +1762,7 @@ void PageTextEditPrivate::paintPageNumbers(QPainter* _painter)
 		//
 		// Номер первой видимой на экране страницы
 		//
-		int pageNumber = vbar->value() / pageSize.height() + 1;
+		int pageNumber = vbar->value() / (int)pageSize.height() + 1;
 
 		//
 		// Верхнее поле первой страницы на экране, когда не видно предыдущей страницы

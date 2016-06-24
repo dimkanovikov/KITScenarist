@@ -45,21 +45,23 @@ void ImagesPane::clear()
 
 void ImagesPane::addImage(const QPixmap& _image)
 {
-	const int imageSortOrder = m_images.size();
+	if (!_image.isNull()) {
+		const int imageSortOrder = m_images.size();
 
-	m_images.append(_image);
+		m_images.append(_image);
 
-	ImageLabel* imageLabel = new ImageLabel(this);
-	imageLabel->setFixedSize(200, 150);
-	imageLabel->setImage(_image);
-	imageLabel->setSortOrder(imageSortOrder);
+		ImageLabel* imageLabel = new ImageLabel(this);
+		imageLabel->setFixedSize(200, 150);
+		imageLabel->setImage(_image);
+		imageLabel->setSortOrder(imageSortOrder);
 
-	connect(imageLabel, &ImageLabel::clicked, this, &ImagesPane::showImage);
-	connect(imageLabel, &ImageLabel::removeRequested, this, &ImagesPane::removeImage);
+		connect(imageLabel, &ImageLabel::clicked, this, &ImagesPane::showImage);
+		connect(imageLabel, &ImageLabel::removeRequested, this, &ImagesPane::removeImage);
 
-	m_layout->insertWidget(m_layout->count() - 1, imageLabel);
+		m_layout->insertWidget(m_layout->count() - 1, imageLabel);
 
-	emit imageAdded(_image, imageSortOrder);
+		emit imageAdded(_image, imageSortOrder);
+	}
 }
 
 void ImagesPane::addImageFromFile(const QString& _imagePath)
