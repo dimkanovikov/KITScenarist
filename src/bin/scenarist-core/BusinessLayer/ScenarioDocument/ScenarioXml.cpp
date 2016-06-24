@@ -94,6 +94,13 @@ ScenarioXml::ScenarioXml(ScenarioDocument* _scenario) :
 
 QString ScenarioXml::scenarioToXml()
 {
+	//
+	// Для формирования xml не используем QXmlStreamWriter, т.к. нам нужно хранить по отдельности
+	// xml каждого блока, а QXmlStreamWriter не всегда закрывает последний записанный тэг,
+	// оставляя место для записи атрибутов. В результате это приводит к появлению в xml
+	// странных последовательностей, наподобии ">>" или ">/>"
+	//
+
 	QString resultXml;
 
 	//
@@ -102,18 +109,10 @@ QString ScenarioXml::scenarioToXml()
 	int openedGroups = 0;
 	int openedFolders = 0;
 
-	QString currentXml;
-	QXmlStreamWriter writer(&currentXml);
-	writer.setAutoFormatting(true);
-	writer.setAutoFormattingIndent(0);
-	writer.writeStartDocument();
-	writer.writeStartElement(NODE_SCENARIO);
-	writer.writeAttribute(ATTRIBUTE_VERSION, "1.0");
-	resultXml.append(currentXml);
-	currentXml.clear();
-
 	QTextBlock currentBlock = m_scenario->document()->begin();
+	QString currentBlockXml;
 	do {
+		currentBlockXml.clear();
 		const uint currentBlockHash = qHash(currentBlock);
 
 		//
@@ -262,37 +261,36 @@ QString ScenarioXml::scenarioToXml()
 				// Обернуть в ячейку
 				//
 				if (!parentNode.isEmpty()) {
-					writer.writeStartElement(parentNode);
+					currentBlockXml.append(QString("<%1>\n").arg(parentNode));
 				}
-
-				//
-				// Открыть ячейку текущего элемента
-				//
-				writer.writeStartElement(currentNode);
 
 				//
 				// Если возможно, сохраним цвета элемента
 				//
+				QString colors;
 				if (canHaveColors) {
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
 						if (!info->colors().isEmpty()) {
-							writer.writeAttribute(ATTRIBUTE_COLOR, info->colors());
+							colors = QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
 						}
 					}
 				}
 
 				//
+				// Открыть ячейку текущего элемента
+				//
+				currentBlockXml.append(QString("<%1%2>\n").arg(currentNode, colors));
+
+				//
 				// Пишем текст текущего элемента
 				//
-				writer.writeStartElement(NODE_VALUE);
-				writer.writeCDATA(textToSave);
-				writer.writeEndElement();
+				currentBlockXml.append(QString("<%1><![CDATA[%2]]></%1>\n").arg(NODE_VALUE, textToSave));
 
 				//
 				// Пишем редакторские комментарии, если они есть в блоке
 				//
 				if (::hasReviewMarks(currentBlock)) {
-					writer.writeStartElement(NODE_REVIEW_GROUP);
+					currentBlockXml.append(QString("<%1>\n").arg(NODE_REVIEW_GROUP));
 					foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
 						bool isReviewMark =
 							range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark);
@@ -301,19 +299,20 @@ QString ScenarioXml::scenarioToXml()
 						// Все редакторские правки, и только, если выделен записываемый текст
 						//
 						if (isReviewMark) {
-							writer.writeStartElement(NODE_REVIEW);
-							writer.writeAttribute(ATTRIBUTE_REVIEW_FROM, QString::number(range.start));
-							writer.writeAttribute(ATTRIBUTE_REVIEW_LENGTH, QString::number(range.length));
+							currentBlockXml.append(QString("<%1").arg(NODE_REVIEW));
+							currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_FROM, QString::number(range.start)));
+							currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_LENGTH, QString::number(range.length)));
 							if (range.format.hasProperty(QTextFormat::ForegroundBrush)) {
-								writer.writeAttribute(ATTRIBUTE_REVIEW_COLOR, range.format.foreground().color().name());
+								currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_COLOR, range.format.foreground().color().name()));
 							}
 							if (range.format.hasProperty(QTextFormat::BackgroundBrush)) {
-								writer.writeAttribute(ATTRIBUTE_REVIEW_BGCOLOR, range.format.background().color().name());
+								currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_BGCOLOR, range.format.background().color().name()));
 							}
-							writer.writeAttribute(ATTRIBUTE_REVIEW_IS_HIGHLIGHT,
-								range.format.boolProperty(ScenarioBlockStyle::PropertyIsHighlight) ? "true" : "false");
-							writer.writeAttribute(ATTRIBUTE_REVIEW_DONE,
-								range.format.boolProperty(ScenarioBlockStyle::PropertyIsDone) ? "true" : "false");
+							currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_IS_HIGHLIGHT,
+								range.format.boolProperty(ScenarioBlockStyle::PropertyIsHighlight) ? "true" : "false"));
+							currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_DONE,
+								range.format.boolProperty(ScenarioBlockStyle::PropertyIsDone) ? "true" : "false"));
+							currentBlockXml.append(">\n");
 							//
 							// ... комментарии
 							//
@@ -321,34 +320,34 @@ QString ScenarioXml::scenarioToXml()
 							const QStringList authors = range.format.property(ScenarioBlockStyle::PropertyCommentsAuthors).toStringList();
 							const QStringList dates = range.format.property(ScenarioBlockStyle::PropertyCommentsDates).toStringList();
 							for (int commentIndex = 0; commentIndex < comments.size(); ++commentIndex) {
-								writer.writeEmptyElement(NODE_REVIEW_COMMENT);
-								writer.writeAttribute(ATTRIBUTE_REVIEW_COMMENT, comments.at(commentIndex));
-								writer.writeAttribute(ATTRIBUTE_REVIEW_AUTHOR, authors.at(commentIndex));
-								writer.writeAttribute(ATTRIBUTE_REVIEW_DATE, dates.at(commentIndex));
+								currentBlockXml.append(QString("<%1").arg(NODE_REVIEW_COMMENT));
+								currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_COMMENT, comments.at(commentIndex)));
+								currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_AUTHOR, authors.at(commentIndex)));
+								currentBlockXml.append(QString(" %1=\"%2\"").arg(ATTRIBUTE_REVIEW_DATE, dates.at(commentIndex)));
+								currentBlockXml.append("/>\n");
 							}
 							//
-							writer.writeEndElement();
+							currentBlockXml.append(QString("</%1>\n").arg(NODE_REVIEW));
 						}
 					}
-					writer.writeEndElement();
+					currentBlockXml.append(QString("</%1>\n").arg(NODE_REVIEW_GROUP));
 				}
 
 				//
 				// Закрываем текущий элемент
 				//
-				writer.writeEndElement();
+				currentBlockXml.append(QString("</%1>\n").arg(currentNode));
 
 				//
 				// Закрываем родителя, если были обёрнуты
 				//
 				if (needCloseParentNode) {
-					writer.writeEndElement();
+					currentBlockXml.append(QString("</%1>\n").arg(parentNode));
 				}
 			}
 
-			m_xmlCache.insert(currentBlockHash, new QString(currentXml));
-			resultXml.append(currentXml);
-			currentXml.clear();
+			m_xmlCache.insert(currentBlockHash, new QString(currentBlockXml));
+			resultXml.append(currentBlockXml);
 		}
 		currentBlock = currentBlock.next();
 	} while (currentBlock.isValid());
@@ -357,10 +356,10 @@ QString ScenarioXml::scenarioToXml()
 	// Закроем открытые группы
 	//
 	while (openedGroups > 0) {
-		writer.writeStartElement("scene_group_footer");
-		writer.writeCDATA(QObject::tr("END OF GROUP", "ScenarioXml"));
-		writer.writeEndElement();
-		writer.writeEndElement(); // scene_group
+		resultXml.append(QString("<%1>\n").arg("scene_group_footer"));
+		resultXml.append(QString("<%1><![CDATA[%2]]></%1>\n").arg(NODE_VALUE, QObject::tr("END OF GROUP", "ScenarioXml")));
+		resultXml.append(QString("</%1>\n").arg("scene_group_footer"));
+		resultXml.append(QString("</%1>\n").arg("scene_group"));
 		--openedGroups;
 	}
 
@@ -368,22 +367,14 @@ QString ScenarioXml::scenarioToXml()
 	// Закроем открытые папки
 	//
 	while (openedFolders > 0) {
-		writer.writeStartElement("folder_footer");
-		writer.writeCDATA(QObject::tr("END OF FOLDER", "ScenarioXml"));
-		writer.writeEndElement();
-		writer.writeEndElement(); // folder
+		resultXml.append(QString("<%1>\n").arg("folder_footer"));
+		resultXml.append(QString("<%1><![CDATA[%2]]></%1>\n").arg(NODE_VALUE, QObject::tr("END OF FOLDER", "ScenarioXml")));
+		resultXml.append(QString("</%1>\n").arg("folder_footer"));
+		resultXml.append(QString("</%1>\n").arg("folder"));
 		--openedFolders;
 	}
 
-	//
-	// Добавим корневой элемент
-	//
-	writer.writeEndElement(); // scenario
-	writer.writeEndDocument();
-
-	resultXml.append(currentXml);
-
-	return resultXml;
+	return makeMimeFromXml(resultXml);
 }
 
 QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _correctLastMime)
