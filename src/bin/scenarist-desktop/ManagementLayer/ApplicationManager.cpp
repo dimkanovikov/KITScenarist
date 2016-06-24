@@ -52,6 +52,14 @@ using UserInterface::ApplicationView;
 
 namespace {
 	/**
+	 * @brief Номера пунктов меню
+	 */
+	/** @{ */
+	const int PRINT_PREVIEW_MENU_INDEX = 7;
+	const int TWO_PANEL_MODE_MENU_INDEX = 9;
+	/** @} */
+
+	/**
 	 * @brief Номера вкладок
 	 */
 	/** @{ */
@@ -769,6 +777,11 @@ void ApplicationManager::aboutExport()
 	m_exportManager->exportScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
 }
 
+void ApplicationManager::aboutPrintPreview()
+{
+	m_exportManager->printPreviewScenario(m_scenarioManager->scenario(), m_researchManager->scenarioData());
+}
+
 void ApplicationManager::aboutExit()
 {
 	//
@@ -1242,6 +1255,15 @@ QMenu* ApplicationManager::createMenu()
 	// ... экспорт
 	QAction* exportTo = menu->addAction(tr("Export to..."));
 	g_disableOnStartActions << exportTo;
+	// ... предварительный просмотр
+	QAction* printPreview = menu->addAction(tr("Print Preview"));
+	printPreview->setShortcut(QKeySequence(Qt::Key_F12));
+	g_disableOnStartActions << printPreview;
+
+	menu->addSeparator();
+	QAction* twoPanelMode = menu->addAction(tr("Two Panel Mode"));
+	twoPanelMode->setCheckable(true);
+	twoPanelMode->setShortcut(QKeySequence(Qt::Key_F2));
 
 	//
 	// Настроим соединения
@@ -1252,6 +1274,8 @@ QMenu* ApplicationManager::createMenu()
 	connect(saveProjectAs, SIGNAL(triggered()), this, SLOT(aboutSaveAs()));
 	connect(import, SIGNAL(triggered()), this, SLOT(aboutImport()));
 	connect(exportTo, SIGNAL(triggered()), this, SLOT(aboutExport()));
+	connect(printPreview, SIGNAL(triggered()), this, SLOT(aboutPrintPreview()));
+	connect(twoPanelMode, &QAction::triggered, m_settingsManager, &SettingsManager::setUseTwoPanelMode);
 
 #ifdef Q_OS_MAC
 	//
@@ -1486,6 +1510,7 @@ void ApplicationManager::reloadApplicationSettings()
 				"application/two-panel-mode",
 				DataStorageLayer::SettingsStorage::ApplicationSettings)
 			.toInt();
+	m_menu->menu()->actions().value(TWO_PANEL_MODE_MENU_INDEX)->setChecked(twoPanelsMode);
 	//
 	// Если не применять этот хак, то в редакторе сценария пропадает курсор
 	// Возникает, только когда редактор сценария был на экране, при отключении второй панели

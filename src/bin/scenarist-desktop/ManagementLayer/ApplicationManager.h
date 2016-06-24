@@ -131,6 +131,11 @@ namespace ManagementLayer
 		void aboutExport();
 
 		/**
+		 * @brief Предварительный просмотр и печать
+		 */
+		void aboutPrintPreview();
+
+		/**
 		 * @brief Закрыть приложение
 		 */
 		void aboutExit();

@@ -115,6 +115,11 @@ QWidget* SettingsManager::view() const
 	return m_view;
 }
 
+void SettingsManager::setUseTwoPanelMode(bool _use)
+{
+	m_view->setApplicationTwoPanelMode(_use);
+}
+
 void SettingsManager::aboutResetSettings()
 {
 	QLightBoxProgress progress(m_view);

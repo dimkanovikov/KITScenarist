@@ -22,6 +22,11 @@ namespace ManagementLayer
 
 		QWidget* view() const;
 
+		/**
+		 * @brief Включить выключить двухпанельный режим
+		 */
+		void setUseTwoPanelMode(bool _use);
+
 	signals:
 		/**
 		 * @brief Обновления настроек
