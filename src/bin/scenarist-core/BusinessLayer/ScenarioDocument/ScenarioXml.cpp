@@ -558,7 +558,7 @@ int ScenarioXml::xmlToScenario(ScenarioModelItem* _insertParent, ScenarioModelIt
 		//
 		// Вставим пустой блок для нового элемента
 		//
-		cursor.setPosition(insertPosition);
+		m_scenario->document()->setCursorPosition(cursor, insertPosition);
 		cursor.insertBlock();
 		//
 		// ... скорректируем позицию курсора
