@@ -7,7 +7,7 @@
 QT       -= gui
 QT       += network xml
 
-QMAKE_MAC_SDK = macosx10.11
+#QMAKE_MAC_SDK = macosx10.11
 
 TARGET = webloader
 TEMPLATE = lib

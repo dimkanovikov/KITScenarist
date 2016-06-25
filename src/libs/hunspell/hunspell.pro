@@ -7,7 +7,7 @@ TEMPLATE = lib
 CONFIG += qt thread warn_on
 QT -= core gui
 
-QMAKE_MAC_SDK = macosx10.11
+#QMAKE_MAC_SDK = macosx10.11
 
 #
 # Конфигурируем расположение файлов сборки

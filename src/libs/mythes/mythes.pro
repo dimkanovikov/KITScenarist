@@ -6,7 +6,7 @@
 
 QT       -= gui
 
-QMAKE_MAC_SDK = macosx10.11
+#QMAKE_MAC_SDK = macosx10.11
 
 TARGET = mythes
 TEMPLATE = lib

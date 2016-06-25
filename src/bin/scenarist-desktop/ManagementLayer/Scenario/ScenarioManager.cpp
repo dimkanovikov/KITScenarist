@@ -199,7 +199,7 @@ namespace {
 				foreach (const QTextLayout::FormatRange& range, currentBlock.textFormats()) {
 					if (!range.format.boolProperty(ScenarioBlockStyle::PropertyIsReviewMark)) {
 						cursor.setPosition(currentBlock.position() + range.start);
-						cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, range.length);
+						cursor.setPosition(cursor.position() + range.length, QTextCursor::KeepAnchor);
 						cursor.mergeCharFormat(blockStyle.charFormat());
 						cursor.mergeBlockCharFormat(blockStyle.charFormat());
 						cursor.mergeBlockFormat(blockStyle.blockFormat());
