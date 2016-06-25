@@ -32,7 +32,7 @@ border: 1px solid palette(dark);
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="6" column="0" colspan="2">
+   <item row="7" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -150,7 +150,7 @@ border: 1px solid palette(dark);
      </layout>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="4" column="0" colspan="2">
     <widget class="QCheckBox" name="showAdditional">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -163,7 +163,7 @@ border: 1px solid palette(dark);
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="6" column="0">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -226,7 +226,7 @@ border: 1px solid palette(dark);
      </item>
     </layout>
    </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QFrame" name="additionalSettings">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -318,6 +318,13 @@ border: 1px solid palette(dark);
         </property>
        </widget>
       </item>
+      <item row="8" column="0" colspan="2">
+       <widget class="QCheckBox" name="checkPageBreaks">
+        <property name="text">
+         <string>Check Page Breaks</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -397,6 +404,7 @@ border: 1px solid palette(dark);
   <tabstop>scenesNumbering</tabstop>
   <tabstop>scenesPrefix</tabstop>
   <tabstop>saveReviewMarks</tabstop>
+  <tabstop>checkPageBreaks</tabstop>
   <tabstop>cancel</tabstop>
   <tabstop>printPreview</tabstop>
   <tabstop>exportTo</tabstop>

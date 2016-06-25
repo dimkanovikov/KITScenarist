@@ -92,6 +92,11 @@ void ExportDialog::setExportFileName(const QString& _fileName)
 	aboutFileNameChanged();
 }
 
+void ExportDialog::setCheckPageBreaks(bool _check)
+{
+	ui->checkPageBreaks->setChecked(_check);
+}
+
 void ExportDialog::setStylesModel(QAbstractItemModel* _model)
 {
 	ui->styles->setModel(_model);
@@ -132,6 +137,7 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 	BusinessLogic::ExportParameters exportParameters;
 	exportParameters.outline = ui->outline->isChecked();
 	exportParameters.filePath = ui->file->text();
+	exportParameters.checkPageBreaks = ui->checkPageBreaks->isChecked();
 	exportParameters.style = ui->styles->currentText();
 	exportParameters.printTilte = ui->printTitle->isChecked();
 	exportParameters.printPagesNumbers = ui->pageNumbering->isChecked();
