@@ -43,6 +43,25 @@ namespace {
 					info.isFile() ? info.absoluteDir().absolutePath() : _path,
 					DataStorageLayer::SettingsStorage::ApplicationSettings);
 	}
+
+	/**
+	 * @brief Обновить текст в редакторе
+	 */
+	static void updateText(QWidget* _edit, const QString& _text) {
+		if (QLineEdit* lineEdit = qobject_cast<QLineEdit*>(_edit)) {
+			if (lineEdit->text() != _text) {
+				lineEdit->setText(_text);
+			}
+		} else if (QComboBox* comboBox = qobject_cast<QComboBox*>(_edit)) {
+			if (comboBox->currentText() != _text) {
+				comboBox->setEditText(_text);
+			}
+		} else if (QPlainTextEdit* plainTextEdit = qobject_cast<QPlainTextEdit*>(_edit)) {
+			if (plainTextEdit->toPlainText() != _text) {
+				plainTextEdit->setPlainText(_text);
+			}
+		}
+	}
 }
 
 
@@ -102,8 +121,8 @@ void ResearchView::selectItem(const QModelIndex& _index)
 void ResearchView::editScenario(const QString& _name, const QString& _logline)
 {
 	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->scenarioEdit);
-	m_ui->scenarioName->setText(_name);
-	m_ui->scenarioLogline->setText(_logline);
+	::updateText(m_ui->scenarioName, _name);
+	::updateText(m_ui->scenarioLogline, _logline);
 
 	setResearchManageButtonsVisible(false);
 	setSearchVisible(false);
@@ -113,12 +132,12 @@ void ResearchView::editTitlePage(const QString& _name, const QString& _additiona
 	const QString& _genre, const QString& _author, const QString& _contacts, const QString& _year)
 {
 	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->titlePageEdit);
-	m_ui->titlePageName->setText(_name);
-	m_ui->titlePageAdditionalInfo->setEditText(_additionalInfo);
-	m_ui->titlePageGenre->setText(_genre);
-	m_ui->titlePageAuthor->setText(_author);
-	m_ui->titlePageContacts->setPlainText(_contacts);
-	m_ui->titlePageYear->setText(_year);
+	::updateText(m_ui->titlePageName, _name);
+	::updateText(m_ui->titlePageAdditionalInfo, _additionalInfo);
+	::updateText(m_ui->titlePageGenre, _genre);
+	::updateText(m_ui->titlePageAuthor, _author);
+	::updateText(m_ui->titlePageContacts, _contacts);
+	::updateText(m_ui->titlePageYear, _year);
 
 	setResearchManageButtonsVisible(false);
 	setSearchVisible(false);
@@ -332,7 +351,9 @@ void ResearchView::initConnections()
 	//
 	// Внутренние соединения формы
 	//
-	connect(m_ui->scenarioName, &QLineEdit::textChanged, m_ui->titlePageName, &QLineEdit::setText);
+	connect(m_ui->scenarioName, &QLineEdit::textChanged, [=] {
+		::updateText(m_ui->titlePageName, m_ui->scenarioName->text());
+	});
 	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=] {
 		const QString textToSplit = m_ui->scenarioLogline->toPlainText().simplified();
 		const int wordsCount = textToSplit.split(QRegExp("([^\\w,^\\\\]|(?=\\\\))+"), QString::SkipEmptyParts).size();
@@ -348,7 +369,9 @@ void ResearchView::initConnections()
 		m_ui->scenarioLoglineWords->setStyleSheet("color: " + color);
 		m_ui->scenarioLoglineWordsLabel->setStyleSheet("color: " + color);
 	});
-	connect(m_ui->titlePageName, &QLineEdit::textChanged, m_ui->scenarioName, &QLineEdit::setText);
+	connect(m_ui->titlePageName, &QLineEdit::textChanged, [=] {
+		::updateText(m_ui->scenarioName, m_ui->titlePageName->text());
+	});
 	//
 	// ... загрузка ссылки
 	//
