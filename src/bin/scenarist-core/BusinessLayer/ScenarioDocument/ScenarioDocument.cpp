@@ -240,6 +240,7 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
 			if (currentBlockType == ScenarioBlockStyle::SceneDescription) {
 				while (currentBlockType == ScenarioBlockStyle::SceneDescription
 					   && !cursor.atEnd()) {
+					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 					cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
 					currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
 				}
