@@ -47,10 +47,14 @@ Application::Application(int& _argc, char** _argv) :
 	setStyle(QStyleFactory::create("Fusion"));
 
 	//
-	// Загрузим Courier New в базу шрифтов программы, если его там ещё нет
+	// Загрузим шрифты в базу шрифтов программы, если их там ещё нет
 	//
 	QFontDatabase fontDatabase;
 	fontDatabase.addApplicationFont(":/Fonts/Courier New");
+	fontDatabase.addApplicationFont(":/Fonts/Courier Prime");
+	fontDatabase.addApplicationFont(":/Fonts/Courier Prime Bold");
+	fontDatabase.addApplicationFont(":/Fonts/Courier Prime Italic");
+	fontDatabase.addApplicationFont(":/Fonts/Courier Prime Bold Italic");
 
 	//
 	// Настроим перевод приложения

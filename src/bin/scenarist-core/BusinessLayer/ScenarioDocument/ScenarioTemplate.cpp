@@ -795,6 +795,8 @@ void ScenarioTemplate::load(const QString& _fromFile)
 			m_name = templateAttributes.value("name").toString();
 			if (m_name == "default") {
 				m_name = QApplication::translate("BusinessLogic::ScenarioTemplate", "Default");
+			} else if (m_name == "default_courier_prime") {
+				m_name = QApplication::translate("BusinessLogic::ScenarioTemplate", "Default with Courier Prime");
 			}
 			m_description = templateAttributes.value("description").toString();
 			m_pageSizeId = PageMetrics::pageSizeIdFromString(templateAttributes.value("page_format").toString());
@@ -998,24 +1000,43 @@ ScenarioTemplateFacade::ScenarioTemplateFacade()
 	//
 	// Обновим шаблон по умолчанию
 	//
-	const QString defaultTemplateName =
+	auto updateDefaultTemplate = [=] (const QString& _templateName) {
+		const QString defaultTemplatePath =
+				templatesFolderPath + QDir::separator() + _templateName + SCENARIO_TEMPLATE_FILE_EXTENSION;
+		QFile defaultTemplateFile(defaultTemplatePath);
+		if (defaultTemplateFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+			QFile defaultTemplateRcFile(":/Templates/Templates/" + _templateName + SCENARIO_TEMPLATE_FILE_EXTENSION);
+			if (defaultTemplateRcFile.open(QIODevice::ReadOnly)) {
+				defaultTemplateFile.write(defaultTemplateRcFile.readAll());
+				defaultTemplateRcFile.close();
+			}
+			defaultTemplateFile.close();
+		}
+
+		return defaultTemplatePath;
+	};
+	//
+	// ... Courier New
+	//
+	const QString defaultCourierNewTemplateName =
 #ifndef MOBILE_OS
 			"default."
 #else
 			"mobile."
 #endif
 			;
-	const QString defaultTemplatePath =
-			templatesFolderPath + QDir::separator() + defaultTemplateName + SCENARIO_TEMPLATE_FILE_EXTENSION;
-	QFile defaultTemplateFile(defaultTemplatePath);
-	if (defaultTemplateFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-		QFile defaultTemplateRcFile(":/Templates/Templates/" + defaultTemplateName + SCENARIO_TEMPLATE_FILE_EXTENSION);
-		if (defaultTemplateRcFile.open(QIODevice::ReadOnly)) {
-			defaultTemplateFile.write(defaultTemplateRcFile.readAll());
-			defaultTemplateRcFile.close();
-		}
-		defaultTemplateFile.close();
-	}
+	const QString defaultCourierNewTemplatePath = updateDefaultTemplate(defaultCourierNewTemplateName);
+	//
+	// ... Courier Prime
+	//
+	const QString defaultCourierPrimeTemplateName =
+#ifndef MOBILE_OS
+			"default_courier_prime."
+#else
+			"mobile_courier_prime."
+#endif
+			;
+	updateDefaultTemplate(defaultCourierPrimeTemplateName);
 
 	//
 	// Загрузить шаблоны
@@ -1032,7 +1053,7 @@ ScenarioTemplateFacade::ScenarioTemplateFacade()
 	//
 	// ... шаблон по умолчанию
 	//
-	m_defaultTemplate = ScenarioTemplate(defaultTemplatePath);
+	m_defaultTemplate = ScenarioTemplate(defaultCourierNewTemplatePath);
 
 	//
 	// Настроим модель шаблонов

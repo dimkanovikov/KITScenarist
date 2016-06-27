@@ -1,6 +1,10 @@
 <RCC>
     <qresource prefix="/Fonts">
         <file alias="Courier New">Fonts/cour.ttf</file>
+        <file alias="Courier Prime Bold Italic">Fonts/courier-prime-bold-italic.ttf</file>
+        <file alias="Courier Prime Bold">Fonts/courier-prime-bold.ttf</file>
+        <file alias="Courier Prime Italic">Fonts/courier-prime-italic.ttf</file>
+        <file alias="Courier Prime">Fonts/courier-prime.ttf</file>
     </qresource>
     <qresource prefix="/SpellChecking">
         <file>HunspellDictionaries/ru_RU.aff</file>
@@ -137,5 +141,7 @@
     <qresource prefix="/Templates">
         <file>Templates/default.kitss</file>
         <file>Templates/mobile.kitss</file>
+        <file>Templates/default_courier_prime.kitss</file>
+        <file>Templates/mobile_courier_prime.kitss</file>
     </qresource>
 </RCC>
