@@ -12,13 +12,17 @@
 
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalHeaderView.h>
 #include <3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.h>
+#include <3rd_party/Widgets/SpellCheckTextEdit/SpellChecker.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+
+#include <WebLoader.h>
 
 #include <QApplication>
 #include <QFileDialog>
 #include <QSplitter>
 #include <QStandardItemModel>
+#include <QStandardPaths>
 #include <QStringListModel>
 
 using ManagementLayer::SettingsManager;
@@ -247,7 +251,59 @@ void SettingsManager::scenarioEditSpellCheckChanged(bool _value)
 
 void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 {
+	//
+	// Сохраняем значение выбранного языка
+	//
 	storeValue("scenario-editor/spell-checking-language", _value);
+
+	//
+	// Проверяем установлен ли выбранный словарь
+	//
+	const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+	const QString hunspellDictionariesFolderPath =
+		appDataFolderPath + QDir::separator() + "Hunspell" + QDir::separator();
+	const QString languageCode = SpellChecker::languageCode((SpellChecker::Language)_value);
+	const QString affFileName = languageCode + ".aff";
+	const QString dicFileName = languageCode + ".dic";
+	//
+	// Если не установлен, скачаем
+	//
+	if (!QFile::exists(hunspellDictionariesFolderPath + affFileName)
+		|| !QFile::exists(hunspellDictionariesFolderPath + dicFileName)) {
+		//
+		// ... покажем прелоадер
+		//
+		QLightBoxProgress progress(m_view);
+		progress.showProgress(tr("Dictionary loading"), tr("Please wait, loading of spell checking dictionary can take a few minutes."));
+
+		//
+		// ... создаём папку для пользовательских файлов
+		//
+		QDir rootFolder = QDir::root();
+		rootFolder.mkpath(hunspellDictionariesFolderPath);
+
+		//
+		// ... скачаем словарь
+		//
+		const QString hunspellDictionariesFolderUrl = "https://kitscenarist.ru/downloads/hunspell/";
+		//
+		const QByteArray affFileData = WebLoader().loadSync(hunspellDictionariesFolderUrl + affFileName);
+		QFile affFile(hunspellDictionariesFolderPath + affFileName);
+		affFile.open(QIODevice::WriteOnly);
+		affFile.write(affFileData);
+		affFile.close();
+		//
+		const QByteArray dicFileData = WebLoader().loadSync(hunspellDictionariesFolderUrl + dicFileName);
+		QFile dicFile(hunspellDictionariesFolderPath + dicFileName);
+		dicFile.open(QIODevice::WriteOnly);
+		dicFile.write(dicFileData);
+		dicFile.close();
+
+		//
+		// ... скрываем прогресс
+		//
+		progress.finish();
+	}
 }
 
 void SettingsManager::scenarioEditTextColorChanged(const QColor&_value)

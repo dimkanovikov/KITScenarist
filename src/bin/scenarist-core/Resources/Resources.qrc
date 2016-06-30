@@ -6,24 +6,6 @@
         <file alias="Courier Prime Italic">Fonts/courier-prime-italic.ttf</file>
         <file alias="Courier Prime">Fonts/courier-prime.ttf</file>
     </qresource>
-    <qresource prefix="/SpellChecking">
-        <file>HunspellDictionaries/ru_RU.aff</file>
-        <file>HunspellDictionaries/ru_RU.dic</file>
-        <file>HunspellDictionaries/be_BY.aff</file>
-        <file>HunspellDictionaries/be_BY.dic</file>
-        <file>HunspellDictionaries/uk_UA.aff</file>
-        <file>HunspellDictionaries/uk_UA.dic</file>
-        <file>HunspellDictionaries/ru_RU_yo.dic</file>
-        <file>HunspellDictionaries/ru_RU_yo.aff</file>
-        <file>HunspellDictionaries/es_ES.dic</file>
-        <file>HunspellDictionaries/es_ES.aff</file>
-        <file>HunspellDictionaries/en_GB.aff</file>
-        <file>HunspellDictionaries/en_GB.dic</file>
-        <file>HunspellDictionaries/en_US.dic</file>
-        <file>HunspellDictionaries/en_US.aff</file>
-        <file>HunspellDictionaries/fr_FR.dic</file>
-        <file>HunspellDictionaries/fr_FR.aff</file>
-    </qresource>
     <qresource prefix="/Graphics">
         <file>Icons/folder.png</file>
         <file>Icons/scene.png</file>
@@ -119,17 +101,13 @@
         <file>Translations/qt_ru.qm</file>
         <file>Translations/qtbase_ru.qm</file>
         <file>Translations/Scenarist_es.qm</file>
-        <file>Translations/Scenarist_es.ts</file>
         <file>Translations/qtbase_es.qm</file>
         <file>Translations/qt_es.qm</file>
-        <file>Translations/Scenarist_fr.ts</file>
-        <file>Translations/Scenarist_en.ts</file>
         <file>Translations/Scenarist_en.qm</file>
         <file>Translations/Scenarist_fr.qm</file>
         <file>Translations/qtbase_fr.qm</file>
         <file>Translations/qt_fr.qm</file>
         <file>Translations/Scenarist_kz.qm</file>
-        <file>Translations/Scenarist_kz.ts</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/menuarrow.png</file>

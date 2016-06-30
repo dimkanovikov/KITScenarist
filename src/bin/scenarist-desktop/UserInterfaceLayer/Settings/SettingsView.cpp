@@ -598,12 +598,15 @@ void SettingsView::initData()
 {
 	ui->spellCheckingLanguage->addItem(tr("Russian with Yo"), SpellChecker::RussianWithYo);
 	ui->spellCheckingLanguage->addItem(tr("Russian"), SpellChecker::Russian);
-	ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
+	ui->spellCheckingLanguage->addItem(tr("Armenian (Eastern)"), SpellChecker::ArmenianEastern);
+	ui->spellCheckingLanguage->addItem(tr("Armenian (Western)"), SpellChecker::ArmenianWestern);
 	ui->spellCheckingLanguage->addItem(tr("Belorussian"), SpellChecker::Belorussian);
 	ui->spellCheckingLanguage->addItem(tr("English (GB)"), SpellChecker::EnglishGB);
 	ui->spellCheckingLanguage->addItem(tr("English (US)"), SpellChecker::EnglishUS);
-	ui->spellCheckingLanguage->addItem(tr("Spanish"), SpellChecker::Spanish);
 	ui->spellCheckingLanguage->addItem(tr("French"), SpellChecker::French);
+	ui->spellCheckingLanguage->addItem(tr("Kazakh"), SpellChecker::Kazakh);
+	ui->spellCheckingLanguage->addItem(tr("Spanish"), SpellChecker::Spanish);
+	ui->spellCheckingLanguage->addItem(tr("Ukrainian"), SpellChecker::Ukrainian);
 }
 
 void SettingsView::initView()
@@ -707,7 +710,12 @@ void SettingsView::initConnections()
 	connect(ui->correctDoubleCapitals, &QCheckBox::toggled, this, &SettingsView::scenarioEditCorrectDoubleCapitalsChanged);
 	connect(ui->replaceThreeDots, &QCheckBox::toggled, this, &SettingsView::scenarioEditReplaceThreeDotsChanged);
 	connect(ui->smartQuotes, &QCheckBox::toggled, this, &SettingsView::scenarioEditSmartQuotesChanged);
-	connect(ui->spellChecking, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditSpellCheckChanged(bool)));
+	connect(ui->spellChecking, &QCheckBox::toggled, [=] (bool _checked) {
+		emit scenarioEditSpellCheckChanged(_checked);
+		if (_checked) {
+			aboutScenarioEditSpellCheckLanguageChanged();
+		}
+	});
 	connect(ui->spellCheckingLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(aboutScenarioEditSpellCheckLanguageChanged()));
 	connect(ui->currentScenarioTemplate, SIGNAL(currentIndexChanged(QString)), this, SIGNAL(scenarioEditCurrentTemplateChanged(QString)));
 	connect(ui->autoJumpToNextBlock, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditAutoJumpToNextBlockChanged(bool)));

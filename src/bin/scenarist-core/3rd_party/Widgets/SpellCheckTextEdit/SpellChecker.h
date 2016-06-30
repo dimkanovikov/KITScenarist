@@ -28,8 +28,16 @@ public:
 		EnglishGB,
 		EnglishUS,
 		Spanish,
-		French
+		French,
+		Kazakh,
+		ArmenianEastern,
+		ArmenianWestern
 	};
+
+	/**
+	 * @brief Получить код заданного словаря
+	 */
+	static QString languageCode(Language _language);
 
 public:
 	SpellChecker(const QString& _userDictionaryPath = QString::null);

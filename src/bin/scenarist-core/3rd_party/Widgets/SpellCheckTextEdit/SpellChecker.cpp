@@ -12,6 +12,49 @@
 #include <QTextStream>
 
 
+QString SpellChecker::languageCode(SpellChecker::Language _language)
+{
+	QString code;
+	switch (_language) {
+		case Russian:
+		default:
+			code = "ru_RU";
+			break;
+		case RussianWithYo:
+			code = "ru_RU_yo";
+			break;
+		case ArmenianEastern:
+			code = "arm_ARM_east";
+			break;
+		case ArmenianWestern:
+			code = "arm_ARM_west";
+			break;
+		case Belorussian:
+			code = "be_BY";
+			break;
+		case EnglishGB:
+			code = "en_GB";
+			break;
+		case EnglishUS:
+			code = "en_US";
+			break;
+		case French:
+			code = "fr_FR";
+			break;
+		case Kazakh:
+			code = "kk_KZ";
+			break;
+		case Spanish:
+			code = "es_ES";
+			break;
+		case Ukrainian:
+			code = "uk_UA";
+			break;
+	}
+
+	return code;
+}
+
 SpellChecker::SpellChecker(const QString& _userDictionaryPath) :
 	m_spellingLanguage(SpellChecker::Undefined),
 	m_checker(0),
@@ -215,43 +258,10 @@ QString SpellChecker::hunspellFilePath(SpellChecker::Language _language,
 		SpellChecker::FileType _fileType) const
 {
 	//
-	// Словари хранятся в файлах ресурсов, но для ханспела нужны реальные файлы
-	// поэтому, сохраняем файл из ресурсов на диск
-	//
-	const QString rcFilePath = ":/SpellChecking/HunspellDictionaries/";
-	QString fileName;
-
-	//
 	// Получим файл со словарём в зависимости от выбранного языка,
 	// по-умолчанию используется русский язык
 	//
-	switch (_language) {
-		case Russian:
-		default:
-			fileName += "ru_RU";
-			break;
-		case RussianWithYo:
-			fileName += "ru_RU_yo";
-			break;
-		case Ukrainian:
-			fileName += "uk_UA";
-			break;
-		case Belorussian:
-			fileName += "be_BY";
-			break;
-		case EnglishGB:
-			fileName += "en_GB";
-			break;
-		case EnglishUS:
-			fileName += "en_US";
-			break;
-		case Spanish:
-			fileName += "es_ES";
-			break;
-		case French:
-			fileName += "fr_FR";
-			break;
-	}
+	QString fileName = languageCode(_language);
 
 	//
 	// Определим расширение файла, в зависимости от словаря
@@ -266,30 +276,6 @@ QString SpellChecker::hunspellFilePath(SpellChecker::Language _language,
 	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
 	QString hunspellDictionariesFolderPath = appDataFolderPath + QDir::separator() + "Hunspell";
 	QString dictionaryFilePath = hunspellDictionariesFolderPath + QDir::separator() + fileName;
-	//
-	// ... создаём папку для пользовательских файлов
-	//
-	QDir rootFolder = QDir::root();
-	rootFolder.mkpath(hunspellDictionariesFolderPath);
-	//
-	//  создаём файл если такого ещё нет
-	//
-	if (!QFile::exists(dictionaryFilePath)) {
-		QFile resourseFile(rcFilePath + fileName);
-		resourseFile.open(QIODevice::ReadOnly);
-		//
-		QFile dictionaryFile(dictionaryFilePath);
-		dictionaryFile.open(QIODevice::WriteOnly);
-		dictionaryFile.write(resourseFile.readAll());
-		//
-		resourseFile.close();
-		dictionaryFile.close();
-	}
-
-	//
-	// TODO: логирование корректности записи файла
-	//
-
 	return dictionaryFilePath;
 }
 
@@ -306,27 +292,28 @@ QString SpellChecker::mythesFilePath(SpellChecker::Language _language, FileType 
 	// Получим файл со словарём в зависимости от выбранного языка,
 	// по-умолчанию используется русский язык
 	//
-	switch (_language) {
-		default:
-		case Russian:
-		case RussianWithYo:
-		case Belorussian:
-			fileName += "ru";
-			break;
-		case Ukrainian:
-			fileName += "uk";
-			break;
-		case EnglishGB:
-		case EnglishUS:
-			fileName += "en";
-			break;
-		case Spanish:
-			fileName += "es";
-			break;
-		case French:
-			fileName += "fr";
-			break;
-	}
+	fileName += languageCode(_language);
+//	switch (_language) {
+//		default:
+//		case Russian:
+//		case RussianWithYo:
+//		case Belorussian:
+//			fileName += "ru";
+//			break;
+//		case Ukrainian:
+//			fileName += "uk";
+//			break;
+//		case EnglishGB:
+//		case EnglishUS:
+//			fileName += "en";
+//			break;
+//		case Spanish:
+//			fileName += "es";
+//			break;
+//		case French:
+//			fileName += "fr";
+//			break;
+//	}
 
 	//
 	// Определим расширение файла, в зависимости от словаря
