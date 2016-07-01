@@ -1761,75 +1761,85 @@ Continuer à travailler à ce projet en mode déconnecté.</translation>
 <context>
     <name>ManagementLayer::SettingsManager</name>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="126"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="130"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="126"/>
         <source>Restoring</source>
         <translation>Restauration</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="127"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="131"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="127"/>
         <source>Please wait. Restoring settings to default values can take few minutes.</source>
         <translation>S&apos;il vous plaît attendre. Restauration des paramètres aux valeurs par défaut peut prendre quelques minutes.</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="150"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="154"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="150"/>
         <source>Language will be change after application restart.</source>
         <translation>Langue sera changée après redémarrage de l&apos;application.</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="504"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="277"/>
+        <source>Dictionary loading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="277"/>
+        <source>Please wait, loading of spell checking dictionary can take a few minutes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="560"/>
         <source>Choose file to load</source>
         <translation>Choisir le fichier à charger</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="505"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="529"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="561"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="585"/>
         <source>Scenario Template Files (*.%1)</source>
         <translation>Scénario de fichiers de modèle (*.%1)</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="528"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="584"/>
         <source>Choose file to save</source>
         <translation>Choisissez fichier à enregistrer</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="827"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="883"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="788"/>
         <source>Press in paragraph&apos;s end</source>
         <translation>Press en fin paragraphes</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="829"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="834"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="885"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="890"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="790"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="795"/>
         <source>Tab</source>
         <translation>Tab</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="830"/>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="835"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="886"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="891"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="791"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="796"/>
         <source>Enter</source>
         <translation>Entrer</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="832"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="888"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="793"/>
         <source>Press in empty paragraph</source>
         <translation>Presse à vide paragraphe</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="838"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="894"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="799"/>
         <source>Block Name</source>
         <translation>Nom Bloquer</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="839"/>
+        <location filename="../../../scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp" line="895"/>
         <location filename="../../../scenarist-mobile/ManagementLayer/Settings/SettingsManager.cpp" line="800"/>
         <source>Shortcut</source>
         <translation>Raccourci</translation>
@@ -3776,20 +3786,20 @@ Modifier le texte de fond</translation>
         <translation>Russe</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="601"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="609"/>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp" line="595"/>
         <source>Ukrainian</source>
         <translation>Ukrainien</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="602"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="603"/>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp" line="596"/>
         <source>Belorussian</source>
         <translation>Biélorusse</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="124"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="605"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="608"/>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp" line="129"/>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp" line="599"/>
         <source>Spanish</source>
@@ -3809,28 +3819,39 @@ Modifier le texte de fond</translation>
     </message>
     <message>
         <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="139"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="607"/>
         <source>Kazakh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="603"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="601"/>
+        <source>Armenian (Eastern)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="602"/>
+        <source>Armenian (Western)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="604"/>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp" line="597"/>
         <source>English (GB)</source>
         <translation>Anglais (GB)</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="604"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="605"/>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp" line="598"/>
         <source>English (US)</source>
         <translation>Anglais (US)</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="630"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="633"/>
         <source>Editing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="631"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="634"/>
         <source>Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3843,15 +3864,15 @@ Modifier le texte de fond</translation>
         <translation>Français</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="622"/>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="629"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="625"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="632"/>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp" line="621"/>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp" line="628"/>
         <source>Common</source>
         <translation>Commun</translation>
     </message>
     <message>
-        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="623"/>
+        <location filename="../../../scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp" line="626"/>
         <location filename="../../../scenarist-mobile/UserInterfaceLayer/Settings/SettingsView.cpp" line="622"/>
         <source>Modules</source>
         <translation>Modules</translation>
