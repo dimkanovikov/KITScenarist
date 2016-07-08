@@ -38,8 +38,12 @@ QWidget* LocationsManager::view() const
 
 void LocationsManager::loadCurrentProject()
 {
-	m_dataEditManager->clean();
-	m_navigatorManager->loadLocations();
+    m_navigatorManager->loadLocations();
+}
+
+void LocationsManager::closeCurrentProject()
+{
+    m_dataEditManager->clean();
 }
 
 void LocationsManager::saveLocations()

@@ -39,7 +39,7 @@ void ResearchItemDialog::setInsertParent(const QString& _parentName)
 
 int ResearchItemDialog::researchType() const
 {
-	Domain::Research::Type type;
+    Domain::Research::Type type = Domain::Research::Text;
 	if (m_ui->folder->isChecked()) {
 		type = Domain::Research::Folder;
 	} else if (m_ui->text->isChecked()) {

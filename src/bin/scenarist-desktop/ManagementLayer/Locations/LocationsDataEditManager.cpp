@@ -55,7 +55,7 @@ void LocationsDataEditManager::setCommentOnly(bool _isCommentOnly)
 
 void LocationsDataEditManager::aboutSave()
 {
-	if (!m_editor->name().isEmpty()) {
+    if (!m_editor->name().isEmpty()) {
 		//
 		// Сохраним предыдущее название локации
 		//

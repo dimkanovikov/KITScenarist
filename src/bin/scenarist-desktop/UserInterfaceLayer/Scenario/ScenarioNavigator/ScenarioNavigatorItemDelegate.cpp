@@ -58,7 +58,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		//
 		// Реализация альтернативных цветов в представлении
 		//
-		if(opt.features.testFlag(QStyleOptionViewItemV2::Alternate))
+        if(opt.features.testFlag(QStyleOptionViewItem::Alternate))
 		{
 			backgroundBrush = opt.palette.alternateBase();
 			textBrush = opt.palette.windowText();

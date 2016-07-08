@@ -33,7 +33,7 @@ void CharactersNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOpti
 	//
 	// Получим настройки стиля
 	//
-	QStyleOptionViewItemV4 opt = _option;
+    QStyleOptionViewItem opt = _option;
 	initStyleOption(&opt, _index);
 
 	//
@@ -62,7 +62,7 @@ void CharactersNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOpti
 		//
 		// Реализация альтернативных цветов в представлении
 		//
-		if(opt.features.testFlag(QStyleOptionViewItemV2::Alternate))
+        if(opt.features.testFlag(QStyleOptionViewItem::Alternate))
 		{
 			palette.setBrush(QPalette::Window, qApp->palette().brush(QPalette::AlternateBase));
 			palette.setBrush(QPalette::WindowText, qApp->palette().brush(QPalette::WindowText));

@@ -17,7 +17,7 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 	//
 	// Получим настройки стиля
 	//
-	QStyleOptionViewItemV4 opt = _option;
+    QStyleOptionViewItem opt = _option;
 	initStyleOption(&opt, _index);
 
 	//
@@ -48,7 +48,7 @@ void ResearchNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		//
 		// Реализация альтернативных цветов в представлении
 		//
-		if(opt.features.testFlag(QStyleOptionViewItemV2::Alternate))
+        if(opt.features.testFlag(QStyleOptionViewItem::Alternate))
 		{
 			backgroundBrush = opt.palette.alternateBase();
 			textBrush = opt.palette.windowText();

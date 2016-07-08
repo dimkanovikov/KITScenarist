@@ -38,8 +38,12 @@ QWidget* CharactersManager::view() const
 
 void CharactersManager::loadCurrentProject()
 {
-	m_dataEditManager->clean();
-	m_navigatorManager->loadCharacters();
+    m_navigatorManager->loadCharacters();
+}
+
+void CharactersManager::closeCurrentProject()
+{
+    m_dataEditManager->clean();
 }
 
 void CharactersManager::saveCharacters()

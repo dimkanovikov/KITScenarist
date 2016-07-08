@@ -28,6 +28,11 @@ namespace ManagementLayer
 		 */
 		void loadCurrentProject();
 
+        /**
+         * @brief Очистить данные текущего проекта
+         */
+        void closeCurrentProject();
+
 		/**
 		 * @brief Сохранить локации проекта
 		 */

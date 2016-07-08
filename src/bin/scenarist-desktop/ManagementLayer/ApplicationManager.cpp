@@ -1133,6 +1133,8 @@ void ApplicationManager::closeCurrentProject()
 	//
 	m_researchManager->closeCurrentProject();
 	m_scenarioManager->closeCurrentProject();
+    m_charactersManager->closeCurrentProject();
+    m_locationsManager->closeCurrentProject();
 
 	//
 	// Очистим все загруженные на текущий момент данные
