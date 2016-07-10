@@ -3,7 +3,7 @@
 #include <UserInterfaceLayer/ScenarioTextEdit/ScenarioLineEdit.h>
 
 #include <3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h>
-#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
+#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h>
 
 #include <QApplication>
 #include <QDialogButtonBox>
@@ -24,7 +24,7 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 	m_scene(new QRadioButton(this)),
 	m_header(new ScenarioLineEdit(this)),
 	m_color(new ColoredToolButton(QIcon(":/Graphics/Icons/Editing/rect.png"), this)),
-	m_description(new SimpleTextEditor(this)),
+	m_description(new SimpleTextEditorWidget(this)),
 	m_buttons(new QDialogButtonBox(this))
 {
 	initView();
@@ -105,6 +105,8 @@ void ScenarioItemDialog::initView()
 	m_scene->setText(tr("Scene"));
 
 	m_color->setColorsPane(ColoredToolButton::Google);
+
+	m_description->setToolbarVisible(false);
 
 	m_buttons->addButton(QDialogButtonBox::Ok);
 	m_buttons->addButton(QDialogButtonBox::Cancel);

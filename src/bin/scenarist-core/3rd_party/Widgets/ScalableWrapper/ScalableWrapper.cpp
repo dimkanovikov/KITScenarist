@@ -33,12 +33,6 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	grabGesture(Qt::SwipeGesture);
 
 	//
-	// Всегда показываем полосы прокрутки
-	//
-	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-
-	//
 	// Предварительная настройка редактора текста
 	//
 	// FIXME: непонятно как быть с предком, у встраиваемого виджета не должно быть родителя,
@@ -46,15 +40,15 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	//
 	m_editor->setParent(0);
 	m_editor->setContextMenuPolicy(Qt::PreventContextMenu);
-	m_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	m_editor->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	m_editor->installEventFilter(this);
+	m_editor->setFrameShape(QFrame::NoFrame);
 
 	//
 	// Настраиваем само представление
 	//
 	m_rect = m_scene->addRect(0, 0, 1, 1, QPen(), Qt::red);
 	m_editorProxy = m_scene->addWidget(m_editor);
+	m_editorProxy->setPos(0, 0);
 	setScene(m_scene);
 
 	//
@@ -92,6 +86,7 @@ void ScalableWrapper::setZoomRange(qreal _zoomRange)
 		emit zoomRangeChanged(m_zoomRange);
 
 		scaleTextEdit();
+		updateTextEditSize();
 	}
 }
 
@@ -315,7 +310,7 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 	//
 	if (needShowMenu) {
 		QMenu* menu = m_editor->createContextMenu(m_editor->viewport()->mapFromGlobal(cursorGlobalPos), this);
-		menu->exec(QCursor::pos());
+		menu->exec(cursorGlobalPos);
 		delete menu;
 
 		m_editor->clearFocus();
@@ -372,16 +367,28 @@ void ScalableWrapper::setupScrollingSynchronization(bool _needSync)
 
 void ScalableWrapper::updateTextEditSize()
 {
+	int vbarWidth = 0;
+	if (m_editor->verticalScrollBar()->isVisible()) {
+		vbarWidth = m_editor->verticalScrollBar()->width();
+		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	} else {
+		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	}
+	//
+	int hbarHeight = 0;
+	if (m_editor->horizontalScrollBar()->isVisible()) {
+		hbarHeight = m_editor->horizontalScrollBar()->height();
+		setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+	} else {
+		setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	}
+
 	//
 	// Размер редактора устанавливается таким образом, чтобы скрыть масштабированные полосы
 	// прокрутки (скрывать их нельзя, т.к. тогда теряются значения, которые необходимо проксировать)
 	//
-	const int editorWidth =
-			viewport()->width() / m_zoomRange
-			+ m_editor->verticalScrollBar()->width() + m_zoomRange;
-	const int editorHeight =
-			viewport()->height() / m_zoomRange
-			+ m_editor->horizontalScrollBar()->height() + m_zoomRange;
+	const int editorWidth = viewport()->width() / m_zoomRange + vbarWidth + m_zoomRange;
+	const int editorHeight = viewport()->height() / m_zoomRange + hbarHeight + m_zoomRange;
 	const QSize editorSize(editorWidth, editorHeight);
 	if (m_editorProxy->size() != editorSize) {
 		m_editorProxy->resize(editorSize);

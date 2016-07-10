@@ -1,7 +1,7 @@
 #include "ScenarioSceneDescription.h"
 
 #include <3rd_party/Widgets/ElidedLabel/ElidedLabel.h>
-#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
+#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h>
 
 #include <3rd_party/Helpers/TextEditHelper.h>
 
@@ -13,7 +13,7 @@ using namespace UserInterface;
 ScenarioSceneDescription::ScenarioSceneDescription(QWidget* _parent) :
 	QWidget(_parent),
 	m_title(new ElidedLabel(this)),
-	m_description(new SimpleTextEditor(this))
+	m_description(new SimpleTextEditorWidget(this))
 {
 	initView();
 	initConnections();
@@ -64,6 +64,7 @@ QString ScenarioSceneDescription::currentDescription() const
 void ScenarioSceneDescription::initView()
 {
 	m_title->setText(" ");
+	m_description->setToolbarVisible(false);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());

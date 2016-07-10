@@ -98,7 +98,7 @@
       </item>
       <item row="1" column="0">
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0" rowspan="4">
+        <item row="0" column="0" rowspan="5">
          <widget class="PhotosChooser" name="photos" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -130,11 +130,11 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="SimpleTextEditor" name="description">
+         <widget class="SimpleTextEditorWidget" name="description" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
+            <verstretch>1</verstretch>
            </sizepolicy>
           </property>
          </widget>
@@ -153,6 +153,12 @@
    <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
   </customwidget>
   <customwidget>
+   <class>SimpleTextEditorWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>PhotosChooser</class>
    <extends>QWidget</extends>
    <header location="global">3rd_party/Widgets/PhotosChooser/PhotosChooser.h</header>
@@ -163,18 +169,11 @@
    <extends>QLineEdit</extends>
    <header location="global">3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h</header>
   </customwidget>
-  <customwidget>
-   <class>SimpleTextEditor</class>
-   <extends>QTextEdit</extends>
-   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>name</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../../scenarist-core/Resources/Resources.qrc"/>
   <include location="../../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>
  <connections/>

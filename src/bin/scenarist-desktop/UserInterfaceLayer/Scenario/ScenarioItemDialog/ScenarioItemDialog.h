@@ -8,7 +8,7 @@
 class ColoredToolButton;
 class QDialogButtonBox;
 class QRadioButton;
-class SimpleTextEditor;
+class SimpleTextEditorWidget;
 
 namespace UserInterface
 {
@@ -90,7 +90,7 @@ namespace UserInterface
 		/**
 		 * @brief Описание сцены
 		 */
-		SimpleTextEditor* m_description;
+		SimpleTextEditorWidget* m_description;
 
 		/**
 		 * @brief Кнопки диалога

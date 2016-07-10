@@ -552,7 +552,6 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui \
     scenarist-desktop/UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui \
     scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioDataEdit/ScenarioDataEdit.ui \
     scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.ui \

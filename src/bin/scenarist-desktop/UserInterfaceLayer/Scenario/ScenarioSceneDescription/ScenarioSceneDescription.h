@@ -4,7 +4,7 @@
 #include <QWidget>
 
 class ElidedLabel;
-class SimpleTextEditor;
+class SimpleTextEditorWidget;
 
 
 namespace UserInterface
@@ -77,7 +77,7 @@ namespace UserInterface
 		/**
 		 * @brief Редактор описания
 		 */
-		SimpleTextEditor* m_description;
+		SimpleTextEditorWidget* m_description;
 
 		/**
 		 * @brief Исходный текст описания, используется для контроля изменений
