@@ -39,15 +39,28 @@ void ResearchItemDialog::setInsertParent(const QString& _parentName)
 
 int ResearchItemDialog::researchType() const
 {
-    Domain::Research::Type type = Domain::Research::Text;
+	Domain::Research::Type type = Domain::Research::Text;
 	if (m_ui->folder->isChecked()) {
 		type = Domain::Research::Folder;
 	} else if (m_ui->text->isChecked()) {
 		type = Domain::Research::Text;
-	} else if (m_ui->url->isChecked()) {
-		type = Domain::Research::Url;
-	} else if (m_ui->image->isChecked()) {
-		type = Domain::Research::ImagesGallery;
+	} else if (m_ui->other->isChecked()) {
+		switch (m_ui->otherType->currentIndex()) {
+			case 0: {
+				type = Domain::Research::Url;
+				break;
+			}
+
+			case 1: {
+				type = Domain::Research::ImagesGallery;
+				break;
+			}
+
+			case 2: {
+				type = Domain::Research::MindMap;
+				break;
+			}
+		}
 	}
 	return type;
 }
@@ -74,6 +87,8 @@ void ResearchItemDialog::initView()
 
 void ResearchItemDialog::initConnections()
 {
+	connect(m_ui->other, &QRadioButton::toggled, m_ui->otherType, &QComboBox::setEnabled);
+
 	connect(m_ui->buttons, &QDialogButtonBox::accepted, [=](){
 		if (!m_ui->name->text().isEmpty()) {
 			accept();

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>802</width>
-    <height>497</height>
+    <height>451</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -135,15 +135,25 @@
        </item>
        <item row="1" column="0" colspan="2">
         <widget class="QStackedWidget" name="researchDataEditsContainer">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="currentIndex">
-          <number>7</number>
+          <number>8</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label">
+           <item row="1" column="0" colspan="4">
+            <widget class="QLineEdit" name="scenarioName">
+             <property name="maxLength">
+              <number>300</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="scenarioLoglineWordsLabel">
              <property name="text">
-              <string>Scenario Name:</string>
+              <string>words:</string>
              </property>
             </widget>
            </item>
@@ -157,6 +167,13 @@
              </property>
              <property name="text">
               <string>Logline:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Scenario Name:</string>
              </property>
             </widget>
            </item>
@@ -182,16 +199,6 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0" colspan="4">
-            <widget class="QLineEdit" name="scenarioName">
-             <property name="maxLength">
-              <number>300</number>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0" colspan="4">
-            <widget class="SimpleTextEditor" name="scenarioLogline"/>
-           </item>
            <item row="4" column="2">
             <spacer name="verticalSpacer">
              <property name="orientation">
@@ -205,10 +212,13 @@
              </property>
             </spacer>
            </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="scenarioLoglineWordsLabel">
-             <property name="text">
-              <string>words:</string>
+           <item row="3" column="0" colspan="3">
+            <widget class="SimpleTextEditorWidget" name="scenarioLogline" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
             </widget>
            </item>
@@ -369,7 +379,14 @@
             </widget>
            </item>
            <item>
-            <widget class="SimpleTextEditor" name="synopsisText"/>
+            <widget class="SimpleTextEditorWidget" name="synopsisText" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -391,14 +408,7 @@
           </layout>
          </widget>
          <widget class="QWidget" name="textDataEdit">
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Name:</string>
-             </property>
-            </widget>
-           </item>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <widget class="QLineEdit" name="textName">
              <property name="maxLength">
@@ -407,51 +417,27 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>Text:</string>
+            <widget class="SimpleTextEditorWidget" name="textDescription" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
             </widget>
-           </item>
-           <item>
-            <widget class="SimpleTextEditor" name="textDescription"/>
            </item>
           </layout>
          </widget>
          <widget class="QWidget" name="urlEdit">
           <layout class="QGridLayout" name="gridLayout_5">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>Name:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
+           <item row="0" column="0" colspan="4">
             <widget class="QLineEdit" name="urlName">
              <property name="maxLength">
               <number>300</number>
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Url:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLineEdit" name="urlLink"/>
-           </item>
-           <item row="3" column="1">
-            <widget class="QPushButton" name="urlLoad">
-             <property name="text">
-              <string>Load</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0" colspan="2">
+           <item row="3" column="0" colspan="4">
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <property name="spacing">
               <number>0</number>
@@ -487,12 +473,42 @@
              </item>
             </layout>
            </item>
+           <item row="1" column="2" rowspan="2">
+            <widget class="QLineEdit" name="urlLink"/>
+           </item>
+           <item row="1" column="0" rowspan="2" colspan="2">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Url:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3" rowspan="2">
+            <widget class="QPushButton" name="urlLoad">
+             <property name="text">
+              <string>Load</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="imagesGalleryEdit">
           <layout class="QGridLayout" name="gridLayout_6">
-           <item row="3" column="0">
-            <widget class="ImagesPane" name="imagesGalleryPane" native="true">
+           <item row="0" column="0">
+            <widget class="QLineEdit" name="imagesGalleryName">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="maxLength">
+              <number>300</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="ImagesPane" name="imagesGalleryPane">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -501,66 +517,18 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_9">
-             <property name="text">
-              <string>Name:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLineEdit" name="imagesGalleryName">
-             <property name="maxLength">
-              <number>300</number>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>Images:</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="imageEdit">
           <layout class="QGridLayout" name="gridLayout_7">
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_11">
-             <property name="text">
-              <string>Name:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QLineEdit" name="imageName">
-             <property name="maxLength">
-              <number>300</number>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_12">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Image:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
+           <item row="1" column="1">
             <widget class="QPushButton" name="imageChange">
              <property name="text">
               <string>Change</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="0" colspan="2">
+           <item row="2" column="0" colspan="2">
             <widget class="ImageLabel" name="imagePreview">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -575,6 +543,243 @@
               <bool>true</bool>
              </property>
             </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLineEdit" name="imageName">
+             <property name="maxLength">
+              <number>300</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_12">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Image:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="mindMapEdit">
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="QLineEdit" name="mindMapName">
+             <property name="maxLength">
+              <number>300</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QFrame" name="mindMapToolbar">
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="topMindMapToolbarLabelLeft">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>1</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>1</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="addRootNode">
+                  <property name="toolTip">
+                   <string>Add root node</string>
+                  </property>
+                  <property name="text">
+                   <string>Add root node</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/MindMap/add-root.png</normaloff>:/Graphics/Icons/MindMap/add-root.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="addNode">
+                  <property name="toolTip">
+                   <string>Add child node</string>
+                  </property>
+                  <property name="text">
+                   <string>Add child node</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/MindMap/add-child.png</normaloff>:/Graphics/Icons/MindMap/add-child.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="addSiblingNode">
+                  <property name="toolTip">
+                   <string>Add sibling node</string>
+                  </property>
+                  <property name="text">
+                   <string>Add sibling node</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/MindMap/add-sibling.png</normaloff>:/Graphics/Icons/MindMap/add-sibling.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="deleteNode">
+                  <property name="toolTip">
+                   <string>Delete node</string>
+                  </property>
+                  <property name="text">
+                   <string>Delete node</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/MindMap/remove-node.png</normaloff>:/Graphics/Icons/MindMap/remove-node.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="ColoredToolButton" name="nodeTextColor">
+                  <property name="toolTip">
+                   <string>Node text color</string>
+                  </property>
+                  <property name="text">
+                   <string>Text color</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/Review/font-color.png</normaloff>:/Graphics/Icons/Review/font-color.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="popupMode">
+                   <enum>QToolButton::MenuButtonPopup</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="ColoredToolButton" name="nodeBackgroundColor">
+                  <property name="toolTip">
+                   <string>Node background color</string>
+                  </property>
+                  <property name="text">
+                   <string>Background color</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/Review/font-bg-color.png</normaloff>:/Graphics/Icons/Review/font-bg-color.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="popupMode">
+                   <enum>QToolButton::MenuButtonPopup</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="addEdge">
+                  <property name="toolTip">
+                   <string>Add edge</string>
+                  </property>
+                  <property name="text">
+                   <string>Add edge</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/MindMap/add-edge.png</normaloff>:/Graphics/Icons/MindMap/add-edge.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="deleteEdge">
+                  <property name="toolTip">
+                   <string>Delete edge</string>
+                  </property>
+                  <property name="text">
+                   <string>Delete edge</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/MindMap/remove-edge.png</normaloff>:/Graphics/Icons/MindMap/remove-edge.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="topMindMapToolbarLabelRight">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="GraphWidget" name="mindMap" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -591,26 +796,20 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ImagesPane</class>
+   <extends>QScrollArea</extends>
+   <header location="global">3rd_party/Widgets/ImagesPane/ImagesPane.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>FlatButton</class>
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
   </customwidget>
   <customwidget>
-   <class>SimpleTextEditor</class>
-   <extends>QTextEdit</extends>
-   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>QWebEngineView</class>
    <extends>QWidget</extends>
    <header location="global">QWebEngineView</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ImagesPane</class>
-   <extends>QWidget</extends>
-   <header location="global">3rd_party/Widgets/ImagesPane/ImagesPane.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -622,6 +821,23 @@
    <class>SearchWidget</class>
    <extends>QFrame</extends>
    <header location="global">3rd_party/Widgets/SearchWidget/SearchWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GraphWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">3rd_party/Widgets/QtMindMap/include/graphwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ColoredToolButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SimpleTextEditorWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

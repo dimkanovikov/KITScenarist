@@ -20,6 +20,11 @@ public:
 	 */
 	QColor currentColor() const;
 
+    /**
+     * @brief Содержит ли панель заданный цвет
+     */
+    bool contains(const QColor& _color) const;
+
 public slots:
 	/**
 	 * @brief Установить текущий цвет

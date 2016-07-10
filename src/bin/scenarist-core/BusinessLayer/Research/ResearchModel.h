@@ -77,11 +77,12 @@ namespace BusinessLogic
 		Qt::ItemFlags flags(const QModelIndex &_index) const;
 		QVariant data(const QModelIndex &_index, int _role ) const;
 		//! Реализация перетаскивания элементов
-//		bool dropMimeData(const QMimeData* _data, Qt::DropAction _action, int _row, int _column, const QModelIndex& _parent);
-//		QMimeData* mimeData(const QModelIndexList& _indexes) const;
-//		QStringList mimeTypes() const;
-//		Qt::DropActions supportedDragActions() const;
-//		Qt::DropActions supportedDropActions() const;
+		bool canDropMimeData(const QMimeData* _data, Qt::DropAction _action, int _row, int _column, const QModelIndex& _parent) const;
+		bool dropMimeData(const QMimeData* _data, Qt::DropAction _action, int _row, int _column, const QModelIndex& _parent);
+		QMimeData* mimeData(const QModelIndexList& _indexes) const;
+		QStringList mimeTypes() const;
+		Qt::DropActions supportedDragActions() const;
+		Qt::DropActions supportedDropActions() const;
 		/** @} */
 
 		/**
@@ -135,6 +136,11 @@ namespace BusinessLogic
 		 * @brief Таблица с данными разработки
 		 */
 		Domain::ResearchTable* m_researchData;
+
+		/**
+		 * @brief Последние положенные в майм элементы
+		 */
+		mutable QList<ResearchModelItem*> m_lastMimeItems;
 	};
 }
 

@@ -44,6 +44,11 @@ namespace ManagementLayer
 		void closeCurrentProject();
 
 		/**
+		 * @brief Обновить параметры
+		 */
+		void updateSettings();
+
+		/**
 		 * @brief Сохранить разработки проекта
 		 */
 		void saveResearch();

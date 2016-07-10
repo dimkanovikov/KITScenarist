@@ -1,6 +1,7 @@
 #ifndef RESEARCHVIEW_H
 #define RESEARCHVIEW_H
 
+#include <QPageSize>
 #include <QWidget>
 
 namespace Ui {
@@ -22,6 +23,11 @@ namespace UserInterface
 	public:
 		explicit ResearchView(QWidget *parent = 0);
 		~ResearchView();
+
+		/**
+		 * @brief Настроить редактор синопсиса
+		 */
+		void setSynopsisSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign);
 
 		/**
 		 * @brief Загрузить модель разработки
@@ -81,6 +87,11 @@ namespace UserInterface
 		void editImage(const QString& _name, const QPixmap& _image);
 
 		/**
+		 * @brief Включить режим редактирования ментальной карты
+		 */
+		void editMindMap(const QString& _name, const QString& _xml, int _id);
+
+		/**
 		 * @brief Установить режим работы со сценарием
 		 */
 		void setCommentOnly(bool _isCommentOnly);
@@ -128,7 +139,14 @@ namespace UserInterface
 		void imagesGalleryImageRemoved(const QPixmap& _image, int _sortOrder);
 		void imageNameChanged(const QString& _name);
 		void imagePreviewChanged(const QPixmap& _image);
+		void mindMapNameChanged(const QString& _name);
+		void mindMapChanged(const QString& _xml);
 		/** @{ */
+
+		/**
+		 * @brief Элемент был добавлен, или переставлен на другое место в дереве
+		 */
+		void researchItemAdded();
 
 	protected:
 		/**
@@ -175,6 +193,11 @@ namespace UserInterface
 
 	private:
 		Ui::ResearchView* m_ui;
+
+		/**
+		 * @brief Находится ли текстовый редактор в режиме обновления панели инструментов с форматом
+		 */
+		bool m_isInTextFormatUpdate;
 
 		/**
 		 * @brief Кэшированные данные страницы

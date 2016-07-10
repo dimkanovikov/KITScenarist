@@ -5,6 +5,7 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/TextEditHelper.h>
+#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
 
 #include "ResearchNavigatorItemDelegate.h"
 #include "ResearchNavigatorProxyStyle.h"
@@ -12,6 +13,7 @@
 #include <QFileDialog>
 #include <QScrollBar>
 #include <QStandardPaths>
+#include <QStringListModel>
 
 using UserInterface::ResearchView;
 using UserInterface::ResearchNavigatorItemDelegate;
@@ -60,6 +62,8 @@ namespace {
 			if (plainTextEdit->toPlainText() != _text) {
 				plainTextEdit->setPlainText(_text);
 			}
+		} else if (SimpleTextEditorWidget* simpleTextEdit = qobject_cast<SimpleTextEditorWidget*>(_edit)) {
+			simpleTextEdit->setHtml(_text);
 		}
 	}
 }
@@ -67,7 +71,8 @@ namespace {
 
 ResearchView::ResearchView(QWidget *parent) :
 	QWidget(parent),
-	m_ui(new Ui::ResearchView)
+	m_ui(new Ui::ResearchView),
+	m_isInTextFormatUpdate(false)
 {
 	m_ui->setupUi(this);
 
@@ -79,6 +84,11 @@ ResearchView::ResearchView(QWidget *parent) :
 ResearchView::~ResearchView()
 {
 	delete m_ui;
+}
+
+void ResearchView::setSynopsisSettings(QPageSize::PageSizeId _pageSize, const QMarginsF& _margins, Qt::Alignment _numberingAlign)
+{
+	m_ui->synopsisText->setPageSettings(_pageSize, _margins, _numberingAlign);
 }
 
 void ResearchView::setResearchModel(QAbstractItemModel* _model)
@@ -100,6 +110,7 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
 		//
 		connect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
 				this, &ResearchView::currentResearchChanged);
+		connect(_model, &QAbstractItemModel::rowsInserted, this, &ResearchView::researchItemAdded);
 	}
 }
 
@@ -172,7 +183,7 @@ void ResearchView::editText(const QString& _name, const QString& _description)
 	// Сохраняем позицию предыдущего текста
 	//
 	const QString oldText = TextEditHelper::removeDocumentTags(m_ui->textDescription->toHtml());
-	m_textScrollingMap[oldText] = m_ui->textDescription->verticalScrollBar()->value();
+	m_textScrollingMap[oldText] = m_ui->textDescription->editor()->verticalScrollBar()->value();
 
 	//
 	// Загружаем новые данные
@@ -190,7 +201,7 @@ void ResearchView::editText(const QString& _name, const QString& _description)
 	// ... восстанавливаем позицию прокрутки текста, если это возможно
 	//
 	if (m_textScrollingMap.contains(_description)) {
-		m_ui->textDescription->verticalScrollBar()->setValue(m_textScrollingMap[_description]);
+		m_ui->textDescription->editor()->verticalScrollBar()->setValue(m_textScrollingMap[_description]);
 		//
 		// Удаляем себя из карты, чтобы не засорять память, т.к. текст может быть изменён
 		//
@@ -244,6 +255,22 @@ void ResearchView::editImage(const QString& _name, const QPixmap& _image)
 	setSearchVisible(false);
 }
 
+void ResearchView::editMindMap(const QString &_name, const QString &_xml, int _id)
+{
+	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->mindMapEdit);
+	m_ui->mindMapName->setText(_name);
+
+	m_ui->mindMap->closeScene();
+	if (_xml.isEmpty()) {
+		m_ui->mindMap->newScene();
+	} else {
+		m_ui->mindMap->load(_xml);
+	}
+
+	setResearchManageButtonsVisible(true);
+	setSearchVisible(false);
+}
+
 void ResearchView::setCommentOnly(bool _isCommentOnly)
 {
 	m_ui->researchNavigator->setContextMenuPolicy(_isCommentOnly ? Qt::PreventContextMenu : Qt::DefaultContextMenu);
@@ -260,6 +287,9 @@ void ResearchView::setCommentOnly(bool _isCommentOnly)
 	m_ui->synopsisText->setReadOnly(_isCommentOnly);
 	m_ui->textName->setReadOnly(_isCommentOnly);
 	m_ui->textDescription->setReadOnly(_isCommentOnly);
+	//
+	// FIXME: остальные редакторы
+	//
 	m_ui->searchWidget->setSearchOnly(_isCommentOnly);
 }
 
@@ -322,11 +352,18 @@ void ResearchView::initView()
 
 	m_ui->search->setIcons(m_ui->search->icon());
 
+	m_ui->scenarioLogline->setToolbarVisible(false);
+
+	m_ui->synopsisText->setUsePageMode(true);
+
 	m_ui->imagesGalleryPane->setLastSelectedImagePath(::imagesFolderPath());
 
 	m_ui->imagePreview->setReadOnly(true);
 
-	m_ui->searchWidget->setEditor(m_ui->textDescription);
+	m_ui->nodeTextColor->setColorsPane(ColoredToolButton::Google);
+	m_ui->nodeBackgroundColor->setColorsPane(ColoredToolButton::Google);
+
+	m_ui->searchWidget->setEditor(m_ui->textDescription->editor());
 	m_ui->searchWidget->hide();
 }
 
@@ -354,7 +391,7 @@ void ResearchView::initConnections()
 	connect(m_ui->scenarioName, &QLineEdit::textChanged, [=] {
 		::updateText(m_ui->titlePageName, m_ui->scenarioName->text());
 	});
-	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=] {
+	connect(m_ui->scenarioLogline, &SimpleTextEditorWidget::textChanged, [=] {
 		const QString textToSplit = m_ui->scenarioLogline->toPlainText().simplified();
 		const int wordsCount = textToSplit.split(QRegExp("([^\\w,^\\\\]|(?=\\\\))+"), QString::SkipEmptyParts).size();
 		m_ui->scenarioLoglineWords->setVisible(wordsCount > 0);
@@ -414,7 +451,7 @@ void ResearchView::initConnections()
 	// ... сценарий
 	//
 	connect(m_ui->scenarioName, &QLineEdit::textChanged, this, &ResearchView::scenarioNameChanged);
-	connect(m_ui->scenarioLogline, &SimpleTextEditor::textChanged, [=]{
+	connect(m_ui->scenarioLogline, &SimpleTextEditorWidget::textChanged, [=]{
 		emit scenarioLoglineChanged(TextEditHelper::removeDocumentTags(m_ui->scenarioLogline->toHtml()));
 	});
 	//
@@ -431,14 +468,14 @@ void ResearchView::initConnections()
 	//
 	// ... синопсис
 	//
-	connect(m_ui->synopsisText, &SimpleTextEditor::textChanged, [=]{
+	connect(m_ui->synopsisText, &SimpleTextEditorWidget::textChanged, [=]{
 		emit synopsisTextChanged(TextEditHelper::removeDocumentTags(m_ui->synopsisText->toHtml()));
 	});
 	//
 	// ... текстовый элемент
 	//
 	connect(m_ui->textName, &QLineEdit::textChanged, this, &ResearchView::textNameChanged);
-	connect(m_ui->textDescription, &SimpleTextEditor::textChanged, [=] {
+	connect(m_ui->textDescription, &SimpleTextEditorWidget::textChanged, [=] {
 		emit textDescriptionChanged(TextEditHelper::removeDocumentTags(m_ui->textDescription->toHtml()));
 	});
 	//
@@ -475,6 +512,34 @@ void ResearchView::initConnections()
 	// ... изображение
 	//
 	connect(m_ui->imageName, &QLineEdit::textChanged, this, &ResearchView::imageNameChanged);
+
+	//
+	// ... ментальная карта
+	//
+	connect(m_ui->mindMapName, &QLineEdit::textChanged, this, &ResearchView::mindMapNameChanged);
+	connect(m_ui->mindMap, &GraphWidget::contentChanged, [=] {
+		emit mindMapChanged(m_ui->mindMap->save());
+	});
+	//
+	// ... панель инструментов редактора ментальных карт
+	//
+	connect(m_ui->mindMap->graphLogic(), &GraphLogic::activeNodeChanged, [=] {
+		if (Node* activeNode = m_ui->mindMap->graphLogic()->activeNode()) {
+			m_ui->nodeTextColor->setColor(activeNode->textColor());
+			m_ui->nodeBackgroundColor->setColor(activeNode->color());
+		} else {
+			m_ui->nodeTextColor->setColor(QColor());
+			m_ui->nodeBackgroundColor->setColor(QColor());
+		}
+	});
+	connect(m_ui->addRootNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertRootNode);
+	connect(m_ui->addNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertNode);
+	connect(m_ui->addSiblingNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertSiblingNode);
+	connect(m_ui->deleteNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::removeNode);
+	connect(m_ui->addEdge, &FlatButton::clicked, m_ui->mindMap->graphLogic(), static_cast<void (GraphLogic::*)()>(&GraphLogic::addEdge));
+	connect(m_ui->deleteEdge, &FlatButton::clicked, m_ui->mindMap->graphLogic(), static_cast<void (GraphLogic::*)()>(&GraphLogic::removeEdge));
+	connect(m_ui->nodeTextColor, &ColoredToolButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::setNodeTextColor);
+	connect(m_ui->nodeBackgroundColor, &ColoredToolButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::setNodeColor);
 }
 
 void ResearchView::initStyleSheet()
@@ -485,12 +550,32 @@ void ResearchView::initStyleSheet()
 	m_ui->topNavigatorEndLabel->setProperty("topPanelTopBordered", true);
 	m_ui->topDataLabel->setProperty("inTopPanel", true);
 	m_ui->topDataLabel->setProperty("topPanelTopBordered", true);
+	m_ui->topMindMapToolbarLabelLeft->setProperty("inTopPanel", true);
+	m_ui->topMindMapToolbarLabelLeft->setProperty("topPanelLeftBordered", true);
+	m_ui->topMindMapToolbarLabelRight->setProperty("inTopPanel", true);
+	m_ui->topMindMapToolbarLabelRight->setProperty("topPanelTopBordered", true);
+	m_ui->topMindMapToolbarLabelRight->setProperty("topPanelRightBordered", true);
 
 	m_ui->addResearchItem->setProperty("inTopPanel", true);
 	m_ui->removeResearchItem->setProperty("inTopPanel", true);
 
 	m_ui->search->setProperty("inTopPanel", true);
 
+	m_ui->addRootNode->setProperty("inTopPanel", true);
+	m_ui->addNode->setProperty("inTopPanel", true);
+	m_ui->addSiblingNode->setProperty("inTopPanel", true);
+	m_ui->deleteNode->setProperty("inTopPanel", true);
+	m_ui->addEdge->setProperty("inTopPanel", true);
+	m_ui->deleteEdge->setProperty("inTopPanel", true);
+	m_ui->nodeTextColor->setProperty("inTopPanel", true);
+	m_ui->nodeBackgroundColor->setProperty("inTopPanel", true);
+
 	m_ui->researchNavigator->setProperty("mainContainer", true);
 	m_ui->researchDataEditsContainer->setProperty("mainContainer", true);
+
+	m_ui->textName->setProperty("editableLabel", true);
+	m_ui->urlName->setProperty("editableLabel", true);
+	m_ui->imagesGalleryName->setProperty("editableLabel", true);
+	m_ui->imageName->setProperty("editableLabel", true);
+	m_ui->mindMapName->setProperty("editableLabel", true);
 }

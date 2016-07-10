@@ -18,11 +18,21 @@ ColoredToolButton::ColoredToolButton(const QIcon& _icon, QWidget* _parent) :
 	m_colorNotChoosedYet(true),
 	m_colorsPane(0)
 {
-	setIcon(_icon);
-	setFocusPolicy(Qt::NoFocus);
-	aboutUpdateIcon(palette().text().color());
+    setIcon(_icon);
+    setFocusPolicy(Qt::NoFocus);
+    aboutUpdateIcon(palette().text().color());
 
-	connect(this, SIGNAL(clicked()), this, SLOT(aboutClicked()));
+    connect(this, SIGNAL(clicked()), this, SLOT(aboutClicked()));
+}
+
+ColoredToolButton::ColoredToolButton(QWidget* _parent) :
+    QToolButton(_parent),
+    m_colorNotChoosedYet(true),
+    m_colorsPane(0)
+{
+    setFocusPolicy(Qt::NoFocus);
+
+    connect(this, SIGNAL(clicked()), this, SLOT(aboutClicked()));
 }
 
 ColoredToolButton::~ColoredToolButton()
@@ -30,7 +40,7 @@ ColoredToolButton::~ColoredToolButton()
 	if (m_colorsPane != 0) {
 		delete m_colorsPane;
 		m_colorsPane = 0;
-	}
+    }
 }
 
 void ColoredToolButton::setColorsPane(ColoredToolButton::ColorsPaneType _pane)
@@ -99,7 +109,7 @@ QColor ColoredToolButton::currentColor() const
 void ColoredToolButton::setColor(const QColor& _color)
 {
 	QColor newColor;
-	if (_color.isValid()) {
+    if (_color.isValid()) {
 		m_colorNotChoosedYet = false;
 		newColor = _color;
 	} else {
@@ -107,7 +117,8 @@ void ColoredToolButton::setColor(const QColor& _color)
 		newColor = palette().text().color();
 	}
 
-	if (m_colorsPane != 0) {
+    if (m_colorsPane != 0
+        && m_colorsPane->contains(_color)) {
 		m_colorsPane->setCurrentColor(newColor);
 		menu()->close();
 	}
@@ -130,6 +141,13 @@ bool ColoredToolButton::event(QEvent* _event)
 
 void ColoredToolButton::aboutUpdateIcon(const QColor& _color)
 {
+    //
+    // Если иконка ещё не была сохранена, делаем это
+    //
+    if (m_icon.isNull()) {
+        m_icon = icon();
+    }
+
 	QIcon newIcon = m_icon;
 	ImageHelper::setIconColor(newIcon, iconSize(), _color);
 	setIcon(newIcon);

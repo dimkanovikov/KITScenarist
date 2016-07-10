@@ -25,7 +25,8 @@ public:
 
 public:
 	ColoredToolButton(const QIcon& _icon, QWidget* _parent = 0);
-	~ColoredToolButton();
+    ColoredToolButton(QWidget* _parent = 0);
+    ~ColoredToolButton();
 
 	/**
 	 * @brief Установить цветовую панель

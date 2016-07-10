@@ -46,9 +46,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="url">
+      <widget class="QRadioButton" name="other">
        <property name="text">
-        <string>Url</string>
+        <string/>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -56,13 +56,25 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="image">
-       <property name="text">
-        <string>Images Gallery</string>
+      <widget class="QComboBox" name="otherType">
+       <property name="enabled">
+        <bool>false</bool>
        </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
+       <item>
+        <property name="text">
+         <string>Url</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Images Gallery</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Mind Map</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -110,6 +122,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>folder</tabstop>
+  <tabstop>text</tabstop>
+  <tabstop>other</tabstop>
+  <tabstop>otherType</tabstop>
+  <tabstop>name</tabstop>
+  <tabstop>isInsert</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

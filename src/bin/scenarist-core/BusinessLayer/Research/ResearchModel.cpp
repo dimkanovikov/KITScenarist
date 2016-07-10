@@ -294,27 +294,31 @@ Qt::ItemFlags ResearchModel::flags(const QModelIndex& _index) const
 	if (_index.isValid()) {
 		flags |= Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 
-//		ResearchModelItem* item = itemForIndex(_index);
-//		switch (item->research()->type()) {
-//			case Research::ResearchRoot: {
-//				flags |= Qt::ItemIsDropEnabled;
-//				break;
-//			}
+		ResearchModelItem* item = itemForIndex(_index);
+		switch (item->research()->type()) {
+			case Research::ResearchRoot: {
+				flags |= Qt::ItemIsDropEnabled;
+				break;
+			}
 
-//			case Research::Folder: {
-//				flags |= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
-//				break;
-//			}
+			case Research::Folder: {
+				flags |= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+				break;
+			}
 
-//			case Research::Text: {
-//				flags |= Qt::ItemIsDragEnabled;
-//				break;
-//			}
+			case Research::Text:
+			case Research::Url:
+			case Research::ImagesGallery:
+			case Research::Image:
+			case Research::MindMap: {
+				flags |= Qt::ItemIsDragEnabled;
+				break;
+			}
 
-//			default: {
-//				break;
-//			}
-//		}
+			default: {
+				break;
+			}
+		}
 	}
 
 	return flags;
@@ -344,143 +348,125 @@ QVariant ResearchModel::data(const QModelIndex& _index, int _role) const
 	return result;
 }
 
-//bool ResearchModel::dropMimeData(
-//		const QMimeData* _data, Qt::DropAction _action,
-//		int _row, int _column, const QModelIndex& _parent)
-//{
-//	/*
-//	 * Вставка данных в этом случае происходит напрямую в текст документа, а не в дерево,
-//	 * само дерево просто перестраивается после всех манипуляций с текстовым редактором
-//	 */
+bool ResearchModel::canDropMimeData(const QMimeData *_data, Qt::DropAction _action, int _row,
+	int _column, const QModelIndex &_parent) const
+{
+	Q_UNUSED(_action);
+	Q_UNUSED(_row);
+	Q_UNUSED(_parent);
 
-//	Q_UNUSED(_column);
+	if (!_data->hasFormat(MIME_TYPE))
+		return false;
 
-//	//
-//	// _row - индекс, куда вставлять, если в папку, то он равен -1 и если в самый низ списка, то он тоже равен -1
-//	//
+	if (_column > 0)
+		return false;
 
-//	bool isDropSucceed = false;
+	return true;
+}
 
-//	if (_data != 0
-//		&& _data->hasFormat(MIME_TYPE)) {
+bool ResearchModel::dropMimeData(
+		const QMimeData* _data, Qt::DropAction _action,
+		int _row, int _column, const QModelIndex& _parent)
+{
+	if (!canDropMimeData(_data, _action, _row, _column, _parent))
+		return false;
 
-//		switch (_action) {
-//			case Qt::IgnoreAction: {
-//				isDropSucceed = true;
-//				break;
-//			}
+	if (!_parent.isValid())
+		return false;
 
-//			case Qt::MoveAction:
-//			case Qt::CopyAction: {
+	if (_action == Qt::IgnoreAction)
+		return true;
 
-//				//
-//				// Получим структурные элементы дерева, чтобы понять, куда вкладывать данные
-//				//
-//				// ... элемент, в который будут вкладываться данные
-//				ResearchModelItem* parentItem = itemForIndex(_parent);
-//				// ... элемент, перед которым будут вкладываться данные
-//				ResearchModelItem* insertBeforeItem = parentItem->childAt(_row);
+	QByteArray encodedData = _data->data(MIME_TYPE);
+	QDataStream stream(&encodedData, QIODevice::ReadOnly);
+	ResearchModelItem* parentItem = itemForIndex(_parent);
+	QVector<ResearchModelItem*> newItems;
+	int row = 0;
+	while (!stream.atEnd()) {
+		int researchId;
+		stream >> researchId;
+		Domain::Research* research = m_lastMimeItems[row]->research();
+		if (research->id().value() == researchId) {
+			research->setParent(parentItem->research());
+			ResearchModelItem* item = new ResearchModelItem(research);
+			newItems << item;
+		}
 
-//				//
-//				// Если производится перемещение данных
-//				//
-//				bool removeLastMime = false;
-//				if (m_lastMime == _data) {
-//					removeLastMime = true;
-//				}
+		++row;
+	}
 
-//				//
-//				// Вставим данные
-//				//
-//				int insertPosition = m_xmlHandler->xmlToScenario(parentItem, insertBeforeItem, _data->data(MIME_TYPE), removeLastMime);
-//				isDropSucceed = true;
-//				emit mimeDropped(insertPosition);
+	//
+	// Вставляем элементы в нужное место
+	//
+	row = 0;
+	const bool useAppend = !parentItem->hasChildren() || _row == -1;
+	foreach (ResearchModelItem* newItem, newItems) {
+		if (useAppend) {
+			appendItem(newItem, parentItem);
+		} else {
+			//
+			// -1, т.к. нужно вставить перед _row
+			//
+			const int rowForInsert = _row + row - 1;
+			if (rowForInsert == -1) {
+				prependItem(newItem, parentItem);
+			} else {
+				QModelIndex siblingItemIndex= _parent.child(rowForInsert, _column);
+				ResearchModelItem* siblingItem = itemForIndex(siblingItemIndex);
+				insertItem(newItem, siblingItem);
+			}
+			++row;
+		}
+	}
 
-//				break;
-//			}
+	//
+	// Обновляем порядок сортировки
+	//
+	for (int row = 0; row < parentItem->childCount(); ++row) {
+		parentItem->childAt(row)->research()->setSortOrder(row);
+	}
 
-//			default: {
-//				break;
-//			}
-//		}
-//	}
+	while (!m_lastMimeItems.isEmpty()) {
+		removeItem(m_lastMimeItems.takeLast());
+	}
 
-//	return isDropSucceed;
-//}
+	return true;
+}
 
-//QMimeData* ResearchModel::mimeData(const QModelIndexList& _indexes) const
-//{
-//	QMimeData* mimeData = new QMimeData;
+QMimeData* ResearchModel::mimeData(const QModelIndexList& _indexes) const
+{
+	m_lastMimeItems.clear();
 
-//	if (!_indexes.isEmpty()) {
-//		//
-//		// Выделение может быть только последовательным, но нужно учесть ситуацию, когда в выделение
-//		// попадает родительский элемент и не все его дочерние элементы, поэтому просто использовать
-//		// последний элемент некорректно, нужно проверить, не входит ли его родитель в выделение
-//		//
+	QMimeData *mimeData = new QMimeData();
+	QByteArray encodedData;
+	QDataStream stream(&encodedData, QIODevice::WriteOnly);
+	foreach (const QModelIndex& index, _indexes) {
+		if (index.isValid()) {
+			ResearchModelItem* item = itemForIndex(index);
+			stream << item->research()->id().value();
 
-//		QModelIndexList correctedIndexes;
-//		foreach (const QModelIndex& index, _indexes) {
-//			if (!_indexes.contains(index.parent())) {
-//				correctedIndexes.append(index);
-//			}
-//		}
+			m_lastMimeItems << item;
+		}
+	}
+	mimeData->setData(MIME_TYPE, encodedData);
 
-//		//
-//		// Для того, чтобы запретить разрывать папки проверяем выделены ли элементы одного уровня
-//		//
-//		bool itemsHaveSameParent = true;
-//		{
-//			const QModelIndex& genericParent = correctedIndexes.first().parent();
-//			foreach (const QModelIndex& index, correctedIndexes) {
-//				if (index.parent() != genericParent) {
-//					itemsHaveSameParent = false;
-//					break;
-//				}
-//			}
-//		}
+	return mimeData;
+}
 
-//		//
-//		// Если выделены элементы одного уровня, то создаём майм-данные
-//		//
-//		if (itemsHaveSameParent) {
-//			qSort(correctedIndexes);
+QStringList ResearchModel::mimeTypes() const
+{
+	return { MIME_TYPE };
+}
 
-//			QModelIndex fromIndex = correctedIndexes.first();
-//			QModelIndex toIndex = correctedIndexes.last();
+Qt::DropActions ResearchModel::supportedDragActions() const
+{
+	return Qt::MoveAction;
+}
 
-//			//
-//			// Определяем элементы из которых будет состоять выделение
-//			//
-//			ResearchModelItem* fromItem = itemForIndex(fromIndex);
-//			ResearchModelItem* toItem = itemForIndex(toIndex);
-
-//			//
-//			// Сформируем данные
-//			//
-//			mimeData->setData(
-//						MIME_TYPE,
-//						m_xmlHandler->scenarioToXml(fromItem, toItem).toUtf8());
-//		}
-//	}
-
-//	return mimeData;
-//}
-
-//QStringList ResearchModel::mimeTypes() const
-//{
-//	return QStringList() << MIME_TYPE;
-//}
-
-//Qt::DropActions ResearchModel::supportedDragActions() const
-//{
-//	return Qt::MoveAction;
-//}
-
-//Qt::DropActions ResearchModel::supportedDropActions() const
-//{
-//	return Qt::CopyAction | Qt::MoveAction;
-//}
+Qt::DropActions ResearchModel::supportedDropActions() const
+{
+	return Qt::MoveAction;
+}
 
 ResearchModelItem* ResearchModel::itemForIndex(const QModelIndex& _index) const
 {

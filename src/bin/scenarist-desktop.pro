@@ -296,7 +296,13 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.cpp \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Slide/SlideForegroundDecorator.cpp \
-    scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.cpp
+    scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.cpp \
+    scenarist-core/3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.cpp \
+    scenarist-core/3rd_party/Widgets/QtMindMap/src/commands.cpp \
+    scenarist-core/3rd_party/Widgets/QtMindMap/src/edge.cpp \
+    scenarist-core/3rd_party/Widgets/QtMindMap/src/graphlogic.cpp \
+    scenarist-core/3rd_party/Widgets/QtMindMap/src/graphwidget.cpp \
+    scenarist-core/3rd_party/Widgets/QtMindMap/src/node.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -533,7 +539,13 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.h \
     scenarist-core/3rd_party/Widgets/WAF/Slide/SlideForegroundDecorator.h \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h \
-    scenarist-core/3rd_party/Helpers/FileHelper.h
+    scenarist-core/3rd_party/Helpers/FileHelper.h \
+    scenarist-core/3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h \
+    scenarist-core/3rd_party/Widgets/QtMindMap/include/commands.h \
+    scenarist-core/3rd_party/Widgets/QtMindMap/include/edge.h \
+    scenarist-core/3rd_party/Widgets/QtMindMap/include/graphlogic.h \
+    scenarist-core/3rd_party/Widgets/QtMindMap/include/graphwidget.h \
+    scenarist-core/3rd_party/Widgets/QtMindMap/include/node.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

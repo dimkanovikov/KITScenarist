@@ -27,7 +27,8 @@ namespace Domain
 			Text,
 			Url,
 			ImagesGallery,
-			Image
+			Image,
+			MindMap
 		};
 
 	public:

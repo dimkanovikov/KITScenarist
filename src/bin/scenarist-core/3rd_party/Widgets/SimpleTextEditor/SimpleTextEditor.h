@@ -1,80 +1,50 @@
 #ifndef SIMPLETEXTEDITOR_H
 #define SIMPLETEXTEDITOR_H
 
-#include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
-
-class QGestureEvent;
+#include <3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h>
 
 
 /**
  * @brief Простейший редактор текста
  */
-class SimpleTextEditor : public PageTextEdit
+class SimpleTextEditor : public SpellCheckTextEdit
 {
 	Q_OBJECT
 
 public:
 	explicit SimpleTextEditor(QWidget *parent = 0);
-	~SimpleTextEditor();
+
+	/**
+	 * @brief Методы настройки формата
+	 */
+	/** @{ */
+	void setTextBold(bool _bold);
+	void setTextUnderline(bool _underline);
+	void setTextItalic(bool _italic);
+	void setTextColor(const QColor& _color);
+	void setTextBackgroundColor(const QColor& _color);
+	void setTextFont(const QFont& _font);
+	/** @} */
 
 protected:
 	/**
-	 * @brief Переопределяем для обработки жестов
+	 * @brief Добавляем отдельный тип для собственных данных
 	 */
-	bool event(QEvent* _event);
-
-	/**
-	 * @brief Переопределяется для добавления пунктов форматирования текста
-	 */
-	void contextMenuEvent(QContextMenuEvent* _event);
-
-	/**
-	 * @brief Переопределяется для реализации увеличения/уменьшения текста
-	 */
-	void wheelEvent(QWheelEvent* _event);
-
-	/**
-	 * @brief Обрабатываем жест увеличения масштаба
-	 */
-	void gestureEvent(QGestureEvent* _event);
+	QMimeData* createMimeDataFromSelection() const;
 
 	/**
 	 * @brief Вставляется только простой текст
 	 */
 	void insertFromMimeData(const QMimeData* _source);
 
-private slots:
-	void textBold();
-	void textUnderline();
-	void textItalic();
-
-	void currentCharFormatChanged(const QTextCharFormat &format);
-
 private:
-	void setupMenu();
 	void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+	void mergeFormatOnParagraphOrSelection(const QTextCharFormat &format);
 
 	/**
-	 * @brief Установить масштабирование
+	 * @brief Даём виджету доступ к защищённым членам класса
 	 */
-	void setZoomRange(int _zoomRange);
-
-private:
-	QAction* actionTextBold;
-	QAction* actionTextUnderline;
-	QAction* actionTextItalic;
-
-	int m_zoomRange;
-
-	/**
-	 * @brief Инерционный тормоз масштабирования при помощи жестов
-	 */
-	int m_gestureZoomInertionBreak;
-
-	/**
-	 * @brief Синхронизация масштабирования всех редакторов данного типа
-	 */
-	static QList<SimpleTextEditor*> s_editors;
+	friend class SimpleTextEditorWidget;
 };
 
 #endif // SIMPLETEXTEDITOR_H

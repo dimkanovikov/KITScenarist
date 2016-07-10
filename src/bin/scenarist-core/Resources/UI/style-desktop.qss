@@ -24,9 +24,16 @@
  */
 *[mainContainer="true"] {
 	border: none;
-	border-top-width: 1px;
+    border-top-width: 1px;
 	border-top-style: solid;
-	border-top-color: palette(dark);
+    border-top-color: palette(dark);
+}
+
+/*
+ * Виджет без рамок
+ */
+*[nobordersContainer="true"] {
+    border: none;
 }
 
 /*
@@ -99,12 +106,12 @@ QToolButton::menu-arrow[inTopPanel="true"] {
 	image: url(:Interface/UI/menuarrow.png);
 }
 
-QToolButton[reviewPanel="true"] {
+ColoredToolButton[inTopPanel="true"] {
 	padding-right: 14px;
 	min-width: 20px;
 }
 
-QToolButton::menu-button[reviewPanel="true"] {
+ColoredToolButton::menu-button[inTopPanel="true"] {
 	padding-right: 3px;
 	border-right: none;
 }
@@ -119,7 +126,12 @@ QComboBox[inTopPanel="true"]  {
 	color: palette(button-text);
 }
 
+QComboBox:editable[inTopPanel="true"] {
+    background: palette(base);
+}
+
 QComboBox::drop-down[inTopPanel="true"] {
+    background: palette(button);
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
 	width: 15px;
@@ -127,19 +139,50 @@ QComboBox::drop-down[inTopPanel="true"] {
 	padding-right: 4px;
 }
 
+QComboBox::drop-down:editable[inTopPanel="true"] {
+    background: palette(base);
+}
+
 QComboBox::down-arrow[inTopPanel="true"] {
 	image: url(:/Interface/UI/comboboxarrow.png);
 }
-
 
 QComboBox:on[inTopPanel="true"], QComboBox:off[inTopPanel="true"] {
 	color: palette(button-text);
 	background: palette(button);
 }
 
+QComboBox:on:editable[inTopPanel="true"], QComboBox:off:editable[inTopPanel="true"] {
+    color: palette(button-text);
+    background: palette(base);
+}
+
 QComboBox:on:selected[inTopPanel="true"], QComboBox:off:selected[inTopPanel="true"] {
 	color: palette(highlighted-text);
 	background: palette(highlight);
+}
+
+/*
+ * Выбор числа
+ */
+QSpinBox::up-button[inTopPanel="true"] {
+    height: 13px;
+    background: palette(button);
+    border: 1px solid palette(dark);
+}
+
+QSpinBox::up-arrow[inTopPanel="true"] {
+    image: url(:/Interface/UI/menuarrow.png);
+}
+
+QSpinBox::down-button[inTopPanel="true"] {
+    height: 13px;
+    background: palette(button);
+    border: 1px solid palette(dark);
+}
+
+QSpinBox::down-arrow[inTopPanel="true"] {
+    image: url(:/Interface/UI/menuarrow.png);
 }
 
 /*
@@ -347,7 +390,7 @@ QProgressBar::chunk {
     font-weight: 800;
 }
 
-[editableLabel=true]::!hover {
+[editableLabel=true]::!hover::!focus {
     border: none;
     padding: 2px 1px 1px 0px;
     background-color: palette(window);

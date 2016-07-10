@@ -66,6 +66,11 @@ QPixmap ResearchModelItem::icon() const
 				break;
 			}
 
+			case Research::MindMap: {
+				iconPath = ":/Graphics/Icons/file-mind-map.png";
+				break;
+			}
+
 			default: {
 				iconPath = ":/Graphics/Icons/file.png";
 				break;

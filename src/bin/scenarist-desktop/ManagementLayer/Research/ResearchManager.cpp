@@ -10,11 +10,13 @@
 
 #include <BusinessLayer/Research/ResearchModel.h>
 #include <BusinessLayer/Research/ResearchModelItem.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 #include <UserInterfaceLayer/Research/ResearchView.h>
 #include <UserInterfaceLayer/Research/ResearchItemDialog.h>
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+#include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h>
 
 #include <QHBoxLayout>
 #include <QMenu>
@@ -46,6 +48,8 @@ ResearchManager::ResearchManager(QObject* _parent, QWidget* _parentWidget) :
 {
 	initView();
 	initConnections();
+
+	updateSettings();
 }
 
 QWidget* ResearchManager::view() const
@@ -84,6 +88,28 @@ void ResearchManager::closeCurrentProject()
 	m_scenarioData.clear();
 	m_model->clear();
 	m_view->setResearchModel(0);
+}
+
+void ResearchManager::updateSettings()
+{
+	//
+	// Обновим настройки проверки орфографии
+	//
+	SimpleTextEditorWidget::enableSpellCheck(
+		DataStorageLayer::StorageFacade::settingsStorage()->value(
+			"scenario-editor/spell-checking",
+			DataStorageLayer::SettingsStorage::ApplicationSettings)
+		.toInt(),
+		(SpellChecker::Language)DataStorageLayer::StorageFacade::settingsStorage()->value(
+			"scenario-editor/spell-checking-language",
+			DataStorageLayer::SettingsStorage::ApplicationSettings)
+		.toInt());
+
+	//
+	// Обновим настройку используемого шаблона для синопсиса
+	//
+	BusinessLogic::ScenarioTemplate scenarioTemplate = BusinessLogic::ScenarioTemplateFacade::getTemplate();
+	m_view->setSynopsisSettings(scenarioTemplate.pageSizeId(), scenarioTemplate.pageMargins(), scenarioTemplate.numberingAlignment());
 }
 
 void ResearchManager::saveResearch()
@@ -237,6 +263,11 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 					m_view->editImage(research->name(), research->image());
 					break;
 				}
+
+				case Research::MindMap: {
+					m_view->editMindMap(research->name(), research->description(), research->id().value());
+					break;
+				}
 			}
 		}
 	}
@@ -286,7 +317,8 @@ void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const 
 		case Research::Text:
 		case Research::Url:
 		case Research::ImagesGallery:
-		case Research::Image: {
+		case Research::Image:
+		case Research::MindMap: {
 			showAdd = true;
 			showRemove = true;
 			break;
@@ -336,6 +368,7 @@ void ResearchManager::initConnections()
 	connect(m_view, &ResearchView::editResearchRequested, this, &ResearchManager::editResearch);
 	connect(m_view, &ResearchView::removeResearchRequested, this, &ResearchManager::removeResearch);
 	connect(m_view, &ResearchView::navigatorContextMenuRequested, this, &ResearchManager::showNavigatorContextMenu);
+	connect(m_view, &ResearchView::researchItemAdded, this, &ResearchManager::researchChanged);
 
 	connect(m_view, &ResearchView::scenarioNameChanged, [=](const QString& _name){
 		updateScenarioData(ScenarioData::NAME_KEY, _name);
@@ -463,6 +496,23 @@ void ResearchManager::initConnections()
 	connect(m_view, &ResearchView::imagePreviewChanged, [=](const QPixmap& _image){
 		if (m_currentResearch != 0) {
 			m_currentResearch->setImage(_image);
+			emit researchChanged();
+		}
+	});
+	//
+	// ... ментальная карта
+	//
+	connect(m_view, &ResearchView::mindMapNameChanged, [=] (const QString& _name) {
+		if (m_currentResearch != 0
+			&& m_currentResearch->name() != _name) {
+			m_currentResearch->setName(_name);
+			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
+			emit researchChanged();
+		}
+	});
+	connect(m_view, &ResearchView::mindMapChanged, [=] (const QString& _xml) {
+		if (m_currentResearch != 0) {
+			m_currentResearch->setDescription(_xml);
 			emit researchChanged();
 		}
 	});

@@ -67,7 +67,19 @@ GoogleColorsPane::GoogleColorsPane(QWidget* _parent) :
 
 QColor GoogleColorsPane::currentColor() const
 {
-	return m_currentColorInfo.color;
+    return m_currentColorInfo.color;
+}
+
+bool GoogleColorsPane::contains(const QColor& _color) const
+{
+    bool contains = false;
+    foreach (const ColorKeyInfo& _colorKeyInfo, m_colorInfos) {
+        if (_colorKeyInfo.color == _color) {
+            contains = true;
+            break;
+        }
+    }
+    return contains;
 }
 
 void GoogleColorsPane::setCurrentColor(const QColor& _color)

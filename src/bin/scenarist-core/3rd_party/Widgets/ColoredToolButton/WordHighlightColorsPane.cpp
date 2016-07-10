@@ -67,7 +67,19 @@ WordHighlightColorsPane::WordHighlightColorsPane(QWidget* _parent) :
 
 QColor WordHighlightColorsPane::currentColor() const
 {
-	return m_currentColorInfo.color;
+    return m_currentColorInfo.color;
+}
+
+bool WordHighlightColorsPane::contains(const QColor& _color) const
+{
+    bool contains = false;
+    foreach (const ColorKeyInfo& _colorKeyInfo, m_colorInfos) {
+        if (_colorKeyInfo.color == _color) {
+            contains = true;
+            break;
+        }
+    }
+    return contains;
 }
 
 void WordHighlightColorsPane::setCurrentColor(const QColor& _color)

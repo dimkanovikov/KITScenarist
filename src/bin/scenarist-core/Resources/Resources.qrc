@@ -95,6 +95,7 @@
         <file>Icons/Mobile/menu/settings.png</file>
         <file>Icons/Mobile/logout.png</file>
         <file>Icons/unknown.png</file>
+        <file>Icons/file-mind-map.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

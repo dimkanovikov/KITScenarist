@@ -21,6 +21,11 @@ public:
 	 */
 	virtual QColor currentColor() const = 0;
 
+    /**
+     * @brief Содержит ли панель заданный цвет
+     */
+    virtual bool contains(const QColor& _color) const = 0;
+
 public slots:
 	/**
 	 * @brief Установить текущий цвет
