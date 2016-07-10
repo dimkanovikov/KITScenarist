@@ -397,6 +397,8 @@ void ResearchManager::initConnections()
 
 	connect(m_view, &ResearchView::textNameChanged, [=](const QString& _name){
 		if (m_currentResearch != 0
+			&& (m_currentResearch->type() == Research::Folder
+				|| m_currentResearch->type() == Research::Text)
 			&& m_currentResearch->name() != _name) {
 			m_currentResearch->setName(_name);
 			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
@@ -405,6 +407,8 @@ void ResearchManager::initConnections()
 	});
 	connect(m_view, &ResearchView::textDescriptionChanged, [=](const QString& _description){
 		if (m_currentResearch != 0
+			&& (m_currentResearch->type() == Research::Folder
+				|| m_currentResearch->type() == Research::Text)
 			&& m_currentResearch->description() != _description) {
 			m_currentResearch->setDescription(_description);
 			emit researchChanged();
@@ -415,6 +419,7 @@ void ResearchManager::initConnections()
 	//
 	connect(m_view, &ResearchView::urlNameChanged, [=](const QString& _name){
 		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::Url
 			&& m_currentResearch->name() != _name) {
 			m_currentResearch->setName(_name);
 			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
@@ -423,6 +428,7 @@ void ResearchManager::initConnections()
 	});
 	connect(m_view, &ResearchView::urlLinkChanged, [=](const QString& _urlLink){
 		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::Url
 			&& m_currentResearch->url() != _urlLink) {
 			m_currentResearch->setUrl(_urlLink);
 			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
@@ -442,6 +448,7 @@ void ResearchManager::initConnections()
 	//
 	connect(m_view, &ResearchView::imagesGalleryNameChanged, [=](const QString& _name){
 		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::ImagesGallery
 			&& m_currentResearch->name() != _name) {
 			m_currentResearch->setName(_name);
 			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
@@ -449,7 +456,8 @@ void ResearchManager::initConnections()
 		}
 	});
 	connect(m_view, &ResearchView::imagesGalleryImageAdded, [=](const QPixmap& _image, int _sortOrder){
-		if (m_currentResearch != 0) {
+		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::ImagesGallery) {
 			//
 			// Создаём новый элемент
 			//
@@ -462,7 +470,8 @@ void ResearchManager::initConnections()
 		}
 	});
 	connect(m_view, &ResearchView::imagesGalleryImageRemoved, [=](const QPixmap&, int _sortOrder){
-		if (m_currentResearch != 0) {
+		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::ImagesGallery) {
 			//
 			// Получим ребёнка, которого удаляют
 			//
@@ -487,6 +496,7 @@ void ResearchManager::initConnections()
 	//
 	connect(m_view, &ResearchView::imageNameChanged, [=](const QString& _name){
 		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::Image
 			&& m_currentResearch->name() != _name) {
 			m_currentResearch->setName(_name);
 			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
@@ -494,7 +504,8 @@ void ResearchManager::initConnections()
 		}
 	});
 	connect(m_view, &ResearchView::imagePreviewChanged, [=](const QPixmap& _image){
-		if (m_currentResearch != 0) {
+		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::Image) {
 			m_currentResearch->setImage(_image);
 			emit researchChanged();
 		}
@@ -504,6 +515,7 @@ void ResearchManager::initConnections()
 	//
 	connect(m_view, &ResearchView::mindMapNameChanged, [=] (const QString& _name) {
 		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::MindMap
 			&& m_currentResearch->name() != _name) {
 			m_currentResearch->setName(_name);
 			m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
@@ -511,7 +523,8 @@ void ResearchManager::initConnections()
 		}
 	});
 	connect(m_view, &ResearchView::mindMapChanged, [=] (const QString& _xml) {
-		if (m_currentResearch != 0) {
+		if (m_currentResearch != 0
+			&& m_currentResearch->type() == Research::MindMap) {
 			m_currentResearch->setDescription(_xml);
 			emit researchChanged();
 		}

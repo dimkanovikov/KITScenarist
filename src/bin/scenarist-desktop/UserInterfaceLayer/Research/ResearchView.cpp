@@ -360,8 +360,14 @@ void ResearchView::initView()
 
 	m_ui->imagePreview->setReadOnly(true);
 
+	m_ui->addRootNode->setIcons(m_ui->addRootNode->icon());
+	m_ui->addNode->setIcons(m_ui->addNode->icon());
+	m_ui->addSiblingNode->setIcons(m_ui->addSiblingNode->icon());
+	m_ui->deleteNode->setIcons(m_ui->deleteNode->icon());
 	m_ui->nodeTextColor->setColorsPane(ColoredToolButton::Google);
 	m_ui->nodeBackgroundColor->setColorsPane(ColoredToolButton::Google);
+	m_ui->addEdge->setIcons(m_ui->addEdge->icon());
+	m_ui->deleteEdge->setIcons(m_ui->deleteEdge->icon());
 
 	m_ui->searchWidget->setEditor(m_ui->textDescription->editor());
 	m_ui->searchWidget->hide();

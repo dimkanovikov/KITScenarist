@@ -343,18 +343,22 @@ void SyntaxHighlighter::setDocument(QTextDocument *doc)
 		disconnect(d->doc, SIGNAL(contentsChange(int,int,int)),
 				   d, SLOT(_q_reformatBlocks(int,int,int)));
 
-		QTextCursor cursor(d->doc);
-		cursor.beginEditBlock();
-		for (QTextBlock blk = d->doc->begin(); blk.isValid(); blk = blk.next())
-			blk.layout()->clearAdditionalFormats();
-		cursor.endEditBlock();
+		if (!d->doc->isEmpty()) {
+			QTextCursor cursor(d->doc);
+			cursor.beginEditBlock();
+			for (QTextBlock blk = d->doc->begin(); blk.isValid(); blk = blk.next())
+				blk.layout()->clearAdditionalFormats();
+			cursor.endEditBlock();
+		}
 	}
 	d->doc = doc;
 	if (d->doc) {
 		connect(d->doc, SIGNAL(contentsChange(int,int,int)),
 				d, SLOT(_q_reformatBlocks(int,int,int)));
 		d->rehighlightPending = true;
-		rehighlight();
+		if (!d->doc->isEmpty()) {
+			rehighlight();
+		}
 	}
 }
 

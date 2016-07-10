@@ -310,7 +310,7 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 	//
 	if (needShowMenu) {
 		QMenu* menu = m_editor->createContextMenu(m_editor->viewport()->mapFromGlobal(cursorGlobalPos), this);
-		menu->exec(cursorGlobalPos);
+		menu->exec(QCursor::pos());
 		delete menu;
 
 		m_editor->clearFocus();
@@ -343,6 +343,9 @@ bool ScalableWrapper::eventFilter(QObject* _object, QEvent* _event)
 void ScalableWrapper::setupScrollingSynchronization(bool _needSync)
 {
 	if (_needSync) {
+		connect(m_editor->verticalScrollBar(), &QScrollBar::rangeChanged, this, &ScalableWrapper::updateTextEditSize);
+		connect(m_editor->horizontalScrollBar(), &QScrollBar::rangeChanged, this, &ScalableWrapper::updateTextEditSize);
+		//
 		connect(verticalScrollBar(), SIGNAL(valueChanged(int)),
 				m_editor->verticalScrollBar(), SLOT(setValue(int)));
 		connect(horizontalScrollBar(), SIGNAL(valueChanged(int)),
@@ -353,6 +356,9 @@ void ScalableWrapper::setupScrollingSynchronization(bool _needSync)
 		connect(m_editor->horizontalScrollBar(), SIGNAL(valueChanged(int)),
 				horizontalScrollBar(), SLOT(setValue(int)));
 	} else {
+		disconnect(m_editor->verticalScrollBar(), &QScrollBar::rangeChanged, this, &ScalableWrapper::updateTextEditSize);
+		disconnect(m_editor->horizontalScrollBar(), &QScrollBar::rangeChanged, this, &ScalableWrapper::updateTextEditSize);
+		//
 		disconnect(verticalScrollBar(), SIGNAL(valueChanged(int)),
 				m_editor->verticalScrollBar(), SLOT(setValue(int)));
 		disconnect(horizontalScrollBar(), SIGNAL(valueChanged(int)),
