@@ -5,6 +5,8 @@
 #include "ImageLabel.h"
 #include "ImagePreview.h"
 
+#include <WebLoader.h>
+
 #include <QDragEnterEvent>
 #include <QMimeData>
 
@@ -91,20 +93,63 @@ void ImagesPane::setLastSelectedImagePath(const QString& _path)
 
 void ImagesPane::dragEnterEvent(QDragEnterEvent* _event)
 {
-	//
-	// TODO: редко когда бывает, что приходит именно само изображение, как правило - это ссылка или путь к файлу
-	//
-	if (_event->mimeData()->hasImage()) {
-		_event->acceptProposedAction();
-	}
+	_event->acceptProposedAction();
+}
+
+void ImagesPane::dragMoveEvent(QDragMoveEvent* _event)
+{
+	_event->acceptProposedAction();
+}
+
+void ImagesPane::dragLeaveEvent(QDragLeaveEvent* _event)
+{
+	_event->accept();
 }
 
 void ImagesPane::dropEvent(QDropEvent* _event)
 {
-	if (_event->mimeData()->hasImage()) {
-		QImage image = qvariant_cast<QImage>(_event->mimeData()->imageData());
-		addImage(QPixmap::fromImage(image));
+	const QMimeData *mimeData = _event->mimeData();
+
+	//
+	// Первым делом проверяем список ссылок, возможно выбраны сразу несколько фотогафий
+	//
+	if (mimeData->hasUrls()) {
+		foreach (const QUrl& url, mimeData->urls()) {
+			//
+			// Обрабатываем только изображения
+			//
+			const QString urlString = url.toString().toLower();
+			if (urlString.contains(".png")
+				|| urlString.contains(".jpg")
+				|| urlString.contains(".jpeg")
+				|| urlString.contains(".gif")
+				|| urlString.contains(".tiff")
+				|| urlString.contains(".bmp")) {
+				//
+				// ... локальные считываем из файла
+				//
+				if (url.scheme() == "file") {
+					const QPixmap pixmap(url.toLocalFile());
+					addImage(pixmap);
+				}
+				//
+				// ... подгружаем картинки с инета
+				//
+				else if (url.scheme() == "http"
+						   || url.scheme() == "https") {
+					const QByteArray pixmapData = WebLoader().loadSync(url);
+					const QImage image = QImage::fromData(pixmapData);
+					const QPixmap pixmap = QPixmap::fromImage(image);
+					addImage(pixmap);
+				}
+			}
+		}
+	} else if (mimeData->hasImage()) {
+		const QPixmap pixmap = qvariant_cast<QPixmap>(mimeData->imageData());
+		addImage(pixmap);
 	}
+
+	_event->acceptProposedAction();
 }
 
 bool ImagesPane::eventFilter(QObject* _object, QEvent* _event)

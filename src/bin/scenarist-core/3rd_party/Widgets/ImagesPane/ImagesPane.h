@@ -53,8 +53,10 @@ protected:
 	 * @brief Переопределяются для возможности затаскивания изображений прямо в панель
 	 */
 	/** @{ */
-	void dragEnterEvent(QDragEnterEvent* _event);
-	void dropEvent(QDropEvent* _event);
+    void dragEnterEvent(QDragEnterEvent* _event) Q_DECL_OVERRIDE;
+    void dragMoveEvent(QDragMoveEvent* _event) Q_DECL_OVERRIDE;
+    void dragLeaveEvent(QDragLeaveEvent* _event) Q_DECL_OVERRIDE;
+    void dropEvent(QDropEvent* _event) Q_DECL_OVERRIDE;
 	bool eventFilter(QObject* _object, QEvent* _event);
 	/** @} */
 
