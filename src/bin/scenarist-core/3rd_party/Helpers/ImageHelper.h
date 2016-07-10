@@ -70,7 +70,7 @@ public:
 	 * @brief Установить цвет иконки
 	 */
 	static void setIconColor(QIcon& _icon, const QSize& _iconSize, const QColor& _color) {
-		if (!_icon.isNull()) {
+        if (!_icon.isNull() && _iconSize.isValid() && _color.isValid()) {
 			QPixmap baseIconPixmap = _icon.pixmap(_iconSize);
 			QPixmap newIconPixmap = baseIconPixmap;
 

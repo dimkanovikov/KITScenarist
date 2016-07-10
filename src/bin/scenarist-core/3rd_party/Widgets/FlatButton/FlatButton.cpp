@@ -34,12 +34,12 @@ void FlatButton::setIcons(const QIcon& _icon, const QIcon& _checkedIcon, const Q
 	} else {
 		m_checkedIconHighlight = true;
 		m_checkedIcon = _icon;
-		QColor highlightColor = palette().highlight().color();
+        QColor highlightColor = palette().highlight().color();
 #ifdef Q_OS_MAC
-		highlightColor.setHsl(highlightColor.hslHue(), highlightColor.hslSaturation(),
-			highlightColor.lightness() - 50);
+        highlightColor.setHsl(highlightColor.hslHue(), highlightColor.hslSaturation(),
+            highlightColor.lightness() - 50);
 #endif
-		ImageHelper::setIconColor(m_checkedIcon, ICON_SIZE, highlightColor);
+        ImageHelper::setIconColor(m_checkedIcon, ICON_SIZE, highlightColor);
 	}
 
 	m_hoverIcon = _hoverIcon;
@@ -98,6 +98,7 @@ void FlatButton::aboutUpdateIcon()
 	if (!m_icon.isNull()) {
 		const bool isCheckedIcon = !m_checkedIcon.isNull() && isEnabled() && isChecked();
 		setIcon(isCheckedIcon ? m_checkedIcon : m_icon);
+//        setStyleSheet(isCheckedIcon ? "color: palette(highlight)" : "");
 	}
 }
 

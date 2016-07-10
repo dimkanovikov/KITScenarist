@@ -39,6 +39,7 @@
 #include <QtGui/qtextoption.h>
 #include <QtGui/qtextcursor.h>
 #include <QtGui/qtextformat.h>
+#include <QtGui/qtextobject.h>
 #include <QtGui/qpagesize.h>
 
 #ifndef QT_NO_TEXTEDIT
@@ -56,8 +57,7 @@ class QPagedPaintDevice;
 
 class PageTextEdit : public QAbstractScrollArea
 {
-	Q_OBJECT
-	Q_DECLARE_PRIVATE(PageTextEdit)
+    Q_OBJECT
 	Q_FLAGS(AutoFormatting)
 	Q_PROPERTY(AutoFormatting autoFormatting READ autoFormatting WRITE setAutoFormatting)
 	Q_PROPERTY(bool tabChangesFocus READ tabChangesFocus WRITE setTabChangesFocus)
@@ -94,6 +94,10 @@ public:
 	};
 
 	Q_DECLARE_FLAGS(AutoFormatting, AutoFormattingFlag)
+
+	enum TextBlockProperty {
+		PropertyDontShowCursor = QTextFormat::UserProperty + 1
+	};
 
 	explicit PageTextEdit(QWidget *parent = 0);
 	explicit PageTextEdit(const QString &text, QWidget *parent = 0);
@@ -305,13 +309,17 @@ protected:
 	void zoomInF(float range);
 
 private:
+    Q_DECLARE_PRIVATE(PageTextEdit)
 	Q_DISABLE_COPY(PageTextEdit)
-	Q_SLOT void _q_repaintContents(const QRectF &r);
-	Q_SLOT void _q_currentCharFormatChanged(const QTextCharFormat &cf);
-	Q_SLOT void _q_adjustScrollbars();
-	Q_SLOT void _q_ensureVisible(const QRectF &);
-	Q_SLOT void _q_cursorPositionChanged();
-
+    //
+    // FIXME: Нужно разобраться, как заставить это собираться без ручного ввода заголовочного файла
+    //        приватной части класса
+    //
+    Q_PRIVATE_SLOT(d_func(), void _q_repaintContents(const QRectF &r))
+    Q_PRIVATE_SLOT(d_func(), void _q_currentCharFormatChanged(const QTextCharFormat &))
+    Q_PRIVATE_SLOT(d_func(), void _q_adjustScrollbars())
+    Q_PRIVATE_SLOT(d_func(), void _q_ensureVisible(const QRectF &))
+    Q_PRIVATE_SLOT(d_func(), void _q_cursorPositionChanged())
 	friend class PageTextEditControl;
 	friend class QTextDocument;
 	friend class QWidgetTextControl;

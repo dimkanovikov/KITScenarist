@@ -38,16 +38,9 @@ void ResearchNavigatorProxyStyle::drawPrimitive(QStyle::PrimitiveElement element
 		// Элемент вставляется в конец списка
 		//
 		if (option->rect.topLeft().isNull() && option->rect.size().isEmpty()) {
-			//
-			// Рисуем вспомогательный треугольник внизу виджета
-			//
-			int x = widget->width() / 2;
-			int y = widget->height() - 16;
-			QPolygonF treangle;
-			treangle <<	QPointF(x, y)
-					 << QPointF(x + 7,  y + 10)
-					 << QPointF(x - 7,  y + 10);
-			painter->drawPolygon(treangle);
+            //
+            // Ничего не рисуем, т.к. для модели разработки такой операции нет
+            //
 		}
 		//
 		// Элемент вставляется между двух соседних

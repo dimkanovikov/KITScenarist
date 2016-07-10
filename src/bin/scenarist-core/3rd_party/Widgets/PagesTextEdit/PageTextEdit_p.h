@@ -72,7 +72,7 @@ public:
 
 	void init(const QString &html = QString());
 	void paint(QPainter *p, QPaintEvent *e);
-	void _q_repaintContents(const QRectF &contentsRect);
+    void _q_repaintContents(const QRectF &contentsRect);
 
 	inline QPoint mapToContents(const QPoint &point) const
 	{ return QPoint(point.x() + horizontalOffset(), point.y() + verticalOffset()); }

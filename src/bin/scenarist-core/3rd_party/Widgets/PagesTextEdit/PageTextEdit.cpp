@@ -1972,10 +1972,21 @@ QPoint PageTextEditPrivate::correctMousePosition(const QPoint& _eventPos)
 	// Просто идём назад, до первого видимого блока
 	//
 	if (cursor.atEnd() && !cursor.block().isVisible()) {
-		while (!cursor.atStart() && !cursor.block().isVisible()) {
+		while (!cursor.atStart()
+			   && !cursor.block().isVisible()) {
 			cursor.movePosition(QTextCursor::PreviousBlock);
 			cursor.movePosition(QTextCursor::StartOfBlock);
 		}
+	}
+
+	//
+	// Прорабатываем случай, когда курсор попал в блок, в котором запрещено позиционирование курсора
+	// Просто идём вниз до первого блока, в который возможно установить курсор
+	//
+	while (!cursor.atEnd()
+		   && cursor.blockFormat().boolProperty(PageTextEdit::PropertyDontShowCursor)) {
+		cursor.movePosition(QTextCursor::NextBlock);
+		cursor.movePosition(QTextCursor::EndOfBlock);
 	}
 
 	//
@@ -2008,7 +2019,7 @@ QPoint PageTextEditPrivate::correctMousePosition(const QPoint& _eventPos)
 	localPos = viewport->mapToParent(localPos);
 
 	return localPos;
-//	return new QMouseEvent(_event->type(), localPos, _event->button(), _event->buttons(), _event->modifiers());
+	//new QMouseEvent(_event->type(), localPos, _event->button(), _event->buttons(), _event->modifiers());
 }
 
 void PageTextEditPrivate::paint(QPainter *p, QPaintEvent *e)
@@ -2830,36 +2841,6 @@ void PageTextEdit::zoomInF(float range)
 		return;
 	f.setPointSizeF(newSize);
 	setFont(f);
-}
-
-void PageTextEdit::_q_repaintContents(const QRectF& r)
-{
-	Q_D(PageTextEdit);
-	d->_q_repaintContents(r);
-}
-
-void PageTextEdit::_q_currentCharFormatChanged(const QTextCharFormat& cf)
-{
-	Q_D(PageTextEdit);
-	d->_q_currentCharFormatChanged(cf);
-}
-
-void PageTextEdit::_q_adjustScrollbars()
-{
-	Q_D(PageTextEdit);
-	d->_q_adjustScrollbars();
-}
-
-void PageTextEdit::_q_ensureVisible(const QRectF& rect)
-{
-	Q_D(PageTextEdit);
-	d->_q_ensureVisible(rect);
-}
-
-void PageTextEdit::_q_cursorPositionChanged()
-{
-	Q_D(PageTextEdit);
-	d->_q_cursorPositionChanged();
 }
 
 /*!
