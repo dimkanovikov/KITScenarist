@@ -1133,8 +1133,8 @@ void ApplicationManager::closeCurrentProject()
 	//
 	m_researchManager->closeCurrentProject();
 	m_scenarioManager->closeCurrentProject();
-    m_charactersManager->closeCurrentProject();
-    m_locationsManager->closeCurrentProject();
+	m_charactersManager->closeCurrentProject();
+	m_locationsManager->closeCurrentProject();
 
 	//
 	// Очистим все загруженные на текущий момент данные
@@ -1353,6 +1353,8 @@ void ApplicationManager::initConnections()
 
 	connect(m_settingsManager, SIGNAL(applicationSettingsUpdated()),
 			this, SLOT(aboutApplicationSettingsUpdated()));
+	connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated,
+			m_researchManager, &ResearchManager::updateSettings);
 	connect(m_settingsManager, SIGNAL(scenarioEditSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),
