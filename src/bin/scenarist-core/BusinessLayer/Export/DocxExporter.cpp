@@ -227,7 +227,7 @@ namespace {
 							"<w:widowControl w:val=\"0\"/><w:autoSpaceDE w:val=\"0\"/><w:autoSpaceDN w:val=\"0\"/><w:adjustRightInd w:val=\"0\"/><w:spacing w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\"/>"
 						"</w:pPr>"
 						"<w:rPr>"
-							"<w:rFonts w:ascii=\"Courier New\" w:hAnsi=\"Courier New\" w:cs=\"Courier New\"/>"
+							"<w:rFonts w:ascii=\"Courier Prime\" w:hAnsi=\"Courier Prime\" w:cs=\"Courier Prime\"/>"
 							"<w:sz w:val=\"24\"/>"
 						"</w:rPr>"
 					"</w:style>";
@@ -470,6 +470,10 @@ void DocxExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters&
 			//
 			writeStyles(&zip);
 			//
+			// ... шрифты
+			//
+			writeFonts(&zip);
+			//
 			// ... колонтитулы
 			//
 			writeHeader(&zip, _exportParameters);
@@ -497,9 +501,13 @@ void DocxExporter::writeStaticData(QtZipWriter* _zip, const ExportParameters& _e
 	QString contentTypesXml =
 			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			"<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
+			"<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
+			"<Default Extension=\"xml\" ContentType=\"application/xml\"/>"
+			"<Default Extension=\"odttf\" ContentType=\"application/vnd.openxmlformats-officedocument.obfuscatedFont\"/>"
 			"<Override PartName=\"/_rels/.rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
 			"<Override PartName=\"/word/_rels/document.xml.rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
 			"<Override PartName=\"/word/styles.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml\"/>"
+			"<Override PartName=\"/word/fontTable.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml\"/>"
 			"<Override PartName=\"/word/comments.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml\"/>";
 	//
 	// ... необходимы ли колонтитулы
@@ -546,16 +554,33 @@ void DocxExporter::writeStaticData(QtZipWriter* _zip, const ExportParameters& _e
 	}
 	documentXmlRels.append(
 		"<Relationship Id=\"docRId4\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings\" Target=\"settings.xml\"/>"
+		"<Relationship Id=\"docRId5\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable\" Target=\"fontTable.xml\"/>"
 		"</Relationships>");
 	_zip->addFile(QString::fromLatin1("word/_rels/document.xml.rels"), documentXmlRels.toUtf8());
+
+	//
+	// Связи шрифтов
+	//
+	_zip->addFile(QString::fromLatin1("word/_rels/fontTable.xml.rels"),
+		"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+		"<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
+		"<Relationship Id=\"docRId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font1.odttf\"/>"
+		"<Relationship Id=\"docRId2\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font2.odttf\"/>"
+		"<Relationship Id=\"docRId3\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font3.odttf\"/>"
+		"<Relationship Id=\"docRId4\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font4.odttf\"/>"
+		"</Relationships>");
 
 	//
 	// Настройки документа
 	//
 	_zip->addFile(QString::fromLatin1("word/settings.xml"),
 		"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-		"<w:settings xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\"><w:characterSpacingControl w:val=\"doNotCompress\"/>"
-		"<w:footnotePr></w:footnotePr><w:endnotePr></w:endnotePr></w:settings>");
+		"<w:settings xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\">"
+		"<w:embedTrueTypeFonts/>"
+		"<w:characterSpacingControl w:val=\"doNotCompress\"/>"
+		"<w:footnotePr></w:footnotePr>"
+		"<w:endnotePr></w:endnotePr>"
+		"</w:settings>");
 }
 
 void DocxExporter::writeStyles(QtZipWriter* _zip) const
@@ -583,6 +608,46 @@ void DocxExporter::writeStyles(QtZipWriter* _zip) const
 	// Запишем стили в архив
 	//
 	_zip->addFile(QString::fromLatin1("word/styles.xml"), styleXml.toUtf8());
+}
+
+void DocxExporter::writeFonts(QtZipWriter* _zip) const
+{
+	//
+	// Сформируем xml шрифтов
+	//
+	QString fontsXml =
+			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+			"<w:fonts xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">"
+			"<w:font w:name=\"Courier Prime\">"
+			"<w:panose1 w:val=\"02000409000000000000\"/>"
+			"<w:charset w:val=\"CC\"/>"
+			"<w:family w:val=\"auto\"/>"
+			"<w:pitch w:val=\"variable\"/>"
+			"<w:sig w:usb0=\"A000022F\" w:usb1=\"5000004B\" w:usb2=\"00000000\" w:usb3=\"00000000\" w:csb0=\"00000097\" w:csb1=\"00000000\"/>"
+			"<w:embedRegular r:id=\"docRId1\" w:fontKey=\"{1659502D-6790-4F04-A360-0649510E8FFE}\"/>"
+			"<w:embedBold r:id=\"docRId2\" w:fontKey=\"{48BC7042-E0A6-46E9-86B2-50918F67F15A}\"/>"
+			"<w:embedItalic r:id=\"docRId3\" w:fontKey=\"{C7B00197-3587-4889-9839-ED56045BFA61}\"/>"
+			"<w:embedBoldItalic r:id=\"docRId4\" w:fontKey=\"{A8DA4934-C517-4746-BECC-D6B521E307E0}\"/>"
+			"</w:font>"
+			"</w:fonts>";
+
+	//
+	// Запишем таблицу шрифтов в архив
+	//
+	_zip->addFile(QString::fromLatin1("word/fontTable.xml"), fontsXml.toUtf8());
+
+	//
+	// Запишем сами шрифты в архив
+	//
+	auto readFontData = [=] (const QString& _path) {
+		QFile file(_path);
+		file.open(QIODevice::ReadOnly);
+		return file.readAll();
+	};
+	_zip->addFile(QString::fromLatin1("word/fonts/font1.odttf"), readFontData(":/Fonts/Fonts/embed/courierprime-regular.odttf"));
+	_zip->addFile(QString::fromLatin1("word/fonts/font2.odttf"), readFontData(":/Fonts/Fonts/embed/courierprime-bold.odttf"));
+	_zip->addFile(QString::fromLatin1("word/fonts/font3.odttf"), readFontData(":/Fonts/Fonts/embed/courierprime-italic.odttf"));
+	_zip->addFile(QString::fromLatin1("word/fonts/font4.odttf"), readFontData(":/Fonts/Fonts/embed/courierprime-bold-italic.odttf"));
 }
 
 void DocxExporter::writeHeader(QtZipWriter* _zip, const ExportParameters& _exportParameters) const

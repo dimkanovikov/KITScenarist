@@ -37,6 +37,11 @@ namespace BusinessLogic
 		void writeStyles(QtZipWriter* _zip) const;
 
 		/**
+		 * @brief Записать шрифты
+		 */
+		void writeFonts(QtZipWriter* _zip) const;
+
+		/**
 		 * @brief Записать верхний колонтитул
 		 */
 		void writeHeader(QtZipWriter* _zip, const ExportParameters& _exportParameters) const;
