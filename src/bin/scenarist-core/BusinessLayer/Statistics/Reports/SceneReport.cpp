@@ -86,7 +86,8 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 			}
 		}
 		//
-		if (currentData != 0) {
+		if (currentData != 0
+			&& !block.text().isEmpty()) {
 			//
 			// Участники сцены
 			//

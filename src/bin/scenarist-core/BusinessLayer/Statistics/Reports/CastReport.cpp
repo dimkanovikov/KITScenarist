@@ -138,7 +138,8 @@ QString CastReport::makeReport(QTextDocument* _scenario,
 		//
 		// Описание действия, в молчаливые, если ещё не встречался
 		//
-		else if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::Action) {
+		else if (ScenarioBlockStyle::forBlock(block) == ScenarioBlockStyle::Action
+				 && !block.text().isEmpty()) {
 			QRegularExpressionMatch match = rxCharacterFinder.match(block.text());
 			while (match.hasMatch()) {
 				const QString character = match.captured(2).toUpper();

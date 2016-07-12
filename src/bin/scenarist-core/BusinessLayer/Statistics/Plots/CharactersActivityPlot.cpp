@@ -94,7 +94,8 @@ Plot CharactersActivityPlot::makePlot(QTextDocument* _scenario, const BusinessLo
 			}
 		}
 		//
-		if (currentData != 0) {
+		if (currentData != 0
+			&& !block.text().isEmpty()) {
 			//
 			// Участники сцены
 			//

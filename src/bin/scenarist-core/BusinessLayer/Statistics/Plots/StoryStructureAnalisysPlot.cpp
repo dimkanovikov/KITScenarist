@@ -109,7 +109,8 @@ Plot StoryStructureAnalisysPlot::makePlot(QTextDocument* _scenario, const Busine
 			currentSceneCharacters.clear();
 		}
 		//
-		if (currentData != 0) {
+		if (currentData != 0
+			&& !block.text().isEmpty()) {
 			//
 			// Участники сцены
 			//
