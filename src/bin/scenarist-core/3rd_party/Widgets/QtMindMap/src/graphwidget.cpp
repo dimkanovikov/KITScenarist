@@ -146,8 +146,8 @@ void GraphWidget::gestureEvent(QGestureEvent *_event)
             //
             // Если необходимо масштабируем и перерисовываем представление
             //
-            const bool needZoomIn = pinch->scaleFactor() > pinch->lastScaleFactor();
-            const bool needZoomOut = pinch->scaleFactor() < pinch->lastScaleFactor();
+            const bool needZoomIn = pinch->scaleFactor() > 1;
+            const bool needZoomOut = pinch->scaleFactor() < 1;
             if (zoomDelta != 0 && needZoomIn) {
                 zoomIn();
             } else if (zoomDelta != 0 && needZoomOut) {

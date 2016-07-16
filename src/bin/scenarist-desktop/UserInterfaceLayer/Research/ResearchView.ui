@@ -649,6 +649,9 @@
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/add-child.png</normaloff>:/Graphics/Icons/MindMap/add-child.png</iconset>
                   </property>
+                  <property name="shortcut">
+                   <string>Ctrl+Return</string>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -663,6 +666,9 @@
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/add-sibling.png</normaloff>:/Graphics/Icons/MindMap/add-sibling.png</iconset>
                   </property>
+                  <property name="shortcut">
+                   <string>Shift+Return</string>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -676,6 +682,9 @@
                   <property name="icon">
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/remove-node.png</normaloff>:/Graphics/Icons/MindMap/remove-node.png</iconset>
+                  </property>
+                  <property name="shortcut">
+                   <string>Backspace</string>
                   </property>
                  </widget>
                 </item>

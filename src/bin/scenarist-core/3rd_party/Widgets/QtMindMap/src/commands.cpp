@@ -101,7 +101,7 @@ InsertRootNodeCommand::InsertRootNodeCommand(UndoContext context)
 
     m_context.m_graphLogic->nodeLostFocus();
 
-    m_node = m_context.m_graphLogic->nodeFactory();
+    m_node = m_context.m_graphLogic->nodeFactory(true);
     m_node->setHtml(QString(""));
 }
 

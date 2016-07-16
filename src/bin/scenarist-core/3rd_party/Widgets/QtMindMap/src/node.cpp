@@ -16,8 +16,9 @@ const double Node::m_twoPi = Node::m_pi * 2.0;
 
 const QColor Node::m_blue(57, 118, 254);
 
-Node::Node(GraphLogic *graphLogic)
+Node::Node(GraphLogic *graphLogic, bool isRoot)
     : m_graphLogic(graphLogic)
+    , m_isRoot(isRoot)
     , m_hasBorder(false)
     , m_color(m_blue)
     , m_textColor(Qt::white)
@@ -27,6 +28,12 @@ Node::Node(GraphLogic *graphLogic)
     setFlag(ItemSendsGeometryChanges);
     setCacheMode(DeviceCoordinateCache);
     setDefaultTextColor(Qt::white);
+    if (m_isRoot) {
+        QFont textFont = font();
+        textFont.setBold(true);
+        setFont(textFont);
+        setHtml(QApplication::translate("QtMindMap::Node", "<b>Root node</b>"));
+    }
     setZValue(2);
     setGraphicsEffect(m_effect);
     m_effect->setEnabled(false);
@@ -171,6 +178,11 @@ bool Node::isConnected(const Node *node) const
     return false;
 }
 
+bool Node::isRoot() const
+{
+    return m_isRoot;
+}
+
 void Node::setBorder(const bool &hasBorder)
 {
    m_hasBorder = hasBorder;
@@ -181,18 +193,19 @@ void Node::setBorder(const bool &hasBorder)
 
 void Node::setEditable(const bool &editable)
 {
-    if (!editable)
-    {
+    if (!editable) {
         setTextInteractionFlags(Qt::NoTextInteraction);
         return;
     }
 
-    setTextInteractionFlags(Qt::TextEditable);
+    if (editable && textInteractionFlags() != Qt::TextEditorInteraction) {
+        setTextInteractionFlags(Qt::TextEditorInteraction);
 
-    // set cursor to the end
-    QTextCursor c = textCursor();
-    c.setPosition(c.document()->toPlainText().length());
-    setTextCursor(c);
+        // set cursor to the end
+        QTextCursor c = textCursor();
+        c.setPosition(c.document()->toPlainText().length());
+        setTextCursor(c);
+    }
 }
 
 void Node::setColor(const QColor &color)
@@ -396,21 +409,33 @@ void Node::paint(QPainter *painter,
         //
         painter->setBrush(QApplication::palette().text());
         QRectF borderRect = boundingRect();
-        painter->drawRoundedRect(borderRect, 6.0, 6.0);
+        if (m_isRoot) {
+            painter->drawRect(borderRect);
+        } else {
+            painter->drawRoundedRect(borderRect, 6.0, 6.0);
+        }
 
         //
         // Сужаем область отрисовки фона
         //
         painter->setBrush(m_color);
-        QRectF bodyRect = boundingRect();
+        QRectF bodyRect = borderRect;
         bodyRect.moveTop(bodyRect.top() + 1);
         bodyRect.moveLeft(bodyRect.left() + 1);
         bodyRect.setWidth(bodyRect.width() - 2);
         bodyRect.setHeight(bodyRect.height() - 2);
-        painter->drawRoundedRect(bodyRect, 6.0, 6.0);
+        if (m_isRoot) {
+            painter->drawRect(bodyRect);
+        } else {
+            painter->drawRoundedRect(bodyRect, 6.0, 6.0);
+        }
     } else {
         painter->setBrush(m_color);
-        painter->drawRoundedRect(boundingRect(), 6.0, 6.0);
+        if (m_isRoot) {
+            painter->drawRect(boundingRect());
+        } else {
+            painter->drawRoundedRect(boundingRect(), 6.0, 6.0);
+        }
     }
     painter->setBrush(Qt::NoBrush);
 
@@ -463,19 +488,21 @@ void Node::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit nodeSelected();
 
-    QGraphicsItem::mousePressEvent(event);
+    QGraphicsTextItem::mousePressEvent(event);
 }
 
 void Node::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event);
+//    Q_UNUSED(event);
 
     emit nodeEdited();
+
+    QGraphicsTextItem::mouseDoubleClickEvent(event);
 }
 
 void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    QGraphicsItem::mouseReleaseEvent(event);
+    QGraphicsTextItem::mouseReleaseEvent(event);
 }
 
 // notify parent so subtree can be moved too if necessary

@@ -18,7 +18,7 @@ class Node : public QGraphicsTextItem
 
 public:
 
-    Node(GraphLogic *graphLogic);
+    Node(GraphLogic *graphLogic, bool isRoot);
     ~Node();
 
     // add/remove edges
@@ -38,6 +38,7 @@ public:
     bool isConnected(const Node *node) const;
 
     // prop set/get
+    bool isRoot() const;
     void setBorder(const bool &hasBorder = true);
     void setEditable(const bool &editable = true);
     void setColor(const QColor &color);
@@ -99,6 +100,7 @@ private:
 
     QList<EdgeElement> m_edgeList;
     GraphLogic *m_graphLogic;
+    bool m_isRoot;
     bool m_hasBorder;
     QColor m_color;
     QColor m_textColor;

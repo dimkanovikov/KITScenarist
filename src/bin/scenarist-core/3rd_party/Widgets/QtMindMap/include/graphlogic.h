@@ -35,7 +35,7 @@ public:
     void writeContentToXmlFile(const QString &fileName);
     void writeContentToPngFile(const QString &fileName);
 
-    Node *nodeFactory();
+    Node *nodeFactory(bool isRootNode = false);
     Node* activeNode() const;
     void setActiveNode(Node *node);
 

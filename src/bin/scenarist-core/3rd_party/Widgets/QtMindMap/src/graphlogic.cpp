@@ -96,7 +96,7 @@ bool GraphLogic::processKeyEvent(QKeyEvent *event)
 
 void GraphLogic::addFirstNode()
 {
-	Node *node = nodeFactory();
+    Node *node = nodeFactory(true);
 	m_graphWidget->scene()->addItem(node);
 	m_nodeList.append(node);
 	node->setHtml(tr("Root node"));
@@ -150,7 +150,7 @@ bool GraphLogic::readContentFromXml(const QString& _xml)
 		QDomElement e = nodes.item(i).toElement();
 		if(!e.isNull())
 		{
-			Node *node = nodeFactory();
+            Node *node = nodeFactory(e.attribute("is_root").toInt());
 			node->disconnect(node, SIGNAL(nodeChanged()), this, SLOT(nodeChanged()));
 			m_graphWidget->scene()->addItem(node);
 			m_nodeList.append(node);
@@ -239,6 +239,7 @@ QString GraphLogic::writeContentToXml()
 
 		// no need to store ID: parsing order is preorder.
 		// cn.setAttribute( "id", QString::number(m_nodeList.indexOf(node)));
+        cn.setAttribute( "is_root", node->isRoot() ? "1" : "0");
 		cn.setAttribute( "x", QString::number(node->pos().x()));
 		cn.setAttribute( "y", QString::number(node->pos().y()));
 		cn.setAttribute( "htmlContent", node->toHtml());
@@ -315,9 +316,9 @@ void GraphLogic::writeContentToPngFile(const QString &fileName)
 	emit notification(tr("MindMap exported as ") + fileName);
 }
 
-Node * GraphLogic::nodeFactory()
+Node * GraphLogic::nodeFactory(bool isRootNode)
 {
-	Node *node = new Node(this);
+    Node *node = new Node(this, isRootNode);
 
 	connect(node, SIGNAL(nodeChanged()), this, SLOT(nodeChanged()));
 	connect(node, SIGNAL(nodeSelected()), this, SLOT(nodeSelected()));
@@ -499,7 +500,7 @@ void GraphLogic::nodeEdited()
 
 	m_editingNode = true;
 	m_activeNode->setEditable();
-	m_graphWidget->scene()->setFocusItem(m_activeNode);
+    m_graphWidget->scene()->setFocusItem(m_activeNode);
 }
 
 void GraphLogic::scaleUp()
