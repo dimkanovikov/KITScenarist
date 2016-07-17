@@ -14,13 +14,13 @@ const double Node::m_pi = 3.14159265358979323846264338327950288419717;
 const double Node::m_oneAndHalfPi = Node::m_pi * 1.5;
 const double Node::m_twoPi = Node::m_pi * 2.0;
 
-const QColor Node::m_blue(57, 118, 254);
+const QColor Node::m_defaultBackgroundColor(255, 135, 0);
 
 Node::Node(GraphLogic *graphLogic, bool isRoot)
     : m_graphLogic(graphLogic)
     , m_isRoot(isRoot)
     , m_hasBorder(false)
-    , m_color(m_blue)
+    , m_color(m_defaultBackgroundColor)
     , m_textColor(Qt::white)
     , m_effect(new QGraphicsDropShadowEffect(this))
 {
@@ -398,6 +398,15 @@ void Node::keyPressEvent(QKeyEvent *event)
     ///@note leaving editing mode is done with esc, handled by graphwidget
 }
 
+QRectF Node::boundingRect() const
+{
+    QRectF result = QGraphicsTextItem::boundingRect();
+    if (m_isRoot) {
+        result.adjust(-10, -10, 10, 10);
+    }
+    return result;
+}
+
 void Node::paint(QPainter *painter,
                  const QStyleOptionGraphicsItem *option,
                  QWidget *w)
@@ -493,8 +502,6 @@ void Node::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Node::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-//    Q_UNUSED(event);
-
     emit nodeEdited();
 
     QGraphicsTextItem::mouseDoubleClickEvent(event);

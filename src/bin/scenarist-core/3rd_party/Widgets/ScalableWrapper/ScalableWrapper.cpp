@@ -373,21 +373,37 @@ void ScalableWrapper::setupScrollingSynchronization(bool _needSync)
 
 void ScalableWrapper::updateTextEditSize()
 {
+    auto setScrollBarVisibility = [=] (bool _isVerticalScrollBar, Qt::ScrollBarPolicy _policy) {
+        if (_isVerticalScrollBar) {
+            if (verticalScrollBarPolicy() != _policy) {
+                setVerticalScrollBarPolicy(_policy);
+            }
+        } else {
+            if (horizontalScrollBarPolicy() != _policy) {
+                const int lastVerticalScrollValue = verticalScrollBar()->value();
+                setHorizontalScrollBarPolicy(_policy);
+                verticalScrollBar()->setValue(lastVerticalScrollValue);
+            }
+        }
+    };
+
 	int vbarWidth = 0;
+    const bool VERTICAL_SCROLLBAR = true;
+    const bool HORIZONTAL_SCROLLBAR = false;
 	if (m_editor->verticalScrollBar()->isVisible()) {
 		vbarWidth = m_editor->verticalScrollBar()->width();
-		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        setScrollBarVisibility(VERTICAL_SCROLLBAR, Qt::ScrollBarAlwaysOn);
 	} else {
-		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        setScrollBarVisibility(VERTICAL_SCROLLBAR, Qt::ScrollBarAlwaysOff);
 	}
 	//
 	int hbarHeight = 0;
 	if (m_editor->horizontalScrollBar()->isVisible()) {
 		hbarHeight = m_editor->horizontalScrollBar()->height();
-		setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-	} else {
-		setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	}
+        setScrollBarVisibility(HORIZONTAL_SCROLLBAR, Qt::ScrollBarAlwaysOn);
+    } else {
+        setScrollBarVisibility(HORIZONTAL_SCROLLBAR, Qt::ScrollBarAlwaysOff);
+    }
 
 	//
 	// Размер редактора устанавливается таким образом, чтобы скрыть масштабированные полосы

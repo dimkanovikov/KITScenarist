@@ -98,8 +98,7 @@ void GraphLogic::addFirstNode()
 {
     Node *node = nodeFactory(true);
 	m_graphWidget->scene()->addItem(node);
-	m_nodeList.append(node);
-	node->setHtml(tr("Root node"));
+    m_nodeList.append(node);
 
 	m_activeNode = m_nodeList.first();
 	m_activeNode->setBorder();

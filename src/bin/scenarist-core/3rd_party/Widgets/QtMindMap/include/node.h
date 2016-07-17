@@ -57,6 +57,9 @@ public:
     // so GraphWidget::keyPressEvent can call it edit during editing
     void keyPressEvent(QKeyEvent *event);
 
+    // переопределяем, чтобы для крневого элемента передавать расширенную область
+    QRectF boundingRect() const;
+
     // calculetes the intersection of line and shape of this Node
     QPointF intersection(const QLineF &line, const bool &reverse = false) const;
 
@@ -110,7 +113,7 @@ private:
     static const double m_oneAndHalfPi;
     static const double m_twoPi;
 
-    static const QColor m_blue;
+    static const QColor m_defaultBackgroundColor;
 };
 
 #endif // NODE_H
