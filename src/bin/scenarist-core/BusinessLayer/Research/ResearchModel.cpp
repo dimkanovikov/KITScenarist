@@ -28,6 +28,18 @@ namespace {
 			populateResearchTree(researchItem, researchChild, _researchMap);
 		}
 	}
+
+    /**
+     * @brief Скопировать дочерние элементы из одного родителя в другой
+     */
+    static void copyChildItems(ResearchModelItem* _parent, ResearchModelItem* _parentOldCopy) {
+        for (int childRow = 0; childRow < _parentOldCopy->childCount(); ++childRow) {
+            ResearchModelItem* childItemOldCopy = _parentOldCopy->childAt(childRow);
+            ResearchModelItem* childItem = new ResearchModelItem(childItemOldCopy->research());
+            _parent->appendItem(childItem);
+            copyChildItems(childItem, childItemOldCopy);
+        }
+    };
 }
 
 
@@ -375,7 +387,7 @@ bool ResearchModel::dropMimeData(
 		return false;
 
 	if (_action == Qt::IgnoreAction)
-		return true;
+        return true;
 
 	QByteArray encodedData = _data->data(MIME_TYPE);
 	QDataStream stream(&encodedData, QIODevice::ReadOnly);
@@ -388,7 +400,9 @@ bool ResearchModel::dropMimeData(
 		Domain::Research* research = m_lastMimeItems[row]->research();
 		if (research->id().value() == researchId) {
 			research->setParent(parentItem->research());
-			ResearchModelItem* item = new ResearchModelItem(research);
+            ResearchModelItem* item = new ResearchModelItem(research);
+            ::copyChildItems(item, m_lastMimeItems[row]);
+
 			newItems << item;
 		}
 
