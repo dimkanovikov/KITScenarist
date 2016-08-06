@@ -12,6 +12,7 @@
 
 #include <QFileDialog>
 #include <QScrollBar>
+#include <QShortcut>
 #include <QStandardPaths>
 #include <QStringListModel>
 
@@ -543,7 +544,8 @@ void ResearchView::initConnections()
 	connect(m_ui->addRootNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertRootNode);
 	connect(m_ui->addNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertNode);
 	connect(m_ui->addSiblingNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertSiblingNode);
-	connect(m_ui->deleteNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::removeNode);
+    connect(m_ui->deleteNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::removeNode);
+    connect(m_ui->deleteNode_2, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::removeNode);
     connect(m_ui->biggerNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::scaleUp);
     connect(m_ui->smallerNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::scaleDown);
 	connect(m_ui->addEdge, &FlatButton::clicked, m_ui->mindMap->graphLogic(), static_cast<void (GraphLogic::*)()>(&GraphLogic::addEdge));

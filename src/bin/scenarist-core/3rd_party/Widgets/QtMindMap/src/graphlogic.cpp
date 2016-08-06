@@ -72,6 +72,12 @@ bool GraphLogic::processKeyEvent(QKeyEvent *event)
 		return true;
 	}
 
+    if (event->key() == Qt::Key_Delete
+            && event->modifiers() & Qt::ShiftModifier) {
+        removeNode();
+        return true;
+    }
+
 	if (m_memberMap.find(event->key()) != m_memberMap.end())
 	{
 		(this->*m_memberMap[event->key()])();

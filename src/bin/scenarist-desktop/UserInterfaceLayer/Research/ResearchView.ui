@@ -629,7 +629,7 @@
                 <item>
                  <widget class="FlatButton" name="addRootNode">
                   <property name="toolTip">
-                   <string>Add root node</string>
+                   <string>Add root node (Ctrl+N)</string>
                   </property>
                   <property name="text">
                    <string>Add root node</string>
@@ -637,6 +637,9 @@
                   <property name="icon">
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/add-root.png</normaloff>:/Graphics/Icons/MindMap/add-root.png</iconset>
+                  </property>
+                  <property name="shortcut">
+                   <string>Ctrl+N</string>
                   </property>
                  </widget>
                 </item>
@@ -688,6 +691,29 @@
                   </property>
                   <property name="shortcut">
                    <string>Backspace</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="deleteNode_2">
+                  <property name="maximumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Delete node</string>
+                  </property>
+                  <property name="text">
+                   <string>Delete node</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/MindMap/remove-node.png</normaloff>:/Graphics/Icons/MindMap/remove-node.png</iconset>
+                  </property>
+                  <property name="shortcut">
+                   <string>Shift+Backspace</string>
                   </property>
                  </widget>
                 </item>

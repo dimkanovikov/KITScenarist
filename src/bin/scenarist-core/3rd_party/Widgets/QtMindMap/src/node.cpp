@@ -195,7 +195,9 @@ void Node::setBorder(const bool &hasBorder)
 void Node::setEditable(const bool &editable)
 {
     if (!editable) {
-        setTextCursor(QTextCursor());
+        QTextCursor cursor = textCursor();
+        cursor.clearSelection();
+        setTextCursor(cursor);
         setTextInteractionFlags(Qt::NoTextInteraction);
         return;
     }
@@ -405,6 +407,8 @@ QRectF Node::boundingRect() const
     QRectF result = QGraphicsTextItem::boundingRect();
     if (m_isRoot) {
         result.adjust(-10, -10, 10, 10);
+    } else {
+        result.adjust(-3, -3, 3, 3);
     }
     return result;
 }

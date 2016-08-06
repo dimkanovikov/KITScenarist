@@ -72,6 +72,7 @@ void InsertNodeCommand::undo()
     m_context.m_graphLogic->graphWidget()->scene()->removeItem(m_edge);
 
     m_done = false;
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 void InsertNodeCommand::redo()
@@ -91,6 +92,7 @@ void InsertNodeCommand::redo()
     m_context.m_graphLogic->graphWidget()->scene()->addItem(m_edge);
 
     m_done = true;
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 InsertRootNodeCommand::InsertRootNodeCommand(UndoContext context)
@@ -120,6 +122,7 @@ void InsertRootNodeCommand::undo()
     m_context.m_graphLogic->setActiveNode(m_activeNode);
 
     m_done = false;
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 void InsertRootNodeCommand::redo()
@@ -134,6 +137,7 @@ void InsertRootNodeCommand::redo()
         m_context.m_graphLogic->nodeEdited();
 
     m_done = true;
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 RemoveNodeCommand::RemoveNodeCommand(UndoContext context)
@@ -169,6 +173,7 @@ void RemoveNodeCommand::undo()
     }
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 void RemoveNodeCommand::redo()
@@ -187,6 +192,7 @@ void RemoveNodeCommand::redo()
     }
 
     m_context.m_graphLogic->setActiveNode(0);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 AddEdgeCommand::AddEdgeCommand(UndoContext context)
@@ -218,6 +224,7 @@ void AddEdgeCommand::undo()
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
     m_done = false;
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 void AddEdgeCommand::redo()
@@ -229,6 +236,7 @@ void AddEdgeCommand::redo()
 
     m_context.m_graphLogic->setActiveNode(m_context.m_destination);
     m_done = true;
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 AddEdgeCommand::~AddEdgeCommand()
@@ -260,6 +268,7 @@ void RemoveEdgeCommand::undo()
     m_context.m_graphLogic->graphWidget()->scene()->addItem(m_edge);
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 void RemoveEdgeCommand::redo()
@@ -269,6 +278,7 @@ void RemoveEdgeCommand::redo()
     m_context.m_graphLogic->graphWidget()->scene()->removeItem(m_edge);
 
     m_context.m_graphLogic->setActiveNode(m_context.m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 MoveCommand::MoveCommand(UndoContext context)
@@ -288,6 +298,7 @@ void MoveCommand::undo()
         node->moveBy(-m_context.m_x, -m_context.m_y);
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 void MoveCommand::redo()
@@ -296,6 +307,7 @@ void MoveCommand::redo()
         node->moveBy(m_context.m_x, m_context.m_y);
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 bool MoveCommand::mergeWith(const QUndoCommand *command)
@@ -353,6 +365,7 @@ void NodeColorCommand::undo()
     }
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 void NodeColorCommand::redo()
@@ -365,6 +378,7 @@ void NodeColorCommand::redo()
     }
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 NodeTextColorCommand::NodeTextColorCommand(UndoContext context)
@@ -386,6 +400,7 @@ void NodeTextColorCommand::undo()
         node->setTextColor(m_colorMap[node]);
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 void NodeTextColorCommand::redo()
@@ -394,6 +409,7 @@ void NodeTextColorCommand::redo()
         node->setTextColor(m_context.m_color);
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 ScaleNodeCommand::ScaleNodeCommand(UndoContext context)
@@ -413,6 +429,7 @@ void ScaleNodeCommand::undo()
         node->setScale(qreal(-m_context.m_scale), m_context.m_graphLogic->graphWidget()->sceneRect());
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 void ScaleNodeCommand::redo()
@@ -421,6 +438,7 @@ void ScaleNodeCommand::redo()
         node->setScale(m_context.m_scale, m_context.m_graphLogic->graphWidget()->sceneRect());
 
     m_context.m_graphLogic->setActiveNode(m_activeNode);
+    emit m_context.m_graphLogic->contentChanged();
 }
 
 bool ScaleNodeCommand::mergeWith(const QUndoCommand *command)
