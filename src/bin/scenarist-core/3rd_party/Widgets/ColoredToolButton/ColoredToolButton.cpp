@@ -108,24 +108,29 @@ QColor ColoredToolButton::currentColor() const
 
 void ColoredToolButton::setColor(const QColor& _color)
 {
-	QColor newColor;
+    updateColor(_color);
+
+    emit clicked(_color);
+}
+
+void ColoredToolButton::updateColor(const QColor& _color)
+{
+    QColor newColor;
     if (_color.isValid()) {
-		m_colorNotChoosedYet = false;
-		newColor = _color;
-	} else {
-		m_colorNotChoosedYet = true;
-		newColor = palette().text().color();
-	}
+        m_colorNotChoosedYet = false;
+        newColor = _color;
+    } else {
+        m_colorNotChoosedYet = true;
+        newColor = palette().text().color();
+    }
 
     if (m_colorsPane != 0
         && m_colorsPane->contains(_color)) {
-		m_colorsPane->setCurrentColor(newColor);
-		menu()->close();
-	}
+        m_colorsPane->setCurrentColor(newColor);
+        menu()->close();
+    }
 
-	aboutUpdateIcon(_color);
-
-	emit clicked(_color);
+    aboutUpdateIcon(_color);
 }
 
 bool ColoredToolButton::event(QEvent* _event)

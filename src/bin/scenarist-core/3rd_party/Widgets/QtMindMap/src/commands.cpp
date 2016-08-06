@@ -14,8 +14,7 @@ BaseUndoClass::BaseUndoClass(UndoContext context)
 {
     // remove just the active Node or it's subtree too?
     if (m_context.m_subtree ||
-        (QApplication::keyboardModifiers() & Qt::ControlModifier &&
-         QApplication::keyboardModifiers() & Qt::ShiftModifier))
+        (QApplication::keyboardModifiers() & Qt::ShiftModifier))
     {
         m_nodeList = m_activeNode->subtree();
         m_subtree = true;
@@ -334,7 +333,8 @@ NodeColorCommand::NodeColorCommand(UndoContext context)
     : BaseUndoClass(context)
 {
     setText(QObject::tr("Changing color of node: \"").append(
-                m_context.m_activeNode == m_context.m_nodeList->first() ?
+                (m_context.m_activeNode == m_context.m_nodeList->first()
+                 || m_context.m_activeNode == 0) ?
                     QObject::tr("Base node") :
                     m_context.m_activeNode->toPlainText()).append("\"").
                 append(m_subtree ? QObject::tr(" with subtree") : QString("")));

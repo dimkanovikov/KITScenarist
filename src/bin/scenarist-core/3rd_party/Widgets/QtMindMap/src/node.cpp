@@ -186,6 +186,7 @@ bool Node::isRoot() const
 void Node::setBorder(const bool &hasBorder)
 {
    m_hasBorder = hasBorder;
+   m_effect->setColor(QApplication::palette().text().color());
    m_effect->setEnabled(hasBorder);
 
    update();
@@ -194,6 +195,7 @@ void Node::setBorder(const bool &hasBorder)
 void Node::setEditable(const bool &editable)
 {
     if (!editable) {
+        setTextCursor(QTextCursor());
         setTextInteractionFlags(Qt::NoTextInteraction);
         return;
     }
@@ -414,42 +416,41 @@ void Node::paint(QPainter *painter,
     painter->setPen(Qt::transparent);
     if (m_hasBorder) {
         //
-        // Рисуем рамку областью, т.к. родная рисуется коряво
+        // Рисуем рамку областью
         //
         painter->setBrush(QApplication::palette().text());
         QRectF borderRect = boundingRect();
-        if (m_isRoot) {
-            painter->drawRect(borderRect);
-        } else {
-            painter->drawRoundedRect(borderRect, 6.0, 6.0);
-        }
+        painter->drawRect(borderRect);
 
         //
         // Сужаем область отрисовки фона
         //
         painter->setBrush(m_color);
-        QRectF bodyRect = borderRect;
-        bodyRect.moveTop(bodyRect.top() + 1);
-        bodyRect.moveLeft(bodyRect.left() + 1);
-        bodyRect.setWidth(bodyRect.width() - 2);
-        bodyRect.setHeight(bodyRect.height() - 2);
+        QRectF bodyRect = borderRect.adjusted(1, 1, -1, -1);
         if (m_isRoot) {
             painter->drawRect(bodyRect);
         } else {
-            painter->drawRoundedRect(bodyRect, 6.0, 6.0);
+            painter->setBrush(QApplication::palette().base());
+            painter->drawRect(bodyRect.adjusted(1, 1, -1, -1));
         }
     } else {
         painter->setBrush(m_color);
         if (m_isRoot) {
             painter->drawRect(boundingRect());
         } else {
-            painter->drawRoundedRect(boundingRect(), 6.0, 6.0);
+            painter->drawRect(boundingRect());
+            painter->setBrush(QApplication::palette().base());
+            painter->drawRect(boundingRect().adjusted(2, 2, -2, -2));
         }
     }
     painter->setBrush(Qt::NoBrush);
 
     // the text itself
-    setDefaultTextColor(m_textColor);
+    if (m_isRoot) {
+        setDefaultTextColor(m_textColor);
+    } else {
+        setDefaultTextColor(m_color);
+    }
     QGraphicsTextItem::paint(painter, option, w);
 }
 

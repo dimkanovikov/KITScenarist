@@ -53,20 +53,7 @@ bool GraphLogic::processKeyEvent(QKeyEvent *event)
 	{
 		m_activeNode->keyPressEvent(event);
 		return true;
-	}
-
-	if ((event->key() == Qt::Key_Plus || event->key() == Qt::Key_Equal) &&
-		event->modifiers() ^ Qt::ControlModifier)
-	{
-		scaleUp();
-		return true;
-	}
-	if (event->key() == Qt::Key_Minus &&
-		event->modifiers() ^ Qt::ControlModifier)
-	{
-		scaleDown();
-		return true;
-	}
+    }
 
 	if (event == QKeySequence::Undo) {
 		m_undoStack->undo();
@@ -516,8 +503,7 @@ void GraphLogic::scaleUp()
 		return;
 	}
 
-	bool subtree(QApplication::keyboardModifiers() & Qt::ControlModifier &&
-				 QApplication::keyboardModifiers() & Qt::ShiftModifier);
+    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	UndoContext context;
 	context.m_graphLogic = this;
@@ -546,8 +532,7 @@ void GraphLogic::scaleDown()
 		return;
 	}
 
-	bool subtree(QApplication::keyboardModifiers() & Qt::ControlModifier &&
-				 QApplication::keyboardModifiers() & Qt::ShiftModifier);
+    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	UndoContext context;
 	context.m_graphLogic = this;
@@ -570,8 +555,7 @@ void GraphLogic::nodeColor()
 		return;
 	}
 
-	bool subtree(QApplication::keyboardModifiers() & Qt::ControlModifier &&
-				 QApplication::keyboardModifiers() & Qt::ShiftModifier);
+    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	// popup a color selector dialogm def color is the curr one.
 	QColorDialog dialog(m_graphWidget);
@@ -601,8 +585,7 @@ void GraphLogic::setNodeColor(const QColor& _color)
 		return;
 	}
 
-	bool subtree(QApplication::keyboardModifiers() & Qt::ControlModifier &&
-				 QApplication::keyboardModifiers() & Qt::ShiftModifier);
+    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	UndoContext context;
 	context.m_graphLogic = this;
@@ -625,8 +608,7 @@ void GraphLogic::nodeTextColor()
 		return;
 	}
 
-	bool subtree(QApplication::keyboardModifiers() & Qt::ControlModifier &&
-				QApplication::keyboardModifiers() & Qt::ShiftModifier);
+    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	// popup a color selector dialogm def color is the curr one.
 	QColorDialog dialog(m_graphWidget);
@@ -656,8 +638,7 @@ void GraphLogic::setNodeTextColor(const QColor& _color)
 		return;
 	}
 
-	bool subtree(QApplication::keyboardModifiers() & Qt::ControlModifier &&
-				QApplication::keyboardModifiers() & Qt::ShiftModifier);
+    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	UndoContext context;
 	context.m_graphLogic = this;
@@ -710,8 +691,7 @@ void GraphLogic::nodeMoved(QGraphicsSceneMouseEvent *event)
 {
 	// move just the active Node, or it's subtree too?
 	QList <Node *> nodeList;
-	if (event->modifiers() & Qt::ControlModifier &&
-		event->modifiers() & Qt::ShiftModifier)
+    if (event->modifiers() & Qt::ShiftModifier)
 	{
 		nodeList = m_activeNode->subtree();
 	}

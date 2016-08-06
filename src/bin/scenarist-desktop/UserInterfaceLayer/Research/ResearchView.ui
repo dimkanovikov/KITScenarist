@@ -121,6 +121,9 @@
        </item>
        <item row="0" column="0">
         <widget class="FlatButton" name="search">
+         <property name="toolTip">
+          <string>Search (Ctrl+F)</string>
+         </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
            <normaloff>:/Graphics/Icons/Editing/search.png</normaloff>:/Graphics/Icons/Editing/search.png</iconset>
@@ -640,7 +643,7 @@
                 <item>
                  <widget class="FlatButton" name="addNode">
                   <property name="toolTip">
-                   <string>Add child node</string>
+                   <string>Add child node (Ctrl+Enter)</string>
                   </property>
                   <property name="text">
                    <string>Add child node</string>
@@ -657,7 +660,7 @@
                 <item>
                  <widget class="FlatButton" name="addSiblingNode">
                   <property name="toolTip">
-                   <string>Add sibling node</string>
+                   <string>Add sibling node (Shift+Enter)</string>
                   </property>
                   <property name="text">
                    <string>Add sibling node</string>
@@ -685,6 +688,26 @@
                   </property>
                   <property name="shortcut">
                    <string>Backspace</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="biggerNode">
+                  <property name="toolTip">
+                   <string>Scale up node</string>
+                  </property>
+                  <property name="text">
+                   <string>Scale up node</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="FlatButton" name="smallerNode">
+                  <property name="toolTip">
+                   <string>Scale down node</string>
+                  </property>
+                  <property name="text">
+                   <string>Scale down node</string>
                   </property>
                  </widget>
                 </item>

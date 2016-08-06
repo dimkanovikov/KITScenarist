@@ -45,6 +45,11 @@ public slots:
 	 */
 	void setColor(const QColor& _color);
 
+    /**
+     * @brief Установить цвет без вызова сигнала clicked
+     */
+    void updateColor(const QColor& _color);
+
 signals:
 	/**
 	 * @brief Кнопка нажата

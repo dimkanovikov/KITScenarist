@@ -87,6 +87,17 @@ QToolButton[inTopPanel="true"] {
 	height: 26px;
 }
 
+QToolButton:hover[inTopPanel="true"] {
+    background: palette(dark);
+}
+
+QToolButton:pressed[inTopPanel="true"] {
+    background: palette(dark);
+    padding-top: 1px;
+    padding-left: 5px;
+    padding-right: 3px;
+}
+
 QToolButton::menu-button[inTopPanel="true"] {
 	background: palette(button);
 	color: palette(button-text);
@@ -102,6 +113,10 @@ QToolButton::menu-button[inTopPanel="true"] {
 	padding-right: 7px;
 }
 
+QToolButton::menu-button:hover[inTopPanel="true"] {
+    background: palette(dark);
+}
+
 QToolButton::menu-arrow[inTopPanel="true"] {
 	image: url(:Interface/UI/menuarrow.png);
 }
@@ -111,9 +126,22 @@ ColoredToolButton[inTopPanel="true"] {
 	min-width: 20px;
 }
 
+ColoredToolButton:hover[inTopPanel="true"] {
+    background: palette(dark);
+}
+
+ColoredToolButton:hover[inTopPanel="true"] {
+    padding-right: 14px;
+    background: palette(dark);
+}
+
 ColoredToolButton::menu-button[inTopPanel="true"] {
 	padding-right: 3px;
 	border-right: none;
+}
+
+ColoredToolButton::menu-button:hover[inTopPanel="true"] {
+    background: palette(dark);
 }
 
 /*
@@ -130,17 +158,17 @@ QComboBox:editable[inTopPanel="true"] {
     background: palette(base);
 }
 
+QComboBox:!editable:hover[inTopPanel="true"] {
+    background: palette(dark);
+}
+
 QComboBox::drop-down[inTopPanel="true"] {
-    background: palette(button);
+    background: transparent;
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
 	width: 15px;
 	border-width: 0px;
 	padding-right: 4px;
-}
-
-QComboBox::drop-down:editable[inTopPanel="true"] {
-    background: palette(base);
 }
 
 QComboBox::down-arrow[inTopPanel="true"] {
