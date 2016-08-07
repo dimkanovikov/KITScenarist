@@ -1,14 +1,17 @@
 #include "SearchWidget.h"
 
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
+
 #include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
+#include <QComboBox>
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QTextBlock>
 
 
-SearchWidget::SearchWidget(QWidget* _parent) :
+SearchWidget::SearchWidget(QWidget* _parent, bool _showTypesCombo) :
 	QFrame(_parent),
 	m_editor(0),
 	m_searchText(new QLineEdit(this)),
@@ -17,7 +20,8 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	m_nextMatch(new QPushButton(this)),
 	m_replaceText(new QLineEdit(this)),
 	m_replaceOne(new QPushButton(this)),
-	m_replaceAll(new QPushButton(this))
+    m_replaceAll(new QPushButton(this)),
+    m_searchIn(new QComboBox(this))
 {
 	setFrameShape(QFrame::Box);
 	setStyleSheet("*[searchWidget=\"true\"] {"
@@ -73,6 +77,20 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	m_nextMatch->setToolTip(tr("Find Next"));
 	connect(m_nextMatch, SIGNAL(clicked()), this, SLOT(aboutFindNext()));
 
+    m_searchIn->addItem(tr("In whoole document"), BusinessLogic::ScenarioBlockStyle::Undefined);
+    m_searchIn->addItem(tr("In scene heading"), BusinessLogic::ScenarioBlockStyle::SceneHeading);
+    m_searchIn->addItem(tr("In action"), BusinessLogic::ScenarioBlockStyle::Action);
+    m_searchIn->addItem(tr("In character"), BusinessLogic::ScenarioBlockStyle::Character);
+    m_searchIn->addItem(tr("In dialogue"), BusinessLogic::ScenarioBlockStyle::Dialogue);
+    m_searchIn->addItem(tr("In parenthetical"), BusinessLogic::ScenarioBlockStyle::Parenthetical);
+    m_searchIn->setVisible(_showTypesCombo);
+    m_searchIn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    m_searchIn->setProperty("inTopPanel", true);
+    m_searchIn->setProperty("topPanelTopBordered", true);
+    m_searchIn->setProperty("topPanelBottomBordered", true);
+    m_searchIn->setProperty("topPanelLeftBordered", true);
+    m_searchIn->setProperty("topPanelRightBordered", true);
+
 	m_replaceText->setPlaceholderText(tr("Replace with..."));
 
 	m_replaceOne->setText(tr("Replace"));
@@ -80,7 +98,7 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 
 	m_replaceAll->setFixedWidth(50);
 	m_replaceAll->setText(tr("All"));
-	connect(m_replaceAll, SIGNAL(clicked()), this, SLOT(aboutReplaceAll()));
+    connect(m_replaceAll, SIGNAL(clicked()), this, SLOT(aboutReplaceAll()));
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setSpacing(0);
@@ -89,9 +107,13 @@ SearchWidget::SearchWidget(QWidget* _parent) :
 	layout->addWidget(m_prevMatch);
 	layout->addWidget(m_nextMatch);
 	layout->addSpacing(16);
+    if (_showTypesCombo) {
+        layout->addWidget(m_searchIn);
+        layout->addSpacing(16);
+    }
 	layout->addWidget(m_replaceText);
 	layout->addWidget(m_replaceOne);
-	layout->addWidget(m_replaceAll);
+    layout->addWidget(m_replaceAll);
 
 	setLayout(layout);
 }
@@ -197,12 +219,23 @@ void SearchWidget::findText(bool _backward)
 
 		//
 		// Поиск
-		//
+        //
 		bool searchRestarted = false;
+        bool restartSearch = false;
 		do {
-			cursor = m_editor->document()->find(searchText, cursor, findFlags);
-			if (!cursor.isNull()) {
-				m_editor->setTextCursor(cursor);
+            restartSearch = false;
+            cursor = m_editor->document()->find(searchText, cursor, findFlags);
+            BusinessLogic::ScenarioBlockStyle::Type searchType =
+                    (BusinessLogic::ScenarioBlockStyle::Type)m_searchIn->currentData().toInt();
+            BusinessLogic::ScenarioBlockStyle::Type blockType =
+                    BusinessLogic::ScenarioBlockStyle::forBlock(cursor.block());
+            if (!cursor.isNull()) {
+                if (searchType == BusinessLogic::ScenarioBlockStyle::Undefined
+                    || searchType == blockType) {
+                    m_editor->ensureCursorVisible(cursor);
+                } else {
+                    restartSearch = true;
+                }
 			} else {
 				//
 				// Если достигнут конец, или начало документа зацикливаем поиск, если это первый проход
@@ -212,14 +245,20 @@ void SearchWidget::findText(bool _backward)
 					cursor = m_editor->textCursor();
 					cursor.movePosition(_backward ? QTextCursor::End : QTextCursor::Start);
 					cursor = m_editor->document()->find(searchText, cursor, findFlags);
-					if (!cursor.isNull()) {
-						m_editor->setTextCursor(cursor);
+                    blockType = BusinessLogic::ScenarioBlockStyle::forBlock(cursor.block());
+                    if (!cursor.isNull()) {
+                        if (searchType == BusinessLogic::ScenarioBlockStyle::Undefined
+                            || searchType == blockType) {
+                            m_editor->ensureCursorVisible(cursor);
+                        } else {
+                            restartSearch = true;
+                        }
 					}
 				} else {
 					break;
 				}
 			}
-		} while (!cursor.block().isVisible());
+        } while (!cursor.block().isVisible() || restartSearch);
 	}
 
 	//

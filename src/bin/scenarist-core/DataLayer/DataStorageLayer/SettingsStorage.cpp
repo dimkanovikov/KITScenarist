@@ -302,7 +302,7 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 			if (!settings.value(widget->objectName()).isNull()) {
 				const int position = settings.value(widget->objectName()).toInt();
 				splitterWidgets.insert(position, widget);
-			}
+            }
 		}
 		//
 		// ... позиционируем сами виджеты

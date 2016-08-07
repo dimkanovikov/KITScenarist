@@ -823,12 +823,14 @@ void ScenarioManager::initView()
 	m_draftViewSplitter->setOrientation(Qt::Vertical);
 	m_draftViewSplitter->addWidget(m_navigatorManager->view());
 	m_draftViewSplitter->addWidget(m_draftNavigatorManager->view());
+    m_draftViewSplitter->setSizes({1, 0});
 
 	m_noteViewSplitter->setObjectName("noteScenarioEditSplitter");
 	m_noteViewSplitter->setHandleWidth(1);
 	m_noteViewSplitter->setOrientation(Qt::Vertical);
 	m_noteViewSplitter->addWidget(m_draftViewSplitter);
 	m_noteViewSplitter->addWidget(m_sceneDescriptionManager->view());
+    m_noteViewSplitter->setSizes({1, 0});
 
 	m_mainViewSplitter->setObjectName("mainScenarioEditSplitter");
 	m_mainViewSplitter->setHandleWidth(1);
@@ -836,7 +838,7 @@ void ScenarioManager::initView()
 	m_mainViewSplitter->setStretchFactor(1, 1);
 	m_mainViewSplitter->setOpaqueResize(false);
 	m_mainViewSplitter->addWidget(m_noteViewSplitter);
-	m_mainViewSplitter->addWidget(rightWidget);
+    m_mainViewSplitter->addWidget(rightWidget);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());

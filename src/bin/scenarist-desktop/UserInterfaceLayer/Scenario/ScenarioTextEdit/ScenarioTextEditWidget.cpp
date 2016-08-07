@@ -57,7 +57,7 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_review(new ScenarioReviewPanel(m_editor, this)),
 	m_duration(new QLabel(this)),
 	m_countersInfo(new QLabel(this)),
-	m_searchLine(new SearchWidget(this)),
+    m_searchLine(new SearchWidget(this, true)),
 	m_fastFormatWidget(new ScenarioFastFormatWidget(this)),
 	m_reviewView(new ScenarioReviewView(this))
 {

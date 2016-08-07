@@ -4,9 +4,10 @@
 #include <QFrame>
 
 class PageTextEdit;
-class QPushButton;
+class QComboBox;
 class QLineEdit;
 class QLabel;
+class QPushButton;
 
 
 /**
@@ -17,7 +18,7 @@ class SearchWidget : public QFrame
 	Q_OBJECT
 
 public:
-	explicit SearchWidget(QWidget* _parent = 0);
+    explicit SearchWidget(QWidget* _parent = 0, bool _showTypesCombo = false);
 
 	/**
 	 * @brief Установить документ для поиска
@@ -102,6 +103,11 @@ private:
 	 * @brief Кнопка замены всех совпадений
 	 */
 	QPushButton* m_replaceAll;
+
+    /**
+     * @brief В каких блоках искать/заменять
+     */
+    QComboBox* m_searchIn;
 
 	/**
 	 * @brief Последний искомый текст

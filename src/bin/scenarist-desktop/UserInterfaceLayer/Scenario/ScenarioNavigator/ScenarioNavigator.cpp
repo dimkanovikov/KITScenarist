@@ -31,8 +31,7 @@ ScenarioNavigator::ScenarioNavigator(QWidget *parent) :
 	m_removeItem(new FlatButton(this)),
 	m_middleTitle(new QLabel(this)),
 	m_showDraft(new FlatButton(this)),
-	m_showNote(new FlatButton(this)),
-	m_endTitle(new QLabel(this)),
+    m_showNote(new FlatButton(this)),
 	m_navigationTree(new QTreeView(this)),
 	m_navigationTreeDelegate(new ScenarioNavigatorItemDelegate(this))
 {
@@ -312,9 +311,7 @@ void ScenarioNavigator::initView()
 	m_showNote->setObjectName("navigatorShowNote");
 	m_showNote->setIcons(QIcon(":/Graphics/Icons/Editing/note.png"));
 	m_showNote->setToolTip(tr("Show/hide scene note"));
-	m_showNote->setCheckable(true);
-
-	m_endTitle->setFixedWidth(1);
+    m_showNote->setCheckable(true);
 
 	m_navigationTree->setItemDelegate(m_navigationTreeDelegate);
 	m_navigationTree->setDragDropMode(QAbstractItemView::DragDrop);
@@ -337,8 +334,7 @@ void ScenarioNavigator::initView()
 	topLayout->addWidget(m_removeItem);
 	topLayout->addWidget(m_middleTitle);
 	topLayout->addWidget(m_showDraft);
-	topLayout->addWidget(m_showNote);
-	topLayout->addWidget(m_endTitle);
+    topLayout->addWidget(m_showNote);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -379,10 +375,7 @@ void ScenarioNavigator::initStyleSheet()
 	m_middleTitle->setProperty("topPanelRightBordered", true);
 
 	m_showDraft->setProperty("inTopPanel", true);
-	m_showNote->setProperty("inTopPanel", true);
-
-	m_endTitle->setProperty("inTopPanel", true);
-	m_endTitle->setProperty("topPanelTopBordered", true);
+    m_showNote->setProperty("inTopPanel", true);
 
 	m_navigationTree->setProperty("mainContainer", true);
 }

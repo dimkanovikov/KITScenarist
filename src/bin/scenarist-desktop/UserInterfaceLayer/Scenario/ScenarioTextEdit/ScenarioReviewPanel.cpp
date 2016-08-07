@@ -256,8 +256,8 @@ void ScenarioReviewPanel::initView()
 	QFrame* popup = new QFrame(this);
 	popup->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	connect(m_activateButton, &FlatButton::toggled, [=](bool _show){
-		const bool NOT_FIX_BACKGROUND = false;
-		WAF::Animation::slide(popup, WAF::FromLeftToRight, NOT_FIX_BACKGROUND, _show);
+        const bool NOT_FIX_BACKGROUND = false;
+        WAF::Animation::slide(popup, WAF::FromLeftToRight, NOT_FIX_BACKGROUND, _show);
 	});
 
 	QHBoxLayout* popupLayout = new QHBoxLayout;

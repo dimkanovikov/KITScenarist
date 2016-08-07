@@ -19,6 +19,12 @@
 	border-right-color: palette(dark);
 }
 
+*[topPanelBottomBordered="true"] {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: palette(dark);
+}
+
 /*
  * Основные виджеты формы
  */

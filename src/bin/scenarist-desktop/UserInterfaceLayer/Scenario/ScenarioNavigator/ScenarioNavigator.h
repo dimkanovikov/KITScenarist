@@ -210,12 +210,7 @@ namespace UserInterface
 		/**
 		 * @brief Кнопка отображения/сокрытия примечания к сцене
 		 */
-		FlatButton* m_showNote;
-
-		/**
-		 * @brief Окончание панели инструментов
-		 */
-		QLabel* m_endTitle;
+        FlatButton* m_showNote;
 
 		/**
 		 * @brief Дерево навигации
