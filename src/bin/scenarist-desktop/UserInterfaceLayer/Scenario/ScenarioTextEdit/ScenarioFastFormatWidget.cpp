@@ -224,12 +224,11 @@ void ScenarioFastFormatWidget::catchFocusIfNeeded()
 	// Или снимем выделение, для продолжения редактирования текста
 	//
 	else {
-		if (m_editor != 0) {
+        if (m_editor != 0) {
 			QTextCursor cursor = m_editor->textCursor();
 			cursor.setPosition(qMax(cursor.selectionStart(), cursor.selectionEnd()));
-			m_editor->setTextCursor(cursor);
-			m_editor->clearFocus();
-			m_editor->setFocus();
+            m_editor->setTextCursor(cursor);
+            emit focusMovedToEditor();
 		}
 	}
 }

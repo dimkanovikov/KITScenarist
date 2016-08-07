@@ -37,6 +37,12 @@ namespace UserInterface
 		 */
 		void reinitBlockStyles();
 
+    signals:
+        /**
+         * @brief Фокус смещён к редактору
+         */
+        void focusMovedToEditor();
+
 	private slots:
 		/**
 		 * @brief Перейти к следующему блоку

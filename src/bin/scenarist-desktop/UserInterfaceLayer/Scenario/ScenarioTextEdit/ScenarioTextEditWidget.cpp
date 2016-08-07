@@ -42,10 +42,6 @@ using BusinessLogic::ScenarioTemplate;
 using BusinessLogic::ScenarioBlockStyle;
 using BusinessLogic::ScenarioTextBlockInfo;
 
-namespace {
-	const int SCROLL_DELTA = 140;
-}
-
 
 ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	QFrame(_parent),
@@ -587,6 +583,8 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()));
 	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
 	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
+    connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
+            [=] { m_editorWrapper->setFocus(); });
 	connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
 	connect(m_reviewView, SIGNAL(undoPressed()), this, SLOT(aboutUndo()));
 	connect(m_reviewView, SIGNAL(redoPressed()), this, SLOT(aboutRedo()));
