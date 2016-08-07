@@ -265,7 +265,7 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 				}
 
 				case Research::MindMap: {
-					m_view->editMindMap(research->name(), research->description(), research->id().value());
+                    m_view->editMindMap(research->name(), research->description());
 					break;
 				}
 			}
@@ -282,7 +282,7 @@ void ResearchManager::removeResearch(const QModelIndex& _index)
 	Research* research = researchItem->research();
 	if (QLightBoxMessage::question(m_view, QString::null,
 			tr("Are you shure to remove research: <b>%1</b>?").arg(research->name()),
-			QDialogButtonBox::Yes | QDialogButtonBox::No)
+            QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes)
 		== QDialogButtonBox::Yes) {
 		//
 		// ... удалим

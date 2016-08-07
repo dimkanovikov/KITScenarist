@@ -89,7 +89,7 @@ namespace UserInterface
 		/**
 		 * @brief Включить режим редактирования ментальной карты
 		 */
-		void editMindMap(const QString& _name, const QString& _xml, int _id);
+        void editMindMap(const QString& _name, const QString& _xml);
 
 		/**
 		 * @brief Установить режим работы со сценарием

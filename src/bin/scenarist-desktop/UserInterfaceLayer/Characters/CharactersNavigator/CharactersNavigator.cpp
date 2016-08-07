@@ -21,8 +21,7 @@ CharactersNavigator::CharactersNavigator(QWidget *parent) :
 	m_addCharacter(new FlatButton(this)),
 	m_removeCharacter(new FlatButton(this)),
 	m_mergeCharacters(new FlatButton(this)),
-	m_refreshCharacters(new FlatButton(this)),
-	m_endTitle(new QLabel(this)),
+    m_refreshCharacters(new FlatButton(this)),
 	m_navigator(new QListView(this)),
 	m_navigatorProxyModel(new QSortFilterProxyModel(m_navigator))
 {
@@ -107,8 +106,7 @@ void CharactersNavigator::initView()
 	setFocusProxy(m_navigator);
 
 	m_title = new QLabel(tr("Characters"), this);
-	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-	m_endTitle->setFixedWidth(1);
+    m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	m_addCharacter->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_addCharacter->setToolTip(tr("Create New Character"));
@@ -138,8 +136,7 @@ void CharactersNavigator::initView()
 	topLayout->addWidget(m_addCharacter);
 	topLayout->addWidget(m_removeCharacter);
 	topLayout->addWidget(m_mergeCharacters);
-	topLayout->addWidget(m_refreshCharacters);
-	topLayout->addWidget(m_endTitle);
+    topLayout->addWidget(m_refreshCharacters);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -160,9 +157,7 @@ void CharactersNavigator::initConnections()
 void CharactersNavigator::initStyleSheet()
 {
 	m_title->setProperty("inTopPanel", true);
-	m_title->setProperty("topPanelTopBordered", true);
-	m_endTitle->setProperty("inTopPanel", true);
-	m_endTitle->setProperty("topPanelTopBordered", true);
+    m_title->setProperty("topPanelTopBordered", true);
 
 	m_addCharacter->setProperty("inTopPanel", true);
 	m_removeCharacter->setProperty("inTopPanel", true);

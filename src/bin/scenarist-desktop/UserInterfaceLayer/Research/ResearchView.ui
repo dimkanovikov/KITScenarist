@@ -57,6 +57,9 @@
        </item>
        <item row="0" column="2">
         <widget class="FlatButton" name="removeResearchItem">
+         <property name="toolTip">
+          <string>Delete research item (Del)</string>
+         </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
            <normaloff>:/Graphics/Icons/Editing/delete.png</normaloff>:/Graphics/Icons/Editing/delete.png</iconset>
@@ -65,34 +68,12 @@
        </item>
        <item row="0" column="1">
         <widget class="FlatButton" name="addResearchItem">
+         <property name="toolTip">
+          <string>Add reseach item (Ctrl+N)</string>
+         </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
            <normaloff>:/Graphics/Icons/Editing/add.png</normaloff>:/Graphics/Icons/Editing/add.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="topNavigatorEndLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>1</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>1</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </item>
@@ -638,9 +619,6 @@
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/add-root.png</normaloff>:/Graphics/Icons/MindMap/add-root.png</iconset>
                   </property>
-                  <property name="shortcut">
-                   <string>Ctrl+N</string>
-                  </property>
                  </widget>
                 </item>
                 <item>
@@ -680,7 +658,7 @@
                 <item>
                  <widget class="FlatButton" name="deleteNode">
                   <property name="toolTip">
-                   <string>Delete node</string>
+                   <string>Delete node (Del)</string>
                   </property>
                   <property name="text">
                    <string>Delete node</string>
@@ -688,32 +666,6 @@
                   <property name="icon">
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/remove-node.png</normaloff>:/Graphics/Icons/MindMap/remove-node.png</iconset>
-                  </property>
-                  <property name="shortcut">
-                   <string>Backspace</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="FlatButton" name="deleteNode_2">
-                  <property name="maximumSize">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Delete node</string>
-                  </property>
-                  <property name="text">
-                   <string>Delete node</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-                    <normaloff>:/Graphics/Icons/MindMap/remove-node.png</normaloff>:/Graphics/Icons/MindMap/remove-node.png</iconset>
-                  </property>
-                  <property name="shortcut">
-                   <string>Shift+Backspace</string>
                   </property>
                  </widget>
                 </item>

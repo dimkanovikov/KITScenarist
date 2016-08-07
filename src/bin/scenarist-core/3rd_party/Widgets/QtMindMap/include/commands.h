@@ -26,7 +26,6 @@ struct UndoContext
 
     UndoContext(GraphLogic *graphLogic = 0,
                 Node *activeNode = 0,
-                Node *hintNode = 0,
                 QList <Node *> *nodeList = 0,
                 QPointF pos = QPointF(),
                 QColor color = QColor(),
@@ -119,7 +118,6 @@ public:
 
 private:
 
-    Node *m_hintNode;
     QList <Edge *> m_edgeList;
 };
 

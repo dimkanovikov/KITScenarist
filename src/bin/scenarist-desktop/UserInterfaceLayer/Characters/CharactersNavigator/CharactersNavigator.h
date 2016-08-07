@@ -122,12 +122,7 @@ namespace UserInterface
 		/**
 		 * @brief Кнопка обновления списка персонажей
 		 */
-		FlatButton* m_refreshCharacters;
-
-		/**
-		 * @brief Окончание панели инструментов
-		 */
-		QLabel* m_endTitle;
+        FlatButton* m_refreshCharacters;
 
 		/**
 		 * @brief Список персонажей

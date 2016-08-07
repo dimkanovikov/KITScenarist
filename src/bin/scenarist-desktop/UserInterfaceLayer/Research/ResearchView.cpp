@@ -256,7 +256,7 @@ void ResearchView::editImage(const QString& _name, const QPixmap& _image)
 	setSearchVisible(false);
 }
 
-void ResearchView::editMindMap(const QString &_name, const QString &_xml, int _id)
+void ResearchView::editMindMap(const QString &_name, const QString &_xml)
 {
 	m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->mindMapEdit);
 	m_ui->mindMapName->setText(_name);
@@ -382,15 +382,24 @@ void ResearchView::initConnections()
 	connect(m_ui->addResearchItem, &FlatButton::clicked, [=] {
 		emit addResearchRequested(currentResearchIndex());
 	});
+    QShortcut* addResearchShortcut = new QShortcut(QKeySequence::New, m_ui->researchNavigator);
+    addResearchShortcut->setContext(Qt::WidgetShortcut);
+    connect(addResearchShortcut, &QShortcut::activated, m_ui->addResearchItem, &FlatButton::click);
 	connect(m_ui->removeResearchItem, &FlatButton::clicked, [=] {
 		emit removeResearchRequested(currentResearchIndex());
-	});
+    });
+    QShortcut* removeShortcut = new QShortcut(QKeySequence::Delete, m_ui->researchNavigator);
+    removeShortcut->setContext(Qt::WidgetShortcut);
+    connect(removeShortcut, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
+    QShortcut* removeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->researchNavigator);
+    removeShortcut2->setContext(Qt::WidgetShortcut);
+    connect(removeShortcut2, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
 	connect(m_ui->search, &FlatButton::toggled, [=] (bool _visible) {
 		m_ui->searchWidget->setVisible(_visible);
 		if (_visible) {
 			m_ui->searchWidget->setFocus();
 		}
-	});
+    });
 
 	//
 	// Внутренние соединения формы
@@ -542,10 +551,18 @@ void ResearchView::initConnections()
 		}
 	});
 	connect(m_ui->addRootNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertRootNode);
+    QShortcut* addNodeShortcut = new QShortcut(QKeySequence::New, m_ui->mindMapEdit);
+    addNodeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(addNodeShortcut, &QShortcut::activated, m_ui->addRootNode, &FlatButton::click);
 	connect(m_ui->addNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertNode);
 	connect(m_ui->addSiblingNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertSiblingNode);
     connect(m_ui->deleteNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::removeNode);
-    connect(m_ui->deleteNode_2, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::removeNode);
+    QShortcut* removeNodeShortcut = new QShortcut(QKeySequence::Delete, m_ui->mindMapEdit);
+    removeNodeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(removeNodeShortcut, &QShortcut::activated, m_ui->deleteNode, &FlatButton::click);
+    QShortcut* removeNodeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->mindMapEdit);
+    removeNodeShortcut2->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(removeNodeShortcut2, &QShortcut::activated, m_ui->deleteNode, &FlatButton::click);
     connect(m_ui->biggerNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::scaleUp);
     connect(m_ui->smallerNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::scaleDown);
 	connect(m_ui->addEdge, &FlatButton::clicked, m_ui->mindMap->graphLogic(), static_cast<void (GraphLogic::*)()>(&GraphLogic::addEdge));
@@ -557,9 +574,7 @@ void ResearchView::initConnections()
 void ResearchView::initStyleSheet()
 {
 	m_ui->topNavigatorLabel->setProperty("inTopPanel", true);
-	m_ui->topNavigatorLabel->setProperty("topPanelTopBordered", true);
-	m_ui->topNavigatorEndLabel->setProperty("inTopPanel", true);
-	m_ui->topNavigatorEndLabel->setProperty("topPanelTopBordered", true);
+    m_ui->topNavigatorLabel->setProperty("topPanelTopBordered", true);
 	m_ui->topDataLabel->setProperty("inTopPanel", true);
 	m_ui->topDataLabel->setProperty("topPanelTopBordered", true);
 	m_ui->topMindMapToolbarLabelLeft->setProperty("inTopPanel", true);

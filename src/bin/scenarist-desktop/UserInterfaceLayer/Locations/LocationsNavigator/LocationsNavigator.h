@@ -117,12 +117,7 @@ namespace UserInterface
 		/**
 		 * @brief Кнопка обновления списка локаций
 		 */
-		FlatButton* m_refreshLocations;
-
-		/**
-		 * @brief Окончание панели инструментов
-		 */
-		QLabel* m_endTitle;
+        FlatButton* m_refreshLocations;
 
 		/**
 		 * @brief Список локаций

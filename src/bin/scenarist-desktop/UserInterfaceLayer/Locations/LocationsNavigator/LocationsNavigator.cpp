@@ -20,8 +20,7 @@ LocationsNavigator::LocationsNavigator(QWidget *parent) :
 	m_title(new QLabel(this)),
 	m_addLocation(new FlatButton(this)),
 	m_removeLocation(new FlatButton(this)),
-	m_refreshLocations(new FlatButton(this)),
-	m_endTitle(new QLabel(this)),
+    m_refreshLocations(new FlatButton(this)),
 	m_navigator(new QListView(this)),
 	m_navigatorProxyModel(new QSortFilterProxyModel(m_navigator))
 {
@@ -106,8 +105,7 @@ void LocationsNavigator::initView()
 	setFocusProxy(m_navigator);
 
 	m_title->setText(tr("Locations"));
-	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-	m_endTitle->setFixedWidth(1);
+    m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	m_addLocation->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_addLocation->setToolTip(tr("Create New Location"));
@@ -132,8 +130,7 @@ void LocationsNavigator::initView()
 	topLayout->addWidget(m_title);
 	topLayout->addWidget(m_addLocation);
 	topLayout->addWidget(m_removeLocation);
-	topLayout->addWidget(m_refreshLocations);
-	topLayout->addWidget(m_endTitle);
+    topLayout->addWidget(m_refreshLocations);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -154,9 +151,7 @@ void LocationsNavigator::initConnections()
 void LocationsNavigator::initStyleSheet()
 {
 	m_title->setProperty("inTopPanel", true);
-	m_title->setProperty("topPanelTopBordered", true);
-	m_endTitle->setProperty("inTopPanel", true);
-	m_endTitle->setProperty("topPanelTopBordered", true);
+    m_title->setProperty("topPanelTopBordered", true);
 
 	m_addLocation->setProperty("inTopPanel", true);
 	m_removeLocation->setProperty("inTopPanel", true);

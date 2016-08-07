@@ -57,7 +57,7 @@ protected:
     void dragMoveEvent(QDragMoveEvent* _event) Q_DECL_OVERRIDE;
     void dragLeaveEvent(QDragLeaveEvent* _event) Q_DECL_OVERRIDE;
     void dropEvent(QDropEvent* _event) Q_DECL_OVERRIDE;
-	bool eventFilter(QObject* _object, QEvent* _event);
+    bool eventFilter(QObject* _object, QEvent* _event) override;
 	/** @} */
 
 signals:
