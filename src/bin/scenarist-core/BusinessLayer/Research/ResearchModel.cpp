@@ -627,7 +627,8 @@ void ResearchModel::researchRowsRemoved(const QModelIndex& _parent, int _first, 
 			// Удалим из модели
 			//
 			ResearchModelItem* researchToRemove = 0;
-			if (researchParent->hasChildren()) {
+            if (researchParent != 0
+                && researchParent->hasChildren()) {
 				for (int childIndex = 0; childIndex < researchParent->childCount(); ++childIndex) {
 					if (researchParent->childAt(childIndex)->research() == research) {
 						researchToRemove = researchParent->childAt(childIndex);
