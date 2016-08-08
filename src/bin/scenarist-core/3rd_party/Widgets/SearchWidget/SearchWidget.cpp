@@ -41,9 +41,10 @@ SearchWidget::SearchWidget(QWidget* _parent, bool _showTypesCombo) :
 	m_replaceAll->setProperty("last", true);
 
 	setFocusProxy(m_searchText);
+    m_searchText->setPlaceholderText(tr("Find..."));
+    m_searchText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	connect(m_searchText, SIGNAL(textChanged(QString)), this, SLOT(aboutFindNext()));
 	connect(m_searchText, SIGNAL(returnPressed()), this, SLOT(aboutFindNext()));
-	m_searchText->setPlaceholderText(tr("Find..."));
 
 	m_caseSensitive->setFixedWidth(20);
 	m_caseSensitive->setCheckable(true);
@@ -92,6 +93,7 @@ SearchWidget::SearchWidget(QWidget* _parent, bool _showTypesCombo) :
     m_searchIn->setProperty("topPanelRightBordered", true);
 
 	m_replaceText->setPlaceholderText(tr("Replace with..."));
+    m_replaceText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	m_replaceOne->setText(tr("Replace"));
 	connect(m_replaceOne, SIGNAL(clicked()), this, SLOT(aboutReplaceOne()));

@@ -9,6 +9,7 @@
 #include <QListView>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QShortcut>
 #include <QSortFilterProxyModel>
 
 using UserInterface::CharactersNavigator;
@@ -109,11 +110,15 @@ void CharactersNavigator::initView()
     m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	m_addCharacter->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
-	m_addCharacter->setToolTip(tr("Create New Character"));
+    m_addCharacter->setShortcut(QKeySequence::New);
+    m_addCharacter->setToolTip(
+            QString("%1 (%2)")
+                .arg(tr("Create New Character"))
+                .arg(m_addCharacter->shortcut().toString(QKeySequence::NativeText)));
 
 	m_removeCharacter->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
-	m_removeCharacter->setToolTip(tr("Remove Selected Character") + " (Del)");
-	m_removeCharacter->setShortcut(QKeySequence("Delete"));
+    m_removeCharacter->setShortcut(QKeySequence("Delete"));
+    m_removeCharacter->setToolTip(tr("Remove Selected Character") + " (Del)");
 
 	m_mergeCharacters->setIcons(QIcon(":/Graphics/Icons/Editing/merge.png"));
 	m_mergeCharacters->setToolTip(tr("Merge Selected Characters"));
@@ -151,6 +156,8 @@ void CharactersNavigator::initConnections()
 {
 	connect(m_addCharacter, SIGNAL(clicked()), this, SIGNAL(addCharacter()));
 	connect(m_removeCharacter, SIGNAL(clicked()), this, SLOT(aboutRemoveCharacters()));
+    QShortcut* removeCharacterShortcut = new QShortcut(QKeySequence("Backspace"), m_navigator);
+    connect(removeCharacterShortcut, &QShortcut::activated, m_removeCharacter, &FlatButton::click);
 	connect(m_refreshCharacters, SIGNAL(clicked()), this, SIGNAL(refreshCharacters()));
 }
 

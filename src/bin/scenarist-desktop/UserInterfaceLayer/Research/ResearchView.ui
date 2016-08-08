@@ -69,7 +69,7 @@
        <item row="0" column="1">
         <widget class="FlatButton" name="addResearchItem">
          <property name="toolTip">
-          <string>Add reseach item (Ctrl+N)</string>
+          <string>Add reseach item</string>
          </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
@@ -103,7 +103,7 @@
        <item row="0" column="0">
         <widget class="FlatButton" name="search">
          <property name="toolTip">
-          <string>Search (Ctrl+F)</string>
+          <string>Search</string>
          </property>
          <property name="icon">
           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
@@ -610,7 +610,7 @@
                 <item>
                  <widget class="FlatButton" name="addRootNode">
                   <property name="toolTip">
-                   <string>Add root node (Ctrl+N)</string>
+                   <string>Add root node</string>
                   </property>
                   <property name="text">
                    <string>Add root node</string>
@@ -624,7 +624,7 @@
                 <item>
                  <widget class="FlatButton" name="addNode">
                   <property name="toolTip">
-                   <string>Add child node (Ctrl+Enter)</string>
+                   <string>Add child node</string>
                   </property>
                   <property name="text">
                    <string>Add child node</string>
@@ -641,7 +641,7 @@
                 <item>
                  <widget class="FlatButton" name="addSiblingNode">
                   <property name="toolTip">
-                   <string>Add sibling node (Shift+Enter)</string>
+                   <string>Add sibling node</string>
                   </property>
                   <property name="text">
                    <string>Add sibling node</string>

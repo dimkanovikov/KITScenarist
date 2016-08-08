@@ -332,7 +332,12 @@ void ResearchView::currentResearchChanged()
 
 void ResearchView::initView()
 {
-	m_ui->addResearchItem->setIcons(m_ui->addResearchItem->icon());
+    m_ui->addResearchItem->setIcons(m_ui->addResearchItem->icon());
+    m_ui->addResearchItem->setToolTip(
+            QString("%1 (%2)")
+                .arg(m_ui->addResearchItem->toolTip())
+                .arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
+
 	m_ui->removeResearchItem->setIcons(m_ui->removeResearchItem->icon());
 
 	m_ui->researchNavigator->setItemDelegate(new ResearchNavigatorItemDelegate(m_ui->researchNavigator));
@@ -362,8 +367,20 @@ void ResearchView::initView()
 	m_ui->imagePreview->setReadOnly(true);
 
 	m_ui->addRootNode->setIcons(m_ui->addRootNode->icon());
+    m_ui->addRootNode->setToolTip(
+            QString("%1 (%2)")
+                .arg(m_ui->addRootNode->toolTip())
+                .arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
 	m_ui->addNode->setIcons(m_ui->addNode->icon());
+    m_ui->addNode->setToolTip(
+            QString("%1 (%2)")
+                .arg(m_ui->addNode->toolTip())
+                .arg(m_ui->addNode->shortcut().toString(QKeySequence::NativeText)));
 	m_ui->addSiblingNode->setIcons(m_ui->addSiblingNode->icon());
+    m_ui->addSiblingNode->setToolTip(
+            QString("%1 (%2)")
+                .arg(m_ui->addSiblingNode->toolTip())
+                .arg(m_ui->addSiblingNode->shortcut().toString(QKeySequence::NativeText)));
 	m_ui->deleteNode->setIcons(m_ui->deleteNode->icon());
 	m_ui->nodeTextColor->setColorsPane(ColoredToolButton::Google);
 	m_ui->nodeBackgroundColor->setColorsPane(ColoredToolButton::Google);

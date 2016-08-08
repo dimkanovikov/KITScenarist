@@ -120,15 +120,24 @@ void SimpleTextEditorWidget::initView()
 	m_textBold->setCheckable(true);
 	m_textBold->setShortcut(QKeySequence::Bold);
 	m_textBold->setIcons(QIcon(":/Graphics/Icons/Editing/format-bold.png"));
-	m_textBold->setToolTip(tr("Make text bold"));
+    m_textBold->setToolTip(
+            QString("%1 (%2)")
+                .arg(tr("Make text bold"))
+                .arg(m_textBold->shortcut().toString(QKeySequence::NativeText)));
 	m_textItalic->setCheckable(true);
 	m_textItalic->setShortcut(QKeySequence::Italic);
-	m_textItalic->setIcons(QIcon(":/Graphics/Icons/Editing/format-italic.png"));
-	m_textItalic->setToolTip(tr("Make text italic"));
+    m_textItalic->setIcons(QIcon(":/Graphics/Icons/Editing/format-italic.png"));
+    m_textItalic->setToolTip(
+            QString("%1 (%2)")
+                .arg(tr("Make text italic"))
+                .arg(m_textItalic->shortcut().toString(QKeySequence::NativeText)));
 	m_textUnderline->setCheckable(true);
 	m_textUnderline->setShortcut(QKeySequence::Underline);
-	m_textUnderline->setIcons(QIcon(":/Graphics/Icons/Editing/format-underline.png"));
-	m_textUnderline->setToolTip(tr("Make text underlined"));
+    m_textUnderline->setIcons(QIcon(":/Graphics/Icons/Editing/format-underline.png"));
+    m_textUnderline->setToolTip(
+            QString("%1 (%2)")
+                .arg(tr("Make text underline"))
+                .arg(m_textUnderline->shortcut().toString(QKeySequence::NativeText)));
 	m_textColor->setIconSize(QSize(20, 20));
 	m_textColor->setColorsPane(ColoredToolButton::Google);
 	m_textColor->setToolTip(tr("Change text color"));

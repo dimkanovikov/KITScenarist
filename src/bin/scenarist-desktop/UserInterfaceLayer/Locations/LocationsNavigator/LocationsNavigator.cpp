@@ -9,6 +9,7 @@
 #include <QListView>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QShortcut>
 #include <QSortFilterProxyModel>
 
 using UserInterface::LocationsNavigator;
@@ -107,8 +108,12 @@ void LocationsNavigator::initView()
 	m_title->setText(tr("Locations"));
     m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-	m_addLocation->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
-	m_addLocation->setToolTip(tr("Create New Location"));
+    m_addLocation->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
+    m_addLocation->setShortcut(QKeySequence::New);
+    m_addLocation->setToolTip(
+            QString("%1 (%2)")
+                .arg(tr("Create New Location"))
+                .arg(m_addLocation->shortcut().toString(QKeySequence::NativeText)));
 
 	m_removeLocation->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
 	m_removeLocation->setToolTip(tr("Remove Selected Location") + " (Del)");
@@ -145,6 +150,8 @@ void LocationsNavigator::initConnections()
 {
 	connect(m_addLocation, SIGNAL(clicked()), this, SIGNAL(addLocation()));
 	connect(m_removeLocation, SIGNAL(clicked()), this, SLOT(aboutRemoveLocation()));
+    QShortcut* removeLocationShortcut = new QShortcut(QKeySequence("Backspace"), m_navigator);
+    connect(removeLocationShortcut, &QShortcut::activated, m_removeLocation, &FlatButton::click);
 	connect(m_refreshLocations, SIGNAL(clicked()), this, SIGNAL(refreshLocations()));
 }
 
