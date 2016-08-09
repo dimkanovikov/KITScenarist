@@ -3,7 +3,7 @@
 
 #include "AbstractReport.h"
 
-#include <QStringList>
+#include <QVariant>
 
 
 namespace BusinessLogic
@@ -50,9 +50,9 @@ namespace BusinessLogic
 			int number;
 
 			/**
-			 * @brief Реплики персонажа
+             * @brief Реплики персонажа <персонаж, текст, позиция>
 			 */
-			QStringList dialogues;
+            QList<QVariantList> dialogues;
 		};
 	};
 }

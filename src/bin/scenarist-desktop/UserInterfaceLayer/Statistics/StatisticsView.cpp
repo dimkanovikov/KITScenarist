@@ -347,6 +347,8 @@ void StatisticsView::initView()
 	//
 	// Настраиваем панель с данными по отчётам
 	//
+    m_reportData->setOpenLinks(false);
+    m_reportData->setOpenExternalLinks(false);
 	m_statisticData->addWidget(m_reportData);
 	m_statisticData->addWidget(m_plotData);
 
@@ -455,6 +457,8 @@ void StatisticsView::initConnections()
 	connect(m_print, SIGNAL(clicked(bool)), this, SLOT(aboutPrintReport()));
 	connect(m_save, SIGNAL(clicked(bool)), this, SLOT(aboutSaveReport()));
 	connect(m_update, &FlatButton::clicked, this, &StatisticsView::aboutMakeReport);
+
+    connect(m_reportData, &QTextBrowser::anchorClicked, this, &StatisticsView::linkActivated);
 }
 
 void StatisticsView::initStyleSheet()

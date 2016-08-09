@@ -879,7 +879,40 @@ void ApplicationManager::aboutShowFullscreen()
 
 void ApplicationManager::aboutPrepareScenarioForStatistics()
 {
-	m_statisticsManager->setExportedScenario(m_scenarioManager->scenario()->document());
+    m_statisticsManager->setExportedScenario(m_scenarioManager->scenario()->document());
+}
+
+void ApplicationManager::aboutInnerLinkActivated(const QUrl& _url)
+{
+    if (_url.scheme() == "inapp") {
+        if (_url.host() == "scenario") {
+            const QStringList parameters = _url.query().split("&");
+            const int INVALID_CURSOR_POSITION = -1;
+            int cursorPosition = INVALID_CURSOR_POSITION;
+            foreach (const QString parameter, parameters) {
+                const QStringList paramaterDetails = parameter.split("=");
+                if (paramaterDetails.first() == "position") {
+                    cursorPosition = paramaterDetails.last().toInt();
+                }
+            }
+
+            if (cursorPosition != INVALID_CURSOR_POSITION) {
+                if (m_tabsSecondary->isVisible() &&
+                    m_tabs->currentTab() == STATISTICS_TAB_INDEX) {
+                    m_tabsSecondary->setCurrentTab(SCENARIO_TAB_INDEX);
+                } else {
+                    m_tabs->setCurrentTab(SCENARIO_TAB_INDEX);
+                }
+                //
+                // Выполняем события, чтобы пропустить первую прокрутку текста, после запуска
+                // приложения к последнему рабочему месту в сценарии
+                //
+                QApplication::processEvents();
+                //
+                m_scenarioManager->setCursorPosition(cursorPosition);
+            }
+        }
+    }
 }
 
 bool ApplicationManager::event(QEvent* _event)
@@ -1350,6 +1383,7 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutRefreshLocations()));
 
 	connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
+    connect(m_statisticsManager, &StatisticsManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
 
 	connect(m_settingsManager, SIGNAL(applicationSettingsUpdated()),
 			this, SLOT(aboutApplicationSettingsUpdated()));

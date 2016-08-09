@@ -51,6 +51,11 @@ namespace ManagementLayer
 		 */
 		int cursorPosition() const;
 
+        /**
+         * @brief Установть позицию курсора
+         */
+        void setCursorPosition(int _position) const;
+
 		/**
 		 * @brief Загрузить данные текущего проекта
 		 */

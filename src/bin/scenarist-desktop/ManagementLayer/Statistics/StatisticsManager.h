@@ -50,6 +50,11 @@ namespace ManagementLayer
 		 */
 		void needNewExportedScenario();
 
+        /**
+         * @brief В отчёте активирована ссылка
+         */
+        void linkActivated(const QUrl& _url);
+
 	private slots:
 		/**
 		 * @brief Сформировать отчёт

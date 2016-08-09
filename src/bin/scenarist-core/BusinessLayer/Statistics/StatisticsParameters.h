@@ -79,7 +79,7 @@ namespace BusinessLogic
 		 * @brief Параметры отчёта по персонажу
 		 */
 		/** @{ */
-		QString characterName;
+        QStringList characterNames;
 		/** @} */
 
 		/**

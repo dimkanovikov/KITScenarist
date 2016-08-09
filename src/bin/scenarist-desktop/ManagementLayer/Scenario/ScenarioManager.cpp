@@ -260,7 +260,12 @@ BusinessLogic::ScenarioDocument*ScenarioManager::scenarioDraft() const
 
 int ScenarioManager::cursorPosition() const
 {
-	return m_textEditManager->cursorPosition();
+    return m_textEditManager->cursorPosition();
+}
+
+void ScenarioManager::setCursorPosition(int _position) const
+{
+    m_textEditManager->setCursorPosition(_position);
 }
 
 void ScenarioManager::loadCurrentProject()

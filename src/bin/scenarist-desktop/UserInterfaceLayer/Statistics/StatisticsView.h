@@ -63,6 +63,11 @@ namespace UserInterface
 		 */
 		void makeReport(const BusinessLogic::StatisticsParameters& _parameters);
 
+        /**
+         * @brief В отчёте активирована ссылка
+         */
+        void linkActivated(const QUrl& _url);
+
 	private slots:
 		/**
 		 * @brief Настроить панель отображения статистических данных

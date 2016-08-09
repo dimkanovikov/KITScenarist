@@ -165,6 +165,11 @@ namespace ManagementLayer
 		 */
 		void aboutPrepareScenarioForStatistics();
 
+        /**
+         * @brief Активирована внутренняя ссылка приложения
+         */
+        void aboutInnerLinkActivated(const QUrl& _url);
+
 	protected:
 		/**
 		 * @brief Переопределяем, для перехвата события простоя приложения

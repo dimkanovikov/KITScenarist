@@ -128,6 +128,7 @@ void StatisticsManager::initView()
 
 void StatisticsManager::initConnections()
 {
-	connect(m_view, SIGNAL(makeReport(BusinessLogic::StatisticsParameters)), this, SLOT(aboutMakeReport(BusinessLogic::StatisticsParameters)));
+    connect(m_view, &StatisticsView::makeReport, this, &StatisticsManager::aboutMakeReport);
+    connect(m_view, &StatisticsView::linkActivated, this, &StatisticsManager::linkActivated);
 }
 

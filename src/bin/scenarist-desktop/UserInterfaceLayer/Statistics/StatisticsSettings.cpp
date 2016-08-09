@@ -48,10 +48,12 @@ const BusinessLogic::StatisticsParameters& StatisticsSettings::settings() const
 	m_settings.castShowSpeakingAndNonspeakingScenes = m_ui->castShowSpeakingAndNonspeakingScenes->isChecked();
 	m_settings.castSortByColumn = m_ui->castSortBy->currentIndex();
 
-	m_settings.characterName =
-			m_ui->characterName->model()->rowCount() > 0
-			? m_ui->characterName->currentIndex().data().toString()
-			: QString::null;
+    m_settings.characterNames.clear();
+    if (m_ui->characterName->selectionModel() != 0) {
+        foreach (const QModelIndex& index, m_ui->characterName->selectionModel()->selectedIndexes()) {
+            m_settings.characterNames.append(index.data().toString());
+        }
+    }
 
 	m_settings.storyStructureAnalisysSceneChron = m_ui->storyStructureAnalisysSceneChron->isChecked();
 	m_settings.storyStructureAnalisysActionChron = m_ui->storyStructureAnalisysActionChron->isChecked();
