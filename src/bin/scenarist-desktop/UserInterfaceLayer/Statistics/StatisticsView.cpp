@@ -281,7 +281,7 @@ void StatisticsView::initView()
 	m_reports << new ReportButton(tr("Scene report"), StatisticsParameters::Report, StatisticsParameters::SceneReport, reports);
 	m_reports << new ReportButton(tr("Location report"), StatisticsParameters::Report, StatisticsParameters::LocationReport, reports);
 	m_reports << new ReportButton(tr("Cast report"), StatisticsParameters::Report, StatisticsParameters::CastReport, reports);
-	m_reports << new ReportButton(tr("Character dialogues"), StatisticsParameters::Report, StatisticsParameters::CharacterReport, reports);
+	m_reports << new ReportButton(tr("Characters dialogues"), StatisticsParameters::Report, StatisticsParameters::CharacterReport, reports);
 	const int REPORTS_MAX = m_reports.size();
 
 	QVBoxLayout* reportsLayout = new QVBoxLayout;
@@ -347,8 +347,8 @@ void StatisticsView::initView()
 	//
 	// Настраиваем панель с данными по отчётам
 	//
-    m_reportData->setOpenLinks(false);
-    m_reportData->setOpenExternalLinks(false);
+	m_reportData->setOpenLinks(false);
+	m_reportData->setOpenExternalLinks(false);
 	m_statisticData->addWidget(m_reportData);
 	m_statisticData->addWidget(m_plotData);
 
@@ -458,7 +458,7 @@ void StatisticsView::initConnections()
 	connect(m_save, SIGNAL(clicked(bool)), this, SLOT(aboutSaveReport()));
 	connect(m_update, &FlatButton::clicked, this, &StatisticsView::aboutMakeReport);
 
-    connect(m_reportData, &QTextBrowser::anchorClicked, this, &StatisticsView::linkActivated);
+	connect(m_reportData, &QTextBrowser::anchorClicked, this, &StatisticsView::linkActivated);
 }
 
 void StatisticsView::initStyleSheet()
