@@ -677,6 +677,10 @@
                   <property name="text">
                    <string>Scale up node</string>
                   </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/MindMap/scale-up.png</normaloff>:/Graphics/Icons/MindMap/scale-up.png</iconset>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -686,6 +690,10 @@
                   </property>
                   <property name="text">
                    <string>Scale down node</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+                    <normaloff>:/Graphics/Icons/MindMap/scale-down.png</normaloff>:/Graphics/Icons/MindMap/scale-down.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -787,6 +795,7 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <zorder>deleteNode</zorder>
               </widget>
              </item>
             </layout>

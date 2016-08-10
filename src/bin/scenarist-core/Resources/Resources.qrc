@@ -105,6 +105,8 @@
         <file>Icons/MindMap/add-root.png</file>
         <file>Icons/MindMap/add-edge.png</file>
         <file>Icons/MindMap/add-child.png</file>
+        <file>Icons/MindMap/scale-up.png</file>
+        <file>Icons/MindMap/scale-down.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

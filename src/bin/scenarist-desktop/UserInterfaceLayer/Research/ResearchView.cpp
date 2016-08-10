@@ -332,11 +332,11 @@ void ResearchView::currentResearchChanged()
 
 void ResearchView::initView()
 {
-    m_ui->addResearchItem->setIcons(m_ui->addResearchItem->icon());
-    m_ui->addResearchItem->setToolTip(
-            QString("%1 (%2)")
-                .arg(m_ui->addResearchItem->toolTip())
-                .arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
+	m_ui->addResearchItem->setIcons(m_ui->addResearchItem->icon());
+	m_ui->addResearchItem->setToolTip(
+			QString("%1 (%2)")
+				.arg(m_ui->addResearchItem->toolTip())
+				.arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
 
 	m_ui->removeResearchItem->setIcons(m_ui->removeResearchItem->icon());
 
@@ -367,21 +367,23 @@ void ResearchView::initView()
 	m_ui->imagePreview->setReadOnly(true);
 
 	m_ui->addRootNode->setIcons(m_ui->addRootNode->icon());
-    m_ui->addRootNode->setToolTip(
-            QString("%1 (%2)")
-                .arg(m_ui->addRootNode->toolTip())
-                .arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
+	m_ui->addRootNode->setToolTip(
+			QString("%1 (%2)")
+				.arg(m_ui->addRootNode->toolTip())
+				.arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
 	m_ui->addNode->setIcons(m_ui->addNode->icon());
-    m_ui->addNode->setToolTip(
-            QString("%1 (%2)")
-                .arg(m_ui->addNode->toolTip())
-                .arg(m_ui->addNode->shortcut().toString(QKeySequence::NativeText)));
+	m_ui->addNode->setToolTip(
+			QString("%1 (%2)")
+				.arg(m_ui->addNode->toolTip())
+				.arg(m_ui->addNode->shortcut().toString(QKeySequence::NativeText)));
 	m_ui->addSiblingNode->setIcons(m_ui->addSiblingNode->icon());
-    m_ui->addSiblingNode->setToolTip(
-            QString("%1 (%2)")
-                .arg(m_ui->addSiblingNode->toolTip())
-                .arg(m_ui->addSiblingNode->shortcut().toString(QKeySequence::NativeText)));
+	m_ui->addSiblingNode->setToolTip(
+			QString("%1 (%2)")
+				.arg(m_ui->addSiblingNode->toolTip())
+				.arg(m_ui->addSiblingNode->shortcut().toString(QKeySequence::NativeText)));
 	m_ui->deleteNode->setIcons(m_ui->deleteNode->icon());
+	m_ui->biggerNode->setIcons(m_ui->biggerNode->icon());
+	m_ui->smallerNode->setIcons(m_ui->smallerNode->icon());
 	m_ui->nodeTextColor->setColorsPane(ColoredToolButton::Google);
 	m_ui->nodeBackgroundColor->setColorsPane(ColoredToolButton::Google);
 	m_ui->addEdge->setIcons(m_ui->addEdge->icon());
@@ -399,24 +401,24 @@ void ResearchView::initConnections()
 	connect(m_ui->addResearchItem, &FlatButton::clicked, [=] {
 		emit addResearchRequested(currentResearchIndex());
 	});
-    QShortcut* addResearchShortcut = new QShortcut(QKeySequence::New, m_ui->researchNavigator);
-    addResearchShortcut->setContext(Qt::WidgetShortcut);
-    connect(addResearchShortcut, &QShortcut::activated, m_ui->addResearchItem, &FlatButton::click);
+	QShortcut* addResearchShortcut = new QShortcut(QKeySequence::New, m_ui->researchNavigator);
+	addResearchShortcut->setContext(Qt::WidgetShortcut);
+	connect(addResearchShortcut, &QShortcut::activated, m_ui->addResearchItem, &FlatButton::click);
 	connect(m_ui->removeResearchItem, &FlatButton::clicked, [=] {
 		emit removeResearchRequested(currentResearchIndex());
-    });
-    QShortcut* removeShortcut = new QShortcut(QKeySequence::Delete, m_ui->researchNavigator);
-    removeShortcut->setContext(Qt::WidgetShortcut);
-    connect(removeShortcut, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
-    QShortcut* removeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->researchNavigator);
-    removeShortcut2->setContext(Qt::WidgetShortcut);
-    connect(removeShortcut2, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
+	});
+	QShortcut* removeShortcut = new QShortcut(QKeySequence::Delete, m_ui->researchNavigator);
+	removeShortcut->setContext(Qt::WidgetShortcut);
+	connect(removeShortcut, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
+	QShortcut* removeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->researchNavigator);
+	removeShortcut2->setContext(Qt::WidgetShortcut);
+	connect(removeShortcut2, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
 	connect(m_ui->search, &FlatButton::toggled, [=] (bool _visible) {
 		m_ui->searchWidget->setVisible(_visible);
 		if (_visible) {
 			m_ui->searchWidget->setFocus();
 		}
-    });
+	});
 
 	//
 	// Внутренние соединения формы
@@ -558,30 +560,30 @@ void ResearchView::initConnections()
 	//
 	connect(m_ui->mindMap->graphLogic(), &GraphLogic::activeNodeChanged, [=] {
 		if (Node* activeNode = m_ui->mindMap->graphLogic()->activeNode()) {
-            m_ui->nodeTextColor->setVisible(activeNode->isRoot());
-            m_ui->nodeTextColor->updateColor(activeNode->textColor());
-            m_ui->nodeBackgroundColor->updateColor(activeNode->color());
+			m_ui->nodeTextColor->setVisible(activeNode->isRoot());
+			m_ui->nodeTextColor->updateColor(activeNode->textColor());
+			m_ui->nodeBackgroundColor->updateColor(activeNode->color());
 		} else {
-            m_ui->nodeTextColor->show();
-            m_ui->nodeTextColor->updateColor(QColor());
-            m_ui->nodeBackgroundColor->updateColor(QColor());
+			m_ui->nodeTextColor->show();
+			m_ui->nodeTextColor->updateColor(QColor());
+			m_ui->nodeBackgroundColor->updateColor(QColor());
 		}
 	});
 	connect(m_ui->addRootNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertRootNode);
-    QShortcut* addNodeShortcut = new QShortcut(QKeySequence::New, m_ui->mindMapEdit);
-    addNodeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
-    connect(addNodeShortcut, &QShortcut::activated, m_ui->addRootNode, &FlatButton::click);
+	QShortcut* addNodeShortcut = new QShortcut(QKeySequence::New, m_ui->mindMapEdit);
+	addNodeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
+	connect(addNodeShortcut, &QShortcut::activated, m_ui->addRootNode, &FlatButton::click);
 	connect(m_ui->addNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertNode);
 	connect(m_ui->addSiblingNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertSiblingNode);
-    connect(m_ui->deleteNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::removeNode);
-    QShortcut* removeNodeShortcut = new QShortcut(QKeySequence::Delete, m_ui->mindMapEdit);
-    removeNodeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
-    connect(removeNodeShortcut, &QShortcut::activated, m_ui->deleteNode, &FlatButton::click);
-    QShortcut* removeNodeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->mindMapEdit);
-    removeNodeShortcut2->setContext(Qt::WidgetWithChildrenShortcut);
-    connect(removeNodeShortcut2, &QShortcut::activated, m_ui->deleteNode, &FlatButton::click);
-    connect(m_ui->biggerNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::scaleUp);
-    connect(m_ui->smallerNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::scaleDown);
+	connect(m_ui->deleteNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::removeNode);
+	QShortcut* removeNodeShortcut = new QShortcut(QKeySequence::Delete, m_ui->mindMapEdit);
+	removeNodeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
+	connect(removeNodeShortcut, &QShortcut::activated, m_ui->deleteNode, &FlatButton::click);
+	QShortcut* removeNodeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->mindMapEdit);
+	removeNodeShortcut2->setContext(Qt::WidgetWithChildrenShortcut);
+	connect(removeNodeShortcut2, &QShortcut::activated, m_ui->deleteNode, &FlatButton::click);
+	connect(m_ui->biggerNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::scaleUp);
+	connect(m_ui->smallerNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::scaleDown);
 	connect(m_ui->addEdge, &FlatButton::clicked, m_ui->mindMap->graphLogic(), static_cast<void (GraphLogic::*)()>(&GraphLogic::addEdge));
 	connect(m_ui->deleteEdge, &FlatButton::clicked, m_ui->mindMap->graphLogic(), static_cast<void (GraphLogic::*)()>(&GraphLogic::removeEdge));
 	connect(m_ui->nodeTextColor, &ColoredToolButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::setNodeTextColor);
@@ -591,7 +593,7 @@ void ResearchView::initConnections()
 void ResearchView::initStyleSheet()
 {
 	m_ui->topNavigatorLabel->setProperty("inTopPanel", true);
-    m_ui->topNavigatorLabel->setProperty("topPanelTopBordered", true);
+	m_ui->topNavigatorLabel->setProperty("topPanelTopBordered", true);
 	m_ui->topDataLabel->setProperty("inTopPanel", true);
 	m_ui->topDataLabel->setProperty("topPanelTopBordered", true);
 	m_ui->topMindMapToolbarLabelLeft->setProperty("inTopPanel", true);
@@ -609,8 +611,8 @@ void ResearchView::initStyleSheet()
 	m_ui->addNode->setProperty("inTopPanel", true);
 	m_ui->addSiblingNode->setProperty("inTopPanel", true);
 	m_ui->deleteNode->setProperty("inTopPanel", true);
-    m_ui->biggerNode->setProperty("inTopPanel", true);
-    m_ui->smallerNode->setProperty("inTopPanel", true);
+	m_ui->biggerNode->setProperty("inTopPanel", true);
+	m_ui->smallerNode->setProperty("inTopPanel", true);
 	m_ui->addEdge->setProperty("inTopPanel", true);
 	m_ui->deleteEdge->setProperty("inTopPanel", true);
 	m_ui->nodeTextColor->setProperty("inTopPanel", true);
