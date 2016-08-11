@@ -357,7 +357,7 @@ void GraphLogic::insertRootNode()
 	qreal length(100);
 
 	QPointF pos(m_activeNode->sceneBoundingRect().center() +
-				 QPointF(length * cos(angle), length * sin(angle)) -
+                 QPointF(length * cos(angle), length * sin(angle)) -
 				 Node::newNodeCenter);
 
 	QRectF rect (m_graphWidget->scene()->sceneRect().topLeft(),

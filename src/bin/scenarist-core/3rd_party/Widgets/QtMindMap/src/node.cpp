@@ -11,6 +11,7 @@ const QPointF Node::newNodeCenter = QPointF(4, 11.5);
 const QPointF Node::newNodeBottomRigth = QPointF(8, 23);
 
 const double Node::m_pi = 3.14159265358979323846264338327950288419717;
+const double Node::m_halfPi = Node::m_pi * 0.5;
 const double Node::m_oneAndHalfPi = Node::m_pi * 1.5;
 const double Node::m_twoPi = Node::m_pi * 2.0;
 
@@ -304,7 +305,7 @@ double Node::calculateBiggestAngle() const
 {
     // in no edge, return with 12 o'clock
     if (m_edgeList.empty())
-        return Node::m_oneAndHalfPi;
+        return Node::m_halfPi;
 
     // if there is only one edge, return with it's extension
     if (m_edgeList.size()==1)

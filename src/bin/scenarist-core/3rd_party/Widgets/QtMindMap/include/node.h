@@ -110,6 +110,7 @@ private:
     QGraphicsDropShadowEffect *m_effect;
 
     static const double m_pi;
+    static const double m_halfPi;
     static const double m_oneAndHalfPi;
     static const double m_twoPi;
 

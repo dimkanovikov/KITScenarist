@@ -456,7 +456,20 @@ void StatisticsView::initConnections()
 
 	connect(m_print, SIGNAL(clicked(bool)), this, SLOT(aboutPrintReport()));
 	connect(m_save, SIGNAL(clicked(bool)), this, SLOT(aboutSaveReport()));
-	connect(m_update, &FlatButton::clicked, this, &StatisticsView::aboutMakeReport);
+    connect(m_update, &FlatButton::clicked, [=] {
+        //
+        // Запоминаем последнюю позицию в отчёте
+        //
+        const int lastVerticalScrollValue = m_reportData->verticalScrollBar()->value();
+        //
+        // Обновляем отчёт
+        //
+        aboutMakeReport();
+        //
+        // Восстанавливаем позицию
+        //
+        m_reportData->verticalScrollBar()->setValue(lastVerticalScrollValue);
+    });
 
 	connect(m_reportData, &QTextBrowser::anchorClicked, this, &StatisticsView::linkActivated);
 }

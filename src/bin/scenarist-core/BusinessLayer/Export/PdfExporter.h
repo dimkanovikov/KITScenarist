@@ -54,6 +54,11 @@ namespace BusinessLogic
 		 * @brief Документ для печати
 		 */
 		QTextDocument* m_documentForPrint;
+
+        /**
+         * @brief Последняя позиция прокрутки предпросмотра сценария
+         */
+        static QPair<ScenarioDocument*, int> m_lastScenarioPreviewScrollPosition;
 	};
 }
 
