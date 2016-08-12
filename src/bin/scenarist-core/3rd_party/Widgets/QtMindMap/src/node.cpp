@@ -303,9 +303,9 @@ QPointF Node::intersection(const QLineF &line, const bool &reverse) const
 
 double Node::calculateBiggestAngle() const
 {
-    // in no edge, return with 12 o'clock
+    // in no edge, return with 3 o'clock
     if (m_edgeList.empty())
-        return Node::m_halfPi;
+        return Node::m_twoPi;
 
     // if there is only one edge, return with it's extension
     if (m_edgeList.size()==1)

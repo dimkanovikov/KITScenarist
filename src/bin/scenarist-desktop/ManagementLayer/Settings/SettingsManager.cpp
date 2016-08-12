@@ -266,10 +266,26 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 	const QString affFileName = languageCode + ".aff";
 	const QString dicFileName = languageCode + ".dic";
 	//
-	// Если не установлен, скачаем
+    // Получим информацию о файлах словаря
 	//
-	if (!QFile::exists(hunspellDictionariesFolderPath + affFileName)
-		|| !QFile::exists(hunspellDictionariesFolderPath + dicFileName)) {
+    QFileInfo affFileInfo(hunspellDictionariesFolderPath + affFileName);
+    QFileInfo dicFileInfo(hunspellDictionariesFolderPath + dicFileName);
+    //
+    // ... удалим файлы, если они пустые (баг прошлых версий)
+    //
+    if (affFileInfo.size() == 0) {
+        QFile::remove(affFileInfo.absoluteFilePath());
+        affFileInfo.refresh();
+    }
+    if (dicFileInfo.size() == 0) {
+        QFile::remove(dicFileInfo.absoluteFilePath());
+        dicFileInfo.refresh();
+    }
+
+    //
+    // Если не установлен, скачаем
+    //
+    if (!affFileInfo.exists() || !dicFileInfo.exists()) {
 		//
 		// ... покажем прелоадер
 		//
@@ -288,21 +304,37 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 		const QString hunspellDictionariesFolderUrl = "https://kitscenarist.ru/downloads/hunspell/";
 		//
 		const QByteArray affFileData = WebLoader().loadSync(hunspellDictionariesFolderUrl + affFileName);
-		QFile affFile(hunspellDictionariesFolderPath + affFileName);
-		affFile.open(QIODevice::WriteOnly);
-		affFile.write(affFileData);
-		affFile.close();
+        bool downloadingAffFileSuccess = affFileData.size() > 0;
+        if (downloadingAffFileSuccess) {
+            QFile affFile(hunspellDictionariesFolderPath + affFileName);
+            affFile.open(QIODevice::WriteOnly);
+            affFile.write(affFileData);
+            affFile.close();
+        }
 		//
 		const QByteArray dicFileData = WebLoader().loadSync(hunspellDictionariesFolderUrl + dicFileName);
-		QFile dicFile(hunspellDictionariesFolderPath + dicFileName);
-		dicFile.open(QIODevice::WriteOnly);
-		dicFile.write(dicFileData);
-		dicFile.close();
+        bool downloadingDicFileSuccess = dicFileData.size() > 0;
+        if (downloadingDicFileSuccess) {
+            QFile dicFile(hunspellDictionariesFolderPath + dicFileName);
+            dicFile.open(QIODevice::WriteOnly);
+            dicFile.write(dicFileData);
+            dicFile.close();
+        }
 
 		//
 		// ... скрываем прогресс
 		//
 		progress.finish();
+
+        //
+        // Если словари не удалось скачать, предупредим об этом пользователя
+        //
+        if (!downloadingAffFileSuccess || !downloadingDicFileSuccess) {
+            QLightBoxMessage::critical(m_view, tr("Can't enable spell checking"),
+                tr("Can't download spelling dictionary. "
+                   "Please check internet connection and retry to activate spell checking"));
+            m_view->setScenarioEditSpellCheck(false);
+        }
 	}
 }
 

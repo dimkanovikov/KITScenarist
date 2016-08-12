@@ -3250,8 +3250,10 @@ void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate
 void PageTextEdit::setPageFormat(QPageSize::PageSizeId _pageFormat)
 {
 	Q_D(PageTextEdit);
-	d->m_pageMetrics.update(_pageFormat);
-	d->relayoutDocument();
+    if (d->m_pageMetrics.pageFormat() != _pageFormat) {
+        d->m_pageMetrics.update(_pageFormat);
+        d->relayoutDocument();
+    }
 }
 
 void PageTextEdit::setPageMargins(const QMarginsF& _margins)
