@@ -608,16 +608,25 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="FlatButton" name="addRootNode">
+                 <widget class="ColoredToolButton" name="addRootNode">
                   <property name="toolTip">
-                   <string>Add root node</string>
+                   <string>Node text color</string>
                   </property>
                   <property name="text">
-                   <string>Add root node</string>
+                   <string>Text color</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
                     <normaloff>:/Graphics/Icons/MindMap/add-root.png</normaloff>:/Graphics/Icons/MindMap/add-root.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>20</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="popupMode">
+                   <enum>QToolButton::MenuButtonPopup</enum>
                   </property>
                  </widget>
                 </item>
@@ -795,7 +804,6 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <zorder>deleteNode</zorder>
               </widget>
              </item>
             </layout>

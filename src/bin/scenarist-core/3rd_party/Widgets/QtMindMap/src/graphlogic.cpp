@@ -53,7 +53,7 @@ bool GraphLogic::processKeyEvent(QKeyEvent *event)
 	{
 		m_activeNode->keyPressEvent(event);
 		return true;
-    }
+	}
 
 	if (event == QKeySequence::Undo) {
 		m_undoStack->undo();
@@ -72,11 +72,11 @@ bool GraphLogic::processKeyEvent(QKeyEvent *event)
 		return true;
 	}
 
-    if (event->key() == Qt::Key_Delete
-            && event->modifiers() & Qt::ShiftModifier) {
-        removeNode();
-        return true;
-    }
+	if (event->key() == Qt::Key_Delete
+			&& event->modifiers() & Qt::ShiftModifier) {
+		removeNode();
+		return true;
+	}
 
 	if (m_memberMap.find(event->key()) != m_memberMap.end())
 	{
@@ -89,9 +89,9 @@ bool GraphLogic::processKeyEvent(QKeyEvent *event)
 
 void GraphLogic::addFirstNode()
 {
-    Node *node = nodeFactory(true);
+	Node *node = nodeFactory(true);
 	m_graphWidget->scene()->addItem(node);
-    m_nodeList.append(node);
+	m_nodeList.append(node);
 
 	m_activeNode = m_nodeList.first();
 	m_activeNode->setBorder();
@@ -142,7 +142,7 @@ bool GraphLogic::readContentFromXml(const QString& _xml)
 		QDomElement e = nodes.item(i).toElement();
 		if(!e.isNull())
 		{
-            Node *node = nodeFactory(e.attribute("is_root").toInt());
+			Node *node = nodeFactory(e.attribute("is_root").toInt());
 			node->disconnect(node, SIGNAL(nodeChanged()), this, SLOT(nodeChanged()));
 			m_graphWidget->scene()->addItem(node);
 			m_nodeList.append(node);
@@ -231,7 +231,7 @@ QString GraphLogic::writeContentToXml()
 
 		// no need to store ID: parsing order is preorder.
 		// cn.setAttribute( "id", QString::number(m_nodeList.indexOf(node)));
-        cn.setAttribute( "is_root", node->isRoot() ? "1" : "0");
+		cn.setAttribute( "is_root", node->isRoot() ? "1" : "0");
 		cn.setAttribute( "x", QString::number(node->pos().x()));
 		cn.setAttribute( "y", QString::number(node->pos().y()));
 		cn.setAttribute( "htmlContent", node->toHtml());
@@ -310,7 +310,7 @@ void GraphLogic::writeContentToPngFile(const QString &fileName)
 
 Node * GraphLogic::nodeFactory(bool isRootNode)
 {
-    Node *node = new Node(this, isRootNode);
+	Node *node = new Node(this, isRootNode);
 
 	connect(node, SIGNAL(nodeChanged()), this, SLOT(nodeChanged()));
 	connect(node, SIGNAL(nodeSelected()), this, SLOT(nodeSelected()));
@@ -341,7 +341,7 @@ void GraphLogic::setActiveNode(Node *node)
 	}
 }
 
-void GraphLogic::insertRootNode()
+void GraphLogic::insertRootNode(const QColor& _color)
 {
 	// checks
 	if (!m_activeNode)
@@ -357,7 +357,7 @@ void GraphLogic::insertRootNode()
 	qreal length(100);
 
 	QPointF pos(m_activeNode->sceneBoundingRect().center() +
-                 QPointF(length * cos(angle), length * sin(angle)) -
+				 QPointF(length * cos(angle), length * sin(angle)) -
 				 Node::newNodeCenter);
 
 	QRectF rect (m_graphWidget->scene()->sceneRect().topLeft(),
@@ -375,6 +375,7 @@ void GraphLogic::insertRootNode()
 	context.m_nodeList = &m_nodeList;
 	context.m_activeNode = m_activeNode;
 	context.m_pos = pos;
+	context.m_color = _color;
 
 
 	QUndoCommand *insertRootNodeCommand = new InsertRootNodeCommand(context);
@@ -492,7 +493,7 @@ void GraphLogic::nodeEdited()
 
 	m_editingNode = true;
 	m_activeNode->setEditable();
-    m_graphWidget->scene()->setFocusItem(m_activeNode);
+	m_graphWidget->scene()->setFocusItem(m_activeNode);
 }
 
 void GraphLogic::scaleUp()
@@ -509,7 +510,7 @@ void GraphLogic::scaleUp()
 		return;
 	}
 
-    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
+	bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	UndoContext context;
 	context.m_graphLogic = this;
@@ -538,7 +539,7 @@ void GraphLogic::scaleDown()
 		return;
 	}
 
-    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
+	bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	UndoContext context;
 	context.m_graphLogic = this;
@@ -561,7 +562,7 @@ void GraphLogic::nodeColor()
 		return;
 	}
 
-    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
+	bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	// popup a color selector dialogm def color is the curr one.
 	QColorDialog dialog(m_graphWidget);
@@ -591,7 +592,7 @@ void GraphLogic::setNodeColor(const QColor& _color)
 		return;
 	}
 
-    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
+	bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	UndoContext context;
 	context.m_graphLogic = this;
@@ -614,7 +615,7 @@ void GraphLogic::nodeTextColor()
 		return;
 	}
 
-    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
+	bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	// popup a color selector dialogm def color is the curr one.
 	QColorDialog dialog(m_graphWidget);
@@ -644,7 +645,7 @@ void GraphLogic::setNodeTextColor(const QColor& _color)
 		return;
 	}
 
-    bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
+	bool subtree(QApplication::keyboardModifiers() & Qt::ShiftModifier);
 
 	UndoContext context;
 	context.m_graphLogic = this;
@@ -697,7 +698,7 @@ void GraphLogic::nodeMoved(QGraphicsSceneMouseEvent *event)
 {
 	// move just the active Node, or it's subtree too?
 	QList <Node *> nodeList;
-    if (event->modifiers() & Qt::ShiftModifier)
+	if (event->modifiers() & Qt::ShiftModifier)
 	{
 		nodeList = m_activeNode->subtree();
 	}

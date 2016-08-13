@@ -366,7 +366,8 @@ void ResearchView::initView()
 
 	m_ui->imagePreview->setReadOnly(true);
 
-	m_ui->addRootNode->setIcons(m_ui->addRootNode->icon());
+	m_ui->addRootNode->setColorsPane(ColoredToolButton::Google);
+	m_ui->addRootNode->setColor(Node::defaultBackgroundColor);
 	m_ui->addRootNode->setToolTip(
 			QString("%1 (%2)")
 				.arg(m_ui->addRootNode->toolTip())
@@ -569,10 +570,10 @@ void ResearchView::initConnections()
 			m_ui->nodeBackgroundColor->updateColor(QColor());
 		}
 	});
-	connect(m_ui->addRootNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertRootNode);
+	connect(m_ui->addRootNode, &ColoredToolButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertRootNode);
 	QShortcut* addNodeShortcut = new QShortcut(QKeySequence::New, m_ui->mindMapEdit);
 	addNodeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
-	connect(addNodeShortcut, &QShortcut::activated, m_ui->addRootNode, &FlatButton::click);
+	connect(addNodeShortcut, &QShortcut::activated, m_ui->addRootNode, &ColoredToolButton::click);
 	connect(m_ui->addNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertNode);
 	connect(m_ui->addSiblingNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::insertSiblingNode);
 	connect(m_ui->deleteNode, &FlatButton::clicked, m_ui->mindMap->graphLogic(), &GraphLogic::removeNode);
