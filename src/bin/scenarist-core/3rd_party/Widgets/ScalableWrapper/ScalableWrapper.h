@@ -28,13 +28,13 @@ public:
 	 */
 	void setZoomRange(qreal _zoomRange);
 
-    /**
-     * @brief Дополнительные вещи для корректной работы в андройде
-     */
-    /** @{ */
-    QVariant inputMethodQuery(Qt::InputMethodQuery _query) const;
-    Q_INVOKABLE QVariant inputMethodQuery(Qt::InputMethodQuery _query, QVariant _argument) const;
-    /** @} */
+	/**
+	 * @brief Дополнительные вещи для корректной работы в андройде
+	 */
+	/** @{ */
+	QVariant inputMethodQuery(Qt::InputMethodQuery _query) const;
+	Q_INVOKABLE QVariant inputMethodQuery(Qt::InputMethodQuery _query, QVariant _argument) const;
+	/** @} */
 
 public slots:
 	/**
@@ -120,6 +120,16 @@ private:
 	 * @brief Вспомогательный элемент, посредством которого настраивается размер полос прокрутки
 	 */
 	QGraphicsRectItem* m_rect;
+
+	/**
+	 * @brief Нужно ли обновить положение полос прокрутки после события изменения размера
+	 */
+	bool m_needUpdateScrollValues;
+
+	/**
+	 * @brief Положения полос прокрутки зафиксированные перед событием изменения размера
+	 */
+	int m_vbarScrollValue, m_hbarScrollValue;
 };
 
 #endif // SCALABLEWRAPPER_H

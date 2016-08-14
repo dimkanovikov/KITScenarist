@@ -57,7 +57,7 @@ ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
 	m_review(new ScenarioReviewPanel(m_editor, this)),
 	m_duration(new QLabel(this)),
 	m_countersInfo(new QLabel(this)),
-    m_searchLine(new SearchWidget(this, true)),
+	m_searchLine(new SearchWidget(this, true)),
 	m_fastFormatWidget(new ScenarioFastFormatWidget(this)),
 	m_reviewView(new ScenarioReviewView(this))
 {
@@ -583,8 +583,8 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()));
 	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
 	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
-    connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
-            [=] { m_editorWrapper->setFocus(); });
+	connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
+			[=] { m_editorWrapper->setFocus(); });
 	connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
 	connect(m_reviewView, SIGNAL(undoPressed()), this, SLOT(aboutUndo()));
 	connect(m_reviewView, SIGNAL(redoPressed()), this, SLOT(aboutRedo()));

@@ -11,6 +11,7 @@
 #include <QScroller>
 #include <QShortcut>
 #include <QTextEdit>
+#include <QTimer>
 
 
 ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) :
@@ -18,7 +19,10 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	m_scene(new QGraphicsScene),
 	m_editor(_editor),
 	m_zoomRange(1),
-	m_gestureZoomInertionBreak(0)
+	m_gestureZoomInertionBreak(0),
+	m_needUpdateScrollValues(false),
+	m_vbarScrollValue(0),
+	m_hbarScrollValue(0)
 {
 	//
 	// Настраиваем лучшее опции прорисовки
@@ -135,14 +139,18 @@ bool ScalableWrapper::event(QEvent* _event)
 
 		//
 		// Перед событием отключаем синхронизацию полос прокрутки и отматываем полосу прокрутки
-		// представление наверх, для того, чтобы не смещались координаты сцены и виджет редактора
+		// представления наверх, для того, чтобы не смещались координаты сцены и виджет редактора
 		// не уезжал за пределы видимости обёртки
 		//
 
 		setupScrollingSynchronization(false);
 
-		int verticalValue = m_editor->verticalScrollBar()->value();
-		int horizontalValue = m_editor->horizontalScrollBar()->value();
+		//
+		// Помечаем необходимым обновление полос прокрутки обёртки
+		//
+		m_needUpdateScrollValues = true;
+		m_vbarScrollValue = verticalScrollBar()->value();
+		m_hbarScrollValue = horizontalScrollBar()->value();
 
 		verticalScrollBar()->setValue(0);
 		horizontalScrollBar()->setValue(0);
@@ -159,12 +167,8 @@ bool ScalableWrapper::event(QEvent* _event)
 #endif
 
 		//
-		// А после события, восстанавливаем положения полос прокрутки и включаем синхронизацию
+		// А после события включаем синхронизацию
 		//
-
-		verticalScrollBar()->setValue(verticalValue);
-		horizontalScrollBar()->setValue(horizontalValue);
-
 		setupScrollingSynchronization(true);
 	}
 	//
@@ -174,6 +178,20 @@ bool ScalableWrapper::event(QEvent* _event)
 		updateTextEditSize();
 
 		result = QGraphicsView::event(_event);
+
+		//
+		// Если необходимо, обновим положение полос прокрутки
+		//
+		if (m_needUpdateScrollValues) {
+			m_needUpdateScrollValues = false;
+			//
+			// И сделаем это после того, как выполнятся все события
+			//
+			QTimer::singleShot(0, [=] {
+				verticalScrollBar()->setValue(m_vbarScrollValue);
+				horizontalScrollBar()->setValue(m_hbarScrollValue);
+			});
+		}
 	}
 	//
 	// Прочие стандартные обработчики событий
@@ -373,37 +391,37 @@ void ScalableWrapper::setupScrollingSynchronization(bool _needSync)
 
 void ScalableWrapper::updateTextEditSize()
 {
-    auto setScrollBarVisibility = [=] (bool _isVerticalScrollBar, Qt::ScrollBarPolicy _policy) {
-        if (_isVerticalScrollBar) {
-            if (verticalScrollBarPolicy() != _policy) {
-                setVerticalScrollBarPolicy(_policy);
-            }
-        } else {
-            if (horizontalScrollBarPolicy() != _policy) {
-                const int lastVerticalScrollValue = verticalScrollBar()->value();
-                setHorizontalScrollBarPolicy(_policy);
-                verticalScrollBar()->setValue(lastVerticalScrollValue);
-            }
-        }
-    };
+	auto setScrollBarVisibility = [=] (bool _isVerticalScrollBar, Qt::ScrollBarPolicy _policy) {
+		if (_isVerticalScrollBar) {
+			if (verticalScrollBarPolicy() != _policy) {
+				setVerticalScrollBarPolicy(_policy);
+			}
+		} else {
+			if (horizontalScrollBarPolicy() != _policy) {
+				const int lastVerticalScrollValue = verticalScrollBar()->value();
+				setHorizontalScrollBarPolicy(_policy);
+				verticalScrollBar()->setValue(lastVerticalScrollValue);
+			}
+		}
+	};
 
 	int vbarWidth = 0;
-    const bool VERTICAL_SCROLLBAR = true;
-    const bool HORIZONTAL_SCROLLBAR = false;
+	const bool VERTICAL_SCROLLBAR = true;
+	const bool HORIZONTAL_SCROLLBAR = false;
 	if (m_editor->verticalScrollBar()->isVisible()) {
 		vbarWidth = m_editor->verticalScrollBar()->width();
-        setScrollBarVisibility(VERTICAL_SCROLLBAR, Qt::ScrollBarAlwaysOn);
+		setScrollBarVisibility(VERTICAL_SCROLLBAR, Qt::ScrollBarAlwaysOn);
 	} else {
-        setScrollBarVisibility(VERTICAL_SCROLLBAR, Qt::ScrollBarAlwaysOff);
+		setScrollBarVisibility(VERTICAL_SCROLLBAR, Qt::ScrollBarAlwaysOff);
 	}
 	//
 	int hbarHeight = 0;
 	if (m_editor->horizontalScrollBar()->isVisible()) {
 		hbarHeight = m_editor->horizontalScrollBar()->height();
-        setScrollBarVisibility(HORIZONTAL_SCROLLBAR, Qt::ScrollBarAlwaysOn);
-    } else {
-        setScrollBarVisibility(HORIZONTAL_SCROLLBAR, Qt::ScrollBarAlwaysOff);
-    }
+		setScrollBarVisibility(HORIZONTAL_SCROLLBAR, Qt::ScrollBarAlwaysOn);
+	} else {
+		setScrollBarVisibility(HORIZONTAL_SCROLLBAR, Qt::ScrollBarAlwaysOff);
+	}
 
 	//
 	// Размер редактора устанавливается таким образом, чтобы скрыть масштабированные полосы
