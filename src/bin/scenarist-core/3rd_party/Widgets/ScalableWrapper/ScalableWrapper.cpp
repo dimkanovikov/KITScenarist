@@ -1,8 +1,11 @@
 #include "ScalableWrapper.h"
 
 #include <3rd_party/Widgets/SpellCheckTextEdit/SpellCheckTextEdit.h>
+#include <3rd_party/Widgets/CompletableTextEdit/CompletableTextEdit.h>
 
+#include <QAbstractItemView>
 #include <QApplication>
+#include <QCompleter>
 #include <QGestureEvent>
 #include <QGraphicsProxyWidget>
 #include <QMenu>
@@ -76,6 +79,13 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	connect(zoomInShortcut2, SIGNAL(activated()), this, SLOT(zoomIn()));
 	QShortcut* zoomOutShortcut = new QShortcut(QKeySequence("Ctrl+-"), this, 0, 0, Qt::WidgetShortcut);
 	connect(zoomOutShortcut, SIGNAL(activated()), this, SLOT(zoomOut()));
+
+	if (CompletableTextEdit* editor = qobject_cast<CompletableTextEdit*>(m_editor)) {
+		connect(editor, &CompletableTextEdit::popupShowed, [=] {
+			QPointF point = m_editorProxy->mapToScene(editor->completer()->popup()->pos());
+			editor->completer()->popup()->move(mapToGlobal(mapFromScene(point)));
+		});
+	}
 }
 
 SpellCheckTextEdit* ScalableWrapper::editor() const

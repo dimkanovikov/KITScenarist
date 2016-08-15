@@ -86,8 +86,7 @@ bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _c
 				// ... отобразим завершателя
 				//
 				QRect rect = cursorRect();
-				rect.moveTo(mapToGlobal(viewport()->mapToParent(rect.topLeft())));
-				rect.moveLeft(rect.left() + verticalScrollBar()->width());
+				rect.moveLeft(rect.left() + verticalScrollBar()->width() + viewportMargins().left());
 				rect.moveTop(rect.top() + QFontMetricsF(currentCharFormat().font()).height());
 				rect.setWidth(
 							m_completer->popup()->sizeHintForColumn(0)
@@ -95,6 +94,7 @@ bool CompletableTextEdit::complete(QAbstractItemModel* _model, const QString& _c
 
 				MyCompleter* myCompleter = static_cast<MyCompleter*>(m_completer);
 				myCompleter->completeReimpl(rect);
+				emit popupShowed();
 
 				success = true;
 			}
