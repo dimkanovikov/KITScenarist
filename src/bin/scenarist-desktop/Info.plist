@@ -15,7 +15,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.6.1.beta3</string>
+	<string>0.6.1</string>
 	<key>CFBundleExecutable</key>
 	<string>Scenarist</string>
 	<key>CFBundleIdentifier</key>
