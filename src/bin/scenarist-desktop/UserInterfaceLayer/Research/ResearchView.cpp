@@ -94,6 +94,15 @@ void ResearchView::setSynopsisSettings(QPageSize::PageSizeId _pageSize, const QM
 
 void ResearchView::setResearchModel(QAbstractItemModel* _model)
 {
+    //
+    // Отключаем соединения от старой модели
+    //
+    if (QAbstractItemModel* oldModel = m_ui->researchNavigator->model()) {
+        disconnect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, &ResearchView::currentResearchChanged);
+        disconnect(oldModel, &QAbstractItemModel::rowsInserted, this, &ResearchView::researchItemAdded);
+    }
+
 	//
 	// Загружаем модель
 	//

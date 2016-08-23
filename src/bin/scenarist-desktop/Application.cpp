@@ -39,7 +39,7 @@ Application::Application(int& _argc, char** _argv) :
 	setOrganizationName("DimkaNovikov labs.");
 	setOrganizationDomain("dimkanovikov.pro");
 	setApplicationName("Scenarist");
-    setApplicationVersion("0.6.1 beta 3");
+    setApplicationVersion("0.6.1 beta 4");
 
 	//
 	// Настроим стиль отображения внешнего вида приложения
