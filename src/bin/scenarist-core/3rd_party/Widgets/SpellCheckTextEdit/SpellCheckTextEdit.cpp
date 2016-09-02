@@ -54,6 +54,11 @@ void SpellCheckTextEdit::setUseSpellChecker(bool _use)
 	m_spellCheckHighlighter->setUseSpellChecker(_use);
 }
 
+bool SpellCheckTextEdit::useSpellChecker() const
+{
+	return m_spellCheckHighlighter->useSpellChecker();
+}
+
 void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 {
 	if (m_spellChecker->spellingLanguage() != _language) {
@@ -67,6 +72,11 @@ void SpellCheckTextEdit::setSpellCheckLanguage(SpellChecker::Language _language)
 		//
 		m_spellCheckHighlighter->rehighlight();
 	}
+}
+
+SpellChecker::Language SpellCheckTextEdit::spellCheckLanguage() const
+{
+	return m_spellChecker->spellingLanguage();
 }
 
 QMenu* SpellCheckTextEdit::createContextMenu(const QPoint& _pos, QWidget* _parent)

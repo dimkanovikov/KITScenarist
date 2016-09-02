@@ -25,10 +25,20 @@ public slots:
 	void setUseSpellChecker(bool _use);
 
 	/**
+	 * @brief Используется ли проверка орфографии
+	 */
+	bool useSpellChecker() const;
+
+	/**
 	 * @brief Установить язык для проверки орфографии
 	 * @param Язык
 	 */
 	void setSpellCheckLanguage(SpellChecker::Language _language);
+
+	/**
+	 * @brief Получить язык проверки орфографии
+	 */
+	SpellChecker::Language spellCheckLanguage() const;
 
 	/**
 	 * @brief Создать контекстное меню

@@ -65,7 +65,10 @@ public:
 	/**
 	 * @brief Установить текст в редактор
 	 */
+	/** @{ */
 	void setHtml(const QString& _html);
+	void setPlainText(const QString& _text);
+	/** @} */
 
 	/**
 	 * @brief Очистить редактор текста
