@@ -11,6 +11,7 @@
 #include "Import/ImportManager.h"
 #include "Export/ExportManager.h"
 #include "Synchronization/SynchronizationManager.h"
+#include "Synchronization/SynchronizationManagerV2.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
@@ -180,7 +181,8 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_settingsManager(new SettingsManager(this, m_view)),
 	m_importManager(new ImportManager(this, m_view)),
 	m_exportManager(new ExportManager(this, m_view)),
-	m_synchronizationManager(new SynchronizationManager(this, m_view))
+    m_synchronizationManager(new SynchronizationManager(this, m_view)),
+    m_synchronizationManagerV2(new SynchronizationManagerV2(this, m_view))
 {
 	initView();
 	initConnections();
@@ -190,7 +192,8 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
 	reloadApplicationSettings();
 
-	QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
+    //QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
+    QTimer::singleShot(0, m_synchronizationManagerV2, SLOT(autoLogin()));
 }
 
 ApplicationManager::~ApplicationManager()
@@ -206,7 +209,7 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 
 	if (!_fileToOpen.isEmpty()) {
 		aboutLoad(_fileToOpen);
-	}
+       }
 }
 
 void ApplicationManager::openFile(const QString &_fileToOpen)
@@ -712,7 +715,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 				//
 				// Переподключаемся
 				//
-				QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
+                //QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
+                QTimer::singleShot(0, m_synchronizationManagerV2, SLOT(autoLogin()));
 				return;
 			} else {
 				//
@@ -738,6 +742,33 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
 			break;
 		}
+
+        //
+        // Такой email уже зарегистрирован
+        //
+        case 404: {
+            error = tr("Email already exist");
+            m_startUpManager->retryRegister(error);
+            break;
+        }
+
+        //
+        // Неверный код валидации
+        //
+        case 505: {
+            error = tr("Wrong validation code");
+            m_startUpManager->retryValidate(error);
+            break;
+        }
+
+        //
+        // Неверный email для восстановления пароля
+        //
+        case 606: {
+            error = tr("Wrong email");
+            m_startUpManager->aboutRetryLogin(error);
+            break;
+        }
 
 		//
 		// Остальное
@@ -1356,8 +1387,12 @@ void ApplicationManager::initConnections()
 	connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
 	connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
 
-	connect(m_startUpManager, SIGNAL(loginRequested(QString,QString)), m_synchronizationManager, SLOT(aboutLogin(QString,QString)));
-	connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
+    //connect(m_startUpManager, SIGNAL(loginRequested(QString,QString)), m_synchronizationManager, SLOT(aboutLogin(QString,QString)));
+    connect(m_startUpManager, SIGNAL(loginRequested(QString,QString)), m_synchronizationManagerV2, SLOT(login(QString,QString)));
+    connect(m_startUpManager, SIGNAL(registerRequested(QString,QString,QString)), m_synchronizationManagerV2, SLOT(registration(QString,QString, QString)));
+    connect(m_startUpManager, SIGNAL(verifyRequested(QString)), m_synchronizationManagerV2, SLOT(verifyRegistration(QString)));
+    connect(m_startUpManager, SIGNAL(restoreRequested(QString)), m_synchronizationManagerV2, SLOT(recoveryPassword(QString)));
+    connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
 	connect(m_startUpManager, SIGNAL(helpRequested()), this, SLOT(aboutShowHelp()));
@@ -1405,9 +1440,7 @@ void ApplicationManager::initConnections()
 	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
 	connect(m_synchronizationManager, SIGNAL(loginAccepted()),
-			m_startUpManager, SLOT(aboutUserLogged()));
-	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
-			m_startUpManager, SLOT(aboutUserUnlogged()));
+            m_startUpManager, SLOT(aboutUserLogged()));
 	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
 			this, SLOT(aboutUserUnlogged()));
 	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
@@ -1419,8 +1452,19 @@ void ApplicationManager::initConnections()
 	connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
 			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
 	connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
-			this, SLOT(aboutSyncClosedWithError(int,QString)));
+            this, SLOT(aboutSyncClosedWithError(int,QString)));
 	connect(m_synchronizationManager, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
+
+    connect(m_synchronizationManagerV2, SIGNAL(loginAccepted()),
+            m_startUpManager, SLOT(aboutUserLogged()));
+    connect(m_synchronizationManagerV2, SIGNAL(registered()),
+            m_startUpManager, SLOT(userRegistered()));
+    connect(m_synchronizationManagerV2, SIGNAL(registerVerified()),
+            m_startUpManager, SLOT(userVerified()));
+    connect(m_synchronizationManagerV2, SIGNAL(syncClosedWithError(int,QString)),
+            this, SLOT(aboutSyncClosedWithError(int,QString)));
+    connect(m_synchronizationManagerV2, SIGNAL(passwordRecoveried()),
+            m_startUpManager, SLOT(userPassRestored()));
 }
 
 void ApplicationManager::initStyleSheet()

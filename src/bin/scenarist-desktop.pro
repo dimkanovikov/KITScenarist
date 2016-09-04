@@ -302,7 +302,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/edge.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphlogic.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphwidget.cpp \
-    scenarist-core/3rd_party/Widgets/QtMindMap/src/node.cpp
+    scenarist-core/3rd_party/Widgets/QtMindMap/src/node.cpp \
+    scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManagerV2.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -545,7 +546,8 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/edge.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphlogic.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphwidget.h \
-    scenarist-core/3rd_party/Widgets/QtMindMap/include/node.h
+    scenarist-core/3rd_party/Widgets/QtMindMap/include/node.h \
+    scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManagerV2.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

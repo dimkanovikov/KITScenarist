@@ -7,14 +7,15 @@
 
 namespace UserInterface {
 	class StartUpView;
+    class LoginDialog;
 }
 
 class QAbstractItemModel;
 class QNetworkReply;
 
-
 namespace ManagementLayer
 {
+
 	/**
 	 * @brief Управляющий стартовой страницей
 	 */
@@ -32,6 +33,22 @@ namespace ManagementLayer
 		 * @brief Пользователь с заданным именем успешно авторизован на сервере
 		 */
 		void aboutUserLogged();
+
+        /**
+         * @brief Пользователь успешно отправил данные для регистрации
+         */
+        void userRegistered();
+
+        /**
+         * @brief Пользователь успешно ввел проверочный код
+         *        и окончательно зарегистрировался
+         */
+        void userVerified();
+
+        /**
+         * @brief Пользователю отправлен пароль на email
+         */
+        void userPassRestored();
 
 		/**
 		 * @brief Попробовать повторно авторизоваться, после неудачной попытки
@@ -53,11 +70,37 @@ namespace ManagementLayer
 		 */
 		void setRemoteProjects(QAbstractItemModel* _model);
 
+        /**
+         * @brief Попробовать повторно зарегистрироваться
+         */
+        void retryRegister(const QString& _error);
+
+        /**
+         * @brief Попробовать повторно ввести проверочный код
+         */
+        void retryValidate(const QString& _error);
+
 	signals:
 		/**
 		 * @brief Пользователь хочет авторизоваться
 		 */
-		void loginRequested(const QString& _userName, const QString& _password);
+        void loginRequested(const QString& _email, const QString& _password);
+
+        /**
+         * @brief Пользователь хочет зарегистрироваться
+         */
+        void registerRequested(const QString& _email, const QString& _password,
+                               const QString& _type);
+
+        /**
+         * @brief Пользователь хочет отправить проверочный код
+         */
+        void verifyRequested(const QString& _code);
+
+        /**
+         * @brief Пользователь хочет восстановить пароль
+         */
+        void restoreRequested(const QString& _email);
 
 		/**
 		 * @brief Пользователь хочет выйти
@@ -105,6 +148,26 @@ namespace ManagementLayer
 		 */
 		void aboutLoadUpdatesInfo(QNetworkReply* _reply);
 
+        /**
+         * @brief Окно авторизации говорит, что пора авторизоваться
+         */
+        void login();
+
+        /**
+         * @brief Окно авторизации говорит, что пора зарегистрироваться
+         */
+        void registrate();
+
+        /**
+         * @brief Окно авторизации говорит, что надо проверить проверочный код
+         */
+        void verify();
+
+        /**
+         * @brief Окно авторизации говорит, что надо восстановить пароль
+         */
+        void restore();
+
 	private:
 		/**
 		 * @brief Настроить данные
@@ -136,6 +199,11 @@ namespace ManagementLayer
 		 * @brief Пароль введённый при авторизации
 		 */
 		QString m_password;
+
+        /**
+         * @brief Окно авторизации/регистрации
+         */
+        UserInterface::LoginDialog* m_loginDialog;
 	};
 }
 

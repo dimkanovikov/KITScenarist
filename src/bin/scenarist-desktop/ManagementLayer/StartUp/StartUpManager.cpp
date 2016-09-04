@@ -27,11 +27,13 @@ using DataStorageLayer::SettingsStorage;
 using UserInterface::StartUpView;
 using UserInterface::LoginDialog;
 
-
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
-	m_view(new StartUpView(_parentWidget))
+    m_view(new StartUpView(_parentWidget)),
+    m_loginDialog(new LoginDialog(m_view))
 {
+    m_loginDialog->hide();
+
 	initData();
 	initConnections();
 
@@ -49,20 +51,53 @@ void StartUpManager::aboutUserLogged()
 	m_view->setUserLogged(isLogged, m_userName);
 }
 
+void StartUpManager::userRegistered()
+{
+    //
+    // Покажем пользователю окно с вводом проверочного кода
+    //
+    m_loginDialog->showVerify();
+    m_loginDialog->show();
+}
+
+void StartUpManager::userPassRestored()
+{
+    m_loginDialog->showRestore();
+    m_loginDialog->show();
+}
+
+void StartUpManager::userVerified()
+{
+    //
+    // После того, как пользователь зарегистрировался, сразу выполним вход
+    //
+    emit loginRequested(m_loginDialog->regEmail(), m_loginDialog->regPassword());
+}
+
 void StartUpManager::aboutRetryLogin(const QString& _error)
 {
-	//
-	// Показать диалог авторизации с заданной ошибкой
-	//
-	LoginDialog loginDialog(m_view);
-	loginDialog.setUserName(m_userName);
-	loginDialog.setPassword(m_password);
-	loginDialog.setError(_error);
-	if (loginDialog.exec() == QLightBoxDialog::Accepted) {
-		m_userName = loginDialog.userName();
-		m_password = loginDialog.password();
-		emit loginRequested(m_userName, m_password);
-	}
+    //
+    // Покажем пользователю ошибку авторизации
+    //
+    m_loginDialog->setAuthError(_error);
+    m_loginDialog->show();
+}
+
+void StartUpManager::retryRegister(const QString &_error)
+{
+    //
+    // Покажем пользователю ошибку регистрации
+    //
+    m_loginDialog->setRegisterError(_error);
+    m_loginDialog->show();
+}
+
+void StartUpManager::retryValidate(const QString &_error)
+{
+    //
+    // Покажем пользователю ошибку ввода проверочного кода
+    m_loginDialog->setValidateError(_error);
+    m_loginDialog->show();
 }
 
 void StartUpManager::aboutUserUnlogged()
@@ -84,14 +119,10 @@ void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
 void StartUpManager::aboutLoginClicked()
 {
 	//
-	// Показать диалог авторизации
+    // Сначала очистить, а затем показать диалог авторизации
 	//
-	LoginDialog loginDialog(m_view);
-	if (loginDialog.exec() == QLightBoxDialog::Accepted) {
-		m_userName = loginDialog.userName();
-		m_password = loginDialog.password();
-		emit loginRequested(m_userName, m_password);
-	}
+    m_loginDialog->clear();
+    m_loginDialog->show();
 }
 
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
@@ -196,6 +227,52 @@ void StartUpManager::initConnections()
 	connect(m_view, SIGNAL(openRemoteProjectClicked(QModelIndex)),
 			this, SIGNAL(openRemoteProjectRequested(QModelIndex)));
 	connect(m_view, SIGNAL(refreshProjects()), this, SIGNAL(refreshProjectsRequested()));
+
+    connect(m_loginDialog, SIGNAL(login()), this, SLOT(login()));
+    connect(m_loginDialog, SIGNAL(registrate()), this, SLOT(registrate()));
+    connect(m_loginDialog, SIGNAL(verify()), this, SLOT(verify()));
+    connect(m_loginDialog, SIGNAL(restore()), this, SLOT(restore()));
+}
+
+void StartUpManager::login()
+{
+    //
+    // Пользователь нажал кнопку входа
+    // Скроем окно и передадим сигнал с нужными параметрами
+    //
+    m_loginDialog->hide();
+    emit loginRequested(m_loginDialog->loginEmail(), m_loginDialog->loginPassword());
+}
+
+void StartUpManager::registrate()
+{
+    //
+    // Пользователь нажал кнопку регистрации
+    // Скроем окно и передадим сигнал с нужными параметрами
+    //
+    m_loginDialog->hide();
+    emit registerRequested(m_loginDialog->regEmail(), m_loginDialog->regPassword(),
+                           m_loginDialog->regType());
+}
+
+void StartUpManager::verify()
+{
+    //
+    // Пользователь ввел проверочный код
+    // Скроем окно и передадим сигнал с нужными параметрами
+    //
+    m_loginDialog->hide();
+    emit verifyRequested(m_loginDialog->code());
+}
+
+void StartUpManager::restore()
+{
+    //
+    // Пользователь нажал кнопку восстановления пароля
+    // Скроем окно и передадим сигнал с нужными параметрами
+    //
+    m_loginDialog->hide();
+    emit restoreRequested(m_loginDialog->loginEmail());
 }
 
 void StartUpManager::checkNewVersion()
