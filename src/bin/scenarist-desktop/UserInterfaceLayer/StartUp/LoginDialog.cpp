@@ -34,11 +34,6 @@ QString LoginDialog::regEmail() const
     return ui->regEmail->text();
 }
 
-void LoginDialog::setUserName(const QString& _userName)
-{
-    ui->loginEmail->setText(_userName);
-}
-
 QString LoginDialog::loginPassword() const
 {
     return ui->loginPassword->text();
@@ -47,11 +42,6 @@ QString LoginDialog::loginPassword() const
 QString LoginDialog::regPassword() const
 {
     return ui->regPassword->text();
-}
-
-void LoginDialog::setPassword(const QString& _password)
-{
-    ui->loginPassword->setText(_password);
 }
 
 void LoginDialog::setAuthError(const QString& _error)

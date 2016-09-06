@@ -44,12 +44,6 @@ void SynchronizationManagerV2::autoLogin()
 
 void SynchronizationManagerV2::login(const QString &_email, const QString &_password)
 {
-    //
-    // Покажем пользователю информацию
-    //
-    QLightBoxProgress progress(m_view);
-    progress.showProgress(tr("Authorizing"), tr("Checking correction of user name and password."));
-
     bool success = false;
 
     //
