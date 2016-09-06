@@ -49,14 +49,14 @@ void LoginDialog::setAuthError(const QString& _error)
     ui->errorAuth->setStyleSheet("QLabel { color : red; }");
     ui->errorAuth->setText(_error);
     ui->errorAuth->show();
-	resize(width(), sizeHint().height());
+    unblock();
 }
 
 void LoginDialog::setRegisterError(const QString &_error)
 {
     ui->errorReg->setText(_error);
     ui->errorReg->show();
-    resize(width(), sizeHint().height());
+    unblock();
 }
 
 void LoginDialog::setValidateError(const QString &_error)
@@ -64,7 +64,7 @@ void LoginDialog::setValidateError(const QString &_error)
     ui->errorVerification->setStyleSheet("QLabel { color : red; }");
     ui->errorVerification->setText(_error);
     ui->errorVerification->show();
-    resize(width(), sizeHint().height());
+    unblock();
 }
 
 QString LoginDialog::regType() const
@@ -89,6 +89,7 @@ void LoginDialog::checkCode()
     QString s = ui->code->text();
     int pos = 0;
     if(validator.validate(s, pos) == QValidator::Acceptable) {
+        block();
         emit verify();
     }
 }
@@ -101,6 +102,8 @@ void LoginDialog::showVerify()
                                       "with a confirmation code").arg(ui->regEmail->text()));
     ui->errorVerification->show();
     ui->stackedWidget->setCurrentWidget(ui->verificationPage);
+
+    unblock();
 }
 
 void LoginDialog::showRestore()
@@ -109,6 +112,8 @@ void LoginDialog::showRestore()
     ui->errorAuth->setText(tr("your e-mail \"%1\" was sent a letter "
                                       "with a password").arg(ui->loginEmail->text()));
     ui->errorAuth->show();
+
+    unblock();
 }
 
 void LoginDialog::setAuthPage()
@@ -151,6 +156,8 @@ void LoginDialog::initView()
 
     ui->errorVerification->hide();
 
+    ui->progressBar->hide();
+
     //
     // Красивые чекбоксы
     //
@@ -162,7 +169,10 @@ void LoginDialog::initView()
 
 void LoginDialog::initConnections()
 {
+    connect(ui->buttonsAuth, SIGNAL(accepted()), this, SLOT(block()));
     connect(ui->buttonsAuth, SIGNAL(accepted()), this, SIGNAL(login()));
+
+    connect(ui->buttonsReg, SIGNAL(accepted()), this, SLOT(block()));
     connect(ui->buttonsReg, SIGNAL(accepted()), this, SIGNAL(registrate()));
 
     connect(ui->buttonsAuth, SIGNAL(rejected()), this, SLOT(hide()));
@@ -176,6 +186,26 @@ void LoginDialog::initConnections()
     connect(ui->code, SIGNAL(textChanged(QString)), this, SLOT(checkCode()));
 
 	QLightBoxDialog::initConnections();
+}
+
+void LoginDialog::block()
+{
+    ui->authorization->setEnabled(false);
+    ui->registration->setEnabled(false);
+
+    ui->stackedWidget->setEnabled(false);
+
+    ui->progressBar->show();
+}
+
+void LoginDialog::unblock()
+{
+    ui->authorization->setEnabled(true);
+    ui->registration->setEnabled(true);
+
+    ui->stackedWidget->setEnabled(true);
+
+    ui->progressBar->hide();
 }
 
 void LoginDialog::cancelVerify()

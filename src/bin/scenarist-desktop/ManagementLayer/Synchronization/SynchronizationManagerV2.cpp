@@ -6,6 +6,9 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Helpers/PasswordStorage.h>
 
+#include <QEventLoop>
+#include <QTimer>
+
 using ManagementLayer::SynchronizationManagerV2;
 using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
@@ -46,6 +49,9 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 {
     bool success = false;
 
+    QEventLoop event;
+    QTimer::singleShot(2000, &event, SLOT(quit()));
+    event.exec();
     //
     // Авторизация
     //
@@ -57,8 +63,6 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     else {
         handleError(tr("Wrong email or password"), 100);
     }
-
-    progress.finish();
 
     if(success) {
         //
@@ -81,6 +85,10 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 void SynchronizationManagerV2::registration(const QString& _email, const QString& _password,
                                             const QString& _type)
 {
+    QEventLoop event;
+    QTimer::singleShot(2000, &event, SLOT(quit()));
+    event.exec();
+
     bool success = false;
     if(_email == "user" && _password == "user") {
         success = true;
@@ -96,6 +104,10 @@ void SynchronizationManagerV2::registration(const QString& _email, const QString
 
 void SynchronizationManagerV2::verifyRegistration(const QString& _code)
 {
+    QEventLoop event;
+    QTimer::singleShot(2000, &event, SLOT(quit()));
+    event.exec();
+
     bool success = false;
     if(_code == "11111") {
         success = true;
@@ -111,6 +123,10 @@ void SynchronizationManagerV2::verifyRegistration(const QString& _code)
 
 void SynchronizationManagerV2::recoveryPassword(const QString &_email)
 {
+    QEventLoop event;
+    QTimer::singleShot(2000, &event, SLOT(quit()));
+    event.exec();
+
     bool success = false;
     if(_email == "recovery") {
         success = true;

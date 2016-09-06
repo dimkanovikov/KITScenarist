@@ -816,7 +816,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			//
 			m_projectsManager->setRemoteProjectsSyncUnavailable();
 		}
-	}
+        }
 }
 
 void ApplicationManager::aboutImport()

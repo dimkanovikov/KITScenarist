@@ -49,6 +49,7 @@ void StartUpManager::aboutUserLogged()
 {
 	const bool isLogged = true;
 	m_view->setUserLogged(isLogged, m_userName);
+    m_loginDialog->hide();
 }
 
 void StartUpManager::userRegistered()
@@ -57,13 +58,11 @@ void StartUpManager::userRegistered()
     // Покажем пользователю окно с вводом проверочного кода
     //
     m_loginDialog->showVerify();
-    m_loginDialog->show();
 }
 
 void StartUpManager::userPassRestored()
 {
     m_loginDialog->showRestore();
-    m_loginDialog->show();
 }
 
 void StartUpManager::userVerified()
@@ -80,7 +79,6 @@ void StartUpManager::aboutRetryLogin(const QString& _error)
     // Покажем пользователю ошибку авторизации
     //
     m_loginDialog->setAuthError(_error);
-    m_loginDialog->show();
 }
 
 void StartUpManager::retryRegister(const QString &_error)
@@ -89,7 +87,6 @@ void StartUpManager::retryRegister(const QString &_error)
     // Покажем пользователю ошибку регистрации
     //
     m_loginDialog->setRegisterError(_error);
-    m_loginDialog->show();
 }
 
 void StartUpManager::retryValidate(const QString &_error)
@@ -97,7 +94,6 @@ void StartUpManager::retryValidate(const QString &_error)
     //
     // Покажем пользователю ошибку ввода проверочного кода
     m_loginDialog->setValidateError(_error);
-    m_loginDialog->show();
 }
 
 void StartUpManager::aboutUserUnlogged()
@@ -238,9 +234,8 @@ void StartUpManager::login()
 {
     //
     // Пользователь нажал кнопку входа
-    // Скроем окно и передадим сигнал с нужными параметрами
+    // передадим сигнал с нужными параметрами
     //
-    m_loginDialog->hide();
     emit loginRequested(m_loginDialog->loginEmail(), m_loginDialog->loginPassword());
 }
 
@@ -250,7 +245,6 @@ void StartUpManager::registrate()
     // Пользователь нажал кнопку регистрации
     // Скроем окно и передадим сигнал с нужными параметрами
     //
-    m_loginDialog->hide();
     emit registerRequested(m_loginDialog->regEmail(), m_loginDialog->regPassword(),
                            m_loginDialog->regType());
 }
@@ -261,7 +255,6 @@ void StartUpManager::verify()
     // Пользователь ввел проверочный код
     // Скроем окно и передадим сигнал с нужными параметрами
     //
-    m_loginDialog->hide();
     emit verifyRequested(m_loginDialog->code());
 }
 
@@ -271,7 +264,6 @@ void StartUpManager::restore()
     // Пользователь нажал кнопку восстановления пароля
     // Скроем окно и передадим сигнал с нужными параметрами
     //
-    m_loginDialog->hide();
     emit restoreRequested(m_loginDialog->loginEmail());
 }
 

@@ -30,7 +30,6 @@ namespace UserInterface
          * @brief Email с виджета регистрации
          */
         QString regEmail() const;
-        void setUserName(const QString& _userName);
 
         /**
          * @brief Пароль с виджета авторизации
@@ -41,7 +40,6 @@ namespace UserInterface
          * @brief Пароль с виджета регистрации
          */
         QString regPassword() const;
-        void setPassword(const QString& _password);
 
         /**
          * @brief Проверочный код
@@ -76,6 +74,11 @@ namespace UserInterface
          * @brief Очистить окно
          */
         void clear();
+
+        /**
+         * @brief Разблокировать окно для пользователя
+         */
+        void unblock();
 
     signals:
         /**
@@ -119,6 +122,11 @@ namespace UserInterface
          * @brief Смена активного виджета
          */
         void switchWidget();
+
+        /**
+         * @brief Блокирует окно на время передачи данных
+         */
+        void block();
 
 	private:
 		/**
