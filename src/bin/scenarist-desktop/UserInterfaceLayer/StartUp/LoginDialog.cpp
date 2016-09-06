@@ -2,13 +2,14 @@
 #include "ui_LoginDialog.h"
 
 #include "QRegExpValidator"
+#include <3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h>
 
 using UserInterface::LoginDialog;
 
-
 LoginDialog::LoginDialog(QWidget* _parent) :
 	QLightBoxDialog(_parent),
-	ui(new Ui::LoginDialog)
+    ui(new Ui::LoginDialog),
+    m_tabs(new TabBarExpanded(this))
 {
 	ui->setupUi(this);
 
@@ -119,7 +120,7 @@ void LoginDialog::showRestore()
 void LoginDialog::setAuthPage()
 {
     isVerify = false;
-    ui->authorization->setChecked(true);
+    m_tabs->setCurrentIndex(0);
 }
 
 void LoginDialog::clear()
@@ -130,7 +131,7 @@ void LoginDialog::clear()
     ui->regPassword->clear();
     ui->code->clear();
 
-    ui->authorization->setChecked(true);
+    m_tabs->setCurrentIndex(0);
     ui->basicButton->setChecked(true);
     switchWidget();
 
@@ -161,8 +162,10 @@ void LoginDialog::initView()
     //
     // Красивые чекбоксы
     //
-    ui->authorization->setProperty("inStartUpView", true);
-    ui->registration->setProperty("inStartUpView", true);
+    m_tabs->addTab(tr("Login"));
+    m_tabs->addTab(tr("Sign in"));
+    m_tabs->setProperty("inTopPanel", true);
+    ui->stackLayout->insertWidget(0, m_tabs);
 
 	QLightBoxDialog::initView();
 }
@@ -180,7 +183,7 @@ void LoginDialog::initConnections()
     connect(ui->ButtonsVerification, SIGNAL(rejected()), this, SLOT(cancelVerify()));
     connect(ui->ButtonsVerification, SIGNAL(rejected()), this, SLOT(hide()));
 
-    connect(ui->authorization, SIGNAL(toggled(bool)), this, SLOT(switchWidget()));
+    connect(m_tabs, SIGNAL(currentChanged(int)), this, SLOT(switchWidget()));
     connect(ui->restorePass, SIGNAL(clicked(bool)), this, SIGNAL(restore()));
 
     connect(ui->code, SIGNAL(textChanged(QString)), this, SLOT(checkCode()));
@@ -190,8 +193,7 @@ void LoginDialog::initConnections()
 
 void LoginDialog::block()
 {
-    ui->authorization->setEnabled(false);
-    ui->registration->setEnabled(false);
+    m_tabs->setEnabled(false);
 
     ui->stackedWidget->setEnabled(false);
 
@@ -200,8 +202,7 @@ void LoginDialog::block()
 
 void LoginDialog::unblock()
 {
-    ui->authorization->setEnabled(true);
-    ui->registration->setEnabled(true);
+    m_tabs->setEnabled(true);
 
     ui->stackedWidget->setEnabled(true);
 
@@ -216,7 +217,7 @@ void LoginDialog::cancelVerify()
 
 void LoginDialog::switchWidget()
 {
-    if(ui->authorization->isChecked()) {
+    if(m_tabs->currentIndex() == 0) {
         ui->stackedWidget->setCurrentWidget(ui->authPage);
     }
     else if(isVerify) {

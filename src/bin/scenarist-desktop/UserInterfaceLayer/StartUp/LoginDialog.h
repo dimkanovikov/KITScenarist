@@ -7,6 +7,7 @@ namespace Ui {
 	class LoginDialog;
 }
 
+class TabBarExpanded;
 
 namespace UserInterface
 {
@@ -37,7 +38,8 @@ namespace UserInterface
         QString loginPassword() const;
 
         /**
-         * @brief Пароль с виджета регистрации
+         * @brief Пароль с виджета регис
+    m_tabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);трации
          */
         QString regPassword() const;
 
@@ -148,6 +150,8 @@ namespace UserInterface
          *        False - окно регистрации
          */
         bool isVerify;
+
+        TabBarExpanded* m_tabs;
 	};
 }
 
