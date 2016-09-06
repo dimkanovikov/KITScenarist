@@ -157,8 +157,6 @@ void LoginDialog::initView()
 
     ui->errorVerification->hide();
 
-    ui->progressBar->hide();
-
     //
     // Красивые чекбоксы
     //
@@ -197,7 +195,7 @@ void LoginDialog::block()
 
     ui->stackedWidget->setEnabled(false);
 
-    ui->progressBar->show();
+    showProgress();
 }
 
 void LoginDialog::unblock()
@@ -206,7 +204,7 @@ void LoginDialog::unblock()
 
     ui->stackedWidget->setEnabled(true);
 
-    ui->progressBar->hide();
+   hideProgress();
 }
 
 void LoginDialog::cancelVerify()
