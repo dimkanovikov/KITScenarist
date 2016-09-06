@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include <QLabel>
 #include <QParallelAnimationGroup>
+#include <QProgressBar>
 #include <QPropertyAnimation>
 #include <QTimer>
 
@@ -35,6 +36,7 @@ QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget, bool
 	QLightBoxWidget(parent, _followToHeadWidget),
 	m_title(new QLabel(this)),
 	m_centralWidget(0),
+	m_progress(new QProgressBar(this)),
 	m_isContentStretchable(_isContentStretchable),
 	m_execResult(Rejected)
 {
@@ -46,10 +48,7 @@ int QLightBoxDialog::exec()
 {
 	m_execResult = Rejected;
 
-	m_title->setText(windowTitle());
-	if (m_title->text().isEmpty()) {
-		m_title->hide();
-	}
+	updateTitle();
 
 #ifndef NO_ANIMATIONS
 	animateShow();
@@ -92,6 +91,31 @@ void QLightBoxDialog::done(int _result)
 	emit finished(_result);
 }
 
+void QLightBoxDialog::showProgress(int _minimumValue, int _maximumValue)
+{
+	//
+	// Убираем маскирующий стиль
+	//
+	m_progress->setStyleSheet(QString::null);
+
+	m_progress->setRange(_minimumValue, _maximumValue);
+}
+
+void QLightBoxDialog::setProgressValue(int _value)
+{
+	m_progress->setValue(_value);
+}
+
+void QLightBoxDialog::hideProgress()
+{
+	//
+	// Тут мы просто применяем маскирующий стиль для виджета
+	// Делается это для того, чтобы не происходило скачков интерфейса при отображении/скрытии
+	// виджета прогресса внутри компоновщика интерфейса
+	//
+	m_progress->setStyleSheet("QProgressBar {border: none; background-color: transparent;} QProgressBar::chunk {background-color: transparent;}");
+}
+
 bool QLightBoxDialog::event(QEvent* _event)
 {
 	bool result = true;
@@ -117,12 +141,27 @@ bool QLightBoxDialog::event(QEvent* _event)
 
 void QLightBoxDialog::initView()
 {
+	//
+	// Настраиваем заголовок
+	//
 	m_title->setProperty("lightBoxDialogTitle", true);
 	m_title->setWordWrap(true);
 #ifdef Q_OS_MAC
 	m_title->setAlignment(Qt::AlignHCenter);
 #endif
+	updateTitle();
 
+	//
+	// Настраиваем прогресс
+	//
+	m_progress->setFixedHeight(5);
+	m_progress->setValue(0);
+	m_progress->setRange(0, 0);
+	hideProgress();
+
+	//
+	// Настраиваем компоновщик
+	//
 	if (layout() != 0) {
 		m_centralWidget = new QFrame(this);
 		m_centralWidget->setProperty("lightBoxDialogCentralWidget", true);
@@ -144,7 +183,8 @@ void QLightBoxDialog::initView()
 		if (m_isContentStretchable) {
 			newLayout->setRowStretch(2, 8);
 		}
-		newLayout->setRowStretch(3, 1);
+		newLayout->addWidget(m_progress, 3, 1);
+		newLayout->setRowStretch(4, 1);
 		newLayout->setColumnStretch(0, 1);
 		newLayout->setColumnStretch(2, 1);
 		setLayout(newLayout);
@@ -158,6 +198,12 @@ void QLightBoxDialog::initConnections()
 QWidget* QLightBoxDialog::focusedOnExec() const
 {
 	return m_centralWidget;
+}
+
+void QLightBoxDialog::updateTitle()
+{
+	m_title->setText(windowTitle());
+	m_title->setVisible(!m_title->text().isEmpty());
 }
 
 void QLightBoxDialog::animateShow()

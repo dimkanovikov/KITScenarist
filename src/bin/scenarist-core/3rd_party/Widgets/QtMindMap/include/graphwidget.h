@@ -19,55 +19,55 @@ class QGestureEvent;
   */
 class GraphWidget : public QGraphicsView
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
 
-    GraphWidget(QWidget* parent = 0);
+	GraphWidget(QWidget* parent = 0);
 
-    void newScene();
-    void closeScene();
+	void newScene();
+	void closeScene();
 
-    void load(const QString& _xml);
-    QString save() const;
+	void load(const QString& _xml);
+	QString save() const;
 
-    GraphLogic *graphLogic() const;
+	GraphLogic *graphLogic() const;
 
 public slots:
-    void zoomIn();
-    void zoomOut();
+	void zoomIn();
+	void zoomOut();
 
 signals:
 
-    void contentChanged();
-    void  notification(const QString &msg);
+	void contentChanged();
+	void notification(const QString &msg);
 
 protected:
-    /**
-     * @brief Переопределяем для обработки жестов
-     */
-    bool event(QEvent* _event);
+	/**
+	 * @brief Переопределяем для обработки жестов
+	 */
+	bool event(QEvent* _event);
 
-    /**
-     * @brief Обрабатываем жест увеличения масштаба
-     */
-    void gestureEvent(QGestureEvent* _event);
+	/**
+	 * @brief Обрабатываем жест увеличения масштаба
+	 */
+	void gestureEvent(QGestureEvent* _event);
 
-    void keyPressEvent(QKeyEvent* _event);
-    void wheelEvent(QWheelEvent* _event);
-    void drawBackground(QPainter *painter, const QRectF &rect);
-
-private:
-    void scaleView(qreal factor);
+	void keyPressEvent(QKeyEvent* _event);
+	void wheelEvent(QWheelEvent* _event);
+	void drawBackground(QPainter *painter, const QRectF &rect);
 
 private:
-    QGraphicsScene *m_scene;
-    GraphLogic *m_graphlogic;
+	void scaleView(qreal factor);
 
-    /**
-     * @brief Инерционный тормоз масштабирования при помощи жестов
-     */
-    int m_gestureZoomInertionBreak;
+private:
+	QGraphicsScene *m_scene;
+	GraphLogic *m_graphlogic;
+
+	/**
+	 * @brief Инерционный тормоз масштабирования при помощи жестов
+	 */
+	int m_gestureZoomInertionBreak;
 };
 
 #endif // GRAPHWIDGET_H

@@ -5,6 +5,7 @@
 
 class QFrame;
 class QLabel;
+class QProgressBar;
 
 
 /**
@@ -46,6 +47,21 @@ public slots:
 	 */
 	void done(int _result);
 
+	/**
+	 * @brief Показать прогрессбар с установленными параметрами
+	 */
+	void showProgress(int _minimumValue = 0, int _maximumValue = 0);
+
+	/**
+	 * @brief Установить текущее значение прогресса
+	 */
+	void setProgressValue(int _value);
+
+	/**
+	 * @brief Скрыть прогрессбар
+	 */
+	void hideProgress();
+
 signals:
 	/**
 	 * @brief Сигналы о позитивном и негативном закрытии диалога
@@ -83,6 +99,11 @@ protected:
 
 private:
 	/**
+	 * @brief Обновить заголовок
+	 */
+	void updateTitle();
+
+	/**
 	 * @brief Анимировать отображение/сокрытие диалога
 	 */
 	/** @{ */
@@ -101,6 +122,11 @@ private:
 	 * @brief Виджет диалога
 	 */
 	QFrame* m_centralWidget;
+
+	/**
+	 * @brief Прогрессбар для диалога
+	 */
+	QProgressBar* m_progress;
 
 	/**
 	 * @brief Нужно ли расстягивать виджет с содержимым диалога
