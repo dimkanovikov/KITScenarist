@@ -8,6 +8,7 @@ namespace Ui {
 }
 
 class TabBarExpanded;
+class PasswordLineEdit;
 
 namespace UserInterface
 {
@@ -151,7 +152,13 @@ namespace UserInterface
          */
         bool isVerify;
 
+        /**
+         * @brief Табы авторизации/Регистрации
+         */
         TabBarExpanded* m_tabs;
+
+        PasswordLineEdit* loginPasswordEdit;
+        PasswordLineEdit* signInPasswordEdit;
 	};
 }
 

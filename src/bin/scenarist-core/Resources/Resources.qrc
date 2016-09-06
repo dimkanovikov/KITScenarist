@@ -107,6 +107,8 @@
         <file>Icons/MindMap/add-child.png</file>
         <file>Icons/MindMap/scale-up.png</file>
         <file>Icons/MindMap/scale-down.png</file>
+        <file>Icons/eye-off.png</file>
+        <file>Icons/eye.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

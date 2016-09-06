@@ -3,13 +3,16 @@
 
 #include "QRegExpValidator"
 #include <3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h>
+#include <3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h>
 
 using UserInterface::LoginDialog;
 
 LoginDialog::LoginDialog(QWidget* _parent) :
 	QLightBoxDialog(_parent),
     ui(new Ui::LoginDialog),
-    m_tabs(new TabBarExpanded(this))
+    m_tabs(new TabBarExpanded(this)),
+    loginPasswordEdit(new PasswordLineEdit(this)),
+    signInPasswordEdit(new PasswordLineEdit(this))
 {
 	ui->setupUi(this);
 
@@ -37,12 +40,12 @@ QString LoginDialog::regEmail() const
 
 QString LoginDialog::loginPassword() const
 {
-    return ui->loginPassword->text();
+    return loginPasswordEdit->text();
 }
 
 QString LoginDialog::regPassword() const
 {
-    return ui->regPassword->text();
+    return signInPasswordEdit->text();
 }
 
 void LoginDialog::setAuthError(const QString& _error)
@@ -126,9 +129,9 @@ void LoginDialog::setAuthPage()
 void LoginDialog::clear()
 {
     ui->loginEmail->clear();
-    ui->loginPassword->clear();
+    loginPasswordEdit->clear();
     ui->regEmail->clear();
-    ui->regPassword->clear();
+    signInPasswordEdit->clear();
     ui->code->clear();
 
     m_tabs->setCurrentIndex(0);
@@ -165,7 +168,16 @@ void LoginDialog::initView()
     m_tabs->setProperty("inTopPanel", true);
     ui->stackLayout->insertWidget(0, m_tabs);
 
-	QLightBoxDialog::initView();
+    //
+    // Красивые строки ввода пароля
+    //
+    ui->loginMainLayout->insertWidget(4, loginPasswordEdit);
+    ui->loginPasswordLabel->setBuddy(loginPasswordEdit);
+
+    ui->signUpMainLayout->insertWidget(4, signInPasswordEdit);
+    ui->signUpPasswordLabel->setBuddy(signInPasswordEdit);
+
+    QLightBoxDialog::initView();
 }
 
 void LoginDialog::initConnections()

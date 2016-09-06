@@ -39,95 +39,89 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="errorAuth">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 0, 0);</string>
-           </property>
-           <property name="text">
-            <string>Error &amp;message</string>
-           </property>
-           <property name="buddy">
-            <cstring>loginEmail</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>&amp;Email</string>
-           </property>
-           <property name="buddy">
-            <cstring>loginEmail</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="loginEmail"/>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>&amp;Password</string>
-           </property>
-           <property name="buddy">
-            <cstring>loginPassword</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="loginPassword">
-           <property name="echoMode">
-            <enum>QLineEdit::Password</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <layout class="QVBoxLayout" name="loginMainLayout">
            <item>
-            <widget class="QPushButton" name="restorePass">
+            <widget class="QLabel" name="errorAuth">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 0, 0);</string>
+             </property>
              <property name="text">
-              <string>Restore Password</string>
+              <string>Error &amp;message</string>
+             </property>
+             <property name="buddy">
+              <cstring>loginEmail</cstring>
              </property>
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_2">
+            <widget class="QLabel" name="loginEmailLabel">
+             <property name="text">
+              <string>&amp;Email</string>
+             </property>
+             <property name="buddy">
+              <cstring>loginEmail</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="loginEmail"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="loginPasswordLabel">
+             <property name="text">
+              <string>&amp;Password</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_3">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>20</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
            </item>
            <item>
-            <widget class="QDialogButtonBox" name="buttonsAuth">
-             <property name="standardButtons">
-              <set>QDialogButtonBox::Cancel</set>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QPushButton" name="restorePass">
+               <property name="text">
+                <string>Restore Password</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QDialogButtonBox" name="buttonsAuth">
+               <property name="standardButtons">
+                <set>QDialogButtonBox::Cancel</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>
@@ -148,139 +142,143 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="errorReg">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 0, 0);</string>
-           </property>
-           <property name="text">
-            <string>Error &amp;message</string>
-           </property>
-           <property name="buddy">
-            <cstring>loginEmail</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Email</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="regEmail"/>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Password</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="regPassword"/>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Type of account</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QVBoxLayout" name="signUpMainLayout">
            <item>
-            <widget class="QRadioButton" name="startButton">
-             <property name="text">
-              <string>&amp;Start</string>
+            <widget class="QLabel" name="errorReg">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
              </property>
-             <property name="checked">
-              <bool>true</bool>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>Error &amp;message</string>
+             </property>
+             <property name="buddy">
+              <cstring>loginEmail</cstring>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="basicButton">
+            <widget class="QLabel" name="signUpEmailLabel">
              <property name="text">
-              <string>&amp;Basic</string>
+              <string>&amp;Email</string>
+             </property>
+             <property name="buddy">
+              <cstring>regEmail</cstring>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="maximalButton">
+            <widget class="QLineEdit" name="regEmail"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="signUpPasswordLabel">
              <property name="text">
-              <string>Ma&amp;ximal</string>
+              <string>&amp;Password</string>
              </property>
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Type of account</string>
              </property>
-             <property name="sizeHint" stdset="0">
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QRadioButton" name="startButton">
+               <property name="text">
+                <string>S&amp;tart</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="basicButton">
+               <property name="text">
+                <string>&amp;Basic</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="maximalButton">
+               <property name="text">
+                <string>Ma&amp;ximal</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="signUpDescription">
+             <property name="minimumSize">
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
-            </spacer>
+             <property name="text">
+              <string>Description</string>
+             </property>
+            </widget>
            </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Description</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <spacer name="horizontalSpacer_4">
+            <spacer name="verticalSpacer_2">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
-               <height>20</height>
+               <width>20</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
            </item>
            <item>
-            <widget class="QDialogButtonBox" name="buttonsReg">
-             <property name="standardButtons">
-              <set>QDialogButtonBox::Cancel</set>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QDialogButtonBox" name="buttonsReg">
+               <property name="standardButtons">
+                <set>QDialogButtonBox::Cancel</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>
@@ -325,7 +323,10 @@
          <item>
           <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>Verification code</string>
+            <string>&amp;Verification code</string>
+           </property>
+           <property name="buddy">
+            <cstring>code</cstring>
            </property>
           </widget>
          </item>
