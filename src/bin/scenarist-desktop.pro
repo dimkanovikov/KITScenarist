@@ -302,7 +302,27 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/edge.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphlogic.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphwidget.cpp \
-    scenarist-core/3rd_party/Widgets/QtMindMap/src/node.cpp
+    scenarist-core/3rd_party/Widgets/QtMindMap/src/node.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/anchor/sizeanchor.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/pdlg_arrowflow.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/mainwindow.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/horizontalline.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/note.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_action.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_note.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/resizableshape.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/shape.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/verticalline.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -545,7 +565,27 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/edge.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphlogic.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphwidget.h \
-    scenarist-core/3rd_party/Widgets/QtMindMap/include/node.h
+    scenarist-core/3rd_party/Widgets/QtMindMap/include/node.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/anchor/sizeanchor.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/pdlg_arrowflow.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/mainwindow.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/horizontalline.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/note.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_action.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_note.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/resizableshape.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/shape.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/verticalline.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -559,7 +599,11 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui \
     scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui \
-    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/pdlg_arrowflow.ui \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/mainwindow.ui \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_action.ui \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_note.ui
 
 
 RESOURCES += \
@@ -581,3 +625,5 @@ macx {
 # Включаем поддержку компиляции под Windows XP для MSVC 2012+
 #
 QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+
+DISTFILES +=
