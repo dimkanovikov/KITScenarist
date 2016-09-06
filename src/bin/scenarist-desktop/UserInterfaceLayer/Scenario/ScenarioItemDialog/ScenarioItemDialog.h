@@ -67,6 +67,11 @@ namespace UserInterface
 		 */
 		void initConnections();
 
+		/**
+		 * @brief Настроить внешний вид диалога
+		 */
+		void initStyleSheet();
+
 	private:
 		/**
 		 * @brief Переключатели для выбора типа элемента

@@ -3,16 +3,28 @@
 
 #include <QObject>
 
-class ScenarioCardsManager : public QObject
+namespace UserInterface {
+	class ScenarioCardsView;
+}
+
+
+namespace ManagementLayer
 {
-	Q_OBJECT
-public:
-	explicit ScenarioCardsManager(QObject *parent = 0);
+	/**
+	 * @brief Управляющий карточками сценария
+	 */
+	class ScenarioCardsManager : public QObject
+	{
+		Q_OBJECT
 
-signals:
+	public:
+		explicit ScenarioCardsManager(QObject* _parent, QWidget* _parentWidget);
 
-public slots:
+		QWidget* view() const;
 
-};
+	private:
+		UserInterface::ScenarioCardsView* m_view;
+	};
+}
 
 #endif // SCENARIOCARDSMANAGER_H

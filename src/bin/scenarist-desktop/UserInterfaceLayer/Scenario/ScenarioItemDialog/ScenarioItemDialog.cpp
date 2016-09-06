@@ -29,6 +29,7 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 {
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
 void ScenarioItemDialog::clearText()
@@ -149,4 +150,8 @@ void ScenarioItemDialog::initConnections()
 	connect(m_buttons, SIGNAL(rejected()), this, SLOT(reject()));
 
 	QLightBoxDialog::initConnections();
+}
+
+void ScenarioItemDialog::initStyleSheet()
+{
 }

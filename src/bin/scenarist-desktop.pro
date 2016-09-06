@@ -103,7 +103,6 @@ SOURCES += \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectNavigator/ProjectNavigator.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCards.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectCards/ProjectCards.cpp \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp \
@@ -322,7 +321,9 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/verticalline.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.cpp
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -341,7 +342,6 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.h \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.h \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectNavigator/ProjectNavigator.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCards.h \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectCards/ProjectCards.h \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.h \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.h \
@@ -585,7 +585,9 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/verticalline.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.h
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

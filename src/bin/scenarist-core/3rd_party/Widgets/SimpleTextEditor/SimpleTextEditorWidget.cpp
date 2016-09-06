@@ -20,7 +20,7 @@ void SimpleTextEditorWidget::enableSpellCheck(bool _enable, SpellChecker::Langua
 	//
 	// Для каждого редактора
 	//
-	foreach (SimpleTextEditorWidget* editorWidget, s_editorsWidgets) {
+	for (SimpleTextEditorWidget* editorWidget : s_editorsWidgets) {
 		editorWidget->m_editor->setUseSpellChecker(_enable);
 		editorWidget->m_editor->setSpellCheckLanguage(_language);
 		editorWidget->m_editor->setHighlighterDocument(editorWidget->m_editor->document());

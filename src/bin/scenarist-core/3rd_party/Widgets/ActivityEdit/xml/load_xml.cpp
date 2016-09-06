@@ -133,54 +133,56 @@ void fileLoadXml(const QString& _filename, CustomGraphicsScene* _scene, QGraphic
 	file.close();
 }
 
-void loadSceneXml(const QString& _xml, CustomGraphicsScene* _scene, QGraphicsView* _view)
+void loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _view)
 {
 	QDomDocument doc;
 	if (!doc.setContent(_xml)) {
 		throw FileErrorException("");
 	}
 
-	QHash<int, Shape*> ids;
-	QHash<QString, LOADFUNC> loadfuncs;
-	loadfuncs["ArrowFlow"] = loadArrowFlow;
-	loadfuncs["ActionShape"] = loadCardShape;
-	loadfuncs["HorizontalLineShape"] = loadHorizontalLineShape;
-	loadfuncs["VerticalLineShape"] = loadVerticalLineShape;
-	loadfuncs["NoteShape"] = loadNoteShape;
+	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(_scene)) {
+		QHash<int, Shape*> ids;
+		QHash<QString, LOADFUNC> loadfuncs;
+		loadfuncs["ArrowFlow"] = loadArrowFlow;
+		loadfuncs["ActionShape"] = loadCardShape;
+		loadfuncs["HorizontalLineShape"] = loadHorizontalLineShape;
+		loadfuncs["VerticalLineShape"] = loadVerticalLineShape;
+		loadfuncs["NoteShape"] = loadNoteShape;
 
-	if (_view) {
-		double x = doc.documentElement().attribute("viewx", "0").toDouble();
-		double y = doc.documentElement().attribute("viewy", "0").toDouble();
-		_view->centerOn(x, y);
-	}
-
-	const QDomNodeList& items = doc.documentElement().childNodes();
-	QList<QString> shapes = (QList<QString>()
-		<< "ActionShape"
-		<< "NoteShape"
-		<< "HorizontalLineShape"
-		<< "VerticalLineShape"
-	);
-	QList<QString> flows = { "ArrowFlow" };
-
-	QList<int> first, second, other;
-	for (int i = 0; i < items.count(); ++i) {
-		QDomElement e = items.at(i).toElement();
-		if (shapes.contains(e.tagName())) {
-			first.append(i);
-		} else if (flows.contains(e.tagName())) {
-			second.append(i);
-		} else {
-			other.append(i);
+		if (_view) {
+			double x = doc.documentElement().attribute("viewx", "0").toDouble();
+			double y = doc.documentElement().attribute("viewy", "0").toDouble();
+			_view->centerOn(x, y);
 		}
-	}
 
-	QList<int> all = (QList<int>() << first << second << other);
-	for (int i = 0; i < items.count(); ++i) {
-		QDomElement e = items.at(all[i]).toElement();
-		if (loadfuncs[e.tagName()]) {
-			Shape *shp = loadfuncs[e.tagName()](e, ids);
-			_scene->appendShape(shp);
+		const QDomNodeList& items = doc.documentElement().childNodes();
+		QList<QString> shapes = (QList<QString>()
+								 << "ActionShape"
+								 << "NoteShape"
+								 << "HorizontalLineShape"
+								 << "VerticalLineShape"
+								 );
+		QList<QString> flows = { "ArrowFlow" };
+
+		QList<int> first, second, other;
+		for (int i = 0; i < items.count(); ++i) {
+			QDomElement e = items.at(i).toElement();
+			if (shapes.contains(e.tagName())) {
+				first.append(i);
+			} else if (flows.contains(e.tagName())) {
+				second.append(i);
+			} else {
+				other.append(i);
+			}
+		}
+
+		QList<int> all = (QList<int>() << first << second << other);
+		for (int i = 0; i < items.count(); ++i) {
+			QDomElement e = items.at(all[i]).toElement();
+			if (loadfuncs[e.tagName()]) {
+				Shape *shp = loadfuncs[e.tagName()](e, ids);
+				scene->appendShape(shp);
+			}
 		}
 	}
 }
