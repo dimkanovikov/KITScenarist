@@ -137,36 +137,12 @@ namespace ManagementLayer
 		 */
 		void openRemoteProjectRequested(const QModelIndex& _remoteProjectIndex);
 
-	private slots:
-		/**
-		 * @brief Нажата кнопка войти
-		 */
-		void aboutLoginClicked();
+    private slots:
 
 		/**
 		 * @brief Загрузилась страница с информацией об обновлениях
 		 */
-		void aboutLoadUpdatesInfo(QNetworkReply* _reply);
-
-        /**
-         * @brief Окно авторизации говорит, что пора авторизоваться
-         */
-        void login();
-
-        /**
-         * @brief Окно авторизации говорит, что пора зарегистрироваться
-         */
-        void signUp();
-
-        /**
-         * @brief Окно авторизации говорит, что надо проверить проверочный код
-         */
-        void verify();
-
-        /**
-         * @brief Окно авторизации говорит, что надо восстановить пароль
-         */
-        void restorePassword();
+        void aboutLoadUpdatesInfo(QNetworkReply* _reply);
 
 	private:
 		/**

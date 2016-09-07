@@ -12,7 +12,7 @@ PasswordLineEdit::PasswordLineEdit(QWidget* _parent) :
     m_eye->setCursor(Qt::ArrowCursor);
     m_eye->setStyleSheet("QToolButton { border: none; padding: 0px; }");
     m_eye->setVisible(true);
-    connect(m_eye, SIGNAL(clicked()), this, SLOT(eyeClicked()));
+    connect(m_eye, &QToolButton::clicked, this, &PasswordLineEdit::eyeClicked);
 
     isAsterisk = true;
     QLineEdit::setEchoMode(QLineEdit::Password);

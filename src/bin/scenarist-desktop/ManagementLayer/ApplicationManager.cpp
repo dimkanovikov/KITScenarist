@@ -1388,10 +1388,14 @@ void ApplicationManager::initConnections()
 	connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
 
     //connect(m_startUpManager, SIGNAL(loginRequested(QString,QString)), m_synchronizationManager, SLOT(aboutLogin(QString,QString)));
-    connect(m_startUpManager, SIGNAL(loginRequested(QString,QString)), m_synchronizationManagerV2, SLOT(login(QString,QString)));
-    connect(m_startUpManager, SIGNAL(registerRequested(QString,QString,QString)), m_synchronizationManagerV2, SLOT(registration(QString,QString, QString)));
-    connect(m_startUpManager, SIGNAL(verifyRequested(QString)), m_synchronizationManagerV2, SLOT(verifyRegistration(QString)));
-    connect(m_startUpManager, SIGNAL(restoreRequested(QString)), m_synchronizationManagerV2, SLOT(recoveryPassword(QString)));
+    connect(m_startUpManager, &StartUpManager::loginRequested,
+            m_synchronizationManagerV2, &SynchronizationManagerV2::login);
+    connect(m_startUpManager, &StartUpManager::signUpRequested,
+            m_synchronizationManagerV2, &SynchronizationManagerV2::signUp);
+    connect(m_startUpManager, &StartUpManager::verifyRequested,
+            m_synchronizationManagerV2, &SynchronizationManagerV2::verification);
+    connect(m_startUpManager, &StartUpManager::restoreRequested,
+            m_synchronizationManagerV2, &SynchronizationManagerV2::restorePassword);
     connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
@@ -1455,16 +1459,16 @@ void ApplicationManager::initConnections()
             this, SLOT(aboutSyncClosedWithError(int,QString)));
 	connect(m_synchronizationManager, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
 
-    connect(m_synchronizationManagerV2, SIGNAL(loginAccepted()),
-            m_startUpManager, SLOT(aboutUserLogged()));
-    connect(m_synchronizationManagerV2, SIGNAL(registered()),
-            m_startUpManager, SLOT(userRegistered()));
-    connect(m_synchronizationManagerV2, SIGNAL(registerVerified()),
-            m_startUpManager, SLOT(userVerified()));
-    connect(m_synchronizationManagerV2, SIGNAL(syncClosedWithError(int,QString)),
-            this, SLOT(aboutSyncClosedWithError(int,QString)));
-    connect(m_synchronizationManagerV2, SIGNAL(passwordRecoveried()),
-            m_startUpManager, SLOT(userPassRestored()));
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted,
+            m_startUpManager, &StartUpManager::aboutUserLogged);
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::signUped,
+            m_startUpManager, &StartUpManager::userSignUp);
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::verified,
+            m_startUpManager, &StartUpManager::userVerified);
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::restoredPassword,
+            m_startUpManager, &StartUpManager::userPassRestored);
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::syncClosedWithError,
+            this, &ApplicationManager::aboutSyncClosedWithError);
 }
 
 void ApplicationManager::initStyleSheet()

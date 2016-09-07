@@ -55,7 +55,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     //
     // Авторизация
     //
-    if((_email == "admin" && _password == "admin")
+    if ((_email == "admin" && _password == "admin")
             || (_email == "user" && _password == "user")) { // :)
         success = true;
         m_sessionKey = "12345";
@@ -64,7 +64,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
         handleError(tr("Wrong email or password"), 100);
     }
 
-    if(success) {
+    if (success) {
         //
         // Если авторизация успешна, сохраним информацию о пользователе
         //
@@ -90,14 +90,14 @@ void SynchronizationManagerV2::signUp(const QString& _email, const QString& _pas
     event.exec();
 
     bool success = false;
-    if(_email == "user" && _password == "user") {
+    if (_email == "user" && _password == "user") {
         success = true;
     }
     else {
         handleError("Wrong email", 404);
     }
 
-    if(success) {
+    if (success) {
         emit signUped();
     }
 }
@@ -109,14 +109,14 @@ void SynchronizationManagerV2::verification(const QString& _code)
     event.exec();
 
     bool success = false;
-    if(_code == "11111") {
+    if (_code == "11111") {
         success = true;
     }
     else {
         handleError("Wrong code", 505);
     }
 
-    if(success) {
+    if (success) {
         emit verified();
     }
 }
@@ -128,14 +128,14 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     event.exec();
 
     bool success = false;
-    if(_email == "recovery") {
+    if (_email == "recovery") {
         success = true;
     }
     else {
         handleError("Wrong email", 606);
     }
 
-    if(success) {
+    if (success) {
         emit restoredPassword();
     }
 }

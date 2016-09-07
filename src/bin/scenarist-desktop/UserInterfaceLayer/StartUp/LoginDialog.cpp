@@ -182,21 +182,33 @@ void LoginDialog::initView()
 
 void LoginDialog::initConnections()
 {
-    connect(ui->loginButtons, SIGNAL(accepted()), this, SLOT(block()));
-    connect(ui->loginButtons, SIGNAL(accepted()), this, SIGNAL(login()));
+    connect(ui->loginButtons, &QDialogButtonBox::accepted,
+            this, &LoginDialog::block);
+    connect(ui->loginButtons, &QDialogButtonBox::accepted,
+            this, &LoginDialog::login);
+    connect(ui->loginButtons, &QDialogButtonBox::rejected,
+            this, &LoginDialog::hide);
 
-    connect(ui->signUpButtons, SIGNAL(accepted()), this, SLOT(block()));
-    connect(ui->signUpButtons, SIGNAL(accepted()), this, SIGNAL(signUp()));
+    connect(ui->signUpButtons, &QDialogButtonBox::accepted,
+            this, &LoginDialog::block);
+    connect(ui->signUpButtons, &QDialogButtonBox::accepted,
+            this, &LoginDialog::signUp);
+    connect(ui->signUpButtons, &QDialogButtonBox::rejected,
+            this, &LoginDialog::hide);
 
-    connect(ui->loginButtons, SIGNAL(rejected()), this, SLOT(hide()));
-    connect(ui->signUpButtons, SIGNAL(rejected()), this, SLOT(hide()));
-    connect(ui->ButtonsVerification, SIGNAL(rejected()), this, SLOT(cancelVerify()));
-    connect(ui->ButtonsVerification, SIGNAL(rejected()), this, SLOT(hide()));
+    connect(ui->ButtonsVerification, &QDialogButtonBox::rejected,
+            this, &LoginDialog::cancelVerify);
+    connect(ui->ButtonsVerification, &QDialogButtonBox::rejected,
+            this, &LoginDialog::hide);
 
-    connect(m_tabs, SIGNAL(currentChanged(int)), this, SLOT(switchWidget()));
-    connect(ui->restorePassword, SIGNAL(clicked(bool)), this, SIGNAL(restore()));
+    connect(ui->restorePassword, &QPushButton::clicked,
+            this, &LoginDialog::restore);
 
-    connect(ui->verificationCode, SIGNAL(textChanged(QString)), this, SLOT(checkCode()));
+    connect(ui->verificationCode, &QLineEdit::textChanged,
+            this, &LoginDialog::checkCode);
+
+    connect(m_tabs, &TabBarExpanded::currentChanged,
+            this, &LoginDialog::switchWidget);;
 
 	QLightBoxDialog::initConnections();
 }

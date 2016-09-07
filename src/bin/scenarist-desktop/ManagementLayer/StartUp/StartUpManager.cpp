@@ -112,15 +112,6 @@ void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
 	m_view->setRemoteProjects(_model);
 }
 
-void StartUpManager::aboutLoginClicked()
-{
-	//
-    // Сначала очистить, а затем показать диалог авторизации
-	//
-    m_loginDialog->clear();
-    m_loginDialog->show();
-}
-
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 {
 	if (_reply != 0) {
@@ -212,59 +203,42 @@ void StartUpManager::initData()
 
 void StartUpManager::initConnections()
 {
-	connect(m_view, SIGNAL(loginClicked()), this, SLOT(aboutLoginClicked()));
-	connect(m_view, SIGNAL(logoutClicked()), this, SIGNAL(logoutRequested()));
-	connect(m_view, SIGNAL(createProjectClicked()), this, SIGNAL(createProjectRequested()));
-	connect(m_view, SIGNAL(openProjectClicked()), this, SIGNAL(openProjectRequested()));
-	connect(m_view, SIGNAL(helpClicked()), this, SIGNAL(helpRequested()));
+    //
+    // Показать пользователю диалог авторизации/регистрации
+    // Предварительно его очистив
+    //
+    connect(m_view, &StartUpView::loginClicked,
+            [this]() {m_loginDialog->clear();
+                            m_loginDialog->show();});
 
-	connect(m_view, SIGNAL(openRecentProjectClicked(QModelIndex)),
-			this, SIGNAL(openRecentProjectRequested(QModelIndex)));
-	connect(m_view, SIGNAL(openRemoteProjectClicked(QModelIndex)),
-			this, SIGNAL(openRemoteProjectRequested(QModelIndex)));
-	connect(m_view, SIGNAL(refreshProjects()), this, SIGNAL(refreshProjectsRequested()));
+    connect(m_view, &StartUpView::logoutClicked,
+            this, &StartUpManager::logoutRequested);
+    connect(m_view, &StartUpView::createProjectClicked,
+            this, &StartUpManager::createProjectRequested);
+    connect(m_view, &StartUpView::openProjectClicked,
+            this, &StartUpManager::openProjectRequested);
+    connect(m_view, &StartUpView::helpClicked,
+            this, &StartUpManager::helpRequested);
 
-    connect(m_loginDialog, SIGNAL(login()), this, SLOT(login()));
-    connect(m_loginDialog, SIGNAL(signUp()), this, SLOT(signUp()));
-    connect(m_loginDialog, SIGNAL(verify()), this, SLOT(verify()));
-    connect(m_loginDialog, SIGNAL(restorePassword()), this, SLOT(restorePassword()));
-}
 
-void StartUpManager::login()
-{
-    //
-    // Пользователь нажал кнопку входа
-    // передадим сигнал с нужными параметрами
-    //
-    emit loginRequested(m_loginDialog->loginEmail(), m_loginDialog->loginPassword());
-}
+    connect(m_view, &StartUpView::openRecentProjectClicked,
+            this, &StartUpManager::openRecentProjectRequested);
+    connect(m_view, &StartUpView::openRemoteProjectClicked,
+            this, &StartUpManager::openRemoteProjectRequested);
+    connect(m_view, &StartUpView::refreshProjects,
+            this, &StartUpManager::refreshProjectsRequested);
 
-void StartUpManager::signUp()
-{
-    //
-    // Пользователь нажал кнопку регистрации
-    // Скроем окно и передадим сигнал с нужными параметрами
-    //
-    emit signUpRequested(m_loginDialog->signUpEmail(), m_loginDialog->signUpPassword(),
-                           m_loginDialog->signUpType());
-}
-
-void StartUpManager::verify()
-{
-    //
-    // Пользователь ввел проверочный код
-    // Скроем окно и передадим сигнал с нужными параметрами
-    //
-    emit verifyRequested(m_loginDialog->verificationCode());
-}
-
-void StartUpManager::restorePassword()
-{
-    //
-    // Пользователь нажал кнопку восстановления пароля
-    // Скроем окно и передадим сигнал с нужными параметрами
-    //
-    emit restoreRequested(m_loginDialog->loginEmail());
+    connect(m_loginDialog, &LoginDialog::login,
+            [this]() {emit loginRequested(m_loginDialog->loginEmail(),
+                                          m_loginDialog->loginPassword());});
+    connect(m_loginDialog, &LoginDialog::signUp,
+            [this]() {emit signUpRequested(m_loginDialog->signUpEmail(),
+                                           m_loginDialog->signUpPassword(),
+                                           m_loginDialog->signUpType());});
+    connect(m_loginDialog, &LoginDialog::verify,
+            [this]() {emit verifyRequested(m_loginDialog->verificationCode());});
+    connect(m_loginDialog, &LoginDialog::restore,
+            [this]() {emit restoreRequested(m_loginDialog->loginEmail());});
 }
 
 void StartUpManager::checkNewVersion()
