@@ -37,7 +37,7 @@ namespace ManagementLayer
         /**
          * @brief Пользователь успешно отправил данные для регистрации
          */
-        void userRegistered();
+        void userSignUp();
 
         /**
          * @brief Пользователь успешно ввел проверочный код
@@ -73,12 +73,12 @@ namespace ManagementLayer
         /**
          * @brief Попробовать повторно зарегистрироваться
          */
-        void retryRegister(const QString& _error);
+        void retrySignUp(const QString& _error);
 
         /**
          * @brief Попробовать повторно ввести проверочный код
          */
-        void retryValidate(const QString& _error);
+        void retryVerify(const QString& _error);
 
 	signals:
 		/**
@@ -89,7 +89,7 @@ namespace ManagementLayer
         /**
          * @brief Пользователь хочет зарегистрироваться
          */
-        void registerRequested(const QString& _email, const QString& _password,
+        void signUpRequested(const QString& _email, const QString& _password,
                                const QString& _type);
 
         /**
@@ -156,7 +156,7 @@ namespace ManagementLayer
         /**
          * @brief Окно авторизации говорит, что пора зарегистрироваться
          */
-        void registrate();
+        void signUp();
 
         /**
          * @brief Окно авторизации говорит, что надо проверить проверочный код
@@ -166,7 +166,7 @@ namespace ManagementLayer
         /**
          * @brief Окно авторизации говорит, что надо восстановить пароль
          */
-        void restore();
+        void restorePassword();
 
 	private:
 		/**

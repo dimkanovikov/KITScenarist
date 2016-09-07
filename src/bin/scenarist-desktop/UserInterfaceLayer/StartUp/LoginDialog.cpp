@@ -12,7 +12,7 @@ LoginDialog::LoginDialog(QWidget* _parent) :
     ui(new Ui::LoginDialog),
     m_tabs(new TabBarExpanded(this)),
     loginPasswordEdit(new PasswordLineEdit(this)),
-    signInPasswordEdit(new PasswordLineEdit(this))
+    signUpPasswordEdit(new PasswordLineEdit(this))
 {
 	ui->setupUi(this);
 
@@ -33,9 +33,9 @@ QString LoginDialog::loginEmail() const
     return ui->loginEmail->text();
 }
 
-QString LoginDialog::regEmail() const
+QString LoginDialog::signUpEmail() const
 {
-    return ui->regEmail->text();
+    return ui->signUpEmail->text();
 }
 
 QString LoginDialog::loginPassword() const
@@ -43,35 +43,35 @@ QString LoginDialog::loginPassword() const
     return loginPasswordEdit->text();
 }
 
-QString LoginDialog::regPassword() const
+QString LoginDialog::signUpPassword() const
 {
-    return signInPasswordEdit->text();
+    return signUpPasswordEdit->text();
 }
 
-void LoginDialog::setAuthError(const QString& _error)
+void LoginDialog::setLoginError(const QString& _error)
 {
-    ui->errorAuth->setStyleSheet("QLabel { color : red; }");
-    ui->errorAuth->setText(_error);
-    ui->errorAuth->show();
+    ui->loginError->setStyleSheet("QLabel { color : red; }");
+    ui->loginError->setText(_error);
+    ui->loginError->show();
     unblock();
 }
 
-void LoginDialog::setRegisterError(const QString &_error)
+void LoginDialog::setSignUpError(const QString &_error)
 {
-    ui->errorReg->setText(_error);
-    ui->errorReg->show();
+    ui->signUpError->setText(_error);
+    ui->signUpError->show();
     unblock();
 }
 
-void LoginDialog::setValidateError(const QString &_error)
+void LoginDialog::setVerificationError(const QString &_error)
 {
-    ui->errorVerification->setStyleSheet("QLabel { color : red; }");
-    ui->errorVerification->setText(_error);
-    ui->errorVerification->show();
+    ui->verificationError->setStyleSheet("QLabel { color : red; }");
+    ui->verificationError->setText(_error);
+    ui->verificationError->show();
     unblock();
 }
 
-QString LoginDialog::regType() const
+QString LoginDialog::signUpType() const
 {
     if(ui->startButton->isChecked()) {
         return tr("start");
@@ -82,15 +82,15 @@ QString LoginDialog::regType() const
     } else return tr("unexpected");
 }
 
-QString LoginDialog::code() const
+QString LoginDialog::verificationCode() const
 {
-    return ui->code->text();
+    return ui->verificationCode->text();
 }
 
 void LoginDialog::checkCode()
 {
     QRegExpValidator validator(QRegExp("[0-9]{5}"));
-    QString s = ui->code->text();
+    QString s = ui->verificationCode->text();
     int pos = 0;
     if(validator.validate(s, pos) == QValidator::Acceptable) {
         block();
@@ -98,13 +98,13 @@ void LoginDialog::checkCode()
     }
 }
 
-void LoginDialog::showVerify()
+void LoginDialog::showVerification()
 {
     isVerify = true;
-    ui->errorVerification->setStyleSheet("QLabel { color : green; }");
-    ui->errorVerification->setText(tr("your e-mail \"%1\" was sent a letter "
-                                      "with a confirmation code").arg(ui->regEmail->text()));
-    ui->errorVerification->show();
+    ui->verificationError->setStyleSheet("QLabel { color : green; }");
+    ui->verificationError->setText(tr("your e-mail \"%1\" was sent a letter "
+                                      "with a confirmation code").arg(ui->signUpEmail->text()));
+    ui->verificationError->show();
     ui->stackedWidget->setCurrentWidget(ui->verificationPage);
 
     unblock();
@@ -112,15 +112,15 @@ void LoginDialog::showVerify()
 
 void LoginDialog::showRestore()
 {
-    ui->errorAuth->setStyleSheet("QLabel { color : green; }");
-    ui->errorAuth->setText(tr("your e-mail \"%1\" was sent a letter "
+    ui->loginError->setStyleSheet("QLabel { color : green; }");
+    ui->loginError->setText(tr("your e-mail \"%1\" was sent a letter "
                                       "with a password").arg(ui->loginEmail->text()));
-    ui->errorAuth->show();
+    ui->loginError->show();
 
     unblock();
 }
 
-void LoginDialog::setAuthPage()
+void LoginDialog::setLoginPage()
 {
     isVerify = false;
     m_tabs->setCurrentIndex(0);
@@ -130,9 +130,9 @@ void LoginDialog::clear()
 {
     ui->loginEmail->clear();
     loginPasswordEdit->clear();
-    ui->regEmail->clear();
-    signInPasswordEdit->clear();
-    ui->code->clear();
+    ui->signUpEmail->clear();
+    signUpPasswordEdit->clear();
+    ui->verificationError->clear();
 
     m_tabs->setCurrentIndex(0);
     ui->basicButton->setChecked(true);
@@ -140,9 +140,9 @@ void LoginDialog::clear()
 
     isVerify = false;
 
-    ui->errorAuth->clear();
-    ui->errorReg->clear();
-    ui->errorVerification->clear();
+    ui->loginError->clear();
+    ui->signUpError->clear();
+    ui->verificationError->clear();
 }
 
 QWidget* LoginDialog::focusedOnExec() const
@@ -152,19 +152,19 @@ QWidget* LoginDialog::focusedOnExec() const
 
 void LoginDialog::initView()
 {
-    ui->errorAuth->hide();
-    ui->buttonsAuth->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
+    ui->loginError->hide();
+    ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
 
-    ui->errorReg->hide();
-    ui->buttonsReg->addButton(tr("Register"), QDialogButtonBox::AcceptRole);
+    ui->signUpError->hide();
+    ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
 
-    ui->errorVerification->hide();
+    ui->verificationError->hide();
 
     //
     // Красивые чекбоксы
     //
     m_tabs->addTab(tr("Login"));
-    m_tabs->addTab(tr("Sign in"));
+    m_tabs->addTab(tr("Sign Up"));
     m_tabs->setProperty("inTopPanel", true);
     ui->stackLayout->insertWidget(0, m_tabs);
 
@@ -174,29 +174,29 @@ void LoginDialog::initView()
     ui->loginMainLayout->insertWidget(4, loginPasswordEdit);
     ui->loginPasswordLabel->setBuddy(loginPasswordEdit);
 
-    ui->signUpMainLayout->insertWidget(4, signInPasswordEdit);
-    ui->signUpPasswordLabel->setBuddy(signInPasswordEdit);
+    ui->signUpMainLayout->insertWidget(4, signUpPasswordEdit);
+    ui->signUpPasswordLabel->setBuddy(signUpPasswordEdit);
 
     QLightBoxDialog::initView();
 }
 
 void LoginDialog::initConnections()
 {
-    connect(ui->buttonsAuth, SIGNAL(accepted()), this, SLOT(block()));
-    connect(ui->buttonsAuth, SIGNAL(accepted()), this, SIGNAL(login()));
+    connect(ui->loginButtons, SIGNAL(accepted()), this, SLOT(block()));
+    connect(ui->loginButtons, SIGNAL(accepted()), this, SIGNAL(login()));
 
-    connect(ui->buttonsReg, SIGNAL(accepted()), this, SLOT(block()));
-    connect(ui->buttonsReg, SIGNAL(accepted()), this, SIGNAL(registrate()));
+    connect(ui->signUpButtons, SIGNAL(accepted()), this, SLOT(block()));
+    connect(ui->signUpButtons, SIGNAL(accepted()), this, SIGNAL(signUp()));
 
-    connect(ui->buttonsAuth, SIGNAL(rejected()), this, SLOT(hide()));
-    connect(ui->buttonsReg, SIGNAL(rejected()), this, SLOT(hide()));
+    connect(ui->loginButtons, SIGNAL(rejected()), this, SLOT(hide()));
+    connect(ui->signUpButtons, SIGNAL(rejected()), this, SLOT(hide()));
     connect(ui->ButtonsVerification, SIGNAL(rejected()), this, SLOT(cancelVerify()));
     connect(ui->ButtonsVerification, SIGNAL(rejected()), this, SLOT(hide()));
 
     connect(m_tabs, SIGNAL(currentChanged(int)), this, SLOT(switchWidget()));
-    connect(ui->restorePass, SIGNAL(clicked(bool)), this, SIGNAL(restore()));
+    connect(ui->restorePassword, SIGNAL(clicked(bool)), this, SIGNAL(restore()));
 
-    connect(ui->code, SIGNAL(textChanged(QString)), this, SLOT(checkCode()));
+    connect(ui->verificationCode, SIGNAL(textChanged(QString)), this, SLOT(checkCode()));
 
 	QLightBoxDialog::initConnections();
 }
@@ -216,7 +216,7 @@ void LoginDialog::unblock()
 
     ui->stackedWidget->setEnabled(true);
 
-   hideProgress();
+    hideProgress();
 }
 
 void LoginDialog::cancelVerify()
@@ -228,12 +228,12 @@ void LoginDialog::cancelVerify()
 void LoginDialog::switchWidget()
 {
     if(m_tabs->currentIndex() == 0) {
-        ui->stackedWidget->setCurrentWidget(ui->authPage);
+        ui->stackedWidget->setCurrentWidget(ui->loginPage);
     }
     else if(isVerify) {
         ui->stackedWidget->setCurrentWidget(ui->verificationPage);
     }
     else {
-        ui->stackedWidget->setCurrentWidget(ui->regPage);
+        ui->stackedWidget->setCurrentWidget(ui->signUpPage);
     }
 }

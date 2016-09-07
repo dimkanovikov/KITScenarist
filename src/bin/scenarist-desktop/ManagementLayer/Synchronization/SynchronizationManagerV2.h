@@ -28,18 +28,18 @@ namespace ManagementLayer
         /**
          * @brief Регистрация на сервере
          */
-        void registration(const QString& _email, const QString& _password,
+        void signUp(const QString& _email, const QString& _password,
                           const QString& _type);
 
         /**
          * @brief Подтверждение регистрации при помощи проверочного кода
          */
-        void verifyRegistration(const QString& _code);
+        void verification(const QString& _code);
 
         /**
          * @brief Восстановление пароля
          */
-        void recoveryPassword(const QString& _email);
+        void restorePassword(const QString& _email);
 
     signals:
         /**
@@ -50,17 +50,17 @@ namespace ManagementLayer
         /**
          * @brief Сервер успешно принял данные пользователя на регистрацию
          */
-        void registered();
+        void signUped();
 
         /**
          * @brief Сервер подтвердил регистрацию
          */
-        void registerVerified();
+        void verified();
 
         /**
          * @brief Пароль отправлен на email
          */
-        void passwordRecoveried();
+        void restoredPassword();
 
         /**
          * @brief Ошибка

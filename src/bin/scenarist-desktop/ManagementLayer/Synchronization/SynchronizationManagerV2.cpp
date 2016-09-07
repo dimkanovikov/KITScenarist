@@ -82,7 +82,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 
 }
 
-void SynchronizationManagerV2::registration(const QString& _email, const QString& _password,
+void SynchronizationManagerV2::signUp(const QString& _email, const QString& _password,
                                             const QString& _type)
 {
     QEventLoop event;
@@ -98,11 +98,11 @@ void SynchronizationManagerV2::registration(const QString& _email, const QString
     }
 
     if(success) {
-        emit registered();
+        emit signUped();
     }
 }
 
-void SynchronizationManagerV2::verifyRegistration(const QString& _code)
+void SynchronizationManagerV2::verification(const QString& _code)
 {
     QEventLoop event;
     QTimer::singleShot(2000, &event, SLOT(quit()));
@@ -117,11 +117,11 @@ void SynchronizationManagerV2::verifyRegistration(const QString& _code)
     }
 
     if(success) {
-        emit registerVerified();
+        emit verified();
     }
 }
 
-void SynchronizationManagerV2::recoveryPassword(const QString &_email)
+void SynchronizationManagerV2::restorePassword(const QString &_email)
 {
     QEventLoop event;
     QTimer::singleShot(2000, &event, SLOT(quit()));
@@ -136,7 +136,7 @@ void SynchronizationManagerV2::recoveryPassword(const QString &_email)
     }
 
     if(success) {
-        emit passwordRecoveried();
+        emit restoredPassword();
     }
 }
 

@@ -22,9 +22,9 @@
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
-       <widget class="QWidget" name="authPage">
+       <widget class="QWidget" name="loginPage">
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="leftMargin">
           <number>0</number>
@@ -41,7 +41,7 @@
          <item>
           <layout class="QVBoxLayout" name="loginMainLayout">
            <item>
-            <widget class="QLabel" name="errorAuth">
+            <widget class="QLabel" name="loginError">
              <property name="font">
               <font>
                <weight>75</weight>
@@ -95,7 +95,7 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QPushButton" name="restorePass">
+              <widget class="QPushButton" name="restorePassword">
                <property name="text">
                 <string>Restore Password</string>
                </property>
@@ -115,7 +115,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QDialogButtonBox" name="buttonsAuth">
+              <widget class="QDialogButtonBox" name="loginButtons">
                <property name="standardButtons">
                 <set>QDialogButtonBox::Cancel</set>
                </property>
@@ -127,7 +127,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="regPage">
+       <widget class="QWidget" name="signUpPage">
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <property name="leftMargin">
           <number>0</number>
@@ -144,7 +144,7 @@
          <item>
           <layout class="QVBoxLayout" name="signUpMainLayout">
            <item>
-            <widget class="QLabel" name="errorReg">
+            <widget class="QLabel" name="signUpError">
              <property name="font">
               <font>
                <weight>75</weight>
@@ -168,12 +168,12 @@
               <string>&amp;Email</string>
              </property>
              <property name="buddy">
-              <cstring>regEmail</cstring>
+              <cstring>signUpEmail</cstring>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="regEmail"/>
+            <widget class="QLineEdit" name="signUpEmail"/>
            </item>
            <item>
             <widget class="QLabel" name="signUpPasswordLabel">
@@ -272,7 +272,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QDialogButtonBox" name="buttonsReg">
+              <widget class="QDialogButtonBox" name="signUpButtons">
                <property name="standardButtons">
                 <set>QDialogButtonBox::Cancel</set>
                </property>
@@ -302,7 +302,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="errorVerification">
+          <widget class="QLabel" name="verificationError">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -326,12 +326,12 @@
             <string>&amp;Verification code</string>
            </property>
            <property name="buddy">
-            <cstring>code</cstring>
+            <cstring>verificationCode</cstring>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="code"/>
+          <widget class="QLineEdit" name="verificationCode"/>
          </item>
          <item>
           <spacer name="verticalSpacer">

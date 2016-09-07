@@ -52,12 +52,12 @@ void StartUpManager::aboutUserLogged()
     m_loginDialog->hide();
 }
 
-void StartUpManager::userRegistered()
+void StartUpManager::userSignUp()
 {
     //
     // Покажем пользователю окно с вводом проверочного кода
     //
-    m_loginDialog->showVerify();
+    m_loginDialog->showVerification();
 }
 
 void StartUpManager::userPassRestored()
@@ -70,7 +70,7 @@ void StartUpManager::userVerified()
     //
     // После того, как пользователь зарегистрировался, сразу выполним вход
     //
-    emit loginRequested(m_loginDialog->regEmail(), m_loginDialog->regPassword());
+    emit loginRequested(m_loginDialog->signUpEmail(), m_loginDialog->signUpPassword());
 }
 
 void StartUpManager::aboutRetryLogin(const QString& _error)
@@ -78,22 +78,22 @@ void StartUpManager::aboutRetryLogin(const QString& _error)
     //
     // Покажем пользователю ошибку авторизации
     //
-    m_loginDialog->setAuthError(_error);
+    m_loginDialog->setLoginError(_error);
 }
 
-void StartUpManager::retryRegister(const QString &_error)
+void StartUpManager::retrySignUp(const QString &_error)
 {
     //
     // Покажем пользователю ошибку регистрации
     //
-    m_loginDialog->setRegisterError(_error);
+    m_loginDialog->setSignUpError(_error);
 }
 
-void StartUpManager::retryValidate(const QString &_error)
+void StartUpManager::retryVerify(const QString &_error)
 {
     //
     // Покажем пользователю ошибку ввода проверочного кода
-    m_loginDialog->setValidateError(_error);
+    m_loginDialog->setVerificationError(_error);
 }
 
 void StartUpManager::aboutUserUnlogged()
@@ -225,9 +225,9 @@ void StartUpManager::initConnections()
 	connect(m_view, SIGNAL(refreshProjects()), this, SIGNAL(refreshProjectsRequested()));
 
     connect(m_loginDialog, SIGNAL(login()), this, SLOT(login()));
-    connect(m_loginDialog, SIGNAL(registrate()), this, SLOT(registrate()));
+    connect(m_loginDialog, SIGNAL(signUp()), this, SLOT(signUp()));
     connect(m_loginDialog, SIGNAL(verify()), this, SLOT(verify()));
-    connect(m_loginDialog, SIGNAL(restore()), this, SLOT(restore()));
+    connect(m_loginDialog, SIGNAL(restorePassword()), this, SLOT(restorePassword()));
 }
 
 void StartUpManager::login()
@@ -239,14 +239,14 @@ void StartUpManager::login()
     emit loginRequested(m_loginDialog->loginEmail(), m_loginDialog->loginPassword());
 }
 
-void StartUpManager::registrate()
+void StartUpManager::signUp()
 {
     //
     // Пользователь нажал кнопку регистрации
     // Скроем окно и передадим сигнал с нужными параметрами
     //
-    emit registerRequested(m_loginDialog->regEmail(), m_loginDialog->regPassword(),
-                           m_loginDialog->regType());
+    emit signUpRequested(m_loginDialog->signUpEmail(), m_loginDialog->signUpPassword(),
+                           m_loginDialog->signUpType());
 }
 
 void StartUpManager::verify()
@@ -255,10 +255,10 @@ void StartUpManager::verify()
     // Пользователь ввел проверочный код
     // Скроем окно и передадим сигнал с нужными параметрами
     //
-    emit verifyRequested(m_loginDialog->code());
+    emit verifyRequested(m_loginDialog->verificationCode());
 }
 
-void StartUpManager::restore()
+void StartUpManager::restorePassword()
 {
     //
     // Пользователь нажал кнопку восстановления пароля

@@ -748,7 +748,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case 404: {
             error = tr("Email already exist");
-            m_startUpManager->retryRegister(error);
+            m_startUpManager->retrySignUp(error);
             break;
         }
 
@@ -757,7 +757,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case 505: {
             error = tr("Wrong validation code");
-            m_startUpManager->retryValidate(error);
+            m_startUpManager->retryVerify(error);
             break;
         }
 

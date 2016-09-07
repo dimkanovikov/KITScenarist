@@ -31,7 +31,7 @@ namespace UserInterface
         /**
          * @brief Email с виджета регистрации
          */
-        QString regEmail() const;
+        QString signUpEmail() const;
 
         /**
          * @brief Пароль с виджета авторизации
@@ -42,31 +42,31 @@ namespace UserInterface
          * @brief Пароль с виджета регис
     m_tabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);трации
          */
-        QString regPassword() const;
+        QString signUpPassword() const;
 
         /**
          * @brief Проверочный код
          */
-        QString code() const;
+        QString verificationCode() const;
 
         /**
          * @brief Тип аккаунта
          */
-        QString regType() const;
+        QString signUpType() const;
 
 		/**
 		 * @brief Установить сообщение об ошибке
 		 */
-        void setAuthError(const QString& _error);
-        void setRegisterError(const QString& _error);
-        void setValidateError(const QString& _error);
+        void setLoginError(const QString& _error);
+        void setSignUpError(const QString& _error);
+        void setVerificationError(const QString& _error);
 
-        void setAuthPage();
+        void setLoginPage();
 
         /**
          * @brief Установить текст для виджета проверочного кода
          */
-        void showVerify();
+        void showVerification();
 
         /**
          * @brief Установить текст для виджета восстановления пароля
@@ -87,7 +87,7 @@ namespace UserInterface
         /**
          * @brief Пользователь хочет зарегистрироваться
          */
-        void registrate();
+        void signUp();
 
         /**
          * @brief Пользователь хочет авторизоваться
@@ -158,7 +158,7 @@ namespace UserInterface
         TabBarExpanded* m_tabs;
 
         PasswordLineEdit* loginPasswordEdit;
-        PasswordLineEdit* signInPasswordEdit;
+        PasswordLineEdit* signUpPasswordEdit;
 	};
 }
 
