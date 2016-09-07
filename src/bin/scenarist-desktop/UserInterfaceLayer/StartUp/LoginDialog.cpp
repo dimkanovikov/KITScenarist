@@ -47,14 +47,12 @@ void LoginDialog::setLoginError(const QString& _error)
 {
     ui->loginError->setStyleSheet("QLabel { color : red; }");
     ui->loginError->setText(_error);
-    ui->loginError->show();
     unblock();
 }
 
 void LoginDialog::setSignUpError(const QString &_error)
 {
     ui->signUpError->setText(_error);
-    ui->signUpError->show();
     unblock();
 }
 
@@ -62,7 +60,6 @@ void LoginDialog::setVerificationError(const QString &_error)
 {
     ui->verificationError->setStyleSheet("QLabel { color : red; }");
     ui->verificationError->setText(_error);
-    ui->verificationError->show();
     unblock();
 }
 
@@ -99,7 +96,6 @@ void LoginDialog::showVerification()
     ui->verificationError->setStyleSheet("QLabel { color : green; }");
     ui->verificationError->setText(tr("your e-mail \"%1\" was sent a letter "
                                       "with a confirmation code").arg(ui->signUpEmail->text()));
-    ui->verificationError->show();
     ui->stackedWidget->setCurrentWidget(ui->verificationPage);
 
     unblock();
@@ -112,7 +108,6 @@ void LoginDialog::showRestore()
     ui->loginError->setText(tr("your e-mail \"%1\" was sent a letter "
                                       "with a password").arg(ui->loginEmail->text()));
     ui->restorePassword->hide();
-    ui->loginError->show();
 
     unblock();
 }
@@ -153,13 +148,13 @@ QWidget* LoginDialog::focusedOnExec() const
 void LoginDialog::initView()
 {
 
-    ui->loginError->hide();
+    ui->loginError->clear();
     ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
 
-    ui->signUpError->hide();
+    ui->signUpError->clear();
     ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
 
-    ui->verificationError->hide();
+    ui->verificationError->setText("");
 
     //
     // Красивые табы
@@ -168,10 +163,10 @@ void LoginDialog::initView()
     ui->tabs->addTab(tr("Sign Up"));
     ui->tabs->setProperty("inTopPanel", true);
 
-    QLightBoxDialog::initView();
-
     QWidget::setTabOrder(ui->loginEmail, ui->loginPasswordEdit);
     QWidget::setTabOrder(ui->signUpEmail, ui->signUpPasswordEdit);
+
+    QLightBoxDialog::initView();
 }
 
 void LoginDialog::initConnections()
