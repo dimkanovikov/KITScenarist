@@ -208,8 +208,7 @@ void StartUpManager::initConnections()
     // Предварительно его очистив
     //
     connect(m_view, &StartUpView::loginClicked,
-            [this]() {m_loginDialog->clear();
-                            m_loginDialog->show();});
+            [this]() {m_loginDialog->show();});
 
     connect(m_view, &StartUpView::logoutClicked,
             this, &StartUpManager::logoutRequested);

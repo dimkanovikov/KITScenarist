@@ -108,6 +108,7 @@ void LoginDialog::showVerification()
     ui->stackedWidget->setCurrentWidget(ui->verificationPage);
 
     unblock();
+    ui->verificationCode->setFocus();
 }
 
 void LoginDialog::showRestore()
@@ -146,6 +147,7 @@ void LoginDialog::clear()
     ui->verificationError->clear();
 
     ui->restorePassword->show();
+
 }
 
 QWidget* LoginDialog::focusedOnExec() const
@@ -182,6 +184,9 @@ void LoginDialog::initView()
     ui->signUpPasswordLabel->setBuddy(signUpPasswordEdit);
 
     QLightBoxDialog::initView();
+
+    QWidget::setTabOrder(ui->loginEmail, loginPasswordEdit);
+    QWidget::setTabOrder(ui->signUpEmail, signUpPasswordEdit);
 }
 
 void LoginDialog::initConnections()
@@ -222,6 +227,13 @@ void LoginDialog::initConnections()
 	QLightBoxDialog::initConnections();
 }
 
+void LoginDialog::show()
+{
+    clear();
+    QLightBoxDialog::show();
+    ui->loginEmail->setFocus();
+}
+
 void LoginDialog::needAccept()
 {
     //
@@ -229,7 +241,7 @@ void LoginDialog::needAccept()
     if (m_tabs->currentIndex() == 0) {
         emit ui->loginButtons->accepted();
     }
-    else if (isVerify) {
+    else if (!isVerify) {
         emit ui->signUpButtons->accepted();
     }
 }
@@ -262,11 +274,14 @@ void LoginDialog::switchWidget()
 {
     if (m_tabs->currentIndex() == 0) {
         ui->stackedWidget->setCurrentWidget(ui->loginPage);
+        ui->loginEmail->setFocus();
     }
     else if (isVerify) {
         ui->stackedWidget->setCurrentWidget(ui->verificationPage);
+        ui->verificationCode->setFocus();
     }
     else {
         ui->stackedWidget->setCurrentWidget(ui->signUpPage);
+        ui->signUpEmail->setFocus();
     }
 }

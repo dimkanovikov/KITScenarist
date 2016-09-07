@@ -74,14 +74,11 @@ namespace UserInterface
         void showRestore();
 
         /**
-         * @brief Очистить окно
-         */
-        void clear();
-
-        /**
          * @brief Разблокировать окно для пользователя
          */
         void unblock();
+
+        void show();
 
     signals:
         /**
@@ -147,6 +144,11 @@ namespace UserInterface
 		 * @brief Настроить соединения для формы
 		 */
 		void initConnections();
+
+        /**
+         * @brief Очистить окно
+         */
+        void clear();
 
 	private:
 		Ui::LoginDialog *ui;
