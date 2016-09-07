@@ -131,6 +131,12 @@ namespace UserInterface
          */
         void block();
 
+        /**
+         * @brief Пользователь нажал Enter
+         *        В зависимости от окна, сделать нужный сигнал
+         */
+        void needAccept();
+
 	private:
 		/**
 		 * @brief Настроить представление

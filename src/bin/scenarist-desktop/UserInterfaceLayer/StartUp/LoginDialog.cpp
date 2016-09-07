@@ -1,7 +1,7 @@
 #include "LoginDialog.h"
 #include "ui_LoginDialog.h"
 
-#include "QRegExpValidator"
+#include <QRegExpValidator>
 #include <3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h>
 #include <3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h>
 
@@ -155,6 +155,7 @@ QWidget* LoginDialog::focusedOnExec() const
 
 void LoginDialog::initView()
 {
+
     ui->loginError->hide();
     ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
 
@@ -185,6 +186,9 @@ void LoginDialog::initView()
 
 void LoginDialog::initConnections()
 {
+    connect(this, &LoginDialog::accepted, this, &LoginDialog::needAccept);
+    connect(this, &LoginDialog::rejected, this, &LoginDialog::hide);
+
     connect(ui->loginButtons, &QDialogButtonBox::accepted,
             this, &LoginDialog::block);
     connect(ui->loginButtons, &QDialogButtonBox::accepted,
@@ -216,6 +220,18 @@ void LoginDialog::initConnections()
             this, &LoginDialog::switchWidget);;
 
 	QLightBoxDialog::initConnections();
+}
+
+void LoginDialog::needAccept()
+{
+    //
+    // Эмулируем нажатия кнопок Accept
+    if (m_tabs->currentIndex() == 0) {
+        emit ui->loginButtons->accepted();
+    }
+    else if (isVerify) {
+        emit ui->signUpButtons->accepted();
+    }
 }
 
 void LoginDialog::block()
