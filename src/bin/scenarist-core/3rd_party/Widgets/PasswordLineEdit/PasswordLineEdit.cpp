@@ -36,7 +36,7 @@ void PasswordLineEdit::resizeEvent(QResizeEvent *_event)
 
 void PasswordLineEdit::eyeClicked()
 {
-    if(isAsterisk) {
+    if (isAsterisk) {
         m_eye->setIcon(QIcon(":Graphics/Icons/eye-off.png"));
         QLineEdit::setEchoMode(QLineEdit::Normal);
     }

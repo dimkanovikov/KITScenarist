@@ -73,11 +73,11 @@ void LoginDialog::setVerificationError(const QString &_error)
 
 QString LoginDialog::signUpType() const
 {
-    if(ui->startButton->isChecked()) {
+    if (ui->startButton->isChecked()) {
         return tr("start");
-    } else if(ui->basicButton->isChecked()) {
+    } else if (ui->basicButton->isChecked()) {
         return tr("basic");
-    } else if(ui->maximalButton->isChecked()) {
+    } else if (ui->maximalButton->isChecked()) {
         return tr("maximal");
     } else return tr("unexpected");
 }
@@ -92,7 +92,7 @@ void LoginDialog::checkCode()
     QRegExpValidator validator(QRegExp("[0-9]{5}"));
     QString s = ui->verificationCode->text();
     int pos = 0;
-    if(validator.validate(s, pos) == QValidator::Acceptable) {
+    if (validator.validate(s, pos) == QValidator::Acceptable) {
         block();
         emit verify();
     }
@@ -227,10 +227,10 @@ void LoginDialog::cancelVerify()
 
 void LoginDialog::switchWidget()
 {
-    if(m_tabs->currentIndex() == 0) {
+    if (m_tabs->currentIndex() == 0) {
         ui->stackedWidget->setCurrentWidget(ui->loginPage);
     }
-    else if(isVerify) {
+    else if (isVerify) {
         ui->stackedWidget->setCurrentWidget(ui->verificationPage);
     }
     else {
