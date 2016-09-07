@@ -2,17 +2,12 @@
 #include "ui_LoginDialog.h"
 
 #include <QRegExpValidator>
-#include <3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h>
-#include <3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h>
 
 using UserInterface::LoginDialog;
 
 LoginDialog::LoginDialog(QWidget* _parent) :
 	QLightBoxDialog(_parent),
-    ui(new Ui::LoginDialog),
-    m_tabs(new TabBarExpanded(this)),
-    loginPasswordEdit(new PasswordLineEdit(this)),
-    signUpPasswordEdit(new PasswordLineEdit(this))
+    ui(new Ui::LoginDialog)
 {
 	ui->setupUi(this);
 
@@ -40,12 +35,12 @@ QString LoginDialog::signUpEmail() const
 
 QString LoginDialog::loginPassword() const
 {
-    return loginPasswordEdit->text();
+    return ui->loginPasswordEdit->text();
 }
 
 QString LoginDialog::signUpPassword() const
 {
-    return signUpPasswordEdit->text();
+    return ui->signUpPasswordEdit->text();
 }
 
 void LoginDialog::setLoginError(const QString& _error)
@@ -125,18 +120,18 @@ void LoginDialog::showRestore()
 void LoginDialog::setLoginPage()
 {
     isVerify = false;
-    m_tabs->setCurrentIndex(0);
+    ui->tabs->setCurrentIndex(0);
 }
 
 void LoginDialog::clear()
 {
     ui->loginEmail->clear();
-    loginPasswordEdit->clear();
+    ui->loginPasswordEdit->clear();
     ui->signUpEmail->clear();
-    signUpPasswordEdit->clear();
+    ui->signUpPasswordEdit->clear();
     ui->verificationError->clear();
 
-    m_tabs->setCurrentIndex(0);
+    ui->tabs->setCurrentIndex(0);
     ui->basicButton->setChecked(true);
     switchWidget();
 
@@ -167,26 +162,16 @@ void LoginDialog::initView()
     ui->verificationError->hide();
 
     //
-    // Красивые чекбоксы
+    // Красивые табы
     //
-    m_tabs->addTab(tr("Login"));
-    m_tabs->addTab(tr("Sign Up"));
-    m_tabs->setProperty("inTopPanel", true);
-    ui->stackLayout->insertWidget(0, m_tabs);
-
-    //
-    // Красивые строки ввода пароля
-    //
-    ui->loginMainLayout->insertWidget(4, loginPasswordEdit);
-    ui->loginPasswordLabel->setBuddy(loginPasswordEdit);
-
-    ui->signUpMainLayout->insertWidget(4, signUpPasswordEdit);
-    ui->signUpPasswordLabel->setBuddy(signUpPasswordEdit);
+    ui->tabs->addTab(tr("Login"));
+    ui->tabs->addTab(tr("Sign Up"));
+    ui->tabs->setProperty("inTopPanel", true);
 
     QLightBoxDialog::initView();
 
-    QWidget::setTabOrder(ui->loginEmail, loginPasswordEdit);
-    QWidget::setTabOrder(ui->signUpEmail, signUpPasswordEdit);
+    QWidget::setTabOrder(ui->loginEmail, ui->loginPasswordEdit);
+    QWidget::setTabOrder(ui->signUpEmail, ui->signUpPasswordEdit);
 }
 
 void LoginDialog::initConnections()
@@ -221,7 +206,7 @@ void LoginDialog::initConnections()
     connect(ui->verificationCode, &QLineEdit::textChanged,
             this, &LoginDialog::checkCode);
 
-    connect(m_tabs, &TabBarExpanded::currentChanged,
+    connect(ui->tabs, &TabBarExpanded::currentChanged,
             this, &LoginDialog::switchWidget);;
 
 	QLightBoxDialog::initConnections();
@@ -238,7 +223,7 @@ void LoginDialog::needAccept()
 {
     //
     // Эмулируем нажатия кнопок Accept
-    if (m_tabs->currentIndex() == 0) {
+    if (ui->tabs->currentIndex() == 0) {
         emit ui->loginButtons->accepted();
     }
     else if (!isVerify) {
@@ -248,7 +233,7 @@ void LoginDialog::needAccept()
 
 void LoginDialog::block()
 {
-    m_tabs->setEnabled(false);
+    ui->tabs->setEnabled(false);
 
     ui->stackedWidget->setEnabled(false);
 
@@ -257,7 +242,7 @@ void LoginDialog::block()
 
 void LoginDialog::unblock()
 {
-    m_tabs->setEnabled(true);
+    ui->tabs->setEnabled(true);
 
     ui->stackedWidget->setEnabled(true);
 
@@ -272,7 +257,7 @@ void LoginDialog::cancelVerify()
 
 void LoginDialog::switchWidget()
 {
-    if (m_tabs->currentIndex() == 0) {
+    if (ui->tabs->currentIndex() == 0) {
         ui->stackedWidget->setCurrentWidget(ui->loginPage);
         ui->loginEmail->setFocus();
     }
