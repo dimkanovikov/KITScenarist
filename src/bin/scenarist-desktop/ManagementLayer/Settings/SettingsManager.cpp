@@ -266,26 +266,26 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 	const QString affFileName = languageCode + ".aff";
 	const QString dicFileName = languageCode + ".dic";
 	//
-    // Получим информацию о файлах словаря
+	// Получим информацию о файлах словаря
 	//
-    QFileInfo affFileInfo(hunspellDictionariesFolderPath + affFileName);
-    QFileInfo dicFileInfo(hunspellDictionariesFolderPath + dicFileName);
-    //
-    // ... удалим файлы, если они пустые (баг прошлых версий)
-    //
-    if (affFileInfo.size() == 0) {
-        QFile::remove(affFileInfo.absoluteFilePath());
-        affFileInfo.refresh();
-    }
-    if (dicFileInfo.size() == 0) {
-        QFile::remove(dicFileInfo.absoluteFilePath());
-        dicFileInfo.refresh();
-    }
+	QFileInfo affFileInfo(hunspellDictionariesFolderPath + affFileName);
+	QFileInfo dicFileInfo(hunspellDictionariesFolderPath + dicFileName);
+	//
+	// ... удалим файлы, если они пустые (баг прошлых версий)
+	//
+	if (affFileInfo.size() == 0) {
+		QFile::remove(affFileInfo.absoluteFilePath());
+		affFileInfo.refresh();
+	}
+	if (dicFileInfo.size() == 0) {
+		QFile::remove(dicFileInfo.absoluteFilePath());
+		dicFileInfo.refresh();
+	}
 
-    //
-    // Если не установлен, скачаем
-    //
-    if (!affFileInfo.exists() || !dicFileInfo.exists()) {
+	//
+	// Если не установлен, скачаем
+	//
+	if (!affFileInfo.exists() || !dicFileInfo.exists()) {
 		//
 		// ... покажем прелоадер
 		//
@@ -304,37 +304,37 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 		const QString hunspellDictionariesFolderUrl = "https://kitscenarist.ru/downloads/hunspell/";
 		//
 		const QByteArray affFileData = WebLoader().loadSync(hunspellDictionariesFolderUrl + affFileName);
-        bool downloadingAffFileSuccess = affFileData.size() > 0;
-        if (downloadingAffFileSuccess) {
-            QFile affFile(hunspellDictionariesFolderPath + affFileName);
-            affFile.open(QIODevice::WriteOnly);
-            affFile.write(affFileData);
-            affFile.close();
-        }
+		bool downloadingAffFileSuccess = affFileData.size() > 0;
+		if (downloadingAffFileSuccess) {
+			QFile affFile(hunspellDictionariesFolderPath + affFileName);
+			affFile.open(QIODevice::WriteOnly);
+			affFile.write(affFileData);
+			affFile.close();
+		}
 		//
 		const QByteArray dicFileData = WebLoader().loadSync(hunspellDictionariesFolderUrl + dicFileName);
-        bool downloadingDicFileSuccess = dicFileData.size() > 0;
-        if (downloadingDicFileSuccess) {
-            QFile dicFile(hunspellDictionariesFolderPath + dicFileName);
-            dicFile.open(QIODevice::WriteOnly);
-            dicFile.write(dicFileData);
-            dicFile.close();
-        }
+		bool downloadingDicFileSuccess = dicFileData.size() > 0;
+		if (downloadingDicFileSuccess) {
+			QFile dicFile(hunspellDictionariesFolderPath + dicFileName);
+			dicFile.open(QIODevice::WriteOnly);
+			dicFile.write(dicFileData);
+			dicFile.close();
+		}
 
 		//
 		// ... скрываем прогресс
 		//
 		progress.finish();
 
-        //
-        // Если словари не удалось скачать, предупредим об этом пользователя
-        //
-        if (!downloadingAffFileSuccess || !downloadingDicFileSuccess) {
-            QLightBoxMessage::critical(m_view, tr("Can't enable spell checking"),
-                tr("Can't download spelling dictionary. "
-                   "Please check internet connection and retry to activate spell checking"));
-            m_view->setScenarioEditSpellCheck(false);
-        }
+		//
+		// Если словари не удалось скачать, предупредим об этом пользователя
+		//
+		if (!downloadingAffFileSuccess || !downloadingDicFileSuccess) {
+			QLightBoxMessage::critical(m_view, tr("Can't enable spell checking"),
+				tr("Can't download spelling dictionary. "
+				   "Please check internet connection and retry to activate spell checking"));
+			m_view->setScenarioEditSpellCheck(false);
+		}
 	}
 }
 
@@ -434,6 +434,11 @@ void SettingsManager::scenarioEditReviewUseWordHighlightChanged(bool _value)
 void SettingsManager::navigatorShowScenesNumbersChanged(bool _value)
 {
 	storeValue("navigator/show-scenes-numbers", _value);
+}
+
+void SettingsManager::navigatorShowSceneTitleChanged(bool _value)
+{
+	storeValue("navigator/show-scene-title", _value);
 }
 
 void SettingsManager::navigatorShowSceneDescriptionChanged(bool _value)
@@ -959,6 +964,12 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_view->setNavigatorShowSceneTitle(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/show-scene-title",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setNavigatorShowSceneDescription(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"navigator/show-scene-description",
@@ -1139,6 +1150,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)), this, SLOT(scenarioEditReviewUseWordHighlightChanged(bool)));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
+	connect(m_view, SIGNAL(navigatorShowSceneTitleChanged(bool)), this, SLOT(navigatorShowSceneTitleChanged(bool)));
 	connect(m_view, SIGNAL(navigatorShowSceneDescriptionChanged(bool)), this, SLOT(navigatorShowSceneDescriptionChanged(bool)));
 	connect(m_view, SIGNAL(navigatorSceneDescriptionIsSceneTextChanged(bool)), this, SLOT(navigatorSceneDescriptionIsSceneTextChanged(bool)));
 	connect(m_view, SIGNAL(navigatorSceneDescriptionHeightChanged(int)), this, SLOT(navigatorSceneDescriptionHeightChanged(int)));
@@ -1208,6 +1220,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
+	connect(m_view, SIGNAL(navigatorShowSceneTitleChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 	connect(m_view, SIGNAL(navigatorShowSceneDescriptionChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 	connect(m_view, SIGNAL(navigatorSceneDescriptionIsSceneTextChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 	connect(m_view, SIGNAL(navigatorSceneDescriptionHeightChanged(int)), this, SIGNAL(navigatorSettingsUpdated()));

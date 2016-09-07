@@ -28,6 +28,7 @@ namespace {
 	const QString ATTRIBUTE_VERSION = "version";
 	const QString ATTRIBUTE_DESCRIPTION = "description";
 	const QString ATTRIBUTE_COLOR = "color";
+	const QString ATTRIBUTE_TITLE = "title";
 	const QString ATTRIBUTE_REVIEW_FROM = "from";
 	const QString ATTRIBUTE_REVIEW_LENGTH = "length";
 	const QString ATTRIBUTE_REVIEW_COLOR = "color";
@@ -75,6 +76,8 @@ namespace {
 			hash.append(QString::number(blockInfo->sceneNumber()));
 			hash.append("#");
 			hash.append(blockInfo->colors());
+			hash.append("#");
+			hash.append(blockInfo->title());
 			hash.append("#");
 			hash.append(blockInfo->description());
 		}
@@ -216,13 +219,16 @@ QString ScenarioXml::scenarioToXml()
 			//
 			if (needWrite) {
 				//
-				// Если возможно, сохраним цвета элемента
+				// Если возможно, сохраним цвета элемента и его заголовок
 				//
-				QString colors;
+				QString colorsAndTitle;
 				if (canHaveColors) {
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
 						if (!info->colors().isEmpty()) {
-							colors = QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
+							colorsAndTitle = QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
+						}
+						if (!info->title().isEmpty()) {
+							colorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, info->title());
 						}
 					}
 				}
@@ -230,7 +236,7 @@ QString ScenarioXml::scenarioToXml()
 				//
 				// Открыть ячейку текущего элемента
 				//
-				currentBlockXml.append(QString("<%1%2>\n").arg(currentNode, colors));
+				currentBlockXml.append(QString("<%1%2>\n").arg(currentNode, colorsAndTitle));
 
 				//
 				// Пишем текст текущего элемента
@@ -474,12 +480,15 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				writer.writeStartElement(currentNode);
 
 				//
-				// Если возможно, сохраним цвета элемента
+				// Если возможно, сохраним цвета элемента и его название
 				//
 				if (canHaveColors) {
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
 						if (!info->colors().isEmpty()) {
 							writer.writeAttribute(ATTRIBUTE_COLOR, info->colors());
+						}
+						if (!info->title().isEmpty()) {
+							writer.writeAttribute(ATTRIBUTE_TITLE, info->title());
 						}
 					}
 				}
@@ -999,6 +1008,9 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 						ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
 						if (reader.attributes().hasAttribute(ATTRIBUTE_COLOR)) {
 							info->setColors(reader.attributes().value(ATTRIBUTE_COLOR).toString());
+						}
+						if (reader.attributes().hasAttribute(ATTRIBUTE_TITLE)) {
+							info->setTitle(reader.attributes().value(ATTRIBUTE_TITLE).toString());
 						}
 						cursor.block().setUserData(info);
 					}

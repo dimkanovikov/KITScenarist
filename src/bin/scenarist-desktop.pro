@@ -308,7 +308,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/pdlg_arrowflow.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/mainwindow.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.cpp \
@@ -572,7 +571,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/pdlg_arrowflow.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/mainwindow.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.h \

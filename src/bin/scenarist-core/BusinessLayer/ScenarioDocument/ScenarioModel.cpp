@@ -236,6 +236,14 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		}
 
 		//
+		// Название сцены
+		//
+		case TitleIndex: {
+			result = item->title();
+			break;
+		}
+
+		//
 		// Текст сцены
 		//
 		case SceneTextIndex: {

@@ -120,6 +120,18 @@ void ScenarioModelItem::setColors(const QString& _colors)
 	}
 }
 
+QString ScenarioModelItem::title() const
+{
+	return m_title;
+}
+
+void ScenarioModelItem::setTitle(const QString& _title)
+{
+	if (m_title != _title) {
+		m_title = _title;
+	}
+}
+
 QString ScenarioModelItem::description() const
 {
 	return m_description;

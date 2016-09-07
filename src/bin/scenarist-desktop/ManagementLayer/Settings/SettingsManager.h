@@ -90,6 +90,7 @@ namespace ManagementLayer
 		void scenarioEditReviewUseWordHighlightChanged(bool _value);
 
 		void navigatorShowScenesNumbersChanged(bool  _value);
+		void navigatorShowSceneTitleChanged(bool _value);
 		void navigatorShowSceneDescriptionChanged(bool _value);
 		void navigatorSceneDescriptionIsSceneTextChanged(bool _value);
 		void navigatorSceneDescriptionHeightChanged(int _value);

@@ -30,9 +30,9 @@
  */
 *[mainContainer="true"] {
 	border: none;
-    border-top-width: 1px;
+	border-top-width: 1px;
 	border-top-style: solid;
-    border-top-color: palette(dark);
+	border-top-color: palette(dark);
 }
 
 /*
@@ -65,6 +65,17 @@
 QPushButton[leftAlignedText="true"] {
 	padding: 3px 6px 3px 6px;
 	text-align: left;
+}
+
+/*
+ * Панель
+ */
+QFrame[inTopPanel="true"] {
+	background: palette(button);
+	color: palette(button-text);
+	padding-top: 2px;
+	padding-bottom: 2px;
+	min-height: 25px;
 }
 
 /*
@@ -427,7 +438,7 @@ QProgressBar::chunk {
 [editableLabel=true]::!hover::!focus {
     border: none;
     padding: 2px 1px 1px 0px;
-    background-color: palette(window);
+    background-color: transparent;
 }
 
 [editableLabel=true]::hover, [editableLabel=true]::focus {

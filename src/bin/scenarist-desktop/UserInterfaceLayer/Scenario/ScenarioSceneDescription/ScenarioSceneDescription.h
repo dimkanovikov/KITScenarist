@@ -3,7 +3,8 @@
 
 #include <QWidget>
 
-class ElidedLabel;
+class QFrame;
+class QLineEdit;
 class SimpleTextEditorWidget;
 
 
@@ -20,9 +21,9 @@ namespace UserInterface
 		explicit ScenarioSceneDescription(QWidget* _parent = 0);
 
 		/**
-		 * @brief Установить заголовок
+		 * @brief Установить название
 		 */
-		void setHeader(const QString& _header);
+		void setTitle(const QString& _title);
 
 		/**
 		 * @brief Установить описание
@@ -36,17 +37,32 @@ namespace UserInterface
 
 	signals:
 		/**
+		 * @brief Изменилось название сцены
+		 */
+		void titleChanged(const QString& _title);
+
+		/**
 		 * @brief Текст описания изменился
 		 */
 		void descriptionChanged(const QString& _description);
 
 	private slots:
 		/**
+		 * @brief Обработка изменения названия
+		 */
+		void aboutTitleChanged();
+
+		/**
 		 * @brief Обработка изменения текста описания
 		 */
 		void aboutDescriptionChanged();
 
 	private:
+		/**
+		 * @brief Название
+		 */
+		QString currentTitle() const;
+
 		/**
 		 * @brief Текущее описание
 		 */
@@ -72,12 +88,22 @@ namespace UserInterface
 		/**
 		 * @brief Заголовок редактора
 		 */
-		ElidedLabel* m_title;
+		QFrame* m_titleHeader;
+
+		/**
+		 * @brief Название сцены
+		 */
+		QLineEdit* m_title;
 
 		/**
 		 * @brief Редактор описания
 		 */
 		SimpleTextEditorWidget* m_description;
+
+		/**
+		 * @brief Исходный текст названия, используется для контроля изменений
+		 */
+		QString m_sourceTitle;
 
 		/**
 		 * @brief Исходный текст описания, используется для контроля изменений

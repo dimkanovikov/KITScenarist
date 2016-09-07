@@ -85,6 +85,7 @@ namespace UserInterface
 		void setScenarioEditReviewUseWordHighlight(bool _value);
 
 		void setNavigatorShowScenesNumbers(bool _value);
+		void setNavigatorShowSceneTitle(bool _value);
 		void setNavigatorShowSceneDescription(bool _value);
 		void setNavigatorSceneDescriptionIsSceneText(bool _value);
 		void setNavigatorSceneDescriptionHeight(int _value);
@@ -158,6 +159,7 @@ namespace UserInterface
 		void scenarioEditReviewUseWordHighlightChanged(bool);
 
 		void navigatorShowScenesNumbersChanged(bool);
+		void navigatorShowSceneTitleChanged(bool);
 		void navigatorShowSceneDescriptionChanged(bool);
 		void navigatorSceneDescriptionIsSceneTextChanged(bool);
 		void navigatorSceneDescriptionHeightChanged(int);

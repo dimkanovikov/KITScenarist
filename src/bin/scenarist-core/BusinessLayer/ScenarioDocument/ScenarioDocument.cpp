@@ -173,6 +173,56 @@ void ScenarioDocument::setItemColorsAtPosition(int _position, const QString& _co
 	}
 }
 
+QString ScenarioDocument::itemTitleAtPosition(int _position) const
+{
+	QString title;
+	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+		title = itemTitle(item);
+	}
+	return title;
+}
+
+QString ScenarioDocument::itemTitle(ScenarioModelItem* _item) const
+{
+	QTextCursor cursor(m_document);
+	cursor.setPosition(_item->position());
+
+	QString title;
+	QTextBlockUserData* textBlockData = cursor.block().userData();
+	if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
+		title = info->title();
+	}
+	return title;
+}
+
+void ScenarioDocument::setItemTitleAtPosition(int _position, const QString& _title)
+{
+	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+		//
+		// Установить название в элемент
+		//
+		item->setTitle(_title);
+		m_model->updateItem(item);
+
+		//
+		// Установить название в документ
+		//
+		QTextCursor cursor(m_document);
+		cursor.setPosition(item->position());
+
+		QTextBlockUserData* textBlockData = cursor.block().userData();
+		ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+		if (info == 0) {
+			info = new ScenarioTextBlockInfo;
+		}
+		info->setTitle(_title);
+		cursor.block().setUserData(info);
+
+		ScenarioTextDocument::updateBlockRevision(cursor);
+		aboutContentsChange(cursor.block().position(), 0, 0);
+	}
+}
+
 QString ScenarioDocument::itemDescriptionAtPosition(int _position) const
 {
 	QString description;
@@ -825,7 +875,9 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		itemType = ScenarioModelItem::Folder;
 	}
 	// ... заголовок
-	QString itemHeader = cursor.block().text();
+	const QString itemHeader = cursor.block().text();
+	// ... название
+	const QString title = itemTitle(_item);
 	// ... цвет
 	const QString colors = itemColors(_item);
 	// ... текст и описание
@@ -918,6 +970,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setType(itemType);
 	_item->setHeader(itemHeader);
 	_item->setColors(colors);
+	_item->setTitle(title);
 	_item->setText(itemText);
 	_item->setDescription(description);
 	_item->setDuration(itemDuration);

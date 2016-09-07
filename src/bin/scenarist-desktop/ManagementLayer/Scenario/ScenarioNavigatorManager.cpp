@@ -62,6 +62,12 @@ void ScenarioNavigatorManager::reloadNavigatorSettings()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_navigator->setShowSceneTitle(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/show-scene-title",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_navigator->setShowSceneDescription(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"navigator/show-scene-description",

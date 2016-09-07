@@ -325,6 +325,11 @@ void SettingsView::setNavigatorShowScenesNumbers(bool _value)
 	ui->showScenesNumbersInNavigator->setChecked(_value);
 }
 
+void SettingsView::setNavigatorShowSceneTitle(bool _value)
+{
+	ui->showSceneTitle->setChecked(_value);
+}
+
 void SettingsView::setNavigatorShowSceneDescription(bool _value)
 {
 	ui->showSceneDescription->setChecked(_value);
@@ -723,6 +728,7 @@ void SettingsView::initConnections()
 	connect(ui->reviewUseWordHighlight, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)));
 	// ... навигатор
 	connect(ui->showScenesNumbersInNavigator, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowScenesNumbersChanged(bool)));
+	connect(ui->showSceneTitle, &QCheckBox::toggled, this, &SettingsView::navigatorShowSceneTitleChanged);
 	connect(ui->showSceneDescription, SIGNAL(toggled(bool)), this, SIGNAL(navigatorShowSceneDescriptionChanged(bool)));
 	connect(ui->sceneDescriptionIsSceneText, SIGNAL(toggled(bool)), this, SIGNAL(navigatorSceneDescriptionIsSceneTextChanged(bool)));
 	connect(ui->sceneDescriptionHeight, SIGNAL(valueChanged(int)), this, SIGNAL(navigatorSceneDescriptionHeightChanged(int)));

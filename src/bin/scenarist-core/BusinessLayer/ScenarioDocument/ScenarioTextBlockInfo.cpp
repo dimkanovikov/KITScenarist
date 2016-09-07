@@ -34,6 +34,18 @@ void ScenarioTextBlockInfo::setColors(const QString& _colors)
 	}
 }
 
+QString ScenarioTextBlockInfo::title() const
+{
+	return m_title;
+}
+
+void ScenarioTextBlockInfo::setTitle(const QString& _title)
+{
+	if (m_title != _title) {
+		m_title = _title;
+	}
+}
+
 QString ScenarioTextBlockInfo::description(bool htmlEscaped) const
 {
 	QString resultDescription = m_description;

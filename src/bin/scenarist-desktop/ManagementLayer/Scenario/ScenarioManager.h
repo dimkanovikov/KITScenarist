@@ -51,10 +51,10 @@ namespace ManagementLayer
 		 */
 		int cursorPosition() const;
 
-        /**
-         * @brief Установть позицию курсора
-         */
-        void setCursorPosition(int _position) const;
+		/**
+		 * @brief Установть позицию курсора
+		 */
+		void setCursorPosition(int _position) const;
 
 		/**
 		 * @brief Загрузить данные текущего проекта
@@ -185,14 +185,19 @@ namespace ManagementLayer
 		/** @} */
 
 		/**
-		 * @brief Обновить синопсис, если сменилась сцена
+		 * @brief Обновить название и описание текущей сцены, если она сменилась
 		 */
-		void aboutUpdateCurrentSynopsis(int _cursorPosition);
+		void aboutUpdateCurrentSceneTitleAndDescription(int _cursorPosition);
 
 		/**
-		 * @brief Текст синопсиса текущей сцены был изменён
+		 * @brief Название текущей сцены было изменён
 		 */
-		void aboutUpdateCurrentSceneDescription(const QString& _synopsis);
+		void aboutUpdateCurrentSceneTitle(const QString& _title);
+
+		/**
+		 * @brief Описание текущей сцены было изменён
+		 */
+		void aboutUpdateCurrentSceneDescription(const QString& _description);
 
 		/**
 		 * @brief Выделить текущую сцену в навигаторе

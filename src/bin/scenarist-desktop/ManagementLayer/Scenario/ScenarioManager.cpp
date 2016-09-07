@@ -260,12 +260,12 @@ BusinessLogic::ScenarioDocument*ScenarioManager::scenarioDraft() const
 
 int ScenarioManager::cursorPosition() const
 {
-    return m_textEditManager->cursorPosition();
+	return m_textEditManager->cursorPosition();
 }
 
 void ScenarioManager::setCursorPosition(int _position) const
 {
-    m_textEditManager->setCursorPosition(_position);
+	m_textEditManager->setCursorPosition(_position);
 }
 
 void ScenarioManager::loadCurrentProject()
@@ -636,18 +636,29 @@ void ScenarioManager::aboutUpdateCounters()
 	m_textEditManager->setCountersInfo(workingScenario()->countersInfo());
 }
 
-void ScenarioManager::aboutUpdateCurrentSynopsis(int _cursorPosition)
+void ScenarioManager::aboutUpdateCurrentSceneTitleAndDescription(int _cursorPosition)
 {
-	QString itemHeader = workingScenario()->itemHeaderAtPosition(_cursorPosition);
-	m_sceneDescriptionManager->setHeader(itemHeader);
+	QString itemTitle = workingScenario()->itemTitleAtPosition(_cursorPosition);
+	if (itemTitle.isEmpty()) {
+		//
+		// Если название сцены не задано, используем заголовок сцены
+		//
+		itemTitle = workingScenario()->itemHeaderAtPosition(_cursorPosition);
+	}
+	m_sceneDescriptionManager->setTitle(itemTitle);
 
 	QString synopsis = workingScenario()->itemDescriptionAtPosition(_cursorPosition);
 	m_sceneDescriptionManager->setDescription(synopsis);
 }
 
-void ScenarioManager::aboutUpdateCurrentSceneDescription(const QString& _synopsis)
+void ScenarioManager::aboutUpdateCurrentSceneTitle(const QString& _title)
 {
-	workingScenario()->setItemDescriptionAtPosition(m_textEditManager->cursorPosition(), _synopsis);
+	workingScenario()->setItemTitleAtPosition(m_textEditManager->cursorPosition(), _title);
+}
+
+void ScenarioManager::aboutUpdateCurrentSceneDescription(const QString& _description)
+{
+	workingScenario()->setItemDescriptionAtPosition(m_textEditManager->cursorPosition(), _description);
 }
 
 void ScenarioManager::aboutSelectItemInNavigator(int _cursorPosition)
@@ -828,14 +839,14 @@ void ScenarioManager::initView()
 	m_draftViewSplitter->setOrientation(Qt::Vertical);
 	m_draftViewSplitter->addWidget(m_navigatorManager->view());
 	m_draftViewSplitter->addWidget(m_draftNavigatorManager->view());
-    m_draftViewSplitter->setSizes({1, 0});
+	m_draftViewSplitter->setSizes({1, 0});
 
 	m_noteViewSplitter->setObjectName("noteScenarioEditSplitter");
 	m_noteViewSplitter->setHandleWidth(1);
 	m_noteViewSplitter->setOrientation(Qt::Vertical);
 	m_noteViewSplitter->addWidget(m_draftViewSplitter);
 	m_noteViewSplitter->addWidget(m_sceneDescriptionManager->view());
-    m_noteViewSplitter->setSizes({1, 0});
+	m_noteViewSplitter->setSizes({1, 0});
 
 	m_mainViewSplitter->setObjectName("mainScenarioEditSplitter");
 	m_mainViewSplitter->setHandleWidth(1);
@@ -843,7 +854,7 @@ void ScenarioManager::initView()
 	m_mainViewSplitter->setStretchFactor(1, 1);
 	m_mainViewSplitter->setOpaqueResize(false);
 	m_mainViewSplitter->addWidget(m_noteViewSplitter);
-    m_mainViewSplitter->addWidget(rightWidget);
+	m_mainViewSplitter->addWidget(rightWidget);
 
 	QHBoxLayout* layout = new QHBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -875,11 +886,12 @@ void ScenarioManager::initConnections()
 	connect(m_draftNavigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
 	connect(m_draftNavigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
 
+	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::aboutUpdateCurrentSceneTitle);
 	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneDescription);
 
 	connect(m_textEditManager, SIGNAL(textModeChanged()), this, SLOT(aboutRefreshCounters()));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateDuration(int)));
-	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSynopsis(int)));
+	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSceneTitleAndDescription(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCounters()));
 
@@ -888,6 +900,7 @@ void ScenarioManager::initConnections()
 	//
 	// Настраиваем отслеживание изменений документа
 	//
+	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::scenarioChanged);
 	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::scenarioChanged);
 	connect(m_textEditManager, SIGNAL(textChanged()), this, SIGNAL(scenarioChanged()));
 }

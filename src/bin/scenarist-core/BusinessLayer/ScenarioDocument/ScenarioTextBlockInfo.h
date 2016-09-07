@@ -34,6 +34,16 @@ namespace BusinessLogic
 		void setColors(const QString& _colors);
 
 		/**
+		 * @brief Получить название сцены
+		 */
+		QString title() const;
+
+		/**
+		 * @brief Установить название сцены
+		 */
+		void setTitle(const QString& _title);
+
+		/**
 		 * @brief Получить описание
 		 */
 		QString description(bool htmlEscaped = false) const;
@@ -58,6 +68,11 @@ namespace BusinessLogic
 		 * @brief Цвета сцены
 		 */
 		QString m_colors;
+
+		/**
+		 * @brief Название
+		 */
+		QString m_title;
 
 		/**
 		 * @brief Текст описания
