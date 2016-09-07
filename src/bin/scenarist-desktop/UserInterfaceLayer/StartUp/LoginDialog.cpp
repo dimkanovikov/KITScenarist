@@ -115,6 +115,7 @@ void LoginDialog::showRestore()
     ui->loginError->setStyleSheet("QLabel { color : green; }");
     ui->loginError->setText(tr("your e-mail \"%1\" was sent a letter "
                                       "with a password").arg(ui->loginEmail->text()));
+    ui->restorePassword->hide();
     ui->loginError->show();
 
     unblock();
@@ -143,6 +144,8 @@ void LoginDialog::clear()
     ui->loginError->clear();
     ui->signUpError->clear();
     ui->verificationError->clear();
+
+    ui->restorePassword->show();
 }
 
 QWidget* LoginDialog::focusedOnExec() const
@@ -201,6 +204,8 @@ void LoginDialog::initConnections()
     connect(ui->ButtonsVerification, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
 
+    connect(ui->restorePassword, &QPushButton::clicked,
+            this, &LoginDialog::block);
     connect(ui->restorePassword, &QPushButton::clicked,
             this, &LoginDialog::restore);
 
