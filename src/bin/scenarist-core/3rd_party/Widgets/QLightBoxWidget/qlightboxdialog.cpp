@@ -177,7 +177,7 @@ void QLightBoxDialog::initView()
 		QGridLayout* newLayout = new QGridLayout;
 		newLayout->setContentsMargins(QMargins());
 		newLayout->setSpacing(0);
-		newLayout->addWidget(m_title, 1, 1);
+		newLayout->addWidget(titleWidget(), 1, 1);
 		newLayout->addWidget(m_centralWidget, 2, 1);
 		newLayout->setRowStretch(0, 1);
 		if (m_isContentStretchable) {
@@ -195,6 +195,11 @@ void QLightBoxDialog::initConnections()
 {
 }
 
+QWidget* QLightBoxDialog::titleWidget() const
+{
+	return m_title;
+}
+
 QWidget* QLightBoxDialog::focusedOnExec() const
 {
 	return m_centralWidget;
@@ -202,8 +207,12 @@ QWidget* QLightBoxDialog::focusedOnExec() const
 
 void QLightBoxDialog::updateTitle()
 {
-	m_title->setText(windowTitle());
-	m_title->setVisible(!m_title->text().isEmpty());
+	if (titleWidget() == m_title) {
+		m_title->setText(windowTitle());
+		m_title->setVisible(!m_title->text().isEmpty());
+	} else {
+		m_title->hide();
+	}
 }
 
 void QLightBoxDialog::animateShow()
