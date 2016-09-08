@@ -93,11 +93,6 @@ QString ScenarioTextDocument::scenarioXml() const
 	return m_scenarioXml;
 }
 
-QByteArray ScenarioTextDocument::scenarioXmlHash() const
-{
-	return m_scenarioXmlHash;
-}
-
 void ScenarioTextDocument::load(const QString& _scenarioXml)
 {
 	//

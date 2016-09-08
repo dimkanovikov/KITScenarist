@@ -465,7 +465,7 @@ int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, Sce
 
 	return insertPosition;
 }
-
+#include <QDebug>
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
 	//
@@ -476,26 +476,15 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	//
 	// Прерываем ситуация, когда в редактор помещается документ, но для него уже создана модель
 	//
-	const QByteArray currentTextMd5Hash = m_document->scenarioXmlHash();
 	if (_position == 0 && _charsRemoved == _charsAdded
 		&& _charsAdded == m_document->characterCount() && !m_modelItems.isEmpty()) {
-		//
-		// ... на самом ли деле текст изменился?
-		//
-		if (currentTextMd5Hash == m_lastTextMd5Hash) {
-			return;
-		}
+		return;
 	}
 
 	//
 	// Сохраняем позицию начала правок для последующей корректировки
 	//
 	m_lastChangeStartPosition = _position;
-
-	//
-	// Сохранить md5 хэш текста документа
-	//
-	m_lastTextMd5Hash = currentTextMd5Hash;
 
 	//
 	// Если были удалены данные

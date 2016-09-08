@@ -82,9 +82,6 @@ void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocu
 
 	m_editor->setScenarioDocument(_document);
 	m_editor->setWatermark(_isDraft ? tr("DRAFT") : QString::null);
-	if (_document != 0) {
-		m_lastTextMd5Hash = _document->scenarioXmlHash();
-	}
 
 	initEditorConnections();
 }
@@ -432,13 +429,8 @@ void ScenarioTextEditWidget::aboutCursorPositionChanged()
 
 void ScenarioTextEditWidget::aboutTextChanged()
 {
-	if (BusinessLogic::ScenarioTextDocument* scenario =
-		qobject_cast<BusinessLogic::ScenarioTextDocument*>(m_editor->document())) {
-		const QByteArray currentTextMd5Hash = scenario->scenarioXmlHash();
-		if (m_lastTextMd5Hash != currentTextMd5Hash) {
-			emit textChanged();
-			m_lastTextMd5Hash = currentTextMd5Hash;
-		}
+	if (!m_editor->document()->isEmpty()) {
+		emit textChanged();
 	}
 }
 

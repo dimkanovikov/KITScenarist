@@ -245,11 +245,6 @@ namespace BusinessLogic
 		QMap<int, ScenarioModelItem*> m_modelItems;
 
 		/**
-		 * @brief MD5-хэш текста сценария, используется для отслеживания изменённости текста
-		 */
-		QByteArray m_lastTextMd5Hash;
-
-		/**
 		 * @brief Флаг операции обновления описания сцены, для предотвращения рекурсии
 		 */
 		bool m_inSceneDescriptionUpdate;

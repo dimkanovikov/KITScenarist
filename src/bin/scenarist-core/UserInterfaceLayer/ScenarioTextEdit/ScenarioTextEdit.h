@@ -213,11 +213,6 @@ namespace UserInterface
 
 	private slots:
 		/**
-		 * @brief Вспомогательный слот для корректировки отображения больших документов
-		 */
-		void aboutCorrectRepaint();
-
-		/**
 		 * @brief Скорректировать позиции курсоров соавторов
 		 */
 		void aboutCorrectAdditionalCursors(int _position, int _charsRemoved, int _charsAdded);

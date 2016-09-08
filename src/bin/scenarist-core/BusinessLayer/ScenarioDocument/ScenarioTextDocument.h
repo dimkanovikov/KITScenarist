@@ -45,11 +45,6 @@ namespace BusinessLogic
 		QString scenarioXml() const;
 
 		/**
-		 * @brief Получить текущий хэш сценария
-		 */
-		QByteArray scenarioXmlHash() const;
-
-		/**
 		 * @brief Загрузить сценарий
 		 */
 		void load(const QString& _scenarioXml);
