@@ -93,6 +93,11 @@ protected:
 	virtual void initConnections();
 
 	/**
+	 * @brief Виджет заголовок
+	 */
+	virtual QWidget* titleWidget() const;
+
+	/**
 	 * @brief Виджет на который нужно установить фокус при отображении
 	 */
 	virtual QWidget* focusedOnExec() const;
