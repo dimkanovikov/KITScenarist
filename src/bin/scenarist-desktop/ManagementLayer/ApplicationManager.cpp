@@ -1444,7 +1444,7 @@ void ApplicationManager::initConnections()
 	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
 	connect(m_synchronizationManager, SIGNAL(loginAccepted()),
-            m_startUpManager, SLOT(aboutUserLogged()));
+            m_startUpManager, SLOT(userLogged()));
 	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
 			this, SLOT(aboutUserUnlogged()));
 	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),

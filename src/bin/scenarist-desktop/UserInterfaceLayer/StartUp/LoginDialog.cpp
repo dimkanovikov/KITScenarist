@@ -7,7 +7,7 @@ using UserInterface::LoginDialog;
 
 LoginDialog::LoginDialog(QWidget* _parent) :
 	QLightBoxDialog(_parent),
-    ui(new Ui::LoginDialog)
+    m_ui(new Ui::LoginDialog)
 {
     m_ui->setupUi(this);
 
@@ -110,6 +110,11 @@ void LoginDialog::showPrepared()
 QWidget* LoginDialog::focusedOnExec() const
 {
     return m_ui->loginEmail;
+}
+
+QWidget* LoginDialog::titleWidget() const
+{
+    return m_ui->tabs;
 }
 
 void LoginDialog::checkCode()

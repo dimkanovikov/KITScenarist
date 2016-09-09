@@ -100,6 +100,11 @@ namespace UserInterface
 		 */
 		QWidget* focusedOnExec() const;
 
+        /**
+         * @brief Табы в заголовке окна
+         */
+        QWidget* titleWidget() const override;
+
     private slots:
         /**
          * @brief Проверка, что проверочный код удовлетворяет шаблону проверочных кодов
