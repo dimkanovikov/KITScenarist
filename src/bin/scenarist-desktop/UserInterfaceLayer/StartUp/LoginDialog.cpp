@@ -9,80 +9,113 @@ LoginDialog::LoginDialog(QWidget* _parent) :
 	QLightBoxDialog(_parent),
     ui(new Ui::LoginDialog)
 {
-	ui->setupUi(this);
+    m_ui->setupUi(this);
 
 	initView();
 	initConnections();
 
-
-    isVerify = false;
+    m_isVerify = false;
 }
 
 LoginDialog::~LoginDialog()
 {
-	delete ui;
+    delete m_ui;
 }
 
 QString LoginDialog::loginEmail() const
 {
-    return ui->loginEmail->text();
+    return m_ui->loginEmail->text();
 }
 
 QString LoginDialog::signUpEmail() const
 {
-    return ui->signUpEmail->text();
+    return m_ui->signUpEmail->text();
 }
 
 QString LoginDialog::loginPassword() const
 {
-    return ui->loginPasswordEdit->text();
+    return m_ui->loginPasswordEdit->text();
 }
 
 QString LoginDialog::signUpPassword() const
 {
-    return ui->signUpPasswordEdit->text();
+    return m_ui->signUpPasswordEdit->text();
+}
+
+QString LoginDialog::verificationCode() const
+{
+    return m_ui->verificationCode->text();
+}
+
+QString LoginDialog::signUpType() const
+{
+    if (m_ui->startButton->isChecked()) {
+        return tr("start");
+    } else if (m_ui->basicButton->isChecked()) {
+        return tr("basic");
+    } else if (m_ui->maximalButton->isChecked()) {
+        return tr("maximal");
+    } else return tr("unexpected");
 }
 
 void LoginDialog::setLoginError(const QString& _error)
 {
-    ui->loginError->setStyleSheet("QLabel { color : red; }");
-    ui->loginError->setText(_error);
+    m_ui->loginError->setStyleSheet("QLabel { color : red; }");
+    m_ui->loginError->setText(_error);
     unblock();
 }
 
 void LoginDialog::setSignUpError(const QString &_error)
 {
-    ui->signUpError->setText(_error);
+    m_ui->signUpError->setText(_error);
     unblock();
 }
 
 void LoginDialog::setVerificationError(const QString &_error)
 {
-    ui->verificationError->setStyleSheet("QLabel { color : red; }");
-    ui->verificationError->setText(_error);
+    m_ui->verificationError->setStyleSheet("QLabel { color : red; }");
+    m_ui->verificationError->setText(_error);
     unblock();
 }
 
-QString LoginDialog::signUpType() const
+void LoginDialog::showVerification()
 {
-    if (ui->startButton->isChecked()) {
-        return tr("start");
-    } else if (ui->basicButton->isChecked()) {
-        return tr("basic");
-    } else if (ui->maximalButton->isChecked()) {
-        return tr("maximal");
-    } else return tr("unexpected");
+    m_isVerify = true;
+    m_ui->verificationError->setStyleSheet("QLabel { color : green; }");
+    m_ui->verificationError->setText(tr("your e-mail \"%1\" was sent a letter "
+                                      "with a confirmation code").arg(m_ui->signUpEmail->text()));
+    m_ui->stackedWidget->setCurrentWidget(m_ui->verificationPage);
+
+    unblock();
+    m_ui->verificationCode->setFocus();
 }
 
-QString LoginDialog::verificationCode() const
+void LoginDialog::showRestore()
 {
-    return ui->verificationCode->text();
+    m_ui->loginError->setStyleSheet("QLabel { color : green; }");
+    m_ui->loginError->setText(tr("your e-mail \"%1\" was sent a letter "
+                                      "with a password").arg(m_ui->loginEmail->text()));
+    m_ui->restorePassword->hide();
+
+    unblock();
+}
+
+void LoginDialog::showPrepared()
+{
+    clear();
+    QLightBoxDialog::show();
+    m_ui->loginEmail->setFocus();
+}
+
+QWidget* LoginDialog::focusedOnExec() const
+{
+    return m_ui->loginEmail;
 }
 
 void LoginDialog::checkCode()
 {
     QRegExpValidator validator(QRegExp("[0-9]{5}"));
-    QString s = ui->verificationCode->text();
+    QString s = m_ui->verificationCode->text();
     int pos = 0;
     if (validator.validate(s, pos) == QValidator::Acceptable) {
         block();
@@ -90,81 +123,76 @@ void LoginDialog::checkCode()
     }
 }
 
-void LoginDialog::showVerification()
+void LoginDialog::cancelVerify()
 {
-    isVerify = true;
-    ui->verificationError->setStyleSheet("QLabel { color : green; }");
-    ui->verificationError->setText(tr("your e-mail \"%1\" was sent a letter "
-                                      "with a confirmation code").arg(ui->signUpEmail->text()));
-    ui->stackedWidget->setCurrentWidget(ui->verificationPage);
-
-    unblock();
-    ui->verificationCode->setFocus();
-}
-
-void LoginDialog::showRestore()
-{
-    ui->loginError->setStyleSheet("QLabel { color : green; }");
-    ui->loginError->setText(tr("your e-mail \"%1\" was sent a letter "
-                                      "with a password").arg(ui->loginEmail->text()));
-    ui->restorePassword->hide();
-
-    unblock();
-}
-
-void LoginDialog::setLoginPage()
-{
-    isVerify = false;
-    ui->tabs->setCurrentIndex(0);
-}
-
-void LoginDialog::clear()
-{
-    ui->loginEmail->clear();
-    ui->loginPasswordEdit->clear();
-    ui->signUpEmail->clear();
-    ui->signUpPasswordEdit->clear();
-    ui->verificationError->clear();
-
-    ui->tabs->setCurrentIndex(0);
-    ui->basicButton->setChecked(true);
+    m_isVerify = false;
     switchWidget();
-
-    isVerify = false;
-
-    ui->loginError->clear();
-    ui->signUpError->clear();
-    ui->verificationError->clear();
-
-    ui->restorePassword->show();
-
 }
 
-QWidget* LoginDialog::focusedOnExec() const
+void LoginDialog::switchWidget()
 {
-    return ui->loginEmail;
+    if (m_ui->tabs->currentIndex() == 0) {
+        m_ui->stackedWidget->setCurrentWidget(m_ui->loginPage);
+        m_ui->loginEmail->setFocus();
+    } else if (m_isVerify) {
+        m_ui->stackedWidget->setCurrentWidget(m_ui->verificationPage);
+        m_ui->verificationCode->setFocus();
+    } else {
+        m_ui->stackedWidget->setCurrentWidget(m_ui->signUpPage);
+        m_ui->signUpEmail->setFocus();
+    }
+}
+
+void LoginDialog::block()
+{
+    m_ui->tabs->setEnabled(false);
+
+    m_ui->stackedWidget->setEnabled(false);
+
+    showProgress();
+}
+
+void LoginDialog::unblock()
+{
+    m_ui->tabs->setEnabled(true);
+
+    m_ui->stackedWidget->setEnabled(true);
+
+    hideProgress();
+}
+
+void LoginDialog::needAccept()
+{
+    //
+    // Эмулируем нажатия кнопок Accept
+    //
+    if (m_ui->tabs->currentIndex() == 0) {
+        emit m_ui->loginButtons->accepted();
+    } else if (!m_isVerify) {
+        emit m_ui->signUpButtons->accepted();
+    }
 }
 
 void LoginDialog::initView()
 {
 
-    ui->loginError->clear();
-    ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
+    m_ui->loginError->clear();
+    m_ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
 
-    ui->signUpError->clear();
-    ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
+    m_ui->signUpError->clear();
+    m_ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
 
-    ui->verificationError->setText("");
+    m_ui->verificationError->clear();
 
     //
     // Красивые табы
     //
-    ui->tabs->addTab(tr("Login"));
-    ui->tabs->addTab(tr("Sign Up"));
-    ui->tabs->setProperty("inTopPanel", true);
+    m_ui->tabs->addTab(tr("Login"));
+    m_ui->tabs->addTab(tr("Sign Up"));
+    m_ui->tabs->setProperty("inTopPanel", true);
 
-    QWidget::setTabOrder(ui->loginEmail, ui->loginPasswordEdit);
-    QWidget::setTabOrder(ui->signUpEmail, ui->signUpPasswordEdit);
+    QWidget::setTabOrder(m_ui->loginEmail, m_ui->loginPasswordEdit);
+    QWidget::setTabOrder(m_ui->signUpEmail, m_ui->signUpPasswordEdit);
 
     QLightBoxDialog::initView();
 }
@@ -174,94 +202,56 @@ void LoginDialog::initConnections()
     connect(this, &LoginDialog::accepted, this, &LoginDialog::needAccept);
     connect(this, &LoginDialog::rejected, this, &LoginDialog::hide);
 
-    connect(ui->loginButtons, &QDialogButtonBox::accepted,
+    connect(m_ui->loginButtons, &QDialogButtonBox::accepted,
             this, &LoginDialog::block);
-    connect(ui->loginButtons, &QDialogButtonBox::accepted,
+    connect(m_ui->loginButtons, &QDialogButtonBox::accepted,
             this, &LoginDialog::login);
-    connect(ui->loginButtons, &QDialogButtonBox::rejected,
+    connect(m_ui->loginButtons, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
 
-    connect(ui->signUpButtons, &QDialogButtonBox::accepted,
+    connect(m_ui->signUpButtons, &QDialogButtonBox::accepted,
             this, &LoginDialog::block);
-    connect(ui->signUpButtons, &QDialogButtonBox::accepted,
+    connect(m_ui->signUpButtons, &QDialogButtonBox::accepted,
             this, &LoginDialog::signUp);
-    connect(ui->signUpButtons, &QDialogButtonBox::rejected,
+    connect(m_ui->signUpButtons, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
 
-    connect(ui->ButtonsVerification, &QDialogButtonBox::rejected,
+    connect(m_ui->buttonsVerification, &QDialogButtonBox::rejected,
             this, &LoginDialog::cancelVerify);
-    connect(ui->ButtonsVerification, &QDialogButtonBox::rejected,
+    connect(m_ui->buttonsVerification, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
 
-    connect(ui->restorePassword, &QPushButton::clicked,
+    connect(m_ui->restorePassword, &QPushButton::clicked,
             this, &LoginDialog::block);
-    connect(ui->restorePassword, &QPushButton::clicked,
+    connect(m_ui->restorePassword, &QPushButton::clicked,
             this, &LoginDialog::restore);
 
-    connect(ui->verificationCode, &QLineEdit::textChanged,
+    connect(m_ui->verificationCode, &QLineEdit::textChanged,
             this, &LoginDialog::checkCode);
 
-    connect(ui->tabs, &TabBarExpanded::currentChanged,
+    connect(m_ui->tabs, &TabBarExpanded::currentChanged,
             this, &LoginDialog::switchWidget);;
 
 	QLightBoxDialog::initConnections();
 }
 
-void LoginDialog::show()
+void LoginDialog::clear()
 {
-    clear();
-    QLightBoxDialog::show();
-    ui->loginEmail->setFocus();
-}
+    m_ui->loginEmail->clear();
+    m_ui->loginPasswordEdit->clear();
+    m_ui->signUpEmail->clear();
+    m_ui->signUpPasswordEdit->clear();
+    m_ui->verificationError->clear();
 
-void LoginDialog::needAccept()
-{
-    //
-    // Эмулируем нажатия кнопок Accept
-    if (ui->tabs->currentIndex() == 0) {
-        emit ui->loginButtons->accepted();
-    }
-    else if (!isVerify) {
-        emit ui->signUpButtons->accepted();
-    }
-}
-
-void LoginDialog::block()
-{
-    ui->tabs->setEnabled(false);
-
-    ui->stackedWidget->setEnabled(false);
-
-    showProgress();
-}
-
-void LoginDialog::unblock()
-{
-    ui->tabs->setEnabled(true);
-
-    ui->stackedWidget->setEnabled(true);
-
-    hideProgress();
-}
-
-void LoginDialog::cancelVerify()
-{
-    isVerify = false;
+    m_ui->tabs->setCurrentIndex(0);
+    m_ui->basicButton->setChecked(true);
     switchWidget();
-}
 
-void LoginDialog::switchWidget()
-{
-    if (ui->tabs->currentIndex() == 0) {
-        ui->stackedWidget->setCurrentWidget(ui->loginPage);
-        ui->loginEmail->setFocus();
-    }
-    else if (isVerify) {
-        ui->stackedWidget->setCurrentWidget(ui->verificationPage);
-        ui->verificationCode->setFocus();
-    }
-    else {
-        ui->stackedWidget->setCurrentWidget(ui->signUpPage);
-        ui->signUpEmail->setFocus();
-    }
+    m_isVerify = false;
+
+    m_ui->loginError->clear();
+    m_ui->signUpError->clear();
+    m_ui->verificationError->clear();
+
+    m_ui->restorePassword->show();
 }

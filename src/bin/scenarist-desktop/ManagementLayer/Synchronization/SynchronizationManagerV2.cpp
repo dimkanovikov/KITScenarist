@@ -47,6 +47,9 @@ void SynchronizationManagerV2::autoLogin()
 
 void SynchronizationManagerV2::login(const QString &_email, const QString &_password)
 {
+    //
+    // FIXME: Поменять в рабочей версии
+    //
     bool success = false;
 
     QEventLoop event;
@@ -59,8 +62,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
             || (_email == "user" && _password == "user")) { // :)
         success = true;
         m_sessionKey = "12345";
-    }
-    else {
+    } else {
         handleError(tr("Wrong email or password"), 100);
     }
 
@@ -85,6 +87,9 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 void SynchronizationManagerV2::signUp(const QString& _email, const QString& _password,
                                             const QString& _type)
 {
+    //
+    // FIXME: Поменять в рабочей версии
+    //
     QEventLoop event;
     QTimer::singleShot(2000, &event, SLOT(quit()));
     event.exec();
@@ -92,8 +97,7 @@ void SynchronizationManagerV2::signUp(const QString& _email, const QString& _pas
     bool success = false;
     if (_email == "user" && _password == "user") {
         success = true;
-    }
-    else {
+    } else {
         handleError("Wrong email", 404);
     }
 
@@ -104,6 +108,9 @@ void SynchronizationManagerV2::signUp(const QString& _email, const QString& _pas
 
 void SynchronizationManagerV2::verification(const QString& _code)
 {
+    //
+    // FIXME: Поменять в рабочей версии
+    //
     QEventLoop event;
     QTimer::singleShot(2000, &event, SLOT(quit()));
     event.exec();
@@ -111,8 +118,7 @@ void SynchronizationManagerV2::verification(const QString& _code)
     bool success = false;
     if (_code == "11111") {
         success = true;
-    }
-    else {
+    } else {
         handleError("Wrong code", 505);
     }
 
@@ -123,6 +129,9 @@ void SynchronizationManagerV2::verification(const QString& _code)
 
 void SynchronizationManagerV2::restorePassword(const QString &_email)
 {
+    //
+    // FIXME: Поменять в рабочей версии
+    //
     QEventLoop event;
     QTimer::singleShot(2000, &event, SLOT(quit()));
     event.exec();
@@ -130,8 +139,7 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     bool success = false;
     if (_email == "recovery") {
         success = true;
-    }
-    else {
+    } else {
         handleError("Wrong email", 606);
     }
 

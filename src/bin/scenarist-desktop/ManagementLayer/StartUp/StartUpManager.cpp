@@ -45,10 +45,10 @@ QWidget* StartUpManager::view() const
 	return m_view;
 }
 
-void StartUpManager::aboutUserLogged()
+void StartUpManager::userLogged()
 {
-	const bool isLogged = true;
-	m_view->setUserLogged(isLogged, m_userName);
+    const bool isLogged = true;
+    m_view->setUserLogged(isLogged, m_userName);
     m_loginDialog->hide();
 }
 
@@ -60,11 +60,6 @@ void StartUpManager::userSignUp()
     m_loginDialog->showVerification();
 }
 
-void StartUpManager::userPassRestored()
-{
-    m_loginDialog->showRestore();
-}
-
 void StartUpManager::userVerified()
 {
     //
@@ -73,7 +68,28 @@ void StartUpManager::userVerified()
     emit loginRequested(m_loginDialog->signUpEmail(), m_loginDialog->signUpPassword());
 }
 
-void StartUpManager::aboutRetryLogin(const QString& _error)
+void StartUpManager::userPassRestored()
+{
+    m_loginDialog->showRestore();
+}
+
+void StartUpManager::aboutUserUnlogged()
+{
+    const bool isLogged = false;
+    m_view->setUserLogged(isLogged);
+}
+
+void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
+{
+	m_view->setRecentProjects(_model);
+}
+
+void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
+{
+	m_view->setRemoteProjects(_model);
+}
+
+void StartUpManager::retryLogin(const QString& _error)
 {
     //
     // Покажем пользователю ошибку авторизации
@@ -93,23 +109,8 @@ void StartUpManager::retryVerify(const QString &_error)
 {
     //
     // Покажем пользователю ошибку ввода проверочного кода
+    //
     m_loginDialog->setVerificationError(_error);
-}
-
-void StartUpManager::aboutUserUnlogged()
-{
-	const bool isLogged = false;
-	m_view->setUserLogged(isLogged);
-}
-
-void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
-{
-	m_view->setRecentProjects(_model);
-}
-
-void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
-{
-	m_view->setRemoteProjects(_model);
 }
 
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
@@ -207,8 +208,9 @@ void StartUpManager::initConnections()
     // Показать пользователю диалог авторизации/регистрации
     // Предварительно его очистив
     //
-    connect(m_view, &StartUpView::loginClicked,
-            [this]() {m_loginDialog->show();});
+    connect(m_view, &StartUpView::loginClicked, [this] {
+        m_loginDialog->showPrepared();
+    });
 
     connect(m_view, &StartUpView::logoutClicked,
             this, &StartUpManager::logoutRequested);
@@ -227,17 +229,21 @@ void StartUpManager::initConnections()
     connect(m_view, &StartUpView::refreshProjects,
             this, &StartUpManager::refreshProjectsRequested);
 
-    connect(m_loginDialog, &LoginDialog::login,
-            [this]() {emit loginRequested(m_loginDialog->loginEmail(),
-                                          m_loginDialog->loginPassword());});
-    connect(m_loginDialog, &LoginDialog::signUp,
-            [this]() {emit signUpRequested(m_loginDialog->signUpEmail(),
-                                           m_loginDialog->signUpPassword(),
-                                           m_loginDialog->signUpType());});
-    connect(m_loginDialog, &LoginDialog::verify,
-            [this]() {emit verifyRequested(m_loginDialog->verificationCode());});
-    connect(m_loginDialog, &LoginDialog::restore,
-            [this]() {emit restoreRequested(m_loginDialog->loginEmail());});
+    connect(m_loginDialog, &LoginDialog::login, [this] {
+        emit loginRequested(m_loginDialog->loginEmail(),
+                            m_loginDialog->loginPassword());}
+    );
+    connect(m_loginDialog, &LoginDialog::signUp, [this] {
+        emit signUpRequested(m_loginDialog->signUpEmail(),
+                             m_loginDialog->signUpPassword(),
+                             m_loginDialog->signUpType());
+    });
+    connect(m_loginDialog, &LoginDialog::verify, [this] {
+        emit verifyRequested(m_loginDialog->verificationCode());
+    });
+    connect(m_loginDialog, &LoginDialog::restore, [this] {
+        emit restoreRequested(m_loginDialog->loginEmail());
+    });
 }
 
 void StartUpManager::checkNewVersion()

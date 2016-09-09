@@ -674,7 +674,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		case 100:
 		case 101: {
 			error = tr("Incorrect username or password.");
-			m_startUpManager->aboutRetryLogin(error);
+			m_startUpManager->retryLogin(error);
 			break;
 		}
 
@@ -766,7 +766,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case 606: {
             error = tr("Wrong email");
-            m_startUpManager->aboutRetryLogin(error);
+            m_startUpManager->retryLogin(error);
             break;
         }
 
@@ -800,7 +800,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			//
 			// Имитируем успешную авторизацию
 			//
-			m_startUpManager->aboutUserLogged();
+			m_startUpManager->userLogged();
 			//
 			// и загружаем список доступных проектов из кэша
 			//
@@ -1460,7 +1460,7 @@ void ApplicationManager::initConnections()
 	connect(m_synchronizationManager, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
 
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted,
-            m_startUpManager, &StartUpManager::aboutUserLogged);
+            m_startUpManager, &StartUpManager::userLogged);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::signUped,
             m_startUpManager, &StartUpManager::userSignUp);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::verified,

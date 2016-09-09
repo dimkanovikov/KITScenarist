@@ -32,7 +32,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="loginPage">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -406,7 +406,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QDialogButtonBox" name="ButtonsVerification">
+          <widget class="QDialogButtonBox" name="buttonsVerification">
            <property name="standardButtons">
             <set>QDialogButtonBox::Cancel</set>
            </property>

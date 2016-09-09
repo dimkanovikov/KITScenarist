@@ -32,7 +32,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Пользователь с заданным именем успешно авторизован на сервере
 		 */
-		void aboutUserLogged();
+        void userLogged();
 
         /**
          * @brief Пользователь успешно отправил данные для регистрации
@@ -51,11 +51,6 @@ namespace ManagementLayer
         void userPassRestored();
 
 		/**
-		 * @brief Попробовать повторно авторизоваться, после неудачной попытки
-		 */
-		void aboutRetryLogin(const QString& _error);
-
-		/**
 		 * @brief Пользователь закрыл авторизацию
 		 */
 		void aboutUserUnlogged();
@@ -69,6 +64,11 @@ namespace ManagementLayer
 		 * @brief Установить список проектов из облака
 		 */
 		void setRemoteProjects(QAbstractItemModel* _model);
+
+        /**
+         * @brief Попробовать повторно авторизоваться, после неудачной попытки
+         */
+        void retryLogin(const QString& _error);
 
         /**
          * @brief Попробовать повторно зарегистрироваться

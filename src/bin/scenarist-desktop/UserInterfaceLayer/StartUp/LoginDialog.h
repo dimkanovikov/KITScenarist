@@ -36,8 +36,7 @@ namespace UserInterface
         QString loginPassword() const;
 
         /**
-         * @brief Пароль с виджета регис
-    m_tabs->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);трации
+         * @brief Пароль с виджета регистрации
          */
         QString signUpPassword() const;
 
@@ -58,8 +57,6 @@ namespace UserInterface
         void setSignUpError(const QString& _error);
         void setVerificationError(const QString& _error);
 
-        void setLoginPage();
-
         /**
          * @brief Установить текст для виджета проверочного кода
          */
@@ -71,11 +68,10 @@ namespace UserInterface
         void showRestore();
 
         /**
-         * @brief Разблокировать окно для пользователя
+         * @brief Показать окно, предварительно очистив
+         *        и установив на авторизацию
          */
-        void unblock();
-
-        void show();
+        void showPrepared();
 
     signals:
         /**
@@ -126,6 +122,11 @@ namespace UserInterface
         void block();
 
         /**
+         * @brief Разблокировать окно для пользователя
+         */
+        void unblock();
+
+        /**
          * @brief Пользователь нажал Enter
          *        В зависимости от окна, сделать нужный сигнал
          */
@@ -148,14 +149,14 @@ namespace UserInterface
         void clear();
 
 	private:
-		Ui::LoginDialog *ui;
+        Ui::LoginDialog *m_ui;
 
         /**
          * @brief Поскольку один чекбокс на 2 виджета
          *        True - окно ввода проверочного кода
          *        False - окно регистрации
          */
-        bool isVerify;
+        bool m_isVerify;
 	};
 }
 

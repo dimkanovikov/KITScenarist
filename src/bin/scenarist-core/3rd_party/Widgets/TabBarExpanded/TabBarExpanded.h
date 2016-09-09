@@ -11,7 +11,7 @@ public:
     explicit TabBarExpanded(QWidget* _parent = 0);
 
 protected:
-    QSize tabSizeHint(int _index) const;
+    QSize tabSizeHint(int _index) const override;
 };
 
 #endif // TABBAREXPANDED_H

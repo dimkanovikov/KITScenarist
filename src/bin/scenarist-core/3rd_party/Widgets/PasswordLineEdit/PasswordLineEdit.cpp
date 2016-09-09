@@ -14,8 +14,14 @@ PasswordLineEdit::PasswordLineEdit(QWidget* _parent) :
     m_eye->setVisible(true);
     connect(m_eye, &QToolButton::clicked, this, &PasswordLineEdit::eyeClicked);
 
-    isAsterisk = true;
+    m_isAsterisk = true;
     QLineEdit::setEchoMode(QLineEdit::Password);
+}
+
+void PasswordLineEdit::resetAsterisk()
+{
+    m_isAsterisk = false;
+    eyeClicked();
 }
 
 void PasswordLineEdit::resizeEvent(QResizeEvent *_event)
@@ -36,19 +42,12 @@ void PasswordLineEdit::resizeEvent(QResizeEvent *_event)
 
 void PasswordLineEdit::eyeClicked()
 {
-    if (isAsterisk) {
+    if (m_isAsterisk) {
         m_eye->setIcon(QIcon(":Graphics/Icons/eye.png"));
         QLineEdit::setEchoMode(QLineEdit::Normal);
-    }
-    else {
+    } else {
         m_eye->setIcon(QIcon(":Graphics/Icons/eye-off.png"));
         QLineEdit::setEchoMode(QLineEdit::Password);
     }
-    isAsterisk = !isAsterisk;
-}
-
-void PasswordLineEdit::resetAsterisk()
-{
-    isAsterisk = false;
-    eyeClicked();
+    m_isAsterisk = !m_isAsterisk;
 }

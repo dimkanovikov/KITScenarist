@@ -9,8 +9,7 @@ QSize TabBarExpanded::tabSizeHint(int _index) const
 {
     if (count() != 0) {
         return QSize(width() / count(), height());
-    }
-    else {
+    } else {
         return TabBar::tabSizeHint(_index);
     }
 }

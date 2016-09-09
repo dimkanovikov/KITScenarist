@@ -21,7 +21,7 @@ protected:
     /**
      * @brief Переопределим, чтобы добавить глаз
      */
-    void resizeEvent(QResizeEvent* _event);
+    void resizeEvent(QResizeEvent* _event) override;
 
 private slots:
     /**
@@ -39,7 +39,7 @@ private:
     /**
      * @brief Сейчас отображаются звездочки или нет
      */
-    bool isAsterisk;
+    bool m_isAsterisk;
 };
 
 #endif // PASSWORDLINEEDIT_H
