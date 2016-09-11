@@ -111,7 +111,15 @@ namespace {
 }
 
 
-QString ScenarioXml::defaultXml()
+QString ScenarioXml::defaultCardsXml()
+{
+	return "<?xml version=\"1.0\"?>\n"
+		   "<cards_xml viewx=\"499\" viewy=\"273\">\n"
+		   "<ActionShape id=\"0\" x=\"64\" y=\"48\" width=\"211\" height=\"96\" card_type=\"0\" title=\"\" description=\"\"/>\n"
+		   "</cards_xml>";
+}
+
+QString ScenarioXml::defaultTextXml()
 {
 	return makeMimeFromXml("<scene_heading>\n<v><![CDATA[]]></v>\n</scene_heading>\n");
 }

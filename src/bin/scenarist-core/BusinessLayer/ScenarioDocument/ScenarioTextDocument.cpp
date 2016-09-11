@@ -100,7 +100,7 @@ void ScenarioTextDocument::load(const QString& _scenarioXml)
 	//
 	QString scenarioXml = _scenarioXml;
 	if (scenarioXml.isEmpty()) {
-		scenarioXml = m_xmlHandler->defaultXml();
+		scenarioXml = m_xmlHandler->defaultTextXml();
 	}
 
 	//

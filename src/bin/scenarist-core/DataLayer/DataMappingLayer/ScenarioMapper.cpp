@@ -6,7 +6,7 @@ using namespace DataMappingLayer;
 
 
 namespace {
-	const QString COLUMNS = " id, text, is_draft ";
+	const QString COLUMNS = " id, scheme, text, is_draft ";
 	const QString TABLE_NAME = " scenario ";
 }
 
@@ -51,12 +51,13 @@ QString ScenarioMapper::insertStatement(DomainObject* _subject, QVariantList& _i
 	QString insertStatement =
 			QString("INSERT INTO " + TABLE_NAME +
 					" (" + COLUMNS + ") "
-					" VALUES(?, ?, ?) "
+					" VALUES(?, ?, ?, ?) "
 					);
 
 	Scenario* scenario = dynamic_cast<Scenario*>(_subject );
 	_insertValues.clear();
 	_insertValues.append(scenario->id().value());
+	_insertValues.append(scenario->scheme());
 	_insertValues.append(scenario->text());
 	_insertValues.append(scenario->isDraft() ? "1" : "0");
 
@@ -67,13 +68,15 @@ QString ScenarioMapper::updateStatement(DomainObject* _subject, QVariantList& _u
 {
 	QString updateStatement =
 			QString("UPDATE " + TABLE_NAME +
-					" SET text = ?, "
+					" SET scheme = ?, "
+					" text = ?, "
 					" is_draft = ? "
 					" WHERE id = ? "
 					);
 
 	Scenario* scenario = dynamic_cast<Scenario*>(_subject);
 	_updateValues.clear();
+	_updateValues.append(scenario->scheme());
 	_updateValues.append(scenario->text());
 	_updateValues.append(scenario->isDraft() ? "1" : "0");
 	_updateValues.append(scenario->id().value());
@@ -93,15 +96,19 @@ QString ScenarioMapper::deleteStatement(DomainObject* _subject, QVariantList& _d
 
 DomainObject* ScenarioMapper::doLoad(const Identifier& _id, const QSqlRecord& _record)
 {
+	const QString scheme = _record.value("scheme").toString();
 	const QString text = _record.value("text").toString();
 	const bool isDraft = _record.value("is_draft").toInt();
 
-	return new Scenario(_id, text, isDraft);
+	return new Scenario(_id, scheme, text, isDraft);
 }
 
 void ScenarioMapper::doLoad(DomainObject* _domainObject, const QSqlRecord& _record)
 {
 	if (Scenario* scenario = dynamic_cast<Scenario*>(_domainObject)) {
+		const QString scheme = _record.value("scheme").toString();
+		scenario->setScheme(scheme);
+
 		const QString text = _record.value("text").toString();
 		scenario->setText(text);
 

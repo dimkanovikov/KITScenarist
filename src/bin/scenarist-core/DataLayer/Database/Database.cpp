@@ -350,6 +350,7 @@ void Database::createTables(QSqlDatabase& _database)
 	q_creator.exec("CREATE TABLE scenario "
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "scheme TEXT NOT NULL, "
 				   "text TEXT NOT NULL, "
 				   "is_draft INTEGER NOT NULL DEFAULT(0) "
 				   ")"
@@ -568,6 +569,14 @@ void Database::updateDatabase(QSqlDatabase& _database)
 			if (versionMinor < 5
 				|| versionBuild <= 8) {
 				updateDatabaseTo_0_5_9(_database);
+			}
+		}
+		//
+		// 0.6.x
+		//
+		if (versionMinor <= 6) {
+			if (versionBuild <= 1) {
+				updateDatabaseTo_0_7_0(_database);
 			}
 		}
 	}
@@ -907,7 +916,7 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 		//
 		q_updater.exec("SELECT text FROM scenario WHERE is_draft = 0");
 		if (q_updater.next()) {
-			const QString defaultScenarioXml = BusinessLogic::ScenarioXml::defaultXml();
+			const QString defaultScenarioXml = BusinessLogic::ScenarioXml::defaultTextXml();
 			const QString scenarioXml = q_updater.record().value("text").toString();
 			const QString undoPatch = DiffMatchPatchHelper::makePatchXml(scenarioXml, defaultScenarioXml);
 			const QString redoPatch = DiffMatchPatchHelper::makePatchXml(defaultScenarioXml, scenarioXml);
@@ -1100,6 +1109,22 @@ void Database::updateDatabaseTo_0_5_9(QSqlDatabase& _database)
 			q_updater.addBindValue(id);
 			q_updater.exec();
 		}
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_7_0(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Добавление поля в таблицу сценария
+		//
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN scheme TEXT NOT NULL DEFAULT('')");
 	}
 
 	_database.commit();

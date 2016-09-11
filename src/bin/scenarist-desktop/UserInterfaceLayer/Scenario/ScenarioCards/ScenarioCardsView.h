@@ -19,6 +19,32 @@ namespace UserInterface {
 	public:
 		explicit ScenarioCardsView(QWidget* _parent = 0);
 
+		/**
+		 * @brief Очистить схему
+		 */
+		void clear();
+
+		/**
+		 * @brief Загрузить схему из xml-строки
+		 */
+		void load(const QString& _xml);
+
+		/**
+		 * @brief Получить xml-строку текущей схемы
+		 */
+		QString save() const;
+
+		/**
+		 * @brief Установить режим работы со сценарием
+		 */
+		void setCommentOnly(bool _isCommentOnly);
+
+	signals:
+		/**
+		 * @brief Схема карточек изменена
+		 */
+		void schemeChanged();
+
 	private:
 		/**
 		 * @brief Настроить представление
@@ -40,16 +66,6 @@ namespace UserInterface {
 		 * @brief Редактор карточек
 		 */
 		ActivityEdit* m_cardsEdit;
-
-		/**
-		 * @brief Кнопка отмены действия
-		 */
-		FlatButton* m_undo;
-
-		/**
-		 * @brief Кнопка повтора действия
-		 */
-		FlatButton* m_redo;
 
 		/**
 		 * @brief Кнопка добавления карточки

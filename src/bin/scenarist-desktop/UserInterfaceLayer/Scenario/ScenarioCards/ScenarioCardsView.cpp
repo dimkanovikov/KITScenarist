@@ -15,8 +15,6 @@ using UserInterface::ScenarioCardsView;
 ScenarioCardsView::ScenarioCardsView(QWidget* _parent) :
 	QWidget(_parent),
 	m_cardsEdit(new ActivityEdit(_parent)),
-	m_undo(new FlatButton(_parent)),
-	m_redo(new FlatButton(_parent)),
 	m_addCard(new FlatButton(_parent)),
 	m_addNote(new FlatButton(_parent)),
 	m_addHLine(new FlatButton(_parent)),
@@ -31,14 +29,32 @@ ScenarioCardsView::ScenarioCardsView(QWidget* _parent) :
 	initStyleSheet();
 }
 
+void ScenarioCardsView::clear()
+{
+	m_cardsEdit->clear();
+}
+
+void ScenarioCardsView::load(const QString& _xml)
+{
+	m_cardsEdit->load(_xml);
+}
+
+QString ScenarioCardsView::save() const
+{
+	return m_cardsEdit->save();
+}
+
+void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
+{
+	m_addCard->setEnabled(!_isCommentOnly);
+	m_addNote->setEnabled(!_isCommentOnly);
+	m_addHLine->setEnabled(!_isCommentOnly);
+	m_addVLine->setEnabled(!_isCommentOnly);
+	m_sort->setEnabled(!_isCommentOnly);
+}
+
 void ScenarioCardsView::initView()
 {
-	m_undo->setIcons(QIcon(":/Graphics/Icons/Editing/undo.png"));
-	m_undo->setToolTip(ShortcutHelper::makeToolTip(tr("Undo last action"), "Ctrl+Z"));
-
-	m_redo->setIcons(QIcon(":/Graphics/Icons/Editing/redo.png"));
-	m_redo->setToolTip(ShortcutHelper::makeToolTip(tr("Redo last action"), "Shift+Ctrl+Z"));
-
 	m_addCard->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
 	m_addCard->setToolTip(tr("Add new card"));
 
@@ -56,9 +72,11 @@ void ScenarioCardsView::initView()
 
 	m_moveToDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"));
 	m_moveToDraft->setToolTip(tr("Draft"));
+	m_moveToDraft->hide();
 
 	m_moveToScript->setIcons(QIcon(":/Graphics/Icons/Mobile/script.png"));
 	m_moveToScript->setToolTip(tr("Script"));
+	m_moveToScript->hide();
 
 	m_toolbarSpacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
@@ -66,8 +84,6 @@ void ScenarioCardsView::initView()
 	QHBoxLayout* toolbarLayout = new QHBoxLayout(toolbar);
 	toolbarLayout->setContentsMargins(QMargins());
 	toolbarLayout->setSpacing(0);
-	toolbarLayout->addWidget(m_undo);
-	toolbarLayout->addWidget(m_redo);
 	toolbarLayout->addWidget(m_addCard);
 	toolbarLayout->addWidget(m_addNote);
 	toolbarLayout->addWidget(m_addHLine);
@@ -88,8 +104,7 @@ void ScenarioCardsView::initView()
 
 void ScenarioCardsView::initConnections()
 {
-	connect(m_undo, &FlatButton::clicked, m_cardsEdit, &ActivityEdit::undo);
-	connect(m_redo, &FlatButton::clicked, m_cardsEdit, &ActivityEdit::redo);
+	connect(m_cardsEdit, &ActivityEdit::schemeChanged, this, &ScenarioCardsView::schemeChanged);
 
 
 	connect(m_addCard, &FlatButton::clicked, [=] {
@@ -99,8 +114,6 @@ void ScenarioCardsView::initConnections()
 
 void ScenarioCardsView::initStyleSheet()
 {
-	m_undo->setProperty("inTopPanel", true);
-	m_redo->setProperty("inTopPanel", true);
 	m_addCard->setProperty("inTopPanel", true);
 	m_addNote->setProperty("inTopPanel", true);
 	m_addHLine->setProperty("inTopPanel", true);
