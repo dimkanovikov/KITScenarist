@@ -72,7 +72,9 @@ QString LoginDialog::signUpType() const
         return tr("basic");
     } else if (m_ui->maximalButton->isChecked()) {
         return tr("maximal");
-    } else return tr("unexpected");
+    } else {
+        return tr("unexpected");
+    }
 }
 
 void LoginDialog::setLoginError(const QString& _error)
