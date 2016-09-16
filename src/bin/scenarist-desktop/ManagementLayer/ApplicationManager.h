@@ -21,8 +21,7 @@ namespace ManagementLayer
 {
 	class ProjectsManager;
 	class StartUpManager;
-	class ResearchManager;
-	class ScenarioCardsManager;
+    class ResearchManager;
 	class ScenarioManager;
 	class CharactersManager;
 	class LocationsManager;
@@ -296,12 +295,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Управляющий страницей разработки
 		 */
-		ResearchManager* m_researchManager;
-
-		/**
-		 * @brief Управляющий карточками сценария
-		 */
-		ScenarioCardsManager* m_scenarioCardsManager;
+        ResearchManager* m_researchManager;
 
 		/**
 		 * @brief Управляющий сценарием

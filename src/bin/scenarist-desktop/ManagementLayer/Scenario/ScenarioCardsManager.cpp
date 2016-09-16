@@ -13,71 +13,51 @@ using UserInterface::ScenarioCardsView;
 ScenarioCardsManager::ScenarioCardsManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new ScenarioCardsView(_parentWidget)),
-	m_scenario(nullptr)
+    m_scenario(nullptr),
+    m_model(nullptr)
 {
 	initConnections();
 }
 
 QWidget* ScenarioCardsManager::view() const
 {
-	return m_view;
+    return m_view;
 }
 
-void ScenarioCardsManager::loadCurrentProject()
+QString ScenarioCardsManager::save() const
 {
-	//
-	// Загрузим сценарий
-	//
-	m_scenario = DataStorageLayer::StorageFacade::scenarioStorage()->current();
-	QString scheme = m_scenario->scheme();
-	//
-	// ... если схема пуста, просим сформировать для нас её черновой вариант из текста
-	//
-	if (scheme.isEmpty()) {
-		emit needDirtyScheme();
-	}
-	//
-	// ... а если схема есть, то просто загружаем её
-	//
-	else {
-		m_view->load(m_scenario->scheme());
-	}
-
-	//
-	// TODO: загружать и черновик и чистовик, и использовать схему в соответствии с текущим режимом работы
-	//
+    return m_view->save();
 }
 
-void ScenarioCardsManager::loadCurrentProjectSettings(const QString& _projectPath)
+void ScenarioCardsManager::load(const QString& _xml)
 {
-	//
-	// TODO: текущий режим чистовик/черновик
-	//
+    //
+    // Загрузим сценарий
+    //
+    // ... если схема пуста, просим сформировать для нас её черновой вариант из текста
+    //
+    if (_xml.isEmpty()) {
+        emit needDirtyScheme();
+    }
+    //
+    // ... а если схема есть, то просто загружаем её
+    //
+    else {
+        m_view->load(_xml);
+    }
 }
 
-void ScenarioCardsManager::saveCurrentProject()
+void ScenarioCardsManager::setModel(BusinessLogic::ScenarioModel* _model)
 {
-	//
-	// Сохраняем сценарий
-	//
-	m_scenario->setScheme(m_view->save());
-	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenario);
-
-	//
-	// TODO: сохранять черновик
-	//
+    if (m_model != _model) {
+        m_model = _model;
+    }
 }
 
-void ScenarioCardsManager::saveCurrentProjectSettings(const QString& _projectPath)
+void ScenarioCardsManager::clear()
 {
-	//
-	// TODO: сохранять последний используемый режим
-	//
-}
-
-void ScenarioCardsManager::closeCurrentProject()
-{
-	m_view->clear();
+    m_view->clear();
+    m_model = nullptr;
 }
 
 void ScenarioCardsManager::setCommentOnly(bool _isCommentOnly)

@@ -18,6 +18,7 @@ namespace BusinessLogic {
 
 namespace ManagementLayer
 {
+    class ScenarioCardsManager;
 	class ScenarioNavigatorManager;
 	class ScenarioSceneDescriptionManager;
 	class ScenarioDataEditManager;
@@ -35,6 +36,7 @@ namespace ManagementLayer
 		explicit ScenarioManager(QObject* _parent, QWidget* _parentWidget);
 
 		QWidget* view() const;
+        QWidget* cardsView() const;
 
 		/**
 		 * @brief Получить документ сценария
@@ -313,6 +315,11 @@ namespace ManagementLayer
 		 * @brief Документ черновика сценария
 		 */
 		BusinessLogic::ScenarioDocument* m_scenarioDraft;
+
+        /**
+         * @brief Управляющий карточками
+         */
+        ScenarioCardsManager* m_cardsManager;
 
 		/**
 		 * @brief Управляющий навигацией по сценарию

@@ -1,5 +1,6 @@
 #include "ScenarioManager.h"
 
+#include "ScenarioCardsManager.h"
 #include "ScenarioNavigatorManager.h"
 #include "ScenarioSceneDescriptionManager.h"
 #include "ScenarioTextEditManager.h"
@@ -44,6 +45,7 @@
 #include <QWidget>
 
 using ManagementLayer::ScenarioManager;
+using ManagementLayer::ScenarioCardsManager;
 using ManagementLayer::ScenarioNavigatorManager;
 using ManagementLayer::ScenarioSceneDescriptionManager;
 using ManagementLayer::ScenarioDataEditManager;
@@ -231,6 +233,7 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 	m_noteViewSplitter(new QSplitter(m_view)),
 	m_scenario(new ScenarioDocument(this)),
 	m_scenarioDraft(new ScenarioDocument(this)),
+    m_cardsManager(new ScenarioCardsManager(this, _parentWidget)),
 	m_navigatorManager(new ScenarioNavigatorManager(this, m_view)),
 	m_draftNavigatorManager(new ScenarioNavigatorManager(this, m_view, IS_DRAFT)),
 	m_sceneDescriptionManager(new ScenarioSceneDescriptionManager(this, m_view)),
@@ -245,7 +248,12 @@ ScenarioManager::ScenarioManager(QObject *_parent, QWidget* _parentWidget) :
 
 QWidget* ScenarioManager::view() const
 {
-	return m_view;
+    return m_view;
+}
+
+QWidget* ScenarioManager::cardsView() const
+{
+    return m_cardsManager->view();
 }
 
 BusinessLogic::ScenarioDocument* ScenarioManager::scenario() const
@@ -288,6 +296,8 @@ void ScenarioManager::loadCurrentProject()
 	//
 	// Установим данные для менеджеров
 	//
+    m_cardsManager->load(currentScenario->scheme());
+    m_cardsManager->setModel(m_scenario->model());
 	m_navigatorManager->setNavigationModel(m_scenario->model());
 	m_draftNavigatorManager->setNavigationModel(m_scenarioDraft->model());
 	m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);
@@ -336,6 +346,7 @@ void ScenarioManager::saveCurrentProject()
 	// Сохраняем сценарий
 	//
 	m_scenario->scenario()->setText(m_scenario->save());
+    m_scenario->scenario()->setScheme(m_cardsManager->save());
 	DataStorageLayer::StorageFacade::scenarioStorage()->storeScenario(m_scenario->scenario());
 
 	//
@@ -380,9 +391,10 @@ void ScenarioManager::closeCurrentProject()
 	//
 	// Очистим от предыдущих данных
 	//
-	m_navigatorManager->setNavigationModel(0);
-	m_draftNavigatorManager->setNavigationModel(0);
-	m_textEditManager->setScenarioDocument(0);
+    m_cardsManager->clear();
+    m_navigatorManager->setNavigationModel(nullptr);
+    m_draftNavigatorManager->setNavigationModel(nullptr);
+    m_textEditManager->setScenarioDocument(nullptr);
 
 	//
 	// Очистим сценарий
@@ -393,6 +405,7 @@ void ScenarioManager::closeCurrentProject()
 
 void ScenarioManager::setCommentOnly(bool _isCommentOnly)
 {
+    m_cardsManager->setCommentOnly(_isCommentOnly);
 	m_navigatorManager->setCommentOnly(_isCommentOnly);
 	m_draftNavigatorManager->setCommentOnly(_isCommentOnly);
 	m_sceneDescriptionManager->setCommentOnly(_isCommentOnly);
@@ -900,9 +913,10 @@ void ScenarioManager::initConnections()
 	//
 	// Настраиваем отслеживание изменений документа
 	//
+    connect(m_cardsManager, &ScenarioCardsManager::schemeChanged, this, &ScenarioManager::scenarioChanged);
 	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::scenarioChanged);
 	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::scenarioChanged);
-	connect(m_textEditManager, SIGNAL(textChanged()), this, SIGNAL(scenarioChanged()));
+    connect(m_textEditManager, &ScenarioTextEditManager::textChanged, this, &ScenarioManager::scenarioChanged);
 }
 
 void ScenarioManager::initStyleSheet()

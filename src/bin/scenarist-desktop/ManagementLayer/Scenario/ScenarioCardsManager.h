@@ -7,6 +7,10 @@ namespace Domain {
 	class Scenario;
 }
 
+namespace BusinessLogic {
+    class ScenarioModel;
+}
+
 namespace UserInterface {
 	class ScenarioCardsView;
 }
@@ -26,30 +30,25 @@ namespace ManagementLayer
 
 		QWidget* view() const;
 
-		/**
-		 * @brief Загрузить данные текущего проекта
-		 */
-		void loadCurrentProject();
+        /**
+         * @brief Сохранить схему сценария
+         */
+        QString save() const;
 
-		/**
-		 * @brief Загрузить настройки текущего проекта
-		 */
-		void loadCurrentProjectSettings(const QString& _projectPath);
+        /**
+         * @brief Загрузить заданную схему
+         */
+        void load(const QString& _xml);
 
-		/**
-		 * @brief Сохранить данные текущего проекта
-		 */
-		void saveCurrentProject();
+        /**
+         * @brief Установить модель документа сценария
+         */
+        void setModel(BusinessLogic::ScenarioModel* _model);
 
-		/**
-		 * @brief Сохранить настройки текущего проекта
-		 */
-		void saveCurrentProjectSettings(const QString& _projectPath);
-
-		/**
-		 * @brief Закрыть текущий проект
-		 */
-		void closeCurrentProject();
+        /**
+         * @brief Очистить данные схемы и модель
+         */
+        void clear();
 
 		/**
 		 * @brief Установить режим работы со сценарием
@@ -83,6 +82,11 @@ namespace ManagementLayer
 		 * @brief Сценарий
 		 */
 		Domain::Scenario* m_scenario;
+
+        /**
+         * @brief Модель сценария
+         */
+        BusinessLogic::ScenarioModel* m_model;
 	};
 }
 
