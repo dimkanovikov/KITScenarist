@@ -135,8 +135,8 @@ void fileLoadXml(const QString& _filename, CustomGraphicsScene* _scene, QGraphic
 
 void loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _view)
 {
-	QDomDocument doc;
-	if (!doc.setContent(_xml)) {
+    QDomDocument doc;
+    if (!doc.setContent(_xml)) {
 		throw FileErrorException("");
 	}
 

@@ -538,6 +538,105 @@ QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
     return index(row, 0, parent);
 }
 
+namespace {
+    const int CARD_WIDTH = 210;
+    const int CARD_HEIGHT = 100;
+    const int CARDS_SPACE = 40;
+
+    /**
+     * @brief Сколько займут вложенные дети
+     */
+    static QSize cardChildsSize(const ScenarioModelItem* _parent) {
+        int width = CARD_WIDTH + CARDS_SPACE;
+        int height = CARD_HEIGHT + CARDS_SPACE;
+        for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
+            const ScenarioModelItem* childItem = _parent->childAt(childIndex);
+            if (childItem->hasChildren()) {
+                QSize childSize = cardChildsSize(childItem);
+                width += childSize.width() + CARDS_SPACE;
+                if (height < childSize.height() + CARDS_SPACE) {
+                    height = childSize.height() + CARDS_SPACE;
+                }
+            } else {
+                width += CARD_WIDTH + CARDS_SPACE;
+            }
+        }
+
+        return QSize(width, height);
+    }
+
+    /**
+     * @brief Сформировать xml схемы для детей элемента
+     */
+    static QString cardChildsXml(const ScenarioModelItem* _parent, int& _id) {
+        QString xml;
+        int x = CARDS_SPACE;
+        int y = CARDS_SPACE;
+        const int parentId = _id;
+        ++_id;
+        for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
+            const ScenarioModelItem* child = _parent->childAt(childIndex);
+            if (child->hasChildren()) {
+                //
+                // Прикинуть размер
+                //
+                const QSize itemSize = cardChildsSize(child);
+                xml.append(QString("<ActionShape "
+                                   "id=\"%1\" "
+                                   "parent_id=\"%2\" "
+                                   "x=\"%3\" "
+                                   "y=\"%4\" "
+                                   "width=\"%5\" "
+                                   "height=\"%6\" "
+                                   "card_type=\"%7\" "
+                                   "title=\"%8\" "
+                                   "description=\"%9\"/>\n")
+                           .arg(_id)
+                           .arg(parentId)
+                           .arg(x)
+                           .arg(y)
+                           .arg(itemSize.width())
+                           .arg(itemSize.height())
+                           .arg(child->type())
+                           .arg(child->title().isEmpty() ? child->header() : child->title())
+                           .arg(child->description()));
+                //
+                // Строим схему из детей
+                //
+                xml.append(cardChildsXml(child, _id));
+
+                x += itemSize.width() + CARDS_SPACE;
+            } else {
+                xml.append(QString("<ActionShape "
+                                   "id=\"%1\" "
+                                   "parent_id=\"%2\" "
+                                   "x=\"%3\" "
+                                   "y=\"%4\" "
+                                   "width=\"%5\" "
+                                   "height=\"%6\" "
+                                   "card_type=\"%7\" "
+                                   "title=\"%8\" "
+                                   "description=\"%9\"/>\n")
+                           .arg(_id)
+                           .arg(parentId)
+                           .arg(x)
+                           .arg(y)
+                           .arg(CARD_WIDTH)
+                           .arg(CARD_HEIGHT)
+                           .arg(child->type())
+                           .arg(child->title().isEmpty() ? child->header() : child->title())
+                           .arg(child->description()));
+
+                x += CARD_WIDTH + CARDS_SPACE;
+
+                ++_id;
+            }
+        }
+
+        return xml;
+    }
+}
+
 QString ScenarioModel::simpleScheme() const
 {
     QString xml("<?xml version=\"1.0\"?>\n"
@@ -555,13 +654,36 @@ QString ScenarioModel::simpleScheme() const
     int id = 0;
     int x= 60;
     int y = 60;
-    const int CARD_WIDTH = 210;
-    const int CARD_HEIGHT = 100;
-    const int CARDS_SPACE = 40;
     for (int childIndex = 0; childIndex < m_rootItem->childCount(); ++childIndex) {
         const ScenarioModelItem* child = m_rootItem->childAt(childIndex);
         if (child->hasChildren()) {
+            //
+            // Прикинуть размер
+            //
+            const QSize itemSize = ::cardChildsSize(child);
+            xml.append(QString("<ActionShape "
+                               "id=\"%1\" "
+                               "x=\"%2\" "
+                               "y=\"%3\" "
+                               "width=\"%4\" "
+                               "height=\"%5\" "
+                               "card_type=\"%6\" "
+                               "title=\"%7\" "
+                               "description=\"%8\"/>\n")
+                       .arg(id)
+                       .arg(x)
+                       .arg(y)
+                       .arg(itemSize.width())
+                       .arg(itemSize.height())
+                       .arg(child->type())
+                       .arg(child->title().isEmpty() ? child->header() : child->title())
+                       .arg(child->description()));
+            //
+            // Строим схему из детей
+            //
+            xml.append(::cardChildsXml(child, id));
 
+            x += itemSize.width() + CARDS_SPACE;
         } else {
             xml.append(QString("<ActionShape "
                                "id=\"%1\" "
@@ -572,7 +694,7 @@ QString ScenarioModel::simpleScheme() const
                                "card_type=\"%6\" "
                                "title=\"%7\" "
                                "description=\"%8\"/>\n")
-                       .arg(id++)
+                       .arg(id)
                        .arg(x)
                        .arg(y)
                        .arg(CARD_WIDTH)
@@ -582,8 +704,9 @@ QString ScenarioModel::simpleScheme() const
                        .arg(child->description()));
 
             x += CARD_WIDTH + CARDS_SPACE;
+
+            ++id;
         }
-        //"<ActionShape id=\"0\" x=\"64\" y=\"48\" width=\"211\" height=\"96\" card_type=\"0\" title=\"\" description=\"\"/>\n"
     }
 
     //
@@ -596,15 +719,14 @@ QString ScenarioModel::simpleScheme() const
                            "id=\"%1\" "
                            "from_id=\"%2\" "
                            "to_id=\"%3\" "
-                           "offsetX=\"0\" offsetY=\"0\" text=\"\" KnotsCount=\"0\"/>")
+                           "offsetX=\"0\" offsetY=\"0\" text=\"\" KnotsCount=\"0\"/>\n")
                    .arg(id++)
                    .arg(flowEndShapeId - 1)
                    .arg(flowEndShapeId));
         ++flowEndShapeId;
     }
+    xml.append("</cards_xml>\n\n");
 
-
-    xml.append("</cards_xml>");
     return xml;
 }
 
