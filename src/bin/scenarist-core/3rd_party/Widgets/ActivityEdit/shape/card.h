@@ -16,9 +16,11 @@ public:
 	 * @brief Тип карточки
 	 */
 	enum CardType {
+        TypeUndefined,
 		TypeScene,
 		TypeScenesGroup,
-		TypeFolder
+        TypeFolder,
+        TypeScenario
 	};
 
 public:

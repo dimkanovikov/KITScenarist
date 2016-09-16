@@ -2,6 +2,8 @@
 
 #include <Domain/Scenario.h>
 
+#include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 
@@ -29,28 +31,28 @@ QString ScenarioCardsManager::save() const
     return m_view->save();
 }
 
-void ScenarioCardsManager::load(const QString& _xml)
+void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QString& _xml)
 {
+    //
+    // Сохраним модель
+    //
+    if (m_model != _model) {
+        m_model = _model;
+    }
+
     //
     // Загрузим сценарий
     //
-    // ... если схема пуста, просим сформировать для нас её черновой вариант из текста
+    // ... если схема есть, то просто загружаем её
     //
-    if (_xml.isEmpty()) {
-        emit needDirtyScheme();
-    }
-    //
-    // ... а если схема есть, то просто загружаем её
-    //
-    else {
+    if (!_xml.isEmpty()) {
         m_view->load(_xml);
     }
-}
-
-void ScenarioCardsManager::setModel(BusinessLogic::ScenarioModel* _model)
-{
-    if (m_model != _model) {
-        m_model = _model;
+    //
+    // ... а если схема пуста, сформируем её на основе модели
+    //
+    else {
+        m_view->load(m_model->simpleScheme());
     }
 }
 

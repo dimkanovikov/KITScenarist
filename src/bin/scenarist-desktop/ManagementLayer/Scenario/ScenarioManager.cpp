@@ -296,8 +296,7 @@ void ScenarioManager::loadCurrentProject()
 	//
 	// Установим данные для менеджеров
 	//
-    m_cardsManager->load(currentScenario->scheme());
-    m_cardsManager->setModel(m_scenario->model());
+    m_cardsManager->load(m_scenario->model(), currentScenario->scheme());
 	m_navigatorManager->setNavigationModel(m_scenario->model());
 	m_draftNavigatorManager->setNavigationModel(m_scenarioDraft->model());
 	m_textEditManager->setScenarioDocument(m_scenarioDraft->document(), IS_DRAFT);

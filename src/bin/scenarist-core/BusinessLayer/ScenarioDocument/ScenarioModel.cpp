@@ -535,7 +535,77 @@ QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 		row = m_rootItem->rowOfChild(_item);
 	}
 
-	return index(row, 0, parent);
+    return index(row, 0, parent);
+}
+
+QString ScenarioModel::simpleScheme() const
+{
+    QString xml("<?xml version=\"1.0\"?>\n"
+                "<cards_xml viewx=\"500\" viewy=\"270\">\n");
+
+    //
+    // Пробегаем по всем элементам
+    // если нет детей, то позиционируем со стандартным размером в заданном смещении
+    // если есть дети, то рассчитываем размер, занимаемый детьми и позиционируем всё поддерево
+    //
+
+    //
+    // Сначала формируем карточки
+    //
+    int id = 0;
+    int x= 60;
+    int y = 60;
+    const int CARD_WIDTH = 210;
+    const int CARD_HEIGHT = 100;
+    const int CARDS_SPACE = 40;
+    for (int childIndex = 0; childIndex < m_rootItem->childCount(); ++childIndex) {
+        const ScenarioModelItem* child = m_rootItem->childAt(childIndex);
+        if (child->hasChildren()) {
+
+        } else {
+            xml.append(QString("<ActionShape "
+                               "id=\"%1\" "
+                               "x=\"%2\" "
+                               "y=\"%3\" "
+                               "width=\"%4\" "
+                               "height=\"%5\" "
+                               "card_type=\"%6\" "
+                               "title=\"%7\" "
+                               "description=\"%8\"/>\n")
+                       .arg(id++)
+                       .arg(x)
+                       .arg(y)
+                       .arg(CARD_WIDTH)
+                       .arg(CARD_HEIGHT)
+                       .arg(child->type())
+                       .arg(child->title().isEmpty() ? child->header() : child->title())
+                       .arg(child->description()));
+
+            x += CARD_WIDTH + CARDS_SPACE;
+        }
+        //"<ActionShape id=\"0\" x=\"64\" y=\"48\" width=\"211\" height=\"96\" card_type=\"0\" title=\"\" description=\"\"/>\n"
+    }
+
+    //
+    // А потом соединения между всеми карточками
+    //
+    int flowEndShapeId = 1;
+    const int CARDS_COUNT = id;
+    while (flowEndShapeId < CARDS_COUNT) {
+        xml.append(QString("<ArrowFlow "
+                           "id=\"%1\" "
+                           "from_id=\"%2\" "
+                           "to_id=\"%3\" "
+                           "offsetX=\"0\" offsetY=\"0\" text=\"\" KnotsCount=\"0\"/>")
+                   .arg(id++)
+                   .arg(flowEndShapeId - 1)
+                   .arg(flowEndShapeId));
+        ++flowEndShapeId;
+    }
+
+
+    xml.append("</cards_xml>");
+    return xml;
 }
 
 // ********

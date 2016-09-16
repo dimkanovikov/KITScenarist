@@ -150,7 +150,7 @@ QString createSceneXml(QGraphicsScene* _scene, QGraphicsView* _view)
 	}
 
 	writer.writeEndElement();
-	writer.writeEndDocument();
+    writer.writeEndDocument();
 
 	return resultXml;
 }

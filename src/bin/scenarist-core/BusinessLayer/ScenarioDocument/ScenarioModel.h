@@ -118,6 +118,11 @@ namespace BusinessLogic
 		 */
 		QModelIndex indexForItem(ScenarioModelItem* _item) const;
 
+        /**
+         * @brief Сформировать простую схему для сцен
+         */
+        QString simpleScheme() const;
+
 	signals:
 		/**
 		 * @brief Данные опущены в позиции

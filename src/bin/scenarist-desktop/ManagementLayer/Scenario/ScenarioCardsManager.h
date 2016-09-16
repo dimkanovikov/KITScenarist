@@ -38,12 +38,7 @@ namespace ManagementLayer
         /**
          * @brief Загрузить заданную схему
          */
-        void load(const QString& _xml);
-
-        /**
-         * @brief Установить модель документа сценария
-         */
-        void setModel(BusinessLogic::ScenarioModel* _model);
+        void load(BusinessLogic::ScenarioModel* _model, const QString& _xml);
 
         /**
          * @brief Очистить данные схемы и модель
@@ -55,12 +50,7 @@ namespace ManagementLayer
 		 */
 		void setCommentOnly(bool _isCommentOnly);
 
-	signals:
-		/**
-		 * @brief Запрос на формирование черновой схемы по тексту сценария
-		 */
-		void needDirtyScheme();
-
+    signals:
 		/**
 		 * @brief Схема карточек изменена
 		 */
