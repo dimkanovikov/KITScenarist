@@ -115,8 +115,12 @@ namespace UserInterface
 		/**
 		 * @brief Добавить элемент в указанной позиции с заданным текстом и типом
 		 */
+		/** @{ */
+		void addItem(int _position, int _type, const QString& _title,
+			const QString& _description);
 		void addItem(int _position, int _type, const QString& _header,
 			const QColor& _color, const QString& _description);
+		/** @} */
 
 		/**
 		 * @brief Удалить текст в заданном интервале

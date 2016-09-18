@@ -1,6 +1,8 @@
 #include "ScenarioTextEditManager.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -150,6 +152,22 @@ void ScenarioTextEditManager::setAdditionalCursors(const QMap<QString, int>& _cu
 void ScenarioTextEditManager::setCommentOnly(bool _isCommentOnly)
 {
 	m_view->setCommentOnly(_isCommentOnly);
+}
+
+void ScenarioTextEditManager::addScenarioItem(int _position, int _type, const QString& _title,
+	const QString& _description)
+{
+	//
+	// Переводим тип элемента
+	//
+	int mappedType = BusinessLogic::ScenarioBlockStyle::SceneHeading;
+	if (_type == BusinessLogic::ScenarioModelItem::SceneGroup) {
+		mappedType = BusinessLogic::ScenarioBlockStyle::SceneGroupHeader;
+	} else if (_type == BusinessLogic::ScenarioModelItem::Folder) {
+		mappedType = BusinessLogic::ScenarioBlockStyle::FolderHeader;
+	}
+
+	m_view->addItem(_position, mappedType, _title, _description);
 }
 
 void ScenarioTextEditManager::addScenarioItem(int _position, int _type, const QString& _header,

@@ -465,7 +465,7 @@ int ScenarioDocument::positionToInsertMime(ScenarioModelItem* _insertParent, Sce
 
 	return insertPosition;
 }
-#include <QDebug>
+
 void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int _charsAdded)
 {
 	//
@@ -474,12 +474,22 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	m_document->updateScenarioXml();
 
 	//
-	// Прерываем ситуация, когда в редактор помещается документ, но для него уже создана модель
+	// Прерываем ситуацию с ложным срабатыванием изменения документа
 	//
-	if (_position == 0 && _charsRemoved == _charsAdded
-		&& _charsAdded == m_document->characterCount() && !m_modelItems.isEmpty()) {
-		return;
+	const QByteArray currentTextMd5Hash = m_document->scenarioXmlHash();
+	if (_charsRemoved == _charsAdded) {
+		//
+		// ... на самом ли деле текст изменился?
+		//
+		if (currentTextMd5Hash == m_lastTextMd5Hash) {
+			return;
+		}
 	}
+
+	//
+	// Сохранить md5 хэш текста документа
+	//
+	m_lastTextMd5Hash = currentTextMd5Hash;
 
 	//
 	// Сохраняем позицию начала правок для последующей корректировки
@@ -879,22 +889,39 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 
 		ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
 		//
-		// ... исключаем из текста описание
+		// ... исключаем из текста заголовки и описание
 		//
-		if (blockType != ScenarioBlockStyle::SceneDescription) {
-			if (!itemText.isEmpty()) {
-				itemText.append(" ");
+		switch (blockType) {
+			//
+			// Заголовки никуда не включаем
+			//
+			case ScenarioBlockStyle::SceneHeading: {
+				break;
 			}
-			ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
-			itemText +=
-					blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
-					? cursor.block().text().toUpper()
-					: cursor.block().text();
-		} else {
-			if (!description.isEmpty()) {
-				description.append("\n");
+
+			//
+			// Описание сохраняем в описание
+			//
+			case ScenarioBlockStyle::SceneDescription: {
+				if (!description.isEmpty()) {
+					description.append("\n");
+				}
+				description.append(cursor.block().text());
 			}
-			description.append(cursor.block().text());
+
+			//
+			// Весь остальной текст - текст сцены
+			//
+			default: {
+				if (!itemText.isEmpty()) {
+					itemText.append(" ");
+				}
+				ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
+				itemText +=
+						blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
+						? cursor.block().text().toUpper()
+						: cursor.block().text();
+			}
 		}
 
 		cursor.movePosition(QTextCursor::NextBlock);
@@ -906,7 +933,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		|| description.isEmpty()) { // ... или установил в диалоге добавления элемента
 		QTextDocument doc;
 		doc.setHtml(itemDescription(_item));
-		description = doc.toPlainText().replace("\n", " ");
+		description = doc.toPlainText().replace("\n", " ").simplified();
 	}
 	//
 	// ... пользователь изменил описание прямо в редакторе сценария

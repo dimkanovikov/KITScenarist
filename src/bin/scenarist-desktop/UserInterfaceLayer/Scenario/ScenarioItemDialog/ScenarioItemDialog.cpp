@@ -32,7 +32,7 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 	initStyleSheet();
 }
 
-void ScenarioItemDialog::clearText()
+void ScenarioItemDialog::clear()
 {
 	QTextCursor cursor(m_header->document());
 	cursor.select(QTextCursor::Document);

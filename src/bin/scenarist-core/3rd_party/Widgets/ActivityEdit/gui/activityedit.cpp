@@ -92,6 +92,25 @@ void ActivityEdit::addCard(int _cardType, const QString& _title, const QString& 
 	}
 }
 
+void ActivityEdit::updateCard(int _cardNumber, int _type, const QString& _title, const QString& _description)
+{
+	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+		int currentCardNumber = 0;
+		for (auto shape : scene->shapes()) {
+			if (CardShape* currentCard = dynamic_cast<CardShape*>(shape)) {
+				if (currentCardNumber == _cardNumber) {
+					currentCard->setCardType((CardShape::CardType)_type);
+					currentCard->setTitle(_title);
+					currentCard->setDescription(_description);
+					break;
+				} else {
+					++currentCardNumber;
+				}
+			}
+		}
+	}
+}
+
 void ActivityEdit::addNote(const QString& _text)
 {
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
@@ -122,6 +141,46 @@ void ActivityEdit::selectAll()
 	path.addRect(m_view->scene()->sceneRect());
 	m_view->scene()->setSelectionArea(path);
 	m_view->scene()->setSelectionArea(path);
+}
+
+void ActivityEdit::selectCard(int _cardNumber)
+{
+	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+		scene->clearSelection();
+
+		int currentCardNumber = 0;
+		for (auto shape : scene->shapes()) {
+			if (CardShape* currentCard = dynamic_cast<CardShape*>(shape)) {
+				if (currentCardNumber == _cardNumber) {
+					currentCard->setSelected(true);
+					break;
+				} else {
+					++currentCardNumber;
+				}
+			}
+		}
+	}
+}
+
+int ActivityEdit::selectedCardNumber() const
+{
+	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+		CardShape* selectedCard = nullptr;
+		if (!scene->selectedShapes().isEmpty()
+			&& scene->selectedShapes().size() == 1
+			&& (selectedCard = dynamic_cast<CardShape*>(scene->selectedItems().last()))) {
+			int number = 0;
+			for (auto shape : scene->shapes()) {
+				if (shape == selectedCard) {
+					return number;
+				} else if (dynamic_cast<CardShape*>(shape)) {
+					++number;
+				}
+			}
+		}
+	}
+
+	return -1;
 }
 
 void ActivityEdit::deleteSelectedItems()

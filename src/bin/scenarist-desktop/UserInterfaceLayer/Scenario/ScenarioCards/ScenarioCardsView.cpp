@@ -44,6 +44,32 @@ QString ScenarioCardsView::save() const
 	return m_cardsEdit->save();
 }
 
+void ScenarioCardsView::addCard(int _cardType, const QString& _title, const QString& _description)
+{
+	m_cardsEdit->addCard(_cardType, _title, _description);
+}
+
+void ScenarioCardsView::updateCard(int _cardNumber, int _type, const QString& _title, const QString& _description)
+{
+	m_cardsEdit->updateCard(_cardNumber, _type, _title, _description);
+}
+
+void ScenarioCardsView::removeCard(int _cardNumber)
+{
+	m_cardsEdit->selectCard(_cardNumber);
+	m_cardsEdit->deleteSelectedItems();
+}
+
+void ScenarioCardsView::selectCard(int _cardNumber)
+{
+	m_cardsEdit->selectCard(_cardNumber);
+}
+
+int ScenarioCardsView::selectedCardNumber() const
+{
+	return m_cardsEdit->selectedCardNumber();
+}
+
 void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 {
 	m_addCard->setEnabled(!_isCommentOnly);
@@ -106,10 +132,10 @@ void ScenarioCardsView::initConnections()
 {
 	connect(m_cardsEdit, &ActivityEdit::schemeChanged, this, &ScenarioCardsView::schemeChanged);
 
-
-	connect(m_addCard, &FlatButton::clicked, [=] {
-		m_cardsEdit->addCard(1, "title", "description");
-	});
+	connect(m_addCard, &FlatButton::clicked, this, &ScenarioCardsView::addCardClicked);
+//	connect(m_addCard, &FlatButton::clicked, [=] {
+//		m_cardsEdit->addCard(1, "title", "description");
+//	});
 }
 
 void ScenarioCardsView::initStyleSheet()

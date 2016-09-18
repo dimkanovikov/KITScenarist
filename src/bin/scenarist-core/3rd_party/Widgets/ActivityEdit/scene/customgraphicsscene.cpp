@@ -77,13 +77,6 @@ void CustomGraphicsScene::appendCard(int _cardType, const QString& _title, const
 		}
 
 		//
-		// Если выделен группирующий элемент, то соединять будем с последним из его детей
-		//
-		if (hasCards(selectedCard)) {
-			selectedCard = dynamic_cast<CardShape*>(lastCard(selectedCard));
-		}
-
-		//
 		// Предыдущей будет выделенная
 		//
 		previousCard = selectedCard;

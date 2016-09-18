@@ -74,7 +74,7 @@ namespace BusinessLogic
 		 * @brief Реализация древовидной модели
 		 */
 		/** @{ */
-		QModelIndex index(int _row, int _column, const QModelIndex &_parent ) const;
+		QModelIndex index(int _row, int _column, const QModelIndex &_parent = QModelIndex()) const;
 		QModelIndex parent(const QModelIndex &_child) const;
 		int columnCount( const QModelIndex & ) const;
 		int rowCount(const QModelIndex &_parent) const;
@@ -118,10 +118,20 @@ namespace BusinessLogic
 		 */
 		QModelIndex indexForItem(ScenarioModelItem* _item) const;
 
-        /**
-         * @brief Сформировать простую схему для сцен
-         */
-        QString simpleScheme() const;
+		/**
+		 * @brief Получить порядковый номер элемента в заданном индексе
+		 */
+		int numberForIndex(const QModelIndex& _index) const;
+
+		/**
+		 * @brief Получить индекс элемента имеющего заданный порядковый номер
+		 */
+		QModelIndex indexForNumber(int _number) const;
+
+		/**
+		 * @brief Сформировать простую схему для сцен
+		 */
+		QString simpleScheme() const;
 
 	signals:
 		/**

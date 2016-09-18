@@ -173,6 +173,7 @@ void QLightBoxDialog::initView()
 		m_centralWidget->setLayout(centralWidgetLayout);
 
 		setMinimumSize(QSize(0, 0));
+		setMaximumSize(QSize(16777215, 16777215));
 
 		QGridLayout* newLayout = new QGridLayout;
 		newLayout->setContentsMargins(QMargins());

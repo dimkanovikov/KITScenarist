@@ -28,7 +28,7 @@ namespace UserInterface
 		/**
 		 * @brief Восстановить значения по умолчанию
 		 */
-		void clearText();
+		void clear();
 
 		/**
 		 * @brief Получить тип элемента

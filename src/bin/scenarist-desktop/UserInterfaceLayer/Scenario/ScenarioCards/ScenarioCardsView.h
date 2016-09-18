@@ -35,11 +35,41 @@ namespace UserInterface {
 		QString save() const;
 
 		/**
+		 * @brief Добавить карточку
+		 */
+		void addCard(int _cardType, const QString& _title, const QString& _description);
+
+		/**
+		 * @brief Обновить карточку с заданным номером
+		 */
+		void updateCard(int _cardNumber, int _type, const QString& _title, const QString& _description);
+
+		/**
+		 * @brief Удалить карточку с заданным номером
+		 */
+		void removeCard(int _cardNumber);
+
+		/**
+		 * @brief Сделать активной карточку с заданным номером
+		 */
+		void selectCard(int _cardNumber);
+
+		/**
+		 * @brief Получить номер выделенной карточки, если нет выделенных, или выделено больше одной, возвращается -1
+		 */
+		int selectedCardNumber() const;
+
+		/**
 		 * @brief Установить режим работы со сценарием
 		 */
 		void setCommentOnly(bool _isCommentOnly);
 
 	signals:
+		/**
+		 * @brief Нажата кнопка добавления карточки
+		 */
+		void addCardClicked();
+
 		/**
 		 * @brief Схема карточек изменена
 		 */

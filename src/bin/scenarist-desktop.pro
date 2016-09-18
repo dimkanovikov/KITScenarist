@@ -322,7 +322,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.cpp
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -585,7 +586,8 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.h
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -603,7 +605,8 @@ FORMS += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/pdlg_arrowflow.ui \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/mainwindow.ui \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_action.ui \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_note.ui
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_note.ui \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui
 
 
 RESOURCES += \
