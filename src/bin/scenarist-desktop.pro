@@ -305,7 +305,9 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/node.cpp \
     scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManagerV2.cpp \
     scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.cpp \
-    scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.cpp
+    scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -551,7 +553,9 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/node.h \
     scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManagerV2.h \
     scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h \
-    scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h
+    scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -565,7 +569,9 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Statistics/StatisticsSettings.ui \
     scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui \
-    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.ui
 
 
 RESOURCES += \

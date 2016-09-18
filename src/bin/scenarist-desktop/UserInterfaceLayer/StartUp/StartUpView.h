@@ -101,6 +101,16 @@ namespace UserInterface
 		 */
 		void aboutFilesSourceChanged();
 
+        /**
+         * @brief Пользователь желает сменить пароль
+         */
+        void changePassword();
+
+        /**
+         * @brief Пользователь желает продлить подписку
+         */
+        void renewSubscription();
+
 	private:
 		/**
 		 * @brief Настроить представление

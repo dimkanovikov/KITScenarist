@@ -7,8 +7,13 @@
 
 #include <QStandardItemModel>
 
+#include "ChangePasswordDialog.h"
+#include "RenewSubscriptionDialog.h"
+
 using UserInterface::StartUpView;
 using UserInterface::RecentFilesDelegate;
+using UserInterface::ChangePasswordDialog;
+using UserInterface::RenewSubscriptionDialog;
 
 
 StartUpView::StartUpView(QWidget *parent) :
@@ -56,9 +61,9 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName)
 {
 	ui->loginIcon->setVisible(!isLogged);
 	ui->login->setVisible(!isLogged);
-	ui->logoutIcon->setVisible(isLogged);
-	ui->logout->setVisible(isLogged);
-	ui->logout->setText(QString("%1 <a href=\"#\" style=\"color:#2b78da;\">%2</a>").arg(_userName).arg(tr("Logout")));
+    //ui->logoutIcon->setVisible(isLogged);
+    //ui->logout->setVisible(isLogged);
+    //ui->logout->setText(QString("%1 <a href=\"#\" style=\"color:#2b78da;\">%2</a>").arg(_userName).arg(tr("Logout")));
 	ui->remoteProjects->setVisible(isLogged);
 
 	if (!isLogged && ui->remoteProjects->isChecked()) {
@@ -133,6 +138,22 @@ void StartUpView::aboutFilesSourceChanged()
 	}
 }
 
+void StartUpView::changePassword()
+{
+    ChangePasswordDialog dialog(this);
+    if(dialog.exec() == QLightBoxDialog::Accepted) {
+        //FIXME: дописать, когда появится реализация
+    }
+}
+
+void StartUpView::renewSubscription()
+{
+    RenewSubscriptionDialog dialog(this);
+    if(dialog.exec() == QLightBoxDialog::Accepted) {
+        //FIXME: дописать, когда появится реализация
+    }
+}
+
 void StartUpView::initView()
 {
 	QFont versionFont = ui->version->font();
@@ -148,8 +169,8 @@ void StartUpView::initView()
 
 	ui->updateInfo->hide();
 
-	ui->logoutIcon->hide();
-	ui->logout->hide();
+    //ui->logoutIcon->hide();
+    //ui->logout->hide();
 
 	ui->remoteProjects->hide();
 
@@ -168,7 +189,7 @@ void StartUpView::initView()
 void StartUpView::initConnections()
 {
 	connect(ui->login, SIGNAL(linkActivated(QString)), this, SIGNAL(loginClicked()));
-	connect(ui->logout, SIGNAL(linkActivated(QString)), this, SIGNAL(logoutClicked()));
+    //connect(ui->logout, SIGNAL(linkActivated(QString)), this, SIGNAL(logoutClicked()));
 	connect(ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
 	connect(ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));
 	connect(ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));
@@ -177,6 +198,15 @@ void StartUpView::initConnections()
 	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRecentProjectClicked(QModelIndex)));
 	connect(ui->remoteFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRemoteProjectClicked(QModelIndex)));
 	connect(ui->refreshProjects, SIGNAL(clicked()), this, SIGNAL(refreshProjects()));
+    connect(ui->changePassword, &QPushButton::clicked, this, &StartUpView::changePassword);
+    connect(ui->renewSubscription, &QPushButton::clicked, this, &StartUpView::renewSubscription);
+
+    connect(ui->toProjects, &QPushButton::clicked, [this] {
+        ui->stackedWidget->setCurrentWidget(ui->projectsPage);
+    });
+    connect(ui->toCabinet, &QPushButton::clicked, [this] {
+        ui->stackedWidget->setCurrentWidget(ui->cabinetPage);
+    });
 }
 
 void StartUpView::initStyleSheet()
@@ -186,13 +216,16 @@ void StartUpView::initStyleSheet()
 	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
 
 	ui->mainContainer->setProperty("mainContainer", true);
-	ui->projectsFrame->setProperty("mainContainer", true);
-	ui->projectsFrame->setProperty("baseForeground", true);
+    //ui->projectsFrame->setProperty("mainContainer", true);
+    //ui->projectsFrame->setProperty("baseForeground", true);
+    ui->stackedWidget->setProperty("mainContainer", true);
+    ui->stackedWidget->setProperty("baseForeground", true);
 
 	ui->createProject->setProperty("leftAlignedText", true);
 	ui->openProject->setProperty("leftAlignedText", true);
 	ui->help->setProperty("leftAlignedText", true);
 
+    ui->cabinetHeader->setProperty("inStartUpView", true);
 	ui->localProjects->setProperty("inStartUpView", true);
 	ui->remoteProjects->setProperty("inStartUpView", true);
 
@@ -207,7 +240,7 @@ void StartUpView::initIconsColor()
 	QIcon account(*ui->loginIcon->pixmap());
 	ImageHelper::setIconColor(account, iconSize, palette().text().color());
 	ui->loginIcon->setPixmap(account.pixmap(iconSize));
-	ui->logoutIcon->setPixmap(account.pixmap(iconSize));
+    //ui->logoutIcon->setPixmap(account.pixmap(iconSize));
 
 	QIcon createProject = ui->createProject->icon();
 	ImageHelper::setIconColor(createProject, iconSize, palette().text().color());
