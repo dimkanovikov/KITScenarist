@@ -37,7 +37,7 @@ namespace UserInterface {
 		/**
 		 * @brief Добавить карточку
 		 */
-		void addCard(int _cardType, const QString& _title, const QString& _description);
+		void addCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent);
 
 		/**
 		 * @brief Обновить карточку с заданным номером

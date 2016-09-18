@@ -16,12 +16,15 @@ public:
 	 * @brief Тип карточки
 	 */
 	enum CardType {
-        TypeUndefined,
+		TypeUndefined,
 		TypeScene,
 		TypeScenesGroup,
-        TypeFolder,
-        TypeScenario
+		TypeFolder,
+		TypeScenario
 	};
+
+	static const int DEFAULT_WIDTH = 100;
+	static const int DEFAULT_HEIGHT = 100;
 
 public:
 	CardShape(QGraphicsItem* _parent = NULL);

@@ -907,6 +907,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 					description.append("\n");
 				}
 				description.append(cursor.block().text());
+				break;
 			}
 
 			//
@@ -957,7 +958,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		//
 		// ... убираем переносы строк
 		//
-		description.replace("\n", " ");
+		description.replace("\n", " ").simplified();
 	}
 
 	// ... длительность

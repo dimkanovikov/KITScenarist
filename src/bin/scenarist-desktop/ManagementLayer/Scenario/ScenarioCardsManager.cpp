@@ -47,25 +47,28 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 				const QModelIndex index = m_model->index(row, 0, _parent);
 				BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
 				QModelIndex currentCardIndex = _parent;
-				if (_first > 0) {
+				const bool isCardFirstInParent = row == 0;
+				if (row > 0) {
 					//
 					// -1 т.к. нужен предыдущий элемент
 					//
-					const int itemRow = _first - 1;
+					const int itemRow = row - 1;
 					if (_parent.isValid()) {
 						currentCardIndex = _parent.child(itemRow, 0);
 					} else {
 						currentCardIndex = m_model->index(itemRow, 0);
 					}
 				}
+
 				m_view->selectCard(m_model->numberForIndex(currentCardIndex));
 				m_view->addCard(
 					item->type(),
 					item->title().isEmpty() ? item->header() : item->title(),
-					item->description());
+					item->description(),
+					isCardFirstInParent);
 			}
 		});
-		connect(m_model, &BusinessLogic::ScenarioModel::rowsRemoved, [=] (const QModelIndex& _parent, int _first, int _last) {
+		connect(m_model, &BusinessLogic::ScenarioModel::rowsAboutToBeRemoved, [=] (const QModelIndex& _parent, int _first, int _last) {
 			qDebug() << "remove rows from" << _first << "to" << _last << "in parent" << _parent;
 			for (int row = _last; row >= _first; --row) {
 				QModelIndex currentCardIndex = _parent;
@@ -110,8 +113,10 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 
 void ScenarioCardsManager::clear()
 {
-	m_model->disconnect();
-	m_model = nullptr;
+	if (m_model != nullptr) {
+		m_model->disconnect();
+		m_model = nullptr;
+	}
 	m_view->clear();
 }
 

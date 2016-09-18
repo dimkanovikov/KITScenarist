@@ -44,9 +44,9 @@ QString ScenarioCardsView::save() const
 	return m_cardsEdit->save();
 }
 
-void ScenarioCardsView::addCard(int _cardType, const QString& _title, const QString& _description)
+void ScenarioCardsView::addCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent)
 {
-	m_cardsEdit->addCard(_cardType, _title, _description);
+	m_cardsEdit->addCard(_cardType, _title, _description, _isCardFirstInParent);
 }
 
 void ScenarioCardsView::updateCard(int _cardNumber, int _type, const QString& _title, const QString& _description)

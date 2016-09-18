@@ -28,7 +28,7 @@ CardShape::CardShape(QGraphicsItem* _parent) :
 	m_isOnInsertionState(false)
 {
 	setMinSize(QSizeF(50, 32));
-	setSize(QSizeF(100,100));
+	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
 CardShape::CardShape(CardType _type, const QString& _title, const QString& _description, const QPointF& _pos, QGraphicsItem* _parent) :
@@ -39,7 +39,7 @@ CardShape::CardShape(CardType _type, const QString& _title, const QString& _desc
 	m_isOnInsertionState(false)
 {
 	setMinSize(QSizeF(50,32));
-	setSize(QSizeF(100,100));
+	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
 void CardShape::setCardType(CardShape::CardType _type)

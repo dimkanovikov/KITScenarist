@@ -52,7 +52,7 @@ CustomGraphicsScene::~CustomGraphicsScene()
 	removeAllShapes();
 }
 
-void CustomGraphicsScene::appendCard(int _cardType, const QString& _title, const QString& _description)
+void CustomGraphicsScene::appendCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent)
 {
 	QPointF scenePosition = sceneRect().center();
 
@@ -75,6 +75,12 @@ void CustomGraphicsScene::appendCard(int _cardType, const QString& _title, const
 			//
 			parentCard = dynamic_cast<CardShape*>(selectedCard->parentItem());
 		}
+		//
+		// Если вкладывается первый элемент в группирующую карточку, то она и будет родителем
+		//
+		if (_isCardFirstInParent) {
+			parentCard = selectedCard;
+		}
 
 		//
 		// Предыдущей будет выделенная
@@ -84,9 +90,15 @@ void CustomGraphicsScene::appendCard(int _cardType, const QString& _title, const
 		//
 		// Настроим позицию для добавления новой карточки
 		//
-		scenePosition = previousCard->scenePos();
-		scenePosition.setX(scenePosition.x() + previousCard->boundingRect().width() + SHAPE_MOVE_DELTA);
-		scenePosition.setY(scenePosition.y() + previousCard->boundingRect().height() + SHAPE_MOVE_DELTA);
+		if (_isCardFirstInParent) {
+			scenePosition = previousCard->scenePos();
+			scenePosition.setX(scenePosition.x() + SHAPE_MOVE_DELTA);
+			scenePosition.setY(scenePosition.y() + SHAPE_MOVE_DELTA);
+		} else {
+			scenePosition = previousCard->scenePos();
+			scenePosition.setX(scenePosition.x() + previousCard->boundingRect().width() + SHAPE_MOVE_DELTA);
+			scenePosition.setY(scenePosition.y() + previousCard->boundingRect().height() + SHAPE_MOVE_DELTA);
+		}
 
 		//
 		// Определим карточку, которая будет следовать за новой
@@ -100,7 +112,7 @@ void CustomGraphicsScene::appendCard(int _cardType, const QString& _title, const
 	//
 	// В противном случае добавляем карточку после самой последней карточки, если карточки уже есть
 	//
-	else if (hasCards()) {
+	else if (hasCards() && !_isCardFirstInParent) {
 		//
 		// Определим последнюю карточку
 		//
@@ -113,6 +125,23 @@ void CustomGraphicsScene::appendCard(int _cardType, const QString& _title, const
 		scenePosition = previousCard->scenePos();
 		scenePosition.setX(scenePosition.x() + previousCard->boundingRect().width() + SHAPE_MOVE_DELTA);
 		scenePosition.setY(scenePosition.y() + previousCard->boundingRect().height() + SHAPE_MOVE_DELTA);
+	}
+	//
+	// В противном случае добавляем карточку в самое начало
+	//
+	else if (hasCards() && _isCardFirstInParent) {
+		//
+		// Определим первую карточку
+		//
+		Shape* firstCardShape = firstCard();
+		nextCard = dynamic_cast<CardShape*>(firstCardShape);
+
+		//
+		// Настроим позицию для добавления новой карточки
+		//
+		scenePosition = nextCard->scenePos();
+		scenePosition.setX(scenePosition.x() - CardShape::DEFAULT_WIDTH - SHAPE_MOVE_DELTA);
+		scenePosition.setY(scenePosition.y() - CardShape::DEFAULT_HEIGHT - SHAPE_MOVE_DELTA);
 	}
 	//
 	// В противном случае добавляем карточку по середине видимой части сцены, если подключены представления
@@ -919,6 +948,32 @@ bool CustomGraphicsScene::hasCards(QGraphicsItem* parentItem) const
 	}
 
 	return false;
+}
+
+Shape* CustomGraphicsScene::firstCard(Shape* _parent) const
+{
+	//
+	// Определяем первую карточку
+	//
+	Shape* first = nullptr;
+	for (Shape* shape : m_shapes) {
+		if (shape->parentItem() == _parent
+			&& dynamic_cast<CardShape*>(shape)) {
+			first = shape;
+			break;
+		}
+	}
+
+	//
+	// Если первая карточка является группирующим элементом и имеет детей, ищем первого среди них
+	//
+	if (CardShape* card = dynamic_cast<CardShape*>(first)) {
+		if (hasCards(card)) {
+			first = firstCard(card);
+		}
+	}
+
+	return first;
 }
 
 Shape* CustomGraphicsScene::lastCard(Shape* _parent) const

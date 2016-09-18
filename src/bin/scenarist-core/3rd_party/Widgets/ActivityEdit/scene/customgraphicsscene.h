@@ -37,7 +37,7 @@ public:
 	 * @brief Добавить новый элемент
 	 */
 	/** @{ */
-	void appendCard(int _cardType, const QString& _title, const QString& _description);
+	void appendCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent);
 	void appendNote(const QString& _text);
 	void appendHorizontalLine();
 	void appendVerticalLine();
@@ -116,6 +116,11 @@ private:
 	 * @brief Есть ли карточки вложенные в заданный элемент, если элемент не задан, то проверяется вся сцена
 	 */
 	bool hasCards(QGraphicsItem* parentItem = nullptr) const;
+
+	/**
+	 * @brief Получить первую карточку
+	 */
+	Shape* firstCard(Shape* _parent = nullptr) const;
 
 	/**
 	 * @brief Получить последнюю карточку

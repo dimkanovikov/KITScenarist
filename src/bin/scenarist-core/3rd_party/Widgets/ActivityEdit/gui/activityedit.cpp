@@ -84,11 +84,11 @@ void ActivityEdit::load(const QString& _xml)
 	loadSceneXml(_xml, m_view->scene(), m_view);
 }
 
-void ActivityEdit::addCard(int _cardType, const QString& _title, const QString& _description)
+void ActivityEdit::addCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent)
 {
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		m_view->setDragMode(QGraphicsView::NoDrag);
-		scene->appendCard((CardShape::CardType)_cardType, _title, _description);
+		scene->appendCard((CardShape::CardType)_cardType, _title, _description, _isCardFirstInParent);
 	}
 }
 
