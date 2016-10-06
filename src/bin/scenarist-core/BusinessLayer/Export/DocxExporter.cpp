@@ -66,9 +66,23 @@ namespace {
 	}
 
 	/**
+	 * @brief Нужно ли записывать шрифты в файл
+	 */
+	static bool needWriteFonts() {
+		const ScenarioTemplate exportTemplate = ::exportStyle();
+		for (const ScenarioBlockStyle::Type type : blockTypes().values()) {
+			if (exportTemplate.blockStyle(type).font().family() == "Courier Prime") {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * @brief Сформировать строку DOCX-стиля из стиля блока
 	 */
-	static QString docxBlockStyle(const ScenarioBlockStyle& _style) {
+	static QString docxBlockStyle(const ScenarioBlockStyle& _style, const QString& _defaultFontFamily) {
 		QString blockStyle;
 
 		if (_style.type() != ScenarioBlockStyle::Undefined) {
@@ -221,16 +235,18 @@ namespace {
 			// Для неопределённого стиля формируется простая заглушка
 			//
 			blockStyle =
-					"<w:style w:type=\"paragraph\" w:styleId=\"Normal\">"
-						"<w:name w:val=\"Normal\"/>"
-						"<w:pPr>"
-							"<w:widowControl w:val=\"0\"/><w:autoSpaceDE w:val=\"0\"/><w:autoSpaceDN w:val=\"0\"/><w:adjustRightInd w:val=\"0\"/><w:spacing w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\"/>"
-						"</w:pPr>"
-						"<w:rPr>"
-							"<w:rFonts w:ascii=\"Courier Prime\" w:hAnsi=\"Courier Prime\" w:cs=\"Courier Prime\"/>"
-							"<w:sz w:val=\"24\"/>"
-						"</w:rPr>"
-					"</w:style>";
+					QString(
+						"<w:style w:type=\"paragraph\" w:styleId=\"Normal\">"
+							"<w:name w:val=\"Normal\"/>"
+							"<w:pPr>"
+								"<w:widowControl w:val=\"0\"/><w:autoSpaceDE w:val=\"0\"/><w:autoSpaceDN w:val=\"0\"/><w:adjustRightInd w:val=\"0\"/><w:spacing w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\"/>"
+							"</w:pPr>"
+							"<w:rPr>"
+								"<w:rFonts w:ascii=\"%1\" w:hAnsi=\"%1\" w:cs=\"%1\"/>"
+								"<w:sz w:val=\"24\"/>"
+							"</w:rPr>"
+						"</w:style>")
+					.arg(_defaultFontFamily);
 		}
 
 		return blockStyle;
@@ -472,7 +488,9 @@ void DocxExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters&
 			//
 			// ... шрифты
 			//
-			writeFonts(&zip);
+			if (::needWriteFonts()) {
+				writeFonts(&zip);
+			}
 			//
 			// ... колонтитулы
 			//
@@ -573,14 +591,18 @@ void DocxExporter::writeStaticData(QtZipWriter* _zip, const ExportParameters& _e
 	//
 	// Настройки документа
 	//
-	_zip->addFile(QString::fromLatin1("word/settings.xml"),
-		"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-		"<w:settings xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\">"
-		"<w:embedTrueTypeFonts/>"
-		"<w:characterSpacingControl w:val=\"doNotCompress\"/>"
-		"<w:footnotePr></w:footnotePr>"
-		"<w:endnotePr></w:endnotePr>"
-		"</w:settings>");
+	QString wordSettings =
+			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+			"<w:settings xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\">";
+	if (::needWriteFonts()) {
+		wordSettings += "<w:embedTrueTypeFonts w:val=\"true\"/><w:embedSystemFonts w:val=\"false\"/>";
+	}
+	wordSettings +=
+			"<w:characterSpacingControl w:val=\"doNotCompress\"/>"
+			"<w:footnotePr></w:footnotePr>"
+			"<w:endnotePr></w:endnotePr>"
+			"</w:settings>";
+	_zip->addFile(QString::fromLatin1("word/settings.xml"), wordSettings.toUtf8());
 }
 
 void DocxExporter::writeStyles(QtZipWriter* _zip) const
@@ -597,9 +619,10 @@ void DocxExporter::writeStyles(QtZipWriter* _zip) const
 	// Настройки в соответсвии со стилем
 	//
 	ScenarioTemplate style = ::exportStyle();
+	const QString defaultFontFamily = style.blockStyle(ScenarioBlockStyle::Action).font().family();
 	foreach (int blockNumber, ::blockTypes().keys()) {
 		ScenarioBlockStyle blockStyle = style.blockStyle(::blockTypes().value(blockNumber));
-		styleXml.append(::docxBlockStyle(blockStyle));
+		styleXml.append(::docxBlockStyle(blockStyle, defaultFontFamily));
 	}
 
 	styleXml.append("</w:styles>");

@@ -5,6 +5,10 @@
         <file alias="Courier Prime Bold">Fonts/courier-prime-bold.ttf</file>
         <file alias="Courier Prime Italic">Fonts/courier-prime-italic.ttf</file>
         <file alias="Courier Prime">Fonts/courier-prime.ttf</file>
+        <file>Fonts/embed/courierprime-regular.odttf</file>
+        <file>Fonts/embed/courierprime-italic.odttf</file>
+        <file>Fonts/embed/courierprime-bold.odttf</file>
+        <file>Fonts/embed/courierprime-bold-italic.odttf</file>
     </qresource>
     <qresource prefix="/Graphics">
         <file>Icons/folder.png</file>
