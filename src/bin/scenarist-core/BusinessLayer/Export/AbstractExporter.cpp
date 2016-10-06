@@ -108,6 +108,7 @@ namespace {
 			<< ScenarioBlockStyle::Character
 			<< ScenarioBlockStyle::Dialogue
 			<< ScenarioBlockStyle::Parenthetical
+			<< ScenarioBlockStyle::TitleHeader
 			<< ScenarioBlockStyle::Title
 			<< ScenarioBlockStyle::Note
 			<< ScenarioBlockStyle::Transition
