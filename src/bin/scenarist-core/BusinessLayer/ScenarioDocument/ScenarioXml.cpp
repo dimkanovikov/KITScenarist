@@ -1030,7 +1030,7 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 						QStringList comments, authors, dates;
 						while (reader.readNextStartElement()) {
 							if (reader.name() == NODE_REVIEW_COMMENT) {
-								comments << reader.attributes().value(ATTRIBUTE_REVIEW_COMMENT).toString();
+								comments << TextEditHelper::fromHtmlEscaped(reader.attributes().value(ATTRIBUTE_REVIEW_COMMENT).toString());
 								authors << reader.attributes().value(ATTRIBUTE_REVIEW_AUTHOR).toString();
 								dates << reader.attributes().value(ATTRIBUTE_REVIEW_DATE).toString();
 
