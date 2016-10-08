@@ -212,6 +212,13 @@ border: 1px solid palette(dark);
       </widget>
      </item>
      <item>
+      <widget class="QRadioButton" name="fdx">
+       <property name="text">
+        <string>FDX</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -397,6 +404,7 @@ border: 1px solid palette(dark);
   <tabstop>browseFile</tabstop>
   <tabstop>docx</tabstop>
   <tabstop>pdf</tabstop>
+  <tabstop>fdx</tabstop>
   <tabstop>showAdditional</tabstop>
   <tabstop>styles</tabstop>
   <tabstop>printTitle</tabstop>
