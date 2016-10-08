@@ -51,6 +51,11 @@ void TemplateDialog::setScenarioTemplate(const BusinessLogic::ScenarioTemplate& 
 		ui->name->setText(m_template.name());
 		ui->description->setText(m_template.description());
 	}
+	if (m_template.pageSizeId() == QPageSize::A4) {
+		ui->pageFormatA4->setChecked(true);
+	} else {
+		ui->pageFormatLetter->setChecked(true);
+	}
 	ui->leftField->setValue(m_template.pageMargins().left());
 	ui->topField->setValue(m_template.pageMargins().top());
 	ui->rightField->setValue(m_template.pageMargins().right());
@@ -95,6 +100,7 @@ BusinessLogic::ScenarioTemplate TemplateDialog::scenarioTemplate()
 		m_template.setName(tr("Unnamed Template"));
 	}
 	m_template.setDescription(ui->description->text());
+	m_template.setPageSizeId(ui->pageFormatA4->isChecked() ? QPageSize::A4 : QPageSize::Letter);
 	m_template.setPageMargins(QMarginsF(ui->leftField->value(),
 									 ui->topField->value(),
 									 ui->rightField->value(),
