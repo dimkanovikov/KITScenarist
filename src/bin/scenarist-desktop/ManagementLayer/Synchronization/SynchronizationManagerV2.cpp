@@ -22,6 +22,9 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Helpers/PasswordStorage.h>
 
+#include <WebLoader.h>
+
+#include <QXmlStreamReader>
 #include <QEventLoop>
 #include <QTimer>
 
@@ -29,9 +32,38 @@ using ManagementLayer::SynchronizationManagerV2;
 using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
 
+namespace {
+    /**
+     * @brief Список URL адресов, по которым осуществляются запросы
+     */
+    /** @{ */
+    const QUrl URL_SIGNUP = QUrl("https://kitscenarist.ru/api/account/register/");
+    const QUrl URL_RESTORE = QUrl("https://kitscenarist.ru/api/account/restore/");
+    /** @} */
+
+    /**
+     * @brief Список названий параметров для запросов
+     */
+    /** @{ */
+    const QString KEY_EMAIL = "email";
+    const QString KEY_PASSWORD = "password";
+
+    /**
+     * @brief Список кодов ошибок и соответствующих им описаний
+     */
+    /** @{ */
+    const int UNKNOWN_ERROR_CODE = 100;
+    const QString UNKNOWN_ERROR_STRING = QObject::tr("Unknown error");
+
+    const int SESSION_KEY_NOT_FOUND_CODE = 101;
+    const QString SESSION_KEY_NOT_FOUND_STRING = QObject::tr("Session key not found");
+    /** @} */
+}
+
 SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _parentView) :
     QObject(_parent),
-    m_view(_parentView)
+    m_view(_parentView),
+    m_loader(new WebLoader(this))
 {
 
 }
@@ -103,23 +135,48 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 void SynchronizationManagerV2::signUp(const QString& _email, const QString& _password,
                                             const QString& _type)
 {
-    //
-    // FIXME: Поменять в рабочей версии
-    //
-    QEventLoop event;
-    QTimer::singleShot(2000, &event, SLOT(quit()));
-    event.exec();
+    m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->clearRequestAttributes();
+    m_loader->addRequestAttribute(KEY_EMAIL, _email);
+    m_loader->addRequestAttribute(KEY_PASSWORD, _password);
+    QByteArray response = m_loader->loadSync(URL_SIGNUP);
 
-    bool success = false;
-    if (_email == "user" && _password == "user") {
-        success = true;
-    } else {
-        handleError("Wrong email", 404);
+    //
+    // Считываем результат авторизации
+    //
+    QXmlStreamReader responseReader(response);
+    //
+    // Успешно ли завершилась авторизация
+    //
+    if(!checkSuccess(responseReader)) {
+        return;
     }
 
-    if (success) {
-        emit signUped();
+    //
+    // Найдем наш ключ сессии
+    //
+    m_sessionKey.clear();
+    while (!responseReader.atEnd()) {
+        responseReader.readNext();
+        if (responseReader.name().toString() == "session_key") {
+            responseReader.readNext();
+            m_sessionKey = responseReader.text().toString();
+            break;
+        }
     }
+
+    //
+    // Не нашли ключ сессии
+    //
+    if (m_sessionKey.isEmpty()) {
+        handleError(SESSION_KEY_NOT_FOUND_STRING, SESSION_KEY_NOT_FOUND_CODE);
+        return;
+    }
+
+    //
+    // Если авторизация прошла
+    //
+    emit signUped();
 }
 
 void SynchronizationManagerV2::verification(const QString& _code)
@@ -145,23 +202,90 @@ void SynchronizationManagerV2::verification(const QString& _code)
 
 void SynchronizationManagerV2::restorePassword(const QString &_email)
 {
-    //
-    // FIXME: Поменять в рабочей версии
-    //
-    QEventLoop event;
-    QTimer::singleShot(2000, &event, SLOT(quit()));
-    event.exec();
+    m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->clearRequestAttributes();
+    m_loader->addRequestAttribute(KEY_EMAIL, _email);
+    QByteArray response = m_loader->loadSync(URL_RESTORE);
 
-    bool success = false;
-    if (_email == "recovery") {
-        success = true;
-    } else {
-        handleError("Wrong email", 606);
+    //
+    // Считываем результат авторизации
+    //
+    QXmlStreamReader responseReader(response);
+    //
+    // Успешно ли завершилась авторизация
+    //
+    if(!checkSuccess(responseReader)) {
+        return;
     }
 
-    if (success) {
-        emit restoredPassword();
+    //
+    // Найдем статус
+    //
+    m_sessionKey.clear();
+    while (!responseReader.atEnd()) {
+        responseReader.readNext();
+        if (responseReader.name().toString() == "send_mail_result") {
+            responseReader.readNext();
+            QString status = responseReader.text().toString();
+            if (status != "success") {
+                handleError(status, UNKNOWN_ERROR_CODE);
+                return;
+            }
+            break;
+        }
     }
+
+    //
+    // Если успешно отправили письмо
+    //
+    emit restoredPassword();
+}
+
+bool SynchronizationManagerV2::checkSuccess(QXmlStreamReader& _responseReader)
+{
+    while (!_responseReader.atEnd()) {
+        _responseReader.readNext();
+        if (_responseReader.name().toString() == "status") {
+            //
+            // Авторизация успешна
+            //
+            if (_responseReader.attributes().value("result").toString() == "true") {
+                return true;
+            } else {
+                //
+                // Попытаемся извлечь код ошибки
+                //
+                if (!_responseReader.attributes().hasAttribute("errorCode")) {
+                    //
+                    // Неизвестная ошибка
+                    //
+                    handleError(UNKNOWN_ERROR_STRING, UNKNOWN_ERROR_CODE);
+                    return false;
+                }
+
+                int errorCode = _responseReader.attributes().value("errorCode").toInt();
+
+                //
+                // Попытаемся извлечь текст ошибки
+                //
+                QString errorText = UNKNOWN_ERROR_STRING;
+                if (_responseReader.attributes().hasAttribute("error")) {
+                    errorText = _responseReader.attributes().value("error").toString();
+                }
+
+                //
+                // Скажем про ошибку
+                //
+                handleError(errorText, errorCode);
+                return false;
+            }
+        }
+    }
+    //
+    // Ничего не нашли про статус
+    //
+    handleError(tr("Unknown error"), 100);
+    return false;
 }
 
 void SynchronizationManagerV2::handleError(const QString &_error, int _code)

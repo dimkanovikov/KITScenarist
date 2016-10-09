@@ -19,6 +19,9 @@
 
 #include <QObject>
 
+class WebLoader;
+class QXmlStreamReader;
+
 namespace ManagementLayer
 {
     /**
@@ -85,6 +88,10 @@ namespace ManagementLayer
 
     private:
         /**
+         * @brief Проверка, что статус ответа - ок
+         */
+        bool checkSuccess(QXmlStreamReader& _reader);
+        /**
          * Обработка ошибок
          */
         void handleError(const QString& _error, int _code = 0);
@@ -98,6 +105,11 @@ namespace ManagementLayer
          * Ключ сессии
          */
         QString m_sessionKey;
+
+        /**
+         * Загрузчик
+         */
+        WebLoader *m_loader;
     };
 }
 
