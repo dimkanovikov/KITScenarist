@@ -459,7 +459,8 @@ namespace {
 	}
 }
 
-DocxExporter::DocxExporter()
+DocxExporter::DocxExporter() :
+	AbstractExporter()
 {
 }
 

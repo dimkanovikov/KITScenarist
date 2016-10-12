@@ -686,6 +686,13 @@ void ScenarioTemplate::setDescription(const QString& _description)
 	}
 }
 
+void ScenarioTemplate::setPageSizeId(QPageSize::PageSizeId _pageSizeId)
+{
+	if (m_pageSizeId != _pageSizeId) {
+		m_pageSizeId = _pageSizeId;
+	}
+}
+
 void ScenarioTemplate::setPageMargins(const QMarginsF& _pageMargins)
 {
 	if (m_pageMargins != _pageMargins) {
@@ -1015,28 +1022,16 @@ ScenarioTemplateFacade::ScenarioTemplateFacade()
 
 		return defaultTemplatePath;
 	};
-	//
-	// ... Courier New
-	//
-	const QString defaultCourierNewTemplateName =
+
+	QString defaultTemplatePath;
 #ifndef MOBILE_OS
-			"default."
+	defaultTemplatePath = updateDefaultTemplate("default.");
+	updateDefaultTemplate("default_courier_prime.");
+	updateDefaultTemplate("final_draft_letter.");
+	updateDefaultTemplate("final_draft_a4.");
 #else
-			"mobile."
+	defaultTemplatePath = updateDefaultTemplate("mobile.");
 #endif
-			;
-	const QString defaultCourierNewTemplatePath = updateDefaultTemplate(defaultCourierNewTemplateName);
-	//
-	// ... Courier Prime
-	//
-	const QString defaultCourierPrimeTemplateName =
-#ifndef MOBILE_OS
-			"default_courier_prime."
-#else
-			"mobile_courier_prime."
-#endif
-			;
-	updateDefaultTemplate(defaultCourierPrimeTemplateName);
 
 	//
 	// Загрузить шаблоны
@@ -1053,7 +1048,7 @@ ScenarioTemplateFacade::ScenarioTemplateFacade()
 	//
 	// ... шаблон по умолчанию
 	//
-	m_defaultTemplate = ScenarioTemplate(defaultCourierNewTemplatePath);
+	m_defaultTemplate = ScenarioTemplate(defaultTemplatePath);
 
 	//
 	// Настроим модель шаблонов
