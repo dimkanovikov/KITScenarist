@@ -76,8 +76,7 @@ void ResearchManager::loadCurrentProject()
 	//
 	// Загрузим модель разработки
 	//
-	m_model->load(StorageFacade::researchStorage()->all());
-	m_view->setResearchModel(m_model);
+    m_model->load(StorageFacade::researchStorage()->all());
 	editResearch(m_model->index(0, 0));
 
 	g_isProjectLoading = false;
@@ -85,9 +84,8 @@ void ResearchManager::loadCurrentProject()
 
 void ResearchManager::closeCurrentProject()
 {
-	m_scenarioData.clear();
-	m_model->clear();
-	m_view->setResearchModel(0);
+    m_scenarioData.clear();
+    m_model->clear();
 }
 
 void ResearchManager::updateSettings()
@@ -359,7 +357,7 @@ void ResearchManager::updateScenarioData(const QString& _key, const QString& _va
 
 void ResearchManager::initView()
 {
-
+    m_view->setResearchModel(m_model);
 }
 
 void ResearchManager::initConnections()

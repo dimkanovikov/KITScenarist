@@ -794,11 +794,11 @@ void ScenarioXml::xmlToScenarioV0(int _position, const QString& _xml)
 	ScenarioBlockStyle::Type lastTokenType = ScenarioBlockStyle::Undefined;
 
 	QXmlStreamReader reader(_xml);
-	while (!reader.atEnd()) {
-		//
-		// Даём возможность выполниться графическим операциям
-		//
-		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+    while (!reader.atEnd()) {
+        //
+        // Даём возможность выполниться графическим операциям
+        //
+        QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
 		switch (reader.readNext()) {
 			case QXmlStreamReader::StartElement: {

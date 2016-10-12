@@ -1164,7 +1164,7 @@ void ApplicationManager::closeCurrentProject()
 	//
 	// Закроем проект управляющими
 	//
-	m_researchManager->closeCurrentProject();
+    m_researchManager->closeCurrentProject();
 	m_scenarioManager->closeCurrentProject();
 	m_charactersManager->closeCurrentProject();
 	m_locationsManager->closeCurrentProject();
