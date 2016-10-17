@@ -818,11 +818,11 @@ void ScenarioXml::xmlToScenarioV0(int _position, const QString& _xml)
 	ScenarioBlockStyle::Type lastTokenType = ScenarioBlockStyle::Undefined;
 
 	QXmlStreamReader reader(_xml);
-	while (!reader.atEnd()) {
-		//
-		// Даём возможность выполниться графическим операциям
-		//
-		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+    while (!reader.atEnd()) {
+        //
+        // Даём возможность выполниться графическим операциям
+        //
+        QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
 		switch (reader.readNext()) {
 			case QXmlStreamReader::StartElement: {
@@ -1060,7 +1060,7 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 						QStringList comments, authors, dates;
 						while (reader.readNextStartElement()) {
 							if (reader.name() == NODE_REVIEW_COMMENT) {
-								comments << reader.attributes().value(ATTRIBUTE_REVIEW_COMMENT).toString();
+								comments << TextEditHelper::fromHtmlEscaped(reader.attributes().value(ATTRIBUTE_REVIEW_COMMENT).toString());
 								authors << reader.attributes().value(ATTRIBUTE_REVIEW_AUTHOR).toString();
 								dates << reader.attributes().value(ATTRIBUTE_REVIEW_DATE).toString();
 

@@ -9,6 +9,8 @@
 qreal PageMetrics::mmToPx(qreal _mm, bool _x)
 {
 	//
+	// FIXME: !!!!
+	//
 	// Рассчитываем исходя из знания, что один символ шрифта Courier New 12pt
 	// высотой 4,8мм и шириной 2,53мм
 	//
@@ -21,13 +23,8 @@ QPageSize::PageSizeId PageMetrics::pageSizeIdFromString(const QString& _from)
 {
 	QPageSize::PageSizeId result = QPageSize::A4;
 
-	if (_from == "A0") result = QPageSize::A0;
-	else if (_from == "A1") result = QPageSize::A1;
-	else if (_from == "A2") result = QPageSize::A2;
-	else if (_from == "A3") result = QPageSize::A3;
-	else if (_from == "A4") result = QPageSize::A4;
-	else if (_from == "A5") result = QPageSize::A5;
-	else if (_from == "A6") result = QPageSize::A6;
+	if (_from == "A4") result = QPageSize::A4;
+	else if (_from == "Letter") result = QPageSize::Letter;
 	else
 		Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Undefined page size: " + _from));
 
@@ -39,13 +36,8 @@ QString PageMetrics::stringFromPageSizeId(QPageSize::PageSizeId _pageSize)
 	QString result;
 
 	switch (_pageSize) {
-		case QPageSize::A0: result = "A0"; break;
-		case QPageSize::A1: result = "A1"; break;
-		case QPageSize::A2: result = "A2"; break;
-		case QPageSize::A3: result = "A3"; break;
 		case QPageSize::A4: result = "A4"; break;
-		case QPageSize::A5: result = "A5"; break;
-		case QPageSize::A6: result = "A6"; break;
+		case QPageSize::Letter: result = "Letter"; break;
 		default:
 			Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Undefined page size: " + QString::number(_pageSize)));
 	}

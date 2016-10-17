@@ -1,5 +1,5 @@
-#ifndef RTFIMPORTER_H
-#define RTFIMPORTER_H
+#ifndef FDXIMPORTER_H
+#define FDXIMPORTER_H
 
 #include "AbstractImporter.h"
 
@@ -7,12 +7,12 @@
 namespace BusinessLogic
 {
 	/**
-	 * @brief Импортер документов
+	 * @brief Импортер FDX-документов
 	 */
-	class DocumentImporter : public AbstractImporter
+	class FdxImporter : public AbstractImporter
 	{
 	public:
-		DocumentImporter();
+		FdxImporter();
 
 		/**
 		 * @brief Импорт сценария из документа
@@ -21,4 +21,4 @@ namespace BusinessLogic
 	};
 }
 
-#endif // RTFIMPORTER_H
+#endif // FDXIMPORTER_H

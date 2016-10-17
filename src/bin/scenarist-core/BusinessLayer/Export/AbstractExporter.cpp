@@ -108,6 +108,7 @@ namespace {
 			<< ScenarioBlockStyle::Character
 			<< ScenarioBlockStyle::Dialogue
 			<< ScenarioBlockStyle::Parenthetical
+			<< ScenarioBlockStyle::TitleHeader
 			<< ScenarioBlockStyle::Title
 			<< ScenarioBlockStyle::Note
 			<< ScenarioBlockStyle::Transition
@@ -943,7 +944,7 @@ QTextDocument* AbstractExporter::prepareDocument(const BusinessLogic::ScenarioDo
 	//
 	if (_exportParameters.printTilte) {
 		QTextCharFormat titleFormat;
-		titleFormat.setFont(QFont("Courier New", 12));
+		titleFormat.setFont(exportStyle.blockStyle(ScenarioBlockStyle::Action).font());
 		QTextBlockFormat centerFormat;
 		centerFormat.setAlignment(Qt::AlignCenter);
 		centerFormat.setLineHeight(

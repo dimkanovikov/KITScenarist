@@ -448,6 +448,11 @@ namespace BusinessLogic
 		void setDescription(const QString& _description);
 
 		/**
+		 * @brief Установить формат страницы
+		 */
+		void setPageSizeId(QPageSize::PageSizeId _pageSizeId);
+
+		/**
 		 * @brief Установить поля документа
 		 */
 		void setPageMargins(const QMarginsF& _pageMargins);

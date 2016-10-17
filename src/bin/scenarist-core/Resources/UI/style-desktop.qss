@@ -303,6 +303,12 @@ QTabBar::tab:!selected[inTopPanel="true"] {
 	border-bottom-color: palette(button);
 }
 
+QTabBar::tab:!selected:hover[inTopPanel="true"] {
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: palette(dark);
+}
+
 QScrollBar {
 	border: none;
 	background: palette(window);

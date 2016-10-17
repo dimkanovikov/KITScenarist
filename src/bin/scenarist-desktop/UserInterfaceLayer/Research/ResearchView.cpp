@@ -120,7 +120,12 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
 		//
 		connect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
 				this, &ResearchView::currentResearchChanged);
-		connect(_model, &QAbstractItemModel::rowsInserted, this, &ResearchView::researchItemAdded);
+        connect(_model, &QAbstractItemModel::rowsInserted,
+                [=] (const QModelIndex& _parent) {
+            if (_parent.isValid()) {
+                emit researchItemAdded();
+            }
+        });
 	}
 }
 

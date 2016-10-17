@@ -121,6 +121,7 @@ void ScenarioTextEditWidget::setUsePageView(bool _use)
 	QMarginsF pageMargins(15, 5, 5, 5);
 	Qt::Alignment pageNumbersAlign;
 	if (_use) {
+		m_editor->setPageFormat(ScenarioTemplateFacade::getTemplate().pageSizeId());
 		pageMargins = ScenarioTemplateFacade::getTemplate().pageMargins();
 		pageNumbersAlign = ScenarioTemplateFacade::getTemplate().numberingAlignment();
 	}

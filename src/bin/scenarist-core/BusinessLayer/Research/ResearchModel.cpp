@@ -143,13 +143,17 @@ void ResearchModel::clear()
 	//
 	// Пересоздаём корень разработки
 	//
+    emit beginRemoveRows(QModelIndex(), 1, 1);
 	m_rootItem->removeItem(m_researchRoot);
+    emit endRemoveRows();
 	//
 	m_researchRoot =
 		new ResearchModelItem(
 			new Research(Domain::Identifier(), 0, Research::ResearchRoot, 1, tr("Research"))
 		);
+    emit beginInsertRows(QModelIndex(), 1, 1);
 	m_rootItem->appendItem(m_researchRoot);
+    emit endInsertRows();
 }
 
 void ResearchModel::prependItem(ResearchModelItem* _item, ResearchModelItem* _parentItem)

@@ -17,7 +17,7 @@ CONFIG += c++11
 #
 unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 
-#QMAKE_MAC_SDK = macosx10.11
+QMAKE_MAC_SDK = macosx10.12
 
 #
 # Конфигурируем расположение файлов сборки
@@ -323,7 +323,9 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.cpp \
+    scenarist-core/BusinessLayer/Export/FdxExporter.cpp \
+    scenarist-core/BusinessLayer/Import/FdxImporter.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -587,7 +589,9 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h \
+    scenarist-core/BusinessLayer/Export/FdxExporter.h \
+    scenarist-core/BusinessLayer/Import/FdxImporter.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

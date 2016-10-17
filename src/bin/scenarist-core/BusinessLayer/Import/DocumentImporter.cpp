@@ -245,7 +245,8 @@ namespace {
 }
 
 
-DocumentImporter::DocumentImporter()
+DocumentImporter::DocumentImporter() :
+	AbstractImporter()
 {
 }
 

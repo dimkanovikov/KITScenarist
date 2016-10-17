@@ -302,7 +302,7 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 			if (!settings.value(widget->objectName()).isNull()) {
 				const int position = settings.value(widget->objectName()).toInt();
 				splitterWidgets.insert(position, widget);
-            }
+			}
 		}
 		//
 		// ... позиционируем сами виджеты
@@ -349,9 +349,9 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("application/use-dark-theme", "0");
 	m_defaultValues.insert("application/autosave", "1");
 	m_defaultValues.insert("application/autosave-interval", "5");
-	m_defaultValues.insert("application/save-backups", "0");
+	m_defaultValues.insert("application/save-backups", "1");
 	m_defaultValues.insert("application/save-backups-folder",
-		QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+		QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/KITScenarist/backups");
 	m_defaultValues.insert("application/modules/research", "1");
 	m_defaultValues.insert("application/modules/scenario", "1");
 	m_defaultValues.insert("application/modules/characters", "1");

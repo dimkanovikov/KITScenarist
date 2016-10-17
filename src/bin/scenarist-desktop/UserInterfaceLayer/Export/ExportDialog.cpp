@@ -64,17 +64,14 @@ ExportDialog::~ExportDialog()
 
 void ExportDialog::setExportFilePath(const QString& _filePath)
 {
-	QString filePath = _filePath;
-	if (filePath.endsWith("rtf")) {
-		filePath = filePath.replace(".rtf", ".docx");
-	}
-
-	ui->file->setText(filePath);
-	QFileInfo fileInfo(filePath);
+	ui->file->setText(_filePath);
+	QFileInfo fileInfo(_filePath);
 	if (fileInfo.suffix() == "docx") {
 		ui->docx->setChecked(true);
-	} else {
+	} else if (fileInfo.suffix() == "pdf") {
 		ui->pdf->setChecked(true);
+	} else {
+		ui->fdx->setChecked(true);
 	}
 
 	aboutFileNameChanged();
@@ -150,7 +147,14 @@ BusinessLogic::ExportParameters ExportDialog::exportParameters() const
 
 void ExportDialog::aboutFormatChanged()
 {
-	const QString format = ui->docx->isChecked() ? "docx" : "pdf";
+	QString format;
+	if (ui->docx->isChecked()) {
+		format = "docx";
+	} else if (ui->pdf->isChecked()) {
+		format = "pdf";
+	} else {
+		format = "fdx";
+	}
 	QString filePath = ui->file->text();
 
 	//
@@ -174,7 +178,14 @@ void ExportDialog::aboutFormatChanged()
 
 void ExportDialog::aboutChooseFile()
 {
-	const QString format = ui->docx->isChecked() ? "docx" : "pdf";
+	QString format;
+	if (ui->docx->isChecked()) {
+		format = "docx";
+	} else if (ui->pdf->isChecked()) {
+		format = "pdf";
+	} else {
+		format = "fdx";
+	}
 	QString filePath =
 			QFileDialog::getSaveFileName(this, tr("Choose file to export scenario"),
 				(!ui->file->text().isEmpty() ? ui->file->text() : ::exportFolderPath()),
@@ -216,8 +227,9 @@ void ExportDialog::initConnections()
 	connect(ui->showAdditional, SIGNAL(toggled(bool)), ui->additionalSettings, SLOT(setVisible(bool)));
 
 	connect(ui->styles, SIGNAL(currentTextChanged(QString)), this, SIGNAL(currentStyleChanged(QString)));
-	connect(ui->docx, SIGNAL(toggled(bool)), this, SLOT(aboutFormatChanged()));
-	connect(ui->pdf, SIGNAL(toggled(bool)), this, SLOT(aboutFormatChanged()));
+	connect(ui->docx, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
+	connect(ui->pdf, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
+	connect(ui->fdx, &QRadioButton::toggled, this, &ExportDialog::aboutFormatChanged);
 	connect(ui->browseFile, SIGNAL(clicked()), this, SLOT(aboutChooseFile()));
 	connect(ui->file, SIGNAL(textChanged(QString)), this, SLOT(aboutFileNameChanged()));
 
