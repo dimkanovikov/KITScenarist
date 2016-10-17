@@ -27,7 +27,8 @@ namespace {
 
 	const QString ATTRIBUTE_VERSION = "version";
 	const QString ATTRIBUTE_DESCRIPTION = "description";
-	const QString ATTRIBUTE_COLOR = "color";
+    const QString ATTRIBUTE_UUID = "uuid";
+    const QString ATTRIBUTE_COLOR = "color";
 	const QString ATTRIBUTE_TITLE = "title";
 	const QString ATTRIBUTE_REVIEW_FROM = "from";
 	const QString ATTRIBUTE_REVIEW_LENGTH = "length";
@@ -227,16 +228,19 @@ QString ScenarioXml::scenarioToXml()
 			//
 			if (needWrite) {
 				//
-				// Если возможно, сохраним цвета элемента и его заголовок
+                // Если возможно, сохраним uuid, цвета элемента и его заголовок
 				//
-				QString colorsAndTitle;
+                QString uuidColorsAndTitle;
 				if (canHaveColors) {
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
+                        if (!info->uuid().isEmpty()) {
+                            uuidColorsAndTitle = QString(" %1=\"%2\"").arg(ATTRIBUTE_UUID, info->uuid());
+                        }
 						if (!info->colors().isEmpty()) {
-							colorsAndTitle = QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
+                            uuidColorsAndTitle = QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
 						}
 						if (!info->title().isEmpty()) {
-							colorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, info->title());
+                            uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, info->title());
 						}
 					}
 				}
@@ -244,7 +248,7 @@ QString ScenarioXml::scenarioToXml()
 				//
 				// Открыть ячейку текущего элемента
 				//
-				currentBlockXml.append(QString("<%1%2>\n").arg(currentNode, colorsAndTitle));
+                currentBlockXml.append(QString("<%1%2>\n").arg(currentNode, uuidColorsAndTitle));
 
 				//
 				// Пишем текст текущего элемента
@@ -419,10 +423,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			//
 			bool needWrite = true; // пишем абзац?
 			QString currentNode = ScenarioBlockStyle::typeName(currentType); // имя текущей ячейки
-			bool canHaveColors = false; // может иметь цвета
+            bool canHaveUuidColorsAndTitle = false; // может иметь цвета
 			switch (currentType) {
 				case ScenarioBlockStyle::SceneHeading: {
-					canHaveColors = true;
+                    canHaveUuidColorsAndTitle = true;
 					break;
 				}
 
@@ -432,7 +436,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				}
 
 				case ScenarioBlockStyle::SceneGroupHeader: {
-					canHaveColors = true;
+                    canHaveUuidColorsAndTitle = true;
 
 					++openedGroups;
 
@@ -453,7 +457,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				}
 
 				case ScenarioBlockStyle::FolderHeader: {
-					canHaveColors = true;
+                    canHaveUuidColorsAndTitle = true;
 
 					++openedFolders;
 
@@ -488,11 +492,14 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				writer.writeStartElement(currentNode);
 
 				//
-				// Если возможно, сохраним цвета элемента и его название
+                // Если возможно, сохраним uuid, цвета элемента и его название
 				//
-				if (canHaveColors) {
+                if (canHaveUuidColorsAndTitle) {
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
-						if (!info->colors().isEmpty()) {
+                        if (!info->uuid().isEmpty()) {
+                            writer.writeAttribute(ATTRIBUTE_UUID, info->uuid());
+                        }
+                        if (!info->colors().isEmpty()) {
 							writer.writeAttribute(ATTRIBUTE_COLOR, info->colors());
 						}
 						if (!info->title().isEmpty()) {
@@ -1014,6 +1021,9 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 						|| tokenType == ScenarioBlockStyle::SceneGroupHeader
 						|| tokenType == ScenarioBlockStyle::FolderHeader) {
 						ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
+                        if (reader.attributes().hasAttribute(ATTRIBUTE_UUID)) {
+                            info->setUuid(reader.attributes().value(ATTRIBUTE_UUID).toString());
+                        }
 						if (reader.attributes().hasAttribute(ATTRIBUTE_COLOR)) {
 							info->setColors(reader.attributes().value(ATTRIBUTE_COLOR).toString());
 						}

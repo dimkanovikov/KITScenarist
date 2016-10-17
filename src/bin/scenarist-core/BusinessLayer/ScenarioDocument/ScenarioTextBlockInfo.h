@@ -13,6 +13,16 @@ namespace BusinessLogic
 	public:
 		ScenarioTextBlockInfo();
 
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString uuid() const;
+
+        /**
+         * @brief Установить идентификатор
+         */
+        void setUuid(const QString& _uuid);
+
 		/**
 		 * @brief Получить номер сцены
 		 */
@@ -59,6 +69,11 @@ namespace BusinessLogic
 		ScenarioTextBlockInfo* clone() const;
 
 	private:
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString m_uuid;
+
 		/**
 		 * @brief Номер сцены
 		 */

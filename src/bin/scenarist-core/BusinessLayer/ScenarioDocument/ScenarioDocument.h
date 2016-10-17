@@ -89,6 +89,11 @@ namespace BusinessLogic
 		 */
 		QString itemHeaderAtPosition(int _position) const;
 
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString itemUuid(ScenarioModelItem* _item) const;
+
 		/**
 		 * @brief Цвета сцены
 		 */

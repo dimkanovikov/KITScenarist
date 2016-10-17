@@ -30,6 +30,12 @@ namespace BusinessLogic
 		ScenarioModelItem(int _position);
 		~ScenarioModelItem();
 
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString uuid() const;
+        void setUuid(const QString& _uuid);
+
 		/**
 		 * @brief Позиция элемента
 		 */
@@ -145,6 +151,11 @@ namespace BusinessLogic
 		void clear();
 
 	private:
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString m_uuid;
+
 		/**
 		 * @brief Позиция элемента в тексте
 		 */

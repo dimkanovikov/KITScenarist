@@ -129,7 +129,25 @@ QString ScenarioDocument::itemHeaderAtPosition(int _position) const
 	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
 		header = item->header();
 	}
-	return header;
+    return header;
+}
+
+QString ScenarioDocument::itemUuid(ScenarioModelItem* _item) const
+{
+    QTextCursor cursor(m_document);
+    cursor.setPosition(_item->position());
+
+    QString uuid;
+    QTextBlockUserData* textBlockData = cursor.block().userData();
+    if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
+        uuid = info->uuid();
+        if (uuid.isEmpty()) {
+            uuid = QUuid::createUuid().toString();
+            info->setUuid(uuid);
+            cursor.block().setUserData(info);
+        }
+    }
+    return uuid;
 }
 
 QString ScenarioDocument::itemColors(ScenarioModelItem* _item) const
@@ -1021,6 +1039,7 @@ ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNe
 		//
 		else {
 			item = new ScenarioModelItem(_position);
+            item->setUuid(itemUuid(item));
 		}
 	}
 	return item;

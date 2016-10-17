@@ -10,6 +10,18 @@ ScenarioTextBlockInfo::ScenarioTextBlockInfo()
 {
 }
 
+QString ScenarioTextBlockInfo::uuid() const
+{
+    return m_uuid;
+}
+
+void ScenarioTextBlockInfo::setUuid(const QString& _uuid)
+{
+    if (m_uuid!= _uuid) {
+        m_uuid= _uuid;
+    }
+}
+
 int ScenarioTextBlockInfo::sceneNumber() const
 {
 	return m_sceneNumber;

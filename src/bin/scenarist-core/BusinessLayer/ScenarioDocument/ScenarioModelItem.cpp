@@ -22,7 +22,19 @@ ScenarioModelItem::ScenarioModelItem(int _position) :
 
 ScenarioModelItem::~ScenarioModelItem()
 {
-	qDeleteAll(m_children);
+    qDeleteAll(m_children);
+}
+
+QString ScenarioModelItem::uuid() const
+{
+    return m_uuid;
+}
+
+void ScenarioModelItem::setUuid(const QString& _uuid)
+{
+    if (m_uuid != _uuid) {
+        m_uuid = _uuid;
+    }
 }
 
 int ScenarioModelItem::position() const
