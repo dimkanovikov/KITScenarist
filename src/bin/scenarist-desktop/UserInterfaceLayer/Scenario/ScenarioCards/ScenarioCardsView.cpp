@@ -44,30 +44,32 @@ QString ScenarioCardsView::save() const
 	return m_cardsEdit->save();
 }
 
-void ScenarioCardsView::addCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent)
+void ScenarioCardsView::addCard(const QString& _uuid, int _cardType, const QString& _title,
+    const QString& _description, bool _isCardFirstInParent)
 {
-	m_cardsEdit->addCard(_cardType, _title, _description, _isCardFirstInParent);
+    m_cardsEdit->addCard(_uuid, _cardType, _title, _description, _isCardFirstInParent);
 }
 
-void ScenarioCardsView::updateCard(int _cardNumber, int _type, const QString& _title, const QString& _description)
+void ScenarioCardsView::updateCard(const QString& _uuid, int _type, const QString& _title,
+    const QString& _description)
 {
-	m_cardsEdit->updateCard(_cardNumber, _type, _title, _description);
+    m_cardsEdit->updateCard(_uuid, _type, _title, _description);
 }
 
-void ScenarioCardsView::removeCard(int _cardNumber)
+void ScenarioCardsView::removeCard(const QString& _uuid)
 {
-	m_cardsEdit->selectCard(_cardNumber);
+    m_cardsEdit->selectCard(_uuid);
 	m_cardsEdit->deleteSelectedItems();
 }
 
-void ScenarioCardsView::selectCard(int _cardNumber)
+void ScenarioCardsView::selectCard(const QString& _uuid)
 {
-	m_cardsEdit->selectCard(_cardNumber);
+    m_cardsEdit->selectCard(_uuid);
 }
 
-int ScenarioCardsView::selectedCardNumber() const
+QString ScenarioCardsView::selectedCardUuid() const
 {
-	return m_cardsEdit->selectedCardNumber();
+    return m_cardsEdit->selectedCardUuid();
 }
 
 void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)

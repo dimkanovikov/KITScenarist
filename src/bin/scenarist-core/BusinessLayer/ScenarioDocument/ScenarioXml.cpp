@@ -116,13 +116,16 @@ QString ScenarioXml::defaultCardsXml()
 {
 	return "<?xml version=\"1.0\"?>\n"
            "<cards_xml viewx=\"500\" viewy=\"270\">\n"
-           "<ActionShape id=\"0\" x=\"60\" y=\"60\" width=\"210\" height=\"100\" card_type=\"0\" title=\"\" description=\"\"/>\n"
+           "<ActionShape id=\"0\" x=\"60\" y=\"60\" width=\"210\" height=\"100\" uuid=\"{000000-0000000-000000}\" card_type=\"0\" title=\"\" description=\"\"/>\n"
 		   "</cards_xml>";
 }
 
 QString ScenarioXml::defaultTextXml()
 {
-	return makeMimeFromXml("<scene_heading>\n<v><![CDATA[]]></v>\n</scene_heading>\n");
+    return makeMimeFromXml(
+            "<scene_heading uuid=\"{000000-0000000-000000}\">\n"
+            "<v><![CDATA[]]></v>\n"
+            "</scene_heading>\n");
 }
 
 QString ScenarioXml::makeMimeFromXml(const QString& _xml)

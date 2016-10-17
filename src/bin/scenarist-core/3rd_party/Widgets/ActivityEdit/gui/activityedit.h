@@ -47,12 +47,13 @@ public:
 	/**
 	 * @brief Добавить карточку
 	 */
-	void addCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent);
+    void addCard(const QString& _uuid, int _cardType, const QString& _title,
+        const QString& _description, bool _isCardFirstInParent);
 
 	/**
 	 * @brief Обновить карточку с заданным номером
 	 */
-	void updateCard(int _cardNumber, int _type, const QString& _title, const QString& _description);
+    void updateCard(const QString& _uuid, int _type, const QString& _title, const QString& _description);
 
 	/**
 	 * @brief Добавить заметку
@@ -75,14 +76,14 @@ public:
 	void selectAll();
 
 	/**
-	 * @brief Сделать активной карточку с заданным номером
+     * @brief Сделать активной карточку с заданным uuid
 	 */
-	void selectCard(int _cardNumber);
+    void selectCard(const QString& _uuid);
 
 	/**
 	 * @brief Получить номер выделенной карточки, если нет выделенных, или выделено больше одной, возвращается -1
 	 */
-	int selectedCardNumber() const;
+    QString selectedCardUuid() const;
 
 	/**
 	 * @brief Удалить выделенные элементы

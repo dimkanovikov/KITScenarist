@@ -116,17 +116,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Получить индекс заданного элемента
 		 */
-		QModelIndex indexForItem(ScenarioModelItem* _item) const;
+        QModelIndex indexForItem(ScenarioModelItem* _item) const;
 
 		/**
-		 * @brief Получить порядковый номер элемента в заданном индексе
+         * @brief Получить индекс элемента имеющего заданный uuid
 		 */
-		int numberForIndex(const QModelIndex& _index) const;
-
-		/**
-		 * @brief Получить индекс элемента имеющего заданный порядковый номер
-		 */
-		QModelIndex indexForNumber(int _number) const;
+        QModelIndex indexForUuid(const QString& _uuid) const;
 
 		/**
 		 * @brief Сформировать простую схему для сцен

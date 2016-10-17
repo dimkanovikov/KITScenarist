@@ -539,47 +539,16 @@ QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 }
 
 namespace {
-	static int scenarioModelNumberForItem(ScenarioModelItem* _parent, ScenarioModelItem* _item, int& _number) {
-		int searchedNumber = -1;
-		for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
-			ScenarioModelItem* child = _parent->childAt(childIndex);
-			if (child == _item) {
-				searchedNumber = _number;
-				break;
-			} else {
-				++_number;
-				if (child->hasChildren()) {
-					searchedNumber = scenarioModelNumberForItem(child, _item, _number);
-					if (searchedNumber != -1) {
-						break;
-					}
-				}
-			}
-		}
-
-		return searchedNumber;
-	}
-}
-
-int ScenarioModel::numberForIndex(const QModelIndex& _index) const
-{
-	int number = 0;
-	ScenarioModelItem* item = itemForIndex(_index);
-	return ::scenarioModelNumberForItem(m_rootItem, item, number);
-}
-
-namespace {
-	static ScenarioModelItem* scenarioModelItemForNumber(ScenarioModelItem* _parent, int _number, int& _currentNumber) {
+    static ScenarioModelItem* scenarioModelItemForUuid(ScenarioModelItem* _parent, const QString& _uuid) {
 		ScenarioModelItem* searchedItem = nullptr;
 		for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
 			ScenarioModelItem* child = _parent->childAt(childIndex);
-			if (_currentNumber == _number) {
+            if (child->uuid() == _uuid) {
 				searchedItem = child;
 				break;
-			} else {
-				++_currentNumber;
+            } else {
 				if (child->hasChildren()) {
-					searchedItem = scenarioModelItemForNumber(child, _number, _currentNumber);
+                    searchedItem = scenarioModelItemForUuid(child, _uuid);
 					if (searchedItem != nullptr) {
 						break;
 					}
@@ -591,10 +560,9 @@ namespace {
 	}
 }
 
-QModelIndex ScenarioModel::indexForNumber(int _number) const
+QModelIndex ScenarioModel::indexForUuid(const QString& _uuid) const
 {
-	int currentNumber = 0;
-	return indexForItem(::scenarioModelItemForNumber(m_rootItem, _number, currentNumber));
+    return indexForItem(::scenarioModelItemForUuid(m_rootItem, _uuid));
 }
 
 namespace {
@@ -726,15 +694,17 @@ QString ScenarioModel::simpleScheme() const
 							   "y=\"%3\" "
 							   "width=\"%4\" "
 							   "height=\"%5\" "
-							   "card_type=\"%6\" "
-							   "title=\"%7\" "
-							   "description=\"%8\"/>\n")
+                               "uuid=\"%6\" "
+                               "card_type=\"%7\" "
+                               "title=\"%8\" "
+                               "description=\"%9\"/>\n")
 					   .arg(id)
 					   .arg(x)
 					   .arg(y)
 					   .arg(itemSize.width())
 					   .arg(itemSize.height())
-					   .arg(child->type())
+                       .arg(child->uuid())
+                       .arg(child->type())
 					   .arg(child->title().isEmpty() ? child->header() : child->title())
 					   .arg(child->description()));
 			//
@@ -749,16 +719,18 @@ QString ScenarioModel::simpleScheme() const
 							   "x=\"%2\" "
 							   "y=\"%3\" "
 							   "width=\"%4\" "
-							   "height=\"%5\" "
-							   "card_type=\"%6\" "
-							   "title=\"%7\" "
-							   "description=\"%8\"/>\n")
+                               "height=\"%5\" "
+                               "uuid=\"%6\" "
+                               "card_type=\"%7\" "
+                               "title=\"%8\" "
+                               "description=\"%9\"/>\n")
 					   .arg(id)
 					   .arg(x)
 					   .arg(y)
 					   .arg(CARD_WIDTH)
 					   .arg(CARD_HEIGHT)
-					   .arg(child->type())
+                       .arg(child->uuid())
+                       .arg(child->type())
 					   .arg(child->title().isEmpty() ? child->header() : child->title())
 					   .arg(child->description()));
 

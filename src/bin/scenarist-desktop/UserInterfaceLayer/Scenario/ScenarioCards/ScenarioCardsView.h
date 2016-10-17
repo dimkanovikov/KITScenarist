@@ -37,27 +37,29 @@ namespace UserInterface {
 		/**
 		 * @brief Добавить карточку
 		 */
-		void addCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent);
+        void addCard(const QString& _uuid, int _cardType, const QString& _title,
+            const QString& _description, bool _isCardFirstInParent);
 
 		/**
-		 * @brief Обновить карточку с заданным номером
+         * @brief Обновить карточку с заданным uuid
 		 */
-		void updateCard(int _cardNumber, int _type, const QString& _title, const QString& _description);
+        void updateCard(const QString& _uuid, int _type, const QString& _title,
+            const QString& _description);
 
 		/**
-		 * @brief Удалить карточку с заданным номером
+         * @brief Удалить карточку с заданным uuid
 		 */
-		void removeCard(int _cardNumber);
+        void removeCard(const QString& _uuid);
 
 		/**
 		 * @brief Сделать активной карточку с заданным номером
 		 */
-		void selectCard(int _cardNumber);
+        void selectCard(const QString& _uuid);
 
 		/**
 		 * @brief Получить номер выделенной карточки, если нет выделенных, или выделено больше одной, возвращается -1
 		 */
-		int selectedCardNumber() const;
+        QString selectedCardUuid() const;
 
 		/**
 		 * @brief Установить режим работы со сценарием

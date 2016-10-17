@@ -40,6 +40,7 @@ void saveCardShape(QXmlStreamWriter& _writer, Shape* _shape, QHash<Shape*, int>&
 	_writer.writeAttribute("y", QString::number(card->pos().y()));
 	_writer.writeAttribute("width", QString::number(card->size().width()));
 	_writer.writeAttribute("height", QString::number(card->size().height()));
+    _writer.writeAttribute("uuid", card->uuid());
 	_writer.writeAttribute("card_type", QString::number(card->cardType()));
 	_writer.writeAttribute("title", card->title());
 	_writer.writeAttribute("description", card->description());

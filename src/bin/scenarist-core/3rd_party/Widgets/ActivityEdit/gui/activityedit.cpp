@@ -84,28 +84,27 @@ void ActivityEdit::load(const QString& _xml)
 	loadSceneXml(_xml, m_view->scene(), m_view);
 }
 
-void ActivityEdit::addCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent)
+void ActivityEdit::addCard(const QString& _uuid, int _cardType, const QString& _title,
+    const QString& _description, bool _isCardFirstInParent)
 {
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		m_view->setDragMode(QGraphicsView::NoDrag);
-		scene->appendCard((CardShape::CardType)_cardType, _title, _description, _isCardFirstInParent);
+        scene->appendCard(_uuid, (CardShape::CardType)_cardType, _title, _description, _isCardFirstInParent);
 	}
 }
 
-void ActivityEdit::updateCard(int _cardNumber, int _type, const QString& _title, const QString& _description)
+void ActivityEdit::updateCard(const QString& _uuid, int _type, const QString& _title,
+    const QString& _description)
 {
-	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
-		int currentCardNumber = 0;
+    if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		for (auto shape : scene->shapes()) {
 			if (CardShape* currentCard = dynamic_cast<CardShape*>(shape)) {
-				if (currentCardNumber == _cardNumber) {
+                if (currentCard->uuid() == _uuid) {
 					currentCard->setCardType((CardShape::CardType)_type);
 					currentCard->setTitle(_title);
 					currentCard->setDescription(_description);
 					break;
-				} else {
-					++currentCardNumber;
-				}
+                }
 			}
 		}
 	}
@@ -143,44 +142,34 @@ void ActivityEdit::selectAll()
 	m_view->scene()->setSelectionArea(path);
 }
 
-void ActivityEdit::selectCard(int _cardNumber)
+void ActivityEdit::selectCard(const QString& _uuid)
 {
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		scene->clearSelection();
 
-		int currentCardNumber = 0;
 		for (auto shape : scene->shapes()) {
 			if (CardShape* currentCard = dynamic_cast<CardShape*>(shape)) {
-				if (currentCardNumber == _cardNumber) {
+                if (currentCard->uuid() == _uuid) {
 					currentCard->setSelected(true);
 					break;
-				} else {
-					++currentCardNumber;
-				}
+                }
 			}
 		}
 	}
 }
 
-int ActivityEdit::selectedCardNumber() const
+QString ActivityEdit::selectedCardUuid() const
 {
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		CardShape* selectedCard = nullptr;
 		if (!scene->selectedShapes().isEmpty()
 			&& scene->selectedShapes().size() == 1
 			&& (selectedCard = dynamic_cast<CardShape*>(scene->selectedItems().last()))) {
-			int number = 0;
-			for (auto shape : scene->shapes()) {
-				if (shape == selectedCard) {
-					return number;
-				} else if (dynamic_cast<CardShape*>(shape)) {
-					++number;
-				}
-			}
-		}
+            return selectedCard->uuid();
+        }
 	}
 
-	return -1;
+    return QString::null;
 }
 
 void ActivityEdit::deleteSelectedItems()

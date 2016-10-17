@@ -37,7 +37,8 @@ public:
 	 * @brief Добавить новый элемент
 	 */
 	/** @{ */
-	void appendCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent);
+    void appendCard(const QString& _uuid, int _cardType, const QString& _title,
+        const QString& _description, bool _isCardFirstInParent);
 	void appendNote(const QString& _text);
 	void appendHorizontalLine();
 	void appendVerticalLine();
@@ -112,6 +113,12 @@ protected:
 	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event) override;
 
 private:
+    /**
+     * @brief Создать карточку
+     */
+    Shape* createCard(const QString& _uuid, int _cardType, const QString& _title,
+        const QString& _description, const QPointF& _scenePos, Shape* _parent);
+
 	/**
 	 * @brief Есть ли карточки вложенные в заданный элемент, если элемент не задан, то проверяется вся сцена
 	 */
@@ -138,6 +145,11 @@ private:
 	 * @note Порядок следования фигур катрочек соответствует порядку следования сцен в сценарии
 	 */
 	QList<Shape*> m_shapes;
+
+    /**
+     * @brief Корзина с удалёнными фигурами
+     */
+    QList<Shape*> m_shapesAboutToDelete;
 
 	/**
 	 * @brief Действие происходит после перемещения курсора

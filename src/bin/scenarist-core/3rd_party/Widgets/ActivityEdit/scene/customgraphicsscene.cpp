@@ -52,7 +52,8 @@ CustomGraphicsScene::~CustomGraphicsScene()
 	removeAllShapes();
 }
 
-void CustomGraphicsScene::appendCard(int _cardType, const QString& _title, const QString& _description, bool _isCardFirstInParent)
+void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const QString& _title,
+    const QString& _description, bool _isCardFirstInParent)
 {
 	QPointF scenePosition = sceneRect().center();
 
@@ -157,7 +158,7 @@ void CustomGraphicsScene::appendCard(int _cardType, const QString& _title, const
 	//
 	// Добавляем карточку
 	//
-	CardShape* newCard = new CardShape((CardShape::CardType)_cardType, _title, _description, scenePosition, parentCard);
+    Shape* newCard = createCard(_uuid, _cardType, _title, _description, scenePosition, parentCard);
 	insertShape(newCard, previousCard);
 	//
 	// ... корректируем позицию вкладываемой карточки
@@ -525,16 +526,32 @@ void CustomGraphicsScene::removeSelectedShapes()
 		}
 	}
 	for (int i = 0; i < shapes.count(); ++i) {
-		removeShape(shapes[i]);
+        //
+        // Вместо удаления, перемещаем выделенные фигуры в корзину
+        //
+        takeShape(shapes[i]);
+        m_shapesAboutToDelete << shapes[i];
 	}
 }
 
 void CustomGraphicsScene::removeAllShapes()
 {
 	QPainterPath path;
+    //
+    // Вибираем все элементы
+    //
 	path.addRect(this->sceneRect());
 	setSelectionArea(path);
+    //
+    // Удаляем их
+    //
 	removeSelectedShapes();
+    //
+    // Оищаем корзину
+    //
+    qDeleteAll(m_shapesAboutToDelete);
+    m_shapesAboutToDelete.clear();
+
 	this->clear();
 	QGraphicsRectItem *item;
 	addItem(item = new QGraphicsRectItem(QRectF(0,0,10000,10000)));
@@ -921,7 +938,33 @@ void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event
 {
 	if (Shape* s = dynamic_cast<Shape*>(itemAt(_event->scenePos(), QTransform()))) {
 		s->editProperties();
-	}
+    }
+}
+
+Shape* CustomGraphicsScene::createCard(const QString& _uuid, int _cardType, const QString& _title,
+    const QString& _description, const QPointF& _scenePos, Shape* _parent)
+{
+    Shape* newCard = nullptr;
+    //
+    // Сперва пробуем восстановить из корзины
+    //
+    for (Shape* shape : m_shapesAboutToDelete) {
+        if (CardShape* card = dynamic_cast<CardShape*>(shape)) {
+            if (card->uuid() == _uuid) {
+                newCard = card;
+                m_shapesAboutToDelete.removeAll(card);
+                break;
+            }
+        }
+    }
+    //
+    // Если в корзине ничего не нашлось, создаём новую
+    //
+    if (newCard == nullptr) {
+        newCard = new CardShape(_uuid, (CardShape::CardType)_cardType, _title, _description, _scenePos, _parent);
+    }
+
+    return newCard;
 }
 
 bool CustomGraphicsScene::hasCards(QGraphicsItem* parentItem) const

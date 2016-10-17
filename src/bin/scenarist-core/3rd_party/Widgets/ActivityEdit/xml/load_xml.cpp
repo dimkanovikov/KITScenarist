@@ -62,10 +62,11 @@ Shape* loadCardShape(QDomNode& _node, QHash<int, Shape*>& _ids)
 	double y = attributes.namedItem("y").toAttr().value().toDouble();
 	double width = attributes.namedItem("width").toAttr().value().toDouble();
 	double height = attributes.namedItem("height").toAttr().value().toDouble();
+    QString uuid = attributes.namedItem("uuid").toAttr().value();
 	int cardType = attributes.namedItem("card_type").toAttr().value().toInt();
 	QString title = attributes.namedItem("title").toAttr().value();
 	QString description = attributes.namedItem("description").toAttr().value();
-	CardShape* card = new CardShape((CardShape::CardType)cardType, title, description, QPointF(x,y));
+    CardShape* card = new CardShape(uuid, (CardShape::CardType)cardType, title, description, QPointF(x,y));
 	card->setSize(QSizeF(width, height));
 	card->setTitle(title);
 	card->setDescription(description);

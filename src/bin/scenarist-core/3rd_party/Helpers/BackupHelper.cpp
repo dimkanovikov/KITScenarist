@@ -46,6 +46,11 @@ void BackupHelper::setBackupDir(const QString& _dir)
 void BackupHelper::saveBackup(const QString& _filePath)
 {
 	if (m_isActive) {
+        //
+        // Создаём папку для хранения резервных копий, если такой ещё нет
+        //
+        QDir::root().mkpath(m_backupDir);
+
 		//
 		// Сформируем путь к резервной копии
 		//

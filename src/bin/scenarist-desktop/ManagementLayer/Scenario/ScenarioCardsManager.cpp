@@ -60,8 +60,10 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 					}
 				}
 
-				m_view->selectCard(m_model->numberForIndex(currentCardIndex));
+                BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
+                m_view->selectCard(currentCard->uuid());
 				m_view->addCard(
+                    item->uuid(),
 					item->type(),
 					item->title().isEmpty() ? item->header() : item->title(),
 					item->description(),
@@ -76,16 +78,18 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 					currentCardIndex = _parent.child(row, 0);
 				} else {
 					currentCardIndex = m_model->index(row, 0);
-				}
-				m_view->removeCard(m_model->numberForIndex(currentCardIndex));
+                }
+                BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
+                m_view->removeCard(currentCard->uuid());
 			}
 		});
 		connect(m_model, &BusinessLogic::ScenarioModel::dataChanged, [=] (const QModelIndex& _topLeft, const QModelIndex& _bottomRight) {
-			for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
+            qDebug() << "update rows from" << _topLeft << "to" << _bottomRight;
+            for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
 				const QModelIndex index = m_model->index(row, 0, _topLeft.parent());
-				const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
+                const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
 				m_view->updateCard(
-					m_model->numberForIndex(index),
+                    item->uuid(),
 					item->type(),
 					item->title().isEmpty() ? item->header() : item->title(),
 					item->description());
@@ -145,9 +149,9 @@ void ScenarioCardsManager::addCard()
 			// Определим карточку, после которой нужно добавить элемент
 			//
 			QModelIndex index;
-			const int selectedItemNumber = m_view->selectedCardNumber();
-			if (selectedItemNumber != -1) {
-				index = m_model->indexForNumber(selectedItemNumber);
+            const QString selectedItemUuid = m_view->selectedCardUuid();
+            if (!selectedItemUuid.isEmpty()) {
+                index = m_model->indexForUuid(selectedItemUuid);
 			}
 
 			emit addItemRequest(index, type, title, description);

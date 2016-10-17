@@ -31,15 +31,31 @@ CardShape::CardShape(QGraphicsItem* _parent) :
 	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
-CardShape::CardShape(CardType _type, const QString& _title, const QString& _description, const QPointF& _pos, QGraphicsItem* _parent) :
+CardShape::CardShape(const QString& _uuid, CardType _type, const QString& _title,
+    const QString& _description, const QPointF& _pos, QGraphicsItem* _parent) :
 	ResizableShape(_pos, _parent),
+    m_uuid(_uuid),
 	m_cardType(_type),
 	m_title(_title),
 	m_description(_description),
 	m_isOnInsertionState(false)
 {
 	setMinSize(QSizeF(50,32));
-	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+    setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+}
+
+void CardShape::setUuid(const QString& _uuid)
+{
+    if (m_uuid != _uuid) {
+        prepareGeometryChange();
+        m_uuid = _uuid;
+        emit contentsChanged();
+    }
+}
+
+QString CardShape::uuid() const
+{
+    return m_uuid;
 }
 
 void CardShape::setCardType(CardShape::CardType _type)
