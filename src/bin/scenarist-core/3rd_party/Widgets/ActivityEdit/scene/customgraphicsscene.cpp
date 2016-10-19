@@ -19,7 +19,7 @@ namespace {
 	 * @brief Расстояния на которые будут сдвигаться фигуры
 	 */
 	/** @{ */
-	const int SHAPE_MICROMOVE_DELTA = 10;
+	const int SHAPE_MICROMOVE_DELTA = 20;
 	const int SHAPE_MOVE_DELTA = 100;
 	/** @} */
 
@@ -53,7 +53,7 @@ CustomGraphicsScene::~CustomGraphicsScene()
 }
 
 void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const QString& _title,
-    const QString& _description, bool _isCardFirstInParent)
+	const QString& _description, bool _isCardFirstInParent)
 {
 	QPointF scenePosition = sceneRect().center();
 
@@ -87,6 +87,15 @@ void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const 
 		// Предыдущей будет выделенная
 		//
 		previousCard = selectedCard;
+
+		//
+		// Если добавление после группирующего элемента, то нужно взять
+		// последнего его ребёнка, если они есть
+		//
+		if (!previousCard->childItems().isEmpty()
+			&& previousCard != parentCard) {
+			previousCard = dynamic_cast<CardShape*>(lastCard(previousCard));
+		}
 
 		//
 		// Настроим позицию для добавления новой карточки
@@ -158,13 +167,13 @@ void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const 
 	//
 	// Добавляем карточку
 	//
-    Shape* newCard = createCard(_uuid, _cardType, _title, _description, scenePosition, parentCard);
+	Shape* newCard = createCard(_uuid, _cardType, _title, _description, scenePosition, parentCard);
 	insertShape(newCard, previousCard);
 	//
 	// ... корректируем позицию вкладываемой карточки
 	//
 	if (parentCard != nullptr) {
-		const QPointF newPos = parentCard->mapFromScene(newCard->scenePos());
+		const QPointF newPos = parentCard->boundingRect().bottomRight();
 		const QPointF newBottomRightPos = newPos + QPointF(newCard->boundingRect().width(), newCard->boundingRect().height());
 		//
 		newCard->setParentItem(parentCard);
@@ -360,6 +369,11 @@ void CustomGraphicsScene::insertShape(Shape* _shape, Shape* _after)
 	}
 
 	//
+	// Если фигура была невидима, покажем её
+	//
+	_shape->show();
+
+	//
 	// Фокусируем экран на неё, если это не связь
 	//
 	if (!dynamic_cast<Flow*>(_shape)) {
@@ -424,6 +438,11 @@ Shape* CustomGraphicsScene::takeShape(Shape* _shape, bool _removeCardFlows)
 				takeShape(childCard, DONT_REMOVE_FLOWS);
 			}
 		}
+		//
+		// Скрываем фигуру
+		//
+		_shape->hide();
+
 		return _shape;
 	}
 
@@ -526,31 +545,27 @@ void CustomGraphicsScene::removeSelectedShapes()
 		}
 	}
 	for (int i = 0; i < shapes.count(); ++i) {
-        //
-        // Вместо удаления, перемещаем выделенные фигуры в корзину
-        //
-        takeShape(shapes[i]);
-        m_shapesAboutToDelete << shapes[i];
+		//
+		// Вместо удаления, перемещаем выделенные фигуры в корзину
+		//
+		takeShape(shapes[i]);
+		m_shapesAboutToDelete << shapes[i];
 	}
 }
 
 void CustomGraphicsScene::removeAllShapes()
 {
-	QPainterPath path;
-    //
-    // Вибираем все элементы
-    //
-	path.addRect(this->sceneRect());
-	setSelectionArea(path);
-    //
-    // Удаляем их
-    //
-	removeSelectedShapes();
-    //
-    // Оищаем корзину
-    //
-    qDeleteAll(m_shapesAboutToDelete);
-    m_shapesAboutToDelete.clear();
+	//
+	// Удаляем элементы
+	//
+	while (!m_shapes.isEmpty()) {
+		removeShape(m_shapes.takeFirst());
+	}
+	//
+	// Оищаем корзину
+	//
+	qDeleteAll(m_shapesAboutToDelete);
+	m_shapesAboutToDelete.clear();
 
 	this->clear();
 	QGraphicsRectItem *item;
@@ -938,33 +953,45 @@ void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event
 {
 	if (Shape* s = dynamic_cast<Shape*>(itemAt(_event->scenePos(), QTransform()))) {
 		s->editProperties();
-    }
+	}
 }
 
 Shape* CustomGraphicsScene::createCard(const QString& _uuid, int _cardType, const QString& _title,
-    const QString& _description, const QPointF& _scenePos, Shape* _parent)
+	const QString& _description, const QPointF& _scenePos, Shape* _parent)
 {
-    Shape* newCard = nullptr;
-    //
-    // Сперва пробуем восстановить из корзины
-    //
-    for (Shape* shape : m_shapesAboutToDelete) {
-        if (CardShape* card = dynamic_cast<CardShape*>(shape)) {
-            if (card->uuid() == _uuid) {
-                newCard = card;
-                m_shapesAboutToDelete.removeAll(card);
-                break;
-            }
-        }
-    }
-    //
-    // Если в корзине ничего не нашлось, создаём новую
-    //
-    if (newCard == nullptr) {
-        newCard = new CardShape(_uuid, (CardShape::CardType)_cardType, _title, _description, _scenePos, _parent);
-    }
+	Shape* newCard = nullptr;
+	//
+	// Сперва пробуем восстановить из корзины
+	//
+	for (Shape* shape : m_shapesAboutToDelete) {
+		if (CardShape* card = dynamic_cast<CardShape*>(shape)) {
+			if (card->uuid() == _uuid) {
+				newCard = card;
+				m_shapesAboutToDelete.removeAll(card);
+				break;
+			}
+		}
+	}
+	//
+	// Если в корзине ничего не нашлось, создаём новую
+	//
+	if (newCard == nullptr) {
+		newCard = new CardShape(_uuid, (CardShape::CardType)_cardType, _title, _description, _scenePos, _parent);
+	}
+	//
+	// А если нашлось
+	//
+	else {
+		//
+		// ... корректируем позицию, если сменился родитель
+		//
+		if (newCard->parentItem() != _parent) {
+			newCard->setParentItem(_parent);
+			newCard->setPos(_scenePos);
+		}
+	}
 
-    return newCard;
+	return newCard;
 }
 
 bool CustomGraphicsScene::hasCards(QGraphicsItem* parentItem) const
@@ -1000,7 +1027,8 @@ Shape* CustomGraphicsScene::firstCard(Shape* _parent) const
 	//
 	Shape* first = nullptr;
 	for (Shape* shape : m_shapes) {
-		if (shape->parentItem() == _parent
+		if (shape->isVisible()
+			&& shape->parentItem() == _parent
 			&& dynamic_cast<CardShape*>(shape)) {
 			first = shape;
 			break;
@@ -1026,7 +1054,8 @@ Shape* CustomGraphicsScene::lastCard(Shape* _parent) const
 	//
 	Shape* last = nullptr;
 	for (Shape* shape : m_shapes) {
-		if (shape->parentItem() == _parent
+		if (shape->isVisible()
+			&& shape->parentItem() == _parent
 			&& dynamic_cast<CardShape*>(shape)) {
 			last = shape;
 		}

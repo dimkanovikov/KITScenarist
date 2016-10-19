@@ -60,10 +60,11 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 					}
 				}
 
-                BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
-                m_view->selectCard(currentCard->uuid());
+				BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
+				m_view->selectCard(currentCard->uuid());
+				qDebug() << item->uuid();
 				m_view->addCard(
-                    item->uuid(),
+					item->uuid(),
 					item->type(),
 					item->title().isEmpty() ? item->header() : item->title(),
 					item->description(),
@@ -78,18 +79,20 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 					currentCardIndex = _parent.child(row, 0);
 				} else {
 					currentCardIndex = m_model->index(row, 0);
-                }
-                BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
-                m_view->removeCard(currentCard->uuid());
+				}
+				BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
+				qDebug() << currentCard->uuid();
+				m_view->removeCard(currentCard->uuid());
 			}
 		});
 		connect(m_model, &BusinessLogic::ScenarioModel::dataChanged, [=] (const QModelIndex& _topLeft, const QModelIndex& _bottomRight) {
-            qDebug() << "update rows from" << _topLeft << "to" << _bottomRight;
-            for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
+			qDebug() << "update rows from" << _topLeft << "to" << _bottomRight;
+			for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
 				const QModelIndex index = m_model->index(row, 0, _topLeft.parent());
-                const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
+				const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
+				qDebug() << item->uuid();
 				m_view->updateCard(
-                    item->uuid(),
+					item->uuid(),
 					item->type(),
 					item->title().isEmpty() ? item->header() : item->title(),
 					item->description());
@@ -149,9 +152,9 @@ void ScenarioCardsManager::addCard()
 			// Определим карточку, после которой нужно добавить элемент
 			//
 			QModelIndex index;
-            const QString selectedItemUuid = m_view->selectedCardUuid();
-            if (!selectedItemUuid.isEmpty()) {
-                index = m_model->indexForUuid(selectedItemUuid);
+			const QString selectedItemUuid = m_view->selectedCardUuid();
+			if (!selectedItemUuid.isEmpty()) {
+				index = m_model->indexForUuid(selectedItemUuid);
 			}
 
 			emit addItemRequest(index, type, title, description);
