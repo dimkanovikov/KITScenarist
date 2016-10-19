@@ -117,7 +117,7 @@ private:
      * @brief Создать карточку
      */
     Shape* createCard(const QString& _uuid, int _cardType, const QString& _title,
-        const QString& _description, const QPointF& _scenePos, Shape* _parent);
+        const QString& _description, const QPointF& _scenePos, Shape* _parent, bool& needCorrectPosition);
 
 	/**
 	 * @brief Есть ли карточки вложенные в заданный элемент, если элемент не задан, то проверяется вся сцена

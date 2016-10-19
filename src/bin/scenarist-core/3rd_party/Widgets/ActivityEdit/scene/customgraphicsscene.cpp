@@ -167,12 +167,14 @@ void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const 
 	//
 	// Добавляем карточку
 	//
-	Shape* newCard = createCard(_uuid, _cardType, _title, _description, scenePosition, parentCard);
+	bool needCorrectPosition = true;
+	Shape* newCard = createCard(_uuid, _cardType, _title, _description, scenePosition, parentCard, needCorrectPosition);
 	insertShape(newCard, previousCard);
 	//
 	// ... корректируем позицию вкладываемой карточки
 	//
-	if (parentCard != nullptr) {
+	if (needCorrectPosition
+		&& parentCard != nullptr) {
 		const QPointF newPos = parentCard->boundingRect().bottomRight();
 		const QPointF newBottomRightPos = newPos + QPointF(newCard->boundingRect().width(), newCard->boundingRect().height());
 		//
@@ -957,7 +959,7 @@ void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event
 }
 
 Shape* CustomGraphicsScene::createCard(const QString& _uuid, int _cardType, const QString& _title,
-	const QString& _description, const QPointF& _scenePos, Shape* _parent)
+	const QString& _description, const QPointF& _scenePos, Shape* _parent, bool& _needCorrectPosition)
 {
 	Shape* newCard = nullptr;
 	//
@@ -972,11 +974,13 @@ Shape* CustomGraphicsScene::createCard(const QString& _uuid, int _cardType, cons
 			}
 		}
 	}
+
 	//
 	// Если в корзине ничего не нашлось, создаём новую
 	//
 	if (newCard == nullptr) {
 		newCard = new CardShape(_uuid, (CardShape::CardType)_cardType, _title, _description, _scenePos, _parent);
+		_needCorrectPosition = true;
 	}
 	//
 	// А если нашлось
@@ -987,7 +991,13 @@ Shape* CustomGraphicsScene::createCard(const QString& _uuid, int _cardType, cons
 		//
 		if (newCard->parentItem() != _parent) {
 			newCard->setParentItem(_parent);
-			newCard->setPos(_scenePos);
+			_needCorrectPosition = true;
+		}
+		//
+		// ... а если не сменился, то корректировать позицию не нужно
+		//
+		else {
+			_needCorrectPosition = false;
 		}
 	}
 
