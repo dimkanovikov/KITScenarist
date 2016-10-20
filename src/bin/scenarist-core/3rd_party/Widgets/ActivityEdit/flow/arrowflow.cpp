@@ -4,7 +4,6 @@
 #include <QPainter>
 #include "../shape/card.h"
 #include "../shape/note.h"
-#include "../flow/pdlg_arrowflow.h"
 #include "flowtext.h"
 #include <QGraphicsScene>
 #include <QDebug>
@@ -56,11 +55,6 @@ void ArrowFlow::setText (const QString &newtext)
 const QString &ArrowFlow::text() const
 {
 	return _text;
-}
-
-void ArrowFlow::editProperties()
-{
-	ArrowFlowPropertiesDialog(this).exec();
 }
 
 /**

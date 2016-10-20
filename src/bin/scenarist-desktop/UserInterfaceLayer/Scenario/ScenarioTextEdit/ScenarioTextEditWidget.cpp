@@ -281,6 +281,12 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	m_editorWrapper->setFocus();
 }
 
+void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int _type,
+	const QString& _title, const QString& _description)
+{
+
+}
+
 void ScenarioTextEditWidget::removeText(int _from, int _to)
 {
 	QTextCursor cursor = m_editor->textCursor();

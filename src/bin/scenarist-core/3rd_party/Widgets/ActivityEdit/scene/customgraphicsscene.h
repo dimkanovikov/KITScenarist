@@ -37,8 +37,8 @@ public:
 	 * @brief Добавить новый элемент
 	 */
 	/** @{ */
-    void appendCard(const QString& _uuid, int _cardType, const QString& _title,
-        const QString& _description, bool _isCardFirstInParent);
+	void appendCard(const QString& _uuid, int _cardType, const QString& _title,
+		const QString& _description, bool _isCardFirstInParent);
 	void appendNote(const QString& _text);
 	void appendHorizontalLine();
 	void appendVerticalLine();
@@ -89,6 +89,15 @@ signals:
 	 */
 	void stateChangedByUser();
 
+	/**
+	 * @brief Запросы на изменение выделенной фигуры
+	 */
+	/** @{ */
+	void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
+	void editNoteRequest(const QString& _text);
+	void editFlowTextRequest();
+	/** @} */
+
 public slots:
 	/**
 	 * Предполагается, что этот слот будет активироваться извне, чтобы
@@ -113,11 +122,11 @@ protected:
 	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event) override;
 
 private:
-    /**
-     * @brief Создать карточку
-     */
-    Shape* createCard(const QString& _uuid, int _cardType, const QString& _title,
-        const QString& _description, const QPointF& _scenePos, Shape* _parent, bool& needCorrectPosition);
+	/**
+	 * @brief Создать карточку
+	 */
+	Shape* createCard(const QString& _uuid, int _cardType, const QString& _title,
+		const QString& _description, const QPointF& _scenePos, Shape* _parent, bool& needCorrectPosition);
 
 	/**
 	 * @brief Есть ли карточки вложенные в заданный элемент, если элемент не задан, то проверяется вся сцена
@@ -146,10 +155,10 @@ private:
 	 */
 	QList<Shape*> m_shapes;
 
-    /**
-     * @brief Корзина с удалёнными фигурами
-     */
-    QList<Shape*> m_shapesAboutToDelete;
+	/**
+	 * @brief Корзина с удалёнными фигурами
+	 */
+	QList<Shape*> m_shapesAboutToDelete;
 
 	/**
 	 * @brief Действие происходит после перемещения курсора

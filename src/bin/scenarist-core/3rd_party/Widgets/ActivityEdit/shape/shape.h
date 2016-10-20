@@ -29,11 +29,6 @@ public:
 	Shape (QGraphicsItem *parent = 0);
 	virtual ~Shape();
 
-	/**
-	 * Настроить свойства фигуры (например, показать диалог).
-	 */
-	virtual void editProperties();
-
 	virtual QPointF	flowConnectionPoint (const QPointF &anotherEnd, Flow *flow) const;
 	virtual QPointF center() const;
 	void emitStateIsAboutToBeChangedByUser();	///< Отправка уведомления об изменении состояния

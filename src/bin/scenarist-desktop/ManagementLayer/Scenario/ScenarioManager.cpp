@@ -723,6 +723,19 @@ void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _item
 	m_textEditManager->addScenarioItem(position, _itemType, _header, _color, _description);
 }
 
+void ScenarioManager::aboutEditItem(const QModelIndex& _itemIndex, int _itemType,
+	const QString& _header, const QString& _description)
+{
+	//
+	// Изменение элемента из карточек только в режиме чистовика
+	//
+	setWorkingMode(m_navigatorManager);
+
+	const int startPosition = workingScenario()->itemStartPosition(_itemIndex);
+	const int endPosition = workingScenario()->itemEndPosition(_itemIndex);
+	m_textEditManager->editScenarioItem(startPosition, endPosition, _itemType, _header, _description);
+}
+
 void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
 {
 	setWorkingMode(sender());
@@ -895,8 +908,17 @@ void ScenarioManager::initConnections()
 {
 	connect(m_showFullscreen, SIGNAL(clicked()), this, SIGNAL(showFullscreen()));
 
-	connect(m_cardsManager, &ScenarioCardsManager::addItemRequest,
+	connect(m_cardsManager, &ScenarioCardsManager::addCardRequest,
 			this, static_cast<void (ScenarioManager::*)(const QModelIndex&, int, const QString&, const QString&)>(&ScenarioManager::aboutAddItem));
+	connect(m_cardsManager, &ScenarioCardsManager::editCardRequest, this, &ScenarioManager::aboutEditItem);
+	connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, [=] (const QModelIndex& _index) {
+		//
+		// Удаляем сцены из карточек только в режиме чистовика
+		//
+		setWorkingMode(m_navigatorManager);
+
+		aboutRemoveItems({_index});
+	});
 
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));

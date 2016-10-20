@@ -15,8 +15,8 @@ FlowText::FlowText (ArrowFlow *flow, QGraphicsItem *parent)
 	connect(_flow, SIGNAL(contentsChanged()), this, SLOT(flowContentsChanged()));
 	connect(this, SIGNAL(movingByUser()), SLOT(itWasMoved()));
 
-    setFlag(QGraphicsItem::ItemIsMovable, false);
-    setFlag(QGraphicsItem::ItemIsSelectable, false);
+	setFlag(QGraphicsItem::ItemIsMovable, false);
+	setFlag(QGraphicsItem::ItemIsSelectable, false);
 
 	setZValue(1001);
 }
@@ -44,11 +44,6 @@ void FlowText::itWasMoved()
 	_deltay = (_flow->center()-this->pos()).y();
 	updateShape();
 	prepareGeometryChange();
-}
-
-void FlowText::editProperties()
-{
-	_flow->editProperties();
 }
 
 int FlowText::offsetX() const

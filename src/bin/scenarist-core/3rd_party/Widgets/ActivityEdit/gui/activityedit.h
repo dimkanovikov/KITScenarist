@@ -47,13 +47,13 @@ public:
 	/**
 	 * @brief Добавить карточку
 	 */
-    void addCard(const QString& _uuid, int _cardType, const QString& _title,
-        const QString& _description, bool _isCardFirstInParent);
+	void addCard(const QString& _uuid, int _cardType, const QString& _title,
+		const QString& _description, bool _isCardFirstInParent);
 
 	/**
 	 * @brief Обновить карточку с заданным номером
 	 */
-    void updateCard(const QString& _uuid, int _type, const QString& _title, const QString& _description);
+	void updateCard(const QString& _uuid, int _type, const QString& _title, const QString& _description);
 
 	/**
 	 * @brief Добавить заметку
@@ -76,14 +76,14 @@ public:
 	void selectAll();
 
 	/**
-     * @brief Сделать активной карточку с заданным uuid
+	 * @brief Сделать активной карточку с заданным uuid
 	 */
-    void selectCard(const QString& _uuid);
+	void selectCard(const QString& _uuid);
 
 	/**
 	 * @brief Получить номер выделенной карточки, если нет выделенных, или выделено больше одной, возвращается -1
 	 */
-    QString selectedCardUuid() const;
+	QString selectedCardUuid() const;
 
 	/**
 	 * @brief Удалить выделенные элементы
@@ -91,6 +91,20 @@ public:
 	void deleteSelectedItems();
 
 signals:
+	/**
+	 * @brief Запросы на изменение выделенной фигуры
+	 */
+	/** @{ */
+	void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
+	void editNoteRequest(const QString& _text);
+	void editFlowTextRequest();
+	/** @} */
+
+	/**
+	 * @brief Запрос на удаление карточки
+	 */
+	void removeCardRequest(const QString& _uuid);
+
 	/**
 	 * @brief Схема изменена
 	 */

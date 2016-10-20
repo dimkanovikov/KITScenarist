@@ -26,6 +26,12 @@ public:
 	void zoomOut();
 	/** @} */
 
+signals:
+	/**
+	 * @brief Нажата кнопка Delete или Backspace
+	 */
+	void deletePressed();
+
 protected:
 	/**
 	 * @brief Переопределяем для обработки жестов

@@ -45,31 +45,31 @@ QString ScenarioCardsView::save() const
 }
 
 void ScenarioCardsView::addCard(const QString& _uuid, int _cardType, const QString& _title,
-    const QString& _description, bool _isCardFirstInParent)
+	const QString& _description, bool _isCardFirstInParent)
 {
-    m_cardsEdit->addCard(_uuid, _cardType, _title, _description, _isCardFirstInParent);
+	m_cardsEdit->addCard(_uuid, _cardType, _title, _description, _isCardFirstInParent);
 }
 
 void ScenarioCardsView::updateCard(const QString& _uuid, int _type, const QString& _title,
-    const QString& _description)
+	const QString& _description)
 {
-    m_cardsEdit->updateCard(_uuid, _type, _title, _description);
+	m_cardsEdit->updateCard(_uuid, _type, _title, _description);
 }
 
 void ScenarioCardsView::removeCard(const QString& _uuid)
 {
-    m_cardsEdit->selectCard(_uuid);
+	m_cardsEdit->selectCard(_uuid);
 	m_cardsEdit->deleteSelectedItems();
 }
 
 void ScenarioCardsView::selectCard(const QString& _uuid)
 {
-    m_cardsEdit->selectCard(_uuid);
+	m_cardsEdit->selectCard(_uuid);
 }
 
 QString ScenarioCardsView::selectedCardUuid() const
 {
-    return m_cardsEdit->selectedCardUuid();
+	return m_cardsEdit->selectedCardUuid();
 }
 
 void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
@@ -135,9 +135,8 @@ void ScenarioCardsView::initConnections()
 	connect(m_cardsEdit, &ActivityEdit::schemeChanged, this, &ScenarioCardsView::schemeChanged);
 
 	connect(m_addCard, &FlatButton::clicked, this, &ScenarioCardsView::addCardClicked);
-//	connect(m_addCard, &FlatButton::clicked, [=] {
-//		m_cardsEdit->addCard(1, "title", "description");
-//	});
+	connect(m_cardsEdit, &ActivityEdit::editCardRequest, this, &ScenarioCardsView::editCardRequest);
+	connect(m_cardsEdit, &ActivityEdit::removeCardRequest, this, &ScenarioCardsView::removeCardRequest);
 }
 
 void ScenarioCardsView::initStyleSheet()

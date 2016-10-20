@@ -28,16 +28,16 @@ public:
 
 public:
 	CardShape(QGraphicsItem* _parent = NULL);
-    CardShape(const QString& _uuid, CardType _type, const QString& _title,
-        const QString& _description, const QPointF& _pos, QGraphicsItem* _parent = NULL);
+	CardShape(const QString& _uuid, CardType _type, const QString& _title,
+		const QString& _description, const QPointF& _pos, QGraphicsItem* _parent = NULL);
 
-    /**
-     * @brief Идентификатор
-     */
-    /** @{ */
-    void setUuid(const QString& _uuid);
-    QString uuid() const;
-    /** @} */
+	/**
+	 * @brief Идентификатор
+	 */
+	/** @{ */
+	void setUuid(const QString& _uuid);
+	QString uuid() const;
+	/** @} */
 
 	/**
 	 * @brief Тип
@@ -86,8 +86,6 @@ public:
 	 */
 	void adjustSize() override;
 
-	virtual void editProperties();
-
 protected:
 	/**
 	 * @brief Рисуем карточку
@@ -95,10 +93,10 @@ protected:
 	void paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option, QWidget* _widget) override;
 
 private:
-    /**
-     * @brief Идентификатор
-     */
-    QString m_uuid;
+	/**
+	 * @brief Идентификатор
+	 */
+	QString m_uuid;
 
 	/**
 	 * @brief Тип карточки

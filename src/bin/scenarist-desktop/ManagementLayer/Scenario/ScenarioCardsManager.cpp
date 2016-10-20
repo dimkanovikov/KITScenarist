@@ -157,14 +157,45 @@ void ScenarioCardsManager::addCard()
 				index = m_model->indexForUuid(selectedItemUuid);
 			}
 
-			emit addItemRequest(index, type, title, description);
+			emit addCardRequest(index, type, title, description);
 		}
 	}
+}
+
+void ScenarioCardsManager::editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _description)
+{
+	m_addItemDialog->clear();
+	m_addItemDialog->setCardType((BusinessLogic::ScenarioModelItem::Type)_cardType);
+	m_addItemDialog->setCardTitle(_title);
+	m_addItemDialog->setCardDescription(_description);
+
+	//
+	// Если пользователь действительно хочет добавить элемент
+	//
+	if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
+		const int type = m_addItemDialog->cardType();
+		const QString title = m_addItemDialog->cardTitle();
+		const QString description = m_addItemDialog->cardDescription();
+
+		//
+		// Если задан заголовок
+		//
+		if (!title.isEmpty()) {
+			emit editCardRequest(m_model->indexForUuid(_uuid), type, title, description);
+		}
+	}
+}
+
+void ScenarioCardsManager::removeCard(const QString& _uuid)
+{
+	emit removeCardRequest(m_model->indexForUuid(_uuid));
 }
 
 void ScenarioCardsManager::initConnections()
 {
 	connect(m_view, &ScenarioCardsView::addCardClicked, this, &ScenarioCardsManager::addCard);
+	connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
+	connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
 
 	connect(m_view, &ScenarioCardsView::schemeChanged, this, &ScenarioCardsManager::schemeChanged);
 }

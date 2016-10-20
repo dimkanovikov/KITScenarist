@@ -60,14 +60,35 @@ namespace ManagementLayer
 		/**
 		 * @brief Запрос на добавление элемента
 		 */
-		void addItemRequest(const QModelIndex& _afterItemIndex, int _type, const QString& _title,
+		void addCardRequest(const QModelIndex& _afterItemIndex, int _type, const QString& _title,
 			const QString& _description);
+
+		/**
+		 * @brief Запрос на изменение элемента
+		 */
+		void editCardRequest(const QModelIndex& _index, int _type, const QString& _title,
+			const QString& _description);
+
+		/**
+		 * @brief Запрос на удаление элемента
+		 */
+		void removeCardRequest(const QModelIndex& _index);
 
 	private:
 		/**
 		 * @brief Добавить элемент после выбранного
 		 */
 		void addCard();
+
+		/**
+		 * @brief Изменить карточку
+		 */
+		void editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
+
+		/**
+		 * @brief Удалить карточку
+		 */
+		void removeCard(const QString& _uuid);
 
 	private:
 		/**

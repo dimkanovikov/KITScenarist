@@ -176,6 +176,21 @@ void ScenarioTextEditManager::addScenarioItem(int _position, int _type, const QS
 	m_view->addItem(_position, _type, _header, _color, _description);
 }
 
+void ScenarioTextEditManager::editScenarioItem(int _startPosition, int _endPosition, int _type, const QString& _title, const QString& _description)
+{
+	//
+	// Переводим тип элемента
+	//
+	int mappedType = BusinessLogic::ScenarioBlockStyle::SceneHeading;
+	if (_type == BusinessLogic::ScenarioModelItem::SceneGroup) {
+		mappedType = BusinessLogic::ScenarioBlockStyle::SceneGroupHeader;
+	} else if (_type == BusinessLogic::ScenarioModelItem::Folder) {
+		mappedType = BusinessLogic::ScenarioBlockStyle::FolderHeader;
+	}
+
+	m_view->editItem(_startPosition, _endPosition, mappedType, _title, _description);
+}
+
 void ScenarioTextEditManager::removeScenarioText(int _from, int _to)
 {
 	m_view->removeText(_from, _to);

@@ -24,7 +24,6 @@ public:
 	Flow *flow() const;
 	virtual QRectF boundingRect() const;
 	virtual QPainterPath shape() const;
-	virtual void editProperties();	///< Делегирует ArrowFlow::editProperties()
 	virtual void updateShape();
 	int offsetX() const, offsetY() const;
 	void setOffset (int newx, int newy);

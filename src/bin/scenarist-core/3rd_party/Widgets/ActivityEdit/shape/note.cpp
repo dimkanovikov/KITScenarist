@@ -1,6 +1,5 @@
 #include "note.h"
 
-#include "pdlg_note.h"
 #include "textutils.h"
 
 #include <QPainter>
@@ -30,11 +29,6 @@ void NoteShape::setText(const QString& _text)
 QString NoteShape::text() const
 {
 	return m_text;
-}
-
-void NoteShape::editProperties()
-{
-	NoteShapePropertiesDialog(this).exec();
 }
 
 void NoteShape::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option, QWidget* _widget)

@@ -976,8 +976,14 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 
 void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event)
 {
-	if (Shape* s = dynamic_cast<Shape*>(itemAt(_event->scenePos(), QTransform()))) {
-		s->editProperties();
+	if (Shape* shape = dynamic_cast<Shape*>(itemAt(_event->scenePos(), QTransform()))) {
+		if (CardShape* card = dynamic_cast<CardShape*>(shape)) {
+			emit editCardRequest(card->uuid(), card->type(), card->title(), card->description());
+		} else if (NoteShape* note = dynamic_cast<NoteShape*>(shape)) {
+			emit editNoteRequest(note->text());
+		} else if (dynamic_cast<FlowText*>(shape)) {
+			emit editFlowTextRequest();
+		}
 	}
 }
 

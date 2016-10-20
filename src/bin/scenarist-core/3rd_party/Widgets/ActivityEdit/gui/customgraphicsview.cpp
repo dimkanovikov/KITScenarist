@@ -151,6 +151,12 @@ void CustomGraphicsView::keyPressEvent(QKeyEvent* _event)
 		return;
 	}
 
+	if (_event->key() == Qt::Key_Delete
+		|| _event->key() == Qt::Key_Backspace) {
+		emit deletePressed();
+		return;
+	}
+
 	QGraphicsView::keyPressEvent(_event);
 }
 

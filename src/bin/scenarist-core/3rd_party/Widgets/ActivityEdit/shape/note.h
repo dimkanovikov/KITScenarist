@@ -23,8 +23,6 @@ public:
 	QString text() const;
 	/** @} */
 
-	virtual void editProperties();
-
 protected:
 	/**
 	 * @brief Нарисовать заметку

@@ -1,10 +1,10 @@
 #include "card.h"
 
-#include "pdlg_action.h"
 #include "textutils.h"
 
 #include <QApplication>
 #include <QPainter>
+#include <QPalette>
 
 namespace {
 	/**
@@ -32,30 +32,30 @@ CardShape::CardShape(QGraphicsItem* _parent) :
 }
 
 CardShape::CardShape(const QString& _uuid, CardType _type, const QString& _title,
-    const QString& _description, const QPointF& _pos, QGraphicsItem* _parent) :
+	const QString& _description, const QPointF& _pos, QGraphicsItem* _parent) :
 	ResizableShape(_pos, _parent),
-    m_uuid(_uuid),
+	m_uuid(_uuid),
 	m_cardType(_type),
 	m_title(_title),
 	m_description(_description),
 	m_isOnInsertionState(false)
 {
 	setMinSize(QSizeF(50,32));
-    setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
 void CardShape::setUuid(const QString& _uuid)
 {
-    if (m_uuid != _uuid) {
-        prepareGeometryChange();
-        m_uuid = _uuid;
-        emit contentsChanged();
-    }
+	if (m_uuid != _uuid) {
+		prepareGeometryChange();
+		m_uuid = _uuid;
+		emit contentsChanged();
+	}
 }
 
 QString CardShape::uuid() const
 {
-    return m_uuid;
+	return m_uuid;
 }
 
 void CardShape::setCardType(CardShape::CardType _type)
@@ -145,11 +145,6 @@ void CardShape::adjustSize()
 	setMinSize(QSizeF(minSize().width(), minsz.height()+14));
 	if (size().height() < minSize().height())
 		setSize(QSizeF(size().width(), minSize().height()));
-}
-
-void CardShape::editProperties()
-{
-	ActionShapePropertiesDialog(this).exec();
 }
 
 void CardShape::paint(QPainter *_painter, const QStyleOptionGraphicsItem *_option, QWidget *_widget)

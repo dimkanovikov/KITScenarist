@@ -26,7 +26,6 @@ public:
 	~ArrowFlow();
 	virtual void setText (const QString &newtext);	///< Задать текст над связью
 	virtual const QString &text() const;			///< Возвращает текст над связью
-	virtual void editProperties();
 	virtual FlowText *textShape() const;			///< Возвращает указатель на фигуру текста
 
 	/**

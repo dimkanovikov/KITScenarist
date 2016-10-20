@@ -159,11 +159,3 @@ QPointF Shape::center() const
 	return QPointF(rect.width()/2.0, rect.height()/2.0)+rect.topLeft();
 }
 
-void Shape::editProperties()
-{
-	QMessageBox::information(
-			NULL,
-			tr("Properties"),
-			tr("There are no properties\nfor this shape."));
-}
-

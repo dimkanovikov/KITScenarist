@@ -37,29 +37,29 @@ namespace UserInterface {
 		/**
 		 * @brief Добавить карточку
 		 */
-        void addCard(const QString& _uuid, int _cardType, const QString& _title,
-            const QString& _description, bool _isCardFirstInParent);
+		void addCard(const QString& _uuid, int _cardType, const QString& _title,
+			const QString& _description, bool _isCardFirstInParent);
 
 		/**
-         * @brief Обновить карточку с заданным uuid
+		 * @brief Обновить карточку с заданным uuid
 		 */
-        void updateCard(const QString& _uuid, int _type, const QString& _title,
-            const QString& _description);
+		void updateCard(const QString& _uuid, int _type, const QString& _title,
+			const QString& _description);
 
 		/**
-         * @brief Удалить карточку с заданным uuid
+		 * @brief Удалить карточку с заданным uuid
 		 */
-        void removeCard(const QString& _uuid);
+		void removeCard(const QString& _uuid);
 
 		/**
 		 * @brief Сделать активной карточку с заданным номером
 		 */
-        void selectCard(const QString& _uuid);
+		void selectCard(const QString& _uuid);
 
 		/**
 		 * @brief Получить номер выделенной карточки, если нет выделенных, или выделено больше одной, возвращается -1
 		 */
-        QString selectedCardUuid() const;
+		QString selectedCardUuid() const;
 
 		/**
 		 * @brief Установить режим работы со сценарием
@@ -71,6 +71,20 @@ namespace UserInterface {
 		 * @brief Нажата кнопка добавления карточки
 		 */
 		void addCardClicked();
+
+		/**
+		 * @brief Запросы на изменение выделенной фигуры
+		 */
+		/** @{ */
+		void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
+		void editNoteRequest(const QString& _text);
+		void editFlowTextRequest();
+		/** @} */
+
+		/**
+		 * @brief Нажата кнопка удаления карточки
+		 */
+		void removeCardRequest(const QString& _uuid);
 
 		/**
 		 * @brief Схема карточек изменена

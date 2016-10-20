@@ -43,14 +43,45 @@ BusinessLogic::ScenarioModelItem::Type ScenarioSchemeItemDialog::cardType() cons
 	}
 }
 
+void ScenarioSchemeItemDialog::setCardType(BusinessLogic::ScenarioModelItem::Type _type)
+{
+	switch (_type) {
+		default:
+		case BusinessLogic::ScenarioModelItem::Scene: {
+			m_ui->cardIsScene->setChecked(true);
+			break;
+		}
+
+		case BusinessLogic::ScenarioModelItem::SceneGroup: {
+			m_ui->cardIsScenesGroup->setChecked(true);
+			break;
+		}
+
+		case BusinessLogic::ScenarioModelItem::Folder: {
+			m_ui->cardIsFolder->setChecked(true);
+			break;
+		}
+	}
+}
+
 QString ScenarioSchemeItemDialog::cardTitle() const
 {
 	return m_ui->cardTitle->text();
 }
 
+void ScenarioSchemeItemDialog::setCardTitle(const QString& _title)
+{
+	m_ui->cardTitle->setText(_title);
+}
+
 QString ScenarioSchemeItemDialog::cardDescription() const
 {
 	return m_ui->cardDescription->toPlainText();
+}
+
+void ScenarioSchemeItemDialog::setCardDescription(const QString& _description)
+{
+	m_ui->cardDescription->setHtml(_description);
 }
 
 void ScenarioSchemeItemDialog::initView()

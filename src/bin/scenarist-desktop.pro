@@ -306,15 +306,12 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/pdlg_arrowflow.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/horizontalline.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/note.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_action.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_note.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/resizableshape.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/shape.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.cpp \
@@ -572,15 +569,12 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/pdlg_arrowflow.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/horizontalline.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/note.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_action.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_note.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/resizableshape.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/shape.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.h \

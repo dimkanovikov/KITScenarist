@@ -34,14 +34,29 @@ namespace UserInterface
 		BusinessLogic::ScenarioModelItem::Type cardType() const;
 
 		/**
+		 * @brief Установить тип карточки
+		 */
+		void setCardType(BusinessLogic::ScenarioModelItem::Type _type);
+
+		/**
 		 * @brief Получить заголовок карточки
 		 */
 		QString cardTitle() const;
 
 		/**
+		 * @brief Установить заголовок карточки
+		 */
+		void setCardTitle(const QString& _title);
+
+		/**
 		 * @brief Получить описание карточки
 		 */
 		QString cardDescription() const;
+
+		/**
+		 * @brief Установить описание карточки
+		 */
+		void setCardDescription(const QString& _description);
 
 	private:
 		/**
