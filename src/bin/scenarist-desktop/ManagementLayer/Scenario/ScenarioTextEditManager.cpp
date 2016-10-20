@@ -167,7 +167,7 @@ void ScenarioTextEditManager::addScenarioItem(int _position, int _type, const QS
 		mappedType = BusinessLogic::ScenarioBlockStyle::FolderHeader;
 	}
 
-	m_view->addItem(_position, mappedType, _title, _description);
+	m_view->addItem(_position, mappedType, _title, QColor(), _description);
 }
 
 void ScenarioTextEditManager::addScenarioItem(int _position, int _type, const QString& _header,

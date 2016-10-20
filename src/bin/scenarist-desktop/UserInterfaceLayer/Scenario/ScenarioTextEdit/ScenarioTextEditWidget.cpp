@@ -212,56 +212,6 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	}
 }
 
-void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _title, const QString& _description)
-{
-	QTextCursor cursor = m_editor->textCursor();
-	cursor.beginEditBlock();
-
-	cursor.setPosition(_position);
-	m_editor->setTextCursor(cursor);
-	ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)_type;
-
-	//
-	// Добавим новый блок
-	//
-	m_editor->addScenarioBlock(type);
-
-	//
-	// Устанавливаем текст в блок
-	//
-	m_editor->insertPlainText(tr("EMPTY ITEM"));
-
-	//
-	// Устанавливаем заголовок и описание
-	//
-	cursor = m_editor->textCursor();
-	QTextBlockUserData* textBlockData = cursor.block().userData();
-	ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
-	if (info == 0) {
-		info = new ScenarioTextBlockInfo;
-	}
-	info->setTitle(_title);
-	info->setDescription(_description);
-	cursor.block().setUserData(info);
-
-	//
-	// Если это группирующий блок, то вставим и закрывающий текст
-	//
-	if (ScenarioTemplateFacade::getTemplate().blockStyle(type).isEmbeddableHeader()) {
-		cursor = m_editor->textCursor();
-		cursor.movePosition(QTextCursor::NextBlock);
-		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-		cursor.insertText(Helpers::footerText(tr("EMPTY ITEM")));
-	}
-
-	cursor.endEditBlock();
-
-	//
-	// Фокусируемся на редакторе
-	//
-	m_editorWrapper->setFocus();
-}
-
 void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _header,
 	const QColor& _color, const QString& _description)
 {
@@ -290,7 +240,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	m_editor->insertPlainText(_header);
 
 	//
-	// Устанавливаем цвет и описание
+	// Устанавливаем цвет и описание в параметры сцены
 	//
 	cursor = m_editor->textCursor();
 	QTextBlockUserData* textBlockData = cursor.block().userData();
@@ -303,6 +253,15 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	}
 	info->setDescription(_description);
 	cursor.block().setUserData(info);
+	//
+	// ... и в сам текст
+	//
+	if (!_description.isEmpty()) {
+		m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
+		QTextDocument doc;
+		doc.setHtml(_description);
+		m_editor->insertPlainText(doc.toPlainText().simplified());
+	}
 
 	//
 	// Если это группирующий блок, то вставим и закрывающий текст
