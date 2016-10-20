@@ -31,30 +31,30 @@ namespace {
 	const bool CARD_ON_FLOW_END = false;
 	/** @} */
 
-    /**
-     * @brief Обновить размер родителя
-     * @note Используется для расширения размера папок, при вложении в него дочерних элементов
-     */
-    void updateParentCardSize(CardShape* _card) {
-        if (_card->parentItem() != nullptr) {
-            if (CardShape* parentCard = dynamic_cast<CardShape*>(_card->parentItem())) {
-                const QPointF newPos = parentCard->mapFromItem(_card, _card->pos());
-                const QPointF newBottomRightPos = newPos + _card->boundingRect().bottomRight();
-                if (!parentCard->contains(newBottomRightPos)) {
-                    QSizeF newSize = parentCard->size();
-                    if (newSize.width() <= newBottomRightPos.x()) {
-                        newSize.setWidth(newBottomRightPos.x() + SHAPE_MICROMOVE_DELTA);
-                    }
-                    if (newSize.height() <= newBottomRightPos.y()) {
-                        newSize.setHeight(newBottomRightPos.y() + SHAPE_MICROMOVE_DELTA);
-                    }
-                    parentCard->setSize(newSize);
-                }
+	/**
+	 * @brief Обновить размер родителя
+	 * @note Используется для расширения размера папок, при вложении в него дочерних элементов
+	 */
+	void updateParentCardSize(CardShape* _card) {
+		if (_card->parentItem() != nullptr) {
+			if (CardShape* parentCard = dynamic_cast<CardShape*>(_card->parentItem())) {
+				const QPointF newPos = parentCard->mapFromItem(_card, _card->pos());
+				const QPointF newBottomRightPos = newPos + _card->boundingRect().bottomRight();
+				if (!parentCard->contains(newBottomRightPos)) {
+					QSizeF newSize = parentCard->size();
+					if (newSize.width() <= newBottomRightPos.x()) {
+						newSize.setWidth(newBottomRightPos.x() + SHAPE_MICROMOVE_DELTA);
+					}
+					if (newSize.height() <= newBottomRightPos.y()) {
+						newSize.setHeight(newBottomRightPos.y() + SHAPE_MICROMOVE_DELTA);
+					}
+					parentCard->setSize(newSize);
+				}
 
-                updateParentCardSize(parentCard);
-            }
-        }
-    }
+				updateParentCardSize(parentCard);
+			}
+		}
+	}
 }
 
 
@@ -218,10 +218,10 @@ void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const 
 			}
 			parentCard->setSize(newSize);
 
-            //
-            // И всех его родителей тоже
-            //
-            ::updateParentCardSize(parentCard);
+			//
+			// И всех его родителей тоже
+			//
+			::updateParentCardSize(parentCard);
 		}
 	}
 
@@ -366,7 +366,7 @@ void CustomGraphicsScene::appendShape(Shape* _shape)
 	// Добавляем фигуру
 	//
 	connect(_shape, SIGNAL(stateIsAboutToBeChangedByUser()), this, SIGNAL(stateChangedByUser()));
-    m_shapes.append(_shape);
+	m_shapes.append(_shape);
 	if (!items().contains(_shape)) {
 		addItem(_shape);
 	}
@@ -381,41 +381,26 @@ void CustomGraphicsScene::appendShape(Shape* _shape)
 
 void CustomGraphicsScene::insertShape(Shape* _shape, Shape* _after)
 {
-    //
-    // Добавляем фигуру, если она ещё не добавлена, это может случаться при работе с группирующими элементами
-    //
-    if (!m_shapes.contains(_shape)) {
-        //
-        // +1 т.к. вставляем после заданного
-        //
-        connect(_shape, SIGNAL(stateIsAboutToBeChangedByUser()), this, SIGNAL(stateChangedByUser()));
-        m_shapes.insert(m_shapes.indexOf(_after) + 1, _shape);
-        if (!items().contains(_shape)) {
-            addItem(_shape);
-        }
-        //
-        // ... вставляем все вложенные карточки
-        //
-        Shape* lastCardInsertAfter = _shape;
-        for (QGraphicsItem* childItem : _shape->childItems()) {
-            if (CardShape* childCard = dynamic_cast<CardShape*>(childItem)) {
-                insertShape(childCard, lastCardInsertAfter);
-                lastCardInsertAfter = childCard;
-            }
-        }
-    }
+	//
+	// +1 т.к. вставляем после заданного
+	//
+	connect(_shape, SIGNAL(stateIsAboutToBeChangedByUser()), this, SIGNAL(stateChangedByUser()));
+	m_shapes.insert(m_shapes.indexOf(_after) + 1, _shape);
+	if (!items().contains(_shape)) {
+		addItem(_shape);
+	}
 
-    //
-    // Если фигура была невидима, покажем её
-    //
-    _shape->show();
+	//
+	// Если фигура была невидима, покажем её
+	//
+	_shape->show();
 
-    //
-    // Фокусируем экран на неё, если это не связь
-    //
-    if (!dynamic_cast<Flow*>(_shape)) {
-        focusShape(_shape);
-    }
+	//
+	// Фокусируем экран на неё, если это не связь
+	//
+	if (!dynamic_cast<Flow*>(_shape)) {
+		focusShape(_shape);
+	}
 }
 
 Shape* CustomGraphicsScene::takeShape(Shape* _shape, bool _removeCardFlows)
@@ -534,7 +519,7 @@ void CustomGraphicsScene::removeShape(Shape* _shape)
 			disconnect(_shape, SIGNAL(stateIsAboutToBeChangedByUser()), this, SIGNAL(stateChangedByUser()));
 			m_shapes.removeAll(items[i]);
 			delete items[i];
-            items[i] = nullptr;
+			items[i] = nullptr;
 		}
 
 		//
@@ -597,9 +582,9 @@ void CustomGraphicsScene::removeAllShapes()
 	// Удаляем элементы
 	//
 	while (!m_shapes.isEmpty()) {
-        Shape* shapeToDelete = m_shapes.takeFirst();
-        removeShape(shapeToDelete);
-        shapeToDelete = nullptr;
+		Shape* shapeToDelete = m_shapes.takeFirst();
+		removeShape(shapeToDelete);
+		shapeToDelete = nullptr;
 	}
 	//
 	// Оищаем корзину
@@ -1059,8 +1044,8 @@ bool CustomGraphicsScene::hasCards(QGraphicsItem* parentItem) const
 	//
 	for (QGraphicsItem* item : checkList) {
 		if (CardShape* card = dynamic_cast<CardShape*>(item)) {
-            if (card->isVisible()
-                && m_shapes.contains(card)) {
+			if (card->isVisible()
+				&& m_shapes.contains(card)) {
 				return true;
 			}
 		}
