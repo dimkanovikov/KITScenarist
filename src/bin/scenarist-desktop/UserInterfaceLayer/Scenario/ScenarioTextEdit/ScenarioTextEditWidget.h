@@ -115,7 +115,7 @@ namespace UserInterface
 		/**
 		 * @brief Добавить элемент в указанной позиции с заданным текстом и типом
 		 */
-		void addItem(int _position, int _type, const QString& _header,
+		void addItem(int _position, int _type, const QString& _header, const QString& _title,
 			const QColor& _color, const QString& _description);
 
 		/**

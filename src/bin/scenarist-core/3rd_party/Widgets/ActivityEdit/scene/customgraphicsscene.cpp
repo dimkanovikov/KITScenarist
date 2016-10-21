@@ -978,7 +978,7 @@ void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event
 {
 	if (Shape* shape = dynamic_cast<Shape*>(itemAt(_event->scenePos(), QTransform()))) {
 		if (CardShape* card = dynamic_cast<CardShape*>(shape)) {
-			emit editCardRequest(card->uuid(), card->type(), card->title(), card->description());
+			emit editCardRequest(card->uuid(), card->cardType(), card->title(), card->description());
 		} else if (NoteShape* note = dynamic_cast<NoteShape*>(shape)) {
 			emit editNoteRequest(note->text());
 		} else if (dynamic_cast<FlowText*>(shape)) {
@@ -1065,7 +1065,7 @@ Shape* CustomGraphicsScene::firstCard(Shape* _parent) const
 	//
 	// Определяем первую карточку
 	//
-	Shape* first = nullptr;
+	Shape* first = _parent;
 	for (Shape* shape : m_shapes) {
 		if (shape->isVisible()
 			&& shape->parentItem() == _parent
@@ -1092,7 +1092,7 @@ Shape* CustomGraphicsScene::lastCard(Shape* _parent) const
 	//
 	// Определяем последнюю карточку
 	//
-	Shape* last = nullptr;
+	Shape* last = _parent;
 	for (Shape* shape : m_shapes) {
 		if (shape->isVisible()
 			&& shape->parentItem() == _parent

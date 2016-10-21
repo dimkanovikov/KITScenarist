@@ -76,12 +76,12 @@ void ScenarioSchemeItemDialog::setCardTitle(const QString& _title)
 
 QString ScenarioSchemeItemDialog::cardDescription() const
 {
-	return m_ui->cardDescription->toPlainText();
+	return m_ui->cardDescription->toHtml();
 }
 
 void ScenarioSchemeItemDialog::setCardDescription(const QString& _description)
 {
-	m_ui->cardDescription->setHtml(_description);
+	m_ui->cardDescription->setPlainText(_description);
 }
 
 void ScenarioSchemeItemDialog::initView()

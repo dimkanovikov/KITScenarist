@@ -948,7 +948,6 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		|| description.isEmpty()) { // ... или установил в диалоге добавления элемента
 		QTextDocument doc;
 		doc.setHtml(itemDescription(_item));
-		description = doc.toPlainText().replace("\n", " ").simplified();
 	}
 	//
 	// ... пользователь изменил описание прямо в редакторе сценария
@@ -968,11 +967,6 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		doc.setPlainText(description);
 		info->setDescription(doc.toHtml());
 		descriptionCursor.block().setUserData(info);
-
-		//
-		// ... убираем переносы строк
-		//
-		description.replace("\n", " ").simplified();
 	}
 
 	// ... длительность
