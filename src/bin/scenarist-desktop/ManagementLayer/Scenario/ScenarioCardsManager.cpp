@@ -33,7 +33,7 @@ QString ScenarioCardsManager::save() const
 {
 	return m_view->save();
 }
-#include <QDebug>
+
 void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QString& _xml)
 {
 	//
@@ -42,8 +42,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 	if (m_model != _model) {
 		m_model = _model;
 		connect(m_model, &BusinessLogic::ScenarioModel::rowsInserted, [=] (const QModelIndex& _parent, int _first, int _last) {
-			qDebug() << "insert rows from" << _first << "to" << _last << "in parent" << _parent;
-			for (int row = _first; row <= _last; ++row) {
+            for (int row = _first; row <= _last; ++row) {
 				const QModelIndex index = m_model->index(row, 0, _parent);
 				BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
 				QModelIndex currentCardIndex = _parent;
@@ -61,8 +60,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 				}
 
 				BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
-				m_view->selectCard(currentCard->uuid());
-				qDebug() << item->uuid();
+                m_view->selectCard(currentCard->uuid());
 				m_view->addCard(
 					item->uuid(),
 					item->type(),
@@ -71,8 +69,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 					isCardFirstInParent);
 			}
 		});
-		connect(m_model, &BusinessLogic::ScenarioModel::rowsAboutToBeRemoved, [=] (const QModelIndex& _parent, int _first, int _last) {
-			qDebug() << "remove rows from" << _first << "to" << _last << "in parent" << _parent;
+        connect(m_model, &BusinessLogic::ScenarioModel::rowsAboutToBeRemoved, [=] (const QModelIndex& _parent, int _first, int _last) {
 			for (int row = _last; row >= _first; --row) {
 				QModelIndex currentCardIndex = _parent;
 				if (_parent.isValid()) {
@@ -80,17 +77,14 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 				} else {
 					currentCardIndex = m_model->index(row, 0);
 				}
-				BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
-				qDebug() << currentCard->uuid();
+                BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
 				m_view->removeCard(currentCard->uuid());
 			}
 		});
 		connect(m_model, &BusinessLogic::ScenarioModel::dataChanged, [=] (const QModelIndex& _topLeft, const QModelIndex& _bottomRight) {
-			qDebug() << "update rows from" << _topLeft << "to" << _bottomRight;
-			for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
+            for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
 				const QModelIndex index = m_model->index(row, 0, _topLeft.parent());
-				const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
-				qDebug() << item->uuid();
+                const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
 				m_view->updateCard(
 					item->uuid(),
 					item->type(),
@@ -98,9 +92,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 					item->description());
 			}
 		});
-	}
-
-	qDebug() << "************************************";
+    }
 
 	//
 	// Загрузим сценарий
@@ -193,10 +185,10 @@ void ScenarioCardsManager::removeCard(const QString& _uuid)
 
 void ScenarioCardsManager::moveCard(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid)
 {
-	if (!_movedUuid.isEmpty()) {
-		const QModelIndex parentIndex = m_model->indexForUuid(_parentUuid);
-		const QModelIndex previousIndex = m_model->indexForUuid(_previousUuid);
-		const QModelIndex movedIndex = m_model->indexForUuid(_movedUuid);
+    if (!_movedUuid.isEmpty()) {
+        const QModelIndex parentIndex = m_model->indexForUuid(_parentUuid);
+        const QModelIndex previousIndex = m_model->indexForUuid(_previousUuid);
+        const QModelIndex movedIndex = m_model->indexForUuid(_movedUuid);
 
 		//
 		// Синхронизируем перемещение с моделью

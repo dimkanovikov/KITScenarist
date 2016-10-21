@@ -68,7 +68,7 @@ public:
 	/**
 	 * @brief Изъять фигуру
 	 */
-	Shape* takeShape(Shape* _shape, bool _removeCardFlows = true);
+    Shape* takeShape(Shape* _shape);
 
 	/**
 	 * @brief Удалить фигуру со сцены
