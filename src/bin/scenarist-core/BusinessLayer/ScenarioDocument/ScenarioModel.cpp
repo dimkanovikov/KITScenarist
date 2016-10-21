@@ -506,7 +506,7 @@ ScenarioModelItem* ScenarioModel::itemForIndex(const QModelIndex& _index) const
 	ScenarioModelItem* resultItem = m_rootItem;
 	if (_index.isValid()) {
 		ScenarioModelItem* item = static_cast<ScenarioModelItem*>(_index.internalPointer());
-		if (item != 0) {
+		if (item != nullptr) {
 			resultItem = item;
 		}
 	}
@@ -515,7 +515,7 @@ ScenarioModelItem* ScenarioModel::itemForIndex(const QModelIndex& _index) const
 
 QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 {
-	if (_item == 0) {
+	if (_item == nullptr) {
 		return QModelIndex();
 	}
 
@@ -539,16 +539,16 @@ QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 }
 
 namespace {
-    static ScenarioModelItem* scenarioModelItemForUuid(ScenarioModelItem* _parent, const QString& _uuid) {
+	static ScenarioModelItem* scenarioModelItemForUuid(ScenarioModelItem* _parent, const QString& _uuid) {
 		ScenarioModelItem* searchedItem = nullptr;
 		for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
 			ScenarioModelItem* child = _parent->childAt(childIndex);
-            if (child->uuid() == _uuid) {
+			if (child->uuid() == _uuid) {
 				searchedItem = child;
 				break;
-            } else {
+			} else {
 				if (child->hasChildren()) {
-                    searchedItem = scenarioModelItemForUuid(child, _uuid);
+					searchedItem = scenarioModelItemForUuid(child, _uuid);
 					if (searchedItem != nullptr) {
 						break;
 					}
@@ -562,7 +562,11 @@ namespace {
 
 QModelIndex ScenarioModel::indexForUuid(const QString& _uuid) const
 {
-    return indexForItem(::scenarioModelItemForUuid(m_rootItem, _uuid));
+	if (_uuid.isEmpty()) {
+		return QModelIndex();
+	}
+
+	return indexForItem(::scenarioModelItemForUuid(m_rootItem, _uuid));
 }
 
 namespace {
@@ -694,17 +698,17 @@ QString ScenarioModel::simpleScheme() const
 							   "y=\"%3\" "
 							   "width=\"%4\" "
 							   "height=\"%5\" "
-                               "uuid=\"%6\" "
-                               "card_type=\"%7\" "
-                               "title=\"%8\" "
-                               "description=\"%9\"/>\n")
+							   "uuid=\"%6\" "
+							   "card_type=\"%7\" "
+							   "title=\"%8\" "
+							   "description=\"%9\"/>\n")
 					   .arg(id)
 					   .arg(x)
 					   .arg(y)
 					   .arg(itemSize.width())
 					   .arg(itemSize.height())
-                       .arg(child->uuid())
-                       .arg(child->type())
+					   .arg(child->uuid())
+					   .arg(child->type())
 					   .arg(child->title().isEmpty() ? child->header() : child->title())
 					   .arg(child->description()));
 			//
@@ -719,18 +723,18 @@ QString ScenarioModel::simpleScheme() const
 							   "x=\"%2\" "
 							   "y=\"%3\" "
 							   "width=\"%4\" "
-                               "height=\"%5\" "
-                               "uuid=\"%6\" "
-                               "card_type=\"%7\" "
-                               "title=\"%8\" "
-                               "description=\"%9\"/>\n")
+							   "height=\"%5\" "
+							   "uuid=\"%6\" "
+							   "card_type=\"%7\" "
+							   "title=\"%8\" "
+							   "description=\"%9\"/>\n")
 					   .arg(id)
 					   .arg(x)
 					   .arg(y)
 					   .arg(CARD_WIDTH)
 					   .arg(CARD_HEIGHT)
-                       .arg(child->uuid())
-                       .arg(child->type())
+					   .arg(child->uuid())
+					   .arg(child->type())
 					   .arg(child->title().isEmpty() ? child->header() : child->title())
 					   .arg(child->description()));
 

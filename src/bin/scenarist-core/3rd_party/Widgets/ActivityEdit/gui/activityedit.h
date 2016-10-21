@@ -106,6 +106,11 @@ signals:
 	void removeCardRequest(const QString& _uuid);
 
 	/**
+	 * @brief Карточка была перемещена
+	 */
+	void cardMoved(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
+
+	/**
 	 * @brief Схема изменена
 	 */
 	void schemeChanged();

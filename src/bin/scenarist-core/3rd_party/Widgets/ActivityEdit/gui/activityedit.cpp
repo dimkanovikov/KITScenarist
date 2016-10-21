@@ -55,6 +55,7 @@ ActivityEdit::ActivityEdit(QWidget *parent) :
 	connect(scene, &CustomGraphicsScene::editCardRequest, this, &ActivityEdit::editCardRequest);
 	connect(scene, &CustomGraphicsScene::editNoteRequest, this, &ActivityEdit::editNoteRequest);
 	connect(scene, &CustomGraphicsScene::editFlowTextRequest, this, &ActivityEdit::editFlowTextRequest);
+	connect(scene, &CustomGraphicsScene::cardMoved, this, &ActivityEdit::cardMoved);
 
 	QVBoxLayout* layout = new QVBoxLayout(this);
 	layout->setContentsMargins(QMargins());

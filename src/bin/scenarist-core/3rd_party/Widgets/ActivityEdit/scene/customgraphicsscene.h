@@ -98,6 +98,11 @@ signals:
 	void editFlowTextRequest();
 	/** @} */
 
+	/**
+	 * @brief Карточка была перемещена
+	 */
+	void cardMoved(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
+
 public slots:
 	/**
 	 * Предполагается, что этот слот будет активироваться извне, чтобы

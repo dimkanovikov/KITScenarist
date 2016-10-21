@@ -726,6 +726,9 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 	// Обработку производим только после перемещения мыши
 	//
 	if (m_afterMoving) {
+		bool isCardMoved = false;
+		QString parentUuid, previousUuid, selectedUuid;
+
 		//
 		// 1. Перемещение карточки на связь
 		//
@@ -824,6 +827,12 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 					selectedCard->setParentItem(nullptr);
 					selectedCard->setPos(lastPos);
 				}
+
+				//
+				// Сохраняем идентификатор предыдущей карточки
+				//
+				isCardMoved = true;
+				previousUuid = previousCard->uuid();
 			}
 		}
 
@@ -894,6 +903,12 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 							// Меняем порядок следования фигур
 							//
 							insertShape(selectedCard, previousCard);
+
+							//
+							// Сохраняем идентификатор предыдущей карточки
+							//
+							isCardMoved = true;
+							previousUuid = previousCard->uuid();
 						}
 						//
 						// Если детей нет, то связываем непосредственно с группирующим элементом
@@ -922,6 +937,12 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 							// Меняем порядок следования фигур
 							//
 							insertShape(selectedCard, previousCard);
+
+							//
+							// Сохраняем идентификатор предыдущей карточки
+							//
+							isCardMoved = true;
+							previousUuid = previousCard->uuid();
 						}
 
 						//
@@ -961,9 +982,33 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 						const QPointF lastPos = selectedCard->scenePos();
 						selectedCard->setParentItem(nullptr);
 						selectedCard->setPos(lastPos);
+
+						//
+						// Сохраняем идентификатор предыдущей карточки
+						//
+						isCardMoved = true;
+						previousUuid = previousCard->uuid();
 					}
 				}
 			}
+		}
+
+		if (isCardMoved) {
+			//
+			// Сохраняем идентификатор перемещаемой карточки
+			//
+			selectedUuid = selectedCard->uuid();
+			//
+			// Получим идентификатор родителя перемещаемой карточки
+			//
+			if (CardShape* parentCard = dynamic_cast<CardShape*>(selectedCard->parentItem())) {
+				parentUuid = parentCard->uuid();
+			}
+
+			//
+			// Сигнализируем о перемещении карточки
+			//
+			emit cardMoved(parentUuid, previousUuid, selectedUuid);
 		}
 	}
 

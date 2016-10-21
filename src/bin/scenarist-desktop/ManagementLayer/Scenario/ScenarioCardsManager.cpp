@@ -191,11 +191,31 @@ void ScenarioCardsManager::removeCard(const QString& _uuid)
 	emit removeCardRequest(m_model->indexForUuid(_uuid));
 }
 
+void ScenarioCardsManager::moveCard(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid)
+{
+	if (!_movedUuid.isEmpty()) {
+		const QModelIndex parentIndex = m_model->indexForUuid(_parentUuid);
+		const QModelIndex previousIndex = m_model->indexForUuid(_previousUuid);
+		const QModelIndex movedIndex = m_model->indexForUuid(_movedUuid);
+
+		//
+		// Синхронизируем перемещение с моделью
+		//
+		int previousRow = 0;
+		if (previousIndex.isValid()) {
+			previousRow = previousIndex.row() + 1;
+		}
+		QMimeData* mime = m_model->mimeData({movedIndex});
+		m_model->dropMimeData(mime, Qt::MoveAction, previousRow, 0, parentIndex);
+	}
+}
+
 void ScenarioCardsManager::initConnections()
 {
 	connect(m_view, &ScenarioCardsView::addCardClicked, this, &ScenarioCardsManager::addCard);
 	connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
 	connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
+	connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
 
 	connect(m_view, &ScenarioCardsView::schemeChanged, this, &ScenarioCardsManager::schemeChanged);
 }

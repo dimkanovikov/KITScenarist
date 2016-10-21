@@ -90,6 +90,11 @@ namespace ManagementLayer
 		 */
 		void removeCard(const QString& _uuid);
 
+		/**
+		 * @brief Переместить сцену в соответствии с перемещённой карточкой
+		 */
+		void moveCard(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
+
 	private:
 		/**
 		 * @brief Настроить соединения

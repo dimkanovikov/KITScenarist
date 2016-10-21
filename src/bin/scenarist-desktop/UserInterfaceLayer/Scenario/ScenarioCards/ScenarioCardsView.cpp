@@ -137,6 +137,7 @@ void ScenarioCardsView::initConnections()
 	connect(m_addCard, &FlatButton::clicked, this, &ScenarioCardsView::addCardClicked);
 	connect(m_cardsEdit, &ActivityEdit::editCardRequest, this, &ScenarioCardsView::editCardRequest);
 	connect(m_cardsEdit, &ActivityEdit::removeCardRequest, this, &ScenarioCardsView::removeCardRequest);
+	connect(m_cardsEdit, &ActivityEdit::cardMoved, this, &ScenarioCardsView::cardMoved);
 }
 
 void ScenarioCardsView::initStyleSheet()
