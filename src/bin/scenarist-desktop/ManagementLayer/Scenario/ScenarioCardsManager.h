@@ -95,6 +95,26 @@ namespace ManagementLayer
 		 */
 		void moveCard(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
 
+        /**
+         * @brief Добавить заметку
+         */
+        void addNote();
+
+        /**
+         * @brief Изменить заметку
+         */
+        void editNote(const QString& _text);
+
+        /**
+         * @brief Добавить текст связи
+         */
+        void addFlowText();
+
+        /**
+         * @brief Изменить текст связи
+         */
+        void editFlowText(const QString& _text);
+
 	private:
 		/**
 		 * @brief Настроить соединения

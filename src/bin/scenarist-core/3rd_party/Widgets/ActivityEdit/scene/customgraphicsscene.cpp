@@ -1017,8 +1017,12 @@ void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event
 			emit editCardRequest(card->uuid(), card->cardType(), card->title(), card->description());
 		} else if (NoteShape* note = dynamic_cast<NoteShape*>(shape)) {
 			emit editNoteRequest(note->text());
-		} else if (dynamic_cast<FlowText*>(shape)) {
-			emit editFlowTextRequest();
+        } else if (ArrowFlow* flow = dynamic_cast<ArrowFlow*>(shape)) {
+            if (flow->text().isEmpty()) {
+                emit addFlowTextRequest();
+            } else {
+                emit editFlowTextRequest(flow->text());
+            }
 		}
 	}
 }

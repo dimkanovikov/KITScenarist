@@ -4,6 +4,8 @@
 #include "../scene/customgraphicsscene.h"
 #include "../scene/sceneundostack.h"
 #include "../shape/card.h"
+#include "../shape/note.h"
+#include "../flow/arrowflow.h"
 #include "../xml/load_xml.h"
 #include "../xml/save_xml.h"
 
@@ -52,6 +54,7 @@ ActivityEdit::ActivityEdit(QWidget *parent) :
 		emit schemeChanged();
 	});
 
+    connect(scene, &CustomGraphicsScene::addFlowTextRequest, this, &ActivityEdit::addFlowTextRequest);
 	connect(scene, &CustomGraphicsScene::editCardRequest, this, &ActivityEdit::editCardRequest);
 	connect(scene, &CustomGraphicsScene::editNoteRequest, this, &ActivityEdit::editNoteRequest);
 	connect(scene, &CustomGraphicsScene::editFlowTextRequest, this, &ActivityEdit::editFlowTextRequest);
@@ -144,7 +147,33 @@ void ActivityEdit::addNote(const QString& _text)
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		m_view->setDragMode(QGraphicsView::NoDrag);
 		scene->appendNote(_text);
-	}
+    }
+}
+
+void ActivityEdit::updateNote(const QString& _text)
+{
+    if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+        m_view->setDragMode(QGraphicsView::NoDrag);
+        auto selected = scene->selectedShapes();
+        if (selected.size() == 1) {
+            if (NoteShape* note = dynamic_cast<NoteShape*>(selected.first())) {
+                note->setText(_text);
+            }
+        }
+    }
+}
+
+void ActivityEdit::setFlowText(const QString& _text)
+{
+    if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+        m_view->setDragMode(QGraphicsView::NoDrag);
+        auto selected = scene->selectedShapes();
+        if (selected.size() == 1) {
+            if (ArrowFlow* note = dynamic_cast<ArrowFlow*>(selected.first())) {
+                note->setText(_text);
+            }
+        }
+    }
 }
 
 void ActivityEdit::addHorizontalLine()

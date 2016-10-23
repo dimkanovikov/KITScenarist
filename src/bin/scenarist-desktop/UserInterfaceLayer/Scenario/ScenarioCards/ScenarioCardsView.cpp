@@ -69,7 +69,27 @@ void ScenarioCardsView::selectCard(const QString& _uuid)
 
 QString ScenarioCardsView::selectedCardUuid() const
 {
-	return m_cardsEdit->selectedCardUuid();
+    return m_cardsEdit->selectedCardUuid();
+}
+
+void ScenarioCardsView::addNote(const QString& _text)
+{
+    m_cardsEdit->addNote(_text);
+}
+
+void ScenarioCardsView::editNote(const QString& _text)
+{
+    m_cardsEdit->updateNote(_text);
+}
+
+void ScenarioCardsView::addFlowText(const QString& _text)
+{
+    m_cardsEdit->setFlowText(_text);
+}
+
+void ScenarioCardsView::editFlowText(const QString& _text)
+{
+    m_cardsEdit->setFlowText(_text);
 }
 
 void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
@@ -138,6 +158,12 @@ void ScenarioCardsView::initConnections()
 	connect(m_cardsEdit, &ActivityEdit::editCardRequest, this, &ScenarioCardsView::editCardRequest);
 	connect(m_cardsEdit, &ActivityEdit::removeCardRequest, this, &ScenarioCardsView::removeCardRequest);
 	connect(m_cardsEdit, &ActivityEdit::cardMoved, this, &ScenarioCardsView::cardMoved);
+
+    connect(m_addNote, &FlatButton::clicked, this, &ScenarioCardsView::addNoteClicked);
+    connect(m_cardsEdit, &ActivityEdit::editNoteRequest, this, &ScenarioCardsView::editNoteRequest);
+
+    connect(m_cardsEdit, &ActivityEdit::addFlowTextRequest, this, &ScenarioCardsView::addFlowTextRequest);
+    connect(m_cardsEdit, &ActivityEdit::editFlowTextRequest, this, &ScenarioCardsView::editFlowTextRequest);
 }
 
 void ScenarioCardsView::initStyleSheet()

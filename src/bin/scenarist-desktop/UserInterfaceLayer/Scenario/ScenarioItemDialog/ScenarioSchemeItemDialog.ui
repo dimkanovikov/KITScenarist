@@ -29,7 +29,7 @@
    <item>
     <widget class="QStackedWidget" name="content">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="cardPage">
       <layout class="QGridLayout" name="gridLayout">
@@ -119,15 +119,39 @@
      </widget>
      <widget class="QWidget" name="notePage">
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="SimpleTextEditorWidget" name="noteText" native="true"/>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="edgePage">
+     <widget class="QWidget" name="flowPage">
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="SimpleTextEditorWidget" name="edgeText" native="true"/>
+        <widget class="SimpleTextEditorWidget" name="flowText" native="true"/>
        </item>
       </layout>
      </widget>

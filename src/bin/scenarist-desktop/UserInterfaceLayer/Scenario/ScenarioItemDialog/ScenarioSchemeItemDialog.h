@@ -28,6 +28,21 @@ namespace UserInterface
 		 */
 		void clear();
 
+        /**
+         * @brief Показать страницу параметров карточки
+         */
+        void showCardPage();
+
+        /**
+         * @brief Показать страницу параметров заметки
+         */
+        void showNotePage();
+
+        /**
+         * @brief Показать страницу параметров текста связи
+         */
+        void showFlowPage();
+
 		/**
 		 * @brief Получить тип карточки
 		 */
@@ -57,6 +72,26 @@ namespace UserInterface
 		 * @brief Установить описание карточки
 		 */
 		void setCardDescription(const QString& _description);
+
+        /**
+         * @brief Получить текст заметки
+         */
+        QString noteText() const;
+
+        /**
+         * @brief Установить текст заметки
+         */
+        void setNoteText(const QString& _text);
+
+        /**
+         * @brief Получить текст связи
+         */
+        QString flowText() const;
+
+        /**
+         * @brief Установить текст связи
+         */
+        void setFlowText(const QString& _text);
 
 	private:
 		/**

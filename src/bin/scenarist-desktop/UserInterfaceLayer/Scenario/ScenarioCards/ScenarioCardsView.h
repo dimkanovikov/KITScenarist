@@ -61,6 +61,26 @@ namespace UserInterface {
 		 */
 		QString selectedCardUuid() const;
 
+        /**
+         * @brief Добавить заметку
+         */
+        void addNote(const QString& _text);
+
+        /**
+         * @brief Изменить заметку
+         */
+        void editNote(const QString& _text);
+
+        /**
+         * @brief Добавить текст на связь
+         */
+        void addFlowText(const QString& _text);
+
+        /**
+         * @brief Изменить текст на связи
+         */
+        void editFlowText(const QString& _text);
+
 		/**
 		 * @brief Установить режим работы со сценарием
 		 */
@@ -78,7 +98,7 @@ namespace UserInterface {
 		/** @{ */
 		void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
 		void editNoteRequest(const QString& _text);
-		void editFlowTextRequest();
+        void editFlowTextRequest(const QString& _text);
 		/** @} */
 
 		/**
@@ -90,6 +110,16 @@ namespace UserInterface {
 		 * @brief Карточка была перемещена
 		 */
 		void cardMoved(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
+
+        /**
+         * @brief Нажата кнопка добавления карточки
+         */
+        void addNoteClicked();
+
+        /**
+         * @brief Запрос на добавление текста на связь
+         */
+        void addFlowTextRequest();
 
 		/**
 		 * @brief Схема карточек изменена

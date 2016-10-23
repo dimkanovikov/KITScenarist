@@ -126,6 +126,7 @@ void ScenarioCardsManager::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioCardsManager::addCard()
 {
+    m_addItemDialog->showCardPage();
 	m_addItemDialog->clear();
 
 	//
@@ -156,7 +157,8 @@ void ScenarioCardsManager::addCard()
 
 void ScenarioCardsManager::editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _description)
 {
-	m_addItemDialog->clear();
+    m_addItemDialog->showCardPage();
+    m_addItemDialog->clear();
 	m_addItemDialog->setCardType((BusinessLogic::ScenarioModelItem::Type)_cardType);
 	m_addItemDialog->setCardTitle(_title);
 	m_addItemDialog->setCardDescription(_description);
@@ -199,7 +201,84 @@ void ScenarioCardsManager::moveCard(const QString& _parentUuid, const QString& _
 		}
 		QMimeData* mime = m_model->mimeData({movedIndex});
 		m_model->dropMimeData(mime, Qt::MoveAction, previousRow, 0, parentIndex);
-	}
+    }
+}
+
+void ScenarioCardsManager::addNote()
+{
+    m_addItemDialog->showNotePage();
+    m_addItemDialog->clear();
+
+    //
+    // Если пользователь действительно хочет добавить элемент
+    //
+    if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
+        const QString text = m_addItemDialog->noteText();
+
+        //
+        // Если задана заметка
+        //
+        if (!text.isEmpty()) {
+            m_view->addNote(text);
+        }
+    }
+}
+
+void ScenarioCardsManager::editNote(const QString& _text)
+{
+    m_addItemDialog->showNotePage();
+    m_addItemDialog->clear();
+    m_addItemDialog->setNoteText(_text);
+
+    //
+    // Если пользователь действительно хочет добавить элемент
+    //
+    if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
+        const QString text = m_addItemDialog->noteText();
+
+        //
+        // Если задана заметка
+        //
+        if (!text.isEmpty()) {
+            m_view->editNote(text);
+        }
+    }
+}
+
+void ScenarioCardsManager::addFlowText()
+{
+
+    m_addItemDialog->showFlowPage();
+    m_addItemDialog->clear();
+
+    //
+    // Если пользователь действительно хочет добавить элемент
+    //
+    if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
+        const QString text = m_addItemDialog->flowText();
+
+        //
+        // Если задан текст связи
+        //
+        if (!text.isEmpty()) {
+            m_view->addFlowText(text);
+        }
+    }
+}
+
+void ScenarioCardsManager::editFlowText(const QString& _text)
+{
+    m_addItemDialog->showFlowPage();
+    m_addItemDialog->clear();
+    m_addItemDialog->setFlowText(_text);
+
+    //
+    // Если пользователь действительно хочет добавить элемент
+    //
+    if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
+        const QString text = m_addItemDialog->noteText();
+        m_view->editFlowText(text);
+    }
 }
 
 void ScenarioCardsManager::initConnections()
@@ -208,6 +287,12 @@ void ScenarioCardsManager::initConnections()
 	connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
 	connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
 	connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
+
+    connect(m_view, &ScenarioCardsView::addNoteClicked, this, &ScenarioCardsManager::addNote);
+    connect(m_view, &ScenarioCardsView::editNoteRequest, this, &ScenarioCardsManager::editNote);
+
+    connect(m_view, &ScenarioCardsView::addFlowTextRequest, this, &ScenarioCardsManager::addFlowText);
+    connect(m_view, &ScenarioCardsView::editFlowTextRequest, this, &ScenarioCardsManager::editFlowText);
 
 	connect(m_view, &ScenarioCardsView::schemeChanged, this, &ScenarioCardsManager::schemeChanged);
 }
