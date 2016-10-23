@@ -164,6 +164,9 @@ void ScenarioCardsView::initConnections()
 
     connect(m_cardsEdit, &ActivityEdit::addFlowTextRequest, this, &ScenarioCardsView::addFlowTextRequest);
     connect(m_cardsEdit, &ActivityEdit::editFlowTextRequest, this, &ScenarioCardsView::editFlowTextRequest);
+
+    connect(m_addHLine, &FlatButton::clicked, m_cardsEdit, &ActivityEdit::addHorizontalLine);
+    connect(m_addVLine, &FlatButton::clicked, m_cardsEdit, &ActivityEdit::addVerticalLine);
 }
 
 void ScenarioCardsView::initStyleSheet()
