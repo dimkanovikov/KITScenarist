@@ -372,11 +372,11 @@ void CustomGraphicsScene::appendShape(Shape* _shape)
 	}
 
 	//
-	// Фокусируем экран на неё, если это не связь
+    // Фокусируем экран на неё, если это карточка, или заметка
 	//
-	if (!dynamic_cast<Flow*>(_shape)) {
+    if (dynamic_cast<ResizableShape*>(_shape)) {
 		focusShape(_shape);
-	}
+    }
 }
 
 void CustomGraphicsScene::insertShape(Shape* _shape, Shape* _after)

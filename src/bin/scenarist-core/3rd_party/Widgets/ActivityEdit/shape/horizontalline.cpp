@@ -10,7 +10,7 @@ namespace {
 	 * @brief Минимальная ширина линии
 	 * @brief Используется, если ещё не задана сцена
 	 */
-	const int LINE_MIN_WIDTH = 100;
+    const int LINE_MIN_WIDTH = 10000;
 
 	/**
 	 * @brief Высота линии

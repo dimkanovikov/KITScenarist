@@ -15,7 +15,7 @@ namespace {
 	 * @brief Минимальная высота линии
 	 * @brief Используется, если ещё не задана сцена
 	 */
-	const int LINE_MIN_HEIGHT = 100;
+    const int LINE_MIN_HEIGHT = 10000;
 }
 
 
