@@ -993,6 +993,9 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 			}
 		}
 
+		//
+		// Если карточка реально была перемещена
+		//
 		if (isCardMoved) {
 			//
 			// Сохраняем идентификатор перемещаемой карточки
