@@ -1,8 +1,11 @@
 #include "flowtext.h"
-#include <QPainter>
-#include <QDebug>
-#include <QGraphicsScene>
+
 #include "../scene/customgraphicsscene.h"
+
+#include <QApplication>
+#include <QGraphicsScene>
+#include <QPainter>
+#include <QPalette>
 
 FlowText::FlowText (ArrowFlow *flow, QGraphicsItem *parent)
 	: Shape(parent)
@@ -85,7 +88,7 @@ void FlowText::paint (QPainter *painter, const QStyleOptionGraphicsItem *option,
 	painter->setBrush(QColor(255,255,255,200));
 	painter->setPen(Qt::NoPen);
 	painter->drawRoundedRect(_textrect.adjusted(-2,-2,2,2), 5,5);
-	painter->setPen(Qt::black);
+	painter->setPen(QApplication::palette().text().color());
 	painter->drawText(_textrect.adjusted(0,0,100,100), "["+_flow->text()+"]");
 
 	if (isSelected())

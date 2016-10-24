@@ -1,8 +1,10 @@
 #include "horizontalline.h"
 
+#include <QApplication>
 #include <QCursor>
 #include <QGraphicsScene>
 #include <QPainter>
+#include <QPalette>
 
 
 namespace {
@@ -10,12 +12,12 @@ namespace {
 	 * @brief Минимальная ширина линии
 	 * @brief Используется, если ещё не задана сцена
 	 */
-    const int LINE_MIN_WIDTH = 10000;
+	const int LINE_MIN_WIDTH = 10000;
 
 	/**
 	 * @brief Высота линии
 	 */
-	const int LINE_HEIGHT = 5;
+	const int LINE_HEIGHT = 2;
 }
 
 
@@ -35,7 +37,7 @@ HorizontalLineShape::HorizontalLineShape(const QPointF& _pos, QGraphicsItem* _pa
 
 QRectF HorizontalLineShape::boundingRect() const
 {
-    QRectF result(0, 0, LINE_MIN_WIDTH, LINE_HEIGHT);
+	QRectF result(0, 0, LINE_MIN_WIDTH, LINE_HEIGHT);
 	if (!m_inBoundingRect) {
 		m_inBoundingRect = true;
 		if (scene() != nullptr) {
@@ -52,24 +54,24 @@ void HorizontalLineShape::paint(QPainter* _painter, const QStyleOptionGraphicsIt
 	Q_UNUSED(_option);
 	Q_UNUSED(_widget);
 
-    //
-    // Скорректируем позицию, если нужно
-    //
-    if (scene() != nullptr
-        && pos().x() != scene()->sceneRect().x()) {
-        setPos(scene()->sceneRect().x(), pos().y());
-    }
+	//
+	// Скорректируем позицию, если нужно
+	//
+	if (scene() != nullptr
+		&& pos().x() != scene()->sceneRect().x()) {
+		setPos(scene()->sceneRect().x(), pos().y());
+	}
 
-    //
-    // Рисуем линию
-    //
+	//
+	// Рисуем линию
+	//
 	_painter->save();
 	if (isSelected()) {
 		setPenAndBrushForSelection(_painter);
 		_painter->setBrush(_painter->pen().color());
 	} else {
-		_painter->setPen(Qt::black);
-		_painter->setBrush(Qt::black);
+		_painter->setPen(QApplication::palette().dark().color());
+		_painter->setBrush(QApplication::palette().dark());
 	}
 	_painter->drawRect(boundingRect());
 	_painter->restore();
@@ -77,18 +79,18 @@ void HorizontalLineShape::paint(QPainter* _painter, const QStyleOptionGraphicsIt
 
 QVariant HorizontalLineShape::itemChange(QGraphicsItem::GraphicsItemChange _change, const QVariant& _value)
 {
-    switch (_change) {
-        case ItemPositionChange: {
-            QPointF newPosition = _value.toPointF();
-            newPosition.setX(scene() != nullptr ? scene()->sceneRect().x() : 0);
-            emit moving();
-            return newPosition;
-        }
+	switch (_change) {
+		case ItemPositionChange: {
+			QPointF newPosition = _value.toPointF();
+			newPosition.setX(scene() != nullptr ? scene()->sceneRect().x() : 0);
+			emit moving();
+			return newPosition;
+		}
 
-        default: {
-            break;
-        }
-    }
+		default: {
+			break;
+		}
+	}
 
 	return Shape::itemChange(_change, _value);
 }

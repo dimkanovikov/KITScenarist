@@ -29,7 +29,7 @@ public:
 public:
 	CardShape(QGraphicsItem* _parent = NULL);
 	CardShape(const QString& _uuid, CardType _type, const QString& _title,
-		const QString& _description, const QPointF& _pos, QGraphicsItem* _parent = NULL);
+		const QString& _description, const QString& _colors, const QPointF& _pos, QGraphicsItem* _parent = NULL);
 
 	/**
 	 * @brief Идентификатор
@@ -61,6 +61,14 @@ public:
 	/** @{ */
 	void setDescription(const QString& _description);
 	QString description() const;
+	/** @} */
+
+	/**
+	 * @brief Цвета
+	 */
+	/** @{ */
+	void setColors(const QString& _colors);
+	QString colors() const;
 	/** @} */
 
 	/**
@@ -112,6 +120,11 @@ private:
 	 * @brief Описание карточки
 	 */
 	QString m_description;
+
+	/**
+	 * @brief Цвета карточки
+	 */
+	QString m_colors;
 
 	/**
 	 * @brief Карточка находится в состоянии вложения дочернего элемента

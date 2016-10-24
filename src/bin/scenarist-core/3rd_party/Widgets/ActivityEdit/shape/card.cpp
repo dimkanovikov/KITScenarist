@@ -2,11 +2,19 @@
 
 #include "textutils.h"
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
 #include <QApplication>
 #include <QPainter>
 #include <QPalette>
+#include <QStyleOptionGraphicsItem>
 
 namespace {
+	/**
+	 * @brief Высота декорации дополнительных цветов
+	 */
+	const int ADDITIONAL_COLORS_HEIGHT = 10;
+
 	/**
 	 * @brief Поссчитать количество родителей элемента
 	 */
@@ -32,12 +40,13 @@ CardShape::CardShape(QGraphicsItem* _parent) :
 }
 
 CardShape::CardShape(const QString& _uuid, CardType _type, const QString& _title,
-	const QString& _description, const QPointF& _pos, QGraphicsItem* _parent) :
+	const QString& _description, const QString& _colors, const QPointF& _pos, QGraphicsItem* _parent) :
 	ResizableShape(_pos, _parent),
 	m_uuid(_uuid),
 	m_cardType(_type),
 	m_title(_title),
 	m_description(_description),
+	m_colors(_colors),
 	m_isOnInsertionState(false)
 {
 	setMinSize(QSizeF(50,32));
@@ -100,6 +109,20 @@ QString CardShape::description() const
 	return m_description;
 }
 
+void CardShape::setColors(const QString& _colors)
+{
+	if (m_colors != _colors) {
+		prepareGeometryChange();
+		m_colors = _colors;
+		emit contentsChanged();
+	}
+}
+
+QString CardShape::colors() const
+{
+	return m_colors;
+}
+
 void CardShape::setOnInstertionState(bool _on)
 {
 	if (m_isOnInsertionState != _on) {
@@ -154,24 +177,61 @@ void CardShape::paint(QPainter *_painter, const QStyleOptionGraphicsItem *_optio
 
 	adjustSize();
 
+	const QPalette palette = QApplication::palette();
+
 	//
 	// Рисуем фон
 	//
-	_painter->setFont(Shape::basicFont());
-	_painter->setPen(Qt::black);
-	_painter->setBrush(Shape::innerBrush());
-	_painter->drawRect(boundingRect().adjusted(3, 3, -3, -3));
+	_painter->setPen(palette.dark().color());
+	//
+	// ... заданным цветом, если он задан
+	//
+	if (!m_colors.isEmpty()) {
+		_painter->setBrush(QColor(m_colors.split(";").first()));
+	}
+	//
+	// ... или стандартным цветом
+	//
+	else {
+		if (m_cardType == TypeFolder) {
+			_painter->setBrush(palette.alternateBase());
+		} else {
+			_painter->setBrush(palette.base());
+		}
+	}
+	_painter->drawRect(boundingRect());
 	QTextOption textoption;
 	textoption.setAlignment(Qt::AlignTop | Qt::AlignLeft);
+
+	//
+	// Рисуем иконку
+	//
+	const int ICON_SIZE = _painter->fontMetrics().height() + 8;
+	const QRect iconRect(7, 5, ICON_SIZE, ICON_SIZE);
+	QPixmap icon;
+	switch (m_cardType) {
+		default:
+		case TypeScene: icon.load(":/Graphics/Icons/scene.png"); break;
+		case TypeScenesGroup: icon.load(":/Graphics/Icons/scene_group.png"); break;
+		case TypeFolder: icon.load(":/Graphics/Icons/folder.png"); break;
+	}
+	QIcon iconColorized(icon);
+	QColor iconColor = palette.text().color();
+	ImageHelper::setIconColor(iconColorized, iconRect.size(), iconColor);
+	icon = iconColorized.pixmap(iconRect.size());
+	_painter->drawPixmap(iconRect, icon.scaled(iconRect.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
 	//
 	// Рисуем заголовок
 	//
 	textoption.setWrapMode(QTextOption::NoWrap);
+	_painter->setFont(Shape::basicFont());
 	QFont font = _painter->font();
 	font.setBold(true);
 	_painter->setFont(font);
-	const QRectF titleRect(9, 9, size().width() - 18, _painter->fontMetrics().height());
+	_painter->setPen(palette.text().color());
+	const int TITLE_HEIGHT = _painter->fontMetrics().height();
+	const QRectF titleRect(iconRect.right() + 7, 9, size().width() - iconRect.right() - 7 - 9, TITLE_HEIGHT);
 	const QString titleText = TextUtils::elidedText(title(), _painter->font(), titleRect.size(), textoption);
 	_painter->drawText(titleRect, titleText, textoption);
 
@@ -187,24 +247,62 @@ void CardShape::paint(QPainter *_painter, const QStyleOptionGraphicsItem *_optio
 	_painter->drawText(descriptionRect, descriptionText, textoption);
 
 	//
-	// Если это группирующий элемент, рисуем область вложения
+	// Если это группирующий элемент, рисуем декорацию вложения
 	//
 	if (cardType() == TypeScenesGroup
 		|| cardType() == TypeFolder) {
 		const QSizeF fullDescriptionRectSize = TextUtils::textRect(description(), _painter->font(), descriptionRect.width(), textoption);
+
 		//
 		// Если на карточке есть свободное место для отрисовки декорации
 		//
 		if (fullDescriptionRectSize.height() < descriptionRect.height()) {
 			const QRectF childsRect(
-				descriptionRect.left(),
+				descriptionRect.left() - 6,
 				descriptionRect.top() + fullDescriptionRectSize.height() + spacing,
-				descriptionRect.width(),
+				descriptionRect.width() + 12,
 				descriptionRect.height() - fullDescriptionRectSize.height() - spacing);
+
+			//
+			// Рисуем линию отделяющую детей
+			//
+			QPointF left = childsRect.topLeft();
+			QPointF right = childsRect.topRight();
+			if (m_cardType == TypeScenesGroup) {
+				const int SCENE_GROUP_MARGIN = 12;
+				left.setX(left.x() + SCENE_GROUP_MARGIN);
+				right.setX(right.x() - SCENE_GROUP_MARGIN);
+			}
+			_painter->setPen(palette.dark().color());
+			_painter->drawLine(left, right);
+
 			if (m_isOnInsertionState) {
+				//
+				// TODO: new design
+				//
 				_painter->fillRect(childsRect, QApplication::palette().highlight());
-			} else {
-				_painter->fillRect(childsRect, QApplication::palette().dark());
+			}
+		}
+	}
+
+	//
+	// Рисуем дополнительные цвета
+	//
+	if (!m_colors.isEmpty()) {
+		QStringList colorsNamesList = m_colors.split(";", QString::SkipEmptyParts);
+		colorsNamesList.removeFirst();
+		//
+		// ... если они есть
+		//
+		if (!colorsNamesList.isEmpty()) {
+			//
+			// Выссчитываем ширину занимаемую одним цветом
+			//
+			const qreal colorRectWidth = boundingRect().width() / colorsNamesList.size();
+			QRectF colorRect(0, boundingRect().height() - ADDITIONAL_COLORS_HEIGHT, colorRectWidth, ADDITIONAL_COLORS_HEIGHT);
+			for (const QString& colorName : colorsNamesList) {
+				_painter->fillRect(colorRect, QColor(colorName));
+				colorRect.moveLeft(colorRect.right());
 			}
 		}
 	}

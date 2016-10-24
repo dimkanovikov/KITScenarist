@@ -104,7 +104,7 @@ QPointF Shape::flowConnectionPoint (const QPointF &anotherEnd, Flow *flow) const
 void Shape::setPenAndBrushForSelection (QPainter *painter)
 {
 	painter->setBrush(Qt::transparent);
-	QPen pen(QApplication::palette().highlight(), 3, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
+	QPen pen(QApplication::palette().highlight(), 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
 	painter->setPen(pen);
 }
 

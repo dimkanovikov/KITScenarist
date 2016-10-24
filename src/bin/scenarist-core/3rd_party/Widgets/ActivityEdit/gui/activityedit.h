@@ -48,12 +48,12 @@ public:
 	 * @brief Добавить карточку
 	 */
 	void addCard(const QString& _uuid, int _cardType, const QString& _title,
-		const QString& _description, bool _isCardFirstInParent);
+		const QString& _description, const QString& _colors, bool _isCardFirstInParent);
 
 	/**
 	 * @brief Обновить карточку с заданным номером
 	 */
-	void updateCard(const QString& _uuid, int _type, const QString& _title, const QString& _description);
+	void updateCard(const QString& _uuid, int _type, const QString& _title, const QString& _description, const QString& _colors);
 
 	/**
 	 * @brief Добавить заметку

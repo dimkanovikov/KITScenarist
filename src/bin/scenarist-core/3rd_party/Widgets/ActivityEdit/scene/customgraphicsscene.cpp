@@ -78,7 +78,7 @@ CustomGraphicsScene::~CustomGraphicsScene()
 }
 
 void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const QString& _title,
-	const QString& _description, bool _isCardFirstInParent)
+	const QString& _description, const QString& _colors, bool _isCardFirstInParent)
 {
 	QPointF scenePosition = sceneRect().center();
 
@@ -193,7 +193,7 @@ void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const 
 	// Добавляем карточку
 	//
 	bool needCorrectPosition = true;
-	Shape* newCard = createCard(_uuid, _cardType, _title, _description, scenePosition, parentCard, needCorrectPosition);
+	Shape* newCard = createCard(_uuid, _cardType, _title, _description, _colors, scenePosition, parentCard, needCorrectPosition);
 	insertShape(newCard, previousCard);
 	//
 	// ... корректируем позицию вкладываемой карточки
@@ -372,11 +372,11 @@ void CustomGraphicsScene::appendShape(Shape* _shape)
 	}
 
 	//
-    // Фокусируем экран на неё, если это карточка, или заметка
+	// Фокусируем экран на неё, если это карточка, или заметка
 	//
-    if (dynamic_cast<ResizableShape*>(_shape)) {
+	if (dynamic_cast<ResizableShape*>(_shape)) {
 		focusShape(_shape);
-    }
+	}
 }
 
 void CustomGraphicsScene::insertShape(Shape* _shape, Shape* _after)
@@ -393,54 +393,54 @@ void CustomGraphicsScene::insertShape(Shape* _shape, Shape* _after)
 	//
 	// Если фигура была невидима, покажем её
 	//
-    _shape->show();
+	_shape->show();
 
 	//
 	// Фокусируем экран на неё, если это не связь
 	//
-    if (!dynamic_cast<Flow*>(_shape)) {
-        focusShape(_shape);
-    }
+	if (!dynamic_cast<Flow*>(_shape)) {
+		focusShape(_shape);
+	}
 }
 
 Shape* CustomGraphicsScene::takeShape(Shape* _shape)
 {
 	if (m_shapes.contains(_shape)) {
 		//
-        // При необходимости соединяем между собой окружающие карточку элементы
-        // если это карточка, конечно
-        //
-        if (CardShape* cardShape = dynamic_cast<CardShape*>(_shape)) {
-            //
-            // Определяем элементы, с которыми соединена карточка, чтобы соеденить их между собой
-            //
-            Flow* startFlow = cardFlow(cardShape, CARD_ON_FLOW_END);
-            Flow* endFlow = nullptr;
-            if (hasCards(cardShape)) {
-                endFlow = cardFlow(lastCard(cardShape), CARD_ON_FLOW_START);
-            } else {
-                endFlow = cardFlow(cardShape, CARD_ON_FLOW_START);
-            }
-            //
-            // ... если есть связь в оба конца, соединяем карточки на концах этих связей
-            //
-            if (startFlow != nullptr && endFlow != nullptr) {
-                startFlow->setEndShape(endFlow->endShape());
-                removeShape(endFlow);
-            }
-            //
-            // ... если есть связь только в начале, просто уберём эту связь
-            //
-            else if (startFlow != nullptr) {
-                removeShape(startFlow);
-            }
-            //
-            // ... если есть связь только в конце, просто уберём эту связь
-            //
-            else {
-                removeShape(endFlow);
-            }
-        }
+		// При необходимости соединяем между собой окружающие карточку элементы
+		// если это карточка, конечно
+		//
+		if (CardShape* cardShape = dynamic_cast<CardShape*>(_shape)) {
+			//
+			// Определяем элементы, с которыми соединена карточка, чтобы соеденить их между собой
+			//
+			Flow* startFlow = cardFlow(cardShape, CARD_ON_FLOW_END);
+			Flow* endFlow = nullptr;
+			if (hasCards(cardShape)) {
+				endFlow = cardFlow(lastCard(cardShape), CARD_ON_FLOW_START);
+			} else {
+				endFlow = cardFlow(cardShape, CARD_ON_FLOW_START);
+			}
+			//
+			// ... если есть связь в оба конца, соединяем карточки на концах этих связей
+			//
+			if (startFlow != nullptr && endFlow != nullptr) {
+				startFlow->setEndShape(endFlow->endShape());
+				removeShape(endFlow);
+			}
+			//
+			// ... если есть связь только в начале, просто уберём эту связь
+			//
+			else if (startFlow != nullptr) {
+				removeShape(startFlow);
+			}
+			//
+			// ... если есть связь только в конце, просто уберём эту связь
+			//
+			else {
+				removeShape(endFlow);
+			}
+		}
 
 		//
 		// Извлекаем фигуру
@@ -450,8 +450,8 @@ Shape* CustomGraphicsScene::takeShape(Shape* _shape)
 
 		//
 		// Скрываем фигуру
-        //
-        _shape->hide();
+		//
+		_shape->hide();
 
 		return _shape;
 	}
@@ -619,85 +619,85 @@ void CustomGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* _event)
 		//
 		QList<Shape*> selected = selectedShapes();
 		if (selected.size() == 1) {
-            if (CardShape* selectedCard = dynamic_cast<CardShape*>(selected.last())) {
-                //
-                // Определяем пересекающиеся с выделенным элементы
-                //
-                QList<QGraphicsItem*> intersectItems = items(selectedCard->mapToScene(selectedCard->shape()));
-                QList<Flow*> intersectFlows;
-                QList<CardShape*> containedCards;
-                for (QGraphicsItem* intersectItem : intersectItems) {
-                    //
-                    // Оставляем только связи,
-                    //
-                    if (Flow* flow = dynamic_cast<Flow*>(intersectItem)) {
-                        //
-                        // ... к которым данный элемент не присоединён
-                        //	   и ни одна из связанных фигур не вложена в переносимую карточку
-                        //
-                        if (flow->startShape() != selectedCard
-                            && flow->endShape() != selectedCard
-                            && !selectedCard->isGrandParentOf(flow->startShape())
-                            && !selectedCard->isGrandParentOf(flow->endShape())) {
-                            intersectFlows.append(flow);
-                        }
-                    }
-                    //
-                    // Или карочки,
-                    //
-                    else if (CardShape* card = dynamic_cast<CardShape*>(intersectItem)) {
-                        //
-                        // ... если они являются группирующими элементами
-                        //
-                        if (card != selectedCard
-                            && (card->cardType() == CardShape::TypeScenesGroup
-                                || card->cardType() == CardShape::TypeFolder)) {
-                            //
-                            // ... и перетаскиваемый элемент полностью входит в них
-                            //
-                            const QRectF selectedCardRect = selectedCard->mapToScene(selectedCard->boundingRect()).boundingRect();
-                            const QRectF targetCardRect = card->mapToScene(card->boundingRect()).boundingRect();
-                            if (targetCardRect.contains(selectedCardRect)) {
-                                containedCards.append(card);
-                            }
-                        }
-                    }
-                }
+			if (CardShape* selectedCard = dynamic_cast<CardShape*>(selected.last())) {
+				//
+				// Определяем пересекающиеся с выделенным элементы
+				//
+				QList<QGraphicsItem*> intersectItems = items(selectedCard->mapToScene(selectedCard->shape()));
+				QList<Flow*> intersectFlows;
+				QList<CardShape*> containedCards;
+				for (QGraphicsItem* intersectItem : intersectItems) {
+					//
+					// Оставляем только связи,
+					//
+					if (Flow* flow = dynamic_cast<Flow*>(intersectItem)) {
+						//
+						// ... к которым данный элемент не присоединён
+						//	   и ни одна из связанных фигур не вложена в переносимую карточку
+						//
+						if (flow->startShape() != selectedCard
+							&& flow->endShape() != selectedCard
+							&& !selectedCard->isGrandParentOf(flow->startShape())
+							&& !selectedCard->isGrandParentOf(flow->endShape())) {
+							intersectFlows.append(flow);
+						}
+					}
+					//
+					// Или карочки,
+					//
+					else if (CardShape* card = dynamic_cast<CardShape*>(intersectItem)) {
+						//
+						// ... если они являются группирующими элементами
+						//
+						if (card != selectedCard
+							&& (card->cardType() == CardShape::TypeScenesGroup
+								|| card->cardType() == CardShape::TypeFolder)) {
+							//
+							// ... и перетаскиваемый элемент полностью входит в них
+							//
+							const QRectF selectedCardRect = selectedCard->mapToScene(selectedCard->boundingRect()).boundingRect();
+							const QRectF targetCardRect = card->mapToScene(card->boundingRect()).boundingRect();
+							if (targetCardRect.contains(selectedCardRect)) {
+								containedCards.append(card);
+							}
+						}
+					}
+				}
 
-                //
-                // 1. Если такая связь всего одна, помечаем её, как принимающую переставление карточки
-                //
-                if (intersectFlows.size() == 1) {
-                    //
-                    // NOTE: чтобы избежать проблем с перерисовкой анкоров, выполняем событие
-                    //		 до того момента, как сделаем связь активной
-                    //
-                    QGraphicsScene::mouseMoveEvent(_event);
-                    intersectFlows.last()->setSelected(true);
-                    needSendEventToBaseClass = false;
-                }
-                //
-                // 2. Если происходит вложение карточки в группирующую
-                //
-                if (!containedCards.isEmpty()) {
-                    //
-                    // Определим самый низкоуровневый элемент (тот что глубже всех вложен)
-                    //
-                    int maxDepth = -1;
-                    CardShape* topCard = nullptr;
-                    for (CardShape* card : containedCards) {
-                        if (maxDepth < card->depthLevel()) {
-                            maxDepth = card->depthLevel();
-                            topCard = card;
-                        }
-                    }
+				//
+				// 1. Если такая связь всего одна, помечаем её, как принимающую переставление карточки
+				//
+				if (intersectFlows.size() == 1) {
+					//
+					// NOTE: чтобы избежать проблем с перерисовкой анкоров, выполняем событие
+					//		 до того момента, как сделаем связь активной
+					//
+					QGraphicsScene::mouseMoveEvent(_event);
+					intersectFlows.last()->setSelected(true);
+					needSendEventToBaseClass = false;
+				}
+				//
+				// 2. Если происходит вложение карточки в группирующую
+				//
+				if (!containedCards.isEmpty()) {
+					//
+					// Определим самый низкоуровневый элемент (тот что глубже всех вложен)
+					//
+					int maxDepth = -1;
+					CardShape* topCard = nullptr;
+					for (CardShape* card : containedCards) {
+						if (maxDepth < card->depthLevel()) {
+							maxDepth = card->depthLevel();
+							topCard = card;
+						}
+					}
 
-                    //
-                    // Подсвечиваем его, сигнализируя о том, что вложение будет происходить именно в него
-                    //
-                    topCard->setOnInstertionState(true);
-                }
-            }
+					//
+					// Подсвечиваем его, сигнализируя о том, что вложение будет происходить именно в него
+					//
+					topCard->setOnInstertionState(true);
+				}
+			}
 		}
 
 		m_afterMoving = true;
@@ -710,7 +710,7 @@ void CustomGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* _event)
 
 void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 {
-    QGraphicsScene::mouseReleaseEvent(_event);
+	QGraphicsScene::mouseReleaseEvent(_event);
 
 	//
 	// Обработку производим только после перемещения мыши
@@ -743,7 +743,7 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 				//
 				// Изымаем карточку из сцены
 				//
-                takeShape(selectedCard);
+				takeShape(selectedCard);
 
 				//
 				// Определяем элементы к которым теперь будет присоединена карточка
@@ -764,59 +764,59 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 				//
 				// Меняем порядок следования фигур
 				//
-                insertShape(selectedCard, previousCard);
+				insertShape(selectedCard, previousCard);
 
 				//
 				// Если предыдущая карточка вложена в группирующий элемент
 				//
-                QGraphicsItem* previousParentItem = previousCard->parentItem();
-                QGraphicsItem* nextParentItem = nextCard->parentItem();
-                bool handled = false;
-                if (previousParentItem != nullptr) {
-                    const QRectF selectedCardRect = selectedCard->mapToScene(selectedCard->boundingRect()).boundingRect();
-                    const QRectF parentCardRect = previousParentItem->mapToScene(previousParentItem->boundingRect()).boundingRect();
-                    //
-                    // ... и если текущая карточка тоже помещена внутрь группирующего элемента
-                    //
-                    if (parentCardRect.contains(selectedCardRect)) {
-                        //
-                        // ... поместим её внутрь
-                        //
-                        const QPointF lastPos = selectedCard->scenePos();
-                        selectedCard->setParentItem(previousParentItem);
-                        selectedCard->setPos(previousParentItem->mapFromScene(lastPos));
-                        handled = true;
-                    }
-                }
-                //
-                // Если следующая карточка вложена в группирующий элемент
-                //
-                if (!handled
-                    && nextParentItem != nullptr) {
-                    const QRectF selectedCardRect = selectedCard->mapToScene(selectedCard->boundingRect()).boundingRect();
-                    const QRectF parentCardRect = nextParentItem->mapToScene(nextParentItem->boundingRect()).boundingRect();
-                    //
-                    // ... и если текущая карточка тоже помещена внутрь группирующего элемента
-                    //
-                    if (parentCardRect.contains(selectedCardRect)) {
-                        //
-                        // ... поместим её внутрь
-                        //
-                        const QPointF lastPos = selectedCard->scenePos();
-                        selectedCard->setParentItem(nextParentItem);
-                        selectedCard->setPos(nextParentItem->mapFromScene(lastPos));
-                        handled = true;
-                    }
-                }
-                //
-                // Если не удалось вложить, то убираем родителя у элемента
-                //
-                if (!handled
-                    && selectedCard->parentItem() != nullptr) {
-                    const QPointF lastPos = selectedCard->scenePos();
-                    selectedCard->setParentItem(nullptr);
-                    selectedCard->setPos(lastPos);
-                }
+				QGraphicsItem* previousParentItem = previousCard->parentItem();
+				QGraphicsItem* nextParentItem = nextCard->parentItem();
+				bool handled = false;
+				if (previousParentItem != nullptr) {
+					const QRectF selectedCardRect = selectedCard->mapToScene(selectedCard->boundingRect()).boundingRect();
+					const QRectF parentCardRect = previousParentItem->mapToScene(previousParentItem->boundingRect()).boundingRect();
+					//
+					// ... и если текущая карточка тоже помещена внутрь группирующего элемента
+					//
+					if (parentCardRect.contains(selectedCardRect)) {
+						//
+						// ... поместим её внутрь
+						//
+						const QPointF lastPos = selectedCard->scenePos();
+						selectedCard->setParentItem(previousParentItem);
+						selectedCard->setPos(previousParentItem->mapFromScene(lastPos));
+						handled = true;
+					}
+				}
+				//
+				// Если следующая карточка вложена в группирующий элемент
+				//
+				if (!handled
+					&& nextParentItem != nullptr) {
+					const QRectF selectedCardRect = selectedCard->mapToScene(selectedCard->boundingRect()).boundingRect();
+					const QRectF parentCardRect = nextParentItem->mapToScene(nextParentItem->boundingRect()).boundingRect();
+					//
+					// ... и если текущая карточка тоже помещена внутрь группирующего элемента
+					//
+					if (parentCardRect.contains(selectedCardRect)) {
+						//
+						// ... поместим её внутрь
+						//
+						const QPointF lastPos = selectedCard->scenePos();
+						selectedCard->setParentItem(nextParentItem);
+						selectedCard->setPos(nextParentItem->mapFromScene(lastPos));
+						handled = true;
+					}
+				}
+				//
+				// Если не удалось вложить, то убираем родителя у элемента
+				//
+				if (!handled
+					&& selectedCard->parentItem() != nullptr) {
+					const QPointF lastPos = selectedCard->scenePos();
+					selectedCard->setParentItem(nullptr);
+					selectedCard->setPos(lastPos);
+				}
 
 				//
 				// Сохраняем идентификатор предыдущей карточки
@@ -1001,14 +1001,14 @@ void CustomGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 			//
 			// Сигнализируем о перемещении карточки
 			//
-            emit cardMoved(parentUuid, previousUuid, selectedUuid);
+			emit cardMoved(parentUuid, previousUuid, selectedUuid);
 
-            clearSelection();
-            selectedCard->setSelected(true);
+			clearSelection();
+			selectedCard->setSelected(true);
 		}
 	}
 
-    update();
+	update();
 
 	m_afterMoving = false;
 }
@@ -1020,18 +1020,19 @@ void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event
 			emit editCardRequest(card->uuid(), card->cardType(), card->title(), card->description());
 		} else if (NoteShape* note = dynamic_cast<NoteShape*>(shape)) {
 			emit editNoteRequest(note->text());
-        } else if (ArrowFlow* flow = dynamic_cast<ArrowFlow*>(shape)) {
-            if (flow->text().isEmpty()) {
-                emit addFlowTextRequest();
-            } else {
-                emit editFlowTextRequest(flow->text());
-            }
+		} else if (ArrowFlow* flow = dynamic_cast<ArrowFlow*>(shape)) {
+			if (flow->text().isEmpty()) {
+				emit addFlowTextRequest();
+			} else {
+				emit editFlowTextRequest(flow->text());
+			}
 		}
 	}
 }
 
 Shape* CustomGraphicsScene::createCard(const QString& _uuid, int _cardType, const QString& _title,
-	const QString& _description, const QPointF& _scenePos, Shape* _parent, bool& _needCorrectPosition)
+	const QString& _description, const QString& _colors, const QPointF& _scenePos, Shape* _parent,
+	bool& _needCorrectPosition)
 {
 	Shape* newCard = nullptr;
 	//
@@ -1051,7 +1052,7 @@ Shape* CustomGraphicsScene::createCard(const QString& _uuid, int _cardType, cons
 	// Если в корзине ничего не нашлось, создаём новую
 	//
 	if (newCard == nullptr) {
-		newCard = new CardShape(_uuid, (CardShape::CardType)_cardType, _title, _description, _scenePos, _parent);
+		newCard = new CardShape(_uuid, (CardShape::CardType)_cardType, _title, _description, _colors, _scenePos, _parent);
 		_needCorrectPosition = true;
 	}
 	//

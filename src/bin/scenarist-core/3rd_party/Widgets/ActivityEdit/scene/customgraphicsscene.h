@@ -38,7 +38,7 @@ public:
 	 */
 	/** @{ */
 	void appendCard(const QString& _uuid, int _cardType, const QString& _title,
-		const QString& _description, bool _isCardFirstInParent);
+		const QString& _description, const QString& _colors, bool _isCardFirstInParent);
 	void appendNote(const QString& _text);
 	void appendHorizontalLine();
 	void appendVerticalLine();
@@ -68,7 +68,7 @@ public:
 	/**
 	 * @brief Изъять фигуру
 	 */
-    Shape* takeShape(Shape* _shape);
+	Shape* takeShape(Shape* _shape);
 
 	/**
 	 * @brief Удалить фигуру со сцены
@@ -89,10 +89,10 @@ signals:
 	 */
 	void stateChangedByUser();
 
-    /**
-     * @brief Добавить текст для связи
-     */
-    void addFlowTextRequest();
+	/**
+	 * @brief Добавить текст для связи
+	 */
+	void addFlowTextRequest();
 
 	/**
 	 * @brief Запросы на изменение выделенной фигуры
@@ -100,7 +100,7 @@ signals:
 	/** @{ */
 	void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
 	void editNoteRequest(const QString& _text);
-    void editFlowTextRequest(const QString& _text);
+	void editFlowTextRequest(const QString& _text);
 	/** @} */
 
 	/**
@@ -136,7 +136,8 @@ private:
 	 * @brief Создать карточку
 	 */
 	Shape* createCard(const QString& _uuid, int _cardType, const QString& _title,
-		const QString& _description, const QPointF& _scenePos, Shape* _parent, bool& needCorrectPosition);
+		const QString& _description, const QString& _colors, const QPointF& _scenePos,
+		Shape* _parent, bool& needCorrectPosition);
 
 	/**
 	 * @brief Есть ли карточки вложенные в заданный элемент, если элемент не задан, то проверяется вся сцена

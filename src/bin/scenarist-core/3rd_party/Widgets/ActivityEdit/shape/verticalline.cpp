@@ -1,21 +1,23 @@
 #include "verticalline.h"
 
+#include <QApplication>
 #include <QCursor>
 #include <QGraphicsScene>
 #include <QPainter>
+#include <QPalette>
 
 
 namespace {
 	/**
 	 * @brief Ширина линии
 	 */
-	const int LINE_WIDTH = 5;
+	const int LINE_WIDTH = 2;
 
 	/**
 	 * @brief Минимальная высота линии
 	 * @brief Используется, если ещё не задана сцена
 	 */
-    const int LINE_MIN_HEIGHT = 10000;
+	const int LINE_MIN_HEIGHT = 10000;
 }
 
 
@@ -35,7 +37,7 @@ VerticalLineShape::VerticalLineShape(const QPointF& _pos, QGraphicsItem* _parent
 
 QRectF VerticalLineShape::boundingRect() const
 {
-    QRectF result(0, 0, LINE_WIDTH, LINE_MIN_HEIGHT);
+	QRectF result(0, 0, LINE_WIDTH, LINE_MIN_HEIGHT);
 	if (!m_inBoundingRect) {
 		m_inBoundingRect = true;
 		if (scene() != nullptr) {
@@ -52,24 +54,24 @@ void VerticalLineShape::paint(QPainter* _painter, const QStyleOptionGraphicsItem
 	Q_UNUSED(_option);
 	Q_UNUSED(_widget);
 
-    //
-    // Скорректируем позицию, если нужно
-    //
-    if (scene() != nullptr
-        && pos().y() != scene()->sceneRect().y()) {
-        setPos(pos().x(), scene()->sceneRect().y());
-    }
+	//
+	// Скорректируем позицию, если нужно
+	//
+	if (scene() != nullptr
+		&& pos().y() != scene()->sceneRect().y()) {
+		setPos(pos().x(), scene()->sceneRect().y());
+	}
 
-    //
-    // Рисуем линию
-    //
+	//
+	// Рисуем линию
+	//
 	_painter->save();
 	if (isSelected()) {
 		setPenAndBrushForSelection(_painter);
 		_painter->setBrush(_painter->pen().color());
 	} else {
-		_painter->setPen(Qt::black);
-		_painter->setBrush(Qt::black);
+		_painter->setPen(QApplication::palette().dark().color());
+		_painter->setBrush(QApplication::palette().dark());
 	}
 	_painter->drawRect(boundingRect());
 	_painter->restore();
@@ -80,7 +82,7 @@ QVariant VerticalLineShape::itemChange(QGraphicsItem::GraphicsItemChange _change
 	switch (_change) {
 		case ItemPositionChange: {
 			QPointF newPosition = _value.toPointF();
-            newPosition.setY(scene() != nullptr ? scene()->sceneRect().y() : 0);
+			newPosition.setY(scene() != nullptr ? scene()->sceneRect().y() : 0);
 			emit moving();
 			return newPosition;
 		}

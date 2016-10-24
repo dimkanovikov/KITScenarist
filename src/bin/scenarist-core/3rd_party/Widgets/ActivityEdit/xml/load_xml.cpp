@@ -62,14 +62,16 @@ Shape* loadCardShape(QDomNode& _node, QHash<int, Shape*>& _ids)
 	double y = attributes.namedItem("y").toAttr().value().toDouble();
 	double width = attributes.namedItem("width").toAttr().value().toDouble();
 	double height = attributes.namedItem("height").toAttr().value().toDouble();
-    QString uuid = attributes.namedItem("uuid").toAttr().value();
+	QString uuid = attributes.namedItem("uuid").toAttr().value();
 	int cardType = attributes.namedItem("card_type").toAttr().value().toInt();
 	QString title = attributes.namedItem("title").toAttr().value();
 	QString description = attributes.namedItem("description").toAttr().value();
-    CardShape* card = new CardShape(uuid, (CardShape::CardType)cardType, title, description, QPointF(x,y));
+	QString colors = attributes.namedItem("colors").toAttr().value();
+	CardShape* card = new CardShape(uuid, (CardShape::CardType)cardType, title, description, colors, QPointF(x,y));
 	card->setSize(QSizeF(width, height));
 	card->setTitle(title);
 	card->setDescription(description);
+	card->setColors(colors);
 	if (parentCard != nullptr) {
 		card->setParentItem(parentCard);
 		card->setPos(x, y);
@@ -136,8 +138,8 @@ void fileLoadXml(const QString& _filename, CustomGraphicsScene* _scene, QGraphic
 
 void loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _view)
 {
-    QDomDocument doc;
-    if (!doc.setContent(_xml)) {
+	QDomDocument doc;
+	if (!doc.setContent(_xml)) {
 		throw FileErrorException("");
 	}
 

@@ -38,13 +38,13 @@ namespace UserInterface {
 		 * @brief Добавить карточку
 		 */
 		void addCard(const QString& _uuid, int _cardType, const QString& _title,
-			const QString& _description, bool _isCardFirstInParent);
+			const QString& _description, const QString& _colors, bool _isCardFirstInParent);
 
 		/**
 		 * @brief Обновить карточку с заданным uuid
 		 */
 		void updateCard(const QString& _uuid, int _type, const QString& _title,
-			const QString& _description);
+			const QString& _description, const QString& _colors);
 
 		/**
 		 * @brief Удалить карточку с заданным uuid
@@ -61,25 +61,25 @@ namespace UserInterface {
 		 */
 		QString selectedCardUuid() const;
 
-        /**
-         * @brief Добавить заметку
-         */
-        void addNote(const QString& _text);
+		/**
+		 * @brief Добавить заметку
+		 */
+		void addNote(const QString& _text);
 
-        /**
-         * @brief Изменить заметку
-         */
-        void editNote(const QString& _text);
+		/**
+		 * @brief Изменить заметку
+		 */
+		void editNote(const QString& _text);
 
-        /**
-         * @brief Добавить текст на связь
-         */
-        void addFlowText(const QString& _text);
+		/**
+		 * @brief Добавить текст на связь
+		 */
+		void addFlowText(const QString& _text);
 
-        /**
-         * @brief Изменить текст на связи
-         */
-        void editFlowText(const QString& _text);
+		/**
+		 * @brief Изменить текст на связи
+		 */
+		void editFlowText(const QString& _text);
 
 		/**
 		 * @brief Установить режим работы со сценарием
@@ -98,7 +98,7 @@ namespace UserInterface {
 		/** @{ */
 		void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
 		void editNoteRequest(const QString& _text);
-        void editFlowTextRequest(const QString& _text);
+		void editFlowTextRequest(const QString& _text);
 		/** @} */
 
 		/**
@@ -111,15 +111,15 @@ namespace UserInterface {
 		 */
 		void cardMoved(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
 
-        /**
-         * @brief Нажата кнопка добавления карточки
-         */
-        void addNoteClicked();
+		/**
+		 * @brief Нажата кнопка добавления карточки
+		 */
+		void addNoteClicked();
 
-        /**
-         * @brief Запрос на добавление текста на связь
-         */
-        void addFlowTextRequest();
+		/**
+		 * @brief Запрос на добавление текста на связь
+		 */
+		void addFlowTextRequest();
 
 		/**
 		 * @brief Схема карточек изменена

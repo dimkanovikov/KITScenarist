@@ -1,12 +1,15 @@
 #include "flow.h"
-#include <QPainter>
-#include <QDebug>
+
+#include "../anchor/sizeanchor.h"
+#include "../scene/customgraphicsscene.h"
+
+#include <QApplication>
+#include <QCursor>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsScene>
-#include "../anchor/sizeanchor.h"
 #include <QGraphicsSceneMouseEvent>
-#include <QCursor>
-#include "../scene/customgraphicsscene.h"
+#include <QPainter>
+#include <QPalette>
 
 
 
@@ -133,7 +136,7 @@ void Flow::paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 	if (isSelected()) {
 		setPenAndBrushForSelection(painter);
 	} else {
-		QPen pen(Qt::black, 3, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
+		QPen pen(QApplication::palette().text(), 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
 		painter->setPen(pen);
 		painter->setBrush(Qt::transparent);
 	}
