@@ -68,7 +68,7 @@ public:
 	/**
 	 * @brief Изъять фигуру
 	 */
-	Shape* takeShape(Shape* _shape, bool _removeCardFlows = true);
+    Shape* takeShape(Shape* _shape);
 
 	/**
 	 * @brief Удалить фигуру со сцены
@@ -89,13 +89,18 @@ signals:
 	 */
 	void stateChangedByUser();
 
+    /**
+     * @brief Добавить текст для связи
+     */
+    void addFlowTextRequest();
+
 	/**
 	 * @brief Запросы на изменение выделенной фигуры
 	 */
 	/** @{ */
 	void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
 	void editNoteRequest(const QString& _text);
-	void editFlowTextRequest();
+    void editFlowTextRequest(const QString& _text);
 	/** @} */
 
 	/**

@@ -6,11 +6,10 @@
 
 using namespace BusinessLogic;
 
-#include <QDebug>
+
 ScenarioTextBlockInfo::ScenarioTextBlockInfo()
 	: m_uuid(QUuid::createUuid().toString()), m_sceneNumber(0)
 {
-	qDebug() << m_uuid;
 }
 
 QString ScenarioTextBlockInfo::uuid() const

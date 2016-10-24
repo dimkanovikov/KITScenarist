@@ -60,6 +60,16 @@ public:
 	 */
 	void addNote(const QString& _text);
 
+    /**
+     * @brief Обновить текущую заметку
+     */
+    void updateNote(const QString& _text);
+
+    /**
+     * @brief Установить текст текущей связи
+     */
+    void setFlowText(const QString& _text);
+
 	/**
 	 * @brief Добавить горизонтальную линию
 	 */
@@ -91,13 +101,18 @@ public:
 	void deleteSelectedItems();
 
 signals:
+    /**
+     * @brief Добавить текст для связи
+     */
+    void addFlowTextRequest();
+
 	/**
 	 * @brief Запросы на изменение выделенной фигуры
 	 */
 	/** @{ */
 	void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
 	void editNoteRequest(const QString& _text);
-	void editFlowTextRequest();
+    void editFlowTextRequest(const QString& _text);
 	/** @} */
 
 	/**

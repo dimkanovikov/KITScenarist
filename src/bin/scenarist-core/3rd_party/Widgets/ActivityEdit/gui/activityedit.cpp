@@ -4,6 +4,8 @@
 #include "../scene/customgraphicsscene.h"
 #include "../scene/sceneundostack.h"
 #include "../shape/card.h"
+#include "../shape/note.h"
+#include "../flow/arrowflow.h"
 #include "../xml/load_xml.h"
 #include "../xml/save_xml.h"
 
@@ -44,7 +46,12 @@ ActivityEdit::ActivityEdit(QWidget *parent) :
 		//
 		// А потом удаляем все остальные выделенные элементы
 		//
-		scene->removeSelectedShapes();
+        scene->removeSelectedShapes();
+
+        //
+        // И уведомляем об изменении сцены
+        //
+        scene->notifyStateChangeByUser();
 	});
 
 	connect(scene, &CustomGraphicsScene::stateChangedByUser, [=] {
@@ -52,6 +59,7 @@ ActivityEdit::ActivityEdit(QWidget *parent) :
 		emit schemeChanged();
 	});
 
+    connect(scene, &CustomGraphicsScene::addFlowTextRequest, this, &ActivityEdit::addFlowTextRequest);
 	connect(scene, &CustomGraphicsScene::editCardRequest, this, &ActivityEdit::editCardRequest);
 	connect(scene, &CustomGraphicsScene::editNoteRequest, this, &ActivityEdit::editNoteRequest);
 	connect(scene, &CustomGraphicsScene::editFlowTextRequest, this, &ActivityEdit::editFlowTextRequest);
@@ -119,6 +127,7 @@ void ActivityEdit::addCard(const QString& _uuid, int _cardType, const QString& _
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		m_view->setDragMode(QGraphicsView::NoDrag);
 		scene->appendCard(_uuid, (CardShape::CardType)_cardType, _title, _description, _isCardFirstInParent);
+        scene->notifyStateChangeByUser();
 	}
 }
 
@@ -132,6 +141,7 @@ void ActivityEdit::updateCard(const QString& _uuid, int _type, const QString& _t
 					currentCard->setCardType((CardShape::CardType)_type);
 					currentCard->setTitle(_title);
 					currentCard->setDescription(_description);
+                    scene->notifyStateChangeByUser();
 					break;
 				}
 			}
@@ -144,14 +154,44 @@ void ActivityEdit::addNote(const QString& _text)
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		m_view->setDragMode(QGraphicsView::NoDrag);
 		scene->appendNote(_text);
-	}
+        scene->notifyStateChangeByUser();
+    }
+}
+
+void ActivityEdit::updateNote(const QString& _text)
+{
+    if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+        m_view->setDragMode(QGraphicsView::NoDrag);
+        auto selected = scene->selectedShapes();
+        if (selected.size() == 1) {
+            if (NoteShape* note = dynamic_cast<NoteShape*>(selected.first())) {
+                note->setText(_text);
+                scene->notifyStateChangeByUser();
+            }
+        }
+    }
+}
+
+void ActivityEdit::setFlowText(const QString& _text)
+{
+    if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+        m_view->setDragMode(QGraphicsView::NoDrag);
+        auto selected = scene->selectedShapes();
+        if (selected.size() == 1) {
+            if (ArrowFlow* note = dynamic_cast<ArrowFlow*>(selected.first())) {
+                note->setText(_text);
+                scene->notifyStateChangeByUser();
+            }
+        }
+    }
 }
 
 void ActivityEdit::addHorizontalLine()
 {
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		m_view->setDragMode(QGraphicsView::NoDrag);
-		scene->appendHorizontalLine();
+        scene->appendHorizontalLine();
+        scene->notifyStateChangeByUser();
 	}
 }
 
@@ -160,6 +200,7 @@ void ActivityEdit::addVerticalLine()
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		m_view->setDragMode(QGraphicsView::NoDrag);
 		scene->appendVerticalLine();
+        scene->notifyStateChangeByUser();
 	}
 }
 
@@ -204,7 +245,7 @@ QString ActivityEdit::selectedCardUuid() const
 void ActivityEdit::deleteSelectedItems()
 {
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
-		scene->notifyStateChangeByUser();
 		scene->removeSelectedShapes();
+        scene->notifyStateChangeByUser();
 	}
 }

@@ -10,7 +10,7 @@ namespace {
 	 * @brief Минимальная ширина линии
 	 * @brief Используется, если ещё не задана сцена
 	 */
-	const int LINE_MIN_WIDTH = 100;
+    const int LINE_MIN_WIDTH = 10000;
 
 	/**
 	 * @brief Высота линии
@@ -35,7 +35,7 @@ HorizontalLineShape::HorizontalLineShape(const QPointF& _pos, QGraphicsItem* _pa
 
 QRectF HorizontalLineShape::boundingRect() const
 {
-	QRectF result(0, 0, LINE_MIN_WIDTH, LINE_HEIGHT);
+    QRectF result(0, 0, LINE_MIN_WIDTH, LINE_HEIGHT);
 	if (!m_inBoundingRect) {
 		m_inBoundingRect = true;
 		if (scene() != nullptr) {
@@ -52,6 +52,17 @@ void HorizontalLineShape::paint(QPainter* _painter, const QStyleOptionGraphicsIt
 	Q_UNUSED(_option);
 	Q_UNUSED(_widget);
 
+    //
+    // Скорректируем позицию, если нужно
+    //
+    if (scene() != nullptr
+        && pos().x() != scene()->sceneRect().x()) {
+        setPos(scene()->sceneRect().x(), pos().y());
+    }
+
+    //
+    // Рисуем линию
+    //
 	_painter->save();
 	if (isSelected()) {
 		setPenAndBrushForSelection(_painter);
@@ -66,18 +77,18 @@ void HorizontalLineShape::paint(QPainter* _painter, const QStyleOptionGraphicsIt
 
 QVariant HorizontalLineShape::itemChange(QGraphicsItem::GraphicsItemChange _change, const QVariant& _value)
 {
-	switch (_change) {
-		case ItemPositionChange: {
-			QPointF newPosition = _value.toPointF();
-			newPosition.setX(0);
-			emit moving();
-			return newPosition;
-		}
+    switch (_change) {
+        case ItemPositionChange: {
+            QPointF newPosition = _value.toPointF();
+            newPosition.setX(scene() != nullptr ? scene()->sceneRect().x() : 0);
+            emit moving();
+            return newPosition;
+        }
 
-		default: {
-			break;
-		}
-	}
+        default: {
+            break;
+        }
+    }
 
 	return Shape::itemChange(_change, _value);
 }
