@@ -174,7 +174,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_splitter(new QSplitter(m_view)),
 	m_projectsManager(new ProjectsManager(this)),
 	m_startUpManager(new StartUpManager(this, m_view)),
-    m_researchManager(new ResearchManager(this, m_view)),
+	m_researchManager(new ResearchManager(this, m_view)),
 	m_scenarioManager(new ScenarioManager(this, m_view)),
 	m_charactersManager(new CharactersManager(this, m_view)),
 	m_locationsManager(new LocationsManager(this, m_view)),
@@ -186,11 +186,12 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 {
 	initView();
 	initConnections();
-	initStyleSheet();
 
 	aboutUpdateProjectsList();
 
 	reloadApplicationSettings();
+
+	initStyleSheet();
 
 	QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
 }
@@ -205,6 +206,7 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 {
 	loadViewState();
 	m_view->show();
+
 
 	if (!_fileToOpen.isEmpty()) {
 		aboutLoad(_fileToOpen);
@@ -408,7 +410,7 @@ void ApplicationManager::aboutSave()
 		// Управляющие должны сохранить несохранённые данные
 		//
 		DatabaseLayer::Database::transaction();
-        m_researchManager->saveResearch();
+		m_researchManager->saveResearch();
 		m_scenarioManager->saveCurrentProject();
 		m_charactersManager->saveCharacters();
 		m_locationsManager->saveLocations();
@@ -982,7 +984,7 @@ void ApplicationManager::currentTabIndexChanged()
 				switch (_index) {
 					case STARTUP_TAB_INDEX: result = m_startUpManager->view(); break;
 					case RESEARCH_TAB_INDEX: result = m_researchManager->view(); break;
-                    case SCENARIO_CARDS_TAB_INDEX: result = m_scenarioManager->cardsView(); break;
+					case SCENARIO_CARDS_TAB_INDEX: result = m_scenarioManager->cardsView(); break;
 					case SCENARIO_TAB_INDEX: result = m_scenarioManager->view(); break;
 					case CHARACTERS_TAB_INDEX: result = m_charactersManager->view(); break;
 					case LOCATIONS_TAB_INDEX: result = m_locationsManager->view(); break;
@@ -1072,7 +1074,7 @@ void ApplicationManager::goToEditCurrentProject()
 	// Настроим режим работы со сценарием
 	//
 	const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
-    m_researchManager->setCommentOnly(isCommentOnly);
+	m_researchManager->setCommentOnly(isCommentOnly);
 	m_scenarioManager->setCommentOnly(isCommentOnly);
 	m_charactersManager->setCommentOnly(isCommentOnly);
 	m_locationsManager->setCommentOnly(isCommentOnly);
@@ -1118,7 +1120,7 @@ void ApplicationManager::goToEditCurrentProject()
 	// Загрузить данные из файла
 	// Делать это нужно после того, как все данные синхронизировались
 	//
-    m_researchManager->loadCurrentProject();
+	m_researchManager->loadCurrentProject();
 	m_charactersManager->loadCurrentProject();
 	m_locationsManager->loadCurrentProject();
 	m_statisticsManager->loadCurrentProject();
@@ -1139,7 +1141,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Загрузить настройки файла
 	// Порядок загрузки важен - сначала настройки каждого модуля, потом активные вкладки
-    //
+	//
 	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	loadCurrentProjectSettings(ProjectsManager::currentProject().path());
@@ -1159,7 +1161,7 @@ void ApplicationManager::closeCurrentProject()
 {
 	//
 	// Сохраним настройки закрываемого проекта
-    //
+	//
 	m_scenarioManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 	saveCurrentProjectSettings(ProjectsManager::currentProject().path());
@@ -1167,7 +1169,7 @@ void ApplicationManager::closeCurrentProject()
 	//
 	// Закроем проект управляющими
 	//
-    m_researchManager->closeCurrentProject();
+	m_researchManager->closeCurrentProject();
 	m_scenarioManager->closeCurrentProject();
 	m_charactersManager->closeCurrentProject();
 	m_locationsManager->closeCurrentProject();
@@ -1242,7 +1244,7 @@ void ApplicationManager::initView()
 	m_tabsWidgets->setObjectName("tabsWidgets");
 	m_tabsWidgets->addWidget(m_startUpManager->view());
 	m_tabsWidgets->addWidget(m_researchManager->view());
-    m_tabsWidgets->addWidget(m_scenarioManager->cardsView());
+	m_tabsWidgets->addWidget(m_scenarioManager->cardsView());
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
 	m_tabsWidgets->addWidget(m_charactersManager->view());
 	m_tabsWidgets->addWidget(m_locationsManager->view());
@@ -1404,7 +1406,7 @@ void ApplicationManager::initConnections()
 	connect(m_settingsManager, SIGNAL(countersSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutCountersSettingsUpdated()));
 
-    connect(m_researchManager, SIGNAL(researchChanged()), this, SLOT(aboutProjectChanged()));
+	connect(m_researchManager, SIGNAL(researchChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_charactersManager, SIGNAL(characterChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
@@ -1472,7 +1474,6 @@ void ApplicationManager::reloadApplicationSettings()
 		// Настраиваем палитру и стилевые надстройки в зависимости от темы
 		//
 		QPalette palette = QStyleFactory::create("Fusion")->standardPalette();
-		QString styleSheet;
 
 		if (useDarkTheme) {
 			palette.setColor(QPalette::Window, QColor("#26282a"));
@@ -1521,16 +1522,14 @@ void ApplicationManager::reloadApplicationSettings()
 		}
 
 		//
-		// Для всплывающей используем универсальный стиль
-		//
-		styleSheet += "QToolTip { color: palette(window-text); background-color: palette(window); border: 1px solid palette(highlight); } "
-					 ;
-
-		//
-		// Применяем тему
+		// Применяем палитру
 		//
 		qApp->setPalette(palette);
-		qApp->setStyleSheet(styleSheet);
+
+		//
+		// Чтобы все цветовые изменения подхватились, нужно заново переустановить стиль
+		//
+		m_view->setStyleSheet(m_view->styleSheet());
 	}
 
 	//

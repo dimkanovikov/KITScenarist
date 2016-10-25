@@ -1,6 +1,7 @@
 #ifndef SETTINGSSTORAGE_H
 #define SETTINGSSTORAGE_H
 
+#include <QSettings>
 #include <QString>
 #include <QMap>
 #include <QVariant>
@@ -55,6 +56,11 @@ namespace DataStorageLayer
 
 	private:
 		SettingsStorage();
+
+		/**
+		 * @brief Настройки приложения
+		 */
+		QSettings m_appSettings;
 
 		/**
 		 * @brief Значения параметров по умолчанию

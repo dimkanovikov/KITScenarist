@@ -489,3 +489,12 @@ QProgressBar::chunk {
 	border: none;
 	margin: 0px 0px 0px 12px;
 }
+
+/*
+ * Всплывающая подсказка
+ */
+QToolTip {
+	color: palette(window-text);
+	background-color: palette(window);
+	border: 1px solid palette(highlight);
+}

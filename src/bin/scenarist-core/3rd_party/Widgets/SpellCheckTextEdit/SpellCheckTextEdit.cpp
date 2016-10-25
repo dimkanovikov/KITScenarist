@@ -24,7 +24,7 @@ SpellCheckTextEdit::SpellCheckTextEdit(QWidget *_parent) :
 	//
 	// Настроим проверяющего
 	//
-	m_spellChecker = new SpellChecker(userDictionaryfile());
+	m_spellChecker = SpellChecker::createSpellChecker(userDictionaryfile());
 
 	//
 	// Настраиваем подсветку слов не прошедших проверку орфографии

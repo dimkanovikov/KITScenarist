@@ -24,12 +24,6 @@ public:
 	 */
 	static void enableSpellCheck(bool _enable, SpellChecker::Language _language = SpellChecker::Undefined);
 
-private:
-	/**
-	 * @brief Синхронизация масштабирования всех редакторов данного типа
-	 */
-	static QVector<SimpleTextEditorWidget*> s_editorsWidgets;
-
 public:
 	explicit SimpleTextEditorWidget(QWidget *parent = 0);
 	~SimpleTextEditorWidget();
