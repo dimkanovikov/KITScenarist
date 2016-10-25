@@ -46,35 +46,9 @@ bool Database::canOpenFile(const QString& _databaseFileName, bool _isLocal)
 		QSqlQuery q_checker(database);
 
 		//
-		// 1. Если файл был создан в настольной версии приложения, его нельзя открывать в мобильной и наоборот
+		// 1. Если файл был создан в более поздней версии приложения, его нельзя открывать
 		//
-		if (q_checker.exec(
-#ifdef MOBILE_OS
-				"SELECT COUNT(value) AS cant_open FROM system_variables WHERE variable = 'application-version' "
-#else
-				"SELECT COUNT(value) AS cant_open FROM system_variables WHERE variable = 'application-version-mobile' "
-#endif
-				)
-			&& q_checker.next()
-			&& q_checker.record().value("cant_open").toBool() == true) {
-			//
-			// Если есть метка противоположного приложения, то открыть нельзя
-			//
-			canOpen = false;
-			//
-			// ... сформироуем сообщение об ошибке
-			//
-			s_openFileError =
-#ifdef MOBILE_OS
-				QApplication::translate("DatabaseLayer::Database", "Project was created in desktop version.");
-#else
-				QApplication::translate("DatabaseLayer::Database", "Project was created in mobile version.");
-#endif
-		}
-		//
-		// 2. Если файл был создан в более поздней версии приложения, его нельзя открывать
-		//
-		else if (q_checker.exec("SELECT value FROM system_variables WHERE variable = 'application-version' ")
+		if (q_checker.exec("SELECT value FROM system_variables WHERE variable = 'application-version' ")
 				 && q_checker.next()
 				 && q_checker.value("value").toString().split(" ").first() > QApplication::applicationVersion()) {
 			canOpen = false;
@@ -92,6 +66,23 @@ bool Database::canOpenFile(const QString& _databaseFileName, bool _isLocal)
 QString Database::openFileError()
 {
 	return s_openFileError;
+}
+
+bool Database::hasError()
+{
+	return !s_lastError.isEmpty();
+}
+
+QString Database::lastError()
+{
+	return s_lastError;
+}
+
+void Database::setLastError(const QString& _error)
+{
+	if (s_lastError != _error)   {
+		s_lastError = _error;
+	}
 }
 
 void Database::setCurrentFile(const QString& _databaseFileName)
@@ -172,6 +163,7 @@ QString Database::SQL_DRIVER      = "QSQLITE";
 QString Database::DATABASE_NAME   = ":memory:";
 
 QString Database::s_openFileError = QString::null;
+QString Database::s_lastError = QString::null;
 int Database::s_openedTransactions = 0;
 
 QSqlDatabase Database::instanse()
@@ -189,6 +181,8 @@ QSqlDatabase Database::instanse()
 
 void Database::open(QSqlDatabase& _database, const QString& _connectionName, const QString& _databaseName)
 {
+	s_lastError.clear();
+
 	_database = QSqlDatabase::addDatabase(SQL_DRIVER, _connectionName);
 	_database.setDatabaseName(_databaseName);
 	_database.open();
