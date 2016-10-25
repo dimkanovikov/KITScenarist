@@ -17,7 +17,7 @@ namespace {
 	/**
 	 * @brief Высота линии
 	 */
-	const int LINE_HEIGHT = 2;
+	const int LINE_HEIGHT = 3;
 }
 
 

@@ -128,11 +128,11 @@ void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const 
 		if (_isCardFirstInParent) {
 			scenePosition = previousCard->scenePos();
 			scenePosition.setX(scenePosition.x() + SHAPE_MOVE_DELTA);
-			scenePosition.setY(scenePosition.y() + SHAPE_MOVE_DELTA);
+//			scenePosition.setY(scenePosition.y() + SHAPE_MOVE_DELTA);
 		} else {
 			scenePosition = previousCard->scenePos();
 			scenePosition.setX(scenePosition.x() + previousCard->boundingRect().width() + SHAPE_MOVE_DELTA);
-			scenePosition.setY(scenePosition.y() + previousCard->boundingRect().height() + SHAPE_MOVE_DELTA);
+//			scenePosition.setY(scenePosition.y() + previousCard->boundingRect().height() + SHAPE_MOVE_DELTA);
 		}
 
 		//
@@ -159,7 +159,7 @@ void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const 
 		//
 		scenePosition = previousCard->scenePos();
 		scenePosition.setX(scenePosition.x() + previousCard->boundingRect().width() + SHAPE_MOVE_DELTA);
-		scenePosition.setY(scenePosition.y() + previousCard->boundingRect().height() + SHAPE_MOVE_DELTA);
+//		scenePosition.setY(scenePosition.y() + previousCard->boundingRect().height() + SHAPE_MOVE_DELTA);
 	}
 	//
 	// В противном случае добавляем карточку в самое начало

@@ -11,7 +11,7 @@ namespace {
 	/**
 	 * @brief Ширина линии
 	 */
-	const int LINE_WIDTH = 2;
+	const int LINE_WIDTH = 3;
 
 	/**
 	 * @brief Минимальная высота линии

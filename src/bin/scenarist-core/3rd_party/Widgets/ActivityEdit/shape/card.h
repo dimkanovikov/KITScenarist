@@ -23,7 +23,7 @@ public:
 		TypeScenario
 	};
 
-	static const int DEFAULT_WIDTH = 100;
+	static const int DEFAULT_WIDTH = 210;
 	static const int DEFAULT_HEIGHT = 100;
 
 public:

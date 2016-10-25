@@ -116,7 +116,7 @@ void ArrowFlow::paintCap (QPainter *painter, const QStyleOptionGraphicsItem *opt
 			cos(angle + M_PI - M_PI / coefficient) * arrowSize);
 	painter->setBrush(painter->pen().color());
 	painter->drawPolygon(QPolygonF() << arrowP1 << flowStart << arrowP2);
-	painter->drawEllipse(line.p2(), 4, 4);
+	painter->drawEllipse(_start_pt, 4, 4);
 }
 
 void ArrowFlow::paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
