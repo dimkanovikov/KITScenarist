@@ -417,24 +417,75 @@ void ApplicationManager::aboutSave()
 		DatabaseLayer::Database::commit();
 
 		//
-		// Для проекта из облака отправляем данные на сервер
+		// Если всё успешно сохранилось
 		//
-		if (m_projectsManager->currentProject().isRemote()) {
-			m_synchronizationManager->aboutWorkSyncScenario();
-			m_synchronizationManager->aboutWorkSyncData();
+		if (!DatabaseLayer::Database::hasError()) {
+			//
+			// Для проекта из облака отправляем данные на сервер
+			//
+			if (m_projectsManager->currentProject().isRemote()) {
+				m_synchronizationManager->aboutWorkSyncScenario();
+				m_synchronizationManager->aboutWorkSyncData();
+			}
+
+			//
+			// Изменим статус окна на сохранение изменений
+			//
+			::updateWindowModified(m_view, false);
+
+			//
+			// Если необходимо создадим резервную копию закрываемого файла
+			//
+			Task::run([=] {
+				m_backupHelper.saveBackup(ProjectsManager::currentProject().path());
+			}).then([=] {});
 		}
-
 		//
-		// Изменим статус окна на сохранение изменений
+		// А если ошибка сохранения, то делаем дополнительные проверки и работаем с пользователем
 		//
-		::updateWindowModified(m_view, false);
-
-		//
-		// Если необходимо создадим резервную копию закрываемого файла
-		//
-		Task::run([=] {
-			m_backupHelper.saveBackup(ProjectsManager::currentProject().path());
-		}).then([=] {});
+		else {
+			//
+			// Если файл, в который мы пробуем сохранять изменения существует
+			//
+			if (QFile::exists(DatabaseLayer::Database::currentFile())) {
+				//
+				// ... то у нас случилась какая-то внутренняя ошибка базы данных
+				//
+				const QDialogButtonBox::StandardButton messageResult =
+						QLightBoxMessage::critical(m_view, tr("Saving error"),
+												   tr("Can't write you changes to project. There is some internal database error. "
+													  "Please check that file is exists and you have permissions to write in it. Retry to save?")
+												   .arg(DatabaseLayer::Database::currentFile()),
+												   QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes);
+				//
+				// ... пробуем повторно открыть базу данных и записать в неё изменения
+				//
+				if (messageResult == QDialogButtonBox::Yes) {
+					DatabaseLayer::Database::setCurrentFile(DatabaseLayer::Database::currentFile());
+					aboutSave();
+				}
+			}
+			//
+			// Файла с базой данных не найдено
+			//
+			else {
+				//
+				// ... возможно файл был на флешке, а она отошла, или файл был переименован во время работы программы
+				//
+				const QDialogButtonBox::StandardButton messageResult =
+						QLightBoxMessage::critical(m_view, tr("Saving error"),
+							tr("Can't write you changes to project located at <b>%1</b> becourse file isn't exist. "
+							   "Please move file back and retry to save. Retry to save?")
+								.arg(DatabaseLayer::Database::currentFile()),
+							QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes);
+				//
+				// ... пробуем повторно сохранить изменения в базу данных
+				//
+				if (messageResult == QDialogButtonBox::Yes) {
+					aboutSave();
+				}
+			}
+		}
 	}
 }
 
@@ -1149,7 +1200,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
-	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
+	updateWindowTitle();
 
 	//
 	// Закроем уведомление
@@ -1373,6 +1424,8 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_synchronizationManager, SLOT(aboutLoadProjects()));
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRecent(QModelIndex)));
 	connect(m_startUpManager, SIGNAL(openRemoteProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRemote(QModelIndex)));
+
+	connect(m_researchManager, &ResearchManager::scenarioNameChanged, this, &ApplicationManager::updateWindowTitle);
 
 	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
 	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), this, SLOT(aboutUpdateLastChangeInfo()));
@@ -1637,6 +1690,10 @@ void ApplicationManager::reloadApplicationSettings()
 
 void ApplicationManager::updateWindowTitle()
 {
+	//
+	// Обновим название текущего проекта
+	//
+	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
 	const QString projectFileName = ProjectsManager::currentProject().name();
 #ifdef Q_OS_MAC
 	m_view->setWindowTitle(projectFileName);

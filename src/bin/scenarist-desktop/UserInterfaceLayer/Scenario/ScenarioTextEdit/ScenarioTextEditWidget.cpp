@@ -651,7 +651,18 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
 	connect(m_undo, SIGNAL(clicked()), this, SLOT(aboutUndo()));
 	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()));
-	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
+    connect(m_search, &FlatButton::toggled, [=] (bool _toggle) {
+        //
+        // Если поиск виден, но в нём нет фокуса - установим фокус в него
+        // В остальных случаях просто покажем, или скроем поиск
+        //
+        if (!_toggle
+            && m_searchLine->isVisible()
+            && !m_searchLine->hasFocus()) {
+            m_search->setChecked(true);
+        }
+        aboutShowSearch();
+    });
 	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
 	connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
 			[=] { m_editorWrapper->setFocus(); });

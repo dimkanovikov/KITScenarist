@@ -428,9 +428,17 @@ void ResearchView::initConnections()
 	QShortcut* removeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->researchNavigator);
 	removeShortcut2->setContext(Qt::WidgetShortcut);
 	connect(removeShortcut2, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
-	connect(m_ui->search, &FlatButton::toggled, [=] (bool _visible) {
-		m_ui->searchWidget->setVisible(_visible);
-		if (_visible) {
+    connect(m_ui->search, &FlatButton::toggled, [=] (bool _toggle) {
+        if (!_toggle
+            && m_ui->searchWidget->isVisible()
+            && !m_ui->searchWidget->hasFocus()) {
+            m_ui->search->setChecked(true);
+        }
+
+        const bool visible = m_ui->search->isChecked();
+        m_ui->searchWidget->setVisible(visible);
+        if (visible) {
+            m_ui->searchWidget->selectText();
 			m_ui->searchWidget->setFocus();
 		}
 	});

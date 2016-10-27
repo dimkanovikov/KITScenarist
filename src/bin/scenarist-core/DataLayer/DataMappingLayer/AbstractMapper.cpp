@@ -172,12 +172,12 @@ void AbstractMapper::abstractUpdate(DomainObject* _subject)
 		//
 		// Обновим данные в базе
 		//
-		executeSql(q_update);
-
-		//
-		// Изменения сохранены
-		//
-		_subject->changesStored();
+		if (executeSql(q_update)) {
+			//
+			// Изменения сохранены
+			//
+			_subject->changesStored();
+		}
 	}
 }
 
@@ -201,14 +201,14 @@ void AbstractMapper::abstractDelete(DomainObject* _subject)
 	//
 	// Удалим данные из базы
 	//
-	executeSql(q_delete);
-
-	//
-	// Удалим объекст из списка загруженных
-	//
-	m_loadedObjectsMap.remove(_subject->id());
-	delete _subject;
-	_subject = 0;
+	if (executeSql(q_delete)) {
+		//
+		// Удалим объекст из списка загруженных
+		//
+		m_loadedObjectsMap.remove(_subject->id());
+		delete _subject;
+		_subject = 0;
+	}
 }
 
 DomainObject* AbstractMapper::loadObjectFromDatabase(const Identifier& _id)
@@ -259,20 +259,26 @@ DomainObject* AbstractMapper::load(const QSqlRecord& _record )
 	return result;
 }
 
-void AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
+bool AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
 {
 	//
 	// Если запрос завершился с ошибкой, выводим отладочную информацию
 	//
 	if (!_sqlQuery.exec()) {
+		Database::setLastError(_sqlQuery.lastError().text());
+
 		qDebug() << _sqlQuery.lastError();
 		qDebug() << _sqlQuery.lastQuery();
 		qDebug() << _sqlQuery.boundValues();
+
+		return false;
 	}
 	//
 	// Если всё завершилось успешно сохраняем запрос и данные в таблицу истории запросов
 	//
 	else {
+		Database::setLastError(QString::null);
+
 		//
 		// NOTE: Оптимизация размера файла проекта
 		// Сохраняем всё, кроме изменений сценария и текста самого сценария
@@ -307,4 +313,6 @@ void AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
 			q_history.exec();
 		}
 	}
+
+	return true;
 }

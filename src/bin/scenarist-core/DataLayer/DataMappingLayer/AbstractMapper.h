@@ -79,7 +79,7 @@ namespace DataMappingLayer
 		/**
 		 * @brief Выполнить запрос
 		 */
-		void executeSql(QSqlQuery& _sqlQuery);
+		bool executeSql(QSqlQuery& _sqlQuery);
 
 	private:
 		/**
