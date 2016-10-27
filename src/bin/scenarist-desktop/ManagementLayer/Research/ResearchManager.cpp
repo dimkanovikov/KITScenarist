@@ -76,7 +76,7 @@ void ResearchManager::loadCurrentProject()
 	//
 	// Загрузим модель разработки
 	//
-    m_model->load(StorageFacade::researchStorage()->all());
+	m_model->load(StorageFacade::researchStorage()->all());
 	editResearch(m_model->index(0, 0));
 
 	g_isProjectLoading = false;
@@ -84,8 +84,8 @@ void ResearchManager::loadCurrentProject()
 
 void ResearchManager::closeCurrentProject()
 {
-    m_scenarioData.clear();
-    m_model->clear();
+	m_scenarioData.clear();
+	m_model->clear();
 }
 
 void ResearchManager::updateSettings()
@@ -263,7 +263,7 @@ void ResearchManager::editResearch(const QModelIndex& _index)
 				}
 
 				case Research::MindMap: {
-                    m_view->editMindMap(research->name(), research->description());
+					m_view->editMindMap(research->name(), research->description());
 					break;
 				}
 			}
@@ -280,7 +280,7 @@ void ResearchManager::removeResearch(const QModelIndex& _index)
 	Research* research = researchItem->research();
 	if (QLightBoxMessage::question(m_view, QString::null,
 			tr("Are you shure to remove research: <b>%1</b>?").arg(research->name()),
-            QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes)
+			QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes)
 		== QDialogButtonBox::Yes) {
 		//
 		// ... удалим
@@ -357,7 +357,7 @@ void ResearchManager::updateScenarioData(const QString& _key, const QString& _va
 
 void ResearchManager::initView()
 {
-    m_view->setResearchModel(m_model);
+	m_view->setResearchModel(m_model);
 }
 
 void ResearchManager::initConnections()
@@ -369,6 +369,7 @@ void ResearchManager::initConnections()
 	connect(m_view, &ResearchView::researchItemAdded, this, &ResearchManager::researchChanged);
 
 	connect(m_view, &ResearchView::scenarioNameChanged, [=](const QString& _name){
+		emit scenarioNameChanged(_name);
 		updateScenarioData(ScenarioData::NAME_KEY, _name);
 	});
 	connect(m_view, &ResearchView::scenarioLoglineChanged, [=](const QString& _logline){

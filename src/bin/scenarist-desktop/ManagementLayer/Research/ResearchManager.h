@@ -70,6 +70,11 @@ namespace ManagementLayer
 
 	signals:
 		/**
+		 * @brief Было изменено название проекта
+		 */
+		void scenarioNameChanged(const QString& _name);
+
+		/**
 		 * @brief Была изменена разарботка
 		 */
 		void researchChanged();

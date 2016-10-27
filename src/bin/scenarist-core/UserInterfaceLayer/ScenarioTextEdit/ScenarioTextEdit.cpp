@@ -1333,7 +1333,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 	}
 
 	//
-	// Для заголовка группы нужно создать завершение
+	// Для заголовка группы нужно создать завершение, захватив всё содержимое сцены
 	//
 	if (newBlockStyle.isEmbeddableHeader()) {
 		ScenarioBlockStyle footerStyle = ScenarioTemplateFacade::getTemplate().blockStyle(newBlockStyle.embeddableFooter());
@@ -1343,9 +1343,28 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 		//
 		int lastCursorPosition = textCursor().position();
 
-		cursor.movePosition(QTextCursor::EndOfBlock);
-		cursor.insertBlock();
+		//
+		// Ищем конец сцены
+		//
+		do {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			cursor.movePosition(QTextCursor::NextBlock);
+		} while (!cursor.atEnd()
+				 && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneHeading
+				 && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneGroupHeader
+				 && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::FolderHeader);
 
+		//
+		// Если забежали на блок следующей сцены, вернёмся на один символ назад
+		//
+		if (!cursor.atEnd() && cursor.atBlockStart()) {
+			cursor.movePosition(QTextCursor::PreviousCharacter);
+		}
+
+		//
+		// Когда дошли до конца сцены, вставляем закрывающий блок
+		//
+		cursor.insertBlock();
 		cursor.setBlockCharFormat(footerStyle.charFormat());
 		cursor.setBlockFormat(footerStyle.blockFormat());
 

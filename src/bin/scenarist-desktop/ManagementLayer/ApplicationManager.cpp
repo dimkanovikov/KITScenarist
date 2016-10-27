@@ -1195,7 +1195,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
-	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
+	updateWindowTitle();
 
 	//
 	// Закроем уведомление
@@ -1416,6 +1416,8 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_synchronizationManager, SLOT(aboutLoadProjects()));
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRecent(QModelIndex)));
 	connect(m_startUpManager, SIGNAL(openRemoteProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRemote(QModelIndex)));
+
+	connect(m_researchManager, &ResearchManager::scenarioNameChanged, this, &ApplicationManager::updateWindowTitle);
 
 	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
 	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), this, SLOT(aboutUpdateLastChangeInfo()));
@@ -1683,6 +1685,10 @@ void ApplicationManager::reloadApplicationSettings()
 
 void ApplicationManager::updateWindowTitle()
 {
+	//
+	// Обновим название текущего проекта
+	//
+	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
 	const QString projectFileName = ProjectsManager::currentProject().name();
 #ifdef Q_OS_MAC
 	m_view->setWindowTitle(projectFileName);
