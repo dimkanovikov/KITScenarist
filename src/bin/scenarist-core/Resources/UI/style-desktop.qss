@@ -127,10 +127,11 @@ QToolButton::menu-button[inTopPanel="true"] {
 	border-right-color: palette(dark);
 	width: 10px;
 	padding-top: 6px;
-	padding-right: 7px;
+	padding-right: 3px;
 }
 
-QToolButton::menu-button:hover[inTopPanel="true"] {
+QToolButton::menu-button:hover[inTopPanel="true"],
+QToolButton::menu-button:pressed[inTopPanel="true"] {
     background: palette(dark);
 }
 
@@ -138,13 +139,20 @@ QToolButton::menu-arrow[inTopPanel="true"] {
 	image: url(:Interface/UI/menuarrow.png);
 }
 
+FlatButton[hasMenu="true"],
+FlatButton:pressed[hasMenu="true"] {
+	padding-top: 0px;
+	padding-left: 4px;
+	padding-right: 14px;
+}
+
+FlatButton::menu-button[inTopPanel="true"] {
+	border-right: none;
+}
+
 ColoredToolButton[inTopPanel="true"] {
 	padding-right: 14px;
 	min-width: 20px;
-}
-
-ColoredToolButton:hover[inTopPanel="true"] {
-    background: palette(dark);
 }
 
 ColoredToolButton:hover[inTopPanel="true"] {

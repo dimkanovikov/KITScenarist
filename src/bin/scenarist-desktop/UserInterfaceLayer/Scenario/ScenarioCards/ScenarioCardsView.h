@@ -7,8 +7,10 @@ class ActivityEdit;
 class FlatButton;
 class QLabel;
 
-
 namespace UserInterface {
+	class CardsResizer;
+
+
 	/**
 	 * @brief Представление редактора карт
 	 */
@@ -128,6 +130,12 @@ namespace UserInterface {
 
 	private:
 		/**
+		 * @brief Упорядочить карточки по сетке
+		 */
+		void resortCards();
+
+	private:
+		/**
 		 * @brief Настроить представление
 		 */
 		void initView();
@@ -172,6 +180,11 @@ namespace UserInterface {
 		 * @brief Кнопка упорядочивания по таблице
 		 */
 		FlatButton* m_sort;
+
+		/**
+		 * @brief Виджет настройки размера и упорядочивания карточек
+		 */
+		CardsResizer* m_resizer;
 
 		/**
 		 * @brief Кнопка отправки элемента в черновик

@@ -322,7 +322,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.cpp \
     scenarist-core/BusinessLayer/Export/FdxExporter.cpp \
-    scenarist-core/BusinessLayer/Import/FdxImporter.cpp
+    scenarist-core/BusinessLayer/Import/FdxImporter.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -585,7 +586,8 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h \
     scenarist-core/BusinessLayer/Export/FdxExporter.h \
-    scenarist-core/BusinessLayer/Import/FdxImporter.h
+    scenarist-core/BusinessLayer/Import/FdxImporter.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -604,7 +606,8 @@ FORMS += \
     scenarist-core/3rd_party/Widgets/ActivityEdit/gui/mainwindow.ui \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_action.ui \
     scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_note.ui \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.ui
 
 
 RESOURCES += \

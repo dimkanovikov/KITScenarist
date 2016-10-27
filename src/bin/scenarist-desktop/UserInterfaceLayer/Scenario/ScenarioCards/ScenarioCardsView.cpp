@@ -1,4 +1,5 @@
 #include "ScenarioCardsView.h"
+#include "CardsResizer.h"
 
 #include <3rd_party/Helpers/ShortcutHelper.h>
 
@@ -7,9 +8,12 @@
 
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QMenu>
 #include <QVariant>
+#include <QWidgetAction>
 
 using UserInterface::ScenarioCardsView;
+using UserInterface::CardsResizer;
 
 
 ScenarioCardsView::ScenarioCardsView(QWidget* _parent) :
@@ -20,6 +24,7 @@ ScenarioCardsView::ScenarioCardsView(QWidget* _parent) :
 	m_addHLine(new FlatButton(_parent)),
 	m_addVLine(new FlatButton(_parent)),
 	m_sort(new FlatButton(_parent)),
+	m_resizer(new CardsResizer(m_sort)),
 	m_moveToDraft(new FlatButton(_parent)),
 	m_moveToScript(new FlatButton(_parent)),
 	m_toolbarSpacer(new QLabel(_parent))
@@ -101,6 +106,12 @@ void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 	m_sort->setEnabled(!_isCommentOnly);
 }
 
+void ScenarioCardsView::resortCards()
+{
+	m_cardsEdit->arrangeCards(m_resizer->cardSize(), m_resizer->cardRatio(), m_resizer->distance(),
+		m_resizer->cardsInLine(), m_resizer->cardsInRow());
+}
+
 void ScenarioCardsView::initView()
 {
 	m_addCard->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
@@ -117,6 +128,17 @@ void ScenarioCardsView::initView()
 
 	m_sort->setIcons(QIcon(":/Graphics/Icons/Cards/table.png"));
 	m_sort->setToolTip(tr("Sort cards"));
+	//
+	// Настроим меню кнопки упорядочивания карточек по сетке
+	//
+	m_sort->setPopupMode(QToolButton::MenuButtonPopup);
+	{
+		QMenu* menu = new QMenu(m_sort);
+		QWidgetAction* wa = new QWidgetAction(menu);
+		wa->setDefaultWidget(m_resizer);
+		menu->addAction(wa);
+		m_sort->setMenu(menu);
+	}
 
 	m_moveToDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"));
 	m_moveToDraft->setToolTip(tr("Draft"));
@@ -167,6 +189,9 @@ void ScenarioCardsView::initConnections()
 
 	connect(m_addHLine, &FlatButton::clicked, m_cardsEdit, &ActivityEdit::addHorizontalLine);
 	connect(m_addVLine, &FlatButton::clicked, m_cardsEdit, &ActivityEdit::addVerticalLine);
+
+	connect(m_sort, &FlatButton::clicked, this, &ScenarioCardsView::resortCards);
+	connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);
 }
 
 void ScenarioCardsView::initStyleSheet()
@@ -176,6 +201,7 @@ void ScenarioCardsView::initStyleSheet()
 	m_addHLine->setProperty("inTopPanel", true);
 	m_addVLine->setProperty("inTopPanel", true);
 	m_sort->setProperty("inTopPanel", true);
+	m_sort->setProperty("hasMenu", true);
 	m_moveToDraft->setProperty("inTopPanel", true);
 	m_moveToScript->setProperty("inTopPanel", true);
 

@@ -97,12 +97,12 @@ ArrowFlow::~ArrowFlow()
 void ArrowFlow::paintCap (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	QPolygonF poly;
-	poly << _start_pt;
-	for(int i=0; i<knots.count(); ++i)
-		poly << knots[i];
-	poly << _end_pt;
+	poly << m_startPoint;
+	for(int i=0; i<m_knots.count(); ++i)
+		poly << m_knots[i];
+	poly << m_endPoint;
 
-	QLineF line(_end_pt, poly[poly.count()-2]);
+	QLineF line(m_endPoint, poly[poly.count()-2]);
 	const double arrowSize = 8;
 	const qreal coefficient = 2.95;
 	double angle = ::acos(line.dx()/line.length());
@@ -116,7 +116,7 @@ void ArrowFlow::paintCap (QPainter *painter, const QStyleOptionGraphicsItem *opt
 			cos(angle + M_PI - M_PI / coefficient) * arrowSize);
 	painter->setBrush(painter->pen().color());
 	painter->drawPolygon(QPolygonF() << arrowP1 << flowStart << arrowP2);
-	painter->drawEllipse(_start_pt, 4, 4);
+	painter->drawEllipse(m_startPoint, 4, 4);
 }
 
 void ArrowFlow::paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

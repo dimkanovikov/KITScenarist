@@ -9,6 +9,8 @@
 #include "../xml/load_xml.h"
 #include "../xml/save_xml.h"
 
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+
 #include <QVBoxLayout>
 
 
@@ -248,5 +250,131 @@ void ActivityEdit::deleteSelectedItems()
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
 		scene->removeSelectedShapes();
 		scene->notifyStateChangeByUser();
+	}
+}
+
+void ActivityEdit::arrangeCards(int _cardSize, int _cardRatio, int _distance, int _cardsInLine, bool _cardsInRow)
+{
+	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+		//
+		// Если в схеме есть папки, то сообщаем о том, что такую схему не получится упорядочить
+		//
+		auto shapes = scene->shapes();
+		for (auto shape : shapes) {
+			if (!shape->childItems().isEmpty()) {
+				QLightBoxMessage::information(this, tr("Can't arrange cards"),
+					tr("Schemes with scene groups or with folders cannot be arranged."));
+				return;
+			}
+		}
+
+		//
+		// Сперва убираем все существующие узлы у связей
+		//
+		for (auto shape : shapes) {
+			if (Flow* flow = dynamic_cast<Flow*>(shape)) {
+				flow->removeAllFlowKnots();
+			}
+		}
+
+		//
+		// Вычисляем размер карточки
+		//
+		qreal widthDivider = 1;
+		qreal heightDivider = 1;
+		switch (_cardRatio) {
+			case 0: heightDivider = 0.2; break; // 5x1
+			case 1: heightDivider = 0.4; break; // 5x2
+			case 2: heightDivider = 0.6; break; // 5x3
+			case 3: heightDivider = 0.8; break; // 5x4
+			case 4: break; // 5x5
+			case 5: widthDivider = 0.8; break; // 4x5
+			case 6: widthDivider = 0.6; break; // 3x5
+			case 7: widthDivider = 0.4; break; // 2x5
+			case 8: widthDivider = 0.2; break; // 1x5
+		}
+		const qreal CARD_WIDTH = (qreal)_cardSize * widthDivider;
+		const qreal CARD_HEIGHT = (qreal)_cardSize * heightDivider;
+		const QSizeF CARD_SIZE(CARD_WIDTH, CARD_HEIGHT);
+
+		//
+		// Располагаем карточки в нужном направлении
+		//
+		const qreal START_POS = 100.0;
+		qreal x = START_POS;
+		qreal y = START_POS;
+		const int FIRST_CARD_INDEX = 1; // начинаем с одного, чтобы исключить -1 в условии ниже
+		int currentCardInLine = FIRST_CARD_INDEX;
+		for (auto shape : shapes) {
+			if (CardShape* card = dynamic_cast<CardShape*>(shape)) {
+				card->setSize(CARD_SIZE);
+				card->setPos(x, y);
+
+				//
+				// Если это первая карточка ряда, то настроим узлы линии соединяющей текущую карточку с предыдущей
+				//
+				if (currentCardInLine == FIRST_CARD_INDEX
+					&& (x != START_POS || y != START_POS)) {
+					//
+					// ... рассчитаем узловые точки
+					//
+					QPointF firstPoint, secondPoint;
+					if (_cardsInRow) {
+						firstPoint.setX(START_POS + (_cardsInLine - 1) * (_distance + CARD_WIDTH) + CARD_WIDTH / 2.0);
+						firstPoint.setY(y - _distance / 2.0);
+						secondPoint.setX(START_POS + CARD_WIDTH / 2.0);
+						secondPoint.setY(firstPoint.y());
+					} else {
+						firstPoint.setX(x - _distance / 2.0);
+						firstPoint.setY(START_POS + (_cardsInLine - 1) * (_distance + CARD_HEIGHT) + CARD_HEIGHT / 2.0);
+						secondPoint.setX(firstPoint.x());
+						secondPoint.setY(START_POS + CARD_HEIGHT / 2.0);
+					}
+					//
+					// ... настроим узлы
+					//
+					for (auto shape : shapes) {
+						if (Flow* flow = dynamic_cast<Flow*>(shape)) {
+							if (flow->endShape() == card) {
+								flow->setFlowKnots({ firstPoint, secondPoint });
+								break;
+							}
+						}
+					}
+				}
+
+				//
+				// Если следующую карту нужно расположить в этой же линии
+				//
+				if (currentCardInLine < _cardsInLine) {
+					++currentCardInLine;
+					if (_cardsInRow) {
+						x += CARD_WIDTH + _distance;
+					} else {
+						y += CARD_HEIGHT + _distance;
+					}
+				}
+				//
+				// Если переходим к следующей линии
+				//
+				else {
+					currentCardInLine = FIRST_CARD_INDEX;
+					if (_cardsInRow) {
+						x = START_POS;
+						y += CARD_HEIGHT + _distance;
+					} else {
+						x += CARD_WIDTH + _distance;
+						y = START_POS;
+					}
+				}
+			}
+		}
+
+		//
+		// Обновляем экран, чтобы убрать все артефакты
+		//
+		scene->update();
+
+		emit schemeChanged();
 	}
 }

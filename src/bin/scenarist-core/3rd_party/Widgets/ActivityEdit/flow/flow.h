@@ -58,7 +58,10 @@ public:
 	QPolygonF createFlowPolygon() const;
 
 	/// Задать промежуточные узлы связи
-	void setFlowKnots (const QList<QPointF> &knots);
+	void setFlowKnots (const QList<QPointF> &m_knots);
+
+	/// Удалить все промежуточные узлы связи
+	void removeAllFlowKnots();
 
 protected:
 	void selectAnchors (bool select);	///< Выделить маркеры перемещения
@@ -73,18 +76,18 @@ protected:
 	virtual void mouseReleaseEvent (QGraphicsSceneMouseEvent *event);
 	virtual void mouseMoveEvent (QGraphicsSceneMouseEvent *event);
 protected:
-	QList<QPointF> knots;			///< Список узлов
-	QList<SizeAnchor *> anchors;	///< Список маркеров, связанных с соответствующими узлами
-	QPointF _dragstart;				///< Точка, в которой началось вытягивание узла
-	QPointF _start_pt, _end_pt;		///< Начальная и конечная точки присоединения к фигурам
-	int _anchor_to_move;			///< Новый маркер (который приходится перемещать вручную)
+	QList<QPointF> m_knots;			///< Список узлов
+	QList<SizeAnchor *> m_anchors;	///< Список маркеров, связанных с соответствующими узлами
+	QPointF m_dragstart;				///< Точка, в которой началось вытягивание узла
+	QPointF m_startPoint, m_endPoint;		///< Начальная и конечная точки присоединения к фигурам
+	int m_anchorToMove;			///< Новый маркер (который приходится перемещать вручную)
 public slots:
 	void anchorMoved();				///< Срабатывает при перемещении маркера
 	void shapesChanged();			///< Срабатывает при изменении (перемещении, ресайзе) фигур
 protected slots:
 	void removeNeighborKnots();		///< Удаляет слишком близко расположенные соседние узлы
 private:
-	Shape *_start, *_end;			///< Указатели на фигуры
+	Shape *m_startShape, *m_endShape;			///< Указатели на фигуры
 };
 
 #endif // FLOW_H

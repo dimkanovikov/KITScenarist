@@ -17,20 +17,20 @@
 Flow::Flow(Shape *start, Shape *end, QGraphicsItem *parent)
 	: Shape(parent)
 {
-	_anchor_to_move = -1;
+	m_anchorToMove = -1;
 	setGraphicsEffect(NULL);
 	setFlag(ItemSendsGeometryChanges);
 	setFlag(ItemIsMovable, false);
-	_start = start;
-	_end = end;
-	if (_start==_end)
+	m_startShape = start;
+	m_endShape = end;
+	if (m_startShape==m_endShape)
 	{
-		QRectF rect = _start->boundingRect();
+		QRectF rect = m_startShape->boundingRect();
 		int dx = rect.left()-30;
 		int dy = rect.top()-30;
-		knots << (_start->scenePos() + QPointF(dx, start->center().y()));
-		knots << (_start->scenePos() + QPointF(dx, dy));
-		knots << (_start->scenePos() + QPointF(start->center().x(), dy));
+		m_knots << (m_startShape->scenePos() + QPointF(dx, start->center().y()));
+		m_knots << (m_startShape->scenePos() + QPointF(dx, dy));
+		m_knots << (m_startShape->scenePos() + QPointF(start->center().x(), dy));
 		updateAnchors();
 	}
 
@@ -41,7 +41,7 @@ Flow::Flow(Shape *start, Shape *end, QGraphicsItem *parent)
 
 Flow::~Flow()
 {
-	knots.clear();
+	m_knots.clear();
 	updateAnchors();
 }
 
@@ -64,14 +64,22 @@ QPointF Flow::center() const
 
 void Flow::setFlowKnots (const QList<QPointF> &knots)
 {
-	this->knots = knots;
+	m_knots = knots;
+	updateFlow();
+}
+
+void Flow::removeAllFlowKnots()
+{
+	m_knots.clear();
+
+	updateAnchors();
 	updateFlow();
 }
 
 void Flow::setStartShape (Shape *s)
 {
 	disconnectSignals();
-	_start = s;
+	m_startShape = s;
 	updateFlow();
 	connectSignals();
 }
@@ -79,21 +87,21 @@ void Flow::setStartShape (Shape *s)
 void Flow::setEndShape (Shape *s)
 {
 	disconnectSignals();
-	_end = s;
+	m_endShape = s;
 	updateFlow();
 	connectSignals();
 }
 
 void Flow::connectSignals()
 {
-	connect(_start, SIGNAL(placementChanged()), this, SLOT(shapesChanged()));
-	connect(_end, SIGNAL(placementChanged()), this, SLOT(shapesChanged()));
+	connect(m_startShape, SIGNAL(placementChanged()), this, SLOT(shapesChanged()));
+	connect(m_endShape, SIGNAL(placementChanged()), this, SLOT(shapesChanged()));
 }
 
 void Flow::disconnectSignals()
 {
-	disconnect(_start, SIGNAL(placementChanged()), this, SLOT(shapesChanged()));
-	disconnect(_end, SIGNAL(placementChanged()), this, SLOT(shapesChanged()));
+	disconnect(m_startShape, SIGNAL(placementChanged()), this, SLOT(shapesChanged()));
+	disconnect(m_endShape, SIGNAL(placementChanged()), this, SLOT(shapesChanged()));
 }
 
 QPointF Flow::flowConnectionPoint (const QPointF &anotherEnd, Flow *flow) const
@@ -103,21 +111,21 @@ QPointF Flow::flowConnectionPoint (const QPointF &anotherEnd, Flow *flow) const
 
 Shape *Flow::startShape() const
 {
-	return _start;
+	return m_startShape;
 }
 
 Shape *Flow::endShape() const
 {
-	return _end;
+	return m_endShape;
 }
 
 QPainterPath Flow::basicShape() const
 {
 	QPainterPath path;
-	path.moveTo(_start_pt);
-	for(int i=0; i<knots.count(); ++i)
-		path.lineTo(knots[i]);
-	path.lineTo(_end_pt);
+	path.moveTo(m_startPoint);
+	for(int i=0; i<m_knots.count(); ++i)
+		path.lineTo(m_knots[i]);
+	path.lineTo(m_endPoint);
 	return path;
 }
 
@@ -151,38 +159,38 @@ void Flow::paintSelection (QPainter *painter, const QStyleOptionGraphicsItem *op
 
 void Flow::updateAnchors()
 {
-	while(anchors.count()>knots.count())
+	while(m_anchors.count()>m_knots.count())
 	{
-		SizeAnchor *last = anchors[anchors.count()-1];
+		SizeAnchor *last = m_anchors[m_anchors.count()-1];
 		disconnect(last, SIGNAL(moving()), this, SLOT(anchorMoved()));
 		disconnect(last, SIGNAL(stopMoving()), this, SLOT(removeNeighborKnots()));
 		disconnect(last, SIGNAL(startMoving()), this, SIGNAL(stateIsAboutToBeChangedByUser()));
 		if (last->scene() && last->scene()->items().contains(last))
 			last->scene()->removeItem(last);
 		delete last;
-		anchors.removeAt(anchors.count()-1);
+		m_anchors.removeAt(m_anchors.count()-1);
 	}
-	while(anchors.count()<knots.count())
+	while(m_anchors.count()<m_knots.count())
 	{
 		SizeAnchor *a;
-		anchors << (a=new SizeAnchor(NULL));
+		m_anchors << (a=new SizeAnchor(NULL));
 		connect(a, SIGNAL(startMoving()), this, SIGNAL(stateIsAboutToBeChangedByUser()));
 		connect(a, SIGNAL(moving()), this, SLOT(anchorMoved()));
 		connect(a, SIGNAL(stopMoving()), this, SLOT(removeNeighborKnots()));
 	}
-	for(int i=0; i<anchors.count(); ++i)
-		if (anchors[i]->scene()!=this->scene() && this->scene())
-			this->scene()->addItem(anchors[i]);
-	for(int i=0; i<anchors.count(); ++i)
-		if (anchors[i]->scene())
+	for(int i=0; i<m_anchors.count(); ++i)
+		if (m_anchors[i]->scene()!=this->scene() && this->scene())
+			this->scene()->addItem(m_anchors[i]);
+	for(int i=0; i<m_anchors.count(); ++i)
+		if (m_anchors[i]->scene())
 		{
-			anchors[i]->setVisible(this->isSelected());
-			SizeAnchor *a = anchors[i];
+			m_anchors[i]->setVisible(this->isSelected());
+			SizeAnchor *a = m_anchors[i];
 			a->blockSignals(true);
-			if (anchors[i]->parentItem() != nullptr) {
-				anchors[i]->setPos(anchors[i]->parentItem()->mapFromScene(knots[i]));
+			if (m_anchors[i]->parentItem() != nullptr) {
+				m_anchors[i]->setPos(m_anchors[i]->parentItem()->mapFromScene(m_knots[i]));
 			} else {
-				anchors[i]->setPos(knots[i]);
+				m_anchors[i]->setPos(m_knots[i]);
 			}
 			a->blockSignals(false);
 		}
@@ -199,7 +207,7 @@ void Flow::removeNeighborKnots()
 		{
 			if ((poly[i-1] - poly[i]).manhattanLength() < 15)
 			{
-				knots.removeAt((i - (i==1? 0 : 1))-1);
+				m_knots.removeAt((i - (i==1? 0 : 1))-1);
 				found = true;
 				break;
 			}
@@ -212,26 +220,26 @@ void Flow::removeNeighborKnots()
 QPolygonF Flow::createFlowPolygon() const
 {
 	QPolygonF poly;
-	poly << _start_pt;
-	for(int i=0; i<knots.count(); ++i)
-		poly << knots[i];
-	poly << _end_pt;
+	poly << m_startPoint;
+	for(int i=0; i<m_knots.count(); ++i)
+		poly << m_knots[i];
+	poly << m_endPoint;
 	return poly;
 }
 
 void Flow::anchorMoved()
 {
-	int index = anchors.indexOf((SizeAnchor *)sender());
+	int index = m_anchors.indexOf((SizeAnchor *)sender());
 
-	if (index>=0 && index<anchors.count())
+	if (index>=0 && index<m_anchors.count())
 	{
 		QPolygonF poly = createFlowPolygon();
-		poly[0] = QPointF(startShape()->scenePos() + QPointF(_start->boundingRect().width()/2, _start->boundingRect().height()/2));
-		poly[poly.count()-1] = QPointF(endShape()->scenePos() + QPointF(_end->boundingRect().width()/2, _end->boundingRect().height()/2));
+		poly[0] = QPointF(startShape()->scenePos() + QPointF(m_startShape->boundingRect().width()/2, m_startShape->boundingRect().height()/2));
+		poly[poly.count()-1] = QPointF(endShape()->scenePos() + QPointF(m_endShape->boundingRect().width()/2, m_endShape->boundingRect().height()/2));
 		int polyindex = index + 1;
 		QList<double> ver = (QList<double>() << poly[polyindex-1].x() << poly[polyindex+1].x());
 		QList<double> hor = (QList<double>() << poly[polyindex-1].y() << poly[polyindex+1].y());
-		QPointF ap = anchors[index]->scenePos();
+		QPointF ap = m_anchors[index]->scenePos();
 
 		double newx, newy;
 
@@ -243,10 +251,10 @@ void Flow::anchorMoved()
 		else if (abs(ap.y()-hor[1])<5) newy = hor[1];
 		else newy = ap.y();
 
-		if (!anchors[index]->isBeingMovedByUser())
-			knots[index] = anchors[index]->scenePos();
+		if (!m_anchors[index]->isBeingMovedByUser())
+			m_knots[index] = m_anchors[index]->scenePos();
 		else
-			knots[index] = QPointF(newx, newy);
+			m_knots[index] = QPointF(newx, newy);
 	}
 	emit placementChanged();
 	updateFlow();
@@ -256,12 +264,12 @@ void Flow::updateFlow()
 {
 	prepareGeometryChange();
 	QPolygonF poly;
-	poly << _start->scenePos() + QPointF(_start->boundingRect().width()/2, _start->boundingRect().height()/2);
-	for(int i=0; i<knots.count(); ++i)
-		poly << knots[i];
-	poly << _end->scenePos() + QPointF(_end->boundingRect().width()/2, _end->boundingRect().height()/2);
-	_start_pt = _start->flowConnectionPoint(poly[1], this) + _start->scenePos();
-	_end_pt = _end->flowConnectionPoint(poly[poly.count()-2], this) + _end->scenePos();
+	poly << m_startShape->scenePos() + QPointF(m_startShape->boundingRect().width()/2, m_startShape->boundingRect().height()/2);
+	for(int i=0; i<m_knots.count(); ++i)
+		poly << m_knots[i];
+	poly << m_endShape->scenePos() + QPointF(m_endShape->boundingRect().width()/2, m_endShape->boundingRect().height()/2);
+	m_startPoint = m_startShape->flowConnectionPoint(poly[1], this) + m_startShape->scenePos();
+	m_endPoint = m_endShape->flowConnectionPoint(poly[poly.count()-2], this) + m_endShape->scenePos();
 }
 
 void Flow::shapesChanged()
@@ -279,28 +287,28 @@ QRectF Flow::boundingRect() const
 
 void Flow::mousePressEvent (QGraphicsSceneMouseEvent *event)
 {
-	_dragstart = event->scenePos();
-	_anchor_to_move = -1;
+	m_dragstart = event->scenePos();
+	m_anchorToMove = -1;
 	Shape::mousePressEvent(event);
 }
 
 void Flow::mouseReleaseEvent (QGraphicsSceneMouseEvent *event)
 {
 	this->setCursor(Qt::ArrowCursor);
-	_anchor_to_move = -1;
+	m_anchorToMove = -1;
 	Shape::mouseReleaseEvent(event);
 	selectAnchors(isSelected());
 }
 
 void Flow::mouseMoveEvent (QGraphicsSceneMouseEvent *event)
 {
-	if ((event->scenePos() - _dragstart).manhattanLength() > 20
-		&& _anchor_to_move == -1) {
+	if ((event->scenePos() - m_dragstart).manhattanLength() > 20
+		&& m_anchorToMove == -1) {
 		QPolygonF poly;
-		poly << _start_pt;
-		for(int i=0; i<knots.count(); ++i)
-			poly << knots[i];
-		poly << _end_pt;
+		poly << m_startPoint;
+		for(int i=0; i<m_knots.count(); ++i)
+			poly << m_knots[i];
+		poly << m_endPoint;
 
 		for(int i=1; i<poly.count(); ++i)
 		{
@@ -312,21 +320,21 @@ void Flow::mouseMoveEvent (QGraphicsSceneMouseEvent *event)
 			stroker.setCapStyle(Qt::RoundCap);
 			stroker.setJoinStyle(Qt::RoundJoin);
 			path = stroker.createStroke(path);
-			if (path.contains(_dragstart))
+			if (path.contains(m_dragstart))
 			{
-				knots.insert(i-1, _dragstart);
+				m_knots.insert(i-1, m_dragstart);
 				updateAnchors();
-				anchors[i-1]->setCursor(Qt::SizeFDiagCursor);
-				anchors[i-1]->setVisible(true);
-				anchors[i-1]->setSelected(false);
-				_anchor_to_move = i-1;
+				m_anchors[i-1]->setCursor(Qt::SizeFDiagCursor);
+				m_anchors[i-1]->setVisible(true);
+				m_anchors[i-1]->setSelected(false);
+				m_anchorToMove = i-1;
 				break;
 			}
 		}
 	}
 
-	else if (_anchor_to_move >= 0) {
-		anchors[_anchor_to_move]->setPos(event->scenePos());
+	else if (m_anchorToMove >= 0) {
+		m_anchors[m_anchorToMove]->setPos(event->scenePos());
 		emit placementChanged();
 	}
 
@@ -335,11 +343,11 @@ void Flow::mouseMoveEvent (QGraphicsSceneMouseEvent *event)
 
 void Flow::selectAnchors (bool select)
 {
-	for(int i=0; i<anchors.count(); ++i)
-		if (anchors[i]->scene())
+	for(int i=0; i<m_anchors.count(); ++i)
+		if (m_anchors[i]->scene())
 		{
-			anchors[i]->setVisible(select);
-			anchors[i]->setSelected(select);
+			m_anchors[i]->setVisible(select);
+			m_anchors[i]->setSelected(select);
 		}
 }
 
@@ -352,14 +360,14 @@ QVariant Flow::itemChange (GraphicsItemChange change, const QVariant &value)
 		QGraphicsScene *scene = qvariant_cast<QGraphicsScene *>(value);
 		if (scene)
 		{
-			for(int i=0; i<anchors.count(); ++i)
-				scene->addItem(anchors[i]);
+			for(int i=0; i<m_anchors.count(); ++i)
+				scene->addItem(m_anchors[i]);
 		}
 		else
 		{
-			for(int i=0; i<anchors.count(); ++i)
-				if (anchors[i]->scene())
-					anchors[i]->scene()->removeItem(anchors[i]);
+			for(int i=0; i<m_anchors.count(); ++i)
+				if (m_anchors[i]->scene())
+					m_anchors[i]->scene()->removeItem(m_anchors[i]);
 		}
 	}
 	return Shape::itemChange(change, value);
