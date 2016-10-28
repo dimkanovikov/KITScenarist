@@ -1,15 +1,18 @@
 #include "customgraphicsview.h"
 
 #include <QApplication>
+#include <QCursor>
 #include <QGestureEvent>
 #include <QGraphicsRectItem>
 #include <QMouseEvent>
+#include <QScrollBar>
 
 
 CustomGraphicsView::CustomGraphicsView (QWidget* _parent) :
 	QGraphicsView(_parent),
 	m_rubberRect(nullptr),
 	m_inRubberBanding(false),
+    m_inScrolling(false),
 	m_gestureZoomInertionBreak(0)
 {
 	//
@@ -157,7 +160,23 @@ void CustomGraphicsView::keyPressEvent(QKeyEvent* _event)
 		return;
 	}
 
-	QGraphicsView::keyPressEvent(_event);
+    if (_event->key() == Qt::Key_Space) {
+        m_scrollingLastPos = QCursor::pos();
+        m_inScrolling = true;
+        return;
+    }
+
+    QGraphicsView::keyPressEvent(_event);
+}
+
+void CustomGraphicsView::keyReleaseEvent(QKeyEvent* _event)
+{
+    if (_event->key() == Qt::Key_Space) {
+        m_scrollingLastPos = QPoint();
+        m_inScrolling = false;
+    }
+
+    QGraphicsView::keyReleaseEvent(_event);
 }
 
 void CustomGraphicsView::mousePressEvent(QMouseEvent* _event)
@@ -200,6 +219,17 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent* _event)
 
 void CustomGraphicsView::mouseMoveEvent(QMouseEvent* _event)
 {
+    //
+    // Если в данный момент происходит прокрутка полотна
+    //
+    if (m_inScrolling) {
+        const QPoint prevPos = m_scrollingLastPos;
+        m_scrollingLastPos = _event->globalPos();
+        horizontalScrollBar()->setValue(horizontalScrollBar()->value() + (prevPos.x() - m_scrollingLastPos.x()));
+        verticalScrollBar()->setValue(verticalScrollBar()->value() + (prevPos.y() - m_scrollingLastPos.y()));
+        return;
+    }
+
 	//
 	// Если в данным момент происходит не выделение области, то убираем элемент области со сцены
 	//

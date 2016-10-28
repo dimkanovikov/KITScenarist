@@ -1,17 +1,20 @@
 #include "../include/graphwidget.h"
 
-#include <QApplication>
-#include <QDebug>
-#include <QPinchGesture>
-
 #include "../include/node.h"
 #include "../include/edge.h"
 
 #include <math.h>
 
+#include <QApplication>
+#include <QDebug>
+#include <QPinchGesture>
+#include <QScrollBar>
+
+
 GraphWidget::GraphWidget(QWidget *parent) :
 	QGraphicsView(parent),
-	m_gestureZoomInertionBreak(0)
+    m_gestureZoomInertionBreak(0),
+    m_inScrolling(false)
 {
 	//
 	// Настраиваем сцену
@@ -176,7 +179,39 @@ void GraphWidget::keyPressEvent(QKeyEvent *_event)
 		return;
 	}
 
-	QGraphicsView::keyPressEvent(_event);
+    if (_event->key() == Qt::Key_Space) {
+        m_scrollingLastPos = QCursor::pos();
+        m_inScrolling = true;
+        return;
+    }
+
+    QGraphicsView::keyPressEvent(_event);
+}
+
+void GraphWidget::keyReleaseEvent(QKeyEvent* _event)
+{
+    if (_event->key() == Qt::Key_Space) {
+        m_scrollingLastPos = QPoint();
+        m_inScrolling = false;
+    }
+
+    QGraphicsView::keyReleaseEvent(_event);
+}
+
+void GraphWidget::mouseMoveEvent(QMouseEvent* _event)
+{
+    //
+    // Если в данный момент происходит прокрутка полотна
+    //
+    if (m_inScrolling) {
+        const QPoint prevPos = m_scrollingLastPos;
+        m_scrollingLastPos = _event->globalPos();
+        horizontalScrollBar()->setValue(horizontalScrollBar()->value() + (prevPos.x() - m_scrollingLastPos.x()));
+        verticalScrollBar()->setValue(verticalScrollBar()->value() + (prevPos.y() - m_scrollingLastPos.y()));
+        return;
+    }
+
+    QGraphicsView::mouseMoveEvent(_event);
 }
 
 void GraphWidget::wheelEvent(QWheelEvent* _event)

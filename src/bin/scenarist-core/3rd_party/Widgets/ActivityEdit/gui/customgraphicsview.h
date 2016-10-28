@@ -49,9 +49,12 @@ protected:
 	void wheelEvent(QWheelEvent* _event);
 
 	/**
-	 * @brief Переопределяем для обработки горячих клавиш изменения масштаба
+     * @brief Переопределяем для обработки горячих клавиш изменения масштаба и скроллинга
 	 */
-	void keyPressEvent (QKeyEvent* _event);
+    /** @{ */
+    void keyPressEvent(QKeyEvent* _event);
+    void keyReleaseEvent(QKeyEvent* _event);
+    /** @} */
 
 	/**
 	 * @brief Реализация области выделения
@@ -87,6 +90,16 @@ private:
 	 * @brief Происходит ли в данный момент выделение области
 	 */
 	bool m_inRubberBanding;
+
+    /**
+     * @brief Последняя позиция мыши в момент скроллинга полотна
+     */
+    QPoint m_scrollingLastPos;
+
+    /**
+     * @brief Происходит ли в данный момент скроллинг с зажатым пробелом
+     */
+    bool m_inScrolling;
 
 	/**
 	 * @brief Список выделенных элементов
