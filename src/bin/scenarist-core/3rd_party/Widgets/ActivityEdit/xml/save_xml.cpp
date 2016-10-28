@@ -9,9 +9,11 @@
 #include "../shape/horizontalline.h"
 #include "../shape/verticalline.h"
 #include <typeinfo>
-#include <QXmlStreamWriter>
-#include <QFile>
+
 #include <QDebug>
+#include <QFile>
+#include <QScrollBar>
+#include <QXmlStreamWriter>
 
 typedef void (*SAVE_SHAPE_FUNC) (QXmlStreamWriter& _writer, Shape* _shape, QHash<Shape*, int>& _ids);
 
@@ -117,11 +119,10 @@ QString createSceneXml(QGraphicsScene* _scene, QGraphicsView* _view)
 	writer.writeStartDocument();
 	writer.writeStartElement("cards_xml");
 
-	if (_view) {
-		QSize sz = _view->viewport()->size();
-		QPointF pt = _view->mapToScene(sz.width()/2, sz.height()/2);
-		writer.writeAttribute("viewx", QString::number(pt.x()));
-		writer.writeAttribute("viewy", QString::number(pt.y()));
+    if (_view) {
+        writer.writeAttribute("scale", QString::number(_view->transform().m11()));
+        writer.writeAttribute("scroll_x", QString::number(_view->horizontalScrollBar()->value()));
+        writer.writeAttribute("scroll_y", QString::number(_view->verticalScrollBar()->value()));
 	}
 
 	//

@@ -7,11 +7,13 @@
 
 #include "load_xml.h"
 #include "save_xml.h" // FileErrorException is here
-#include <QtXml/QDomNode>
-#include <QtXml/QDomDocument>
+
+#include <QDebug>
+#include <QDomDocument>
+#include <QDomNode>
 #include <QFile>
 #include <QHash>
-#include <QDebug>
+#include <QScrollBar>
 
 typedef Shape *(*LOADFUNC) (QDomNode& _node, QHash<int, Shape*>& _ids);
 
@@ -150,13 +152,7 @@ void loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _v
 		loadfuncs["ActionShape"] = loadCardShape;
 		loadfuncs["HorizontalLineShape"] = loadHorizontalLineShape;
 		loadfuncs["VerticalLineShape"] = loadVerticalLineShape;
-		loadfuncs["NoteShape"] = loadNoteShape;
-
-		if (_view) {
-			double x = doc.documentElement().attribute("viewx", "0").toDouble();
-			double y = doc.documentElement().attribute("viewy", "0").toDouble();
-			_view->centerOn(x, y);
-		}
+        loadfuncs["NoteShape"] = loadNoteShape;
 
 		const QDomNodeList& items = doc.documentElement().childNodes();
 		QList<QString> shapes = (QList<QString>()
@@ -187,5 +183,24 @@ void loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _v
 				scene->appendShape(shp);
 			}
 		}
+
+        if (_view
+            && doc.documentElement().hasAttribute("scale")
+            && doc.documentElement().hasAttribute("scroll_x")
+            && doc.documentElement().hasAttribute("scroll_y")) {
+            //
+            // Восстанавливаем масштаб
+            //
+            _view->resetTransform();
+            const qreal scaleFactor = doc.documentElement().attribute("scale").toDouble();
+            _view->scale(scaleFactor, scaleFactor);
+            //
+            // ... и позиционирование
+            //
+            const int scrollX = doc.documentElement().attribute("scroll_x").toInt();
+            _view->horizontalScrollBar()->setValue(scrollX);
+            const int scrollY = doc.documentElement().attribute("scroll_y").toInt();
+            _view->verticalScrollBar()->setValue(scrollY);
+        }
 	}
 }
