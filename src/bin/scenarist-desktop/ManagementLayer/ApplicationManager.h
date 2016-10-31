@@ -21,7 +21,7 @@ namespace ManagementLayer
 {
 	class ProjectsManager;
 	class StartUpManager;
-	class ResearchManager;
+    class ResearchManager;
 	class ScenarioManager;
 	class CharactersManager;
 	class LocationsManager;
@@ -165,10 +165,10 @@ namespace ManagementLayer
 		 */
 		void aboutPrepareScenarioForStatistics();
 
-        /**
-         * @brief Активирована внутренняя ссылка приложения
-         */
-        void aboutInnerLinkActivated(const QUrl& _url);
+		/**
+		 * @brief Активирована внутренняя ссылка приложения
+		 */
+		void aboutInnerLinkActivated(const QUrl& _url);
 
 	protected:
 		/**
@@ -295,7 +295,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Управляющий страницей разработки
 		 */
-		ResearchManager* m_researchManager;
+        ResearchManager* m_researchManager;
 
 		/**
 		 * @brief Управляющий сценарием

@@ -35,12 +35,6 @@ using namespace BusinessLogic;
 
 namespace {
 	/**
-	 * @brief Флаг для перерисовки текста редактора при первом отображении
-	 * @note см. paintEvent для детальной информации
-	 */
-	static bool s_firstRepaintUpdate = true;
-
-	/**
 	 * @brief Флаг положения курсора
 	 * @note Используется для корректировки скрола при совместном редактировании
 	 */
@@ -104,8 +98,6 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 
 		TextEditHelper::beautifyDocument(m_document, m_replaceThreeDots, m_smartQuotes);
 	}
-
-	s_firstRepaintUpdate = true;
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
@@ -752,18 +744,6 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 {
 	//
-	// Если в документе формат первого блока имеет отступ сверху, это приводит
-	// к некорректной прорисовке текста, это баг Qt...
-	// Поэтому приходится отлавливать этот момент и вручную корректировать
-	//
-	if (isVisible() && s_firstRepaintUpdate) {
-		s_firstRepaintUpdate = false;
-
-		QTimer::singleShot(10, this, SLOT(aboutCorrectRepaint()));
-	}
-
-
-	//
 	// Подсветка строки
 	//
 	if (m_highlightCurrentLine) {
@@ -1068,16 +1048,6 @@ bool ScenarioTextEdit::canComplete() const
 	}
 
 	return result;
-}
-
-void ScenarioTextEdit::aboutCorrectRepaint()
-{
-	QTextCursor cursor(document());
-	cursor.beginEditBlock();
-	cursor.setBlockFormat(cursor.blockFormat());
-	cursor.movePosition(QTextCursor::End);
-	cursor.setBlockFormat(cursor.blockFormat());
-	cursor.endEditBlock();
 }
 
 void ScenarioTextEdit::aboutCorrectAdditionalCursors(int _position, int _charsRemoved, int _charsAdded)

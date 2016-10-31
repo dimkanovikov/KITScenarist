@@ -19,9 +19,14 @@ namespace BusinessLogic
 	{
 	public:
 		/**
-		 * @brief Значение xml-документа по умолчанию
+		 * @brief Значение xml-документа схемы карточек по умолчанию
 		 */
-		static QString defaultXml();
+		static QString defaultCardsXml();
+
+		/**
+		 * @brief Значение xml-документа текста сценария по умолчанию
+		 */
+		static QString defaultTextXml();
 
 		/**
 		 * @brief Подготовить майм для вставки из заданного xml

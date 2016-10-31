@@ -236,6 +236,14 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 		}
 
 		//
+		// Название сцены
+		//
+		case TitleIndex: {
+			result = item->title();
+			break;
+		}
+
+		//
 		// Текст сцены
 		//
 		case SceneTextIndex: {
@@ -498,7 +506,7 @@ ScenarioModelItem* ScenarioModel::itemForIndex(const QModelIndex& _index) const
 	ScenarioModelItem* resultItem = m_rootItem;
 	if (_index.isValid()) {
 		ScenarioModelItem* item = static_cast<ScenarioModelItem*>(_index.internalPointer());
-		if (item != 0) {
+		if (item != nullptr) {
 			resultItem = item;
 		}
 	}
@@ -507,7 +515,7 @@ ScenarioModelItem* ScenarioModel::itemForIndex(const QModelIndex& _index) const
 
 QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 {
-	if (_item == 0) {
+	if (_item == nullptr) {
 		return QModelIndex();
 	}
 
@@ -528,6 +536,189 @@ QModelIndex ScenarioModel::indexForItem(ScenarioModelItem* _item) const
 	}
 
 	return index(row, 0, parent);
+}
+
+namespace {
+	static ScenarioModelItem* scenarioModelItemForUuid(ScenarioModelItem* _parent, const QString& _uuid) {
+		ScenarioModelItem* searchedItem = nullptr;
+		for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
+			ScenarioModelItem* child = _parent->childAt(childIndex);
+			if (child->uuid() == _uuid) {
+				searchedItem = child;
+				break;
+			} else {
+				if (child->hasChildren()) {
+					searchedItem = scenarioModelItemForUuid(child, _uuid);
+					if (searchedItem != nullptr) {
+						break;
+					}
+				}
+			}
+		}
+
+		return searchedItem;
+	}
+}
+
+QModelIndex ScenarioModel::indexForUuid(const QString& _uuid) const
+{
+	if (_uuid.isEmpty()) {
+		return QModelIndex();
+	}
+
+	return indexForItem(::scenarioModelItemForUuid(m_rootItem, _uuid));
+}
+
+namespace {
+	const int CARD_WIDTH = 210;
+	const int CARD_HEIGHT = 100;
+	const int CARDS_SPACE = 40;
+
+	/**
+	 * @brief Сколько займут вложенные дети
+	 */
+	static QSize cardChildsSize(const ScenarioModelItem* _parent) {
+		int width = CARD_WIDTH + CARDS_SPACE;
+		int height = CARD_HEIGHT + CARDS_SPACE;
+		for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
+			const ScenarioModelItem* childItem = _parent->childAt(childIndex);
+			if (childItem->hasChildren()) {
+				QSize childSize = cardChildsSize(childItem);
+				width += childSize.width() + CARDS_SPACE;
+				if (height < childSize.height() + CARDS_SPACE) {
+					height = childSize.height() + CARDS_SPACE;
+				}
+			} else {
+				width += CARD_WIDTH + CARDS_SPACE;
+			}
+		}
+
+		return QSize(width, height);
+	}
+
+	/**
+	 * @brief Сформировать строку xml-карточки для элемента
+	 */
+	/** @{ */
+	const bool INVALID_PARENT_ID = -1;
+	static QString cardXmlFor(const ScenarioModelItem* _item, int _id, int _parentId, int _x, int _y, const QSize& _itemSize) {
+		QString cardXml = "<ActionShape ";
+
+		cardXml.append(QString("id=\"%1\" ").arg(_id));
+		if (_parentId != INVALID_PARENT_ID) {
+			cardXml.append(QString("parent_id=\"%1\" ").arg(_parentId));
+		}
+
+		cardXml.append(QString("x=\"%1\" ").arg(_x));
+		cardXml.append(QString("y=\"%1\" ").arg(_y));
+
+		cardXml.append(QString("width=\"%1\" ").arg(_itemSize.width()));
+		cardXml.append(QString("height=\"%1\" ").arg(_itemSize.height()));
+
+		cardXml.append(QString("uuid=\"%1\" ").arg(_item->uuid()));
+		cardXml.append(QString("card_type=\"%1\" ").arg(_item->type()));
+		cardXml.append(QString("title=\"%1\" ").arg(_item->title().isEmpty() ? _item->header() : _item->title()));
+		cardXml.append(QString("description=\"%1\" ").arg(_item->description()));
+		cardXml.append(QString("colors=\"%1\" ").arg(_item->colors()));
+
+		cardXml.append("/>\n");
+
+		return cardXml;
+	}
+	/** @} */
+
+	/**
+	 * @brief Сформировать xml схемы для детей элемента
+	 */
+	static QString cardChildsXml(const ScenarioModelItem* _parent, int& _id) {
+		QString xml;
+		int x = CARDS_SPACE;
+		int y = CARDS_SPACE;
+		const int parentId = _id;
+		++_id;
+		for (int childIndex = 0; childIndex < _parent->childCount(); ++childIndex) {
+			const ScenarioModelItem* child = _parent->childAt(childIndex);
+			if (child->hasChildren()) {
+				const QSize itemSize = cardChildsSize(child);
+				xml.append(cardXmlFor(child, _id, parentId, x, y, itemSize));
+
+				//
+				// Строим схему из детей
+				//
+				xml.append(cardChildsXml(child, _id));
+
+				x += itemSize.width() + CARDS_SPACE;
+			} else {
+				const QSize itemSize = QSize(CARD_WIDTH, CARD_HEIGHT);
+				xml.append(cardXmlFor(child, _id, parentId, x, y, itemSize));
+
+				x += CARD_WIDTH + CARDS_SPACE;
+
+				++_id;
+			}
+		}
+
+		return xml;
+	}
+}
+
+QString ScenarioModel::simpleScheme() const
+{
+	QString xml("<?xml version=\"1.0\"?>\n"
+                "<cards_xml scale=\"1\" scroll_x=\"0\" scroll_y=\"0\" >\n");
+
+	//
+	// Пробегаем по всем элементам
+	// если нет детей, то позиционируем со стандартным размером в заданном смещении
+	// если есть дети, то рассчитываем размер, занимаемый детьми и позиционируем всё поддерево
+	//
+
+	//
+	// Сначала формируем карточки
+	//
+	int id = 0;
+	int x= 60;
+	int y = 60;
+	for (int childIndex = 0; childIndex < m_rootItem->childCount(); ++childIndex) {
+		const ScenarioModelItem* child = m_rootItem->childAt(childIndex);
+		if (child->hasChildren()) {
+			const QSize itemSize = cardChildsSize(child);
+			xml.append(cardXmlFor(child, id, INVALID_PARENT_ID, x, y, itemSize));
+			//
+			// Строим схему из детей
+			//
+			xml.append(::cardChildsXml(child, id));
+
+			x += itemSize.width() + CARDS_SPACE;
+		} else {
+			const QSize itemSize = QSize(CARD_WIDTH, CARD_HEIGHT);
+			xml.append(cardXmlFor(child, id, INVALID_PARENT_ID, x, y, itemSize));
+
+			x += CARD_WIDTH + CARDS_SPACE;
+
+			++id;
+		}
+	}
+
+	//
+	// А потом соединения между всеми карточками
+	//
+	int flowEndShapeId = 1;
+	const int CARDS_COUNT = id;
+	while (flowEndShapeId < CARDS_COUNT) {
+		xml.append(QString("<ArrowFlow "
+						   "id=\"%1\" "
+						   "from_id=\"%2\" "
+						   "to_id=\"%3\" "
+						   "offsetX=\"0\" offsetY=\"0\" text=\"\" KnotsCount=\"0\"/>\n")
+				   .arg(id++)
+				   .arg(flowEndShapeId - 1)
+				   .arg(flowEndShapeId));
+		++flowEndShapeId;
+	}
+	xml.append("</cards_xml>\n\n");
+
+	return xml;
 }
 
 // ********

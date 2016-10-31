@@ -82,9 +82,6 @@ void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocu
 
 	m_editor->setScenarioDocument(_document);
 	m_editor->setWatermark(_isDraft ? tr("DRAFT") : QString::null);
-	if (_document != 0) {
-		m_lastTextMd5Hash = _document->scenarioXmlHash();
-	}
 
 	initEditorConnections();
 }
@@ -215,7 +212,7 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	}
 }
 
-void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _header,
+void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _header, const QString& _title,
 	const QColor& _color, const QString& _description)
 {
 	QTextCursor cursor = m_editor->textCursor();
@@ -240,10 +237,10 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	//
 	// Устанавливаем текст в блок
 	//
-	m_editor->insertPlainText(_header);
+	m_editor->insertPlainText(!_header.isEmpty() ? _header : _title);
 
 	//
-	// Устанавливаем цвет и описание
+	// Устанавливаем цвет и описание в параметры сцены
 	//
 	cursor = m_editor->textCursor();
 	QTextBlockUserData* textBlockData = cursor.block().userData();
@@ -251,11 +248,21 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	if (info == 0) {
 		info = new ScenarioTextBlockInfo;
 	}
+	info->setTitle(!_title.isEmpty() ? _title : _header);
 	if (_color.isValid()) {
 		info->setColors(_color.name());
 	}
 	info->setDescription(_description);
 	cursor.block().setUserData(info);
+	//
+	// ... и в сам текст
+	//
+	if (!_description.isEmpty()) {
+		m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
+		QTextDocument doc;
+		doc.setHtml(_description);
+		m_editor->insertPlainText(doc.toPlainText());
+	}
 
 	//
 	// Если это группирующий блок, то вставим и закрывающий текст
@@ -273,6 +280,73 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	// Фокусируемся на редакторе
 	//
 	m_editorWrapper->setFocus();
+}
+
+void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int _type,
+	const QString& _title, const QString& _description)
+{
+	QTextCursor cursor = m_editor->textCursor();
+	cursor.beginEditBlock();
+
+	//
+	// Идём в начало сцены
+	//
+	cursor.setPosition(_startPosition);
+	m_editor->setTextCursor(cursor);
+
+	//
+	// Проверяем тип блока, если нужно - меняем на новый
+	//
+	ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)_type;
+	if (ScenarioBlockStyle::forBlock(cursor.block()) != type) {
+		m_editor->changeScenarioBlockType(type);
+	}
+
+	//
+	// Устанавливаем название блока и описание
+	//
+	if (ScenarioTextBlockInfo* blockInfo = dynamic_cast<ScenarioTextBlockInfo*>(cursor.block().userData())) {
+		blockInfo->setTitle(_title);
+		blockInfo->setDescription(_description);
+		cursor.block().setUserData(blockInfo);
+	}
+
+	//
+	// Обновляем описание в самом тексте
+	//
+	cursor.setPosition(_startPosition);
+	//
+	// ... сперва выделив старое описание
+	//
+	cursor.movePosition(QTextCursor::NextBlock);
+	while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
+		   && cursor.position() <= _endPosition
+		   && !cursor.atEnd()) {
+		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+	}
+	//
+	// ... шаг назад, если до этого мы перескочили в следующий блок
+	//
+	if (cursor.atBlockStart()
+		&& ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneDescription) {
+		cursor.movePosition(QTextCursor::PreviousCharacter, cursor.hasSelection() ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+	}
+	//
+	// ... а потом вставив новое
+	//
+	if (cursor.hasSelection()) {
+		cursor.removeSelectedText();
+		m_editor->setTextCursor(cursor);
+	} else {
+		m_editor->setTextCursor(cursor);
+		m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
+	}
+	QTextDocument doc;
+	doc.setHtml(_description);
+	m_editor->insertPlainText(doc.toPlainText());
+
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEditWidget::removeText(int _from, int _to)
@@ -433,13 +507,8 @@ void ScenarioTextEditWidget::aboutCursorPositionChanged()
 
 void ScenarioTextEditWidget::aboutTextChanged()
 {
-	if (BusinessLogic::ScenarioTextDocument* scenario =
-		qobject_cast<BusinessLogic::ScenarioTextDocument*>(m_editor->document())) {
-		const QByteArray currentTextMd5Hash = scenario->scenarioXmlHash();
-		if (m_lastTextMd5Hash != currentTextMd5Hash) {
-			emit textChanged();
-			m_lastTextMd5Hash = currentTextMd5Hash;
-		}
+	if (!m_editor->document()->isEmpty()) {
+		emit textChanged();
 	}
 }
 

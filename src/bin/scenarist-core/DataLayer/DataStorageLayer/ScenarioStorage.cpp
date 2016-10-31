@@ -43,7 +43,8 @@ Scenario* ScenarioStorage::current(bool _isDraft)
 		// ... создаём сценарий
 		//
 		currentScenario =
-			new Scenario(Identifier(), BusinessLogic::ScenarioXml::defaultXml(), _isDraft);
+			new Scenario(Identifier(), BusinessLogic::ScenarioXml::defaultCardsXml(),
+						 BusinessLogic::ScenarioXml::defaultTextXml(), _isDraft);
 		//
 		// ... сохраним сценарий в базе данных
 		//

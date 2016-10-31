@@ -18,6 +18,7 @@ namespace BusinessLogic {
 
 namespace ManagementLayer
 {
+	class ScenarioCardsManager;
 	class ScenarioNavigatorManager;
 	class ScenarioSceneDescriptionManager;
 	class ScenarioDataEditManager;
@@ -35,6 +36,7 @@ namespace ManagementLayer
 		explicit ScenarioManager(QObject* _parent, QWidget* _parentWidget);
 
 		QWidget* view() const;
+		QWidget* cardsView() const;
 
 		/**
 		 * @brief Получить документ сценария
@@ -51,10 +53,10 @@ namespace ManagementLayer
 		 */
 		int cursorPosition() const;
 
-        /**
-         * @brief Установть позицию курсора
-         */
-        void setCursorPosition(int _position) const;
+		/**
+		 * @brief Установть позицию курсора
+		 */
+		void setCursorPosition(int _position) const;
 
 		/**
 		 * @brief Загрузить данные текущего проекта
@@ -92,6 +94,11 @@ namespace ManagementLayer
 		void setCommentOnly(bool _isCommentOnly);
 
 	public slots:
+        /**
+         * @brief Обновить параметры редактора карточек
+         */
+        void aboutCardsSettingsUpdated();
+
 		/**
 		 * @brief Обновить параметры текстового редактора
 		 */
@@ -185,14 +192,19 @@ namespace ManagementLayer
 		/** @} */
 
 		/**
-		 * @brief Обновить синопсис, если сменилась сцена
+		 * @brief Обновить название и описание текущей сцены, если она сменилась
 		 */
-		void aboutUpdateCurrentSynopsis(int _cursorPosition);
+		void aboutUpdateCurrentSceneTitleAndDescription(int _cursorPosition);
 
 		/**
-		 * @brief Текст синопсиса текущей сцены был изменён
+		 * @brief Название текущей сцены было изменён
 		 */
-		void aboutUpdateCurrentSceneDescription(const QString& _synopsis);
+		void aboutUpdateCurrentSceneTitle(const QString& _title);
+
+		/**
+		 * @brief Описание текущей сцены было изменён
+		 */
+		void aboutUpdateCurrentSceneDescription(const QString& _description);
 
 		/**
 		 * @brief Выделить текущую сцену в навигаторе
@@ -210,8 +222,17 @@ namespace ManagementLayer
 		/**
 		 * @brief Добавить элемент, после заданного
 		 */
+		/** @{ */
+		void aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _title,
+			const QString& _description);
 		void aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _header,
-						  const QColor& _color, const QString& _description);
+			const QColor& _color, const QString& _description);
+
+		/**
+		 * @brief Изменить заданный элемент
+		 */
+		void aboutEditItem(const QModelIndex& _itemIndex, int _itemType, const QString& _header,
+			const QString& _description);
 
 		/**
 		 * @brief Удалить заданныё элемент
@@ -308,6 +329,11 @@ namespace ManagementLayer
 		 * @brief Документ черновика сценария
 		 */
 		BusinessLogic::ScenarioDocument* m_scenarioDraft;
+
+		/**
+		 * @brief Управляющий карточками
+		 */
+		ScenarioCardsManager* m_cardsManager;
 
 		/**
 		 * @brief Управляющий навигацией по сценарию

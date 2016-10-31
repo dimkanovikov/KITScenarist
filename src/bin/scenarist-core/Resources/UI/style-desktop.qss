@@ -1,25 +1,25 @@
 /*
  * Общие стили для элементов верхней панели
  */
-*[topPanelLeftBordered="true"] {
+*[topPanelLeftBordered=true] {
 	border-left-width: 1px;
 	border-left-style: solid;
 	border-left-color: palette(dark);
 }
 
-*[topPanelTopBordered="true"] {
+*[topPanelTopBordered=true] {
 	border-top-width: 1px;
 	border-top-style: solid;
 	border-top-color: palette(dark);
 }
 
-*[topPanelRightBordered="true"] {
+*[topPanelRightBordered=true] {
 	border-right-width: 1px;
 	border-right-style: solid;
 	border-right-color: palette(dark);
 }
 
-*[topPanelBottomBordered="true"] {
+*[topPanelBottomBordered=true] {
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: palette(dark);
@@ -28,31 +28,31 @@
 /*
  * Основные виджеты формы
  */
-*[mainContainer="true"] {
+*[mainContainer=true] {
 	border: none;
-    border-top-width: 1px;
+	border-top-width: 1px;
 	border-top-style: solid;
-    border-top-color: palette(dark);
+	border-top-color: palette(dark);
 }
 
 /*
  * Виджет без рамок
  */
-*[nobordersContainer="true"] {
+*[nobordersContainer=true] {
     border: none;
 }
 
 /*
  * Сделать фон виджета цветом base из палитры
  */
-*[baseForeground="true"] {
+*[baseForeground=true] {
 	background-color: palette(base);
 }
 
 /*
  * Стиль панели быстрого форматирования
  */
-*[fastFormatWidget="true"] {
+*[fastFormatWidget=true] {
 	border: 0px solid black;
 	border-left-width: 1px;
 	border-left-style: solid;
@@ -62,15 +62,26 @@
 /*
  * Кнопка с выравниваем текста по левой стороне
  */
-QPushButton[leftAlignedText="true"] {
+QPushButton[leftAlignedText=true] {
 	padding: 3px 6px 3px 6px;
 	text-align: left;
 }
 
 /*
+ * Панель
+ */
+QFrame[inTopPanel=true] {
+	background: palette(button);
+	color: palette(button-text);
+	padding-top: 2px;
+	padding-bottom: 2px;
+	min-height: 25px;
+}
+
+/*
  * Текстовые метки
  */
-QLabel[inTopPanel="true"] {
+QLabel[inTopPanel=true] {
 	background: palette(button);
 	color: palette(button-text);
 	padding-top: 2px;
@@ -81,7 +92,7 @@ QLabel[inTopPanel="true"] {
 /*
  * Кнопка меню
  */
-QToolButton[inTopPanel="true"] {
+QToolButton[inTopPanel=true] {
 	background: palette(button);
 	color: palette(button-text);
 	border: none;
@@ -93,18 +104,18 @@ QToolButton[inTopPanel="true"] {
 	height: 26px;
 }
 
-QToolButton:hover[inTopPanel="true"] {
+QToolButton:hover[inTopPanel=true] {
     background: palette(dark);
 }
 
-QToolButton:pressed[inTopPanel="true"] {
+QToolButton:pressed[inTopPanel=true] {
     background: palette(dark);
     padding-top: 1px;
     padding-left: 5px;
     padding-right: 3px;
 }
 
-QToolButton::menu-button[inTopPanel="true"] {
+QToolButton::menu-button[inTopPanel=true] {
 	background: palette(button);
 	color: palette(button-text);
 	border: none;
@@ -116,59 +127,97 @@ QToolButton::menu-button[inTopPanel="true"] {
 	border-right-color: palette(dark);
 	width: 10px;
 	padding-top: 6px;
-	padding-right: 7px;
+	padding-right: 3px;
 }
 
-QToolButton::menu-button:hover[inTopPanel="true"] {
+QToolButton::menu-button:hover[inTopPanel=true],
+QToolButton::menu-button:pressed[inTopPanel=true] {
     background: palette(dark);
 }
 
-QToolButton::menu-arrow[inTopPanel="true"] {
+QToolButton::menu-arrow[inTopPanel=true] {
 	image: url(:Interface/UI/menuarrow.png);
 }
 
-ColoredToolButton[inTopPanel="true"] {
+FlatButton[hasMenu=true],
+FlatButton:pressed[hasMenu=true] {
+	padding-top: 0px;
+	padding-left: 4px;
+	padding-right: 14px;
+}
+
+FlatButton::menu-button[inTopPanel=true] {
+	border-right: none;
+}
+
+ColoredToolButton[inTopPanel=true] {
 	padding-right: 14px;
 	min-width: 20px;
 }
 
-ColoredToolButton:hover[inTopPanel="true"] {
-    background: palette(dark);
-}
-
-ColoredToolButton:hover[inTopPanel="true"] {
+ColoredToolButton:hover[inTopPanel=true] {
     padding-right: 14px;
     background: palette(dark);
 }
 
-ColoredToolButton::menu-button[inTopPanel="true"] {
+ColoredToolButton::menu-button[inTopPanel=true] {
 	padding-right: 3px;
 	border-right: none;
 }
 
-ColoredToolButton::menu-button:hover[inTopPanel="true"] {
+ColoredToolButton::menu-button:hover[inTopPanel=true] {
+    background: palette(dark);
+}
+
+ColoredToolButton[itemDialog=true] {
+    padding: 2px 14px 2px 2px;
+    min-width: 20px;
+    background-color: palette(button);
+    border: 1px solid palette(dark);
+}
+
+ColoredToolButton:disabled[itemDialog=true] {
+    background-color: palette(window);
+}
+
+ColoredToolButton:checked[itemDialog=true] {
+    color: palette(window);
+    background-color: palette(text);
+    border: 1px solid palette(text);
+}
+
+ColoredToolButton:!checked:hover[itemDialog=true], ColoredToolButton:!checked:pressed[itemDialog=true] {
+    background-color: palette(dark);
+}
+
+ColoredToolButton::menu-button[itemDialog=true] {
+    padding-right: 3px;
+    border-right: none;
+}
+
+ColoredToolButton::menu-button:hover[itemDialog=true] {
     background: palette(dark);
 }
 
 /*
  * Выпадающий список
  */
-QComboBox[inTopPanel="true"]  {
+QComboBox[inTopPanel=true]  {
 	padding: 1px 18px 1px 8px;
 	min-width: 6em;
 	background: palette(button);
 	color: palette(button-text);
 }
 
-QComboBox:editable[inTopPanel="true"] {
+QComboBox:editable[inTopPanel=true] {
     background: palette(base);
 }
 
-QComboBox:!editable:hover[inTopPanel="true"] {
+QComboBox:!editable:hover[inTopPanel=true] {
     background: palette(dark);
 }
 
-QComboBox::drop-down[inTopPanel="true"] {
+QComboBox::drop-down[inTopPanel=true] {
     background: transparent;
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
@@ -177,21 +226,21 @@ QComboBox::drop-down[inTopPanel="true"] {
 	padding-right: 4px;
 }
 
-QComboBox::down-arrow[inTopPanel="true"] {
+QComboBox::down-arrow[inTopPanel=true] {
 	image: url(:/Interface/UI/comboboxarrow.png);
 }
 
-QComboBox:on[inTopPanel="true"], QComboBox:off[inTopPanel="true"] {
+QComboBox:on[inTopPanel=true], QComboBox:off[inTopPanel=true] {
 	color: palette(button-text);
 	background: palette(button);
 }
 
-QComboBox:on:editable[inTopPanel="true"], QComboBox:off:editable[inTopPanel="true"] {
+QComboBox:on:editable[inTopPanel=true], QComboBox:off:editable[inTopPanel=true] {
     color: palette(button-text);
     background: palette(base);
 }
 
-QComboBox:on:selected[inTopPanel="true"], QComboBox:off:selected[inTopPanel="true"] {
+QComboBox:on:selected[inTopPanel=true], QComboBox:off:selected[inTopPanel=true] {
 	color: palette(highlighted-text);
 	background: palette(highlight);
 }
@@ -199,23 +248,23 @@ QComboBox:on:selected[inTopPanel="true"], QComboBox:off:selected[inTopPanel="tru
 /*
  * Выбор числа
  */
-QSpinBox::up-button[inTopPanel="true"] {
+QSpinBox::up-button[inTopPanel=true] {
     height: 13px;
     background: palette(button);
     border: 1px solid palette(dark);
 }
 
-QSpinBox::up-arrow[inTopPanel="true"] {
+QSpinBox::up-arrow[inTopPanel=true] {
     image: url(:/Interface/UI/menuarrow.png);
 }
 
-QSpinBox::down-button[inTopPanel="true"] {
+QSpinBox::down-button[inTopPanel=true] {
     height: 13px;
     background: palette(button);
     border: 1px solid palette(dark);
 }
 
-QSpinBox::down-arrow[inTopPanel="true"] {
+QSpinBox::down-arrow[inTopPanel=true] {
     image: url(:/Interface/UI/menuarrow.png);
 }
 
@@ -229,7 +278,7 @@ QSplitter::handle {
 /*
  * Переключатель
  */
-QRadioButton[inTopPanel="true"] {
+QRadioButton[inTopPanel=true] {
 	background: palette(button);
 	color: palette(button-text);
 	padding-top: 2px;
@@ -237,19 +286,19 @@ QRadioButton[inTopPanel="true"] {
 	padding-right: 6px;
 }
 
-QRadioButton::indicator[inTopPanel="true"] {
+QRadioButton::indicator[inTopPanel=true] {
 	height: 0px;
 	width: 0px;
 	image: none;
 }
 
-QRadioButton:unchecked[inTopPanel="true"] {
+QRadioButton:unchecked[inTopPanel=true] {
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
 	border-bottom-color: palette(button);
 }
 
-QRadioButton:checked[inTopPanel="true"] {
+QRadioButton:checked[inTopPanel=true] {
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
 	border-bottom-color: palette(highlight);
@@ -258,11 +307,11 @@ QRadioButton:checked[inTopPanel="true"] {
 /*
  * Табы
  */
-QTabBar[inTopPanel="true"] {
+QTabBar[inTopPanel=true] {
 	background-color: palette(button);
 }
 
-QTabBar::tab[inTopPanel="true"] {
+QTabBar::tab[inTopPanel=true] {
 	border-top-width: 1px;
 	border-top-style: solid;
 	border-top-color: palette(dark);
@@ -274,25 +323,25 @@ QTabBar::tab[inTopPanel="true"] {
 	padding-right: 7px;
 }
 
-QTabBar::tab:last[topPanelRightBordered="true"] {
+QTabBar::tab:last[topPanelRightBordered=true] {
 	border-right-width: 1px;
 	border-right-style: solid;
 	border-right-color: palette(dark);
 }
 
-QTabBar::tab:selected[inTopPanel="true"] {
+QTabBar::tab:selected[inTopPanel=true] {
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
 	border-bottom-color: palette(highlight);
 }
 
-QTabBar::tab:!selected[inTopPanel="true"] {
+QTabBar::tab:!selected[inTopPanel=true] {
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
 	border-bottom-color: palette(button);
 }
 
-QTabBar::tab:!selected:hover[inTopPanel="true"] {
+QTabBar::tab:!selected:hover[inTopPanel=true] {
 	border-bottom-width: 3px;
 	border-bottom-style: solid;
 	border-bottom-color: palette(dark);
@@ -333,42 +382,42 @@ QScrollBar::sub-line {
 	height: 0px;
 }
 
-QRadioButton[inStartUpView="true"] {
+QRadioButton[inStartUpView=true] {
 	spacing: 0px;
 	padding: 2px 8px 2px 8px;
 	background-color: palette(window);
 	border: 1px solid palette(dark);
 }
 
-QRadioButton[inStartUpView="true"]:!checked:hover {
+QRadioButton[inStartUpView=true]:!checked:hover {
 	background-color: palette(dark);
 }
 
-QRadioButton[inStartUpView="true"]::checked {
+QRadioButton[inStartUpView=true]::checked {
 	color: palette(window);
 	background-color: palette(text);
 	border: 1px solid palette(text);
 }
 
-QRadioButton[inStartUpView="true"]:indicator {
+QRadioButton[inStartUpView=true]:indicator {
 	width: 0px;
 	height: 0px;
 	image: none;
 }
 
-QRadioButton[chevron="true"] {
+QRadioButton[chevron=true] {
 	spacing: 0px;
 	padding: 4px 8px 4px 8px;
 	background-color: palette(base);
 	border: none;
 }
 
-QRadioButton[chevron="true"]::checked {
+QRadioButton[chevron=true]::checked {
 	color: palette(highlighted-text);
 	background-color: palette(highlight);
 }
 
-QRadioButton[chevron="true"]:indicator {
+QRadioButton[chevron=true]:indicator {
 	width: 0px;
 	height: 0px;
 	image: none;
@@ -395,15 +444,15 @@ QPushButton:!checked:hover, QPushButton:!checked:pressed {
 	background-color: palette(dark);
 }
 
-ctkCollapsibleButton[reportButton="true"] {
+ctkCollapsibleButton[reportButton=true] {
 	padding: 4px 8px 4px 8px;
 	background-color: palette(button);
 	border: none;
 	font-weight: bold;
 }
 
-ctkCollapsibleButton[reportButton="true"]:hover,
-ctkCollapsibleButton[reportButton="true"]:pressed {
+ctkCollapsibleButton[reportButton=true]:hover,
+ctkCollapsibleButton[reportButton=true]:pressed {
 	background-color: palette(dark);
 }
 
@@ -433,7 +482,7 @@ QProgressBar::chunk {
 [editableLabel=true]::!hover::!focus {
     border: none;
     padding: 2px 1px 1px 0px;
-    background-color: palette(window);
+    background-color: transparent;
 }
 
 [editableLabel=true]::hover, [editableLabel=true]::focus {
@@ -477,4 +526,13 @@ QProgressBar::chunk {
 	color: white;
 	border: none;
 	margin: 0px 0px 0px 12px;
+}
+
+/*
+ * Всплывающая подсказка
+ */
+QToolTip {
+	color: palette(window-text);
+	background-color: palette(window);
+	border: 1px solid palette(highlight);
 }

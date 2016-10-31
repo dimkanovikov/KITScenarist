@@ -14,7 +14,15 @@ namespace Domain
 	class Scenario : public DomainObject
 	{
 	public:
-		Scenario(const Identifier& _id, const QString& _text, bool _isDraft);
+		Scenario(const Identifier& _id, const QString& _scheme, const QString& _text, bool _isDraft);
+
+		/**
+		 * @brief Схема сценария
+		 */
+		/** @{ */
+		QString scheme() const;
+		void setScheme(const QString _scheme);
+		/** @} */
 
 		/**
 		 * @brief Текст сценария
@@ -32,6 +40,11 @@ namespace Domain
 		void setIsDraft(bool _isDraft);
 
 	private:
+		/**
+		 * @brief Схема сценария
+		 */
+		QString m_scheme;
+
 		/**
 		 * @brief Текст сценария
 		 */
@@ -56,6 +69,7 @@ namespace Domain
 		enum Column {
 			Undefined,
 			Id,
+			Scheme,
 			Text
 		};
 

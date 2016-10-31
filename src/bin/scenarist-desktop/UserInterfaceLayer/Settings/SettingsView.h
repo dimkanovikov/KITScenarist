@@ -60,6 +60,10 @@ namespace UserInterface
 		void setApplicationModuleLocations(bool _use);
 		void setApplicationModuleStatistics(bool _use);
 
+        void setCardsUseCorkboardBackground(bool _use);
+        void setCardsBackgroundColor(const QColor& _color);
+        void setCardsBackgroundColorDark(const QColor& _color);
+
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditShowScenesNumbers(bool _value);
 		void setScenarioEditHighlightCurrentLine(bool _value);
@@ -85,6 +89,7 @@ namespace UserInterface
 		void setScenarioEditReviewUseWordHighlight(bool _value);
 
 		void setNavigatorShowScenesNumbers(bool _value);
+		void setNavigatorShowSceneTitle(bool _value);
 		void setNavigatorShowSceneDescription(bool _value);
 		void setNavigatorSceneDescriptionIsSceneText(bool _value);
 		void setNavigatorSceneDescriptionHeight(int _value);
@@ -130,6 +135,10 @@ namespace UserInterface
 		void applicationModuleLocationsChanged(bool);
 		void applicationModuleStatisticsChanged(bool);
 
+        void cardsUseCorkboardBackgroundChanged(bool);
+        void cardsBackgroundColorChanged(const QColor&);
+        void cardsBackgroundColorDarkChanged(const QColor&);
+
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditShowScenesNumbersChanged(bool);
 		void scenarioEditHighlightCurrentLineChanged(bool);
@@ -158,6 +167,7 @@ namespace UserInterface
 		void scenarioEditReviewUseWordHighlightChanged(bool);
 
 		void navigatorShowScenesNumbersChanged(bool);
+		void navigatorShowSceneTitleChanged(bool);
 		void navigatorShowSceneDescriptionChanged(bool);
 		void navigatorSceneDescriptionIsSceneTextChanged(bool);
 		void navigatorSceneDescriptionHeightChanged(int);
@@ -206,6 +216,14 @@ namespace UserInterface
 		 * @brief Запрос на открытие диалога выбора папки сохранения резервных копий
 		 */
 		void aboutBrowseSaveBackupsFolder();
+
+        /**
+         * @brief Выбрать цвет для параметров редактора сценария
+         */
+        /** @{ */
+        void aboutCardsChooseBackgroundColor();
+        void aboutCardsChooseBackgroundColorDark();
+        /** @} */
 
 		/**
 		 * @brief Сменился блок в настройках переходов

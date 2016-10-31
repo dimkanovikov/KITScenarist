@@ -54,6 +54,10 @@ protected:
 	void gestureEvent(QGestureEvent* _event);
 
 	void keyPressEvent(QKeyEvent* _event);
+    void keyReleaseEvent(QKeyEvent* _event);
+
+    void mouseMoveEvent(QMouseEvent* _event);
+
 	void wheelEvent(QWheelEvent* _event);
 	void drawBackground(QPainter *painter, const QRectF &rect);
 
@@ -68,6 +72,16 @@ private:
 	 * @brief Инерционный тормоз масштабирования при помощи жестов
 	 */
 	int m_gestureZoomInertionBreak;
+
+    /**
+     * @brief Последняя позиция мыши в момент скроллинга полотна
+     */
+    QPoint m_scrollingLastPos;
+
+    /**
+     * @brief Происходит ли в данный момент скроллинг с зажатым пробелом
+     */
+    bool m_inScrolling;
 };
 
 #endif // GRAPHWIDGET_H

@@ -3,11 +3,26 @@
 using namespace Domain;
 
 
-Scenario::Scenario(const Identifier& _id, const QString& _text, bool _isDraft) :
+Scenario::Scenario(const Identifier& _id, const QString& _scheme, const QString& _text, bool _isDraft) :
 	DomainObject(_id),
+	m_scheme(_scheme),
 	m_text(_text),
 	m_isDraft(_isDraft)
 {
+}
+
+QString Scenario::scheme() const
+{
+	return m_scheme;
+}
+
+void Scenario::setScheme(const QString _scheme)
+{
+	if (m_scheme != _scheme) {
+		m_scheme = _scheme;
+
+		changesNotStored();
+	}
 }
 
 QString Scenario::text() const
@@ -63,6 +78,11 @@ QVariant ScenariosTable::data(const QModelIndex& _index, int _role) const
 		Scenario* scenario = dynamic_cast<Scenario*>(domainObject);
 		Column column = sectionToColumn(_index.column());
 		switch (column) {
+			case Scheme: {
+				resultData = scenario->scheme();
+				break;
+			}
+
 			case Text: {
 				resultData = scenario->text();
 				break;
@@ -83,6 +103,11 @@ ScenariosTable::Column ScenariosTable::sectionToColumn(int _section) const
 
 	switch (_section) {
 		case 0: {
+			column = Scheme;
+			break;
+		}
+
+		case 1: {
 			column = Text;
 			break;
 		}

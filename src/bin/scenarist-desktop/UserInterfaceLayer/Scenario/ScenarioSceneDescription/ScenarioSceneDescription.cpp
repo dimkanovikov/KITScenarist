@@ -1,10 +1,12 @@
 #include "ScenarioSceneDescription.h"
 
-#include <3rd_party/Widgets/ElidedLabel/ElidedLabel.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h>
 
 #include <3rd_party/Helpers/TextEditHelper.h>
 
+#include <QFrame>
+#include <QLabel>
+#include <QLineEdit>
 #include <QVBoxLayout>
 
 using namespace UserInterface;
@@ -12,7 +14,8 @@ using namespace UserInterface;
 
 ScenarioSceneDescription::ScenarioSceneDescription(QWidget* _parent) :
 	QWidget(_parent),
-	m_title(new ElidedLabel(this)),
+	m_titleHeader(new QFrame(this)),
+	m_title(new QLineEdit(this)),
 	m_description(new SimpleTextEditorWidget(this))
 {
 	initView();
@@ -20,17 +23,26 @@ ScenarioSceneDescription::ScenarioSceneDescription(QWidget* _parent) :
 	initStyleSheet();
 }
 
-void ScenarioSceneDescription::setHeader(const QString& _header)
+void ScenarioSceneDescription::setTitle(const QString& _title)
 {
-	QString newHeader = _header.toUpper();
-	m_title->setText(QString(" %1: %2").arg(tr("Notes of"), newHeader));
-	m_title->setToolTip(newHeader);
+	const QString newTitle = _title.toUpper();
+	if (currentTitle() != newTitle) {
+		disconnect(m_title, &QLineEdit::textChanged, this, &ScenarioSceneDescription::aboutTitleChanged);
+
+		m_sourceTitle = newTitle;
+
+		m_title->setText(newTitle);
+		m_title->setCursorPosition(0);
+		m_title->setToolTip(newTitle);
+
+		connect(m_title, &QLineEdit::textChanged, this, &ScenarioSceneDescription::aboutTitleChanged);
+	}
 }
 
 void ScenarioSceneDescription::setDescription(const QString& _description)
 {
 	if (currentDescription() != _description) {
-		disconnect(m_description, SIGNAL(textChanged()), this, SLOT(aboutDescriptionChanged()));
+		disconnect(m_description, &SimpleTextEditorWidget::textChanged, this, &ScenarioSceneDescription::aboutDescriptionChanged);
 
 		//
 		// Сформируем значение описания, для корректности последующих сравнений
@@ -39,13 +51,22 @@ void ScenarioSceneDescription::setDescription(const QString& _description)
 
 		m_description->setHtml(_description);
 
-		connect(m_description, SIGNAL(textChanged()), this, SLOT(aboutDescriptionChanged()));
+		connect(m_description, &SimpleTextEditorWidget::textChanged, this, &ScenarioSceneDescription::aboutDescriptionChanged);
 	}
 }
 
 void ScenarioSceneDescription::setCommentOnly(bool _isCommentOnly)
 {
+	m_title->setReadOnly(_isCommentOnly);
 	m_description->setReadOnly(_isCommentOnly);
+}
+
+void ScenarioSceneDescription::aboutTitleChanged()
+{
+	if (m_sourceTitle != currentTitle()
+		|| currentTitle().isEmpty()) {
+		emit titleChanged(currentTitle());
+	}
 }
 
 void ScenarioSceneDescription::aboutDescriptionChanged()
@@ -56,6 +77,11 @@ void ScenarioSceneDescription::aboutDescriptionChanged()
 	}
 }
 
+QString ScenarioSceneDescription::currentTitle() const
+{
+	return m_title->text().toUpper().simplified();
+}
+
 QString ScenarioSceneDescription::currentDescription() const
 {
 	return TextEditHelper::removeDocumentTags(m_description->toHtml());
@@ -63,13 +89,17 @@ QString ScenarioSceneDescription::currentDescription() const
 
 void ScenarioSceneDescription::initView()
 {
-	m_title->setText(" ");
 	m_description->setToolbarVisible(false);
+
+	QHBoxLayout* topLayout = new QHBoxLayout(m_titleHeader);
+	topLayout->setContentsMargins(QMargins(6, 0, 6, 0));
+	topLayout->addWidget(new QLabel(tr("Description of:"), this));
+	topLayout->addWidget(m_title);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
 	layout->setSpacing(0);
-	layout->addWidget(m_title);
+	layout->addWidget(m_titleHeader);
 	layout->addWidget(m_description);
 
 	setLayout(layout);
@@ -77,14 +107,16 @@ void ScenarioSceneDescription::initView()
 
 void ScenarioSceneDescription::initConnections()
 {
-	connect(m_description, SIGNAL(textChanged()), this, SLOT(aboutDescriptionChanged()));
+	connect(m_title, &QLineEdit::textChanged, this, &ScenarioSceneDescription::aboutTitleChanged);
+	connect(m_description, &SimpleTextEditorWidget::textChanged, this, &ScenarioSceneDescription::aboutDescriptionChanged);
 }
 
 void ScenarioSceneDescription::initStyleSheet()
 {
-	m_title->setProperty("inTopPanel", true);
-	m_title->setProperty("topPanelTopBordered", true);
-	m_title->setProperty("topPanelRightBordered", true);
+
+	m_titleHeader->setProperty("inTopPanel", true);
+
+	m_title->setProperty("editableLabel", true);
 
 	m_description->setProperty("mainContainer", true);
 }

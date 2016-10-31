@@ -19,9 +19,9 @@ QWidget* ScenarioSceneDescriptionManager::view() const
 	return m_view;
 }
 
-void ScenarioSceneDescriptionManager::setHeader(const QString& _header)
+void ScenarioSceneDescriptionManager::setTitle(const QString& _title)
 {
-	m_view->setHeader(_header);
+	m_view->setTitle(_title);
 }
 
 void ScenarioSceneDescriptionManager::setDescription(const QString& _description)
@@ -41,5 +41,6 @@ void ScenarioSceneDescriptionManager::initView()
 
 void ScenarioSceneDescriptionManager::initConnections()
 {
-	connect(m_view, SIGNAL(descriptionChanged(QString)), this, SIGNAL(descriptionChanged(QString)));
+	connect(m_view, &ScenarioSceneDescription::titleChanged, this, &ScenarioSceneDescriptionManager::titleChanged);
+	connect(m_view, &ScenarioSceneDescription::descriptionChanged, this, &ScenarioSceneDescriptionManager::descriptionChanged);
 }

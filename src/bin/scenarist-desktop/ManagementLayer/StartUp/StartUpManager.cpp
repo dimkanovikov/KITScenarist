@@ -19,6 +19,7 @@
 #include <QNetworkReply>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+#include <QTimer>
 
 using ManagementLayer::StartUpManager;
 using ManagementLayer::ProjectsManager;
@@ -35,7 +36,10 @@ StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	initData();
 	initConnections();
 
-	checkNewVersion();
+	//
+	// Проверяем наличие новой версии уже после старта программы
+	//
+	QTimer::singleShot(0, this, &StartUpManager::checkNewVersion);
 }
 
 QWidget* StartUpManager::view() const

@@ -39,8 +39,12 @@ public:
 	 */
 	static QString languageCode(Language _language);
 
+	/**
+	 * @brief Синглтон
+	 */
+	static SpellChecker* createSpellChecker(const QString& _userDictionaryPath = QString::null);
+
 public:
-	SpellChecker(const QString& _userDictionaryPath = QString::null);
 	~SpellChecker();
 
 	/**
@@ -85,6 +89,8 @@ public:
 	Language spellingLanguage() const;
 
 private:
+	SpellChecker(const QString& _userDictionaryPath);
+
 	/**
 	 * @brief Тип словаря
 	 */
@@ -125,6 +131,11 @@ private:
 	void addWordToChecker(const QString& _word) const;
 
 private:
+	/**
+	 * @brief Синглтон
+	 */
+	static SpellChecker* s_spellChecker;
+
 	/**
 	 * @brief Текущий язык проверки орфографии
 	 */

@@ -3,6 +3,7 @@
 #include "Project/ProjectsManager.h"
 #include "StartUp/StartUpManager.h"
 #include "Research/ResearchManager.h"
+#include "Scenario/ScenarioCardsManager.h"
 #include "Scenario/ScenarioManager.h"
 #include "Characters/CharactersManager.h"
 #include "Locations/LocationsManager.h"
@@ -69,11 +70,12 @@ namespace {
 	/** @{ */
 	const int STARTUP_TAB_INDEX = 0;
 	const int RESEARCH_TAB_INDEX = 1;
-	const int SCENARIO_TAB_INDEX = 2;
-	const int CHARACTERS_TAB_INDEX = 3;
-	const int LOCATIONS_TAB_INDEX = 4;
-	const int STATISTICS_TAB_INDEX = 5;
-	const int SETTINGS_TAB_INDEX = 6;
+	const int SCENARIO_CARDS_TAB_INDEX = 2;
+	const int SCENARIO_TAB_INDEX = 3;
+	const int CHARACTERS_TAB_INDEX = 4;
+	const int LOCATIONS_TAB_INDEX = 5;
+	const int STATISTICS_TAB_INDEX = 6;
+	const int SETTINGS_TAB_INDEX = 7;
 	/** @} */
 
 	/**
@@ -184,11 +186,12 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 {
 	initView();
 	initConnections();
-	initStyleSheet();
 
 	aboutUpdateProjectsList();
 
 	reloadApplicationSettings();
+
+	initStyleSheet();
 
 	QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
 }
@@ -203,6 +206,7 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 {
 	loadViewState();
 	m_view->show();
+
 
 	if (!_fileToOpen.isEmpty()) {
 		aboutLoad(_fileToOpen);
@@ -1031,6 +1035,7 @@ void ApplicationManager::currentTabIndexChanged()
 				switch (_index) {
 					case STARTUP_TAB_INDEX: result = m_startUpManager->view(); break;
 					case RESEARCH_TAB_INDEX: result = m_researchManager->view(); break;
+					case SCENARIO_CARDS_TAB_INDEX: result = m_scenarioManager->cardsView(); break;
 					case SCENARIO_TAB_INDEX: result = m_scenarioManager->view(); break;
 					case CHARACTERS_TAB_INDEX: result = m_charactersManager->view(); break;
 					case LOCATIONS_TAB_INDEX: result = m_locationsManager->view(); break;
@@ -1264,6 +1269,7 @@ void ApplicationManager::initView()
 	//
 	m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
+	g_disableOnStartActions << m_tabs->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
@@ -1275,6 +1281,7 @@ void ApplicationManager::initView()
 	m_tabsSecondary->setCompactMode(true);
 	m_tabsSecondary->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
 	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
+	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
 	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
 	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
 	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
@@ -1288,6 +1295,7 @@ void ApplicationManager::initView()
 	m_tabsWidgets->setObjectName("tabsWidgets");
 	m_tabsWidgets->addWidget(m_startUpManager->view());
 	m_tabsWidgets->addWidget(m_researchManager->view());
+	m_tabsWidgets->addWidget(m_scenarioManager->cardsView());
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
 	m_tabsWidgets->addWidget(m_charactersManager->view());
 	m_tabsWidgets->addWidget(m_locationsManager->view());
@@ -1442,6 +1450,8 @@ void ApplicationManager::initConnections()
 			this, SLOT(aboutApplicationSettingsUpdated()));
 	connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated,
 			m_researchManager, &ResearchManager::updateSettings);
+    connect(m_settingsManager, &SettingsManager::cardsSettingsUpdated,
+            m_scenarioManager, &ScenarioManager::aboutCardsSettingsUpdated);
 	connect(m_settingsManager, SIGNAL(scenarioEditSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),
@@ -1519,7 +1529,6 @@ void ApplicationManager::reloadApplicationSettings()
 		// Настраиваем палитру и стилевые надстройки в зависимости от темы
 		//
 		QPalette palette = QStyleFactory::create("Fusion")->standardPalette();
-		QString styleSheet;
 
 		if (useDarkTheme) {
 			palette.setColor(QPalette::Window, QColor("#26282a"));
@@ -1568,16 +1577,14 @@ void ApplicationManager::reloadApplicationSettings()
 		}
 
 		//
-		// Для всплывающей используем универсальный стиль
-		//
-		styleSheet += "QToolTip { color: palette(window-text); background-color: palette(window); border: 1px solid palette(highlight); } "
-					 ;
-
-		//
-		// Применяем тему
+		// Применяем палитру
 		//
 		qApp->setPalette(palette);
-		qApp->setStyleSheet(styleSheet);
+
+		//
+		// Чтобы все цветовые изменения подхватились, нужно заново переустановить стиль
+		//
+		m_view->setStyleSheet(m_view->styleSheet());
 	}
 
 	//

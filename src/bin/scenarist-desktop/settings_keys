@@ -1,6 +1,11 @@
 В этом файле собраны все ключи к настройкам хранящимся приложением
 
+cards/use-corkboard - использовать в качестве фона рисунок пробковой доски (true) или цвет (false)
+cards/background-color - цвет фоновой заливки для светлой темы
+cards/background-color-dark - цвет фоновой заливки для тёмной темы
+
 navigator/show-scenes-numbers - отображать номера сцен
+navigator/show-scene-title - отображать название сцены вместо заголовка (время и место)
 navigator/show-scene-description - отображать примечание к сцене
 navigator/scene-description-is-scene-text - примечанием к сцене является текст сцены (true) или синопсис сцены (false)
 navigator/scene-description-height - высота примечания к сцене

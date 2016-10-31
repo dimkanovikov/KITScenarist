@@ -111,6 +111,12 @@
         <file>Icons/MindMap/add-child.png</file>
         <file>Icons/MindMap/scale-up.png</file>
         <file>Icons/MindMap/scale-down.png</file>
+        <file>Icons/cards.png</file>
+        <file>Icons/Cards/vline.png</file>
+        <file>Icons/Cards/hline.png</file>
+        <file>Icons/Cards/table.png</file>
+        <file>Icons/settings-cards.png</file>
+        <file>Images/corkboard.jpg</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

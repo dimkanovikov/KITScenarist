@@ -31,6 +31,7 @@ namespace BusinessLogic
 		 */
 		enum DataRoles {
 			ColorIndex = Qt::UserRole + 1,
+			TitleIndex,
 			SceneTextIndex,
 			DescriptionIndex,
 			DurationIndex,
@@ -73,7 +74,7 @@ namespace BusinessLogic
 		 * @brief Реализация древовидной модели
 		 */
 		/** @{ */
-		QModelIndex index(int _row, int _column, const QModelIndex &_parent ) const;
+		QModelIndex index(int _row, int _column, const QModelIndex &_parent = QModelIndex()) const;
 		QModelIndex parent(const QModelIndex &_child) const;
 		int columnCount( const QModelIndex & ) const;
 		int rowCount(const QModelIndex &_parent) const;
@@ -115,7 +116,17 @@ namespace BusinessLogic
 		/**
 		 * @brief Получить индекс заданного элемента
 		 */
-		QModelIndex indexForItem(ScenarioModelItem* _item) const;
+        QModelIndex indexForItem(ScenarioModelItem* _item) const;
+
+		/**
+         * @brief Получить индекс элемента имеющего заданный uuid
+		 */
+        QModelIndex indexForUuid(const QString& _uuid) const;
+
+		/**
+		 * @brief Сформировать простую схему для сцен
+		 */
+		QString simpleScheme() const;
 
 	signals:
 		/**

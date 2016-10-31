@@ -5,6 +5,7 @@
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 
+#include <QApplication>
 #include <QComboBox>
 #include <QFontDatabase>
 #include <QLabel>
@@ -12,15 +13,20 @@
 #include <QStringListModel>
 #include <QVBoxLayout>
 
+namespace {
+	/**
+	 * @brief Список всех виджетов редакторов
+	 */
+	static QList<SimpleTextEditorWidget*> s_editorWidgets;
+}
 
-QVector<SimpleTextEditorWidget*> SimpleTextEditorWidget::s_editorsWidgets;
 
 void SimpleTextEditorWidget::enableSpellCheck(bool _enable, SpellChecker::Language _language)
 {
 	//
 	// Для каждого редактора
 	//
-	foreach (SimpleTextEditorWidget* editorWidget, s_editorsWidgets) {
+	for (SimpleTextEditorWidget* editorWidget : s_editorWidgets) {
 		editorWidget->m_editor->setUseSpellChecker(_enable);
 		editorWidget->m_editor->setSpellCheckLanguage(_language);
 		editorWidget->m_editor->setHighlighterDocument(editorWidget->m_editor->document());
@@ -49,17 +55,19 @@ SimpleTextEditorWidget::SimpleTextEditorWidget(QWidget *parent) :
 	//
 	// При создании нового, попробуем настроить его в соответствии со всеми уже настроенными редакторами
 	//
-	if (!s_editorsWidgets.isEmpty()) {
-		m_editor->setUseSpellChecker(s_editorsWidgets.last()->m_editor->useSpellChecker());
-		m_editor->setSpellCheckLanguage(s_editorsWidgets.last()->m_editor->spellCheckLanguage());
-		m_editor->setHighlighterDocument(m_editor->document());
+	for (SimpleTextEditorWidget* editorWidget : s_editorWidgets) {
+		if (editorWidget != this) {
+			m_editor->setUseSpellChecker(editorWidget->m_editor->useSpellChecker());
+			m_editor->setSpellCheckLanguage(editorWidget->m_editor->spellCheckLanguage());
+			m_editor->setHighlighterDocument(m_editor->document());
+			break;
+		}
 	}
-	s_editorsWidgets.append(this);
+	s_editorWidgets.append(this);
 }
 
 SimpleTextEditorWidget::~SimpleTextEditorWidget()
 {
-	s_editorsWidgets.removeOne(this);
 }
 
 void SimpleTextEditorWidget::setToolbarVisible(bool _visible)
@@ -202,7 +210,7 @@ void SimpleTextEditorWidget::initConnections()
 		//
 		// Обновить значение для всех простых редакторов
 		//
-		foreach (SimpleTextEditorWidget* editorWidget, s_editorsWidgets) {
+		for (SimpleTextEditorWidget* editorWidget : s_editorWidgets) {
 			editorWidget->m_editorWrapper->setZoomRange(_zoomRange);
 		}
 	});

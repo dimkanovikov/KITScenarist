@@ -23,9 +23,9 @@ namespace ManagementLayer
 		QWidget* view() const;
 
 		/**
-		 * @brief Установить заголовок редактора
+		 * @brief Установить название
 		 */
-		void setHeader(const QString& _header);
+		void setTitle(const QString& _title);
 
 		/**
 		 * @brief Установить описание
@@ -38,6 +38,11 @@ namespace ManagementLayer
 		void setCommentOnly(bool _isCommentOnly);
 
 	signals:
+		/**
+		 * @brief Изменилось название сцены
+		 */
+		void titleChanged(const QString& _title);
+
 		/**
 		 * @brief Текст описания изменился
 		 */

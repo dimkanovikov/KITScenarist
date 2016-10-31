@@ -62,6 +62,12 @@ void ScenarioNavigatorManager::reloadNavigatorSettings()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_navigator->setShowSceneTitle(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/show-scene-title",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_navigator->setShowSceneDescription(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"navigator/show-scene-description",
@@ -109,7 +115,7 @@ void ScenarioNavigatorManager::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioNavigatorManager::aboutAddItem(const QModelIndex& _index)
 {
-	m_addItemDialog->clearText();
+	m_addItemDialog->clear();
 
 	//
 	// Если пользователь действительно хочет добавить элемент

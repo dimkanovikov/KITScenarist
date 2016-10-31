@@ -13,6 +13,16 @@ namespace BusinessLogic
 	public:
 		ScenarioTextBlockInfo();
 
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString uuid() const;
+
+        /**
+         * @brief Установить идентификатор
+         */
+        void setUuid(const QString& _uuid);
+
 		/**
 		 * @brief Получить номер сцены
 		 */
@@ -34,6 +44,16 @@ namespace BusinessLogic
 		void setColors(const QString& _colors);
 
 		/**
+		 * @brief Получить название сцены
+		 */
+		QString title() const;
+
+		/**
+		 * @brief Установить название сцены
+		 */
+		void setTitle(const QString& _title);
+
+		/**
 		 * @brief Получить описание
 		 */
 		QString description(bool htmlEscaped = false) const;
@@ -49,6 +69,11 @@ namespace BusinessLogic
 		ScenarioTextBlockInfo* clone() const;
 
 	private:
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString m_uuid;
+
 		/**
 		 * @brief Номер сцены
 		 */
@@ -58,6 +83,11 @@ namespace BusinessLogic
 		 * @brief Цвета сцены
 		 */
 		QString m_colors;
+
+		/**
+		 * @brief Название
+		 */
+		QString m_title;
 
 		/**
 		 * @brief Текст описания
