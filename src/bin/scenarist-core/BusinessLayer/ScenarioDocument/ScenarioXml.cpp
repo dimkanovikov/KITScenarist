@@ -115,7 +115,7 @@ namespace {
 QString ScenarioXml::defaultCardsXml()
 {
 	return "<?xml version=\"1.0\"?>\n"
-           "<cards_xml viewx=\"500\" viewy=\"270\">\n"
+           "<cards_xml scale=\"0\" scale_x=\"0\" scale_y=\"0\">\n"
            "<ActionShape id=\"0\" x=\"60\" y=\"60\" width=\"210\" height=\"100\" uuid=\"{000000-0000000-000000}\" card_type=\"0\" title=\"\" description=\"\"/>\n"
 		   "</cards_xml>";
 }
@@ -240,7 +240,7 @@ QString ScenarioXml::scenarioToXml()
                             uuidColorsAndTitle = QString(" %1=\"%2\"").arg(ATTRIBUTE_UUID, info->uuid());
                         }
 						if (!info->colors().isEmpty()) {
-                            uuidColorsAndTitle = QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
+                            uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
 						}
 						if (!info->title().isEmpty()) {
                             uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, info->title());
@@ -662,9 +662,10 @@ QString ScenarioXml::scenarioToXml(ScenarioModelItem* _fromItem, ScenarioModelIt
 	//
 	return scenarioToXml(startPosition, endPosition);
 }
-
+#include <QDebug>
 void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 {
+    qDebug() << _xml;
 	QXmlStreamReader reader(_xml);
 	if (reader.readNextStartElement()
 		&& reader.name().toString() == NODE_SCENARIO) {

@@ -33,7 +33,7 @@ QString ScenarioCardsManager::save() const
 {
 	return m_view->save();
 }
-
+#include <QDebug>
 void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QString& _xml)
 {
 	//
@@ -96,6 +96,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 		});
 	}
 
+    qDebug() << _xml;
 	//
 	// Загрузим сценарий
 	//
@@ -211,6 +212,7 @@ void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString&
     if (!_uuid.isEmpty()) {
         const QModelIndex index = m_model->indexForUuid(_uuid);
         emit cardColorsChanged(index, _colors);
+        qDebug() << _uuid << index;
     }
 }
 
