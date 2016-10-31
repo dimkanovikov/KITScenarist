@@ -83,6 +83,15 @@
          </item>
          <item>
           <property name="text">
+           <string>Cards</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+            <normaloff>:/Graphics/Icons/settings-cards.png</normaloff>:/Graphics/Icons/settings-cards.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Scenario Editor</string>
           </property>
           <property name="icon">
@@ -136,7 +145,7 @@
        <item>
         <widget class="QStackedWidget" name="categoriesWidgets">
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="applicationPage">
           <layout class="QGridLayout" name="applicationPageLayout">
@@ -419,6 +428,7 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="cardsPage"/>
          <widget class="QWidget" name="scenarioEditPage">
           <layout class="QGridLayout" name="scenarioEditPageLayout">
            <property name="leftMargin">

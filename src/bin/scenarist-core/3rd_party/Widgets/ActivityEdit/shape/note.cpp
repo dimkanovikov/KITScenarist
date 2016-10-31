@@ -2,7 +2,9 @@
 
 #include "textutils.h"
 
+#include <QApplication>
 #include <QPainter>
+#include <QPalette>
 
 
 NoteShape::NoteShape(QGraphicsItem *_parent) :
@@ -36,11 +38,13 @@ void NoteShape::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	Q_UNUSED(_option);
 	Q_UNUSED(_widget);
 
+    const QPalette palette = QApplication::palette();
+
 	//
 	// Рисуем фон
 	//
-	_painter->setBrush(Shape::innerBrush());
-	_painter->setPen(Qt::black);
+    _painter->setBrush(palette.base());
+    _painter->setPen(palette.text().color());
 	_painter->drawPath(shape());
 	QRectF r = boundingRect();
 	//

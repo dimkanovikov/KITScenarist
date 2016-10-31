@@ -70,10 +70,10 @@ void Flow::setFlowKnots (const QList<QPointF> &knots)
 
 void Flow::removeAllFlowKnots()
 {
-	m_knots.clear();
+    m_knots.clear();
 
-	updateAnchors();
-	updateFlow();
+    updateAnchors();
+    updateFlow();
 }
 
 void Flow::setStartShape (Shape *s)
@@ -144,7 +144,7 @@ void Flow::paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 	if (isSelected()) {
 		setPenAndBrushForSelection(painter);
 	} else {
-		QPen pen(QApplication::palette().text(), 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
+        QPen pen(QApplication::palette().text(), 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
 		painter->setPen(pen);
 		painter->setBrush(Qt::transparent);
 	}

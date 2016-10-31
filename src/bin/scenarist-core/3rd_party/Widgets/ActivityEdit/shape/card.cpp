@@ -193,11 +193,11 @@ void CardShape::paint(QPainter *_painter, const QStyleOptionGraphicsItem *_optio
 	// ... или стандартным цветом
 	//
 	else {
-		if (m_cardType == TypeFolder) {
-			_painter->setBrush(palette.alternateBase());
-		} else {
+        if (m_cardType == TypeFolder) {
+            _painter->setBrush(palette.alternateBase());
+        } else {
 			_painter->setBrush(palette.base());
-		}
+        }
 	}
 	_painter->drawRect(boundingRect());
 	QTextOption textoption;
@@ -206,7 +206,7 @@ void CardShape::paint(QPainter *_painter, const QStyleOptionGraphicsItem *_optio
 	//
 	// Рисуем иконку
 	//
-	const int ICON_SIZE = _painter->fontMetrics().height() + 8;
+    const int ICON_SIZE = _painter->fontMetrics().height() + 4;
 	const QRect iconRect(7, 5, ICON_SIZE, ICON_SIZE);
 	QPixmap icon;
 	switch (m_cardType) {

@@ -29,7 +29,7 @@ public:
 	void setOffset (int newx, int newy);
 protected:
 	QRectF _bounding, _textrect;
-	virtual void paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    virtual void paint (QPainter *_painter, const QStyleOptionGraphicsItem *_option, QWidget *_widget);
 	int _deltax, _deltay;
 public slots:
 	void flowPlacementChanged();

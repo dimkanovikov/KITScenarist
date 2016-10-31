@@ -82,27 +82,34 @@ void FlowText::updateShape()
 	_bounding = _path.boundingRect().adjusted(-4,-4,4,4);
 }
 
-void FlowText::paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void FlowText::paint (QPainter* _painter, const QStyleOptionGraphicsItem* _option, QWidget* _widget)
 {
-	painter->setFont(Shape::basicFont());
-	painter->setBrush(QColor(255,255,255,200));
-	painter->setPen(Qt::NoPen);
-	painter->drawRoundedRect(_textrect.adjusted(-2,-2,2,2), 5,5);
-	painter->setPen(QApplication::palette().text().color());
-	painter->drawText(_textrect.adjusted(0,0,100,100), "["+_flow->text()+"]");
+    Q_UNUSED(_option);
+    Q_UNUSED(_widget);
+
+    const QPalette palette = QApplication::palette();
+
+    _painter->setFont(Shape::basicFont());
+    const QColor textColor = palette.text().color();
+    QColor bgColor(textColor.red(), textColor.green(), textColor.blue(), 200);
+    _painter->setBrush(bgColor);
+    _painter->setPen(Qt::NoPen);
+    _painter->drawRoundedRect(_textrect.adjusted(-2,-2,2,2), 5,5);
+    _painter->setPen(palette.base().color());
+    _painter->drawText(_textrect.adjusted(0,0,100,100), _flow->text());
 
 	if (isSelected())
 	{
-		setPenAndBrushForSelection(painter);
-		painter->drawRoundedRect(QRectF(
+        setPenAndBrushForSelection(_painter);
+        _painter->drawRoundedRect(QRectF(
 				QPointF(_textrect.left(), _textrect.top()),
 				QPointF(_textrect.left()+_textrect.width(), _textrect.top()+_textrect.height())
 			).adjusted(-3,-3,3,3), 5,5);
-		painter->drawLine(
+        _painter->drawLine(
 				QPointF(_textrect.left(), _textrect.top()+_textrect.height()),
 				QPointF(_textrect.left()+_textrect.width(), _textrect.top()+_textrect.height())
 		);
-		painter->drawLine(
+        _painter->drawLine(
 			QPointF(
 				_textrect.left() + _textrect.width()/2.0,
 				_textrect.top() + _textrect.height()),

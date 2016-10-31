@@ -665,7 +665,7 @@ namespace {
 QString ScenarioModel::simpleScheme() const
 {
 	QString xml("<?xml version=\"1.0\"?>\n"
-				"<cards_xml viewx=\"500\" viewy=\"270\">\n");
+                "<cards_xml scale=\"1\" scroll_x=\"0\" scroll_y=\"0\" >\n");
 
 	//
 	// Пробегаем по всем элементам

@@ -29,33 +29,10 @@
    <item>
     <widget class="QStackedWidget" name="content">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="cardPage">
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Title of</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QRadioButton" name="cardIsScene">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Scene</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="2">
         <widget class="QRadioButton" name="cardIsScenesGroup">
          <property name="sizePolicy">
@@ -66,19 +43,6 @@
          </property>
          <property name="text">
           <string>Scenes Group</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QRadioButton" name="cardIsFolder">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Folder</string>
          </property>
         </widget>
        </item>
@@ -95,23 +59,63 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="0" colspan="5">
-        <widget class="QLineEdit" name="cardTitle"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
+       <item row="0" column="3">
+        <widget class="QRadioButton" name="cardIsFolder">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string>Description</string>
+          <string>Folder</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0" colspan="5">
+       <item row="0" column="5">
+        <widget class="ColoredToolButton" name="cardColor">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../../scenarist-core/Resources/Resources.qrc">
+           <normaloff>:/Graphics/Icons/Editing/rect.png</normaloff>:/Graphics/Icons/Editing/rect.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="6">
+        <widget class="QLineEdit" name="cardTitle"/>
+       </item>
+       <item row="3" column="0" colspan="6">
         <widget class="SimpleTextEditorWidget" name="cardDescription" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="6">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Description</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QRadioButton" name="cardIsScene">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Scene</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -173,7 +177,14 @@
    <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>ColoredToolButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h</header>
+  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../../scenarist-core/Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

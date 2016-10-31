@@ -121,6 +121,8 @@ void ScenarioSchemeItemDialog::initView()
 {
 	m_ui->content->setCurrentWidget(m_ui->cardPage);
 
+    m_ui->cardColor->setColorsPane(ColoredToolButton::Google);
+
 	m_ui->cardDescription->setToolbarVisible(false);
 	m_ui->noteText->setToolbarVisible(false);
     m_ui->flowText->setToolbarVisible(false);
@@ -140,5 +142,5 @@ void ScenarioSchemeItemDialog::initConnections()
 
 void ScenarioSchemeItemDialog::initStyleSheet()
 {
-
+    m_ui->cardColor->setProperty("itemDialog", true);
 }
