@@ -18,6 +18,16 @@ class CustomGraphicsView : public QGraphicsView
 public:
 	explicit CustomGraphicsView(QWidget* _parent = 0);
 
+    /**
+     * @brief Необходимо ли использовать в качестве фона пробковую доску
+     */
+    void setUseCorkboardBackground(bool _use);
+
+    /**
+     * @brief Установить цвет фона
+     */
+    void setBackgroundColor(const QColor& _color);
+
 	/**
 	 * @brief Методы масштабирования
 	 */
@@ -71,6 +81,11 @@ protected:
 	/** @} */
 
 private:
+    /**
+     * @brief Обновить фон
+     */
+    void updateBackgroundBrush();
+
 	/**
 	 * @brief Масштабировать представление на заданный коэффициент
 	 */
@@ -80,6 +95,17 @@ private:
 	 * @brief Выделить отдельные элементы
 	 */
 	void selectItemsWithCtrl(QPainterPath& _area);
+
+private:
+    /**
+     * @brief Использовать ли для фона заливку в виде пробковой доски
+     */
+    bool m_useCorkboardBackground;
+
+    /**
+     * @brief Цвет фона, когда не используется пробковая доска
+     */
+    QColor m_backgroundColor;
 
 	/**
 	 * @brief Фигура области выделения

@@ -349,6 +349,10 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("application/modules/locations", "1");
 	m_defaultValues.insert("application/modules/statistics", "1");
 
+    m_defaultValues.insert("cards/use-corkboard", "1");
+    m_defaultValues.insert("cards/background-color", "#FEFEFE");
+    m_defaultValues.insert("cards/background-color-dark", "#3D3D3D");
+
 	m_defaultValues.insert("navigator/show-scenes-numbers", "1");
 	m_defaultValues.insert("navigator/show-scene-description", "1");
 	m_defaultValues.insert("navigator/scene-description-is-scene-text", "1");

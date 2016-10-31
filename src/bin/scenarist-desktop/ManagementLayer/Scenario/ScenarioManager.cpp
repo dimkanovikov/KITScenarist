@@ -411,7 +411,12 @@ void ScenarioManager::setCommentOnly(bool _isCommentOnly)
 	m_navigatorManager->setCommentOnly(_isCommentOnly);
 	m_draftNavigatorManager->setCommentOnly(_isCommentOnly);
 	m_sceneDescriptionManager->setCommentOnly(_isCommentOnly);
-	m_textEditManager->setCommentOnly(_isCommentOnly);
+    m_textEditManager->setCommentOnly(_isCommentOnly);
+}
+
+void ScenarioManager::aboutCardsSettingsUpdated()
+{
+    m_cardsManager->reloadSettings();
 }
 
 void ScenarioManager::aboutTextEditSettingsUpdated()

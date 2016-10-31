@@ -194,7 +194,26 @@ void SettingsView::setApplicationModuleLocations(bool _use)
 
 void SettingsView::setApplicationModuleStatistics(bool _use)
 {
-	ui->applicationModuleStatistics->setChecked(_use);
+    ui->applicationModuleStatistics->setChecked(_use);
+}
+
+void SettingsView::setCardsUseCorkboardBackground(bool _use)
+{
+    if (_use) {
+        ui->cardsUseCorkboardBackground->setChecked(true);
+    } else {
+        ui->cardsUseColorsBackground->setChecked(true);
+    }
+}
+
+void SettingsView::setCardsBackgroundColor(const QColor& _color)
+{
+    setColorFor(ui->cardsBackgroundColor, _color);
+}
+
+void SettingsView::setCardsBackgroundColorDark(const QColor& _color)
+{
+    setColorFor(ui->cardsBackgroundColorDark, _color);
 }
 
 void SettingsView::setScenarioEditPageView(bool _value)
@@ -460,7 +479,19 @@ void SettingsView::aboutBrowseSaveBackupsFolder()
 				ui->saveBackupsFolder->text(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if (!folder.isEmpty()) {
 		ui->saveBackupsFolder->setText(folder);
-	}
+    }
+}
+
+void SettingsView::aboutCardsChooseBackgroundColor()
+{
+    setColorFor(ui->cardsBackgroundColor);
+    emit cardsBackgroundColorChanged(ui->cardsBackgroundColor->palette().button().color());
+}
+
+void SettingsView::aboutCardsChooseBackgroundColorDark()
+{
+    setColorFor(ui->cardsBackgroundColorDark);
+    emit cardsBackgroundColorDarkChanged(ui->cardsBackgroundColorDark->palette().button().color());
 }
 
 void SettingsView::aboutBlockJumpChanged(const QModelIndex& _topLeft, const QModelIndex& _bottomRight)
@@ -668,6 +699,11 @@ void SettingsView::initConnections()
 	connect(ui->spellChecking, SIGNAL(toggled(bool)), ui->spellCheckingLanguage, SLOT(setEnabled(bool)));
 	// ... выбор папки сохранения резервных копий
 	connect(ui->browseBackupFolder, SIGNAL(clicked()), this, SLOT(aboutBrowseSaveBackupsFolder()));
+    // ... активность выбора цветов заливки фона карточек
+    connect(ui->cardsUseColorsBackground, &QRadioButton::toggled, ui->cardsColorsGroup, &QGroupBox::setEnabled);
+    // ... выбор цвета элементов редактора сценария
+    connect(ui->cardsBackgroundColor, SIGNAL(clicked()), this, SLOT(aboutCardsChooseBackgroundColor()));
+    connect(ui->cardsBackgroundColorDark, SIGNAL(clicked()), this, SLOT(aboutCardsChooseBackgroundColorDark()));
 	// ... смена вкладок страницы настройки редактора сценария
 	connect(m_scenarioEditorTabs, SIGNAL(currentChanged(int)), ui->scenarioEditPageStack, SLOT(setCurrentIndex(int)));
 	// ... выбор цвета элементов редактора сценария
@@ -707,6 +743,8 @@ void SettingsView::initConnections()
 	connect(ui->applicationModuleCharacters, &QCheckBox::toggled, this, &SettingsView::applicationModuleCharactersChanged);
 	connect(ui->applicationModuleLocations, &QCheckBox::toggled, this, &SettingsView::applicationModuleLocationsChanged);
 	connect(ui->applicationModuleStatistics, &QCheckBox::toggled, this, &SettingsView::applicationModuleStatisticsChanged);
+    // ... карточки
+    connect(ui->cardsUseCorkboardBackground, &QRadioButton::toggled, this, &SettingsView::cardsUseCorkboardBackgroundChanged);
 	// ... текстовый редактор
 	connect(ui->pageView, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditPageViewChanged(bool)));
 	connect(ui->showScenesNumbersInEditor, SIGNAL(toggled(bool)), this, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)));

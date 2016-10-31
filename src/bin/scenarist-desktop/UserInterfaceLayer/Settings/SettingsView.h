@@ -60,6 +60,10 @@ namespace UserInterface
 		void setApplicationModuleLocations(bool _use);
 		void setApplicationModuleStatistics(bool _use);
 
+        void setCardsUseCorkboardBackground(bool _use);
+        void setCardsBackgroundColor(const QColor& _color);
+        void setCardsBackgroundColorDark(const QColor& _color);
+
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditShowScenesNumbers(bool _value);
 		void setScenarioEditHighlightCurrentLine(bool _value);
@@ -130,6 +134,10 @@ namespace UserInterface
 		void applicationModuleCharactersChanged(bool);
 		void applicationModuleLocationsChanged(bool);
 		void applicationModuleStatisticsChanged(bool);
+
+        void cardsUseCorkboardBackgroundChanged(bool);
+        void cardsBackgroundColorChanged(const QColor&);
+        void cardsBackgroundColorDarkChanged(const QColor&);
 
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditShowScenesNumbersChanged(bool);
@@ -208,6 +216,14 @@ namespace UserInterface
 		 * @brief Запрос на открытие диалога выбора папки сохранения резервных копий
 		 */
 		void aboutBrowseSaveBackupsFolder();
+
+        /**
+         * @brief Выбрать цвет для параметров редактора сценария
+         */
+        /** @{ */
+        void aboutCardsChooseBackgroundColor();
+        void aboutCardsChooseBackgroundColorDark();
+        /** @} */
 
 		/**
 		 * @brief Сменился блок в настройках переходов

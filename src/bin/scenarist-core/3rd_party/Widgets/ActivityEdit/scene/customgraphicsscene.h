@@ -33,6 +33,11 @@ public:
 	CustomGraphicsScene(QObject* _parent = 0);
 	~CustomGraphicsScene();
 
+    /**
+     * @brief Необходимо ли использовать в качестве фона пробковую доску
+     */
+    void setUseCorkboardBackground(bool _use);
+
 	/**
 	 * @brief Добавить новый элемент
 	 */
@@ -129,7 +134,7 @@ protected:
 	/**
 	 * @brief Переопределяем для отображения редактора параметров элемента
 	 */
-	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event) override;
 
 private:
 	/**

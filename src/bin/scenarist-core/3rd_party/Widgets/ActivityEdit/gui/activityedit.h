@@ -19,6 +19,16 @@ public:
 	explicit ActivityEdit(QWidget *parent = 0);
 	~ActivityEdit();
 
+    /**
+     * @brief Необходимо ли использовать в качестве фона пробковую доску
+     */
+    void setUseCorkboardBackground(bool _use);
+
+    /**
+     * @brief Установить цвет фона
+     */
+    void setBackgroundColor(const QColor& _color);
+
 	/**
 	 * @brief Очистить схему
 	 */

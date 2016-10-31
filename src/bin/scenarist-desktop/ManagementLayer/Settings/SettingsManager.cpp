@@ -206,7 +206,22 @@ void SettingsManager::applicationModuleLocationsChanged(bool _value)
 
 void SettingsManager::applicationModuleStatisticsChanged(bool _value)
 {
-	storeValue("application/modules/statistics", _value);
+    storeValue("application/modules/statistics", _value);
+}
+
+void SettingsManager::cardsUseCorkboardBackgroundChanged(bool _value)
+{
+    storeValue("cards/use-corkboard", _value);
+}
+
+void SettingsManager::cardsBackgroundColorChanged(const QColor& _value)
+{
+    storeValue("cards/background-color", _value);
+}
+
+void SettingsManager::cardsBackgroundColorDarkChanged(const QColor& _value)
+{
+    storeValue("cards/background-color-dark", _value);
 }
 
 void SettingsManager::scenarioEditPageViewChanged(bool _value)
@@ -759,6 +774,30 @@ void SettingsManager::initView()
 				.toInt()
 				);
 
+    //
+    // Настройки карточек
+    //
+    m_view->setCardsUseCorkboardBackground(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "cards/use-corkboard",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
+    m_view->setCardsBackgroundColor(
+                QColor(
+                    DataStorageLayer::StorageFacade::settingsStorage()->value(
+                        "cards/background-color",
+                        DataStorageLayer::SettingsStorage::ApplicationSettings)
+                    )
+                );
+    m_view->setCardsBackgroundColorDark(
+                QColor(
+                    DataStorageLayer::StorageFacade::settingsStorage()->value(
+                        "cards/background-color-dark",
+                        DataStorageLayer::SettingsStorage::ApplicationSettings)
+                    )
+                );
+
 	//
 	// Настройки текстового редактора
 	//
@@ -1122,6 +1161,10 @@ void SettingsManager::initConnections()
 	connect(m_view, &SettingsView::applicationModuleLocationsChanged, this, &SettingsManager::applicationModuleLocationsChanged);
 	connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationModuleStatisticsChanged);
 
+    connect(m_view, &SettingsView::cardsUseCorkboardBackgroundChanged, this, &SettingsManager::cardsUseCorkboardBackgroundChanged);
+    connect(m_view, &SettingsView::cardsBackgroundColorChanged, this, &SettingsManager::cardsBackgroundColorChanged);
+    connect(m_view, &SettingsView::cardsBackgroundColorDarkChanged, this, &SettingsManager::cardsBackgroundColorDarkChanged);
+
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditHighlightCurrentLineChanged(bool)), this, SLOT(scenarioEditHighlightCurrentLineChanged(bool)));
@@ -1192,6 +1235,11 @@ void SettingsManager::initConnections()
 	connect(m_view, &SettingsView::applicationModuleCharactersChanged, this, &SettingsManager::applicationSettingsUpdated);
 	connect(m_view, &SettingsView::applicationModuleLocationsChanged, this, &SettingsManager::applicationSettingsUpdated);
 	connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationSettingsUpdated);
+
+    connect(m_view, &SettingsView::applicationUseDarkThemeChanged, this, &SettingsManager::cardsSettingsUpdated);
+    connect(m_view, &SettingsView::cardsUseCorkboardBackgroundChanged, this, &SettingsManager::cardsSettingsUpdated);
+    connect(m_view, &SettingsView::cardsBackgroundColorChanged, this, &SettingsManager::cardsSettingsUpdated);
+    connect(m_view, &SettingsView::cardsBackgroundColorDarkChanged, this, &SettingsManager::cardsSettingsUpdated);
 
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));

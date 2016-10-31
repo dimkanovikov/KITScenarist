@@ -80,7 +80,17 @@ ActivityEdit::ActivityEdit(QWidget *parent) :
 ActivityEdit::~ActivityEdit()
 {
 	delete m_undoStack;
-	m_undoStack = nullptr;
+    m_undoStack = nullptr;
+}
+
+void ActivityEdit::setUseCorkboardBackground(bool _use)
+{
+    m_view->setUseCorkboardBackground(_use);
+}
+
+void ActivityEdit::setBackgroundColor(const QColor& _color)
+{
+    m_view->setBackgroundColor(_color);
 }
 
 void ActivityEdit::clear()

@@ -60,12 +60,12 @@ namespace {
 
 
 CustomGraphicsScene::CustomGraphicsScene(QObject* _parent) :
-	QGraphicsScene(_parent),
+    QGraphicsScene(_parent),
 	m_afterMoving(false)
 {
 	setItemIndexMethod(QGraphicsScene::NoIndex);
 
-	setBackgroundBrush(Qt::transparent);
+    setBackgroundBrush(Qt::transparent);
 
 	QGraphicsRectItem *item;
 	addItem(item = new QGraphicsRectItem(QRectF(0,0,10000,10000)));
@@ -74,7 +74,7 @@ CustomGraphicsScene::CustomGraphicsScene(QObject* _parent) :
 
 CustomGraphicsScene::~CustomGraphicsScene()
 {
-	removeAllShapes();
+    removeAllShapes();
 }
 
 void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const QString& _title,
@@ -1033,7 +1033,7 @@ void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event
 				emit editFlowTextRequest(flow->text());
 			}
 		}
-	}
+    }
 }
 
 Shape* CustomGraphicsScene::createCard(const QString& _uuid, int _cardType, const QString& _title,

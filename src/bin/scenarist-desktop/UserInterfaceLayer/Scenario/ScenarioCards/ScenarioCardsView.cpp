@@ -36,7 +36,17 @@ ScenarioCardsView::ScenarioCardsView(QWidget* _parent) :
 
 void ScenarioCardsView::clear()
 {
-	m_cardsEdit->clear();
+    m_cardsEdit->clear();
+}
+
+void ScenarioCardsView::setUseCorkboardBackground(bool _use)
+{
+    m_cardsEdit->setUseCorkboardBackground(_use);
+}
+
+void ScenarioCardsView::setBackgroundColor(const QColor& _color)
+{
+    m_cardsEdit->setBackgroundColor(_color);
 }
 
 void ScenarioCardsView::load(const QString& _xml)

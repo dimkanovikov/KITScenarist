@@ -94,6 +94,11 @@ namespace ManagementLayer
 		void setCommentOnly(bool _isCommentOnly);
 
 	public slots:
+        /**
+         * @brief Обновить параметры редактора карточек
+         */
+        void aboutCardsSettingsUpdated();
+
 		/**
 		 * @brief Обновить параметры текстового редактора
 		 */

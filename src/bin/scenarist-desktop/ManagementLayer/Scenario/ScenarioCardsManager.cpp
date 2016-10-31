@@ -6,6 +6,7 @@
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h>
 #include <UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h>
@@ -22,18 +23,43 @@ ScenarioCardsManager::ScenarioCardsManager(QObject* _parent, QWidget* _parentWid
 	m_model(nullptr)
 {
 	initConnections();
+    reloadSettings();
 }
 
 QWidget* ScenarioCardsManager::view() const
 {
-	return m_view;
+    return m_view;
+}
+
+void ScenarioCardsManager::reloadSettings()
+{
+    m_view->setUseCorkboardBackground(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "cards/use-corkboard",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
+
+    const bool useDarkTheme =
+            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                "application/use-dark-theme",
+                DataStorageLayer::SettingsStorage::ApplicationSettings)
+            .toInt();
+    const QString colorSuffix = useDarkTheme ? "-dark" : "";
+    m_view->setBackgroundColor(
+                QColor(
+                    DataStorageLayer::StorageFacade::settingsStorage()->value(
+                        "cards/background-color" + colorSuffix,
+                        DataStorageLayer::SettingsStorage::ApplicationSettings)
+                    )
+                );
 }
 
 QString ScenarioCardsManager::save() const
 {
 	return m_view->save();
 }
-#include <QDebug>
+
 void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QString& _xml)
 {
 	//
@@ -96,7 +122,6 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 		});
 	}
 
-    qDebug() << _xml;
 	//
 	// Загрузим сценарий
 	//
@@ -212,7 +237,6 @@ void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString&
     if (!_uuid.isEmpty()) {
         const QModelIndex index = m_model->indexForUuid(_uuid);
         emit cardColorsChanged(index, _colors);
-        qDebug() << _uuid << index;
     }
 }
 

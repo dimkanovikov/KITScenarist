@@ -31,6 +31,11 @@ namespace ManagementLayer
 
 		QWidget* view() const;
 
+        /**
+         * @brief Перезагрузить настройки
+         */
+        void reloadSettings();
+
 		/**
 		 * @brief Сохранить схему сценария
 		 */

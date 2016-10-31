@@ -662,10 +662,9 @@ QString ScenarioXml::scenarioToXml(ScenarioModelItem* _fromItem, ScenarioModelIt
 	//
 	return scenarioToXml(startPosition, endPosition);
 }
-#include <QDebug>
+
 void ScenarioXml::xmlToScenario(int _position, const QString& _xml)
 {
-    qDebug() << _xml;
 	QXmlStreamReader reader(_xml);
 	if (reader.readNextStartElement()
 		&& reader.name().toString() == NODE_SCENARIO) {

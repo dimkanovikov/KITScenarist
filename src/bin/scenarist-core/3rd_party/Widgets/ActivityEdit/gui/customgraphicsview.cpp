@@ -10,6 +10,7 @@
 
 CustomGraphicsView::CustomGraphicsView (QWidget* _parent) :
 	QGraphicsView(_parent),
+    m_useCorkboardBackground(true),
 	m_rubberRect(nullptr),
 	m_inRubberBanding(false),
     m_inScrolling(false),
@@ -19,7 +20,23 @@ CustomGraphicsView::CustomGraphicsView (QWidget* _parent) :
 	// Отслеживаем жесты
 	//
 	grabGesture(Qt::PinchGesture);
-	grabGesture(Qt::SwipeGesture);
+    grabGesture(Qt::SwipeGesture);
+}
+
+void CustomGraphicsView::setUseCorkboardBackground(bool _use)
+{
+    if (m_useCorkboardBackground != _use) {
+        m_useCorkboardBackground = _use;
+        updateBackgroundBrush();
+    }
+}
+
+void CustomGraphicsView::setBackgroundColor(const QColor& _color)
+{
+    if (m_backgroundColor != _color) {
+        m_backgroundColor = _color;
+        updateBackgroundBrush();
+    }
 }
 
 void CustomGraphicsView::zoomIn()
@@ -291,7 +308,17 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent* _event)
         emit contextMenuRequest(_event->pos());
     }
 
-	QGraphicsView::mouseReleaseEvent(_event);
+    QGraphicsView::mouseReleaseEvent(_event);
+}
+
+void CustomGraphicsView::updateBackgroundBrush()
+{
+    if (m_useCorkboardBackground) {
+        setBackgroundBrush(QImage(":/Graphics/Images/corkboard.jpg"));
+        setCacheMode(QGraphicsView::CacheBackground);
+    } else {
+        setBackgroundBrush(m_backgroundColor);
+    }
 }
 
 void CustomGraphicsView::scaleView(qreal _factor)

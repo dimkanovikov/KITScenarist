@@ -26,6 +26,16 @@ namespace UserInterface {
 		 */
 		void clear();
 
+        /**
+         * @brief Необходимо ли использовать в качестве фона пробковую доску
+         */
+        void setUseCorkboardBackground(bool _use);
+
+        /**
+         * @brief Установить цвет фона
+         */
+        void setBackgroundColor(const QColor& _color);
+
 		/**
 		 * @brief Загрузить схему из xml-строки
 		 */
