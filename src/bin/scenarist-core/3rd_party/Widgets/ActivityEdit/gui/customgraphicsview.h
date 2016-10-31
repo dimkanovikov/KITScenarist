@@ -32,6 +32,11 @@ signals:
 	 */
 	void deletePressed();
 
+    /**
+     * @brief Запрос на создание контекстного меню
+     */
+    void contextMenuRequest(const QPoint& _pos);
+
 protected:
 	/**
 	 * @brief Переопределяем для обработки жестов

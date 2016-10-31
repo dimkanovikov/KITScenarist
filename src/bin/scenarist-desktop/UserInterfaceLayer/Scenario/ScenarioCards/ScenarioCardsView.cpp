@@ -109,7 +109,12 @@ void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 void ScenarioCardsView::resortCards()
 {
 	m_cardsEdit->arrangeCards(m_resizer->cardSize(), m_resizer->cardRatio(), m_resizer->distance(),
-		m_resizer->cardsInLine(), m_resizer->cardsInRow());
+                              m_resizer->cardsInLine(), m_resizer->cardsInRow());
+}
+
+void ScenarioCardsView::showContextMenu(const QPoint& _pos)
+{
+
 }
 
 void ScenarioCardsView::initView()
@@ -177,9 +182,11 @@ void ScenarioCardsView::initConnections()
 	connect(m_cardsEdit, &ActivityEdit::schemeChanged, this, &ScenarioCardsView::schemeChanged);
 
 	connect(m_addCard, &FlatButton::clicked, this, &ScenarioCardsView::addCardClicked);
+    connect(m_cardsEdit, &ActivityEdit::addCardRequest, this, &ScenarioCardsView::addCardClicked);
 	connect(m_cardsEdit, &ActivityEdit::editCardRequest, this, &ScenarioCardsView::editCardRequest);
 	connect(m_cardsEdit, &ActivityEdit::removeCardRequest, this, &ScenarioCardsView::removeCardRequest);
 	connect(m_cardsEdit, &ActivityEdit::cardMoved, this, &ScenarioCardsView::cardMoved);
+    connect(m_cardsEdit, &ActivityEdit::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
 
 	connect(m_addNote, &FlatButton::clicked, this, &ScenarioCardsView::addNoteClicked);
 	connect(m_cardsEdit, &ActivityEdit::editNoteRequest, this, &ScenarioCardsView::editNoteRequest);

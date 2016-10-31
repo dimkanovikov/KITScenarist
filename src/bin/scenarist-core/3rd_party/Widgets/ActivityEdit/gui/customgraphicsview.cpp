@@ -287,7 +287,9 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent* _event)
 		delete m_rubberRect;
 		m_rubberRect = nullptr;
 		m_inRubberBanding = false;
-	}
+    } else if (_event->button() == Qt::RightButton) {
+        emit contextMenuRequest(_event->pos());
+    }
 
 	QGraphicsView::mouseReleaseEvent(_event);
 }

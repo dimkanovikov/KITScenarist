@@ -103,13 +103,21 @@ public:
 	/**
 	 * @brief Упорядочить карточки по сетке
 	 */
-	void arrangeCards(int _cardSize, int _cardRatio, int _distance, int _cardsInLine, bool _cardsInRow);
+    void arrangeCards(int _cardSize, int _cardRatio, int _distance, int _cardsInLine, bool _cardsInRow);
+
+    /**
+     * @brief Показать контекстное меню в заданной точке для карточки
+     */
+    void showContextMenu(const QPoint& _pos);
 
 signals:
 	/**
-	 * @brief Добавить текст для связи
+     * @brief Запросы на добавление элементов
 	 */
+    /** @{ */
+    void addCardRequest();
 	void addFlowTextRequest();
+    /** @} */
 
 	/**
 	 * @brief Запросы на изменение выделенной фигуры
@@ -129,6 +137,11 @@ signals:
 	 * @brief Карточка была перемещена
 	 */
 	void cardMoved(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
+
+    /**
+     * @brief Изменились цвета карточки
+     */
+    void cardColorsChanged(const QString& _uuid, const QString& _colors);
 
 	/**
 	 * @brief Схема изменена

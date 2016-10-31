@@ -203,7 +203,15 @@ void ScenarioCardsManager::moveCard(const QString& _parentUuid, const QString& _
 		}
 		QMimeData* mime = m_model->mimeData({movedIndex});
 		m_model->dropMimeData(mime, Qt::MoveAction, previousRow, 0, parentIndex);
-	}
+    }
+}
+
+void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString& _colors)
+{
+    if (!_uuid.isEmpty()) {
+        const QModelIndex index = m_model->indexForUuid(_uuid);
+        emit cardColorsChanged(index, _colors);
+    }
 }
 
 void ScenarioCardsManager::addNote()
@@ -289,6 +297,7 @@ void ScenarioCardsManager::initConnections()
 	connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
 	connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
 	connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
+    connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
 
 	connect(m_view, &ScenarioCardsView::addNoteClicked, this, &ScenarioCardsManager::addNote);
 	connect(m_view, &ScenarioCardsView::editNoteRequest, this, &ScenarioCardsManager::editNote);

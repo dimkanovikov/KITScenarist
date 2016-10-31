@@ -919,6 +919,7 @@ void ScenarioManager::initConnections()
 
 		aboutRemoveItems({_index});
 	});
+    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
 
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));

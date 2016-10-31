@@ -39,6 +39,11 @@ protected:
 	 */
 	QPainterPath selectionShape() const;
 
+    /**
+     * @brief Z-индекс для заметки по умолчанию должен быть больше чем у карточки
+     */
+    int defaultZValue() const;
+
 private:
 	/**
 	 * @brief Текст заметки

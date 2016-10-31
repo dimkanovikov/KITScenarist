@@ -104,5 +104,10 @@ QPainterPath NoteShape::selectionShape() const
 		<< QPointF(1, r.height()-1)
 		<< QPointF(1, 1)
 	);
-	return path;
+    return path;
+}
+
+int NoteShape::defaultZValue() const
+{
+    return 10;
 }

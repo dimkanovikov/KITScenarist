@@ -50,7 +50,7 @@ CardShape::CardShape(const QString& _uuid, CardType _type, const QString& _title
 	m_isOnInsertionState(false)
 {
 	setMinSize(QSizeF(50,32));
-	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+    setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
 void CardShape::setUuid(const QString& _uuid)

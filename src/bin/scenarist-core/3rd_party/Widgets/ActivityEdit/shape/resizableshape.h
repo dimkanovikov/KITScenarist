@@ -1,7 +1,8 @@
 #ifndef RESIZABLESHAPE_H
 #define RESIZABLESHAPE_H
-#include <QGraphicsItem>
+
 #include "shape.h"
+
 
 /**
  * @class ResizableShape
@@ -13,6 +14,7 @@ class ResizableShape : public Shape
 {
 	Q_OBJECT
 	Q_INTERFACES(QGraphicsItem)
+
 public:
 	ResizableShape (QGraphicsItem *parent = 0);
 	ResizableShape (const QPointF &pos, QGraphicsItem *parent = 0);
@@ -27,9 +29,10 @@ protected:
 	virtual void adjustAnchor();
 	virtual QVariant itemChange (GraphicsItemChange change, const QVariant &value);
 	virtual void showAnchors (bool visible = true);
+    virtual int defaultZValue() const;
 private:
 	bool _resizable;
-	SizeAnchor *anchor;
+    SizeAnchor *m_anchor;
 	QSizeF _size;
 	QSizeF _minsize;
 signals:

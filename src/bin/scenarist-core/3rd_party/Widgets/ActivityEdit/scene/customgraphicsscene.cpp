@@ -461,16 +461,7 @@ Shape* CustomGraphicsScene::takeShape(Shape* _shape)
 
 void CustomGraphicsScene::removeShape(Shape* _shape)
 {
-	if (m_shapes.contains(_shape)) {
-		//
-		// Удаляем детей
-		//
-		for (QGraphicsItem* childItem : _shape->childItems()) {
-			if (Shape* childShape = dynamic_cast<Shape*>(childItem)) {
-				removeShape(childShape);
-			}
-		}
-
+    if (m_shapes.contains(_shape)) {
 		//
 		// Определяем внешние элементы
 		//
@@ -566,21 +557,36 @@ void CustomGraphicsScene::removeSelectedShapes()
 
 void CustomGraphicsScene::removeAllShapes()
 {
-	//
-	// Удаляем элементы
-	//
-	while (!m_shapes.isEmpty()) {
-		Shape* shapeToDelete = m_shapes.takeFirst();
-		removeShape(shapeToDelete);
-		shapeToDelete = nullptr;
-	}
-	//
-	// Оищаем корзину
-	//
-	qDeleteAll(m_shapesAboutToDelete);
-	m_shapesAboutToDelete.clear();
+    //
+    // Удаляем элементы в корзину
+    //
+    QPainterPath path;
+    path.addRect(sceneRect());
+    setSelectionArea(path);
+    removeSelectedShapes();
 
-	this->clear();
+    //
+    // Очищаем корзину
+    //
+    {
+        //
+        // Сперва убираем родителей (чтобы не произошло рекурсивного удаления)
+        // и извлекаем из сцены (чтобы было более эффективно)
+        //
+        for (Shape* shape : m_shapesAboutToDelete) {
+            shape->setParentItem(nullptr);
+            if (shape->scene() == this) {
+                removeItem(shape);
+            }
+        }
+        //
+        // А затем удаляем сами элементы
+        //
+        qDeleteAll(m_shapesAboutToDelete);
+        m_shapesAboutToDelete.clear();
+    }
+
+    clear();
 	QGraphicsRectItem *item;
 	addItem(item = new QGraphicsRectItem(QRectF(0,0,10000,10000)));
 	item->setVisible(false);

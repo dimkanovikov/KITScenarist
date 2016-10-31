@@ -37,14 +37,13 @@ void ResizableShape::adjustSize()
 }
 
 ResizableShape::ResizableShape (QGraphicsItem *parent)
-	: QGraphicsItem(parent)
+    : QGraphicsItem(parent), Shape(parent)
 {
 	initialize();
 }
 
 ResizableShape::ResizableShape (const QPointF &pos, QGraphicsItem *parent)
-	: QGraphicsItem(parent)
-	, Shape(parent)
+    : QGraphicsItem(parent), Shape(parent)
 {
 	initialize();
 	setPos(pos);
@@ -59,22 +58,22 @@ void ResizableShape::initialize()
 	_size = QSizeF(100, 30);
 	_minsize = QSizeF(70, 30);
 	setResizable(true);
-	anchor = new SizeAnchor(this);
-	anchor->setZValue(zValue()+1);
-	anchor->setVisible(false);
-	connect(anchor, SIGNAL(stopMoving()), this, SIGNAL(stopSizingByUser()));
-	connect(anchor, SIGNAL(movingByUser()), this, SLOT(anchorMoved()));
+    m_anchor = new SizeAnchor(this);
+    m_anchor->setZValue(zValue()+1);
+    m_anchor->setVisible(false);
+    connect(m_anchor, SIGNAL(stopMoving()), this, SIGNAL(stopSizingByUser()));
+    connect(m_anchor, SIGNAL(movingByUser()), this, SLOT(anchorMoved()));
 	connect(this, SIGNAL(sizeChanged()), this, SIGNAL(placementChanged()));
 }
 
 ResizableShape::~ResizableShape()
 {
-	if (scene())
-	{
-		disconnect(anchor, SIGNAL(startMoving()), this, SIGNAL(stateIsAboutToBeChangedByUser()));
-		scene()->removeItem(anchor);
-	}
-	delete anchor;
+    if (scene())
+    {
+        disconnect(m_anchor, &SizeAnchor::startMoving, this, &ResizableShape::stateIsAboutToBeChangedByUser);
+        scene()->removeItem(m_anchor);
+    }
+    delete m_anchor;
 }
 
 QRectF ResizableShape::boundingRect() const
@@ -87,9 +86,9 @@ QRectF ResizableShape::boundingRect() const
  */
 void ResizableShape::adjustAnchor()
 {
-	anchor->blockSignals(true);
-	anchor->setPos(scenePos().x() + size().width(), scenePos().y() + size().height());
-	anchor->blockSignals(false);
+    m_anchor->blockSignals(true);
+    m_anchor->setPos(scenePos().x() + size().width(), scenePos().y() + size().height());
+    m_anchor->blockSignals(false);
 
 	foreach (QGraphicsItem* child, childItems()) {
 		if (ResizableShape* childShape = dynamic_cast<ResizableShape*>(child)) {
@@ -107,13 +106,13 @@ QVariant ResizableShape::itemChange (GraphicsItemChange change, const QVariant &
 			QGraphicsScene *scene = qvariant_cast<QGraphicsScene *>(value);
 			if (scene)
 			{
-				scene->addItem(anchor);
-				connect(anchor, SIGNAL(startMoving()), this, SIGNAL(stateIsAboutToBeChangedByUser()));
+                scene->addItem(m_anchor);
+                connect(m_anchor, SIGNAL(startMoving()), this, SIGNAL(stateIsAboutToBeChangedByUser()));
 			}
 			else
 			{
-				disconnect(anchor, SIGNAL(startMoving()), this, SIGNAL(stateIsAboutToBeChangedByUser()));
-				this->scene()->removeItem(anchor);
+                disconnect(m_anchor, SIGNAL(startMoving()), this, SIGNAL(stateIsAboutToBeChangedByUser()));
+                this->scene()->removeItem(m_anchor);
 			}
 			adjustAnchor();
 			break;
@@ -122,10 +121,12 @@ QVariant ResizableShape::itemChange (GraphicsItemChange change, const QVariant &
 			adjustAnchor();
 			::emitMovingFor(this);
 			break;
-		case ItemSelectedChange:
-			showAnchors(!isSelected());
-			emit selected();
-			break;
+        case ItemSelectedChange: {
+            setZValue(value.toBool() ? 1000 : defaultZValue());
+            showAnchors(!isSelected());
+            emit selected();
+            break;
+        }
 		default:
 			break;
 	}
@@ -138,7 +139,12 @@ QVariant ResizableShape::itemChange (GraphicsItemChange change, const QVariant &
  */
 void ResizableShape::showAnchors (bool visible)
 {
-	anchor->setVisible(visible && resizable());
+    m_anchor->setVisible(visible && resizable());
+}
+
+int ResizableShape::defaultZValue() const
+{
+    return 1;
 }
 
 /**
@@ -149,7 +155,7 @@ void ResizableShape::showAnchors (bool visible)
 void ResizableShape::anchorMoved()
 {
 	prepareGeometryChange();
-	QPointF pt = anchor->scenePos() - scenePos();
+    QPointF pt = m_anchor->scenePos() - scenePos();
 
 	//
 	// Определим минимальный размер фигуры

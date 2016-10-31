@@ -74,6 +74,11 @@ namespace ManagementLayer
 		 */
 		void removeCardRequest(const QModelIndex& _index);
 
+        /**
+         * @brief Изменились цвета карточки
+         */
+        void cardColorsChanged(const QModelIndex& _index, const QString& _colors);
+
 	private:
 		/**
 		 * @brief Добавить элемент после выбранного
@@ -93,7 +98,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Переместить сцену в соответствии с перемещённой карточкой
 		 */
-		void moveCard(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
+        void moveCard(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
+
+        /**
+         * @brief Изменить цвета карточки
+         */
+        void changeCardColors(const QString& _uuid, const QString& _colors);
 
         /**
          * @brief Добавить заметку

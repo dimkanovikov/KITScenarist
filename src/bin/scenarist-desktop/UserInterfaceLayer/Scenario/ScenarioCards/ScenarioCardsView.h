@@ -113,6 +113,11 @@ namespace UserInterface {
 		 */
 		void cardMoved(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
 
+        /**
+         * @brief Изменились цвета карточки
+         */
+        void cardColorsChanged(const QString& _uuid, const QString& _colors);
+
 		/**
 		 * @brief Нажата кнопка добавления карточки
 		 */
@@ -133,6 +138,11 @@ namespace UserInterface {
 		 * @brief Упорядочить карточки по сетке
 		 */
 		void resortCards();
+
+        /**
+         * @brief Показать контекстное меню в заданной точке для карточки
+         */
+        void showContextMenu(const QPoint& _pos);
 
 	private:
 		/**
