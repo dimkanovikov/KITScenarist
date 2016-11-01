@@ -602,10 +602,6 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/pdlg_arrowflow.ui \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/mainwindow.ui \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_action.ui \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/pdlg_note.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.ui
 

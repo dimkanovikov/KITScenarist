@@ -821,7 +821,8 @@ void SettingsView::initStyleSheet()
 				 << ui->topRightEmptyLabel_4
 				 << ui->topRightEmptyLabel_5
 				 << ui->topRightEmptyLabel_7
-				 << ui->topRightEmptyLabel_8;
+                 << ui->topRightEmptyLabel_8
+                 << ui->topRightEmptyLabel_9;
 
 	foreach (QWidget* topEmpty, topEmptyList) {
 		topEmpty->setProperty("inTopPanel", true);
@@ -834,6 +835,7 @@ void SettingsView::initStyleSheet()
 	QList<QWidget*> mainList;
 	mainList << ui->categories
 			 << ui->applicationPageStack
+             << ui->cardsPageWidget
 			 << ui->scenarioEditPageStack
 			 << ui->navigatorPageWidget
 			 << ui->chronometryPageWidget
