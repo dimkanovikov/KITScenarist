@@ -8,6 +8,10 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
+namespace {
+	const qreal PI = 3.14159265358979323846264338327950288419717;
+}
+
 /**
  * Возвращает фигуру текста, связанную со связью.
  * @return Фигура текста.
@@ -106,14 +110,14 @@ void ArrowFlow::paintCap (QPainter *painter, const QStyleOptionGraphicsItem *opt
 	const double arrowSize = 8;
 	const qreal coefficient = 2.95;
 	double angle = ::acos(line.dx()/line.length());
-	if (line.dy() >= 0) angle = (M_PI * 2) - angle;
+	if (line.dy() >= 0) angle = (PI * 2) - angle;
 	QPointF flowStart = line.p1();
 	QPointF arrowP1 = flowStart + QPointF(
-			sin(angle + M_PI / coefficient) * arrowSize,
-			cos(angle + M_PI / coefficient) * arrowSize);
+			sin(angle + PI / coefficient) * arrowSize,
+			cos(angle + PI / coefficient) * arrowSize);
 	QPointF arrowP2 = flowStart + QPointF(
-			sin(angle + M_PI - M_PI / coefficient) * arrowSize,
-			cos(angle + M_PI - M_PI / coefficient) * arrowSize);
+			sin(angle + PI - PI / coefficient) * arrowSize,
+			cos(angle + PI - PI / coefficient) * arrowSize);
 	painter->setBrush(painter->pen().color());
 	painter->drawPolygon(QPolygonF() << arrowP1 << flowStart << arrowP2);
 	painter->drawEllipse(m_startPoint, 4, 4);

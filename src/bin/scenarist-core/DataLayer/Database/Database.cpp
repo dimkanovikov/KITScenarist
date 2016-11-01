@@ -569,7 +569,8 @@ void Database::updateDatabase(QSqlDatabase& _database)
 		// 0.6.x
 		//
 		if (versionMinor <= 6) {
-			if (versionBuild <= 1) {
+			if (versionMinor < 5
+				|| versionBuild <= 2) {
 				updateDatabaseTo_0_7_0(_database);
 			}
 		}
