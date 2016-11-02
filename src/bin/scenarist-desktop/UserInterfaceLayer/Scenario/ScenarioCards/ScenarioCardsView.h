@@ -139,6 +139,11 @@ namespace UserInterface {
 		void addFlowTextRequest();
 
 		/**
+		 * @brief Запрос на переход в полноэкранный режим, или выход из него
+		 */
+		void fullscreenRequest();
+
+		/**
 		 * @brief Схема карточек изменена
 		 */
 		void schemeChanged();
@@ -207,14 +212,9 @@ namespace UserInterface {
 		CardsResizer* m_resizer;
 
 		/**
-		 * @brief Кнопка отправки элемента в черновик
+		 * @brief Перейти в полноэкранный режим
 		 */
-		FlatButton* m_moveToDraft;
-
-		/**
-		 * @brief Кнопка отправки элемента в сценарий
-		 */
-		FlatButton* m_moveToScript;
+		FlatButton* m_fullscreen;
 
 		/**
 		 * @brief Метка, для закрашивания пространства в панели инструментов

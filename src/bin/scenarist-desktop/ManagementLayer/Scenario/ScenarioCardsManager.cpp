@@ -334,5 +334,7 @@ void ScenarioCardsManager::initConnections()
 	connect(m_view, &ScenarioCardsView::addFlowTextRequest, this, &ScenarioCardsManager::addFlowText);
 	connect(m_view, &ScenarioCardsView::editFlowTextRequest, this, &ScenarioCardsManager::editFlowText);
 
+	connect(m_view, &ScenarioCardsView::fullscreenRequest, this, &ScenarioCardsManager::fullscreenRequest);
+
 	connect(m_view, &ScenarioCardsView::schemeChanged, this, &ScenarioCardsManager::schemeChanged);
 }

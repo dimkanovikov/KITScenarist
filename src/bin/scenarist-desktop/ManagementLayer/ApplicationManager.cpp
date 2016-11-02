@@ -925,7 +925,6 @@ void ApplicationManager::aboutShowFullscreen()
 		//
 		// Переходим в полноэкранный режим
 		//
-		m_tabsWidgets->setCurrentWidget(m_scenarioManager->view());
 		m_menu->hide();
 		m_tabs->hide();
 		m_view->showFullScreen();
@@ -1450,8 +1449,8 @@ void ApplicationManager::initConnections()
 			this, SLOT(aboutApplicationSettingsUpdated()));
 	connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated,
 			m_researchManager, &ResearchManager::updateSettings);
-    connect(m_settingsManager, &SettingsManager::cardsSettingsUpdated,
-            m_scenarioManager, &ScenarioManager::aboutCardsSettingsUpdated);
+	connect(m_settingsManager, &SettingsManager::cardsSettingsUpdated,
+			m_scenarioManager, &ScenarioManager::aboutCardsSettingsUpdated);
 	connect(m_settingsManager, SIGNAL(scenarioEditSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),

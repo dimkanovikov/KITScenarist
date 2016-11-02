@@ -84,6 +84,11 @@ namespace ManagementLayer
 		 */
 		void cardColorsChanged(const QModelIndex& _index, const QString& _colors);
 
+		/**
+		 * @brief Запрос на переход в полноэкранный режим, или выход из него
+		 */
+		void fullscreenRequest();
+
 	private:
 		/**
 		 * @brief Добавить элемент после выбранного

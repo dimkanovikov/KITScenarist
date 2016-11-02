@@ -862,7 +862,7 @@ void ScenarioManager::initView()
 	m_showFullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
 		QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
 	m_showFullscreen->setToolTip(ShortcutHelper::makeToolTip(tr("On/off Fullscreen Mode"), "F5"));
-	m_showFullscreen->setShortcut(QKeySequence("F5"));
+	m_showFullscreen->setShortcut(Qt::Key_F5);
 	m_showFullscreen->setCheckable(true);
 
 	QWidget* rightWidget = new QWidget(m_view);
@@ -924,6 +924,7 @@ void ScenarioManager::initConnections()
 		aboutRemoveItems({_index});
 	});
 	connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
+	connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
 
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));

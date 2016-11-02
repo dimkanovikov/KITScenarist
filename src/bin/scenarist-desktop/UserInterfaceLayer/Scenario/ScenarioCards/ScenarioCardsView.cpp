@@ -25,8 +25,7 @@ ScenarioCardsView::ScenarioCardsView(QWidget* _parent) :
 	m_addVLine(new FlatButton(_parent)),
 	m_sort(new FlatButton(_parent)),
 	m_resizer(new CardsResizer(m_sort)),
-	m_moveToDraft(new FlatButton(_parent)),
-	m_moveToScript(new FlatButton(_parent)),
+	m_fullscreen(new FlatButton(_parent)),
 	m_toolbarSpacer(new QLabel(_parent))
 {
 	initView();
@@ -36,17 +35,17 @@ ScenarioCardsView::ScenarioCardsView(QWidget* _parent) :
 
 void ScenarioCardsView::clear()
 {
-    m_cardsEdit->clear();
+	m_cardsEdit->clear();
 }
 
 void ScenarioCardsView::setUseCorkboardBackground(bool _use)
 {
-    m_cardsEdit->setUseCorkboardBackground(_use);
+	m_cardsEdit->setUseCorkboardBackground(_use);
 }
 
 void ScenarioCardsView::setBackgroundColor(const QColor& _color)
 {
-    m_cardsEdit->setBackgroundColor(_color);
+	m_cardsEdit->setBackgroundColor(_color);
 }
 
 void ScenarioCardsView::load(const QString& _xml)
@@ -119,7 +118,7 @@ void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 void ScenarioCardsView::resortCards()
 {
 	m_cardsEdit->arrangeCards(m_resizer->cardSize(), m_resizer->cardRatio(), m_resizer->distance(),
-                              m_resizer->cardsInLine(), m_resizer->cardsInRow());
+							  m_resizer->cardsInLine(), m_resizer->cardsInRow());
 }
 
 void ScenarioCardsView::showContextMenu(const QPoint& _pos)
@@ -155,13 +154,11 @@ void ScenarioCardsView::initView()
 		m_sort->setMenu(menu);
 	}
 
-	m_moveToDraft->setIcons(QIcon(":/Graphics/Icons/Editing/draft.png"));
-	m_moveToDraft->setToolTip(tr("Draft"));
-	m_moveToDraft->hide();
-
-	m_moveToScript->setIcons(QIcon(":/Graphics/Icons/Mobile/script.png"));
-	m_moveToScript->setToolTip(tr("Script"));
-	m_moveToScript->hide();
+	m_fullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
+		QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
+	m_fullscreen->setToolTip(tr("On/off fullscreen mode (F5)"));
+	m_fullscreen->setShortcut(Qt::Key_F5);
+	m_fullscreen->setCheckable(true);
 
 	m_toolbarSpacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
@@ -175,8 +172,7 @@ void ScenarioCardsView::initView()
 	toolbarLayout->addWidget(m_addVLine);
 	toolbarLayout->addWidget(m_sort);
 	toolbarLayout->addWidget(m_toolbarSpacer);
-	toolbarLayout->addWidget(m_moveToDraft);
-	toolbarLayout->addWidget(m_moveToScript);
+	toolbarLayout->addWidget(m_fullscreen);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -192,11 +188,11 @@ void ScenarioCardsView::initConnections()
 	connect(m_cardsEdit, &ActivityEdit::schemeChanged, this, &ScenarioCardsView::schemeChanged);
 
 	connect(m_addCard, &FlatButton::clicked, this, &ScenarioCardsView::addCardClicked);
-    connect(m_cardsEdit, &ActivityEdit::addCardRequest, this, &ScenarioCardsView::addCardClicked);
+	connect(m_cardsEdit, &ActivityEdit::addCardRequest, this, &ScenarioCardsView::addCardClicked);
 	connect(m_cardsEdit, &ActivityEdit::editCardRequest, this, &ScenarioCardsView::editCardRequest);
 	connect(m_cardsEdit, &ActivityEdit::removeCardRequest, this, &ScenarioCardsView::removeCardRequest);
 	connect(m_cardsEdit, &ActivityEdit::cardMoved, this, &ScenarioCardsView::cardMoved);
-    connect(m_cardsEdit, &ActivityEdit::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
+	connect(m_cardsEdit, &ActivityEdit::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
 
 	connect(m_addNote, &FlatButton::clicked, this, &ScenarioCardsView::addNoteClicked);
 	connect(m_cardsEdit, &ActivityEdit::editNoteRequest, this, &ScenarioCardsView::editNoteRequest);
@@ -209,6 +205,8 @@ void ScenarioCardsView::initConnections()
 
 	connect(m_sort, &FlatButton::clicked, this, &ScenarioCardsView::resortCards);
 	connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);
+
+	connect(m_fullscreen, &FlatButton::clicked, this, &ScenarioCardsView::fullscreenRequest);
 }
 
 void ScenarioCardsView::initStyleSheet()
@@ -219,8 +217,10 @@ void ScenarioCardsView::initStyleSheet()
 	m_addVLine->setProperty("inTopPanel", true);
 	m_sort->setProperty("inTopPanel", true);
 	m_sort->setProperty("hasMenu", true);
-	m_moveToDraft->setProperty("inTopPanel", true);
-	m_moveToScript->setProperty("inTopPanel", true);
+
+	m_fullscreen->setProperty("inTopPanel", true);
+	m_fullscreen->setProperty("topPanelTopBordered", true);
+	m_fullscreen->setProperty("topPanelRightBordered", true);
 
 	m_toolbarSpacer->setProperty("inTopPanel", true);
 	m_toolbarSpacer->setProperty("topPanelTopBordered", true);
