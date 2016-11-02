@@ -13,8 +13,8 @@
 
 GraphWidget::GraphWidget(QWidget *parent) :
 	QGraphicsView(parent),
-    m_gestureZoomInertionBreak(0),
-    m_inScrolling(false)
+	m_gestureZoomInertionBreak(0),
+	m_inScrolling(false)
 {
 	//
 	// Настраиваем сцену
@@ -179,39 +179,59 @@ void GraphWidget::keyPressEvent(QKeyEvent *_event)
 		return;
 	}
 
-    if (_event->key() == Qt::Key_Space) {
-        m_scrollingLastPos = QCursor::pos();
-        m_inScrolling = true;
-        return;
-    }
+	if (_event->key() == Qt::Key_Space) {
+		m_inScrolling = true;
+		return;
+	}
 
-    QGraphicsView::keyPressEvent(_event);
+	QGraphicsView::keyPressEvent(_event);
 }
 
 void GraphWidget::keyReleaseEvent(QKeyEvent* _event)
 {
-    if (_event->key() == Qt::Key_Space) {
-        m_scrollingLastPos = QPoint();
-        m_inScrolling = false;
-    }
+	if (_event->key() == Qt::Key_Space) {
+		m_inScrolling = false;
+	}
 
-    QGraphicsView::keyReleaseEvent(_event);
+	QGraphicsView::keyReleaseEvent(_event);
+}
+
+void GraphWidget::mousePressEvent(QMouseEvent* _event)
+{
+	if (m_inScrolling
+		&& _event->buttons() & Qt::LeftButton) {
+		m_scrollingLastPos = _event->globalPos();
+		QApplication::setOverrideCursor(QCursor(Qt::ClosedHandCursor));
+	}
+
+	QGraphicsView::mousePressEvent(_event);
 }
 
 void GraphWidget::mouseMoveEvent(QMouseEvent* _event)
 {
-    //
-    // Если в данный момент происходит прокрутка полотна
-    //
-    if (m_inScrolling) {
-        const QPoint prevPos = m_scrollingLastPos;
-        m_scrollingLastPos = _event->globalPos();
-        horizontalScrollBar()->setValue(horizontalScrollBar()->value() + (prevPos.x() - m_scrollingLastPos.x()));
-        verticalScrollBar()->setValue(verticalScrollBar()->value() + (prevPos.y() - m_scrollingLastPos.y()));
-        return;
-    }
+	//
+	// Если в данный момент происходит прокрутка полотна
+	//
+	if (m_inScrolling) {
+		if (_event->buttons() & Qt::LeftButton) {
+			const QPoint prevPos = m_scrollingLastPos;
+			m_scrollingLastPos = _event->globalPos();
+			horizontalScrollBar()->setValue(horizontalScrollBar()->value() + (prevPos.x() - m_scrollingLastPos.x()));
+			verticalScrollBar()->setValue(verticalScrollBar()->value() + (prevPos.y() - m_scrollingLastPos.y()));
+		}
+		return;
+	}
 
-    QGraphicsView::mouseMoveEvent(_event);
+	QGraphicsView::mouseMoveEvent(_event);
+}
+
+void GraphWidget::mouseReleaseEvent(QMouseEvent* _event)
+{
+	if (m_inScrolling) {
+		QApplication::restoreOverrideCursor();
+	}
+
+	QGraphicsView::mouseReleaseEvent(_event);
 }
 
 void GraphWidget::wheelEvent(QWheelEvent* _event)

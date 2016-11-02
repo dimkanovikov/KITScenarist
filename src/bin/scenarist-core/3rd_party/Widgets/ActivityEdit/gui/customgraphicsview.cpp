@@ -10,33 +10,33 @@
 
 CustomGraphicsView::CustomGraphicsView (QWidget* _parent) :
 	QGraphicsView(_parent),
-    m_useCorkboardBackground(true),
+	m_useCorkboardBackground(true),
 	m_rubberRect(nullptr),
 	m_inRubberBanding(false),
-    m_inScrolling(false),
+	m_inScrolling(false),
 	m_gestureZoomInertionBreak(0)
 {
 	//
 	// Отслеживаем жесты
 	//
 	grabGesture(Qt::PinchGesture);
-    grabGesture(Qt::SwipeGesture);
+	grabGesture(Qt::SwipeGesture);
 }
 
 void CustomGraphicsView::setUseCorkboardBackground(bool _use)
 {
-    if (m_useCorkboardBackground != _use) {
-        m_useCorkboardBackground = _use;
-        updateBackgroundBrush();
-    }
+	if (m_useCorkboardBackground != _use) {
+		m_useCorkboardBackground = _use;
+		updateBackgroundBrush();
+	}
 }
 
 void CustomGraphicsView::setBackgroundColor(const QColor& _color)
 {
-    if (m_backgroundColor != _color) {
-        m_backgroundColor = _color;
-        updateBackgroundBrush();
-    }
+	if (m_backgroundColor != _color) {
+		m_backgroundColor = _color;
+		updateBackgroundBrush();
+	}
 }
 
 void CustomGraphicsView::zoomIn()
@@ -177,27 +177,31 @@ void CustomGraphicsView::keyPressEvent(QKeyEvent* _event)
 		return;
 	}
 
-    if (_event->key() == Qt::Key_Space) {
-        m_scrollingLastPos = QCursor::pos();
-        m_inScrolling = true;
-        return;
-    }
+	if (_event->key() == Qt::Key_Space) {
+		m_inScrolling = true;
+		return;
+	}
 
-    QGraphicsView::keyPressEvent(_event);
+	QGraphicsView::keyPressEvent(_event);
 }
 
 void CustomGraphicsView::keyReleaseEvent(QKeyEvent* _event)
 {
-    if (_event->key() == Qt::Key_Space) {
-        m_scrollingLastPos = QPoint();
-        m_inScrolling = false;
-    }
+	if (_event->key() == Qt::Key_Space) {
+		m_inScrolling = false;
+	}
 
-    QGraphicsView::keyReleaseEvent(_event);
+	QGraphicsView::keyReleaseEvent(_event);
 }
 
 void CustomGraphicsView::mousePressEvent(QMouseEvent* _event)
 {
+	if (m_inScrolling) {
+		m_scrollingLastPos = _event->globalPos();
+		QApplication::setOverrideCursor(QCursor(Qt::ClosedHandCursor));
+		return;
+	}
+
 	QList<QGraphicsItem*> items = scene()->items();
 	prevSelState.clear();
 	for (int i = 0; i < items.count(); ++i) {
@@ -236,16 +240,18 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent* _event)
 
 void CustomGraphicsView::mouseMoveEvent(QMouseEvent* _event)
 {
-    //
-    // Если в данный момент происходит прокрутка полотна
-    //
-    if (m_inScrolling) {
-        const QPoint prevPos = m_scrollingLastPos;
-        m_scrollingLastPos = _event->globalPos();
-        horizontalScrollBar()->setValue(horizontalScrollBar()->value() + (prevPos.x() - m_scrollingLastPos.x()));
-        verticalScrollBar()->setValue(verticalScrollBar()->value() + (prevPos.y() - m_scrollingLastPos.y()));
-        return;
-    }
+	//
+	// Если в данный момент происходит прокрутка полотна
+	//
+	if (m_inScrolling) {
+		if (_event->buttons() & Qt::LeftButton) {
+			const QPoint prevPos = m_scrollingLastPos;
+			m_scrollingLastPos = _event->globalPos();
+			horizontalScrollBar()->setValue(horizontalScrollBar()->value() + (prevPos.x() - m_scrollingLastPos.x()));
+			verticalScrollBar()->setValue(verticalScrollBar()->value() + (prevPos.y() - m_scrollingLastPos.y()));
+		}
+		return;
+	}
 
 	//
 	// Если в данным момент происходит не выделение области, то убираем элемент области со сцены
@@ -299,26 +305,29 @@ void CustomGraphicsView::mouseMoveEvent(QMouseEvent* _event)
 
 void CustomGraphicsView::mouseReleaseEvent(QMouseEvent* _event)
 {
+	if (m_inScrolling) {
+		QApplication::restoreOverrideCursor();
+	}
 	if (m_rubberRect && m_inRubberBanding) {
 		scene()->removeItem(m_rubberRect);
 		delete m_rubberRect;
 		m_rubberRect = nullptr;
 		m_inRubberBanding = false;
-    } else if (_event->button() == Qt::RightButton) {
-        emit contextMenuRequest(_event->pos());
-    }
+	} else if (_event->button() == Qt::RightButton) {
+		emit contextMenuRequest(_event->pos());
+	}
 
-    QGraphicsView::mouseReleaseEvent(_event);
+	QGraphicsView::mouseReleaseEvent(_event);
 }
 
 void CustomGraphicsView::updateBackgroundBrush()
 {
-    if (m_useCorkboardBackground) {
-        setBackgroundBrush(QImage(":/Graphics/Images/corkboard.jpg"));
-        setCacheMode(QGraphicsView::CacheBackground);
-    } else {
-        setBackgroundBrush(m_backgroundColor);
-    }
+	if (m_useCorkboardBackground) {
+		setBackgroundBrush(QImage(":/Graphics/Images/corkboard.jpg"));
+		setCacheMode(QGraphicsView::CacheBackground);
+	} else {
+		setBackgroundBrush(m_backgroundColor);
+	}
 }
 
 void CustomGraphicsView::scaleView(qreal _factor)
