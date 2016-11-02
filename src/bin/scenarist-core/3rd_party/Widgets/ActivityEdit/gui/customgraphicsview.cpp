@@ -331,7 +331,9 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent* _event)
 void CustomGraphicsView::updateBackgroundBrush()
 {
 	if (m_useCorkboardBackground) {
-		setBackgroundBrush(QImage(":/Graphics/Images/corkboard.jpg"));
+		QBrush brush(QImage(":/Graphics/Images/corkboard.jpg"));
+		brush.setTransform(QTransform().scale(0.4, 0.4));
+		setBackgroundBrush(brush);
 		setCacheMode(QGraphicsView::CacheBackground);
 	} else {
 		setBackgroundBrush(m_backgroundColor);

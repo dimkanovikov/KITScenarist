@@ -99,7 +99,11 @@ void ScenarioSchemeItemDialog::setCardDescription(const QString& _description)
 
 QString ScenarioSchemeItemDialog::cardColor() const
 {
-	return m_ui->cardColor->currentColor().name();
+	if (m_ui->cardColor->currentColor().isValid()) {
+		return m_ui->cardColor->currentColor().name();
+	}
+
+	return QString::null;
 }
 
 void ScenarioSchemeItemDialog::setCardColor(const QString& _color)

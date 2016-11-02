@@ -116,6 +116,7 @@ application/save-backups-folder - папка сохранения резервн
 application/two-panel-mode - режим разделения экрана на 2 панели (0 - выключен, 1 - включён)
 application/modules/... - включённые/выключенные модули
 application/modules/research
+application/modules/cards
 application/modules/scenario
 application/modules/characters
 application/modules/locations

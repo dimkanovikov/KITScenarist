@@ -55,14 +55,15 @@ namespace UserInterface
 		void setApplicationSaveBackupsFolder(const QString& _folder);
 		void setApplicationTwoPanelMode(bool _use);
 		void setApplicationModuleResearch(bool _use);
+		void setApplicationModuleCards(bool _use);
 		void setApplicationModuleScenario(bool _use);
 		void setApplicationModuleCharacters(bool _use);
 		void setApplicationModuleLocations(bool _use);
 		void setApplicationModuleStatistics(bool _use);
 
-        void setCardsUseCorkboardBackground(bool _use);
-        void setCardsBackgroundColor(const QColor& _color);
-        void setCardsBackgroundColorDark(const QColor& _color);
+		void setCardsUseCorkboardBackground(bool _use);
+		void setCardsBackgroundColor(const QColor& _color);
+		void setCardsBackgroundColorDark(const QColor& _color);
 
 		void setScenarioEditPageView(bool _value);
 		void setScenarioEditShowScenesNumbers(bool _value);
@@ -130,14 +131,15 @@ namespace UserInterface
 		void applicationSaveBackupsFolderChanged(const QString&);
 		void applicationTwoPanelModeChanged(bool);
 		void applicationModuleResearchChanged(bool);
+		void applicationModuleCardsChanged(bool);
 		void applicationModuleScenarioChanged(bool);
 		void applicationModuleCharactersChanged(bool);
 		void applicationModuleLocationsChanged(bool);
 		void applicationModuleStatisticsChanged(bool);
 
-        void cardsUseCorkboardBackgroundChanged(bool);
-        void cardsBackgroundColorChanged(const QColor&);
-        void cardsBackgroundColorDarkChanged(const QColor&);
+		void cardsUseCorkboardBackgroundChanged(bool);
+		void cardsBackgroundColorChanged(const QColor&);
+		void cardsBackgroundColorDarkChanged(const QColor&);
 
 		void scenarioEditPageViewChanged(bool);
 		void scenarioEditShowScenesNumbersChanged(bool);
@@ -217,13 +219,13 @@ namespace UserInterface
 		 */
 		void aboutBrowseSaveBackupsFolder();
 
-        /**
-         * @brief Выбрать цвет для параметров редактора сценария
-         */
-        /** @{ */
-        void aboutCardsChooseBackgroundColor();
-        void aboutCardsChooseBackgroundColorDark();
-        /** @} */
+		/**
+		 * @brief Выбрать цвет для параметров редактора сценария
+		 */
+		/** @{ */
+		void aboutCardsChooseBackgroundColor();
+		void aboutCardsChooseBackgroundColorDark();
+		/** @} */
 
 		/**
 		 * @brief Сменился блок в настройках переходов

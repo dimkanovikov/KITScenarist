@@ -1656,6 +1656,14 @@ void ApplicationManager::reloadApplicationSettings()
 	m_tabs->tab(RESEARCH_TAB_INDEX)->setVisible(showResearchModule);
 	m_tabsSecondary->tab(RESEARCH_TAB_INDEX)->setVisible(showResearchModule);
 	//
+	const bool showCardsModule =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/modules/cards",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	m_tabs->tab(SCENARIO_CARDS_TAB_INDEX)->setVisible(showCardsModule);
+	m_tabsSecondary->tab(SCENARIO_CARDS_TAB_INDEX)->setVisible(showCardsModule);
+	//
 	const bool showScenarioModule =
 			DataStorageLayer::StorageFacade::settingsStorage()->value(
 				"application/modules/scenario",
