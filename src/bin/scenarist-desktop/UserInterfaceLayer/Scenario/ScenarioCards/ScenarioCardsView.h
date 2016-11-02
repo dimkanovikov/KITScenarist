@@ -26,15 +26,15 @@ namespace UserInterface {
 		 */
 		void clear();
 
-        /**
-         * @brief Необходимо ли использовать в качестве фона пробковую доску
-         */
-        void setUseCorkboardBackground(bool _use);
+		/**
+		 * @brief Необходимо ли использовать в качестве фона пробковую доску
+		 */
+		void setUseCorkboardBackground(bool _use);
 
-        /**
-         * @brief Установить цвет фона
-         */
-        void setBackgroundColor(const QColor& _color);
+		/**
+		 * @brief Установить цвет фона
+		 */
+		void setBackgroundColor(const QColor& _color);
 
 		/**
 		 * @brief Загрузить схему из xml-строки
@@ -108,7 +108,7 @@ namespace UserInterface {
 		 * @brief Запросы на изменение выделенной фигуры
 		 */
 		/** @{ */
-		void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
+		void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description);
 		void editNoteRequest(const QString& _text);
 		void editFlowTextRequest(const QString& _text);
 		/** @} */
@@ -123,10 +123,10 @@ namespace UserInterface {
 		 */
 		void cardMoved(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
 
-        /**
-         * @brief Изменились цвета карточки
-         */
-        void cardColorsChanged(const QString& _uuid, const QString& _colors);
+		/**
+		 * @brief Изменились цвета карточки
+		 */
+		void cardColorsChanged(const QString& _uuid, const QString& _colors);
 
 		/**
 		 * @brief Нажата кнопка добавления карточки
@@ -149,10 +149,10 @@ namespace UserInterface {
 		 */
 		void resortCards();
 
-        /**
-         * @brief Показать контекстное меню в заданной точке для карточки
-         */
-        void showContextMenu(const QPoint& _pos);
+		/**
+		 * @brief Показать контекстное меню в заданной точке для карточки
+		 */
+		void showContextMenu(const QPoint& _pos);
 
 	private:
 		/**

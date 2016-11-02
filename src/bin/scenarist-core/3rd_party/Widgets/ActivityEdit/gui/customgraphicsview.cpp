@@ -196,7 +196,8 @@ void CustomGraphicsView::keyReleaseEvent(QKeyEvent* _event)
 
 void CustomGraphicsView::mousePressEvent(QMouseEvent* _event)
 {
-	if (m_inScrolling) {
+	if (m_inScrolling
+		&& _event->buttons() & Qt::LeftButton) {
 		m_scrollingLastPos = _event->globalPos();
 		QApplication::setOverrideCursor(QCursor(Qt::ClosedHandCursor));
 		return;
@@ -235,6 +236,13 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent* _event)
 			}
 		}
 		scene()->addItem(m_rubberRect);
+	}
+	//
+	// В противном случае, если это клик правой кнопкой мышки, выделим элемент под ней
+	//
+	else if (_event->button() == Qt::RightButton) {
+		scene()->clearSelection();
+		scene()->itemAt(mapToScene(_event->pos()), QTransform())->setSelected(true);
 	}
 }
 

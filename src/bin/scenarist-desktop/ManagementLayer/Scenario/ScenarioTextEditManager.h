@@ -72,8 +72,8 @@ namespace ManagementLayer
 		 * @brief Добавить элемент сценария в указанной позиции
 		 */
 		/** @{ */
-		void addScenarioItem(int _position, int _type, const QString& _title,
-			const QString& _description);
+		void addScenarioItemFromCards(int _position, int _type, const QString& _title,
+			const QColor& _color, const QString& _description);
 		void addScenarioItem(int _position, int _type, const QString& _header,
 			const QColor& _color, const QString& _description);
 		/** @{ */
@@ -82,7 +82,7 @@ namespace ManagementLayer
 		 * @brief Изменить элемент сценария
 		 */
 		void editScenarioItem(int _startPosition, int _endPosition, int _type,
-			const QString& _title, const QString& _description);
+			const QString& _title, const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Удалить заданный текст сценария

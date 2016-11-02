@@ -411,12 +411,12 @@ void ScenarioManager::setCommentOnly(bool _isCommentOnly)
 	m_navigatorManager->setCommentOnly(_isCommentOnly);
 	m_draftNavigatorManager->setCommentOnly(_isCommentOnly);
 	m_sceneDescriptionManager->setCommentOnly(_isCommentOnly);
-    m_textEditManager->setCommentOnly(_isCommentOnly);
+	m_textEditManager->setCommentOnly(_isCommentOnly);
 }
 
 void ScenarioManager::aboutCardsSettingsUpdated()
 {
-    m_cardsManager->reloadSettings();
+	m_cardsManager->reloadSettings();
 }
 
 void ScenarioManager::aboutTextEditSettingsUpdated()
@@ -707,8 +707,8 @@ void ScenarioManager::aboutMoveCursorToItem(int _itemPosition)
 	m_textEditManager->setCursorPosition(_itemPosition);
 }
 
-void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType,
-	const QString& _title, const QString& _description)
+void ScenarioManager::aboutAddItemFromCards(const QModelIndex& _afterItemIndex, int _itemType,
+	const QString& _title, const QColor& _color, const QString& _description)
 {
 	//
 	// Карточки добавляются только в режиме чистовика
@@ -716,7 +716,7 @@ void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _item
 	setWorkingMode(m_navigatorManager);
 
 	const int position = workingScenario()->itemEndPosition(_afterItemIndex);
-	m_textEditManager->addScenarioItem(position, _itemType, _title, _description);
+	m_textEditManager->addScenarioItemFromCards(position, _itemType, _title, _color, _description);
 }
 
 void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType,
@@ -728,8 +728,8 @@ void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _item
 	m_textEditManager->addScenarioItem(position, _itemType, _header, _color, _description);
 }
 
-void ScenarioManager::aboutEditItem(const QModelIndex& _itemIndex, int _itemType,
-	const QString& _header, const QString& _description)
+void ScenarioManager::aboutEditItemFromCards(const QModelIndex& _itemIndex, int _itemType,
+	const QString& _header, const QColor& _color, const QString& _description)
 {
 	//
 	// Изменение элемента из карточек только в режиме чистовика
@@ -738,7 +738,7 @@ void ScenarioManager::aboutEditItem(const QModelIndex& _itemIndex, int _itemType
 
 	const int startPosition = workingScenario()->itemStartPosition(_itemIndex);
 	const int endPosition = workingScenario()->itemEndPosition(_itemIndex);
-	m_textEditManager->editScenarioItem(startPosition, endPosition, _itemType, _header, _description);
+	m_textEditManager->editScenarioItem(startPosition, endPosition, _itemType, _header, _color, _description);
 }
 
 void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
@@ -913,9 +913,8 @@ void ScenarioManager::initConnections()
 {
 	connect(m_showFullscreen, SIGNAL(clicked()), this, SIGNAL(showFullscreen()));
 
-	connect(m_cardsManager, &ScenarioCardsManager::addCardRequest,
-			this, static_cast<void (ScenarioManager::*)(const QModelIndex&, int, const QString&, const QString&)>(&ScenarioManager::aboutAddItem));
-	connect(m_cardsManager, &ScenarioCardsManager::editCardRequest, this, &ScenarioManager::aboutEditItem);
+	connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
+	connect(m_cardsManager, &ScenarioCardsManager::editCardRequest, this, &ScenarioManager::aboutEditItemFromCards);
 	connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, [=] (const QModelIndex& _index) {
 		//
 		// Удаляем сцены из карточек только в режиме чистовика
@@ -924,7 +923,7 @@ void ScenarioManager::initConnections()
 
 		aboutRemoveItems({_index});
 	});
-    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
+	connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
 
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));

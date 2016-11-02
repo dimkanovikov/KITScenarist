@@ -283,7 +283,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 }
 
 void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int _type,
-	const QString& _title, const QString& _description)
+	const QString& _title, const QColor& _color, const QString& _description)
 {
 	QTextCursor cursor = m_editor->textCursor();
 	cursor.beginEditBlock();
@@ -307,6 +307,9 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
 	//
 	if (ScenarioTextBlockInfo* blockInfo = dynamic_cast<ScenarioTextBlockInfo*>(cursor.block().userData())) {
 		blockInfo->setTitle(_title);
+		if (_color.isValid()) {
+			blockInfo->setColors(_color.name());
+		}
 		blockInfo->setDescription(_description);
 		cursor.block().setUserData(blockInfo);
 	}
@@ -651,18 +654,18 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
 	connect(m_undo, SIGNAL(clicked()), this, SLOT(aboutUndo()));
 	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()));
-    connect(m_search, &FlatButton::toggled, [=] (bool _toggle) {
-        //
-        // Если поиск виден, но в нём нет фокуса - установим фокус в него
-        // В остальных случаях просто покажем, или скроем поиск
-        //
-        if (!_toggle
-            && m_searchLine->isVisible()
-            && !m_searchLine->hasFocus()) {
-            m_search->setChecked(true);
-        }
-        aboutShowSearch();
-    });
+	connect(m_search, &FlatButton::toggled, [=] (bool _toggle) {
+		//
+		// Если поиск виден, но в нём нет фокуса - установим фокус в него
+		// В остальных случаях просто покажем, или скроем поиск
+		//
+		if (!_toggle
+			&& m_searchLine->isVisible()
+			&& !m_searchLine->hasFocus()) {
+			m_search->setChecked(true);
+		}
+		aboutShowSearch();
+	});
 	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
 	connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
 			[=] { m_editorWrapper->setFocus(); });

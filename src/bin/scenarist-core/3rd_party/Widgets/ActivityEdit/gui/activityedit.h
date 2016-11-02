@@ -19,15 +19,15 @@ public:
 	explicit ActivityEdit(QWidget *parent = 0);
 	~ActivityEdit();
 
-    /**
-     * @brief Необходимо ли использовать в качестве фона пробковую доску
-     */
-    void setUseCorkboardBackground(bool _use);
+	/**
+	 * @brief Необходимо ли использовать в качестве фона пробковую доску
+	 */
+	void setUseCorkboardBackground(bool _use);
 
-    /**
-     * @brief Установить цвет фона
-     */
-    void setBackgroundColor(const QColor& _color);
+	/**
+	 * @brief Установить цвет фона
+	 */
+	void setBackgroundColor(const QColor& _color);
 
 	/**
 	 * @brief Очистить схему
@@ -113,27 +113,27 @@ public:
 	/**
 	 * @brief Упорядочить карточки по сетке
 	 */
-    void arrangeCards(int _cardSize, int _cardRatio, int _distance, int _cardsInLine, bool _cardsInRow);
+	void arrangeCards(int _cardSize, int _cardRatio, int _distance, int _cardsInLine, bool _cardsInRow);
 
-    /**
-     * @brief Показать контекстное меню в заданной точке для карточки
-     */
-    void showContextMenu(const QPoint& _pos);
+	/**
+	 * @brief Показать контекстное меню в заданной точке для карточки
+	 */
+	void showContextMenu(const QPoint& _pos);
 
 signals:
 	/**
-     * @brief Запросы на добавление элементов
+	 * @brief Запросы на добавление элементов
 	 */
-    /** @{ */
-    void addCardRequest();
+	/** @{ */
+	void addCardRequest();
 	void addFlowTextRequest();
-    /** @} */
+	/** @} */
 
 	/**
 	 * @brief Запросы на изменение выделенной фигуры
 	 */
 	/** @{ */
-	void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
+	void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description);
 	void editNoteRequest(const QString& _text);
 	void editFlowTextRequest(const QString& _text);
 	/** @} */
@@ -148,10 +148,10 @@ signals:
 	 */
 	void cardMoved(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
 
-    /**
-     * @brief Изменились цвета карточки
-     */
-    void cardColorsChanged(const QString& _uuid, const QString& _colors);
+	/**
+	 * @brief Изменились цвета карточки
+	 */
+	void cardColorsChanged(const QString& _uuid, const QString& _colors);
 
 	/**
 	 * @brief Схема изменена

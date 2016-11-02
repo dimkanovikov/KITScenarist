@@ -23,36 +23,36 @@ ScenarioCardsManager::ScenarioCardsManager(QObject* _parent, QWidget* _parentWid
 	m_model(nullptr)
 {
 	initConnections();
-    reloadSettings();
+	reloadSettings();
 }
 
 QWidget* ScenarioCardsManager::view() const
 {
-    return m_view;
+	return m_view;
 }
 
 void ScenarioCardsManager::reloadSettings()
 {
-    m_view->setUseCorkboardBackground(
-                DataStorageLayer::StorageFacade::settingsStorage()->value(
-                    "cards/use-corkboard",
-                    DataStorageLayer::SettingsStorage::ApplicationSettings)
-                .toInt()
-                );
+	m_view->setUseCorkboardBackground(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"cards/use-corkboard",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 
-    const bool useDarkTheme =
-            DataStorageLayer::StorageFacade::settingsStorage()->value(
-                "application/use-dark-theme",
-                DataStorageLayer::SettingsStorage::ApplicationSettings)
-            .toInt();
-    const QString colorSuffix = useDarkTheme ? "-dark" : "";
-    m_view->setBackgroundColor(
-                QColor(
-                    DataStorageLayer::StorageFacade::settingsStorage()->value(
-                        "cards/background-color" + colorSuffix,
-                        DataStorageLayer::SettingsStorage::ApplicationSettings)
-                    )
-                );
+	const bool useDarkTheme =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/use-dark-theme",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	const QString colorSuffix = useDarkTheme ? "-dark" : "";
+	m_view->setBackgroundColor(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"cards/background-color" + colorSuffix,
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
 }
 
 QString ScenarioCardsManager::save() const
@@ -163,6 +163,7 @@ void ScenarioCardsManager::addCard()
 	if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
 		const int type = m_addItemDialog->cardType();
 		const QString title = m_addItemDialog->cardTitle();
+		const QString color = m_addItemDialog->cardColor();
 		const QString description = m_addItemDialog->cardDescription();
 
 		//
@@ -178,17 +179,18 @@ void ScenarioCardsManager::addCard()
 				index = m_model->indexForUuid(selectedItemUuid);
 			}
 
-			emit addCardRequest(index, type, title, description);
+			emit addCardRequest(index, type, title, QColor(color), description);
 		}
 	}
 }
 
-void ScenarioCardsManager::editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _description)
+void ScenarioCardsManager::editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description)
 {
 	m_addItemDialog->showCardPage();
 	m_addItemDialog->clear();
 	m_addItemDialog->setCardType((BusinessLogic::ScenarioModelItem::Type)_cardType);
 	m_addItemDialog->setCardTitle(_title);
+	m_addItemDialog->setCardColor(_color);
 	m_addItemDialog->setCardDescription(_description);
 
 	//
@@ -197,13 +199,14 @@ void ScenarioCardsManager::editCard(const QString& _uuid, int _cardType, const Q
 	if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
 		const int type = m_addItemDialog->cardType();
 		const QString title = m_addItemDialog->cardTitle();
+		const QString color = m_addItemDialog->cardColor();
 		const QString description = m_addItemDialog->cardDescription();
 
 		//
 		// Если задан заголовок
 		//
 		if (!title.isEmpty()) {
-			emit editCardRequest(m_model->indexForUuid(_uuid), type, title, description);
+			emit editCardRequest(m_model->indexForUuid(_uuid), type, title, QColor(color), description);
 		}
 	}
 }
@@ -229,15 +232,15 @@ void ScenarioCardsManager::moveCard(const QString& _parentUuid, const QString& _
 		}
 		QMimeData* mime = m_model->mimeData({movedIndex});
 		m_model->dropMimeData(mime, Qt::MoveAction, previousRow, 0, parentIndex);
-    }
+	}
 }
 
 void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString& _colors)
 {
-    if (!_uuid.isEmpty()) {
-        const QModelIndex index = m_model->indexForUuid(_uuid);
-        emit cardColorsChanged(index, _colors);
-    }
+	if (!_uuid.isEmpty()) {
+		const QModelIndex index = m_model->indexForUuid(_uuid);
+		emit cardColorsChanged(index, _colors);
+	}
 }
 
 void ScenarioCardsManager::addNote()
@@ -323,7 +326,7 @@ void ScenarioCardsManager::initConnections()
 	connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
 	connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
 	connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
-    connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
+	connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
 
 	connect(m_view, &ScenarioCardsView::addNoteClicked, this, &ScenarioCardsManager::addNote);
 	connect(m_view, &ScenarioCardsView::editNoteRequest, this, &ScenarioCardsManager::editNote);

@@ -122,7 +122,7 @@ namespace UserInterface
 		 * @brief Изменить элемент в указанной позиции с заданным текстом и типом
 		 */
 		void editItem(int _startPosition, int _endPosition, int _type, const QString& _title,
-			const QString& _description);
+			const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Удалить текст в заданном интервале

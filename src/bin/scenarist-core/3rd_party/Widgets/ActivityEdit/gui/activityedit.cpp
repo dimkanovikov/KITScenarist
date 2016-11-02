@@ -58,7 +58,7 @@ ActivityEdit::ActivityEdit(QWidget *parent) :
 		//
 		scene->notifyStateChangeByUser();
 	});
-    connect(m_view, &CustomGraphicsView::contextMenuRequest, this, &ActivityEdit::showContextMenu);
+	connect(m_view, &CustomGraphicsView::contextMenuRequest, this, &ActivityEdit::showContextMenu);
 
 	connect(scene, &CustomGraphicsScene::stateChangedByUser, [=] {
 		m_undoStack->addState(scene->toXML());
@@ -80,17 +80,17 @@ ActivityEdit::ActivityEdit(QWidget *parent) :
 ActivityEdit::~ActivityEdit()
 {
 	delete m_undoStack;
-    m_undoStack = nullptr;
+	m_undoStack = nullptr;
 }
 
 void ActivityEdit::setUseCorkboardBackground(bool _use)
 {
-    m_view->setUseCorkboardBackground(_use);
+	m_view->setUseCorkboardBackground(_use);
 }
 
 void ActivityEdit::setBackgroundColor(const QColor& _color)
 {
-    m_view->setBackgroundColor(_color);
+	m_view->setBackgroundColor(_color);
 }
 
 void ActivityEdit::clear()
@@ -390,117 +390,136 @@ void ActivityEdit::arrangeCards(int _cardSize, int _cardRatio, int _distance, in
 		scene->update();
 
 		emit schemeChanged();
-    }
+	}
 }
 
 void ActivityEdit::showContextMenu(const QPoint& _pos)
 {
-    if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
-        if (!scene->selectedShapes().isEmpty()
-            && scene->selectedShapes().size() == 1) {
-            //
-            // Если это запрос на контекстное меню для карточки
-            //
-            if (CardShape* card = dynamic_cast<CardShape*>(scene->selectedShapes().first())) {
-                QMenu* menu = new QMenu(this);
-                //
-                // Цвета
-                //
-                QString colorsNames = card->colors();
-                int colorIndex = 1;
-                QList<GoogleColorsPane*> colorsPanesList;
-                //
-                // ... добавляем каждый цвет
-                //
-                foreach (const QString& colorName, colorsNames.split(";", QString::SkipEmptyParts)) {
-                    QAction* color = menu->addAction(tr("Color %1").arg(colorIndex));
-                    QMenu* colorMenu = new QMenu(this);
-                    QAction* removeColor = colorMenu->addAction(tr("Remove"));
-                    removeColor->setData(QString("removeColor:%1").arg(colorIndex));
-                    QWidgetAction* wa = new QWidgetAction(colorMenu);
-                    GoogleColorsPane* colorsPane = new GoogleColorsPane(colorMenu);
-                    colorsPane->setCurrentColor(QColor(colorName));
-                    wa->setDefaultWidget(colorsPane);
-                    colorMenu->addAction(wa);
-                    color->setMenu(colorMenu);
+	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+		if (!scene->selectedShapes().isEmpty()
+			&& scene->selectedShapes().size() == 1) {
+			//
+			// Если это запрос на контекстное меню для карточки
+			//
+			if (CardShape* card = dynamic_cast<CardShape*>(scene->selectedShapes().first())) {
+				QMenu* menu = new QMenu(this);
+				//
+				// Цвета
+				//
+				QString colorsNames = card->colors();
+				int colorIndex = 1;
+				QList<GoogleColorsPane*> colorsPanesList;
+				//
+				// ... добавляем каждый цвет
+				//
+				foreach (const QString& colorName, colorsNames.split(";", QString::SkipEmptyParts)) {
+					QAction* color = menu->addAction(tr("Color %1").arg(colorIndex));
+					QMenu* colorMenu = new QMenu(this);
+					QAction* removeColor = colorMenu->addAction(tr("Remove"));
+					removeColor->setData(QString("removeColor:%1").arg(colorIndex));
+					QWidgetAction* wa = new QWidgetAction(colorMenu);
+					GoogleColorsPane* colorsPane = new GoogleColorsPane(colorMenu);
+					colorsPane->setCurrentColor(QColor(colorName));
+					wa->setDefaultWidget(colorsPane);
+					colorMenu->addAction(wa);
+					color->setMenu(colorMenu);
 
-                    connect(colorsPane, SIGNAL(selected(QColor)), menu, SLOT(close()));
+					connect(colorsPane, SIGNAL(selected(QColor)), menu, SLOT(close()));
 
-                    colorsPanesList.append(colorsPane);
+					colorsPanesList.append(colorsPane);
 
-                    ++colorIndex;
-                }
-                //
-                // ... пункт для нового цвета
-                //
-                {
-                    QAction* color = menu->addAction(tr("Add color"));
-                    QMenu* colorMenu = new QMenu(this);
-                    QWidgetAction* wa = new QWidgetAction(colorMenu);
-                    GoogleColorsPane* colorsPane = new GoogleColorsPane(colorMenu);
-                    wa->setDefaultWidget(colorsPane);
-                    colorMenu->addAction(wa);
-                    color->setMenu(colorMenu);
+					++colorIndex;
+				}
+				//
+				// ... пункт для нового цвета
+				//
+				{
+					QAction* color = menu->addAction(tr("Add color"));
+					QMenu* colorMenu = new QMenu(this);
+					QWidgetAction* wa = new QWidgetAction(colorMenu);
+					GoogleColorsPane* colorsPane = new GoogleColorsPane(colorMenu);
+					wa->setDefaultWidget(colorsPane);
+					colorMenu->addAction(wa);
+					color->setMenu(colorMenu);
 
-                    connect(colorsPane, SIGNAL(selected(QColor)), menu, SLOT(close()));
+					connect(colorsPane, SIGNAL(selected(QColor)), menu, SLOT(close()));
 
-                    colorsPanesList.append(colorsPane);
-                }
+					colorsPanesList.append(colorsPane);
+				}
 
-                //
-                // Остальное
-                //
-                menu->addSeparator();
-                QAction* addNew = menu->addAction(tr("Create Card After"));
-                QAction* remove = menu->addAction(tr("Remove"));
+				//
+				// Остальное
+				//
+				menu->addSeparator();
+				QAction* addNew = menu->addAction(tr("Create Card After"));
+				QAction* remove = menu->addAction(tr("Remove"));
 
-                //
-                // Выводим меню
-                //
-                QAction* toggled = menu->exec(mapToGlobal(_pos));
-                if (toggled != 0) {
-                    if (toggled->data().toString().startsWith("removeColor")) {
-                        //
-                        // Удаляем выбранный цвет из списка и обновляемся
-                        //
-                        const int removeColorIndex = toggled->data().toString().split(":").last().toInt();
-                        QString newColorsNames;
-                        int colorIndex = 1;
-                        foreach (const QString& colorName, colorsNames.split(";", QString::SkipEmptyParts)) {
-                            if (colorIndex != removeColorIndex) {
-                                if (!newColorsNames.isEmpty()) {
-                                    newColorsNames.append(";");
-                                }
-                                newColorsNames.append(colorName);
-                            }
+				//
+				// Выводим меню
+				//
+				QAction* toggled = menu->exec(mapToGlobal(_pos));
+				if (toggled != 0) {
+					if (toggled->data().toString().startsWith("removeColor")) {
+						//
+						// Удаляем выбранный цвет из списка и обновляемся
+						//
+						const int removeColorIndex = toggled->data().toString().split(":").last().toInt();
+						QString newColorsNames;
+						int colorIndex = 1;
+						foreach (const QString& colorName, colorsNames.split(";", QString::SkipEmptyParts)) {
+							if (colorIndex != removeColorIndex) {
+								if (!newColorsNames.isEmpty()) {
+									newColorsNames.append(";");
+								}
+								newColorsNames.append(colorName);
+							}
 
-                            ++colorIndex;
-                        }
+							++colorIndex;
+						}
 
-                        emit cardColorsChanged(card->uuid(), newColorsNames);
-                    } else if (toggled == addNew) {
-                        emit addCardRequest();
-                    } else if (toggled == remove) {
-                        emit removeCardRequest(card->uuid());
-                    }
-                } else {
-                    //
-                    // Добавляем новый цвет и обновляемся
-                    //
-                    QString newColorsNames;
-                    foreach (GoogleColorsPane* colorsPane, colorsPanesList) {
-                        if (colorsPane->currentColor().isValid()) {
-                            if (!newColorsNames.isEmpty()) {
-                                newColorsNames.append(";");
-                            }
-                            newColorsNames.append(colorsPane->currentColor().name());
-                        }
-                    }
-                    emit cardColorsChanged(card->uuid(), newColorsNames);
-                }
+						emit cardColorsChanged(card->uuid(), newColorsNames);
+					} else if (toggled == addNew) {
+						emit addCardRequest();
+					} else if (toggled == remove) {
+						emit removeCardRequest(card->uuid());
+					}
+				} else {
+					//
+					// Добавляем новый цвет и обновляемся
+					//
+					QString newColorsNames;
+					foreach (GoogleColorsPane* colorsPane, colorsPanesList) {
+						if (colorsPane->currentColor().isValid()) {
+							if (!newColorsNames.isEmpty()) {
+								newColorsNames.append(";");
+							}
+							newColorsNames.append(colorsPane->currentColor().name());
+						}
+					}
+					emit cardColorsChanged(card->uuid(), newColorsNames);
+				}
 
-                menu->deleteLater();
-            }
-        }
-    }
+				menu->deleteLater();
+			}
+			//
+			// Меню для заметок
+			//
+			else if (NoteShape* note = dynamic_cast<NoteShape*>(scene->selectedShapes().first())) {
+				QMenu* menu = new QMenu(this);
+				QAction* remove = menu->addAction(tr("Remove"));
+
+				//
+				// Выводим меню
+				//
+				QAction* toggled = menu->exec(mapToGlobal(_pos));
+				if (toggled != 0) {
+					if (toggled == remove) {
+						deleteSelectedItems();
+					}
+				}
+
+				menu->deleteLater();
+			}
+		}
+	}
 }

@@ -31,10 +31,10 @@ namespace ManagementLayer
 
 		QWidget* view() const;
 
-        /**
-         * @brief Перезагрузить настройки
-         */
-        void reloadSettings();
+		/**
+		 * @brief Перезагрузить настройки
+		 */
+		void reloadSettings();
 
 		/**
 		 * @brief Сохранить схему сценария
@@ -66,23 +66,23 @@ namespace ManagementLayer
 		 * @brief Запрос на добавление элемента
 		 */
 		void addCardRequest(const QModelIndex& _afterItemIndex, int _type, const QString& _title,
-			const QString& _description);
+			const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Запрос на изменение элемента
 		 */
 		void editCardRequest(const QModelIndex& _index, int _type, const QString& _title,
-			const QString& _description);
+			const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Запрос на удаление элемента
 		 */
 		void removeCardRequest(const QModelIndex& _index);
 
-        /**
-         * @brief Изменились цвета карточки
-         */
-        void cardColorsChanged(const QModelIndex& _index, const QString& _colors);
+		/**
+		 * @brief Изменились цвета карточки
+		 */
+		void cardColorsChanged(const QModelIndex& _index, const QString& _colors);
 
 	private:
 		/**
@@ -93,7 +93,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Изменить карточку
 		 */
-		void editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
+		void editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description);
 
 		/**
 		 * @brief Удалить карточку
@@ -103,32 +103,32 @@ namespace ManagementLayer
 		/**
 		 * @brief Переместить сцену в соответствии с перемещённой карточкой
 		 */
-        void moveCard(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
+		void moveCard(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid);
 
-        /**
-         * @brief Изменить цвета карточки
-         */
-        void changeCardColors(const QString& _uuid, const QString& _colors);
+		/**
+		 * @brief Изменить цвета карточки
+		 */
+		void changeCardColors(const QString& _uuid, const QString& _colors);
 
-        /**
-         * @brief Добавить заметку
-         */
-        void addNote();
+		/**
+		 * @brief Добавить заметку
+		 */
+		void addNote();
 
-        /**
-         * @brief Изменить заметку
-         */
-        void editNote(const QString& _text);
+		/**
+		 * @brief Изменить заметку
+		 */
+		void editNote(const QString& _text);
 
-        /**
-         * @brief Добавить текст связи
-         */
-        void addFlowText();
+		/**
+		 * @brief Добавить текст связи
+		 */
+		void addFlowText();
 
-        /**
-         * @brief Изменить текст связи
-         */
-        void editFlowText(const QString& _text);
+		/**
+		 * @brief Изменить текст связи
+		 */
+		void editFlowText(const QString& _text);
 
 	private:
 		/**

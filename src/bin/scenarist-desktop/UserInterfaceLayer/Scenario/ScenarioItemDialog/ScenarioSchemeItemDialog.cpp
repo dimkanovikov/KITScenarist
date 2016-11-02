@@ -27,22 +27,22 @@ void ScenarioSchemeItemDialog::clear()
 
 	m_ui->noteText->clear();
 
-    m_ui->flowText->clear();
+	m_ui->flowText->clear();
 }
 
 void ScenarioSchemeItemDialog::showCardPage()
 {
-    m_ui->content->setCurrentWidget(m_ui->cardPage);
+	m_ui->content->setCurrentWidget(m_ui->cardPage);
 }
 
 void ScenarioSchemeItemDialog::showNotePage()
 {
-    m_ui->content->setCurrentWidget(m_ui->notePage);
+	m_ui->content->setCurrentWidget(m_ui->notePage);
 }
 
 void ScenarioSchemeItemDialog::showFlowPage()
 {
-    m_ui->content->setCurrentWidget(m_ui->flowPage);
+	m_ui->content->setCurrentWidget(m_ui->flowPage);
 }
 
 BusinessLogic::ScenarioModelItem::Type ScenarioSchemeItemDialog::cardType() const
@@ -94,38 +94,48 @@ QString ScenarioSchemeItemDialog::cardDescription() const
 
 void ScenarioSchemeItemDialog::setCardDescription(const QString& _description)
 {
-    m_ui->cardDescription->setPlainText(_description);
+	m_ui->cardDescription->setPlainText(_description);
+}
+
+QString ScenarioSchemeItemDialog::cardColor() const
+{
+	return m_ui->cardColor->currentColor().name();
+}
+
+void ScenarioSchemeItemDialog::setCardColor(const QString& _color)
+{
+	m_ui->cardColor->setColor(QColor(_color));
 }
 
 QString ScenarioSchemeItemDialog::noteText() const
 {
-    return m_ui->noteText->toPlainText();
+	return m_ui->noteText->toPlainText();
 }
 
 void ScenarioSchemeItemDialog::setNoteText(const QString& _text)
 {
-    m_ui->noteText->setPlainText(_text);
+	m_ui->noteText->setPlainText(_text);
 }
 
 QString ScenarioSchemeItemDialog::flowText() const
 {
-    return m_ui->flowText->toPlainText();
+	return m_ui->flowText->toPlainText();
 }
 
 void ScenarioSchemeItemDialog::setFlowText(const QString& _text)
 {
-    m_ui->flowText->setPlainText(_text);
+	m_ui->flowText->setPlainText(_text);
 }
 
 void ScenarioSchemeItemDialog::initView()
 {
 	m_ui->content->setCurrentWidget(m_ui->cardPage);
 
-    m_ui->cardColor->setColorsPane(ColoredToolButton::Google);
+	m_ui->cardColor->setColorsPane(ColoredToolButton::Google);
 
 	m_ui->cardDescription->setToolbarVisible(false);
 	m_ui->noteText->setToolbarVisible(false);
-    m_ui->flowText->setToolbarVisible(false);
+	m_ui->flowText->setToolbarVisible(false);
 
 	m_ui->buttons->addButton(tr("Add"), QDialogButtonBox::AcceptRole);
 
@@ -142,5 +152,5 @@ void ScenarioSchemeItemDialog::initConnections()
 
 void ScenarioSchemeItemDialog::initStyleSheet()
 {
-    m_ui->cardColor->setProperty("itemDialog", true);
+	m_ui->cardColor->setProperty("itemDialog", true);
 }

@@ -94,10 +94,10 @@ namespace ManagementLayer
 		void setCommentOnly(bool _isCommentOnly);
 
 	public slots:
-        /**
-         * @brief Обновить параметры редактора карточек
-         */
-        void aboutCardsSettingsUpdated();
+		/**
+		 * @brief Обновить параметры редактора карточек
+		 */
+		void aboutCardsSettingsUpdated();
 
 		/**
 		 * @brief Обновить параметры текстового редактора
@@ -223,16 +223,16 @@ namespace ManagementLayer
 		 * @brief Добавить элемент, после заданного
 		 */
 		/** @{ */
-		void aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _title,
-			const QString& _description);
+		void aboutAddItemFromCards(const QModelIndex& _afterItemIndex, int _itemType, const QString& _title,
+			const QColor& _color, const QString& _description);
 		void aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _header,
 			const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Изменить заданный элемент
 		 */
-		void aboutEditItem(const QModelIndex& _itemIndex, int _itemType, const QString& _header,
-			const QString& _description);
+		void aboutEditItemFromCards(const QModelIndex& _itemIndex, int _itemType, const QString& _header,
+			const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Удалить заданныё элемент

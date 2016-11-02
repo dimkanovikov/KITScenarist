@@ -33,10 +33,10 @@ public:
 	CustomGraphicsScene(QObject* _parent = 0);
 	~CustomGraphicsScene();
 
-    /**
-     * @brief Необходимо ли использовать в качестве фона пробковую доску
-     */
-    void setUseCorkboardBackground(bool _use);
+	/**
+	 * @brief Необходимо ли использовать в качестве фона пробковую доску
+	 */
+	void setUseCorkboardBackground(bool _use);
 
 	/**
 	 * @brief Добавить новый элемент
@@ -103,7 +103,7 @@ signals:
 	 * @brief Запросы на изменение выделенной фигуры
 	 */
 	/** @{ */
-	void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _description);
+	void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description);
 	void editNoteRequest(const QString& _text);
 	void editFlowTextRequest(const QString& _text);
 	/** @} */
@@ -134,7 +134,7 @@ protected:
 	/**
 	 * @brief Переопределяем для отображения редактора параметров элемента
 	 */
-    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event) override;
+	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event) override;
 
 private:
 	/**

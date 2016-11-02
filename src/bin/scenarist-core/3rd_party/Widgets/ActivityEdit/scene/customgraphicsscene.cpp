@@ -60,12 +60,12 @@ namespace {
 
 
 CustomGraphicsScene::CustomGraphicsScene(QObject* _parent) :
-    QGraphicsScene(_parent),
+	QGraphicsScene(_parent),
 	m_afterMoving(false)
 {
 	setItemIndexMethod(QGraphicsScene::NoIndex);
 
-    setBackgroundBrush(Qt::transparent);
+	setBackgroundBrush(Qt::transparent);
 
 	QGraphicsRectItem *item;
 	addItem(item = new QGraphicsRectItem(QRectF(0,0,10000,10000)));
@@ -74,7 +74,7 @@ CustomGraphicsScene::CustomGraphicsScene(QObject* _parent) :
 
 CustomGraphicsScene::~CustomGraphicsScene()
 {
-    removeAllShapes();
+	removeAllShapes();
 }
 
 void CustomGraphicsScene::appendCard(const QString& _uuid, int _cardType, const QString& _title,
@@ -461,7 +461,7 @@ Shape* CustomGraphicsScene::takeShape(Shape* _shape)
 
 void CustomGraphicsScene::removeShape(Shape* _shape)
 {
-    if (m_shapes.contains(_shape)) {
+	if (m_shapes.contains(_shape)) {
 		//
 		// Определяем внешние элементы
 		//
@@ -557,36 +557,36 @@ void CustomGraphicsScene::removeSelectedShapes()
 
 void CustomGraphicsScene::removeAllShapes()
 {
-    //
-    // Удаляем элементы в корзину
-    //
-    QPainterPath path;
-    path.addRect(sceneRect());
-    setSelectionArea(path);
-    removeSelectedShapes();
+	//
+	// Удаляем элементы в корзину
+	//
+	QPainterPath path;
+	path.addRect(sceneRect());
+	setSelectionArea(path);
+	removeSelectedShapes();
 
-    //
-    // Очищаем корзину
-    //
-    {
-        //
-        // Сперва убираем родителей (чтобы не произошло рекурсивного удаления)
-        // и извлекаем из сцены (чтобы было более эффективно)
-        //
-        for (Shape* shape : m_shapesAboutToDelete) {
-            shape->setParentItem(nullptr);
-            if (shape->scene() == this) {
-                removeItem(shape);
-            }
-        }
-        //
-        // А затем удаляем сами элементы
-        //
-        qDeleteAll(m_shapesAboutToDelete);
-        m_shapesAboutToDelete.clear();
-    }
+	//
+	// Очищаем корзину
+	//
+	{
+		//
+		// Сперва убираем родителей (чтобы не произошло рекурсивного удаления)
+		// и извлекаем из сцены (чтобы было более эффективно)
+		//
+		for (Shape* shape : m_shapesAboutToDelete) {
+			shape->setParentItem(nullptr);
+			if (shape->scene() == this) {
+				removeItem(shape);
+			}
+		}
+		//
+		// А затем удаляем сами элементы
+		//
+		qDeleteAll(m_shapesAboutToDelete);
+		m_shapesAboutToDelete.clear();
+	}
 
-    clear();
+	clear();
 	QGraphicsRectItem *item;
 	addItem(item = new QGraphicsRectItem(QRectF(0,0,10000,10000)));
 	item->setVisible(false);
@@ -1023,7 +1023,7 @@ void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event
 {
 	if (Shape* shape = dynamic_cast<Shape*>(itemAt(_event->scenePos(), QTransform()))) {
 		if (CardShape* card = dynamic_cast<CardShape*>(shape)) {
-			emit editCardRequest(card->uuid(), card->cardType(), card->title(), card->description());
+			emit editCardRequest(card->uuid(), card->cardType(), card->title(), card->colors(), card->description());
 		} else if (NoteShape* note = dynamic_cast<NoteShape*>(shape)) {
 			emit editNoteRequest(note->text());
 		} else if (ArrowFlow* flow = dynamic_cast<ArrowFlow*>(shape)) {
@@ -1033,7 +1033,7 @@ void CustomGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event
 				emit editFlowTextRequest(flow->text());
 			}
 		}
-    }
+	}
 }
 
 Shape* CustomGraphicsScene::createCard(const QString& _uuid, int _cardType, const QString& _title,
