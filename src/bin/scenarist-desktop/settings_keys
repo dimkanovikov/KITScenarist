@@ -3,6 +3,12 @@
 cards/use-corkboard - использовать в качестве фона рисунок пробковой доски (true) или цвет (false)
 cards/background-color - цвет фоновой заливки для светлой темы
 cards/background-color-dark - цвет фоновой заливки для тёмной темы
+cards/resizer - параметры панели упорядочивания карточек по сетке
+cards/resizer/card-size - размер карточки
+cards/resizer/card-ratio - отношение сторон карточки
+cards/resizer/distance - расстояние
+cards/resizer/count-in-line - количество карточек в строке
+cards/resizer/arrange-in-rows - выстраивать карточки в строки (true) или в столбцы (false)
 
 navigator/show-scenes-numbers - отображать номера сцен
 navigator/show-scene-title - отображать название сцены вместо заголовка (время и место)

@@ -520,6 +520,25 @@ void ActivityEdit::showContextMenu(const QPoint& _pos)
 
 				menu->deleteLater();
 			}
+			//
+			// Меню для связей
+			//
+			else if (ArrowFlow* flow = dynamic_cast<ArrowFlow*>(scene->selectedShapes().first())) {
+				QMenu* menu = new QMenu(this);
+				QAction* removeAnchors = menu->addAction(tr("Remove anchors"));
+
+				//
+				// Выводим меню
+				//
+				QAction* toggled = menu->exec(mapToGlobal(_pos));
+				if (toggled != 0) {
+					if (toggled == removeAnchors) {
+						flow->removeAllFlowKnots();
+					}
+				}
+
+				menu->deleteLater();
+			}
 		}
 	}
 }

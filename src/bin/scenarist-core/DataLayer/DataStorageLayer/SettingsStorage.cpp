@@ -9,6 +9,8 @@
 
 #include <QApplication>
 #include <QHeaderView>
+#include <QRadioButton>
+#include <QSpinBox>
 #include <QSplitter>
 #include <QStandardPaths>
 #include <QStringList>
@@ -226,14 +228,23 @@ void SettingsStorage::saveApplicationStateAndGeometry(QWidget* _widget)
 {
 	m_appSettings.beginGroup(STATE_AND_GEOMETRY_KEY);
 
+	//
+	// Геометрия и положение самого окна
+	//
 	m_appSettings.setValue("geometry", _widget->saveGeometry());
 
+	//
+	// Сохраняем состояния кнопок
+	//
 	m_appSettings.beginGroup("toolbuttons");
 	foreach (QToolButton* toolButton, _widget->findChildren<QToolButton*>()) {
 		m_appSettings.setValue(toolButton->objectName() + "-checked", toolButton->isChecked());
 	}
 	m_appSettings.endGroup();
 
+	//
+	// Сохраняем состояния разделителей
+	//
 	m_appSettings.beginGroup("splitters");
 	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
 		m_appSettings.beginGroup(splitter->objectName());
@@ -251,16 +262,50 @@ void SettingsStorage::saveApplicationStateAndGeometry(QWidget* _widget)
 	}
 	m_appSettings.endGroup();
 
+	//
+	// Сохраняем состояния таблиц
+	//
 	m_appSettings.beginGroup("headers");
 	foreach (QTableView* table, _widget->findChildren<QTableView*>()) {
 		m_appSettings.setValue(table->objectName() + "-state", table->horizontalHeader()->saveState());
 		m_appSettings.setValue(table->objectName() + "-geometry", table->horizontalHeader()->saveGeometry());
 	}
+	//
+	// ... и деревьев
+	//
 	foreach (QTreeView* tree, QApplication::activeWindow()->findChildren<QTreeView*>()) {
 		m_appSettings.setValue(tree->objectName() + "-state", tree->header()->saveState());
 		m_appSettings.setValue(tree->objectName() + "-geometry", tree->header()->saveGeometry());
 	}
 	m_appSettings.endGroup();
+
+	//
+	// Сохраняем состояния радиокнопок
+	//
+	m_appSettings.beginGroup("radiobuttons");
+	foreach (QRadioButton* radioButton, _widget->findChildren<QRadioButton*>()) {
+		m_appSettings.setValue(radioButton->objectName() + "-checked", radioButton->isChecked());
+	}
+	m_appSettings.endGroup();
+
+	//
+	// Сохраняем состояния слайдеров
+	//
+	m_appSettings.beginGroup("sliders");
+	foreach (QAbstractSlider* slider, _widget->findChildren<QAbstractSlider*>()) {
+		m_appSettings.setValue(slider->objectName() + "-value", slider->value());
+	}
+	m_appSettings.endGroup();
+
+	//
+	// Сохраняем состояния спинбоксов
+	//
+	m_appSettings.beginGroup("spinboxes");
+	foreach (QSpinBox* spinBox, _widget->findChildren<QSpinBox*>()) {
+		m_appSettings.setValue(spinBox->objectName() + "-value", spinBox->value());
+	}
+	m_appSettings.endGroup();
+
 	m_appSettings.endGroup(); // STATE_AND_GEOMETRY_KEY
 }
 
@@ -268,15 +313,23 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 {
 	m_appSettings.beginGroup(STATE_AND_GEOMETRY_KEY);
 
+	//
+	// Восстановим геометрию и положение окна
+	//
 	_widget->restoreGeometry(m_appSettings.value("geometry").toByteArray());
 
-
+	//
+	// Состояния кнопок
+	//
 	m_appSettings.beginGroup("toolbuttons");
 	foreach (QToolButton* toolButton, _widget->findChildren<QToolButton*>()) {
 		toolButton->setChecked(m_appSettings.value(toolButton->objectName() + "-checked", false).toBool());
 	}
 	m_appSettings.endGroup();
 
+	//
+	// Разделителей
+	//
 	m_appSettings.beginGroup("splitters");
 	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
 		m_appSettings.beginGroup(splitter->objectName());
@@ -316,16 +369,51 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 	}
 	m_appSettings.endGroup();
 
+	//
+	// Таблиц
+	//
 	m_appSettings.beginGroup("headers");
 	foreach (QTableView* table, _widget->findChildren<QTableView*>()) {
 		table->horizontalHeader()->restoreState(m_appSettings.value(table->objectName() + "-state").toByteArray());
 		table->horizontalHeader()->restoreGeometry(m_appSettings.value(table->objectName() + "-geometry").toByteArray());
 	}
+	//
+	// ... и деревьев
+	//
 	foreach (QTreeView* tree, _widget->findChildren<QTreeView*>()) {
 		tree->header()->restoreState(m_appSettings.value(tree->objectName() + "-state").toByteArray());
 		tree->header()->restoreGeometry(m_appSettings.value(tree->objectName() + "-geometry").toByteArray());
 	}
 	m_appSettings.endGroup();
+
+
+	//
+	// Радиокнопок
+	//
+	m_appSettings.beginGroup("radiobuttons");
+	foreach (QRadioButton* radioButton, _widget->findChildren<QRadioButton*>()) {
+		radioButton->setChecked(m_appSettings.value(radioButton->objectName() + "-checked", radioButton->isChecked()).toBool());
+	}
+	m_appSettings.endGroup();
+
+	//
+	// Слайдеров
+	//
+	m_appSettings.beginGroup("sliders");
+	foreach (QAbstractSlider* slider, _widget->findChildren<QAbstractSlider*>()) {
+		slider->setValue(m_appSettings.value(slider->objectName() + "-value", slider->value()).toInt());
+	}
+	m_appSettings.endGroup();
+
+	//
+	// Спинбоксов
+	//
+	m_appSettings.beginGroup("spinboxes");
+	foreach (QSpinBox* spinBox, _widget->findChildren<QSpinBox*>()) {
+		spinBox->setValue(m_appSettings.value(spinBox->objectName() + "-value", spinBox->value()).toInt());
+	}
+	m_appSettings.endGroup();
+
 	m_appSettings.endGroup(); // STATE_AND_GEOMETRY_KEY
 }
 

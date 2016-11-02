@@ -896,9 +896,10 @@ void ApplicationManager::aboutApplicationSettingsUpdated()
 
 void ApplicationManager::aboutProjectChanged()
 {
-	::updateWindowModified(m_view, true);
-
-	m_statisticsManager->scenarioTextChanged();
+	if (isProjectLoaded()) {
+		::updateWindowModified(m_view, true);
+		m_statisticsManager->scenarioTextChanged();
+	}
 }
 
 void ApplicationManager::aboutShowFullscreen()
@@ -1248,6 +1249,11 @@ void ApplicationManager::closeCurrentProject()
 	// Перейти на стартовую вкладку
 	//
 	m_tabs->setCurrentTab(0);
+}
+
+bool ApplicationManager::isProjectLoaded() const
+{
+	return m_projectsManager->isCurrentProjectValid();
 }
 
 void ApplicationManager::initView()

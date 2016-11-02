@@ -21,7 +21,7 @@ namespace ManagementLayer
 {
 	class ProjectsManager;
 	class StartUpManager;
-    class ResearchManager;
+	class ResearchManager;
 	class ScenarioManager;
 	class CharactersManager;
 	class LocationsManager;
@@ -210,6 +210,11 @@ namespace ManagementLayer
 		 */
 		void closeCurrentProject();
 
+		/**
+		 * @brief Загружен ли проект в данный момент
+		 */
+		bool isProjectLoaded() const;
+
 	private:
 		/**
 		 * @brief Настроить представление
@@ -295,7 +300,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Управляющий страницей разработки
 		 */
-        ResearchManager* m_researchManager;
+		ResearchManager* m_researchManager;
 
 		/**
 		 * @brief Управляющий сценарием

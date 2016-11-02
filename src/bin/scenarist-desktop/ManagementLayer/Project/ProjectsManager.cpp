@@ -20,6 +20,11 @@ namespace {
 }
 
 
+bool ProjectsManager::isCurrentProjectValid()
+{
+	return s_currentProject.type() != Project::Invalid;
+}
+
 const ManagementLayer::Project& ProjectsManager::currentProject()
 {
 	return s_currentProject;

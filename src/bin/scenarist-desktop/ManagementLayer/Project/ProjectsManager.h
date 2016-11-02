@@ -23,6 +23,11 @@ namespace ManagementLayer
 	 */
 	public:
 		/**
+		 * @brief Валиден ли текущий проект
+		 */
+		static bool isCurrentProjectValid();
+
+		/**
 		 * @brief Получить текущий проект, с которым работает пользователь
 		 */
 		static const Project& currentProject();
