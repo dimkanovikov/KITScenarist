@@ -217,13 +217,11 @@ void ScenarioCardsView::initStyleSheet()
 	m_addVLine->setProperty("inTopPanel", true);
 	m_sort->setProperty("inTopPanel", true);
 	m_sort->setProperty("hasMenu", true);
-
 	m_fullscreen->setProperty("inTopPanel", true);
-	m_fullscreen->setProperty("topPanelTopBordered", true);
-	m_fullscreen->setProperty("topPanelRightBordered", true);
 
 	m_toolbarSpacer->setProperty("inTopPanel", true);
 	m_toolbarSpacer->setProperty("topPanelTopBordered", true);
+	m_toolbarSpacer->setProperty("topPanelRightBordered", true);
 
 	m_cardsEdit->setProperty("mainContainer", true);
 }
