@@ -1,0 +1,1841 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FinalDraft DocumentType="Script" Template="No" Version="2">
+
+  <Content>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="1" Title="About Save the Cat!">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT!</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template was based upon ideas from the Save the Cat!® books published by Michael Wiese Productions (www.mwp.com) and Save the Cat! Press. If you are not familiar with Save the Cat!, visit www.savethecat.com for free screenwriting articles and beat sheets. Save the Cat! also makes the popular Save the Cat! software and iPhone and iPad app that imports and exports Final Draft (.fdx) files. Save the Cat! software has many additional and advanced features you won't find in this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1 5/8" Page="1" Title="About Save the Cat! Genres">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT! GENRES</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In his book, </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Italic">Save the Cat! The Last Book on Screenwriting You'll Ever Need</Text>
+      <Text>, Blake Snyder organizes scripts into ten basic genres. These genres are listed below.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Monster in the House</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Monster, House, Sin</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A culpable hero is forced to save a trapped group of people from being killed by a monster he inadvertently unleashed.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Golden Fleece</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Road, Team, Prize</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A driven hero must lead a group of allies to retrieve a prized possession through a perilous journey that wasn’t what the hero expected.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Out of the Bottle</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Wish, Spell, Lesson</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A covetous hero must learn to undo a spell he wished for before it turns into a curse he can’t undo.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dude with a Problem</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Innocent Hero, Sudden Event, Life or Death</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An unwitting hero must survive at all costs when he is dragged into a life or death situation he never saw coming and cannot escape.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Rites of Passage</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Life Problem, Wrong Way, Acceptance </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>
+A troubled hero’s only way to overcome a spiraling life crisis is to defeat his worst enemy - himself.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Buddy Love</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Incomplete Hero, Counterpart, Complication </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An inadequate hero must rise above an extremely difficult situation to be with a uniquely unlikely partner who is the only one capable of bringing him peace.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Whydunit</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Detective, Secret, Dark Turn</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A single-minded hero must find the truth to a mystery so intriguing before he is swallowed by the darkness he desperately seeks to expose.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fool Triumphant</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Fool, Establishment, Transmutation</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An innocent hero’s only way to defeat the prejudices of a group is to change himself without losing what made him the group’s target of disdain in the first place - his uniqueness.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Institutionalized</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Group, Choice, Sacrifice</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An outsider’s only way to save his individuality is by going against the many who wish to integrate him into their fold.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Superhero</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Special Power, Nemesis, Curse</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A uniquely special hero must defeat an opponent with stronger capabilities by using the same powers that disconnect him from the people he hopes to save.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="4/8" Page="2" Title="About Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Within each Save the Cat! genre are fifteen beats. These beats are important scenes or sequences that typically occur near the same place in every script or movie.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The page number where a beat typically occurs is indicated below in parentheses. This page number is based on a 110-page script. If your script is longer or shorter than 110 pages, the location of your beats may vary.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>It's also good to note that, as can be seen in a few of the examples, while the beats usually follow a specific pattern and occur at certain moments in a script, it is not always the case - the order of beats can sometimes vary. There are times the beats can be considered "movable parts" that work together to tell a story - and the transformation of your hero - in the best possible way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This allows screenwriters to maintain your own unique creative voices while still providing your audience with a familiar form of storytelling that will resonate.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1 2/8" Page="3" Title="Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">SAVE THE CAT! BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Opening Image</Text>
+      <Text> (1) – The scene in the movie that sets up the tone, type, and initial salvo of a film, a "before" snapshot — and the opposite of the Final Image.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Theme Stated</Text>
+      <Text> (5) – Usually spoken to the main character, often without knowing what is said will be vital to his surviving this tale. It's what your movie is "about."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Setup</Text>
+      <Text> (1-10) – The first 10 pages of a script must not only grab our interest and a studio reader's but introduce or hint at introducing every character in the A Story.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Catalyst </Text>
+      <Text>(12) – The telegram, the knock at the door, the act of catching a spouse in bed with another — something that is done to the hero to shake him.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Debate</Text>
+      <Text> (12-25) – The section of the script, be it a scene or a series of scenes, when the hero doubts the journey he must take.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Two</Text>
+      <Text> (25) – Act Two, that is; it is where we leave the "Thesis" world behind and enter the upside-down "Anti-thesis" world of Act Two. The hero makes a choice — and his journey begins.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">B Story</Text>
+      <Text> (30) – The "love" story, traditionally, but actually where the discussion about the theme of a good movie is found.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fun and Games</Text>
+      <Text> (30-55) – Here we forget plot and enjoy "set pieces" and "trailer moments" and revel in the "promise of the premise."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Midpoint</Text>
+      <Text> (55) – The dividing line between the two halves of a movie; it's back to the story as "stakes are raised," "time clocks" appear, and we start putting the squeeze on our hero(es).</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Bad Guys Close In</Text>
+      <Text> (55-75) – Both internally (the disintegration of old beliefs) and externally (as actual bad guys tighten their grip), real pressure is applied.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">All Is Lost</Text>
+      <Text> (75) – The "False Defeat" and the place where we find "the whiff of death" — because something must die here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dark Night of the Soul</Text>
+      <Text> (75 to 85) – Why hast thou forsaken me? That part of the script where the hero has lost all hope...</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Three</Text>
+      <Text> (85) ...but not for long! Thanks to a fresh idea, new inspiration, or last-minute action or advice from the love interest in the B Story, the hero chooses to fight.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Finale</Text>
+      <Text> (85-110) – The "Synthesis" of two worlds: From what was, and that which has been learned, the hero forges a third way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Final Image</Text>
+      <Text> (110) – The opposite of the Opening Image, proving a change has occurred. And since All Stories Are About Transformation, that change had better be dramatic!</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="3/8" Page="4" Title="How to Use this Template">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">You can use this template purely as a reference template. You can also delete the Save the Cat beats </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">HOW TO USE THIS TEMPLATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template includes a Save the Cat! Beat Sheet for three films within the Fool Triumphant genre. The three beat sheets are for the films </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Italic">Elf, The King's Speech</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">, </Text>
+      <Text>and</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold"> </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Italic">The 40 Year Old Virgin.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>You can use this template as a reference while you write your script. You can also use Scene View, Scene Navigator, and Index Card View within Final Draft 9 to replace these beats with your own scenes and scene summaries.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>If you decide to alter or replace this template, first save it with a new file name. Otherwise, you will permanently change the content within this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="ELF">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: David Berenbaum</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Jon Favreau</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">Elf</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: David Berenbaum</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Jon Favreau</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps"></Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="5" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The movie opens in storybook fashion, with narrator Papa Elf (Bob Newhart) telling a tale about the film’s hero, Buddy, although the first time we meet Buddy, he is a baby at an orphanage. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 1 - Opening Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The movie opens in storybook fashion, with narrator Papa Elf (Bob Newhart) telling a tale about the film’s hero, Buddy, although the first time we meet Buddy, he is a baby at an orphanage. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">One Christmas Eve, the baby sneaks into Santa’s toy sack and is accidentally taken to the North Pole, where he grows up without realizing he is a human and attends elf school. Papa Elf teaches him about Santa’s sleigh, which used to be powered by Christmas spirit, but is now powered by a jet engine in need of repair. Buddy (Will Ferrell) struggles to fit in as an elf, unable to make the same amount of toys as the others.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 2 - setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>One Christmas Eve, the baby sneaks into Santa’s toy sack and is accidentally taken to the North Pole, where he grows up without realizing he is a human and attends elf school. Papa Elf teaches him about Santa’s sleigh, which used to be powered by Christmas spirit, but is now powered by a jet engine in need of repair. Buddy (Will Ferrell) struggles to fit in as an elf, unable to make the same amount of toys as the others.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">When Buddy berates himself for being behind production schedule, elf Ming Ming tells him, “We all just have different talents, that’s all… you have lots of talent, special talents, in fact.” This is the “thesis” that will be debated in the story: what makes an individual unique, and how does someone find out where he or she truly belongs?</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 3 - THEME STATED</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>When Buddy berates himself for being behind production schedule, elf Ming Ming tells him, “We all just have different talents, that’s all… you have lots of talent, special talents, in fact.” This is the “thesis” that will be debated in the story: what makes an individual unique, and how does someone find out where he or she truly belongs?</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">After becoming frustrated with his lack of toy-making ability, Buddy overhears some of the other elves discussing how clueless he is, stating that if he hasn’t figured out he’s a human yet, he never will.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ELF BEAT 4 - CATALYST</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>After becoming frustrated with his lack of toy-making ability, Buddy overhears some of the other elves discussing how clueless he is, stating that if he hasn’t figured out he’s a human yet, he never will.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="5" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Buddy runs home to Papa Elf, learning about his past and true parentage. Papa Elf shows Buddy a snow globe with the Empire State Building inside it, telling him where his biological father works. Buddy then goes to talk to Santa. Buddy is excited about the prospect of going to meet his true father, but Santa delivers a shocking blow: Walter Hobbs, a children’s book editor, is on the naughty list. “Some people, they just lose sight of what’s important in life,” Santa says. “That doesn’t mean they can’t find their way again. Maybe all they need is just a little Christmas spirit.” Buddy realizes that he has what his father needs and decides to set out to New York to meet and to rescue him. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 5 - DEBATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Buddy runs home to Papa Elf, learning about his past and true parentage. Papa Elf shows Buddy a snow globe with the Empire State Building inside it, telling him where his biological father works. Buddy then goes to talk to Santa. Buddy is excited about the prospect of going to meet his true father, but Santa delivers a shocking blow: Walter Hobbs, a children’s book editor, is on the naughty list. “Some people, they just lose sight of what’s important in life,” Santa says. “That doesn’t mean they can’t find their way again. Maybe all they need is just a little Christmas spirit.” Buddy realizes that he has what his father needs and decides to set out to New York to meet and to rescue him. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Buddy arrives in Manhattan, the “upside-down world,” the complete antithesis of his winter wonderland. When he arrives at the Empire State Building, everyone thinks he is a big joke. Even though Buddy mentions the name of his birth mother, Walter kicks him out of the building. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 6 - BREAK INTO TWO</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Buddy arrives in Manhattan, the “upside-down world,” the complete antithesis of his winter wonderland. When he arrives at the Empire State Building, everyone thinks he is a big joke. Even though Buddy mentions the name of his birth mother, Walter kicks him out of the building. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Buddy goes to the place that is closest to his ordinary world: Gimbel’s Department Store. There he catches a glimpse of Jovie (Zooey Deschanel) as she decorates a Christmas tree. Her brash demeanor is unable to keep Buddy from sharing his wisdom: “The best way to spread Christmas cheer is by singing loud for all to hear.”</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ELF BEAT 7 - b story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Buddy goes to the place that is closest to his ordinary world: Gimbel’s Department Store. There he catches a glimpse of Jovie (Zooey Deschanel) as she decorates a Christmas tree. Her brash demeanor is unable to keep Buddy from sharing his wisdom: “The best way to spread Christmas cheer is by singing loud for all to hear.”</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="6" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">While one could argue that the Fun and Games begin when Buddy first arrives in the Big Apple, they truly take off when he sets foot in the department store. Buddy has an encounter with the manager, who is not sure how to handle him. When the manager announces that Santa will be arriving the next day, Buddy is ecstatic, screaming at the top of his lungs and adding, “I know him!” He works tirelessly throughout the night, turning the store into a mini North Pole.
+</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">When Buddy meets the faux Santa and declares him an imposter, he gets into a fight, and Walter receives a call to bail his son out of jail. Walter takes Buddy to his doctor, who runs a paternity test, confirming that Buddy is his son.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ELF BEAT 8 - fun and games</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>While one could argue that the Fun and Games begin when Buddy first arrives in the Big Apple, they truly take off when he sets foot in the department store. Buddy has an encounter with the manager, who is not sure how to handle him. When the manager announces that Santa will be arriving the next day, Buddy is ecstatic, screaming at the top of his lungs and adding, “I know him!” He works tirelessly throughout the night, turning the store into a mini North Pole.
+</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>When Buddy meets the faux Santa and declares him an imposter, he gets into a fight, and Walter receives a call to bail his son out of jail. Walter takes Buddy to his doctor, who runs a paternity test, confirming that Buddy is his son.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="6" Title="MIDPOINT ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Walter brings Buddy home to meet his wife and son, Michael. After some initial tension, Buddy helps Michael in a snowball fight, Michael accepts him as a brother, and the two run through Gimbel’s together, jumping across beds and in the elevator. Buddy encounters Jovie, and Michael persuades him to ask her out to “go eat food.” Jovie accepts. On all levels, this seems like a victory for Buddy as he tries to find his place in the world and in his family. But as with all midpoints, it is a “false victory.”</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 9 - midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Walter brings Buddy home to meet his wife and son, Michael. After some initial tension, Buddy helps Michael in a snowball fight, Michael accepts him as a brother, and the two run through Gimbel’s together, jumping across beds and in the elevator. Buddy encounters Jovie, and Michael persuades him to ask her out to “go eat food.” Jovie accepts. On all levels, this seems like a victory for Buddy as he tries to find his place in the world and in his family. But as with all midpoints, it is a “false victory.”
+</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="7" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Just when Buddy thinks he’s found his place in this new world, the world starts to push back. Walter reluctantly takes Buddy to work with him, but Buddy is too much to handle. He causes issues in the mailroom, which in turn causes problems for Walter. The Bad Guys Close In on Walter, too: his boss wants him to come up with a new book by Christmas Eve, and Walter must choose between work and family. He brings in author Miles Finch (Peter Dinklage) to help save his business.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">It’s Christmas Eve, and Buddy takes Jovie on a date and the two hit it off well. Elated and in love, Buddy bursts into the board room during the meeting with Finch and is surprised to see Finch’s size, assuming that the author is an elf. Buddy’s insistence and innocence cause Finch to lose his temper and walk out on Walter.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 10 - bad guys close in </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Just when Buddy thinks he’s found his place in this new world, the world starts to push back. Walter reluctantly takes Buddy to work with him, but Buddy is too much to handle. He causes issues in the mailroom, which in turn causes problems for Walter. The Bad Guys Close In on Walter, too: his boss wants him to come up with a new book by Christmas Eve, and Walter must choose between work and family. He brings in author Miles Finch (Peter Dinklage) to help save his business.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>It’s Christmas Eve, and Buddy takes Jovie on a date and the two hit it off well. Elated and in love, Buddy bursts into the board room during the meeting with Finch and is surprised to see Finch’s size, assuming that the author is an elf. Buddy’s insistence and innocence cause Finch to lose his temper and walk out on Walter.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="ALL IS LOST ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Walter is infuriated and screams at Buddy, “Get the hell out of my life!” Buddy, despondent, walks through New York, and while his father is meeting with the boss, Buddy is standing at a bridge, looking at the water below. The “whiff of death” is in the air in more ways than one as Buddy is lost between two different worlds, and he can’t seem to find his place in either.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 11 - All Is Lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Walter is infuriated and screams at Buddy, “Get the hell out of my life!” Buddy, despondent, walks through New York, and while his father is meeting with the boss, Buddy is standing at a bridge, looking at the water below. The “whiff of death” is in the air in more ways than one as Buddy is lost between two different worlds, and he can’t seem to find his place in either.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Suddenly, Santa’s sleigh careens out of control and lands in Central Park. Buddy catches up with Santa and tries to help him fix the jet engine on the sleigh. Walter arrives with Michael, having chosen family over career when he realized that Buddy was leaving forever. But the Central Park rangers prepare to move in and arrest Santa. When Michael’s belief makes Santa’s sleigh begin to fly, Buddy knows what he must do: he gives Santa’s book to Michael. He must make the world believe.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 12 - Dark Night of the Soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Suddenly, Santa’s sleigh careens out of control and lands in Central Park. Buddy catches up with Santa and tries to help him fix the jet engine on the sleigh. Walter arrives with Michael, having chosen family over career when he realized that Buddy was leaving forever. But the Central Park rangers prepare to move in and arrest Santa. When Michael’s belief makes Santa’s sleigh begin to fly, Buddy knows what he must do: he gives Santa’s book to Michael. He must make the world believe.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="7" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The city’s attention is now fixed on what is happening in Central Park.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 13 - Break into Three</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The city’s attention is now fixed on what is happening in Central Park.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Michael reads from Santa’s book live on the air while the rangers chase Walter, disguised as Santa. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Jovie and Emily see the news and rush to Central Park, and when things look their worst, Jovie remembers Buddy’s words: “The best way to spread Christmas cheer is by singing loud for all to hear.” Overcoming her fears and insecurities, she sings in front of everyone. Soon, all of the others whom Buddy has affected do, too, but only when Walter reluctantly joins in do they gain full power, saving Santa and Christmas.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 14 - Finale</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Michael reads from Santa’s book live on the air while the rangers chase Walter, disguised as Santa. Jovie and Emily see the news and rush to Central Park, and when things look their worst, Jovie remembers Buddy’s words: “The best way to spread Christmas cheer is by singing loud for all to hear.” Overcoming her fears and insecurities, she sings in front of everyone. Soon, all of the others whom Buddy has affected do, too, but only when Walter reluctantly joins in do they gain full power, saving Santa and Christmas.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="FINAL IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Papa Elf narrates, the screen fills with images of a family sing-along followed by Buddy and Jovie visiting the North Pole. Buddy has found his place in both worlds, “synthesis” as his life has changed the lives of those around him, a typical feature of a Fool Triumphant story. Buddy’s influence is nowhere more evident than in the best-selling book that Walter’s new firm has published: Elf.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Elf beat 15 - Final Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Papa Elf narrates, the screen fills with images of a family sing-along followed by Buddy and Jovie visiting the North Pole. Buddy has found his place in both worlds, “synthesis” as his life has changed the lives of those around him, a typical feature of a Fool Triumphant story. Buddy’s influence is nowhere more evident than in the best-selling book that Walter’s new firm has published: </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Italic">Elf</Text>
+      <Text>.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="THE KING'S SPEECH">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: David Seidler</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Tom Hooper</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">THE KING'S SPEECH</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: David Seidler</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Tom Hooper</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="8" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie (Colin Firth), the future King George VI, is surrounded by his wife and aides as they prep and reassure him he will do well with his speech at Wembley Stadium. Bertie is visibly nervous. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie climbs the stadium steps and faces the cause of his fear: thousands of people present to listen.  As the red light on his microphone turns on, Bertie is unable to speak. He struggles as he stammers and stutters badly. It is painful to watch, particularly for his wife, Elizabeth (Helena Bonham Carter). Everyone else can only look away or shake their heads in disappointment.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 1 - Opening Image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie (Colin Firth), the future King George VI, is surrounded by his wife and aides as they prep and reassure him he will do well with his speech at Wembley Stadium. Bertie is visibly nervous. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie climbs the stadium steps and faces the cause of his fear: thousands of people present to listen.  As the red light on his microphone turns on, Bertie is unable to speak. He struggles as he stammers and stutters badly. It is painful to watch, particularly for his wife, Elizabeth (Helena Bonham Carter). Everyone else can only look away or shake their heads in disappointment.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="8" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie is being treated by a speech doctor who makes him talk with a mouthful of marbles. The procedure is infuriating and Bertie thinks the treatment is hopeless. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Even in front of his kids, Bertie has trouble telling them a bedtime story. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Elizabeth visits an unorthodox speech therapist, Lionel Logue (Geoffrey Rush). Despite telling Lionel who she really is, Lionel tells her his therapy depends on full trust and honesty towards one another. He cannot make an exception for anyone and all of his sessions must be done at his office.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Lionel is also a frustrated actor and does poorly on an audition.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 2 - setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie is being treated by a speech doctor who makes him talk with a mouthful of marbles. The procedure is infuriating and Bertie thinks the treatment is hopeless. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Even in front of his kids, Bertie has trouble telling them a bedtime story. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Elizabeth visits an unorthodox speech therapist, Lionel Logue (Geoffrey Rush). Despite telling Lionel who she really is, Lionel tells her his therapy depends on full trust and honesty towards one another. He cannot make an exception for anyone and all of his sessions must be done at his office.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Lionel is also a frustrated actor and does poorly on an audition.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Believing that Lionel may be their last hope, Bertie and Elizabeth arrive at Lionel’s office. But Lionel’s unique approach to speech therapy has Bertie fuming mad once again. Before Bertie storms off, Lionel hands him a record of the speech Lionel just forced him to read while listening to music through headphones.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 3 - catalyst </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Believing that Lionel may be their last hope, Bertie and Elizabeth arrive at Lionel’s office. But Lionel’s unique approach to speech therapy has Bertie fuming mad once again. Before Bertie storms off, Lionel hands him a record of the speech Lionel just forced him to read while listening to music through headphones.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">King George V, after delivering his Christmas speech, tells his son that since the invention of radio, kings are expected to do more, to give hope to every home.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Knowing Bertie’s brother David is falling for a married woman, the King tells Bertie he might one day have to fulfill such expectations. The King has Bertie practice in front of him as if he were giving a speech on the radio. Bertie stammers, much to the dismay and anger of his father.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 4 - theme stated </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>King George V, after delivering his Christmas speech, tells his son that since the invention of radio, kings are expected to do more, to give hope to every home.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Knowing Bertie’s brother David is falling for a married woman, the King tells Bertie he might one day have to fulfill such expectations. The King has Bertie practice in front of him as if he were giving a speech on the radio. Bertie stammers, much to the dismay and anger of his father.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie is distraught. He believes he will never be the man his father hopes for nor the king his people need. He sees the record Lionel gave him and as he plays it, he gets the biggest shock of his life. He hears himself on the record but he’s not stuttering. Elizabeth hears it as well.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 5 - DEBATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie is distraught. He believes he will never be the man his father hopes for nor the king his people need. He sees the record Lionel gave him and as he plays it, he gets the biggest shock of his life. He hears himself on the record but he’s not stuttering. Elizabeth hears it as well.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="9" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie and Elizabeth return to Lionel’s office, much to his surprise.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 6 - BREAK INTO TWO </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie and Elizabeth return to Lionel’s office, much to his surprise.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="9" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Lionel will help Bertie overcome his speech impediment, but more importantly, help him believe in himself.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 7 - B STORY </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Lionel will help Bertie overcome his speech impediment, but more importantly, help him believe in himself.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Lionel’s unorthodox treatment has Bertie doing stuff he’s never done before. And as the two go through the therapy, their friendship begins to grow.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie’s brother David arrives. His relationship with Wallis Simpson, an American divorcee, is clearly a problem for the monarchy.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie seems to be improving but he clearly still has a ways to go.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 8 - Fun AND Games</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Lionel’s unorthodox treatment has Bertie doing stuff he’s never done before. And as the two go through the therapy, their friendship begins to grow.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie’s brother David arrives. His relationship with Wallis Simpson, an American divorcee, is clearly a problem for the monarchy.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie seems to be improving but he clearly still has a ways to go.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The King passes away, which makes David the new king, Edward III. However, instead of accepting the position with dignity, David feels trapped by the monarchy and breaks down. Bertie — behaving more like a king — confronts David to remind him that he’s king now and must act like it.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 9 - Midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The King passes away, which makes David the new king, Edward III. However, instead of accepting the position with dignity, David feels trapped by the monarchy and breaks down. Bertie — behaving more like a king — confronts David to remind him that he’s king now and must act like it. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="5/8" Page="10" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie shows up at Lionel’s office unexpectedly. They talk about Bertie’s life as a child, when his stammering started, and his lack of any real friends.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">David continues to party away and when Bertie confronts him, especially with the impending danger of Hitler, David accuses Bertie of wanting to take over the crown. Bertie is unable to answer back when David makes fun of his stammering.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Bertie reveals his frustrations to Lionel, Lionel suggests that Bertie would be a better king than David and mustn’t let his fears lead him. Bertie accuses Lionel of treason for even thinking of such things. Bertie storms off, leaving Lionel alone.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie stops his sessions with Lionel and Lionel grows worried. He visits Bertie at his royal residence only to be turned away. It seems like their friendship has ended.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie meets with Winston Churchill and it’s clear that David has not been performing his duties properly. More importantly, it seems certain that England is headed for war with Germany, and many are concerned as to where David would stand.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 10 - Bad Guys Close In </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie shows up at Lionel’s office unexpectedly. They talk about Bertie’s life as a child, when his stammering started, and his lack of any real friends.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>David continues to party away and when Bertie confronts him, especially with the impending danger of Hitler, David accuses Bertie of wanting to take over the crown. Bertie is unable to answer back when David makes fun of his stammering.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Bertie reveals his frustrations to Lionel, Lionel suggests that Bertie would be a better king than David and mustn’t let his fears lead him. Bertie accuses Lionel of treason for even thinking of such things. Bertie storms off, leaving Lionel alone.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie stops his sessions with Lionel and Lionel grows worried. He visits Bertie at his royal residence only to be turned away. It seems like their friendship has ended.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie meets with Winston Churchill and it’s clear that David has not been performing his duties properly. More importantly, it seems certain that England is headed for war with Germany, and many are concerned as to where David would stand.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Forced to choose between the monarchy and his love, David abdicates the throne. Bertie is now King George VI. His greatest fear has been realized.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Bertie is presented to the Accession Council, his old symptoms and stammering are in full bloom.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 11 - All Is Lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Forced to choose between the monarchy and his love, David abdicates the throne. Bertie is now King George VI. His greatest fear has been realized.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Bertie is presented to the Accession Council, his old symptoms and stammering are in full bloom.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie is in his study lamenting his predicament. He dreads his coronation speech and believes he isn’t meant to be king. Elizabeth consoles him and tells him she always loved his stammering and believes he will be a great king.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 12 - Dark Night of the Soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie is in his study lamenting his predicament. He dreads his coronation speech and believes he isn’t meant to be king. Elizabeth consoles him and tells him she always loved his stammering and believes he will be a great king.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="11" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bertie and Elizabeth visit Lionel at his home. Bertie apologizes and he and Lionel make amends.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 13 - Break into Three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bertie and Elizabeth visit Lionel at his home. Bertie apologizes and he and Lionel make amends.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="11" Title="FINALE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Bertie prepares for his coronation speech, he is told by the Archbishop that Lionel is a fraud. Bertie confronts Lionel but Lionel does not deny anything, for he never lied about who he was. They argue until Lionel finally tells Bertie he is the bravest man he has ever known. When the Archbishop arrives to remove Lionel, Bertie instead tells the Archbishop that his advice is not needed.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">After a successful coronation, the threat of Hitler’s invasion is very real and England is forced to declare war against Germany. In his greatest test, Bertie must give a speech to his people to give them hope and courage for the dark times ahead.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">With Lionel at his side, Bertie delivers an inspiring speech without his stammering. This time around, there are no embarrassed reactions or pained faces. Instead, the King is greeted with applause and congratulations.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 14 - Finale </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Bertie prepares for his coronation speech, he is told by the Archbishop that Lionel is a fraud. Bertie confronts Lionel but Lionel does not deny anything, for he never lied about who he was. They argue until Lionel finally tells Bertie he is the bravest man he has ever known. When the Archbishop arrives to remove Lionel, Bertie instead tells the Archbishop that his advice is not needed.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>After a successful coronation, the threat of Hitler’s invasion is very real and England is forced to declare war against Germany. In his greatest test, Bertie must give a speech to his people to give them hope and courage for the dark times ahead.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>With Lionel at his side, Bertie delivers an inspiring speech without his stammering. This time around, there are no embarrassed reactions or pained faces. Instead, the King is greeted with applause and congratulations.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="FINAL IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Bertie, Elizabeth, and their two daughters walk out to the balcony of Buckingham Palace, they are greeted with thundering applause by the crowd that has amassed below.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE KING'S SPEECH beat 15 - Final Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Bertie, Elizabeth, and their two daughters walk out to the balcony of Buckingham Palace, they are greeted with thundering applause by the crowd that has amassed below.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps"></Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="12" Title="THE 40 YEAR OLD VIRGIN">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: Judd Apatow &amp; Steve Carell</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Judd Apatow</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">THE 40 YEAR OLD VIRGIN</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: Judd Apatow &amp; Steve Carell</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Judd Apatow</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="OPENING IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Meet Andy Stitzer (Steve Carell) asleep in bed, looking kinda sad, and when he wakes, we know why: His morning erection reveals he’s a little “backed up.” Like a real-life Pee-wee Herman, boyish Andy makes breakfast and gets ready for his day, donning a helmet and riding his bike to work, but not before waving at the nice couple upstairs.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 1 - Opening Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Meet Andy Stitzer (Steve Carell) asleep in bed, looking kinda sad, and when he wakes, we know why: His morning erection reveals he’s a little “backed up.” Like a real-life Pee-wee Herman, boyish Andy makes breakfast and gets ready for his day, donning a helmet and riding his bike to work, but not before waving at the nice couple upstairs.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The neighbor waves back and says: “That guy has got to get laid.” It’s the theme... but is it true? Do you have to have sex to have a fulfilling life? </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 2 - THEME STATED</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The neighbor waves back and says: “That guy has got to get laid.” It’s the theme... but is it true? Do you have to have sex to have a fulfilling life? </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="12" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Andy starts out this movie working in the stock room of Smart Tech. Sharing about his weekend, a co-worker, the bearish Cal (Seth Rogen), tells a graphic sex story while Andy can only talk about making an egg salad sandwich. We meet the others: David (Paul Rudd), who misses his angry ex-girlfriend, and shaved-headed Jay (Romany Malco), the player. The guys invite Andy to their poker game, assuming him a rube. Andy surprises them by winning. This won’t be the last time Andy trumps his pals; and it’s a prelude to other lessons the “fool” will be dispensing. After the game has ended, the guys begin to tell sex stories. Andy is shy about his experiences...</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 3 - setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Andy starts out this movie working in the stock room of Smart Tech. Sharing about his weekend, a co-worker, the bearish Cal (Seth Rogen), tells a graphic sex story while Andy can only talk about making an egg salad sandwich. We meet the others: David (Paul Rudd), who misses his angry ex-girlfriend, and shaved-headed Jay (Romany Malco), the player. The guys invite Andy to their poker game, assuming him a rube. Andy surprises them by winning. This won’t be the last time Andy trumps his pals; and it’s a prelude to other lessons the “fool” will be dispensing. After the game has ended, the guys begin to tell sex stories. Andy is shy about his experiences...</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="12" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">...and at Minute 13 it slips out: Andy’s a virgin!</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 4 - CATALYST</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>...and at Minute 13 it slips out: Andy’s a virgin!</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="12" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">What should Andy do now? Embarrassed — and a little scared that the guys know — Andy considers quitting his job. In reviewing his life, we learn why Andy never had sex — although he came close. Like a 40-year-old boy, Andy collects comic-book action figures, paints soldiers, and plays video games. That life is now in jeopardy as David and the others begin to convince Andy to try again. Andy can’t escape a society consumed by sex — even ads for a sexy perfume called “Eruption” seem to be following him everywhere. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 5 - DEBATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>What should Andy do now? Embarrassed — and a little scared that the guys know — Andy considers quitting his job. In reviewing his life, we learn why Andy never had sex — although he came close. Like a 40-year-old boy, Andy collects comic-book action figures, paints soldiers, and plays video games. That life is now in jeopardy as David and the others begin to convince Andy to try again. Andy can’t escape a society consumed by sex — even ads for a sexy perfume called “Eruption” seem to be following him everywhere. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At Minute 22, Andy agrees to go out with the guys and enter the world of “men” — or at least the world these fellow boys he works with consider manly. The range of advice on how to “become a man” is hilarious. First idea: Find a drunk girl. At a club, Andy does just that and is sent home with her by the other guys, but his wild ride with this drunk girl mostly involves getting thrown up on. Andy has tried, but he is still a virgin.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 6 - BREAK INTO TWO</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At Minute 22, Andy agrees to go out with the guys and enter the world of “men” — or at least the world these fellow boys he works with consider manly. The range of advice on how to “become a man” is hilarious. First idea: Find a drunk girl. At a club, Andy does just that and is sent home with her by the other guys, but his wild ride with this drunk girl mostly involves getting thrown up on. Andy has tried, but he is still a virgin.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At Minute 33, Andy meets Trish (Catherine Keener) — not only more age-appropriate, but actually attracted to him. Trish works nearby, yet even when she gives him her number, Andy’s too shy to call. Trish will be his agent of change.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 7 - b story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At Minute 33, Andy meets Trish (Catherine Keener) — not only more age-appropriate, but actually attracted to him. Trish works nearby, yet even when she gives him her number, Andy’s too shy to call. Trish will be his agent of change. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="13" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Almost from the get-go, we realize Trish is “the one” for Andy, but the “promise of the premise” includes showing just how far this fish is out of water. His buddies initiate Andy into their world, and lock him in the store with a porn tape playing in the front window. The guys also take him to get his chest hair waxed in a painful and hilarious scene. (“We gonna need more wax!”) At Minute 46, telling Andy to “Be David Caruso in Jade,” Cal takes him to meet Beth, a wild blonde. Beth confuses Andy’s “virgin in the headlights” stare as “cool.” The fool has a fan who’s sure he’s a lothario. Later, David drops by Andy’s house with a box of porn, and pulls Andy into speed-dating, where we meet David’s angry ex. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 8 - fun and games</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Almost from the get-go, we realize Trish is “the one” for Andy, but the “promise of the premise” includes showing just how far this fish is out of water. His buddies initiate Andy into their world, and lock him in the store with a porn tape playing in the front window. The guys also take him to get his chest hair waxed in a painful and hilarious scene. (“We gonna need more wax!”) At Minute 46, telling Andy to “Be David Caruso in Jade,” Cal takes him to meet Beth, a wild blonde. Beth confuses Andy’s “virgin in the headlights” stare as “cool.” The fool has a fan who’s sure he’s a lothario. Later, David drops by Andy’s house with a box of porn, and pulls Andy into speed-dating, where we meet David’s angry ex. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">After the guys send Andy to a hooker (who turns out to be a man), the “Fun and Games” are over. Fed up with the guys’ idiotic plans, Andy “raises the stakes” and A and B Stories cross as he asks Trish out. The fool is now teaching the “men.” </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 9 - midpoint</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>After the guys send Andy to a hooker (who turns out to be a man), the “Fun and Games” are over. Fed up with the guys’ idiotic plans, Andy “raises the stakes” and A and B Stories cross as he asks Trish out. The fool is now teaching the “men.” </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="14" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Andy’s date goes well but the “bad guy” closing in is Andy’s inability to tell Trish he’s a virgin — and the close calls when he is almost forced to confess. After failing at using condoms, and interrupted by Trish’s “insider” (the jealous one who realizes the “idiot” is wiser than everyone and seeks to stop him before others see this too) daughter Marla, who hates Andy on sight, Andy and Trish agree to have 20 dates until they are intimate. Another “bad guy” is Andy’s randy boss, Paula (Jane Lynch), who suggests he have sex with her. Despite all this pressure, Andy is rising to prominence at work, going from clerk to salesman to floor manager. He learns to drive a car from Trish, and starts to sell his action figures on eBay. He also gets close to Marla in a great scene at Planned Parenthood where, as Marla’s surrogate father, he admits he’s a virgin. In a roomful of adults trying to be “hip” with their kids, Andy’s candor is heroic.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 10 - bad guys close in </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Andy’s date goes well but the “bad guy” closing in is Andy’s inability to tell Trish he’s a virgin — and the close calls when he is almost forced to confess. After failing at using condoms, and interrupted by Trish’s “insider” (the jealous one who realizes the “idiot” is wiser than everyone and seeks to stop him before others see this too) daughter Marla, who hates Andy on sight, Andy and Trish agree to have 20 dates until they are intimate. Another “bad guy” is Andy’s randy boss, Paula (Jane Lynch), who suggests he have sex with her. Despite all this pressure, Andy is rising to prominence at work, going from clerk to salesman to floor manager. He learns to drive a car from Trish, and starts to sell his action figures on eBay. He also gets close to Marla in a great scene at Planned Parenthood where, as Marla’s surrogate father, he admits he’s a virgin. In a roomful of adults trying to be “hip” with their kids, Andy’s candor is heroic.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Andy matures, he begins to counsel the other guys, including Jay — who now turns to the virgin for advice! But when the 20 dates are up — and Trish suggests they finally be intimate — Andy freaks, telling her it’s her fault that he sold his figurines; he also proudly defends the fact he rides a bike, even though it’s odd for a man his age. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 11 - all is lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Andy matures, he begins to counsel the other guys, including Jay — who now turns to the virgin for advice! But when the 20 dates are up — and Trish suggests they finally be intimate — Andy freaks, telling her it’s her fault that he sold his figurines; he also proudly defends the fact he rides a bike, even though it’s odd for a man his age. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Confused, Andy gets drunk at a party for Jay, whose girlfriend is pregnant. Jay is finally settling down. Andy meets Beth, who takes him back to her house. Beth is a real freak, but even drunk, Andy can’t have sex with her. In a sweet and funny scene, the guys rescue Andy — and Cal stays behind. Back home, Andy finds Trish waiting, but still can’t tell her the truth. A and B Stories cross as she storms out. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 12 - dark night of the soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Confused, Andy gets drunk at a party for Jay, whose girlfriend is pregnant. Jay is finally settling down. Andy meets Beth, who takes him back to her house. Beth is a real freak, but even drunk, Andy can’t have sex with her. In a sweet and funny scene, the guys rescue Andy — and Cal stays behind. Back home, Andy finds Trish waiting, but still can’t tell her the truth. A and B Stories cross as she storms out.  </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="BREAK INTO THREE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">A fresh “chase to the airport” as Andy races to catch Trish via bicycle, leading to an accident when he busts through a billboard for “Eruption.” Trish comforts Andy, who now tells her the truth: “I’m a virgin.”</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 13 - break into three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A fresh “chase to the airport” as Andy races to catch Trish via bicycle, leading to an accident when he busts through a billboard for “Eruption.” Trish comforts Andy, who now tells her the truth: “I’m a virgin.”</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The wedding of Andy and Trish and the rush to the hotel. “Three and a half minutes later...” the smile on Andy’s face as he lies in bed after their session of bliss is hilarious.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 14 - finale </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The wedding of Andy and Trish and the rush to the hotel. “Three and a half minutes later...” the smile on Andy’s face as he lies in bed after their session of bliss is hilarious.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="15" Title="FINAL IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">To “Age of Aquarius,” the cast celebrates sex. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE 40 YEAR OLD VIRGIN beat 15 - Final image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>To “Age of Aquarius,” the cast celebrates sex. </Text>
+    </Paragraph>
+  </Content>
+
+  <Watermarking Text=""/>
+
+  <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+    <Header>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Last Revised"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Page #"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Center"/>
+          <Tabstop Position="7.25" Type="Right"/>
+        </Tabstops>
+      </Paragraph>
+    </Header>
+    <Footer>
+      <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+      </Paragraph>
+    </Footer>
+  </HeaderAndFooter>
+
+  <SpellCheckIgnoreLists>
+    <IgnoredRanges/>
+    <IgnoredWords/>
+  </SpellCheckIgnoreLists>
+
+  <PageLayout BackgroundColor="#FFFFFFFFFFFF" BottomMargin="72" BreakDialogueAndActionAtSentences="Yes" DocumentLeading="Normal" FooterMargin="36" ForegroundColor="#000000000000" HeaderMargin="36" InvisiblesColor="#808080808080" TopMargin="72" UsesSmartQuotes="Yes">
+    <PageSize Height="11.00" Width="8.50"/>
+    <AutoCastList AddParentheses="Yes" AutomaticallyGenerate="Yes" CastListElement="Cast List"/>
+  </PageLayout>
+
+  <WindowState Height="869" Left="13" Mode="Normal" Top="4" Width="1409"/>
+
+  <TextState Scaling="100" Selection="16423,16423" ShowInvisibles="No"/>
+
+  <ElementSettings Type="General">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="General" Shortcut="0"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Scene Heading">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="1"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Action">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="2"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Character">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="3.50" RightIndent="7.25" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Character" ReturnKey="Dialogue" Shortcut="3"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Parenthetical">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="-0.10" Leading="Regular" LeftIndent="3.00" RightIndent="5.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Parenthetical" ReturnKey="Dialogue" Shortcut="4"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Dialogue">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="2.50" RightIndent="6.00" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Dialogue" ReturnKey="Action" Shortcut="5"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Transition">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="5.50" RightIndent="7.10" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Transition" ReturnKey="Scene Heading" Shortcut="6"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Shot">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="7"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Cast List">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="8"/>
+  </ElementSettings>
+
+  <TitlePage>
+    <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+      <Header>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <DynamicLabel Type="Page #"/>
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        </Paragraph>
+      </Header>
+      <Footer>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+        </Paragraph>
+      </Footer>
+    </HeaderAndFooter>
+    <Content>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline+AllCaps">Script Title</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Name of First Writer</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Based on, If Any</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Address</Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Phone Number</Text>
+      </Paragraph>
+    </Content>
+    <TextState Scaling="100" Selection="0,0" ShowInvisibles="No"/>
+  </TitlePage>
+
+  <UnanchoredScriptNotes/>
+
+  <SmartType>
+    <Characters>
+      <Character>ABOUT BEATS</Character>
+      <Character>THE AVENGERS</Character>
+      <Character>RAGING BULL</Character>
+      <Character>RATATOUILLE</Character>
+    </Characters>
+    <Extensions>
+      <Extension>(V.O.)</Extension>
+      <Extension>(O.S.)</Extension>
+      <Extension>(O.C.)</Extension>
+      <Extension>(CONT'D)</Extension>
+      <Extension>(SUBTITLE)</Extension>
+    </Extensions>
+    <SceneIntros Separator=". ">
+      <SceneIntro>INT</SceneIntro>
+      <SceneIntro>EXT</SceneIntro>
+      <SceneIntro>I/E</SceneIntro>
+      <SceneIntro>AT MINUTE 19, AFTER GETTING STATIC FROM SAL ABOUT HIS PIZZA, A "BRANDO" FIGURE [THE CHARACTER IN THE INSTITUTIONALIZED GENRE WHO STANDS OPPOSED TO THE SYSTEM BY HIS OR HER VERY NATURE AND EXPOSES ITS FAULTS], BUGGIN' OUT (GIANCARLO ESPOSITO), LOOKS UP ON THE WALL OF SAL'S FAMOUS AND SEES NOTHING BUT ITALIAN-AMERICANS</SceneIntro>
+    </SceneIntros>
+    <Locations>
+      <Location>ABOUT SAVE THE CAT!</Location>
+      <Location>ABOUT SAVE THE CAT! GENRES</Location>
+      <Location>SAVE THE CAT! BEATS</Location>
+      <Location>HOW TO USE THIS TEMPLATE</Location>
+      <Location>THE AVENGERS BEAT 1</Location>
+      <Location>THE AVENGERS BEAT 2</Location>
+      <Location>THE AVENGERS BEAT 3</Location>
+      <Location>THE AVENGERS BEAT 4</Location>
+      <Location>THE AVENGERS BEAT 5</Location>
+      <Location>THE AVENGERS BEAT 6</Location>
+      <Location>THE AVENGERS BEAT 7</Location>
+      <Location>THE AVENGERS BEAT 8</Location>
+      <Location>THE AVENGERS BEAT 9</Location>
+      <Location>THE AVENGERS BEAT 10</Location>
+      <Location>THE AVENGERS BEAT 11</Location>
+      <Location>THE AVENGERS BEAT 12</Location>
+      <Location>THE AVENGERS BEAT 13</Location>
+      <Location>THE AVENGERS BEAT 14</Location>
+      <Location>THE AVENGERS BEAT 15</Location>
+      <Location>RAGING BULL BEAT 1</Location>
+      <Location>RAGING BULL BEAT 2</Location>
+      <Location>RAGING BULL BEAT 3</Location>
+      <Location>RAGING BULL BEAT 4</Location>
+      <Location>RAGING BULL BEAT 5</Location>
+      <Location>RAGING BULL BEAT 6</Location>
+      <Location>RAGING BULL BEAT 7</Location>
+      <Location>RAGING BULL BEAT 8</Location>
+      <Location>RAGING BULL BEAT 9</Location>
+      <Location>RAGING BULL BEAT 10</Location>
+      <Location>RAGING BULL BEAT 11</Location>
+      <Location>RAGING BULL BEAT 12</Location>
+      <Location>RAGING BULL BEAT 13</Location>
+      <Location>RAGING BULL BEAT 14</Location>
+      <Location>RAGING BULL BEAT 15</Location>
+      <Location>RATATOUILLE BEAT 1</Location>
+      <Location>RATATOUILLE BEAT 2</Location>
+      <Location>RATATOUILLE BEAT 3</Location>
+      <Location>RATATOUILLE BEAT 4</Location>
+      <Location>RATATOUILLE BEAT 5</Location>
+      <Location>RATATOUILLE BEAT 6</Location>
+      <Location>RATATOUILLE BEAT 7</Location>
+      <Location>RATATOUILLE BEAT 8</Location>
+      <Location>RATATOUILLE BEAT 9</Location>
+      <Location>RATATOUILLE BEAT 10</Location>
+      <Location>RATATOUILLE BEAT 11</Location>
+      <Location>RATATOUILLE BEAT 12</Location>
+      <Location>RATATOUILLE BEAT 13</Location>
+      <Location>RATATOUILLE BEAT 14</Location>
+      <Location>RATATOUILLE BEAT 15</Location>
+      <Location>ABOUT BEATS</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND BEAT 1</Location>
+      <Location>MIDNIGHT IN PARIS</Location>
+      <Location>LIAR LIAR</Location>
+      <Location>SAW</Location>
+      <Location>"WHY AIN'T YOU GOT NO BROTHERS UP ON THE WALL?" HE PROTESTS. AND SINCE IT'S PRIMARILY AN AFRICAN-AMERICAN COMMUNITY, BUGGIN' OUT WANTS ANSWERS. INSTEAD, SAL KICKS HIM OUT, WITH MOOKIE ASSISTING. FOR NOW, MOOKIE IS TRYING TO KEEP HIS BOSS HAPPY. DO THE RIGHT THING BEAT 6</Location>
+      <Location>DO THE RIGHT THING BEAT 5</Location>
+      <Location>AMOUR BEAT 11</Location>
+      <Location>BRIDESMAIDS BEAT 3</Location>
+      <Location>BRIDESMAIDS BEAT 5</Location>
+      <Location>BRIDESMAIDS BEAT 4</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 4</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 3</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 6</Location>
+      <Location>BLADE RUNNER BEAT 2/3</Location>
+      <Location>BLADE RUNNER BEAT 2</Location>
+      <Location>FROZEN BEAT 6</Location>
+      <Location>FROZEN BEAT 7</Location>
+      <Location>WHEN HARRY MET SALLY BEAT 6</Location>
+      <Location>WHEN HARRY MET SALLY BEAT 15</Location>
+      <Location>ARGO BEAT 4</Location>
+      <Location>ARGO BEAT 7</Location>
+      <Location>ARGO BEAT 11</Location>
+      <Location>ELF BEAT 7</Location>
+    </Locations>
+    <TimesOfDay Separator=" - ">
+      <TimeOfDay>DAY</TimeOfDay>
+      <TimeOfDay>NIGHT</TimeOfDay>
+      <TimeOfDay>AFTERNOON</TimeOfDay>
+      <TimeOfDay>MORNING</TimeOfDay>
+      <TimeOfDay>EVENING</TimeOfDay>
+      <TimeOfDay>LATER</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER</TimeOfDay>
+      <TimeOfDay>CONTINUOUS</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY</TimeOfDay>
+      <TimeOfDay>OPENING IMAGE</TimeOfDay>
+      <TimeOfDay>SETUP</TimeOfDay>
+      <TimeOfDay>THEME STATED</TimeOfDay>
+      <TimeOfDay>CATALYST</TimeOfDay>
+      <TimeOfDay>DEBATE</TimeOfDay>
+      <TimeOfDay>BREAK INTO TWO</TimeOfDay>
+      <TimeOfDay>B STORY</TimeOfDay>
+      <TimeOfDay>FUN AND GAMES</TimeOfDay>
+      <TimeOfDay>MIDPOINT</TimeOfDay>
+      <TimeOfDay>BAD GUYS CLOSE IN</TimeOfDay>
+      <TimeOfDay>ALL IS LOST</TimeOfDay>
+      <TimeOfDay>DARK NIGHT OF THE SOUL</TimeOfDay>
+      <TimeOfDay>BREAK INTO THREE</TimeOfDay>
+      <TimeOfDay>FINALE</TimeOfDay>
+      <TimeOfDay>FINAL IMAGE</TimeOfDay>
+      <TimeOfDay>BREAK INTO TWO </TimeOfDay>
+      <TimeOfDay>ALL IS LOST </TimeOfDay>
+      <TimeOfDay>SETUP </TimeOfDay>
+      <TimeOfDay>DEBATE </TimeOfDay>
+      <TimeOfDay>CATALYST </TimeOfDay>
+      <TimeOfDay>SETUP/THEME STATED</TimeOfDay>
+    </TimesOfDay>
+    <Transitions>
+      <Transition>CUT TO:</Transition>
+      <Transition>FADE IN:</Transition>
+      <Transition>FADE OUT.</Transition>
+      <Transition>FADE TO:</Transition>
+      <Transition>DISSOLVE TO:</Transition>
+      <Transition>BACK TO:</Transition>
+      <Transition>MATCH CUT TO:</Transition>
+      <Transition>JUMP CUT TO:</Transition>
+      <Transition>FADE TO BLACK.</Transition>
+    </Transitions>
+  </SmartType>
+
+  <MoresAndContinueds>
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <DialogueBreaks AutomaticCharacterContinueds="Yes" BottomOfPage="Yes" DialogueBottom="(MORE)" DialogueTop="(CONT'D)" TopOfNext="Yes"/>
+    <SceneBreaks ContinuedNumber="No" SceneBottom="(CONTINUED)" SceneBottomOfPage="No" SceneTop="CONTINUED:" SceneTopOfNext="No"/>
+  </MoresAndContinueds>
+
+  <LockedPages/>
+
+  <Revisions ActiveSet="1" Location="7.75" RevisionMode="No" RevisionsShown="Active" ShowAllMarks="No" ShowAllSets="No" ShowPageColor="No">
+    <Revision Color="#000000000000" FullRevision="No" ID="1" Mark="*" Name="Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="2" Mark="*" Name="Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="3" Mark="*" Name="Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="4" Mark="*" Name="Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="5" Mark="*" Name="Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="6" Mark="*" Name="Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="7" Mark="*" Name="Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="8" Mark="*" Name="Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="9" Mark="*" Name="Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="10" Mark="*" Name="2nd White Rev. (mm/dd/yy)" PageColor="#FFFFFFFFFFFF" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="11" Mark="*" Name="2nd Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="12" Mark="*" Name="2nd Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="13" Mark="*" Name="2nd Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="14" Mark="*" Name="2nd Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="15" Mark="*" Name="2nd Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="16" Mark="*" Name="2nd Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="17" Mark="*" Name="2nd Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="18" Mark="*" Name="2nd Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="19" Mark="*" Name="2nd Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+  </Revisions>
+
+  <SplitState ActivePanel="1" SplitMode="None" SplitterPosition="0">
+    <ScriptPanel DisplayMode="Page">
+      <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Verdana" RevisionID="0" Size="9" Style=""/>
+    </ScriptPanel>
+  </SplitState>
+
+  <Macros>
+    <Macro Element="Scene Heading" Name="INT" Shortcut="Ctrl+Alt+1" Text="INT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="EXT" Shortcut="Ctrl+Alt+2" Text="EXT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="I/E" Shortcut="Ctrl+Alt+3" Text="I/E " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="DAY" Shortcut="Ctrl+Alt+4" Text=" - DAY" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="NIGHT" Shortcut="Ctrl+Alt+5" Text=" - NIGHT" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="SUNRISE" Shortcut="Ctrl+Alt+6" Text=" - SUNRISE" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="MAGIC" Shortcut="Ctrl+Alt+7" Text=" - MAGIC" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="CONT" Shortcut="Ctrl+Alt+8" Text="continuing" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="INTER" Shortcut="Ctrl+Alt+9" Text="interrupting" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="Ctrl+Alt+0" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="CUTTO" Shortcut="Ctrl+Shift+Alt+1" Text="CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Action" Name="FADEIN" Shortcut="Ctrl+Shift+Alt+2" Text="FADE IN:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADEOUT" Shortcut="Ctrl+Shift+Alt+3" Text="FADE OUT." Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADETO" Shortcut="Ctrl+Shift+Alt+4" Text="FADE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="DISSLV" Shortcut="Ctrl+Shift+Alt+5" Text="DISSOLVE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="BACKTO" Shortcut="Ctrl+Shift+Alt+6" Text="BACK TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="MATCHCUT" Shortcut="Ctrl+Shift+Alt+7" Text="MATCH CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="JUMPCUT" Shortcut="Ctrl+Shift+Alt+8" Text="JUMP CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FBLACK" Shortcut="Ctrl+Shift+Alt+9" Text="FADE TO BLACK." Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="E" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+  </Macros>
+
+  <Actors>
+    <Actor MacVoice="" Name="Man 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Man 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Man" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Woman" Pitch="Normal" Speed="Medium" WinVoice=""/>
+  </Actors>
+
+  <Cast>
+    <Narrator Actor="Man 1">
+      <Element Type="Character"/>
+      <Element Type="Dialogue"/>
+    </Narrator>
+    <Member Actor="Man 1" Character="ABOUT BEATS"/>
+    <Member Actor="Man 1" Character="THE AVENGERS"/>
+    <Member Actor="Man 1" Character="RAGING BULL"/>
+    <Member Actor="Man 1" Character="RATATOUILLE"/>
+  </Cast>
+
+  <SceneNumberOptions LeftLocation="0.75" RightLocation="7.38" ShowNumbersOnLeft="Yes" ShowNumbersOnRight="Yes">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+  </SceneNumberOptions>
+
+  <CastList SortOption="Alphabetical">
+    <CustomOrder/>
+  </CastList>
+
+  <CharacterHighlighting/>
+
+  <CharacterNavigatorPreferences IsSortAscending="Yes" SortColumn="Order">
+    <Column Width="51">Order</Column>
+    <Column Width="50">Title</Column>
+    <Column Width="67">Location</Column>
+    <Column UserType="CharacterColumnType" Width="95">RATATOUILLE</Column>
+    <Column UserType="CharacterArcColumnType" Width="133">RATATOUILLE</Column>
+  </CharacterNavigatorPreferences>
+
+</FinalDraft>

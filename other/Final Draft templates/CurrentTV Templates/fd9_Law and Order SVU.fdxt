@@ -1,0 +1,2139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FinalDraft DocumentType="Script" Template="Yes" Version="2">
+
+  <Content>
+    <Paragraph Type="Show/Ep. Title">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">LAW &amp; ORDER</Text>
+      <Text>:</Text>
+    </Paragraph>
+    <Paragraph Type="Show/Ep. Title">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline"> SPECIAL VICTIMS UNIT </Text>
+      <Text>“</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">EPISODE TITLE</Text>
+      <Text>”</Text>
+    </Paragraph>
+    <Paragraph Type="Teaser/Act One">
+      <Text>TEASER</Text>
+    </Paragraph>
+    <Paragraph Type="Shot">
+      <Text>FADE IN</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="1" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="BYSTANDER 1"></CharacterArcBeat>
+          <CharacterArcBeat Name="BYSTANDER 2"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Ext. sTREET - AFTERNOON</Text>
+    </Paragraph>
+    <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.38" SpaceBefore="1" Spacing="1" StartsNewPage="No" Type="Action">
+      <Text>A car is burned out and people are starting to crowd around.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Bystander 1</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialogue about what's going on.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>BySTANDER 2</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Concurs with bystander one.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A charred body slumps over the steering wheel. People look on in horror as black smoke escapes the vehicle.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="5/8" Page="1" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="BENSON"></CharacterArcBeat>
+          <CharacterArcBeat Name="STABLER"></CharacterArcBeat>
+          <CharacterArcBeat Name="WARNER"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>EXT. sTREET - lATER</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Now a crime scene. Benson and Stabler approach through the tape and see Warner.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>WARNER</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog details about the deceased....</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>STABLER</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Asking questions about the possibilities.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>WARNER</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>More dialog explaining the situation</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Warner shows them some gruesome detail yet not disclosed...</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>bENSON</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>More witty dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>WARNER</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Some shocking detail of the death.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>StabLER</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>The smart end of scene button we’ve come to expect.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Off Benson and Stabler.</Text>
+    </Paragraph>
+    <Paragraph Type="Transition">
+      <Text>Fade out.</Text>
+    </Paragraph>
+    <Paragraph Type="End Of Act">
+      <Text>End of teaser</Text>
+    </Paragraph>
+    <Paragraph Type="New Act">
+      <Text>Act one</Text>
+    </Paragraph>
+    <Paragraph Type="Shot">
+      <Text>Fade in</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="5/8" Page="2" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="BENSON"></CharacterArcBeat>
+          <CharacterArcBeat Name="CRAGEN"></CharacterArcBeat>
+          <CharacterArcBeat Name="FIN"></CharacterArcBeat>
+          <CharacterArcBeat Name="STABLER"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>iNT. sVU SQUADROOM - dAY ONE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The team is reviewing pictures of other burned bodies.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>fin</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Benson</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog in reply</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Stabler</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Question for the group...</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Cragen reads from a newspaper article on the front page.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>CRAGEN</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>BENSON</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Fin</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Response dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>PUSH IN on Stabler’s face, aghast.</Text>
+    </Paragraph>
+    <Paragraph Type="Transition">
+      <Text>Fade out.</Text>
+    </Paragraph>
+    <Paragraph Type="End Of Act">
+      <Text>End of act one</Text>
+    </Paragraph>
+    <Paragraph Type="New Act">
+      <Text>Act two</Text>
+    </Paragraph>
+    <Paragraph Type="Shot">
+      <Text>Fade in</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="3" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="BENSON"></CharacterArcBeat>
+          <CharacterArcBeat Name="PERP"></CharacterArcBeat>
+          <CharacterArcBeat Name="STABLER"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Int. PErP’s HOUSE - hallway - day two</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Benson and Stabler sneak up to the front door, listen for sound then as </Text>
+      <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">theybreak</Text>
+      <Text> down the door.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Benson</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(Bellowing)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Police! Random dialog afterwards.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Stabler</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Mentioning how eerily quiet the place is.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Stabler opens the door to the hallway, spots the overweight PERP, </Text>
+      <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">30’s</Text>
+      <Text>, trying to squeeze into the attic crawl space.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>BENSON</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(Pointing a gun)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Yells at the Perp to catch him.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>PerP</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog pleading not to get shot.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="3" Title="">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Int. Svu squadroom - day two</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>ON the Multiplex -- a mugshot of the Perp.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="3" Title="">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Int. Svu interview room - day two</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Benson and Stabler are pressing the Perp to talk.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="3" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="CRAGEN"></CharacterArcBeat>
+          <CharacterArcBeat Name="HUANG"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Int. observation room - day two</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Cragen, watching, turns to Huang.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Huang</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Cragen</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="3" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="BENSON"></CharacterArcBeat>
+          <CharacterArcBeat Name="PERP"></CharacterArcBeat>
+          <CharacterArcBeat Name="STABLER"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Int. InTERROGATION ROOM #1 - day two</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>BENSON</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>PERP</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(stammers, indignant)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Benson</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here!</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(in his face)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>And another thing!</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>perp</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog defending himself.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>BENSON</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>What about dialog?</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>STABLER</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>There’s a knock on the window. Benson exits.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="4" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="CRAGEN"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Int. ObSERVATION ROOM - day two</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>CrAGEN</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Liv. The Perp’s a blah </Text>
+      <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">blah</Text>
+      <Text>.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="PERP"></CharacterArcBeat>
+          <CharacterArcBeat Name="STABLER"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Int. InterrOGATION ROOM #1 - day two</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>sTABLER</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>PERP</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>More defending and explaining dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Int. oBSERVATION ROOM - DAY TWO</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Benson’s cell phone rings and she gets some crazy news about the Perp’s potential innocence. Off Benson, staring in horror at Stabler yelling at the Perp -- </Text>
+    </Paragraph>
+    <Paragraph Type="Transition">
+      <Text>Fade out.</Text>
+    </Paragraph>
+    <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="1" Spacing="1" StartsNewPage="No" Type="End Of Act">
+      <Text>End of act two</Text>
+    </Paragraph>
+    <Paragraph Type="New Act">
+      <Text>Act three</Text>
+    </Paragraph>
+    <Paragraph Type="Shot">
+      <Text>Fade in</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text></Text>
+    </Paragraph>
+    <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.25" SpaceBefore="1" Spacing="1" StartsNewPage="No" Type="Scene Heading">
+      <SceneProperties Length="5/8" Page="5" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="BENSON"></CharacterArcBeat>
+          <CharacterArcBeat Name="GREYLEK"></CharacterArcBeat>
+          <CharacterArcBeat Name="STABLER"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Int. observation room - Day two</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Stabler and Benson brief Greylek. Perp sits eating from a pizza, alone in Interrogation.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Benson</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog </Text>
+      <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">explaing</Text>
+      <Text> Perp made a full confession.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>GREYLEK</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(off looks)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Yadayada</Text>
+      <Text> dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>STABLER</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(realizing)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Benson</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>More Dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Greylek</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Off Benson and Stabler as they watch the Perp stuffing food into his mouth.</Text>
+    </Paragraph>
+    <Paragraph Type="Transition">
+      <Text>Fade out.</Text>
+    </Paragraph>
+    <Paragraph Type="End Of Act">
+      <Text>End of act three</Text>
+    </Paragraph>
+    <Paragraph Type="New Act">
+      <Text>Act four</Text>
+    </Paragraph>
+    <Paragraph Type="Shot">
+      <Text>Fade in</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="FIN"></CharacterArcBeat>
+          <CharacterArcBeat Name="MUNCH"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Int. hudson county courthouse - hallway - day three</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Benson and Stabler walk out with ADA Greylek. We see Bystander 1 being brought by in handcuffs by Munch and Fin.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>Munch</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>FIN</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="BYSTANDER 1"></CharacterArcBeat>
+          <CharacterArcBeat Name="GREYLEK"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Int. hudson county COURTHOUSE - courtroom - day four</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Stabler in the witness box. Judge Whoever presides. Greylek cross examines Bystander 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>GreYLEK</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>BySTANDER 1</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="GREYLEK"></CharacterArcBeat>
+          <CharacterArcBeat Name="STABLER"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>Int. hudson county COURTHOUSE - courtroom - day five</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>ADA Kim Greylek cross-examines Stabler. </Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>GREYLEK</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>STABLER</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The jury all look at Bystander 1 in shock. Close on the Defense attorney. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Int. hudson county courthouse - hallway/holding cell - day five</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Benson and two Court Officers drag Bystander 1 down the hall.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Greylek walks back to her table. Off her sullen face.</Text>
+    </Paragraph>
+    <Paragraph Type="Transition">
+      <Text>Fade out.</Text>
+    </Paragraph>
+    <Paragraph Type="End Of Act">
+      <Text>End of episode</Text>
+    </Paragraph>
+  </Content>
+
+  <Watermarking Text=""/>
+
+  <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="Yes" HeaderVisible="Yes" StartingPage="1">
+    <Header>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.75" RightIndent="-0.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Prod. / </Text>
+        <DynamicLabel Type="Page #"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">. </Text>
+        <DynamicLabel Type="Last Revised"/>
+        <Tabstops>
+          <Tabstop Position="4.00" Type="Left"/>
+          <Tabstop Position="7.50" Type="Right"/>
+        </Tabstops>
+      </Paragraph>
+    </Header>
+    <Footer>
+      <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+    </Footer>
+  </HeaderAndFooter>
+
+  <SpellCheckIgnoreLists>
+    <IgnoredRanges>
+      <Range End="15" Start="11"/>
+      <Range End="99" Start="97"/>
+      <Range End="134" Start="127"/>
+      <Range End="102" Start="97"/>
+      <Range End="251" Start="248"/>
+      <Range End="523" Start="519"/>
+      <Range End="335" Start="326"/>
+      <Range End="578" Start="576"/>
+      <Range End="617" Start="615"/>
+      <Range End="588" Start="584"/>
+      <Range End="835" Start="826"/>
+      <Range End="631" Start="627"/>
+      <Range End="77" Start="68"/>
+      <Range End="198" Start="194"/>
+      <Range End="1021" Start="1018"/>
+      <Range End="1074" Start="1069"/>
+      <Range End="1048" Start="1042"/>
+      <Range End="1184" Start="1180"/>
+      <Range End="1204" Start="1198"/>
+      <Range End="1052" Start="1048"/>
+      <Range End="1086" Start="1079"/>
+      <Range End="1142" Start="1139"/>
+      <Range End="1179" Start="1176"/>
+      <Range End="1437" Start="1433"/>
+      <Range End="1428" Start="1424"/>
+      <Range End="365" Start="360"/>
+      <Range End="1153" Start="1149"/>
+      <Range End="1557" Start="1553"/>
+      <Range End="1600" Start="1598"/>
+      <Range End="1007" Start="1001"/>
+      <Range End="1197" Start="1192"/>
+      <Range End="1562" Start="1561"/>
+      <Range End="1694" Start="1690"/>
+      <Range End="1187" Start="1183"/>
+      <Range End="1319" Start="1306"/>
+      <Range End="1330" Start="1327"/>
+      <Range End="1661" Start="1657"/>
+      <Range End="1629" Start="1626"/>
+      <Range End="1630" Start="1626"/>
+      <Range End="1683" Start="1671"/>
+      <Range End="1632" Start="1630"/>
+      <Range End="1680" Start="1678"/>
+      <Range End="1136" Start="1133"/>
+      <Range End="1826" Start="1823"/>
+      <Range End="1892" Start="1888"/>
+      <Range End="2018" Start="2016"/>
+      <Range End="2195" Start="2192"/>
+      <Range End="1425" Start="1419"/>
+      <Range End="1706" Start="1701"/>
+      <Range End="1215" Start="1211"/>
+      <Range End="1859" Start="1856"/>
+      <Range End="2178" Start="2174"/>
+      <Range End="2215" Start="2210"/>
+      <Range End="2122" Start="2113"/>
+      <Range End="2122" Start="2115"/>
+      <Range End="2303" Start="2300"/>
+      <Range End="2323" Start="2319"/>
+      <Range End="2220" Start="2217"/>
+      <Range End="367" Start="366"/>
+      <Range End="1323" Start="1317"/>
+      <Range End="1587" Start="1583"/>
+      <Range End="1762" Start="1759"/>
+      <Range End="2205" Start="2194"/>
+      <Range End="2228" Start="2220"/>
+      <Range End="1142" Start="1139"/>
+      <Range End="1106" Start="1097"/>
+      <Range End="1132" Start="1126"/>
+      <Range End="1798" Start="1796"/>
+      <Range End="1353" Start="1351"/>
+      <Range End="1223" Start="1220"/>
+      <Range End="2049" Start="2047"/>
+      <Range End="1201" Start="1198"/>
+      <Range End="1563" Start="1560"/>
+      <Range End="1634" Start="1630"/>
+      <Range End="1673" Start="1668"/>
+      <Range End="1902" Start="1893"/>
+      <Range End="2087" Start="2084"/>
+      <Range End="2281" Start="2277"/>
+      <Range End="2290" Start="2282"/>
+      <Range End="1582" Start="1577"/>
+      <Range End="1782" Start="1778"/>
+      <Range End="1942" Start="1939"/>
+      <Range End="2128" Start="2124"/>
+      <Range End="1389" Start="1386"/>
+      <Range End="1691" Start="1680"/>
+      <Range End="1714" Start="1706"/>
+      <Range End="2363" Start="2360"/>
+      <Range End="2784" Start="2781"/>
+      <Range End="2234" Start="2231"/>
+      <Range End="2326" Start="2321"/>
+      <Range End="2990" Start="2988"/>
+      <Range End="2159" Start="2155"/>
+      <Range End="3223" Start="3217"/>
+      <Range End="3088" Start="3084"/>
+      <Range End="2376" Start="2372"/>
+      <Range End="2496" Start="2492"/>
+      <Range End="1849" Start="1847"/>
+      <Range End="2974" Start="2971"/>
+      <Range End="3164" Start="3152"/>
+      <Range End="3037" Start="3034"/>
+      <Range End="1354" Start="1342"/>
+      <Range End="1504" Start="1491"/>
+      <Range End="1911" Start="1905"/>
+      <Range End="2409" Start="2407"/>
+    </IgnoredRanges>
+    <IgnoredWords>
+      <Word>20s</Word>
+      <Word>30s</Word>
+      <Word>40s</Word>
+      <Word>50s</Word>
+      <Word>70s</Word>
+      <Word>70’s</Word>
+      <Word>A.C.</Word>
+      <Word>A.Y.</Word>
+      <Word>AAA-AAA</Word>
+      <Word>ALIK</Word>
+      <Word>ANOTHERYOUNIVERSE.COM</Word>
+      <Word>Adderall.</Word>
+      <Word>Alik.</Word>
+      <Word>Amtrak</Word>
+      <Word>AnotherYOUniverse</Word>
+      <Word>AnotherYOUniverse-dot-com.</Word>
+      <Word>BAM</Word>
+      <Word>BAWSON</Word>
+      <Word>Bawson</Word>
+      <Word>Bendix</Word>
+      <Word>Bernardi</Word>
+      <Word>Bing</Word>
+      <Word>C.O.D</Word>
+      <Word>CF.</Word>
+      <Word>CHANOOR</Word>
+      <Word>CHUH-newÕr</Word>
+      <Word>CHUN</Word>
+      <Word>CONT’D</Word>
+      <Word>CONTÕD</Word>
+      <Word>COPPERCUFFS.</Word>
+      <Word>CRAGEN</Word>
+      <Word>CSU</Word>
+      <Word>Chanoor</Word>
+      <Word>Ches</Word>
+      <Word>Chun</Word>
+      <Word>Colbee</Word>
+      <Word>Concerta</Word>
+      <Word>Conover</Word>
+      <Word>Cragen</Word>
+      <Word>D'AVELLA</Word>
+      <Word>D'Avella.</Word>
+      <Word>D.A.</Word>
+      <Word>DCPI</Word>
+      <Word>DEBI</Word>
+      <Word>DENBY</Word>
+      <Word>DMV</Word>
+      <Word>DUTCHESS</Word>
+      <Word>Dammit.</Word>
+      <Word>Debi</Word>
+      <Word>Deegan</Word>
+      <Word>Demerol.</Word>
+      <Word>Denby</Word>
+      <Word>Descartes</Word>
+      <Word>Dextromethorphan.</Word>
+      <Word>Domosedan</Word>
+      <Word>Dutchess</Word>
+      <Word>DÕAVELLA</Word>
+      <Word>EDIE</Word>
+      <Word>EDIEÕS</Word>
+      <Word>ENTRYWAY</Word>
+      <Word>ESU</Word>
+      <Word>ESUs</Word>
+      <Word>EXT.</Word>
+      <Word>Econ.</Word>
+      <Word>Edenbridge</Word>
+      <Word>Edie</Word>
+      <Word>Elsa</Word>
+      <Word>FRIEDICH.Õ</Word>
+      <Word>Feighery</Word>
+      <Word>Friedich</Word>
+      <Word>GPÕs</Word>
+      <Word>Geeta</Word>
+      <Word>Gomes</Word>
+      <Word>Gonna</Word>
+      <Word>Goulden</Word>
+      <Word>Guiness</Word>
+      <Word>HAO</Word>
+      <Word>Hao</Word>
+      <Word>How’d</Word>
+      <Word>HowÕd</Word>
+      <Word>I.D</Word>
+      <Word>ID’d</Word>
+      <Word>INT.</Word>
+      <Word>IP</Word>
+      <Word>IQ</Word>
+      <Word>IVÕs</Word>
+      <Word>Intro</Word>
+      <Word>Jekyll</Word>
+      <Word>Jen</Word>
+      <Word>Jumbotron</Word>
+      <Word>KELLYANNE</Word>
+      <Word>KRISTI</Word>
+      <Word>KROLL</Word>
+      <Word>Karle</Word>
+      <Word>Kellyanne</Word>
+      <Word>Ketamine</Word>
+      <Word>Kharkiv.</Word>
+      <Word>Knicks</Word>
+      <Word>Kristi</Word>
+      <Word>Kroll</Word>
+      <Word>LAROM</Word>
+      <Word>Larom</Word>
+      <Word>Liv</Word>
+      <Word>Lizzie</Word>
+      <Word>Lockheed</Word>
+      <Word>Lychkoff.</Word>
+      <Word>M.I.T.</Word>
+      <Word>M.O.</Word>
+      <Word>M.O.Õs</Word>
+      <Word>MCGINNLEY</Word>
+      <Word>MING</Word>
+      <Word>MOREWOOD</Word>
+      <Word>MTA</Word>
+      <Word>Maura</Word>
+      <Word>McGinnley</Word>
+      <Word>Med</Word>
+      <Word>Midwood</Word>
+      <Word>Ming</Word>
+      <Word>MingÕs</Word>
+      <Word>Mitsakos.</Word>
+      <Word>MoeÕs</Word>
+      <Word>Montagna</Word>
+      <Word>Morewood</Word>
+      <Word>NEUROPSYCH</Word>
+      <Word>NYPD.</Word>
+      <Word>No</Word>
+      <Word>O.S.</Word>
+      <Word>ONSCREEN</Word>
+      <Word>OSTOPIAK</Word>
+      <Word>Ostopiak</Word>
+      <Word>Ostrepiak</Word>
+      <Word>OxyContin.</Word>
+      <Word>O’HALLORAN</Word>
+      <Word>O’Halloran</Word>
+      <Word>O’Malley.</Word>
+      <Word>PDA.</Word>
+      <Word>PENN</Word>
+      <Word>PETROVSKY</Word>
+      <Word>POEÕS</Word>
+      <Word>POV</Word>
+      <Word>PRELAP</Word>
+      <Word>Pankovich.</Word>
+      <Word>Parasomnia.</Word>
+      <Word>Penn</Word>
+      <Word>Percocet.</Word>
+      <Word>Petrovich</Word>
+      <Word>Petrovsky</Word>
+      <Word>Poe</Word>
+      <Word>PoeÕs</Word>
+      <Word>Provigil.</Word>
+      <Word>Prozac.</Word>
+      <Word>Rach</Word>
+      <Word>Rankesh</Word>
+      <Word>Ratched</Word>
+      <Word>Rikers.</Word>
+      <Word>Rimpo.</Word>
+      <Word>Risa.</Word>
+      <Word>Riverdale.</Word>
+      <Word>SQUADROOM</Word>
+      <Word>SVU</Word>
+      <Word>Sexsomnia.</Word>
+      <Word>Shhh.</Word>
+      <Word>Siddons</Word>
+      <Word>Silvio</Word>
+      <Word>SoHo.</Word>
+      <Word>Squadroom</Word>
+      <Word>Stottville</Word>
+      <Word>Strangelove?</Word>
+      <Word>Suze.</Word>
+      <Word>TAÕd</Word>
+      <Word>Tai</Word>
+      <Word>Techs.</Word>
+      <Word>That’ll</Word>
+      <Word>ThatÕll</Word>
+      <Word>ThisÕll</Word>
+      <Word>Tobin</Word>
+      <Word>Tri-bar</Word>
+      <Word>Tri-state</Word>
+      <Word>Tutuola.</Word>
+      <Word>U-STORE-IT</Word>
+      <Word>UNI</Word>
+      <Word>Unabomber.</Word>
+      <Word>Uni</Word>
+      <Word>Unis</Word>
+      <Word>V.O.</Word>
+      <Word>VIXY</Word>
+      <Word>VIXY’</Word>
+      <Word>Vanderbilt.</Word>
+      <Word>Vicodin</Word>
+      <Word>Vixy</Word>
+      <Word>WASSERMAN</Word>
+      <Word>Wasserman</Word>
+      <Word>WhatÕd</Word>
+      <Word>WhereÕve</Word>
+      <Word>Wonderstage</Word>
+      <Word>Xanax</Word>
+      <Word>advisee.</Word>
+      <Word>arrestin’</Word>
+      <Word>asshole.</Word>
+      <Word>asswipe</Word>
+      <Word>b.g.</Word>
+      <Word>b.s.</Word>
+      <Word>badging</Word>
+      <Word>baggie</Word>
+      <Word>benzos</Word>
+      <Word>blog.</Word>
+      <Word>brainiacs</Word>
+      <Word>cellphone</Word>
+      <Word>comm</Word>
+      <Word>crap</Word>
+      <Word>creeped</Word>
+      <Word>de-glammed.</Word>
+      <Word>dickweed</Word>
+      <Word>duh</Word>
+      <Word>fourteen-year-olds</Word>
+      <Word>fucking</Word>
+      <Word>gamers</Word>
+      <Word>gonna</Word>
+      <Word>headshot</Word>
+      <Word>hoodie</Word>
+      <Word>hoodies</Word>
+      <Word>interrogatin’.</Word>
+      <Word>joe</Word>
+      <Word>judge’ll</Word>
+      <Word>juvie</Word>
+      <Word>kevin</Word>
+      <Word>kickin’</Word>
+      <Word>lakeside</Word>
+      <Word>lineup-ers.</Word>
+      <Word>meds.</Word>
+      <Word>meth</Word>
+      <Word>milquetoast</Word>
+      <Word>mugshot</Word>
+      <Word>must’ve</Word>
+      <Word>mustÕve</Word>
+      <Word>nothin’</Word>
+      <Word>nuthouse.</Word>
+      <Word>o.s.</Word>
+      <Word>parasomnia</Word>
+      <Word>perp</Word>
+      <Word>pharm</Word>
+      <Word>pissed</Word>
+      <Word>playin’</Word>
+      <Word>punked?</Word>
+      <Word>recordsÕll</Word>
+      <Word>rep</Word>
+      <Word>scrapbooking</Word>
+      <Word>scumbag</Word>
+      <Word>sexsomnia</Word>
+      <Word>sexsomniac</Word>
+      <Word>sh--</Word>
+      <Word>skittling.</Word>
+      <Word>slutty.</Word>
+      <Word>sonuvabitch.</Word>
+      <Word>sotto</Word>
+      <Word>thisÕll</Word>
+      <Word>towncar</Word>
+      <Word>unhung.</Word>
+      <Word>walkie</Word>
+      <Word>where’d</Word>
+      <Word>whereÕd</Word>
+      <Word>whiteboards</Word>
+      <Word>why’d</Word>
+      <Word>whyÕd</Word>
+      <Word>‘AnotherYOUniverse.com’.</Word>
+      <Word>‘BONATIM</Word>
+      <Word>‘Bonatim</Word>
+      <Word>‘Hothousing?’</Word>
+      <Word>‘Liv</Word>
+      <Word>‘TOBIN</Word>
+      <Word>‘hothousing.’</Word>
+      <Word>ÔAnotherYOUniverse.comÕ.</Word>
+      <Word>ÔBONATIM</Word>
+      <Word>ÔBonatim</Word>
+      <Word>ÔJ.T.</Word>
+      <Word>ÔU-Stor-It.Õ</Word>
+    </IgnoredWords>
+  </SpellCheckIgnoreLists>
+
+  <PageLayout BackgroundColor="#FFFFFFFFFFFF" BottomMargin="72" BreakDialogueAndActionAtSentences="Yes" DocumentLeading="Normal" FooterMargin="36" ForegroundColor="#000000000000" HeaderMargin="36" InvisiblesColor="#808080808080" TopMargin="72" UsesSmartQuotes="No">
+    <PageSize Height="11.00" Width="8.50"/>
+    <AutoCastList AddParentheses="Yes" AutomaticallyGenerate="Yes" CastListElement="Cast List"/>
+  </PageLayout>
+
+  <WindowState Height="635" Left="2" Mode="Normal" Top="2" Width="649"/>
+
+  <TextState Scaling="100" Selection="0,0" ShowInvisibles="No"/>
+
+  <ElementSettings Type="General">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.75" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="General" Shortcut="0"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Scene Heading">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.25" SpaceBefore="11" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="1"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Action">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.25" SpaceBefore="11" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="2"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Character">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="3.88" RightIndent="7.25" SpaceBefore="11" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Character" ReturnKey="Dialogue" Shortcut="3"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Parenthetical">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="-0.10" Leading="Regular" LeftIndent="3.38" RightIndent="5.25" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Parenthetical" ReturnKey="Dialogue" Shortcut="4"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Dialogue">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="2.61" RightIndent="6.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Dialogue" ReturnKey="Action" Shortcut="5"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Transition">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="5.75" RightIndent="7.11" SpaceBefore="11" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Transition" ReturnKey="Scene Heading" Shortcut="6"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Shot">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="11" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Scene Heading" Shortcut="7"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Cast List">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="8"/>
+  </ElementSettings>
+
+  <ElementSettings Type="New Act">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline+AllCaps"/>
+    <ParagraphSpec Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="Yes"/>
+    <Behavior PaginateAs="General" ReturnKey="Shot" Shortcut=""/>
+  </ElementSettings>
+
+  <ElementSettings Type="End Of Act">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline+AllCaps"/>
+    <ParagraphSpec Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="22" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="New Act" Shortcut="9"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Teaser/Act One">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline+AllCaps"/>
+    <ParagraphSpec Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="22" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="Scene Heading" Shortcut="T"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Show/Ep. Title">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="Teaser/Act One" Shortcut="S"/>
+  </ElementSettings>
+
+  <TitlePage>
+    <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+      <Header>
+        <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="-1.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Prod. #/ TK/TK/TK </Text>
+          <DynamicLabel Type="Page #"/>
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+          <Tabstops>
+            <Tabstop Position="5.50" Type="Center"/>
+            <Tabstop Position="7.38" Type="Right"/>
+          </Tabstops>
+        </Paragraph>
+      </Header>
+      <Footer>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+        </Paragraph>
+      </Footer>
+    </HeaderAndFooter>
+    <Content>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> Prod. # /</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="5.38" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">LAW &amp; ORDER</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">:</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">SPECIAL VICTIMS UNIT</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">"</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">EPISODE TITLE</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">"</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.75" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Writer's Name</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="0.75" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="0.75" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="0.75" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="0.75" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="10" Style="">Copyright 2014 BY UNIVERSAL NETWORK TELEVISION </Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="10" Style="">LLC</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="10" Style="">.</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="0.75" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="0.75" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="10" Style="">This material is property of UNIVERSAL NETWORK TELEVISION </Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="10" Style="">LLC</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="10" Style=""> and is intended </Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="10" Style="">solely for use by its personnel. The sale, copying, reproduction or exploitation of this material in any form is prohibited. Distribution or disclosure of this material to unauthorized persons is prohibited.</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="Yes">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">LAW &amp; ORDER</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">:</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">SPECIAL VICTIMS UNIT</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">"TITLE </Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">TK</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">"</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">CAST</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">DET</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">. OLIVIA BENSON</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">DET</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">. ELLIOT STABLER</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">CAPT. DONALD CRAGEN </Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">DET</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">. </Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">ODAFINTUTUOLA</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">DET</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">. JOHN MUNCH</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">DR. MELINDA WARNER</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">DR. GEORGE HUANG </Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">ADA KIM GREYLEK</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="Yes">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">LAW &amp; ORDER</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">:</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">SPECIAL VICTIMS UNIT</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">"EPISODE TITLE"</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">SETS</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">INTERIORS</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">: </Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline">EXTERIORS</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">:</Text>
+        <Tabstops>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">PRECINCTCOURTHOUSE </Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> PRECINCTSQUADROOM STEPS </Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">CRAGEN'S OFFICE STREET</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> INTERROGATION ROOM #1 </Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> INTERROGATION ROOM #2 </Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> OBSERVATION ROOM </Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> INTERVIEW ROOM #1</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> INTERVIEW ROOM #2</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> HALLWAY</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> CORRIDOR </Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> LOUNGE</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> ELEVATOR</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">COURTHOUSE</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> COURTROOM</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> JUDGE'S CHAMBERS</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> ADA'S OFFICE </Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> ARRAIGNMENT COURT</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> HALLWAY</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> ROTUNDA</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">MORGUE</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.32" Type="Left"/>
+          <Tabstop Position="4.75" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+    </Content>
+    <TextState Scaling="100" Selection="141,141" ShowInvisibles="No"/>
+  </TitlePage>
+
+  <UnanchoredScriptNotes/>
+
+  <SmartType>
+    <Characters>
+      <Character>BENSON</Character>
+      <Character>STABLER</Character>
+      <Character>WARNER</Character>
+      <Character>GREYLEK</Character>
+      <Character>FIN</Character>
+      <Character>CRAGEN</Character>
+      <Character>Huang</Character>
+      <Character>Munch</Character>
+    </Characters>
+    <Extensions>
+      <Extension>(O.S.)</Extension>
+      <Extension>(V.O.)</Extension>
+      <Extension>(ONSCREEN)</Extension>
+      <Extension>(PRE-LAP)</Extension>
+      <Extension>(ON VIDEO)</Extension>
+    </Extensions>
+    <SceneIntros Separator=". ">
+      <SceneIntro>INT</SceneIntro>
+      <SceneIntro>EXT</SceneIntro>
+      <SceneIntro>I/E</SceneIntro>
+    </SceneIntros>
+    <Locations>
+      <Location>STREET</Location>
+      <Location>OBSERVATION ROOM</Location>
+      <Location>HUDSON COUNTY COURTHOUSE - COURTROOM</Location>
+      <Location>SVU SQUADROOM</Location>
+      <Location>SVU INTERVIEW ROOM</Location>
+      <Location>INTERROGATION ROOM #1</Location>
+      <Location>HUDSON COUNTY COURTHOUSE - HALLWAY</Location>
+      <Location>HUDSON COUNTY COURTHOUSE - HALLWAY/HOLDING CELL</Location>
+    </Locations>
+    <TimesOfDay Separator=" - ">
+      <TimeOfDay>AFTERNOON</TimeOfDay>
+      <TimeOfDay>CONTINUOUS</TimeOfDay>
+      <TimeOfDay>DAY</TimeOfDay>
+      <TimeOfDay>DAY ONE</TimeOfDay>
+      <TimeOfDay>DAY TWO</TimeOfDay>
+      <TimeOfDay>DAY THREE</TimeOfDay>
+      <TimeOfDay>DAY FOUR</TimeOfDay>
+      <TimeOfDay>DAY FIVE</TimeOfDay>
+      <TimeOfDay>DAY SIX</TimeOfDay>
+      <TimeOfDay>DAY SEVEN</TimeOfDay>
+      <TimeOfDay>DAY EIGHT</TimeOfDay>
+      <TimeOfDay>DAY NINE</TimeOfDay>
+      <TimeOfDay>DAY TEN</TimeOfDay>
+      <TimeOfDay>EVENING</TimeOfDay>
+      <TimeOfDay>LATER</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER</TimeOfDay>
+      <TimeOfDay>MORNING</TimeOfDay>
+      <TimeOfDay>NIGHT</TimeOfDay>
+      <TimeOfDay>NIGHT ONE</TimeOfDay>
+      <TimeOfDay>NIGHT TWO</TimeOfDay>
+      <TimeOfDay>NIGHT THREE</TimeOfDay>
+      <TimeOfDay>NIGHT FOUR</TimeOfDay>
+      <TimeOfDay>NIGHT FIVE</TimeOfDay>
+      <TimeOfDay>NIGHT SIX</TimeOfDay>
+      <TimeOfDay>NIGHT SEVEN</TimeOfDay>
+      <TimeOfDay>NIGHT EIGHT</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY</TimeOfDay>
+    </TimesOfDay>
+    <Transitions>
+      <Transition>BACK TO:</Transition>
+      <Transition>CUT TO:</Transition>
+      <Transition>DISSOLVE TO:</Transition>
+      <Transition>FADE IN:</Transition>
+      <Transition>FADE OUT.</Transition>
+      <Transition>FADE TO:</Transition>
+      <Transition>FADE TO BLACK.</Transition>
+      <Transition>INTERCUT WITH:</Transition>
+      <Transition>JUMP CUT TO:</Transition>
+      <Transition>MATCH CUT TO:</Transition>
+      <Transition>MATCH TO:</Transition>
+      <Transition>TIME CUT:</Transition>
+    </Transitions>
+  </SmartType>
+
+  <MoresAndContinueds>
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <DialogueBreaks AutomaticCharacterContinueds="Yes" BottomOfPage="Yes" DialogueBottom="(MORE)" DialogueTop="(CONT'D)" TopOfNext="Yes"/>
+    <SceneBreaks ContinuedNumber="Yes" SceneBottom="CONTINUED" SceneBottomOfPage="Yes" SceneTop="CONTINUED" SceneTopOfNext="Yes"/>
+  </MoresAndContinueds>
+
+  <LockedPages/>
+
+  <Revisions ActiveSet="1" Location="7.75" RevisionMode="No" RevisionsShown="All" ShowAllMarks="Yes" ShowAllSets="Yes" ShowPageColor="No">
+    <Revision Color="#000000000000" FullRevision="No" ID="1" Mark="*" Name="Production White" PageColor="#FFFFFFFFFFFF" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="2" Mark="*" Name="Blue Rev. - mm/dd/yy" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="3" Mark="*" Name="Pink Rev. - mm/dd/yy" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="4" Mark="*" Name="Yellow Rev. - mm/dd/yy" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="5" Mark="*" Name="Green Rev. - mm/dd/yy" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="6" Mark="*" Name="Goldenrod Rev. - mm/dd/yy" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="7" Mark="*" Name="Buff Rev. - mm/dd/yy" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="8" Mark="*" Name="Salmon Rev. - mm/dd/yy" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="9" Mark="*" Name="Cherry Rev. - mm/dd/yy" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="10" Mark="*" Name="Tan Rev. - mm/dd/yy" PageColor="#FDFDF1F1C7C7" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="11" Mark="*" Name="2nd White Rev. - mm/dd/yy" PageColor="#FFFFFFFFFFFF" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="12" Mark="*" Name="2nd Blue Rev. - mm/dd/yy" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="13" Mark="*" Name="2nd Pink Rev. - mm/dd/yy" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="14" Mark="*" Name="2nd Yellow Rev. - mm/dd/yy" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="15" Mark="*" Name="2nd Green Rev. - mm/dd/yy" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="16" Mark="*" Name="2nd Goldenrod Rev. - mm/dd/yy" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="17" Mark="*" Name="2nd Buff Rev. - mm/dd/yy" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="18" Mark="*" Name="2nd Salmon Rev. - mm/dd/yy" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="19" Mark="*" Name="2nd Cherry Rev. - mm/dd/yy" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="20" Mark="*" Name="2nd Tan Rev. - mm/dd/yy" PageColor="#FDFDF1F1C7C7" Style=""/>
+  </Revisions>
+
+  <SplitState ActivePanel="1" SplitMode="None" SplitterPosition="629">
+    <ScriptPanel DisplayMode="Page">
+      <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Verdana" RevisionID="0" Size="9" Style=""/>
+    </ScriptPanel>
+  </SplitState>
+
+  <Macros>
+    <Macro Element="Scene Heading" Name="INT" Shortcut="Ctrl+Alt+1" Text="INT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="EXT" Shortcut="Ctrl+Alt+2" Text="EXT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="I/E" Shortcut="Ctrl+Alt+3" Text="I/E " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="DAY" Shortcut="Ctrl+Alt+4" Text=" - DAY" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="NIGHT" Shortcut="Ctrl+Alt+5" Text=" - NIGHT" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="SUNRISE" Shortcut="Ctrl+Alt+6" Text=" - SUNRISE" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="MAGIC" Shortcut="Ctrl+Alt+7" Text=" - MAGIC" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="CONT" Shortcut="Ctrl+Alt+8" Text="continuing" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="INTER" Shortcut="Ctrl+Alt+9" Text="interrupting" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="Ctrl+Alt+0" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="CUTTO" Shortcut="Ctrl+Shift+Alt+1" Text="CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Action" Name="FADEIN" Shortcut="Ctrl+Shift+Alt+2" Text="FADE IN:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADEOUT" Shortcut="Ctrl+Shift+Alt+3" Text="FADE OUT." Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADETO" Shortcut="Ctrl+Shift+Alt+4" Text="FADE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="DISSLV" Shortcut="Ctrl+Shift+Alt+5" Text="DISSOLVE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="BACKTO" Shortcut="Ctrl+Shift+Alt+6" Text="BACK TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="MATCHCUT" Shortcut="Ctrl+Shift+Alt+7" Text="MATCH CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="JUMPCUT" Shortcut="Ctrl+Shift+Alt+8" Text="JUMP CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FBLACK" Shortcut="Ctrl+Shift+Alt+9" Text="FADE TO BLACK." Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="Ctrl+Shift+Alt+0" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="End Of Act"/>
+        <ActivateIn Element="Teaser/Act One"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Teaser/Act One" Name="Start Tzr" Shortcut="E" Text="TEASER" Transition="Scene Heading">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="st1" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="End Of Act" Name="End Tzr" Shortcut="E" Text="END OF TEASER" Transition="New Act">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="et1" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="End Of Act"/>
+      </Alias>
+    </Macro>
+    <Macro Element="New Act" Name="Start Act 1" Shortcut="E" Text="ACT ONE" Transition="Scene Heading">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="sa1" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="New Act"/>
+        <ActivateIn Element="Show/Ep. Title"/>
+      </Alias>
+    </Macro>
+    <Macro Element="End Of Act" Name="End Act 1" Shortcut="E" Text="END OF ACT ONE" Transition="New Act">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="ea1" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="End Of Act"/>
+      </Alias>
+    </Macro>
+    <Macro Element="New Act" Name="Start Act 2" Shortcut="E" Text="ACT TWO" Transition="Scene Heading">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="sa2" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="New Act"/>
+      </Alias>
+    </Macro>
+    <Macro Element="End Of Act" Name="End Act 2" Shortcut="E" Text="END OF ACT TWO" Transition="New Act">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="ea2" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="End Of Act"/>
+      </Alias>
+    </Macro>
+    <Macro Element="New Act" Name="Start Act 3" Shortcut="E" Text="ACT THREE" Transition="Scene Heading">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="sa3" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="New Act"/>
+      </Alias>
+    </Macro>
+    <Macro Element="End Of Act" Name="End Act 3" Shortcut="E" Text="END OF ACT THREE" Transition="New Act">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="ea3" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="End Of Act"/>
+      </Alias>
+    </Macro>
+    <Macro Element="New Act" Name="Start Act 4" Shortcut="E" Text="ACT FOUR" Transition="Scene Heading">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="sa4" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="New Act"/>
+      </Alias>
+    </Macro>
+    <Macro Element="End Of Act" Name="End Act 4" Shortcut="E" Text="END OF ACT FOUR" Transition="None">
+      <Alias Confirm="Yes" MatchCase="No" SmartReplace="Yes" Text="ea4" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="End Of Act"/>
+      </Alias>
+    </Macro>
+  </Macros>
+
+  <Actors>
+    <Actor MacVoice="" Name="Man 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Man 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Man" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Woman" Pitch="Normal" Speed="Medium" WinVoice=""/>
+  </Actors>
+
+  <Cast>
+    <Narrator Actor="Man 1">
+      <Element Type="Character"/>
+      <Element Type="Dialogue"/>
+    </Narrator>
+    <Member Actor="Man 1" Character="BENSON"/>
+    <Member Actor="Man 1" Character="STABLER"/>
+    <Member Actor="Man 1" Character="WARNER"/>
+    <Member Actor="Man 1" Character="GREYLEK"/>
+    <Member Actor="Man 1" Character="FIN"/>
+    <Member Actor="Man 1" Character="CRAGEN"/>
+    <Member Actor="Man 1" Character="Huang"/>
+    <Member Actor="Man 1" Character="Munch"/>
+  </Cast>
+
+  <SceneNumberOptions LeftLocation="0.75" RightLocation="7.38" ShowNumbersOnLeft="Yes" ShowNumbersOnRight="Yes">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+  </SceneNumberOptions>
+
+  <CastList SortOption="Alphabetical">
+    <CustomOrder/>
+  </CastList>
+
+  <CharacterHighlighting>
+    <Character Color="#FFFFFFFFFFFF" Name="BYSTANDER 1" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="BYSTANDER 2" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="WARNER" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="STABLER" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="BENSON" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="FIN" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="CRAGEN" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="PERP" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="HUANG" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="GREYLEK" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="MUNCH" Visible="No"/>
+  </CharacterHighlighting>
+
+  <CharacterNavigatorPreferences IsSortAscending="Yes" SortColumn=""/>
+
+</FinalDraft>

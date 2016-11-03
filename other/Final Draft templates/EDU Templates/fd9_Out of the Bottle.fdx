@@ -1,0 +1,1679 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FinalDraft DocumentType="Script" Template="No" Version="2">
+
+  <Content>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="1" Title="About Save the Cat!">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT!</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template was based upon ideas from the Save the Cat!® books published by Michael Wiese Productions (www.mwp.com) and Save the Cat! Press. If you are not familiar with Save the Cat!, visit www.savethecat.com for free screenwriting articles and beat sheets. Save the Cat! also makes the popular Save the Cat! software and iPhone and iPad app that imports and exports Final Draft (.fdx) files. Save the Cat! software has many additional and advanced features you won't find in this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1" Page="1" Title="About Save the Cat! Genres">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT! GENRES</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In his book, </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Italic">Save the Cat! The Last Book on Screenwriting You'll Ever Need</Text>
+      <Text>, Blake Snyder organizes scripts into ten basic genres. These genres are listed below.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>1. </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Monster in the House</Text>
+      <Text>: someone or something is after the characters — often in an enclosed space — and there is a sin they are paying for.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>2. </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Golden Fleece</Text>
+      <Text>: quest stories that feature a team, a journey, and a prize at the end.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3. </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Out of the Bottle</Text>
+      <Text>: stories that involve a wish, a magical blessing or spell, and a lesson learned.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>4. </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dude with a Problem</Text>
+      <Text>: an innocent hero is suddenly thrust into an event and must overcome obstacles, ultimately engaging in a life or death battle.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>5. </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Rites of Passage</Text>
+      <Text>: the hero deals with a life problem, trying several wrong methods to fix it, and ultimately accepts the true path.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>6. </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Buddy Love</Text>
+      <Text>: friendship stories where the hero is incomplete, needs a counterpart with qualities he or she lacks, and faces a complication — from a personal misunderstanding to the disapproval of society.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>7. </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Whydunit</Text>
+      <Text>: mystery stories that involve a character acting as a detective to learn a deep secret, only to discover a dark turn of events.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>8. </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fool Triumphant</Text>
+      <Text>:  a "fool" whose innocence is his strength comes up against an establishment, resulting in a transmutation in which the fool becomes someone or something new.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>9. </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Institutionalized</Text>
+      <Text>: A unique group - a family, organization or business - is involved in an ongoing conflict that pits one man or woman against the system; finally, a sacrifice must be made, leading to one of three endings: join it, burn it down... or commit "suicide."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>10.</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold"> Superhero</Text>
+      <Text>: these are not only about comic book heroes, but individuals that are set apart by something that makes them different and truly extraordinary, especially when opposed by a nemesis of equal or greater force. But these differences come with a curse that the hero must overcome.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="4/8" Page="2" Title="About Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Within each Save the Cat! genre are fifteen beats. These beats are important scenes or sequences that typically occur near the same place in every script or movie.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The page number where a beat typically occurs is indicated below in parentheses. This page number is based on a 110-page script. If your script is longer or shorter than 110 pages, the location of your beats may vary.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>It's also good to note that, as can be seen in a few of the examples, while the beats usually follow a specific pattern and occur at certain moments in a script, it is not always the case - the order of beats can sometimes vary. There are times the beats can be considered "movable parts" that work together to tell a story - and the transformation of your hero - in the best possible way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This allows screenwriters to maintain your own unique creative voices while still providing your audience with a familiar form of storytelling that will resonate.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1 2/8" Page="2" Title="Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">SAVE THE CAT! BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Opening Image</Text>
+      <Text> (1) – The scene in the movie that sets up the tone, type, and initial salvo of a film, a "before" snapshot — and the opposite of the Final Image.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Theme Stated</Text>
+      <Text> (5) – Usually spoken to the main character, often without knowing what is said will be vital to his surviving this tale. It's what your movie is "about."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Setup</Text>
+      <Text> (1-10) – The first 10 pages of a script must not only grab our interest and a studio reader's but introduce or hint at introducing every character in the A Story.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Catalyst </Text>
+      <Text>(12) – The telegram, the knock at the door, the act of catching a spouse in bed with another — something that is done to the hero to shake him.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Debate</Text>
+      <Text> (12-25) – The section of the script, be it a scene or a series of scenes, when the hero doubts the journey he must take.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Two</Text>
+      <Text> (25) – Act Two, that is; it is where we leave the "Thesis" world behind and enter the upside-down "Anti-thesis" world of Act Two. The hero makes a choice — and his journey begins.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">B Story</Text>
+      <Text> (30) – The "love" story, traditionally, but actually where the discussion about the theme of a good movie is found.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fun and Games</Text>
+      <Text> (30-55) – Here we forget plot and enjoy "set pieces" and "trailer moments" and revel in the "promise of the premise."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Midpoint</Text>
+      <Text> (55) – The dividing line between the two halves of a movie; it's back to the story as "stakes are raised," "time clocks" appear, and we start putting the squeeze on our hero(es).</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Bad Guys Close In</Text>
+      <Text> (55-75) – Both internally (the disintegration of old beliefs) and externally (as actual bad guys tighten their grip), real pressure is applied.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">All Is Lost</Text>
+      <Text> (75) – The "False Defeat" and the place where we find "the whiff of death" — because something must die here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dark Night of the Soul</Text>
+      <Text> (75 to 85) – Why hast thou forsaken me? That part of the script where the hero has lost all hope...</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Three</Text>
+      <Text> (85) ...but not for long! Thanks to a fresh idea, new inspiration, or last-minute action or advice from the love interest in the B Story, the hero chooses to fight.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Finale</Text>
+      <Text> (85-110) – The "Synthesis" of two worlds: From what was, and that which has been learned, the hero forges a third way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Final Image</Text>
+      <Text> (110) – The opposite of the Opening Image, proving a change has occurred. And since All Stories Are About Transformation, that change had better be dramatic!</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="3/8" Page="3" Title="How to Use this Template">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">You can use this template purely as a reference template. You can also delete the Save the Cat beats </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">HOW TO USE THIS TEMPLATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template includes a Save the Cat! Beat Sheet for three films within the Out of the Bottle genre. The three beat sheets are for the films </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Eternal Sunshine of the Spotless Mind, Midnight in Paris, </Text>
+      <Text>and</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold"> Liar Liar.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>You can use this template as a reference while you write your script. You can also use Scene View, Scene Navigator, and Index Card View within Final Draft 9 to replace these beats with your own scenes and scene summaries.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>If you decide to alter or replace this template, first save it with a new file name. Otherwise, you will permanently change the content within this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="ETERNAL SUNSHINE OF THE SPOTLESS MIND">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: Charlie Kaufman, screenplay; Charlie Kaufman &amp; Michel Gondry &amp; Pierre Bismuth, story</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Michael Gondry</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ETERNAL SUNSHINE OF THE SPOTLESS MIND</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: Charlie Kaufman, screenplay; Charlie Kaufman &amp; Michel Gondry &amp; Pierre Bismuth, story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Michael Gondry</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Joel Barish (Jim Carrey) wakes, not sure where he is. He goes out to his car and finds it dented. It's Valentines Day. (“A day designed to make people feel like crap.”) Joel skips work and gets on a train to Montauk. He finds pages ripped out of his sketchbook: “It appears this is my first entry in two years.”  </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 1 - Opening Image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Joel Barish (Jim Carrey) wakes, not sure where he is. He goes out to his car and finds it dented. It's Valentines Day. (“A day designed to make people feel like crap.”) Joel skips work and gets on a train to Montauk. He finds pages ripped out of his sketchbook: “It appears this is my first entry in two years.”  </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">On the way back, Joel meets Clementine (Kate Winslet). She says: “I can't tell from one minute to the next what I'm going to like, but right now I'm glad you're here.” That is our theme: the battle between the ideal and the real.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 2 - Theme Stated </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>On the way back, Joel meets Clementine (Kate Winslet). She says: “I can't tell from one minute to the next what I'm going to like, but right now I'm glad you're here.” That is our theme: the battle between the ideal and the real.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Turns out Joel and Clementine were lovers. What we are seeing is the day after Joel had his memory of her erased. Now he gives Clementine a ride home, and, as strangers, they fall in love all over again. Only after dropping Clementine off does Joel sense trouble. A stranger, Patrick (Elijah Wood), appears asking: “Can I help you with something?”</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 3 - SetUp</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Turns out Joel and Clementine were lovers. What we are seeing is the day after Joel had his memory of her erased. Now he gives Clementine a ride home, and, as strangers, they fall in love all over again. Only after dropping Clementine off does Joel sense trouble. A stranger, Patrick (Elijah Wood), appears asking: “Can I help you with something?” </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">This is the pre-title sequence. We now go back to the day that Joel headed home to begin the Lacuna Inc. process. He'll take a sleeping pill, lie down in bed, and await the Lacuna team to come in and erase his memory of Clementine. A neighbor Joel meets in his mailroom mentions that Valentine’s Day is getting close. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 4 - Catalyst</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This is the pre-title sequence. We now go back to the day that Joel headed home to begin the Lacuna Inc. process. He'll take a sleeping pill, lie down in bed, and await the Lacuna team to come in and erase his memory of Clementine. A neighbor Joel meets in his mailroom mentions that Valentine’s Day is getting close. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Can you erase the memory of love and defy fate? As Joel re-lives that mailroom scene, we flash back to how he learned of this amazing process. A friend (David Cross) tells Joel that Lacuna Inc. erased Clementine's memory of him. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Joel storms into the ramshackle office, meets perky office assistant Mary (Kirsten Dunst) and the inventor of the Lacuna procedure, Dr. Mierzwiak (Tom Wilkinson). Joel demands an explanation and learns that Clementine wanted him gone.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 5 - Debate</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Can you erase the memory of love and defy fate? As Joel re-lives that mailroom scene, we flash back to how he learned of this amazing process. A friend (David Cross) tells Joel that Lacuna Inc. erased Clementine's memory of him. Joel storms into the ramshackle office, meets perky office assistant Mary (Kirsten Dunst) and the inventor of the Lacuna procedure, Dr. Mierzwiak (Tom Wilkinson). Joel demands an explanation and learns that Clementine wanted him gone.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="5" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At Minute 27 Joel decides to do likewise and is told to collect everything connected to Clementine so they can destroy all evidence of her. This explains why his sketchbook is missing two years of entries: the length of their relationship. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Now, with Joel asleep, Stan (Mark Ruffalo) and the mysterious Patrick arrive to oversee the brain scrub. More flashbacks as we learn how Joel and Clementine met for the first time: in Montauk at a beach party with friends. We also see how their initial happiness devolved into alcohol-soaked co-dependence. Time begins to cut out; is Joel conscious or not? But hearing the name “Patrick” makes Joel resist the memory erase. It was the name Joel heard when he visited a post-scrub Clementine at work.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 6 - Break into Two</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At Minute 27 Joel decides to do likewise and is told to collect everything connected to Clementine so they can destroy all evidence of her. This explains why his sketchbook is missing two years of entries: the length of their relationship. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Now, with Joel asleep, Stan (Mark Ruffalo) and the mysterious Patrick arrive to oversee the brain scrub. More flashbacks as we learn how Joel and Clementine met for the first time: in Montauk at a beach party with friends. We also see how their initial happiness devolved into alcohol-soaked co-dependence. Time begins to cut out; is Joel conscious or not? But hearing the name “Patrick” makes Joel resist the memory erase. It was the name Joel heard when he visited a post-scrub Clementine at work.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="5" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Elijah is the “Confidant” (a person the hero can trust with the secret of his magic power, and sometimes the one who uses that information to harm the hero). He was present when Clementine underwent her procedure and is using what he learned about her life with Joel to woo her. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">We also see Stan and Mary flirt when she drops by, and Patrick ducks out to have a Valentine's date with Clementine. But Mary also has a crush on Dr. Mierzwiak — and the fallout of their relationship will kick the A Story into Act Three.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 7 - B Story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Elijah is the “Confidant” (a person the hero can trust with the secret of his magic power, and sometimes the one who uses that information to harm the hero). He was present when Clementine underwent her procedure and is using what he learned about her life with Joel to woo her. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>We also see Stan and Mary flirt when she drops by, and Patrick ducks out to have a Valentine's date with Clementine. But Mary also has a crush on Dr. Mierzwiak — and the fallout of their relationship will kick the A Story into Act Three.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="5" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">We have two worlds at play now. Up top, in “real” life, Clementine and Patrick go out for Valentine’s Day. But in his mind, Joel is having second thoughts about the erasure. Having sensed something is not kosher with this “Patrick” character, Joel chases Clementine in his imaginary world to convince her to come back to him, and to keep his memories of her intact. But even in his mind, she's still mad at him and eludes him as scenes of their relationship vanish. This is the “promise of the premise” as Joel runs through his imagination, from memory to memory, trying to understand “The Rules” in order to stop Clementine from being expunged.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 8 - Fun and Games</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>We have two worlds at play now. Up top, in “real” life, Clementine and Patrick go out for Valentine’s Day. But in his mind, Joel is having second thoughts about the erasure. Having sensed something is not kosher with this “Patrick” character, Joel chases Clementine in his imaginary world to convince her to come back to him, and to keep his memories of her intact. But even in his mind, she's still mad at him and eludes him as scenes of their relationship vanish. This is the “promise of the premise” as Joel runs through his imagination, from memory to memory, trying to understand “The Rules” in order to stop Clementine from being expunged.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At Minute 54, Joel yells, “I want to call this off!” In “real” life, Patrick takes Clementine out and repeats a line Joel used; Clementine realizes something's wrong, but doesn't know what. This is the “false victory,” as back in Joel's mind, his memory version of Clementine agrees to help him. Their only hope is to look for spots in Joel's mind where the erasure process won't find her.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 9 - Midpoint</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At Minute 54, Joel yells, “I want to call this off!” In “real” life, Patrick takes Clementine out and repeats a line Joel used; Clementine realizes something's wrong, but doesn't know what. This is the “false victory,” as back in Joel's mind, his memory version of Clementine agrees to help him. Their only hope is to look for spots in Joel's mind where the erasure process won't find her.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="BAD GUYS CLOSE IN">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Flashback to Joel's childhood, as Clementine and Joel don many guises. Bad guys (in this case the Lacuna process) search and destroy Joel's memories. There is conflict too as Stan and Mary discover Joel's brain erase is off track. Dr. Mierzwiak is called to Joel's house to fix the problem.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 10 - Bad Guys Close In</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Flashback to Joel's childhood, as Clementine and Joel don many guises. Bad guys (in this case the Lacuna process) search and destroy Joel's memories. There is conflict too as Stan and Mary discover Joel's brain erase is off track. Dr. Mierzwiak is called to Joel's house to fix the problem.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Looking for a place in his memory to hide her, Joel and Clementine find a day as a boy when he killed a bird (“whiff of death”). As two little kids, like narrators observing this incident, they know they can't hang onto their love for long. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 11 - All Is Lost</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Looking for a place in his memory to hide her, Joel and Clementine find a day as a boy when he killed a bird (“whiff of death”). As two little kids, like narrators observing this incident, they know they can't hang onto their love for long. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Left alone with Dr. Mierzwiak, Mary quotes the Alexander Pope poem from which the title of the movie stems. She tries to kiss Dr. Mierzwiak, who resists her as Stan watches through the window. Then Dr. Mierzwiak's wife shows up and spills the beans: Mary and the Doc had an affair. Even though Mary had her memory of the affair erased, she is doomed to keep repeating her behavior. The Lacuna process does not work. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 12 - Dark Night of the Soul</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Left alone with Dr. Mierzwiak, Mary quotes the Alexander Pope poem from which the title of the movie stems. She tries to kiss Dr. Mierzwiak, who resists her as Stan watches through the window. Then Dr. Mierzwiak's wife shows up and spills the beans: Mary and the Doc had an affair. Even though Mary had her memory of the affair erased, she is doomed to keep repeating her behavior. The Lacuna process does not work. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Joel and Clementine relive the day they met. “I wish I'd stayed,” he says. “I wish I'd done a lot of things.” Before she vanishes, Clementine whispers: “Meet me in Montauk.” A and B Stories cross as Mary steals Joel's and Clementine's files.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 13 - Break into Three</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Joel and Clementine relive the day they met. “I wish I'd stayed,” he says. “I wish I'd done a lot of things.” Before she vanishes, Clementine whispers: “Meet me in Montauk.” A and B Stories cross as Mary steals Joel's and Clementine's files.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">We return to the beginning with Joel waking, memory erased. He gets up, goes to Montauk, and meets Clementine. But they now get a real second chance: Mary has sent files to all Mierzwiak's clients. Hearing tapes of themselves describing their past relationship, the brain-scrubbed Clementine and Joel realize they already met and failed at love. Should they consider it again? </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 14 - Finale</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>We return to the beginning with Joel waking, memory erased. He gets up, goes to Montauk, and meets Clementine. But they now get a real second chance: Mary has sent files to all Mierzwiak's clients. Hearing tapes of themselves describing their past relationship, the brain-scrubbed Clementine and Joel realize they already met and failed at love. Should they consider it again? </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="7" Title="FINAL IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Joel and Clementine recommit. Synthesis! What they had adds to what they learned. Eyes opened, they will try once more. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>eternal sunshine of the spotless mind beat 15 - Final Image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Joel and Clementine recommit. Synthesis! What they had adds to what they learned. Eyes opened, they will try once more. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="7" Title="MIDNIGHT IN PARIS">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written and Directed By: Woody Allen</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">midnight in paris</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written and Directed By: Woody Allen</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil (Owen Wilson) and his fiancée, Inez (Rachel McAdams), stroll through beautiful Paris. Gil is excited to be in the City of Lights and wishes he had moved there the first time he visited. He can only imagine how much more beautiful it was back in the day. Inez doesn’t share his enthusiasm. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 1 - Opening Image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil (Owen Wilson) and his fiancée, Inez (Rachel McAdams), stroll through beautiful Paris. Gil is excited to be in the City of Lights and wishes he had moved there the first time he visited. He can only imagine how much more beautiful it was back in the day. Inez doesn’t share his enthusiasm. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Inez continues her lukewarm reaction to Gil’s love affair with the city. Gil proclaims he wouldn’t think twice about dropping his successful screenwriting career and home in Beverly Hills if he could only live in Paris to write his book and be a real artist just like the greats of old. Inez’s parents share her sentiments about Paris and clearly don’t agree with Gil.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 2 - Setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Inez continues her lukewarm reaction to Gil’s love affair with the city. Gil proclaims he wouldn’t think twice about dropping his successful screenwriting career and home in Beverly Hills if he could only live in Paris to write his book and be a real artist just like the greats of old. Inez’s parents share her sentiments about Paris and clearly don’t agree with Gil.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil and Inez run into an old professor of hers, Paul (Michael Sheen), a pompous know-it-all. As Inez tells Paul that Gil is writing a novel about a guy who works in a “nostalgia shop,” Paul belittles Gil’s book by saying, “Nostalgia is the denial of the painful present.” It’s an indirect jab at Gil for wanting to live in the past to merely avoid his present situation.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 3 - Theme Stated</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil and Inez run into an old professor of hers, Paul (Michael Sheen), a pompous know-it-all. As Inez tells Paul that Gil is writing a novel about a guy who works in a “nostalgia shop,” Paul belittles Gil’s book by saying, “Nostalgia is the denial of the painful present.” It’s an indirect jab at Gil for wanting to live in the past to merely avoid his present situation.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="8" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Gil begs off from a night of dancing with Inez and Paul, he finds himself lost in the streets of Paris. When the clock strikes midnight, Gil is approached by a horse-drawn cart that offers him a ride. He thinks nothing of it and gets on board. He’s brought to a party where he meets F. Scott Fitzgerald and his girlfriend Zelda. Initially skeptical, Gil then meets Ernest Hemingway in a café and realizes he’s somehow been magically transported back to the 1920s.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil musters up the courage to ask Hemingway to read his book, but Hemingway rejects the idea. He’ll never read the work of another writer. But he tells Gil he’ll give his novel to the only reader he trusts, Gertrude Stein. Gil can’t believe it and goes for some fresh air. But when he tries to return to the café, it’s gone. He’s back in the present.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 4 - Catalyst</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Gil begs off from a night of dancing with Inez and Paul, he finds himself lost in the streets of Paris. When the clock strikes midnight, Gil is approached by a horse-drawn cart that offers him a ride. He thinks nothing of it and gets on board. He’s brought to a party where he meets F. Scott Fitzgerald and his girlfriend Zelda. Initially skeptical, Gil then meets Ernest Hemingway in a café and realizes he’s somehow been magically transported back to the 1920s.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil musters up the courage to ask Hemingway to read his book, but Hemingway rejects the idea. He’ll never read the work of another writer. But he tells Gil he’ll give his novel to the only reader he trusts, Gertrude Stein. Gil can’t believe it and goes for some fresh air. But when he tries to return to the café, it’s gone. He’s back in the present.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Did it really happen? The next day, Gil tries to makes sense of the last night, but Inez dismisses his “fantasies.” Gil brings Inez to the spot where he was picked up, but they just wait… and wait… until Inez has had enough and takes a cab back to the hotel. Gil is left alone, but as he’s about to give up, the clock strikes midnight again and Hemingway appears, urging Gil to join him for a ride.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 5 - Debate</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Did it really happen? The next day, Gil tries to makes sense of the last night, but Inez dismisses his “fantasies.” Gil brings Inez to the spot where he was picked up, but they just wait… and wait… until Inez has had enough and takes a cab back to the hotel. Gil is left alone, but as he’s about to give up, the clock strikes midnight again and Hemingway appears, urging Gil to join him for a ride.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil gladly joins Hemingway. They head to Gertrude’s place. She’s pleased to meet Gil and asks for his novel. She also introduces him to Pablo Picasso, who she’s been having an argument with about a painting he just finished.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 6 - Break into Two</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil gladly joins Hemingway. They head to Gertrude’s place. She’s pleased to meet Gil and asks for his novel. She also introduces him to Pablo Picasso, who she’s been having an argument with about a painting he just finished.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">It’s a painting of his mistress, Adriana (Marion Cotillard), who is with him. Gertrude argues how Pablo merely painted her as he sees her sexually, not who she really is, or how others see her. When asked for his opinion, Gil — clearly smitten with Adriana — can only agree.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 7 - B Story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>It’s a painting of his mistress, Adriana (Marion Cotillard), who is with him. Gertrude argues how Pablo merely painted her as he sees her sexually, not who she really is, or how others see her. When asked for his opinion, Gil — clearly smitten with Adriana — can only agree.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="9" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil wakes up back in the present. In a private museum visit organized by Paul, Gil corrects the condescending Paul in front of Inez, saying that Paul is mistaken about the very same painting of Adriana by Picasso, now hanging in front of them. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil can’t stop thinking of the past and meets a lovely antique dealer, Gabrielle, who seems to have the same interest in the past as he does. Gil sneaks away from Inez every evening to join his friends back in time, particularly Adriana. They go dancing and walk through the streets talking about love and relationships. Gil is clearly falling for her. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 8 - Fun and Games </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil wakes up back in the present. In a private museum visit organized by Paul, Gil corrects the condescending Paul in front of Inez, saying that Paul is mistaken about the very same painting of Adriana by Picasso, now hanging in front of them. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil can’t stop thinking of the past and meets a lovely antique dealer, Gabrielle, who seems to have the same interest in the past as he does. Gil sneaks away from Inez every evening to join his friends back in time, particularly Adriana. They go dancing and walk through the streets talking about love and relationships. Gil is clearly falling for her. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil meets Dali and some of his surrealist friends at a restaurant. Gil has to tell someone about his feelings and what is happening. So he tells Dali that he’s falling for a woman from a different time. Dali and his friends have heard crazier things and urge him to pursue the girl.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 9 - Midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil meets Dali and some of his surrealist friends at a restaurant. Gil has to tell someone about his feelings and what is happening. So he tells Dali that he’s falling for a woman from a different time. Dali and his friends have heard crazier things and urge him to pursue the girl.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="5/8" Page="9" Title="BAD GUYS CLOSE IN">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Unknown to Gil, Inez’s dad has become suspicious of his late night disappearances and has hired a private detective to follow him around. Upon returning to the ‘20s, Gil finds out from Gertrude that Adriana broke up with Picasso but has gone on an African Safari with Hemingway. On top of this, Gertrude tells him that she didn’t love his book. It wasn’t optimistic enough about the present and the “human condition.”</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Back in the present, Gil is distraught. He finds Gabrielle, and they talk about the past and music. He meets a book vendor who sells old and rare texts. Surprisingly, he discovers a journal that belonged to Adriana. He reads her journal and learns that she has feelings for him. She even had a dream about Gil giving her earrings.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil finds a pair of earrings from a flea market and sneaks back to the 1920s. After giving Gertrude new rewritten chapters from his book, he learns that Adriana is back and has broken up with Hemingway. Gil seeks out Adriana and professes his love to her. They kiss. They are in love. A carriage suddenly appears and invites them to get in. They are transported back to the late 1800s in the days of the Belle Epoque. Adrianna is captivated, not only by Gil, but also about traveling to the past. This is where she’s always wanted to be.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 10 - Bad Guys Close In </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Unknown to Gil, Inez’s dad has become suspicious of his late night disappearances and has hired a private detective to follow him around. Upon returning to the ‘20s, Gil finds out from Gertrude that Adriana broke up with Picasso but has gone on an African Safari with Hemingway. On top of this, Gertrude tells him that she didn’t love his book. It wasn’t optimistic enough about the present and the “human condition.”</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Back in the present, Gil is distraught. He finds Gabrielle, and they talk about the past and music. He meets a book vendor who sells old and rare texts. Surprisingly, he discovers a journal that belonged to Adriana. He reads her journal and learns that she has feelings for him. She even had a dream about Gil giving her earrings.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil finds a pair of earrings from a flea market and sneaks back to the 1920s. After giving Gertrude new rewritten chapters from his book, he learns that Adriana is back and has broken up with Hemingway. Gil seeks out Adriana and professes his love to her. They kiss. They are in love. A carriage suddenly appears and invites them to get in. They are transported back to the late 1800s in the days of the Belle Epoque. Adrianna is captivated, not only by Gil, but also about traveling to the past. This is where she’s always wanted to be.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="10" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Adriana is so in love with the past that she doesn’t want to go back to the ‘20s. She wants to stay and urges Gil to stay with her. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 11 - All Is Lost</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Adriana is so in love with the past that she doesn’t want to go back to the ‘20s. She wants to stay and urges Gil to stay with her. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Adriana is such a nostalgic character, floating through life, a beautiful, yet lost soul, that when she transported back to the late 1800s, she knew she never wanted to return to her current life. Gil knows that he doesn’t want this. He has learned that he wants to live in the present. And this difference of nostalgia vs. the view of the present, the here and now, is what ultimately creates a schism in his relationship with Adriana. Gil must make a decision. He feels alone, like he’s lost the love of his life.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 12 - Dark Night of the Soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Adriana is such a nostalgic character, floating through life, a beautiful, yet lost soul, that when she transported back to the late 1800s, she knew she never wanted to return to her current life. Gil knows that he doesn’t want this. He has learned that he wants to live in the present. And this difference of nostalgia vs. the view of the present, the here and now, is what ultimately creates a schism in his relationship with Adriana. Gil must make a decision. He feels alone, like he’s lost the love of his life.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil chooses to return to his life in the present. Gil leaves Adriana behind, but we know that she is happy now. Gil says good-bye to his friends from the 1920s. He sees Gertrude Stein and learns that she likes the rewrite of his novel. Even Hemingway liked it, which surprises Gil. But Hemingway couldn’t believe that the protagonist didn’t know his fiancée was having an affair. Gil just replies, “It’s called denial.”</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 13 - Break into Three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil chooses to return to his life in the present. Gil leaves Adriana behind, but we know that she is happy now. Gil says good-bye to his friends from the 1920s. He sees Gertrude Stein and learns that she likes the rewrite of his novel. Even Hemingway liked it, which surprises Gil. But Hemingway couldn’t believe that the protagonist didn’t know his fiancée was having an affair. Gil just replies, “It’s called denial.”</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil returns to his present life and confronts Inez. She confesses to an affair with Paul but she still wants to marry Gil. Gil tells her that they are no longer getting married. He’s staying in Paris. Inez flips out. Her father admits he hired a detective, and is sure that Gil had an affair. However, having followed Gil back into the past, the detective is stuck in the Middle Ages.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 14 - Finale</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil returns to his present life and confronts Inez. She confesses to an affair with Paul but she still wants to marry Gil. Gil tells her that they are no longer getting married. He’s staying in Paris. Inez flips out. Her father admits he hired a detective, and is sure that Gil had an affair. However, having followed Gil back into the past, the detective is stuck in the Middle Ages.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="FINAL IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gil is walking the streets of Paris alone at night. He comes upon Gabrielle and tells her he just moved to Paris to become a novelist. As Gil offers to walk her home, it starts to rain. But, unlike Inez in the opening, she tells him she enjoys walking the streets of Paris, especially when it rains because that’s when Paris is most beautiful. Gil couldn’t agree more.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Midnight in Paris Beat 15 - Final Image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gil is walking the streets of Paris alone at night. He comes upon Gabrielle and tells her he just moved to Paris to become a novelist. As Gil offers to walk her home, it starts to rain. But, unlike Inez in the opening, she tells him she enjoys walking the streets of Paris, especially when it rains because that’s when Paris is most beautiful. Gil couldn’t agree more.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="11" Title="LIAR LIAR">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: Paul Guay &amp; Stephen Mazur</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Tom Shadyac</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">liar liar</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: Paul Guay &amp; Stephen Mazur</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Tom Shadyac</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">In an elementary school classroom, kids are telling about what jobs their parents do. Max Reed (Justin Cooper) tells everyone that his father is a “liar.” The teacher thinks he must have meant “lawyer,” but Max just shrugs when she corrects him. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 1 - Opening Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In an elementary school classroom, kids are telling about what jobs their parents do. Max Reed (Justin Cooper) tells everyone that his father is a “liar.” The teacher thinks he must have meant “lawyer,” but Max just shrugs when she corrects him. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="11" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Fletcher Reed (Jim Carrey) exits the courthouse, he stops for an interview about his recent victory. This makes him late to pick up Max, and when he finally arrives, he is greeted by his ex-wife Audrey (Maura Tierney). Fletcher spins lies to explain his tardiness but promises to take Max to see a wrestling match. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">When Fletcher meets Audrey’s boyfriend Jerry (Cary Elwes), who is moving to Boston for his job, Audrey mentions that Max will miss Jerry. Fletcher replies that he will be there for Max, but it is evident that he is unreliable. Arriving at the law firm, Fletcher’s secretary asks Max about his birthday, causing Fletcher to realize that he had not only forgotten to get Max a gift, but had forgotten about the birthday party.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 2 - Setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Fletcher Reed (Jim Carrey) exits the courthouse, he stops for an interview about his recent victory. This makes him late to pick up Max, and when he finally arrives, he is greeted by his ex-wife Audrey (Maura Tierney). Fletcher spins lies to explain his tardiness but promises to take Max to see a wrestling match. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>When Fletcher meets Audrey’s boyfriend Jerry (Cary Elwes), who is moving to Boston for his job, Audrey mentions that Max will miss Jerry. Fletcher replies that he will be there for Max, but it is evident that he is unreliable. Arriving at the law firm, Fletcher’s secretary asks Max about his birthday, causing Fletcher to realize that he had not only forgotten to get Max a gift, but had forgotten about the birthday party.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Miranda, one of the lawyers at Fletcher’s law firm, asks an attorney to represent a client in a tough case, one that would be difficult to win given the circumstances. The lawyer tells her that he will only represent the client in an ethical manner, but he will not lie. The importance of telling the truth is the lesson Fletcher will need to learn in this journey, one that will turn his world upside-down.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 3 - Theme Stated</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Miranda, one of the lawyers at Fletcher’s law firm, asks an attorney to represent a client in a tough case, one that would be difficult to win given the circumstances. The lawyer tells her that he will only represent the client in an ethical manner, but he will not lie. The importance of telling the truth is the lesson Fletcher will need to learn in this journey, one that will turn his world upside-down.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">While Max is excited about spending time with his dad at the wrestling match, Miranda approaches Fletcher with the case the other attorney would not take. Now, he must work through the night, breaking his promise to Max.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 4 - Catalyst</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>While Max is excited about spending time with his dad at the wrestling match, Miranda approaches Fletcher with the case the other attorney would not take. Now, he must work through the night, breaking his promise to Max.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="12" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Jerry proposes to Audrey, which would mean moving to Boston with him. The next morning, Fletcher gives Max a birthday gift his secretary bought, but he does not have time to play with Max, letting him down once again. Fletcher meets his client, who clearly does not have the truth on her side. Even so, Fletcher manipulates her into believing that she is the victim in the case, and she is relieved to have an attorney she can trust. Miranda tells Fletcher that if he wins the case, he would most certainly make partner at the firm. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At Max’s party, Audrey tells Jerry that she can’t move to Boston because Max needs Fletcher. Meanwhile, Fletcher sleeps with Miranda and calls Audrey to say that he will have to miss Max’s birthday party. Max learns that his dad will not be in attendance, and, tired of the broken promises, wishes that for only one day, Fletcher can’t tell a lie.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 5 - Debate  </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Jerry proposes to Audrey, which would mean moving to Boston with him. The next morning, Fletcher gives Max a birthday gift his secretary bought, but he does not have time to play with Max, letting him down once again. Fletcher meets his client, who clearly does not have the truth on her side. Even so, Fletcher manipulates her into believing that she is the victim in the case, and she is relieved to have an attorney she can trust. Miranda tells Fletcher that if he wins the case, he would most certainly make partner at the firm. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At Max’s party, Audrey tells Jerry that she can’t move to Boston because Max needs Fletcher. Meanwhile, Fletcher sleeps with Miranda and calls Audrey to say that he will have to miss Max’s birthday party. Max learns that his dad will not be in attendance, and, tired of the broken promises, wishes that for only one day, Fletcher can’t tell a lie.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The wish comes true, and Fletcher cannot lie for one day. This is the antithesis of all he knows, and he must use truth instead of lies if he is to win the case.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 6 - Break into Two </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The wish comes true, and Fletcher cannot lie for one day. This is the antithesis of all he knows, and he must use truth instead of lies if he is to win the case.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The ongoing B Story is Fletcher’s relationship with Max. While Fletcher might win the case in the A Story, he might lose Max in the process.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 7 - B Story </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The ongoing B Story is Fletcher’s relationship with Max. While Fletcher might win the case in the A Story, he might lose Max in the process.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="12" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Suddenly stricken with the inability to lie, Fletcher insults Miranda and makes inappropriate comments to others. In court, when he encounters the plaintiff’s lawyer, Fletcher tries to state his defense, but he literally cannot say it; he doesn’t know what is happening. He asks for a continuance, but due to his inability to lie, he can’t provide a good reason. The trial will happen at 1:30, and he races into his office to seek refuge. He must confront the “upside-down version of his world” and find a way to deal with it.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Fletcher’s original defense in the case revolved around bending the truth, but now he cannot. And because he isn’t able to settle in court as originally planned, he can’t pick Max up from school. Max tells Audrey about his wish, and Audrey tells Fletcher she is moving to Boston. Fletcher wants to talk to Audrey and speeds while driving, drawing the attention of a police officer. Forced to tell the truth, Fletcher has his car impounded. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 8 - Fun and Games </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Suddenly stricken with the inability to lie, Fletcher insults Miranda and makes inappropriate comments to others. In court, when he encounters the plaintiff’s lawyer, Fletcher tries to state his defense, but he literally cannot say it; he doesn’t know what is happening. He asks for a continuance, but due to his inability to lie, he can’t provide a good reason. The trial will happen at 1:30, and he races into his office to seek refuge. He must confront the “upside-down version of his world” and find a way to deal with it.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Fletcher’s original defense in the case revolved around bending the truth, but now he cannot. And because he isn’t able to settle in court as originally planned, he can’t pick Max up from school. Max tells Audrey about his wish, and Audrey tells Fletcher she is moving to Boston. Fletcher wants to talk to Audrey and speeds while driving, drawing the attention of a police officer. Forced to tell the truth, Fletcher has his car impounded. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Audrey takes Fletcher to the impound lot to get his car. The B Story crosses with the stress of the A Story as he admits that he’s a bad father and begs for a second chance. In a false victory, Audrey says she will not move to Boston if he can make it to see Max in time after the trial, and so a “time clock” appears, “raising the stakes.” Audrey also tells him about the wish, and Fletcher learns why he can’t lie.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 9 - Midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Audrey takes Fletcher to the impound lot to get his car. The B Story crosses with the stress of the A Story as he admits that he’s a bad father and begs for a second chance. In a false victory, Audrey says she will not move to Boston if he can make it to see Max in time after the trial, and so a “time clock” appears, “raising the stakes.” Audrey also tells him about the wish, and Fletcher learns why he can’t lie.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="13" Title="BAD GUYS CLOSE IN">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Thinking that he now has the solution to his problem, Fletcher tries to get Max to un-wish the wish, but it doesn’t work. Fletcher’s secretary quits due to his past lies. Miranda makes Fletcher speak in front of the firm’s partners, and he insults them. At court, Fletcher tries to stall using unorthodox methods such as beating himself up. The trial goes from bad to worse until Fletcher discovers a loophole, winning the case. His client changes her mind about joint custody of the children, wanting to hit her ex-husband where it hurts. Fletcher realizes that he has represented the wrong person.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 10 - Bad Guys Close In  </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Thinking that he now has the solution to his problem, Fletcher tries to get Max to un-wish the wish, but it doesn’t work. Fletcher’s secretary quits due to his past lies. Miranda makes Fletcher speak in front of the firm’s partners, and he insults them. At court, Fletcher tries to stall using unorthodox methods such as beating himself up. The trial goes from bad to worse until Fletcher discovers a loophole, winning the case. His client changes her mind about joint custody of the children, wanting to hit her ex-husband where it hurts. Fletcher realizes that he has represented the wrong person.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="ALL IS LOST ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Fletcher argues about his win, saying that just because the judge bought the defense doesn’t make it right. This angers the judge, and Fletcher is taken into custody and held in contempt of court. Now, he will miss seeing Max in time, and Audrey will move to Boston. The “whiff of death” is in the air as his relationship with Max faces an end.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 11 - All Is Lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Fletcher argues about his win, saying that just because the judge bought the defense doesn’t make it right. This angers the judge, and Fletcher is taken into custody and held in contempt of court. Now, he will miss seeing Max in time, and Audrey will move to Boston. The “whiff of death” is in the air as his relationship with Max faces an end.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Fletcher calls Audrey and asks for bail, saying he is a changed man, but she hangs up on him. His former secretary bails him out, and while Fletcher knows he is fired, he is actually happy, wanting to start his own firm. Most importantly, he must see Max. He has learned his lesson, and in a display of synthesis, he notes, “This truth stuff is actually pretty cool.” He runs off shouting that he loves his son.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 12 - Dark Night of the Soul</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Fletcher calls Audrey and asks for bail, saying he is a changed man, but she hangs up on him. His former secretary bails him out, and while Fletcher knows he is fired, he is actually happy, wanting to start his own firm. Most importantly, he must see Max. He has learned his lesson, and in a display of synthesis, he notes, “This truth stuff is actually pretty cool.” He runs off shouting that he loves his son.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Fletcher races to the airport to stop Audrey and Max from leaving. Before, he would lie and would not care about missing time with his son, but now, nothing else matters to him.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 13 - Break into Three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Fletcher races to the airport to stop Audrey and Max from leaving. Before, he would lie and would not care about missing time with his son, but now, nothing else matters to him.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Fletcher sneaks onto the runway through a baggage terminal and hijacks a set of movable stairs. Driving alongside the plane, he is able to get the pilot to pull over and stop. Before he is taken away in an ambulance, Fletcher “digs down deep” and tells Max he loves him and will never hurt him again. At first, Fletcher and Max think the statement is true because of the wish, but the 24 hours are over. Fletcher realizes he was telling truth on his own, evidence of his transformation. Audrey and Max are not moving to Boston.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 14 - Finale </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Fletcher sneaks onto the runway through a baggage terminal and hijacks a set of movable stairs. Driving alongside the plane, he is able to get the pilot to pull over and stop. Before he is taken away in an ambulance, Fletcher “digs down deep” and tells Max he loves him and will never hurt him again. At first, Fletcher and Max think the statement is true because of the wish, but the 24 hours are over. Fletcher realizes he was telling truth on his own, evidence of his transformation. Audrey and Max are not moving to Boston.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="FINAL IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">One year later, it is Max’s birthday. After blowing out the candles, Fletcher and Audrey are embracing and kissing. As Fletcher chases them around with “the claw,” it is clear that the truth has transformed Fletcher, and it has healed this family.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Liar Liar Beat 15 - Final Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>One year later, it is Max’s birthday. After blowing out the candles, Fletcher and Audrey are embracing and kissing. As Fletcher chases them around with “the claw,” it is clear that the truth has transformed Fletcher, and it has healed this family.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps"></Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps"></Text>
+    </Paragraph>
+  </Content>
+
+  <Watermarking Text=""/>
+
+  <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+    <Header>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Last Revised"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Page #"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Center"/>
+          <Tabstop Position="7.25" Type="Right"/>
+        </Tabstops>
+      </Paragraph>
+    </Header>
+    <Footer>
+      <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+      </Paragraph>
+    </Footer>
+  </HeaderAndFooter>
+
+  <SpellCheckIgnoreLists>
+    <IgnoredRanges/>
+    <IgnoredWords/>
+  </SpellCheckIgnoreLists>
+
+  <PageLayout BackgroundColor="#FFFFFFFFFFFF" BottomMargin="72" BreakDialogueAndActionAtSentences="Yes" DocumentLeading="Normal" FooterMargin="36" ForegroundColor="#000000000000" HeaderMargin="36" InvisiblesColor="#808080808080" TopMargin="72" UsesSmartQuotes="Yes">
+    <PageSize Height="11.00" Width="8.50"/>
+    <AutoCastList AddParentheses="Yes" AutomaticallyGenerate="Yes" CastListElement="Cast List"/>
+  </PageLayout>
+
+  <WindowState Height="873" Left="0" Mode="Normal" Top="4" Width="1373"/>
+
+  <TextState Scaling="100" Selection="6231,6231" ShowInvisibles="No"/>
+
+  <ElementSettings Type="General">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="General" Shortcut="0"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Scene Heading">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="1"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Action">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="2"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Character">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="3.50" RightIndent="7.25" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Character" ReturnKey="Dialogue" Shortcut="3"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Parenthetical">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="-0.10" Leading="Regular" LeftIndent="3.00" RightIndent="5.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Parenthetical" ReturnKey="Dialogue" Shortcut="4"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Dialogue">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="2.50" RightIndent="6.00" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Dialogue" ReturnKey="Action" Shortcut="5"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Transition">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="5.50" RightIndent="7.10" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Transition" ReturnKey="Scene Heading" Shortcut="6"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Shot">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="7"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Cast List">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="8"/>
+  </ElementSettings>
+
+  <TitlePage>
+    <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+      <Header>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <DynamicLabel Type="Page #"/>
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        </Paragraph>
+      </Header>
+      <Footer>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+        </Paragraph>
+      </Footer>
+    </HeaderAndFooter>
+    <Content>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline+AllCaps">Script Title</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Name of First Writer</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Based on, If Any</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Address</Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Phone Number</Text>
+      </Paragraph>
+    </Content>
+    <TextState Scaling="100" Selection="0,0" ShowInvisibles="No"/>
+  </TitlePage>
+
+  <UnanchoredScriptNotes/>
+
+  <SmartType>
+    <Characters>
+      <Character>ABOUT BEATS</Character>
+      <Character>THE AVENGERS</Character>
+      <Character>RAGING BULL</Character>
+      <Character>RATATOUILLE</Character>
+    </Characters>
+    <Extensions>
+      <Extension>(V.O.)</Extension>
+      <Extension>(O.S.)</Extension>
+      <Extension>(O.C.)</Extension>
+      <Extension>(CONT'D)</Extension>
+      <Extension>(SUBTITLE)</Extension>
+    </Extensions>
+    <SceneIntros Separator=". ">
+      <SceneIntro>INT</SceneIntro>
+      <SceneIntro>EXT</SceneIntro>
+      <SceneIntro>I/E</SceneIntro>
+    </SceneIntros>
+    <Locations>
+      <Location>ABOUT SAVE THE CAT!</Location>
+      <Location>ABOUT SAVE THE CAT! GENRES</Location>
+      <Location>SAVE THE CAT! BEATS</Location>
+      <Location>HOW TO USE THIS TEMPLATE</Location>
+      <Location>THE AVENGERS BEAT 1</Location>
+      <Location>THE AVENGERS BEAT 2</Location>
+      <Location>THE AVENGERS BEAT 3</Location>
+      <Location>THE AVENGERS BEAT 4</Location>
+      <Location>THE AVENGERS BEAT 5</Location>
+      <Location>THE AVENGERS BEAT 6</Location>
+      <Location>THE AVENGERS BEAT 7</Location>
+      <Location>THE AVENGERS BEAT 8</Location>
+      <Location>THE AVENGERS BEAT 9</Location>
+      <Location>THE AVENGERS BEAT 10</Location>
+      <Location>THE AVENGERS BEAT 11</Location>
+      <Location>THE AVENGERS BEAT 12</Location>
+      <Location>THE AVENGERS BEAT 13</Location>
+      <Location>THE AVENGERS BEAT 14</Location>
+      <Location>THE AVENGERS BEAT 15</Location>
+      <Location>RAGING BULL BEAT 1</Location>
+      <Location>RAGING BULL BEAT 2</Location>
+      <Location>RAGING BULL BEAT 3</Location>
+      <Location>RAGING BULL BEAT 4</Location>
+      <Location>RAGING BULL BEAT 5</Location>
+      <Location>RAGING BULL BEAT 6</Location>
+      <Location>RAGING BULL BEAT 7</Location>
+      <Location>RAGING BULL BEAT 8</Location>
+      <Location>RAGING BULL BEAT 9</Location>
+      <Location>RAGING BULL BEAT 10</Location>
+      <Location>RAGING BULL BEAT 11</Location>
+      <Location>RAGING BULL BEAT 12</Location>
+      <Location>RAGING BULL BEAT 13</Location>
+      <Location>RAGING BULL BEAT 14</Location>
+      <Location>RAGING BULL BEAT 15</Location>
+      <Location>RATATOUILLE BEAT 1</Location>
+      <Location>RATATOUILLE BEAT 2</Location>
+      <Location>RATATOUILLE BEAT 3</Location>
+      <Location>RATATOUILLE BEAT 4</Location>
+      <Location>RATATOUILLE BEAT 5</Location>
+      <Location>RATATOUILLE BEAT 6</Location>
+      <Location>RATATOUILLE BEAT 7</Location>
+      <Location>RATATOUILLE BEAT 8</Location>
+      <Location>RATATOUILLE BEAT 9</Location>
+      <Location>RATATOUILLE BEAT 10</Location>
+      <Location>RATATOUILLE BEAT 11</Location>
+      <Location>RATATOUILLE BEAT 12</Location>
+      <Location>RATATOUILLE BEAT 13</Location>
+      <Location>RATATOUILLE BEAT 14</Location>
+      <Location>RATATOUILLE BEAT 15</Location>
+      <Location>ABOUT BEATS</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND BEAT 1</Location>
+      <Location>MIDNIGHT IN PARIS</Location>
+      <Location>LIAR LIAR</Location>
+    </Locations>
+    <TimesOfDay Separator=" - ">
+      <TimeOfDay>DAY</TimeOfDay>
+      <TimeOfDay>NIGHT</TimeOfDay>
+      <TimeOfDay>AFTERNOON</TimeOfDay>
+      <TimeOfDay>MORNING</TimeOfDay>
+      <TimeOfDay>EVENING</TimeOfDay>
+      <TimeOfDay>LATER</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER</TimeOfDay>
+      <TimeOfDay>CONTINUOUS</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY</TimeOfDay>
+      <TimeOfDay>OPENING IMAGE</TimeOfDay>
+      <TimeOfDay>SETUP</TimeOfDay>
+      <TimeOfDay>THEME STATED</TimeOfDay>
+      <TimeOfDay>CATALYST</TimeOfDay>
+      <TimeOfDay>DEBATE</TimeOfDay>
+      <TimeOfDay>BREAK INTO TWO</TimeOfDay>
+      <TimeOfDay>B STORY</TimeOfDay>
+      <TimeOfDay>FUN AND GAMES</TimeOfDay>
+      <TimeOfDay>MIDPOINT</TimeOfDay>
+      <TimeOfDay>BAD GUYS CLOSE IN</TimeOfDay>
+      <TimeOfDay>ALL IS LOST</TimeOfDay>
+      <TimeOfDay>DARK NIGHT OF THE SOUL</TimeOfDay>
+      <TimeOfDay>BREAK INTO THREE</TimeOfDay>
+      <TimeOfDay>FINALE</TimeOfDay>
+      <TimeOfDay>FINAL IMAGE</TimeOfDay>
+    </TimesOfDay>
+    <Transitions>
+      <Transition>CUT TO:</Transition>
+      <Transition>FADE IN:</Transition>
+      <Transition>FADE OUT.</Transition>
+      <Transition>FADE TO:</Transition>
+      <Transition>DISSOLVE TO:</Transition>
+      <Transition>BACK TO:</Transition>
+      <Transition>MATCH CUT TO:</Transition>
+      <Transition>JUMP CUT TO:</Transition>
+      <Transition>FADE TO BLACK.</Transition>
+    </Transitions>
+  </SmartType>
+
+  <MoresAndContinueds>
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <DialogueBreaks AutomaticCharacterContinueds="Yes" BottomOfPage="Yes" DialogueBottom="(MORE)" DialogueTop="(CONT'D)" TopOfNext="Yes"/>
+    <SceneBreaks ContinuedNumber="No" SceneBottom="(CONTINUED)" SceneBottomOfPage="No" SceneTop="CONTINUED:" SceneTopOfNext="No"/>
+  </MoresAndContinueds>
+
+  <LockedPages/>
+
+  <Revisions ActiveSet="1" Location="7.75" RevisionMode="No" RevisionsShown="Active" ShowAllMarks="No" ShowAllSets="No" ShowPageColor="No">
+    <Revision Color="#000000000000" FullRevision="No" ID="1" Mark="*" Name="Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="2" Mark="*" Name="Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="3" Mark="*" Name="Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="4" Mark="*" Name="Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="5" Mark="*" Name="Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="6" Mark="*" Name="Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="7" Mark="*" Name="Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="8" Mark="*" Name="Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="9" Mark="*" Name="Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="10" Mark="*" Name="2nd White Rev. (mm/dd/yy)" PageColor="#FFFFFFFFFFFF" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="11" Mark="*" Name="2nd Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="12" Mark="*" Name="2nd Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="13" Mark="*" Name="2nd Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="14" Mark="*" Name="2nd Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="15" Mark="*" Name="2nd Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="16" Mark="*" Name="2nd Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="17" Mark="*" Name="2nd Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="18" Mark="*" Name="2nd Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="19" Mark="*" Name="2nd Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+  </Revisions>
+
+  <SplitState ActivePanel="1" SplitMode="None" SplitterPosition="0">
+    <ScriptPanel DisplayMode="Page">
+      <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Verdana" RevisionID="0" Size="9" Style=""/>
+    </ScriptPanel>
+  </SplitState>
+
+  <Macros>
+    <Macro Element="Scene Heading" Name="INT" Shortcut="Ctrl+Alt+1" Text="INT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="EXT" Shortcut="Ctrl+Alt+2" Text="EXT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="I/E" Shortcut="Ctrl+Alt+3" Text="I/E " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="DAY" Shortcut="Ctrl+Alt+4" Text=" - DAY" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="NIGHT" Shortcut="Ctrl+Alt+5" Text=" - NIGHT" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="SUNRISE" Shortcut="Ctrl+Alt+6" Text=" - SUNRISE" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="MAGIC" Shortcut="Ctrl+Alt+7" Text=" - MAGIC" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="CONT" Shortcut="Ctrl+Alt+8" Text="continuing" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="INTER" Shortcut="Ctrl+Alt+9" Text="interrupting" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="Ctrl+Alt+0" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="CUTTO" Shortcut="Ctrl+Shift+Alt+1" Text="CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Action" Name="FADEIN" Shortcut="Ctrl+Shift+Alt+2" Text="FADE IN:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADEOUT" Shortcut="Ctrl+Shift+Alt+3" Text="FADE OUT." Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADETO" Shortcut="Ctrl+Shift+Alt+4" Text="FADE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="DISSLV" Shortcut="Ctrl+Shift+Alt+5" Text="DISSOLVE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="BACKTO" Shortcut="Ctrl+Shift+Alt+6" Text="BACK TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="MATCHCUT" Shortcut="Ctrl+Shift+Alt+7" Text="MATCH CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="JUMPCUT" Shortcut="Ctrl+Shift+Alt+8" Text="JUMP CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FBLACK" Shortcut="Ctrl+Shift+Alt+9" Text="FADE TO BLACK." Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="E" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+  </Macros>
+
+  <Actors>
+    <Actor MacVoice="" Name="Man 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Man 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Man" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Woman" Pitch="Normal" Speed="Medium" WinVoice=""/>
+  </Actors>
+
+  <Cast>
+    <Narrator Actor="Man 1">
+      <Element Type="Character"/>
+      <Element Type="Dialogue"/>
+    </Narrator>
+    <Member Actor="Man 1" Character="ABOUT BEATS"/>
+    <Member Actor="Man 1" Character="THE AVENGERS"/>
+    <Member Actor="Man 1" Character="RAGING BULL"/>
+    <Member Actor="Man 1" Character="RATATOUILLE"/>
+  </Cast>
+
+  <SceneNumberOptions LeftLocation="0.75" RightLocation="7.38" ShowNumbersOnLeft="Yes" ShowNumbersOnRight="Yes">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+  </SceneNumberOptions>
+
+  <CastList SortOption="Alphabetical">
+    <CustomOrder/>
+  </CastList>
+
+  <CharacterHighlighting/>
+
+  <CharacterNavigatorPreferences IsSortAscending="Yes" SortColumn="Order">
+    <Column Width="51">Order</Column>
+    <Column Width="50">Title</Column>
+    <Column Width="67">Location</Column>
+    <Column UserType="CharacterColumnType" Width="95">RATATOUILLE</Column>
+    <Column UserType="CharacterArcColumnType" Width="133">RATATOUILLE</Column>
+  </CharacterNavigatorPreferences>
+
+</FinalDraft>

@@ -1,0 +1,1841 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FinalDraft DocumentType="Script" Template="No" Version="2">
+
+  <Content>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="1" Title="About Save the Cat!">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT!</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template was based upon ideas from the Save the Cat!® books published by Michael Wiese Productions (www.mwp.com) and Save the Cat! Press. If you are not familiar with Save the Cat!, visit www.savethecat.com for free screenwriting articles and beat sheets. Save the Cat! also makes the popular Save the Cat! software and iPhone and iPad app that imports and exports Final Draft (.fdx) files. Save the Cat! software has many additional and advanced features you won't find in this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1 5/8" Page="1" Title="About Save the Cat! Genres">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT! GENRES</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In his book, </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Italic">Save the Cat! The Last Book on Screenwriting You'll Ever Need</Text>
+      <Text>, Blake Snyder organizes scripts into ten basic genres. These genres are listed below.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Monster in the House</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Monster, House, Sin</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A culpable hero is forced to save a trapped group of people from being killed by a monster he inadvertently unleashed.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Golden Fleece</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Road, Team, Prize</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A driven hero must lead a group of allies to retrieve a prized possession through a perilous journey that wasn’t what the hero expected.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Out of the Bottle</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Wish, Spell, Lesson</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A covetous hero must learn to undo a spell he wished for before it turns into a curse he can’t undo.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dude with a Problem</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Innocent Hero, Sudden Event, Life or Death</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An unwitting hero must survive at all costs when he is dragged into a life or death situation he never saw coming and cannot escape.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Rites of Passage</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Life Problem, Wrong Way, Acceptance </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>
+A troubled hero’s only way to overcome a spiraling life crisis is to defeat his worst enemy - himself.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Buddy Love</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Incomplete Hero, Counterpart, Complication </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An inadequate hero must rise above an extremely difficult situation to be with a uniquely unlikely partner who is the only one capable of bringing him peace.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Whydunit</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Detective, Secret, Dark Turn</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A single-minded hero must find the truth to a mystery so intriguing before he is swallowed by the darkness he desperately seeks to expose.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fool Triumphant</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Fool, Establishment, Transmutation</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An innocent hero’s only way to defeat the prejudices of a group is to change himself without losing what made him the group’s target of disdain in the first place - his uniqueness.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Institutionalized</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Group, Choice, Sacrifice</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An outsider’s only way to save his individuality is by going against the many who wish to integrate him into their fold.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Superhero</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Special Power, Nemesis, Curse</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A uniquely special hero must defeat an opponent with stronger capabilities by using the same powers that disconnect him from the people he hopes to save.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="4/8" Page="2" Title="About Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Within each Save the Cat! genre are fifteen beats. These beats are important scenes or sequences that typically occur near the same place in every script or movie.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The page number where a beat typically occurs is indicated below in parentheses. This page number is based on a 110-page script. If your script is longer or shorter than 110 pages, the location of your beats may vary.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>It's also good to note that, as can be seen in a few of the examples, while the beats usually follow a specific pattern and occur at certain moments in a script, it is not always the case - the order of beats can sometimes vary. There are times the beats can be considered "movable parts" that work together to tell a story - and the transformation of your hero - in the best possible way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This allows screenwriters to maintain your own unique creative voices while still providing your audience with a familiar form of storytelling that will resonate.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1 2/8" Page="3" Title="Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">SAVE THE CAT! BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Opening Image</Text>
+      <Text> (1) – The scene in the movie that sets up the tone, type, and initial salvo of a film, a "before" snapshot — and the opposite of the Final Image.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Theme Stated</Text>
+      <Text> (5) – Usually spoken to the main character, often without knowing what is said will be vital to his surviving this tale. It's what your movie is "about."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Setup</Text>
+      <Text> (1-10) – The first 10 pages of a script must not only grab our interest and a studio reader's but introduce or hint at introducing every character in the A Story.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Catalyst </Text>
+      <Text>(12) – The telegram, the knock at the door, the act of catching a spouse in bed with another — something that is done to the hero to shake him.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Debate</Text>
+      <Text> (12-25) – The section of the script, be it a scene or a series of scenes, when the hero doubts the journey he must take.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Two</Text>
+      <Text> (25) – Act Two, that is; it is where we leave the "Thesis" world behind and enter the upside-down "Anti-thesis" world of Act Two. The hero makes a choice — and his journey begins.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">B Story</Text>
+      <Text> (30) – The "love" story, traditionally, but actually where the discussion about the theme of a good movie is found.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fun and Games</Text>
+      <Text> (30-55) – Here we forget plot and enjoy "set pieces" and "trailer moments" and revel in the "promise of the premise."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Midpoint</Text>
+      <Text> (55) – The dividing line between the two halves of a movie; it's back to the story as "stakes are raised," "time clocks" appear, and we start putting the squeeze on our hero(es).</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Bad Guys Close In</Text>
+      <Text> (55-75) – Both internally (the disintegration of old beliefs) and externally (as actual bad guys tighten their grip), real pressure is applied.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">All Is Lost</Text>
+      <Text> (75) – The "False Defeat" and the place where we find "the whiff of death" — because something must die here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dark Night of the Soul</Text>
+      <Text> (75 to 85) – Why hast thou forsaken me? That part of the script where the hero has lost all hope...</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Three</Text>
+      <Text> (85) ...but not for long! Thanks to a fresh idea, new inspiration, or last-minute action or advice from the love interest in the B Story, the hero chooses to fight.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Finale</Text>
+      <Text> (85-110) – The "Synthesis" of two worlds: From what was, and that which has been learned, the hero forges a third way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Final Image</Text>
+      <Text> (110) – The opposite of the Opening Image, proving a change has occurred. And since All Stories Are About Transformation, that change had better be dramatic!</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="3/8" Page="4" Title="How to Use this Template">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">You can use this template purely as a reference template. You can also delete the Save the Cat beats </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">HOW TO USE THIS TEMPLATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template includes a Save the Cat! Beat Sheet for three films within the Golden Fleece genre. The three beat sheets are for the films </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Italic">Argo, Raiders of the Lost Ark</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">, </Text>
+      <Text>and</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold"> </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Italic">Saving Private Ryan.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>You can use this template as a reference while you write your script. You can also use Scene View, Scene Navigator, and Index Card View within Final Draft 9 to replace these beats with your own scenes and scene summaries.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>If you decide to alter or replace this template, first save it with a new file name. Otherwise, you will permanently change the content within this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="ARGO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: Chris Terrio (screenplay), based on a selection from "The Master of Disguise" by Tony Mendez and based on the Wired Magazine article "The Great Escape" by Joshuah Bearman</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Ben Affleck</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">Argo</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: Chris Terrio (screenplay), based on a selection from "The Master of Disguise" by Tony Mendez and based on the Wired Magazine article "The Great Escape" by Joshuah Bearman</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Ben Affleck</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Hundreds of angry protesters surround the US embassy in Tehran. Inside the embassy, everyone is on heightened alert. It’s a very real threat that quickly becomes volatile when the gates are breached. Six American citizens flee to the streets unnoticed by the mob. They are Mark and Cora Lijek, Joe and Kathy Stafford, Bob Anders, and Lee Schatz.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 1 - Opening Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Hundreds of angry protesters surround the US embassy in Tehran. Inside the embassy, everyone is on heightened alert. It’s a very real threat that quickly becomes volatile when the gates are breached. Six American citizens flee to the streets unnoticed by the mob. They are Mark and Cora Lijek, Joe and Kathy Stafford, Bob Anders, and Lee Schatz.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="5" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The CIA is in panic mode, scrambling to react to the situation. Confirmation is made that the six escapees are hiding at the Canadian Ambassador’s residence.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">We’re introduced to Tony Mendez (Ben Affleck). He’s asleep in his day clothes in his apartment that’s littered with empty bottles and Chinese food take-out boxes. He’s separated from his wife and son. He’s also the CIA’s best Exfiltrator Specialist.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">In a meeting with CIA brass, Tony shoots down every option that’s thrown out to get the six out of Iran. With no definitive plan, he’s told to come up with something soon.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Meanwhile, the Iranians have set up a sweatshop of kids putting together shredded documents from the US Embassy. Among those documents are pictures of everyone working in the embassy.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 2 - setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The CIA is in panic mode, scrambling to react to the situation. Confirmation is made that the six escapees are hiding at the Canadian Ambassador’s residence.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>We’re introduced to Tony Mendez (Ben Affleck). He’s asleep in his day clothes in his apartment that’s littered with empty bottles and Chinese food take-out boxes. He’s separated from his wife and son. He’s also the CIA’s best Exfiltrator Specialist.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In a meeting with CIA brass, Tony shoots down every option that’s thrown out to get the six out of Iran. With no definitive plan, he’s told to come up with something soon.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Meanwhile, the Iranians have set up a sweatshop of kids putting together shredded documents from the US Embassy. Among those documents are pictures of everyone working in the embassy.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="5" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">In a phone conversation, Tony comes up with a plan after his son tells him he’s watching Battle of the Planet of the Apes.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 3 - catalyst</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In a phone conversation, Tony comes up with a plan after his son tells him he’s watching Battle of the Planet of the Apes.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Tony proposes the idea to Jack O’Donnell (Bryan Cranston) and the CIA bigwigs. They’re going in as a “Canadian film crew” looking to shoot at an exotic location. Tony tells them he’s got a guy in Hollywood, John Chambers (John Goodman), who can help him set up the project. Jack tells him if it looks credible, he’ll take it to the Director of the CIA.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ARGO BEAT 4 - debate</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Tony proposes the idea to Jack O’Donnell (Bryan Cranston) and the CIA bigwigs. They’re going in as a “Canadian film crew” looking to shoot at an exotic location. Tony tells them he’s got a guy in Hollywood, John Chambers (John Goodman), who can help him set up the project. Jack tells him if it looks credible, he’ll take it to the Director of the CIA.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Tony flies to Hollywood and briefs John on his plan. To make it real, John tells Tony they’re going to need an actual producer, someone with a name.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 5 - break INTO TWO</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Tony flies to Hollywood and briefs John on his plan. To make it real, John tells Tony they’re going to need an actual producer, someone with a name.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="6" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">They visit Lester Siegel (Alan Arkin). Though initially skeptical of the mission, Lester agrees to be part of the fake production. But just like anything else in Hollywood, they’re going to need a script first.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 6 - b story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>They visit Lester Siegel (Alan Arkin). Though initially skeptical of the mission, Lester agrees to be part of the fake production. But just like anything else in Hollywood, they’re going to need a script first.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="6" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Welcome to Hollywood, where nothing is what it seems. Tony finds himself in the mother of upside-down worlds. He knows squat about the biz but manages to fit right in. John and Lester get to work. They find the perfect script, “Argo.” It’s been in development hell forever. Soon, the PR goes into effect. News articles and production companies are created.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Meanwhile, Jack is telling Tony to hurry up. They need to get approval soon or the CIA’s going in another direction. Tony does one better and goes straight to the Director and the Secretary of State. After a moment of skepticism, they approve Tony’s mission.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ARGO BEAT 7 - fun AND GAMES</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Welcome to Hollywood, where nothing is what it seems. Tony finds himself in the mother of upside-down worlds. He knows squat about the biz but manages to fit right in. John and Lester get to work. They find the perfect script, “Argo.” It’s been in development hell forever. Soon, the PR goes into effect. News articles and production companies are created.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Meanwhile, Jack is telling Tony to hurry up. They need to get approval soon or the CIA’s going in another direction. Tony does one better and goes straight to the Director and the Secretary of State. After a moment of skepticism, they approve Tony’s mission.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">While having tacos, Tony asks Lester about his family. Lester tells him he’s divorced and his daughters are with their mom. When Tony asks why that is, Lester simply says, in this business, sometimes people get left behind. And though Tony may be the best the CIA’s got in bringing people home, in his own personal life, he’s been left behind by his wife and son.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ARGO BEAT 8 - theme stated</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>While having tacos, Tony asks Lester about his family. Lester tells him he’s divorced and his daughters are with their mom. When Tony asks why that is, Lester simply says, in this business, sometimes people get left behind. And though Tony may be the best the CIA’s got in bringing people home, in his own personal life, he’s been left behind by his wife and son.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="MIDPOINT ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Tony makes it to Iran and through immigration safely. The cover is holding. With the help of the Canadian Ambassador, he finally comes face to face with the six escapees.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 9 - midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Tony makes it to Iran and through immigration safely. The cover is holding. With the help of the Canadian Ambassador, he finally comes face to face with the six escapees.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="6" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Tony immediately goes to work and tells the six what the plan is. Unfortunately, they’re not convinced they can pull it off. In particular, Joe Stafford thinks Tony will only get them killed.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">They get their approval from the Minster of Culture for a location scout, which they can’t turn down or they’ll look suspicious. The Canadian Ambassador tells Tony that he’s been told to shut down the embassy as well and head back home. The “clock is ticking.”</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">On their fake location scout, Kathy Stafford is confronted by a shop owner and a commotion breaks out. The group is accused of being CIA spies. They barely make it back to their van.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Meanwhile, a Revolutionary Guard official questions the Canadian Ambassador’s maid about the guests living in the embassy.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Tony grills the six to make sure they know their covers before they leave the next day. After the events at the location scout, the strain and fear is palpable.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 10 - bad guys close in </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Tony immediately goes to work and tells the six what the plan is. Unfortunately, they’re not convinced they can pull it off. In particular, Joe Stafford thinks Tony will only get them killed.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>They get their approval from the Minster of Culture for a location scout, which they can’t turn down or they’ll look suspicious. The Canadian Ambassador tells Tony that he’s been told to shut down the embassy as well and head back home. The “clock is ticking.”</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>On their fake location scout, Kathy Stafford is confronted by a shop owner and a commotion breaks out. The group is accused of being CIA spies. They barely make it back to their van.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Meanwhile, a Revolutionary Guard official questions the Canadian Ambassador’s maid about the guests living in the embassy.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Tony grills the six to make sure they know their covers before they leave the next day. After the events at the location scout, the strain and fear is palpable.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="ALL IS LOST ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Tony receives a call from Jack. He tells Tony to abort the mission. A military operation is underway. The Canadian Ambassador tells Tony it’s probably best for him to just not show up the next day.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 11 - All Is Lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Tony receives a call from Jack. He tells Tony to abort the mission. A military operation is underway. The Canadian Ambassador tells Tony it’s probably best for him to just not show up the next day.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Tony is alone in his hotel room. He‘s ready to burn the six fake passports. He holds a match to them but, after a moment, blows the match out.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 12 - Dark Night of the Soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Tony is alone in his hotel room. He‘s ready to burn the six fake passports. He holds a match to them but, after a moment, blows the match out.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="7" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Tony gives Jack a call and tells him he’s taking the six through.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 13 - Break into Three</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Tony gives Jack a call and tells him he’s taking the six through.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="5/8" Page="7" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Jack scrambles to get the plane tickets in time for Tony and the six.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Tony shows up at the Canadian Embassy, much to the ambassador’s surprise. They make their way through the checkpoints and airline check-in. The tickets make it just in time.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Meanwhile, the six have been identified by the Revolutionary Guards at the sweatshop. It’s a race to get to them.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Just as the six are about to board the plane, they’re pulled aside into a screening room. They’re questioned by the officers. After a tense moment, Joe Stafford, speaking in Farsi, pitches the movie to the officials. It’s a performance that impresses even Tony, who tells the officials to call their production office. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">John and Lester make it to their office just in time to pick up the phone and confirm the film shoot is real. The six are allowed to board the plane.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As the plane takes off, the Revolutionary Guards give chase but it’s too late. The plane lifts off and once the group enters international space, they celebrate. Joe goes to Tony and shakes his hand.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 14 - Finale</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Jack scrambles to get the plane tickets in time for Tony and the six.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Tony shows up at the Canadian Embassy, much to the ambassador’s surprise. They make their way through the checkpoints and airline check-in. The tickets make it just in time. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Meanwhile, the six have been identified by the Revolutionary Guards at the sweatshop. It’s a race to get to them.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Just as the six are about to board the plane, they’re pulled aside into a screening room. They’re questioned by the officers. After a tense moment, Joe Stafford, speaking in Farsi, pitches the movie to the officials. It’s a performance that impresses even Tony, who tells the officials to call their production office. John and Lester make it to their office just in time to pick up the phone and confirm the film shoot is real. The six are allowed to board the plane.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As the plane takes off, the Revolutionary Guards give chase but it’s too late. The plane lifts off and once the group enters international space, they celebrate. Joe goes to Tony and shakes his hand.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="FINAL IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">After watching the six being welcomed back home, Tony makes his way back home as well — but this time it’s to his wife and son. And in direct contrast to when we first met Tony, now we see him lying in bed with his son. No longer left behind.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Argo beat 15 - Final Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>After watching the six being welcomed back home, Tony makes his way back home as well — but this time it’s to his wife and son. And in direct contrast to when we first met Tony, now we see him lying in bed with his son. No longer left behind.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="RAIDERS OF THE LOST ARK">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: Lawrence Kasdan (screenplay), George Lucas and Philip Kaufman (story)</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Steven Spielberg </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">RAIDERS OF THE LOST ARK</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: Lawrence Kasdan (screenplay), George Lucas and Philip Kaufman (story)</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Steven Spielberg </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The Paramount Pictures logo fades and is replaced by a mountain in South America. This is where we meet our intrepid archaeologist (Harrison Ford). As the explorers move through the dense jungle, we only catch a glimpse of his silhouette, framed by a fedora and a whip at his side. But once he steps out of the shadows and uses that whip to knock a gun out of a guide’s hand, we understand that he is no ordinary hero.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 1 - Opening Image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The Paramount Pictures logo fades and is replaced by a mountain in South America. This is where we meet our intrepid archaeologist (Harrison Ford). As the explorers move through the dense jungle, we only catch a glimpse of his silhouette, framed by a fedora and a whip at his side. But once he steps out of the shadows and uses that whip to knock a gun out of a guide’s hand, we understand that he is no ordinary hero. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Indy talks with his friend and mentor Marcus Brody about the search for the Ark of the Covenant, and Marcus warns Indy not to take the Ark lightly. Although Indy doesn’t believe in “magic, a lot of superstitious hocus-pocus,” the theme is that there are some powers that man was not meant to wield.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 2 - theme stated</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Indy talks with his friend and mentor Marcus Brody about the search for the Ark of the Covenant, and Marcus warns Indy not to take the Ark lightly. Although Indy doesn’t believe in “magic, a lot of superstitious hocus-pocus,” the theme is that there are some powers that man was not meant to wield.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="8" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">We come to understand the peril Jones faces. After arriving at the South American temple in search of a fertility idol, he dodges darts, leaps across pits, rolls under stone doors, and outruns a massive boulder. And that’s only in the first few minutes. After obtaining the idol, Indy meets his archaeological nemesis, Rene Belloq.  </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Belloq steals the idol from Indy, declaring, “There is nothing you possess that I cannot take.” We want to root for Indy because despite his tough exterior, he’s an underdog. And surprisingly, he’s afraid of snakes. As the scene transitions to his college, we get to see a bit of Indy’s alter-ego, Dr. Henry Jones. He’s a popular professor, especially among the female students. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 3 - SETUP </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>We come to understand the peril Jones faces. After arriving at the South American temple in search of a fertility idol, he dodges darts, leaps across pits, rolls under stone doors, and outruns a massive boulder. And that’s only in the first few minutes. After obtaining the idol, Indy meets his archaeological nemesis, Rene Belloq.  Belloq steals the idol from Indy, declaring, “There is nothing you possess that I cannot take.” We want to root for Indy because despite his tough exterior, he’s an underdog. And surprisingly, he’s afraid of snakes. As the scene transitions to his college, we get to see a bit of Indy’s alter-ego, Dr. Henry Jones. He’s a popular professor, especially among the female students. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Men who will only identify themselves as being “Army Intelligence” have come to Dr. Jones seeking help for something top secret.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 4 - CATALYST </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Men who will only identify themselves as being “Army Intelligence” have come to Dr. Jones seeking help for something top secret.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="9" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Indy is questioned about his former mentor, Abner Ravenwood, whose name has surfaced in Nazi documents. Ravenwood is rumored to possess the headpiece of the Staff of Ra, an artifact that will reveal the location of the lost Ark of the Covenant, a source of power the Nazis seek.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Jones suggests that the Ark might be in the Well of Souls. Brody says that an army that carries the Ark before it will be invincible, and Indy must retrieve it before the Nazis do. Will Indy be able to find the Ark before the Nazis do? And if so, will it simply be a find of great historical significance… or something much more?</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 5 - DEBATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Indy is questioned about his former mentor, Abner Ravenwood, whose name has surfaced in Nazi documents. Ravenwood is rumored to possess the headpiece of the Staff of Ra, an artifact that will reveal the location of the lost Ark of the Covenant, a source of power the Nazis seek.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Jones suggests that the Ark might be in the Well of Souls. Brody says that an army that carries the Ark before it will be invincible, and Indy must retrieve it before the Nazis do. Will Indy be able to find the Ark before the Nazis do? And if so, will it simply be a find of great historical significance… or something much more?</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="9" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Indy sets off on his journey to Nepal to seek out Ravenwood.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 6 - BREAK INTO TWO </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Indy sets off on his journey to Nepal to seek out Ravenwood.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">In Nepal, Indy encounters Marion Ravenwood (Karen Allen), who is surprised and seems happy to see him. That is, until she punches him in the face and berates him for his past mistakes.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 7 - B STORY </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In Nepal, Indy encounters Marion Ravenwood (Karen Allen), who is surprised and seems happy to see him. That is, until she punches him in the face and berates him for his past mistakes.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="9" Title="FUN &amp; GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">After kicking Indiana out of the bar, Marion is greeted by Toht, a Nazi who seems to have a thing for red-hot fire pokers. Marion refuses to tell him about where the medallion is. Indy returns and a firefight ensues, ultimately resulting in Marion’s bar burning down.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Marion and Indy travel to Cairo, where he meets up with his friend Sallah. Unfortunately, he also learns that Belloq is there. Sword-wielding assassins chase them through the marketplace, and while hiding in a basket, Marion is taken and placed upon a truck that explodes before Indy’s eyes.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">While drowning his sorrows, Indy is brought before Belloq, who tells him that the Ark is a “radio to talk to God.” After having the staff headpiece read and analyzed, Indy learns that the Nazis are digging for the Well of Souls in the wrong place and sets out to use the Map Room to find the correct site.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 8 - Fun AND Games</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>After kicking Indiana out of the bar, Marion is greeted by Toht, a Nazi who seems to have a thing for red-hot fire pokers. Marion refuses to tell him about where the medallion is. Indy returns and a firefight ensues, ultimately resulting in Marion’s bar burning down.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Marion and Indy travel to Cairo, where he meets up with his friend Sallah. Unfortunately, he also learns that Belloq is there. Sword-wielding assassins chase them through the marketplace, and while hiding in a basket, Marion is taken and placed upon a truck that explodes before Indy’s eyes.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>While drowning his sorrows, Indy is brought before Belloq, who tells him that the Ark is a “radio to talk to God.” After having the staff headpiece read and analyzed, Indy learns that the Nazis are digging for the Well of Souls in the wrong place and sets out to use the Map Room to find the correct site.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="10" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The Nazis tell Belloq that the Fuhrer is not patient while waiting for him to find the Ark — a “time clock” indicates that the “stakes have been raised.” Meanwhile, Indiana Jones arrives in the Map Room to use the Staff of Ra at a precise time of day, watching with wonder as a beam of light reveals the location of the Well of Souls. Sneaking out past the Nazis, he hides in a tent and finds Marion alive. A and B Stories cross as Indy finds victory, but it is a false victory. He must leave Marion behind in the hands of her captors.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 9 - Midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The Nazis tell Belloq that the Fuhrer is not patient while waiting for him to find the Ark — a “time clock” indicates that the “stakes have been raised.” Meanwhile, Indiana Jones arrives in the Map Room to use the Staff of Ra at a precise time of day, watching with wonder as a beam of light reveals the location of the Well of Souls. Sneaking out past the Nazis, he hides in a tent and finds Marion alive. A and B Stories cross as Indy finds victory, but it is a false victory. He must leave Marion behind in the hands of her captors.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="10" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Indy and Sallah gather a crew of men to dig for the Well of Souls while Marion dines with Belloq, failing to escape. Indy and Sallah raise the Ark from the snake-infested Well, but the Nazis and Belloq take it and throw Marion into the Well, closing it. Torches begin to burn out while venomous snakes emerge from a hollow wall. Indy crashes a statue through the wall to escape.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Indy and Marion try to steal an enemy plane, but it explodes during the struggle. Indy sets off on horseback, chasing the truck that is carrying the Ark. After a harrowing display of heroics, Indy returns with the Ark, and he and Marion board a steamer with it.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 10 - Bad Guys Close In </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Indy and Sallah gather a crew of men to dig for the Well of Souls while Marion dines with Belloq, failing to escape. Indy and Sallah raise the Ark from the snake-infested Well, but the Nazis and Belloq take it and throw Marion into the Well, closing it. Torches begin to burn out while venomous snakes emerge from a hollow wall. Indy crashes a statue through the wall to escape.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Indy and Marion try to steal an enemy plane, but it explodes during the struggle. Indy sets off on horseback, chasing the truck that is carrying the Ark. After a harrowing display of heroics, Indy returns with the Ark, and he and Marion board a steamer with it.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The Nazis are not willing to let the Ark slip from their hands. Stopping the steamer, they take the Ark aboard their submarine, along with Marion. Moments earlier, the “whiff of death” was in the air as a rat struggled and died next to the wooden crate carrying the Ark, a blackened burn mark taking the place of the Nazi swastika.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 11 - All Is Lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The Nazis are not willing to let the Ark slip from their hands. Stopping the steamer, they take the Ark aboard their submarine, along with Marion. Moments earlier, the “whiff of death” was in the air as a rat struggled and died next to the wooden crate carrying the Ark, a blackened burn mark taking the place of the Nazi swastika.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="11" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">After hiding from the Nazis, Indy jumps into the water and swims to the submarine to save Marion and the Ark.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 12 - Dark Night of the Soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>After hiding from the Nazis, Indy jumps into the water and swims to the submarine to save Marion and the Ark.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The Nazi submarine arrives at a small island with Indy aboard. His journey is almost complete, but he will have to face evil one final time.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 13 - Break into Three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The Nazi submarine arrives at a small island with Indy aboard. His journey is almost complete, but he will have to face evil one final time.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="11" Title="FINALE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Indy sneaks in among the enemy’s ranks, gaining the high ground. He holds Marion’s captors at bay, threatening to destroy the Ark unless they return her. Belloq calls his bluff, and Jones is captured and tied up to a pole with Marion on the mountain top. Belloq and the Nazis open the Ark. At first, it seems that it is filled with nothing but ancient dust, but the sky soon erupts with flashes of lightning, and spirits emerge from the Ark. Indy tells Marion to keep her eyes shut no matter what happens, and the air is filled with screams as the Angel of Death destroys their enemies.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 14 - Finale </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Indy sneaks in among the enemy’s ranks, gaining the high ground. He holds Marion’s captors at bay, threatening to destroy the Ark unless they return her. Belloq calls his bluff, and Jones is captured and tied up to a pole with Marion on the mountain top. Belloq and the Nazis open the Ark. At first, it seems that it is filled with nothing but ancient dust, but the sky soon erupts with flashes of lightning, and spirits emerge from the Ark. Indy tells Marion to keep her eyes shut no matter what happens, and the air is filled with screams as the Angel of Death destroys their enemies.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="FINAL IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">A man rolls a crate containing the Ark through a massive warehouse full of similar crates. And we are left to wonder: what else could be lurking in there?</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>RAIDERS OF THE LOST ARK beat 15 - Final Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A man rolls a crate containing the Ark through a massive warehouse full of similar crates. And we are left to wonder: what else could be lurking in there?</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="WHEN HARRY MET SALLY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: Robert Rodat</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Steven Spielberg</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">SAVING PRIVATE RYAN</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: Robert Rodat</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Steven Spielberg</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="OPENING IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">A battlefield cemetery. An old man and his family. He served in World War Two and finds the gravesite of a fallen comrade. We will learn just who this brave man is by story’s end. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 1 - Opening Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A battlefield cemetery. An old man and his family. He served in World War Two and finds the gravesite of a fallen comrade. We will learn just who this brave man is by story’s end. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The opening gives way to flashback. D-Day. June 6, 1944. The landing at Omaha Beach is bloody. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Captain John Miller (Tom Hanks) shows courage and saves lives as his unit helps secure the objective. This sequence “sets up” the world of hellish war and John’s leadership skills. John’s men are a highly functional team.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 2 - SETUP</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The opening gives way to flashback. D-Day. June 6, 1944. The landing at Omaha Beach is bloody. Captain John Miller (Tom Hanks) shows courage and saves lives as his unit helps secure the objective. This sequence “sets up” the world of hellish war and John’s leadership skills. John’s men are a highly functional team.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As the dead of the invasion are accounted for, one has special meaning. His last name is Ryan, one of four brothers — three now dead. Back at home, General George Marshall cites a letter written by Abraham Lincoln and orders the fourth brother, lost in post-D-Day France, brought home. “That boy is alive. We are gonna send somebody to find him and we are going to get him the hell out of there.” One man counts. That’s our theme.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 3 - theme stated</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As the dead of the invasion are accounted for, one has special meaning. His last name is Ryan, one of four brothers — three now dead. Back at home, General George Marshall cites a letter written by Abraham Lincoln and orders the fourth brother, lost in post-D-Day France, brought home. “That boy is alive. We are gonna send somebody to find him and we are going to get him the hell out of there.” One man counts. That’s our theme.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">John is given the mission and we now meet a new member of the squad, a wet-behind-the-ears translator, Corporal Upham (Jeremy Davies). John will be the leader, but Upham will act as the interpreter of both French and German — and of events.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 4 - CATALYST</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>John is given the mission and we now meet a new member of the squad, a wet-behind-the-ears translator, Corporal Upham (Jeremy Davies). John will be the leader, but Upham will act as the interpreter of both French and German — and of events.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="12" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Should the squad go? Upham’s nervousness shows the nature and risks of the journey. Like us, he is a novice.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 5 - DEBATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Should the squad go? Upham’s nervousness shows the nature and risks of the journey. Like us, he is a novice.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">John accepts the mission and we meet the rest of his squad: Sergeant Mike Horvath (Tom Sizemore), “the muscle,” enforces John’s orders. Pvt. Stanley Mellish (Adam Goldberg), “the conscience,” has a special hatred of Nazis. Pvt. Daniel Jackson (Barry Pepper), “the soul,” possesses sniper skills enhanced by God. And Pvt. Richard Reiben (Edward Burns) is “the heart.” Each has a unique way of speaking, point of view, and experience to share. And we’re all guessing: Who’s gonna get it first? </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 6 - BREAK INTO TWO</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>John accepts the mission and we meet the rest of his squad: Sergeant Mike Horvath (Tom Sizemore), “the muscle,” enforces John’s orders. Pvt. Stanley Mellish (Adam Goldberg), “the conscience,” has a special hatred of Nazis. Pvt. Daniel Jackson (Barry Pepper), “the soul,” possesses sniper skills enhanced by God. And Pvt. Richard Reiben (Edward Burns) is “the heart.” Each has a unique way of speaking, point of view, and experience to share. And we’re all guessing: Who’s gonna get it first? </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The B Story is the question: Who is Captain Miller? John’s background is a mystery; apart from a shaky hand and a firm grip on leadership, little is known of him. Tying in to the “Theme Stated” idea of one man counts, John exemplifies the value of individual sacrifice for the benefit and protection of others.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 7 - b story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The B Story is the question: Who is Captain Miller? John’s background is a mystery; apart from a shaky hand and a firm grip on leadership, little is known of him. Tying in to the “Theme Stated” idea of one man counts, John exemplifies the value of individual sacrifice for the benefit and protection of others.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="13" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Marching through the hedgerow country of France, coming upon the surprises and adventures of war, this is the “promise of the premise.” We are on the road, each signpost ahead another chance for a revealing look at, and growth of, each character. It is a journey echoing that of Jason and the Argonauts and other men of battle who strike out on a special mission. There is a lift the men have been given from surviving D-Day. No time to think about anything more than the next detail, so off they go. This is why we came to see this movie: to learn up close about men at war and its light and dark sides. As dangerous as battle is, there’s a sense we’re on a lark, an adventure. The friendship, easygoing patter, and even the secret language they share (FUBAR becomes one of the code words) — are all taken in through Upham’s POV.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 8 - fun and games</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Marching through the hedgerow country of France, coming upon the surprises and adventures of war, this is the “promise of the premise.” We are on the road, each signpost ahead another chance for a revealing look at, and growth of, each character. It is a journey echoing that of Jason and the Argonauts and other men of battle who strike out on a special mission. There is a lift the men have been given from surviving D-Day. No time to think about anything more than the next detail, so off they go. This is why we came to see this movie: to learn up close about men at war and its light and dark sides. As dangerous as battle is, there’s a sense we’re on a lark, an adventure. The friendship, easygoing patter, and even the secret language they share (FUBAR becomes one of the code words) — are all taken in through Upham’s POV.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="13" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">After a run-in with a French family, a shootout with a squad of Germans, and a midnight talk (A and B Stories cross) that continues the debate over the importance of the individual, the squad seems to have come to an impasse when they find a downed glider and dozens of dead and wounded paratroopers. This marks one of the mistakes of the D-Day invasion, a screw-up where good men died needlessly and an ideal “false defeat.” Most midpoints are a “false victory” where events peak. This is the opposite, a down, compounded when the squad search through the dogtags of the dead and think they’ll never find Ryan. Then a soldier who lost his hearing says he knows Ryan’s location. Buoyed, the squad moves on.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 9 - midpoint</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>After a run-in with a French family, a shootout with a squad of Germans, and a midnight talk (A and B Stories cross) that continues the debate over the importance of the individual, the squad seems to have come to an impasse when they find a downed glider and dozens of dead and wounded paratroopers. This marks one of the mistakes of the D-Day invasion, a screw-up where good men died needlessly and an ideal “false defeat.” Most midpoints are a “false victory” where events peak. This is the opposite, a down, compounded when the squad search through the dogtags of the dead and think they’ll never find Ryan. Then a soldier who lost his hearing says he knows Ryan’s location. Buoyed, the squad moves on.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="13" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">This particular journey is marked by the steady disintegration of the team, both in number as they die one by one, and also by the doubts about the mission that chip away at camaraderie and faith. Infighting grows when John decides to take the squad off course to knock out a German machine-gun nest. The men want to go around, but John insists. They lose another of their comrades but capture a German prisoner. His fate is hotly debated and the team is ready to mutiny. John stops the argument by sacrificing his identity, revealing he’s a schoolteacher — and that they must band together. They agree, and let the Nazi go. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 10 - bad guys close in </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This particular journey is marked by the steady disintegration of the team, both in number as they die one by one, and also by the doubts about the mission that chip away at camaraderie and faith. Infighting grows when John decides to take the squad off course to knock out a German machine-gun nest. The men want to go around, but John insists. They lose another of their comrades but capture a German prisoner. His fate is hotly debated and the team is ready to mutiny. John stops the argument by sacrificing his identity, revealing he’s a schoolteacher — and that they must band together. They agree, and let the Nazi go. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The squad finally finds Private Ryan — blonde, blue-eyed Matt Damon. The surprise comes when Ryan refuses to go home. Ryan doesn’t want to leave his team in the lurch, and the “road apple” (that thing that kyboshes the plan just when victory is in sight) is: death of the mission. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 11 - all is lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The squad finally finds Private Ryan — blonde, blue-eyed Matt Damon. The surprise comes when Ryan refuses to go home. Ryan doesn’t want to leave his team in the lurch, and the “road apple” (that thing that kyboshes the plan just when victory is in sight) is: death of the mission. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="14" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">With Ryan refusing to be saved, John and the survivors of the trek to find him wonder what to do.  </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 12 - dark night of the soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>With Ryan refusing to be saved, John and the survivors of the trek to find him wonder what to do.  </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="BREAK INTO THREE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">John decides to dig in and defend the bridge where Ryan and his squad wait for a Nazi attack. A and B Stories cross as John chooses individual sacrifice for the larger goal of saving others and bringing the war to an end as soon as possible.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 13 - break into three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>John decides to dig in and defend the bridge where Ryan and his squad wait for a Nazi attack. A and B Stories cross as John chooses individual sacrifice for the larger goal of saving others and bringing the war to an end as soon as possible.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The big battle as John and Ryan and the rest defend the bridge. In a final irony, the Nazi soldier they freed returns to kill. Man by man, many die — including John. But one survives. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 14 - finale </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The big battle as John and Ryan and the rest defend the bridge. In a final irony, the Nazi soldier they freed returns to kill. Man by man, many die — including John. But one survives. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="FINAL IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Back at the gravesite, a bookend. All along we’ve had the feeling that the old man at the gravesite was John. We now see it’s Ryan. Private Ryan survived. He was given his life back by the soldiers who rescued him. We realize that Private Ryan is us. Just as John’s “team” saved Private Ryan on the battlefield, John — and men like him — saved us at home. And we must thank them for their sacrifice. It’s a powerful coda and a heartfelt salute to those who serve.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>SAVING PRIVATE RYAN beat 15 - Final image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Back at the gravesite, a bookend. All along we’ve had the feeling that the old man at the gravesite was John. We now see it’s Ryan. Private Ryan survived. He was given his life back by the soldiers who rescued him. We realize that Private Ryan is us. Just as John’s “team” saved Private Ryan on the battlefield, John — and men like him — saved us at home. And we must thank them for their sacrifice. It’s a powerful coda and a heartfelt salute to those who serve.</Text>
+    </Paragraph>
+  </Content>
+
+  <Watermarking Text=""/>
+
+  <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+    <Header>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Last Revised"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Page #"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Center"/>
+          <Tabstop Position="7.25" Type="Right"/>
+        </Tabstops>
+      </Paragraph>
+    </Header>
+    <Footer>
+      <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+      </Paragraph>
+    </Footer>
+  </HeaderAndFooter>
+
+  <SpellCheckIgnoreLists>
+    <IgnoredRanges/>
+    <IgnoredWords/>
+  </SpellCheckIgnoreLists>
+
+  <PageLayout BackgroundColor="#FFFFFFFFFFFF" BottomMargin="72" BreakDialogueAndActionAtSentences="Yes" DocumentLeading="Normal" FooterMargin="36" ForegroundColor="#000000000000" HeaderMargin="36" InvisiblesColor="#808080808080" TopMargin="72" UsesSmartQuotes="Yes">
+    <PageSize Height="11.00" Width="8.50"/>
+    <AutoCastList AddParentheses="Yes" AutomaticallyGenerate="Yes" CastListElement="Cast List"/>
+  </PageLayout>
+
+  <WindowState Height="873" Left="0" Mode="Normal" Top="4" Width="1413"/>
+
+  <TextState Scaling="100" Selection="25622,25622" ShowInvisibles="No"/>
+
+  <ElementSettings Type="General">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="General" Shortcut="0"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Scene Heading">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="1"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Action">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="2"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Character">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="3.50" RightIndent="7.25" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Character" ReturnKey="Dialogue" Shortcut="3"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Parenthetical">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="-0.10" Leading="Regular" LeftIndent="3.00" RightIndent="5.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Parenthetical" ReturnKey="Dialogue" Shortcut="4"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Dialogue">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="2.50" RightIndent="6.00" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Dialogue" ReturnKey="Action" Shortcut="5"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Transition">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="5.50" RightIndent="7.10" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Transition" ReturnKey="Scene Heading" Shortcut="6"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Shot">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="7"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Cast List">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="8"/>
+  </ElementSettings>
+
+  <TitlePage>
+    <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+      <Header>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <DynamicLabel Type="Page #"/>
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        </Paragraph>
+      </Header>
+      <Footer>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+        </Paragraph>
+      </Footer>
+    </HeaderAndFooter>
+    <Content>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline+AllCaps">Script Title</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Name of First Writer</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Based on, If Any</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Address</Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Phone Number</Text>
+      </Paragraph>
+    </Content>
+    <TextState Scaling="100" Selection="0,0" ShowInvisibles="No"/>
+  </TitlePage>
+
+  <UnanchoredScriptNotes/>
+
+  <SmartType>
+    <Characters>
+      <Character>ABOUT BEATS</Character>
+      <Character>THE AVENGERS</Character>
+      <Character>RAGING BULL</Character>
+      <Character>RATATOUILLE</Character>
+    </Characters>
+    <Extensions>
+      <Extension>(V.O.)</Extension>
+      <Extension>(O.S.)</Extension>
+      <Extension>(O.C.)</Extension>
+      <Extension>(CONT'D)</Extension>
+      <Extension>(SUBTITLE)</Extension>
+    </Extensions>
+    <SceneIntros Separator=". ">
+      <SceneIntro>INT</SceneIntro>
+      <SceneIntro>EXT</SceneIntro>
+      <SceneIntro>I/E</SceneIntro>
+      <SceneIntro>AT MINUTE 19, AFTER GETTING STATIC FROM SAL ABOUT HIS PIZZA, A "BRANDO" FIGURE [THE CHARACTER IN THE INSTITUTIONALIZED GENRE WHO STANDS OPPOSED TO THE SYSTEM BY HIS OR HER VERY NATURE AND EXPOSES ITS FAULTS], BUGGIN' OUT (GIANCARLO ESPOSITO), LOOKS UP ON THE WALL OF SAL'S FAMOUS AND SEES NOTHING BUT ITALIAN-AMERICANS</SceneIntro>
+    </SceneIntros>
+    <Locations>
+      <Location>ABOUT SAVE THE CAT!</Location>
+      <Location>ABOUT SAVE THE CAT! GENRES</Location>
+      <Location>SAVE THE CAT! BEATS</Location>
+      <Location>HOW TO USE THIS TEMPLATE</Location>
+      <Location>THE AVENGERS BEAT 1</Location>
+      <Location>THE AVENGERS BEAT 2</Location>
+      <Location>THE AVENGERS BEAT 3</Location>
+      <Location>THE AVENGERS BEAT 4</Location>
+      <Location>THE AVENGERS BEAT 5</Location>
+      <Location>THE AVENGERS BEAT 6</Location>
+      <Location>THE AVENGERS BEAT 7</Location>
+      <Location>THE AVENGERS BEAT 8</Location>
+      <Location>THE AVENGERS BEAT 9</Location>
+      <Location>THE AVENGERS BEAT 10</Location>
+      <Location>THE AVENGERS BEAT 11</Location>
+      <Location>THE AVENGERS BEAT 12</Location>
+      <Location>THE AVENGERS BEAT 13</Location>
+      <Location>THE AVENGERS BEAT 14</Location>
+      <Location>THE AVENGERS BEAT 15</Location>
+      <Location>RAGING BULL BEAT 1</Location>
+      <Location>RAGING BULL BEAT 2</Location>
+      <Location>RAGING BULL BEAT 3</Location>
+      <Location>RAGING BULL BEAT 4</Location>
+      <Location>RAGING BULL BEAT 5</Location>
+      <Location>RAGING BULL BEAT 6</Location>
+      <Location>RAGING BULL BEAT 7</Location>
+      <Location>RAGING BULL BEAT 8</Location>
+      <Location>RAGING BULL BEAT 9</Location>
+      <Location>RAGING BULL BEAT 10</Location>
+      <Location>RAGING BULL BEAT 11</Location>
+      <Location>RAGING BULL BEAT 12</Location>
+      <Location>RAGING BULL BEAT 13</Location>
+      <Location>RAGING BULL BEAT 14</Location>
+      <Location>RAGING BULL BEAT 15</Location>
+      <Location>RATATOUILLE BEAT 1</Location>
+      <Location>RATATOUILLE BEAT 2</Location>
+      <Location>RATATOUILLE BEAT 3</Location>
+      <Location>RATATOUILLE BEAT 4</Location>
+      <Location>RATATOUILLE BEAT 5</Location>
+      <Location>RATATOUILLE BEAT 6</Location>
+      <Location>RATATOUILLE BEAT 7</Location>
+      <Location>RATATOUILLE BEAT 8</Location>
+      <Location>RATATOUILLE BEAT 9</Location>
+      <Location>RATATOUILLE BEAT 10</Location>
+      <Location>RATATOUILLE BEAT 11</Location>
+      <Location>RATATOUILLE BEAT 12</Location>
+      <Location>RATATOUILLE BEAT 13</Location>
+      <Location>RATATOUILLE BEAT 14</Location>
+      <Location>RATATOUILLE BEAT 15</Location>
+      <Location>ABOUT BEATS</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND BEAT 1</Location>
+      <Location>MIDNIGHT IN PARIS</Location>
+      <Location>LIAR LIAR</Location>
+      <Location>SAW</Location>
+      <Location>"WHY AIN'T YOU GOT NO BROTHERS UP ON THE WALL?" HE PROTESTS. AND SINCE IT'S PRIMARILY AN AFRICAN-AMERICAN COMMUNITY, BUGGIN' OUT WANTS ANSWERS. INSTEAD, SAL KICKS HIM OUT, WITH MOOKIE ASSISTING. FOR NOW, MOOKIE IS TRYING TO KEEP HIS BOSS HAPPY. DO THE RIGHT THING BEAT 6</Location>
+      <Location>DO THE RIGHT THING BEAT 5</Location>
+      <Location>AMOUR BEAT 11</Location>
+      <Location>BRIDESMAIDS BEAT 3</Location>
+      <Location>BRIDESMAIDS BEAT 5</Location>
+      <Location>BRIDESMAIDS BEAT 4</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 4</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 3</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 6</Location>
+      <Location>BLADE RUNNER BEAT 2/3</Location>
+      <Location>BLADE RUNNER BEAT 2</Location>
+      <Location>FROZEN BEAT 6</Location>
+      <Location>FROZEN BEAT 7</Location>
+      <Location>WHEN HARRY MET SALLY BEAT 6</Location>
+      <Location>WHEN HARRY MET SALLY BEAT 15</Location>
+      <Location>ARGO BEAT 4</Location>
+      <Location>ARGO BEAT 7</Location>
+      <Location>ARGO BEAT 11</Location>
+    </Locations>
+    <TimesOfDay Separator=" - ">
+      <TimeOfDay>DAY</TimeOfDay>
+      <TimeOfDay>NIGHT</TimeOfDay>
+      <TimeOfDay>AFTERNOON</TimeOfDay>
+      <TimeOfDay>MORNING</TimeOfDay>
+      <TimeOfDay>EVENING</TimeOfDay>
+      <TimeOfDay>LATER</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER</TimeOfDay>
+      <TimeOfDay>CONTINUOUS</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY</TimeOfDay>
+      <TimeOfDay>OPENING IMAGE</TimeOfDay>
+      <TimeOfDay>SETUP</TimeOfDay>
+      <TimeOfDay>THEME STATED</TimeOfDay>
+      <TimeOfDay>CATALYST</TimeOfDay>
+      <TimeOfDay>DEBATE</TimeOfDay>
+      <TimeOfDay>BREAK INTO TWO</TimeOfDay>
+      <TimeOfDay>B STORY</TimeOfDay>
+      <TimeOfDay>FUN AND GAMES</TimeOfDay>
+      <TimeOfDay>MIDPOINT</TimeOfDay>
+      <TimeOfDay>BAD GUYS CLOSE IN</TimeOfDay>
+      <TimeOfDay>ALL IS LOST</TimeOfDay>
+      <TimeOfDay>DARK NIGHT OF THE SOUL</TimeOfDay>
+      <TimeOfDay>BREAK INTO THREE</TimeOfDay>
+      <TimeOfDay>FINALE</TimeOfDay>
+      <TimeOfDay>FINAL IMAGE</TimeOfDay>
+      <TimeOfDay>BREAK INTO TWO </TimeOfDay>
+      <TimeOfDay>ALL IS LOST </TimeOfDay>
+      <TimeOfDay>SETUP </TimeOfDay>
+      <TimeOfDay>DEBATE </TimeOfDay>
+      <TimeOfDay>CATALYST </TimeOfDay>
+      <TimeOfDay>SETUP/THEME STATED</TimeOfDay>
+    </TimesOfDay>
+    <Transitions>
+      <Transition>CUT TO:</Transition>
+      <Transition>FADE IN:</Transition>
+      <Transition>FADE OUT.</Transition>
+      <Transition>FADE TO:</Transition>
+      <Transition>DISSOLVE TO:</Transition>
+      <Transition>BACK TO:</Transition>
+      <Transition>MATCH CUT TO:</Transition>
+      <Transition>JUMP CUT TO:</Transition>
+      <Transition>FADE TO BLACK.</Transition>
+    </Transitions>
+  </SmartType>
+
+  <MoresAndContinueds>
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <DialogueBreaks AutomaticCharacterContinueds="Yes" BottomOfPage="Yes" DialogueBottom="(MORE)" DialogueTop="(CONT'D)" TopOfNext="Yes"/>
+    <SceneBreaks ContinuedNumber="No" SceneBottom="(CONTINUED)" SceneBottomOfPage="No" SceneTop="CONTINUED:" SceneTopOfNext="No"/>
+  </MoresAndContinueds>
+
+  <LockedPages/>
+
+  <Revisions ActiveSet="1" Location="7.75" RevisionMode="No" RevisionsShown="Active" ShowAllMarks="No" ShowAllSets="No" ShowPageColor="No">
+    <Revision Color="#000000000000" FullRevision="No" ID="1" Mark="*" Name="Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="2" Mark="*" Name="Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="3" Mark="*" Name="Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="4" Mark="*" Name="Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="5" Mark="*" Name="Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="6" Mark="*" Name="Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="7" Mark="*" Name="Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="8" Mark="*" Name="Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="9" Mark="*" Name="Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="10" Mark="*" Name="2nd White Rev. (mm/dd/yy)" PageColor="#FFFFFFFFFFFF" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="11" Mark="*" Name="2nd Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="12" Mark="*" Name="2nd Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="13" Mark="*" Name="2nd Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="14" Mark="*" Name="2nd Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="15" Mark="*" Name="2nd Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="16" Mark="*" Name="2nd Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="17" Mark="*" Name="2nd Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="18" Mark="*" Name="2nd Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="19" Mark="*" Name="2nd Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+  </Revisions>
+
+  <SplitState ActivePanel="1" SplitMode="None" SplitterPosition="0">
+    <ScriptPanel DisplayMode="Page">
+      <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Verdana" RevisionID="0" Size="9" Style=""/>
+    </ScriptPanel>
+  </SplitState>
+
+  <Macros>
+    <Macro Element="Scene Heading" Name="INT" Shortcut="Ctrl+Alt+1" Text="INT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="EXT" Shortcut="Ctrl+Alt+2" Text="EXT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="I/E" Shortcut="Ctrl+Alt+3" Text="I/E " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="DAY" Shortcut="Ctrl+Alt+4" Text=" - DAY" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="NIGHT" Shortcut="Ctrl+Alt+5" Text=" - NIGHT" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="SUNRISE" Shortcut="Ctrl+Alt+6" Text=" - SUNRISE" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="MAGIC" Shortcut="Ctrl+Alt+7" Text=" - MAGIC" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="CONT" Shortcut="Ctrl+Alt+8" Text="continuing" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="INTER" Shortcut="Ctrl+Alt+9" Text="interrupting" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="Ctrl+Alt+0" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="CUTTO" Shortcut="Ctrl+Shift+Alt+1" Text="CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Action" Name="FADEIN" Shortcut="Ctrl+Shift+Alt+2" Text="FADE IN:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADEOUT" Shortcut="Ctrl+Shift+Alt+3" Text="FADE OUT." Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADETO" Shortcut="Ctrl+Shift+Alt+4" Text="FADE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="DISSLV" Shortcut="Ctrl+Shift+Alt+5" Text="DISSOLVE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="BACKTO" Shortcut="Ctrl+Shift+Alt+6" Text="BACK TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="MATCHCUT" Shortcut="Ctrl+Shift+Alt+7" Text="MATCH CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="JUMPCUT" Shortcut="Ctrl+Shift+Alt+8" Text="JUMP CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FBLACK" Shortcut="Ctrl+Shift+Alt+9" Text="FADE TO BLACK." Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="E" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+  </Macros>
+
+  <Actors>
+    <Actor MacVoice="" Name="Man 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Man 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Man" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Woman" Pitch="Normal" Speed="Medium" WinVoice=""/>
+  </Actors>
+
+  <Cast>
+    <Narrator Actor="Man 1">
+      <Element Type="Character"/>
+      <Element Type="Dialogue"/>
+    </Narrator>
+    <Member Actor="Man 1" Character="ABOUT BEATS"/>
+    <Member Actor="Man 1" Character="THE AVENGERS"/>
+    <Member Actor="Man 1" Character="RAGING BULL"/>
+    <Member Actor="Man 1" Character="RATATOUILLE"/>
+  </Cast>
+
+  <SceneNumberOptions LeftLocation="0.75" RightLocation="7.38" ShowNumbersOnLeft="Yes" ShowNumbersOnRight="Yes">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+  </SceneNumberOptions>
+
+  <CastList SortOption="Alphabetical">
+    <CustomOrder/>
+  </CastList>
+
+  <CharacterHighlighting/>
+
+  <CharacterNavigatorPreferences IsSortAscending="Yes" SortColumn="Order">
+    <Column Width="51">Order</Column>
+    <Column Width="50">Title</Column>
+    <Column Width="67">Location</Column>
+    <Column UserType="CharacterColumnType" Width="95">RATATOUILLE</Column>
+    <Column UserType="CharacterArcColumnType" Width="133">RATATOUILLE</Column>
+  </CharacterNavigatorPreferences>
+
+</FinalDraft>

@@ -1,0 +1,1837 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FinalDraft DocumentType="Script" Template="No" Version="2">
+
+  <Content>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="1" Title="About Save the Cat!">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT!</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template was based upon ideas from the Save the Cat!® books published by Michael Wiese Productions (www.mwp.com) and Save the Cat! Press. If you are not familiar with Save the Cat!, visit www.savethecat.com for free screenwriting articles and beat sheets. Save the Cat! also makes the popular Save the Cat! software and iPhone and iPad app that imports and exports Final Draft (.fdx) files. Save the Cat! software has many additional and advanced features you won't find in this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1 5/8" Page="1" Title="About Save the Cat! Genres">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT! GENRES</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In his book, </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Italic">Save the Cat! The Last Book on Screenwriting You'll Ever Need</Text>
+      <Text>, Blake Snyder organizes scripts into ten basic genres. These genres are listed below.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Monster in the House</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Monster, House, Sin</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A culpable hero is forced to save a trapped group of people from being killed by a monster he inadvertently unleashed.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Golden Fleece</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Road, Team, Prize</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A driven hero must lead a group of allies to retrieve a prized possession through a perilous journey that wasn’t what the hero expected.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Out of the Bottle</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Wish, Spell, Lesson</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A covetous hero must learn to undo a spell he wished for before it turns into a curse he can’t undo.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dude with a Problem</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Innocent Hero, Sudden Event, Life or Death</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An unwitting hero must survive at all costs when he is dragged into a life or death situation he never saw coming and cannot escape.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Rites of Passage</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Life Problem, Wrong Way, Acceptance </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>
+A troubled hero’s only way to overcome a spiraling life crisis is to defeat his worst enemy - himself.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Buddy Love</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Incomplete Hero, Counterpart, Complication </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An inadequate hero must rise above an extremely difficult situation to be with a uniquely unlikely partner who is the only one capable of bringing him peace.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Whydunit</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Detective, Secret, Dark Turn</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A single-minded hero must find the truth to a mystery so intriguing before he is swallowed by the darkness he desperately seeks to expose.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fool Triumphant</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Fool, Establishment, Transmutation</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An innocent hero’s only way to defeat the prejudices of a group is to change himself without losing what made him the group’s target of disdain in the first place - his uniqueness.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Institutionalized</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Group, Choice, Sacrifice</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An outsider’s only way to save his individuality is by going against the many who wish to integrate him into their fold.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Superhero</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Special Power, Nemesis, Curse</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A uniquely special hero must defeat an opponent with stronger capabilities by using the same powers that disconnect him from the people he hopes to save.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="4/8" Page="2" Title="About Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Within each Save the Cat! genre are fifteen beats. These beats are important scenes or sequences that typically occur near the same place in every script or movie.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The page number where a beat typically occurs is indicated below in parentheses. This page number is based on a 110-page script. If your script is longer or shorter than 110 pages, the location of your beats may vary.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>It's also good to note that, as can be seen in a few of the examples, while the beats usually follow a specific pattern and occur at certain moments in a script, it is not always the case - the order of beats can sometimes vary. There are times the beats can be considered "movable parts" that work together to tell a story - and the transformation of your hero - in the best possible way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This allows screenwriters to maintain your own unique creative voices while still providing your audience with a familiar form of storytelling that will resonate.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1 2/8" Page="3" Title="Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">SAVE THE CAT! BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Opening Image</Text>
+      <Text> (1) – The scene in the movie that sets up the tone, type, and initial salvo of a film, a "before" snapshot — and the opposite of the Final Image.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Theme Stated</Text>
+      <Text> (5) – Usually spoken to the main character, often without knowing what is said will be vital to his surviving this tale. It's what your movie is "about."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Setup</Text>
+      <Text> (1-10) – The first 10 pages of a script must not only grab our interest and a studio reader's but introduce or hint at introducing every character in the A Story.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Catalyst </Text>
+      <Text>(12) – The telegram, the knock at the door, the act of catching a spouse in bed with another — something that is done to the hero to shake him.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Debate</Text>
+      <Text> (12-25) – The section of the script, be it a scene or a series of scenes, when the hero doubts the journey he must take.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Two</Text>
+      <Text> (25) – Act Two, that is; it is where we leave the "Thesis" world behind and enter the upside-down "Anti-thesis" world of Act Two. The hero makes a choice — and his journey begins.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">B Story</Text>
+      <Text> (30) – The "love" story, traditionally, but actually where the discussion about the theme of a good movie is found.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fun and Games</Text>
+      <Text> (30-55) – Here we forget plot and enjoy "set pieces" and "trailer moments" and revel in the "promise of the premise."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Midpoint</Text>
+      <Text> (55) – The dividing line between the two halves of a movie; it's back to the story as "stakes are raised," "time clocks" appear, and we start putting the squeeze on our hero(es).</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Bad Guys Close In</Text>
+      <Text> (55-75) – Both internally (the disintegration of old beliefs) and externally (as actual bad guys tighten their grip), real pressure is applied.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">All Is Lost</Text>
+      <Text> (75) – The "False Defeat" and the place where we find "the whiff of death" — because something must die here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dark Night of the Soul</Text>
+      <Text> (75 to 85) – Why hast thou forsaken me? That part of the script where the hero has lost all hope...</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Three</Text>
+      <Text> (85) ...but not for long! Thanks to a fresh idea, new inspiration, or last-minute action or advice from the love interest in the B Story, the hero chooses to fight.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Finale</Text>
+      <Text> (85-110) – The "Synthesis" of two worlds: From what was, and that which has been learned, the hero forges a third way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Final Image</Text>
+      <Text> (110) – The opposite of the Opening Image, proving a change has occurred. And since All Stories Are About Transformation, that change had better be dramatic!</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="3/8" Page="4" Title="How to Use this Template">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">You can use this template purely as a reference template. You can also delete the Save the Cat beats </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">HOW TO USE THIS TEMPLATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template includes a Save the Cat! Beat Sheet for three films within the Dude with a Problem genre. The three beat sheets are for the films </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Italic">Die Hard, Gravity</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">, </Text>
+      <Text>and</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold"> </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Italic">The Lego Movie.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>You can use this template as a reference while you write your script. You can also use Scene View, Scene Navigator, and Index Card View within Final Draft 9 to replace these beats with your own scenes and scene summaries.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>If you decide to alter or replace this template, first save it with a new file name. Otherwise, you will permanently change the content within this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="DIE HARD">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: Jeb Stuart and Steven E deSouza</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed  by: John McTiernan</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">Die Hard</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: Jeb Stuart and Steven E deSouza</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed  by: John McTiernan</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps"></Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="5" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">A plane lands at LAX. On board, a businessman advises “how to survive” traveling. The advisee is John McClane (Bruce Willis). Pre-9/11, John carries a gun. He’s a NYC cop.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 1 - Opening Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A plane lands at LAX. On board, a businessman advises “how to survive” traveling. The advisee is John McClane (Bruce Willis). Pre-9/11, John carries a gun. He’s a NYC cop.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="5" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">“Survival” is our theme — and John’s mission.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 2 - THEME STATED</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>“Survival” is our theme — and John’s mission.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="5" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Atop Century City, Mr. Takagi (James Shigeta), the boss here at Nakatomi Plaza, wishes Merry Xmas to his employees including Holly Gennero McClane (Bonnie Bedelia) and coke-head co-worker, Harry Ellis (Hart Bochner). The term “on the verge of” often sets up the heroes of a movie, and here John and Holly are “on the verge of” divorce. As John explains to his friendly limo driver, his wife had “a good job that turned into a great career” and now they are unhappily bi-coastal. From her office, Holly calls home to say hi to her kids (more “stakes to raise”) as John arrives and sees Holly is using her maiden name. But as John washes up, and then gets into a fight with Holly, there is more trouble than the marriage. At Minute 14, a mysterious truck arrives.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 3 - SETUP</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Atop Century City, Mr. Takagi (James Shigeta), the boss here at Nakatomi Plaza, wishes Merry Xmas to his employees including Holly Gennero McClane (Bonnie Bedelia) and coke-head co-worker, Harry Ellis (Hart Bochner). The term “on the verge of” often sets up the heroes of a movie, and here John and Holly are “on the verge of” divorce. As John explains to his friendly limo driver, his wife had “a good job that turned into a great career” and now they are unhappily bi-coastal. From her office, Holly calls home to say hi to her kids (more “stakes to raise”) as John arrives and sees Holly is using her maiden name. But as John washes up, and then gets into a fight with Holly, there is more trouble than the marriage. At Minute 14, a mysterious truck arrives.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The truck signals an invasion as “suddenly” a dozen “terrorists” enter, kill the lobby guard, lock down the building, and storm the party. Meet Alan Rickman as their ringleader, Hans Grüber, and his henchman of few words, Karl (Alexander Godunov). </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>DIE HARD BEAT 4 - CATALYST</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The truck signals an invasion as “suddenly” a dozen “terrorists” enter, kill the lobby guard, lock down the building, and storm the party. Meet Alan Rickman as their ringleader, Hans Grüber, and his henchman of few words, Karl (Alexander Godunov). </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Alerted to the commotion, John grabs his gun and begins to assess the situation. John’s low-tech approach, like noting the names the robbers call each other and where they’re located in the building, will help defeat them. And speaking of da feet, John is handicapped by being barefoot—nice touch! Corralling the hostages and Holly, Hans gets down to business. He wants the millions in the vault and demands the combination. When Takagi refuses, he is killed, and John is spotted. What is John to do?</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 5 - DEBATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Alerted to the commotion, John grabs his gun and begins to assess the situation. John’s low-tech approach, like noting the names the robbers call each other and where they’re located in the building, will help defeat them. And speaking of da feet, John is handicapped by being barefoot—nice touch! Corralling the hostages and Holly, Hans gets down to business. He wants the millions in the vault and demands the combination. When Takagi refuses, he is killed, and John is spotted. What is John to do?</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">“Think, think,” John says to himself. His running patter, and the “lone defender of the fort” odds, are what humanize him and what is original about this character. He’s not superman, he’s a street cop, and a smart one. The action is divided into three phases: 1. John trying to get the cops to help. 2. John working with the cops to stop the baddies, and 3. John realizing he has to stop the baddies alone. Phase 1 begins at Minute 31 when John pulls the fire alarm, hoping to bring the LAFD. John has now entered the “upside-down world” of Act Two.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 6 - BREAK INTO TWO</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>“Think, think,” John says to himself. His running patter, and the “lone defender of the fort” odds, are what humanize him and what is original about this character. He’s not superman, he’s a street cop, and a smart one. The action is divided into three phases: 1. John trying to get the cops to help. 2. John working with the cops to stop the baddies, and 3. John realizing he has to stop the baddies alone. Phase 1 begins at Minute 31 when John pulls the fire alarm, hoping to bring the LAFD. John has now entered the “upside-down world” of Act Two.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="6" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The LAFD thinks the alarm is a hoax, and one of the baddies is sent after John. At Minute 38, John fights with the guy and rolls down the stairs, breaking the man’s neck. Now John ups the ante. He takes the baddie’s machine gun and (seemingly unnecessary) Zippo, and sends the body in an elevator car to Hans with a message: “Ho-Ho-Ho.” Hans is perturbed. But Karl is pissed: The dead man was his bruddah! Karl goes after John on the rooftop and John fires back. Despite the gunplay, the cops are still MIA. John is chased into the elevator shaft where, using the Zippo to see, he has a memorable line: “Come out to the coast! We’ll get together, have a few laughs!”</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>DIE HARD BEAT 7 - FUN AND GAMES</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The LAFD thinks the alarm is a hoax, and one of the baddies is sent after John. At Minute 38, John fights with the guy and rolls down the stairs, breaking the man’s neck. Now John ups the ante. He takes the baddie’s machine gun and (seemingly unnecessary) Zippo, and sends the body in an elevator car to Hans with a message: “Ho-Ho-Ho.” Hans is perturbed. But Karl is pissed: The dead man was his bruddah! Karl goes after John on the rooftop and John fires back. Despite the gunplay, the cops are still MIA. John is chased into the elevator shaft where, using the Zippo to see, he has a memorable line: “Come out to the coast! We’ll get together, have a few laughs!”</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">LAPD Sergeant Powell (Reginald VelJohnson) arrives to check on the fire alarm. Freed from his air duct, and having killed 2 henchmen, John throws one body through the window to get the cop’s attention and make Powell the “eye of the storm” (the break from the fast-paced, confusing, and dangerous situation our innocent hero finds himself in — it can be a friend or a love interest who also offer the hero a needed lesson). Finally, the cops are on their way, and it’s all due to John.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>DIE HARD BEAT 8 - b story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>LAPD Sergeant Powell (Reginald VelJohnson) arrives to check on the fire alarm. Freed from his air duct, and having killed 2 henchmen, John throws one body through the window to get the cop’s attention and make Powell the “eye of the storm” (the break from the fast-paced, confusing, and dangerous situation our innocent hero finds himself in — it can be a friend or a love interest who also offer the hero a needed lesson). Finally, the cops are on their way, and it’s all due to John.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="MIDPOINT ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">“False victory” his, John now “raises the stakes” for himself. Using the bad guy’s walkie-talkie, John contacts Hans, letting him know he killed three of his men, brought the LAPD, and has his detonators. Hans cites John for being a cowboy and John replies with his famous Roy Rogers epithet: “Yippie-ki-yay!” Hans is worried and now asks his men how much longer the safe-cracking will take. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 9 - midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>“False victory” his, John now “raises the stakes” for himself. Using the bad guy’s walkie-talkie, John contacts Hans, letting him know he killed three of his men, brought the LAPD, and has his detonators. Hans cites John for being a cowboy and John replies with his famous Roy Rogers epithet: “Yippie-ki-yay!” Hans is worried and now asks his men how much longer the safe-cracking will take. 
+</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="7" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Pressure builds with this new “time clock” and John has an ally in Powell, but Powell’s boss (Paul Gleason) thinks John is one of the bad guys. At 1 Hour 15 Minutes, John sees the cops try to storm the building, not realizing Hans has planned for this. With an LAPD vehicle under fire, Phase 2 (John trying to help the cops) begins as John sends a bomb down the elevator shaft and kills two more of Hans’ men. All John needs to do is wait it out. But then one of the “internal team” members, Harry, does a dumb thing. Coked up, he decides to negotiate with Hans, and is killed. The baddies now know John’s name — and so do the cops. But it doesn’t matter: The FBI has arrived on the scene. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 10 - bad guys close in </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Pressure builds with this new “time clock” and John has an ally in Powell, but Powell’s boss (Paul Gleason) thinks John is one of the bad guys. At 1 Hour 15 Minutes, John sees the cops try to storm the building, not realizing Hans has planned for this. With an LAPD vehicle under fire, Phase 2 (John trying to help the cops) begins as John sends a bomb down the elevator shaft and kills two more of Hans’ men. All John needs to do is wait it out. But then one of the “internal team” members, Harry, does a dumb thing. Coked up, he decides to negotiate with Hans, and is killed. The baddies now know John’s name — and so do the cops. But it doesn’t matter: The FBI has arrived on the scene. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="ALL IS LOST ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As the FBI take over the operation, Hans bumps into John while searching the building, and pretends to be a civilian. This is a very nice moment — and vital — for without a mano-a-mano with Hans before the climax, the ending would not be nearly as effective. Hans also learns of John’s handicap: his bare feet. “Shoot the glass,” he yells at Karl. John escapes but his feet are bloody and the detonators are back in Hans’ hands. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 11 - All Is Lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As the FBI take over the operation, Hans bumps into John while searching the building, and pretends to be a civilian. This is a very nice moment — and vital — for without a mano-a-mano with Hans before the climax, the ending would not be nearly as effective. Hans also learns of John’s handicap: his bare feet. “Shoot the glass,” he yells at Karl. John escapes but his feet are bloody and the detonators are back in Hans’ hands. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">John has done all he can. A and B Stories cross as he laments via walkie-talkie with Powell, who reveals he accidentally shot a kid while on duty several years earlier. Powell too has a personal issue to overcome.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die hard beat 12 - dark night of the soul</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>John has done all he can. A and B Stories cross as he laments via walkie-talkie with Powell, who reveals he accidentally shot a kid while on duty several years earlier. Powell too has a personal issue to overcome.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Baddies open the vault and, with the detonators back, get ready to escape. But when Holly is exposed on the news as John’s wife, Hans takes her as his own personal hostage. With his wife in jeopardy, Phase 3 kicks in: John must save her, with or without the cops.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die hard beat 13 - break into three</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Baddies open the vault and, with the detonators back, get ready to escape. But when Holly is exposed on the news as John’s wife, Hans takes her as his own personal hostage. With his wife in jeopardy, Phase 3 kicks in: John must save her, with or without the cops.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">With the bad guys about to escape with the bearer bonds (that’s what all worthwhile crooks stole in the ‘80s), John jumps into action. There are some great set pieces as John “kills” Karl and barefoots it to the roof to save the hostages. Then a returned-from-hell John makes an appearance with back lighting to rescue his wife. “Hi honey,” he deadpans. In the shootout with Hans, John outsmarts and kills him. “Happy trails, Hans.” Together again, John and Holly kiss.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 14 - Finale</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>With the bad guys about to escape with the bearer bonds (that’s what all worthwhile crooks stole in the ‘80s), John jumps into action. There are some great set pieces as John “kills” Karl and barefoots it to the roof to save the hostages. Then a returned-from-hell John makes an appearance with back lighting to rescue his wife. “Hi honey,” he deadpans. In the shootout with Hans, John outsmarts and kills him. “Happy trails, Hans.” Together again, John and Holly kiss.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="FINAL IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">John meets Sergeant Powell and they hug. Karl makes a last appearance and is killed by Powell who, by doing so, gets over the shooting incident that’s haunted him. And John takes Holly home in the limo to the tune of “Let it Snow.”</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Die Hard beat 15 - Final Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>John meets Sergeant Powell and they hug. Karl makes a last appearance and is killed by Powell who, by doing so, gets over the shooting incident that’s haunted him. And John takes Holly home in the limo to the tune of “Let it Snow.”</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="THE KING'S SPEECH">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by: Alfonso Cuarón &amp; Jonás Cuarón; Geoge Clooney, uncredited script collaborator</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Alfonso Cuarón</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">GRAVITY</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written by: Alfonso Cuarón &amp; Jonás Cuarón; Geoge Clooney, uncredited script collaborator</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Alfonso Cuarón</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">A breathtaking image of the earth. Its magnitude is overwhelming. A speck appears miles above the earth’s atmosphere. It is the space shuttle Explorer.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 1 - Opening Image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A breathtaking image of the earth. Its magnitude is overwhelming. A speck appears miles above the earth’s atmosphere. It is the space shuttle Explorer.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="8" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">We’re introduced to astronauts Ryan Stone (Sandra Bullock) and Matt Kowalkski (George Clooney). This is Ryan’s first mission. Houston (Mission Control) is worried about her readings as they ask her how she feels. Focused on the task at hand, Ryan simply brushes off Houston’s concerns. Matt, the charismatic veteran astronaut, zooms freely in space on his jetpack as he entertains Houston with stories of his ex-loves. Houston tells Matt they will miss his stories when this mission, his last, is over.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Matt checks in on Ryan, Houston calls for Matt to abort their mission. A Russian missile has taken out one of its own defunct satellites, causing a chain reaction as other satellites are struck. A cloud of space debris is heading directly towards Ryan and Matt. Ryan asks for more time to finish her job — a hint at her running theme — but Matt orders her to immediately drop what she’s doing.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 2 - setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>We’re introduced to astronauts Ryan Stone (Sandra Bullock) and Matt Kowalkski (George Clooney). This is Ryan’s first mission. Houston (Mission Control) is worried about her readings as they ask her how she feels. Focused on the task at hand, Ryan simply brushes off Houston’s concerns. Matt, the charismatic veteran astronaut, zooms freely in space on his jetpack as he entertains Houston with stories of his ex-loves. Houston tells Matt they will miss his stories when this mission, his last, is over.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Matt checks in on Ryan, Houston calls for Matt to abort their mission. A Russian missile has taken out one of its own defunct satellites, causing a chain reaction as other satellites are struck. A cloud of space debris is heading directly towards Ryan and Matt. Ryan asks for more time to finish her job — a hint at her running theme — but Matt orders her to immediately drop what she’s doing.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Matt and Ryan are bombarded by the space debris. A third astronaut, Shariff, is immediately struck and killed. The Explorer is struck as well. And Ryan is sent spinning out of control.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 3 - catalyst </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Matt and Ryan are bombarded by the space debris. A third astronaut, Shariff, is immediately struck and killed. The Explorer is struck as well. And Ryan is sent spinning out of control.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Matt calls out to Ryan as she heads deeper and deeper into space. Ryan struggles to regain control. She’s hyperventilating and panicking. Her oxygen supply reaches critical level.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Ryan finds herself alone until Matt’s voice suddenly crackles through her radio. He reunites with her and latches her onto his jetpack. He tells Ryan they must work together to make it to the Explorer.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 4 - DEBATE </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Matt calls out to Ryan as she heads deeper and deeper into space. Ryan struggles to regain control. She’s hyperventilating and panicking. Her oxygen supply reaches critical level.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Ryan finds herself alone until Matt’s voice suddenly crackles through her radio. He reunites with her and latches her onto his jetpack. He tells Ryan they must work together to make it to the Explorer.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="9" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Ryan calms down and follows Matt’s lead.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 5 - break into two</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Ryan calms down and follows Matt’s lead.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Matt’s leadership and guidance will provide Ryan the strength and confidence to learn her theme... if she is to make it back home.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 6 - b story </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Matt’s leadership and guidance will provide Ryan the strength and confidence to learn her theme... if she is to make it back home.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="5/8" Page="9" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Matt tells Ryan they have about 90 minutes before the space debris orbits the earth and returns (just what the script doctor ordered: a “ticking clock”!). They make their way to the Explorer only to learn that no one else has survived and the shuttle is beyond repair. Their only chance now is to make it to the International Space Station (ISS) and use its escape pods, the Soyuz, to return to earth. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">To keep her mind off her quickly depleting oxygen supply, Matt asks Ryan about her life back on earth. Ryan reveals she lost a 4-year-old daughter in a tragic playground accident. Since then, she’s done nothing but work.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As they close in on the ISS, Matt quickly realizes that it’s missing one of its Soyuz and the remaining one has its parachutes deployed, making it impossible to re-enter earth. Not giving up hope, Matt tells Ryan they will use the remaining Soyuz to make their way to the Chinese Station and its landing pod, the Shenzhou.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">With the last thrust of his jetpack, Matt and Ryan make it to the ISS. Unable to control their momentum, Ryan luckily gets her foot entangled in the Soyuz’s parachute lines and she’s able to grab Matt’s tether. However, Matt knows he’s merely pulling Ryan back into open space.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 7 - fun and games</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Matt tells Ryan they have about 90 minutes before the space debris orbits the earth and returns (just what the script doctor ordered: a “ticking clock”!). They make their way to the Explorer only to learn that no one else has survived and the shuttle is beyond repair. Their only chance now is to make it to the International Space Station (ISS) and use its escape pods, the Soyuz, to return to earth. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>To keep her mind off her quickly depleting oxygen supply, Matt asks Ryan about her life back on earth. Ryan reveals she lost a 4-year-old daughter in a tragic playground accident. Since then, she’s done nothing but work.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As they close in on the ISS, Matt quickly realizes that it’s missing one of its Soyuz and the remaining one has its parachutes deployed, making it impossible to re-enter earth. Not giving up hope, Matt tells Ryan they will use the remaining Soyuz to make their way to the Chinese Station and its landing pod, the Shenzhou.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>With the last thrust of his jetpack, Matt and Ryan make it to the ISS. Unable to control their momentum, Ryan luckily gets her foot entangled in the Soyuz’s parachute lines and she’s able to grab Matt’s tether. However, Matt knows he’s merely pulling Ryan back into open space.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Matt tells Ryan they’re both going to die if she holds on to him. Knowing Ryan won’t let go, Matt untethers himself from her and tells her she must learn to let go if she’s to move on. And though we’re not on page 5, the theme, which was hinted at earlier, finally becomes clear for Ryan.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 8 - theme stated</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Matt tells Ryan they’re both going to die if she holds on to him. Knowing Ryan won’t let go, Matt untethers himself from her and tells her she must learn to let go if she’s to move on. And though we’re not on page 5, the theme, which was hinted at earlier, finally becomes clear for Ryan.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Matt floats away, he gives Ryan last-minute instructions on how to make it to the Shenzhou. She makes it inside the ISS just before she passes out from lack of oxygen.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 9 - Midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Matt floats away, he gives Ryan last-minute instructions on how to make it to the Shenzhou. She makes it inside the ISS just before she passes out from lack of oxygen.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="10" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">A wire shortage causes a fire inside the ISS. Ryan barely makes it inside the Soyuz in time. Ryan tries to break free from the burning ISS but the parachute ropes keep pulling her back. She’s forced to go on a spacewalk to detach the ropes. Ryan works on the ropes as the first wave of space debris returns. She makes it back inside the Soyuz as the rest of the orbiting debris destroys the ISS.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Ryan hits the thrust button on the Soyuz, but nothing happens. Ryan sees the fuel gauge. It’s empty. Ryan has no way of getting to the Shenzhou. As Ryan floats aimlessly, she uses the radio to call out to Houston. To her surprise, someone answers. But she can’t understand what he’s saying. She can’t make it out and realizes this person has no idea where she is and will not be able to help her. She hears the person on the radio singing a lullaby to his child. Remembering her daughter, Ryan leans back in defeat.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 10 - Bad Guys Close In </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A wire shortage causes a fire inside the ISS. Ryan barely makes it inside the Soyuz in time. Ryan tries to break free from the burning ISS but the parachute ropes keep pulling her back. She’s forced to go on a spacewalk to detach the ropes. Ryan works on the ropes as the first wave of space debris returns. She makes it back inside the Soyuz as the rest of the orbiting debris destroys the ISS.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Ryan hits the thrust button on the Soyuz, but nothing happens. Ryan sees the fuel gauge. It’s empty. Ryan has no way of getting to the Shenzhou. As Ryan floats aimlessly, she uses the radio to call out to Houston. To her surprise, someone answers. But she can’t understand what he’s saying. She can’t make it out and realizes this person has no idea where she is and will not be able to help her. She hears the person on the radio singing a lullaby to his child. Remembering her daughter, Ryan leans back in defeat.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Alone and drifting, Ryan makes a decision. She turns off the oxygen supply. She will let the lullaby put her to sleep, to slip away peacefully… and reunite with her daughter.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 11 - All Is Lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Alone and drifting, Ryan makes a decision. She turns off the oxygen supply. She will let the lullaby put her to sleep, to slip away peacefully… and reunite with her daughter.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Just as she’s about to drift away, there’s a knock on the window. It’s Matt. She asks how he survived. Matt tells her it’s a helluva story but it’s about time they head to the Shenzhou. Ryan tells him there’s no fuel. He tells her the landing jets work the same way as the thrusters. Ryan argues, but Matt stops her. He gets it, he tells her. It’s easier to forget everything and be safe. She had it rough. Her kid died. She has to let go and get on with living. It’s time to go home.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 12 - Dark Night of the Soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Just as she’s about to drift away, there’s a knock on the window. It’s Matt. She asks how he survived. Matt tells her it’s a helluva story but it’s about time they head to the Shenzhou. Ryan tells him there’s no fuel. He tells her the landing jets work the same way as the thrusters. Ryan argues, but Matt stops her. He gets it, he tells her. It’s easier to forget everything and be safe. She had it rough. Her kid died. She has to let go and get on with living. It’s time to go home.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As an alarm goes off, Ryan realizes Matt was never there. She was just imagining him. She quickly turns the oxygen back on and pulls out the manual on landing.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 13 - Break into Three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As an alarm goes off, Ryan realizes Matt was never there. She was just imagining him. She quickly turns the oxygen back on and pulls out the manual on landing.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="11" Title="FINALE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As Ryan works the switches and buttons, she calls out to Matt and tells him to give her daughter a hug for her. Using the landing jets, Ryan gets closer to the Shenzhou. Timing it right, Ryan pulls on the door latch and hurtles through space. Using a fire extinguisher as a propulsion pack, she makes it to the Chinese station and into the Shenzhou.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">She initiates landing procedures. As the ship re-enters the atmosphere, Ryan radios to Houston that she’s on her way home. Whether she makes it or not, she knows it’ll be one helluva ride and she’s ready for it. The Shenzhou lands safely in water but as Ryan opens the latch, a surge pushes her back in as the Shenzhou drops to the water’s bottom. Ryan manages to fight her way through, swim up to the surface and make it to land.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 14 - Finale </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Ryan works the switches and buttons, she calls out to Matt and tells him to give her daughter a hug for her. Using the landing jets, Ryan gets closer to the Shenzhou. Timing it right, Ryan pulls on the door latch and hurtles through space. Using a fire extinguisher as a propulsion pack, she makes it to the Chinese station and into the Shenzhou.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>She initiates landing procedures. As the ship re-enters the atmosphere, Ryan radios to Houston that she’s on her way home. Whether she makes it or not, she knows it’ll be one helluva ride and she’s ready for it. The Shenzhou lands safely in water but as Ryan opens the latch, a surge pushes her back in as the Shenzhou drops to the water’s bottom. Ryan manages to fight her way through, swim up to the surface and make it to land.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="FINAL IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Gasping for air, Ryan slowly stands. She’s wobbly and shaking. But she’s alive… and home.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">She looks up to the heavens, tall and bigger than life. She is no longer the speck she was in the Opening Image.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>GRAVITY beat 15 - Final Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Gasping for air, Ryan slowly stands. She’s wobbly and shaking. But she’s alive… and home.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>She looks up to the heavens, tall and bigger than life. She is no longer the speck she was in the Opening Image.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="THE 40 YEAR OLD VIRGIN">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Screenplay by: Phil Lord &amp; Christopher Miller</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Story By: Dan Hageman &amp; Kevin Hageman and Phil Lord &amp; Christopher Miller</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Phil Lord, Christopher Miller</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">THE LEGO MOVIE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Screenplay by: Phil Lord &amp; Christopher Miller</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Story By: Dan Hageman &amp; Kevin Hageman and Phil Lord &amp; Christopher Miller</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Phil Lord, Christopher Miller</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="11" Title="OPENING IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">In a world made of Lego bricks, wise Vitruvius (voice: Morgan Freeman) is attacked in his underground lair.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 1 - Opening Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In a world made of Lego bricks, wise Vitruvius (voice: Morgan Freeman) is attacked in his underground lair.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps"></Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The villainous Lord Business (voice: Will Ferrell) confronts Vitruvius, looking for the Kragle, an item that will give him unlimited power. He obtains it, but not before Vitruvius recites a prophecy of a Special One, the greatest and most important individual of all times, who will find the Piece of Resistance and use it against Lord Business and the Kragle. This theme will be debated and built upon brick-by-brick as the hero learns what it means to be unique in a world where everyone seems to be the same.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 2 - THEME STATED</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The villainous Lord Business (voice: Will Ferrell) confronts Vitruvius, looking for the Kragle, an item that will give him unlimited power. He obtains it, but not before Vitruvius recites a prophecy of a Special One, the greatest and most important individual of all times, who will find the Piece of Resistance and use it against Lord Business and the Kragle. This theme will be debated and built upon brick-by-brick as the hero learns what it means to be unique in a world where everyone seems to be the same.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="12" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Eight and a half years later, Emmet Brickowoski (voice: Chris Pratt) wakes up to a daily routine in which he carefully consults the instructions that tell him “how to fit in, have everybody like you, and always be happy.” This is his “thesis” world, one of predictability and sameness. On television, President Business announces Taco Tuesday, and Emmet steps outside to his ordinary world. Everyone follows the rules laid out for them, and even though they all sing “Everything Is Awesome,” there are things that need fixing in Emmet’s life. “Deep down,” he wonders where all the special people in his life are. The theme is echoed as he longs to feel something other than ordinary. After work, he is separated from the group and spies a mysterious figure who is not following the rules.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 3 - setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Eight and a half years later, Emmet Brickowoski (voice: Chris Pratt) wakes up to a daily routine in which he carefully consults the instructions that tell him “how to fit in, have everybody like you, and always be happy.” This is his “thesis” world, one of predictability and sameness. On television, President Business announces Taco Tuesday, and Emmet steps outside to his ordinary world. Everyone follows the rules laid out for them, and even though they all sing “Everything Is Awesome,” there are things that need fixing in Emmet’s life. “Deep down,” he wonders where all the special people in his life are. The theme is echoed as he longs to feel something other than ordinary. After work, he is separated from the group and spies a mysterious figure who is not following the rules.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Our innocent hero follows the figure, catching a glimpse of her. He falls deep into a crevice and wanders around, asking aloud what he should do without his instructions. Seeing a mysterious object, he touches it, and his mind is filled with images both real and surreal. He passes out, but not before he hears a voice say, “It’s your turn to be the hero.”</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 4 - CATALYST</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Our innocent hero follows the figure, catching a glimpse of her. He falls deep into a crevice and wanders around, asking aloud what he should do without his instructions. Seeing a mysterious object, he touches it, and his mind is filled with images both real and surreal. He passes out, but not before he hears a voice say, “It’s your turn to be the hero.”</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="12" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Emmet wakes to find himself being interrogated by Bad Cop (voice: Liam Neeson), who quickly switches to Good Cop. During this sudden event, he learns that the Piece of Resistance is stuck to his back. Despite having the piece, Emmet is told that he will fail in his supposed mission; President Business will end the world with the Kragle. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">In this life or death situation, Emmet states that he is just a normal, ordinary guy, saying his friends would miss him if something happened to him. The theme is restated in the video interviews Bad Cop shows Emmet of his “friends,” all who state that he was just average and not that special. One states, “We all have something that makes us something, and Emmet is… nothing.” Emmet is rescued by Wyldstyle (voice: Elizabeth Banks), and he is dubbed The Special, but is he really?</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 5 - DEBATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Emmet wakes to find himself being interrogated by Bad Cop (voice: Liam Neeson), who quickly switches to Good Cop. During this sudden event, he learns that the Piece of Resistance is stuck to his back. Despite having the piece, Emmet is told that he will fail in his supposed mission; President Business will end the world with the Kragle. In this life or death situation, Emmet states that he is just a normal, ordinary guy, saying his friends would miss him if something happened to him. The theme is restated in the video interviews Bad Cop shows Emmet of his “friends,” all who state that he was just average and not that special. One states, “We all have something that makes us something, and Emmet is… nothing.” Emmet is rescued by Wyldstyle (voice: Elizabeth Banks), and he is dubbed The Special, but is he really?</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Escaping the city, Emmet enters the “upside-down world” of Act Two, one that is different from all he has known, and one in which he is not so ordinary.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 6 - BREAK INTO TWO</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Escaping the city, Emmet enters the “upside-down world” of Act Two, one that is different from all he has known, and one in which he is not so ordinary.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Wyldstyle becomes a romantic interest. She will inspire Emmet to find what makes him special, giving him the strength and wisdom to save the world in the A Story.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 7 - b story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Wyldstyle becomes a romantic interest. She will inspire Emmet to find what makes him special, giving him the strength and wisdom to save the world in the A Story.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="13" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Entering the Old West, Emmet realizes he’s not The Special. Wyldstyle, disappointed, teaches him about the different regions and the former freedoms they had to be different. President Business had put a stop by erecting walls and instilling order, causing many of the Master Builders to go into hiding. Telling Emmet that the Piece of Resistance can stop the Kragle, she leads him to Vitruvius.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Meanwhile, President Business reveals his plan to spray everyone with the Kragle (a worn bottle of Krazy Glue), making them look ordinary. He forces Bad Cop to test it on his parents.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">In the Old West, Vitruvius learns that Emmet has seen the Man Upstairs in his vision, something truly special. Bad Cop’s men discover them, but they evade capture with the help of Batman, Wyldstyle’s boyfriend. They escape to Cloud Cuckoo Land, where strange creations roam the streets without rules, and the Master Builders take refuge.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 8 - fun and games</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Entering the Old West, Emmet realizes he’s not The Special. Wyldstyle, disappointed, teaches him about the different regions and the former freedoms they had to be different. President Business had put a stop by erecting walls and instilling order, causing many of the Master Builders to go into hiding. Telling Emmet that the Piece of Resistance can stop the Kragle, she leads him to Vitruvius.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Meanwhile, President Business reveals his plan to spray everyone with the Kragle (a worn bottle of Krazy Glue), making them look ordinary. He forces Bad Cop to test it on his parents.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In the Old West, Vitruvius learns that Emmet has seen the Man Upstairs in his vision, something truly special. Bad Cop’s men discover them, but they evade capture with the help of Batman, Wyldstyle’s boyfriend. They escape to Cloud Cuckoo Land, where strange creations roam the streets without rules, and the Master Builders take refuge.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Standing before the Master Builders, Vitruvius tells them of Lord Business’s plans and of their one hope: The Special. It is a victory against Lord Business, but a false one, for as Emmet takes the stage to speak, they quickly realize that he is not The Special.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 9 - midpoint</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Standing before the Master Builders, Vitruvius tells them of Lord Business’s plans and of their one hope: The Special. It is a victory against Lord Business, but a false one, for as Emmet takes the stage to speak, they quickly realize that he is not The Special.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="14" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Metal Beard storms in, telling of the impossibility of reaching Lord Business’s tower. The Bad Guys Close In as they attack Cloud Cuckoo Land, destroying it and taking the Master Builders captive. Only Emmet and his circle of new friends escape the ordeal. They come up with a plan to break into Lord Business’s tower and use the Piece of Resistance against the Kragle, but are confronted by Lord Business’s robots. Momentarily escaping, Wyldstyle confesses her hidden Bad Guys: she had wanted to be The Special and was disappointed that it could be Emmet. Emmet, however, begins to show change, as he admits that she made him feel special. The plan collapses, however, and they are caught and brought before Lord Business, who kills Vitruvius in front of them.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 10 - bad guys close in </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Metal Beard storms in, telling of the impossibility of reaching Lord Business’s tower. The Bad Guys Close In as they attack Cloud Cuckoo Land, destroying it and taking the Master Builders captive. Only Emmet and his circle of new friends escape the ordeal. They come up with a plan to break into Lord Business’s tower and use the Piece of Resistance against the Kragle, but are confronted by Lord Business’s robots. Momentarily escaping, Wyldstyle confesses her hidden Bad Guys: she had wanted to be The Special and was disappointed that it could be Emmet. Emmet, however, begins to show change, as he admits that she made him feel special. The plan collapses, however, and they are caught and brought before Lord Business, who kills Vitruvius in front of them.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The “whiff of death” is in the air not only for Vitruvius, but for all. Their plan has failed, and Lord Business throws the Piece of Resistance from the tower and prepares to release the Kragle. Emmet is hooked up to a battery and must watch the Master Builders perish before he himself dies.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 11 - all is lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The “whiff of death” is in the air not only for Vitruvius, but for all. Their plan has failed, and Lord Business throws the Piece of Resistance from the tower and prepares to release the Kragle. Emmet is hooked up to a battery and must watch the Master Builders perish before he himself dies.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Vitruvius’s ghost tells a dejected Emmet that even though he had made up the prophecy, the only thing needed to be special is to believe that you are. Realizing this, Emmet sacrifices himself, jumping off the tower with the battery.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Believing Emmet has perished, Wyldstyle inspires others to be different and make whatever they think of, breaking the rules.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 12 - dark night of the soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Vitruvius’s ghost tells a dejected Emmet that even though he had made up the prophecy, the only thing needed to be special is to believe that you are. Realizing this, Emmet sacrifices himself, jumping off the tower with the battery.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Believing Emmet has perished, Wyldstyle inspires others to be different and make whatever they think of, breaking the rules.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="14" Title="BREAK INTO THREE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">A and B Stories come together as Emmet learns that he is special, and this will help him stop Lord Business.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 13 - break into three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A and B Stories come together as Emmet learns that he is special, and this will help him stop Lord Business.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="14" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Emmet awakes in the real world, seeing a human boy staring down at him. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">He sees his world from the outside, and the boy’s father (Will Ferrell) comes downstairs and is angry with the disorder of the Lego sets. Both worlds collide and the Man Upstairs begins using the Krazy Glue to “fix” all of the “weird stuff” while overlooking the ordinary Emmet.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Watching as his friends fail, Emmet sees the Piece of Resistance on the floor, and rolls off the table to get it. The boy puts him back into his own world, and in a display of synthesis, Emmet believes that he is Special, becoming a Master Builder and confronting Lord Business.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The father watches as his son plays this out, seeing himself in Lord Business and realizing he is the villain. In another display of synthesis, the Man Upstairs and Lord Business, one and the same, listen to Emmet’s message and are transformed, realizing the error of their ways.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 14 - finale </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Emmet awakes in the real world, seeing a human boy staring down at him. He sees his world from the outside, and the boy’s father (Will Ferrell) comes downstairs and is angry with the disorder of the Lego sets. Both worlds collide and the Man Upstairs begins using the Krazy Glue to “fix” all of the “weird stuff” while overlooking the ordinary Emmet.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Watching as his friends fail, Emmet sees the Piece of Resistance on the floor, and rolls off the table to get it. The boy puts him back into his own world, and in a display of synthesis, Emmet believes that he is Special, becoming a Master Builder and confronting Lord Business.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The father watches as his son plays this out, seeing himself in Lord Business and realizing he is the villain. In another display of synthesis, the Man Upstairs and Lord Business, one and the same, listen to Emmet’s message and are transformed, realizing the error of their ways.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="15" Title="FINAL IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As the Man Upstairs removes the Krazy Glue from the Lego pieces, he shows his transformation by telling the son that his little sister can play with the Lego sets now, too.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">In Emmet’s world, this comes true as the characters face a new deadly threat: invaders from the Planet Duplon.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>THE LEGO MOVIE beat 15 - Final image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As the Man Upstairs removes the Krazy Glue from the Lego pieces, he shows his transformation by telling the son that his little sister can play with the Lego sets now, too.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In Emmet’s world, this comes true as the characters face a new deadly threat: invaders from the Planet Duplon.</Text>
+    </Paragraph>
+  </Content>
+
+  <Watermarking Text=""/>
+
+  <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+    <Header>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Last Revised"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Page #"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Center"/>
+          <Tabstop Position="7.25" Type="Right"/>
+        </Tabstops>
+      </Paragraph>
+    </Header>
+    <Footer>
+      <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+      </Paragraph>
+    </Footer>
+  </HeaderAndFooter>
+
+  <SpellCheckIgnoreLists>
+    <IgnoredRanges/>
+    <IgnoredWords/>
+  </SpellCheckIgnoreLists>
+
+  <PageLayout BackgroundColor="#FFFFFFFFFFFF" BottomMargin="72" BreakDialogueAndActionAtSentences="Yes" DocumentLeading="Normal" FooterMargin="36" ForegroundColor="#000000000000" HeaderMargin="36" InvisiblesColor="#808080808080" TopMargin="72" UsesSmartQuotes="Yes">
+    <PageSize Height="11.00" Width="8.50"/>
+    <AutoCastList AddParentheses="Yes" AutomaticallyGenerate="Yes" CastListElement="Cast List"/>
+  </PageLayout>
+
+  <WindowState Height="869" Left="0" Mode="Normal" Top="8" Width="1425"/>
+
+  <TextState Scaling="100" Selection="20206,20206" ShowInvisibles="No"/>
+
+  <ElementSettings Type="General">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="General" Shortcut="0"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Scene Heading">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="1"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Action">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="2"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Character">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="3.50" RightIndent="7.25" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Character" ReturnKey="Dialogue" Shortcut="3"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Parenthetical">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="-0.10" Leading="Regular" LeftIndent="3.00" RightIndent="5.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Parenthetical" ReturnKey="Dialogue" Shortcut="4"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Dialogue">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="2.50" RightIndent="6.00" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Dialogue" ReturnKey="Action" Shortcut="5"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Transition">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="5.50" RightIndent="7.10" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Transition" ReturnKey="Scene Heading" Shortcut="6"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Shot">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="7"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Cast List">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="8"/>
+  </ElementSettings>
+
+  <TitlePage>
+    <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+      <Header>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <DynamicLabel Type="Page #"/>
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        </Paragraph>
+      </Header>
+      <Footer>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+        </Paragraph>
+      </Footer>
+    </HeaderAndFooter>
+    <Content>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline+AllCaps">Script Title</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Name of First Writer</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Based on, If Any</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Address</Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Phone Number</Text>
+      </Paragraph>
+    </Content>
+    <TextState Scaling="100" Selection="0,0" ShowInvisibles="No"/>
+  </TitlePage>
+
+  <UnanchoredScriptNotes/>
+
+  <SmartType>
+    <Characters>
+      <Character>ABOUT BEATS</Character>
+      <Character>THE AVENGERS</Character>
+      <Character>RAGING BULL</Character>
+      <Character>RATATOUILLE</Character>
+    </Characters>
+    <Extensions>
+      <Extension>(V.O.)</Extension>
+      <Extension>(O.S.)</Extension>
+      <Extension>(O.C.)</Extension>
+      <Extension>(CONT'D)</Extension>
+      <Extension>(SUBTITLE)</Extension>
+    </Extensions>
+    <SceneIntros Separator=". ">
+      <SceneIntro>INT</SceneIntro>
+      <SceneIntro>EXT</SceneIntro>
+      <SceneIntro>I/E</SceneIntro>
+      <SceneIntro>AT MINUTE 19, AFTER GETTING STATIC FROM SAL ABOUT HIS PIZZA, A "BRANDO" FIGURE [THE CHARACTER IN THE INSTITUTIONALIZED GENRE WHO STANDS OPPOSED TO THE SYSTEM BY HIS OR HER VERY NATURE AND EXPOSES ITS FAULTS], BUGGIN' OUT (GIANCARLO ESPOSITO), LOOKS UP ON THE WALL OF SAL'S FAMOUS AND SEES NOTHING BUT ITALIAN-AMERICANS</SceneIntro>
+    </SceneIntros>
+    <Locations>
+      <Location>ABOUT SAVE THE CAT!</Location>
+      <Location>ABOUT SAVE THE CAT! GENRES</Location>
+      <Location>SAVE THE CAT! BEATS</Location>
+      <Location>HOW TO USE THIS TEMPLATE</Location>
+      <Location>THE AVENGERS BEAT 1</Location>
+      <Location>THE AVENGERS BEAT 2</Location>
+      <Location>THE AVENGERS BEAT 3</Location>
+      <Location>THE AVENGERS BEAT 4</Location>
+      <Location>THE AVENGERS BEAT 5</Location>
+      <Location>THE AVENGERS BEAT 6</Location>
+      <Location>THE AVENGERS BEAT 7</Location>
+      <Location>THE AVENGERS BEAT 8</Location>
+      <Location>THE AVENGERS BEAT 9</Location>
+      <Location>THE AVENGERS BEAT 10</Location>
+      <Location>THE AVENGERS BEAT 11</Location>
+      <Location>THE AVENGERS BEAT 12</Location>
+      <Location>THE AVENGERS BEAT 13</Location>
+      <Location>THE AVENGERS BEAT 14</Location>
+      <Location>THE AVENGERS BEAT 15</Location>
+      <Location>RAGING BULL BEAT 1</Location>
+      <Location>RAGING BULL BEAT 2</Location>
+      <Location>RAGING BULL BEAT 3</Location>
+      <Location>RAGING BULL BEAT 4</Location>
+      <Location>RAGING BULL BEAT 5</Location>
+      <Location>RAGING BULL BEAT 6</Location>
+      <Location>RAGING BULL BEAT 7</Location>
+      <Location>RAGING BULL BEAT 8</Location>
+      <Location>RAGING BULL BEAT 9</Location>
+      <Location>RAGING BULL BEAT 10</Location>
+      <Location>RAGING BULL BEAT 11</Location>
+      <Location>RAGING BULL BEAT 12</Location>
+      <Location>RAGING BULL BEAT 13</Location>
+      <Location>RAGING BULL BEAT 14</Location>
+      <Location>RAGING BULL BEAT 15</Location>
+      <Location>RATATOUILLE BEAT 1</Location>
+      <Location>RATATOUILLE BEAT 2</Location>
+      <Location>RATATOUILLE BEAT 3</Location>
+      <Location>RATATOUILLE BEAT 4</Location>
+      <Location>RATATOUILLE BEAT 5</Location>
+      <Location>RATATOUILLE BEAT 6</Location>
+      <Location>RATATOUILLE BEAT 7</Location>
+      <Location>RATATOUILLE BEAT 8</Location>
+      <Location>RATATOUILLE BEAT 9</Location>
+      <Location>RATATOUILLE BEAT 10</Location>
+      <Location>RATATOUILLE BEAT 11</Location>
+      <Location>RATATOUILLE BEAT 12</Location>
+      <Location>RATATOUILLE BEAT 13</Location>
+      <Location>RATATOUILLE BEAT 14</Location>
+      <Location>RATATOUILLE BEAT 15</Location>
+      <Location>ABOUT BEATS</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND BEAT 1</Location>
+      <Location>MIDNIGHT IN PARIS</Location>
+      <Location>LIAR LIAR</Location>
+      <Location>SAW</Location>
+      <Location>"WHY AIN'T YOU GOT NO BROTHERS UP ON THE WALL?" HE PROTESTS. AND SINCE IT'S PRIMARILY AN AFRICAN-AMERICAN COMMUNITY, BUGGIN' OUT WANTS ANSWERS. INSTEAD, SAL KICKS HIM OUT, WITH MOOKIE ASSISTING. FOR NOW, MOOKIE IS TRYING TO KEEP HIS BOSS HAPPY. DO THE RIGHT THING BEAT 6</Location>
+      <Location>DO THE RIGHT THING BEAT 5</Location>
+      <Location>AMOUR BEAT 11</Location>
+      <Location>BRIDESMAIDS BEAT 3</Location>
+      <Location>BRIDESMAIDS BEAT 5</Location>
+      <Location>BRIDESMAIDS BEAT 4</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 4</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 3</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 6</Location>
+      <Location>BLADE RUNNER BEAT 2/3</Location>
+      <Location>BLADE RUNNER BEAT 2</Location>
+      <Location>FROZEN BEAT 6</Location>
+      <Location>FROZEN BEAT 7</Location>
+      <Location>WHEN HARRY MET SALLY BEAT 6</Location>
+      <Location>WHEN HARRY MET SALLY BEAT 15</Location>
+      <Location>ARGO BEAT 4</Location>
+      <Location>ARGO BEAT 7</Location>
+      <Location>ARGO BEAT 11</Location>
+      <Location>ELF BEAT 7</Location>
+      <Location>DIE HARD BEAT 12</Location>
+      <Location>DIE HARD BEAT 13</Location>
+      <Location>THE LEGO MOVIE BEAT 15</Location>
+    </Locations>
+    <TimesOfDay Separator=" - ">
+      <TimeOfDay>DAY</TimeOfDay>
+      <TimeOfDay>NIGHT</TimeOfDay>
+      <TimeOfDay>AFTERNOON</TimeOfDay>
+      <TimeOfDay>MORNING</TimeOfDay>
+      <TimeOfDay>EVENING</TimeOfDay>
+      <TimeOfDay>LATER</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER</TimeOfDay>
+      <TimeOfDay>CONTINUOUS</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY</TimeOfDay>
+      <TimeOfDay>OPENING IMAGE</TimeOfDay>
+      <TimeOfDay>SETUP</TimeOfDay>
+      <TimeOfDay>THEME STATED</TimeOfDay>
+      <TimeOfDay>CATALYST</TimeOfDay>
+      <TimeOfDay>DEBATE</TimeOfDay>
+      <TimeOfDay>BREAK INTO TWO</TimeOfDay>
+      <TimeOfDay>B STORY</TimeOfDay>
+      <TimeOfDay>FUN AND GAMES</TimeOfDay>
+      <TimeOfDay>MIDPOINT</TimeOfDay>
+      <TimeOfDay>BAD GUYS CLOSE IN</TimeOfDay>
+      <TimeOfDay>ALL IS LOST</TimeOfDay>
+      <TimeOfDay>DARK NIGHT OF THE SOUL</TimeOfDay>
+      <TimeOfDay>BREAK INTO THREE</TimeOfDay>
+      <TimeOfDay>FINALE</TimeOfDay>
+      <TimeOfDay>FINAL IMAGE</TimeOfDay>
+      <TimeOfDay>BREAK INTO TWO </TimeOfDay>
+      <TimeOfDay>ALL IS LOST </TimeOfDay>
+      <TimeOfDay>SETUP </TimeOfDay>
+      <TimeOfDay>DEBATE </TimeOfDay>
+      <TimeOfDay>CATALYST </TimeOfDay>
+      <TimeOfDay>SETUP/THEME STATED</TimeOfDay>
+    </TimesOfDay>
+    <Transitions>
+      <Transition>CUT TO:</Transition>
+      <Transition>FADE IN:</Transition>
+      <Transition>FADE OUT.</Transition>
+      <Transition>FADE TO:</Transition>
+      <Transition>DISSOLVE TO:</Transition>
+      <Transition>BACK TO:</Transition>
+      <Transition>MATCH CUT TO:</Transition>
+      <Transition>JUMP CUT TO:</Transition>
+      <Transition>FADE TO BLACK.</Transition>
+    </Transitions>
+  </SmartType>
+
+  <MoresAndContinueds>
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <DialogueBreaks AutomaticCharacterContinueds="Yes" BottomOfPage="Yes" DialogueBottom="(MORE)" DialogueTop="(CONT'D)" TopOfNext="Yes"/>
+    <SceneBreaks ContinuedNumber="No" SceneBottom="(CONTINUED)" SceneBottomOfPage="No" SceneTop="CONTINUED:" SceneTopOfNext="No"/>
+  </MoresAndContinueds>
+
+  <LockedPages/>
+
+  <Revisions ActiveSet="1" Location="7.75" RevisionMode="No" RevisionsShown="Active" ShowAllMarks="No" ShowAllSets="No" ShowPageColor="No">
+    <Revision Color="#000000000000" FullRevision="No" ID="1" Mark="*" Name="Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="2" Mark="*" Name="Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="3" Mark="*" Name="Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="4" Mark="*" Name="Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="5" Mark="*" Name="Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="6" Mark="*" Name="Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="7" Mark="*" Name="Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="8" Mark="*" Name="Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="9" Mark="*" Name="Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="10" Mark="*" Name="2nd White Rev. (mm/dd/yy)" PageColor="#FFFFFFFFFFFF" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="11" Mark="*" Name="2nd Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="12" Mark="*" Name="2nd Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="13" Mark="*" Name="2nd Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="14" Mark="*" Name="2nd Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="15" Mark="*" Name="2nd Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="16" Mark="*" Name="2nd Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="17" Mark="*" Name="2nd Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="18" Mark="*" Name="2nd Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="19" Mark="*" Name="2nd Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+  </Revisions>
+
+  <SplitState ActivePanel="1" SplitMode="Vertical" SplitterPosition="784">
+    <ScriptPanel DisplayMode="Page">
+      <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Verdana" RevisionID="0" Size="9" Style=""/>
+    </ScriptPanel>
+    <ScenePanel ActionVisible="Yes" SummaryVisible="Yes" TitleVisible="Yes">
+      <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Verdana" RevisionID="0" Size="9" Style=""/>
+    </ScenePanel>
+  </SplitState>
+
+  <Macros>
+    <Macro Element="Scene Heading" Name="INT" Shortcut="Ctrl+Alt+1" Text="INT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="EXT" Shortcut="Ctrl+Alt+2" Text="EXT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="I/E" Shortcut="Ctrl+Alt+3" Text="I/E " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="DAY" Shortcut="Ctrl+Alt+4" Text=" - DAY" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="NIGHT" Shortcut="Ctrl+Alt+5" Text=" - NIGHT" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="SUNRISE" Shortcut="Ctrl+Alt+6" Text=" - SUNRISE" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="MAGIC" Shortcut="Ctrl+Alt+7" Text=" - MAGIC" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="CONT" Shortcut="Ctrl+Alt+8" Text="continuing" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="INTER" Shortcut="Ctrl+Alt+9" Text="interrupting" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="Ctrl+Alt+0" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="CUTTO" Shortcut="Ctrl+Shift+Alt+1" Text="CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Action" Name="FADEIN" Shortcut="Ctrl+Shift+Alt+2" Text="FADE IN:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADEOUT" Shortcut="Ctrl+Shift+Alt+3" Text="FADE OUT." Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADETO" Shortcut="Ctrl+Shift+Alt+4" Text="FADE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="DISSLV" Shortcut="Ctrl+Shift+Alt+5" Text="DISSOLVE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="BACKTO" Shortcut="Ctrl+Shift+Alt+6" Text="BACK TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="MATCHCUT" Shortcut="Ctrl+Shift+Alt+7" Text="MATCH CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="JUMPCUT" Shortcut="Ctrl+Shift+Alt+8" Text="JUMP CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FBLACK" Shortcut="Ctrl+Shift+Alt+9" Text="FADE TO BLACK." Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="E" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+  </Macros>
+
+  <Actors>
+    <Actor MacVoice="" Name="Man 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Man 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Man" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Woman" Pitch="Normal" Speed="Medium" WinVoice=""/>
+  </Actors>
+
+  <Cast>
+    <Narrator Actor="Man 1">
+      <Element Type="Character"/>
+      <Element Type="Dialogue"/>
+    </Narrator>
+    <Member Actor="Man 1" Character="ABOUT BEATS"/>
+    <Member Actor="Man 1" Character="THE AVENGERS"/>
+    <Member Actor="Man 1" Character="RAGING BULL"/>
+    <Member Actor="Man 1" Character="RATATOUILLE"/>
+  </Cast>
+
+  <SceneNumberOptions LeftLocation="0.75" RightLocation="7.38" ShowNumbersOnLeft="Yes" ShowNumbersOnRight="Yes">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+  </SceneNumberOptions>
+
+  <CastList SortOption="Alphabetical">
+    <CustomOrder/>
+  </CastList>
+
+  <CharacterHighlighting/>
+
+  <CharacterNavigatorPreferences IsSortAscending="Yes" SortColumn="Order">
+    <Column Width="51">Order</Column>
+    <Column Width="50">Title</Column>
+    <Column Width="67">Location</Column>
+    <Column UserType="CharacterColumnType" Width="95">RATATOUILLE</Column>
+    <Column UserType="CharacterArcColumnType" Width="133">RATATOUILLE</Column>
+  </CharacterNavigatorPreferences>
+
+</FinalDraft>

@@ -1,0 +1,1744 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FinalDraft DocumentType="Script" Template="No" Version="2">
+
+  <Content>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="1" Title="About Save the Cat!">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT!</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template was based upon ideas from the Save the Cat!® books published by Michael Wiese Productions (www.mwp.com) and Save the Cat! Press. If you are not familiar with Save the Cat!, visit www.savethecat.com for free screenwriting articles and beat sheets. Save the Cat! also makes the popular Save the Cat! software and iPhone and iPad app that imports and exports Final Draft (.fdx) files. Save the Cat! software has many additional and advanced features you won't find in this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1 5/8" Page="1" Title="About Save the Cat! Genres">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT SAVE THE CAT! GENRES</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In his book, </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Italic">Save the Cat! The Last Book on Screenwriting You'll Ever Need</Text>
+      <Text>, Blake Snyder organizes scripts into ten basic genres. These genres are listed below.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Monster in the House</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Monster, House, Sin</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A culpable hero is forced to save a trapped group of people from being killed by a monster he inadvertently unleashed.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Golden Fleece</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Road, Team, Prize</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A driven hero must lead a group of allies to retrieve a prized possession through a perilous journey that wasn’t what the hero expected.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Out of the Bottle</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Wish, Spell, Lesson</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A covetous hero must learn to undo a spell he wished for before it turns into a curse he can’t undo.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dude with a Problem</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Innocent Hero, Sudden Event, Life or Death</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An unwitting hero must survive at all costs when he is dragged into a life or death situation he never saw coming and cannot escape.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Rites of Passage</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Life Problem, Wrong Way, Acceptance </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>
+A troubled hero’s only way to overcome a spiraling life crisis is to defeat his worst enemy - himself.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Buddy Love</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Incomplete Hero, Counterpart, Complication </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An inadequate hero must rise above an extremely difficult situation to be with a uniquely unlikely partner who is the only one capable of bringing him peace.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Whydunit</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Detective, Secret, Dark Turn</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A single-minded hero must find the truth to a mystery so intriguing before he is swallowed by the darkness he desperately seeks to expose.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fool Triumphant</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Fool, Establishment, Transmutation</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An innocent hero’s only way to defeat the prejudices of a group is to change himself without losing what made him the group’s target of disdain in the first place - his uniqueness.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Institutionalized</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Group, Choice, Sacrifice</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>An outsider’s only way to save his individuality is by going against the many who wish to integrate him into their fold.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Superhero</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>3 primary components: Special Power, Nemesis, Curse</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A uniquely special hero must defeat an opponent with stronger capabilities by using the same powers that disconnect him from the people he hopes to save.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="4/8" Page="2" Title="About Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ABOUT BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Within each Save the Cat! genre are fifteen beats. These beats are important scenes or sequences that typically occur near the same place in every script or movie.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The page number where a beat typically occurs is indicated below in parentheses. This page number is based on a 110-page script. If your script is longer or shorter than 110 pages, the location of your beats may vary.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>It's also good to note that, as can be seen in a few of the examples, while the beats usually follow a specific pattern and occur at certain moments in a script, it is not always the case - the order of beats can sometimes vary. There are times the beats can be considered "movable parts" that work together to tell a story - and the transformation of your hero - in the best possible way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This allows screenwriters to maintain your own unique creative voices while still providing your audience with a familiar form of storytelling that will resonate.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="1 2/8" Page="3" Title="Save the Cat! Beats">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">SAVE THE CAT! BEATS</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Opening Image</Text>
+      <Text> (1) – The scene in the movie that sets up the tone, type, and initial salvo of a film, a "before" snapshot — and the opposite of the Final Image.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Theme Stated</Text>
+      <Text> (5) – Usually spoken to the main character, often without knowing what is said will be vital to his surviving this tale. It's what your movie is "about."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Setup</Text>
+      <Text> (1-10) – The first 10 pages of a script must not only grab our interest and a studio reader's but introduce or hint at introducing every character in the A Story.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Catalyst </Text>
+      <Text>(12) – The telegram, the knock at the door, the act of catching a spouse in bed with another — something that is done to the hero to shake him.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Debate</Text>
+      <Text> (12-25) – The section of the script, be it a scene or a series of scenes, when the hero doubts the journey he must take.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Two</Text>
+      <Text> (25) – Act Two, that is; it is where we leave the "Thesis" world behind and enter the upside-down "Anti-thesis" world of Act Two. The hero makes a choice — and his journey begins.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">B Story</Text>
+      <Text> (30) – The "love" story, traditionally, but actually where the discussion about the theme of a good movie is found.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Fun and Games</Text>
+      <Text> (30-55) – Here we forget plot and enjoy "set pieces" and "trailer moments" and revel in the "promise of the premise."</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Midpoint</Text>
+      <Text> (55) – The dividing line between the two halves of a movie; it's back to the story as "stakes are raised," "time clocks" appear, and we start putting the squeeze on our hero(es).</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Bad Guys Close In</Text>
+      <Text> (55-75) – Both internally (the disintegration of old beliefs) and externally (as actual bad guys tighten their grip), real pressure is applied.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">All Is Lost</Text>
+      <Text> (75) – The "False Defeat" and the place where we find "the whiff of death" — because something must die here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Dark Night of the Soul</Text>
+      <Text> (75 to 85) – Why hast thou forsaken me? That part of the script where the hero has lost all hope...</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Break into Three</Text>
+      <Text> (85) ...but not for long! Thanks to a fresh idea, new inspiration, or last-minute action or advice from the love interest in the B Story, the hero chooses to fight.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Finale</Text>
+      <Text> (85-110) – The "Synthesis" of two worlds: From what was, and that which has been learned, the hero forges a third way.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">Final Image</Text>
+      <Text> (110) – The opposite of the Opening Image, proving a change has occurred. And since All Stories Are About Transformation, that change had better be dramatic!</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Color="#FFFFFFFF0000" Length="3/8" Page="4" Title="How to Use this Template">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">You can use this template purely as a reference template. You can also delete the Save the Cat beats </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">HOW TO USE THIS TEMPLATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>This template includes a Save the Cat! Beat Sheet for three films within the Whydunit genre. The three beat sheets are for the films </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Italic">All The President’s Men, Body Heat</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">, </Text>
+      <Text>and</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold"> </Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Italic">The Conversation</Text>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>You can use this template as a reference while you write your script. You can also use Scene View, Scene Navigator, and Index Card View within Final Draft 9 to replace these beats with your own scenes and scene summaries.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>If you decide to alter or replace this template, first save it with a new file name. Otherwise, you will permanently change the content within this template.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="4" Title="ALL THE PRESIDENT'S MEN">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Screenplay by: William Goldman. Based on the book by Carl Bernstein &amp; Bob Woodward</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Directed by: Alan Pakula</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">ALL THE PRESIDENT'S MEN</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Screenplay by: William Goldman. Based on the book by Carl Bernstein &amp; Bob Woodward</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Directed by: Alan Pakula</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps"></Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="5" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Like gunshots, the date “June 17, 1972” is pounded out by a booming typewriter as President Nixon’s helicopter lands triumphantly; he is at the height of power.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 1 - Opening Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Like gunshots, the date “June 17, 1972” is pounded out by a booming typewriter as President Nixon’s helicopter lands triumphantly; he is at the height of power.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Burglars are arrested at the Watergate Hotel. On the story, Washington Post reporter Bob Woodward (Robert Redford) arrives at court where they’re being arraigned. When Bob asks the burglars’ counsel how he got there, the lawyer replies: “I’m not here.” The theme is subterfuge by the men behind the men that govern us.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 2 - theme stated</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Burglars are arrested at the Watergate Hotel. On the story, Washington Post reporter Bob Woodward (Robert Redford) arrives at court where they’re being arraigned. When Bob asks the burglars’ counsel how he got there, the lawyer replies: “I’m not here.” The theme is subterfuge by the men behind the men that govern us. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="5" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Bob digs into the case while another reporter, Carl
+Bernstein (Dustin Hoffman), realizes this is a big story and
+wants on it “bad.” Bob learns that one of the men arrested worked for the CIA. Is there more going on than a break-in? Bob is assigned to the story, while Carl dogs the edges trying to be included. As the reporters attempt to work out their differing styles, Bob learns the phone number for the White House was in one of the burglar’s address books, and finds out another of the President’s men, Howard Hunt, was also in the CIA.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 3 - setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bob digs into the case while another reporter, Carl
+Bernstein (Dustin Hoffman), realizes this is a big story and
+wants on it “bad.” Bob learns that one of the men arrested worked for the CIA. Is there more going on than a break-in? Bob is assigned to the story, while Carl dogs the edges trying to be included. As the reporters attempt to work out their differing styles, Bob learns the phone number for the White House was in one of the burglar’s address books, and finds out another of the President’s men, Howard Hunt, was also in the CIA.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="5" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At Minute 23, the two are told they’re both on the story. They begin in earnest to write their first byline together..</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 4 - Catalyst</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At Minute 23, the two are told they’re both on the story. They begin in earnest to write their first byline together.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="DEBATE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Are these two reporters too green to do the job? As the “stakes keep getting raised,” we always come back to this question.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 5 - Debate </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Are these two reporters too green to do the job? As the “stakes keep getting raised,” we always come back to this question. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="5" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At Minute 33, they file their first story and interact with boss Ben Bradlee (Jason Robards), who shoots it down. “Bury it in the back somewhere,” he grumbles. And now the team must choose: Quit or re-double their efforts? They decide to get back to work and get the story right.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 6 - BREAK INTO TWO</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At Minute 33, they file their first story and interact with boss Ben Bradlee (Jason Robards), who shoots it down. “Bury it in the back somewhere,” he grumbles. And now the team must choose: Quit or re-double their efforts? They decide to get back to work and get the story right.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="6" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Twin B Stories as Bob and Carl get two mentors who inspire them to dissect the “subterfuge” that is our theme. One is Ben, whose “love” for the rookie reporters pushes them on when the going gets tough. The other is “Deep Throat,” the real-life mystery man (revealed in 2005 to be Mark Felt) who provided Bob Woodward with inside information. We meet him (Hal Holbrook) in the underground parking lot scene this film is most noted for.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 7 - b story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Twin B Stories as Bob and Carl get two mentors who inspire them to dissect the “subterfuge” that is our theme. One is Ben, whose “love” for the rookie reporters pushes them on when the going gets tough. The other is “Deep Throat,” the real-life mystery man (revealed in 2005 to be Mark Felt) who provided Bob Woodward with inside information. We meet him (Hal Holbrook) in the underground parking lot scene this film is most noted for.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="6" Title="FUN AND GAMES ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Told by Deep Throat to “follow the money” (a famous line created out of whole cloth by writer Goldman), the boys have newfound direction. Jetting to Florida, Carl tricks a secretary to see a local official (Ned Beatty). Armed with what Carl dug up, Bob tracks down the Midwest Finance Chairman of CREEP (The Committee to Re-Elect the President), who reveals it was his check that wound up in the bank account of one of the burglars. This is the “promise of the premise.” Like any great detective story, the first blush of the case and the assorted clues connected to it are exciting. The story - and this mystery - can go anywhere!</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 8 - fun and games </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Told by Deep Throat to “follow the money” (a famous line created out of whole cloth by writer Goldman), the boys have newfound direction. Jetting to Florida, Carl tricks a secretary to see a local official (Ned Beatty). Armed with what Carl dug up, Bob tracks down the Midwest Finance Chairman of CREEP (The Committee to Re-Elect the President), who reveals it was his check that wound up in the bank account of one of the burglars. This is the “promise of the premise.” Like any great detective story, the first blush of the case and the assorted clues connected to it are exciting. The story - and this mystery - can go anywhere!</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="6" Title="MIDPOINT ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">The flurry of stories “Woodstein” files (the boys are working so closely, they’ve earned the nickname) are all sweet victories; their coverage of “Watergate” is making the reporters famous, and even getting results as Nixon’s finance team is audited. But at Minute 56, A and B Stories cross as Ben “raises the stakes” when he tells them he wants more - and bridles at the idea of “Deep Throat,” whom he now learns about. We get a “false defeat” as the reporters hit bottom at Minute 70 when they reach the end of a list of Nixon employees they’ve been investigating. It looks like the clues have dried up. “We’ll just have to start all over again,” says Bob, as they go back to the top of the list.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 9 - Midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>The flurry of stories “Woodstein” files (the boys are working so closely, they’ve earned the nickname) are all sweet victories; their coverage of “Watergate” is making the reporters famous, and even getting results as Nixon’s finance team is audited. But at Minute 56, A and B Stories cross as Ben “raises the stakes” when he tells them he wants more - and bridles at the idea of “Deep Throat,” whom he now learns about. We get a “false defeat” as the reporters hit bottom at Minute 70 when they reach the end of a list of Nixon employees they’ve been investigating. It looks like the clues have dried up. “We’ll just have to start all over again,” says Bob, as they go back to the top of the list.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="6" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Scrambling to get the information they need, the “Dark Turn” takes hold as Woodstein starts to play games with witnesses, tricking them into going on the record and using their own subterfuge to get accurate quotes and sources. The “secret,” the pull of what’s in that “last little room,” is overwhelming their sense of fair play. Pressure is applied by the “bad guys” too, when one story linking Attorney General John Mitchell to the case includes Mitchell threatening Carl and the owner of the Post, Katharine Graham. </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Despite all the progress, when Bob meets Deep Throat for a second time, he’s frustrated when told: “You’re missing the overall.” And it’s even worse: This time, Bob thinks he was followed. For his part, Carl visits his doppelganger, Donald Segretti (Robert Walden), who admits that he will not only lose his law license but will probably go to jail for his dirty tricks. The lawyer’s tale foreshadows the penalty for failure.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 10 - Bad Guys Close In </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Scrambling to get the information they need, the “Dark Turn” takes hold as Woodstein starts to play games with witnesses, tricking them into going on the record and using their own subterfuge to get accurate quotes and sources. The “secret,” the pull of what’s in that “last little room,” is overwhelming their sense of fair play. Pressure is applied by the “bad guys” too, when one story linking Attorney General John Mitchell to the case includes Mitchell threatening Carl and the owner of the Post, Katharine Graham. Despite all the progress, when Bob meets Deep Throat for a second time, he’s frustrated when told: “You’re missing the overall.” And it’s even worse: This time, Bob thinks he was followed. For his part, Carl visits his doppelganger, Donald Segretti (Robert Walden), who admits that he will not only lose his law license but will probably go to jail for his dirty tricks. The lawyer’s tale foreshadows the penalty for failure.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="ALL IS LOST ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Because the Midpoint is a “down,” the All Is Lost is an “up” or a “false victory.” After thinking Bob and Carl have vetted a story that links the break-in to the Oval Office, Ben agrees to “go with it” - but the story is immediately denounced by the White House. Threats by Nixon’s team include a demand for a retraction. About to be fired, or worse - get their boss sued and his reputation destroyed - the rookies seem to have blown it. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 11 - All Is Lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Because the Midpoint is a “down,” the All Is Lost is an “up” or a “false victory.” After thinking Bob and Carl have vetted a story that links the break-in to the Oval Office, Ben agrees to “go with it” - but the story is immediately denounced by the White House. Threats by Nixon’s team include a demand for a retraction. About to be fired, or worse - get their boss sued and his reputation destroyed - the rookies seem to have blown it.  </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="7" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">“What was our mistake?” Carl asks.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 12 - Dark Night of the Soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>“What was our mistake?” Carl asks.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">A and B Stories cross as Ben votes to “stick with the story” and “stand by the boys.” As a result, Bob sets up another meeting with Deep Throat to find out how they goofed..</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 13 - Break into Three</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A and B Stories cross as Ben votes to “stick with the story” and “stand by the boys.” As a result, Bob sets up another meeting with Deep Throat to find out how they goofed.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="7" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At the garage, Bob has finally had it with subterfuge: “I’m tired of your chickenshit games,” he tells Deep Throat. “I need to know what you know.” Deep Mentor decides to tell Bob all - the trail leads to the President. And Bob rushes back to inform Carl. Typing to each other out of fear of being bugged, Bob writes: “Our lives are in danger.” The boys then rush to Ben’s house to tell him. Ben lovingly says: “Go home, rest up, fifteen minutes.” They are back on the case for real. As we go out, the two are feverishly typing more stories.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 14 - Finale</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At the garage, Bob has finally had it with subterfuge: “I’m tired of your chickenshit games,” he tells Deep Throat. “I need to know what you know.” Deep Mentor decides to tell Bob all - the trail leads to the President. And Bob rushes back to inform Carl. Typing to each other out of fear of being bugged, Bob writes: “Our lives are in danger.” The boys then rush to Ben’s house to tell him. Ben lovingly says: “Go home, rest up, fifteen minutes.” They are back on the case for real. As we go out, the two are feverishly typing more stories.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="7" Title="FINAL IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">A series of headlines spit out by a teletype machine reveal how the story unfolds in the next few years leading to Nixon’s resignation. The press has triumphed. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>ALL THE PRESIDENT'S MEN beat 15 - Final Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>A series of headlines spit out by a teletype machine reveal how the story unfolds in the next few years leading to Nixon’s resignation. The press has triumphed. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="8" Title="BODY HEAT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written and Directed By: Lawrence Kasdan</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">Body heat</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written and Directed By: Lawrence Kasdan</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="OPENING IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">From his bedroom window, Ned Racine (William Hurt) watches a building across town in flames. Behind him, a woman gets dressed; their banter is sexy. And underscoring it all, their coastal Florida town is in the throes of an unprecedented heat wave. This will be a hot and steamy tale.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 1 - Opening Image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>From his bedroom window, Ned Racine (William Hurt) watches a building across town in flames. Behind him, a woman gets dressed; their banter is sexy. And underscoring it all, their coastal Florida town is in the throes of an unprecedented heat wave. This will be a hot and steamy tale.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Ned is a lawyer who represents small-time con men and petty criminals, and seems more interested in his sex life than his professional life.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 2 - setup</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Ned is a lawyer who represents small-time con men and petty criminals, and seems more interested in his sex life than his professional life.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As a judge he goes before puts it, Ned needs either “a better defense, or a better class of client.” This statement nicely sums up Ned’s situation in this movie, as he’ll be out of his depth when he meets…</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 3 - theme stated </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As a judge he goes before puts it, Ned needs either “a better defense, or a better class of client.” This statement nicely sums up Ned’s situation in this movie, as he’ll be out of his depth when he meets…</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="CATALYST ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Matty Walker (Kathleen Turner), the “well-tended” wife of a wealthy businessman. Even though she tells Ned immediately that she’s a married woman, their chemistry is irresistible and he begins to pursue her.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 4 - Catalyst </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Matty Walker (Kathleen Turner), the “well-tended” wife of a wealthy businessman. Even though she tells Ned immediately that she’s a married woman, their chemistry is irresistible and he begins to pursue her.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="8" Title="DEBATE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">After their first chance meeting, Ned returns to the beachfront walkway site of the encounter hoping to run into Matty again. Even though he has other female companionship, he can’t seem to get Matty off his mind and finally tracks her down at a bar in her more upscale neighborhood. Their flirtation sizzles, her husband is out of town, and when he follows her home to “see her wind chimes,” they end up in bed.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 5 - Debate </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>After their first chance meeting, Ned returns to the beachfront walkway site of the encounter hoping to run into Matty again. Even though he has other female companionship, he can’t seem to get Matty off his mind and finally tracks her down at a bar in her more upscale neighborhood. Their flirtation sizzles, her husband is out of town, and when he follows her home to “see her wind chimes,” they end up in bed.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="8" Title="BREAK INTO TWO">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Their affair continues, but Matty tells Ned that no one can know about it. They have to be careful.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 6 - Break into Two </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Their affair continues, but Matty tells Ned that no one can know about it. They have to be careful.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">For maybe the first time, Ned’s not talking about his latest conquest to his best friends, prosecutor Peter Lowenstein (Ted Danson) and Detective Oscar Grace (J.A. Preston). Their eagerness to hear about his escapades is all in good fun now, but as the story progresses their interest will turn more serious, and official.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 7 - B Story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>For maybe the first time, Ned’s not talking about his latest conquest to his best friends, prosecutor Peter Lowenstein (Ted Danson) and Detective Oscar Grace (J.A. Preston). Their eagerness to hear about his escapades is all in good fun now, but as the story progresses their interest will turn more serious, and official.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="6/8" Page="9" Title="FUN AND GAMES ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">As they carry on, Matty begins to drop hints about her husband, Edmund Walker (Richard Crenna), who will be coming home soon. Matty paints a picture of a mean, controlling man. She also tells Ned about the properties that her husband is involved in, the will he’s had drawn up which splits his estate between Matty and his niece Heather, and the sad fact that if she divorces Edmund she’ll get nothing because she signed a pre-nup. But as long as she and Ned are together, she says, nothing else matters.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Despite their efforts to be careful, Ned accidentally makes a pass at an old high school friend of Matty’s, Mary Ann Simpson (Kim Zimmer), because the two women look so similar. Later, Edmund arrives along with Heather (Carola McGuinness) for a surprise visit, and during the girl’s stay she sees Ned and Matty in a compromising position; the mistakes are piling up.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">And finally, Ned runs into Matty and Edmund at an area restaurant. The three end up sharing dinner and at one point while Matty is away from the table, Edmund tells Ned about the type of man Matty dated before they married — the type who wasn’t willing to do whatever it took to get what he wanted. Ned says he “hates that kind of guy” — and that it’s a lot like him.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Soon after, Ned and Matty confirm that they’re going to kill Edmund and they begin to plan in earnest. She wants Ned to change the will, enabling Matty to collect it all rather than splitting it with Heather, but Ned tells her not to get greedy.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 8 - Fun and Games </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As they carry on, Matty begins to drop hints about her husband, Edmund Walker (Richard Crenna), who will be coming home soon. Matty paints a picture of a mean, controlling man. She also tells Ned about the properties that her husband is involved in, the will he’s had drawn up which splits his estate between Matty and his niece Heather, and the sad fact that if she divorces Edmund she’ll get nothing because she signed a pre-nup. But as long as she and Ned are together, she says, nothing else matters.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Despite their efforts to be careful, Ned accidentally makes a pass at an old high school friend of Matty’s, Mary Ann Simpson (Kim Zimmer), because the two women look so similar. Later, Edmund arrives along with Heather (Carola McGuinness) for a surprise visit, and during the girl’s stay she sees Ned and Matty in a compromising position; the mistakes are piling up.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>And finally, Ned runs into Matty and Edmund at an area restaurant. The three end up sharing dinner and at one point while Matty is away from the table, Edmund tells Ned about the type of man Matty dated before they married — the type who wasn’t willing to do whatever it took to get what he wanted. Ned says he “hates that kind of guy” — and that it’s a lot like him.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Soon after, Ned and Matty confirm that they’re going to kill Edmund and they begin to plan in earnest. She wants Ned to change the will, enabling Matty to collect it all rather than splitting it with Heather, but Ned tells her not to get greedy.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="9" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Ned establishes an alibi by checking into a Miami hotel, then drives back to the Walker estate where he kills Edmund. Ned takes the body to an abandoned building in which Edmund had a business interest, and destroys the building with an incendiary device from one of his shadier clients, Teddy Lewis (Mickey Rourke), to make it look like a botched arson job. </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 9 - Midpoint </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Ned establishes an alibi by checking into a Miami hotel, then drives back to the Walker estate where he kills Edmund. Ned takes the body to an abandoned building in which Edmund had a business interest, and destroys the building with an incendiary device from one of his shadier clients, Teddy Lewis (Mickey Rourke), to make it look like a botched arson job. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="10" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Looking for some support, Annie asks Rhodes if he wants to hang out. They do and they end up in Rhodes’ place for the night. The next morning, Annie apologizes for staying over, but Rhodes quickly tells her it’s alright — a complete opposite from Ted’s no sleepover rule. But Rhodes has something else for Annie, he’s gotten some baking stuff and asks Annie to bake. This irks Annie and she storms off, angrily telling Rhodes he doesn’t know her. The hits keep on coming. After an argument with a teenage customer at work, Annie gets fired. She goes to her apartment only to be told by her roommate’s sister that it’s probably best if Annie moves out. Rhodes has given up on calling Annie after she doesn’t pick up her phone.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 10 - Bad Guys Close In </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In the aftermath, Ned tells Matty they need to lay low. But then Ned is contacted by Edmund's lawyer about a new will that Ned supposedly drew up on Edmund's behalf, which was witnessed by Mary Ann Simpson. Unaware of the new will's existence, Ned plays along to avoid suspicion. Still leaving half the estate to Heather, the new will is so poorly prepared it is declared null and void due to a violation of the rule against perpetuities. Because of the errors, Matty inherits the entire fortune.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Knowing well his weakness for women, Ned’s friends warn him not to get involved with Matty, who they believe is just a client at this point. But now, to cover his affair, he tells them he’s going to begin sleeping with her. In the course of doing their jobs, his friends uncover clues that look bad for Ned and soon they begin to suspect he was involved in Edmund’s death. </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Lowenstein warns Ned that someone kept calling his hotel room on the night in question but never got an answer, thereby weakening his alibi. Ned can’t help but question Matty’s loyalty. Has she been playing him all along? </Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 11 - All Is Lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Lowenstein warns Ned that someone kept calling his hotel room on the night in question but never got an answer, thereby weakening his alibi. Ned can’t help but question Matty’s loyalty. Has she been playing him all along? </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="10" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Teddy Lewis tells Ned that Matty came to him to learn how to rig a bomb to the opening of a door. When Matty calls Ned and tells him where to recover a piece of evidence they need to bury, a suspicious Ned goes to the boathouse late at night and sees through the window a long twisted wire attached to the door.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 12 - Dark Night of the Soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Teddy Lewis tells Ned that Matty came to him to learn how to rig a bomb to the opening of a door. When Matty calls Ned and tells him where to recover a piece of evidence they need to bury, a suspicious Ned goes to the boathouse late at night and sees through the window a long twisted wire attached to the door.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="10" Title="BREAK INTO THREE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Armed with a gun and facing his own “Dark Turn,” Ned confronts Matty.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 13 - Break into Three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Armed with a gun and facing his own “Dark Turn,” Ned confronts Matty.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="10" Title="FINALE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">She continues to deny that she deliberately set him up and that she really loves him now. He tells her to prove it by going into the boathouse. She complies, heading toward the building. At the last second he tries to stop her, but it’s too late — the cabin explodes; she couldn’t possibly survive.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Or was this yet another trick? Now in prison, Ned tries to convince his friend Detective Grace that Matty is still alive, laying out for him a scenario in which the woman he knew as "Matty" was actually Mary Ann Simpson, who had an unsavory background and, in order to marry Edmund Walker and get his money, assumed the identity of Matty Tyler. The real Matty learned of this and played along, presumably in exchange for some of the money, but was then murdered and left in the boathouse. Had he been killed by entering the boathouse, the police would have closed the case; both suspects would have been found dead, and "Matty" would have gotten away clean with the money, which was never recovered.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Later, Ned manages to confirm his suspicions by tracking down Matty and Mary Ann’s old yearbook. Below the picture of the real Mary Ann — the woman Ned knew as “Matty” — is the inscription "Ambition? To be rich and live in an exotic land.”</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 14 - Finale </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>She continues to deny that she deliberately set him up and that she really loves him now. He tells her to prove it by going into the boathouse. She complies, heading toward the building. At the last second he tries to stop her, but it’s too late — the cabin explodes; she couldn’t possibly survive.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Or was this yet another trick? Now in prison, Ned tries to convince his friend Detective Grace that Matty is still alive, laying out for him a scenario in which the woman he knew as "Matty" was actually Mary Ann Simpson, who had an unsavory background and, in order to marry Edmund Walker and get his money, assumed the identity of Matty Tyler. The real Matty learned of this and played along, presumably in exchange for some of the money, but was then murdered and left in the boathouse. Had he been killed by entering the boathouse, the police would have closed the case; both suspects would have been found dead, and "Matty" would have gotten away clean with the money, which was never recovered.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Later, Ned manages to confirm his suspicions by tracking down Matty and Mary Ann’s old yearbook. Below the picture of the real Mary Ann — the woman Ned knew as “Matty” — is the inscription "Ambition? To be rich and live in an exotic land.”</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="FINAL IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Mary Ann, our “Matty,” on the beach of a tropical island with a young man at her side. As he lifts an ice-filled drink from a tray beside her, he addresses her in his own language. "It is hot," he says in English, when she doesn’t understand what he’s said. Mary Ann puts on her sunglasses and agrees, before the camera moves up to take in the tropical sky.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>Body heat beat 15 - Final Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Mary Ann, our “Matty,” on the beach of a tropical island with a young man at her side. As he lifts an ice-filled drink from a tray beside her, he addresses her in his own language. "It is hot," he says in English, when she doesn’t understand what he’s said. Mary Ann puts on her sunglasses and agrees, before the camera moves up to take in the tropical sky.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="11" Title="THE CONVERSATION">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written and Directed By: Francis Ford Coppola</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+AllCaps">The conversation</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Written and Directed by: Francis Ford Coppola</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="OPENING IMAGE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">San Francisco’s Union Square. From high above, we watch the midday crowd. Slowly the camera hones in on one man: Harry Caul (Gene Hackman). As this establishing scene will soon reveal, Harry is a surveillance expert and he is on the job, along with a small team, recording a conversation between a couple, Ann and Mark (Cindy Williams and Frederic Forrest).</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 1 - Opening Image </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>San Francisco’s Union Square. From high above, we watch the midday crowd. Slowly the camera hones in on one man: Harry Caul (Gene Hackman). As this establishing scene will soon reveal, Harry is a surveillance expert and he is on the job, along with a small team, recording a conversation between a couple, Ann and Mark (Cindy Williams and Frederic Forrest).</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="11" Title="SETUP">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Harry is the best in the business and, perhaps because of this, guards his own privacy well. His apartment is triple-locked and protected by an alarm. He’s even on high alert when someone manages to learn it’s his birthday and delivers a gift to him, after which Harry spends the afternoon alone in his apartment practicing his saxophone.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 2 - SETUP</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Harry is the best in the business and, perhaps because of this, guards his own privacy well. His apartment is triple-locked and protected by an alarm. He’s even on high alert when someone manages to learn it’s his birthday and delivers a gift to him, after which Harry spends the afternoon alone in his apartment practicing his saxophone.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="THEME STATED">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">In the opening scene, and repeated throughout the movie, an exchange between the observed couple reveals the theme. Mark says, “He’s not hurting anyone,” and Ann replies, “Neither are we.” Just as Harry insists he’s not responsible for the content of his surveillance or for how it’s used by his clients, the question of participation will be examined.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 3 - theme stated</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>In the opening scene, and repeated throughout the movie, an exchange between the observed couple reveals the theme. Mark says, “He’s not hurting anyone,” and Ann replies, “Neither are we.” Just as Harry insists he’s not responsible for the content of his surveillance or for how it’s used by his clients, the question of participation will be examined.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="CATALYST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Ann and Mark, at the end of their opening scene rendezvous, set a meeting at a hotel room to occur in a few days’ time. The words are clearly recorded but their meaning is ambiguous enough to spark Harry’s interpretation and his subsequent actions.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 4 - CATALYST</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Ann and Mark, at the end of their opening scene rendezvous, set a meeting at a hotel room to occur in a few days’ time. The words are clearly recorded but their meaning is ambiguous enough to spark Harry’s interpretation and his subsequent actions.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="12" Title="DEBATE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Harry works his magic on merging the surveillance tapes into one record of the conversation. He arranges for the handoff to the client and his payment, but something about it bothers him. What will happen when he hands over the tapes? And just what is his duty in this situation?</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 5 - DEBATE</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Harry works his magic on merging the surveillance tapes into one record of the conversation. He arranges for the handoff to the client and his payment, but something about it bothers him. What will happen when he hands over the tapes? And just what is his duty in this situation?</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="12" Title="BREAK INTO TWO/B STORY">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">That night, Harry calls on Amy (Teri Garr), a girlfriend in as much as a man as private and guarded as Harry could have a romantic partner. When she learns it’s his birthday she asks him to tell her something personal, a secret. She reveals she knows how suspicious he is of her, as if he’s going to catch her up to something. It’s not an exaggeration; Harry seems very suspicious of everything Amy does, every word she says in the scene. She asks too many questions that he doesn’t want to answer, and when he walks out it’s clear to both of them that this is the end of their relationship. It would seem that Harry is incapable of having a truly open relationship.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 6/7 - BREAK INTO TWO/b story</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>That night, Harry calls on Amy (Teri Garr), a girlfriend in as much as a man as private and guarded as Harry could have a romantic partner. When she learns it’s his birthday she asks him to tell her something personal, a secret. She reveals she knows how suspicious he is of her, as if he’s going to catch her up to something. It’s not an exaggeration; Harry seems very suspicious of everything Amy does, every word she says in the scene. She asks too many questions that he doesn’t want to answer, and when he walks out it’s clear to both of them that this is the end of their relationship. It would seem that Harry is incapable of having a truly open relationship.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="12" Title="FUN AND GAMES">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Harry meets with the client’s assistant, Martin Stett (Harrison Ford), to exchange the tapes for payment, but something doesn’t sit right with him and Harry walks out with the tapes. Waiting for the elevator, he sees Mark. Moments later, Ann steps onto the elevator with Harry. Neither seem aware of his presence or identity.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Back at his workspace, Harry goes back to enhancing the tapes. He concentrates on one key phrase hidden under the sound of a street musician, finally filtering it out clearly: "He'd kill us if he got the chance." Harry is affected by these words and later when he goes to confession he reveals that in the past, people have been hurt as a result of his work.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At a surveillance trade show, Harry sees Martin Stett and believes the man is following him. But Martin tells Harry he was looking for him, not following him, and doing so to set up a meeting with The Director (Robert Duvall), the client who commissioned the surveillance of Mark and Ann.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 8 - fun and games</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Harry meets with the client’s assistant, Martin Stett (Harrison Ford), to exchange the tapes for payment, but something doesn’t sit right and Harry walks out with the tapes. Waiting for the elevator, he sees Mark. Moments later, Ann steps onto the elevator with Harry. Neither seem aware of his presence or identity.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Back at his workspace, Harry goes back to enhancing the tapes. He concentrates on one key phrase hidden under the sound of a street musician, finally filtering it out clearly: "He'd kill us if he got the chance." Harry is affected by these words and later when he goes to confession he reveals that in the past, people have been hurt as a result of his work. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At a surveillance trade show, Harry sees Martin Stett and believes the man is following him. But Martin tells Harry he was looking for him, not following him, and doing so to set up a meeting with The Director (Robert Duvall), the client who commissioned the surveillance of Mark and Ann.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="MIDPOINT">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Following the convention, Harry brings a group of colleagues back to his workspace. Though it’s a party, the “second best” in the business dogs him about trade secrets and partnering up. A trade show model flirts with Harry, and ends up staying the night. It’s an intertwining of his personal life with his professional life, the effects of which will play out throughout the rest of the second act.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 9 - midpoint</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Following the convention, Harry brings a group of colleagues back to his workspace. Though it’s a party, the “second best” in the business dogs him about trade secrets and partnering up. A trade show model flirts with Harry, and ends up staying the night. It’s an intertwining of his personal life with his professional life, the effects of which will play out throughout the rest of the second act.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="BAD GUYS CLOSE IN ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">At the tail end of the party, the story of Harry’s most famous job is explained and we learn that three people were murdered as a result of it. This is the ghost that’s been haunting Harry. And now, even with a woman seducing him, Harry can’t get his mind off of the conversation between Ann and Mark, and his fear that he could be responsible for another such tragedy. Harry dreams about it that night, telling Ann in his dream that he’s not afraid of death, but he is afraid of murder.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 10 - bad guys close in </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>At the tail end of the party, the story of Harry’s most famous job is explained and we learn that three people were murdered as a result of it. This is the ghost that’s been haunting Harry. And now, even with a woman seducing him, Harry can’t get his mind off of the conversation between Ann and Mark, and his fear that he could be responsible for another such tragedy. Harry dreams about it that night, telling Ann in his dream that he’s not afraid of death, but he is afraid of murder.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="13" Title="ALL IS LOST">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">When Harry wakes up, the model is gone — and so are his tapes of the conversation.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 11 - all is lost </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>When Harry wakes up, the model is gone — and so are his tapes of the conversation.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="13" Title="DARK NIGHT OF THE SOUL">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Harry reaches Martin Stett, who confirms they have the tapes. Martin tells him the tapes have nothing to do with Harry, and they are ready to pay him in full for the work he’s done.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 12 - dark night of the soul </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Harry reaches Martin Stett, who confirms they have the tapes. Martin tells him the tapes have nothing to do with Harry, and they are ready to pay him in full for the work he’s done.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="14" Title="BREAK INTO THREE ">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Harry goes to The Director’s office to complete their business transaction. He finds the Director listening to the tapes, and asks him what he will do to Ann.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 13 - break into three </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Harry goes to The Director’s office to complete their business transaction. He finds the Director listening to the tapes, and asks him what he will do to Ann.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="14" Title="FINALE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Fearing what will happen to the couple, and in a classic “Dark Turn” that breaks his own personal code of non-involvement, Harry rents the hotel room next door to the one where the couple planned to meet. Using his monitoring equipment, he overhears a heated argument between Ann and The Director, and to his horror, the tape being played back at a particularly incriminating moment. Harry runs to the balcony outside, hears screaming, and witnesses a bloody hand frantically slamming against the frosted glass partition.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Several hours later, Harry picks the lock into the room and initially sees nothing amiss. On closer investigation, he flushes the clogged toilet and torrents of blood come flowing out. Harry tries to confront The Director at his office, and is stunned to instead find Ann and Mark, unharmed. Their conversation didn’t mean what his guilt-wracked mind interpreted it to mean.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Harry sees a newspaper headline about The Director's death in a "car accident," and knows that the couple killed him in the hotel room. Harry now realizes that the statement "He'd kill us if he got the chance" was a rationalization of the couple's decision to kill The Director.</Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 14 - finale </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Fearing what will happen to the couple, and in a classic “Dark Turn” that breaks his own personal code of non-involvement, Harry rents the hotel room next door to the one where the couple planned to meet. Using his monitoring equipment, he overhears a heated argument between Ann and The Director, and to his horror, the tape being played back at a particularly incriminating moment. Harry runs to the balcony outside, hears screaming, and witnesses a bloody hand frantically slamming against the frosted glass partition. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Several hours later, Harry picks the lock into the room and initially sees nothing amiss. On closer investigation, he flushes the clogged toilet and torrents of blood come flowing out. Harry tries to confront The Director at his office, and is stunned to instead find Ann and Mark, unharmed. Their conversation didn’t mean what his guilt-wracked mind interpreted it to mean.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Harry sees a newspaper headline about The Director's death in a "car accident," and knows that the couple killed him in the hotel room. Harry now realizes that the statement "He'd kill us if he got the chance" was a rationalization of the couple's decision to kill The Director.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="14" Title="FINAL IMAGE">
+        <Summary>
+          <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+            <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Later, Martin Stett calls Harry on his unlisted number and warns: "We know that you know, Mr. Caul. For your own sake, don't get involved any further. We'll be listening to you.” Stett plays back a recording of Harry's moments-earlier saxophone practice, which sets Harry off on a frantic search for a listening device. He tears up walls and floorboards, destroying his apartment in the process, but to no avail. In the final image, Harry sits amidst the wreckage, playing his saxophone.</Text>
+          </Paragraph>
+        </Summary>
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>The conversation beat 15 - Final image</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Later, Martin Stett calls Harry on his unlisted number and warns: "We know that you know, Mr. Caul. For your own sake, don't get involved any further. We'll be listening to you.” Stett plays back a recording of Harry's moments-earlier saxophone practice, which sets Harry off on a frantic search for a listening device. He tears up walls and floorboards, destroying his apartment in the process, but to no avail. In the final image, Harry sits amidst the wreckage, playing his saxophone.</Text>
+    </Paragraph>
+  </Content>
+
+  <Watermarking Text=""/>
+
+  <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+    <Header>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.00" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Last Revised"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Page #"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Center"/>
+          <Tabstop Position="7.25" Type="Right"/>
+        </Tabstops>
+      </Paragraph>
+    </Header>
+    <Footer>
+      <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+      </Paragraph>
+    </Footer>
+  </HeaderAndFooter>
+
+  <SpellCheckIgnoreLists>
+    <IgnoredRanges/>
+    <IgnoredWords/>
+  </SpellCheckIgnoreLists>
+
+  <PageLayout BackgroundColor="#FFFFFFFFFFFF" BottomMargin="72" BreakDialogueAndActionAtSentences="Yes" DocumentLeading="Normal" FooterMargin="36" ForegroundColor="#000000000000" HeaderMargin="36" InvisiblesColor="#808080808080" TopMargin="72" UsesSmartQuotes="Yes">
+    <PageSize Height="11.00" Width="8.50"/>
+    <AutoCastList AddParentheses="Yes" AutomaticallyGenerate="Yes" CastListElement="Cast List"/>
+  </PageLayout>
+
+  <WindowState Height="873" Left="0" Mode="Normal" Top="4" Width="1438"/>
+
+  <TextState Scaling="100" Selection="20187,20187" ShowInvisibles="No"/>
+
+  <ElementSettings Type="General">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="General" Shortcut="0"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Scene Heading">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="1"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Action">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="2"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Character">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="3.50" RightIndent="7.25" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Character" ReturnKey="Dialogue" Shortcut="3"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Parenthetical">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="-0.10" Leading="Regular" LeftIndent="3.00" RightIndent="5.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Parenthetical" ReturnKey="Dialogue" Shortcut="4"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Dialogue">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="2.50" RightIndent="6.00" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Dialogue" ReturnKey="Action" Shortcut="5"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Transition">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="5.50" RightIndent="7.10" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Transition" ReturnKey="Scene Heading" Shortcut="6"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Shot">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="24" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="7"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Cast List">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="8"/>
+  </ElementSettings>
+
+  <TitlePage>
+    <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+      <Header>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <DynamicLabel Type="Page #"/>
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        </Paragraph>
+      </Header>
+      <Footer>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+        </Paragraph>
+      </Footer>
+    </HeaderAndFooter>
+    <Content>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline+AllCaps">Script Title</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Written by</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Name of First Writer</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Based on, If Any</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Address</Text>
+      </Paragraph>
+      <Paragraph Alignment="Full" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Phone Number</Text>
+      </Paragraph>
+    </Content>
+    <TextState Scaling="100" Selection="0,0" ShowInvisibles="No"/>
+  </TitlePage>
+
+  <UnanchoredScriptNotes/>
+
+  <SmartType>
+    <Characters>
+      <Character>ABOUT BEATS</Character>
+      <Character>THE AVENGERS</Character>
+      <Character>RAGING BULL</Character>
+      <Character>RATATOUILLE</Character>
+    </Characters>
+    <Extensions>
+      <Extension>(V.O.)</Extension>
+      <Extension>(O.S.)</Extension>
+      <Extension>(O.C.)</Extension>
+      <Extension>(CONT'D)</Extension>
+      <Extension>(SUBTITLE)</Extension>
+    </Extensions>
+    <SceneIntros Separator=". ">
+      <SceneIntro>INT</SceneIntro>
+      <SceneIntro>EXT</SceneIntro>
+      <SceneIntro>I/E</SceneIntro>
+      <SceneIntro>AT MINUTE 19, AFTER GETTING STATIC FROM SAL ABOUT HIS PIZZA, A "BRANDO" FIGURE [THE CHARACTER IN THE INSTITUTIONALIZED GENRE WHO STANDS OPPOSED TO THE SYSTEM BY HIS OR HER VERY NATURE AND EXPOSES ITS FAULTS], BUGGIN' OUT (GIANCARLO ESPOSITO), LOOKS UP ON THE WALL OF SAL'S FAMOUS AND SEES NOTHING BUT ITALIAN-AMERICANS</SceneIntro>
+    </SceneIntros>
+    <Locations>
+      <Location>ABOUT SAVE THE CAT!</Location>
+      <Location>ABOUT SAVE THE CAT! GENRES</Location>
+      <Location>SAVE THE CAT! BEATS</Location>
+      <Location>HOW TO USE THIS TEMPLATE</Location>
+      <Location>THE AVENGERS BEAT 1</Location>
+      <Location>THE AVENGERS BEAT 2</Location>
+      <Location>THE AVENGERS BEAT 3</Location>
+      <Location>THE AVENGERS BEAT 4</Location>
+      <Location>THE AVENGERS BEAT 5</Location>
+      <Location>THE AVENGERS BEAT 6</Location>
+      <Location>THE AVENGERS BEAT 7</Location>
+      <Location>THE AVENGERS BEAT 8</Location>
+      <Location>THE AVENGERS BEAT 9</Location>
+      <Location>THE AVENGERS BEAT 10</Location>
+      <Location>THE AVENGERS BEAT 11</Location>
+      <Location>THE AVENGERS BEAT 12</Location>
+      <Location>THE AVENGERS BEAT 13</Location>
+      <Location>THE AVENGERS BEAT 14</Location>
+      <Location>THE AVENGERS BEAT 15</Location>
+      <Location>RAGING BULL BEAT 1</Location>
+      <Location>RAGING BULL BEAT 2</Location>
+      <Location>RAGING BULL BEAT 3</Location>
+      <Location>RAGING BULL BEAT 4</Location>
+      <Location>RAGING BULL BEAT 5</Location>
+      <Location>RAGING BULL BEAT 6</Location>
+      <Location>RAGING BULL BEAT 7</Location>
+      <Location>RAGING BULL BEAT 8</Location>
+      <Location>RAGING BULL BEAT 9</Location>
+      <Location>RAGING BULL BEAT 10</Location>
+      <Location>RAGING BULL BEAT 11</Location>
+      <Location>RAGING BULL BEAT 12</Location>
+      <Location>RAGING BULL BEAT 13</Location>
+      <Location>RAGING BULL BEAT 14</Location>
+      <Location>RAGING BULL BEAT 15</Location>
+      <Location>RATATOUILLE BEAT 1</Location>
+      <Location>RATATOUILLE BEAT 2</Location>
+      <Location>RATATOUILLE BEAT 3</Location>
+      <Location>RATATOUILLE BEAT 4</Location>
+      <Location>RATATOUILLE BEAT 5</Location>
+      <Location>RATATOUILLE BEAT 6</Location>
+      <Location>RATATOUILLE BEAT 7</Location>
+      <Location>RATATOUILLE BEAT 8</Location>
+      <Location>RATATOUILLE BEAT 9</Location>
+      <Location>RATATOUILLE BEAT 10</Location>
+      <Location>RATATOUILLE BEAT 11</Location>
+      <Location>RATATOUILLE BEAT 12</Location>
+      <Location>RATATOUILLE BEAT 13</Location>
+      <Location>RATATOUILLE BEAT 14</Location>
+      <Location>RATATOUILLE BEAT 15</Location>
+      <Location>ABOUT BEATS</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND</Location>
+      <Location>ETERNAL SUNSHINE OF THE SPOTLESS MIND BEAT 1</Location>
+      <Location>MIDNIGHT IN PARIS</Location>
+      <Location>LIAR LIAR</Location>
+      <Location>SAW</Location>
+      <Location>"WHY AIN'T YOU GOT NO BROTHERS UP ON THE WALL?" HE PROTESTS. AND SINCE IT'S PRIMARILY AN AFRICAN-AMERICAN COMMUNITY, BUGGIN' OUT WANTS ANSWERS. INSTEAD, SAL KICKS HIM OUT, WITH MOOKIE ASSISTING. FOR NOW, MOOKIE IS TRYING TO KEEP HIS BOSS HAPPY. DO THE RIGHT THING BEAT 6</Location>
+      <Location>DO THE RIGHT THING BEAT 5</Location>
+      <Location>AMOUR BEAT 11</Location>
+      <Location>BRIDESMAIDS BEAT 3</Location>
+      <Location>BRIDESMAIDS BEAT 5</Location>
+      <Location>BRIDESMAIDS BEAT 4</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 4</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 3</Location>
+      <Location>NAPOLEON DYNAMITE BEAT 6</Location>
+      <Location>BLADE RUNNER BEAT 2/3</Location>
+      <Location>BLADE RUNNER BEAT 2</Location>
+    </Locations>
+    <TimesOfDay Separator=" - ">
+      <TimeOfDay>DAY</TimeOfDay>
+      <TimeOfDay>NIGHT</TimeOfDay>
+      <TimeOfDay>AFTERNOON</TimeOfDay>
+      <TimeOfDay>MORNING</TimeOfDay>
+      <TimeOfDay>EVENING</TimeOfDay>
+      <TimeOfDay>LATER</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER</TimeOfDay>
+      <TimeOfDay>CONTINUOUS</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY</TimeOfDay>
+      <TimeOfDay>OPENING IMAGE</TimeOfDay>
+      <TimeOfDay>SETUP</TimeOfDay>
+      <TimeOfDay>THEME STATED</TimeOfDay>
+      <TimeOfDay>CATALYST</TimeOfDay>
+      <TimeOfDay>DEBATE</TimeOfDay>
+      <TimeOfDay>BREAK INTO TWO</TimeOfDay>
+      <TimeOfDay>B STORY</TimeOfDay>
+      <TimeOfDay>FUN AND GAMES</TimeOfDay>
+      <TimeOfDay>MIDPOINT</TimeOfDay>
+      <TimeOfDay>BAD GUYS CLOSE IN</TimeOfDay>
+      <TimeOfDay>ALL IS LOST</TimeOfDay>
+      <TimeOfDay>DARK NIGHT OF THE SOUL</TimeOfDay>
+      <TimeOfDay>BREAK INTO THREE</TimeOfDay>
+      <TimeOfDay>FINALE</TimeOfDay>
+      <TimeOfDay>FINAL IMAGE</TimeOfDay>
+      <TimeOfDay>BREAK INTO TWO </TimeOfDay>
+      <TimeOfDay>ALL IS LOST </TimeOfDay>
+      <TimeOfDay>SETUP </TimeOfDay>
+      <TimeOfDay>DEBATE </TimeOfDay>
+      <TimeOfDay>CATALYST </TimeOfDay>
+      <TimeOfDay>SETUP/THEME STATED</TimeOfDay>
+    </TimesOfDay>
+    <Transitions>
+      <Transition>CUT TO:</Transition>
+      <Transition>FADE IN:</Transition>
+      <Transition>FADE OUT.</Transition>
+      <Transition>FADE TO:</Transition>
+      <Transition>DISSOLVE TO:</Transition>
+      <Transition>BACK TO:</Transition>
+      <Transition>MATCH CUT TO:</Transition>
+      <Transition>JUMP CUT TO:</Transition>
+      <Transition>FADE TO BLACK.</Transition>
+    </Transitions>
+  </SmartType>
+
+  <MoresAndContinueds>
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <DialogueBreaks AutomaticCharacterContinueds="Yes" BottomOfPage="Yes" DialogueBottom="(MORE)" DialogueTop="(CONT'D)" TopOfNext="Yes"/>
+    <SceneBreaks ContinuedNumber="No" SceneBottom="(CONTINUED)" SceneBottomOfPage="No" SceneTop="CONTINUED:" SceneTopOfNext="No"/>
+  </MoresAndContinueds>
+
+  <LockedPages/>
+
+  <Revisions ActiveSet="1" Location="7.75" RevisionMode="No" RevisionsShown="Active" ShowAllMarks="No" ShowAllSets="No" ShowPageColor="No">
+    <Revision Color="#000000000000" FullRevision="No" ID="1" Mark="*" Name="Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="2" Mark="*" Name="Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="3" Mark="*" Name="Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="4" Mark="*" Name="Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="5" Mark="*" Name="Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="6" Mark="*" Name="Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="7" Mark="*" Name="Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="8" Mark="*" Name="Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="9" Mark="*" Name="Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="10" Mark="*" Name="2nd White Rev. (mm/dd/yy)" PageColor="#FFFFFFFFFFFF" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="11" Mark="*" Name="2nd Blue Rev. (mm/dd/yy)" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="12" Mark="*" Name="2nd Pink Rev. (mm/dd/yy)" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="13" Mark="*" Name="2nd Yellow Rev. (mm/dd/yy)" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="14" Mark="*" Name="2nd Green Rev. (mm/dd/yy)" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="15" Mark="*" Name="2nd Goldenrod Rev. (mm/dd/yy)" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="16" Mark="*" Name="2nd Buff Rev. (mm/dd/yy)" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="17" Mark="*" Name="2nd Salmon Rev. (mm/dd/yy)" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="18" Mark="*" Name="2nd Cherry Rev. (mm/dd/yy)" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#000000000000" FullRevision="No" ID="19" Mark="*" Name="2nd Tan Rev. (mm/dd/yy)" PageColor="#FDFDF1F1C7C7" Style=""/>
+  </Revisions>
+
+  <SplitState ActivePanel="1" SplitMode="None" SplitterPosition="0">
+    <ScriptPanel DisplayMode="Page">
+      <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Verdana" RevisionID="0" Size="9" Style=""/>
+    </ScriptPanel>
+  </SplitState>
+
+  <Macros>
+    <Macro Element="Scene Heading" Name="INT" Shortcut="Ctrl+Alt+1" Text="INT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="EXT" Shortcut="Ctrl+Alt+2" Text="EXT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="I/E" Shortcut="Ctrl+Alt+3" Text="I/E " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="DAY" Shortcut="Ctrl+Alt+4" Text=" - DAY" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="NIGHT" Shortcut="Ctrl+Alt+5" Text=" - NIGHT" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="SUNRISE" Shortcut="Ctrl+Alt+6" Text=" - SUNRISE" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="MAGIC" Shortcut="Ctrl+Alt+7" Text=" - MAGIC" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="CONT" Shortcut="Ctrl+Alt+8" Text="continuing" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="INTER" Shortcut="Ctrl+Alt+9" Text="interrupting" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="Ctrl+Alt+0" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="CUTTO" Shortcut="Ctrl+Shift+Alt+1" Text="CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Action" Name="FADEIN" Shortcut="Ctrl+Shift+Alt+2" Text="FADE IN:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADEOUT" Shortcut="Ctrl+Shift+Alt+3" Text="FADE OUT." Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADETO" Shortcut="Ctrl+Shift+Alt+4" Text="FADE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="DISSLV" Shortcut="Ctrl+Shift+Alt+5" Text="DISSOLVE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="BACKTO" Shortcut="Ctrl+Shift+Alt+6" Text="BACK TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="MATCHCUT" Shortcut="Ctrl+Shift+Alt+7" Text="MATCH CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="JUMPCUT" Shortcut="Ctrl+Shift+Alt+8" Text="JUMP CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FBLACK" Shortcut="Ctrl+Shift+Alt+9" Text="FADE TO BLACK." Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="E" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+  </Macros>
+
+  <Actors>
+    <Actor MacVoice="" Name="Man 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Man 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Man" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Woman" Pitch="Normal" Speed="Medium" WinVoice=""/>
+  </Actors>
+
+  <Cast>
+    <Narrator Actor="Man 1">
+      <Element Type="Character"/>
+      <Element Type="Dialogue"/>
+    </Narrator>
+    <Member Actor="Man 1" Character="ABOUT BEATS"/>
+    <Member Actor="Man 1" Character="THE AVENGERS"/>
+    <Member Actor="Man 1" Character="RAGING BULL"/>
+    <Member Actor="Man 1" Character="RATATOUILLE"/>
+  </Cast>
+
+  <SceneNumberOptions LeftLocation="0.75" RightLocation="7.38" ShowNumbersOnLeft="Yes" ShowNumbersOnRight="Yes">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+  </SceneNumberOptions>
+
+  <CastList SortOption="Alphabetical">
+    <CustomOrder/>
+  </CastList>
+
+  <CharacterHighlighting/>
+
+  <CharacterNavigatorPreferences IsSortAscending="Yes" SortColumn="Order">
+    <Column Width="51">Order</Column>
+    <Column Width="50">Title</Column>
+    <Column Width="67">Location</Column>
+    <Column UserType="CharacterColumnType" Width="95">RATATOUILLE</Column>
+    <Column UserType="CharacterArcColumnType" Width="133">RATATOUILLE</Column>
+  </CharacterNavigatorPreferences>
+
+</FinalDraft>
