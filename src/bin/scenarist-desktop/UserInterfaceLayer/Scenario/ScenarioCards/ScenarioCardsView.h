@@ -27,6 +27,16 @@ namespace UserInterface {
 		void clear();
 
 		/**
+		 * @brief Отменить последнее действие
+		 */
+		void undo();
+
+		/**
+		 * @brief Повторить последнее действие
+		 */
+		void redo();
+
+		/**
 		 * @brief Необходимо ли использовать в качестве фона пробковую доску
 		 */
 		void setUseCorkboardBackground(bool _use);
@@ -45,6 +55,11 @@ namespace UserInterface {
 		 * @brief Получить xml-строку текущей схемы
 		 */
 		QString save() const;
+
+		/**
+		 * @brief Сохранить изменения схемы
+		 */
+		void saveChanges(bool _hasChangesInText);
 
 		/**
 		 * @brief Добавить карточку
@@ -99,6 +114,16 @@ namespace UserInterface {
 		void setCommentOnly(bool _isCommentOnly);
 
 	signals:
+		/**
+		 * @brief Запрос на отмену последнего действия
+		 */
+		void undoRequest();
+
+		/**
+		 * @brief Запрос на повтор последнего действия
+		 */
+		void redoRequest();
+
 		/**
 		 * @brief Нажата кнопка добавления карточки
 		 */
@@ -169,6 +194,11 @@ namespace UserInterface {
 		 * @brief Настроить соединения
 		 */
 		void initConnections();
+
+		/**
+		 * @brief Настроить горячие клавиши
+		 */
+		void initShortcuts();
 
 		/**
 		 * @brief Настроить внешний вид

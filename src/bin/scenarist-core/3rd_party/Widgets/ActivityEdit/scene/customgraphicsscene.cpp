@@ -517,14 +517,7 @@ void CustomGraphicsScene::notifyStateChangeByUser()
 
 QString CustomGraphicsScene::toXML()
 {
-	return createSceneXml(this, (this->views().count()==0? NULL : this->views()[0]));
-}
-
-CustomGraphicsScene *CustomGraphicsScene::fromXML (const QString &xml, CustomGraphicsScene *scene)
-{
-	scene->removeAllShapes();
-	loadSceneXml(xml, scene);
-	return scene;
+	return createSceneXml(this, (views().count() == 0 ? nullptr : views().first()));
 }
 
 QList<Shape *> CustomGraphicsScene::selectedShapes()

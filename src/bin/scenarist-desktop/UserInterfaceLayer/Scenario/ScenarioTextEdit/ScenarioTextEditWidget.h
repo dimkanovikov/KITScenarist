@@ -151,16 +151,6 @@ namespace UserInterface
 
 	public slots:
 		/**
-		 * @brief Отменить последнее действие
-		 */
-		void aboutUndo();
-
-		/**
-		 * @brief Повторить последнее действие
-		 */
-		void aboutRedo();
-
-		/**
 		 * @brief Показать/скрыть поле поиска
 		 */
 		void aboutShowSearch();
@@ -171,6 +161,16 @@ namespace UserInterface
 		void aboutShowFastFormat();
 
 	signals:
+		/**
+		 * @brief Запрос на отмену последнего действия
+		 */
+		void undoRequest();
+
+		/**
+		 * @brief Запрос на повтор последнего действия
+		 */
+		void redoRequest();
+
 		/**
 		 * @brief Изменился режим отображения сценария
 		 */

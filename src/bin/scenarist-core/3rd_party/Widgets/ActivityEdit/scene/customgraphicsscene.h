@@ -24,9 +24,9 @@ class CustomGraphicsScene : public QGraphicsScene
 	Q_OBJECT
 
 public:
-	/// Загружает сцену из XML
-	static CustomGraphicsScene *fromXML (const QString &xml, CustomGraphicsScene *scene);
-	/// Возвращает сцену, преобразованную в XML-формат
+	/**
+	* @brief Возвращает сцену, преобразованную в XML-формат
+	*/
 	QString toXML();
 
 public:

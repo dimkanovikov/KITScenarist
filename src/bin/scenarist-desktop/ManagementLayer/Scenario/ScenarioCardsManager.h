@@ -42,6 +42,11 @@ namespace ManagementLayer
 		QString save() const;
 
 		/**
+		 * @brief Сохранить изменения схемы
+		 */
+		void saveChanges(bool _hasChangesInText);
+
+		/**
 		 * @brief Загрузить заданную схему
 		 */
 		void load(BusinessLogic::ScenarioModel* _model, const QString& _xml);
@@ -52,11 +57,31 @@ namespace ManagementLayer
 		void clear();
 
 		/**
+		 * @brief Отменить последнее действие
+		 */
+		void undo();
+
+		/**
+		 * @brief Повторить последнее действие
+		 */
+		void redo();
+
+		/**
 		 * @brief Установить режим работы со сценарием
 		 */
 		void setCommentOnly(bool _isCommentOnly);
 
 	signals:
+		/**
+		 * @brief Запрос на отмену последнего действия
+		 */
+		void undoRequest();
+
+		/**
+		 * @brief Запрос на повтор последнего действия
+		 */
+		void redoRequest();
+
 		/**
 		 * @brief Схема карточек изменена
 		 */

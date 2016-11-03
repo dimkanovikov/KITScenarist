@@ -1,7 +1,8 @@
 #ifndef SCENEUNDOSTACK_H
 #define SCENEUNDOSTACK_H
+
 #include <QString>
-#include <QList>
+#include <QVector>
 
 
 /**
@@ -24,9 +25,19 @@ public:
 	bool canUndo();
 
 	/**
+	 * @brief Нужно ли синхронизировать отмену с текстом сценария
+	 */
+	bool needSyncUndo();
+
+	/**
 	 * @brief Можно повторить?
 	 */
 	bool canRedo();
+
+	/**
+	 * @brief Нужно ли синхронизировать повтор с текстом сценария
+	 */
+	bool needSyncRedo();
 
 	/**
 	 * @brief Отменить (перейти к предыдущему состоянию)
@@ -46,9 +57,13 @@ public:
 	/**
 	 * @brief Добавить изменение в историю
 	 * Состояние представляет собой XML-строку, полученную в CustomGraphicsScene::toXML().
-	 * Все повторы, которые расположены за текущим состоянием, будут уничтожены.
 	 */
-	void addState(const QString& _data);
+	void addState(const QString& _data, bool _needSync);
+
+	/**
+	 * @brief Изменилась ли схема по сравнению с текущим состоянием
+	 */
+	bool hasChanges(const QString& _data);
 
 private:
 	/**
@@ -60,7 +75,12 @@ private:
 	/**
 	 * @brief История изменений
 	 */
-	QList<QByteArray> m_history;
+	QVector<QByteArray> m_history;
+
+	/**
+	 * @brief Нужно ли синхронизировать изменения с текстом сценария
+	 */
+	QVector<bool> m_historyNeedSync;
 
 	/**
 	 * @brief Текущее положение в истории изменений

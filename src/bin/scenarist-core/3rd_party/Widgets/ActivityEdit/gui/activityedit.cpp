@@ -61,7 +61,6 @@ ActivityEdit::ActivityEdit(QWidget *parent) :
 	connect(m_view, &CustomGraphicsView::contextMenuRequest, this, &ActivityEdit::showContextMenu);
 
 	connect(scene, &CustomGraphicsScene::stateChangedByUser, [=] {
-		m_undoStack->addState(scene->toXML());
 		emit schemeChanged();
 	});
 
@@ -101,35 +100,72 @@ void ActivityEdit::clear()
 	m_undoStack->clear();
 }
 
+bool ActivityEdit::needSyncUndo() const
+{
+	return m_undoStack->needSyncUndo();
+}
+
 void ActivityEdit::undo()
 {
 	if (m_undoStack->canUndo()) {
-		CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene());
-		if (!m_undoStack->canRedo()) {
-			m_undoStack->addState(scene->toXML());
-			m_undoStack->undo();
-		}
-		scene->fromXML(m_undoStack->undo(), scene);
-
-		if (m_undoStack->canUndo()) {
+		if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+			scene->removeAllShapes();
+			load(m_undoStack->undo());
 			emit schemeChanged();
 		}
 	}
 }
 
+bool ActivityEdit::needSyncRedo() const
+{
+	return m_undoStack->needSyncRedo();
+}
+
 void ActivityEdit::redo()
 {
 	if (m_undoStack->canRedo()) {
-		CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene());
-		scene->fromXML(m_undoStack->redo(), scene);
-
-		emit schemeChanged();
+		if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+			scene->removeAllShapes();
+			load(m_undoStack->redo());
+			emit schemeChanged();
+		}
 	}
 }
 
 QString ActivityEdit::save() const
 {
 	return createSceneXml(m_view->scene(), m_view);
+}
+
+void ActivityEdit::saveChanges(bool _hasChangesInText)
+{
+	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(m_view->scene())) {
+		const QString xml = scene->toXML();
+
+		//
+		// Если есть изменения сцены
+		//
+		if (m_undoStack->hasChanges(xml)) {
+			//
+			// ... то добавляем состояние в стек
+			//
+			m_undoStack->addState(xml, _hasChangesInText);
+		}
+		//
+		// А если изменений сцены нет
+		//
+		else {
+			//
+			// ... но есть изменения текста
+			//
+			if (_hasChangesInText) {
+				//
+				// ... очищаем стэк отмены действий, т.к. мы не предоставляем отмены действий для случаев, когда был изменён текст сценария
+				//
+				m_undoStack->clear();
+			}
+		}
+	}
 }
 
 void ActivityEdit::load(const QString& _xml)

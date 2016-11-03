@@ -176,6 +176,16 @@ namespace ManagementLayer
 
 	private slots:
 		/**
+		 * @brief Отменить последнее действие
+		 */
+		void aboutUndo();
+
+		/**
+		 * @brief Повторить последнее действие
+		 */
+		void aboutRedo();
+
+		/**
 		 * @brief Обновить хронометраж
 		 */
 		/** @{ */

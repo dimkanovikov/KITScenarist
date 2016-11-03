@@ -179,8 +179,8 @@ void ScenarioNavigatorManager::initConnections()
 	connect(m_navigator, SIGNAL(showHideDraft()), this, SIGNAL(showHideDraft()));
 	connect(m_navigator, SIGNAL(showHideNote()), this, SIGNAL(showHideNote()));
 	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutSceneChoosed(QModelIndex)));
-	connect(m_navigator, SIGNAL(undoPressed()), this, SIGNAL(undoPressed()));
-	connect(m_navigator, SIGNAL(redoPressed()), this, SIGNAL(redoPressed()));
+	connect(m_navigator, SIGNAL(undoRequest()), this, SIGNAL(undoRequest()));
+	connect(m_navigator, SIGNAL(redoRequest()), this, SIGNAL(redoRequest()));
 }
 
 void ScenarioNavigatorManager::connectModel()

@@ -89,16 +89,6 @@ namespace ManagementLayer
 		 */
 		void removeScenarioText(int _from, int _to);
 
-		/**
-		 * @brief Отменить последнее действие
-		 */
-		void aboutUndo();
-
-		/**
-		 * @brief Повторить последнее действие
-		 */
-		void aboutRedo();
-
 	signals:
 		/**
 		 * @brief Изменился текст сценария
@@ -113,12 +103,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Запрос отмены действия
 		 */
-		void undoPressed();
+		void undoRequest();
 
 		/**
 		 * @brief Запрос повтора действия
 		 */
-		void redoPressed();
+		void redoRequest();
 
 		/**
 		 * @brief Изменился режим отображения сценария

@@ -453,16 +453,6 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
 	}
 }
 
-void ScenarioTextEditWidget::aboutUndo()
-{
-	m_editor->undoReimpl();
-}
-
-void ScenarioTextEditWidget::aboutRedo()
-{
-	m_editor->redoReimpl();
-}
-
 void ScenarioTextEditWidget::aboutShowSearch()
 {
 	m_searchLine->setVisible(m_search->isChecked());
@@ -685,8 +675,8 @@ void ScenarioTextEditWidget::updateStylesCombo()
 void ScenarioTextEditWidget::initConnections()
 {
 	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
-	connect(m_undo, SIGNAL(clicked()), this, SLOT(aboutUndo()));
-	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()));
+	connect(m_undo, &FlatButton::clicked, this, &ScenarioTextEditWidget::undoRequest);
+	connect(m_redo, &FlatButton::clicked, this, &ScenarioTextEditWidget::redoRequest);
 	connect(m_search, &FlatButton::toggled, [=] (bool _toggle) {
 		//
 		// Если поиск виден, но в нём нет фокуса - установим фокус в него
@@ -703,8 +693,8 @@ void ScenarioTextEditWidget::initConnections()
 	connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
 			[=] { m_editorWrapper->setFocus(); });
 	connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
-	connect(m_reviewView, SIGNAL(undoPressed()), this, SLOT(aboutUndo()));
-	connect(m_reviewView, SIGNAL(redoPressed()), this, SLOT(aboutRedo()));
+	connect(m_reviewView, &ScenarioReviewView::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
+	connect(m_reviewView, &ScenarioReviewView::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
 
 	initEditorConnections();
 }
@@ -712,6 +702,8 @@ void ScenarioTextEditWidget::initConnections()
 void ScenarioTextEditWidget::initEditorConnections()
 {
 	connect(m_outline, &FlatButton::toggled, this, &ScenarioTextEditWidget::updateTextMode);
+	connect(m_editor, &ScenarioTextEdit::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
+	connect(m_editor, &ScenarioTextEdit::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
 	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
@@ -726,6 +718,8 @@ void ScenarioTextEditWidget::initEditorConnections()
 void ScenarioTextEditWidget::removeEditorConnections()
 {
 	disconnect(m_outline, &FlatButton::toggled, this, &ScenarioTextEditWidget::updateTextMode);
+	disconnect(m_editor, &ScenarioTextEdit::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
+	disconnect(m_editor, &ScenarioTextEdit::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
 	disconnect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));

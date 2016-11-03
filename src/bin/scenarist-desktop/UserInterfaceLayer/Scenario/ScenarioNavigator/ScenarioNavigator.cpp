@@ -150,9 +150,9 @@ bool ScenarioNavigator::eventFilter(QObject* _watched, QEvent* _event)
 				|| keyCharacter == "z"
 				|| keyCharacter == QString::fromUtf8("я"))) {
 			if (keyEvent->modifiers().testFlag(Qt::ShiftModifier)) {
-				emit redoPressed();
+				emit redoRequest();
 			} else {
-				emit undoPressed();
+				emit undoRequest();
 			}
 			isEventFiltered = true;
 		}

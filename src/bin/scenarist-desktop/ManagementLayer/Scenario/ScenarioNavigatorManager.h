@@ -101,12 +101,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Запрос отмены действия
 		 */
-		void undoPressed();
+		void undoRequest();
 
 		/**
 		 * @brief Запрос повтора действия
 		 */
-		void redoPressed();
+		void redoRequest();
 
 	private slots:
 		/**

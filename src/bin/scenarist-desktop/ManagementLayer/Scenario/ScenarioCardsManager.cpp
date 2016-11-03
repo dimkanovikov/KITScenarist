@@ -60,6 +60,11 @@ QString ScenarioCardsManager::save() const
 	return m_view->save();
 }
 
+void ScenarioCardsManager::saveChanges(bool _hasChangesInText)
+{
+	m_view->saveChanges(_hasChangesInText);
+}
+
 void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QString& _xml)
 {
 	//
@@ -145,6 +150,16 @@ void ScenarioCardsManager::clear()
 		m_model = nullptr;
 	}
 	m_view->clear();
+}
+
+void ScenarioCardsManager::undo()
+{
+	m_view->undo();
+}
+
+void ScenarioCardsManager::redo()
+{
+	m_view->redo();
 }
 
 void ScenarioCardsManager::setCommentOnly(bool _isCommentOnly)
@@ -322,6 +337,9 @@ void ScenarioCardsManager::editFlowText(const QString& _text)
 
 void ScenarioCardsManager::initConnections()
 {
+	connect(m_view, &ScenarioCardsView::undoRequest, this, &ScenarioCardsManager::undoRequest);
+	connect(m_view, &ScenarioCardsView::redoRequest, this, &ScenarioCardsManager::redoRequest);
+
 	connect(m_view, &ScenarioCardsView::addCardClicked, this, &ScenarioCardsManager::addCard);
 	connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
 	connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);

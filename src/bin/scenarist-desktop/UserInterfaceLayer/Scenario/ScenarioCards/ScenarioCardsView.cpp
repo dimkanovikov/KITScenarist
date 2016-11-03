@@ -9,6 +9,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMenu>
+#include <QShortcut>
 #include <QVariant>
 #include <QWidgetAction>
 
@@ -30,12 +31,23 @@ ScenarioCardsView::ScenarioCardsView(QWidget* _parent) :
 {
 	initView();
 	initConnections();
+	initShortcuts();
 	initStyleSheet();
 }
 
 void ScenarioCardsView::clear()
 {
 	m_cardsEdit->clear();
+}
+
+void ScenarioCardsView::undo()
+{
+	m_cardsEdit->undo();
+}
+
+void ScenarioCardsView::redo()
+{
+	m_cardsEdit->redo();
 }
 
 void ScenarioCardsView::setUseCorkboardBackground(bool _use)
@@ -51,11 +63,17 @@ void ScenarioCardsView::setBackgroundColor(const QColor& _color)
 void ScenarioCardsView::load(const QString& _xml)
 {
 	m_cardsEdit->load(_xml);
+	m_cardsEdit->saveChanges(true);
 }
 
 QString ScenarioCardsView::save() const
 {
 	return m_cardsEdit->save();
+}
+
+void ScenarioCardsView::saveChanges(bool _hasChangesInText)
+{
+	m_cardsEdit->saveChanges(_hasChangesInText);
 }
 
 void ScenarioCardsView::addCard(const QString& _uuid, int _cardType, const QString& _title,
@@ -157,7 +175,6 @@ void ScenarioCardsView::initView()
 	m_fullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
 		QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
 	m_fullscreen->setToolTip(tr("On/off fullscreen mode (F5)"));
-	m_fullscreen->setShortcut(Qt::Key_F5);
 	m_fullscreen->setCheckable(true);
 
 	m_toolbarSpacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -207,6 +224,48 @@ void ScenarioCardsView::initConnections()
 	connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);
 
 	connect(m_fullscreen, &FlatButton::clicked, this, &ScenarioCardsView::fullscreenRequest);
+}
+
+void ScenarioCardsView::initShortcuts()
+{
+	QShortcut* undo = new QShortcut(QKeySequence::Undo, this);
+	undo->setContext(Qt::WidgetWithChildrenShortcut);
+	connect(undo, &QShortcut::activated, [=] {
+		//
+		// Если отмену необходимо синхронизировать с текстом, уведомляем об этом
+		//
+		if (m_cardsEdit->needSyncUndo()) {
+			emit undoRequest();
+		}
+		//
+		// А если синхронизировать не нужно, просто отменяем последнее изменение
+		//
+		else {
+			m_cardsEdit->saveChanges(false);
+			m_cardsEdit->undo();
+		}
+	});
+
+	QShortcut* redo = new QShortcut(QKeySequence::Redo, this);
+	redo->setContext(Qt::WidgetWithChildrenShortcut);
+	connect(redo, &QShortcut::activated, [=] {
+		//
+		// Если повтор необходимо синхронизировать с текстом, уведомляем об этом
+		//
+		if (m_cardsEdit->needSyncRedo()) {
+			emit redoRequest();
+		}
+		//
+		// А если синхронизировать не нужно, просто повторяем последнее изменение
+		//
+		else {
+			m_cardsEdit->redo();
+		}
+	});
+
+	QShortcut* fullscreen = new QShortcut(Qt::Key_F5, this);
+	fullscreen->setContext(Qt::WidgetWithChildrenShortcut);
+	connect(fullscreen, &QShortcut::activated, m_fullscreen, &FlatButton::click);
 }
 
 void ScenarioCardsView::initStyleSheet()

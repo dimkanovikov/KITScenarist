@@ -35,9 +35,19 @@ public:
 	void clear();
 
 	/**
+	 * @brief Нужно ли синхрозировать отмену действия с текстом
+	 */
+	bool needSyncUndo() const;
+
+	/**
 	 * @brief Отменить последнее действие
 	 */
 	void undo();
+
+	/**
+	 * @brief Нужно ли синхрозировать повтор действия с текстом
+	 */
+	bool needSyncRedo() const;
 
 	/**
 	 * @brief Повторить последнее действие
@@ -48,6 +58,11 @@ public:
 	 * @brief Сохранить схему в XML-строку
 	 */
 	QString save() const;
+
+	/**
+	 * @brief Сохранить изменения схемы
+	 */
+	void saveChanges(bool _hasChangesInText);
 
 	/**
 	 * @brief Загрузить схему из XMl-строки

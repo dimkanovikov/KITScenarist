@@ -196,16 +196,6 @@ void ScenarioTextEditManager::removeScenarioText(int _from, int _to)
 	m_view->removeText(_from, _to);
 }
 
-void ScenarioTextEditManager::aboutUndo()
-{
-	m_view->aboutUndo();
-}
-
-void ScenarioTextEditManager::aboutRedo()
-{
-	m_view->aboutRedo();
-}
-
 void ScenarioTextEditManager::aboutTextEditZoomRangeChanged(qreal _zoomRange)
 {
 	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
@@ -221,6 +211,8 @@ void ScenarioTextEditManager::initView()
 
 void ScenarioTextEditManager::initConnections()
 {
+	connect(m_view, &ScenarioTextEditWidget::undoRequest, this, &ScenarioTextEditManager::undoRequest);
+	connect(m_view, &ScenarioTextEditWidget::redoRequest, this, &ScenarioTextEditManager::redoRequest);
 	connect(m_view, &ScenarioTextEditWidget::textModeChanged, this, &ScenarioTextEditManager::textModeChanged);
 	connect(m_view, &ScenarioTextEditWidget::textChanged, this, &ScenarioTextEditManager::textChanged);
 	connect(m_view, &ScenarioTextEditWidget::cursorPositionChanged, this, &ScenarioTextEditManager::cursorPositionChanged);

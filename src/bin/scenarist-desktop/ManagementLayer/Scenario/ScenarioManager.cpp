@@ -623,6 +623,19 @@ void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bo
 	}
 }
 
+void ScenarioManager::aboutUndo()
+{
+	aboutSaveScenarioChanges();
+	workingScenario()->document()->undoReimpl();
+	m_cardsManager->undo();
+}
+
+void ScenarioManager::aboutRedo()
+{
+	workingScenario()->document()->redoReimpl();
+	m_cardsManager->redo();
+}
+
 void ScenarioManager::aboutRefreshDuration(int _cursorPosition)
 {
 	if (BusinessLogic::ChronometerFacade::chronometryUsed()) {
@@ -814,15 +827,25 @@ void ScenarioManager::aboutShowHideNote()
 
 void ScenarioManager::aboutSaveScenarioChanges()
 {
+	//
+	// Сохраняем изменения сценария
+	//
 	Domain::ScenarioChange* change = m_scenario->document()->saveChanges();
-	if (change != 0) {
+	if (change != nullptr) {
 		change->setIsDraft(false);
 	}
-
+	//
+	// ... и черновика
+	//
 	Domain::ScenarioChange* changeDraft = m_scenarioDraft->document()->saveChanges();
-	if (changeDraft != 0) {
+	if (changeDraft != nullptr) {
 		changeDraft->setIsDraft(true);
 	}
+
+	//
+	// Сохраняем изменения в карточках
+	//
+	m_cardsManager->saveChanges(change != nullptr);
 
 #ifdef Q_OS_MAC
 	//
@@ -925,6 +948,8 @@ void ScenarioManager::initConnections()
 	});
 	connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
 	connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
+	connect(m_cardsManager, &ScenarioCardsManager::undoRequest, this, &ScenarioManager::aboutUndo);
+	connect(m_cardsManager, &ScenarioCardsManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
 	connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
@@ -933,16 +958,16 @@ void ScenarioManager::initConnections()
 	connect(m_navigatorManager, SIGNAL(showHideNote()), this, SLOT(aboutShowHideNote()));
 	connect(m_navigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
 	connect(m_navigatorManager, SIGNAL(sceneChoosed(int)), this, SLOT(aboutMoveCursorToItem(int)));
-	connect(m_navigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
-	connect(m_navigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
+	connect(m_navigatorManager, &ScenarioNavigatorManager::undoRequest, this, &ScenarioManager::aboutUndo);
+	connect(m_navigatorManager, &ScenarioNavigatorManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
 	connect(m_draftNavigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
 	connect(m_draftNavigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
 	connect(m_draftNavigatorManager, SIGNAL(setItemColors(QModelIndex,QString)), this, SLOT(aboutSetItemColors(QModelIndex,QString)));
 	connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutMoveCursorToItem(QModelIndex)));
 	connect(m_draftNavigatorManager, SIGNAL(sceneChoosed(int)), this, SLOT(aboutMoveCursorToItem(int)));
-	connect(m_draftNavigatorManager, SIGNAL(undoPressed()), m_textEditManager, SLOT(aboutUndo()));
-	connect(m_draftNavigatorManager, SIGNAL(redoPressed()), m_textEditManager, SLOT(aboutRedo()));
+	connect(m_draftNavigatorManager, &ScenarioNavigatorManager::undoRequest, this, &ScenarioManager::aboutUndo);
+	connect(m_draftNavigatorManager, &ScenarioNavigatorManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
 	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::aboutUpdateCurrentSceneTitle);
 	connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::aboutUpdateCurrentSceneDescription);
@@ -952,6 +977,8 @@ void ScenarioManager::initConnections()
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCurrentSceneTitleAndDescription(int)));
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutSelectItemInNavigator(int)), Qt::QueuedConnection);
 	connect(m_textEditManager, SIGNAL(cursorPositionChanged(int)), this, SLOT(aboutUpdateCounters()));
+	connect(m_textEditManager, &ScenarioTextEditManager::undoRequest, this, &ScenarioManager::aboutUndo);
+	connect(m_textEditManager, &ScenarioTextEditManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
 	connect(&m_saveChangesTimer, SIGNAL(timeout()), this, SLOT(aboutSaveScenarioChanges()));
 

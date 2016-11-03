@@ -412,11 +412,11 @@ QMenu* ScenarioTextEdit::createContextMenu(const QPoint& _pos, QWidget* _parent)
 	foreach (QAction* menuAction, menu->findChildren<QAction*>()) {
 		if (menuAction->text().endsWith(QKeySequence(QKeySequence::Undo).toString(QKeySequence::NativeText))) {
 			menuAction->disconnect();
-			connect(menuAction, SIGNAL(triggered()), this, SLOT(undoReimpl()));
+			connect(menuAction, &QAction::triggered, this, &ScenarioTextEdit::undoRequest);
 			menuAction->setEnabled(m_document->isUndoAvailableReimpl());
 		} else if (menuAction->text().endsWith(QKeySequence(QKeySequence::Redo).toString(QKeySequence::NativeText))) {
 			menuAction->disconnect();
-			connect(menuAction, SIGNAL(triggered()), this, SLOT(redoReimpl()));
+			connect(menuAction, &QAction::triggered, this, &ScenarioTextEdit::redoRequest);
 			menuAction->setEnabled(m_document->isRedoAvailableReimpl());
 		}
 	}
@@ -469,16 +469,6 @@ void ScenarioTextEdit::setAdditionalCursors(const QMap<QString, int>& _cursors)
 	}
 }
 
-void ScenarioTextEdit::undoReimpl()
-{
-	m_document->undoReimpl();
-}
-
-void ScenarioTextEdit::redoReimpl()
-{
-	m_document->redoReimpl();
-}
-
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 {
 	//
@@ -496,10 +486,10 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	if (_event == QKeySequence::Undo
 		|| _event == QKeySequence::Redo) {
 		if (_event == QKeySequence::Undo) {
-			undoReimpl();
+			emit undoRequest();
 		}
 		else if (_event == QKeySequence::Redo) {
-			redoReimpl();
+			emit redoRequest();
 		}
 		_event->accept();
 		return;
