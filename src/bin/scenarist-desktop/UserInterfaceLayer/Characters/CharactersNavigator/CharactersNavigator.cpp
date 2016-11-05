@@ -22,7 +22,7 @@ CharactersNavigator::CharactersNavigator(QWidget *parent) :
 	m_addCharacter(new FlatButton(this)),
 	m_removeCharacter(new FlatButton(this)),
 	m_mergeCharacters(new FlatButton(this)),
-    m_refreshCharacters(new FlatButton(this)),
+	m_refreshCharacters(new FlatButton(this)),
 	m_navigator(new QListView(this)),
 	m_navigatorProxyModel(new QSortFilterProxyModel(m_navigator))
 {
@@ -107,18 +107,18 @@ void CharactersNavigator::initView()
 	setFocusProxy(m_navigator);
 
 	m_title = new QLabel(tr("Characters"), this);
-    m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	m_title->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	m_addCharacter->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
-    m_addCharacter->setShortcut(QKeySequence::New);
-    m_addCharacter->setToolTip(
-            QString("%1 (%2)")
-                .arg(tr("Create New Character"))
-                .arg(m_addCharacter->shortcut().toString(QKeySequence::NativeText)));
+	m_addCharacter->setShortcut(QKeySequence::New);
+	m_addCharacter->setToolTip(
+			QString("%1 (%2)")
+				.arg(tr("Create New Character"))
+				.arg(m_addCharacter->shortcut().toString(QKeySequence::NativeText)));
 
 	m_removeCharacter->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
-    m_removeCharacter->setShortcut(QKeySequence("Delete"));
-    m_removeCharacter->setToolTip(tr("Remove Selected Character") + " (Del)");
+	m_removeCharacter->setShortcut(QKeySequence("Delete"));
+	m_removeCharacter->setToolTip(tr("Remove Selected Character") + " (Del)");
 
 	m_mergeCharacters->setIcons(QIcon(":/Graphics/Icons/Editing/merge.png"));
 	m_mergeCharacters->setToolTip(tr("Merge Selected Characters"));
@@ -141,7 +141,7 @@ void CharactersNavigator::initView()
 	topLayout->addWidget(m_addCharacter);
 	topLayout->addWidget(m_removeCharacter);
 	topLayout->addWidget(m_mergeCharacters);
-    topLayout->addWidget(m_refreshCharacters);
+	topLayout->addWidget(m_refreshCharacters);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->setContentsMargins(QMargins());
@@ -156,15 +156,15 @@ void CharactersNavigator::initConnections()
 {
 	connect(m_addCharacter, SIGNAL(clicked()), this, SIGNAL(addCharacter()));
 	connect(m_removeCharacter, SIGNAL(clicked()), this, SLOT(aboutRemoveCharacters()));
-    QShortcut* removeCharacterShortcut = new QShortcut(QKeySequence("Backspace"), m_navigator);
-    connect(removeCharacterShortcut, &QShortcut::activated, m_removeCharacter, &FlatButton::click);
+	QShortcut* removeCharacterShortcut = new QShortcut(QKeySequence("Backspace"), m_navigator);
+	connect(removeCharacterShortcut, &QShortcut::activated, m_removeCharacter, &FlatButton::click);
 	connect(m_refreshCharacters, SIGNAL(clicked()), this, SIGNAL(refreshCharacters()));
 }
 
 void CharactersNavigator::initStyleSheet()
 {
 	m_title->setProperty("inTopPanel", true);
-    m_title->setProperty("topPanelTopBordered", true);
+	m_title->setProperty("topPanelTopBordered", true);
 
 	m_addCharacter->setProperty("inTopPanel", true);
 	m_removeCharacter->setProperty("inTopPanel", true);

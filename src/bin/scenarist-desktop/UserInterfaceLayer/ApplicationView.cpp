@@ -11,16 +11,6 @@
 
 using UserInterface::ApplicationView;
 
-namespace {
-	static UIConfigurator* s_uiConfigurator = nullptr;
-	static UIConfigurator* uiConfigurator(QWidget* _parent) {
-		if (s_uiConfigurator == nullptr) {
-			s_uiConfigurator = new UIConfigurator(_parent);
-		}
-		return s_uiConfigurator;
-	}
-}
-
 
 ApplicationView::ApplicationView(QWidget *_parent) :
 	QWidget(_parent, Qt::Window)
@@ -28,10 +18,11 @@ ApplicationView::ApplicationView(QWidget *_parent) :
 	setWindowIcon(QIcon(":/Graphics/Icons/logo.png"));
 	setWindowTitle(tr("KIT Scenarist"));
 
+#ifndef Q_OS_WIN
+	static UIConfigurator* s_uiConfigurator = new UIConfigurator(this);
 	QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+Shift+Esc"), this);
-	connect(shortcut, &QShortcut::activated, [=] {
-		::uiConfigurator(this)->show();
-	});
+	connect(shortcut, &QShortcut::activated, s_uiConfigurator, &UIConfigurator::show);
+#endif
 }
 
 void ApplicationView::initSplittersRightClick()
