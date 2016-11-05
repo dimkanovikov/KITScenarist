@@ -148,7 +148,7 @@ void SynchronizationManagerV2::signUp(const QString& _email, const QString& _pas
     //
     // Успешно ли завершилась авторизация
     //
-    if(!checkSuccess(responseReader)) {
+    if(!isOperationSucceed(responseReader)) {
         return;
     }
 
@@ -179,7 +179,7 @@ void SynchronizationManagerV2::signUp(const QString& _email, const QString& _pas
     emit signUped();
 }
 
-void SynchronizationManagerV2::verification(const QString& _code)
+void SynchronizationManagerV2::verify(const QString& _code)
 {
     //
     // FIXME: Поменять в рабочей версии
@@ -214,7 +214,7 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     //
     // Успешно ли завершилась авторизация
     //
-    if(!checkSuccess(responseReader)) {
+    if(!isOperationSucceed(responseReader)) {
         return;
     }
 
@@ -241,7 +241,7 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     emit restoredPassword();
 }
 
-bool SynchronizationManagerV2::checkSuccess(QXmlStreamReader& _responseReader)
+bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseReader)
 {
     while (!_responseReader.atEnd()) {
         _responseReader.readNext();

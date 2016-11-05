@@ -77,12 +77,12 @@ namespace UserInterface
         /**
          * @brief Установить текст для виджета проверочного кода
          */
-        void showVerification();
+        void showVerificationSuccess();
 
         /**
          * @brief Установить текст для виджета восстановления пароля
          */
-        void showRestore();
+        void showRestoreSuccess();
 
         /**
          * @brief Показать окно, предварительно очистив
@@ -94,22 +94,22 @@ namespace UserInterface
         /**
          * @brief Пользователь хочет зарегистрироваться
          */
-        void signUp();
+        void signUpRequested();
 
         /**
          * @brief Пользователь хочет авторизоваться
          */
-        void login();
+        void loginRequested();
 
         /**
          * @brief Пользователь хочет отправить проверочный код
          */
-        void verify();
+        void verifyRequested();
 
         /**
          * @brief Пользователь хочет восстановить пароль
          */
-        void restore();
+        void restoreRequested();
 
 	protected:
 		/**
@@ -126,7 +126,7 @@ namespace UserInterface
         /**
          * @brief Проверка, что проверочный код удовлетворяет шаблону проверочных кодов
          */
-        void checkCode();
+        void checkVerificationCode();
 
         /**
          * @brief Убрать окно ввода проверочного кода и показывать вместо него окно регистрации
@@ -152,7 +152,7 @@ namespace UserInterface
          * @brief Пользователь нажал Enter
          *        В зависимости от окна, сделать нужный сигнал
          */
-        void needAccept();
+        void emitAccept();
 
 	private:
 		/**
@@ -169,6 +169,12 @@ namespace UserInterface
          * @brief Очистить окно
          */
         void clear();
+
+        /**
+         * @brief Установить текст для метки
+         */
+        void updateLabel(QLabel* _label,
+                           const QString& _message, bool _isError);
 
 	private:
         Ui::LoginDialog *m_ui;

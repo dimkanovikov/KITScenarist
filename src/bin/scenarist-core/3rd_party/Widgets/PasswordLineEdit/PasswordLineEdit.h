@@ -1,5 +1,4 @@
 /*
-* Copyright (C) 2014 Dimka Novikov, to@dimkanovikov.pro
 * Copyright (C) 2016 Alexey Polushkin, armijo38@yandex.ru
 *
 * This library is free software; you can redistribute it and/or

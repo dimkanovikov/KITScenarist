@@ -800,7 +800,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			//
 			// Имитируем успешную авторизацию
 			//
-			m_startUpManager->userLogged();
+			m_startUpManager->completeLogin();
 			//
 			// и загружаем список доступных проектов из кэша
 			//
@@ -1393,7 +1393,7 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::signUpRequested,
             m_synchronizationManagerV2, &SynchronizationManagerV2::signUp);
     connect(m_startUpManager, &StartUpManager::verifyRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::verification);
+            m_synchronizationManagerV2, &SynchronizationManagerV2::verify);
     connect(m_startUpManager, &StartUpManager::restoreRequested,
             m_synchronizationManagerV2, &SynchronizationManagerV2::restorePassword);
     connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
@@ -1460,11 +1460,11 @@ void ApplicationManager::initConnections()
 	connect(m_synchronizationManager, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
 
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted,
-            m_startUpManager, &StartUpManager::userLogged);
+            m_startUpManager, &StartUpManager::completeLogin);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::signUped,
-            m_startUpManager, &StartUpManager::userSignUp);
+            m_startUpManager, &StartUpManager::verifyUser);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::verified,
-            m_startUpManager, &StartUpManager::userVerified);
+            m_startUpManager, &StartUpManager::userAfterSignUp);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::restoredPassword,
             m_startUpManager, &StartUpManager::userPassRestored);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::syncClosedWithError,

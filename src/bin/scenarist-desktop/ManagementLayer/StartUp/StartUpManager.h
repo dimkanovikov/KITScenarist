@@ -49,18 +49,18 @@ namespace ManagementLayer
 		/**
 		 * @brief Пользователь с заданным именем успешно авторизован на сервере
 		 */
-        void userLogged();
+        void completeLogin();
 
         /**
          * @brief Пользователь успешно отправил данные для регистрации
          */
-        void userSignUp();
+        void verifyUser();
 
         /**
          * @brief Пользователь успешно ввел проверочный код
          *        и окончательно зарегистрировался
          */
-        void userVerified();
+        void userAfterSignUp();
 
         /**
          * @brief Пользователю отправлен пароль на email
@@ -70,7 +70,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Пользователь закрыл авторизацию
 		 */
-		void aboutUserUnlogged();
+        void completeLogout();
 
 		/**
 		 * @brief Установить список недавно используемых проектов
@@ -166,6 +166,11 @@ namespace ManagementLayer
 		 * @brief Настроить данные
 		 */
 		void initData();
+
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
 		/**
 		 * @brief Настроить соединения

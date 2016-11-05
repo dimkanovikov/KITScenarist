@@ -53,7 +53,7 @@ namespace ManagementLayer
         /**
          * @brief Подтверждение регистрации при помощи проверочного кода
          */
-        void verification(const QString& _code);
+        void verify(const QString& _code);
 
         /**
          * @brief Восстановление пароля
@@ -90,7 +90,7 @@ namespace ManagementLayer
         /**
          * @brief Проверка, что статус ответа - ок
          */
-        bool checkSuccess(QXmlStreamReader& _reader);
+        bool isOperationSucceed(QXmlStreamReader& _reader);
         /**
          * Обработка ошибок
          */

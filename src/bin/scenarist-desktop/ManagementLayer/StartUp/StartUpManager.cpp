@@ -49,7 +49,7 @@ StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
     m_view(new StartUpView(_parentWidget)),
     m_loginDialog(new LoginDialog(m_view))
 {
-    m_loginDialog->hide();
+    initView();
 
 	initData();
 	initConnections();
@@ -62,22 +62,22 @@ QWidget* StartUpManager::view() const
 	return m_view;
 }
 
-void StartUpManager::userLogged()
+void StartUpManager::completeLogin()
 {
     const bool isLogged = true;
     m_view->setUserLogged(isLogged, m_userName);
     m_loginDialog->hide();
 }
 
-void StartUpManager::userSignUp()
+void StartUpManager::verifyUser()
 {
     //
     // Покажем пользователю окно с вводом проверочного кода
     //
-    m_loginDialog->showVerification();
+    m_loginDialog->showVerificationSuccess();
 }
 
-void StartUpManager::userVerified()
+void StartUpManager::userAfterSignUp()
 {
     //
     // После того, как пользователь зарегистрировался, сразу выполним вход
@@ -87,10 +87,10 @@ void StartUpManager::userVerified()
 
 void StartUpManager::userPassRestored()
 {
-    m_loginDialog->showRestore();
+    m_loginDialog->showRestoreSuccess();
 }
 
-void StartUpManager::aboutUserUnlogged()
+void StartUpManager::completeLogout()
 {
     const bool isLogged = false;
     m_view->setUserLogged(isLogged);
@@ -219,6 +219,11 @@ void StartUpManager::initData()
 				);
 }
 
+void StartUpManager::initView()
+{
+    m_loginDialog->hide();
+}
+
 void StartUpManager::initConnections()
 {
     //
@@ -246,19 +251,19 @@ void StartUpManager::initConnections()
     connect(m_view, &StartUpView::refreshProjects,
             this, &StartUpManager::refreshProjectsRequested);
 
-    connect(m_loginDialog, &LoginDialog::login, [this] {
+    connect(m_loginDialog, &LoginDialog::loginRequested, [this] {
         emit loginRequested(m_loginDialog->loginEmail(),
                             m_loginDialog->loginPassword());}
     );
-    connect(m_loginDialog, &LoginDialog::signUp, [this] {
+    connect(m_loginDialog, &LoginDialog::signUpRequested, [this] {
         emit signUpRequested(m_loginDialog->signUpEmail(),
                              m_loginDialog->signUpPassword(),
                              m_loginDialog->signUpType());
     });
-    connect(m_loginDialog, &LoginDialog::verify, [this] {
+    connect(m_loginDialog, &LoginDialog::verifyRequested, [this] {
         emit verifyRequested(m_loginDialog->verificationCode());
     });
-    connect(m_loginDialog, &LoginDialog::restore, [this] {
+    connect(m_loginDialog, &LoginDialog::restoreRequested, [this] {
         emit restoreRequested(m_loginDialog->loginEmail());
     });
 }

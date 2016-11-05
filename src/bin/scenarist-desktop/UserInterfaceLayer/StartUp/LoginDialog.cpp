@@ -24,14 +24,13 @@ using UserInterface::LoginDialog;
 
 LoginDialog::LoginDialog(QWidget* _parent) :
 	QLightBoxDialog(_parent),
-    m_ui(new Ui::LoginDialog)
+    m_ui(new Ui::LoginDialog),
+    m_isVerify(false)
 {
     m_ui->setupUi(this);
 
 	initView();
-	initConnections();
-
-    m_isVerify = false;
+    initConnections();
 }
 
 LoginDialog::~LoginDialog()
@@ -79,41 +78,39 @@ QString LoginDialog::signUpType() const
 
 void LoginDialog::setLoginError(const QString& _error)
 {
-    m_ui->loginError->setStyleSheet("QLabel { color : red; }");
-    m_ui->loginError->setText(_error);
+    updateLabel(m_ui->loginError, _error, true);
     unblock();
 }
 
 void LoginDialog::setSignUpError(const QString &_error)
 {
-    m_ui->signUpError->setText(_error);
+    updateLabel(m_ui->signUpError, _error, true);
     unblock();
 }
 
 void LoginDialog::setVerificationError(const QString &_error)
 {
-    m_ui->verificationError->setStyleSheet("QLabel { color : red; }");
-    m_ui->verificationError->setText(_error);
+    updateLabel(m_ui->verificationError, _error, true);
     unblock();
 }
 
-void LoginDialog::showVerification()
+void LoginDialog::showVerificationSuccess()
 {
     m_isVerify = true;
-    m_ui->verificationError->setStyleSheet("QLabel { color : green; }");
-    m_ui->verificationError->setText(tr("your e-mail \"%1\" was sent a letter "
-                                      "with a confirmation code").arg(m_ui->signUpEmail->text()));
+    updateLabel(m_ui->verificationError,
+                tr("your e-mail \"%1\" was sent a letter with a "
+                   "confirmation code").arg(m_ui->signUpEmail->text()), false);
     m_ui->stackedWidget->setCurrentWidget(m_ui->verificationPage);
 
     unblock();
     m_ui->verificationCode->setFocus();
 }
 
-void LoginDialog::showRestore()
+void LoginDialog::showRestoreSuccess()
 {
-    m_ui->loginError->setStyleSheet("QLabel { color : green; }");
-    m_ui->loginError->setText(tr("your e-mail \"%1\" was sent a letter "
-                                      "with a password").arg(m_ui->loginEmail->text()));
+    updateLabel(m_ui->loginError, tr("your e-mail \"%1\" was sent a "
+                                       "letter with a password").arg(m_ui->loginEmail->text()),
+                  false);
     m_ui->restorePassword->hide();
 
     unblock();
@@ -136,14 +133,14 @@ QWidget* LoginDialog::titleWidget() const
     return m_ui->tabs;
 }
 
-void LoginDialog::checkCode()
+void LoginDialog::checkVerificationCode()
 {
     QRegExpValidator validator(QRegExp("[0-9]{5}"));
     QString s = m_ui->verificationCode->text();
     int pos = 0;
     if (validator.validate(s, pos) == QValidator::Acceptable) {
         block();
-        emit verify();
+        emit verifyRequested();
     }
 }
 
@@ -185,7 +182,7 @@ void LoginDialog::unblock()
     hideProgress();
 }
 
-void LoginDialog::needAccept()
+void LoginDialog::emitAccept()
 {
     //
     // Эмулируем нажатия кнопок Accept
@@ -223,20 +220,20 @@ void LoginDialog::initView()
 
 void LoginDialog::initConnections()
 {
-    connect(this, &LoginDialog::accepted, this, &LoginDialog::needAccept);
+    connect(this, &LoginDialog::accepted, this, &LoginDialog::emitAccept);
     connect(this, &LoginDialog::rejected, this, &LoginDialog::hide);
 
     connect(m_ui->loginButtons, &QDialogButtonBox::accepted,
             this, &LoginDialog::block);
     connect(m_ui->loginButtons, &QDialogButtonBox::accepted,
-            this, &LoginDialog::login);
+            this, &LoginDialog::loginRequested);
     connect(m_ui->loginButtons, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
 
     connect(m_ui->signUpButtons, &QDialogButtonBox::accepted,
             this, &LoginDialog::block);
     connect(m_ui->signUpButtons, &QDialogButtonBox::accepted,
-            this, &LoginDialog::signUp);
+            this, &LoginDialog::signUpRequested);
     connect(m_ui->signUpButtons, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
 
@@ -248,10 +245,10 @@ void LoginDialog::initConnections()
     connect(m_ui->restorePassword, &QPushButton::clicked,
             this, &LoginDialog::block);
     connect(m_ui->restorePassword, &QPushButton::clicked,
-            this, &LoginDialog::restore);
+            this, &LoginDialog::restoreRequested);
 
     connect(m_ui->verificationCode, &QLineEdit::textChanged,
-            this, &LoginDialog::checkCode);
+            this, &LoginDialog::checkVerificationCode);
 
     connect(m_ui->tabs, &TabBarExpanded::currentChanged,
             this, &LoginDialog::switchWidget);;
@@ -278,4 +275,11 @@ void LoginDialog::clear()
     m_ui->verificationError->clear();
 
     m_ui->restorePassword->show();
+}
+
+void LoginDialog::updateLabel(QLabel *_label, const QString &_message, bool _isError)
+{
+    _label->setStyleSheet(QString("QLabel { color : %1; }").arg(_isError? "red": "green"));
+    _label->setText(_message);
+
 }
