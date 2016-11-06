@@ -20,6 +20,10 @@
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
+class QLineEdit;
+class QDialogButtonBox;
+class QPushButton;
+
 namespace Ui {
 	class LoginDialog;
 }
@@ -129,6 +133,16 @@ namespace UserInterface
         void checkVerificationCode();
 
         /**
+         * @brief Проверка, что email для авторизации удовлетворяет шаблону
+         */
+        void checkLoginEmail();
+
+        /**
+         * @brief Проверка, что email для регистрации удовлетворяет шаблону
+         */
+        void checkSignUpEmail();
+
+        /**
          * @brief Убрать окно ввода проверочного кода и показывать вместо него окно регистрации
          */
         void cancelVerify();
@@ -176,6 +190,10 @@ namespace UserInterface
         void updateLabel(QLabel* _label,
                            const QString& _message, bool _isError);
 
+        /**
+         * @brief Проверят, является ли строка email
+         */
+        void isEmail(QLineEdit* _line, QPushButton* _button);
 	private:
         Ui::LoginDialog *m_ui;
 
@@ -185,6 +203,9 @@ namespace UserInterface
          *        False - окно регистрации
          */
         bool m_isVerify;
+
+        QPushButton* m_loginButton;
+        QPushButton* m_signUpButton;
 	};
 }
 

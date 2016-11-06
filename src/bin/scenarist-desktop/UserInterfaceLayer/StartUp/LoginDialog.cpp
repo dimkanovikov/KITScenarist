@@ -144,6 +144,16 @@ void LoginDialog::checkVerificationCode()
     }
 }
 
+void LoginDialog::checkLoginEmail()
+{
+    isEmail(m_ui->loginEmail, m_loginButton);
+}
+
+void LoginDialog::checkSignUpEmail()
+{
+    isEmail(m_ui->signUpEmail, m_signUpButton);
+}
+
 void LoginDialog::cancelVerify()
 {
     m_isVerify = false;
@@ -198,10 +208,12 @@ void LoginDialog::initView()
 {
 
     m_ui->loginError->clear();
-    m_ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
+    m_loginButton = m_ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
+    checkLoginEmail();
 
     m_ui->signUpError->clear();
-    m_ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
+    m_signUpButton = m_ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
+    checkSignUpEmail();
 
     m_ui->verificationError->clear();
 
@@ -249,6 +261,10 @@ void LoginDialog::initConnections()
 
     connect(m_ui->verificationCode, &QLineEdit::textChanged,
             this, &LoginDialog::checkVerificationCode);
+    connect(m_ui->loginEmail, &QLineEdit::textChanged,
+            this, &LoginDialog::checkLoginEmail);
+    connect(m_ui->signUpEmail, &QLineEdit::textChanged,
+            this, &LoginDialog::checkSignUpEmail);
 
     connect(m_ui->tabs, &TabBarExpanded::currentChanged,
             this, &LoginDialog::switchWidget);;
@@ -281,5 +297,20 @@ void LoginDialog::updateLabel(QLabel *_label, const QString &_message, bool _isE
 {
     _label->setStyleSheet(QString("QLabel { color : %1; }").arg(_isError? "red": "green"));
     _label->setText(_message);
+
+}
+
+void LoginDialog::isEmail(QLineEdit* _line, QPushButton* _button)
+{
+    QRegExpValidator validator(QRegExp(".+@.{2,}\\..{2,}"));
+    QString s = _line->text();
+    int pos = 0;
+    if (validator.validate(s, pos) != QValidator::Acceptable) {
+        _button->setEnabled(false);
+        _line->setStyleSheet("QLineEdit { background-color: rgb(255, 0, 0);}");
+    } else {
+        _button->setEnabled(true);
+        _line->setStyleSheet("QLineEdit { background-color: rgb(255, 255, 255);}");
+    }
 
 }
