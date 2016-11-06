@@ -60,6 +60,11 @@ namespace ManagementLayer
          */
         void restorePassword(const QString& _email);
 
+        /**
+         * @brief Закрыть авторизацию
+         */
+        void logout();
+
     signals:
         /**
          * @brief Авторизация пройдена успешно
@@ -80,6 +85,11 @@ namespace ManagementLayer
          * @brief Пароль отправлен на email
          */
         void restoredPassword();
+
+        /**
+         * @brief Авторизация закрыта
+         */
+        void logouted();
 
         /**
          * @brief Ошибка

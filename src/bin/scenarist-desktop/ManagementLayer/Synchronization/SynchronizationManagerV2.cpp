@@ -39,6 +39,8 @@ namespace {
     /** @{ */
     const QUrl URL_SIGNUP = QUrl("https://kitscenarist.ru/api/account/register/");
     const QUrl URL_RESTORE = QUrl("https://kitscenarist.ru/api/account/restore/");
+    const QUrl URL_LOGIN = QUrl("https://kitscenarist.ru/api/account/login/");
+    const QUrl URL_LOGOUT = QUrl("https://kitscenarist.ru/api/account/logout/");
     /** @} */
 
     /**
@@ -46,7 +48,9 @@ namespace {
      */
     /** @{ */
     const QString KEY_EMAIL = "email";
+    const QString KEY_LOGIN = "login";
     const QString KEY_PASSWORD = "password";
+    const QString KEY_SESSION_KEY = "session_key";
 
     /**
      * @brief Список кодов ошибок и соответствующих им описаний
@@ -95,40 +99,58 @@ void SynchronizationManagerV2::autoLogin()
 
 void SynchronizationManagerV2::login(const QString &_email, const QString &_password)
 {
-    //
-    // FIXME: Поменять в рабочей версии
-    //
-    bool success = false;
 
-    QEventLoop event;
-    QTimer::singleShot(2000, &event, SLOT(quit()));
-    event.exec();
+    m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->clearRequestAttributes();
+    m_loader->addRequestAttribute(KEY_LOGIN, _email);
+    m_loader->addRequestAttribute(KEY_PASSWORD, _password);
+    QByteArray response = m_loader->loadSync(URL_LOGIN);
+
     //
-    // Авторизация
+    // Считываем результат авторизации
     //
-    if ((_email == "admin" && _password == "admin")
-            || (_email == "user" && _password == "user")) { // :)
-        success = true;
-        m_sessionKey = "12345";
-    } else {
-        handleError(tr("Wrong email or password"), 100);
+    QXmlStreamReader responseReader(response);
+    //
+    // Успешно ли завершилась авторизация
+    //
+    if(!isOperationSucceed(responseReader)) {
+        return;
     }
 
-    if (success) {
-        //
-        // Если авторизация успешна, сохраним информацию о пользователе
-        //
-        StorageFacade::settingsStorage()->setValue(
-                    "application/email",
-                    _email,
-                    SettingsStorage::ApplicationSettings);
-        StorageFacade::settingsStorage()->setValue(
-                    "application/password",
-                    PasswordStorage::save(_password, _email),
-                    SettingsStorage::ApplicationSettings);
-
-        emit loginAccepted();
+    //
+    // Найдем наш ключ сессии
+    //
+    m_sessionKey.clear();
+    while (!responseReader.atEnd()) {
+        responseReader.readNext();
+        if (responseReader.name().toString() == "session_key") {
+            responseReader.readNext();
+            m_sessionKey = responseReader.text().toString();
+            break;
+        }
     }
+
+    //
+    // Не нашли ключ сессии
+    //
+    if (m_sessionKey.isEmpty()) {
+        handleError(SESSION_KEY_NOT_FOUND_STRING, SESSION_KEY_NOT_FOUND_CODE);
+        return;
+    }
+
+    //
+    // Если авторизация успешна, сохраним информацию о пользователе
+    //
+    StorageFacade::settingsStorage()->setValue(
+                "application/email",
+                _email,
+                SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
+                "application/password",
+                PasswordStorage::save(_password, _email),
+                SettingsStorage::ApplicationSettings);
+
+    emit loginAccepted();
 
 }
 
@@ -239,6 +261,40 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     // Если успешно отправили письмо
     //
     emit restoredPassword();
+}
+
+void SynchronizationManagerV2::logout()
+{
+    QByteArray response;
+    if (!m_sessionKey.isEmpty()) {
+        m_loader->setRequestMethod(WebLoader::Post);
+        m_loader->clearRequestAttributes();
+        m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+        response = m_loader->loadSync(URL_LOGOUT);
+    }
+
+    m_sessionKey.clear();
+
+    //
+    // Удаляем сохраненные значения, если они были
+    //
+    StorageFacade::settingsStorage()->setValue(
+                "application/email",
+                QString::null,
+                SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
+                "application/password",
+                QString::null,
+                SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
+                "application/remote-projects",
+                QString::null,
+                SettingsStorage::ApplicationSettings);
+
+    //
+    // Если деавторизация прошла
+    //
+    emit logouted();
 }
 
 bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseReader)

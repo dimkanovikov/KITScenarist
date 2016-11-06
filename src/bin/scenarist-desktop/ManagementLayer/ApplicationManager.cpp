@@ -1396,6 +1396,8 @@ void ApplicationManager::initConnections()
             m_synchronizationManagerV2, &SynchronizationManagerV2::verify);
     connect(m_startUpManager, &StartUpManager::restoreRequested,
             m_synchronizationManagerV2, &SynchronizationManagerV2::restorePassword);
+    connect(m_startUpManager, &StartUpManager::logoutRequested,
+            m_synchronizationManagerV2, &SynchronizationManagerV2::logout);
     connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
@@ -1443,8 +1445,6 @@ void ApplicationManager::initConnections()
 	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
-	connect(m_synchronizationManager, SIGNAL(loginAccepted()),
-            m_startUpManager, SLOT(userLogged()));
 	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
 			this, SLOT(aboutUserUnlogged()));
 	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
@@ -1467,6 +1467,8 @@ void ApplicationManager::initConnections()
             m_startUpManager, &StartUpManager::userAfterSignUp);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::restoredPassword,
             m_startUpManager, &StartUpManager::userPassRestored);
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logouted,
+            m_startUpManager, &StartUpManager::completeLogout);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::syncClosedWithError,
             this, &ApplicationManager::aboutSyncClosedWithError);
 }
