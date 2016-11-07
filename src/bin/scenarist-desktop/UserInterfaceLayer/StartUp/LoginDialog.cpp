@@ -22,6 +22,13 @@
 
 using UserInterface::LoginDialog;
 
+namespace {
+    /**
+     * @brief Размер иконки
+     */
+    const QSize ICON_PIXMAP_SIZE(12, 12);
+}
+
 LoginDialog::LoginDialog(QWidget* _parent) :
 	QLightBoxDialog(_parent),
     m_ui(new Ui::LoginDialog),
@@ -131,14 +138,18 @@ void LoginDialog::checkVerificationCode()
     }
 }
 
-void LoginDialog::checkLoginEmail()
+void LoginDialog::loginAcceptButton()
 {
-    isEmail(m_ui->loginEmail, m_loginButton);
+    if (abstractAcceptButton(m_ui->loginEmail, m_ui->loginError)) {
+        emit loginRequested();
+    }
 }
 
-void LoginDialog::checkSignUpEmail()
+void LoginDialog::signUpAcceptButton()
 {
-    isEmail(m_ui->signUpEmail, m_signUpButton);
+    if (abstractAcceptButton(m_ui->signUpEmail, m_ui->signUpError)) {
+        emit signUpRequested();
+    }
 }
 
 void LoginDialog::cancelVerify()
@@ -196,11 +207,9 @@ void LoginDialog::initView()
 
     m_ui->loginError->clear();
     m_loginButton = m_ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
-    checkLoginEmail();
 
     m_ui->signUpError->clear();
     m_signUpButton = m_ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
-    checkSignUpEmail();
 
     m_ui->verificationError->clear();
 
@@ -223,16 +232,11 @@ void LoginDialog::initConnections()
     connect(this, &LoginDialog::rejected, this, &LoginDialog::hide);
 
     connect(m_ui->loginButtons, &QDialogButtonBox::accepted,
-            this, &LoginDialog::block);
+            this, &LoginDialog::loginAcceptButton);
     connect(m_ui->loginButtons, &QDialogButtonBox::accepted,
-            this, &LoginDialog::loginRequested);
+            this, &LoginDialog::signUpAcceptButton);
     connect(m_ui->loginButtons, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
-
-    connect(m_ui->signUpButtons, &QDialogButtonBox::accepted,
-            this, &LoginDialog::block);
-    connect(m_ui->signUpButtons, &QDialogButtonBox::accepted,
-            this, &LoginDialog::signUpRequested);
     connect(m_ui->signUpButtons, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
 
@@ -248,10 +252,6 @@ void LoginDialog::initConnections()
 
     connect(m_ui->verificationCode, &QLineEdit::textChanged,
             this, &LoginDialog::checkVerificationCode);
-    connect(m_ui->loginEmail, &QLineEdit::textChanged,
-            this, &LoginDialog::checkLoginEmail);
-    connect(m_ui->signUpEmail, &QLineEdit::textChanged,
-            this, &LoginDialog::checkSignUpEmail);
 
     connect(m_ui->tabs, &TabBarExpanded::currentChanged,
             this, &LoginDialog::switchWidget);;
@@ -281,22 +281,40 @@ void LoginDialog::clear()
 
 void LoginDialog::updateLabel(QLabel *_label, const QString &_message, bool _isError)
 {
-    _label->setStyleSheet(QString("QLabel { color : %1; }").arg(_isError? "red": "green"));
     _label->setText(_message);
+    _label->setPixmap(_label->style()->
+                      standardIcon(_isError? QStyle::SP_MessageBoxCritical
+                                           : QStyle::SP_MessageBoxInformation).
+                      pixmap(ICON_PIXMAP_SIZE));
 
 }
 
-void LoginDialog::isEmail(QLineEdit* _line, QPushButton* _button)
+bool LoginDialog::abstractAcceptButton(QLineEdit *_line, QLabel *_label)
 {
-    QRegExpValidator validator(QRegExp(".+@.{2,}\\..{2,}"));
-    QString s = _line->text();
-    int pos = 0;
-    if (validator.validate(s, pos) != QValidator::Acceptable) {
-        _button->setEnabled(false);
-        _line->setStyleSheet("QLineEdit { background-color: rgb(255, 0, 0);}");
+    if (checkEmailValidy(_line->text())) {
+        _label->clear();
+        block();
+        return true;
     } else {
-        _button->setEnabled(true);
-        _line->setStyleSheet("QLineEdit { background-color: rgb(255, 255, 255);}");
+        updateLabel(_label, tr("Email is invalid"), true);
+        return false;
+    }
+}
+
+bool LoginDialog::checkEmailValidy(const QString& _email)
+{
+    //
+    // Для валидатора нужна неконстантная ссылка,
+    // поэтому копируем
+    //
+    QString toCheck = _email;
+
+    QRegExpValidator validator(QRegExp(".+@.{2,}\\..{2,}"));
+    int pos = 0;
+    if (validator.validate(toCheck, pos) != QValidator::Acceptable) {
+        return false;
+    } else {
+        return true;
     }
 
 }

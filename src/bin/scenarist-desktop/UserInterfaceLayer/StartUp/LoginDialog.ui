@@ -49,43 +49,6 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="loginError">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="baseSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 0, 0);</string>
-         </property>
-         <property name="text">
-          <string>Error &amp;message</string>
-         </property>
-         <property name="buddy">
-          <cstring>loginEmail</cstring>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="loginEmailLabel">
          <property name="text">
           <string>&amp;Email</string>
@@ -117,6 +80,49 @@
        </item>
        <item>
         <widget class="PasswordLineEdit" name="loginPasswordEdit"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="loginError">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Error &amp;message</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="buddy">
+          <cstring>loginEmail</cstring>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_3">
@@ -179,25 +185,6 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="signUpError">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 0, 0);</string>
-         </property>
-         <property name="text">
-          <string>Error &amp;message</string>
-         </property>
-         <property name="buddy">
-          <cstring>loginEmail</cstring>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="signUpEmailLabel">
          <property name="text">
           <string>&amp;Email</string>
@@ -222,6 +209,31 @@
        </item>
        <item>
         <widget class="PasswordLineEdit" name="signUpPasswordEdit"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="signUpError">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Error &amp;message</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="buddy">
+          <cstring>loginEmail</cstring>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
@@ -271,7 +283,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,0,0">
        <property name="spacing">
-        <number>-1</number>
+        <number>6</number>
        </property>
        <property name="sizeConstraint">
         <enum>QLayout::SetMaximumSize</enum>
@@ -289,28 +301,6 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="verificationError">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 0, 0);</string>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Error &lt;/p&gt;&lt;p&gt;&amp;amp;message&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-         <property name="buddy">
-          <cstring>loginEmail</cstring>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="label_7">
          <property name="text">
           <string>&amp;Verification code</string>
@@ -322,6 +312,31 @@
        </item>
        <item>
         <widget class="QLineEdit" name="verificationCode"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="verificationError">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Error &lt;/p&gt;&lt;p&gt;&amp;amp;message&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="buddy">
+          <cstring>loginEmail</cstring>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">
