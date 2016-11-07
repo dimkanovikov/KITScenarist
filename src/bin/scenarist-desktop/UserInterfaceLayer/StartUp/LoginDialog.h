@@ -66,11 +66,6 @@ namespace UserInterface
          */
         QString verificationCode() const;
 
-        /**
-         * @brief Тип аккаунта
-         */
-        QString signUpType() const;
-
 		/**
 		 * @brief Установить сообщение об ошибке
 		 */

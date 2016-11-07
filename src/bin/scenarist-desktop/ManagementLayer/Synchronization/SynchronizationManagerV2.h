@@ -47,8 +47,7 @@ namespace ManagementLayer
         /**
          * @brief Регистрация на сервере
          */
-        void signUp(const QString& _email, const QString& _password,
-                          const QString& _type);
+        void signUp(const QString& _email, const QString& _password);
 
         /**
          * @brief Подтверждение регистрации при помощи проверочного кода

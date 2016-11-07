@@ -154,8 +154,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 
 }
 
-void SynchronizationManagerV2::signUp(const QString& _email, const QString& _password,
-                                            const QString& _type)
+void SynchronizationManagerV2::signUp(const QString& _email, const QString& _password)
 {
     m_loader->setRequestMethod(WebLoader::Post);
     m_loader->clearRequestAttributes();

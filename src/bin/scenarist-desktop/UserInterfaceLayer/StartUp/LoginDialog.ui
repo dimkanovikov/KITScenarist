@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
-    <height>315</height>
+    <width>442</width>
+    <height>317</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -96,7 +96,14 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="loginEmail"/>
+        <widget class="QLineEdit" name="loginEmail">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="loginPasswordLabel">
@@ -217,67 +224,6 @@
         <widget class="PasswordLineEdit" name="signUpPasswordEdit"/>
        </item>
        <item>
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Type of account</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QRadioButton" name="startButton">
-           <property name="text">
-            <string>S&amp;tart</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="basicButton">
-           <property name="text">
-            <string>&amp;Basic</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="maximalButton">
-           <property name="text">
-            <string>Ma&amp;ximal</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="signUpDescription">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Description</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -291,7 +237,7 @@
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0">
          <item>
           <spacer name="horizontalSpacer_4">
            <property name="orientation">

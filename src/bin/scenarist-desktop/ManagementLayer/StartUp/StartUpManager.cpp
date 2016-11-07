@@ -257,8 +257,7 @@ void StartUpManager::initConnections()
     );
     connect(m_loginDialog, &LoginDialog::signUpRequested, [this] {
         emit signUpRequested(m_loginDialog->signUpEmail(),
-                             m_loginDialog->signUpPassword(),
-                             m_loginDialog->signUpType());
+                             m_loginDialog->signUpPassword());
     });
     connect(m_loginDialog, &LoginDialog::verifyRequested, [this] {
         emit verifyRequested(m_loginDialog->verificationCode());

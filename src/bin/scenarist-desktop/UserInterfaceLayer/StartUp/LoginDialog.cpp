@@ -63,19 +63,6 @@ QString LoginDialog::verificationCode() const
     return m_ui->verificationCode->text();
 }
 
-QString LoginDialog::signUpType() const
-{
-    if (m_ui->startButton->isChecked()) {
-        return tr("start");
-    } else if (m_ui->basicButton->isChecked()) {
-        return tr("basic");
-    } else if (m_ui->maximalButton->isChecked()) {
-        return tr("maximal");
-    } else {
-        return tr("unexpected");
-    }
-}
-
 void LoginDialog::setLoginError(const QString& _error)
 {
     updateLabel(m_ui->loginError, _error, true);
@@ -281,7 +268,6 @@ void LoginDialog::clear()
     m_ui->verificationError->clear();
 
     m_ui->tabs->setCurrentIndex(0);
-    m_ui->basicButton->setChecked(true);
     switchWidget();
 
     m_isVerify = false;

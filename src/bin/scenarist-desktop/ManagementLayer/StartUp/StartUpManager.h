@@ -106,8 +106,7 @@ namespace ManagementLayer
         /**
          * @brief Пользователь хочет зарегистрироваться
          */
-        void signUpRequested(const QString& _email, const QString& _password,
-                               const QString& _type);
+        void signUpRequested(const QString& _email, const QString& _password);
 
         /**
          * @brief Пользователь хочет отправить проверочный код
