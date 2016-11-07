@@ -114,7 +114,7 @@ namespace UserInterface
 		/**
 		 * @brief При запуске фокусируемся на поле ввода имени пользователя
 		 */
-		QWidget* focusedOnExec() const;
+        QWidget* focusedOnExec() const override;
 
         /**
          * @brief Табы в заголовке окна
@@ -167,12 +167,12 @@ namespace UserInterface
 		/**
 		 * @brief Настроить представление
 		 */
-		void initView();
+        void initView() override;
 
 		/**
 		 * @brief Настроить соединения для формы
 		 */
-		void initConnections();
+        void initConnections() override;
 
         /**
          * @brief Очистить окно
