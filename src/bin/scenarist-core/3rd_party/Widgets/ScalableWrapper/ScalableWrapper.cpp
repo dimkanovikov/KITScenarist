@@ -16,6 +16,12 @@
 #include <QTextEdit>
 #include <QTimer>
 
+namespace {
+	const qreal DEFAULT_ZOOM_RANGE = 1.;
+	const qreal MINIMUM_ZOOM_RANGE = 0.5;
+	const qreal MAXIMUM_ZOOM_RANGE = 3.;
+}
+
 
 ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) :
 	QGraphicsView(_parent),
@@ -95,7 +101,9 @@ SpellCheckTextEdit* ScalableWrapper::editor() const
 
 void ScalableWrapper::setZoomRange(qreal _zoomRange)
 {
-	if (m_zoomRange != _zoomRange) {
+	if (m_zoomRange != _zoomRange
+		&& _zoomRange >= MINIMUM_ZOOM_RANGE
+		&& _zoomRange <= MAXIMUM_ZOOM_RANGE) {
 		m_zoomRange = _zoomRange;
 		emit zoomRangeChanged(m_zoomRange);
 
@@ -458,9 +466,6 @@ void ScalableWrapper::updateTextEditSize()
 
 void ScalableWrapper::scaleTextEdit()
 {
-	const qreal DEFAULT_ZOOM_RANGE = 1.;
-	const qreal MINIMUM_ZOOM_RANGE = 0.5;
-	const qreal MAXIMUM_ZOOM_RANGE = 3.;
 	if (m_zoomRange == 0) {
 		m_zoomRange = DEFAULT_ZOOM_RANGE;
 	} else if (m_zoomRange < MINIMUM_ZOOM_RANGE) {

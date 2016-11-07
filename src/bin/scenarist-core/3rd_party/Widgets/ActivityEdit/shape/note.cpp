@@ -6,10 +6,16 @@
 #include <QPainter>
 #include <QPalette>
 
+namespace {
+	const int DEFAULT_WIDTH = 150;
+	const int DEFAULT_HEIGHT = 80;
+}
+
 
 NoteShape::NoteShape(QGraphicsItem *_parent) :
 	ResizableShape(_parent)
 {
+	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
 
@@ -17,6 +23,7 @@ NoteShape::NoteShape(const QString& _text, const QPointF& _pos, QGraphicsItem* _
 	ResizableShape(_pos, _parent),
 	m_text(_text)
 {
+	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
 void NoteShape::setText(const QString& _text)
@@ -38,13 +45,13 @@ void NoteShape::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _optio
 	Q_UNUSED(_option);
 	Q_UNUSED(_widget);
 
-    const QPalette palette = QApplication::palette();
+	const QPalette palette = QApplication::palette();
 
 	//
 	// Рисуем фон
 	//
-    _painter->setBrush(palette.base());
-    _painter->setPen(palette.text().color());
+	_painter->setBrush(palette.base());
+	_painter->setPen(palette.text().color());
 	_painter->drawPath(shape());
 	QRectF r = boundingRect();
 	//
@@ -104,10 +111,10 @@ QPainterPath NoteShape::selectionShape() const
 		<< QPointF(1, r.height()-1)
 		<< QPointF(1, 1)
 	);
-    return path;
+	return path;
 }
 
 int NoteShape::defaultZValue() const
 {
-    return 10;
+	return 10;
 }

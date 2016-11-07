@@ -95,6 +95,8 @@ void GraphLogic::addFirstNode()
 
 	m_activeNode = m_nodeList.first();
 	m_activeNode->setBorder();
+
+	m_graphWidget->ensureVisible(node);
 }
 
 void GraphLogic::removeAllNodes()

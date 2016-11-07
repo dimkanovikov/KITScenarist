@@ -52,6 +52,7 @@ void GraphWidget::newScene()
 	m_graphlogic->removeAllNodes();
 	m_graphlogic->addFirstNode();
 
+
 	this->show();
 }
 
