@@ -82,10 +82,33 @@ void ResearchManager::loadCurrentProject()
 	g_isProjectLoading = false;
 }
 
+void ResearchManager::loadCurrentProjectSettings(const QString& _projectPath)
+{
+	//
+	// Загрузим состояние дерева
+	//
+	m_view->setExpandedIndexes(
+		DataStorageLayer::StorageFacade::settingsStorage()->variantValue(
+			QString("projects/%1/research/expanded-items").arg(_projectPath),
+			DataStorageLayer::SettingsStorage::ApplicationSettings)
+		.toStringList());
+}
+
 void ResearchManager::closeCurrentProject()
 {
 	m_scenarioData.clear();
 	m_model->clear();
+}
+
+void ResearchManager::saveCurrentProjectSettings(const QString& _projectPath)
+{
+	//
+	// Сохраним состояние дерева
+	//
+	DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+		QString("projects/%1/research/expanded-items").arg(_projectPath),
+		m_view->expandedIndexes(),
+		DataStorageLayer::SettingsStorage::ApplicationSettings);
 }
 
 void ResearchManager::updateSettings()

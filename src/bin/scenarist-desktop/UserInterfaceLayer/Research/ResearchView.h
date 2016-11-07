@@ -89,12 +89,22 @@ namespace UserInterface
 		/**
 		 * @brief Включить режим редактирования ментальной карты
 		 */
-        void editMindMap(const QString& _name, const QString& _xml);
+		void editMindMap(const QString& _name, const QString& _xml);
 
 		/**
 		 * @brief Установить режим работы со сценарием
 		 */
 		void setCommentOnly(bool _isCommentOnly);
+
+		/**
+		 * @brief Получить список раскрытых узлов дерева разработки
+		 */
+		QStringList expandedIndexes() const;
+
+		/**
+		 * @brief Установить список раскрытых узлов дерева разработки
+		 */
+		void setExpandedIndexes(const QStringList& _indexes);
 
 	signals:
 		/**

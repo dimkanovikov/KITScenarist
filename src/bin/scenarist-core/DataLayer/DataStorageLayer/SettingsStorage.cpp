@@ -49,7 +49,7 @@ namespace {
 }
 
 
-void SettingsStorage::setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace)
+void SettingsStorage::setVariantValue(const QString& _key, const QVariant& _value, SettingsStorage::SettingsPlace _settingsPlace)
 {
 	//
 	// Кэшируем значение
@@ -62,8 +62,18 @@ void SettingsStorage::setValue(const QString& _key, const QString& _value, Setti
 	if (_settingsPlace == ApplicationSettings) {
 		m_appSettings.setValue(_key.toUtf8().toHex(), _value);
 	} else {
-		MapperFacade::settingsMapper()->setValue(_key, _value);
+		MapperFacade::settingsMapper()->setValue(_key, _value.toString());
 	}
+}
+
+void SettingsStorage::setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace)
+{
+	setVariantValue(_key, _value, _settingsPlace);
+}
+
+void SettingsStorage::setValue(const QString& _key, const QStringList& _value, SettingsStorage::SettingsPlace _settingsPlace)
+{
+	setVariantValue(_key, _value, _settingsPlace);
 }
 
 void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QString& _valuesGroup, SettingsStorage::SettingsPlace _settingsPlace)
@@ -111,6 +121,33 @@ void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QSt
 		Q_ASSERT_X(0, Q_FUNC_INFO, "Database settings can't save group of settings");
 	}
 
+}
+
+QVariant SettingsStorage::variantValue(const QString& _key, SettingsStorage::SettingsPlace _settingsPlace)
+{
+	//
+	// Пробуем получить значение из кэша
+	//
+	bool hasCachedValue = false;
+	QVariant value = getCachedValue(_key, _settingsPlace, hasCachedValue);
+
+	//
+	// Если в кэше нет, то загружаем из указанного места
+	//
+	if (!hasCachedValue) {
+		if (_settingsPlace == ApplicationSettings) {
+			value = m_appSettings.value(_key.toUtf8().toHex(), QVariant());
+		} else {
+			value = MapperFacade::settingsMapper()->value(_key);
+		}
+
+		//
+		// Сохраняем значение в кэш
+		//
+		cacheValue(_key, value, _settingsPlace);
+	}
+
+	return value;
 }
 
 QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace, const QString& _defaultValue)

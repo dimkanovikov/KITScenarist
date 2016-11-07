@@ -29,17 +29,17 @@ namespace {
 		}
 	}
 
-    /**
-     * @brief Скопировать дочерние элементы из одного родителя в другой
-     */
-    static void copyChildItems(ResearchModelItem* _parent, ResearchModelItem* _parentOldCopy) {
-        for (int childRow = 0; childRow < _parentOldCopy->childCount(); ++childRow) {
-            ResearchModelItem* childItemOldCopy = _parentOldCopy->childAt(childRow);
-            ResearchModelItem* childItem = new ResearchModelItem(childItemOldCopy->research());
-            _parent->appendItem(childItem);
-            copyChildItems(childItem, childItemOldCopy);
-        }
-    };
+	/**
+	 * @brief Скопировать дочерние элементы из одного родителя в другой
+	 */
+	static void copyChildItems(ResearchModelItem* _parent, ResearchModelItem* _parentOldCopy) {
+		for (int childRow = 0; childRow < _parentOldCopy->childCount(); ++childRow) {
+			ResearchModelItem* childItemOldCopy = _parentOldCopy->childAt(childRow);
+			ResearchModelItem* childItem = new ResearchModelItem(childItemOldCopy->research());
+			_parent->appendItem(childItem);
+			copyChildItems(childItem, childItemOldCopy);
+		}
+	};
 }
 
 
@@ -143,17 +143,17 @@ void ResearchModel::clear()
 	//
 	// Пересоздаём корень разработки
 	//
-    emit beginRemoveRows(QModelIndex(), 1, 1);
+	emit beginRemoveRows(QModelIndex(), 1, 1);
 	m_rootItem->removeItem(m_researchRoot);
-    emit endRemoveRows();
+	emit endRemoveRows();
 	//
 	m_researchRoot =
 		new ResearchModelItem(
 			new Research(Domain::Identifier(), 0, Research::ResearchRoot, 1, tr("Research"))
 		);
-    emit beginInsertRows(QModelIndex(), 1, 1);
+	emit beginInsertRows(QModelIndex(), 1, 1);
 	m_rootItem->appendItem(m_researchRoot);
-    emit endInsertRows();
+	emit endInsertRows();
 }
 
 void ResearchModel::prependItem(ResearchModelItem* _item, ResearchModelItem* _parentItem)
@@ -391,7 +391,7 @@ bool ResearchModel::dropMimeData(
 		return false;
 
 	if (_action == Qt::IgnoreAction)
-        return true;
+		return true;
 
 	QByteArray encodedData = _data->data(MIME_TYPE);
 	QDataStream stream(&encodedData, QIODevice::ReadOnly);
@@ -404,8 +404,8 @@ bool ResearchModel::dropMimeData(
 		Domain::Research* research = m_lastMimeItems[row]->research();
 		if (research->id().value() == researchId) {
 			research->setParent(parentItem->research());
-            ResearchModelItem* item = new ResearchModelItem(research);
-            ::copyChildItems(item, m_lastMimeItems[row]);
+			ResearchModelItem* item = new ResearchModelItem(research);
+			::copyChildItems(item, m_lastMimeItems[row]);
 
 			newItems << item;
 		}
@@ -523,6 +523,11 @@ QModelIndex ResearchModel::indexForItem(ResearchModelItem* _item) const
 	return index(row, 0, parent);
 }
 
+QModelIndexList ResearchModel::getPersistentIndexList() const
+{
+	return persistentIndexList();
+}
+
 void ResearchModel::reload()
 {
 	emit beginResetModel();
@@ -631,8 +636,8 @@ void ResearchModel::researchRowsRemoved(const QModelIndex& _parent, int _first, 
 			// Удалим из модели
 			//
 			ResearchModelItem* researchToRemove = 0;
-            if (researchParent != 0
-                && researchParent->hasChildren()) {
+			if (researchParent != 0
+				&& researchParent->hasChildren()) {
 				for (int childIndex = 0; childIndex < researchParent->childCount(); ++childIndex) {
 					if (researchParent->childAt(childIndex)->research() == research) {
 						researchToRemove = researchParent->childAt(childIndex);

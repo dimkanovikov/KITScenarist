@@ -1193,6 +1193,7 @@ void ApplicationManager::goToEditCurrentProject()
 	// Загрузить настройки файла
 	// Порядок загрузки важен - сначала настройки каждого модуля, потом активные вкладки
 	//
+	m_researchManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	loadCurrentProjectSettings(ProjectsManager::currentProject().path());
@@ -1210,45 +1211,48 @@ void ApplicationManager::goToEditCurrentProject()
 
 void ApplicationManager::closeCurrentProject()
 {
-	//
-	// Сохраним настройки закрываемого проекта
-	//
-	m_scenarioManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
-	m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
-	saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+	if (isProjectLoaded()) {
+		//
+		// Сохраним настройки закрываемого проекта
+		//
+		m_researchManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+		m_scenarioManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+		m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+		saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 
-	//
-	// Закроем проект управляющими
-	//
-	m_researchManager->closeCurrentProject();
-	m_scenarioManager->closeCurrentProject();
-	m_charactersManager->closeCurrentProject();
-	m_locationsManager->closeCurrentProject();
+		//
+		// Закроем проект управляющими
+		//
+		m_researchManager->closeCurrentProject();
+		m_scenarioManager->closeCurrentProject();
+		m_charactersManager->closeCurrentProject();
+		m_locationsManager->closeCurrentProject();
 
-	//
-	// Очистим все загруженные на текущий момент данные
-	//
-	DataStorageLayer::StorageFacade::clearStorages();
+		//
+		// Очистим все загруженные на текущий момент данные
+		//
+		DataStorageLayer::StorageFacade::clearStorages();
 
-	//
-	// Если использовалась база данных, то удалим старое соединение
-	//
-	DatabaseLayer::Database::closeCurrentFile();
+		//
+		// Если использовалась база данных, то удалим старое соединение
+		//
+		DatabaseLayer::Database::closeCurrentFile();
 
-	//
-	// Информируем управляющего проектами, что текущий проект закрыт
-	//
-	m_projectsManager->closeCurrentProject();
+		//
+		// Информируем управляющего проектами, что текущий проект закрыт
+		//
+		m_projectsManager->closeCurrentProject();
 
-	//
-	// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
-	//
-	::disableActionsOnStart();
+		//
+		// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
+		//
+		::disableActionsOnStart();
 
-	//
-	// Перейти на стартовую вкладку
-	//
-	m_tabs->setCurrentTab(0);
+		//
+		// Перейти на стартовую вкладку
+		//
+		m_tabs->setCurrentTab(0);
+	}
 }
 
 bool ApplicationManager::isProjectLoaded() const

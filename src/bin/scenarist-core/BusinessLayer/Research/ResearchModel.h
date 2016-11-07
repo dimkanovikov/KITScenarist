@@ -95,6 +95,11 @@ namespace BusinessLogic
 		 */
 		QModelIndex indexForItem(ResearchModelItem* _item) const;
 
+		/**
+		 * @brief Получить список всех индексов модели единым списком
+		 */
+		QModelIndexList getPersistentIndexList() const;
+
 	private:
 		/**
 		 * @brief Перезагрузить данные разработки

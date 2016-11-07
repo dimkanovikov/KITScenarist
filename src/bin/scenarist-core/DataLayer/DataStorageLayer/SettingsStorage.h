@@ -24,7 +24,11 @@ namespace DataStorageLayer
 		/**
 		 * @brief Сохранить значение с заданным ключём
 		 */
+		/** @{ */
+		void setVariantValue(const QString& _key, const QVariant& _value, SettingsPlace _settingsPlace);
 		void setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace);
+		void setValue(const QString& _key, const QStringList& _value, SettingsPlace _settingsPlace);
+		/** @} */
 
 		/**
 		 * @brief Сохранить карту параметров
@@ -34,6 +38,7 @@ namespace DataStorageLayer
 		/**
 		 * @brief Получить значение по ключу
 		 */
+		QVariant variantValue(const QString& _key, SettingsPlace _settingsPlace);
 		QString value(const QString& _key, SettingsPlace _settingsPlace, const QString& _defaultValue = QString::null);
 
 		/**

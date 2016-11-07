@@ -39,9 +39,19 @@ namespace ManagementLayer
 		void loadCurrentProject();
 
 		/**
+		 * @brief Загрузить настройки текущего проекта
+		 */
+		void loadCurrentProjectSettings(const QString& _projectPath);
+
+		/**
 		 * @brief Очистить все загруженные данные
 		 */
 		void closeCurrentProject();
+
+		/**
+		 * @brief Сохранить настройки текущего проекта
+		 */
+		void saveCurrentProjectSettings(const QString& _projectPath);
 
 		/**
 		 * @brief Обновить параметры
