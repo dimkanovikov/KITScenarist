@@ -323,10 +323,22 @@ Qt::ItemFlags ResearchModel::flags(const QModelIndex& _index) const
 			}
 
 			case Research::Text:
-			case Research::Url:
 			case Research::ImagesGallery:
 			case Research::Image:
 			case Research::MindMap: {
+				flags |= Qt::ItemIsDragEnabled;
+				break;
+			}
+
+			case Research::Url: {
+#ifdef Q_OS_WIN
+				//
+				// В виндовс XP webengine не работает, поэтому делаем ссылки недоступными для открытия
+				//
+				if (QSysInfo::windowsVersion() == QSysInfo::WV_XP) {
+					flags ^= Qt::ItemIsEnabled;
+				}
+#endif
 				flags |= Qt::ItemIsDragEnabled;
 				break;
 			}

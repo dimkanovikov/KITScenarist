@@ -62,7 +62,7 @@
        </property>
        <item>
         <property name="text">
-         <string>Url</string>
+         <string>Mind Map</string>
         </property>
        </item>
        <item>
@@ -72,7 +72,7 @@
        </item>
        <item>
         <property name="text">
-         <string>Mind Map</string>
+         <string>Url</string>
         </property>
        </item>
       </widget>

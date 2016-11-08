@@ -47,7 +47,7 @@ int ResearchItemDialog::researchType() const
 	} else if (m_ui->other->isChecked()) {
 		switch (m_ui->otherType->currentIndex()) {
 			case 0: {
-				type = Domain::Research::Url;
+				type = Domain::Research::MindMap;
 				break;
 			}
 
@@ -57,7 +57,7 @@ int ResearchItemDialog::researchType() const
 			}
 
 			case 2: {
-				type = Domain::Research::MindMap;
+				type = Domain::Research::Url;
 				break;
 			}
 		}
@@ -83,6 +83,15 @@ QWidget* ResearchItemDialog::focusedOnExec() const
 void ResearchItemDialog::initView()
 {
 	QLightBoxDialog::initView();
+
+#ifdef Q_OS_WIN
+	//
+	// В виндовс XP webengine не работает, поэтому скрываем пункт с добавлением ссылки
+	//
+	if (QSysInfo::windowsVersion() == QSysInfo::WV_XP) {
+		m_ui->otherType->removeItem(2);
+	}
+#endif
 }
 
 void ResearchItemDialog::initConnections()
