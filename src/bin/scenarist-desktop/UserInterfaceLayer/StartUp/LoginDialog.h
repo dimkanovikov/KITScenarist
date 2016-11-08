@@ -182,13 +182,13 @@ namespace UserInterface
         /**
          * @brief Установить текст для метки
          */
-        void updateLabel(QLabel* _label,
+        void updateLabel(QLabel* _label, QLabel* _icon,
                            const QString& _message, bool _isError);
 
         /**
          * @brief Общий метод для обработки accept кнопок для проверки правильности email
          */
-        bool abstractAcceptButton(QLineEdit* _line, QLabel* _label);
+        bool abstractAcceptButton(QLineEdit* _line, QLabel* _label, QLabel* _icon);
 
         /**
          * @brief Проверят, является ли строка email

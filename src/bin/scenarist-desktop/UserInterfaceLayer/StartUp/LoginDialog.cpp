@@ -26,7 +26,7 @@ namespace {
     /**
      * @brief Размер иконки
      */
-    const QSize ICON_PIXMAP_SIZE(12, 12);
+    const QSize ICON_PIXMAP_SIZE(24, 24);
 }
 
 LoginDialog::LoginDialog(QWidget* _parent) :
@@ -72,26 +72,26 @@ QString LoginDialog::verificationCode() const
 
 void LoginDialog::setLoginError(const QString& _error)
 {
-    updateLabel(m_ui->loginError, _error, true);
+    updateLabel(m_ui->loginError, m_ui->loginErrorIcon, _error, true);
     unblock();
 }
 
 void LoginDialog::setSignUpError(const QString &_error)
 {
-    updateLabel(m_ui->signUpError, _error, true);
+    updateLabel(m_ui->signUpError, m_ui->signUpErrorIcon, _error, true);
     unblock();
 }
 
 void LoginDialog::setVerificationError(const QString &_error)
 {
-    updateLabel(m_ui->verificationError, _error, true);
+    updateLabel(m_ui->verificationError, m_ui->verificationErrorIcon,_error, true);
     unblock();
 }
 
 void LoginDialog::showVerificationSuccess()
 {
     m_isVerify = true;
-    updateLabel(m_ui->verificationError,
+    updateLabel(m_ui->verificationError, m_ui->verificationErrorIcon,
                 tr("your e-mail \"%1\" was sent a letter with a "
                    "confirmation code").arg(m_ui->signUpEmail->text()), false);
     m_ui->stackedWidget->setCurrentWidget(m_ui->verificationPage);
@@ -102,8 +102,9 @@ void LoginDialog::showVerificationSuccess()
 
 void LoginDialog::showRestoreSuccess()
 {
-    updateLabel(m_ui->loginError, tr("your e-mail \"%1\" was sent a "
-                                       "letter with a password").arg(m_ui->loginEmail->text()),
+    updateLabel(m_ui->loginError, m_ui->loginErrorIcon,
+                tr("your e-mail \"%1\" was sent a letter with a password").
+                arg(m_ui->loginEmail->text()),
                   false);
     m_ui->restorePassword->hide();
 
@@ -140,14 +141,14 @@ void LoginDialog::checkVerificationCode()
 
 void LoginDialog::loginAcceptButton()
 {
-    if (abstractAcceptButton(m_ui->loginEmail, m_ui->loginError)) {
+    if (abstractAcceptButton(m_ui->loginEmail, m_ui->loginError, m_ui->loginErrorIcon)) {
         emit loginRequested();
     }
 }
 
 void LoginDialog::signUpAcceptButton()
 {
-    if (abstractAcceptButton(m_ui->signUpEmail, m_ui->signUpError)) {
+    if (abstractAcceptButton(m_ui->signUpEmail, m_ui->signUpError, m_ui->signUpErrorIcon)) {
         emit signUpRequested();
     }
 }
@@ -206,12 +207,15 @@ void LoginDialog::initView()
 {
 
     m_ui->loginError->clear();
+    m_ui->loginErrorIcon->clear();
     m_loginButton = m_ui->loginButtons->addButton(tr("Login"), QDialogButtonBox::AcceptRole);
 
     m_ui->signUpError->clear();
+    m_ui->signUpErrorIcon->clear();
     m_signUpButton = m_ui->signUpButtons->addButton(tr("Sign Up"), QDialogButtonBox::AcceptRole);
 
     m_ui->verificationError->clear();
+    m_ui->verificationErrorIcon->clear();
 
     //
     // Красивые табы
@@ -233,7 +237,7 @@ void LoginDialog::initConnections()
 
     connect(m_ui->loginButtons, &QDialogButtonBox::accepted,
             this, &LoginDialog::loginAcceptButton);
-    connect(m_ui->loginButtons, &QDialogButtonBox::accepted,
+    connect(m_ui->signUpButtons, &QDialogButtonBox::accepted,
             this, &LoginDialog::signUpAcceptButton);
     connect(m_ui->loginButtons, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
@@ -276,27 +280,33 @@ void LoginDialog::clear()
     m_ui->signUpError->clear();
     m_ui->verificationError->clear();
 
+    m_ui->loginErrorIcon->clear();
+    m_ui->signUpErrorIcon->clear();
+    m_ui->verificationErrorIcon->clear();
+
     m_ui->restorePassword->show();
 }
 
-void LoginDialog::updateLabel(QLabel *_label, const QString &_message, bool _isError)
+void LoginDialog::updateLabel(QLabel *_label, QLabel* _icon,
+                              const QString &_message, bool _isError)
 {
     _label->setText(_message);
-    _label->setPixmap(_label->style()->
+    _icon->setPixmap(_icon->style()->
                       standardIcon(_isError? QStyle::SP_MessageBoxCritical
                                            : QStyle::SP_MessageBoxInformation).
                       pixmap(ICON_PIXMAP_SIZE));
 
 }
 
-bool LoginDialog::abstractAcceptButton(QLineEdit *_line, QLabel *_label)
+bool LoginDialog::abstractAcceptButton(QLineEdit *_line, QLabel* _label, QLabel* _icon)
 {
     if (checkEmailValidy(_line->text())) {
         _label->clear();
+        _icon->clear();
         block();
         return true;
     } else {
-        updateLabel(_label, tr("Email is invalid"), true);
+        updateLabel(_label, _icon, tr("Email is invalid"), true);
         return false;
     }
 }
