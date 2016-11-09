@@ -8,6 +8,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Import/DocumentImporter.h>
 #include <BusinessLayer/Import/FdxImporter.h>
+#include <BusinessLayer/Import/TrelbyImporter.h>
 
 #include <DataLayer/Database/Database.h>
 
@@ -36,6 +37,11 @@ namespace {
 	 * @brief Формат файлов Final Draft
 	 */
 	const QString FINAL_DRAFT_EXTENSION = ".fdx";
+
+    /**
+     * @brief Формат файлов Trelby
+     */
+    const QString TRELBY_EXTENSION = ".trelby";
 }
 
 
@@ -65,7 +71,9 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 			QString importScenarioXml;
 			if (importParameters.filePath.toLower().endsWith(FINAL_DRAFT_EXTENSION)) {
 				importScenarioXml = BusinessLogic::FdxImporter().importScenario(importParameters);
-			} else {
+            } else if (importParameters.filePath.toLower().endsWith(TRELBY_EXTENSION)) {
+                importScenarioXml = BusinessLogic::TrelbyImporter().importScenario(importParameters);
+            } else {
 				importScenarioXml = BusinessLogic::DocumentImporter().importScenario(importParameters);
 			}
 

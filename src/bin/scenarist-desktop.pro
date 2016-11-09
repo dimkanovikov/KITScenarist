@@ -324,7 +324,8 @@ SOURCES += \
     scenarist-core/BusinessLayer/Export/FdxExporter.cpp \
     scenarist-core/BusinessLayer/Import/FdxImporter.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.cpp \
-    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.cpp
+    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.cpp \
+    scenarist-core/BusinessLayer/Import/TrelbyImporter.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -589,7 +590,8 @@ HEADERS += \
     scenarist-core/BusinessLayer/Export/FdxExporter.h \
     scenarist-core/BusinessLayer/Import/FdxImporter.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.h \
-    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.h
+    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.h \
+    scenarist-core/BusinessLayer/Import/TrelbyImporter.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
