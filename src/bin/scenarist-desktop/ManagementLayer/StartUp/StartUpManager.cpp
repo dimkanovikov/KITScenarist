@@ -66,6 +66,7 @@ void StartUpManager::completeLogin()
 {
     const bool isLogged = true;
     m_view->setUserLogged(isLogged, m_userName);
+    m_loginDialog->unblock();
     m_loginDialog->hide();
 }
 

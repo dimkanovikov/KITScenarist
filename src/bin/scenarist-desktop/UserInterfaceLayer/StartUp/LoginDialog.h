@@ -89,6 +89,11 @@ namespace UserInterface
          */
         void showPrepared();
 
+        /**
+         * @brief Разблокировать окно для пользователя
+         */
+        void unblock();
+
     signals:
         /**
          * @brief Пользователь хочет зарегистрироваться
@@ -151,11 +156,6 @@ namespace UserInterface
          * @brief Блокирует окно на время передачи данных
          */
         void block();
-
-        /**
-         * @brief Разблокировать окно для пользователя
-         */
-        void unblock();
 
         /**
          * @brief Пользователь нажал Enter

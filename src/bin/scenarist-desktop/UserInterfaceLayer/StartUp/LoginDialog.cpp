@@ -118,6 +118,15 @@ void LoginDialog::showPrepared()
     m_ui->loginEmail->setFocus();
 }
 
+void LoginDialog::unblock()
+{
+    m_ui->tabs->setEnabled(true);
+
+    m_ui->stackedWidget->setEnabled(true);
+
+    hideProgress();
+}
+
 QWidget* LoginDialog::focusedOnExec() const
 {
     return m_ui->loginEmail;
@@ -180,15 +189,6 @@ void LoginDialog::block()
     m_ui->stackedWidget->setEnabled(false);
 
     showProgress();
-}
-
-void LoginDialog::unblock()
-{
-    m_ui->tabs->setEnabled(true);
-
-    m_ui->stackedWidget->setEnabled(true);
-
-    hideProgress();
 }
 
 void LoginDialog::emitAccept()
