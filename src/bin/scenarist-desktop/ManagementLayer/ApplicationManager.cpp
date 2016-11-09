@@ -753,6 +753,15 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         }
 
         //
+        // Слишком слабый пароль
+        //
+        case 405: {
+            error = tr("Password too weak");
+            m_startUpManager->retrySignUp(error);
+            break;
+        }
+
+        //
         // Неверный код валидации
         //
         case 505: {

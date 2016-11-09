@@ -189,7 +189,7 @@ void StartUpView::initView()
 void StartUpView::initConnections()
 {
 	connect(ui->login, SIGNAL(linkActivated(QString)), this, SIGNAL(loginClicked()));
-    //connect(ui->logout, SIGNAL(linkActivated(QString)), this, SIGNAL(logoutClicked()));
+    connect(ui->logout, &QPushButton::clicked, this, &StartUpView::logoutClicked);;
 	connect(ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
 	connect(ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));
 	connect(ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));

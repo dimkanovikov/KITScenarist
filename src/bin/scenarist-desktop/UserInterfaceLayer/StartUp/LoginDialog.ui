@@ -32,7 +32,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="loginPage">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -82,6 +82,22 @@
         <widget class="PasswordLineEdit" name="loginPasswordEdit"/>
        </item>
        <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>2</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QLabel" name="loginErrorIcon">
@@ -93,13 +109,13 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>48</width>
+             <width>40</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>48</width>
+             <width>40</width>
              <height>16777215</height>
             </size>
            </property>
@@ -130,8 +146,8 @@
            </property>
            <property name="font">
             <font>
-             <weight>75</weight>
-             <bold>true</bold>
+             <weight>50</weight>
+             <bold>false</bold>
             </font>
            </property>
            <property name="styleSheet">
@@ -161,7 +177,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>1</height>
           </size>
          </property>
         </spacer>
@@ -240,6 +256,22 @@
         <widget class="PasswordLineEdit" name="signUpPasswordEdit"/>
        </item>
        <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>2</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QLabel" name="signUpErrorIcon">
@@ -251,13 +283,13 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>48</width>
+             <width>40</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>48</width>
+             <width>40</width>
              <height>16777215</height>
             </size>
            </property>
@@ -270,8 +302,8 @@
           <widget class="QLabel" name="signUpError">
            <property name="font">
             <font>
-             <weight>75</weight>
-             <bold>true</bold>
+             <weight>50</weight>
+             <bold>false</bold>
             </font>
            </property>
            <property name="styleSheet">
@@ -301,7 +333,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>1</height>
           </size>
          </property>
         </spacer>
@@ -339,7 +371,7 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,0,0">
+      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,0,0,0">
        <property name="spacing">
         <number>6</number>
        </property>
@@ -372,6 +404,22 @@
         <widget class="QLineEdit" name="verificationCode"/>
        </item>
        <item>
+        <spacer name="verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>2</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
           <widget class="QLabel" name="verificationErrorIcon">
@@ -383,13 +431,13 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>48</width>
+             <width>40</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>48</width>
+             <width>40</width>
              <height>16777215</height>
             </size>
            </property>
@@ -402,8 +450,8 @@
           <widget class="QLabel" name="verificationError">
            <property name="font">
             <font>
-             <weight>75</weight>
-             <bold>true</bold>
+             <weight>50</weight>
+             <bold>false</bold>
             </font>
            </property>
            <property name="styleSheet">
@@ -433,7 +481,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>105</height>
+           <height>1</height>
           </size>
          </property>
         </spacer>

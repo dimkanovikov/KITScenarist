@@ -26,7 +26,7 @@ namespace {
     /**
      * @brief Размер иконки
      */
-    const QSize ICON_PIXMAP_SIZE(24, 24);
+    const QSize ICON_PIXMAP_SIZE(32, 32);
 }
 
 LoginDialog::LoginDialog(QWidget* _parent) :
