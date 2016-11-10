@@ -100,6 +100,8 @@ void ScenarioItemDialog::initView()
 {
 	setWindowTitle(tr("Add scenario item"));
 
+    setMinimumSize(500, 400);
+
 	m_scene->setText(tr("Scene"));
     m_scene->setChecked(true);
     m_scenesGroup->setText(tr("Scenes group"));

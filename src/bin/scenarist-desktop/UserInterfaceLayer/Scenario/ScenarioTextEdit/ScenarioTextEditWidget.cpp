@@ -12,6 +12,7 @@
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
+#include <3rd_party/Widgets/WAF/Animation.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
@@ -455,11 +456,16 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioTextEditWidget::aboutShowSearch()
 {
-	m_searchLine->setVisible(m_search->isChecked());
-	if (m_searchLine->isVisible()) {
-		m_searchLine->selectText();
-		m_searchLine->setFocus();
-	}
+    const bool visible = m_search->isChecked();
+    if (m_searchLine->isVisible() != visible) {
+        WAF::Animation::slide(m_searchLine, WAF::FromBottomToTop, true, visible);
+        QTimer::singleShot(300, [=] { m_searchLine->setVisible(visible); });
+    }
+
+    if (visible) {
+        m_searchLine->selectText();
+        m_searchLine->setFocus();
+    }
 }
 
 void ScenarioTextEditWidget::aboutShowFastFormat()

@@ -15,7 +15,7 @@ namespace {
 NoteShape::NoteShape(QGraphicsItem *_parent) :
 	ResizableShape(_parent)
 {
-	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+    setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
 
@@ -23,7 +23,7 @@ NoteShape::NoteShape(const QString& _text, const QPointF& _pos, QGraphicsItem* _
 	ResizableShape(_pos, _parent),
 	m_text(_text)
 {
-	setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+    setSize(QSizeF(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 }
 
 void NoteShape::setText(const QString& _text)

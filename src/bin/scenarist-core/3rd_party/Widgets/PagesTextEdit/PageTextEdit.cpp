@@ -3208,9 +3208,9 @@ void PageTextEdit::ensureCursorVisible(const QTextCursor& _cursor, bool _animate
 		qreal delta = log(abs(nextVbarValue - lastVbarValue) / 300) / 2;
 		if (delta < 1) {
 			delta = 1;
-		}
+        }
 		animation->setDuration(300 * delta);
-		animation->setEasingCurve(QEasingCurve::OutCubic);
+        animation->setEasingCurve(QEasingCurve::InOutCubic);
 		animation->setStartValue(lastVbarValue);
 		animation->setEndValue(nextVbarValue);
 		animation->start();
