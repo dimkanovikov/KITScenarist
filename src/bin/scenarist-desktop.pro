@@ -150,8 +150,6 @@ SOURCES += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioXml.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextDocument.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RecentFilesDelegate.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RecentFileWidget.cpp \
     scenarist-core/3rd_party/Widgets/SideBar/SideBar.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.cpp \
@@ -325,7 +323,10 @@ SOURCES += \
     scenarist-core/BusinessLayer/Import/FdxImporter.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.cpp \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.cpp \
-    scenarist-core/BusinessLayer/Import/TrelbyImporter.cpp
+    scenarist-core/BusinessLayer/Import/TrelbyImporter.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -393,8 +394,6 @@ HEADERS += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioXml.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextDocument.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RecentFilesDelegate.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RecentFileWidget.h \
     scenarist-core/3rd_party/Widgets/SideBar/SideBar.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h \
@@ -591,7 +590,10 @@ HEADERS += \
     scenarist-core/BusinessLayer/Import/FdxImporter.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.h \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.h \
-    scenarist-core/BusinessLayer/Import/TrelbyImporter.h
+    scenarist-core/BusinessLayer/Import/TrelbyImporter.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -608,7 +610,9 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.ui \
-    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui
+    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.ui
 
 
 RESOURCES += \

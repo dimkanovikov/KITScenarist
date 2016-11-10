@@ -1550,7 +1550,7 @@ void ApplicationManager::reloadApplicationSettings()
 			palette.setColor(QPalette::Highlight, QColor("#2b78da"));
 			palette.setColor(QPalette::HighlightedText, QColor("#ffffff"));
 			palette.setColor(QPalette::Light, QColor("#404040"));
-			palette.setColor(QPalette::Midlight, QColor("#696765"));
+			palette.setColor(QPalette::Midlight, QColor("#424140"));
 			palette.setColor(QPalette::Dark, QColor("#696765"));
 			palette.setColor(QPalette::Shadow, QColor("#1c2023"));
 

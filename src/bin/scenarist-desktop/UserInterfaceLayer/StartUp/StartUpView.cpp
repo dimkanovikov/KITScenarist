@@ -1,13 +1,12 @@
 #include "StartUpView.h"
 #include "ui_StartUpView.h"
 
-#include "RecentFilesDelegate.h"
-
 #include <3rd_party/Helpers/ImageHelper.h>
 
 #include <QStandardItemModel>
 
 using UserInterface::StartUpView;
+using UserInterface::ProjectsList;
 using UserInterface::RecentFilesDelegate;
 
 
@@ -95,35 +94,6 @@ bool StartUpView::event(QEvent* _event)
 	return QWidget::event(_event);
 }
 
-bool StartUpView::eventFilter(QObject* _watched, QEvent* _event)
-{
-	bool result = false;
-
-	//
-	// Когда мышка входит или покидает список недавних файлов, нужно перерисовать его,
-	// чтобы не осталось невыделенных/выделенных модулей
-	//
-	if ((_watched == ui->recentFiles || _watched == ui->remoteFiles)
-		&& (_event->type () == QEvent::Enter || _event->type () == QEvent::Leave))
-	{
-		if (_watched == ui->recentFiles) {
-			ui->recentFiles->repaint();
-		} else {
-			ui->remoteFiles->repaint();
-		}
-		result = true;
-	}
-	//
-	// Для всех остальных событий используем реализацю базовового класса
-	//
-	else
-	{
-		result = QWidget::eventFilter(_watched, _event);
-	}
-
-	return result;
-}
-
 void StartUpView::aboutFilesSourceChanged()
 {
 	if (ui->localProjects->isChecked()) {
@@ -155,13 +125,6 @@ void StartUpView::initView()
 
 	ui->filesSouces->setCurrentWidget(ui->recentFilesPage);
 
-	ui->recentFiles->setItemDelegate(new RecentFilesDelegate(ui->recentFiles));
-	ui->recentFiles->setMouseTracking(true);
-	ui->recentFiles->installEventFilter(this);
-	ui->remoteFiles->setItemDelegate(new RecentFilesDelegate(ui->remoteFiles));
-	ui->remoteFiles->setMouseTracking(true);
-	ui->remoteFiles->installEventFilter(this);
-
 	initIconsColor();
 }
 
@@ -174,8 +137,8 @@ void StartUpView::initConnections()
 	connect(ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));
 
 	connect(ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
-	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRecentProjectClicked(QModelIndex)));
-	connect(ui->remoteFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRemoteProjectClicked(QModelIndex)));
+	connect(ui->recentFiles, &ProjectsList::clicked, this, &StartUpView::openRecentProjectClicked);
+	connect(ui->remoteFiles, &ProjectsList::clicked, this, &StartUpView::openRemoteProjectClicked);
 	connect(ui->refreshProjects, SIGNAL(clicked()), this, SIGNAL(refreshProjects()));
 }
 

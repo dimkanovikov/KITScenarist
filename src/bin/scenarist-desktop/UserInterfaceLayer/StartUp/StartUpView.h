@@ -90,11 +90,6 @@ namespace UserInterface
 		 */
 		bool event(QEvent* _event);
 
-		/**
-		 * @brief Переопределяется для фиксации события когда мышка покидает виджет недавних проектов
-		 */
-		bool eventFilter(QObject* _watched, QEvent* _event);
-
 	private slots:
 		/**
 		 * @brief Пользователь сменил источник отображаемых проектов
