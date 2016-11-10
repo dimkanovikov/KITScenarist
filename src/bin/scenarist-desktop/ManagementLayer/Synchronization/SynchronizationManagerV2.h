@@ -83,12 +83,12 @@ namespace ManagementLayer
         /**
          * @brief Пароль отправлен на email
          */
-        void restoredPassword();
+        void passwordRestored();
 
         /**
          * @brief Авторизация закрыта
          */
-        void logouted();
+        void logoutFinished();
 
         /**
          * @brief Ошибка

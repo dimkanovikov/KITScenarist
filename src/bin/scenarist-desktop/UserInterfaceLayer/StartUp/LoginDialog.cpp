@@ -148,17 +148,27 @@ void LoginDialog::checkVerificationCode()
     }
 }
 
-void LoginDialog::loginAcceptButton()
+void LoginDialog::tryLogin()
 {
-    if (abstractAcceptButton(m_ui->loginEmail, m_ui->loginError, m_ui->loginErrorIcon)) {
+    if (isEmailValid(m_ui->loginEmail->text())) {
+        m_ui->loginError->clear();
+        m_ui->loginErrorIcon->clear();
+        block();
         emit loginRequested();
+    } else {
+        updateLabel(m_ui->loginError, m_ui->loginErrorIcon, tr("Email is invalid"), true);
     }
 }
 
-void LoginDialog::signUpAcceptButton()
+void LoginDialog::trySignUp()
 {
-    if (abstractAcceptButton(m_ui->signUpEmail, m_ui->signUpError, m_ui->signUpErrorIcon)) {
+    if (isEmailValid(m_ui->signUpEmail->text())) {
+        m_ui->signUpError->clear();
+        m_ui->signUpErrorIcon->clear();
+        block();
         emit signUpRequested();
+    } else {
+        updateLabel(m_ui->signUpError, m_ui->signUpErrorIcon, tr("Email is invalid"), true);
     }
 }
 
@@ -236,9 +246,9 @@ void LoginDialog::initConnections()
     connect(this, &LoginDialog::rejected, this, &LoginDialog::hide);
 
     connect(m_ui->loginButtons, &QDialogButtonBox::accepted,
-            this, &LoginDialog::loginAcceptButton);
+            this, &LoginDialog::tryLogin);
     connect(m_ui->signUpButtons, &QDialogButtonBox::accepted,
-            this, &LoginDialog::signUpAcceptButton);
+            this, &LoginDialog::trySignUp);
     connect(m_ui->loginButtons, &QDialogButtonBox::rejected,
             this, &LoginDialog::hide);
     connect(m_ui->signUpButtons, &QDialogButtonBox::rejected,
@@ -298,20 +308,7 @@ void LoginDialog::updateLabel(QLabel *_label, QLabel* _icon,
 
 }
 
-bool LoginDialog::abstractAcceptButton(QLineEdit *_line, QLabel* _label, QLabel* _icon)
-{
-    if (checkEmailValidy(_line->text())) {
-        _label->clear();
-        _icon->clear();
-        block();
-        return true;
-    } else {
-        updateLabel(_label, _icon, tr("Email is invalid"), true);
-        return false;
-    }
-}
-
-bool LoginDialog::checkEmailValidy(const QString& _email)
+bool LoginDialog::isEmailValid(const QString& _email)
 {
     //
     // Для валидатора нужна неконстантная ссылка,

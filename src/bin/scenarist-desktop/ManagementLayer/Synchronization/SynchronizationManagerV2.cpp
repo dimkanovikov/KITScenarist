@@ -259,7 +259,7 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     //
     // Если успешно отправили письмо
     //
-    emit restoredPassword();
+    emit passwordRestored();
 }
 
 void SynchronizationManagerV2::logout()
@@ -293,7 +293,7 @@ void SynchronizationManagerV2::logout()
     //
     // Если деавторизация прошла
     //
-    emit logouted();
+    emit logoutFinished();
 }
 
 bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseReader)

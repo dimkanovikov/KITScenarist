@@ -135,12 +135,12 @@ namespace UserInterface
         /**
          * @brief Слот для кнопки accept окна авторизации
          */
-        void loginAcceptButton();
+        void tryLogin();
 
         /**
          * @brief Слот для кнопки accept окна регистрации
          */
-        void signUpAcceptButton();
+        void trySignUp();
 
         /**
          * @brief Убрать окно ввода проверочного кода и показывать вместо него окно регистрации
@@ -186,14 +186,9 @@ namespace UserInterface
                            const QString& _message, bool _isError);
 
         /**
-         * @brief Общий метод для обработки accept кнопок для проверки правильности email
-         */
-        bool abstractAcceptButton(QLineEdit* _line, QLabel* _label, QLabel* _icon);
-
-        /**
          * @brief Проверят, является ли строка email
          */
-        bool checkEmailValidy(const QString& _email);
+        bool isEmailValid(const QString& _email);
 	private:
         Ui::LoginDialog *m_ui;
 

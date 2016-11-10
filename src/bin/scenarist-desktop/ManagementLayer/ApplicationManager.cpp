@@ -1474,9 +1474,9 @@ void ApplicationManager::initConnections()
             m_startUpManager, &StartUpManager::userAfterSignUp);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::verified,
             m_startUpManager, &StartUpManager::userAfterSignUp);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::restoredPassword,
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::passwordRestored,
             m_startUpManager, &StartUpManager::userPassRestored);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logouted,
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished,
             m_startUpManager, &StartUpManager::completeLogout);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::syncClosedWithError,
             this, &ApplicationManager::aboutSyncClosedWithError);
