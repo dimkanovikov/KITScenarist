@@ -103,6 +103,12 @@ namespace UserInterface
 		 */
 		void setFlowText(const QString& _text);
 
+    protected:
+        /**
+         * @brief Виджет на который нужно установить фокус при отображении
+         */
+        QWidget* focusedOnExec() const override;
+
 	private:
 		/**
 		 * @brief Настроить представление

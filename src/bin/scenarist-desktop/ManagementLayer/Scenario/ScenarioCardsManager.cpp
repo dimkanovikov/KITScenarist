@@ -169,8 +169,8 @@ void ScenarioCardsManager::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioCardsManager::addCard()
 {
-	m_addItemDialog->showCardPage();
-	m_addItemDialog->clear();
+    m_addItemDialog->showCardPage();
+    m_addItemDialog->clear();
 
 	//
 	// Если пользователь действительно хочет добавить элемент
@@ -201,12 +201,12 @@ void ScenarioCardsManager::addCard()
 
 void ScenarioCardsManager::editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description)
 {
-	m_addItemDialog->showCardPage();
-	m_addItemDialog->clear();
-	m_addItemDialog->setCardType((BusinessLogic::ScenarioModelItem::Type)_cardType);
-	m_addItemDialog->setCardTitle(_title);
-	m_addItemDialog->setCardColor(_color);
-	m_addItemDialog->setCardDescription(_description);
+    m_addItemDialog->showCardPage();
+    m_addItemDialog->clear();
+    m_addItemDialog->setCardType((BusinessLogic::ScenarioModelItem::Type)_cardType);
+    m_addItemDialog->setCardTitle(_title);
+    m_addItemDialog->setCardColor(_color);
+    m_addItemDialog->setCardDescription(_description);
 
 	//
 	// Если пользователь действительно хочет добавить элемент
