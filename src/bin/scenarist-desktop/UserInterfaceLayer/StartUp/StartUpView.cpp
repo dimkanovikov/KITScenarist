@@ -221,6 +221,8 @@ void StartUpView::initStyleSheet()
     ui->stackedWidget->setProperty("mainContainer", true);
     ui->stackedWidget->setProperty("baseForeground", true);
 
+    ui->renewSubscription_2->setProperty("leftAlignedText", true);
+    ui->cabinetQuit->setProperty("leftAlignedText", true);
 	ui->createProject->setProperty("leftAlignedText", true);
 	ui->openProject->setProperty("leftAlignedText", true);
 	ui->help->setProperty("leftAlignedText", true);
