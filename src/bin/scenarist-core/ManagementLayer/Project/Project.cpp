@@ -44,7 +44,8 @@ Project::Project() :
 }
 
 Project::Project(Type _type, const QString& _name, const QString& _path,
-	const QDateTime& _lastEditDatetime, int _id, const QString& _owner, Role _role) :
+	const QDateTime& _lastEditDatetime, int _id, const QString& _owner, Role _role,
+	const QStringList& _users) :
 	m_type(_type),
 	m_name(_name),
 	m_path(_path),
@@ -52,6 +53,7 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 	m_id(_id),
 	m_owner(_owner),
 	m_role(_role),
+	m_users(_users),
 	m_isSyncAvailable(false)
 {
 	//
@@ -157,6 +159,11 @@ int Project::id() const
 bool Project::isCommentOnly() const
 {
 	return m_role == Commentator;
+}
+
+QStringList Project::users() const
+{
+	return m_users;
 }
 
 bool Project::isSyncAvailable(int* _errorCode) const

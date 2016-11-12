@@ -32,13 +32,23 @@ namespace UserInterface
 		/**
 		 * @brief Был выбран проект для открытия
 		 */
-		void clicked(const QModelIndex&);
+		void clicked(const QModelIndex& _projectIndex);
+
+		/**
+		 * @brief Удалить пользователя с заданным адресом электронной почты
+		 */
+		void removeUserRequested(const QModelIndex& _projectIndex, const QString& _email);
 
 	private:
 		/**
 		 * @brief Обработать выбор проекта
 		 */
 		void handleProjectClick();
+
+		/**
+		 * @brief Обработать закрытие доступа к проекту для пользователя
+		 */
+		void handleRemoveUserRequest(const QString& _email);
 
 	private:
 		/**

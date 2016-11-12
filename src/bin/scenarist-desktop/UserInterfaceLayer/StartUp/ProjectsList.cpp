@@ -45,11 +45,18 @@ void ProjectsList::setModel(QAbstractItemModel* _model)
 				const QModelIndex projectIndex = m_model->index(row, 0);
 				const QString projectName = projectIndex.data(Qt::DisplayRole).toString();
 				const QString projectPath = projectIndex.data(Qt::WhatsThisRole).toString();
+				const QStringList users = projectIndex.data(Qt::UserRole).toStringList();
 
 				ProjectFileWidget* project = new ProjectFileWidget;
 				project->setProjectName(projectName);
 				project->setFilePath(projectPath);
+				for (const QString& user : users) {
+					const QStringList userInfo = user.split(";");
+					project->addCollaborator(userInfo.value(0), userInfo.value(1), userInfo.value(2));
+				}
+				//
 				connect(project, &ProjectFileWidget::clicked, this, &ProjectsList::handleProjectClick);
+				connect(project, &ProjectFileWidget::removeUserRequested, this, &ProjectsList::handleRemoveUserRequest);
 
 				layout->addWidget(project);
 			}
@@ -70,6 +77,15 @@ void ProjectsList::handleProjectClick()
 		QVBoxLayout* layout = dynamic_cast<QVBoxLayout*>(widget()->layout());
 		const int row = layout->indexOf(project);
 		emit clicked(m_model->index(row, 0));
+	}
+}
+
+void ProjectsList::handleRemoveUserRequest(const QString& _email)
+{
+	if (ProjectFileWidget* project = qobject_cast<ProjectFileWidget*>(sender())) {
+		QVBoxLayout* layout = dynamic_cast<QVBoxLayout*>(widget()->layout());
+		const int row = layout->indexOf(project);
+		emit removeUserRequested(m_model->index(row, 0), _email);
 	}
 }
 

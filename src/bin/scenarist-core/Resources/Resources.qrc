@@ -118,7 +118,7 @@
         <file>Icons/settings-cards.png</file>
         <file>Images/corkboard.jpg</file>
         <file>Icons/Editing/account-plus.png</file>
-        <file>Icons/Editing/close-box-outline.png</file>
+        <file>Icons/Editing/close.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

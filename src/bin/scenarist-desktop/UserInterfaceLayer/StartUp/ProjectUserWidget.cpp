@@ -25,6 +25,6 @@ void ProjectUserWidget::setUserInfo(const QString& _email, const QString& _name,
 void ProjectUserWidget::initConnections()
 {
 	connect(m_ui->closeAccess, &QToolButton::clicked, [=] {
-		emit removeUser(m_ui->userName->toolTip());
+		emit removeUserRequested(m_ui->userName->toolTip());
 	});
 }

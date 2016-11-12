@@ -38,7 +38,7 @@ void ProjectFileWidget::addCollaborator(const QString& _email, const QString& _n
 {
 	ProjectUserWidget* user = new ProjectUserWidget(this);
 	user->setUserInfo(_email, _name, _role);
-	connect(user, &ProjectUserWidget::removeUser, this, &ProjectFileWidget::removeUser);
+	connect(user, &ProjectUserWidget::removeUserRequested, this, &ProjectFileWidget::removeUserRequested);
 	m_ui->mainLayout->addWidget(user);
 
 	m_users.append(user);

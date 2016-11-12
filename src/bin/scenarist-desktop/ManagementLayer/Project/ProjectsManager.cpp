@@ -74,6 +74,7 @@ QAbstractItemModel* ProjectsManager::remoteProjects()
 		QStandardItem* item = new QStandardItem;
 		item->setData(project.displayName(), Qt::DisplayRole);
 		item->setData(project.displayPath(), Qt::WhatsThisRole);
+		item->setData(project.users(), Qt::UserRole);
 		remoteProjectsModel->appendRow(item);
 	}
 
@@ -304,7 +305,17 @@ void ProjectsManager::setRemoteProjects(const QString& _xml)
 			const QString roleText = projectsReader.attributes().value("role").toString();
 			Project::Role role = Project::roleFromString(roleText);
 
-			m_remoteProjects.append(Project(Project::Remote, name, path, lastEditDatetime, id, owner, role));
+			QStringList users;
+			projectsReader.readNextStartElement();
+			while (projectsReader.name().toString() != "project") {
+				if (projectsReader.tokenType() == QXmlStreamReader::StartElement
+					&& projectsReader.name().toString() == "user") {
+					users << projectsReader.readElementText();
+				}
+				projectsReader.readNextStartElement();
+			}
+
+			m_remoteProjects.append(Project(Project::Remote, name, path, lastEditDatetime, id, owner, role, users));
 		}
 	}
 

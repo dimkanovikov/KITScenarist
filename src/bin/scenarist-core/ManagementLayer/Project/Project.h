@@ -45,7 +45,7 @@ namespace ManagementLayer
 		Project();
 		Project(Type _type, const QString& _name, const QString& _path,
 			const QDateTime& _lastEditDatetime, int _id = 0, const QString& _owner = QString::null,
-			Role _role = Owner);
+			Role _role = Owner, const QStringList& _users = QStringList());
 
 		/**
 		 * @brief Тип проекта
@@ -99,6 +99,11 @@ namespace ManagementLayer
 		bool isCommentOnly() const;
 
 		/**
+		 * @brief Список пользователей
+		 */
+		QStringList users() const;
+
+		/**
 		 * @brief Возможна ли синхронизация
 		 */
 		/** @{ */
@@ -141,6 +146,11 @@ namespace ManagementLayer
 		 * @brief Роль пользователя в проекте (для проектов из облака)
 		 */
 		Role m_role;
+
+		/**
+		 * @brief Список пользователей проекта
+		 */
+		QStringList m_users;
 
 		/**
 		 * @brief Возможна ли синхронизация

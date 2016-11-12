@@ -7,13 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>136</width>
-    <height>35</height>
+    <height>21</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QToolButton" name="closeAccess">
      <property name="text">
@@ -21,7 +27,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-       <normaloff>:/Graphics/Icons/Editing/close-box-outline.png</normaloff>:/Graphics/Icons/Editing/close-box-outline.png</iconset>
+       <normaloff>:/Graphics/Icons/Editing/close.png</normaloff>:/Graphics/Icons/Editing/close.png</iconset>
      </property>
      <property name="autoRaise">
       <bool>true</bool>

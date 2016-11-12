@@ -47,7 +47,7 @@ namespace UserInterface
 		/**
 		 * @brief Удалить пользователя с заданным адресом электронной почты
 		 */
-		void removeUser(const QString& _email);
+		void removeUserRequested(const QString& _email);
 
 	protected:
 		/**

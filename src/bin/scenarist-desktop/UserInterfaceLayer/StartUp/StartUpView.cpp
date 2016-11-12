@@ -7,7 +7,6 @@
 
 using UserInterface::StartUpView;
 using UserInterface::ProjectsList;
-using UserInterface::RecentFilesDelegate;
 
 
 StartUpView::StartUpView(QWidget *parent) :
