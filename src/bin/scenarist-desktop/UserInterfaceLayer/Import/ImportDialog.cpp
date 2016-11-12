@@ -45,13 +45,13 @@ namespace {
 	 */
 	static QString filters() {
 		QString filters;
-		filters.append(QApplication::translate("UserInterface::ImportDialog", "All Supported Files") + QLatin1String(" (*.kitsp *.fdx *.docx *.doc *.odt)"));
-        filters.append(";;");
-        filters.append(QApplication::translate("UserInterface::ImportDialog","KIT Scenarist Project") + QLatin1String(" (*.kitsp)"));
+		filters.append(QApplication::translate("UserInterface::ImportDialog", "All Supported Files") + QLatin1String(" (*.kitsp *.fdx *.trelby *.docx *.doc *.odt)"));
+		filters.append(";;");
+		filters.append(QApplication::translate("UserInterface::ImportDialog","KIT Scenarist Project") + QLatin1String(" (*.kitsp)"));
 		filters.append(";;");
 		filters.append(QApplication::translate("UserInterface::ImportDialog","Final Draft screenplay") + QLatin1String(" (*.fdx)"));
 		filters.append(";;");
-        filters.append(QApplication::translate("UserInterface::ImportDialog","Trelby screenplay") + QLatin1String(" (*.trelby)"));
+		filters.append(QApplication::translate("UserInterface::ImportDialog","Trelby screenplay") + QLatin1String(" (*.trelby)"));
 		filters.append(";;");
 		filters.append(QApplication::translate("UserInterface::ImportDialog","Office Open XML") + QLatin1String(" (*.docx *.doc)"));
 		filters.append(";;");
