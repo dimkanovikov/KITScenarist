@@ -4,6 +4,7 @@
 #include "RecentFilesDelegate.h"
 
 #include <3rd_party/Helpers/ImageHelper.h>
+#include <3rd_party/Widgets/WAF/Animation.h>
 
 #include <QStandardItemModel>
 #include <QDesktopServices>
@@ -16,6 +17,9 @@ using UserInterface::StartUpView;
 using UserInterface::RecentFilesDelegate;
 using UserInterface::ChangePasswordDialog;
 using UserInterface::RenewSubscriptionDialog;
+
+using WAF::Animation;
+using WAF::AnimationDirection;
 
 
 StartUpView::StartUpView(QWidget *parent) :
@@ -63,10 +67,12 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const Q
 {
 	ui->loginIcon->setVisible(!isLogged);
 	ui->login->setVisible(!isLogged);
+    Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, false, isLogged);
+    //ui->cabinetFrame->setVisible(isLogged);
     //ui->logoutIcon->setVisible(isLogged);
     //ui->logout->setVisible(isLogged);
     //ui->logout->setText(QString("%1 <a href=\"#\" style=\"color:#2b78da;\">%2</a>").arg(_userName).arg(tr("Logout")));
-	ui->remoteProjects->setVisible(isLogged);
+    ui->remoteProjects->setVisible(isLogged);
 
     if (isLogged) {
         ui->userName->setText(_userName);
@@ -175,6 +181,7 @@ void StartUpView::initView()
     //ui->logout->hide();
 
 	ui->remoteProjects->hide();
+    ui->cabinetFrame->hide();
 
 	ui->filesSouces->setCurrentWidget(ui->recentFilesPage);
 
