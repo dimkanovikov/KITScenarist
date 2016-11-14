@@ -81,6 +81,10 @@ void ChangePasswordDialog::block()
 
 void ChangePasswordDialog::initConnections()
 {
+    //
+    // Соединения к сигналу accepted должны быть именно в таком порядке
+    // иначе, пароль изменится, окно разблокируется, а затем заблокируется
+    //
     connect(m_ui->buttonBox, &QDialogButtonBox::accepted,
             this, &ChangePasswordDialog::block);
     connect(m_ui->buttonBox, &QDialogButtonBox::accepted,
