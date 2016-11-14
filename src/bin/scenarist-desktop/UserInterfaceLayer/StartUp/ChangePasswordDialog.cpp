@@ -51,6 +51,7 @@ void ChangePasswordDialog::showPrepared()
     m_ui->oldPassword->clear();
     m_ui->newPassword->clear();
     show();
+    m_ui->oldPassword->setFocus();
 }
 
 QString ChangePasswordDialog::getPassword() const

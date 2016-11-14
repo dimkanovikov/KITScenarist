@@ -766,7 +766,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case 406: {
             error = tr("Invalid old password");
-            m->startUpManager->retrySignUp(error);
+            m_startUpManager->retrySignUp(error);
             break;
         }
 
