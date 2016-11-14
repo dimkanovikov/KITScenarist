@@ -64,11 +64,31 @@ namespace ManagementLayer
          */
         void logout();
 
+        /**
+         * @brief Продлить подписку
+         */
+        void renewSubscription(unsigned _duration, unsigned _type);
+
+        /**
+         * @brief Сменить имя пользователя
+         */
+        void changeUserName(const QString& _newUserName);
+
+        /**
+         * @brief Получить информацию о подписке
+         */
+        void getSubscriptionInfo();
+
+        /**
+         * @brief Сменить пароль
+         */
+        void changePassword(const QString& _password, const QString& _newPassword);
+
     signals:
         /**
          * @brief Авторизация пройдена успешно
          */
-        void loginAccepted();
+        void loginAccepted(const QString& _userName, const QString& _userEmail);
 
         /**
          * @brief Сервер успешно принял данные пользователя на регистрацию
@@ -89,6 +109,21 @@ namespace ManagementLayer
          * @brief Авторизация закрыта
          */
         void logoutFinished();
+
+        /**
+         * @brief Успешно изменено имя пользователя
+         */
+        void userNameChange();
+
+        /**
+         * @brief Успешно запрошена информация о подписке
+         */
+        void subscriptionInfoGot(bool, QString);
+
+        /**
+         * @brief Успешно изменен пароль
+         */
+        void passwordChanged();
 
         /**
          * @brief Ошибка
@@ -114,6 +149,11 @@ namespace ManagementLayer
          * Ключ сессии
          */
         QString m_sessionKey;
+
+        /**
+         * @brief Email пользователя
+         */
+        QString m_userEmail;
 
         /**
          * Загрузчик

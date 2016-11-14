@@ -38,6 +38,7 @@ ChangePasswordDialog::ChangePasswordDialog(QWidget *_parent) :
     dataChanged();
 
     QLightBoxDialog::initView();
+    initConnections();
 }
 
 ChangePasswordDialog::~ChangePasswordDialog()
@@ -45,7 +46,14 @@ ChangePasswordDialog::~ChangePasswordDialog()
     delete m_ui;
 }
 
-QString ChangePasswordDialog::getOldPassword() const
+void ChangePasswordDialog::showPrepared()
+{
+    m_ui->oldPassword->clear();
+    m_ui->newPassword->clear();
+    show();
+}
+
+QString ChangePasswordDialog::getPassword() const
 {
     return m_ui->oldPassword->text();
 }
@@ -53,6 +61,34 @@ QString ChangePasswordDialog::getOldPassword() const
 QString ChangePasswordDialog::getNewPassword() const
 {
     return m_ui->newPassword->text();
+}
+
+void ChangePasswordDialog::hide()
+{
+    QLightBoxDialog::setEnabled(true);
+
+    hideProgress();
+
+    QLightBoxDialog::hide();
+}
+
+void ChangePasswordDialog::block()
+{
+    QLightBoxDialog::setEnabled(false);
+
+    showProgress();
+}
+
+void ChangePasswordDialog::initConnections()
+{
+    connect(m_ui->buttonBox, &QDialogButtonBox::accepted,
+            this, &ChangePasswordDialog::block);
+    connect(m_ui->buttonBox, &QDialogButtonBox::accepted,
+            this, &ChangePasswordDialog::changeRequested);
+    connect(m_ui->buttonBox, &QDialogButtonBox::rejected,
+            this, &ChangePasswordDialog::hide);
+
+    QLightBoxDialog::initConnections();
 }
 
 void ChangePasswordDialog::dataChanged()

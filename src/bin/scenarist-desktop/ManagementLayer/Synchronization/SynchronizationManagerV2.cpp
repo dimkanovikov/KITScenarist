@@ -27,6 +27,7 @@
 #include <QXmlStreamReader>
 #include <QEventLoop>
 #include <QTimer>
+#include <QDesktopServices>
 
 using ManagementLayer::SynchronizationManagerV2;
 using DataStorageLayer::StorageFacade;
@@ -41,6 +42,8 @@ namespace {
     const QUrl URL_RESTORE = QUrl("https://kitscenarist.ru/api/account/restore/");
     const QUrl URL_LOGIN = QUrl("https://kitscenarist.ru/api/account/login/");
     const QUrl URL_LOGOUT = QUrl("https://kitscenarist.ru/api/account/logout/");
+    const QUrl URL_UPDATE = QUrl("https://kitscenarist.ru/api/account/update/");
+    const QUrl URL_SUBSCRIBE_STATE = QUrl("https://kitscenarist.ru/api/account/subscribe/state/");
     /** @} */
 
     /**
@@ -49,7 +52,9 @@ namespace {
     /** @{ */
     const QString KEY_EMAIL = "email";
     const QString KEY_LOGIN = "login";
+    const QString KEY_USERNAME = "username";
     const QString KEY_PASSWORD = "password";
+    const QString KEY_NEW_PASSWORD = "new_password";
     const QString KEY_SESSION_KEY = "session_key";
 
     /**
@@ -117,8 +122,10 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
         return;
     }
 
+    QString userName;
+
     //
-    // Найдем наш ключ сессии
+    // Найдем наш ключ сессии и имя пользователя
     //
     m_sessionKey.clear();
     while (!responseReader.atEnd()) {
@@ -126,7 +133,11 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
         if (responseReader.name().toString() == "session_key") {
             responseReader.readNext();
             m_sessionKey = responseReader.text().toString();
-            break;
+            responseReader.readNext();
+        } else if (responseReader.name().toString() == "user_name") {
+            responseReader.readNext();
+            userName = responseReader.text().toString();
+            responseReader.readNext();
         }
     }
 
@@ -150,7 +161,12 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
                 PasswordStorage::save(_password, _email),
                 SettingsStorage::ApplicationSettings);
 
-    emit loginAccepted();
+    //
+    // Запомним email
+    //
+    m_userEmail = _email;
+
+    emit loginAccepted(userName, m_userEmail);
 
 }
 
@@ -182,6 +198,7 @@ void SynchronizationManagerV2::signUp(const QString& _email, const QString& _pas
         if (responseReader.name().toString() == "session_key") {
             responseReader.readNext();
             m_sessionKey = responseReader.text().toString();
+            responseReader.readNext();
             break;
         }
     }
@@ -248,6 +265,7 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
         if (responseReader.name().toString() == "send_mail_result") {
             responseReader.readNext();
             QString status = responseReader.text().toString();
+            responseReader.readNext();
             if (status != "success") {
                 handleError(status, UNKNOWN_ERROR_CODE);
                 return;
@@ -273,6 +291,7 @@ void SynchronizationManagerV2::logout()
     }
 
     m_sessionKey.clear();
+    m_userEmail.clear();
 
     //
     // Удаляем сохраненные значения, если они были
@@ -294,6 +313,114 @@ void SynchronizationManagerV2::logout()
     // Если деавторизация прошла
     //
     emit logoutFinished();
+}
+
+void SynchronizationManagerV2::renewSubscription(unsigned _duration,
+                                                 unsigned _type)
+{
+    QDesktopServices::openUrl(QUrl(QString("http://kitscenarist.ru/api/account/subscribe/?"
+                                           "user=%1&month=%2&payment_type=%3").
+                                   arg(m_userEmail).arg(_duration).
+                                   arg(_type == 0 ? "AC" : "PC")));
+}
+
+void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
+{
+    QByteArray response;
+    if (m_sessionKey.isEmpty()) {
+        handleError(tr("Session key is empty"), 408);
+        return;
+    }
+
+    m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->clearRequestAttributes();
+    m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+    m_loader->addRequestAttribute(KEY_USERNAME, _newUserName);
+    response = m_loader->loadSync(URL_UPDATE);
+
+    //
+    // Считываем результат авторизации
+    //
+    QXmlStreamReader responseReader(response);
+
+    if (!isOperationSucceed(responseReader)) {
+        return;
+    }
+    emit userNameChange();
+}
+
+void SynchronizationManagerV2::getSubscriptionInfo()
+{
+    QByteArray response;
+    if (m_sessionKey.isEmpty()) {
+        handleError(tr("Session key is empty"), 408);
+        return;
+    }
+
+    m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->clearRequestAttributes();
+    m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+    response = m_loader->loadSync(URL_SUBSCRIBE_STATE);
+
+    //
+    // Считываем результат авторизации
+    //
+    QXmlStreamReader responseReader(response);
+
+    //
+    // Распарсим результат
+    //
+    bool isActive;
+    QString date;
+
+    bool isActiveFind = false;
+    while (!responseReader.atEnd()) {
+        responseReader.readNext();
+        if (responseReader.name().toString() == "subscribe_is_active") {
+            isActiveFind = true;
+            responseReader.readNext();
+            isActive = responseReader.text().toString() == "true";
+            responseReader.readNext();
+        } else if (responseReader.name().toString() == "subscribe_end") {
+            responseReader.readNext();
+            date = responseReader.text().toString();
+            responseReader.readNext();
+        }
+    }
+
+    if (!isActiveFind || (isActiveFind && isActive && date.isEmpty())) {
+        handleError(tr("Got wrong result from server"), 404);
+        return;
+    }
+
+    emit subscriptionInfoGot(isActive, date);
+}
+
+void SynchronizationManagerV2::changePassword(const QString& _password,
+                                              const QString& _newPassword)
+{
+    QByteArray response;
+    if (m_sessionKey.isEmpty()) {
+        handleError(tr("Session key is empty"), 408);
+        return;
+    }
+
+    m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->clearRequestAttributes();
+    m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+    m_loader->addRequestAttribute(KEY_PASSWORD, _password);
+    m_loader->addRequestAttribute(KEY_NEW_PASSWORD, _newPassword);
+    response = m_loader->loadSync(URL_UPDATE);
+
+    //
+    // Считываем результат авторизации
+    //
+    QXmlStreamReader responseReader(response);
+
+    if (!isOperationSucceed(responseReader)) {
+        return;
+    }
+    emit passwordChanged();
 }
 
 bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseReader)

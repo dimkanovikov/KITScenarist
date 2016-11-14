@@ -39,18 +39,39 @@ namespace UserInterface
         ~ChangePasswordDialog();
 
         /**
+         * @brief Показать окно, очистив его предварительно
+         */
+        void showPrepared();
+
+        /**
          * @brief Получить старый пароль
          */
-        QString getOldPassword() const;
+        QString getPassword() const;
 
         /**
          * @brief Получить новый пароль
          */
         QString getNewPassword() const;
 
+        /**
+         * @brief Скроем окно, предварительно разблокировав его
+         */
+        void hide();
+
+    public slots:
+        /**
+         * @brief Блокируем окно и показываем прогрессбар
+         */
+        void block();
+
+    signals:
+        void changeRequested();
+
     private:
         Ui::ChangePasswordDialog *m_ui;
         QPushButton *m_accept;
+
+        void initConnections();
 
     private slots:
         void dataChanged();

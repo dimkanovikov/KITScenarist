@@ -6,6 +6,8 @@
 #include <3rd_party/Helpers/ImageHelper.h>
 
 #include <QStandardItemModel>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "ChangePasswordDialog.h"
 #include "RenewSubscriptionDialog.h"
@@ -57,7 +59,7 @@ void StartUpView::setUpdateInfo(const QString& _updateInfo)
 	ui->updateInfo->show();
 }
 
-void StartUpView::setUserLogged(bool isLogged, const QString& _userName)
+void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const QString& _userEmail)
 {
 	ui->loginIcon->setVisible(!isLogged);
 	ui->login->setVisible(!isLogged);
@@ -66,9 +68,25 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName)
     //ui->logout->setText(QString("%1 <a href=\"#\" style=\"color:#2b78da;\">%2</a>").arg(_userName).arg(tr("Logout")));
 	ui->remoteProjects->setVisible(isLogged);
 
+    if (isLogged) {
+        ui->userName->setText(_userName);
+        ui->userEmail->setText(_userEmail);
+    }
+
 	if (!isLogged && ui->remoteProjects->isChecked()) {
 		ui->localProjects->setChecked(true);
-	}
+    }
+}
+
+void StartUpView::setSubscriptionInfo(bool _isActive, const QString &_expDate)
+{
+    if (_isActive) {
+        ui->subscriptionActivity->setText(tr("Subscription is active until"));
+        ui->subscriptionEndDate->setText(_expDate);
+    } else {
+        ui->subscriptionActivity->setText(tr("Subscription is inactive"));
+        ui->subscriptionEndDate->clear();
+    }
 }
 
 void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
@@ -138,22 +156,6 @@ void StartUpView::aboutFilesSourceChanged()
 	}
 }
 
-void StartUpView::changePassword()
-{
-    ChangePasswordDialog dialog(this);
-    if(dialog.exec() == QLightBoxDialog::Accepted) {
-        //FIXME: дописать, когда появится реализация
-    }
-}
-
-void StartUpView::renewSubscription()
-{
-    RenewSubscriptionDialog dialog(this);
-    if(dialog.exec() == QLightBoxDialog::Accepted) {
-        //FIXME: дописать, когда появится реализация
-    }
-}
-
 void StartUpView::initView()
 {
 	QFont versionFont = ui->version->font();
@@ -194,19 +196,15 @@ void StartUpView::initConnections()
 	connect(ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));
 	connect(ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));
 
+    connect(ui->userName, &AcceptebleLineEdit::textAccepted, this, &StartUpView::userNameChanged);
+    connect(ui->changePassword, &QPushButton::clicked, this, &StartUpView::passwordChangeClicked);
+    connect(ui->getSubscriptionInfo, &QToolButton::clicked, this, &StartUpView::getSubscriptionInfoClicked);
+    connect(ui->renewSubscription, &QPushButton::clicked, this, &StartUpView::renewSubscriptionClicked);
+
 	connect(ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
 	connect(ui->recentFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRecentProjectClicked(QModelIndex)));
 	connect(ui->remoteFiles, SIGNAL(clicked(QModelIndex)), this, SIGNAL(openRemoteProjectClicked(QModelIndex)));
 	connect(ui->refreshProjects, SIGNAL(clicked()), this, SIGNAL(refreshProjects()));
-    connect(ui->changePassword, &QPushButton::clicked, this, &StartUpView::changePassword);
-    connect(ui->renewSubscription, &QPushButton::clicked, this, &StartUpView::renewSubscription);
-
-    connect(ui->toProjects, &QPushButton::clicked, [this] {
-        ui->stackedWidget->setCurrentWidget(ui->projectsPage);
-    });
-    connect(ui->toCabinet, &QPushButton::clicked, [this] {
-        ui->stackedWidget->setCurrentWidget(ui->cabinetPage);
-    });
 }
 
 void StartUpView::initStyleSheet()
@@ -218,16 +216,14 @@ void StartUpView::initStyleSheet()
 	ui->mainContainer->setProperty("mainContainer", true);
     //ui->projectsFrame->setProperty("mainContainer", true);
     //ui->projectsFrame->setProperty("baseForeground", true);
-    ui->stackedWidget->setProperty("mainContainer", true);
-    ui->stackedWidget->setProperty("baseForeground", true);
 
-    ui->renewSubscription_2->setProperty("leftAlignedText", true);
-    ui->cabinetQuit->setProperty("leftAlignedText", true);
+    ui->getSubscriptionInfo->setProperty("leftAlignedText", true);
+    ui->changePassword->setProperty("leftAlignedText", true);
+    ui->logout->setProperty("leftAlignedText", true);
 	ui->createProject->setProperty("leftAlignedText", true);
 	ui->openProject->setProperty("leftAlignedText", true);
 	ui->help->setProperty("leftAlignedText", true);
 
-    ui->cabinetHeader->setProperty("inStartUpView", true);
 	ui->localProjects->setProperty("inStartUpView", true);
 	ui->remoteProjects->setProperty("inStartUpView", true);
 

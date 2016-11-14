@@ -36,7 +36,13 @@ namespace UserInterface
 		/**
 		 * @brief Установить информацию о том, авторизован пользователь или нет
 		 */
-		void setUserLogged(bool isLogged, const QString& _userName = QString::null);
+        void setUserLogged(bool isLogged, const QString& _userName = QString::null,
+                           const QString& _userEmail = QString::null);
+
+        /**
+         * @brief Установить информацию о подписке
+         */
+        void setSubscriptionInfo(bool _isActive, const QString& _expDate);
 
 		/**
 		 * @brief Установить список доступных проектов
@@ -69,6 +75,25 @@ namespace UserInterface
 		 */
 		void helpClicked();
 
+        /**
+         * @brief Пользователь решил сменить свое имя
+         */
+        void userNameChanged(const QString& _newUserName);
+
+        /**
+         * @brief Пользователь нажал кнопку смены пароля
+         */
+        void passwordChangeClicked();
+
+        /**
+         * @brief Пользователь нажал кнопку обновления информации о подписке
+         */
+        void getSubscriptionInfoClicked();
+
+        /**
+         * @brief Пользователь нажал кнопку продления подписки
+         */
+        void renewSubscriptionClicked();
 		/**
 		 * @brief Выбран один из недавно используемых проектов для открытия
 		 */
@@ -99,17 +124,7 @@ namespace UserInterface
 		/**
 		 * @brief Пользователь сменил источник отображаемых проектов
 		 */
-		void aboutFilesSourceChanged();
-
-        /**
-         * @brief Пользователь желает сменить пароль
-         */
-        void changePassword();
-
-        /**
-         * @brief Пользователь желает продлить подписку
-         */
-        void renewSubscription();
+        void aboutFilesSourceChanged();
 
 	private:
 		/**

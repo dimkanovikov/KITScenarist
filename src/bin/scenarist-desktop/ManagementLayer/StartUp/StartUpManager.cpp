@@ -21,11 +21,14 @@
 
 #include <UserInterfaceLayer/StartUp/StartUpView.h>
 #include <UserInterfaceLayer/StartUp/LoginDialog.h>
+#include <UserInterfaceLayer/StartUp/ChangePasswordDialog.h>
+#include <UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/PasswordStorage.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <QApplication>
 #include <QFile>
@@ -43,11 +46,14 @@ using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
 using UserInterface::StartUpView;
 using UserInterface::LoginDialog;
+using UserInterface::ChangePasswordDialog;
+using UserInterface::RenewSubscriptionDialog;
 
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
     m_view(new StartUpView(_parentWidget)),
-    m_loginDialog(new LoginDialog(m_view))
+    m_loginDialog(new LoginDialog(m_view)),
+    m_changePasswordDialog(new ChangePasswordDialog(m_view))
 {
     initView();
 
@@ -62,10 +68,10 @@ QWidget* StartUpManager::view() const
 	return m_view;
 }
 
-void StartUpManager::completeLogin()
+void StartUpManager::completeLogin(const QString& _userName, const QString& _userEmail)
 {
     const bool isLogged = true;
-    m_view->setUserLogged(isLogged, m_userName);
+    m_view->setUserLogged(isLogged, _userName, _userEmail);
     m_loginDialog->unblock();
     m_loginDialog->hide();
 }
@@ -95,6 +101,26 @@ void StartUpManager::completeLogout()
 {
     const bool isLogged = false;
     m_view->setUserLogged(isLogged);
+}
+
+void StartUpManager::passwordChanged()
+{
+    m_changePasswordDialog->hide();
+    QLightBoxMessage::information(m_view, tr("Password changed"),
+                                  tr("Password successfully changed"));
+}
+
+void StartUpManager::subscriptionInfoGot(bool _isActive, const QString &_expDate)
+{
+    m_view->setSubscriptionInfo(_isActive, _expDate);
+}
+
+void StartUpManager::renewSubscriptionShow()
+{
+    RenewSubscriptionDialog dialog(m_view);
+    if(dialog.exec() == QLightBoxDialog::Accepted) {
+        emit renewSubscriptionRequested(dialog.getDuration(), dialog.getType());
+    }
 }
 
 void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
@@ -265,6 +291,20 @@ void StartUpManager::initConnections()
     });
     connect(m_loginDialog, &LoginDialog::restoreRequested, [this] {
         emit restoreRequested(m_loginDialog->loginEmail());
+    });
+    connect(m_view, &StartUpView::userNameChanged,
+            this, &StartUpManager::userNameChangeRequested);
+    connect(m_view, &StartUpView::getSubscriptionInfoClicked,
+            this, &StartUpManager::getSubscriptionInfoRequested);
+    connect(m_view, &StartUpView::renewSubscriptionClicked,
+            this, &StartUpManager::renewSubscriptionShow);
+    connect(m_view, &StartUpView::passwordChangeClicked, [this] {
+        m_changePasswordDialog->showPrepared();
+    });
+
+    connect(m_changePasswordDialog, &ChangePasswordDialog::changeRequested, [this] {
+        emit passwordChangeRequested(m_changePasswordDialog->getPassword(),
+                                     m_changePasswordDialog->getNewPassword());
     });
 }
 

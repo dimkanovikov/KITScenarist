@@ -25,6 +25,7 @@
 namespace UserInterface {
 	class StartUpView;
     class LoginDialog;
+    class ChangePasswordDialog;
 }
 
 class QAbstractItemModel;
@@ -49,7 +50,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Пользователь с заданным именем успешно авторизован на сервере
 		 */
-        void completeLogin();
+        void completeLogin(const QString& _userName, const QString& _userEmail);
 
         /**
          * @brief Пользователь успешно отправил данные для регистрации
@@ -71,6 +72,21 @@ namespace ManagementLayer
 		 * @brief Пользователь закрыл авторизацию
 		 */
         void completeLogout();
+
+        /**
+         * @brief Пароль успешно сменен
+         */
+        void passwordChanged();
+
+        /**
+         * @brief Получена информация о подписке
+         */
+        void subscriptionInfoGot(bool _isActive, const QString& _expDate);
+
+        /**
+         * @brief Показать диалог продления подписки
+         */
+        void renewSubscriptionShow();
 
 		/**
 		 * @brief Установить список недавно используемых проектов
@@ -117,6 +133,27 @@ namespace ManagementLayer
          * @brief Пользователь хочет восстановить пароль
          */
         void restoreRequested(const QString& _email);
+
+        /**
+         * @brief Пользователь хочет сменить имя
+         */
+        void userNameChangeRequested(const QString& _userName);
+
+        /**
+         * @brief Пользователь хочет запросить информацию о подписке
+         */
+        void getSubscriptionInfoRequested();
+
+        /**
+         * @brief Пользователь хочет продлить подписку
+         */
+        void renewSubscriptionRequested(unsigned _duration, unsigned _type);
+
+        /**
+         * @brief Пользователь хочет сменить пароль
+         */
+        void passwordChangeRequested(const QString& _password,
+                                     const QString& _newPassword);
 
 		/**
 		 * @brief Пользователь хочет выйти
@@ -201,6 +238,13 @@ namespace ManagementLayer
          * @brief Окно авторизации/регистрации
          */
         UserInterface::LoginDialog* m_loginDialog;
+
+        /**
+         * @brief Окно смены пароля
+         */
+        UserInterface::ChangePasswordDialog* m_changePasswordDialog;
+
+
 	};
 }
 

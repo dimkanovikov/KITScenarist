@@ -809,7 +809,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			//
 			// Имитируем успешную авторизацию
 			//
-			m_startUpManager->completeLogin();
+            //m_startUpManager->completeLogin();
 			//
 			// и загружаем список доступных проектов из кэша
 			//
@@ -1407,6 +1407,15 @@ void ApplicationManager::initConnections()
             m_synchronizationManagerV2, &SynchronizationManagerV2::restorePassword);
     connect(m_startUpManager, &StartUpManager::logoutRequested,
             m_synchronizationManagerV2, &SynchronizationManagerV2::logout);
+    connect(m_startUpManager, &StartUpManager::renewSubscriptionRequested,
+            m_synchronizationManagerV2, &SynchronizationManagerV2::renewSubscription);
+    connect(m_startUpManager, &StartUpManager::userNameChangeRequested,
+            m_synchronizationManagerV2, &SynchronizationManagerV2::changeUserName);
+    connect(m_startUpManager, &StartUpManager::getSubscriptionInfoRequested,
+            m_synchronizationManagerV2, &SynchronizationManagerV2::getSubscriptionInfo);
+    connect(m_startUpManager, &StartUpManager::passwordChangeRequested,
+            m_synchronizationManagerV2, &SynchronizationManagerV2::changePassword);
+
     connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
@@ -1478,6 +1487,10 @@ void ApplicationManager::initConnections()
             m_startUpManager, &StartUpManager::userPassRestored);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished,
             m_startUpManager, &StartUpManager::completeLogout);
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::passwordChanged,
+            m_startUpManager, &StartUpManager::passwordChanged);
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::subscriptionInfoGot,
+            m_startUpManager, &StartUpManager::subscriptionInfoGot);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::syncClosedWithError,
             this, &ApplicationManager::aboutSyncClosedWithError);
 }
