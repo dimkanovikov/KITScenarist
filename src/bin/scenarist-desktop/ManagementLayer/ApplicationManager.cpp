@@ -762,6 +762,15 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         }
 
         //
+        // Старый пароль некорректен
+        //
+        case 406: {
+            error = tr("Invalid old password");
+            m->startUpManager->retrySignUp(error);
+            break;
+        }
+
+        //
         // Неверный код валидации
         //
         case 505: {
