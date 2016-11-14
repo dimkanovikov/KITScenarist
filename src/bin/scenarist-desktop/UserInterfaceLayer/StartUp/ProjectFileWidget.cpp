@@ -34,12 +34,21 @@ void ProjectFileWidget::setFilePath(const QString& _filePath)
 	m_ui->filePath->setText(_filePath);
 }
 
+void ProjectFileWidget::setIsRemote(bool _isRemote)
+{
+	m_ui->change->setVisible(_isRemote);
+	m_ui->remove->setVisible(_isRemote);
+	m_ui->share->setVisible(_isRemote);
+
+	m_ui->hide->setVisible(!_isRemote);
+}
+
 void ProjectFileWidget::addCollaborator(const QString& _email, const QString& _name, const QString& _role)
 {
 	ProjectUserWidget* user = new ProjectUserWidget(this);
 	user->setUserInfo(_email, _name, _role);
 	connect(user, &ProjectUserWidget::removeUserRequested, this, &ProjectFileWidget::removeUserRequested);
-	m_ui->mainLayout->addWidget(user);
+	m_ui->usersLayout->addWidget(user);
 
 	m_users.append(user);
 }
@@ -100,12 +109,17 @@ void ProjectFileWidget::initView()
 	m_ui->options->setIcons(m_ui->options->icon());
 
 	m_ui->optionsPanel->hide();
+
+	m_ui->users->hide();
 }
 
 void ProjectFileWidget::initConnections()
 {
 	connect(m_ui->options, &FlatButton::toggled, [=] (bool _toggled) {
 		WAF::Animation::slide(m_ui->optionsPanel, WAF::FromRightToLeft, true, _toggled);
+		if (m_ui->usersLayout->count() > 0) {
+			WAF::Animation::slide(m_ui->users, WAF::FromBottomToTop, false, _toggled);
+		}
 	});
 }
 

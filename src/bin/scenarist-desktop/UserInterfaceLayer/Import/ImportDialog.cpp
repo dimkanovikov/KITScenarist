@@ -99,7 +99,8 @@ BusinessLogic::ImportParameters ImportDialog::importParameters() const
 void ImportDialog::aboutChooseFile()
 {
 	QString filePath =
-			QFileDialog::getOpenFileName(this, tr("Choose file to import"), ::importFolderPath(), ::filters());
+			QFileDialog::getOpenFileName(this, tr("Choose file to import"), ::importFolderPath(),
+										 BusinessLogic::AbstractImporter::filters());
 
 	if (!filePath.isEmpty()) {
 		//

@@ -8,6 +8,11 @@
 using UserInterface::StartUpView;
 using UserInterface::ProjectsList;
 
+namespace {
+	const bool PROJECTS_IS_REMOTE = true;
+	const bool PROJECTS_IS_LOCAL = false;
+}
+
 
 StartUpView::StartUpView(QWidget *parent) :
 	QWidget(parent),
@@ -32,7 +37,7 @@ void StartUpView::setRecentProjects(QAbstractItemModel* _recentProjectsModel)
 	//
 	if (ui->recentFiles->model() != 0) {
 		QAbstractItemModel* oldModel = ui->recentFiles->model();
-		ui->recentFiles->setModel(0);
+		ui->recentFiles->setModel(0, PROJECTS_IS_LOCAL);
 		delete oldModel;
 		oldModel = 0;
 	}
@@ -41,7 +46,7 @@ void StartUpView::setRecentProjects(QAbstractItemModel* _recentProjectsModel)
 	// Установим новую модель
 	//
 	_recentProjectsModel->setParent(ui->recentFiles);
-	ui->recentFiles->setModel(_recentProjectsModel);
+	ui->recentFiles->setModel(_recentProjectsModel, PROJECTS_IS_LOCAL);
 }
 
 void StartUpView::setUpdateInfo(const QString& _updateInfo)
@@ -71,7 +76,7 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
 	//
 	if (ui->remoteFiles->model() != 0) {
 		QAbstractItemModel* oldModel = ui->remoteFiles->model();
-		ui->remoteFiles->setModel(0);
+		ui->remoteFiles->setModel(0, PROJECTS_IS_REMOTE);
 		delete oldModel;
 		oldModel = 0;
 	}
@@ -80,7 +85,7 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
 	// Установим новую модель
 	//
 	_remoteProjectsModel->setParent(ui->remoteFiles);
-	ui->remoteFiles->setModel(_remoteProjectsModel);
+	ui->remoteFiles->setModel(_remoteProjectsModel, PROJECTS_IS_REMOTE);
 }
 
 bool StartUpView::event(QEvent* _event)

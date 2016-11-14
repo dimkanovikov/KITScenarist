@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>474</width>
-    <height>350</height>
+    <height>316</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -47,19 +47,15 @@ border: 1px solid palette(dark);
     </widget>
    </item>
    <item row="1" column="0" colspan="2">
-    <widget class="QGroupBox" name="filePanel">
-     <property name="title">
-      <string/>
+    <widget class="QFrame" name="filePanel">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>File:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="1" column="1">
        <widget class="QLineEdit" name="file">
         <property name="text">
          <string/>
@@ -69,7 +65,7 @@ border: 1px solid palette(dark);
         </property>
        </widget>
       </item>
-      <item>
+      <item row="1" column="2">
        <widget class="FlatButton" name="browseFile">
         <property name="toolTip">
          <string>Browse...</string>
@@ -89,6 +85,13 @@ border: 1px solid palette(dark);
         </property>
         <property name="autoRaise">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Choose File with Project to Import:</string>
         </property>
        </widget>
       </item>
@@ -177,8 +180,6 @@ border: 1px solid palette(dark);
  <tabstops>
   <tabstop>scenario</tabstop>
   <tabstop>outline</tabstop>
-  <tabstop>file</tabstop>
-  <tabstop>browseFile</tabstop>
   <tabstop>removeScenesNumbers</tabstop>
   <tabstop>replaceScenario</tabstop>
   <tabstop>currentCursorPosition</tabstop>

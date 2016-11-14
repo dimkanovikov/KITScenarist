@@ -33,6 +33,7 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <UserInterfaceLayer/ApplicationView.h>
+#include <UserInterfaceLayer/Project/AddProjectDialog.h>
 
 #include <QApplication>
 #include <QComboBox>
@@ -54,6 +55,7 @@
 
 using namespace ManagementLayer;
 using UserInterface::ApplicationView;
+using UserInterface::AddProjectDialog;
 
 namespace {
 	/**
@@ -230,90 +232,120 @@ void ApplicationManager::aboutCreateNew()
 	// Спросить у пользователя хочет ли он сохранить проект
 	//
 	if (saveIfNeeded()) {
+		AddProjectDialog dlg(m_view);
 		//
-		// Получим имя файла для нового проекта
+		// TODO: SyncManager
 		//
-		QString newProjectFileName =
-				QFileDialog::getSaveFileName(
-					m_view,
-					tr("Choose file for new project"),
-					projectsFolderPath(),
-					tr ("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
-					);
-
-		//
-		// Если файл выбран
-		//
-		if (!newProjectFileName.isEmpty()) {
+//		dlg.setIsRemoteAvailable(false);
+		while (dlg.exec() != AddProjectDialog::Rejected) {
 			//
-			// ... закроем текущий проект
+			// Если пользователь добавляет локальный проект
 			//
-			closeCurrentProject();
-
-			//
-			// ... установим расширение, если не задано
-			//
-			if (!newProjectFileName.endsWith(PROJECT_FILE_EXTENSION)) {
-				newProjectFileName.append(PROJECT_FILE_EXTENSION);
-			}
-
-			//
-			// ... проверяем, можем ли мы писать в выбранный файл
-			//
-			QFile file(newProjectFileName);
-			const bool canWrite = file.open(QIODevice::WriteOnly);
-			file.close();
-
-			//
-			// Если возможна запись в файл
-			//
-			if (canWrite) {
+			if (dlg.isLocal()) {
 				//
-				// ... если файл существовал, удалим его для удаления данных в нём
+				// Путь к файлу проекта должен быть обязательно задан
 				//
-				if (QFile::exists(newProjectFileName)) {
-					QFile::remove(newProjectFileName);
+				if (!dlg.projectFilePath().isEmpty()) {
+					//
+					// Если задан, то создаём новый проект в заданном файле
+					//
+					const QString newProjectPath = dlg.projectFilePath();
+					const QString importFilePath = dlg.isNeedImport() ? dlg.importFilePath() : QString::null;
+					createNewLocalProject(newProjectPath, importFilePath);
+					break;
 				}
-				//
-				// ... создаём новую базу данных в файле и делаем её текущим проектом
-				//
-				m_projectsManager->setCurrentProject(newProjectFileName);
-				//
-				// ... сохраняем путь
-				//
-				saveProjectsFolderPath(newProjectFileName);
-				//
-				// ... перейдём к редактированию
-				//
-				goToEditCurrentProject();
-
 			}
 			//
-			// Если невозможно записать в файл, предупреждаем пользователя и отваливаемся
+			// Проект в облаке
 			//
 			else {
-				const QFileInfo fileInfo(newProjectFileName);
-				//
-				// ... предупреждаем
-				//
-				QString errorMessage;
-				if (!fileInfo.dir().exists()) {
-					errorMessage =
-						tr("You try to create project in nonexistent folder <b>%1</b>. Please, choose other location for new project.")
-						.arg(fileInfo.dir().absolutePath());
-				} else if (fileInfo.exists()) {
-					errorMessage =
-						tr("Can't write to file. Maybe it opened in other application. Please, close it and retry.");
-				} else {
-					errorMessage =
-						tr("Can't write to file. Check permissions to write in choosed folder. Please, choose other folder.");
-				}
-				QLightBoxMessage::critical(m_view, tr("Create project error"), errorMessage);
-				//
-				// ... и перезапускаем создание проекта
-				//
-				QTimer::singleShot(0, this, &ApplicationManager::aboutCreateNew);
+
 			}
+		}
+	}
+}
+
+void ApplicationManager::createNewLocalProject(const QString& _filePath, const QString& _importFilePath)
+{
+	QString newProjectFilePath = _filePath;
+
+	//
+	// Если файл выбран
+	//
+	if (!newProjectFilePath.isEmpty()) {
+		//
+		// ... закроем текущий проект
+		//
+		closeCurrentProject();
+
+		//
+		// ... установим расширение, если не задано
+		//
+		if (!newProjectFilePath.endsWith(PROJECT_FILE_EXTENSION)) {
+			newProjectFilePath.append(PROJECT_FILE_EXTENSION);
+		}
+
+		//
+		// ... проверяем, можем ли мы писать в выбранный файл
+		//
+		QFile file(newProjectFilePath);
+		const bool canWrite = file.open(QIODevice::WriteOnly);
+		file.close();
+
+		//
+		// Если возможна запись в файл
+		//
+		if (canWrite) {
+			//
+			// ... если файл существовал, удалим его для удаления данных в нём
+			//
+			if (QFile::exists(newProjectFilePath)) {
+				QFile::remove(newProjectFilePath);
+			}
+			//
+			// ... создаём новую базу данных в файле и делаем её текущим проектом
+			//
+			m_projectsManager->setCurrentProject(newProjectFilePath);
+			//
+			// ... сохраняем путь
+			//
+			saveProjectsFolderPath(newProjectFilePath);
+			//
+			// ... перейдём к редактированию
+			//
+			goToEditCurrentProject();
+			//
+			// ... и импортируем, если надо
+			//
+			if (!_importFilePath.isEmpty()) {
+				m_importManager->importScenario(m_scenarioManager->scenario(), _importFilePath);
+			}
+		}
+		//
+		// Если невозможно записать в файл, предупреждаем пользователя и отваливаемся
+		//
+		else {
+			const QFileInfo fileInfo(newProjectFilePath);
+			//
+			// ... предупреждаем
+			//
+			QString errorMessage;
+			if (!fileInfo.dir().exists()) {
+				errorMessage =
+					tr("You try to create project in nonexistent folder <b>%1</b>. Please, choose other location for new project.")
+					.arg(fileInfo.dir().absolutePath());
+			} else if (fileInfo.exists()) {
+				errorMessage =
+					tr("Can't write to file. Maybe it opened in other application. Please, close it and retry.");
+			} else {
+				errorMessage =
+					tr("Can't write to file. Check permissions to write in choosed folder. Please, choose other folder.");
+			}
+			QLightBoxMessage::critical(m_view, tr("Create project error"), errorMessage);
+			//
+			// ... и перезапускаем создание проекта
+			//
+			QTimer::singleShot(0, this, &ApplicationManager::aboutCreateNew);
 		}
 	}
 }

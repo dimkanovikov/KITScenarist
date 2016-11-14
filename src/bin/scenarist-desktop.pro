@@ -101,9 +101,6 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp \
     scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.cpp \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.cpp \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.cpp \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectNavigator/ProjectNavigator.cpp \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectCards/ProjectCards.cpp \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp \
     scenarist-desktop/UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp \
@@ -326,7 +323,9 @@ SOURCES += \
     scenarist-core/BusinessLayer/Import/TrelbyImporter.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.cpp
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.cpp \
+    scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp \
+    scenarist-core/BusinessLayer/Import/KitScenaristImporter.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -343,9 +342,6 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.h \
     scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.h \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.h \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.h \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectNavigator/ProjectNavigator.h \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectCards/ProjectCards.h \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.h \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.h \
     scenarist-desktop/UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.h \
@@ -593,7 +589,9 @@ HEADERS += \
     scenarist-core/BusinessLayer/Import/TrelbyImporter.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.h
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.h \
+    scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.h \
+    scenarist-core/BusinessLayer/Import/KitScenaristImporter.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -612,7 +610,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.ui \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.ui \
-    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.ui
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.ui \
+    scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui
 
 
 RESOURCES += \

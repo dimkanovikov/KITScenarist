@@ -63,7 +63,10 @@ namespace ManagementLayer
 		/**
 		 * @brief Создать новый
 		 */
+		/** @{ */
 		void aboutCreateNew();
+		void createNewLocalProject(const QString& _filePath, const QString& _importFilePath);
+		/** @} */
 
 		/**
 		 * @brief Сохранить как...

@@ -16,7 +16,7 @@ ProjectsList::ProjectsList(QWidget* _parent) :
 	initView();
 }
 
-void ProjectsList::setModel(QAbstractItemModel* _model)
+void ProjectsList::setModel(QAbstractItemModel* _model, bool _isRemote)
 {
 	if (m_model != _model) {
 		QVBoxLayout* layout = dynamic_cast<QVBoxLayout*>(widget()->layout());
@@ -50,9 +50,12 @@ void ProjectsList::setModel(QAbstractItemModel* _model)
 				ProjectFileWidget* project = new ProjectFileWidget;
 				project->setProjectName(projectName);
 				project->setFilePath(projectPath);
+				project->setIsRemote(_isRemote);
 				for (const QString& user : users) {
-					const QStringList userInfo = user.split(";");
-					project->addCollaborator(userInfo.value(0), userInfo.value(1), userInfo.value(2));
+					if (!user.simplified().isEmpty()) {
+						const QStringList userInfo = user.split(";");
+						project->addCollaborator(userInfo.value(0), userInfo.value(1), userInfo.value(2));
+					}
 				}
 				//
 				connect(project, &ProjectFileWidget::clicked, this, &ProjectsList::handleProjectClick);

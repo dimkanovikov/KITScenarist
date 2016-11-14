@@ -25,8 +25,20 @@ namespace UserInterface
 	public:
 		explicit ProjectFileWidget(QWidget *parent = 0);
 
+		/**
+		 * @brief Установить название проекта
+		 */
 		void setProjectName(const QString& _projectName);
+
+		/**
+		 * @brief Установить путь к файлу проекта
+		 */
 		void setFilePath(const QString& _filePath);
+
+		/**
+		 * @brief Установить расположение объекта - облако (true) или локально (false)
+		 */
+		void setIsRemote(bool _isRemote);
 
 		/**
 		 * @brief Добавить соавтора

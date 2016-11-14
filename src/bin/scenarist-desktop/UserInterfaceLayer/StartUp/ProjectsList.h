@@ -21,7 +21,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить модель проектов
 		 */
-		void setModel(QAbstractItemModel* _model);
+		void setModel(QAbstractItemModel* _model, bool _isRemote);
 
 		/**
 		 * @brief Получить модель проектов

@@ -453,6 +453,9 @@
            </property>
            <item>
             <widget class="QRadioButton" name="localProjects">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
              <property name="text">
               <string>Projects from local computer</string>
              </property>
@@ -463,6 +466,9 @@
            </item>
            <item>
             <widget class="QRadioButton" name="remoteProjects">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
              <property name="text">
               <string>Projects from kitscenarist.ru</string>
              </property>
