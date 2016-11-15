@@ -28,6 +28,7 @@
 #include <QEventLoop>
 #include <QTimer>
 #include <QDesktopServices>
+#include <QDateTime>
 
 using ManagementLayer::SynchronizationManagerV2;
 using DataStorageLayer::StorageFacade;
@@ -72,6 +73,7 @@ namespace {
 SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _parentView) :
     QObject(_parent),
     m_view(_parentView),
+    m_activeSubscribe(false),
     m_loader(new WebLoader(this))
 {
 
@@ -123,9 +125,11 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     }
 
     QString userName;
+    QString date;
 
+    bool isActiveFind = false;
     //
-    // Найдем наш ключ сессии и имя пользователя
+    // Найдем наш ключ сессии, имя пользователя, информацию о подписке
     //
     m_sessionKey.clear();
     while (!responseReader.atEnd()) {
@@ -138,7 +142,21 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
             responseReader.readNext();
             userName = responseReader.text().toString();
             responseReader.readNext();
+        } else if (responseReader.name().toString() == "subscribe_is_active") {
+            isActiveFind = true;
+            responseReader.readNext();
+            m_activeSubscribe = responseReader.text().toString() == "true";
+            responseReader.readNext();
+        } else if (responseReader.name().toString() == "subscribe_end") {
+            responseReader.readNext();
+            date = responseReader.text().toString();
+            responseReader.readNext();
         }
+    }
+
+    if (!isActiveFind || (isActiveFind && m_activeSubscribe && date.isEmpty())) {
+        handleError(tr("Got wrong result from server"), 404);
+        return;
     }
 
     //
@@ -166,6 +184,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     //
     m_userEmail = _email;
 
+    emit subscriptionInfoGot(m_activeSubscribe, dateTransform(date));
     emit loginAccepted(userName, m_userEmail);
 
 }
@@ -379,7 +398,7 @@ void SynchronizationManagerV2::getSubscriptionInfo()
         if (responseReader.name().toString() == "subscribe_is_active") {
             isActiveFind = true;
             responseReader.readNext();
-            isActive = responseReader.text().toString() == "true";
+            m_activeSubscribe = responseReader.text().toString() == "true";
             responseReader.readNext();
         } else if (responseReader.name().toString() == "subscribe_end") {
             responseReader.readNext();
@@ -388,12 +407,12 @@ void SynchronizationManagerV2::getSubscriptionInfo()
         }
     }
 
-    if (!isActiveFind || (isActiveFind && isActive && date.isEmpty())) {
+    if (!isActiveFind || (isActiveFind && m_activeSubscribe && date.isEmpty())) {
         handleError(tr("Got wrong result from server"), 404);
         return;
     }
 
-    emit subscriptionInfoGot(isActive, date);
+    emit subscriptionInfoGot(m_activeSubscribe, dateTransform(date));
 }
 
 void SynchronizationManagerV2::changePassword(const QString& _password,
@@ -474,4 +493,9 @@ void SynchronizationManagerV2::handleError(const QString &_error, int _code)
 {
     m_sessionKey.clear();
     emit syncClosedWithError(_code, _error);
+}
+
+QString SynchronizationManagerV2::dateTransform(const QString &_date)
+{
+    return QDateTime::fromString(_date, "yyyy-MM-dd hh:mm:ss").toString("dd.MM.yyyy");
 }

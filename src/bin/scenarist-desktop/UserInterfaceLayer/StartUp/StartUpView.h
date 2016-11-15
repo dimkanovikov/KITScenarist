@@ -126,6 +126,11 @@ namespace UserInterface
 		 */
         void aboutFilesSourceChanged();
 
+        /**
+         * @brief Пользователь хочет отобразить/скрыть кабинет
+         */
+        void cabinetChangeVisibility();
+
 	private:
 		/**
 		 * @brief Настроить представление

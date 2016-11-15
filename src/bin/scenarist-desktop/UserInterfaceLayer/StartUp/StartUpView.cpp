@@ -9,6 +9,7 @@
 #include <QStandardItemModel>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QTimer>
 
 #include "ChangePasswordDialog.h"
 #include "RenewSubscriptionDialog.h"
@@ -67,7 +68,14 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const Q
 {
 	ui->loginIcon->setVisible(!isLogged);
 	ui->login->setVisible(!isLogged);
+    ui->userEmail->setVisible(isLogged);
+    ui->userEmailIcon->setVisible(isLogged);
     Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, false, isLogged);
+    if(!isLogged) {
+        QTimer::singleShot(300, ui->cabinetFrame, &QWidget::hide);
+    } else {
+        ui->cabinetFrame->show();
+    }
     //ui->cabinetFrame->setVisible(isLogged);
     //ui->logoutIcon->setVisible(isLogged);
     //ui->logout->setVisible(isLogged);
@@ -75,8 +83,8 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const Q
     ui->remoteProjects->setVisible(isLogged);
 
     if (isLogged) {
-        ui->userName->setText(_userName);
-        ui->userEmail->setText(_userEmail);
+        ui->userName->setAcceptedText(_userName);
+        ui->userEmail->setText(QString("<a href=\"#\" style=\"color:#2b78da;\">%1</a>").arg(_userEmail));
     }
 
 	if (!isLogged && ui->remoteProjects->isChecked()) {
@@ -87,10 +95,10 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const Q
 void StartUpView::setSubscriptionInfo(bool _isActive, const QString &_expDate)
 {
     if (_isActive) {
-        ui->subscriptionActivity->setText(tr("Subscription is active until"));
+        ui->subscriptionActivity->setText(tr("The subscription is active until"));
         ui->subscriptionEndDate->setText(_expDate);
     } else {
-        ui->subscriptionActivity->setText(tr("Subscription is inactive"));
+        ui->subscriptionActivity->setText(tr("The subscription is inactive"));
         ui->subscriptionEndDate->clear();
     }
 }
@@ -159,7 +167,19 @@ void StartUpView::aboutFilesSourceChanged()
 		ui->filesSouces->setCurrentWidget(ui->recentFilesPage);
 	} else {
 		ui->filesSouces->setCurrentWidget(ui->remoteFilesPage);
-	}
+    }
+}
+
+void StartUpView::cabinetChangeVisibility()
+{
+    bool isVisible = ui->cabinetFrame->isVisible();
+    if (!isVisible) {
+        ui->cabinetFrame->show();
+    }
+    Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, false, !isVisible);
+    if (isVisible) {
+        QTimer::singleShot(300, ui->cabinetFrame, &QWidget::hide);
+    }
 }
 
 void StartUpView::initView()
@@ -182,6 +202,8 @@ void StartUpView::initView()
 
 	ui->remoteProjects->hide();
     ui->cabinetFrame->hide();
+    ui->userEmail->hide();
+    ui->userEmailIcon->hide();
 
 	ui->filesSouces->setCurrentWidget(ui->recentFilesPage);
 
@@ -198,7 +220,8 @@ void StartUpView::initView()
 void StartUpView::initConnections()
 {
 	connect(ui->login, SIGNAL(linkActivated(QString)), this, SIGNAL(loginClicked()));
-    connect(ui->logout, &QPushButton::clicked, this, &StartUpView::logoutClicked);;
+    connect(ui->userEmail, &QLabel::linkActivated, this, &StartUpView::cabinetChangeVisibility);
+    connect(ui->logout, &QPushButton::clicked, this, &StartUpView::logoutClicked);
 	connect(ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
 	connect(ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));
 	connect(ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));
@@ -225,6 +248,7 @@ void StartUpView::initStyleSheet()
     //ui->projectsFrame->setProperty("baseForeground", true);
 
     ui->getSubscriptionInfo->setProperty("leftAlignedText", true);
+    ui->renewSubscription->setProperty("leftAlignedText", true);
     ui->changePassword->setProperty("leftAlignedText", true);
     ui->logout->setProperty("leftAlignedText", true);
 	ui->createProject->setProperty("leftAlignedText", true);

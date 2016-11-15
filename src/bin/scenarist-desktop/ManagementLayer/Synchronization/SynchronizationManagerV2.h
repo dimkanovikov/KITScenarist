@@ -33,6 +33,10 @@ namespace ManagementLayer
     public:
         explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
 
+        /**
+         * @brief Активна ли подписка у пользователя
+         */
+        bool isActiveSubscribe();
     public slots:
         /**
          * @brief Авторизоваться на сервере, используя сохраненные логин и пароль
@@ -141,6 +145,11 @@ namespace ManagementLayer
         void handleError(const QString& _error, int _code = 0);
 
         /**
+         * @brief Преобразовать дату из гггг.мм.дд чч:мм:сс в дд.мм.гггг
+         */
+        QString dateTransform(const QString& _date);
+
+        /**
          * @brief указатель на главную форму приложения
          */
         QWidget* m_view;
@@ -154,6 +163,11 @@ namespace ManagementLayer
          * @brief Email пользователя
          */
         QString m_userEmail;
+
+        /**
+         * @brief Активна ли подписка у пользователя
+         */
+        bool m_activeSubscribe;
 
         /**
          * Загрузчик
