@@ -1425,7 +1425,6 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::passwordChangeRequested,
             m_synchronizationManagerV2, &SynchronizationManagerV2::changePassword);
 
-    connect(m_startUpManager, SIGNAL(logoutRequested()), m_synchronizationManager, SLOT(aboutLogout()));
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
 	connect(m_startUpManager, SIGNAL(helpRequested()), this, SLOT(aboutShowHelp()));
