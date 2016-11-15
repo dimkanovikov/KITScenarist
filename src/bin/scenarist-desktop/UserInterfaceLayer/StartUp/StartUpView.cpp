@@ -67,13 +67,18 @@ void StartUpView::setUpdateInfo(const QString& _updateInfo)
 void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const QString& _userEmail)
 {
 	ui->loginIcon->setVisible(!isLogged);
-	ui->login->setVisible(!isLogged);
-    ui->userEmail->setVisible(isLogged);
-    ui->userEmailIcon->setVisible(isLogged);
+    ui->login->setVisible(!isLogged);
     Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, false, isLogged);
     if(!isLogged) {
-        QTimer::singleShot(300, ui->cabinetFrame, &QWidget::hide);
+        QTimer::singleShot(300, [this] {
+            ui->cabinetFrame->hide();
+            ui->userEmail->hide();
+            ui->userEmailIcon->hide();
+        });
+        //QTimer::singleShot(300, ui->cabinetFrame, &QWidget::hide);
     } else {
+        ui->userEmail->show();
+        ui->userEmailIcon->show();
         ui->cabinetFrame->show();
     }
     //ui->cabinetFrame->setVisible(isLogged);
