@@ -68,13 +68,20 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const Q
 {
 	ui->loginIcon->setVisible(!isLogged);
     ui->login->setVisible(!isLogged);
-    ui->userEmail->setVisible(isLogged);
-    ui->userEmailIcon->setVisible(isLogged);
     ui->remoteProjects->setVisible(isLogged);
 
     if (isLogged) {
         ui->userName->setAcceptedText(_userName);
         ui->userEmail->setText(QString("<a href=\"#\" style=\"color:#2b78da;\">%1</a>").arg(_userEmail));
+        ui->userEmail->show();
+        ui->userEmailIcon->show();
+    } else {
+        Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, false, false);
+        QTimer::singleShot(300, [this] {
+            ui->cabinetFrame->hide();
+            ui->userEmail->hide();
+            ui->userEmailIcon->hide();
+        });
     }
 
 	if (!isLogged && ui->remoteProjects->isChecked()) {
