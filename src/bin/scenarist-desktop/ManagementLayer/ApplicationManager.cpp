@@ -193,7 +193,7 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	reloadApplicationSettings();
 
     //QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
-    QTimer::singleShot(0, m_synchronizationManagerV2, SLOT(autoLogin()));
+    QTimer::singleShot(0, m_synchronizationManagerV2, &SynchronizationManagerV2::autoLogin);
 }
 
 ApplicationManager::~ApplicationManager()
@@ -716,7 +716,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 				// Переподключаемся
 				//
                 //QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
-                QTimer::singleShot(0, m_synchronizationManagerV2, SLOT(autoLogin()));
+                QTimer::singleShot(0, m_synchronizationManagerV2, &SynchronizationManagerV2::autoLogin);
 				return;
 			} else {
 				//
@@ -757,7 +757,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case 405: {
             error = tr("Password too weak");
-            m_startUpManager->retrySignUp(error);
+            m_startUpManager->showPasswordError(error);
             break;
         }
 
@@ -766,7 +766,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case 406: {
             error = tr("Invalid old password");
-            m_startUpManager->retrySignUp(error);
+            m_startUpManager->showPasswordError(error);
             break;
         }
 

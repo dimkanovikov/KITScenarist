@@ -79,6 +79,11 @@ namespace ManagementLayer
         void passwordChanged();
 
         /**
+         * @brief passwordNotChanged
+         */
+        void showPasswordError(const QString& _error);
+
+        /**
          * @brief Получена информация о подписке
          */
         void subscriptionInfoGot(bool _isActive, const QString& _expDate);

@@ -244,6 +244,8 @@ void StartUpView::initStyleSheet()
     //ui->projectsFrame->setProperty("mainContainer", true);
     //ui->projectsFrame->setProperty("baseForeground", true);
 
+    ui->userName->setProperty("editableLabel", true);
+
     ui->getSubscriptionInfo->setProperty("leftAlignedText", true);
     ui->renewSubscription->setProperty("leftAlignedText", true);
     ui->changePassword->setProperty("leftAlignedText", true);

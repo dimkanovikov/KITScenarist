@@ -110,6 +110,23 @@ void StartUpManager::passwordChanged()
                                   tr("Password successfully changed"));
 }
 
+void StartUpManager::showPasswordError(const QString& _error)
+{
+    if (m_loginDialog->isVisible()) {
+        //
+        // Если активно окно авторизации, то покажем ошибку там
+        //
+        retrySignUp(_error);
+    } else {
+        //
+        // Иначе, активно окно смены пароля
+        //
+        m_changePasswordDialog->stopAndHide();
+        QLightBoxMessage::critical(m_view, tr("Can not change password"),
+                                      _error);
+    }
+}
+
 void StartUpManager::subscriptionInfoGot(bool _isActive, const QString &_expDate)
 {
     m_view->setSubscriptionInfo(_isActive, _expDate);
