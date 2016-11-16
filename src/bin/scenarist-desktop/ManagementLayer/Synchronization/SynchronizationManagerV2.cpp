@@ -478,7 +478,7 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
     //
     // Ничего не нашли про статус. Скорее всего пропал интернет
     //    
-    handleError(tr("Can't estabilish network connection."), 100);
+    handleError(tr("Can't estabilish network connection."), 0);
     return false;
 }
 
