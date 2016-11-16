@@ -723,6 +723,16 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			}
 
 			int currentItemEndPos = cursor.position();
+			//
+			// ... если текущий элемент является группирующим, то нужно также включить и закрывающий блок
+			//
+			if (nextBlockType == ScenarioBlockStyle::SceneGroupFooter
+				|| nextBlockType == ScenarioBlockStyle::FolderFooter) {
+				QTextCursor endCursor = cursor;
+				endCursor.movePosition(QTextCursor::NextBlock);
+				endCursor.movePosition(QTextCursor::EndOfBlock);
+				currentItemEndPos = endCursor.position();
+			}
 
 			//
 			// Сформируем элемент, если это не конец группы
@@ -921,9 +931,11 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			case ScenarioBlockStyle::SceneDescription: {
 				if (!isFirstDescriptionBlock) {
 					description.append("\n");
+				} else {
+					description = "";
+					isFirstDescriptionBlock = false;
 				}
 				description.append(cursor.block().text());
-				isFirstDescriptionBlock = false;
 				break;
 			}
 
@@ -933,13 +945,15 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			default: {
 				if (!isFirstTextBlock) {
 					itemText.append(" ");
+				} else {
+					itemText = "";
+					isFirstTextBlock = false;
 				}
 				ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
 				itemText +=
 						blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
 						? cursor.block().text().toUpper()
 						: cursor.block().text();
-				isFirstTextBlock = false;
 			}
 		}
 
