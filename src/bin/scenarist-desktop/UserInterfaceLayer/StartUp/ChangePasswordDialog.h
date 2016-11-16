@@ -44,6 +44,11 @@ namespace UserInterface
         void showPrepared();
 
         /**
+         * @brief Показать окно, не очищая его
+         */
+        void showUnprepared();
+
+        /**
          * @brief Получить старый пароль
          */
         QString password() const;

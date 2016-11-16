@@ -48,6 +48,12 @@ void ChangePasswordDialog::showPrepared()
     m_ui->oldPassword->setFocus();
 }
 
+void ChangePasswordDialog::showUnprepared()
+{
+    show();
+    m_ui->oldPassword->setFocus();
+}
+
 QString ChangePasswordDialog::password() const
 {
     return m_ui->oldPassword->text();
@@ -76,6 +82,11 @@ void ChangePasswordDialog::block()
 
 void ChangePasswordDialog::initConnections()
 {
+    connect(this, &ChangePasswordDialog::accepted, [this] {
+        if (m_accept->isEnabled()) {
+            emit m_ui->buttonBox->accepted();
+        }
+    });
     connect(m_ui->oldPassword, &PasswordLineEdit::textChanged,
             this, &ChangePasswordDialog::setAcceptButtonAvailability);
     connect(m_ui->newPassword, &PasswordLineEdit::textChanged,
@@ -92,6 +103,7 @@ void ChangePasswordDialog::initConnections()
     connect(m_ui->buttonBox, &QDialogButtonBox::rejected,
             this, &ChangePasswordDialog::stopAndHide);
 
+    QWidget::setTabOrder(m_ui->oldPassword, m_ui->newPassword);
     QLightBoxDialog::initConnections();
 }
 

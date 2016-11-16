@@ -166,6 +166,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 
     if (!isActiveFind || (isActiveFind && m_activeSubscribe && date.isEmpty())) {
         handleError(tr("Got wrong result from server"), 404);
+        m_sessionKey.clear();
         return;
     }
 
@@ -275,11 +276,11 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     QByteArray response = m_loader->loadSync(URL_RESTORE);
 
     //
-    // Считываем результат авторизации
+    // Считываем результат
     //
     QXmlStreamReader responseReader(response);
     //
-    // Успешно ли завершилась авторизация
+    // Успешно ли завершилась операция
     //
     if(!isOperationSucceed(responseReader)) {
         return;
@@ -288,7 +289,6 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     //
     // Найдем статус
     //
-    m_sessionKey.clear();
     while (!responseReader.atEnd()) {
         responseReader.readNext();
         if (responseReader.name().toString() == "send_mail_result") {
@@ -440,7 +440,7 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
         _responseReader.readNext();
         if (_responseReader.name().toString() == "status") {
             //
-            // Авторизация успешна
+            // Операция успешна
             //
             if (_responseReader.attributes().value("result").toString() == "true") {
                 return true;
@@ -453,6 +453,7 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
                     // Неизвестная ошибка
                     //
                     handleError(UNKNOWN_ERROR_STRING, UNKNOWN_ERROR_CODE);
+                    m_sessionKey.clear();
                     return false;
                 }
 
@@ -483,6 +484,5 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
 
 void SynchronizationManagerV2::handleError(const QString &_error, int _code)
 {
-    m_sessionKey.clear();
     emit syncClosedWithError(_code, _error);
 }
