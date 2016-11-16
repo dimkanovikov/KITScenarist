@@ -124,6 +124,7 @@ void StartUpManager::showPasswordError(const QString& _error)
         m_changePasswordDialog->stopAndHide();
         QLightBoxMessage::critical(m_view, tr("Can not change password"),
                                       _error);
+        m_changePasswordDialog->show();
     }
 }
 
