@@ -44,6 +44,8 @@ void ChangePasswordDialog::showPrepared()
 {
     m_ui->oldPassword->clear();
     m_ui->newPassword->clear();
+    m_ui->oldPassword->resetAsterisk();
+    m_ui->newPassword->resetAsterisk();
     show();
     m_ui->oldPassword->setFocus();
 }
@@ -87,6 +89,8 @@ void ChangePasswordDialog::initConnections()
             emit m_ui->buttonBox->accepted();
         }
     });
+    connect(this, &ChangePasswordDialog::rejected,
+            this, &ChangePasswordDialog::hide);
     connect(m_ui->oldPassword, &PasswordLineEdit::textChanged,
             this, &ChangePasswordDialog::setAcceptButtonAvailability);
     connect(m_ui->newPassword, &PasswordLineEdit::textChanged,
