@@ -46,35 +46,42 @@ namespace UserInterface
         /**
          * @brief Получить старый пароль
          */
-        QString getPassword() const;
+        QString password() const;
 
         /**
          * @brief Получить новый пароль
          */
-        QString getNewPassword() const;
+        QString newPassword() const;
 
         /**
          * @brief Скроем окно, предварительно разблокировав его
          */
-        void hide();
+        void stopAndHide();
 
-    public slots:
         /**
          * @brief Блокируем окно и показываем прогрессбар
          */
         void block();
 
     signals:
+        /**
+         * @brief Пользователь нажал кнопку Сменить
+         */
         void changeRequested();
 
     private:
-        Ui::ChangePasswordDialog *m_ui;
-        QPushButton *m_accept;
+        /**
+         * @brief Пользователь ввел в одно из полей паролей
+         */
+        void setAcceptButtonAvailability();
 
         void initConnections();
+        void initView();
 
-    private slots:
-        void dataChanged();
+    private:
+        Ui::ChangePasswordDialog *m_ui;
+
+        QPushButton *m_accept;
     };
 }
 

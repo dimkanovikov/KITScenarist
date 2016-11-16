@@ -105,7 +105,7 @@ void StartUpManager::completeLogout()
 
 void StartUpManager::passwordChanged()
 {
-    m_changePasswordDialog->hide();
+    m_changePasswordDialog->stopAndHide();
     QLightBoxMessage::information(m_view, tr("Password changed"),
                                   tr("Password successfully changed"));
 }
@@ -119,7 +119,7 @@ void StartUpManager::renewSubscriptionShow()
 {
     RenewSubscriptionDialog dialog(m_view);
     if(dialog.exec() == QLightBoxDialog::Accepted) {
-        emit renewSubscriptionRequested(dialog.getDuration(), dialog.getType());
+        emit renewSubscriptionRequested(dialog.duration(), dialog.paymentSystemType());
     }
 }
 
@@ -303,8 +303,8 @@ void StartUpManager::initConnections()
     });
 
     connect(m_changePasswordDialog, &ChangePasswordDialog::changeRequested, [this] {
-        emit passwordChangeRequested(m_changePasswordDialog->getPassword(),
-                                     m_changePasswordDialog->getNewPassword());
+        emit passwordChangeRequested(m_changePasswordDialog->password(),
+                                     m_changePasswordDialog->newPassword());
     });
 }
 

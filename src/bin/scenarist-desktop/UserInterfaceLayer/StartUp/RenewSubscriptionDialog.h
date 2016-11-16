@@ -33,12 +33,26 @@ namespace UserInterface
         explicit RenewSubscriptionDialog(QWidget *_parent = 0);
         ~RenewSubscriptionDialog();
 
-        unsigned getDuration() const;
-        unsigned getAmount() const;
-        unsigned getType() const;
+        /**
+         * @brief Получить длительность периода запрашиваемой подписки
+         */
+        unsigned duration() const;
 
-    private slots:
-        void durationChanged();
+        /**
+         * @brief Получить стоимость запрашиваемой подписки
+         */
+        unsigned amount() const;
+
+        /**
+         * @brief Получить тип оплаты. 0 банковская карта, 1 - Яндекс.Деньги
+         */
+        unsigned paymentSystemType() const;
+
+    private:
+        /**
+         * @brief Сменился период запрашиваемой подписки
+         */
+        void setPaymentText();
 
     private:
         Ui::RenewSubscriptionDialog *m_ui;

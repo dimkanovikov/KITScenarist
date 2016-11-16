@@ -29,15 +29,9 @@ ChangePasswordDialog::ChangePasswordDialog(QWidget *_parent) :
     m_ui->setupUi(this);
     m_ui->buttonBox->addButton(m_accept, QDialogButtonBox::AcceptRole);
 
-    connect(m_ui->oldPassword, &PasswordLineEdit::textChanged,
-            this, &ChangePasswordDialog::dataChanged);
-    connect(m_ui->newPassword, &PasswordLineEdit::textChanged,
-            this, &ChangePasswordDialog::dataChanged);
+    setAcceptButtonAvailability();
 
-
-    dataChanged();
-
-    QLightBoxDialog::initView();
+    initView();
     initConnections();
 }
 
@@ -54,17 +48,17 @@ void ChangePasswordDialog::showPrepared()
     m_ui->oldPassword->setFocus();
 }
 
-QString ChangePasswordDialog::getPassword() const
+QString ChangePasswordDialog::password() const
 {
     return m_ui->oldPassword->text();
 }
 
-QString ChangePasswordDialog::getNewPassword() const
+QString ChangePasswordDialog::newPassword() const
 {
     return m_ui->newPassword->text();
 }
 
-void ChangePasswordDialog::hide()
+void ChangePasswordDialog::stopAndHide()
 {
     QLightBoxDialog::setEnabled(true);
 
@@ -82,6 +76,11 @@ void ChangePasswordDialog::block()
 
 void ChangePasswordDialog::initConnections()
 {
+    connect(m_ui->oldPassword, &PasswordLineEdit::textChanged,
+            this, &ChangePasswordDialog::setAcceptButtonAvailability);
+    connect(m_ui->newPassword, &PasswordLineEdit::textChanged,
+            this, &ChangePasswordDialog::setAcceptButtonAvailability);
+
     //
     // Соединения к сигналу accepted должны быть именно в таком порядке
     // иначе, пароль изменится, окно разблокируется, а затем заблокируется
@@ -91,12 +90,17 @@ void ChangePasswordDialog::initConnections()
     connect(m_ui->buttonBox, &QDialogButtonBox::accepted,
             this, &ChangePasswordDialog::changeRequested);
     connect(m_ui->buttonBox, &QDialogButtonBox::rejected,
-            this, &ChangePasswordDialog::hide);
+            this, &ChangePasswordDialog::stopAndHide);
 
     QLightBoxDialog::initConnections();
 }
 
-void ChangePasswordDialog::dataChanged()
+void ChangePasswordDialog::initView()
+{
+    QLightBoxDialog::initView();
+}
+
+void ChangePasswordDialog::setAcceptButtonAvailability()
 {
     if(m_ui->oldPassword->text().isEmpty() || m_ui->newPassword->text().isEmpty()) {
         m_accept->setEnabled(false);

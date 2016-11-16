@@ -70,6 +70,16 @@ namespace {
     /** @} */
 }
 
+namespace {
+    /**
+     * @brief Преобразовать дату из гггг.мм.дд чч:мм:сс в дд.мм.гггг
+     */
+    QString dateTransform(const QString &_date)
+    {
+        return QDateTime::fromString(_date, "yyyy-MM-dd hh:mm:ss").toString("dd.MM.yyyy");
+    }
+}
+
 SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _parentView) :
     QObject(_parent),
     m_view(_parentView),
@@ -184,7 +194,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     //
     m_userEmail = _email;
 
-    emit subscriptionInfoGot(m_activeSubscribe, dateTransform(date));
+    emit subscriptionInfoLoaded(m_activeSubscribe, dateTransform(date));
     emit loginAccepted(userName, m_userEmail);
 
 }
@@ -233,7 +243,7 @@ void SynchronizationManagerV2::signUp(const QString& _email, const QString& _pas
     //
     // Если авторизация прошла
     //
-    emit signUped();
+    emit signUpFinished();
 }
 
 void SynchronizationManagerV2::verify(const QString& _code)
@@ -301,13 +311,10 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
 
 void SynchronizationManagerV2::logout()
 {
-    QByteArray response;
-    if (!m_sessionKey.isEmpty()) {
-        m_loader->setRequestMethod(WebLoader::Post);
-        m_loader->clearRequestAttributes();
-        m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-        response = m_loader->loadSync(URL_LOGOUT);
-    }
+    m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->clearRequestAttributes();
+    m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+    QByteArray response = m_loader->loadSync(URL_LOGOUT);
 
     m_sessionKey.clear();
     m_userEmail.clear();
@@ -345,17 +352,11 @@ void SynchronizationManagerV2::renewSubscription(unsigned _duration,
 
 void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
 {
-    QByteArray response;
-    if (m_sessionKey.isEmpty()) {
-        handleError(tr("Session key is empty"), 408);
-        return;
-    }
-
     m_loader->setRequestMethod(WebLoader::Post);
     m_loader->clearRequestAttributes();
     m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
     m_loader->addRequestAttribute(KEY_USERNAME, _newUserName);
-    response = m_loader->loadSync(URL_UPDATE);
+    QByteArray response = m_loader->loadSync(URL_UPDATE);
 
     //
     // Считываем результат авторизации
@@ -365,26 +366,23 @@ void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
     if (!isOperationSucceed(responseReader)) {
         return;
     }
-    emit userNameChange();
+    emit userNameChanged();
 }
 
-void SynchronizationManagerV2::getSubscriptionInfo()
+void SynchronizationManagerV2::loadSubscriptionInfo()
 {
-    QByteArray response;
-    if (m_sessionKey.isEmpty()) {
-        handleError(tr("Session key is empty"), 408);
-        return;
-    }
-
     m_loader->setRequestMethod(WebLoader::Post);
     m_loader->clearRequestAttributes();
     m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-    response = m_loader->loadSync(URL_SUBSCRIBE_STATE);
+    QByteArray response = m_loader->loadSync(URL_SUBSCRIBE_STATE);
 
     //
     // Считываем результат авторизации
     //
     QXmlStreamReader responseReader(response);
+    if (!isOperationSucceed(responseReader)) {
+        return;
+    }
 
     //
     // Распарсим результат
@@ -412,24 +410,18 @@ void SynchronizationManagerV2::getSubscriptionInfo()
         return;
     }
 
-    emit subscriptionInfoGot(m_activeSubscribe, dateTransform(date));
+    emit subscriptionInfoLoaded(m_activeSubscribe, dateTransform(date));
 }
 
 void SynchronizationManagerV2::changePassword(const QString& _password,
                                               const QString& _newPassword)
 {
-    QByteArray response;
-    if (m_sessionKey.isEmpty()) {
-        handleError(tr("Session key is empty"), 408);
-        return;
-    }
-
     m_loader->setRequestMethod(WebLoader::Post);
     m_loader->clearRequestAttributes();
     m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
     m_loader->addRequestAttribute(KEY_PASSWORD, _password);
     m_loader->addRequestAttribute(KEY_NEW_PASSWORD, _newPassword);
-    response = m_loader->loadSync(URL_UPDATE);
+    QByteArray response = m_loader->loadSync(URL_UPDATE);
 
     //
     // Считываем результат авторизации
@@ -483,9 +475,9 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
         }
     }
     //
-    // Ничего не нашли про статус
-    //
-    handleError(tr("Unknown error"), 100);
+    // Ничего не нашли про статус. Скорее всего пропал интернет
+    //    
+    handleError(tr("Can't estabilish network connection."), 100);
     return false;
 }
 
@@ -493,9 +485,4 @@ void SynchronizationManagerV2::handleError(const QString &_error, int _code)
 {
     m_sessionKey.clear();
     emit syncClosedWithError(_code, _error);
-}
-
-QString SynchronizationManagerV2::dateTransform(const QString &_date)
-{
-    return QDateTime::fromString(_date, "yyyy-MM-dd hh:mm:ss").toString("dd.MM.yyyy");
 }

@@ -36,8 +36,8 @@ namespace ManagementLayer
         /**
          * @brief Активна ли подписка у пользователя
          */
-        bool isActiveSubscribe();
-    public slots:
+        bool isSubscriptionActive();
+
         /**
          * @brief Авторизоваться на сервере, используя сохраненные логин и пароль
          */
@@ -81,7 +81,7 @@ namespace ManagementLayer
         /**
          * @brief Получить информацию о подписке
          */
-        void getSubscriptionInfo();
+        void loadSubscriptionInfo();
 
         /**
          * @brief Сменить пароль
@@ -97,7 +97,7 @@ namespace ManagementLayer
         /**
          * @brief Сервер успешно принял данные пользователя на регистрацию
          */
-        void signUped();
+        void signUpFinished();
 
         /**
          * @brief Сервер подтвердил регистрацию
@@ -117,12 +117,12 @@ namespace ManagementLayer
         /**
          * @brief Успешно изменено имя пользователя
          */
-        void userNameChange();
+        void userNameChanged();
 
         /**
          * @brief Успешно запрошена информация о подписке
          */
-        void subscriptionInfoGot(bool, QString);
+        void subscriptionInfoLoaded(bool, QString);
 
         /**
          * @brief Успешно изменен пароль
@@ -143,11 +143,6 @@ namespace ManagementLayer
          * Обработка ошибок
          */
         void handleError(const QString& _error, int _code = 0);
-
-        /**
-         * @brief Преобразовать дату из гггг.мм.дд чч:мм:сс в дд.мм.гггг
-         */
-        QString dateTransform(const QString& _date);
 
         /**
          * @brief указатель на главную форму приложения

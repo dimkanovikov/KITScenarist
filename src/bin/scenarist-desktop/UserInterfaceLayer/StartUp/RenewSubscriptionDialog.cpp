@@ -35,10 +35,10 @@ RenewSubscriptionDialog::RenewSubscriptionDialog(QWidget *_parent) :
     m_ui->duration->addItem(tr("6 month (6% discount)"), 6);
     m_ui->duration->addItem(tr("12 month (12% discount)"), 12);
 
-    durationChanged();
+    setPaymentText();
 
     connect(m_ui->duration, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &RenewSubscriptionDialog::durationChanged);
+            this, &RenewSubscriptionDialog::setPaymentText);
     connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &RenewSubscriptionDialog::accept);
     connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &RenewSubscriptionDialog::reject);
 
@@ -50,24 +50,24 @@ RenewSubscriptionDialog::~RenewSubscriptionDialog()
     delete m_ui;
 }
 
-unsigned RenewSubscriptionDialog::getDuration() const
+unsigned RenewSubscriptionDialog::duration() const
 {
     return m_ui->duration->currentData().toInt();
 }
 
-unsigned RenewSubscriptionDialog::getAmount() const
+unsigned RenewSubscriptionDialog::amount() const
 {
-    return durationToAmount(getDuration());
+    return durationToAmount(duration());
 }
 
-unsigned RenewSubscriptionDialog::getType() const
+unsigned RenewSubscriptionDialog::paymentSystemType() const
 {
     return m_ui->paymentType->currentIndex();
 }
 
-void RenewSubscriptionDialog::durationChanged()
+void RenewSubscriptionDialog::setPaymentText()
 {
-    m_ui->payment->setText(tr("for %1 rubles").arg(getAmount()));
+    m_ui->payment->setText(tr("for %1 rubles").arg(amount()));
 }
 
 unsigned RenewSubscriptionDialog::durationToAmount(unsigned _duration) const

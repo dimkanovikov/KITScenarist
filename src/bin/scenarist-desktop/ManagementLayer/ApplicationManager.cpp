@@ -1421,7 +1421,7 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::userNameChangeRequested,
             m_synchronizationManagerV2, &SynchronizationManagerV2::changeUserName);
     connect(m_startUpManager, &StartUpManager::getSubscriptionInfoRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::getSubscriptionInfo);
+            m_synchronizationManagerV2, &SynchronizationManagerV2::loadSubscriptionInfo);
     connect(m_startUpManager, &StartUpManager::passwordChangeRequested,
             m_synchronizationManagerV2, &SynchronizationManagerV2::changePassword);
 
@@ -1487,7 +1487,7 @@ void ApplicationManager::initConnections()
 
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted,
             m_startUpManager, &StartUpManager::completeLogin);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::signUped,
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::signUpFinished,
             m_startUpManager, &StartUpManager::userAfterSignUp);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::verified,
             m_startUpManager, &StartUpManager::userAfterSignUp);
@@ -1497,7 +1497,7 @@ void ApplicationManager::initConnections()
             m_startUpManager, &StartUpManager::completeLogout);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::passwordChanged,
             m_startUpManager, &StartUpManager::passwordChanged);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::subscriptionInfoGot,
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::subscriptionInfoLoaded,
             m_startUpManager, &StartUpManager::subscriptionInfoGot);
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::syncClosedWithError,
             this, &ApplicationManager::aboutSyncClosedWithError);
