@@ -896,6 +896,8 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	// ... текст и описание
 	QString itemText;
 	QString description;
+	bool isFirstDescriptionBlock = true; // первый блок описания сцены
+	bool isFirstTextBlock = true; // первый блок текста сцены
 	cursor.movePosition(QTextCursor::NextBlock);
 	while (!cursor.atEnd()
 		   && cursor.position() < _itemEndPos) {
@@ -917,10 +919,11 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			// Описание сохраняем в описание
 			//
 			case ScenarioBlockStyle::SceneDescription: {
-				if (!description.isEmpty()) {
+				if (!isFirstDescriptionBlock) {
 					description.append("\n");
 				}
 				description.append(cursor.block().text());
+				isFirstDescriptionBlock = false;
 				break;
 			}
 
@@ -928,7 +931,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			// Весь остальной текст - текст сцены
 			//
 			default: {
-				if (!itemText.isEmpty()) {
+				if (!isFirstTextBlock) {
 					itemText.append(" ");
 				}
 				ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
@@ -936,6 +939,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 						blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
 						? cursor.block().text().toUpper()
 						: cursor.block().text();
+				isFirstTextBlock = false;
 			}
 		}
 

@@ -91,6 +91,14 @@ void QLightBoxDialog::done(int _result)
 	emit finished(_result);
 }
 
+bool QLightBoxDialog::isProressVisible() const
+{
+	//
+	// Определяем скрыт ли прогрессбар по его стилю, т.к. для сокрытия используетс маскировка
+	//
+	return m_progress->styleSheet().isEmpty();
+}
+
 void QLightBoxDialog::showProgress(int _minimumValue, int _maximumValue)
 {
 	//
@@ -120,7 +128,8 @@ bool QLightBoxDialog::event(QEvent* _event)
 {
 	bool result = true;
 	bool needHandle = true;
-	if (_event->type() == QEvent::KeyPress) {
+	if (!isProressVisible()
+		&& _event->type() == QEvent::KeyPress) {
 		QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(_event);
 		if (keyEvent->key() == Qt::Key_Enter
 			|| keyEvent->key() == Qt::Key_Return) {

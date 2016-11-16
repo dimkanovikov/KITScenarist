@@ -272,9 +272,16 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	// Если это группирующий блок, то вставим и закрывающий текст
 	//
 	if (ScenarioTemplateFacade::getTemplate().blockStyle(type).isEmbeddableHeader()) {
+		ScenarioBlockStyle::Type footerType = ScenarioTemplateFacade::getTemplate().blockStyle(type).embeddableFooter();
 		cursor = m_editor->textCursor();
-		cursor.movePosition(QTextCursor::NextBlock);
-		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		//
+		// Но сначала дойдём до подготовленного заранее закрывающего блока
+		//
+		while (!cursor.atEnd()
+			   && ScenarioBlockStyle::forBlock(cursor.block()) != footerType) {
+			cursor.movePosition(QTextCursor::NextBlock);
+			cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		}
 		cursor.insertText(Helpers::footerText(_header));
 	}
 
@@ -299,6 +306,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	// Фокусируемся на редакторе
 	//
 	m_editorWrapper->setFocus();
+	m_editor->ensureCursorVisible(cursor);
 }
 
 void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int _type,
@@ -456,16 +464,16 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioTextEditWidget::aboutShowSearch()
 {
-    const bool visible = m_search->isChecked();
-    if (m_searchLine->isVisible() != visible) {
-        WAF::Animation::slide(m_searchLine, WAF::FromBottomToTop, true, visible);
-        QTimer::singleShot(300, [=] { m_searchLine->setVisible(visible); });
-    }
+	const bool visible = m_search->isChecked();
+	if (m_searchLine->isVisible() != visible) {
+		WAF::Animation::slide(m_searchLine, WAF::FromBottomToTop, true, visible);
+		QTimer::singleShot(300, [=] { m_searchLine->setVisible(visible); });
+	}
 
-    if (visible) {
-        m_searchLine->selectText();
-        m_searchLine->setFocus();
-    }
+	if (visible) {
+		m_searchLine->selectText();
+		m_searchLine->setFocus();
+	}
 }
 
 void ScenarioTextEditWidget::aboutShowFastFormat()
