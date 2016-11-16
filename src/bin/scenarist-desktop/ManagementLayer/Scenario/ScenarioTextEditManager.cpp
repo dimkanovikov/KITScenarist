@@ -13,6 +13,22 @@ using ManagementLayer::ScenarioTextEditManager;
 using BusinessLogic::ScenarioDocument;
 using UserInterface::ScenarioTextEditWidget;
 
+namespace {
+	/**
+	 * @brief Перевести тип блока из представления модели в представление стиля блока
+	 */
+	static int mapItemTypeFromModelToBlock(int _itemType) {
+		int mappedType = BusinessLogic::ScenarioBlockStyle::SceneHeading;
+		if (_itemType == BusinessLogic::ScenarioModelItem::SceneGroup) {
+			mappedType = BusinessLogic::ScenarioBlockStyle::SceneGroupHeader;
+		} else if (_itemType == BusinessLogic::ScenarioModelItem::Folder) {
+			mappedType = BusinessLogic::ScenarioBlockStyle::FolderHeader;
+		}
+
+		return mappedType;
+	}
+}
+
 
 ScenarioTextEditManager::ScenarioTextEditManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
@@ -160,13 +176,7 @@ void ScenarioTextEditManager::addScenarioItemFromCards(int _position, int _type,
 	//
 	// Переводим тип элемента
 	//
-	int mappedType = BusinessLogic::ScenarioBlockStyle::SceneHeading;
-	if (_type == BusinessLogic::ScenarioModelItem::SceneGroup) {
-		mappedType = BusinessLogic::ScenarioBlockStyle::SceneGroupHeader;
-	} else if (_type == BusinessLogic::ScenarioModelItem::Folder) {
-		mappedType = BusinessLogic::ScenarioBlockStyle::FolderHeader;
-	}
-
+	const int mappedType = ::mapItemTypeFromModelToBlock(_type);
 	m_view->addItem(_position, mappedType, QString::null, _title, _color, _description);
 }
 
@@ -181,19 +191,23 @@ void ScenarioTextEditManager::editScenarioItem(int _startPosition, int _endPosit
 	//
 	// Переводим тип элемента
 	//
-	int mappedType = BusinessLogic::ScenarioBlockStyle::SceneHeading;
-	if (_type == BusinessLogic::ScenarioModelItem::SceneGroup) {
-		mappedType = BusinessLogic::ScenarioBlockStyle::SceneGroupHeader;
-	} else if (_type == BusinessLogic::ScenarioModelItem::Folder) {
-		mappedType = BusinessLogic::ScenarioBlockStyle::FolderHeader;
-	}
-
+	const int mappedType = ::mapItemTypeFromModelToBlock(_type);
 	m_view->editItem(_startPosition, _endPosition, mappedType, _title, _color, _description);
 }
 
 void ScenarioTextEditManager::removeScenarioText(int _from, int _to)
 {
 	m_view->removeText(_from, _to);
+}
+
+void ScenarioTextEditManager::changeItemType(int _position, int _type)
+{
+	//
+	// Переводим тип элемента
+	//
+	const int mappedType = ::mapItemTypeFromModelToBlock(_type);
+	m_view->setCursorPosition(_position);
+	m_view->setCurrentBlockType(mappedType);
 }
 
 void ScenarioTextEditManager::aboutTextEditZoomRangeChanged(qreal _zoomRange)

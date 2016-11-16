@@ -213,6 +213,11 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	}
 }
 
+void ScenarioTextEditWidget::setCurrentBlockType(int _type)
+{
+	m_editor->changeScenarioBlockType((BusinessLogic::ScenarioBlockStyle::Type)_type);
+}
+
 void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _header, const QString& _title,
 	const QColor& _color, const QString& _description)
 {

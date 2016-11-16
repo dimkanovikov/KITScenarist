@@ -255,6 +255,11 @@ namespace ManagementLayer
 		void aboutSetItemColors(const QModelIndex& _itemIndex, const QString& _colors);
 
 		/**
+		 * @brief Сменить тип элемента
+		 */
+		void aboutChangeItemType(const QModelIndex& _index, int _type);
+
+		/**
 		 * @brief Показать/скрыть заметки к сцене
 		 */
 		void aboutShowHideDraft();

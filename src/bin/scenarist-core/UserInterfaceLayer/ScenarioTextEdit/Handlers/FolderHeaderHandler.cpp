@@ -188,13 +188,15 @@ void FolderHeaderHandler::handleOther(QKeyEvent* _event)
 	// Если редактируется заголовок группы
 	//
 	if (editor()->scenarioBlockType() == ScenarioBlockStyle::FolderHeader) {
-
-		cursor.movePosition(QTextCursor::NextBlock);
-
+		//
 		// ... открытые группы на пути поиска необходимого для обновления блока
+		//
 		int openedGroups = 0;
 		bool isFooterUpdated = false;
-		do {
+		while (!isFooterUpdated && !cursor.atEnd()) {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			cursor.movePosition(QTextCursor::NextBlock);
+
 			ScenarioBlockStyle::Type currentType =
 					ScenarioBlockStyle::forBlock(cursor.block());
 
@@ -210,10 +212,6 @@ void FolderHeaderHandler::handleOther(QKeyEvent* _event)
 				// ... встретилась новая группа
 				++openedGroups;
 			}
-
-			if (!cursor.movePosition(QTextCursor::NextBlock)) {
-				cursor.movePosition(QTextCursor::EndOfBlock);
-			}
-		} while (!isFooterUpdated && !cursor.atEnd());
+		}
 	}
 }

@@ -89,6 +89,11 @@ namespace ManagementLayer
 		 */
 		void removeScenarioText(int _from, int _to);
 
+		/**
+		 * @brief Установить в заданной позиции заданный тип блока
+		 */
+		void changeItemType(int _position, int _type);
+
 	signals:
 		/**
 		 * @brief Изменился текст сценария

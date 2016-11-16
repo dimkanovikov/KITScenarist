@@ -464,6 +464,8 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 		} else {
 			if (topStyle.isEmbeddable() && !bottomStyle.isEmbeddable()) {
 				targetType = bottomStyle.type();
+			} else if (bottomStyle.isEmbeddable() && !topStyle.isEmbeddable()) {
+				targetType = topStyle.type();
 			} else if (!topBlock.text().isEmpty()) {
 				targetType = topStyle.type();
 			} else if (!bottomBlock.text().isEmpty()) {

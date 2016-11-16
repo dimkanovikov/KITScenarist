@@ -188,13 +188,15 @@ void SceneGroupHeaderHandler::handleOther(QKeyEvent* _event)
 	// Если редактируется заголовок группы
 	//
 	if (editor()->scenarioBlockType() == ScenarioBlockStyle::SceneGroupHeader) {
-
-		cursor.movePosition(QTextCursor::NextBlock);
-
+		//
 		// ... открытые группы на пути поиска необходимого для обновления блока
+		//
 		int openedGroups = 0;
 		bool isFooterUpdated = false;
-		do {
+		while (!isFooterUpdated && !cursor.atEnd()) {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			cursor.movePosition(QTextCursor::NextBlock);
+
 			ScenarioBlockStyle::Type currentType =
 					ScenarioBlockStyle::forBlock(cursor.block());
 
@@ -210,9 +212,6 @@ void SceneGroupHeaderHandler::handleOther(QKeyEvent* _event)
 				// ... встретилась новая группа
 				++openedGroups;
 			}
-
-			cursor.movePosition(QTextCursor::EndOfBlock);
-			cursor.movePosition(QTextCursor::NextBlock);
-		} while (!isFooterUpdated && !cursor.atEnd());
+		}
 	}
 }
