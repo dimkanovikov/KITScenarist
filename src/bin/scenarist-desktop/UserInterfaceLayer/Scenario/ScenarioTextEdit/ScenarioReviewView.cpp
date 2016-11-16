@@ -89,9 +89,9 @@ void ScenarioReviewView::keyPressEvent(QKeyEvent* _event)
 			|| keyCharacter == "z"
 			|| keyCharacter == QString::fromUtf8("я"))) {
 		if (_event->modifiers().testFlag(Qt::ShiftModifier)) {
-			emit redoPressed();
+			emit redoRequest();
 		} else {
-			emit undoPressed();
+			emit undoRequest();
 		}
 	}
 

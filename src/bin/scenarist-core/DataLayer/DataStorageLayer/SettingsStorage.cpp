@@ -9,7 +9,8 @@
 
 #include <QApplication>
 #include <QHeaderView>
-#include <QSettings>
+#include <QRadioButton>
+#include <QSpinBox>
 #include <QSplitter>
 #include <QStandardPaths>
 #include <QStringList>
@@ -48,7 +49,7 @@ namespace {
 }
 
 
-void SettingsStorage::setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace)
+void SettingsStorage::setVariantValue(const QString& _key, const QVariant& _value, SettingsStorage::SettingsPlace _settingsPlace)
 {
 	//
 	// Кэшируем значение
@@ -59,10 +60,20 @@ void SettingsStorage::setValue(const QString& _key, const QString& _value, Setti
 	// Сохраняем его в заданное хранилище
 	//
 	if (_settingsPlace == ApplicationSettings) {
-		QSettings().setValue(_key.toUtf8().toHex(), _value);
+		m_appSettings.setValue(_key.toUtf8().toHex(), _value);
 	} else {
-		MapperFacade::settingsMapper()->setValue(_key, _value);
+		MapperFacade::settingsMapper()->setValue(_key, _value.toString());
 	}
+}
+
+void SettingsStorage::setValue(const QString& _key, const QString& _value, SettingsPlace _settingsPlace)
+{
+	setVariantValue(_key, _value, _settingsPlace);
+}
+
+void SettingsStorage::setValue(const QString& _key, const QStringList& _value, SettingsStorage::SettingsPlace _settingsPlace)
+{
+	setVariantValue(_key, _value, _settingsPlace);
 }
 
 void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QString& _valuesGroup, SettingsStorage::SettingsPlace _settingsPlace)
@@ -76,34 +87,32 @@ void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QSt
 	// Сохраняем его в заданное хранилище
 	//
 	if (_settingsPlace == ApplicationSettings) {
-		QSettings settings;
-
 		//
 		// Очистим группу
 		//
 		{
-			settings.beginGroup(_valuesGroup);
-			settings.remove("");
-			settings.endGroup();
+			m_appSettings.beginGroup(_valuesGroup);
+			m_appSettings.remove("");
+			m_appSettings.endGroup();
 		}
 
 		//
 		// Откроем группу
 		//
-		settings.beginGroup(_valuesGroup);
+		m_appSettings.beginGroup(_valuesGroup);
 
 		//
 		// Сохраним значения
 		//
 		foreach (const QString& key, _values.keys()) {
-			settings.setValue(key.toUtf8().toHex(), _values.value(key));
+			m_appSettings.setValue(key.toUtf8().toHex(), _values.value(key));
 			m_cachedValuesApp.insert(key, _values.value(key));
 		}
 
 		//
 		// Закроем группу
 		//
-		settings.endGroup();
+		m_appSettings.endGroup();
 	}
 	//
 	// В базу данных карта параметров не умеет сохраняться
@@ -112,6 +121,33 @@ void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QSt
 		Q_ASSERT_X(0, Q_FUNC_INFO, "Database settings can't save group of settings");
 	}
 
+}
+
+QVariant SettingsStorage::variantValue(const QString& _key, SettingsStorage::SettingsPlace _settingsPlace)
+{
+	//
+	// Пробуем получить значение из кэша
+	//
+	bool hasCachedValue = false;
+	QVariant value = getCachedValue(_key, _settingsPlace, hasCachedValue);
+
+	//
+	// Если в кэше нет, то загружаем из указанного места
+	//
+	if (!hasCachedValue) {
+		if (_settingsPlace == ApplicationSettings) {
+			value = m_appSettings.value(_key.toUtf8().toHex(), QVariant());
+		} else {
+			value = MapperFacade::settingsMapper()->value(_key);
+		}
+
+		//
+		// Сохраняем значение в кэш
+		//
+		cacheValue(_key, value, _settingsPlace);
+	}
+
+	return value;
 }
 
 QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace, const QString& _defaultValue)
@@ -127,7 +163,7 @@ QString SettingsStorage::value(const QString& _key, SettingsPlace _settingsPlace
 	//
 	if (!hasCachedValue) {
 		if (_settingsPlace == ApplicationSettings) {
-			value = QSettings().value(_key.toUtf8().toHex(), QVariant()).toString();
+			value = m_appSettings.value(_key.toUtf8().toHex(), QVariant()).toString();
 		} else {
 			value = MapperFacade::settingsMapper()->value(_key);
 		}
@@ -166,29 +202,27 @@ QMap<QString, QString> SettingsStorage::values(const QString& _valuesGroup, Sett
 	//
 	if (!hasCachedValue) {
 		if (_settingsPlace == ApplicationSettings) {
-			QSettings settings;
-
 			//
 			// Откроем группу для считывания
 			//
-			settings.beginGroup(_valuesGroup);
+			m_appSettings.beginGroup(_valuesGroup);
 
 			//
 			// Получим все ключи
 			//
-			QStringList keys = settings.childKeys();
+			QStringList keys = m_appSettings.childKeys();
 
 			//
 			// Получим все значения
 			//
 			foreach (QString key, keys) {
-				 settingsValues.insert(QByteArray::fromHex(key.toUtf8()), settings.value(key).toString());
+				 settingsValues.insert(QByteArray::fromHex(key.toUtf8()), m_appSettings.value(key).toString());
 			}
 
 			//
 			// Закроем группу
 			//
-			settings.endGroup();
+			m_appSettings.endGroup();
 		}
 		//
 		// Из базы данных карта параметров не умеет загружаться
@@ -229,80 +263,127 @@ void SettingsStorage::resetValues(SettingsStorage::SettingsPlace _settingsPlace)
 
 void SettingsStorage::saveApplicationStateAndGeometry(QWidget* _widget)
 {
-	QSettings settings;
+	m_appSettings.beginGroup(STATE_AND_GEOMETRY_KEY);
 
-	settings.beginGroup(STATE_AND_GEOMETRY_KEY);
+	//
+	// Геометрия и положение самого окна
+	//
+	m_appSettings.setValue("geometry", _widget->saveGeometry());
 
-	settings.setValue("geometry", _widget->saveGeometry());
-
-	settings.beginGroup("toolbuttons");
+	//
+	// Сохраняем состояния кнопок
+	//
+	m_appSettings.beginGroup("toolbuttons");
 	foreach (QToolButton* toolButton, _widget->findChildren<QToolButton*>()) {
-		settings.setValue(toolButton->objectName() + "-checked", toolButton->isChecked());
+		m_appSettings.setValue(toolButton->objectName() + "-checked", toolButton->isChecked());
 	}
-	settings.endGroup();
+	m_appSettings.endGroup();
 
-	settings.beginGroup("splitters");
+	//
+	// Сохраняем состояния разделителей
+	//
+	m_appSettings.beginGroup("splitters");
 	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
-		settings.beginGroup(splitter->objectName());
-		settings.setValue("state", splitter->saveState());
-		settings.setValue("geometry", splitter->saveGeometry());
+		m_appSettings.beginGroup(splitter->objectName());
+		m_appSettings.setValue("state", splitter->saveState());
+		m_appSettings.setValue("geometry", splitter->saveGeometry());
 		//
 		// Сохраняем расположение панелей
 		//
-		settings.beginGroup("splitter-widgets");
+		m_appSettings.beginGroup("splitter-widgets");
 		for (int widgetPos = 0; widgetPos < splitter->count(); ++widgetPos) {
-			settings.setValue(splitter->widget(widgetPos)->objectName(), widgetPos);
+			m_appSettings.setValue(splitter->widget(widgetPos)->objectName(), widgetPos);
 		}
-		settings.endGroup(); // splitter-widgets
-		settings.endGroup(); // splitter->objectName()
+		m_appSettings.endGroup(); // splitter-widgets
+		m_appSettings.endGroup(); // splitter->objectName()
 	}
-	settings.endGroup();
+	m_appSettings.endGroup();
 
-	settings.beginGroup("headers");
+	//
+	// Сохраняем состояния таблиц
+	//
+	m_appSettings.beginGroup("headers");
 	foreach (QTableView* table, _widget->findChildren<QTableView*>()) {
-		settings.setValue(table->objectName() + "-state", table->horizontalHeader()->saveState());
-		settings.setValue(table->objectName() + "-geometry", table->horizontalHeader()->saveGeometry());
+		m_appSettings.setValue(table->objectName() + "-state", table->horizontalHeader()->saveState());
+		m_appSettings.setValue(table->objectName() + "-geometry", table->horizontalHeader()->saveGeometry());
 	}
+	//
+	// ... и деревьев
+	//
 	foreach (QTreeView* tree, QApplication::activeWindow()->findChildren<QTreeView*>()) {
-		settings.setValue(tree->objectName() + "-state", tree->header()->saveState());
-		settings.setValue(tree->objectName() + "-geometry", tree->header()->saveGeometry());
+		m_appSettings.setValue(tree->objectName() + "-state", tree->header()->saveState());
+		m_appSettings.setValue(tree->objectName() + "-geometry", tree->header()->saveGeometry());
 	}
-	settings.endGroup();
-	settings.endGroup(); // STATE_AND_GEOMETRY_KEY
+	m_appSettings.endGroup();
+
+	//
+	// Сохраняем состояния радиокнопок
+	//
+	m_appSettings.beginGroup("radiobuttons");
+	foreach (QRadioButton* radioButton, _widget->findChildren<QRadioButton*>()) {
+		m_appSettings.setValue(radioButton->objectName() + "-checked", radioButton->isChecked());
+	}
+	m_appSettings.endGroup();
+
+	//
+	// Сохраняем состояния слайдеров
+	//
+	m_appSettings.beginGroup("sliders");
+	foreach (QAbstractSlider* slider, _widget->findChildren<QAbstractSlider*>()) {
+		m_appSettings.setValue(slider->objectName() + "-value", slider->value());
+	}
+	m_appSettings.endGroup();
+
+	//
+	// Сохраняем состояния спинбоксов
+	//
+	m_appSettings.beginGroup("spinboxes");
+	foreach (QSpinBox* spinBox, _widget->findChildren<QSpinBox*>()) {
+		m_appSettings.setValue(spinBox->objectName() + "-value", spinBox->value());
+	}
+	m_appSettings.endGroup();
+
+	m_appSettings.endGroup(); // STATE_AND_GEOMETRY_KEY
 }
 
 void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 {
-	QSettings settings;
+	m_appSettings.beginGroup(STATE_AND_GEOMETRY_KEY);
 
-	settings.beginGroup(STATE_AND_GEOMETRY_KEY);
+	//
+	// Восстановим геометрию и положение окна
+	//
+	_widget->restoreGeometry(m_appSettings.value("geometry").toByteArray());
 
-	_widget->restoreGeometry(settings.value("geometry").toByteArray());
-
-
-	settings.beginGroup("toolbuttons");
+	//
+	// Состояния кнопок
+	//
+	m_appSettings.beginGroup("toolbuttons");
 	foreach (QToolButton* toolButton, _widget->findChildren<QToolButton*>()) {
-		toolButton->setChecked(settings.value(toolButton->objectName() + "-checked", false).toBool());
+		toolButton->setChecked(m_appSettings.value(toolButton->objectName() + "-checked", false).toBool());
 	}
-	settings.endGroup();
+	m_appSettings.endGroup();
 
-	settings.beginGroup("splitters");
+	//
+	// Разделителей
+	//
+	m_appSettings.beginGroup("splitters");
 	foreach (QSplitter* splitter, _widget->findChildren<QSplitter*>()) {
-		settings.beginGroup(splitter->objectName());
+		m_appSettings.beginGroup(splitter->objectName());
 		//
 		// Восстанавливаем расположение панелей
 		//
-		settings.beginGroup("splitter-widgets");
+		m_appSettings.beginGroup("splitter-widgets");
 		//
 		// ... сформируем карту позиционирования
 		//
 		QMap<int, QWidget*> splitterWidgets;
 		for (int widgetPos = 0; widgetPos < splitter->count(); ++widgetPos) {
 			QWidget* widget = splitter->widget(widgetPos);
-			if (!settings.value(widget->objectName()).isNull()) {
-				const int position = settings.value(widget->objectName()).toInt();
+			if (!m_appSettings.value(widget->objectName()).isNull()) {
+				const int position = m_appSettings.value(widget->objectName()).toInt();
 				splitterWidgets.insert(position, widget);
-            }
+			}
 		}
 		//
 		// ... позиционируем сами виджеты
@@ -310,7 +391,7 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 		foreach (int position, splitterWidgets.keys()) {
 			splitter->insertWidget(position, splitterWidgets.value(position));
 		}
-		settings.endGroup(); // splitter-widgets
+		m_appSettings.endGroup(); // splitter-widgets
 
 		//
 		// Восстанавливаем состояние и геометрию разделителя
@@ -319,23 +400,58 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
 		// панели имеют определённый минимальный размер, соответственно этот размер задаётся и
 		// области разделителя, в которой он находится
 		//
-		splitter->restoreState(settings.value("state").toByteArray());
-		splitter->restoreGeometry(settings.value("geometry").toByteArray());
-		settings.endGroup(); // splitter->objectName()
+		splitter->restoreState(m_appSettings.value("state").toByteArray());
+		splitter->restoreGeometry(m_appSettings.value("geometry").toByteArray());
+		m_appSettings.endGroup(); // splitter->objectName()
 	}
-	settings.endGroup();
+	m_appSettings.endGroup();
 
-	settings.beginGroup("headers");
+	//
+	// Таблиц
+	//
+	m_appSettings.beginGroup("headers");
 	foreach (QTableView* table, _widget->findChildren<QTableView*>()) {
-		table->horizontalHeader()->restoreState(settings.value(table->objectName() + "-state").toByteArray());
-		table->horizontalHeader()->restoreGeometry(settings.value(table->objectName() + "-geometry").toByteArray());
+		table->horizontalHeader()->restoreState(m_appSettings.value(table->objectName() + "-state").toByteArray());
+		table->horizontalHeader()->restoreGeometry(m_appSettings.value(table->objectName() + "-geometry").toByteArray());
 	}
+	//
+	// ... и деревьев
+	//
 	foreach (QTreeView* tree, _widget->findChildren<QTreeView*>()) {
-		tree->header()->restoreState(settings.value(tree->objectName() + "-state").toByteArray());
-		tree->header()->restoreGeometry(settings.value(tree->objectName() + "-geometry").toByteArray());
+		tree->header()->restoreState(m_appSettings.value(tree->objectName() + "-state").toByteArray());
+		tree->header()->restoreGeometry(m_appSettings.value(tree->objectName() + "-geometry").toByteArray());
 	}
-	settings.endGroup();
-	settings.endGroup(); // STATE_AND_GEOMETRY_KEY
+	m_appSettings.endGroup();
+
+
+	//
+	// Радиокнопок
+	//
+	m_appSettings.beginGroup("radiobuttons");
+	foreach (QRadioButton* radioButton, _widget->findChildren<QRadioButton*>()) {
+		radioButton->setChecked(m_appSettings.value(radioButton->objectName() + "-checked", radioButton->isChecked()).toBool());
+	}
+	m_appSettings.endGroup();
+
+	//
+	// Слайдеров
+	//
+	m_appSettings.beginGroup("sliders");
+	foreach (QAbstractSlider* slider, _widget->findChildren<QAbstractSlider*>()) {
+		slider->setValue(m_appSettings.value(slider->objectName() + "-value", slider->value()).toInt());
+	}
+	m_appSettings.endGroup();
+
+	//
+	// Спинбоксов
+	//
+	m_appSettings.beginGroup("spinboxes");
+	foreach (QSpinBox* spinBox, _widget->findChildren<QSpinBox*>()) {
+		spinBox->setValue(m_appSettings.value(spinBox->objectName() + "-value", spinBox->value()).toInt());
+	}
+	m_appSettings.endGroup();
+
+	m_appSettings.endGroup(); // STATE_AND_GEOMETRY_KEY
 }
 
 SettingsStorage::SettingsStorage()
@@ -349,14 +465,19 @@ SettingsStorage::SettingsStorage()
 	m_defaultValues.insert("application/use-dark-theme", "0");
 	m_defaultValues.insert("application/autosave", "1");
 	m_defaultValues.insert("application/autosave-interval", "5");
-	m_defaultValues.insert("application/save-backups", "0");
+	m_defaultValues.insert("application/save-backups", "1");
 	m_defaultValues.insert("application/save-backups-folder",
-		QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+		QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/KITScenarist/backups");
 	m_defaultValues.insert("application/modules/research", "1");
+	m_defaultValues.insert("application/modules/cards", "1");
 	m_defaultValues.insert("application/modules/scenario", "1");
 	m_defaultValues.insert("application/modules/characters", "1");
 	m_defaultValues.insert("application/modules/locations", "1");
 	m_defaultValues.insert("application/modules/statistics", "1");
+
+	m_defaultValues.insert("cards/use-corkboard", "1");
+	m_defaultValues.insert("cards/background-color", "#FEFEFE");
+	m_defaultValues.insert("cards/background-color-dark", "#3D3D3D");
 
 	m_defaultValues.insert("navigator/show-scenes-numbers", "1");
 	m_defaultValues.insert("navigator/show-scene-description", "1");

@@ -166,10 +166,10 @@ namespace ManagementLayer
 		 */
 		void aboutPrepareScenarioForStatistics();
 
-        /**
-         * @brief Активирована внутренняя ссылка приложения
-         */
-        void aboutInnerLinkActivated(const QUrl& _url);
+		/**
+		 * @brief Активирована внутренняя ссылка приложения
+		 */
+		void aboutInnerLinkActivated(const QUrl& _url);
 
 	protected:
 		/**
@@ -210,6 +210,11 @@ namespace ManagementLayer
 		 * @brief Закрыть текущий проект
 		 */
 		void closeCurrentProject();
+
+		/**
+		 * @brief Загружен ли проект в данный момент
+		 */
+		bool isProjectLoaded() const;
 
 	private:
 		/**

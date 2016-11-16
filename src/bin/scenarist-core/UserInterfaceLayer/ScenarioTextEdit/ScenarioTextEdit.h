@@ -139,16 +139,17 @@ namespace UserInterface
 		 */
 		void setAdditionalCursors(const QMap<QString, int>& _cursors);
 
-	public slots:
-		/**
-		 * @brief Собственные реализации отмены/повтора последнего действия
-		 */
-		/** @{ */
-		void undoReimpl();
-		void redoReimpl();
-		/** @} */
-
 	signals:
+		/**
+		 * @brief Запрос на отмену последнего действия
+		 */
+		void undoRequest();
+
+		/**
+		 * @brief Запрос на повтор последнего действия
+		 */
+		void redoRequest();
+
 		/**
 		 * @brief Сменился стиль под курсором
 		 */
@@ -212,11 +213,6 @@ namespace UserInterface
 		bool canComplete() const;
 
 	private slots:
-		/**
-		 * @brief Вспомогательный слот для корректировки отображения больших документов
-		 */
-		void aboutCorrectRepaint();
-
 		/**
 		 * @brief Скорректировать позиции курсоров соавторов
 		 */

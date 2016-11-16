@@ -29,9 +29,10 @@ ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 {
 	initView();
 	initConnections();
+	initStyleSheet();
 }
 
-void ScenarioItemDialog::clearText()
+void ScenarioItemDialog::clear()
 {
 	QTextCursor cursor(m_header->document());
 	cursor.select(QTextCursor::Document);
@@ -99,10 +100,12 @@ void ScenarioItemDialog::initView()
 {
 	setWindowTitle(tr("Add scenario item"));
 
-	m_folder->setText(tr("Folder"));
-	m_folder->setChecked(true);
-	m_scenesGroup->setText(tr("Scenes group"));
+    setMinimumSize(500, 400);
+
 	m_scene->setText(tr("Scene"));
+    m_scene->setChecked(true);
+    m_scenesGroup->setText(tr("Scenes group"));
+    m_folder->setText(tr("Folder"));
 
 	m_color->setColorsPane(ColoredToolButton::Google);
 
@@ -112,14 +115,14 @@ void ScenarioItemDialog::initView()
 	m_buttons->addButton(QDialogButtonBox::Cancel);
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
-	topLayout->addWidget(m_folder);
+    topLayout->addWidget(m_scene);
 	topLayout->addWidget(m_scenesGroup);
-	topLayout->addWidget(m_scene);
-	topLayout->addStretch();
+    topLayout->addWidget(m_folder);
+    topLayout->addStretch();
+    topLayout->addWidget(m_color);
 
 	QHBoxLayout* headerLayout = new QHBoxLayout;
 	headerLayout->addWidget(m_header);
-	headerLayout->addWidget(m_color);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->addLayout(topLayout);
@@ -149,4 +152,9 @@ void ScenarioItemDialog::initConnections()
 	connect(m_buttons, SIGNAL(rejected()), this, SLOT(reject()));
 
 	QLightBoxDialog::initConnections();
+}
+
+void ScenarioItemDialog::initStyleSheet()
+{
+    m_color->setProperty("itemDialog", true);
 }

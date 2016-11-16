@@ -65,7 +65,17 @@ void SimpleTextEditor::setTextFont(const QFont& _font)
 {
 	QTextCharFormat fmt;
 	fmt.setFont(_font);
-	mergeFormatOnParagraphOrSelection(fmt);
+
+	//
+	// TODO: При изменении шрифта, не удаётся корректно наложить новое форматированние на старое,
+	// поэтому приходится делать всё это вручную
+	//
+
+	QTextCursor cursor = textCursor();
+	if (!cursor.hasSelection()) {
+		cursor.select(QTextCursor::BlockUnderCursor);
+	}
+	cursor.mergeCharFormat(fmt);
 }
 
 QMimeData* SimpleTextEditor::createMimeDataFromSelection() const
@@ -90,15 +100,6 @@ void SimpleTextEditor::mergeFormatOnWordOrSelection(const QTextCharFormat& forma
 	QTextCursor cursor = textCursor();
 	if (!cursor.hasSelection())
 		cursor.select(QTextCursor::WordUnderCursor);
-	cursor.mergeCharFormat(format);
-	mergeCurrentCharFormat(format);
-}
-
-void SimpleTextEditor::mergeFormatOnParagraphOrSelection(const QTextCharFormat& format)
-{
-	QTextCursor cursor = textCursor();
-	if (!cursor.hasSelection())
-		cursor.select(QTextCursor::BlockUnderCursor);
 	cursor.mergeCharFormat(format);
 	mergeCurrentCharFormat(format);
 }

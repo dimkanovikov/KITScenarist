@@ -132,6 +132,20 @@ QString ScenarioDocument::itemHeaderAtPosition(int _position) const
 	return header;
 }
 
+QString ScenarioDocument::itemUuid(ScenarioModelItem* _item) const
+{
+	QTextCursor cursor(m_document);
+	cursor.setPosition(_item->position());
+	QTextBlockUserData* textBlockData = cursor.block().userData();
+	ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+	if (info == 0) {
+		info = new ScenarioTextBlockInfo;
+	}
+	cursor.block().setUserData(info);
+
+	return info->uuid();
+}
+
 QString ScenarioDocument::itemColors(ScenarioModelItem* _item) const
 {
 	QTextCursor cursor(m_document);
@@ -166,6 +180,56 @@ void ScenarioDocument::setItemColorsAtPosition(int _position, const QString& _co
 			info = new ScenarioTextBlockInfo;
 		}
 		info->setColors(_colors);
+		cursor.block().setUserData(info);
+
+		ScenarioTextDocument::updateBlockRevision(cursor);
+		aboutContentsChange(cursor.block().position(), 0, 0);
+	}
+}
+
+QString ScenarioDocument::itemTitleAtPosition(int _position) const
+{
+	QString title;
+	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+		title = itemTitle(item);
+	}
+	return title;
+}
+
+QString ScenarioDocument::itemTitle(ScenarioModelItem* _item) const
+{
+	QTextCursor cursor(m_document);
+	cursor.setPosition(_item->position());
+
+	QString title;
+	QTextBlockUserData* textBlockData = cursor.block().userData();
+	if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData)) {
+		title = info->title();
+	}
+	return title;
+}
+
+void ScenarioDocument::setItemTitleAtPosition(int _position, const QString& _title)
+{
+	if (ScenarioModelItem* item = itemForPosition(_position, true)) {
+		//
+		// Установить название в элемент
+		//
+		item->setTitle(_title);
+		m_model->updateItem(item);
+
+		//
+		// Установить название в документ
+		//
+		QTextCursor cursor(m_document);
+		cursor.setPosition(item->position());
+
+		QTextBlockUserData* textBlockData = cursor.block().userData();
+		ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(textBlockData);
+		if (info == 0) {
+			info = new ScenarioTextBlockInfo;
+		}
+		info->setTitle(_title);
 		cursor.block().setUserData(info);
 
 		ScenarioTextDocument::updateBlockRevision(cursor);
@@ -424,11 +488,10 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	m_document->updateScenarioXml();
 
 	//
-	// Прерываем ситуация, когда в редактор помещается документ, но для него уже создана модель
+	// Прерываем ситуацию с ложным срабатыванием изменения документа
 	//
 	const QByteArray currentTextMd5Hash = m_document->scenarioXmlHash();
-	if (_position == 0 && _charsRemoved == _charsAdded
-		&& _charsAdded == m_document->characterCount() && !m_modelItems.isEmpty()) {
+	if (_charsRemoved == _charsAdded) {
 		//
 		// ... на самом ли деле текст изменился?
 		//
@@ -438,14 +501,14 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 	}
 
 	//
-	// Сохраняем позицию начала правок для последующей корректировки
-	//
-	m_lastChangeStartPosition = _position;
-
-	//
 	// Сохранить md5 хэш текста документа
 	//
 	m_lastTextMd5Hash = currentTextMd5Hash;
+
+	//
+	// Сохраняем позицию начала правок для последующей корректировки
+	//
+	m_lastChangeStartPosition = _position;
 
 	//
 	// Если были удалены данные
@@ -825,7 +888,9 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		itemType = ScenarioModelItem::Folder;
 	}
 	// ... заголовок
-	QString itemHeader = cursor.block().text();
+	const QString itemHeader = cursor.block().text();
+	// ... название
+	const QString title = itemTitle(_item);
 	// ... цвет
 	const QString colors = itemColors(_item);
 	// ... текст и описание
@@ -838,22 +903,40 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 
 		ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
 		//
-		// ... исключаем из текста описание
+		// ... исключаем из текста заголовки и описание
 		//
-		if (blockType != ScenarioBlockStyle::SceneDescription) {
-			if (!itemText.isEmpty()) {
-				itemText.append(" ");
+		switch (blockType) {
+			//
+			// Заголовки никуда не включаем
+			//
+			case ScenarioBlockStyle::SceneHeading: {
+				break;
 			}
-			ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
-			itemText +=
-					blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
-					? cursor.block().text().toUpper()
-					: cursor.block().text();
-		} else {
-			if (!description.isEmpty()) {
-				description.append("\n");
+
+			//
+			// Описание сохраняем в описание
+			//
+			case ScenarioBlockStyle::SceneDescription: {
+				if (!description.isEmpty()) {
+					description.append("\n");
+				}
+				description.append(cursor.block().text());
+				break;
 			}
-			description.append(cursor.block().text());
+
+			//
+			// Весь остальной текст - текст сцены
+			//
+			default: {
+				if (!itemText.isEmpty()) {
+					itemText.append(" ");
+				}
+				ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
+				itemText +=
+						blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
+						? cursor.block().text().toUpper()
+						: cursor.block().text();
+			}
 		}
 
 		cursor.movePosition(QTextCursor::NextBlock);
@@ -865,7 +948,6 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		|| description.isEmpty()) { // ... или установил в диалоге добавления элемента
 		QTextDocument doc;
 		doc.setHtml(itemDescription(_item));
-		description = doc.toPlainText().replace("\n", " ");
 	}
 	//
 	// ... пользователь изменил описание прямо в редакторе сценария
@@ -885,11 +967,6 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 		doc.setPlainText(description);
 		info->setDescription(doc.toHtml());
 		descriptionCursor.block().setUserData(info);
-
-		//
-		// ... убираем переносы строк
-		//
-		description.replace("\n", " ");
 	}
 
 	// ... длительность
@@ -918,6 +995,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setType(itemType);
 	_item->setHeader(itemHeader);
 	_item->setColors(colors);
+	_item->setTitle(title);
 	_item->setText(itemText);
 	_item->setDescription(description);
 	_item->setDuration(itemDuration);
@@ -953,6 +1031,11 @@ ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNe
 			item = new ScenarioModelItem(_position);
 		}
 	}
+	//
+	// Обновим идентификатор элемента
+	//
+	item->setUuid(itemUuid(item));
+
 	return item;
 }
 

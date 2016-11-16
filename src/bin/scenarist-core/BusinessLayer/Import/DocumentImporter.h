@@ -17,7 +17,7 @@ namespace BusinessLogic
 		/**
 		 * @brief Импорт сценария из документа
 		 */
-		QString importScenario(const ImportParameters &_importParameters) const;
+		QString importScenario(const ImportParameters& _importParameters) const;
 	};
 }
 

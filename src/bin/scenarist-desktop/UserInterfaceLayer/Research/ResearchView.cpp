@@ -4,8 +4,11 @@
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
+#include <BusinessLayer/Research/ResearchModel.h>
+
 #include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
+#include <3rd_party/Widgets/WAF/Animation.h>
 
 #include "ResearchNavigatorItemDelegate.h"
 #include "ResearchNavigatorProxyStyle.h"
@@ -15,6 +18,7 @@
 #include <QShortcut>
 #include <QStandardPaths>
 #include <QStringListModel>
+#include <QTimer>
 
 using UserInterface::ResearchView;
 using UserInterface::ResearchNavigatorItemDelegate;
@@ -94,14 +98,14 @@ void ResearchView::setSynopsisSettings(QPageSize::PageSizeId _pageSize, const QM
 
 void ResearchView::setResearchModel(QAbstractItemModel* _model)
 {
-    //
-    // Отключаем соединения от старой модели
-    //
-    if (QAbstractItemModel* oldModel = m_ui->researchNavigator->model()) {
-        disconnect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
-                this, &ResearchView::currentResearchChanged);
-        disconnect(oldModel, &QAbstractItemModel::rowsInserted, this, &ResearchView::researchItemAdded);
-    }
+	//
+	// Отключаем соединения от старой модели
+	//
+	if (QAbstractItemModel* oldModel = m_ui->researchNavigator->model()) {
+		disconnect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
+				this, &ResearchView::currentResearchChanged);
+		disconnect(oldModel, &QAbstractItemModel::rowsInserted, this, &ResearchView::researchItemAdded);
+	}
 
 	//
 	// Загружаем модель
@@ -120,7 +124,12 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
 		//
 		connect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
 				this, &ResearchView::currentResearchChanged);
-		connect(_model, &QAbstractItemModel::rowsInserted, this, &ResearchView::researchItemAdded);
+		connect(_model, &QAbstractItemModel::rowsInserted,
+				[=] (const QModelIndex& _parent) {
+			if (_parent.isValid()) {
+				emit researchItemAdded();
+			}
+		});
 	}
 }
 
@@ -303,6 +312,56 @@ void ResearchView::setCommentOnly(bool _isCommentOnly)
 	m_ui->searchWidget->setSearchOnly(_isCommentOnly);
 }
 
+QStringList ResearchView::expandedIndexes() const
+{
+	QStringList indexes;
+
+	//
+	// prepare list
+	// PS: getPersistentIndexList() function is a simple `return this->persistentIndexList()` from TreeModel model class
+	//
+	if (BusinessLogic::ResearchModel* model = qobject_cast<BusinessLogic::ResearchModel*>(m_ui->researchNavigator->model())) {
+		for (const QModelIndex& index : model->getPersistentIndexList()) {
+			if (m_ui->researchNavigator->isExpanded(index)) {
+				indexes << QString("%1;%2;%3").arg(index.row()).arg(index.column()).arg(index.data(Qt::DisplayRole).toString());
+			}
+		}
+	}
+
+	return indexes;
+}
+
+void ResearchView::setExpandedIndexes(const QStringList& _indexes)
+{
+	QAbstractItemModel* model = m_ui->researchNavigator->model();
+	if (model != nullptr) {
+		for (const QString& item : _indexes) {
+			if (!item.isEmpty()) {
+				QStringList itemData = item.split(";");
+				const int row = itemData.takeFirst().toInt();
+				const int column = itemData.takeFirst().toInt();
+				const QString text = itemData.join(";");
+
+				//
+				// search `item` text in model
+				//
+				QModelIndexList items = model->match(model->index(0, 0), Qt::DisplayRole, QVariant::fromValue(text), -1, Qt::MatchRecursive);
+				while (!items.isEmpty()) {
+					QModelIndex first = items.takeFirst();
+					if (first.row() == row
+						&& first.column() == column) {
+						//
+						// Information: with this code, expands ONLY first level in QTreeView
+						//
+						m_ui->researchNavigator->setExpanded(first, true);
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
 bool ResearchView::eventFilter(QObject* _object, QEvent* _event)
 {
 	if (_object == m_ui->researchNavigator
@@ -423,9 +482,20 @@ void ResearchView::initConnections()
 	QShortcut* removeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->researchNavigator);
 	removeShortcut2->setContext(Qt::WidgetShortcut);
 	connect(removeShortcut2, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
-	connect(m_ui->search, &FlatButton::toggled, [=] (bool _visible) {
-		m_ui->searchWidget->setVisible(_visible);
-		if (_visible) {
+	connect(m_ui->search, &FlatButton::toggled, [=] (bool _toggle) {
+		if (!_toggle
+			&& m_ui->searchWidget->isVisible()
+			&& !m_ui->searchWidget->hasFocus()) {
+			m_ui->search->setChecked(true);
+		}
+
+        const bool visible = m_ui->search->isChecked();
+        if (m_ui->searchWidget->isVisible() != visible) {
+            WAF::Animation::slide(m_ui->searchWidget, WAF::FromBottomToTop, true, visible);
+            QTimer::singleShot(300, [=] { m_ui->searchWidget->setVisible(visible); });
+        }
+		if (visible) {
+			m_ui->searchWidget->selectText();
 			m_ui->searchWidget->setFocus();
 		}
 	});

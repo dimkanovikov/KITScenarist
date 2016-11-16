@@ -45,6 +45,11 @@ namespace UserInterface
 		void setShowSceneNumber(bool _show);
 
 		/**
+		 * @brief Настроить отображение названий сцен
+		 */
+		void setShowSceneTitle(bool _show);
+
+		/**
 		 * @brief Настроить отображение примечания сцен
 		 */
 		void setShowSceneDescription(bool _show);
@@ -126,12 +131,12 @@ namespace UserInterface
 		/**
 		 * @brief Запрос отмены действия
 		 */
-		void undoPressed();
+		void undoRequest();
 
 		/**
 		 * @brief Запрос повтора действия
 		 */
-		void redoPressed();
+		void redoRequest();
 
 	protected:
 		/**
@@ -210,7 +215,7 @@ namespace UserInterface
 		/**
 		 * @brief Кнопка отображения/сокрытия примечания к сцене
 		 */
-        FlatButton* m_showNote;
+		FlatButton* m_showNote;
 
 		/**
 		 * @brief Дерево навигации

@@ -30,6 +30,12 @@ namespace BusinessLogic
 		ScenarioModelItem(int _position);
 		~ScenarioModelItem();
 
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString uuid() const;
+        void setUuid(const QString& _uuid);
+
 		/**
 		 * @brief Позиция элемента
 		 */
@@ -69,6 +75,12 @@ namespace BusinessLogic
 		 */
 		QString colors() const;
 		void setColors(const QString& _colors);
+
+		/**
+		 * @brief Название
+		 */
+		QString title() const;
+		void setTitle(const QString& _title);
 
 		/**
 		 * @brief Описание элемента
@@ -139,6 +151,11 @@ namespace BusinessLogic
 		void clear();
 
 	private:
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString m_uuid;
+
 		/**
 		 * @brief Позиция элемента в тексте
 		 */
@@ -163,6 +180,11 @@ namespace BusinessLogic
 		 * @brief Цвета элемента
 		 */
 		QString m_colors;
+
+		/**
+		 * @brief Название элемента
+		 */
+		QString m_title;
 
 		/**
 		 * @brief Описание элемента

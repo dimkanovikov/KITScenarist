@@ -46,35 +46,9 @@ bool Database::canOpenFile(const QString& _databaseFileName, bool _isLocal)
 		QSqlQuery q_checker(database);
 
 		//
-		// 1. Если файл был создан в настольной версии приложения, его нельзя открывать в мобильной и наоборот
+		// 1. Если файл был создан в более поздней версии приложения, его нельзя открывать
 		//
-		if (q_checker.exec(
-#ifdef MOBILE_OS
-				"SELECT COUNT(value) AS cant_open FROM system_variables WHERE variable = 'application-version' "
-#else
-				"SELECT COUNT(value) AS cant_open FROM system_variables WHERE variable = 'application-version-mobile' "
-#endif
-				)
-			&& q_checker.next()
-			&& q_checker.record().value("cant_open").toBool() == true) {
-			//
-			// Если есть метка противоположного приложения, то открыть нельзя
-			//
-			canOpen = false;
-			//
-			// ... сформироуем сообщение об ошибке
-			//
-			s_openFileError =
-#ifdef MOBILE_OS
-				QApplication::translate("DatabaseLayer::Database", "Project was created in desktop version.");
-#else
-				QApplication::translate("DatabaseLayer::Database", "Project was created in mobile version.");
-#endif
-		}
-		//
-		// 2. Если файл был создан в более поздней версии приложения, его нельзя открывать
-		//
-		else if (q_checker.exec("SELECT value FROM system_variables WHERE variable = 'application-version' ")
+		if (q_checker.exec("SELECT value FROM system_variables WHERE variable = 'application-version' ")
 				 && q_checker.next()
 				 && q_checker.value("value").toString().split(" ").first() > QApplication::applicationVersion()) {
 			canOpen = false;
@@ -92,6 +66,23 @@ bool Database::canOpenFile(const QString& _databaseFileName, bool _isLocal)
 QString Database::openFileError()
 {
 	return s_openFileError;
+}
+
+bool Database::hasError()
+{
+	return !s_lastError.isEmpty();
+}
+
+QString Database::lastError()
+{
+	return s_lastError;
+}
+
+void Database::setLastError(const QString& _error)
+{
+	if (s_lastError != _error)   {
+		s_lastError = _error;
+	}
 }
 
 void Database::setCurrentFile(const QString& _databaseFileName)
@@ -172,6 +163,7 @@ QString Database::SQL_DRIVER      = "QSQLITE";
 QString Database::DATABASE_NAME   = ":memory:";
 
 QString Database::s_openFileError = QString::null;
+QString Database::s_lastError = QString::null;
 int Database::s_openedTransactions = 0;
 
 QSqlDatabase Database::instanse()
@@ -189,6 +181,8 @@ QSqlDatabase Database::instanse()
 
 void Database::open(QSqlDatabase& _database, const QString& _connectionName, const QString& _databaseName)
 {
+	s_lastError.clear();
+
 	_database = QSqlDatabase::addDatabase(SQL_DRIVER, _connectionName);
 	_database.setDatabaseName(_databaseName);
 	_database.open();
@@ -350,6 +344,7 @@ void Database::createTables(QSqlDatabase& _database)
 	q_creator.exec("CREATE TABLE scenario "
 				   "( "
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				   "scheme TEXT NOT NULL, "
 				   "text TEXT NOT NULL, "
 				   "is_draft INTEGER NOT NULL DEFAULT(0) "
 				   ")"
@@ -568,6 +563,15 @@ void Database::updateDatabase(QSqlDatabase& _database)
 			if (versionMinor < 5
 				|| versionBuild <= 8) {
 				updateDatabaseTo_0_5_9(_database);
+			}
+		}
+		//
+		// 0.6.x
+		//
+		if (versionMinor <= 6) {
+			if (versionMinor < 5
+				|| versionBuild <= 2) {
+				updateDatabaseTo_0_7_0(_database);
 			}
 		}
 	}
@@ -907,7 +911,7 @@ void Database::updateDatabaseTo_0_5_0(QSqlDatabase& _database)
 		//
 		q_updater.exec("SELECT text FROM scenario WHERE is_draft = 0");
 		if (q_updater.next()) {
-			const QString defaultScenarioXml = BusinessLogic::ScenarioXml::defaultXml();
+			const QString defaultScenarioXml = BusinessLogic::ScenarioXml::defaultTextXml();
 			const QString scenarioXml = q_updater.record().value("text").toString();
 			const QString undoPatch = DiffMatchPatchHelper::makePatchXml(scenarioXml, defaultScenarioXml);
 			const QString redoPatch = DiffMatchPatchHelper::makePatchXml(defaultScenarioXml, scenarioXml);
@@ -1100,6 +1104,22 @@ void Database::updateDatabaseTo_0_5_9(QSqlDatabase& _database)
 			q_updater.addBindValue(id);
 			q_updater.exec();
 		}
+	}
+
+	_database.commit();
+}
+
+void Database::updateDatabaseTo_0_7_0(QSqlDatabase& _database)
+{
+	QSqlQuery q_updater(_database);
+
+	_database.transaction();
+
+	{
+		//
+		// Добавление поля в таблицу сценария
+		//
+		q_updater.exec("ALTER TABLE scenario ADD COLUMN scheme TEXT NOT NULL DEFAULT('')");
 	}
 
 	_database.commit();

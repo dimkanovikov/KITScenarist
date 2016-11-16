@@ -1,0 +1,1300 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<FinalDraft DocumentType="Script" Template="Yes" Version="3">
+
+  <Content>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="4/8" Page="1" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="BILL"></CharacterArcBeat>
+          <CharacterArcBeat Name="SOOKIE"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>InT. oLD STACKHOUSE PLACE - KITCHEN - mORNING - DAY 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>ANGLE ON a cheery humming SOOKIE STACKHOUSE.  She’s making breakfast for herself and someone off camera -</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SOOKIE</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>REVERSE ON a smiling BILL COMPTON enjoying a hearty breakfast, the morning sun shining on his face through the window.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>BILL</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Slowly, his hands and face start to smoke as he continues to smile, oblivious.  ON SOOKIE’S FACE in horror.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>BILL (CONT’D)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here...</Text>
+    </Paragraph>
+    <Paragraph Type="Transition">
+      <Text>SMASH CUT TO:</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="1" Title="">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>INT. oLD STACKHOUSE PLACE - SOOKIE’S BEDROOM - mORNING - DAY 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Sookie startles awake from a dream.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text></Text>
+    </Paragraph>
+    <Paragraph Type="Transition">
+      <Text>SMASH CUT TO:</Text>
+    </Paragraph>
+    <Paragraph Type="General">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">MAIN TITLES</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="7/8" Page="1" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="SAM"></CharacterArcBeat>
+          <CharacterArcBeat Name="SOOKIE"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>INT. MErLOTTES - SAM’S OFFICE - DAY - DAY 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>SAM MERLOTTE leans against his desk, on his CELL PHONE, leaving a message:</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SAM </Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Just then, Sookie enters, heading for her cubby. </Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SAM (</Text>
+      <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps">CONT’D</Text>
+      <Text>)</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(clicks off phone)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Sookie, dialog, dialog? </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Sookie avoids his eyes. </Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SOOKIE</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog. </Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SAM</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>As Sookie ties on her apron:</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SOOKIE</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here. </Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SAM</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(lowering his voice)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>More dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SOOKIE</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(sharply)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here? </Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(then)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>More dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SAM</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Sookie shrugs it off - back to business. </Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SOOKIE</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.  </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Sookie turns and heads out of Sam’s office and into...</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="2" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="SOOKIE"></CharacterArcBeat>
+          <CharacterArcBeat Name="TARA"></CharacterArcBeat>
+          <CharacterArcBeat Name="TARA’S THOUGHTS"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>INT. MERLOTTE’S - SERVICE ALLEY - CONTINUOUS - DAY 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SOOKIE</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Sookie’s interrupted by a blast of her THOUGHTS-</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>TaRA’s THoughts</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SOOKIE</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>TARA</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>They exchange glances and look at the customers.  OFF SOOKIE’S concerned face.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="2" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="SOOKIE"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>INT. OLD STACKHOUSE PLACE - LIVING ROOM - NIGHT 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>CLOSE ON a sleeping Sookie lying on the couch.  A loud sound comes from the dark kitchen- </Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SOOKIE</Text>
+    </Paragraph>
+    <Paragraph Type="Parenthetical">
+      <Text>(cautiously)</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog here... </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>She creeps around the corner to -  </Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="3" Title="">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>INT. oLD STACKHOUSE PLACE - KITCHEN - CONTINUOUS - NIGHT 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Sookie’s outline appears against the lit living room. Groping for the light cord on the ceiling fan, a hand reaches out from the shadows and grabs her mouth.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>OFF SOOKIE, her eyes revealing her fear.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="3" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="BILL"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>INT. cOMPTON HOUSE - CUBBY HOLE - cONTINUOUS - NIGHT 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>ANGLE ON Bill. He wakes with a startle and senses that Sookie is in need of his help.  </Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>bILL</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog!!!</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="2/8" Page="3" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="SAM"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>INT. MERLOTTES - SAM’S OFFICE - cONTINUOUS - NIGHT 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Sam too senses something is wrong with Sookie and rushes out.</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SAM</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>Dialog!!!</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text></Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="1/8" Page="3" Title="">
+        <SceneArcBeats/>
+      </SceneProperties>
+      <Text>INT. old COMPTON placE - CONTINUOUS - NIGHT 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>ANGLE ON THE TRAP DOOR as it BURSTS OPEN. Bill climbs out and rushes out his front door at preternatural speed.</Text>
+    </Paragraph>
+    <Paragraph Type="Scene Heading">
+      <SceneProperties Length="3/8" Page="3" Title="">
+        <SceneArcBeats>
+          <CharacterArcBeat Name="SAM"></CharacterArcBeat>
+        </SceneArcBeats>
+      </SceneProperties>
+      <Text>EXT. oLD STACKHOUSE PLACE - FRONT PORCH - NIGHT - DAY 1.</Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Sam stands on the front porch, calling into the house-</Text>
+    </Paragraph>
+    <Paragraph Type="Character">
+      <Text>SAM</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text>SOOKIE!! </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>Bill arrives just in time hear her muffled screams inside.</Text>
+    </Paragraph>
+    <Paragraph Type="Transition">
+      <Text>DIP TO BLACK.</Text>
+    </Paragraph>
+    <Paragraph Type="Dialogue">
+      <Text></Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text>“BAD MOON RISING” by Ann Wilson &amp; Gretchen Wilson plays over. </Text>
+    </Paragraph>
+    <Paragraph Type="Action">
+      <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold">END CREDITS</Text>
+      <Text>. </Text>
+    </Paragraph>
+  </Content>
+
+  <Watermarking Opacity="70" Position="Diagonal Descending">
+    <DynamicContent>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.00" RightIndent="1.39" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+    </DynamicContent>
+    <Distribution/>
+    <WatermarkImage Height="144"></WatermarkImage>
+  </Watermarking>
+
+  <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="Yes" HeaderVisible="Yes" StartingPage="1">
+    <Header>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="0.50" RightIndent="-0.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">TRUE BLOOD "Episode Title"	</Text>
+        <DynamicLabel Type="Last Revised"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <DynamicLabel Type="Page #"/>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        <Tabstops>
+          <Tabstop Position="4.00" Type="Center"/>
+          <Tabstop Position="7.25" Type="Right"/>
+        </Tabstops>
+      </Paragraph>
+    </Header>
+    <Footer>
+      <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+      </Paragraph>
+    </Footer>
+  </HeaderAndFooter>
+
+  <SpellCheckIgnoreLists>
+    <IgnoredRanges/>
+    <IgnoredWords>
+      <Word>20Õs</Word>
+      <Word>40Õs</Word>
+      <Word>AMENS!</Word>
+      <Word>Awww</Word>
+      <Word>BELLEFLEUR</Word>
+      <Word>BELLEFLUER</Word>
+      <Word>BURLEY.</Word>
+      <Word>Bellefleur</Word>
+      <Word>Bunkie</Word>
+      <Word>BurleyÕs</Word>
+      <Word>CÕmon</Word>
+      <Word>D-U-I.</Word>
+      <Word>DEARBORNE</Word>
+      <Word>Dang</Word>
+      <Word>FORTENBERRY.</Word>
+      <Word>FUCK</Word>
+      <Word>FUCKING</Word>
+      <Word>Fuck!</Word>
+      <Word>Fucking</Word>
+      <Word>Getta</Word>
+      <Word>Gimme</Word>
+      <Word>HORSESHIT!</Word>
+      <Word>LENIER</Word>
+      <Word>LIAM</Word>
+      <Word>LaMontagne</Word>
+      <Word>Lemme</Word>
+      <Word>Lenier.</Word>
+      <Word>MERLOTTE</Word>
+      <Word>Marthaville</Word>
+      <Word>Merlotte.</Word>
+      <Word>NORTHMAN</Word>
+      <Word>P-T-S-DÕing</Word>
+      <Word>PICKENS</Word>
+      <Word>POV</Word>
+      <Word>Shit</Word>
+      <Word>Sook</Word>
+      <Word>SookieÕll</Word>
+      <Word>Stackhouse?</Word>
+      <Word>Tru</Word>
+      <Word>Uh</Word>
+      <Word>WhatÕre</Word>
+      <Word>WhereÕd</Word>
+      <Word>allÕa</Word>
+      <Word>atÕcha.</Word>
+      <Word>awww</Word>
+      <Word>cunt</Word>
+      <Word>cuttinÕ</Word>
+      <Word>diddly-squat</Word>
+      <Word>doinÕ</Word>
+      <Word>fangbanger?</Word>
+      <Word>fangbangers.</Word>
+      <Word>fanger</Word>
+      <Word>fangers</Word>
+      <Word>fuck</Word>
+      <Word>fuckersÕ</Word>
+      <Word>fucking</Word>
+      <Word>fucks</Word>
+      <Word>fullÕa</Word>
+      <Word>goddamned</Word>
+      <Word>gonna</Word>
+      <Word>gotta</Word>
+      <Word>hadnÕta</Word>
+      <Word>hellÕre</Word>
+      <Word>kinda</Word>
+      <Word>knowinÕ</Word>
+      <Word>lemme</Word>
+      <Word>livinÕ</Word>
+      <Word>lookinÕ</Word>
+      <Word>loopy.</Word>
+      <Word>lotta</Word>
+      <Word>makinÕ</Word>
+      <Word>manslut</Word>
+      <Word>mayÕve</Word>
+      <Word>meds.</Word>
+      <Word>musta</Word>
+      <Word>mustÕve</Word>
+      <Word>nothinÕ</Word>
+      <Word>oughta</Word>
+      <Word>outta</Word>
+      <Word>pm.</Word>
+      <Word>roadkill.</Word>
+      <Word>sayinÕ</Word>
+      <Word>seeinÕ</Word>
+      <Word>shit</Word>
+      <Word>shouldnÕtÕve</Word>
+      <Word>sittinÕ</Word>
+      <Word>sonofabitch</Word>
+      <Word>spillinÕ</Word>
+      <Word>stayinÕ</Word>
+      <Word>stealinÕ</Word>
+      <Word>talkinÕ</Word>
+      <Word>thinkinÕ</Word>
+      <Word>waitinÕ</Word>
+      <Word>wanna</Word>
+      <Word>watchinÕ.</Word>
+      <Word>whatÕre</Word>
+      <Word>yÕall</Word>
+      <Word>Ôkay?</Word>
+    </IgnoredWords>
+  </SpellCheckIgnoreLists>
+
+  <PageLayout BackgroundColor="#FFFFFFFFFFFF" BottomMargin="36" BreakDialogueAndActionAtSentences="Yes" DocumentLeading="Normal" FooterMargin="36" ForegroundColor="#000000000000" HeaderMargin="36" InvisiblesColor="#808080808080" TopMargin="54" UsesSmartQuotes="Yes">
+    <PageSize Height="11.00" Width="8.50"/>
+    <AutoCastList AddParentheses="Yes" AutomaticallyGenerate="Yes" CastListElement="Cast List"/>
+  </PageLayout>
+
+  <WindowState Height="635" Left="2" Mode="Normal" Top="2" Width="649"/>
+
+  <TextState Scaling="100" Selection="0,0" ShowInvisibles="No"/>
+
+  <ElementSettings Type="General">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.75" RightIndent="7.38" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="General" ReturnKey="General" Shortcut="0"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Scene Heading">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Underline+AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.75" RightIndent="7.38" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="1"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Action">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.75" RightIndent="7.38" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="2"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Character">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="4.11" RightIndent="7.38" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Character" ReturnKey="Dialogue" Shortcut="3"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Parenthetical">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="-0.10" Leading="Regular" LeftIndent="3.38" RightIndent="5.38" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Parenthetical" ReturnKey="Dialogue" Shortcut="4"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Dialogue">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="2.75" RightIndent="6.11" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Dialogue" ReturnKey="Action" Shortcut="5"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Transition">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="6.00" RightIndent="7.38" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Transition" ReturnKey="Scene Heading" Shortcut="6"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Shot">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.75" RightIndent="7.38" SpaceBefore="12" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Scene Heading" ReturnKey="Action" Shortcut="7"/>
+  </ElementSettings>
+
+  <ElementSettings Type="Cast List">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="AllCaps"/>
+    <ParagraphSpec Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.50" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No"/>
+    <Behavior PaginateAs="Action" ReturnKey="Action" Shortcut="8"/>
+  </ElementSettings>
+
+  <TitlePage>
+    <HeaderAndFooter FooterFirstPage="Yes" FooterVisible="No" HeaderFirstPage="No" HeaderVisible="Yes" StartingPage="1">
+      <Header>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <DynamicLabel Type="Page #"/>
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">.</Text>
+        </Paragraph>
+      </Header>
+      <Footer>
+        <Paragraph Alignment="Right" FirstIndent="0.00" Leading="Regular" LeftIndent="1.25" RightIndent="-1.25" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+          <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+        </Paragraph>
+      </Footer>
+    </HeaderAndFooter>
+    <Content>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+
+</Text>      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="20" Style="Underline">
+</Text>        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="20" Style="Bold+Underline">True Blood</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+
+Episode #</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+ "Episode Title"</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+
+</Text>      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+Written By</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+Writer's Name</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+
+</Text>      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">based</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> on the Southern Vampire Novels</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">by</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> </Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Charlaine</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> Harris</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	REVISION DRAFT:	m/</Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">dd</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">/</Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">yy</Text>
+        <Tabstops>
+          <Tabstop Position="7.50" Type="Right"/>
+          <Tabstop Position="6.57" Type="Left"/>
+          <Tabstop Position="6.38" Type="Right"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+					</Text></Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="Yes">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Underline">TRUE BLOOD</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+"Episode Title" </Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Ep</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">. # - Revision Color</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+Month d, </Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">yyyy</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Underline">
+CAST LIST</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+SOOKIE STACKHOUSE
+BILL COMPTON
+JASON STACKHOUSE
+SAM MERLOTTE
+TARA THORNTON
+BUD DEARBORNE 
+ANDY BELLEFLEUR  
+ARLENE FOWLER 
+HOYT FORTENBERRY
+
+GRAN (ADELE HALE) STACKHOUSE
+EGGS (BENEDICT TALLEY)
+ERIC
+JESSICA
+LISA FOWLER</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">COBY</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> FOWLER
+MARYANN FORRESTER
+ORRY DAWSON
+PAM
+ROSIE
+STEVE NEWLIN
+TERRY BELLEFLEUR</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+
+</Text>      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="Yes">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Underline">TRUE BLOOD</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+"Episode Title" </Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">Ep</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">. # - Revision Color</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+Month d, </Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">yyyy</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Underline">
+SET LIST</Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Center" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""></Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Underline">INTERIORS</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="Bold+Underline">EXTERIORS</Text>
+        <Tabstops>
+          <Tabstop Position="1.38" Type="Left"/>
+          <Tabstop Position="4.50" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+MERLOTTE'S	WOODS - TIME OF DAY
+-	SAM'S OFFICE	
+-	SERVICE ALLEY	</Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">CEMETARY</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> - TIME OF DAY</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Left"/>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.82" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+OLD </Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">STACKHOUSE</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> PLACE	MARYANN'S HOUSE - TIME OF DAY
+-	FOYER	-	PATIO</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Left"/>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.82" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">-	KITCHEN	-	POOL</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Left"/>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.82" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">-	DINING ROOM	</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Left"/>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.82" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">-	LIVING ROOM	MERLOTTE'S - TIME OF DAY</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Left"/>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.82" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.92" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">	-	BACK ENTRANCE 
+CINDY'S BEDROOM (FLASHBACK)	-	PARKING LOT</Text>
+        <Tabstops>
+          <Tabstop Position="4.50" Type="Left"/>
+          <Tabstop Position="4.82" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">		</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.50" Type="Left"/>
+          <Tabstop Position="4.82" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.92" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">OLD COMPTON PLACE	OLD </Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">STACKHOUSE</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> PLACE - TIME OF DAY 
+-	CUBBY HOLE 	-	FRONT PORCH</Text>
+        <Tabstops>
+          <Tabstop Position="1.32" Type="Left"/>
+          <Tabstop Position="4.50" Type="Left"/>
+          <Tabstop Position="4.82" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+BON TEMPS/</Text>
+        <Text AdornmentStyle="-1" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">RENARD</Text>
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""> PARISH JAIL
+-	POLICE STATION
+-	HOLDING CELL
+-	INTERROGATION ROOM
+
+SOOKIE'S CAR</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+JASON'S TRUCK </Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+MARYANN'S HOUSE
+-	GUEST ROOM
+-	MARYANN'S ROOM
+-	DEN</Text>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>        <Tabstops>
+          <Tabstop Position="4.50" Type="Left"/>
+        </Tabstops>
+      </Paragraph>
+      <Paragraph Alignment="Left" FirstIndent="0.00" Leading="Regular" LeftIndent="1.00" RightIndent="7.50" SpaceBefore="0" Spacing="1" StartsNewPage="No">
+        <Text AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style="">
+</Text>      </Paragraph>
+    </Content>
+    <TextState Scaling="100" Selection="6,6" ShowInvisibles="No"/>
+  </TitlePage>
+
+  <UnanchoredScriptNotes/>
+
+  <SmartType>
+    <Characters>
+      <Character>ADELE</Character>
+      <Character>ANDY</Character>
+      <Character>ARLENE</Character>
+      <Character>BILL</Character>
+      <Character>BUD</Character>
+      <Character>CUSTOMERS THOUGHTS</Character>
+      <Character>DOROTHY</Character>
+      <Character>EGGS</Character>
+      <Character>ERIC</Character>
+      <Character>GORDON</Character>
+      <Character>HOYT</Character>
+      <Character>JANE BODEHOUSE</Character>
+      <Character>JASON</Character>
+      <Character>JESSICA</Character>
+      <Character>KEVIN</Character>
+      <Character>MARYANN</Character>
+      <Character>MAUDETTE</Character>
+      <Character>MIRIAM</Character>
+      <Character>ORRY</Character>
+      <Character>PAM</Character>
+      <Character>ROSIE</Character>
+      <Character>SAM</Character>
+      <Character>SOOKIE</Character>
+      <Character>STEVE NEWLIN</Character>
+      <Character>TARA</Character>
+      <Character>TERRY</Character>
+      <Character>WADE</Character>
+    </Characters>
+    <Extensions>
+      <Extension>(V.O.)</Extension>
+      <Extension>(O.S.)</Extension>
+      <Extension>(O.C.)</Extension>
+      <Extension>(SUBTITLE)</Extension>
+      <Extension>(PRELAP)</Extension>
+    </Extensions>
+    <SceneIntros Separator=". ">
+      <SceneIntro>INT</SceneIntro>
+      <SceneIntro>EXT</SceneIntro>
+      <SceneIntro>I/E</SceneIntro>
+      <SceneIntro>INT./EXT</SceneIntro>
+    </SceneIntros>
+    <Locations>
+      <Location>BON TEMPS/RENARD PARISH JAIL</Location>
+      <Location>BON TEMPS/RENARD PARISH JAIL - HOLDING CELL</Location>
+      <Location>CEMETERY</Location>
+      <Location>CHURCH</Location>
+      <Location>COMPTON HOUSE</Location>
+      <Location>COMPTON HOUSE - CUBBY HOLE</Location>
+      <Location>COMPTON HOUSE - CUBBY HOLE - CONTINUOUS</Location>
+      <Location>JASON'S TRUCK</Location>
+      <Location>MERLOTTES</Location>
+      <Location>MERLOTTES - HALLWAY OUTSIDE SAM'S OFFICE</Location>
+      <Location>MERLOTTES - KITCHEN</Location>
+      <Location>MERLOTTES - PARKING LOT</Location>
+      <Location>MERLOTTES - SAM'S OFFICE</Location>
+      <Location>MERLOTTES - SAM'S OFFICE - CONTINUOUS</Location>
+      <Location>MERLOTTES - SAM'S OFFICE - DAY</Location>
+      <Location>OLD COMPTON PLACE - CONTINUOUS</Location>
+      <Location>OLD STACKHOUSE PLACE</Location>
+      <Location>OLD STACKHOUSE PLACE - DINING ROOM</Location>
+      <Location>OLD STACKHOUSE PLACE - FRONT PORCH</Location>
+      <Location>OLD STACKHOUSE PLACE - KITCHEN</Location>
+      <Location>OLD STACKHOUSE PLACE - LIVING ROOM</Location>
+      <Location>OLD STACKHOUSE PLACE - SOOKIE'S BEDROOM</Location>
+      <Location>POLICE STATION</Location>
+      <Location>POLICE STATION - HOLDING CELL</Location>
+      <Location>POLICE STATION - MAIN OFFICE</Location>
+      <Location>SAM'S CAR</Location>
+      <Location>SHREVEPORT CHURCH</Location>
+      <Location>SOOKIE'S CAR</Location>
+      <Location>TARA'S CAR</Location>
+      <Location>WOODS</Location>
+    </Locations>
+    <TimesOfDay Separator=" - ">
+      <TimeOfDay>AFTERNOON - DAY 1.</TimeOfDay>
+      <TimeOfDay>AFTERNOON - DAY 2.</TimeOfDay>
+      <TimeOfDay>AFTERNOON - DAY 3.</TimeOfDay>
+      <TimeOfDay>AFTERNOON - DAY 4.</TimeOfDay>
+      <TimeOfDay>CONTINUOUS - DAY 1.</TimeOfDay>
+      <TimeOfDay>CONTINUOUS - DAY 2.</TimeOfDay>
+      <TimeOfDay>CONTINUOUS - DAY 3.</TimeOfDay>
+      <TimeOfDay>CONTINUOUS - DAY 4.</TimeOfDay>
+      <TimeOfDay>CONTINUOUS - NIGHT 1.</TimeOfDay>
+      <TimeOfDay>CONTINUOUS - NIGHT 2.</TimeOfDay>
+      <TimeOfDay>CONTINUOUS - NIGHT 3.</TimeOfDay>
+      <TimeOfDay>CONTINUOUS - NIGHT 4.</TimeOfDay>
+      <TimeOfDay>DAY 1.</TimeOfDay>
+      <TimeOfDay>DAY 2.</TimeOfDay>
+      <TimeOfDay>DAY 3.</TimeOfDay>
+      <TimeOfDay>DAY 4.</TimeOfDay>
+      <TimeOfDay>EVENING - DAY 1.</TimeOfDay>
+      <TimeOfDay>EVENING - DAY 2.</TimeOfDay>
+      <TimeOfDay>EVENING - DAY 3.</TimeOfDay>
+      <TimeOfDay>EVENING - DAY 4.</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER - DAY 1.</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER - DAY 2.</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER - DAY 3.</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER - DAY 4.</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER - NIGHT 1.</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER - NIGHT 2.</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER - NIGHT 3.</TimeOfDay>
+      <TimeOfDay>MOMENTS LATER - NIGHT 4.</TimeOfDay>
+      <TimeOfDay>MORNING - DAY 1.</TimeOfDay>
+      <TimeOfDay>MORNING - DAY 2.</TimeOfDay>
+      <TimeOfDay>MORNING - DAY 3.</TimeOfDay>
+      <TimeOfDay>MORNING - DAY 4.</TimeOfDay>
+      <TimeOfDay>NIGHT 1.</TimeOfDay>
+      <TimeOfDay>NIGHT 2.</TimeOfDay>
+      <TimeOfDay>NIGHT 3.</TimeOfDay>
+      <TimeOfDay>NIGHT 4.</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY - DAY 2.</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY - DAY 3.</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY - DAY 4.</TimeOfDay>
+      <TimeOfDay>THE NEXT DAY - DAY 5.</TimeOfDay>
+    </TimesOfDay>
+    <Transitions>
+      <Transition>CUT TO:</Transition>
+      <Transition>FADE IN:</Transition>
+      <Transition>FADE OUT.</Transition>
+      <Transition>FADE TO:</Transition>
+      <Transition>DISSOLVE TO:</Transition>
+      <Transition>BACK TO:</Transition>
+      <Transition>MATCH CUT TO:</Transition>
+      <Transition>JUMP CUT TO:</Transition>
+      <Transition>FADE TO BLACK.</Transition>
+      <Transition>SMASH CUT TO:</Transition>
+      <Transition>DIP TO BLACK.</Transition>
+    </Transitions>
+  </SmartType>
+
+  <MoresAndContinueds>
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+    <DialogueBreaks AutomaticCharacterContinueds="Yes" BottomOfPage="Yes" DialogueBottom="(MORE)" DialogueTop="(CONT'D)" TopOfNext="Yes"/>
+    <SceneBreaks ContinuedNumber="Yes" SceneBottom="(CONTINUED)" SceneBottomOfPage="Yes" SceneTop="CONTINUED:" SceneTopOfNext="Yes"/>
+  </MoresAndContinueds>
+
+  <LockedPages/>
+
+  <Revisions ActiveSet="1" Location="7.75" RevisionMode="No" RevisionsShown="Active" ShowAllMarks="No" ShowAllSets="No" ShowPageColor="No">
+    <Revision Color="#FFFF00000000" FullRevision="No" ID="1" Mark="*" Name="Blue Revisions  m/d/yy" PageColor="#C6C6EDEDFEFE" Style=""/>
+    <Revision Color="#FFFF00000000" FullRevision="No" ID="2" Mark="*" Name="Pink Revisions  m/d/yy" PageColor="#FDFDCCCCD4D4" Style=""/>
+    <Revision Color="#FFFF00000000" FullRevision="No" ID="3" Mark="*" Name="Yellow Revisions  m/d/yy" PageColor="#FDFDFFFFABAB" Style=""/>
+    <Revision Color="#FFFF00000000" FullRevision="No" ID="4" Mark="*" Name="Green Revisions  m/d/yy" PageColor="#D1D1FEFED0D0" Style=""/>
+    <Revision Color="#FFFF00000000" FullRevision="No" ID="5" Mark="*" Name="Goldenrod Revisions  m/d/yy" PageColor="#FAFACDCD3939" Style=""/>
+    <Revision Color="#FFFF00000000" FullRevision="No" ID="6" Mark="*" Name="Buff Revisions  m/d/yy" PageColor="#FCFCEDED9D9D" Style=""/>
+    <Revision Color="#FFFF00000000" FullRevision="No" ID="7" Mark="*" Name="Salmon Revisions  m/d/yy" PageColor="#F8F8AEAE8E8E" Style=""/>
+    <Revision Color="#FFFF00000000" FullRevision="No" ID="8" Mark="*" Name="Cherry Revisions  m/d/yy" PageColor="#FBFBA4A4B4B4" Style=""/>
+    <Revision Color="#FFFF00000000" FullRevision="No" ID="9" Mark="*" Name="Tan Revisions  m/d/yy" PageColor="#FDFDF1F1C7C7" Style=""/>
+  </Revisions>
+
+  <SplitState ActivePanel="1" SplitMode="None" SplitterPosition="625">
+    <ScriptPanel DisplayMode="Page">
+      <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Verdana" RevisionID="0" Size="9" Style=""/>
+    </ScriptPanel>
+  </SplitState>
+
+  <Macros>
+    <Macro Element="Scene Heading" Name="INT" Shortcut="Ctrl+Alt+1" Text="INT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="EXT" Shortcut="Ctrl+Alt+2" Text="EXT. " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="I/E" Shortcut="Ctrl+Alt+3" Text="I/E " Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="DAY" Shortcut="Ctrl+Alt+4" Text=" - DAY" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="NIGHT" Shortcut="Ctrl+Alt+5" Text=" - NIGHT" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="SUNRISE" Shortcut="Ctrl+Alt+6" Text=" - SUNRISE" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Scene Heading" Name="MAGIC" Shortcut="Ctrl+Alt+7" Text=" - MAGIC" Transition="Action">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="CONT" Shortcut="Ctrl+Alt+8" Text="continuing" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Parenthetical" Name="INTER" Shortcut="Ctrl+Alt+9" Text="interrupting" Transition="Dialogue">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="E" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="CUTTO" Shortcut="Ctrl+Shift+Alt+1" Text="CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Action" Name="FADEIN" Shortcut="Ctrl+Shift+Alt+2" Text="FADE IN:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADEOUT" Shortcut="Ctrl+Shift+Alt+3" Text="FADE OUT." Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FADETO" Shortcut="Ctrl+Shift+Alt+4" Text="FADE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="DISSLV" Shortcut="Ctrl+Shift+Alt+5" Text="DISSOLVE TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="BACKTO" Shortcut="Ctrl+Shift+Alt+6" Text="BACK TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="MATCHCUT" Shortcut="Ctrl+Shift+Alt+7" Text="MATCH CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="JUMPCUT" Shortcut="Ctrl+Shift+Alt+8" Text="JUMP CUT TO:" Transition="Scene Heading">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="Transition" Name="FBLACK" Shortcut="Ctrl+Shift+Alt+9" Text="FADE TO BLACK." Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+    <Macro Element="None" Name="" Shortcut="E" Text="" Transition="None">
+      <Alias Confirm="No" MatchCase="No" SmartReplace="Yes" Text="" WordOnly="No">
+        <ActivateIn Element="General"/>
+        <ActivateIn Element="Scene Heading"/>
+        <ActivateIn Element="Action"/>
+        <ActivateIn Element="Character"/>
+        <ActivateIn Element="Parenthetical"/>
+        <ActivateIn Element="Dialogue"/>
+        <ActivateIn Element="Transition"/>
+        <ActivateIn Element="Shot"/>
+      </Alias>
+    </Macro>
+  </Macros>
+
+  <Actors>
+    <Actor MacVoice="" Name="Man 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Man 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Woman 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Boy 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 1" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Girl 2" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Man" Pitch="Normal" Speed="Medium" WinVoice=""/>
+    <Actor MacVoice="" Name="Old Woman" Pitch="Normal" Speed="Medium" WinVoice=""/>
+  </Actors>
+
+  <Cast>
+    <Narrator Actor="Man 1">
+      <Element Type="Character"/>
+      <Element Type="Dialogue"/>
+    </Narrator>
+    <Member Actor="Man 1" Character="ADELE"/>
+    <Member Actor="Man 1" Character="ANDY"/>
+    <Member Actor="Man 1" Character="ARLENE"/>
+    <Member Actor="Man 1" Character="BILL"/>
+    <Member Actor="Man 1" Character="BUD"/>
+    <Member Actor="Man 1" Character="CUSTOMERS THOUGHTS"/>
+    <Member Actor="Man 1" Character="DOROTHY"/>
+    <Member Actor="Man 1" Character="EGGS"/>
+    <Member Actor="Man 1" Character="ERIC"/>
+    <Member Actor="Man 1" Character="GORDON"/>
+    <Member Actor="Man 1" Character="HOYT"/>
+    <Member Actor="Man 1" Character="JANE BODEHOUSE"/>
+    <Member Actor="Man 1" Character="JASON"/>
+    <Member Actor="Man 1" Character="JESSICA"/>
+    <Member Actor="Man 1" Character="KEVIN"/>
+    <Member Actor="Man 1" Character="MARYANN"/>
+    <Member Actor="Man 1" Character="MAUDETTE"/>
+    <Member Actor="Man 1" Character="MIRIAM"/>
+    <Member Actor="Man 1" Character="ORRY"/>
+    <Member Actor="Man 1" Character="PAM"/>
+    <Member Actor="Man 1" Character="ROSIE"/>
+    <Member Actor="Man 1" Character="SAM"/>
+    <Member Actor="Man 1" Character="SOOKIE"/>
+    <Member Actor="Man 1" Character="STEVE NEWLIN"/>
+    <Member Actor="Man 1" Character="TARA"/>
+    <Member Actor="Man 1" Character="TERRY"/>
+    <Member Actor="Man 1" Character="WADE"/>
+  </Cast>
+
+  <SceneNumberOptions LeftLocation="1.00" NumberScheme="1A" RightLocation="7.75" ShowNumbersOnLeft="Yes" ShowNumbersOnRight="Yes">
+    <FontSpec AdornmentStyle="0" Background="#FFFFFFFFFFFF" Color="#000000000000" Font="Courier Final Draft" RevisionID="0" Size="12" Style=""/>
+  </SceneNumberOptions>
+
+  <CastList SortOption="Alphabetical">
+    <CustomOrder/>
+  </CastList>
+
+  <CharacterHighlighting>
+    <Character Color="#FFFFFFFFFFFF" Name="BILL" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="SAM" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="SOOKIE" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="TARA" Visible="No"/>
+    <Character Color="#FFFFFFFFFFFF" Name="TARA’S THOUGHTS" Visible="No"/>
+  </CharacterHighlighting>
+
+  <CharacterNavigatorPreferences IsSortAscending="Yes" SortColumn=""/>
+
+  <AltCollection/>
+
+  <TargetScriptLength>60</TargetScriptLength>
+
+  <ListItems/>
+
+  <DisplayBoards>
+    <DisplayBoard Height="56" ScrollOrigin="0,0" Type="StoryMap" Width="2032" ZoomLevel="100.000"/>
+    <DisplayBoard Height="10000" ScrollOrigin="0,0" Type="Beat" Width="24000" ZoomLevel="100.000"/>
+  </DisplayBoards>
+
+</FinalDraft>

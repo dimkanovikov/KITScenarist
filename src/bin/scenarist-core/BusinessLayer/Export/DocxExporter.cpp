@@ -61,14 +61,29 @@ namespace {
 			s_types.insert(10, ScenarioBlockStyle::Title);
 			s_types.insert(11, ScenarioBlockStyle::SceneGroupHeader);
 			s_types.insert(12, ScenarioBlockStyle::SceneGroupFooter);
+            s_types.insert(13, ScenarioBlockStyle::SceneDescription);
 		}
 		return s_types;
 	}
 
 	/**
+	 * @brief Нужно ли записывать шрифты в файл
+	 */
+	static bool needWriteFonts() {
+		const ScenarioTemplate exportTemplate = exportStyle();
+		for (const ScenarioBlockStyle::Type type : blockTypes().values()) {
+			if (exportTemplate.blockStyle(type).font().family() == "Courier Prime") {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * @brief Сформировать строку DOCX-стиля из стиля блока
 	 */
-	static QString docxBlockStyle(const ScenarioBlockStyle& _style) {
+	static QString docxBlockStyle(const ScenarioBlockStyle& _style, const QString& _defaultFontFamily) {
 		QString blockStyle;
 
 		if (_style.type() != ScenarioBlockStyle::Undefined) {
@@ -221,16 +236,18 @@ namespace {
 			// Для неопределённого стиля формируется простая заглушка
 			//
 			blockStyle =
-					"<w:style w:type=\"paragraph\" w:styleId=\"Normal\">"
-						"<w:name w:val=\"Normal\"/>"
-						"<w:pPr>"
-							"<w:widowControl w:val=\"0\"/><w:autoSpaceDE w:val=\"0\"/><w:autoSpaceDN w:val=\"0\"/><w:adjustRightInd w:val=\"0\"/><w:spacing w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\"/>"
-						"</w:pPr>"
-						"<w:rPr>"
-							"<w:rFonts w:ascii=\"Courier Prime\" w:hAnsi=\"Courier Prime\" w:cs=\"Courier Prime\"/>"
-							"<w:sz w:val=\"24\"/>"
-						"</w:rPr>"
-					"</w:style>";
+					QString(
+						"<w:style w:type=\"paragraph\" w:styleId=\"Normal\">"
+							"<w:name w:val=\"Normal\"/>"
+							"<w:pPr>"
+								"<w:widowControl w:val=\"0\"/><w:autoSpaceDE w:val=\"0\"/><w:autoSpaceDN w:val=\"0\"/><w:adjustRightInd w:val=\"0\"/><w:spacing w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\"/>"
+							"</w:pPr>"
+							"<w:rPr>"
+								"<w:rFonts w:ascii=\"%1\" w:hAnsi=\"%1\" w:cs=\"%1\"/>"
+								"<w:sz w:val=\"24\"/>"
+							"</w:rPr>"
+						"</w:style>")
+					.arg(_defaultFontFamily);
 		}
 
 		return blockStyle;
@@ -443,7 +460,8 @@ namespace {
 	}
 }
 
-DocxExporter::DocxExporter()
+DocxExporter::DocxExporter() :
+	AbstractExporter()
 {
 }
 
@@ -472,7 +490,9 @@ void DocxExporter::exportTo(ScenarioDocument* _scenario, const ExportParameters&
 			//
 			// ... шрифты
 			//
-			writeFonts(&zip);
+			if (::needWriteFonts()) {
+				writeFonts(&zip);
+			}
 			//
 			// ... колонтитулы
 			//
@@ -503,12 +523,15 @@ void DocxExporter::writeStaticData(QtZipWriter* _zip, const ExportParameters& _e
 			"<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
 			"<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
 			"<Default Extension=\"xml\" ContentType=\"application/xml\"/>"
-			"<Default Extension=\"odttf\" ContentType=\"application/vnd.openxmlformats-officedocument.obfuscatedFont\"/>"
 			"<Override PartName=\"/_rels/.rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
 			"<Override PartName=\"/word/_rels/document.xml.rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
 			"<Override PartName=\"/word/styles.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml\"/>"
-			"<Override PartName=\"/word/fontTable.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml\"/>"
 			"<Override PartName=\"/word/comments.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml\"/>";
+	if (::needWriteFonts()) {
+		contentTypesXml.append(
+			"<Default Extension=\"odttf\" ContentType=\"application/vnd.openxmlformats-officedocument.obfuscatedFont\"/>"
+			"<Override PartName=\"/word/fontTable.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml\"/>");
+	}
 	//
 	// ... необходимы ли колонтитулы
 	//
@@ -552,35 +575,45 @@ void DocxExporter::writeStaticData(QtZipWriter* _zip, const ExportParameters& _e
 			documentXmlRels.append("<Relationship Id=\"docRId3\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer\" Target=\"footer1.xml\"/>");
 		}
 	}
-	documentXmlRels.append(
-		"<Relationship Id=\"docRId4\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings\" Target=\"settings.xml\"/>"
-		"<Relationship Id=\"docRId5\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable\" Target=\"fontTable.xml\"/>"
-		"</Relationships>");
+	documentXmlRels.append("<Relationship Id=\"docRId4\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings\" Target=\"settings.xml\"/>");
+	//
+	// ... необходимы ли шрифты
+	//
+	if (::needWriteFonts()) {
+		documentXmlRels.append("<Relationship Id=\"docRId5\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable\" Target=\"fontTable.xml\"/>");
+	}
+	documentXmlRels.append("</Relationships>");
 	_zip->addFile(QString::fromLatin1("word/_rels/document.xml.rels"), documentXmlRels.toUtf8());
 
 	//
 	// Связи шрифтов
 	//
-	_zip->addFile(QString::fromLatin1("word/_rels/fontTable.xml.rels"),
-		"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-		"<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
-		"<Relationship Id=\"docRId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font1.odttf\"/>"
-		"<Relationship Id=\"docRId2\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font2.odttf\"/>"
-		"<Relationship Id=\"docRId3\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font3.odttf\"/>"
-		"<Relationship Id=\"docRId4\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font4.odttf\"/>"
-		"</Relationships>");
+	if (::needWriteFonts()) {
+		_zip->addFile(QString::fromLatin1("word/_rels/fontTable.xml.rels"),
+					  "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+					  "<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
+					  "<Relationship Id=\"fontRId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font1.odttf\"/>"
+					  "<Relationship Id=\"fontRId2\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font2.odttf\"/>"
+					  "<Relationship Id=\"fontRId3\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font3.odttf\"/>"
+					  "<Relationship Id=\"fontRId4\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/font\" Target=\"fonts/font4.odttf\"/>"
+					  "</Relationships>");
+	}
 
 	//
 	// Настройки документа
 	//
-	_zip->addFile(QString::fromLatin1("word/settings.xml"),
-		"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-		"<w:settings xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\">"
-		"<w:embedTrueTypeFonts/>"
-		"<w:characterSpacingControl w:val=\"doNotCompress\"/>"
-		"<w:footnotePr></w:footnotePr>"
-		"<w:endnotePr></w:endnotePr>"
-		"</w:settings>");
+	QString wordSettings =
+			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+			"<w:settings xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\">";
+	if (::needWriteFonts()) {
+		wordSettings += "<w:embedTrueTypeFonts w:val=\"true\"/><w:embedSystemFonts w:val=\"false\"/>";
+	}
+	wordSettings +=
+			"<w:characterSpacingControl w:val=\"doNotCompress\"/>"
+			"<w:footnotePr></w:footnotePr>"
+			"<w:endnotePr></w:endnotePr>"
+			"</w:settings>";
+	_zip->addFile(QString::fromLatin1("word/settings.xml"), wordSettings.toUtf8());
 }
 
 void DocxExporter::writeStyles(QtZipWriter* _zip) const
@@ -597,9 +630,10 @@ void DocxExporter::writeStyles(QtZipWriter* _zip) const
 	// Настройки в соответсвии со стилем
 	//
 	ScenarioTemplate style = ::exportStyle();
+	const QString defaultFontFamily = style.blockStyle(ScenarioBlockStyle::Action).font().family();
 	foreach (int blockNumber, ::blockTypes().keys()) {
 		ScenarioBlockStyle blockStyle = style.blockStyle(::blockTypes().value(blockNumber));
-		styleXml.append(::docxBlockStyle(blockStyle));
+		styleXml.append(::docxBlockStyle(blockStyle, defaultFontFamily));
 	}
 
 	styleXml.append("</w:styles>");
@@ -619,15 +653,16 @@ void DocxExporter::writeFonts(QtZipWriter* _zip) const
 			"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
 			"<w:fonts xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">"
 			"<w:font w:name=\"Courier Prime\">"
+			"<w:altName w:val=\"Courier New\"/>"
 			"<w:panose1 w:val=\"02000409000000000000\"/>"
 			"<w:charset w:val=\"CC\"/>"
-			"<w:family w:val=\"auto\"/>"
+			"<w:family w:val=\"modern\"/>"
 			"<w:pitch w:val=\"variable\"/>"
 			"<w:sig w:usb0=\"A000022F\" w:usb1=\"5000004B\" w:usb2=\"00000000\" w:usb3=\"00000000\" w:csb0=\"00000097\" w:csb1=\"00000000\"/>"
-			"<w:embedRegular r:id=\"docRId1\" w:fontKey=\"{1659502D-6790-4F04-A360-0649510E8FFE}\"/>"
-			"<w:embedBold r:id=\"docRId2\" w:fontKey=\"{48BC7042-E0A6-46E9-86B2-50918F67F15A}\"/>"
-			"<w:embedItalic r:id=\"docRId3\" w:fontKey=\"{C7B00197-3587-4889-9839-ED56045BFA61}\"/>"
-			"<w:embedBoldItalic r:id=\"docRId4\" w:fontKey=\"{A8DA4934-C517-4746-BECC-D6B521E307E0}\"/>"
+			"<w:embedRegular r:id=\"fontRId1\" w:fontKey=\"{E986E054-5FE3-4CE1-AC06-D0F4C1EA288D}\"/>"
+			"<w:embedBold r:id=\"fontRId2\" w:fontKey=\"{E74E9704-F3D4-4C5A-A0F9-6D5CA0A87C03}\"/>"
+			"<w:embedItalic r:id=\"fontRId3\" w:fontKey=\"{3F8FC19D-124E-49D8-8A3F-F9B677D4F9DD}\"/>"
+			"<w:embedBoldItalic r:id=\"fontRId4\" w:fontKey=\"{ECA70A3C-24DC-43CB-AC33-333B6A6DDC0B}\"/>"
 			"</w:font>"
 			"</w:fonts>";
 

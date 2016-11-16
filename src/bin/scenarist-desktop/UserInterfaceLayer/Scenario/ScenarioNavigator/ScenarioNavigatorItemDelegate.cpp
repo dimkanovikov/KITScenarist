@@ -13,6 +13,7 @@ using UserInterface::ScenarioNavigatorItemDelegate;
 ScenarioNavigatorItemDelegate::ScenarioNavigatorItemDelegate(QObject* _parent) :
 	QStyledItemDelegate(_parent),
 	m_showSceneNumber(false),
+	m_showSceneTitle(false),
 	m_showSceneDescription(true),
 	m_sceneDescriptionIsSceneText(true),
 	m_sceneDescriptionHeight(1)
@@ -58,7 +59,7 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		//
 		// Реализация альтернативных цветов в представлении
 		//
-        if(opt.features.testFlag(QStyleOptionViewItem::Alternate))
+		if(opt.features.testFlag(QStyleOptionViewItem::Alternate))
 		{
 			backgroundBrush = opt.palette.alternateBase();
 			textBrush = opt.palette.windowText();
@@ -181,6 +182,15 @@ void ScenarioNavigatorItemDelegate::paint(QPainter* _painter, const QStyleOption
 		TEXT_LINE_HEIGHT
 		);
 	QString header = _index.data(Qt::DisplayRole).toString().toUpper();
+	if (m_showSceneTitle) {
+		//
+		// Если нужно выводим название сцены вместо заголовка
+		//
+		const QString title = _index.data(BusinessLogic::ScenarioModel::TitleIndex).toString().toUpper();
+		if (!title.isEmpty()) {
+			header = title;
+		}
+	}
 	if (m_showSceneNumber) {
 		//
 		// Если нужно добавляем номер сцены
@@ -238,6 +248,13 @@ void ScenarioNavigatorItemDelegate::setShowSceneNumber(bool _show)
 {
 	if (m_showSceneNumber != _show) {
 		m_showSceneNumber = _show;
+	}
+}
+
+void ScenarioNavigatorItemDelegate::setShowSceneTitle(bool _show)
+{
+	if (m_showSceneTitle != _show) {
+		m_showSceneTitle = _show;
 	}
 }
 

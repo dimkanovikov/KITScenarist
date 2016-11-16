@@ -24,6 +24,7 @@ namespace UserInterface
 		 */
 		/** @{ */
 		void setShowSceneNumber(bool _show);
+		void setShowSceneTitle(bool _show);
 		void setShowSceneDescription(bool _show);
 		void setSceneDescriptionIsSceneText(bool _isSceneText);
 		void setSceneDescriptionHeight(int _height);
@@ -34,6 +35,11 @@ namespace UserInterface
 		 * @brief Отображать номер сцены
 		 */
 		bool m_showSceneNumber;
+
+		/**
+		 * @brief Отображать название сцены
+		 */
+		bool m_showSceneTitle;
 
 		/**
 		 * @brief Отображать описание сцены

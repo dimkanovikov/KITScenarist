@@ -19,7 +19,7 @@ namespace UserInterface
 		explicit CharactersNavigatorItemDelegate(QObject* _parent = 0);
 		~CharactersNavigatorItemDelegate();
 
-		void paint (QPainter* _painter, const QStyleOptionViewItem& _option, const QModelIndex& _index) const;
+//		void paint (QPainter* _painter, const QStyleOptionViewItem& _option, const QModelIndex& _index) const;
 		QSize sizeHint(const QStyleOptionViewItem& _option, const QModelIndex& _index) const;
 
 	private:

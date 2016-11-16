@@ -89,6 +89,11 @@ namespace BusinessLogic
 		 */
 		QString itemHeaderAtPosition(int _position) const;
 
+        /**
+         * @brief Идентификатор сцены
+         */
+        QString itemUuid(ScenarioModelItem* _item) const;
+
 		/**
 		 * @brief Цвета сцены
 		 */
@@ -98,6 +103,21 @@ namespace BusinessLogic
 		 * @brief Установить цвет для сцены в указанной позиции
 		 */
 		void setItemColorsAtPosition(int _position, const QString& _colors);
+
+		/**
+		 * @brief Название сцены в позиции
+		 */
+		QString itemTitleAtPosition(int _position) const;
+
+		/**
+		 * @brief Название сцены
+		 */
+		QString itemTitle(ScenarioModelItem* _item) const;
+
+		/**
+		 * @brief Установить название для сцены в указанной позиции курсора
+		 */
+		void setItemTitleAtPosition(int _position, const QString& _title);
 
 		/**
 		 * @brief Описание сцены в позиции

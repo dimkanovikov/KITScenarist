@@ -28,7 +28,7 @@ namespace UserInterface
 		/**
 		 * @brief Восстановить значения по умолчанию
 		 */
-		void clearText();
+		void clear();
 
 		/**
 		 * @brief Получить тип элемента
@@ -66,6 +66,11 @@ namespace UserInterface
 		 * @brief Настроить соединения
 		 */
 		void initConnections();
+
+		/**
+		 * @brief Настроить внешний вид диалога
+		 */
+		void initStyleSheet();
 
 	private:
 		/**

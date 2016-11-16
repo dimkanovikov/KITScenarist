@@ -71,23 +71,23 @@ namespace ManagementLayer
 		/**
 		 * @brief Добавить элемент сценария в указанной позиции
 		 */
+		/** @{ */
+		void addScenarioItemFromCards(int _position, int _type, const QString& _title,
+			const QColor& _color, const QString& _description);
 		void addScenarioItem(int _position, int _type, const QString& _header,
 			const QColor& _color, const QString& _description);
+		/** @{ */
+
+		/**
+		 * @brief Изменить элемент сценария
+		 */
+		void editScenarioItem(int _startPosition, int _endPosition, int _type,
+			const QString& _title, const QColor& _color, const QString& _description);
 
 		/**
 		 * @brief Удалить заданный текст сценария
 		 */
 		void removeScenarioText(int _from, int _to);
-
-		/**
-		 * @brief Отменить последнее действие
-		 */
-		void aboutUndo();
-
-		/**
-		 * @brief Повторить последнее действие
-		 */
-		void aboutRedo();
 
 	signals:
 		/**
@@ -103,12 +103,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Запрос отмены действия
 		 */
-		void undoPressed();
+		void undoRequest();
 
 		/**
 		 * @brief Запрос повтора действия
 		 */
-		void redoPressed();
+		void redoRequest();
 
 		/**
 		 * @brief Изменился режим отображения сценария

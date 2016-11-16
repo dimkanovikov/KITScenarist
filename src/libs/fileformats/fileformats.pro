@@ -8,7 +8,7 @@ DEFINES += FILEFORMATS_LIBRARY
 #
 CONFIG += qt thread warn_on
 
-#QMAKE_MAC_SDK = macosx10.11
+QMAKE_MAC_SDK = macosx10.12
 
 #
 # Конфигурируем расположение файлов сборки

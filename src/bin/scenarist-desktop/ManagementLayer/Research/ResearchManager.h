@@ -39,9 +39,19 @@ namespace ManagementLayer
 		void loadCurrentProject();
 
 		/**
+		 * @brief Загрузить настройки текущего проекта
+		 */
+		void loadCurrentProjectSettings(const QString& _projectPath);
+
+		/**
 		 * @brief Очистить все загруженные данные
 		 */
 		void closeCurrentProject();
+
+		/**
+		 * @brief Сохранить настройки текущего проекта
+		 */
+		void saveCurrentProjectSettings(const QString& _projectPath);
 
 		/**
 		 * @brief Обновить параметры
@@ -69,6 +79,11 @@ namespace ManagementLayer
 		QMap<QString, QString> scenarioData() const;
 
 	signals:
+		/**
+		 * @brief Было изменено название проекта
+		 */
+		void scenarioNameChanged(const QString& _name);
+
 		/**
 		 * @brief Была изменена разарботка
 		 */

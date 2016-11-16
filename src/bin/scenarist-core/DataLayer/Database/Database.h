@@ -20,6 +20,16 @@ namespace DatabaseLayer
 		static QString openFileError();
 
 		/**
+		 * @brief Текст последней ошибки базы данных
+		 * @note Если он пуст, то и ошибки нет
+		 */
+		/** @{ */
+		static bool hasError();
+		static QString lastError();
+		static void setLastError(const QString& _error);
+		/** @} */
+
+		/**
 		 * @brief Установить текущий файл базы данных
 		 */
 		static void setCurrentFile(const QString& _databaseFileName);
@@ -75,6 +85,11 @@ namespace DatabaseLayer
 		 * @brief Текст ошибки открытия последнего загружаемого файла
 		 */
 		static QString s_openFileError;
+
+		/**
+		 * @brief Текст последней ошибки
+		 */
+		static QString s_lastError;
 
 		/**
 		 * @brief Счётчик открытых транзакций
@@ -180,6 +195,13 @@ namespace DatabaseLayer
 		 * - внутрь сценария выносятся блоки описания сцен, для поддержания режима поэпизодного плана
 		 */
 		static void updateDatabaseTo_0_5_9(QSqlDatabase& _database);
+
+		/**
+		 * @brief Обновить базу данных до версии 0.7.0
+		 *
+		 * - в таблицу scenario добавляется поле для хранения схемы
+		 */
+		static void updateDatabaseTo_0_7_0(QSqlDatabase& _database);
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS(Database::States)

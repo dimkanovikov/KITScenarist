@@ -7,6 +7,8 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/Import/DocumentImporter.h>
+#include <BusinessLayer/Import/FdxImporter.h>
+#include <BusinessLayer/Import/TrelbyImporter.h>
 
 #include <DataLayer/Database/Database.h>
 
@@ -30,6 +32,16 @@ namespace {
 	 * @brief Старый вордовский формат не поддерживается
 	 */
 	const QString MS_DOC_EXTENSION = ".doc";
+
+	/**
+	 * @brief Формат файлов Final Draft
+	 */
+	const QString FINAL_DRAFT_EXTENSION = ".fdx";
+
+    /**
+     * @brief Формат файлов Trelby
+     */
+    const QString TRELBY_EXTENSION = ".trelby";
 }
 
 
@@ -56,7 +68,14 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 			//
 			// Получим xml-представление импортируемого сценария
 			//
-			QString importScenarioXml = BusinessLogic::DocumentImporter().importScenario(importParameters);
+			QString importScenarioXml;
+			if (importParameters.filePath.toLower().endsWith(FINAL_DRAFT_EXTENSION)) {
+				importScenarioXml = BusinessLogic::FdxImporter().importScenario(importParameters);
+            } else if (importParameters.filePath.toLower().endsWith(TRELBY_EXTENSION)) {
+                importScenarioXml = BusinessLogic::TrelbyImporter().importScenario(importParameters);
+            } else {
+				importScenarioXml = BusinessLogic::DocumentImporter().importScenario(importParameters);
+			}
 
 			//
 			// Загрузим импортируемый текст в сценарий

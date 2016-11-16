@@ -3,6 +3,7 @@
 #include "Project/ProjectsManager.h"
 #include "StartUp/StartUpManager.h"
 #include "Research/ResearchManager.h"
+#include "Scenario/ScenarioCardsManager.h"
 #include "Scenario/ScenarioManager.h"
 #include "Characters/CharactersManager.h"
 #include "Locations/LocationsManager.h"
@@ -70,11 +71,12 @@ namespace {
 	/** @{ */
 	const int STARTUP_TAB_INDEX = 0;
 	const int RESEARCH_TAB_INDEX = 1;
-	const int SCENARIO_TAB_INDEX = 2;
-	const int CHARACTERS_TAB_INDEX = 3;
-	const int LOCATIONS_TAB_INDEX = 4;
-	const int STATISTICS_TAB_INDEX = 5;
-	const int SETTINGS_TAB_INDEX = 6;
+	const int SCENARIO_CARDS_TAB_INDEX = 2;
+	const int SCENARIO_TAB_INDEX = 3;
+	const int CHARACTERS_TAB_INDEX = 4;
+	const int LOCATIONS_TAB_INDEX = 5;
+	const int STATISTICS_TAB_INDEX = 6;
+	const int SETTINGS_TAB_INDEX = 7;
 	/** @} */
 
 	/**
@@ -186,14 +188,13 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 {
 	initView();
 	initConnections();
-	initStyleSheet();
 
 	aboutUpdateProjectsList();
 
 	reloadApplicationSettings();
 
-    //QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
     QTimer::singleShot(0, m_synchronizationManagerV2, &SynchronizationManagerV2::autoLogin);
+    initStyleSheet();
 }
 
 ApplicationManager::~ApplicationManager()
@@ -206,6 +207,7 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 {
 	loadViewState();
 	m_view->show();
+
 
 	if (!_fileToOpen.isEmpty()) {
 		aboutLoad(_fileToOpen);
@@ -416,24 +418,75 @@ void ApplicationManager::aboutSave()
 		DatabaseLayer::Database::commit();
 
 		//
-		// Для проекта из облака отправляем данные на сервер
+		// Если всё успешно сохранилось
 		//
-		if (m_projectsManager->currentProject().isRemote()) {
-			m_synchronizationManager->aboutWorkSyncScenario();
-			m_synchronizationManager->aboutWorkSyncData();
+		if (!DatabaseLayer::Database::hasError()) {
+			//
+			// Для проекта из облака отправляем данные на сервер
+			//
+			if (m_projectsManager->currentProject().isRemote()) {
+				m_synchronizationManager->aboutWorkSyncScenario();
+				m_synchronizationManager->aboutWorkSyncData();
+			}
+
+			//
+			// Изменим статус окна на сохранение изменений
+			//
+			::updateWindowModified(m_view, false);
+
+			//
+			// Если необходимо создадим резервную копию закрываемого файла
+			//
+			Task::run([=] {
+				m_backupHelper.saveBackup(ProjectsManager::currentProject().path());
+			}).then([=] {});
 		}
-
 		//
-		// Изменим статус окна на сохранение изменений
+		// А если ошибка сохранения, то делаем дополнительные проверки и работаем с пользователем
 		//
-		::updateWindowModified(m_view, false);
-
-		//
-		// Если необходимо создадим резервную копию закрываемого файла
-		//
-		Task::run([=] {
-			m_backupHelper.saveBackup(ProjectsManager::currentProject().path());
-		}).then([=] {});
+		else {
+			//
+			// Если файл, в который мы пробуем сохранять изменения существует
+			//
+			if (QFile::exists(DatabaseLayer::Database::currentFile())) {
+				//
+				// ... то у нас случилась какая-то внутренняя ошибка базы данных
+				//
+				const QDialogButtonBox::StandardButton messageResult =
+						QLightBoxMessage::critical(m_view, tr("Saving error"),
+												   tr("Can't write you changes to project. There is some internal database error. "
+													  "Please check that file is exists and you have permissions to write in it. Retry to save?")
+												   .arg(DatabaseLayer::Database::currentFile()),
+												   QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes);
+				//
+				// ... пробуем повторно открыть базу данных и записать в неё изменения
+				//
+				if (messageResult == QDialogButtonBox::Yes) {
+					DatabaseLayer::Database::setCurrentFile(DatabaseLayer::Database::currentFile());
+					aboutSave();
+				}
+			}
+			//
+			// Файла с базой данных не найдено
+			//
+			else {
+				//
+				// ... возможно файл был на флешке, а она отошла, или файл был переименован во время работы программы
+				//
+				const QDialogButtonBox::StandardButton messageResult =
+						QLightBoxMessage::critical(m_view, tr("Saving error"),
+							tr("Can't write you changes to project located at <b>%1</b> becourse file isn't exist. "
+							   "Please move file back and retry to save. Retry to save?")
+								.arg(DatabaseLayer::Database::currentFile()),
+							QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes);
+				//
+				// ... пробуем повторно сохранить изменения в базу данных
+				//
+				if (messageResult == QDialogButtonBox::Yes) {
+					aboutSave();
+				}
+			}
+		}
 	}
 }
 
@@ -890,9 +943,10 @@ void ApplicationManager::aboutApplicationSettingsUpdated()
 
 void ApplicationManager::aboutProjectChanged()
 {
-	::updateWindowModified(m_view, true);
-
-	m_statisticsManager->scenarioTextChanged();
+	if (isProjectLoaded()) {
+		::updateWindowModified(m_view, true);
+		m_statisticsManager->scenarioTextChanged();
+	}
 }
 
 void ApplicationManager::aboutShowFullscreen()
@@ -919,7 +973,6 @@ void ApplicationManager::aboutShowFullscreen()
 		//
 		// Переходим в полноэкранный режим
 		//
-		m_tabsWidgets->setCurrentWidget(m_scenarioManager->view());
 		m_menu->hide();
 		m_tabs->hide();
 		m_view->showFullScreen();
@@ -928,40 +981,40 @@ void ApplicationManager::aboutShowFullscreen()
 
 void ApplicationManager::aboutPrepareScenarioForStatistics()
 {
-    m_statisticsManager->setExportedScenario(m_scenarioManager->scenario()->document());
+	m_statisticsManager->setExportedScenario(m_scenarioManager->scenario()->document());
 }
 
 void ApplicationManager::aboutInnerLinkActivated(const QUrl& _url)
 {
-    if (_url.scheme() == "inapp") {
-        if (_url.host() == "scenario") {
-            const QStringList parameters = _url.query().split("&");
-            const int INVALID_CURSOR_POSITION = -1;
-            int cursorPosition = INVALID_CURSOR_POSITION;
-            foreach (const QString parameter, parameters) {
-                const QStringList paramaterDetails = parameter.split("=");
-                if (paramaterDetails.first() == "position") {
-                    cursorPosition = paramaterDetails.last().toInt();
-                }
-            }
+	if (_url.scheme() == "inapp") {
+		if (_url.host() == "scenario") {
+			const QStringList parameters = _url.query().split("&");
+			const int INVALID_CURSOR_POSITION = -1;
+			int cursorPosition = INVALID_CURSOR_POSITION;
+			foreach (const QString parameter, parameters) {
+				const QStringList paramaterDetails = parameter.split("=");
+				if (paramaterDetails.first() == "position") {
+					cursorPosition = paramaterDetails.last().toInt();
+				}
+			}
 
-            if (cursorPosition != INVALID_CURSOR_POSITION) {
-                if (m_tabsSecondary->isVisible() &&
-                    m_tabs->currentTab() == STATISTICS_TAB_INDEX) {
-                    m_tabsSecondary->setCurrentTab(SCENARIO_TAB_INDEX);
-                } else {
-                    m_tabs->setCurrentTab(SCENARIO_TAB_INDEX);
-                }
-                //
-                // Выполняем события, чтобы пропустить первую прокрутку текста, после запуска
-                // приложения к последнему рабочему месту в сценарии
-                //
-                QApplication::processEvents();
-                //
-                m_scenarioManager->setCursorPosition(cursorPosition);
-            }
-        }
-    }
+			if (cursorPosition != INVALID_CURSOR_POSITION) {
+				if (m_tabsSecondary->isVisible() &&
+					m_tabs->currentTab() == STATISTICS_TAB_INDEX) {
+					m_tabsSecondary->setCurrentTab(SCENARIO_TAB_INDEX);
+				} else {
+					m_tabs->setCurrentTab(SCENARIO_TAB_INDEX);
+				}
+				//
+				// Выполняем события, чтобы пропустить первую прокрутку текста, после запуска
+				// приложения к последнему рабочему месту в сценарии
+				//
+				QApplication::processEvents();
+				//
+				m_scenarioManager->setCursorPosition(cursorPosition);
+			}
+		}
+	}
 }
 
 bool ApplicationManager::event(QEvent* _event)
@@ -1029,6 +1082,7 @@ void ApplicationManager::currentTabIndexChanged()
 				switch (_index) {
 					case STARTUP_TAB_INDEX: result = m_startUpManager->view(); break;
 					case RESEARCH_TAB_INDEX: result = m_researchManager->view(); break;
+					case SCENARIO_CARDS_TAB_INDEX: result = m_scenarioManager->cardsView(); break;
 					case SCENARIO_TAB_INDEX: result = m_scenarioManager->view(); break;
 					case CHARACTERS_TAB_INDEX: result = m_charactersManager->view(); break;
 					case LOCATIONS_TAB_INDEX: result = m_locationsManager->view(); break;
@@ -1186,6 +1240,7 @@ void ApplicationManager::goToEditCurrentProject()
 	// Загрузить настройки файла
 	// Порядок загрузки важен - сначала настройки каждого модуля, потом активные вкладки
 	//
+	m_researchManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_scenarioManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	m_exportManager->loadCurrentProjectSettings(ProjectsManager::currentProject().path());
 	loadCurrentProjectSettings(ProjectsManager::currentProject().path());
@@ -1193,7 +1248,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Обновим название текущего проекта, т.к. данные о проекте теперь загружены
 	//
-	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
+	updateWindowTitle();
 
 	//
 	// Закроем уведомление
@@ -1203,45 +1258,53 @@ void ApplicationManager::goToEditCurrentProject()
 
 void ApplicationManager::closeCurrentProject()
 {
-	//
-	// Сохраним настройки закрываемого проекта
-	//
-	m_scenarioManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
-	m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
-	saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+	if (isProjectLoaded()) {
+		//
+		// Сохраним настройки закрываемого проекта
+		//
+		m_researchManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+		m_scenarioManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+		m_exportManager->saveCurrentProjectSettings(ProjectsManager::currentProject().path());
+		saveCurrentProjectSettings(ProjectsManager::currentProject().path());
 
-	//
-	// Закроем проект управляющими
-	//
-	m_researchManager->closeCurrentProject();
-	m_scenarioManager->closeCurrentProject();
-	m_charactersManager->closeCurrentProject();
-	m_locationsManager->closeCurrentProject();
+		//
+		// Закроем проект управляющими
+		//
+		m_researchManager->closeCurrentProject();
+		m_scenarioManager->closeCurrentProject();
+		m_charactersManager->closeCurrentProject();
+		m_locationsManager->closeCurrentProject();
 
-	//
-	// Очистим все загруженные на текущий момент данные
-	//
-	DataStorageLayer::StorageFacade::clearStorages();
+		//
+		// Очистим все загруженные на текущий момент данные
+		//
+		DataStorageLayer::StorageFacade::clearStorages();
 
-	//
-	// Если использовалась база данных, то удалим старое соединение
-	//
-	DatabaseLayer::Database::closeCurrentFile();
+		//
+		// Если использовалась база данных, то удалим старое соединение
+		//
+		DatabaseLayer::Database::closeCurrentFile();
 
-	//
-	// Информируем управляющего проектами, что текущий проект закрыт
-	//
-	m_projectsManager->closeCurrentProject();
+		//
+		// Информируем управляющего проектами, что текущий проект закрыт
+		//
+		m_projectsManager->closeCurrentProject();
 
-	//
-	// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
-	//
-	::disableActionsOnStart();
+		//
+		// Отключим некоторые действия, которые не могут быть выполнены до момента загрузки проекта
+		//
+		::disableActionsOnStart();
 
-	//
-	// Перейти на стартовую вкладку
-	//
-	m_tabs->setCurrentTab(0);
+		//
+		// Перейти на стартовую вкладку
+		//
+		m_tabs->setCurrentTab(0);
+	}
+}
+
+bool ApplicationManager::isProjectLoaded() const
+{
+	return m_projectsManager->isCurrentProjectValid();
 }
 
 void ApplicationManager::initView()
@@ -1262,6 +1325,7 @@ void ApplicationManager::initView()
 	//
 	m_tabs->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
+	g_disableOnStartActions << m_tabs->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
 	g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
@@ -1273,6 +1337,7 @@ void ApplicationManager::initView()
 	m_tabsSecondary->setCompactMode(true);
 	m_tabsSecondary->addTab(tr("Start"), QIcon(":/Graphics/Icons/start.png"));
 	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
+	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
 	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
 	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
 	g_disableOnStartActions << m_tabsSecondary->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
@@ -1286,6 +1351,7 @@ void ApplicationManager::initView()
 	m_tabsWidgets->setObjectName("tabsWidgets");
 	m_tabsWidgets->addWidget(m_startUpManager->view());
 	m_tabsWidgets->addWidget(m_researchManager->view());
+	m_tabsWidgets->addWidget(m_scenarioManager->cardsView());
 	m_tabsWidgets->addWidget(m_scenarioManager->view());
 	m_tabsWidgets->addWidget(m_charactersManager->view());
 	m_tabsWidgets->addWidget(m_locationsManager->view());
@@ -1433,6 +1499,8 @@ void ApplicationManager::initConnections()
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRecent(QModelIndex)));
 	connect(m_startUpManager, SIGNAL(openRemoteProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRemote(QModelIndex)));
 
+	connect(m_researchManager, &ResearchManager::scenarioNameChanged, this, &ApplicationManager::updateWindowTitle);
+
 	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
 	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), this, SLOT(aboutUpdateLastChangeInfo()));
 	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncScenario()));
@@ -1450,12 +1518,14 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutRefreshLocations()));
 
 	connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
-    connect(m_statisticsManager, &StatisticsManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
+	connect(m_statisticsManager, &StatisticsManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);
 
 	connect(m_settingsManager, SIGNAL(applicationSettingsUpdated()),
 			this, SLOT(aboutApplicationSettingsUpdated()));
 	connect(m_settingsManager, &SettingsManager::scenarioEditSettingsUpdated,
 			m_researchManager, &ResearchManager::updateSettings);
+	connect(m_settingsManager, &SettingsManager::cardsSettingsUpdated,
+			m_scenarioManager, &ScenarioManager::aboutCardsSettingsUpdated);
 	connect(m_settingsManager, SIGNAL(scenarioEditSettingsUpdated()),
 			m_scenarioManager, SLOT(aboutTextEditSettingsUpdated()));
 	connect(m_settingsManager, SIGNAL(navigatorSettingsUpdated()),
@@ -1546,7 +1616,6 @@ void ApplicationManager::reloadApplicationSettings()
 		// Настраиваем палитру и стилевые надстройки в зависимости от темы
 		//
 		QPalette palette = QStyleFactory::create("Fusion")->standardPalette();
-		QString styleSheet;
 
 		if (useDarkTheme) {
 			palette.setColor(QPalette::Window, QColor("#26282a"));
@@ -1595,16 +1664,14 @@ void ApplicationManager::reloadApplicationSettings()
 		}
 
 		//
-		// Для всплывающей используем универсальный стиль
-		//
-		styleSheet += "QToolTip { color: palette(window-text); background-color: palette(window); border: 1px solid palette(highlight); } "
-					 ;
-
-		//
-		// Применяем тему
+		// Применяем палитру
 		//
 		qApp->setPalette(palette);
-		qApp->setStyleSheet(styleSheet);
+
+		//
+		// Чтобы все цветовые изменения подхватились, нужно заново переустановить стиль
+		//
+		m_view->setStyleSheet(m_view->styleSheet());
 	}
 
 	//
@@ -1677,6 +1744,14 @@ void ApplicationManager::reloadApplicationSettings()
 	m_tabs->tab(RESEARCH_TAB_INDEX)->setVisible(showResearchModule);
 	m_tabsSecondary->tab(RESEARCH_TAB_INDEX)->setVisible(showResearchModule);
 	//
+	const bool showCardsModule =
+			DataStorageLayer::StorageFacade::settingsStorage()->value(
+				"application/modules/cards",
+				DataStorageLayer::SettingsStorage::ApplicationSettings)
+			.toInt();
+	m_tabs->tab(SCENARIO_CARDS_TAB_INDEX)->setVisible(showCardsModule);
+	m_tabsSecondary->tab(SCENARIO_CARDS_TAB_INDEX)->setVisible(showCardsModule);
+	//
 	const bool showScenarioModule =
 			DataStorageLayer::StorageFacade::settingsStorage()->value(
 				"application/modules/scenario",
@@ -1712,6 +1787,10 @@ void ApplicationManager::reloadApplicationSettings()
 
 void ApplicationManager::updateWindowTitle()
 {
+	//
+	// Обновим название текущего проекта
+	//
+	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
 	const QString projectFileName = ProjectsManager::currentProject().name();
 #ifdef Q_OS_MAC
 	m_view->setWindowTitle(projectFileName);

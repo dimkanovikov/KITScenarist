@@ -222,32 +222,32 @@ namespace {
 		}
 	}
 
-    /**
-     * @brief Прокрутить диалог предпросмотра к заданной позиции
-     */
-    static void setPrintPreviewScrollValue(QPrintPreviewDialog& _dialog, int _value) {
+	/**
+	 * @brief Прокрутить диалог предпросмотра к заданной позиции
+	 */
+	static void setPrintPreviewScrollValue(QPrintPreviewDialog& _dialog, int _value) {
 
 
-        foreach (QAbstractScrollArea* child, _dialog.findChildren<QAbstractScrollArea*>()) {
-            if (QString(child->metaObject()->className()) == "GraphicsView") {
-                child->verticalScrollBar()->setValue(_value);
-                break;
-            }
-        }
-    }
+		foreach (QAbstractScrollArea* child, _dialog.findChildren<QAbstractScrollArea*>()) {
+			if (QString(child->metaObject()->className()) == "GraphicsView") {
+				child->verticalScrollBar()->setValue(_value);
+				break;
+			}
+		}
+	}
 
-    /**
-     * @brief Получить позиции прокрутки диалога предпросмотра печати
-     */
-    static int printPreviewScrollValue(const QPrintPreviewDialog& _dialog) {
-        int value = 0;
-        foreach (const QAbstractScrollArea* child, _dialog.findChildren<QAbstractScrollArea*>()) {
-            if (QString(child->metaObject()->className()) == "GraphicsView") {
-                value = child->verticalScrollBar()->value();
-            }
-        }
-        return value;
-    }
+	/**
+	 * @brief Получить позиции прокрутки диалога предпросмотра печати
+	 */
+	static int printPreviewScrollValue(const QPrintPreviewDialog& _dialog) {
+		int value = 0;
+		foreach (const QAbstractScrollArea* child, _dialog.findChildren<QAbstractScrollArea*>()) {
+			if (QString(child->metaObject()->className()) == "GraphicsView") {
+				value = child->verticalScrollBar()->value();
+			}
+		}
+		return value;
+	}
 }
 
 
@@ -255,6 +255,7 @@ QPair<ScenarioDocument*, int> PdfExporter::m_lastScenarioPreviewScrollPosition;
 
 PdfExporter::PdfExporter(QObject* _parent) :
 	QObject(_parent),
+	AbstractExporter(),
 	m_documentForPrint(0)
 {
 }
@@ -307,37 +308,37 @@ void PdfExporter::printPreview(ScenarioDocument* _scenario, const ExportParamete
 	m_documentForPrint = preparedDocument;
 
 	//
-    // Настроим диалог предварительного просмотра
-    //
-    QPrintPreviewDialog printDialog(printer, qApp->activeWindow());
-    printDialog.setWindowState( Qt::WindowMaximized );
-    connect(&printDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(aboutPrint(QPrinter*)));
-    if (m_lastScenarioPreviewScrollPosition.first == _scenario) {
-        QTimer::singleShot(0, [this, &printDialog] {
-            ::setPrintPreviewScrollValue(printDialog, m_lastScenarioPreviewScrollPosition.second);
-        });
-    } else {
-        m_lastScenarioPreviewScrollPosition.first = _scenario;
-    }
+	// Настроим диалог предварительного просмотра
+	//
+	QPrintPreviewDialog printDialog(printer, qApp->activeWindow());
+	printDialog.setWindowState( Qt::WindowMaximized );
+	connect(&printDialog, SIGNAL(paintRequested(QPrinter*)), this, SLOT(aboutPrint(QPrinter*)));
+	if (m_lastScenarioPreviewScrollPosition.first == _scenario) {
+		QTimer::singleShot(0, [this, &printDialog] {
+			::setPrintPreviewScrollValue(printDialog, m_lastScenarioPreviewScrollPosition.second);
+		});
+	} else {
+		m_lastScenarioPreviewScrollPosition.first = _scenario;
+	}
 
-    //
-    // Вызываем диалог предварительного просмотра и печати
-    //
-    printDialog.exec();
+	//
+	// Вызываем диалог предварительного просмотра и печати
+	//
+	printDialog.exec();
 
-    //
-    // Сохраняем позицию прокрутки
-    //
-    m_lastScenarioPreviewScrollPosition.second = ::printPreviewScrollValue(printDialog);
+	//
+	// Сохраняем позицию прокрутки
+	//
+	m_lastScenarioPreviewScrollPosition.second = ::printPreviewScrollValue(printDialog);
 
-    //
-    // Освобождаем память
-    //
-    m_documentForPrint = 0;
-    delete printer;
-    printer = 0;
-    delete preparedDocument;
-    preparedDocument = 0;
+	//
+	// Освобождаем память
+	//
+	m_documentForPrint = 0;
+	delete printer;
+	printer = 0;
+	delete preparedDocument;
+	preparedDocument = 0;
 }
 
 void PdfExporter::aboutPrint(QPrinter* _printer)

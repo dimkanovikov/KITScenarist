@@ -12,6 +12,7 @@
 #include <3rd_party/Widgets/ScalableWrapper/ScalableWrapper.h>
 #include <3rd_party/Widgets/SearchWidget/SearchWidget.h>
 #include <3rd_party/Widgets/TabBar/TabBar.h>
+#include <3rd_party/Widgets/WAF/Animation.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
@@ -82,9 +83,6 @@ void ScenarioTextEditWidget::setScenarioDocument(BusinessLogic::ScenarioTextDocu
 
 	m_editor->setScenarioDocument(_document);
 	m_editor->setWatermark(_isDraft ? tr("DRAFT") : QString::null);
-	if (_document != 0) {
-		m_lastTextMd5Hash = _document->scenarioXmlHash();
-	}
 
 	initEditorConnections();
 }
@@ -124,6 +122,7 @@ void ScenarioTextEditWidget::setUsePageView(bool _use)
 	QMarginsF pageMargins(15, 5, 5, 5);
 	Qt::Alignment pageNumbersAlign;
 	if (_use) {
+		m_editor->setPageFormat(ScenarioTemplateFacade::getTemplate().pageSizeId());
 		pageMargins = ScenarioTemplateFacade::getTemplate().pageMargins();
 		pageNumbersAlign = ScenarioTemplateFacade::getTemplate().numberingAlignment();
 	}
@@ -214,7 +213,7 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
 	}
 }
 
-void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _header,
+void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _header, const QString& _title,
 	const QColor& _color, const QString& _description)
 {
 	QTextCursor cursor = m_editor->textCursor();
@@ -223,26 +222,29 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	cursor.setPosition(_position);
 	m_editor->setTextCursor(cursor);
 	ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)_type;
+	bool blockWasAdded = false;
 	//
 	// Если в позиции пустой блок, изменим его
 	//
 	if (cursor.block().text().isEmpty()) {
 		m_editor->changeScenarioBlockType(type);
+		blockWasAdded = false;
 	}
 	//
 	// В противном случае добавим новый
 	//
 	else {
 		m_editor->addScenarioBlock(type);
+		blockWasAdded = true;
 	}
 
 	//
 	// Устанавливаем текст в блок
 	//
-	m_editor->insertPlainText(_header);
+	m_editor->insertPlainText(!_header.isEmpty() ? _header : _title);
 
 	//
-	// Устанавливаем цвет и описание
+	// Устанавливаем цвет и описание в параметры сцены
 	//
 	cursor = m_editor->textCursor();
 	QTextBlockUserData* textBlockData = cursor.block().userData();
@@ -250,11 +252,21 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 	if (info == 0) {
 		info = new ScenarioTextBlockInfo;
 	}
+	info->setTitle(!_title.isEmpty() ? _title : _header);
 	if (_color.isValid()) {
 		info->setColors(_color.name());
 	}
 	info->setDescription(_description);
 	cursor.block().setUserData(info);
+	//
+	// ... и в сам текст
+	//
+	if (!_description.isEmpty()) {
+		m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
+		QTextDocument doc;
+		doc.setHtml(_description);
+		m_editor->insertPlainText(doc.toPlainText());
+	}
 
 	//
 	// Если это группирующий блок, то вставим и закрывающий текст
@@ -266,12 +278,112 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 		cursor.insertText(Helpers::footerText(_header));
 	}
 
+	//
+	// А теперь скроем блоки с описанием сцены, если мы не в режиме битов
+	//
+	const bool isSceneDescriptionVisible = m_editor->visibleBlocksTypes().contains(ScenarioBlockStyle::SceneDescription);
+	if (!isSceneDescriptionVisible) {
+		cursor.setPosition(_position);
+		cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, blockWasAdded ? 2 : 1);
+		while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
+			   && !cursor.atEnd()) {
+			cursor.block().setVisible(isSceneDescriptionVisible);
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			cursor.movePosition(QTextCursor::NextBlock);
+		}
+	}
+
 	cursor.endEditBlock();
 
 	//
 	// Фокусируемся на редакторе
 	//
 	m_editorWrapper->setFocus();
+}
+
+void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int _type,
+	const QString& _title, const QColor& _color, const QString& _description)
+{
+	QTextCursor cursor = m_editor->textCursor();
+	cursor.beginEditBlock();
+
+	//
+	// Идём в начало сцены
+	//
+	cursor.setPosition(_startPosition);
+	m_editor->setTextCursor(cursor);
+
+	//
+	// Проверяем тип блока, если нужно - меняем на новый
+	//
+	ScenarioBlockStyle::Type type = (ScenarioBlockStyle::Type)_type;
+	if (ScenarioBlockStyle::forBlock(cursor.block()) != type) {
+		m_editor->changeScenarioBlockType(type);
+	}
+
+	//
+	// Устанавливаем название блока и описание
+	//
+	if (ScenarioTextBlockInfo* blockInfo = dynamic_cast<ScenarioTextBlockInfo*>(cursor.block().userData())) {
+		blockInfo->setTitle(_title);
+		if (_color.isValid()) {
+			blockInfo->setColors(_color.name());
+		}
+		blockInfo->setDescription(_description);
+		cursor.block().setUserData(blockInfo);
+	}
+
+	//
+	// Обновляем описание в самом тексте
+	//
+	cursor.setPosition(_startPosition);
+	//
+	// ... сперва выделив старое описание
+	//
+	cursor.movePosition(QTextCursor::NextBlock);
+	while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
+		   && cursor.position() <= _endPosition
+		   && !cursor.atEnd()) {
+		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+	}
+	//
+	// ... шаг назад, если до этого мы перескочили в следующий блок
+	//
+	if (cursor.atBlockStart()
+		&& ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneDescription) {
+		cursor.movePosition(QTextCursor::PreviousCharacter, cursor.hasSelection() ? QTextCursor::KeepAnchor : QTextCursor::MoveAnchor);
+	}
+	//
+	// ... а потом вставив новое
+	//
+	if (cursor.hasSelection()) {
+		cursor.removeSelectedText();
+		m_editor->setTextCursor(cursor);
+	} else {
+		m_editor->setTextCursor(cursor);
+		m_editor->addScenarioBlock(ScenarioBlockStyle::SceneDescription);
+	}
+	QTextDocument doc;
+	doc.setHtml(_description);
+	m_editor->insertPlainText(doc.toPlainText());
+
+	//
+	// А теперь скроем блоки с описанием сцены, если мы не в режиме битов
+	//
+	const bool isSceneDescriptionVisible = m_editor->visibleBlocksTypes().contains(ScenarioBlockStyle::SceneDescription);
+	if (!isSceneDescriptionVisible) {
+		cursor.setPosition(_startPosition);
+		cursor.movePosition(QTextCursor::NextBlock);
+		while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
+			   && !cursor.atEnd()) {
+			cursor.block().setVisible(isSceneDescriptionVisible);
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			cursor.movePosition(QTextCursor::NextBlock);
+		}
+	}
+
+	cursor.endEditBlock();
 }
 
 void ScenarioTextEditWidget::removeText(int _from, int _to)
@@ -342,23 +454,18 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
 	}
 }
 
-void ScenarioTextEditWidget::aboutUndo()
-{
-	m_editor->undoReimpl();
-}
-
-void ScenarioTextEditWidget::aboutRedo()
-{
-	m_editor->redoReimpl();
-}
-
 void ScenarioTextEditWidget::aboutShowSearch()
 {
-	m_searchLine->setVisible(m_search->isChecked());
-	if (m_searchLine->isVisible()) {
-		m_searchLine->selectText();
-		m_searchLine->setFocus();
-	}
+    const bool visible = m_search->isChecked();
+    if (m_searchLine->isVisible() != visible) {
+        WAF::Animation::slide(m_searchLine, WAF::FromBottomToTop, true, visible);
+        QTimer::singleShot(300, [=] { m_searchLine->setVisible(visible); });
+    }
+
+    if (visible) {
+        m_searchLine->selectText();
+        m_searchLine->setFocus();
+    }
 }
 
 void ScenarioTextEditWidget::aboutShowFastFormat()
@@ -432,13 +539,8 @@ void ScenarioTextEditWidget::aboutCursorPositionChanged()
 
 void ScenarioTextEditWidget::aboutTextChanged()
 {
-	if (BusinessLogic::ScenarioTextDocument* scenario =
-		qobject_cast<BusinessLogic::ScenarioTextDocument*>(m_editor->document())) {
-		const QByteArray currentTextMd5Hash = scenario->scenarioXmlHash();
-		if (m_lastTextMd5Hash != currentTextMd5Hash) {
-			emit textChanged();
-			m_lastTextMd5Hash = currentTextMd5Hash;
-		}
+	if (!m_editor->document()->isEmpty()) {
+		emit textChanged();
 	}
 }
 
@@ -579,15 +681,26 @@ void ScenarioTextEditWidget::updateStylesCombo()
 void ScenarioTextEditWidget::initConnections()
 {
 	connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
-	connect(m_undo, SIGNAL(clicked()), this, SLOT(aboutUndo()));
-	connect(m_redo, SIGNAL(clicked()), this, SLOT(aboutRedo()));
-	connect(m_search, SIGNAL(toggled(bool)), this, SLOT(aboutShowSearch()));
+	connect(m_undo, &FlatButton::clicked, this, &ScenarioTextEditWidget::undoRequest);
+	connect(m_redo, &FlatButton::clicked, this, &ScenarioTextEditWidget::redoRequest);
+	connect(m_search, &FlatButton::toggled, [=] (bool _toggle) {
+		//
+		// Если поиск виден, но в нём нет фокуса - установим фокус в него
+		// В остальных случаях просто покажем, или скроем поиск
+		//
+		if (!_toggle
+			&& m_searchLine->isVisible()
+			&& !m_searchLine->hasFocus()) {
+			m_search->setChecked(true);
+		}
+		aboutShowSearch();
+	});
 	connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
 	connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
 			[=] { m_editorWrapper->setFocus(); });
 	connect(m_review, SIGNAL(toggled(bool)), m_reviewView, SLOT(setVisible(bool)));
-	connect(m_reviewView, SIGNAL(undoPressed()), this, SLOT(aboutUndo()));
-	connect(m_reviewView, SIGNAL(redoPressed()), this, SLOT(aboutRedo()));
+	connect(m_reviewView, &ScenarioReviewView::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
+	connect(m_reviewView, &ScenarioReviewView::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
 
 	initEditorConnections();
 }
@@ -595,6 +708,8 @@ void ScenarioTextEditWidget::initConnections()
 void ScenarioTextEditWidget::initEditorConnections()
 {
 	connect(m_outline, &FlatButton::toggled, this, &ScenarioTextEditWidget::updateTextMode);
+	connect(m_editor, &ScenarioTextEdit::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
+	connect(m_editor, &ScenarioTextEdit::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
 	connect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	connect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));
@@ -609,6 +724,8 @@ void ScenarioTextEditWidget::initEditorConnections()
 void ScenarioTextEditWidget::removeEditorConnections()
 {
 	disconnect(m_outline, &FlatButton::toggled, this, &ScenarioTextEditWidget::updateTextMode);
+	disconnect(m_editor, &ScenarioTextEdit::undoRequest, this, &ScenarioTextEditWidget::undoRequest);
+	disconnect(m_editor, &ScenarioTextEdit::redoRequest, this, &ScenarioTextEditWidget::redoRequest);
 	disconnect(m_editor, SIGNAL(currentStyleChanged()), this, SLOT(aboutUpdateTextStyle()));
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutUpdateTextStyle()));
 	disconnect(m_editor, SIGNAL(cursorPositionChanged()), this, SLOT(aboutCursorPositionChanged()));

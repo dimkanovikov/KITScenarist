@@ -33,6 +33,7 @@ namespace ManagementLayer
 		 */
 		/** @{ */
 		void applicationSettingsUpdated();
+		void cardsSettingsUpdated();
 		void scenarioEditSettingsUpdated();
 		void navigatorSettingsUpdated();
 		void chronometrySettingsUpdated();
@@ -57,10 +58,15 @@ namespace ManagementLayer
 		void applicationSaveBackupsFolderChanged(const QString& _value);
 		void applicationTwoPanelModeChanged(bool _value);
 		void applicationModuleResearchChanged(bool _value);
+		void applicationModuleCardsChanged(bool _value);
 		void applicationModuleScenarioChanged(bool _value);
 		void applicationModuleCharactersChanged(bool _value);
 		void applicationModuleLocationsChanged(bool _value);
 		void applicationModuleStatisticsChanged(bool _value);
+
+		void cardsUseCorkboardBackgroundChanged(bool);
+		void cardsBackgroundColorChanged(const QColor&);
+		void cardsBackgroundColorDarkChanged(const QColor&);
 
 		void scenarioEditPageViewChanged(bool  _value);
 		void scenarioEditShowScenesNumbersChanged(bool  _value);
@@ -90,6 +96,7 @@ namespace ManagementLayer
 		void scenarioEditReviewUseWordHighlightChanged(bool _value);
 
 		void navigatorShowScenesNumbersChanged(bool  _value);
+		void navigatorShowSceneTitleChanged(bool _value);
 		void navigatorShowSceneDescriptionChanged(bool _value);
 		void navigatorSceneDescriptionIsSceneTextChanged(bool _value);
 		void navigatorSceneDescriptionHeightChanged(int _value);

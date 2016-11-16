@@ -95,6 +95,8 @@ void GraphLogic::addFirstNode()
 
 	m_activeNode = m_nodeList.first();
 	m_activeNode->setBorder();
+
+	m_graphWidget->ensureVisible(node);
 }
 
 void GraphLogic::removeAllNodes()
@@ -168,20 +170,24 @@ bool GraphLogic::readContentFromXml(const QString& _xml)
 		QDomElement e = edges.item(i).toElement();
 		if(!e.isNull())
 		{
-			Node *source = m_nodeList[e.attribute("source").toInt()];
-			Node *destination = m_nodeList[e.attribute("destination").toInt()];
+			const int sourceIndex = e.attribute("source").toInt();
+			const int destIndex = e.attribute("destination").toInt();
+			if (sourceIndex != -1 && destIndex != -1) {
+				Node *source = m_nodeList[sourceIndex];
+				Node *destination = m_nodeList[destIndex];
 
-			Edge *edge = new Edge(source, destination);
-			source->addEdge(edge, true);
-			destination->addEdge(edge, false);
+				Edge *edge = new Edge(source, destination);
+				source->addEdge(edge, true);
+				destination->addEdge(edge, false);
 
-			edge->setColor(QColor(e.attribute("red").toFloat(),
-								  e.attribute("green").toFloat(),
-								  e.attribute("blue").toFloat()));
-			edge->setWidth(e.attribute("width").toFloat());
-			edge->setSecondary(e.attribute("secondary").toInt() );
+				edge->setColor(QColor(e.attribute("red").toFloat(),
+									  e.attribute("green").toFloat(),
+									  e.attribute("blue").toFloat()));
+				edge->setWidth(e.attribute("width").toFloat());
+				edge->setSecondary(e.attribute("secondary").toInt() );
 
-			m_graphWidget->scene()->addItem(edge);
+				m_graphWidget->scene()->addItem(edge);
+			}
 		}
 	}
 
@@ -828,11 +834,11 @@ QList<Edge *> GraphLogic::allEdges() const
 
 void GraphLogic::addEdge(Node *source, Node *destination)
 {
-	if (destination == m_nodeList.first())
-	{
-		emit notification(tr("Base node cannot be a target."));
-		return;
-	}
+//	if (destination->isRoot())
+//	{
+//		emit notification(tr("Base node cannot be a target."));
+//		return;
+//	}
 
 	if (source->isConnected(destination))
 	{
@@ -842,7 +848,7 @@ void GraphLogic::addEdge(Node *source, Node *destination)
 
 	// aviod the graph beeing acyclic. (ok, Nodes having multiple parents)
 	bool sec(false);
-	if (!destination->edgesToThis().empty())
+	if (destination->isRoot() || !destination->edgesToThis().empty())
 	{
 		emit notification(
 		   QObject::tr("The graph is acyclic, edge added as secondary edge."));

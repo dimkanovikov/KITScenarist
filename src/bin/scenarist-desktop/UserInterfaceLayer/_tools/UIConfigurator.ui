@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UIConfigurator</class>
+ <widget class="QWidget" name="UIConfigurator">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>517</width>
+    <height>614</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Palette colors</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Inactive</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>WindowText</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="le_11"/>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="le_12"/>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLineEdit" name="le_81"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Active</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="le_22"/>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLineEdit" name="le_23"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Light</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="le_31"/>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="le_32"/>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="le_33"/>
+       </item>
+       <item row="15" column="1">
+        <widget class="QLineEdit" name="le_151"/>
+       </item>
+       <item row="15" column="2">
+        <widget class="QLineEdit" name="le_152"/>
+       </item>
+       <item row="15" column="3">
+        <widget class="QLineEdit" name="le_153"/>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="le_13"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Button</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="le_41"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="le_21"/>
+       </item>
+       <item row="17" column="0" colspan="4">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_19">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://doc.qt.io/qt-5/qpalette.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Info&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="resetPalette">
+           <property name="text">
+            <string>Reset to defaults</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="savePalette">
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="loadPalette">
+           <property name="text">
+            <string>Load</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="applyPalette">
+           <property name="text">
+            <string>Apply</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>BrightText</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Midlight</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QLineEdit" name="le_82"/>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="le_42"/>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="le_43"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Dark</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="le_51"/>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="le_52"/>
+       </item>
+       <item row="5" column="3">
+        <widget class="QLineEdit" name="le_53"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Mid</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Disabled</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="le_61"/>
+       </item>
+       <item row="6" column="2">
+        <widget class="QLineEdit" name="le_62"/>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLineEdit" name="le_63"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Text</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="le_71"/>
+       </item>
+       <item row="7" column="2">
+        <widget class="QLineEdit" name="le_72"/>
+       </item>
+       <item row="7" column="3">
+        <widget class="QLineEdit" name="le_73"/>
+       </item>
+       <item row="8" column="3">
+        <widget class="QLineEdit" name="le_83"/>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>ButtonText</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="le_91"/>
+       </item>
+       <item row="11" column="1">
+        <widget class="QLineEdit" name="le_111"/>
+       </item>
+       <item row="11" column="2">
+        <widget class="QLineEdit" name="le_112"/>
+       </item>
+       <item row="11" column="3">
+        <widget class="QLineEdit" name="le_113"/>
+       </item>
+       <item row="12" column="0">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Shadow</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QLineEdit" name="le_121"/>
+       </item>
+       <item row="12" column="2">
+        <widget class="QLineEdit" name="le_122"/>
+       </item>
+       <item row="12" column="3">
+        <widget class="QLineEdit" name="le_123"/>
+       </item>
+       <item row="13" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>Highlight</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1">
+        <widget class="QLineEdit" name="le_131"/>
+       </item>
+       <item row="13" column="2">
+        <widget class="QLineEdit" name="le_132"/>
+       </item>
+       <item row="13" column="3">
+        <widget class="QLineEdit" name="le_133"/>
+       </item>
+       <item row="14" column="0">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>HighlightedText</string>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="1">
+        <widget class="QLineEdit" name="le_141"/>
+       </item>
+       <item row="14" column="2">
+        <widget class="QLineEdit" name="le_142"/>
+       </item>
+       <item row="14" column="3">
+        <widget class="QLineEdit" name="le_143"/>
+       </item>
+       <item row="15" column="0">
+        <widget class="QLabel" name="label_18">
+         <property name="text">
+          <string>AlternateBase</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="2">
+        <widget class="QLineEdit" name="le_92"/>
+       </item>
+       <item row="9" column="3">
+        <widget class="QLineEdit" name="le_93"/>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Base</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QLineEdit" name="le_101"/>
+       </item>
+       <item row="10" column="2">
+        <widget class="QLineEdit" name="le_102"/>
+       </item>
+       <item row="10" column="3">
+        <widget class="QLineEdit" name="le_103"/>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Window</string>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="2">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Style sheet</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QPlainTextEdit" name="styleSheet"/>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_20">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://doc.qt.io/qt-5/stylesheet-reference.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Info&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="resetStyleSheet">
+           <property name="text">
+            <string>Reset to defaults</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="saveStyleSheet">
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="loadStyleSheet">
+           <property name="text">
+            <string>Load</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="applyStyleSheet">
+           <property name="text">
+            <string>Apply</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

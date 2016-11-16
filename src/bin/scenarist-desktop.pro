@@ -17,7 +17,7 @@ CONFIG += c++11
 #
 unix: QMAKE_CXXFLAGS += -Wno-unused-function -Wno-unused-variable
 
-#QMAKE_MAC_SDK = macosx10.11
+QMAKE_MAC_SDK = macosx10.12
 
 #
 # Конфигурируем расположение файлов сборки
@@ -103,7 +103,6 @@ SOURCES += \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectNavigator/ProjectNavigator.cpp \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCards.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectCards/ProjectCards.cpp \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp \
@@ -307,7 +306,31 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.cpp \
     scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/anchor/sizeanchor.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/horizontalline.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/note.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/resizableshape.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/shape.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/verticalline.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.cpp \
+    scenarist-core/BusinessLayer/Export/FdxExporter.cpp \
+    scenarist-core/BusinessLayer/Import/FdxImporter.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.cpp \
+    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.cpp \
+    scenarist-core/BusinessLayer/Import/TrelbyImporter.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -326,7 +349,6 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.h \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.h \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectNavigator/ProjectNavigator.h \
-    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCards.h \
     scenarist-desktop/UserInterfaceLayer/Project/ProjectCards/ProjectCards.h \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.h \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.h \
@@ -555,7 +577,31 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h \
     scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h
+    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/anchor/sizeanchor.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/horizontalline.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/note.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/resizableshape.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/shape.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/verticalline.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h \
+    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h \
+    scenarist-core/BusinessLayer/Export/FdxExporter.h \
+    scenarist-core/BusinessLayer/Import/FdxImporter.h \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.h \
+    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.h \
+    scenarist-core/BusinessLayer/Import/TrelbyImporter.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -571,7 +617,10 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.ui \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.ui
+    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.ui \
+    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui
 
 
 RESOURCES += \
@@ -593,3 +642,5 @@ macx {
 # Включаем поддержку компиляции под Windows XP для MSVC 2012+
 #
 QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+
+DISTFILES +=

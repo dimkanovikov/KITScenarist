@@ -46,6 +46,11 @@ void BackupHelper::setBackupDir(const QString& _dir)
 void BackupHelper::saveBackup(const QString& _filePath)
 {
 	if (m_isActive) {
+        //
+        // Создаём папку для хранения резервных копий, если такой ещё нет
+        //
+        QDir::root().mkpath(m_backupDir);
+
 		//
 		// Сформируем путь к резервной копии
 		//
@@ -85,12 +90,12 @@ void BackupHelper::saveBackup(const QString& _filePath)
 				db.setDatabaseName(backupVersionsFileName);
 				db.open();
 				//
-				// Храним всего 10 копий, удаляя более старые
+				// Храним всего 100 копий, удаляя более старые
 				//
 				QSqlQuery backuper(db);
 				backuper.exec("CREATE TABLE IF NOT EXISTS versions (id INTEGER, version TEXT NOT NULL, datetime TEXT NOT NULL)");
 				backuper.exec("UPDATE versions SET id = (id + 1)");
-				backuper.exec("DELETE FROM versions WHERE id = 11");
+				backuper.exec("DELETE FROM versions WHERE id = 101");
 
 				backuper.prepare("INSERT INTO versions VALUES(1, ?, ?)");
 				backuper.addBindValue(DataStorageLayer::StorageFacade::scenarioStorage()->current()->text());

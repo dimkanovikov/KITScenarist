@@ -35,12 +35,6 @@ using namespace BusinessLogic;
 
 namespace {
 	/**
-	 * @brief Флаг для перерисовки текста редактора при первом отображении
-	 * @note см. paintEvent для детальной информации
-	 */
-	static bool s_firstRepaintUpdate = true;
-
-	/**
 	 * @brief Флаг положения курсора
 	 * @note Используется для корректировки скрола при совместном редактировании
 	 */
@@ -104,8 +98,6 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 
 		TextEditHelper::beautifyDocument(m_document, m_replaceThreeDots, m_smartQuotes);
 	}
-
-	s_firstRepaintUpdate = true;
 }
 
 void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
@@ -420,11 +412,11 @@ QMenu* ScenarioTextEdit::createContextMenu(const QPoint& _pos, QWidget* _parent)
 	foreach (QAction* menuAction, menu->findChildren<QAction*>()) {
 		if (menuAction->text().endsWith(QKeySequence(QKeySequence::Undo).toString(QKeySequence::NativeText))) {
 			menuAction->disconnect();
-			connect(menuAction, SIGNAL(triggered()), this, SLOT(undoReimpl()));
+			connect(menuAction, &QAction::triggered, this, &ScenarioTextEdit::undoRequest);
 			menuAction->setEnabled(m_document->isUndoAvailableReimpl());
 		} else if (menuAction->text().endsWith(QKeySequence(QKeySequence::Redo).toString(QKeySequence::NativeText))) {
 			menuAction->disconnect();
-			connect(menuAction, SIGNAL(triggered()), this, SLOT(redoReimpl()));
+			connect(menuAction, &QAction::triggered, this, &ScenarioTextEdit::redoRequest);
 			menuAction->setEnabled(m_document->isRedoAvailableReimpl());
 		}
 	}
@@ -477,16 +469,6 @@ void ScenarioTextEdit::setAdditionalCursors(const QMap<QString, int>& _cursors)
 	}
 }
 
-void ScenarioTextEdit::undoReimpl()
-{
-	m_document->undoReimpl();
-}
-
-void ScenarioTextEdit::redoReimpl()
-{
-	m_document->redoReimpl();
-}
-
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 {
 	//
@@ -504,10 +486,10 @@ void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
 	if (_event == QKeySequence::Undo
 		|| _event == QKeySequence::Redo) {
 		if (_event == QKeySequence::Undo) {
-			undoReimpl();
+			emit undoRequest();
 		}
 		else if (_event == QKeySequence::Redo) {
-			redoReimpl();
+			emit redoRequest();
 		}
 		_event->accept();
 		return;
@@ -751,18 +733,6 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 {
-	//
-	// Если в документе формат первого блока имеет отступ сверху, это приводит
-	// к некорректной прорисовке текста, это баг Qt...
-	// Поэтому приходится отлавливать этот момент и вручную корректировать
-	//
-	if (isVisible() && s_firstRepaintUpdate) {
-		s_firstRepaintUpdate = false;
-
-		QTimer::singleShot(10, this, SLOT(aboutCorrectRepaint()));
-	}
-
-
 	//
 	// Подсветка строки
 	//
@@ -1070,16 +1040,6 @@ bool ScenarioTextEdit::canComplete() const
 	return result;
 }
 
-void ScenarioTextEdit::aboutCorrectRepaint()
-{
-	QTextCursor cursor(document());
-	cursor.beginEditBlock();
-	cursor.setBlockFormat(cursor.blockFormat());
-	cursor.movePosition(QTextCursor::End);
-	cursor.setBlockFormat(cursor.blockFormat());
-	cursor.endEditBlock();
-}
-
 void ScenarioTextEdit::aboutCorrectAdditionalCursors(int _position, int _charsRemoved, int _charsAdded)
 {
 	if (_charsAdded != _charsRemoved) {
@@ -1333,7 +1293,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 	}
 
 	//
-	// Для заголовка группы нужно создать завершение
+	// Для заголовка группы нужно создать завершение, захватив всё содержимое сцены
 	//
 	if (newBlockStyle.isEmbeddableHeader()) {
 		ScenarioBlockStyle footerStyle = ScenarioTemplateFacade::getTemplate().blockStyle(newBlockStyle.embeddableFooter());
@@ -1343,9 +1303,28 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 		//
 		int lastCursorPosition = textCursor().position();
 
-		cursor.movePosition(QTextCursor::EndOfBlock);
-		cursor.insertBlock();
+		//
+		// Ищем конец сцены
+		//
+		do {
+			cursor.movePosition(QTextCursor::EndOfBlock);
+			cursor.movePosition(QTextCursor::NextBlock);
+		} while (!cursor.atEnd()
+				 && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneHeading
+				 && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneGroupHeader
+				 && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::FolderHeader);
 
+		//
+		// Если забежали на блок следующей сцены, вернёмся на один символ назад
+		//
+		if (!cursor.atEnd() && cursor.atBlockStart()) {
+			cursor.movePosition(QTextCursor::PreviousCharacter);
+		}
+
+		//
+		// Когда дошли до конца сцены, вставляем закрывающий блок
+		//
+		cursor.insertBlock();
 		cursor.setBlockCharFormat(footerStyle.charFormat());
 		cursor.setBlockFormat(footerStyle.blockFormat());
 

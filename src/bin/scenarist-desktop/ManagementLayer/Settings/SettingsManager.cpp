@@ -189,6 +189,11 @@ void SettingsManager::applicationModuleResearchChanged(bool _value)
 	storeValue("application/modules/research", _value);
 }
 
+void SettingsManager::applicationModuleCardsChanged(bool _value)
+{
+	storeValue("application/modules/cards", _value);
+}
+
 void SettingsManager::applicationModuleScenarioChanged(bool _value)
 {
 	storeValue("application/modules/scenario", _value);
@@ -207,6 +212,21 @@ void SettingsManager::applicationModuleLocationsChanged(bool _value)
 void SettingsManager::applicationModuleStatisticsChanged(bool _value)
 {
 	storeValue("application/modules/statistics", _value);
+}
+
+void SettingsManager::cardsUseCorkboardBackgroundChanged(bool _value)
+{
+	storeValue("cards/use-corkboard", _value);
+}
+
+void SettingsManager::cardsBackgroundColorChanged(const QColor& _value)
+{
+	storeValue("cards/background-color", _value);
+}
+
+void SettingsManager::cardsBackgroundColorDarkChanged(const QColor& _value)
+{
+	storeValue("cards/background-color-dark", _value);
 }
 
 void SettingsManager::scenarioEditPageViewChanged(bool _value)
@@ -266,26 +286,26 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 	const QString affFileName = languageCode + ".aff";
 	const QString dicFileName = languageCode + ".dic";
 	//
-    // Получим информацию о файлах словаря
+	// Получим информацию о файлах словаря
 	//
-    QFileInfo affFileInfo(hunspellDictionariesFolderPath + affFileName);
-    QFileInfo dicFileInfo(hunspellDictionariesFolderPath + dicFileName);
-    //
-    // ... удалим файлы, если они пустые (баг прошлых версий)
-    //
-    if (affFileInfo.size() == 0) {
-        QFile::remove(affFileInfo.absoluteFilePath());
-        affFileInfo.refresh();
-    }
-    if (dicFileInfo.size() == 0) {
-        QFile::remove(dicFileInfo.absoluteFilePath());
-        dicFileInfo.refresh();
-    }
+	QFileInfo affFileInfo(hunspellDictionariesFolderPath + affFileName);
+	QFileInfo dicFileInfo(hunspellDictionariesFolderPath + dicFileName);
+	//
+	// ... удалим файлы, если они пустые (баг прошлых версий)
+	//
+	if (affFileInfo.size() == 0) {
+		QFile::remove(affFileInfo.absoluteFilePath());
+		affFileInfo.refresh();
+	}
+	if (dicFileInfo.size() == 0) {
+		QFile::remove(dicFileInfo.absoluteFilePath());
+		dicFileInfo.refresh();
+	}
 
-    //
-    // Если не установлен, скачаем
-    //
-    if (!affFileInfo.exists() || !dicFileInfo.exists()) {
+	//
+	// Если не установлен, скачаем
+	//
+	if (!affFileInfo.exists() || !dicFileInfo.exists()) {
 		//
 		// ... покажем прелоадер
 		//
@@ -304,37 +324,37 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 		const QString hunspellDictionariesFolderUrl = "https://kitscenarist.ru/downloads/hunspell/";
 		//
 		const QByteArray affFileData = WebLoader().loadSync(hunspellDictionariesFolderUrl + affFileName);
-        bool downloadingAffFileSuccess = affFileData.size() > 0;
-        if (downloadingAffFileSuccess) {
-            QFile affFile(hunspellDictionariesFolderPath + affFileName);
-            affFile.open(QIODevice::WriteOnly);
-            affFile.write(affFileData);
-            affFile.close();
-        }
+		bool downloadingAffFileSuccess = affFileData.size() > 0;
+		if (downloadingAffFileSuccess) {
+			QFile affFile(hunspellDictionariesFolderPath + affFileName);
+			affFile.open(QIODevice::WriteOnly);
+			affFile.write(affFileData);
+			affFile.close();
+		}
 		//
 		const QByteArray dicFileData = WebLoader().loadSync(hunspellDictionariesFolderUrl + dicFileName);
-        bool downloadingDicFileSuccess = dicFileData.size() > 0;
-        if (downloadingDicFileSuccess) {
-            QFile dicFile(hunspellDictionariesFolderPath + dicFileName);
-            dicFile.open(QIODevice::WriteOnly);
-            dicFile.write(dicFileData);
-            dicFile.close();
-        }
+		bool downloadingDicFileSuccess = dicFileData.size() > 0;
+		if (downloadingDicFileSuccess) {
+			QFile dicFile(hunspellDictionariesFolderPath + dicFileName);
+			dicFile.open(QIODevice::WriteOnly);
+			dicFile.write(dicFileData);
+			dicFile.close();
+		}
 
 		//
 		// ... скрываем прогресс
 		//
 		progress.finish();
 
-        //
-        // Если словари не удалось скачать, предупредим об этом пользователя
-        //
-        if (!downloadingAffFileSuccess || !downloadingDicFileSuccess) {
-            QLightBoxMessage::critical(m_view, tr("Can't enable spell checking"),
-                tr("Can't download spelling dictionary. "
-                   "Please check internet connection and retry to activate spell checking"));
-            m_view->setScenarioEditSpellCheck(false);
-        }
+		//
+		// Если словари не удалось скачать, предупредим об этом пользователя
+		//
+		if (!downloadingAffFileSuccess || !downloadingDicFileSuccess) {
+			QLightBoxMessage::critical(m_view, tr("Can't enable spell checking"),
+				tr("Can't download spelling dictionary. "
+				   "Please check internet connection and retry to activate spell checking"));
+			m_view->setScenarioEditSpellCheck(false);
+		}
 	}
 }
 
@@ -434,6 +454,11 @@ void SettingsManager::scenarioEditReviewUseWordHighlightChanged(bool _value)
 void SettingsManager::navigatorShowScenesNumbersChanged(bool _value)
 {
 	storeValue("navigator/show-scenes-numbers", _value);
+}
+
+void SettingsManager::navigatorShowSceneTitleChanged(bool _value)
+{
+	storeValue("navigator/show-scene-title", _value);
 }
 
 void SettingsManager::navigatorShowSceneDescriptionChanged(bool _value)
@@ -729,6 +754,12 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_view->setApplicationModuleCards(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"application/modules/cards",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setApplicationModuleScenario(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"application/modules/scenario",
@@ -752,6 +783,30 @@ void SettingsManager::initView()
 					"application/modules/statistics",
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
+				);
+
+	//
+	// Настройки карточек
+	//
+	m_view->setCardsUseCorkboardBackground(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"cards/use-corkboard",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
+	m_view->setCardsBackgroundColor(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"cards/background-color",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
+				);
+	m_view->setCardsBackgroundColorDark(
+				QColor(
+					DataStorageLayer::StorageFacade::settingsStorage()->value(
+						"cards/background-color-dark",
+						DataStorageLayer::SettingsStorage::ApplicationSettings)
+					)
 				);
 
 	//
@@ -959,6 +1014,12 @@ void SettingsManager::initView()
 					DataStorageLayer::SettingsStorage::ApplicationSettings)
 				.toInt()
 				);
+	m_view->setNavigatorShowSceneTitle(
+				DataStorageLayer::StorageFacade::settingsStorage()->value(
+					"navigator/show-scene-title",
+					DataStorageLayer::SettingsStorage::ApplicationSettings)
+				.toInt()
+				);
 	m_view->setNavigatorShowSceneDescription(
 				DataStorageLayer::StorageFacade::settingsStorage()->value(
 					"navigator/show-scene-description",
@@ -1106,10 +1167,15 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SLOT(applicationSaveBackupsFolderChanged(QString)));
 	connect(m_view, &SettingsView::applicationTwoPanelModeChanged, this, &SettingsManager::applicationTwoPanelModeChanged);
 	connect(m_view, &SettingsView::applicationModuleResearchChanged, this, &SettingsManager::applicationModuleResearchChanged);
+	connect(m_view, &SettingsView::applicationModuleCardsChanged, this, &SettingsManager::applicationModuleCardsChanged);
 	connect(m_view, &SettingsView::applicationModuleScenarioChanged, this, &SettingsManager::applicationModuleScenarioChanged);
 	connect(m_view, &SettingsView::applicationModuleCharactersChanged, this, &SettingsManager::applicationModuleCharactersChanged);
 	connect(m_view, &SettingsView::applicationModuleLocationsChanged, this, &SettingsManager::applicationModuleLocationsChanged);
 	connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationModuleStatisticsChanged);
+
+	connect(m_view, &SettingsView::cardsUseCorkboardBackgroundChanged, this, &SettingsManager::cardsUseCorkboardBackgroundChanged);
+	connect(m_view, &SettingsView::cardsBackgroundColorChanged, this, &SettingsManager::cardsBackgroundColorChanged);
+	connect(m_view, &SettingsView::cardsBackgroundColorDarkChanged, this, &SettingsManager::cardsBackgroundColorDarkChanged);
 
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SLOT(scenarioEditPageViewChanged(bool)));
 	connect(m_view, SIGNAL(scenarioEditShowScenesNumbersChanged(bool)), this, SLOT(scenarioEditShowScenesNumbersChanged(bool)));
@@ -1139,6 +1205,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)), this, SLOT(scenarioEditReviewUseWordHighlightChanged(bool)));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SLOT(navigatorShowScenesNumbersChanged(bool)));
+	connect(m_view, SIGNAL(navigatorShowSceneTitleChanged(bool)), this, SLOT(navigatorShowSceneTitleChanged(bool)));
 	connect(m_view, SIGNAL(navigatorShowSceneDescriptionChanged(bool)), this, SLOT(navigatorShowSceneDescriptionChanged(bool)));
 	connect(m_view, SIGNAL(navigatorSceneDescriptionIsSceneTextChanged(bool)), this, SLOT(navigatorSceneDescriptionIsSceneTextChanged(bool)));
 	connect(m_view, SIGNAL(navigatorSceneDescriptionHeightChanged(int)), this, SLOT(navigatorSceneDescriptionHeightChanged(int)));
@@ -1176,10 +1243,16 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(applicationSaveBackupsFolderChanged(QString)), this, SIGNAL(applicationSettingsUpdated()));
 	connect(m_view, &SettingsView::applicationTwoPanelModeChanged, this, &SettingsManager::applicationSettingsUpdated);
 	connect(m_view, &SettingsView::applicationModuleResearchChanged, this, &SettingsManager::applicationSettingsUpdated);
+	connect(m_view, &SettingsView::applicationModuleCardsChanged, this, &SettingsManager::applicationSettingsUpdated);
 	connect(m_view, &SettingsView::applicationModuleScenarioChanged, this, &SettingsManager::applicationSettingsUpdated);
 	connect(m_view, &SettingsView::applicationModuleCharactersChanged, this, &SettingsManager::applicationSettingsUpdated);
 	connect(m_view, &SettingsView::applicationModuleLocationsChanged, this, &SettingsManager::applicationSettingsUpdated);
 	connect(m_view, &SettingsView::applicationModuleStatisticsChanged, this, &SettingsManager::applicationSettingsUpdated);
+
+	connect(m_view, &SettingsView::applicationUseDarkThemeChanged, this, &SettingsManager::cardsSettingsUpdated);
+	connect(m_view, &SettingsView::cardsUseCorkboardBackgroundChanged, this, &SettingsManager::cardsSettingsUpdated);
+	connect(m_view, &SettingsView::cardsBackgroundColorChanged, this, &SettingsManager::cardsSettingsUpdated);
+	connect(m_view, &SettingsView::cardsBackgroundColorDarkChanged, this, &SettingsManager::cardsSettingsUpdated);
 
 	connect(m_view, SIGNAL(applicationUseDarkThemeChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 	connect(m_view, SIGNAL(scenarioEditPageViewChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
@@ -1208,6 +1281,7 @@ void SettingsManager::initConnections()
 	connect(m_view, SIGNAL(scenarioEditReviewUseWordHighlightChanged(bool)), this, SIGNAL(scenarioEditSettingsUpdated()));
 
 	connect(m_view, SIGNAL(navigatorShowScenesNumbersChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
+	connect(m_view, SIGNAL(navigatorShowSceneTitleChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 	connect(m_view, SIGNAL(navigatorShowSceneDescriptionChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 	connect(m_view, SIGNAL(navigatorSceneDescriptionIsSceneTextChanged(bool)), this, SIGNAL(navigatorSettingsUpdated()));
 	connect(m_view, SIGNAL(navigatorSceneDescriptionHeightChanged(int)), this, SIGNAL(navigatorSettingsUpdated()));

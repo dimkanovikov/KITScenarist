@@ -1,8 +1,11 @@
 #include "ApplicationView.h"
 
+#include "_tools/UIConfigurator.h"
+
 #include <QCloseEvent>
 #include <QIcon>
 #include <QMouseEvent>
+#include <QShortcut>
 #include <QSplitter>
 #include <QSplitterHandle>
 
@@ -14,6 +17,12 @@ ApplicationView::ApplicationView(QWidget *_parent) :
 {
 	setWindowIcon(QIcon(":/Graphics/Icons/logo.png"));
 	setWindowTitle(tr("KIT Scenarist"));
+
+#ifndef Q_OS_WIN
+	static UIConfigurator* s_uiConfigurator = new UIConfigurator(this);
+	QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+Shift+Esc"), this);
+	connect(shortcut, &QShortcut::activated, s_uiConfigurator, &UIConfigurator::show);
+#endif
 }
 
 void ApplicationView::initSplittersRightClick()

@@ -115,7 +115,13 @@ namespace UserInterface
 		/**
 		 * @brief Добавить элемент в указанной позиции с заданным текстом и типом
 		 */
-		void addItem(int _position, int _type, const QString& _header,
+		void addItem(int _position, int _type, const QString& _header, const QString& _title,
+			const QColor& _color, const QString& _description);
+
+		/**
+		 * @brief Изменить элемент в указанной позиции с заданным текстом и типом
+		 */
+		void editItem(int _startPosition, int _endPosition, int _type, const QString& _title,
 			const QColor& _color, const QString& _description);
 
 		/**
@@ -145,16 +151,6 @@ namespace UserInterface
 
 	public slots:
 		/**
-		 * @brief Отменить последнее действие
-		 */
-		void aboutUndo();
-
-		/**
-		 * @brief Повторить последнее действие
-		 */
-		void aboutRedo();
-
-		/**
 		 * @brief Показать/скрыть поле поиска
 		 */
 		void aboutShowSearch();
@@ -165,6 +161,16 @@ namespace UserInterface
 		void aboutShowFastFormat();
 
 	signals:
+		/**
+		 * @brief Запрос на отмену последнего действия
+		 */
+		void undoRequest();
+
+		/**
+		 * @brief Запрос на повтор последнего действия
+		 */
+		void redoRequest();
+
 		/**
 		 * @brief Изменился режим отображения сценария
 		 */
@@ -315,11 +321,6 @@ namespace UserInterface
 		 * @brief Панель со списком комментариев
 		 */
 		ScenarioReviewView* m_reviewView;
-
-		/**
-		 * @brief MD5-хэш текста сценария, используется для отслеживания изменённости текста
-		 */
-		QByteArray m_lastTextMd5Hash;
 	};
 }
 

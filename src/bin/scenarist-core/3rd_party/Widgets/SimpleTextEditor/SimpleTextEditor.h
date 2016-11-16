@@ -38,8 +38,10 @@ protected:
 	void insertFromMimeData(const QMimeData* _source);
 
 private:
+	/**
+	 * @brief Объединить новое форматированные с выделенным текстом, или со словом под курсором
+	 */
 	void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
-	void mergeFormatOnParagraphOrSelection(const QTextCharFormat &format);
 
 	/**
 	 * @brief Даём виджету доступ к защищённым членам класса
