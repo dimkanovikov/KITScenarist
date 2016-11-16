@@ -724,10 +724,51 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 
 			int currentItemEndPos = cursor.position();
 			//
-			// ... если текущий элемент является группирующим, то нужно также включить и закрывающий блок
+			// ... если текущий элемент является группирующим, то нужно включить
+			//     и все входящие в него группирующие элементы
 			//
-			if (nextBlockType == ScenarioBlockStyle::SceneGroupFooter
-				|| nextBlockType == ScenarioBlockStyle::FolderFooter) {
+			if (currentType == ScenarioBlockStyle::SceneGroupHeader
+				|| currentType == ScenarioBlockStyle::FolderHeader) {
+				int openedScenesGroups = currentType == ScenarioBlockStyle::SceneGroupHeader ? 1 : 0;
+				int openedFolders = currentType == ScenarioBlockStyle::FolderHeader ? 1 : 0;
+				QTextCursor endCursor = cursor;
+				while (!endCursor.atEnd()
+					   && (openedScenesGroups != 0
+						   || openedFolders != 0)) {
+					endCursor.movePosition(QTextCursor::EndOfBlock);
+					switch (ScenarioBlockStyle::forBlock(endCursor.block())) {
+						case ScenarioBlockStyle::SceneGroupHeader: {
+							++openedScenesGroups;
+							break;
+						}
+
+						case ScenarioBlockStyle::SceneGroupFooter: {
+							--openedScenesGroups;
+							break;
+						}
+
+						case ScenarioBlockStyle::FolderHeader: {
+							++openedFolders;
+							break;
+						}
+
+						case ScenarioBlockStyle::FolderFooter: {
+							--openedFolders;
+							break;
+						}
+
+						default: break;
+					}
+					endCursor.movePosition(QTextCursor::NextBlock);
+				}
+
+				currentItemEndPos = endCursor.position();
+			}
+			//
+			// ... или как минимум его закрывающий блок
+			//
+			else if (currentType == ScenarioBlockStyle::SceneGroupFooter
+					   || currentType == ScenarioBlockStyle::FolderFooter) {
 				QTextCursor endCursor = cursor;
 				endCursor.movePosition(QTextCursor::NextBlock);
 				endCursor.movePosition(QTextCursor::EndOfBlock);
@@ -848,11 +889,6 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 							currentItem = currentItem->parent();
 						}
 						currentParent = currentItem->parent();
-
-						//
-						// Сохраняем окончание группирующего блока
-						//
-						currentItem->setFooter(cursor.block().text());
 						break;
 					}
 
@@ -906,8 +942,14 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	// ... текст и описание
 	QString itemText;
 	QString description;
+	// ... подвал
+	QString footer;
+	//
 	bool isFirstDescriptionBlock = true; // первый блок описания сцены
 	bool isFirstTextBlock = true; // первый блок текста сцены
+	bool isNeedIncludeBlock = true; // нужно ли включать текущий блок
+	int openedScenesGroups = 0; // кол-во открытых групп
+	int openedFolders = 0; // кол-во открытых папок
 	cursor.movePosition(QTextCursor::NextBlock);
 	while (!cursor.atEnd()
 		   && cursor.position() < _itemEndPos) {
@@ -922,6 +964,51 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			// Заголовки никуда не включаем
 			//
 			case ScenarioBlockStyle::SceneHeading: {
+				isNeedIncludeBlock = false;
+				break;
+			}
+
+			//
+			// Не включаем тект групп сцен
+			//
+			case ScenarioBlockStyle::SceneGroupHeader: {
+				++openedScenesGroups;
+				isNeedIncludeBlock = false;
+				break;
+			}
+			case ScenarioBlockStyle::SceneGroupFooter: {
+				if (openedScenesGroups == 0
+					&& openedFolders == 0) {
+					footer = cursor.block().text();
+				} else {
+					--openedScenesGroups;
+					if (openedScenesGroups == 0
+						&& openedFolders == 0) {
+						isNeedIncludeBlock = true;
+					}
+				}
+				break;
+			}
+
+			//
+			// Не включаем тект папок
+			//
+			case ScenarioBlockStyle::FolderHeader: {
+				++openedFolders;
+				isNeedIncludeBlock = false;
+				break;
+			}
+			case ScenarioBlockStyle::FolderFooter: {
+				if (openedScenesGroups == 0
+					&& openedFolders == 0) {
+					footer = cursor.block().text();
+				} else {
+					--openedFolders;
+					if (openedScenesGroups == 0
+						&& openedFolders == 0) {
+						isNeedIncludeBlock = true;
+					}
+				}
 				break;
 			}
 
@@ -929,13 +1016,15 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			// Описание сохраняем в описание
 			//
 			case ScenarioBlockStyle::SceneDescription: {
-				if (!isFirstDescriptionBlock) {
-					description.append("\n");
-				} else {
-					description = "";
-					isFirstDescriptionBlock = false;
+				if (isNeedIncludeBlock) {
+					if (!isFirstDescriptionBlock) {
+						description.append("\n");
+					} else {
+						description = "";
+						isFirstDescriptionBlock = false;
+					}
+					description.append(cursor.block().text());
 				}
-				description.append(cursor.block().text());
 				break;
 			}
 
@@ -943,17 +1032,20 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			// Весь остальной текст - текст сцены
 			//
 			default: {
-				if (!isFirstTextBlock) {
-					itemText.append(" ");
-				} else {
-					itemText = "";
-					isFirstTextBlock = false;
+				if (isNeedIncludeBlock) {
+					if (!isFirstTextBlock) {
+						itemText.append(" ");
+					} else {
+						itemText = "";
+						isFirstTextBlock = false;
+					}
+					ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
+					itemText +=
+							blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
+							? cursor.block().text().toUpper()
+							: cursor.block().text();
 				}
-				ScenarioBlockStyle blockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(blockType);
-				itemText +=
-						blockStyle.charFormat().fontCapitalization() == QFont::AllUppercase
-						? cursor.block().text().toUpper()
-						: cursor.block().text();
+				break;
 			}
 		}
 
@@ -1019,6 +1111,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	_item->setDuration(itemDuration);
 	_item->setHasNote(hasNote);
 	_item->setCounter(counter);
+	_item->setFooter(footer);
 }
 
 ScenarioModelItem* ScenarioDocument::itemForPosition(int _position, bool _findNear) const
