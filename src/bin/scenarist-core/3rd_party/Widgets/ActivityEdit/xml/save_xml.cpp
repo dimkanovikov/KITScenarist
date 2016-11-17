@@ -12,6 +12,7 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QGraphicsView>
 #include <QScrollBar>
 #include <QXmlStreamWriter>
 
@@ -97,15 +98,18 @@ void saveVerticalLineShape(QXmlStreamWriter& _writer, Shape* _shape, QHash<Shape
 	_writer.writeEndElement();
 }
 
-void fileSaveXml(const QString& _filename, QGraphicsView* _view)
+bool fileSaveXml(const QString& _filename, QGraphicsView* _view)
 {
+	bool xmlSaved = false;
 	QFile file(_filename);
-	if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-		throw FileErrorException(_filename);
+	if (file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+		QTextStream stream(&file);
+		stream << createSceneXml(_view->scene(), _view);
+		file.close();
+		xmlSaved = true;
 	}
-	QTextStream stream(&file);
-	stream << createSceneXml(_view->scene(), _view);
-	file.close();
+
+	return xmlSaved;
 }
 
 QString createSceneXml(QGraphicsScene* _scene, QGraphicsView* _view)
@@ -119,10 +123,10 @@ QString createSceneXml(QGraphicsScene* _scene, QGraphicsView* _view)
 	writer.writeStartDocument();
 	writer.writeStartElement("cards_xml");
 
-    if (_view) {
-        writer.writeAttribute("scale", QString::number(_view->transform().m11()));
-        writer.writeAttribute("scroll_x", QString::number(_view->horizontalScrollBar()->value()));
-        writer.writeAttribute("scroll_y", QString::number(_view->verticalScrollBar()->value()));
+	if (_view) {
+		writer.writeAttribute("scale", QString::number(_view->transform().m11()));
+		writer.writeAttribute("scroll_x", QString::number(_view->horizontalScrollBar()->value()));
+		writer.writeAttribute("scroll_y", QString::number(_view->verticalScrollBar()->value()));
 	}
 
 	//

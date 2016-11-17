@@ -67,7 +67,7 @@ public:
 	/**
 	 * @brief Загрузить схему из XMl-строки
 	 */
-	void load(const QString& _xml);
+	bool load(const QString& _xml);
 
 	/**
 	 * @brief Добавить карточку
@@ -167,6 +167,11 @@ signals:
 	 * @brief Изменились цвета карточки
 	 */
 	void cardColorsChanged(const QString& _uuid, const QString& _colors);
+
+	/**
+	 * @brief Запрос на изменение типа карточки
+	 */
+	void itemTypeChanged(const QString& _uuid, int _cardType);
 
 	/**
 	 * @brief Схема изменена

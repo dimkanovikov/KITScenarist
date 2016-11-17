@@ -4,6 +4,8 @@
 #include "ScenarioDocument.h"
 #include "ScenarioXml.h"
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 #include <QMimeData>
 
 using namespace BusinessLogic;
@@ -625,8 +627,12 @@ namespace {
 
 		cardXml.append(QString("uuid=\"%1\" ").arg(_item->uuid()));
 		cardXml.append(QString("card_type=\"%1\" ").arg(_item->type()));
-		cardXml.append(QString("title=\"%1\" ").arg(_item->title().isEmpty() ? _item->header() : _item->title()));
-		cardXml.append(QString("description=\"%1\" ").arg(_item->description()));
+		cardXml.append(QString("title=\"%1\" ")
+					   .arg(_item->title().isEmpty()
+							? TextEditHelper::toHtmlEscaped(_item->header())
+							: TextEditHelper::toHtmlEscaped(_item->title())));
+		cardXml.append(QString("description=\"%1\" ")
+					   .arg(TextEditHelper::toHtmlEscaped(_item->description())));
 		cardXml.append(QString("colors=\"%1\" ").arg(_item->colors()));
 
 		cardXml.append("/>\n");

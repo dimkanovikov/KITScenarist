@@ -168,9 +168,9 @@ void ActivityEdit::saveChanges(bool _hasChangesInText)
 	}
 }
 
-void ActivityEdit::load(const QString& _xml)
+bool ActivityEdit::load(const QString& _xml)
 {
-	loadSceneXml(_xml, m_view->scene(), m_view);
+	return loadSceneXml(_xml, m_view->scene(), m_view);
 }
 
 void ActivityEdit::addCard(const QString& _uuid, int _cardType, const QString& _title,
@@ -439,9 +439,40 @@ void ActivityEdit::showContextMenu(const QPoint& _pos)
 			//
 			if (CardShape* card = dynamic_cast<CardShape*>(scene->selectedShapes().first())) {
 				QMenu* menu = new QMenu(this);
+
+				//
+				// Преобразование элемента
+				//
+				QMenu* convertMenu = menu->addMenu(tr("Convert to"));
+				QAction* convertToScene = convertMenu->addAction(tr("Scene"));
+				convertToScene->setData(CardShape::TypeScene);
+				QAction* convertToScenesGroup = convertMenu->addAction(tr("Scenes Group"));
+				convertToScenesGroup->setData(CardShape::TypeScenesGroup);
+				QAction* convertToFolder = convertMenu->addAction(tr("Folder"));
+				convertToFolder->setData(CardShape::TypeFolder);
+				switch (card->cardType()) {
+					case CardShape::TypeScene: {
+						convertToScene->setEnabled(false);
+						break;
+					}
+
+					case CardShape::TypeScenesGroup: {
+						convertToScenesGroup->setEnabled(false);
+						break;
+					}
+
+					case CardShape::TypeFolder: {
+						convertToFolder->setEnabled(false);
+						break;
+					}
+
+					default: break;
+				}
+
 				//
 				// Цвета
 				//
+				menu->addSeparator();
 				QString colorsNames = card->colors();
 				int colorIndex = 1;
 				QList<GoogleColorsPane*> colorsPanesList;
@@ -518,6 +549,10 @@ void ActivityEdit::showContextMenu(const QPoint& _pos)
 						emit addCardRequest();
 					} else if (toggled == remove) {
 						emit removeCardRequest(card->uuid());
+					} else if (toggled == convertToScene
+							   || toggled == convertToScenesGroup
+							   || toggled == convertToFolder) {
+						emit itemTypeChanged(card->uuid(), toggled->data().toInt());
 					}
 				} else {
 					//
