@@ -30,7 +30,8 @@ namespace BusinessLogic
 		 * @brief Индексы ролей с данными в модели
 		 */
 		enum DataRoles {
-			ColorIndex = Qt::UserRole + 1,
+			TypeIndex = Qt::UserRole + 1,
+			ColorIndex,
 			TitleIndex,
 			SceneTextIndex,
 			DescriptionIndex,
@@ -116,12 +117,12 @@ namespace BusinessLogic
 		/**
 		 * @brief Получить индекс заданного элемента
 		 */
-        QModelIndex indexForItem(ScenarioModelItem* _item) const;
+		QModelIndex indexForItem(ScenarioModelItem* _item) const;
 
 		/**
-         * @brief Получить индекс элемента имеющего заданный uuid
+		 * @brief Получить индекс элемента имеющего заданный uuid
 		 */
-        QModelIndex indexForUuid(const QString& _uuid) const;
+		QModelIndex indexForUuid(const QString& _uuid) const;
 
 		/**
 		 * @brief Сформировать простую схему для сцен

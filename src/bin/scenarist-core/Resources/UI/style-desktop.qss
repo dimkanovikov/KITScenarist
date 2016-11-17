@@ -2,21 +2,21 @@
  * Общие стили для элементов верхней панели
  */
 *[topPanelLeftBordered=true] {
-	border-left-width: 1px;
-	border-left-style: solid;
-	border-left-color: palette(dark);
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: palette(dark);
 }
 
 *[topPanelTopBordered=true] {
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-top-color: palette(dark);
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: palette(dark);
 }
 
 *[topPanelRightBordered=true] {
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: palette(dark);
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: palette(dark);
 }
 
 *[topPanelBottomBordered=true] {
@@ -29,10 +29,10 @@
  * Основные виджеты формы
  */
 *[mainContainer=true] {
-	border: none;
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-top-color: palette(dark);
+    border: none;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: palette(dark);
 }
 
 /*
@@ -46,62 +46,62 @@
  * Сделать фон виджета цветом base из палитры
  */
 *[baseForeground=true] {
-	background-color: palette(base);
+    background-color: palette(base);
 }
 
 /*
  * Стиль панели быстрого форматирования
  */
 *[fastFormatWidget=true] {
-	border: 0px solid black;
-	border-left-width: 1px;
-	border-left-style: solid;
-	border-left-color: palette(dark);
+    border: 0px solid black;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: palette(dark);
 }
 
 /*
  * Кнопка с выравниваем текста по левой стороне
  */
 QPushButton[leftAlignedText=true] {
-	padding: 3px 6px 3px 6px;
-	text-align: left;
+    padding: 3px 6px 3px 6px;
+    text-align: left;
 }
 
 /*
  * Панель
  */
 QFrame[inTopPanel=true] {
-	background: palette(button);
-	color: palette(button-text);
-	padding-top: 2px;
-	padding-bottom: 2px;
-	min-height: 25px;
+    background: palette(button);
+    color: palette(button-text);
+    padding-top: 2px;
+    padding-bottom: 2px;
+    min-height: 25px;
 }
 
 /*
  * Текстовые метки
  */
 QLabel[inTopPanel=true] {
-	background: palette(button);
-	color: palette(button-text);
-	padding-top: 2px;
-	padding-bottom: 2px;
-	min-height: 25px;
+    background: palette(button);
+    color: palette(button-text);
+    padding-top: 2px;
+    padding-bottom: 2px;
+    min-height: 25px;
 }
 
 /*
  * Кнопка меню
  */
 QToolButton[inTopPanel=true] {
-	background: palette(button);
-	color: palette(button-text);
-	border: none;
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-top-color: palette(dark);
-	padding-left: 4px;
-	padding-right: 4px;
-	height: 26px;
+    background: palette(button);
+    color: palette(button-text);
+    border: none;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: palette(dark);
+    padding-left: 4px;
+    padding-right: 4px;
+    height: 26px;
 }
 
 QToolButton:hover[inTopPanel=true] {
@@ -116,18 +116,19 @@ QToolButton:pressed[inTopPanel=true] {
 }
 
 QToolButton::menu-button[inTopPanel=true] {
-	background: palette(button);
-	color: palette(button-text);
-	border: none;
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-top-color: palette(dark);
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: palette(dark);
-	width: 10px;
-	padding-top: 6px;
-	padding-right: 3px;
+    background: palette(button);
+    color: palette(button-text);
+    border: none;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: palette(dark);
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: palette(dark);
+    width: 10px;
+    padding-top: 6px;
+    padding-bottom: 5px;
+    padding-right: 6px;
 }
 
 QToolButton::menu-button:hover[inTopPanel=true],
@@ -136,23 +137,23 @@ QToolButton::menu-button:pressed[inTopPanel=true] {
 }
 
 QToolButton::menu-arrow[inTopPanel=true] {
-	image: url(:Interface/UI/menuarrow.png);
+    image: url(:Interface/UI/menuarrow.png);
 }
 
 FlatButton[hasMenu=true],
 FlatButton:pressed[hasMenu=true] {
-	padding-top: 0px;
-	padding-left: 4px;
-	padding-right: 14px;
+    padding-top: 0px;
+    padding-left: 4px;
+    padding-right: 14px;
 }
 
 FlatButton::menu-button[inTopPanel=true] {
-	border-right: none;
+    border-right: none;
 }
 
 ColoredToolButton[inTopPanel=true] {
-	padding-right: 14px;
-	min-width: 20px;
+    padding-right: 14px;
+    min-width: 20px;
 }
 
 ColoredToolButton:hover[inTopPanel=true] {
@@ -161,8 +162,8 @@ ColoredToolButton:hover[inTopPanel=true] {
 }
 
 ColoredToolButton::menu-button[inTopPanel=true] {
-	padding-right: 3px;
-	border-right: none;
+    padding-right: 3px;
+    border-right: none;
 }
 
 ColoredToolButton::menu-button:hover[inTopPanel=true] {
@@ -203,10 +204,10 @@ ColoredToolButton::menu-button:hover[itemDialog=true] {
  * Выпадающий список
  */
 QComboBox[inTopPanel=true]  {
-	padding: 1px 18px 1px 8px;
-	min-width: 6em;
-	background: palette(button);
-	color: palette(button-text);
+    padding: 1px 18px 1px 8px;
+    min-width: 6em;
+    background: palette(button);
+    color: palette(button-text);
 }
 
 QComboBox:editable[inTopPanel=true] {
@@ -219,20 +220,20 @@ QComboBox:!editable:hover[inTopPanel=true] {
 
 QComboBox::drop-down[inTopPanel=true] {
     background: transparent;
-	subcontrol-origin: padding;
-	subcontrol-position: top right;
-	width: 15px;
-	border-width: 0px;
-	padding-right: 4px;
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    border-width: 0px;
+    padding-right: 4px;
 }
 
 QComboBox::down-arrow[inTopPanel=true] {
-	image: url(:/Interface/UI/comboboxarrow.png);
+    image: url(:/Interface/UI/comboboxarrow.png);
 }
 
 QComboBox:on[inTopPanel=true], QComboBox:off[inTopPanel=true] {
-	color: palette(button-text);
-	background: palette(button);
+    color: palette(button-text);
+    background: palette(button);
 }
 
 QComboBox:on:editable[inTopPanel=true], QComboBox:off:editable[inTopPanel=true] {
@@ -241,8 +242,8 @@ QComboBox:on:editable[inTopPanel=true], QComboBox:off:editable[inTopPanel=true] 
 }
 
 QComboBox:on:selected[inTopPanel=true], QComboBox:off:selected[inTopPanel=true] {
-	color: palette(highlighted-text);
-	background: palette(highlight);
+    color: palette(highlighted-text);
+    background: palette(highlight);
 }
 
 /*
@@ -272,200 +273,200 @@ QSpinBox::down-arrow[inTopPanel=true] {
  * Разделитель
  */
 QSplitter::handle {
-	background: palette(dark);
+    background: palette(dark);
 }
 
 /*
  * Переключатель
  */
 QRadioButton[inTopPanel=true] {
-	background: palette(button);
-	color: palette(button-text);
-	padding-top: 2px;
-	padding-bottom: 2px;
-	padding-right: 6px;
+    background: palette(button);
+    color: palette(button-text);
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 6px;
 }
 
 QRadioButton::indicator[inTopPanel=true] {
-	height: 0px;
-	width: 0px;
-	image: none;
+    height: 0px;
+    width: 0px;
+    image: none;
 }
 
 QRadioButton:unchecked[inTopPanel=true] {
-	border-bottom-width: 3px;
-	border-bottom-style: solid;
-	border-bottom-color: palette(button);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: palette(button);
 }
 
 QRadioButton:checked[inTopPanel=true] {
-	border-bottom-width: 3px;
-	border-bottom-style: solid;
-	border-bottom-color: palette(highlight);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: palette(highlight);
 }
 
 /*
  * Табы
  */
 QTabBar[inTopPanel=true] {
-	background-color: palette(button);
+    background-color: palette(button);
 }
 
 QTabBar::tab[inTopPanel=true] {
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-top-color: palette(dark);
-	background: palette(button);
-	color: palette(button-text);
-	padding-top: 4px;
-	padding-bottom: 1px;
-	padding-left: 7px;
-	padding-right: 7px;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: palette(dark);
+    background: palette(button);
+    color: palette(button-text);
+    padding-top: 4px;
+    padding-bottom: 1px;
+    padding-left: 7px;
+    padding-right: 7px;
 }
 
 QTabBar::tab:last[topPanelRightBordered=true] {
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: palette(dark);
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: palette(dark);
 }
 
 QTabBar::tab:selected[inTopPanel=true] {
-	border-bottom-width: 3px;
-	border-bottom-style: solid;
-	border-bottom-color: palette(highlight);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: palette(highlight);
 }
 
 QTabBar::tab:!selected[inTopPanel=true] {
-	border-bottom-width: 3px;
-	border-bottom-style: solid;
-	border-bottom-color: palette(button);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: palette(button);
 }
 
 QTabBar::tab:!selected:hover[inTopPanel=true] {
-	border-bottom-width: 3px;
-	border-bottom-style: solid;
-	border-bottom-color: palette(dark);
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: palette(dark);
 }
 
 QScrollBar {
-	border: none;
-	background: palette(window);
+    border: none;
+    background: palette(window);
 }
 
 QScrollBar:horizontal {
-	height: 11px;
-	margin: 1px 0px 1px 0px;
+    height: 11px;
+    margin: 1px 0px 1px 0px;
 }
 
 QScrollBar:vertical {
-	width: 11px;
-	margin: 0px 1px 0px 1px;
+    width: 11px;
+    margin: 0px 1px 0px 1px;
 }
 
 QScrollBar::handle {
-	background: palette(dark);
-	min-height: 0px;
-	min-width: 0px;
-	border-radius: 4px;
-	border: none;
+    background: palette(dark);
+    min-height: 0px;
+    min-width: 0px;
+    border-radius: 4px;
+    border: none;
 }
 
 QScrollBar::handle:vertical {
-	min-height: 30px;
+    min-height: 30px;
 }
 
 QScrollBar::add-line {
-	height: 0px;
+    height: 0px;
 }
 
 QScrollBar::sub-line {
-	height: 0px;
+    height: 0px;
 }
 
 QRadioButton[inStartUpView=true] {
-	spacing: 0px;
-	padding: 2px 8px 2px 8px;
-	background-color: palette(window);
-	border: 1px solid palette(dark);
+    spacing: 0px;
+    padding: 2px 8px 2px 8px;
+    background-color: palette(window);
+    border: 1px solid palette(dark);
 }
 
 QRadioButton[inStartUpView=true]:!checked:hover {
-	background-color: palette(dark);
+    background-color: palette(dark);
 }
 
 QRadioButton[inStartUpView=true]::checked {
-	color: palette(window);
-	background-color: palette(text);
-	border: 1px solid palette(text);
+    color: palette(window);
+    background-color: palette(text);
+    border: 1px solid palette(text);
 }
 
 QRadioButton[inStartUpView=true]:indicator {
-	width: 0px;
-	height: 0px;
-	image: none;
+    width: 0px;
+    height: 0px;
+    image: none;
 }
 
 QRadioButton[chevron=true] {
-	spacing: 0px;
-	padding: 4px 8px 4px 8px;
-	background-color: palette(base);
-	border: none;
+    spacing: 0px;
+    padding: 4px 8px 4px 8px;
+    background-color: palette(base);
+    border: none;
 }
 
 QRadioButton[chevron=true]::checked {
-	color: palette(highlighted-text);
-	background-color: palette(highlight);
+    color: palette(highlighted-text);
+    background-color: palette(highlight);
 }
 
 QRadioButton[chevron=true]:indicator {
-	width: 0px;
-	height: 0px;
-	image: none;
+    width: 0px;
+    height: 0px;
+    image: none;
 }
 
 QPushButton {
-	padding: 4px 8px 4px 8px;
-	min-width: 60px;
-	background-color: palette(button);
-	border: 1px solid palette(dark);
+    padding: 4px 8px 4px 8px;
+    min-width: 60px;
+    background-color: palette(button);
+    border: 1px solid palette(dark);
 }
 
 QPushButton:disabled {
-	background-color: palette(window);
+    background-color: palette(window);
 }
 
 QPushButton:checked {
-	color: palette(window);
-	background-color: palette(text);
-	border: 1px solid palette(text);
+    color: palette(window);
+    background-color: palette(text);
+    border: 1px solid palette(text);
 }
 
 QPushButton:!checked:hover, QPushButton:!checked:pressed {
-	background-color: palette(dark);
+    background-color: palette(dark);
 }
 
 ctkCollapsibleButton[reportButton=true] {
-	padding: 4px 8px 4px 8px;
-	background-color: palette(button);
-	border: none;
-	font-weight: bold;
+    padding: 4px 8px 4px 8px;
+    background-color: palette(button);
+    border: none;
+    font-weight: bold;
 }
 
 ctkCollapsibleButton[reportButton=true]:hover,
 ctkCollapsibleButton[reportButton=true]:pressed {
-	background-color: palette(dark);
+    background-color: palette(dark);
 }
 
 ctkBasePopupWidget {
-	background-color: palette(window);
-	border: 1px solid palette(dark);
+    background-color: palette(window);
+    border: 1px solid palette(dark);
 }
 
 QProgressBar {
-	border-radius: 0px;
-	border: none;
-	background-color: #b3c4da;
-	max-height: 5px;
+    border-radius: 0px;
+    border: none;
+    background-color: #b3c4da;
+    max-height: 5px;
 }
 
 QProgressBar::chunk {
@@ -494,45 +495,45 @@ QProgressBar::chunk {
  * Стили лайтбокса
  */
 [lightBoxDialogTitle=true] {
-	font-weight: 700;
-	background-color: palette(window);
-	padding: 7px 20px 7px 20px;
-	border: 1px solid palette(dark);
+    font-weight: 700;
+    background-color: palette(window);
+    padding: 7px 20px 7px 20px;
+    border: 1px solid palette(dark);
 }
 
 [lightBoxDialogCentralWidget=true] {
-	background-color: palette(window);
-	border: 1px solid palette(dark);
-	padding: 8px 20px 10px 20px;
+    background-color: palette(window);
+    border: 1px solid palette(dark);
+    padding: 8px 20px 10px 20px;
 }
 
 [lightBoxProgressTitle=true] {
-	font-size: 20pt;
-	font-weight: 500;
-	background-color: transparent;
-	color: white;
-	border: none;
-	margin: 20px 0px 0px 12px;
+    font-size: 20pt;
+    font-weight: 500;
+    background-color: transparent;
+    color: white;
+    border: none;
+    margin: 20px 0px 0px 12px;
 }
 
 [lightBoxProgressIndicator=true] {
-	background-color: transparent;
-	color: white;
-	border: none;
+    background-color: transparent;
+    color: white;
+    border: none;
 }
 
 [lightBoxProgressDescription=true] {
-	background-color: transparent;
-	color: white;
-	border: none;
-	margin: 0px 0px 0px 12px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    margin: 0px 0px 0px 12px;
 }
 
 /*
  * Всплывающая подсказка
  */
 QToolTip {
-	color: palette(window-text);
-	background-color: palette(window);
-	border: 1px solid palette(highlight);
+    color: palette(window-text);
+    background-color: palette(window);
+    border: 1px solid palette(highlight);
 }

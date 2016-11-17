@@ -113,6 +113,11 @@ void SettingsStorage::setValues(const QMap<QString, QString>& _values, const QSt
 		// Закроем группу
 		//
 		m_appSettings.endGroup();
+
+		//
+		// Сохраняем изменения в файл
+		//
+		m_appSettings.sync();
 	}
 	//
 	// В базу данных карта параметров не умеет сохраняться

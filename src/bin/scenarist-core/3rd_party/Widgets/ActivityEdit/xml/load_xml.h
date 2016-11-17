@@ -1,12 +1,13 @@
 #ifndef FILE_LOAD_XML_H
 #define FILE_LOAD_XML_H
 
-#include "../scene/customgraphicsscene.h"
+class CustomGraphicsScene;
+class QGraphicsScene;
+class QGraphicsView;
+class QString;
 
-#include <QString>
 
-
-void loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _view = NULL);
-void fileLoadXml(const QString& _filename, CustomGraphicsScene* _scene, QGraphicsView* _view = NULL);
+bool loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _view = NULL);
+bool fileLoadXml(const QString& _filename, CustomGraphicsScene* _scene, QGraphicsView* _view = NULL);
 
 #endif // FILE_LOAD_XML_H

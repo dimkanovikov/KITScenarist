@@ -3,10 +3,13 @@
 #include <Domain/Scenario.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
+#include <3rd_party/Widgets/ActivityEdit/shape/card.h>
 
 #include <UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h>
 #include <UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h>
@@ -258,6 +261,20 @@ void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString&
 	}
 }
 
+void ScenarioCardsManager::changeCardType(const QString& _uuid, int _cardType)
+{
+	if (!_uuid.isEmpty()) {
+		const QModelIndex index = m_model->indexForUuid(_uuid);
+		int mappedType = BusinessLogic::ScenarioModelItem::Scene;
+		if (_cardType == CardShape::TypeScenesGroup) {
+			mappedType = BusinessLogic::ScenarioModelItem::SceneGroup;
+		} else if (_cardType == CardShape::TypeFolder) {
+			mappedType = BusinessLogic::ScenarioModelItem::Folder;
+		}
+		emit cardTypeChanged(index, mappedType);
+	}
+}
+
 void ScenarioCardsManager::addNote()
 {
 	m_addItemDialog->showNotePage();
@@ -337,6 +354,13 @@ void ScenarioCardsManager::editFlowText(const QString& _text)
 
 void ScenarioCardsManager::initConnections()
 {
+	//
+	// Если не удалось загрузить сохранённую схему, построим её заново
+	//
+	connect(m_view, &ScenarioCardsView::schemeNotLoaded, [=] {
+		m_view->load(m_model->simpleScheme());
+	});
+
 	connect(m_view, &ScenarioCardsView::undoRequest, this, &ScenarioCardsManager::undoRequest);
 	connect(m_view, &ScenarioCardsView::redoRequest, this, &ScenarioCardsManager::redoRequest);
 
@@ -345,6 +369,7 @@ void ScenarioCardsManager::initConnections()
 	connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
 	connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
 	connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
+	connect(m_view, &ScenarioCardsView::itemTypeChanged, this, &ScenarioCardsManager::changeCardType);
 
 	connect(m_view, &ScenarioCardsView::addNoteClicked, this, &ScenarioCardsManager::addNote);
 	connect(m_view, &ScenarioCardsView::editNoteRequest, this, &ScenarioCardsManager::editNote);

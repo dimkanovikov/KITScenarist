@@ -32,17 +32,17 @@ void ScenarioSchemeItemDialog::clear()
 
 void ScenarioSchemeItemDialog::showCardPage()
 {
-	m_ui->content->setCurrentWidget(m_ui->cardPage);
+    m_ui->content->setCurrentWidget(m_ui->cardPage);
 }
 
 void ScenarioSchemeItemDialog::showNotePage()
 {
-	m_ui->content->setCurrentWidget(m_ui->notePage);
+    m_ui->content->setCurrentWidget(m_ui->notePage);
 }
 
 void ScenarioSchemeItemDialog::showFlowPage()
 {
-	m_ui->content->setCurrentWidget(m_ui->flowPage);
+    m_ui->content->setCurrentWidget(m_ui->flowPage);
 }
 
 BusinessLogic::ScenarioModelItem::Type ScenarioSchemeItemDialog::cardType() const
@@ -128,7 +128,20 @@ QString ScenarioSchemeItemDialog::flowText() const
 
 void ScenarioSchemeItemDialog::setFlowText(const QString& _text)
 {
-	m_ui->flowText->setPlainText(_text);
+    m_ui->flowText->setPlainText(_text);
+}
+
+QWidget* ScenarioSchemeItemDialog::focusedOnExec() const
+{
+    if (m_ui->content->currentWidget() == m_ui->cardPage) {
+        return m_ui->cardTitle;
+    } else if (m_ui->content->currentWidget() == m_ui->notePage) {
+        return m_ui->noteText;
+    } else if (m_ui->content->currentWidget() == m_ui->flowPage) {
+        return m_ui->flowText;
+    }
+
+    return QLightBoxDialog::focusedOnExec();
 }
 
 void ScenarioSchemeItemDialog::initView()

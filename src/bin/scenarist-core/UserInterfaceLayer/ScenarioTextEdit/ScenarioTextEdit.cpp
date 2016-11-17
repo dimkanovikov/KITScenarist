@@ -1125,9 +1125,27 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 
 			if (currentType == oldBlockStyle.embeddableFooter()) {
 				if (openedGroups == 0) {
+					//
+					// Запомним стиль предыдущего блока
+					//
+					cursor.movePosition(QTextCursor::PreviousBlock);
+					ScenarioBlockStyle::Type previousBlockType = ScenarioBlockStyle::forBlock(cursor.block());
+					cursor.movePosition(QTextCursor::NextBlock);
+					//
+					// Удаляем закрывающий блок
+					//
 					cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 					cursor.deleteChar();
 					cursor.deletePreviousChar();
+					//
+					// Восстановим стиль предыдущего блока
+					//
+					if (ScenarioBlockStyle::forBlock(cursor.block()) != previousBlockType) {
+						QTextCursor lastTextCursor = textCursor();
+						setTextCursor(cursor);
+						applyScenarioTypeToBlockText(previousBlockType);
+						setTextCursor(lastTextCursor);
+					}
 					isFooterUpdated = true;
 				} else {
 					--openedGroups;
@@ -1334,7 +1352,9 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
 		cursor.setPosition(lastCursorPosition);
 		setTextCursor(cursor);
 
-
+		//
+		// Эмулируем нажатие кнопки клавиатуры, чтобы обновился футер стиля
+		//
 		QKeyEvent empyEvent(QEvent::KeyPress, -1, Qt::NoModifier);
 		keyPressEvent(&empyEvent);
 	}

@@ -22,19 +22,19 @@ ScenarioModelItem::ScenarioModelItem(int _position) :
 
 ScenarioModelItem::~ScenarioModelItem()
 {
-    qDeleteAll(m_children);
+	qDeleteAll(m_children);
 }
 
 QString ScenarioModelItem::uuid() const
 {
-    return m_uuid;
+	return m_uuid;
 }
 
 void ScenarioModelItem::setUuid(const QString& _uuid)
 {
-    if (m_uuid != _uuid) {
-        m_uuid = _uuid;
-    }
+	if (m_uuid != _uuid) {
+		m_uuid = _uuid;
+	}
 }
 
 int ScenarioModelItem::position() const
@@ -58,26 +58,34 @@ int ScenarioModelItem::length() const
 {
 	int length = 0;
 	//
-	// Единица тут добавляется, за символ переноса строки после заголовка
+	// Единица тут добавляется, за символ переноса строки после предыдущего блока
+	// это может быть заголовок элемента, или описание сцены перед текстом
 	//
 	length += m_header.length();
 	if (!m_description.isNull()) {
 		length += 1 + m_description.length();
 	}
-	if (m_type == Folder || m_type == SceneGroup) {
-		length += 1 + m_footer.length();
-	} else if (!m_text.isNull()) {
-		length += 1 + m_textLength;
-	}
-
 	//
-	// Ещё один перенос после каждого вложенного элемента
+	// Ещё один перенос перед каждым вложенного элемента
 	//
 	if (hasChildren()) {
 		foreach (ScenarioModelItem* child, m_children) {
 			length += child->length() + 1;
 		}
 	}
+	//
+	// И перед текстом
+	//
+	if (!m_text.isNull()) {
+		length += 1 + m_textLength;
+	}
+	//
+	// + 1 перенос перед закрывающим элементом
+	//
+	if (m_type == Folder || m_type == SceneGroup) {
+		length += 1 + m_footer.length();
+	}
+
 
 	return length;
 }
@@ -103,7 +111,6 @@ void ScenarioModelItem::setHeader(const QString& _header)
 {
 	if (m_header != _header) {
 		m_header = _header;
-		updateParentText();
 	}
 }
 
@@ -116,7 +123,6 @@ void ScenarioModelItem::setFooter(const QString& _footer)
 {
 	if (m_footer != _footer) {
 		m_footer = _footer;
-		updateParentText();
 	}
 }
 
@@ -151,7 +157,8 @@ QString ScenarioModelItem::description() const
 
 void ScenarioModelItem::setDescription(const QString& _description)
 {
-	if (m_description != _description) {
+	if (m_description.isNull() != _description.isNull()
+		|| m_description != _description) {
 		m_description = _description;
 	}
 }
@@ -165,9 +172,9 @@ void ScenarioModelItem::setText(const QString& _text)
 {
 	m_textLength = _text.length();
 	const QString newText = _text.left(MAX_TEXT_LENGTH);
-	if (m_text != newText) {
+	if (m_text.isNull() != newText.isNull()
+		|| m_text != newText) {
 		m_text = newText;
-		updateParentText();
 	}
 }
 
@@ -267,31 +274,6 @@ void ScenarioModelItem::setCounter(const Counter& _counter)
 	}
 }
 
-void ScenarioModelItem::updateParentText()
-{
-	//
-	// Если есть дети - обновляем свой текст
-	//
-	if (hasChildren()) {
-		QString text;
-		foreach (ScenarioModelItem* child, m_children) {
-			text += child->header() + " " + child->text() + " ";
-			if (text.length() > MAX_TEXT_LENGTH) {
-				text = text.left(MAX_TEXT_LENGTH);
-				break;
-			}
-		}
-		setText(text);
-	}
-
-	//
-	// Обновляем родителя
-	//
-	if (hasParent()) {
-		parent()->updateParentText();
-	}
-}
-
 void ScenarioModelItem::updateParentDuration()
 {
 	//
@@ -345,7 +327,6 @@ void ScenarioModelItem::clear()
 	m_header.clear();
 	m_text.clear();
 	m_footer.clear();
-	updateParentText();
 
 	m_duration = 0;
 	updateParentDuration();

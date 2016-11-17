@@ -83,6 +83,11 @@ namespace ManagementLayer
 		void setItemColors(const QModelIndex& _indexes, const QString& _colors);
 
 		/**
+		 * @brief Запрос на изменения типа текущего элемента
+		 */
+		void changeItemTypeRequested(const QModelIndex& _index, int _type);
+
+		/**
 		 * @brief Показать/скрыть заметки к сцене
 		 */
 		void showHideDraft();
@@ -123,6 +128,11 @@ namespace ManagementLayer
 		 * @brief Установить цвета элемента
 		 */
 		void aboutSetItemColors(const QModelIndex& _index, const QString& _colors);
+
+		/**
+		 * @brief Сменить тип элемента
+		 */
+		void aboutChangeItemType(const QModelIndex& _index, int _type);
 
 		/**
 		 * @brief Выбрана сцена

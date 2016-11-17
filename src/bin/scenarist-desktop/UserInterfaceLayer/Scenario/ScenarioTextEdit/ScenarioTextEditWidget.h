@@ -113,6 +113,11 @@ namespace UserInterface
 		void setCursorPosition(int _position);
 
 		/**
+		 * @brief Установить тип текущего блока
+		 */
+		void setCurrentBlockType(int _type);
+
+		/**
 		 * @brief Добавить элемент в указанной позиции с заданным текстом и типом
 		 */
 		void addItem(int _position, int _type, const QString& _header, const QString& _title,

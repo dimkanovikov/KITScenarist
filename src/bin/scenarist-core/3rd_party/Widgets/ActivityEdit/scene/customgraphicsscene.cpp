@@ -1,10 +1,5 @@
 #include "customgraphicsscene.h"
-#include <math.h>
-#include <QGraphicsSceneMouseEvent>
-#include <QDebug>
-#include <QDialog>
-#include <QMessageBox>
-#include <QGraphicsRectItem>
+
 #include "../shape/card.h"
 #include "../flow/arrowflow.h"
 #include "../shape/horizontalline.h"
@@ -13,6 +8,15 @@
 #include "../xml/save_xml.h"
 #include "../xml/load_xml.h"
 #include "../flow/flowtext.h"
+
+#include <QDebug>
+#include <QDialog>
+#include <QGraphicsRectItem>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsView>
+#include <QMessageBox>
+
+#include <math.h>
 
 namespace {
 	/**

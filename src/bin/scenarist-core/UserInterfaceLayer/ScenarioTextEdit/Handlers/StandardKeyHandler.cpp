@@ -462,7 +462,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 		if (topBlock == bottomBlock) {
 			targetType = topStyle.type();
 		} else {
-			if (topStyle.isEmbeddable() && !bottomStyle.isEmbeddable()) {
+			if (topStyle.isEmbeddable() && !bottomStyle.isEmbeddable() && !bottomBlock.text().isEmpty()) {
 				targetType = bottomStyle.type();
 			} else if (!topBlock.text().isEmpty()) {
 				targetType = topStyle.type();
@@ -481,7 +481,11 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 		// Подсчитать количество группирующих элементов входящих в выделение
 		//
 		QList<int> groupsToDeleteCounts;
-		if (topBlock != bottomBlock) {
+		const bool needToDeleteGroups =
+				topBlock != bottomBlock
+				&& ((topStyle.isEmbeddable() && (!bottomBlock.text().isEmpty() || (bottomCursorPosition - topCursorPosition > 1)))
+					|| (bottomStyle.isEmbeddable() && (!topBlock.text().isEmpty() || (bottomCursorPosition - topCursorPosition > 1))));
+		if (needToDeleteGroups) {
 			groupsToDeleteCounts = findGroupCountsToDelete(topCursorPosition, bottomCursorPosition);
 		}
 
@@ -495,7 +499,7 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 		//
 		// Удалить вторые половинки группирующих элементов
 		//
-		if (topBlock != bottomBlock) {
+		if (needToDeleteGroups) {
 			removeGroupsPairs(cursor.position(), groupsToDeleteCounts);
 		}
 	}

@@ -4,6 +4,8 @@
 #include "ScenarioDocument.h"
 #include "ScenarioXml.h"
 
+#include <3rd_party/Helpers/TextEditHelper.h>
+
 #include <QMimeData>
 
 using namespace BusinessLogic;
@@ -224,6 +226,14 @@ QVariant ScenarioModel::data(const QModelIndex& _index, int _role) const
 
 		case Qt::DecorationRole: {
 			result = QVariant::fromValue(item->icon());
+			break;
+		}
+
+		//
+		// Тип элемента
+		//
+		case TypeIndex: {
+			result = item->type();
 			break;
 		}
 
@@ -617,8 +627,12 @@ namespace {
 
 		cardXml.append(QString("uuid=\"%1\" ").arg(_item->uuid()));
 		cardXml.append(QString("card_type=\"%1\" ").arg(_item->type()));
-		cardXml.append(QString("title=\"%1\" ").arg(_item->title().isEmpty() ? _item->header() : _item->title()));
-		cardXml.append(QString("description=\"%1\" ").arg(_item->description()));
+		cardXml.append(QString("title=\"%1\" ")
+					   .arg(_item->title().isEmpty()
+							? TextEditHelper::toHtmlEscaped(_item->header())
+							: TextEditHelper::toHtmlEscaped(_item->title())));
+		cardXml.append(QString("description=\"%1\" ")
+					   .arg(TextEditHelper::toHtmlEscaped(_item->description())));
 		cardXml.append(QString("colors=\"%1\" ").arg(_item->colors()));
 
 		cardXml.append("/>\n");
@@ -665,7 +679,7 @@ namespace {
 QString ScenarioModel::simpleScheme() const
 {
 	QString xml("<?xml version=\"1.0\"?>\n"
-                "<cards_xml scale=\"1\" scroll_x=\"0\" scroll_y=\"0\" >\n");
+				"<cards_xml scale=\"1\" scroll_x=\"0\" scroll_y=\"0\" >\n");
 
 	//
 	// Пробегаем по всем элементам

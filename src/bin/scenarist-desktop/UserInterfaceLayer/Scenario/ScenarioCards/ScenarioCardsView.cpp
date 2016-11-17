@@ -62,8 +62,11 @@ void ScenarioCardsView::setBackgroundColor(const QColor& _color)
 
 void ScenarioCardsView::load(const QString& _xml)
 {
-	m_cardsEdit->load(_xml);
-	m_cardsEdit->saveChanges(true);
+	if (m_cardsEdit->load(_xml)) {
+		m_cardsEdit->saveChanges(true);
+	} else {
+		emit schemeNotLoaded();
+	}
 }
 
 QString ScenarioCardsView::save() const
@@ -139,11 +142,6 @@ void ScenarioCardsView::resortCards()
 							  m_resizer->cardsInLine(), m_resizer->cardsInRow());
 }
 
-void ScenarioCardsView::showContextMenu(const QPoint& _pos)
-{
-
-}
-
 void ScenarioCardsView::initView()
 {
 	m_addCard->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
@@ -210,6 +208,7 @@ void ScenarioCardsView::initConnections()
 	connect(m_cardsEdit, &ActivityEdit::removeCardRequest, this, &ScenarioCardsView::removeCardRequest);
 	connect(m_cardsEdit, &ActivityEdit::cardMoved, this, &ScenarioCardsView::cardMoved);
 	connect(m_cardsEdit, &ActivityEdit::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
+	connect(m_cardsEdit, &ActivityEdit::itemTypeChanged, this, &ScenarioCardsView::itemTypeChanged);
 
 	connect(m_addNote, &FlatButton::clicked, this, &ScenarioCardsView::addNoteClicked);
 	connect(m_cardsEdit, &ActivityEdit::editNoteRequest, this, &ScenarioCardsView::editNoteRequest);

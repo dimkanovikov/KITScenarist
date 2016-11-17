@@ -27,8 +27,8 @@ namespace {
 
 	const QString ATTRIBUTE_VERSION = "version";
 	const QString ATTRIBUTE_DESCRIPTION = "description";
-    const QString ATTRIBUTE_UUID = "uuid";
-    const QString ATTRIBUTE_COLOR = "color";
+	const QString ATTRIBUTE_UUID = "uuid";
+	const QString ATTRIBUTE_COLOR = "color";
 	const QString ATTRIBUTE_TITLE = "title";
 	const QString ATTRIBUTE_REVIEW_FROM = "from";
 	const QString ATTRIBUTE_REVIEW_LENGTH = "length";
@@ -115,17 +115,17 @@ namespace {
 QString ScenarioXml::defaultCardsXml()
 {
 	return "<?xml version=\"1.0\"?>\n"
-           "<cards_xml scale=\"0\" scale_x=\"0\" scale_y=\"0\">\n"
-           "<ActionShape id=\"0\" x=\"60\" y=\"60\" width=\"210\" height=\"100\" uuid=\"{000000-0000000-000000}\" card_type=\"0\" title=\"\" description=\"\"/>\n"
+		   "<cards_xml scale=\"0\" scale_x=\"0\" scale_y=\"0\">\n"
+		   "<ActionShape id=\"0\" x=\"60\" y=\"60\" width=\"210\" height=\"100\" uuid=\"{000000-0000000-000000}\" card_type=\"0\" title=\"\" description=\"\"/>\n"
 		   "</cards_xml>";
 }
 
 QString ScenarioXml::defaultTextXml()
 {
-    return makeMimeFromXml(
-            "<scene_heading uuid=\"{000000-0000000-000000}\">\n"
-            "<v><![CDATA[]]></v>\n"
-            "</scene_heading>\n");
+	return makeMimeFromXml(
+			"<scene_heading uuid=\"{000000-0000000-000000}\">\n"
+			"<v><![CDATA[]]></v>\n"
+			"</scene_heading>\n");
 }
 
 QString ScenarioXml::makeMimeFromXml(const QString& _xml)
@@ -231,19 +231,19 @@ QString ScenarioXml::scenarioToXml()
 			//
 			if (needWrite) {
 				//
-                // Если возможно, сохраним uuid, цвета элемента и его заголовок
+				// Если возможно, сохраним uuid, цвета элемента и его заголовок
 				//
-                QString uuidColorsAndTitle;
+				QString uuidColorsAndTitle;
 				if (canHaveColors) {
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
-                        if (!info->uuid().isEmpty()) {
-                            uuidColorsAndTitle = QString(" %1=\"%2\"").arg(ATTRIBUTE_UUID, info->uuid());
-                        }
+						if (!info->uuid().isEmpty()) {
+							uuidColorsAndTitle = QString(" %1=\"%2\"").arg(ATTRIBUTE_UUID, info->uuid());
+						}
 						if (!info->colors().isEmpty()) {
-                            uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
+							uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
 						}
 						if (!info->title().isEmpty()) {
-                            uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, info->title());
+							uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, info->title());
 						}
 					}
 				}
@@ -251,7 +251,7 @@ QString ScenarioXml::scenarioToXml()
 				//
 				// Открыть ячейку текущего элемента
 				//
-                currentBlockXml.append(QString("<%1%2>\n").arg(currentNode, uuidColorsAndTitle));
+				currentBlockXml.append(QString("<%1%2>\n").arg(currentNode, uuidColorsAndTitle));
 
 				//
 				// Пишем текст текущего элемента
@@ -426,10 +426,10 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 			//
 			bool needWrite = true; // пишем абзац?
 			QString currentNode = ScenarioBlockStyle::typeName(currentType); // имя текущей ячейки
-            bool canHaveUuidColorsAndTitle = false; // может иметь цвета
+			bool canHaveUuidColorsAndTitle = false; // может иметь цвета
 			switch (currentType) {
 				case ScenarioBlockStyle::SceneHeading: {
-                    canHaveUuidColorsAndTitle = true;
+					canHaveUuidColorsAndTitle = true;
 					break;
 				}
 
@@ -439,7 +439,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				}
 
 				case ScenarioBlockStyle::SceneGroupHeader: {
-                    canHaveUuidColorsAndTitle = true;
+					canHaveUuidColorsAndTitle = true;
 
 					++openedGroups;
 
@@ -460,7 +460,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				}
 
 				case ScenarioBlockStyle::FolderHeader: {
-                    canHaveUuidColorsAndTitle = true;
+					canHaveUuidColorsAndTitle = true;
 
 					++openedFolders;
 
@@ -495,14 +495,14 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 				writer.writeStartElement(currentNode);
 
 				//
-                // Если возможно, сохраним uuid, цвета элемента и его название
+				// Если возможно, сохраним uuid, цвета элемента и его название
 				//
-                if (canHaveUuidColorsAndTitle) {
+				if (canHaveUuidColorsAndTitle) {
 					if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*>(currentBlock.userData())) {
-                        if (!info->uuid().isEmpty()) {
-                            writer.writeAttribute(ATTRIBUTE_UUID, info->uuid());
-                        }
-                        if (!info->colors().isEmpty()) {
+						if (!info->uuid().isEmpty()) {
+							writer.writeAttribute(ATTRIBUTE_UUID, info->uuid());
+						}
+						if (!info->colors().isEmpty()) {
 							writer.writeAttribute(ATTRIBUTE_COLOR, info->colors());
 						}
 						if (!info->title().isEmpty()) {
@@ -763,10 +763,10 @@ int ScenarioXml::removeLastMime()
 		//
 		// Расширим область чтобы не оставалось пустых строк
 		//
-		if (m_lastMimeFrom > 0) {
-			--m_lastMimeFrom;
-		} else if (m_lastMimeTo != (documentCharactersCount - 1)){
+		if (m_lastMimeTo != (documentCharactersCount - 1)){
 			++m_lastMimeTo;
+		} else if (m_lastMimeFrom > 0) {
+			--m_lastMimeFrom;
 		}
 
 		//
@@ -821,11 +821,11 @@ void ScenarioXml::xmlToScenarioV0(int _position, const QString& _xml)
 	ScenarioBlockStyle::Type lastTokenType = ScenarioBlockStyle::Undefined;
 
 	QXmlStreamReader reader(_xml);
-    while (!reader.atEnd()) {
-        //
-        // Даём возможность выполниться графическим операциям
-        //
-        QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+	while (!reader.atEnd()) {
+		//
+		// Даём возможность выполниться графическим операциям
+		//
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
 		switch (reader.readNext()) {
 			case QXmlStreamReader::StartElement: {
@@ -1024,9 +1024,9 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
 						|| tokenType == ScenarioBlockStyle::SceneGroupHeader
 						|| tokenType == ScenarioBlockStyle::FolderHeader) {
 						ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
-                        if (reader.attributes().hasAttribute(ATTRIBUTE_UUID)) {
-                            info->setUuid(reader.attributes().value(ATTRIBUTE_UUID).toString());
-                        }
+						if (reader.attributes().hasAttribute(ATTRIBUTE_UUID)) {
+							info->setUuid(reader.attributes().value(ATTRIBUTE_UUID).toString());
+						}
 						if (reader.attributes().hasAttribute(ATTRIBUTE_COLOR)) {
 							info->setColors(reader.attributes().value(ATTRIBUTE_COLOR).toString());
 						}

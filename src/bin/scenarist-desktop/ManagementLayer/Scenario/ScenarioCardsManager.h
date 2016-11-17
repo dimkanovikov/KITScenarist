@@ -110,6 +110,11 @@ namespace ManagementLayer
 		void cardColorsChanged(const QModelIndex& _index, const QString& _colors);
 
 		/**
+		 * @brief Запрос на изменение типа карточки
+		 */
+		void cardTypeChanged(const QModelIndex& _index, int _cardType);
+
+		/**
 		 * @brief Запрос на переход в полноэкранный режим, или выход из него
 		 */
 		void fullscreenRequest();
@@ -139,6 +144,11 @@ namespace ManagementLayer
 		 * @brief Изменить цвета карточки
 		 */
 		void changeCardColors(const QString& _uuid, const QString& _colors);
+
+		/**
+		 * @brief Изменить тип карточки
+		 */
+		void changeCardType(const QString& _uuid, int _cardType);
 
 		/**
 		 * @brief Добавить заметку

@@ -70,8 +70,8 @@ void HorizontalLineShape::paint(QPainter* _painter, const QStyleOptionGraphicsIt
 		setPenAndBrushForSelection(_painter);
 		_painter->setBrush(_painter->pen().color());
 	} else {
-		_painter->setPen(QApplication::palette().dark().color());
-		_painter->setBrush(QApplication::palette().dark());
+        _painter->setPen(QApplication::palette().text().color());
+        _painter->setBrush(QApplication::palette().text());
 	}
 	_painter->drawRect(boundingRect());
 	_painter->restore();

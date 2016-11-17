@@ -35,10 +35,6 @@ void FlatButton::setIcons(const QIcon& _icon, const QIcon& _checkedIcon, const Q
 		m_checkedIconHighlight = true;
 		m_checkedIcon = _icon;
 		QColor highlightColor = palette().highlight().color();
-#ifdef Q_OS_MAC
-		highlightColor.setHsl(highlightColor.hslHue(), highlightColor.hslSaturation(),
-			highlightColor.lightness() - 50);
-#endif
 		ImageHelper::setIconColor(m_checkedIcon, ICON_SIZE, highlightColor);
 	}
 

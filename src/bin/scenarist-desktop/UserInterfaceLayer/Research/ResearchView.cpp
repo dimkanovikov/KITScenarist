@@ -8,6 +8,7 @@
 
 #include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
+#include <3rd_party/Widgets/WAF/Animation.h>
 
 #include "ResearchNavigatorItemDelegate.h"
 #include "ResearchNavigatorProxyStyle.h"
@@ -17,6 +18,7 @@
 #include <QShortcut>
 #include <QStandardPaths>
 #include <QStringListModel>
+#include <QTimer>
 
 using UserInterface::ResearchView;
 using UserInterface::ResearchNavigatorItemDelegate;
@@ -487,8 +489,11 @@ void ResearchView::initConnections()
 			m_ui->search->setChecked(true);
 		}
 
-		const bool visible = m_ui->search->isChecked();
-		m_ui->searchWidget->setVisible(visible);
+        const bool visible = m_ui->search->isChecked();
+        if (m_ui->searchWidget->isVisible() != visible) {
+            WAF::Animation::slide(m_ui->searchWidget, WAF::FromBottomToTop, true, visible);
+            QTimer::singleShot(300, [=] { m_ui->searchWidget->setVisible(visible); });
+        }
 		if (visible) {
 			m_ui->searchWidget->selectText();
 			m_ui->searchWidget->setFocus();

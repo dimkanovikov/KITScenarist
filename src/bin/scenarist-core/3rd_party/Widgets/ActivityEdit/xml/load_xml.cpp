@@ -1,3 +1,4 @@
+#include "../scene/customgraphicsscene.h"
 #include "../flow/arrowflow.h"
 #include "../flow/flowtext.h"
 #include "../shape/card.h"
@@ -6,12 +7,12 @@
 #include "../shape/note.h"
 
 #include "load_xml.h"
-#include "save_xml.h" // FileErrorException is here
 
 #include <QDebug>
 #include <QDomDocument>
 #include <QDomNode>
 #include <QFile>
+#include <QGraphicsView>
 #include <QHash>
 #include <QScrollBar>
 
@@ -121,28 +122,24 @@ Shape* loadVerticalLineShape(QDomNode& _node, QHash<int, Shape*>& _ids)
 	return line;
 }
 
-void fileLoadXml(const QString& _filename, CustomGraphicsScene* _scene, QGraphicsView* _view)
+bool fileLoadXml(const QString& _filename, CustomGraphicsScene* _scene, QGraphicsView* _view)
 {
+	bool xmlLoaded = false;
 	QFile file(_filename);
-	if (!file.open(QIODevice::ReadOnly)) {
-		throw FileErrorException(_filename);
+	if (file.open(QIODevice::ReadOnly)) {
+		QByteArray data = file.readAll();
+		file.close();
+		xmlLoaded = loadSceneXml(QString(data), _scene, _view);
 	}
-	QByteArray data = file.readAll();
 
-	try {
-		loadSceneXml(QString(data), _scene, _view);
-	}
-	catch (...) {
-		throw FileErrorException("");
-	}
-	file.close();
+	return xmlLoaded;
 }
 
-void loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _view)
+bool loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _view)
 {
 	QDomDocument doc;
 	if (!doc.setContent(_xml)) {
-		throw FileErrorException("");
+		return false;
 	}
 
 	if (CustomGraphicsScene* scene = dynamic_cast<CustomGraphicsScene*>(_scene)) {
@@ -152,7 +149,7 @@ void loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _v
 		loadfuncs["ActionShape"] = loadCardShape;
 		loadfuncs["HorizontalLineShape"] = loadHorizontalLineShape;
 		loadfuncs["VerticalLineShape"] = loadVerticalLineShape;
-        loadfuncs["NoteShape"] = loadNoteShape;
+		loadfuncs["NoteShape"] = loadNoteShape;
 
 		const QDomNodeList& items = doc.documentElement().childNodes();
 		QList<QString> shapes = (QList<QString>()
@@ -184,23 +181,24 @@ void loadSceneXml(const QString& _xml, QGraphicsScene* _scene, QGraphicsView* _v
 			}
 		}
 
-        if (_view
-            && doc.documentElement().hasAttribute("scale")
-            && doc.documentElement().hasAttribute("scroll_x")
-            && doc.documentElement().hasAttribute("scroll_y")) {
-            //
-            // Восстанавливаем масштаб
-            //
-            _view->resetTransform();
-            const qreal scaleFactor = doc.documentElement().attribute("scale").toDouble();
-            _view->scale(scaleFactor, scaleFactor);
-            //
-            // ... и позиционирование
-            //
-            const int scrollX = doc.documentElement().attribute("scroll_x").toInt();
-            _view->horizontalScrollBar()->setValue(scrollX);
-            const int scrollY = doc.documentElement().attribute("scroll_y").toInt();
-            _view->verticalScrollBar()->setValue(scrollY);
-        }
+		if (_view
+			&& doc.documentElement().hasAttribute("scale")
+			&& doc.documentElement().hasAttribute("scroll_x")
+			&& doc.documentElement().hasAttribute("scroll_y")) {
+			//
+			// Восстанавливаем масштаб
+			//
+			_view->resetTransform();
+			const qreal scaleFactor = doc.documentElement().attribute("scale").toDouble();
+			_view->scale(scaleFactor, scaleFactor);
+			//
+			// ... и позиционирование
+			//
+			const int scrollX = doc.documentElement().attribute("scroll_x").toInt();
+			_view->horizontalScrollBar()->setValue(scrollX);
+			const int scrollY = doc.documentElement().attribute("scroll_y").toInt();
+			_view->verticalScrollBar()->setValue(scrollY);
+		}
 	}
+	return true;
 }

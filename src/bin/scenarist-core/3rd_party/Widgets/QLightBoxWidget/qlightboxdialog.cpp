@@ -35,7 +35,7 @@ namespace {
 QLightBoxDialog::QLightBoxDialog(QWidget *parent, bool _followToHeadWidget, bool _isContentStretchable) :
 	QLightBoxWidget(parent, _followToHeadWidget),
 	m_title(new QLabel(this)),
-	m_centralWidget(0),
+	m_centralWidget(nullptr),
 	m_progress(new QProgressBar(this)),
 	m_isContentStretchable(_isContentStretchable),
 	m_execResult(Rejected)
@@ -91,6 +91,14 @@ void QLightBoxDialog::done(int _result)
 	emit finished(_result);
 }
 
+bool QLightBoxDialog::isProressVisible() const
+{
+	//
+	// Определяем скрыт ли прогрессбар по его стилю, т.к. для сокрытия используетс маскировка
+	//
+	return m_progress->styleSheet().isEmpty();
+}
+
 void QLightBoxDialog::showProgress(int _minimumValue, int _maximumValue)
 {
 	//
@@ -120,7 +128,8 @@ bool QLightBoxDialog::event(QEvent* _event)
 {
 	bool result = true;
 	bool needHandle = true;
-	if (_event->type() == QEvent::KeyPress) {
+	if (_event->type() == QEvent::KeyPress
+		&& !isProressVisible()) {
 		QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(_event);
 		if (keyEvent->key() == Qt::Key_Enter
 			|| keyEvent->key() == Qt::Key_Return) {

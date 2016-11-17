@@ -149,6 +149,11 @@ void ScenarioNavigatorManager::aboutSetItemColors(const QModelIndex& _index, con
 	emit setItemColors(m_scenarioModelProxy->mapToSource(_index), _colors);
 }
 
+void ScenarioNavigatorManager::aboutChangeItemType(const QModelIndex& _index, int _type)
+{
+	emit changeItemTypeRequested(m_scenarioModelProxy->mapToSource(_index), _type);
+}
+
 void ScenarioNavigatorManager::aboutSceneChoosed(const QModelIndex& _index)
 {
 	emit sceneChoosed(m_scenarioModelProxy->mapToSource(_index));
@@ -176,6 +181,7 @@ void ScenarioNavigatorManager::initConnections()
 	connect(m_navigator, SIGNAL(addItem(QModelIndex)), this, SLOT(aboutAddItem(QModelIndex)));
 	connect(m_navigator, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
 	connect(m_navigator, SIGNAL(setItemColors(QModelIndex,QString)), this, SLOT(aboutSetItemColors(QModelIndex,QString)));
+	connect(m_navigator, &ScenarioNavigator::changeItemTypeRequested, this, &ScenarioNavigatorManager::aboutChangeItemType);
 	connect(m_navigator, SIGNAL(showHideDraft()), this, SIGNAL(showHideDraft()));
 	connect(m_navigator, SIGNAL(showHideNote()), this, SIGNAL(showHideNote()));
 	connect(m_navigator, SIGNAL(sceneChoosed(QModelIndex)), this, SLOT(aboutSceneChoosed(QModelIndex)));

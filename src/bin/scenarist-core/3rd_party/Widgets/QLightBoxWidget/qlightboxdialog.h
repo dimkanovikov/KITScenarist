@@ -48,6 +48,11 @@ public slots:
 	void done(int _result);
 
 	/**
+	 * @brief Виден ли прогрессбар в данный момент
+	 */
+	bool isProressVisible() const;
+
+	/**
 	 * @brief Показать прогрессбар с установленными параметрами
 	 */
 	void showProgress(int _minimumValue = 0, int _maximumValue = 0);

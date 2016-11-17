@@ -4,6 +4,7 @@
 #include "ScenarioNavigatorProxyStyle.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioModel.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 
 #include <3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
@@ -190,9 +191,38 @@ void ScenarioNavigator::aboutRemoveItem()
 void ScenarioNavigator::aboutContextMenuRequested(const QPoint& _pos)
 {
 	QMenu* menu = new QMenu(this);
+
+	//
+	// Преобразование элемента
+	//
+	QMenu* convertMenu = menu->addMenu(tr("Convert to"));
+	QAction* convertToScene = convertMenu->addAction(tr("Scene"));
+	convertToScene->setData(BusinessLogic::ScenarioModelItem::Scene);
+	QAction* convertToScenesGroup = convertMenu->addAction(tr("Scenes Group"));
+	convertToScenesGroup->setData(BusinessLogic::ScenarioModelItem::SceneGroup);
+	QAction* convertToFolder = convertMenu->addAction(tr("Folder"));
+	convertToFolder->setData(BusinessLogic::ScenarioModelItem::Folder);
+	switch (m_navigationTree->currentIndex().data(BusinessLogic::ScenarioModel::TypeIndex).toInt()) {
+		case BusinessLogic::ScenarioModelItem::Scene: {
+			convertToScene->setEnabled(false);
+			break;
+		}
+
+		case BusinessLogic::ScenarioModelItem::SceneGroup: {
+			convertToScenesGroup->setEnabled(false);
+			break;
+		}
+
+		case BusinessLogic::ScenarioModelItem::Folder: {
+			convertToFolder->setEnabled(false);
+			break;
+		}
+	}
+
 	//
 	// Цвета
 	//
+	menu->addSeparator();
 	QString colorsNames =
 			m_navigationTree->currentIndex().data(BusinessLogic::ScenarioModel::ColorIndex).toString();
 	int colorIndex = 1;
@@ -270,6 +300,11 @@ void ScenarioNavigator::aboutContextMenuRequested(const QPoint& _pos)
 			aboutAddItem();
 		} else if (toggled == remove) {
 			aboutRemoveItem();
+		} else if (toggled == convertToScene
+				   || toggled == convertToScenesGroup
+				   || toggled == convertToFolder) {
+			const QModelIndex currentItemIndex = m_navigationTree->currentIndex();
+			emit changeItemTypeRequested(currentItemIndex, toggled->data().toInt());
 		}
 	} else {
 		//

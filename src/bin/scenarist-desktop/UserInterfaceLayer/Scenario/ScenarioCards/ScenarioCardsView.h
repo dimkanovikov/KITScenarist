@@ -115,6 +115,11 @@ namespace UserInterface {
 
 	signals:
 		/**
+		 * @brief Не удалось загрузить схему
+		 */
+		void schemeNotLoaded();
+
+		/**
 		 * @brief Запрос на отмену последнего действия
 		 */
 		void undoRequest();
@@ -154,6 +159,11 @@ namespace UserInterface {
 		void cardColorsChanged(const QString& _uuid, const QString& _colors);
 
 		/**
+		 * @brief Запрос на изменение типа карточки
+		 */
+		void itemTypeChanged(const QString& _uuid, int _cardType);
+
+		/**
 		 * @brief Нажата кнопка добавления карточки
 		 */
 		void addNoteClicked();
@@ -178,11 +188,6 @@ namespace UserInterface {
 		 * @brief Упорядочить карточки по сетке
 		 */
 		void resortCards();
-
-		/**
-		 * @brief Показать контекстное меню в заданной точке для карточки
-		 */
-		void showContextMenu(const QPoint& _pos);
 
 	private:
 		/**
