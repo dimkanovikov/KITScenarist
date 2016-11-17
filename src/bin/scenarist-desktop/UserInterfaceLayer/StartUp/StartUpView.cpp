@@ -2,11 +2,23 @@
 #include "ui_StartUpView.h"
 
 #include <3rd_party/Helpers/ImageHelper.h>
+#include <3rd_party/Widgets/WAF/Animation.h>
 
 #include <QStandardItemModel>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QTimer>
+
+#include "ChangePasswordDialog.h"
+#include "RenewSubscriptionDialog.h"
 
 using UserInterface::StartUpView;
+using UserInterface::ChangePasswordDialog;
+using UserInterface::RenewSubscriptionDialog;
 using UserInterface::ProjectsList;
+
+using WAF::Animation;
+using WAF::AnimationDirection;
 
 namespace {
 	const bool PROJECTS_IS_REMOTE = true;
@@ -55,17 +67,39 @@ void StartUpView::setUpdateInfo(const QString& _updateInfo)
 	ui->updateInfo->show();
 }
 
-void StartUpView::setUserLogged(bool isLogged, const QString& _userName)
+void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const QString& _userEmail)
 {
 	ui->loginIcon->setVisible(!isLogged);
 	ui->login->setVisible(!isLogged);
-	ui->logoutIcon->setVisible(isLogged);
-	ui->logout->setVisible(isLogged);
-	ui->logout->setText(QString("%1 <a href=\"#\" style=\"color:#2b78da;\">%2</a>").arg(_userName).arg(tr("Logout")));
 	ui->remoteProjects->setVisible(isLogged);
+
+	if (isLogged) {
+		ui->userName->setAcceptedText(_userName);
+		ui->userEmail->setText(QString("<a href=\"#\" style=\"color:#2b78da;\">%1</a>").arg(_userEmail));
+		ui->userEmail->show();
+		ui->userEmailIcon->show();
+	} else {
+		Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, false, false);
+		QTimer::singleShot(300, [this] {
+			ui->cabinetFrame->hide();
+			ui->userEmail->hide();
+			ui->userEmailIcon->hide();
+		});
+	}
 
 	if (!isLogged && ui->remoteProjects->isChecked()) {
 		ui->localProjects->setChecked(true);
+	}
+}
+
+void StartUpView::setSubscriptionInfo(bool _isActive, const QString &_expDate)
+{
+	if (_isActive) {
+		ui->subscriptionActivity->setText(tr("The subscription is active until"));
+		ui->subscriptionEndDate->setText(_expDate);
+	} else {
+		ui->subscriptionActivity->setText(tr("The subscription is inactive"));
+		ui->subscriptionEndDate->clear();
 	}
 }
 
@@ -107,6 +141,18 @@ void StartUpView::aboutFilesSourceChanged()
 	}
 }
 
+void StartUpView::cabinetChangeVisibility()
+{
+	bool isVisible = ui->cabinetFrame->isVisible();
+	if (!isVisible) {
+		ui->cabinetFrame->show();
+	}
+	Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, false, !isVisible);
+	if (isVisible) {
+		QTimer::singleShot(300, ui->cabinetFrame, &QWidget::hide);
+	}
+}
+
 void StartUpView::initView()
 {
 	QFont versionFont = ui->version->font();
@@ -122,10 +168,13 @@ void StartUpView::initView()
 
 	ui->updateInfo->hide();
 
-	ui->logoutIcon->hide();
-	ui->logout->hide();
+	//ui->logoutIcon->hide();
+	//ui->logout->hide();
 
 	ui->remoteProjects->hide();
+	ui->cabinetFrame->hide();
+	ui->userEmail->hide();
+	ui->userEmailIcon->hide();
 
 	ui->filesSouces->setCurrentWidget(ui->recentFilesPage);
 
@@ -135,10 +184,16 @@ void StartUpView::initView()
 void StartUpView::initConnections()
 {
 	connect(ui->login, SIGNAL(linkActivated(QString)), this, SIGNAL(loginClicked()));
-	connect(ui->logout, SIGNAL(linkActivated(QString)), this, SIGNAL(logoutClicked()));
+	connect(ui->userEmail, &QLabel::linkActivated, this, &StartUpView::cabinetChangeVisibility);
+	connect(ui->logout, &QPushButton::clicked, this, &StartUpView::logoutClicked);
 	connect(ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
 	connect(ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));
 	connect(ui->help, SIGNAL(clicked(bool)), this, SIGNAL(helpClicked()));
+
+	connect(ui->userName, &AcceptebleLineEdit::textAccepted, this, &StartUpView::userNameChanged);
+	connect(ui->changePassword, &QPushButton::clicked, this, &StartUpView::passwordChangeClicked);
+	connect(ui->getSubscriptionInfo, &QToolButton::clicked, this, &StartUpView::getSubscriptionInfoClicked);
+	connect(ui->renewSubscription, &QPushButton::clicked, this, &StartUpView::renewSubscriptionClicked);
 
 	connect(ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
 	connect(ui->recentFiles, &ProjectsList::clicked, this, &StartUpView::openRecentProjectClicked);
@@ -153,9 +208,15 @@ void StartUpView::initStyleSheet()
 	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
 
 	ui->mainContainer->setProperty("mainContainer", true);
-	ui->projectsFrame->setProperty("mainContainer", true);
-	ui->projectsFrame->setProperty("baseForeground", true);
+	//ui->projectsFrame->setProperty("mainContainer", true);
+	//ui->projectsFrame->setProperty("baseForeground", true);
 
+	ui->userName->setProperty("editableLabel", true);
+
+	ui->getSubscriptionInfo->setProperty("leftAlignedText", true);
+	ui->renewSubscription->setProperty("leftAlignedText", true);
+	ui->changePassword->setProperty("leftAlignedText", true);
+	ui->logout->setProperty("leftAlignedText", true);
 	ui->createProject->setProperty("leftAlignedText", true);
 	ui->openProject->setProperty("leftAlignedText", true);
 	ui->help->setProperty("leftAlignedText", true);
@@ -174,7 +235,7 @@ void StartUpView::initIconsColor()
 	QIcon account(*ui->loginIcon->pixmap());
 	ImageHelper::setIconColor(account, iconSize, palette().text().color());
 	ui->loginIcon->setPixmap(account.pixmap(iconSize));
-	ui->logoutIcon->setPixmap(account.pixmap(iconSize));
+	//ui->logoutIcon->setPixmap(account.pixmap(iconSize));
 
 	QIcon createProject = ui->createProject->icon();
 	ImageHelper::setIconColor(createProject, iconSize, palette().text().color());

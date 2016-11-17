@@ -1,3 +1,20 @@
+/*
+* Copyright (C) 2014 Dimka Novikov, to@dimkanovikov.pro
+* Copyright (C) 2016 Alexey Polushkin, armijo38@yandex.ru
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public
+* License as published by the Free Software Foundation; either
+* version 3 of the License, or any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* General Public License for more details.
+*
+* Full license: http://dimkanovikov.pro/license/GPLv3
+*/
+
 #ifndef STARTUPMANAGER_H
 #define STARTUPMANAGER_H
 
@@ -7,14 +24,16 @@
 
 namespace UserInterface {
 	class StartUpView;
+    class LoginDialog;
+    class ChangePasswordDialog;
 }
 
 class QAbstractItemModel;
 class QNetworkReply;
 
-
 namespace ManagementLayer
 {
+
 	/**
 	 * @brief Управляющий стартовой страницей
 	 */
@@ -31,17 +50,48 @@ namespace ManagementLayer
 		/**
 		 * @brief Пользователь с заданным именем успешно авторизован на сервере
 		 */
-		void aboutUserLogged();
+        void completeLogin(const QString& _userName, const QString& _userEmail);
 
-		/**
-		 * @brief Попробовать повторно авторизоваться, после неудачной попытки
-		 */
-		void aboutRetryLogin(const QString& _error);
+        /**
+         * @brief Пользователь успешно отправил данные для регистрации
+         */
+        void verifyUser();
+
+        /**
+         * @brief Пользователь успешно ввел проверочный код
+         *        и окончательно зарегистрировался
+         */
+        void userAfterSignUp();
+
+        /**
+         * @brief Пользователю отправлен пароль на email
+         */
+        void userPassRestored();
 
 		/**
 		 * @brief Пользователь закрыл авторизацию
 		 */
-		void aboutUserUnlogged();
+        void completeLogout();
+
+        /**
+         * @brief Пароль успешно сменен
+         */
+        void passwordChanged();
+
+        /**
+         * @brief passwordNotChanged
+         */
+        void showPasswordError(const QString& _error);
+
+        /**
+         * @brief Получена информация о подписке
+         */
+        void subscriptionInfoGot(bool _isActive, const QString& _expDate);
+
+        /**
+         * @brief Показать диалог продления подписки
+         */
+        void renewSubscriptionShow();
 
 		/**
 		 * @brief Установить список недавно используемых проектов
@@ -53,11 +103,62 @@ namespace ManagementLayer
 		 */
 		void setRemoteProjects(QAbstractItemModel* _model);
 
+        /**
+         * @brief Попробовать повторно авторизоваться, после неудачной попытки
+         */
+        void retryLogin(const QString& _error);
+
+        /**
+         * @brief Попробовать повторно зарегистрироваться
+         */
+        void retrySignUp(const QString& _error);
+
+        /**
+         * @brief Попробовать повторно ввести проверочный код
+         */
+        void retryVerify(const QString& _error);
+
 	signals:
 		/**
 		 * @brief Пользователь хочет авторизоваться
 		 */
-		void loginRequested(const QString& _userName, const QString& _password);
+        void loginRequested(const QString& _email, const QString& _password);
+
+        /**
+         * @brief Пользователь хочет зарегистрироваться
+         */
+        void signUpRequested(const QString& _email, const QString& _password);
+
+        /**
+         * @brief Пользователь хочет отправить проверочный код
+         */
+        void verifyRequested(const QString& _code);
+
+        /**
+         * @brief Пользователь хочет восстановить пароль
+         */
+        void restoreRequested(const QString& _email);
+
+        /**
+         * @brief Пользователь хочет сменить имя
+         */
+        void userNameChangeRequested(const QString& _userName);
+
+        /**
+         * @brief Пользователь хочет запросить информацию о подписке
+         */
+        void getSubscriptionInfoRequested();
+
+        /**
+         * @brief Пользователь хочет продлить подписку
+         */
+        void renewSubscriptionRequested(unsigned _duration, unsigned _type);
+
+        /**
+         * @brief Пользователь хочет сменить пароль
+         */
+        void passwordChangeRequested(const QString& _password,
+                                     const QString& _newPassword);
 
 		/**
 		 * @brief Пользователь хочет выйти
@@ -94,22 +195,23 @@ namespace ManagementLayer
 		 */
 		void openRemoteProjectRequested(const QModelIndex& _remoteProjectIndex);
 
-	private slots:
-		/**
-		 * @brief Нажата кнопка войти
-		 */
-		void aboutLoginClicked();
+    private slots:
 
 		/**
 		 * @brief Загрузилась страница с информацией об обновлениях
 		 */
-		void aboutLoadUpdatesInfo(QNetworkReply* _reply);
+        void aboutLoadUpdatesInfo(QNetworkReply* _reply);
 
 	private:
 		/**
 		 * @brief Настроить данные
 		 */
 		void initData();
+
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
 		/**
 		 * @brief Настроить соединения
@@ -136,6 +238,18 @@ namespace ManagementLayer
 		 * @brief Пароль введённый при авторизации
 		 */
 		QString m_password;
+
+        /**
+         * @brief Окно авторизации/регистрации
+         */
+        UserInterface::LoginDialog* m_loginDialog;
+
+        /**
+         * @brief Окно смены пароля
+         */
+        UserInterface::ChangePasswordDialog* m_changePasswordDialog;
+
+
 	};
 }
 

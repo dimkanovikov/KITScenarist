@@ -1,12 +1,32 @@
+/*
+* Copyright (C) 2014 Dimka Novikov, to@dimkanovikov.pro
+* Copyright (C) 2016 Alexey Polushkin, armijo38@yandex.ru
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public
+* License as published by the Free Software Foundation; either
+* version 3 of the License, or any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* General Public License for more details.
+*
+* Full license: http://dimkanovikov.pro/license/GPLv3
+*/
+
 #ifndef LOGINDIALOG_H
 #define LOGINDIALOG_H
 
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
+class QLineEdit;
+class QDialogButtonBox;
+class QPushButton;
+
 namespace Ui {
 	class LoginDialog;
 }
-
 
 namespace UserInterface
 {
@@ -21,46 +41,166 @@ namespace UserInterface
 		explicit LoginDialog(QWidget* _parent = 0);
 		~LoginDialog();
 
-		/**
-		 * @brief Имя пользователя
-		 */
-		/** @{ */
-		QString userName() const;
-		void setUserName(const QString& _userName);
-		/** @} */
+        /**
+         * @brief Email с виджета авторизации
+         */
+        QString loginEmail() const;
 
-		/**
-		 * @brief Пароль пользователя
-		 */
-		/** @{ */
-		QString password() const;
-		void setPassword(const QString& _password);
-		/** @} */
+        /**
+         * @brief Email с виджета регистрации
+         */
+        QString signUpEmail() const;
+
+        /**
+         * @brief Пароль с виджета авторизации
+         */
+        QString loginPassword() const;
+
+        /**
+         * @brief Пароль с виджета регистрации
+         */
+        QString signUpPassword() const;
+
+        /**
+         * @brief Проверочный код
+         */
+        QString verificationCode() const;
 
 		/**
 		 * @brief Установить сообщение об ошибке
 		 */
-		void setError(const QString& _error);
+        void setLoginError(const QString& _error);
+        void setSignUpError(const QString& _error);
+        void setVerificationError(const QString& _error);
+
+        /**
+         * @brief Установить текст для виджета проверочного кода
+         */
+        void showVerificationSuccess();
+
+        /**
+         * @brief Установить текст для виджета восстановления пароля
+         */
+        void showRestoreSuccess();
+
+        /**
+         * @brief Показать окно, предварительно очистив
+         *        и установив на авторизацию
+         */
+        void showPrepared();
+
+        /**
+         * @brief Разблокировать окно для пользователя
+         */
+        void unblock();
+
+    signals:
+        /**
+         * @brief Пользователь хочет зарегистрироваться
+         */
+        void signUpRequested();
+
+        /**
+         * @brief Пользователь хочет авторизоваться
+         */
+        void loginRequested();
+
+        /**
+         * @brief Пользователь хочет отправить проверочный код
+         */
+        void verifyRequested();
+
+        /**
+         * @brief Пользователь хочет восстановить пароль
+         */
+        void restoreRequested();
 
 	protected:
 		/**
 		 * @brief При запуске фокусируемся на поле ввода имени пользователя
 		 */
-		QWidget* focusedOnExec() const;
+        QWidget* focusedOnExec() const override;
+
+        /**
+         * @brief Табы в заголовке окна
+         */
+        QWidget* titleWidget() const override;
+
+    private slots:
+        /**
+         * @brief Проверка, что проверочный код удовлетворяет шаблону проверочных кодов
+         */
+        void checkVerificationCode();
+
+        /**
+         * @brief Слот для кнопки accept окна авторизации
+         */
+        void tryLogin();
+
+        /**
+         * @brief Слот для кнопки accept окна регистрации
+         */
+        void trySignUp();
+
+        /**
+         * @brief Убрать окно ввода проверочного кода и показывать вместо него окно регистрации
+         */
+        void cancelVerify();
+
+        /**
+         * @brief Смена активного виджета
+         */
+        void switchWidget();
+
+        /**
+         * @brief Блокирует окно на время передачи данных
+         */
+        void block();
+
+        /**
+         * @brief Пользователь нажал Enter
+         *        В зависимости от окна, сделать нужный сигнал
+         */
+        void emitAccept();
 
 	private:
 		/**
 		 * @brief Настроить представление
 		 */
-		void initView();
+        void initView() override;
 
 		/**
 		 * @brief Настроить соединения для формы
 		 */
-		void initConnections();
+        void initConnections() override;
 
+        /**
+         * @brief Очистить окно
+         */
+        void clear();
+
+        /**
+         * @brief Установить текст для метки
+         */
+        void updateLabel(QLabel* _label, QLabel* _icon,
+                           const QString& _message, bool _isError);
+
+        /**
+         * @brief Проверят, является ли строка email
+         */
+        bool isEmailValid(const QString& _email);
 	private:
-		Ui::LoginDialog *ui;
+        Ui::LoginDialog *m_ui;
+
+        /**
+         * @brief Поскольку один чекбокс на 2 виджета
+         *        True - окно ввода проверочного кода
+         *        False - окно регистрации
+         */
+        bool m_isVerify;
+
+        QPushButton* m_loginButton;
+        QPushButton* m_signUpButton;
 	};
 }
 

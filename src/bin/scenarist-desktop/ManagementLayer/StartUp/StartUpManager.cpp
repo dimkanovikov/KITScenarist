@@ -1,14 +1,34 @@
+/*
+* Copyright (C) 2014 Dimka Novikov, to@dimkanovikov.pro
+* Copyright (C) 2016 Alexey Polushkin, armijo38@yandex.ru
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public
+* License as published by the Free Software Foundation; either
+* version 3 of the License, or any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* General Public License for more details.
+*
+* Full license: http://dimkanovikov.pro/license/GPLv3
+*/
+
 #include "StartUpManager.h"
 
 #include <ManagementLayer/Project/ProjectsManager.h>
 
 #include <UserInterfaceLayer/StartUp/StartUpView.h>
 #include <UserInterfaceLayer/StartUp/LoginDialog.h>
+#include <UserInterfaceLayer/StartUp/ChangePasswordDialog.h>
+#include <UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/PasswordStorage.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <QApplication>
 #include <QFile>
@@ -27,12 +47,17 @@ using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
 using UserInterface::StartUpView;
 using UserInterface::LoginDialog;
-
+using UserInterface::ChangePasswordDialog;
+using UserInterface::RenewSubscriptionDialog;
 
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
-	m_view(new StartUpView(_parentWidget))
+    m_view(new StartUpView(_parentWidget)),
+    m_loginDialog(new LoginDialog(m_view)),
+    m_changePasswordDialog(new ChangePasswordDialog(m_view))
 {
+    initView();
+
 	initData();
 	initConnections();
 
@@ -47,32 +72,77 @@ QWidget* StartUpManager::view() const
 	return m_view;
 }
 
-void StartUpManager::aboutUserLogged()
+void StartUpManager::completeLogin(const QString& _userName, const QString& _userEmail)
 {
-	const bool isLogged = true;
-	m_view->setUserLogged(isLogged, m_userName);
+    const bool isLogged = true;
+    m_view->setUserLogged(isLogged, _userName, _userEmail);
+    m_loginDialog->unblock();
+    m_loginDialog->hide();
 }
 
-void StartUpManager::aboutRetryLogin(const QString& _error)
+void StartUpManager::verifyUser()
 {
-	//
-	// Показать диалог авторизации с заданной ошибкой
-	//
-	LoginDialog loginDialog(m_view);
-	loginDialog.setUserName(m_userName);
-	loginDialog.setPassword(m_password);
-	loginDialog.setError(_error);
-	if (loginDialog.exec() == QLightBoxDialog::Accepted) {
-		m_userName = loginDialog.userName();
-		m_password = loginDialog.password();
-		emit loginRequested(m_userName, m_password);
-	}
+    //
+    // Покажем пользователю окно с вводом проверочного кода
+    //
+    m_loginDialog->showVerificationSuccess();
 }
 
-void StartUpManager::aboutUserUnlogged()
+void StartUpManager::userAfterSignUp()
 {
-	const bool isLogged = false;
-	m_view->setUserLogged(isLogged);
+    //
+    // После того, как пользователь зарегистрировался, сразу выполним вход
+    //
+    emit loginRequested(m_loginDialog->signUpEmail(), m_loginDialog->signUpPassword());
+}
+
+void StartUpManager::userPassRestored()
+{
+    m_loginDialog->showRestoreSuccess();
+}
+
+void StartUpManager::completeLogout()
+{
+    const bool isLogged = false;
+    m_view->setUserLogged(isLogged);
+}
+
+void StartUpManager::passwordChanged()
+{
+    m_changePasswordDialog->stopAndHide();
+    QLightBoxMessage::information(m_view, tr("Password changed"),
+                                  tr("Password successfully changed"));
+}
+
+void StartUpManager::showPasswordError(const QString& _error)
+{
+    if (m_loginDialog->isVisible()) {
+        //
+        // Если активно окно авторизации, то покажем ошибку там
+        //
+        retrySignUp(_error);
+    } else {
+        //
+        // Иначе, активно окно смены пароля
+        //
+        m_changePasswordDialog->stopAndHide();
+        QLightBoxMessage::critical(m_view, tr("Can not change password"),
+                                      _error);
+        m_changePasswordDialog->showUnprepared();
+    }
+}
+
+void StartUpManager::subscriptionInfoGot(bool _isActive, const QString &_expDate)
+{
+    m_view->setSubscriptionInfo(_isActive, _expDate);
+}
+
+void StartUpManager::renewSubscriptionShow()
+{
+    RenewSubscriptionDialog dialog(m_view);
+    if(dialog.exec() == QLightBoxDialog::Accepted) {
+        emit renewSubscriptionRequested(dialog.duration(), dialog.paymentSystemType());
+    }
 }
 
 void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
@@ -85,17 +155,28 @@ void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
 	m_view->setRemoteProjects(_model);
 }
 
-void StartUpManager::aboutLoginClicked()
+void StartUpManager::retryLogin(const QString& _error)
 {
-	//
-	// Показать диалог авторизации
-	//
-	LoginDialog loginDialog(m_view);
-	if (loginDialog.exec() == QLightBoxDialog::Accepted) {
-		m_userName = loginDialog.userName();
-		m_password = loginDialog.password();
-		emit loginRequested(m_userName, m_password);
-	}
+    //
+    // Покажем пользователю ошибку авторизации
+    //
+    m_loginDialog->setLoginError(_error);
+}
+
+void StartUpManager::retrySignUp(const QString &_error)
+{
+    //
+    // Покажем пользователю ошибку регистрации
+    //
+    m_loginDialog->setSignUpError(_error);
+}
+
+void StartUpManager::retryVerify(const QString &_error)
+{
+    //
+    // Покажем пользователю ошибку ввода проверочного кода
+    //
+    m_loginDialog->setVerificationError(_error);
 }
 
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
@@ -187,19 +268,66 @@ void StartUpManager::initData()
 				);
 }
 
+void StartUpManager::initView()
+{
+    m_loginDialog->hide();
+}
+
 void StartUpManager::initConnections()
 {
-	connect(m_view, SIGNAL(loginClicked()), this, SLOT(aboutLoginClicked()));
-	connect(m_view, SIGNAL(logoutClicked()), this, SIGNAL(logoutRequested()));
-	connect(m_view, SIGNAL(createProjectClicked()), this, SIGNAL(createProjectRequested()));
-	connect(m_view, SIGNAL(openProjectClicked()), this, SIGNAL(openProjectRequested()));
-	connect(m_view, SIGNAL(helpClicked()), this, SIGNAL(helpRequested()));
+    //
+    // Показать пользователю диалог авторизации/регистрации
+    // Предварительно его очистив
+    //
+    connect(m_view, &StartUpView::loginClicked, [this] {
+        m_loginDialog->showPrepared();
+    });
 
-	connect(m_view, SIGNAL(openRecentProjectClicked(QModelIndex)),
-			this, SIGNAL(openRecentProjectRequested(QModelIndex)));
-	connect(m_view, SIGNAL(openRemoteProjectClicked(QModelIndex)),
-			this, SIGNAL(openRemoteProjectRequested(QModelIndex)));
-	connect(m_view, SIGNAL(refreshProjects()), this, SIGNAL(refreshProjectsRequested()));
+    connect(m_view, &StartUpView::logoutClicked,
+            this, &StartUpManager::logoutRequested);
+    connect(m_view, &StartUpView::createProjectClicked,
+            this, &StartUpManager::createProjectRequested);
+    connect(m_view, &StartUpView::openProjectClicked,
+            this, &StartUpManager::openProjectRequested);
+    connect(m_view, &StartUpView::helpClicked,
+            this, &StartUpManager::helpRequested);
+
+
+    connect(m_view, &StartUpView::openRecentProjectClicked,
+            this, &StartUpManager::openRecentProjectRequested);
+    connect(m_view, &StartUpView::openRemoteProjectClicked,
+            this, &StartUpManager::openRemoteProjectRequested);
+    connect(m_view, &StartUpView::refreshProjects,
+            this, &StartUpManager::refreshProjectsRequested);
+
+    connect(m_loginDialog, &LoginDialog::loginRequested, [this] {
+        emit loginRequested(m_loginDialog->loginEmail(),
+                            m_loginDialog->loginPassword());}
+    );
+    connect(m_loginDialog, &LoginDialog::signUpRequested, [this] {
+        emit signUpRequested(m_loginDialog->signUpEmail(),
+                             m_loginDialog->signUpPassword());
+    });
+    connect(m_loginDialog, &LoginDialog::verifyRequested, [this] {
+        emit verifyRequested(m_loginDialog->verificationCode());
+    });
+    connect(m_loginDialog, &LoginDialog::restoreRequested, [this] {
+        emit restoreRequested(m_loginDialog->loginEmail());
+    });
+    connect(m_view, &StartUpView::userNameChanged,
+            this, &StartUpManager::userNameChangeRequested);
+    connect(m_view, &StartUpView::getSubscriptionInfoClicked,
+            this, &StartUpManager::getSubscriptionInfoRequested);
+    connect(m_view, &StartUpView::renewSubscriptionClicked,
+            this, &StartUpManager::renewSubscriptionShow);
+    connect(m_view, &StartUpView::passwordChangeClicked, [this] {
+        m_changePasswordDialog->showPrepared();
+    });
+
+    connect(m_changePasswordDialog, &ChangePasswordDialog::changeRequested, [this] {
+        emit passwordChangeRequested(m_changePasswordDialog->password(),
+                                     m_changePasswordDialog->newPassword());
+    });
 }
 
 void StartUpManager::checkNewVersion()

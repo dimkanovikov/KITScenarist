@@ -30,6 +30,7 @@ namespace ManagementLayer
 	class ExportManager;
 	class ImportManager;
 	class SynchronizationManager;
+    class SynchronizationManagerV2;
 
 
 	/**
@@ -344,6 +345,7 @@ namespace ManagementLayer
 		 * @brief Управляющий синхронизацией
 		 */
 		SynchronizationManager* m_synchronizationManager;
+        SynchronizationManagerV2* m_synchronizationManagerV2;
 
 		/**
 		 * @brief Таймер автосохранения

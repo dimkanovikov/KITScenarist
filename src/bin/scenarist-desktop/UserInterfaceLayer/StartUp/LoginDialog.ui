@@ -6,98 +6,535 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>231</height>
+    <width>442</width>
+    <height>317</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Authorization</string>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="0" colspan="2">
-    <widget class="QLineEdit" name="password">
-     <property name="echoMode">
-      <enum>QLineEdit::Password</enum>
-     </property>
-    </widget>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>230</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_4">
+   <item>
+    <widget class="TabBarExpanded" name="tabs" native="true"/>
    </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_3">
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="text">
-      <string>&lt;a href=&quot;https://kitscenarist.ru/cabin.html&quot; style=&quot;color:#2b78da;&quot;&gt;Registration&lt;/a&gt;</string>
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-     <property name="openExternalLinks">
-      <bool>true</bool>
-     </property>
+     <widget class="QWidget" name="loginPage">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="loginEmailLabel">
+         <property name="text">
+          <string>&amp;Email</string>
+         </property>
+         <property name="buddy">
+          <cstring>loginEmail</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="loginEmail">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="loginPasswordLabel">
+         <property name="text">
+          <string>&amp;Password</string>
+         </property>
+         <property name="buddy">
+          <cstring>loginPasswordEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="PasswordLineEdit" name="loginPasswordEdit"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>6</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="loginErrorIcon">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>ErrorLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="loginError">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="baseSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Error &amp;amp;message&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::AutoText</enum>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="buddy">
+            <cstring>loginEmail</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>1</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="restorePassword">
+           <property name="text">
+            <string>Restore Password</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QDialogButtonBox" name="loginButtons">
+           <property name="standardButtons">
+            <set>QDialogButtonBox::Cancel</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="signUpPage">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="signUpEmailLabel">
+         <property name="text">
+          <string>&amp;Email</string>
+         </property>
+         <property name="buddy">
+          <cstring>signUpEmail</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="signUpEmail"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="signUpPasswordLabel">
+         <property name="text">
+          <string>&amp;Password</string>
+         </property>
+         <property name="buddy">
+          <cstring>signUpPasswordEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="PasswordLineEdit" name="signUpPasswordEdit"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>6</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="signUpErrorIcon">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Error Icon</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="signUpError">
+           <property name="font">
+            <font>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Error &amp;message</string>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::AutoText</enum>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="buddy">
+            <cstring>loginEmail</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>1</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0">
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QDialogButtonBox" name="signUpButtons">
+           <property name="standardButtons">
+            <set>QDialogButtonBox::Cancel</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="verificationPage">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0,0,0,0">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMaximumSize</enum>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>&amp;Verification code</string>
+         </property>
+         <property name="buddy">
+          <cstring>verificationCode</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="verificationCode"/>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>10</width>
+           <height>6</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="verificationErrorIcon">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Error Icon</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="verificationError">
+           <property name="font">
+            <font>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Error &lt;/p&gt;&lt;p&gt;&amp;amp;message&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::AutoText</enum>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="buddy">
+            <cstring>loginEmail</cstring>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>1</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QDialogButtonBox" name="buttonsVerification">
+           <property name="standardButtons">
+            <set>QDialogButtonBox::Cancel</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="error">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>Error message</string>
-     </property>
-     <property name="buddy">
-      <cstring>userName</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>User name</string>
-     </property>
-     <property name="buddy">
-      <cstring>userName</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Password</string>
-     </property>
-     <property name="buddy">
-      <cstring>password</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="2">
-    <widget class="QDialogButtonBox" name="buttons">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QLineEdit" name="userName"/>
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>userName</tabstop>
-  <tabstop>password</tabstop>
- </tabstops>
+ <customwidgets>
+  <customwidget>
+   <class>TabBarExpanded</class>
+   <extends>QWidget</extends>
+   <header>3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PasswordLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
