@@ -15,55 +15,55 @@
 */
 
 #include "PasswordLineEdit.h"
+#include "../FlatButton/FlatButton.h"
 
-#include <QToolButton>
 #include <QStyle>
 
 PasswordLineEdit::PasswordLineEdit(QWidget* _parent) :
-    QLineEdit(_parent),
-    m_eye(new QToolButton(this))
+	QLineEdit(_parent),
+	m_eye(new FlatButton(this))
 {
-    m_eye->setIcon(QIcon(":Graphics/Icons/eye-off.png"));
-    m_eye->setIconSize(QSize(15, 15));
-    m_eye->setCursor(Qt::ArrowCursor);
-    m_eye->setStyleSheet("QToolButton { border: none; padding: 0px; }");
-    m_eye->setVisible(true);
-    connect(m_eye, &QToolButton::clicked, this, &PasswordLineEdit::eyeClicked);
+	m_eye->setIcons(QIcon(":Graphics/Icons/eye-off.png"));
+	m_eye->setIconSize(QSize(15, 15));
+	m_eye->setCursor(Qt::ArrowCursor);
+	m_eye->setStyleSheet("QToolButton { border: none; padding: 0px; }");
+	m_eye->setVisible(true);
+	connect(m_eye, &QToolButton::clicked, this, &PasswordLineEdit::eyeClicked);
 
-    m_isAsterisk = true;
-    QLineEdit::setEchoMode(QLineEdit::Password);
+	m_isAsterisk = true;
+	QLineEdit::setEchoMode(QLineEdit::Password);
 }
 
 void PasswordLineEdit::resetAsterisk()
 {
-    m_isAsterisk = false;
-    eyeClicked();
+	m_isAsterisk = false;
+	eyeClicked();
 }
 
 void PasswordLineEdit::resizeEvent(QResizeEvent *_event)
 {
-    QLineEdit::resizeEvent(_event);
+	QLineEdit::resizeEvent(_event);
 
-    //
-    // Корректируем положение кнопки
-    //
-    const QSize eyeSizeHint = m_eye->sizeHint();
-    const int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
+	//
+	// Корректируем положение кнопки
+	//
+	const QSize eyeSizeHint = m_eye->sizeHint();
+	const int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
 
-    m_eye->move(
-        rect().right() - frameWidth - eyeSizeHint.width(),
-        (rect().bottom() + 3 - eyeSizeHint.height()) / 2
-        );
+	m_eye->move(
+		rect().right() - frameWidth - eyeSizeHint.width(),
+		(rect().bottom() - eyeSizeHint.height()) / 2
+		);
 }
 
 void PasswordLineEdit::eyeClicked()
 {
-    if (m_isAsterisk) {
-        m_eye->setIcon(QIcon(":Graphics/Icons/eye.png"));
-        QLineEdit::setEchoMode(QLineEdit::Normal);
-    } else {
-        m_eye->setIcon(QIcon(":Graphics/Icons/eye-off.png"));
-        QLineEdit::setEchoMode(QLineEdit::Password);
-    }
-    m_isAsterisk = !m_isAsterisk;
+	if (m_isAsterisk) {
+		m_eye->setIcons(QIcon(":Graphics/Icons/eye.png"));
+		QLineEdit::setEchoMode(QLineEdit::Normal);
+	} else {
+		m_eye->setIcons(QIcon(":Graphics/Icons/eye-off.png"));
+		QLineEdit::setEchoMode(QLineEdit::Password);
+	}
+	m_isAsterisk = !m_isAsterisk;
 }

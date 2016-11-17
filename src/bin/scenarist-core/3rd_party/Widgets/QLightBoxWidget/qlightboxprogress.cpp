@@ -48,6 +48,7 @@ QLightBoxProgress::QLightBoxProgress(QWidget* _parent, bool _folowToHeadWidget) 
 
 QLightBoxProgress::~QLightBoxProgress()
 {
+	finish();
 	if (s_lastUsedWidget == this) {
 		s_lastUsedWidget = 0;
 	}

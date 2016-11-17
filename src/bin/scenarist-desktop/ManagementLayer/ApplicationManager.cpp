@@ -185,8 +185,8 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_settingsManager(new SettingsManager(this, m_view)),
 	m_importManager(new ImportManager(this, m_view)),
 	m_exportManager(new ExportManager(this, m_view)),
-    m_synchronizationManager(new SynchronizationManager(this, m_view)),
-    m_synchronizationManagerV2(new SynchronizationManagerV2(this, m_view))
+	m_synchronizationManager(new SynchronizationManager(this, m_view)),
+	m_synchronizationManagerV2(new SynchronizationManagerV2(this, m_view))
 {
 	initView();
 	initConnections();
@@ -195,8 +195,8 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
 	reloadApplicationSettings();
 
-    QTimer::singleShot(0, m_synchronizationManagerV2, &SynchronizationManagerV2::autoLogin);
-    initStyleSheet();
+	QTimer::singleShot(0, m_synchronizationManagerV2, &SynchronizationManagerV2::autoLogin);
+	initStyleSheet();
 }
 
 ApplicationManager::~ApplicationManager()
@@ -213,7 +213,7 @@ void ApplicationManager::exec(const QString& _fileToOpen)
 
 	if (!_fileToOpen.isEmpty()) {
 		aboutLoad(_fileToOpen);
-       }
+	   }
 }
 
 void ApplicationManager::openFile(const QString &_fileToOpen)
@@ -704,16 +704,6 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 	}
 }
 
-void ApplicationManager::aboutUserUnlogged()
-{
-	//
-	// Закрываем проект, если он из облака
-	//
-	if (m_projectsManager->currentProject().isRemote()) {
-		closeCurrentProject();
-	}
-}
-
 void ApplicationManager::aboutShowSyncActiveIndicator()
 {
 	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"), tr("Connection active"), tr("Project sinchronized"));
@@ -800,8 +790,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 				//
 				// Переподключаемся
 				//
-                //QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
-                QTimer::singleShot(0, m_synchronizationManagerV2, &SynchronizationManagerV2::autoLogin);
+				//QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
+				QTimer::singleShot(0, m_synchronizationManagerV2, &SynchronizationManagerV2::autoLogin);
 				return;
 			} else {
 				//
@@ -828,50 +818,50 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			break;
 		}
 
-        //
-        // Такой email уже зарегистрирован
-        //
-        case 404: {
-            error = tr("Email already exist");
-            m_startUpManager->retrySignUp(error);
-            break;
-        }
+		//
+		// Такой email уже зарегистрирован
+		//
+		case 404: {
+			error = tr("Email already exist");
+			m_startUpManager->retrySignUp(error);
+			break;
+		}
 
-        //
-        // Слишком слабый пароль
-        //
-        case 405: {
-            error = tr("Password too weak");
-            m_startUpManager->showPasswordError(error);
-            break;
-        }
+		//
+		// Слишком слабый пароль
+		//
+		case 405: {
+			error = tr("Password too weak");
+			m_startUpManager->showPasswordError(error);
+			break;
+		}
 
-        //
-        // Старый пароль некорректен
-        //
-        case 406: {
-            error = tr("Invalid old password");
-            m_startUpManager->showPasswordError(error);
-            break;
-        }
+		//
+		// Старый пароль некорректен
+		//
+		case 406: {
+			error = tr("Invalid old password");
+			m_startUpManager->showPasswordError(error);
+			break;
+		}
 
-        //
-        // Неверный код валидации
-        //
-        case 505: {
-            error = tr("Wrong validation code");
-            m_startUpManager->retryVerify(error);
-            break;
-        }
+		//
+		// Неверный код валидации
+		//
+		case 505: {
+			error = tr("Wrong validation code");
+			m_startUpManager->retryVerify(error);
+			break;
+		}
 
-        //
-        // Неверный email для восстановления пароля
-        //
-        case 606: {
-            error = tr("Wrong email");
-            m_startUpManager->retryLogin(error);
-            break;
-        }
+		//
+		// Неверный email для восстановления пароля
+		//
+		case 606: {
+			error = tr("Wrong email");
+			m_startUpManager->retryLogin(error);
+			break;
+		}
 
 		//
 		// Остальное
@@ -903,7 +893,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			//
 			// Имитируем успешную авторизацию
 			//
-            //m_startUpManager->completeLogin();
+			//m_startUpManager->completeLogin();
 			//
 			// и загружаем список доступных проектов из кэша
 			//
@@ -919,7 +909,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			//
 			m_projectsManager->setRemoteProjectsSyncUnavailable();
 		}
-        }
+		}
 }
 
 void ApplicationManager::aboutImport()
@@ -1503,31 +1493,30 @@ void ApplicationManager::initConnections()
 	connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
 	connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
 
-    //connect(m_startUpManager, SIGNAL(loginRequested(QString,QString)), m_synchronizationManager, SLOT(aboutLogin(QString,QString)));
-    connect(m_startUpManager, &StartUpManager::loginRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::login);
-    connect(m_startUpManager, &StartUpManager::signUpRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::signUp);
-    connect(m_startUpManager, &StartUpManager::verifyRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::verify);
-    connect(m_startUpManager, &StartUpManager::restoreRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::restorePassword);
-    connect(m_startUpManager, &StartUpManager::logoutRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::logout);
-    connect(m_startUpManager, &StartUpManager::renewSubscriptionRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::renewSubscription);
-    connect(m_startUpManager, &StartUpManager::userNameChangeRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::changeUserName);
-    connect(m_startUpManager, &StartUpManager::getSubscriptionInfoRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::loadSubscriptionInfo);
-    connect(m_startUpManager, &StartUpManager::passwordChangeRequested,
-            m_synchronizationManagerV2, &SynchronizationManagerV2::changePassword);
+	connect(m_startUpManager, &StartUpManager::loginRequested,
+			m_synchronizationManagerV2, &SynchronizationManagerV2::login);
+	connect(m_startUpManager, &StartUpManager::signUpRequested,
+			m_synchronizationManagerV2, &SynchronizationManagerV2::signUp);
+	connect(m_startUpManager, &StartUpManager::verifyRequested,
+			m_synchronizationManagerV2, &SynchronizationManagerV2::verify);
+	connect(m_startUpManager, &StartUpManager::restoreRequested,
+			m_synchronizationManagerV2, &SynchronizationManagerV2::restorePassword);
+	connect(m_startUpManager, &StartUpManager::logoutRequested,
+			m_synchronizationManagerV2, &SynchronizationManagerV2::logout);
+	connect(m_startUpManager, &StartUpManager::renewSubscriptionRequested,
+			m_synchronizationManagerV2, &SynchronizationManagerV2::renewSubscription);
+	connect(m_startUpManager, &StartUpManager::userNameChangeRequested,
+			m_synchronizationManagerV2, &SynchronizationManagerV2::changeUserName);
+	connect(m_startUpManager, &StartUpManager::getSubscriptionInfoRequested,
+			m_synchronizationManagerV2, &SynchronizationManagerV2::loadSubscriptionInfo);
+	connect(m_startUpManager, &StartUpManager::passwordChangeRequested,
+			m_synchronizationManagerV2, &SynchronizationManagerV2::changePassword);
 
 	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
 	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
 	connect(m_startUpManager, SIGNAL(helpRequested()), this, SLOT(aboutShowHelp()));
-	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_projectsManager, SLOT(refreshProjects()));
-	connect(m_startUpManager, SIGNAL(refreshProjectsRequested()), m_synchronizationManager, SLOT(aboutLoadProjects()));
+	connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_projectsManager, &ProjectsManager::refreshProjects);
+	connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_synchronizationManagerV2, &SynchronizationManagerV2::loadProjects);
 	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRecent(QModelIndex)));
 	connect(m_startUpManager, SIGNAL(openRemoteProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRemote(QModelIndex)));
 
@@ -1573,10 +1562,6 @@ void ApplicationManager::initConnections()
 	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
-	connect(m_synchronizationManager, SIGNAL(logoutAccepted()),
-			this, SLOT(aboutUserUnlogged()));
-	connect(m_synchronizationManager, SIGNAL(remoteProjectsLoaded(QString)),
-			m_projectsManager, SLOT(setRemoteProjects(QString)));
 	connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),
 			m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
 	connect(m_synchronizationManager, SIGNAL(applyPatchesRequested(QList<QString>,bool)),
@@ -1584,25 +1569,36 @@ void ApplicationManager::initConnections()
 	connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
 			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
 	connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
-            this, SLOT(aboutSyncClosedWithError(int,QString)));
+			this, SLOT(aboutSyncClosedWithError(int,QString)));
 	connect(m_synchronizationManager, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
 
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted,
-            m_startUpManager, &StartUpManager::completeLogin);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::signUpFinished,
-            m_startUpManager, &StartUpManager::userAfterSignUp);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::verified,
-            m_startUpManager, &StartUpManager::userAfterSignUp);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::passwordRestored,
-            m_startUpManager, &StartUpManager::userPassRestored);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished,
-            m_startUpManager, &StartUpManager::completeLogout);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::passwordChanged,
-            m_startUpManager, &StartUpManager::passwordChanged);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::subscriptionInfoLoaded,
-            m_startUpManager, &StartUpManager::subscriptionInfoGot);
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::syncClosedWithError,
-            this, &ApplicationManager::aboutSyncClosedWithError);
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted,
+			m_startUpManager, &StartUpManager::completeLogin);
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::signUpFinished,
+			m_startUpManager, &StartUpManager::userAfterSignUp);
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::verified,
+			m_startUpManager, &StartUpManager::userAfterSignUp);
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::passwordRestored,
+			m_startUpManager, &StartUpManager::userPassRestored);
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished,
+			m_startUpManager, &StartUpManager::completeLogout);
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::passwordChanged,
+			m_startUpManager, &StartUpManager::passwordChanged);
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::subscriptionInfoLoaded,
+			m_startUpManager, &StartUpManager::subscriptionInfoGot);
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::syncClosedWithError,
+			this, &ApplicationManager::aboutSyncClosedWithError);
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::projectsLoaded,
+			m_projectsManager, &ProjectsManager::setRemoteProjects);
+
+	//
+	// Когда пользователь вышел из своего аккаунта, закрываем текущий проект, если он из облака
+	//
+	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished, [=] {
+		if (m_projectsManager->currentProject().isRemote()) {
+			closeCurrentProject();
+		}
+	});
 }
 
 void ApplicationManager::initStyleSheet()

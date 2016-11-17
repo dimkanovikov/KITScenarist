@@ -69,21 +69,19 @@ void StartUpView::setUpdateInfo(const QString& _updateInfo)
 
 void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const QString& _userEmail)
 {
-	ui->loginIcon->setVisible(!isLogged);
-	ui->login->setVisible(!isLogged);
 	ui->remoteProjects->setVisible(isLogged);
 
 	if (isLogged) {
 		ui->userName->setAcceptedText(_userName);
 		ui->userEmail->setText(QString("<a href=\"#\" style=\"color:#2b78da;\">%1</a>").arg(_userEmail));
+		ui->login->hide();
 		ui->userEmail->show();
-		ui->userEmailIcon->show();
 	} else {
-		Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, false, false);
+		Animation::slideOut(ui->cabinetFrame, AnimationDirection::FromTopToBottom, true);
 		QTimer::singleShot(300, [this] {
 			ui->cabinetFrame->hide();
 			ui->userEmail->hide();
-			ui->userEmailIcon->hide();
+			ui->login->show();
 		});
 	}
 
@@ -95,10 +93,10 @@ void StartUpView::setUserLogged(bool isLogged, const QString& _userName, const Q
 void StartUpView::setSubscriptionInfo(bool _isActive, const QString &_expDate)
 {
 	if (_isActive) {
-		ui->subscriptionActivity->setText(tr("The subscription is active until"));
+		ui->subscriptionActivity->setText(tr("Account is active until:"));
 		ui->subscriptionEndDate->setText(_expDate);
 	} else {
-		ui->subscriptionActivity->setText(tr("The subscription is inactive"));
+		ui->subscriptionActivity->setText(tr("Account is inactive"));
 		ui->subscriptionEndDate->clear();
 	}
 }
@@ -147,7 +145,7 @@ void StartUpView::cabinetChangeVisibility()
 	if (!isVisible) {
 		ui->cabinetFrame->show();
 	}
-	Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, false, !isVisible);
+	Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, true, !isVisible);
 	if (isVisible) {
 		QTimer::singleShot(300, ui->cabinetFrame, &QWidget::hide);
 	}
@@ -168,13 +166,9 @@ void StartUpView::initView()
 
 	ui->updateInfo->hide();
 
-	//ui->logoutIcon->hide();
-	//ui->logout->hide();
-
 	ui->remoteProjects->hide();
 	ui->cabinetFrame->hide();
 	ui->userEmail->hide();
-	ui->userEmailIcon->hide();
 
 	ui->filesSouces->setCurrentWidget(ui->recentFilesPage);
 
@@ -208,8 +202,8 @@ void StartUpView::initStyleSheet()
 	ui->topEmptyLabel->setProperty("topPanelRightBordered", true);
 
 	ui->mainContainer->setProperty("mainContainer", true);
-	//ui->projectsFrame->setProperty("mainContainer", true);
-	//ui->projectsFrame->setProperty("baseForeground", true);
+	ui->projectsFrame->setProperty("mainContainer", true);
+	ui->projectsFrame->setProperty("baseForeground", true);
 
 	ui->userName->setProperty("editableLabel", true);
 
@@ -235,7 +229,6 @@ void StartUpView::initIconsColor()
 	QIcon account(*ui->loginIcon->pixmap());
 	ImageHelper::setIconColor(account, iconSize, palette().text().color());
 	ui->loginIcon->setPixmap(account.pixmap(iconSize));
-	//ui->logoutIcon->setPixmap(account.pixmap(iconSize));
 
 	QIcon createProject = ui->createProject->icon();
 	ImageHelper::setIconColor(createProject, iconSize, palette().text().color());
@@ -252,4 +245,5 @@ void StartUpView::initIconsColor()
 	QIcon refresh = ui->refreshProjects->icon();
 	ImageHelper::setIconColor(refresh, iconSize, palette().text().color());
 	ui->refreshProjects->setIcon(refresh);
+	ui->getSubscriptionInfo->setIcon(refresh);
 }

@@ -24,151 +24,176 @@ class QXmlStreamReader;
 
 namespace ManagementLayer
 {
-    /**
-     *  @brief Управляющий синхронизацией
-     */
-    class SynchronizationManagerV2 : public QObject
-    {
-        Q_OBJECT
-    public:
-        explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
+	/**
+	 *  @brief Управляющий синхронизацией
+	 */
+	class SynchronizationManagerV2 : public QObject
+	{
+		Q_OBJECT
+	public:
+		explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
 
-        /**
-         * @brief Активна ли подписка у пользователя
-         */
-        bool isSubscriptionActive();
+		//
+		// Методы работы с аккаунтом
+		//
 
-        /**
-         * @brief Авторизоваться на сервере, используя сохраненные логин и пароль
-         */
-        void autoLogin();
+		/**
+		 * @brief Активна ли подписка у пользователя
+		 */
+		bool isSubscriptionActive();
 
-        /**
-         * @brief Авторизоваться на сервере
-         */
-        void login(const QString& _email, const QString& _password);
+		/**
+		 * @brief Авторизоваться на сервере, используя сохраненные логин и пароль
+		 */
+		void autoLogin();
 
-        /**
-         * @brief Регистрация на сервере
-         */
-        void signUp(const QString& _email, const QString& _password);
+		/**
+		 * @brief Авторизоваться на сервере
+		 */
+		void login(const QString& _email, const QString& _password);
 
-        /**
-         * @brief Подтверждение регистрации при помощи проверочного кода
-         */
-        void verify(const QString& _code);
+		/**
+		 * @brief Регистрация на сервере
+		 */
+		void signUp(const QString& _email, const QString& _password);
 
-        /**
-         * @brief Восстановление пароля
-         */
-        void restorePassword(const QString& _email);
+		/**
+		 * @brief Подтверждение регистрации при помощи проверочного кода
+		 */
+		void verify(const QString& _code);
 
-        /**
-         * @brief Закрыть авторизацию
-         */
-        void logout();
+		/**
+		 * @brief Восстановление пароля
+		 */
+		void restorePassword(const QString& _email);
 
-        /**
-         * @brief Продлить подписку
-         */
-        void renewSubscription(unsigned _duration, unsigned _type);
+		/**
+		 * @brief Закрыть авторизацию
+		 */
+		void logout();
 
-        /**
-         * @brief Сменить имя пользователя
-         */
-        void changeUserName(const QString& _newUserName);
+		/**
+		 * @brief Продлить подписку
+		 */
+		void renewSubscription(unsigned _duration, unsigned _type);
 
-        /**
-         * @brief Получить информацию о подписке
-         */
-        void loadSubscriptionInfo();
+		/**
+		 * @brief Сменить имя пользователя
+		 */
+		void changeUserName(const QString& _newUserName);
 
-        /**
-         * @brief Сменить пароль
-         */
-        void changePassword(const QString& _password, const QString& _newPassword);
+		/**
+		 * @brief Получить информацию о подписке
+		 */
+		void loadSubscriptionInfo();
 
-    signals:
-        /**
-         * @brief Авторизация пройдена успешно
-         */
-        void loginAccepted(const QString& _userName, const QString& _userEmail);
+		/**
+		 * @brief Сменить пароль
+		 */
+		void changePassword(const QString& _password, const QString& _newPassword);
 
-        /**
-         * @brief Сервер успешно принял данные пользователя на регистрацию
-         */
-        void signUpFinished();
+		//
+		// Методы работы с проектами
+		//
 
-        /**
-         * @brief Сервер подтвердил регистрацию
-         */
-        void verified();
+		/**
+		 * @brief Загрузить список доступных проектов
+		 */
+		void loadProjects();
 
-        /**
-         * @brief Пароль отправлен на email
-         */
-        void passwordRestored();
+	signals:
+		/**
+		 * @brief Авторизация пройдена успешно
+		 */
+		void loginAccepted(const QString& _userName, const QString& _userEmail);
 
-        /**
-         * @brief Авторизация закрыта
-         */
-        void logoutFinished();
+		/**
+		 * @brief Сервер успешно принял данные пользователя на регистрацию
+		 */
+		void signUpFinished();
 
-        /**
-         * @brief Успешно изменено имя пользователя
-         */
-        void userNameChanged();
+		/**
+		 * @brief Сервер подтвердил регистрацию
+		 */
+		void verified();
 
-        /**
-         * @brief Успешно запрошена информация о подписке
-         */
-        void subscriptionInfoLoaded(bool, QString);
+		/**
+		 * @brief Пароль отправлен на email
+		 */
+		void passwordRestored();
 
-        /**
-         * @brief Успешно изменен пароль
-         */
-        void passwordChanged();
+		/**
+		 * @brief Авторизация закрыта
+		 */
+		void logoutFinished();
 
-        /**
-         * @brief Ошибка
-         */
-        void syncClosedWithError(int, QString);
+		/**
+		 * @brief Успешно изменено имя пользователя
+		 */
+		void userNameChanged();
 
-    private:
-        /**
-         * @brief Проверка, что статус ответа - ок
-         */
-        bool isOperationSucceed(QXmlStreamReader& _reader);
-        /**
-         * Обработка ошибок
-         */
-        void handleError(const QString& _error, int _code = 0);
+		/**
+		 * @brief Успешно запрошена информация о подписке
+		 */
+		void subscriptionInfoLoaded(bool, QString);
 
-        /**
-         * @brief указатель на главную форму приложения
-         */
-        QWidget* m_view;
+		/**
+		 * @brief Успешно изменен пароль
+		 */
+		void passwordChanged();
 
-        /**
-         * Ключ сессии
-         */
-        QString m_sessionKey;
+		/**
+		 * @brief Проекты загружены
+		 */
+		void projectsLoaded(const QString& _projectsXml);
 
-        /**
-         * @brief Email пользователя
-         */
-        QString m_userEmail;
+		/**
+		 * @brief Ошибка
+		 */
+		void syncClosedWithError(int, QString);
 
-        /**
-         * @brief Активна ли подписка у пользователя
-         */
-        bool m_activeSubscribe;
+	private:
+		/**
+		 * @brief Проверка, что статус ответа - ок
+		 */
+		bool isOperationSucceed(QXmlStreamReader& _reader);
+		/**
+		 * Обработка ошибок
+		 */
+		void handleError(const QString& _error, int _code = 0);
 
-        /**
-         * Загрузчик
-         */
-        WebLoader *m_loader;
-    };
+	private:
+		/**
+		 * @brief Настроить соединения
+		 */
+		void initConnections();
+
+	private:
+		/**
+		 * @brief указатель на главную форму приложения
+		 */
+		QWidget* m_view;
+
+		/**
+		 * Ключ сессии
+		 */
+		QString m_sessionKey;
+
+		/**
+		 * @brief Email пользователя
+		 */
+		QString m_userEmail;
+
+		/**
+		 * @brief Активна ли подписка у пользователя
+		 */
+		bool m_activeSubscribe;
+
+		/**
+		 * Загрузчик
+		 */
+		WebLoader *m_loader;
+	};
 }
 
 #endif // SYNCHRONIZATIONMANAGERV2_H

@@ -81,7 +81,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
-            <normaloff>:/Graphics/Icons/Editing/download.png</normaloff>:/Graphics/Icons/Editing/download.png</iconset>
+            <normaloff>:/Graphics/Icons/eye-off.png</normaloff>:/Graphics/Icons/eye-off.png</iconset>
           </property>
           <property name="autoRaise">
            <bool>true</bool>
