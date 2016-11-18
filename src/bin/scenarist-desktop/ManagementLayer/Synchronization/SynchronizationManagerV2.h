@@ -22,6 +22,7 @@
 class WebLoader;
 class QXmlStreamReader;
 
+
 namespace ManagementLayer
 {
 	/**
@@ -30,6 +31,7 @@ namespace ManagementLayer
 	class SynchronizationManagerV2 : public QObject
 	{
 		Q_OBJECT
+
 	public:
 		explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
 
@@ -40,7 +42,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Активна ли подписка у пользователя
 		 */
-		bool isSubscriptionActive();
+		bool isSubscriptionActive() const;
 
 		/**
 		 * @brief Авторизоваться на сервере, используя сохраненные логин и пароль
@@ -101,6 +103,32 @@ namespace ManagementLayer
 		 */
 		void loadProjects();
 
+		/**
+		 * @brief Создать проект в облаке
+		 */
+		int createProject(const QString& _projectName);
+
+		/**
+		 * @brief Обновить название проекта
+		 */
+		void updateProjectName(int _projectId, const QString& _newProjectName);
+
+		/**
+		 * @brief Удалить проект
+		 */
+		void removeProject(int _projectId);
+
+		/**
+		 * @brief Добавить подписчика в свой проект
+		 */
+		void shareProject(int _projectId, const QString& _userEmail, int _role);
+
+		/**
+		 * @brief Убрать подписку на проект для заданного пользователя
+		 * @note Если пользователь не задан, то происходит отписка текущего пользователя
+		 */
+		void unshareProject(int _projectId, const QString& _userEmail = QString::null);
+
 	signals:
 		/**
 		 * @brief Авторизация пройдена успешно
@@ -157,6 +185,7 @@ namespace ManagementLayer
 		 * @brief Проверка, что статус ответа - ок
 		 */
 		bool isOperationSucceed(QXmlStreamReader& _reader);
+
 		/**
 		 * Обработка ошибок
 		 */
@@ -187,12 +216,12 @@ namespace ManagementLayer
 		/**
 		 * @brief Активна ли подписка у пользователя
 		 */
-		bool m_activeSubscribe;
+		bool m_isSubscriptionActive;
 
 		/**
 		 * Загрузчик
 		 */
-		WebLoader *m_loader;
+		WebLoader* m_loader;
 	};
 }
 

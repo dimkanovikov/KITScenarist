@@ -26,6 +26,11 @@ namespace UserInterface
 		 */
 		void setUserInfo(const QString& _email, const QString& _name, const QString& _role);
 
+		/**
+		 * @brief Можно ли удалять подписку для пользователя
+		 */
+		void setDeletable(bool _isDeletable);
+
 	signals:
 		/**
 		 * @brief Удалить пользователя с заданным адресом электронной почты
@@ -33,6 +38,11 @@ namespace UserInterface
 		void removeUserRequested(const QString& _email);
 
 	private:
+		/**
+		 * @brief Настроить представление
+		 */
+		void initView();
+
 		/**
 		 * @brief Настроить соединения
 		 */

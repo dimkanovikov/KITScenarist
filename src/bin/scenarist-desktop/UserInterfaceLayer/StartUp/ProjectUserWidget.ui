@@ -21,7 +21,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QToolButton" name="closeAccess">
+    <widget class="FlatButton" name="closeAccess">
      <property name="text">
       <string/>
      </property>
@@ -43,6 +43,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FlatButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../scenarist-core/Resources/Resources.qrc"/>
  </resources>

@@ -36,14 +36,15 @@ namespace UserInterface
 		void setFilePath(const QString& _filePath);
 
 		/**
-		 * @brief Установить расположение объекта - облако (true) или локально (false)
+		 * @brief Настроить опции проекта в зависимости от того находится ли проект в облаке
+		 *		  и если да, то является ли текущий пользователь его владельцем
 		 */
-		void setIsRemote(bool _isRemote);
+		void configureOptions(bool _isRemote, bool _isOwner);
 
 		/**
 		 * @brief Добавить соавтора
 		 */
-		void addCollaborator(const QString& _email, const QString& _name, const QString& _role);
+		void addCollaborator(const QString& _email, const QString& _name, const QString& _role, bool _isOwner);
 
 		/**
 		 * @brief Находится ли мышка над элементом
@@ -55,6 +56,26 @@ namespace UserInterface
 		 * @brief На виджете был произведён клик
 		 */
 		void clicked();
+
+		/**
+		 * @brief Нажата кнопка изменить
+		 */
+		void editClicked();
+
+		/**
+		 * @brief Нажата кнопка удалить
+		 */
+		void removeClicked();
+
+		/**
+		 * @brief Нажата кнопка скрыть
+		 */
+		void hideClicked();
+
+		/**
+		 * @brief Нажата кнопка открыть доступ
+		 */
+		void shareClicked();
 
 		/**
 		 * @brief Удалить пользователя с заданным адресом электронной почты

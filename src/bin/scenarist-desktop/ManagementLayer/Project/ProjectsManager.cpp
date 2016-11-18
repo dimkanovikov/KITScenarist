@@ -75,6 +75,7 @@ QAbstractItemModel* ProjectsManager::remoteProjects()
 		item->setData(project.displayName(), Qt::DisplayRole);
 		item->setData(project.displayPath(), Qt::WhatsThisRole);
 		item->setData(project.users(), Qt::UserRole);
+		item->setData(project.isUserOwner(), Qt::UserRole + 1);
 		remoteProjectsModel->appendRow(item);
 	}
 
@@ -258,6 +259,20 @@ void ProjectsManager::setCurrentProjectSyncAvailable(bool _syncAvailable, int _e
 void ProjectsManager::closeCurrentProject()
 {
 	s_currentProject = Project();
+}
+
+ManagementLayer::Project ProjectsManager::project(const QModelIndex& _index, bool _isLocal) const
+{
+	return
+			_isLocal
+			? m_recentProjects.value(_index.row())
+			: m_remoteProjects.value(_index.row());
+}
+
+void ProjectsManager::hideProjectFromLocal(const QModelIndex& _index)
+{
+	m_recentProjects.removeAt(_index.row());
+	emit recentProjectsUpdated();
 }
 
 void ProjectsManager::refreshProjects()

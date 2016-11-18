@@ -52,11 +52,11 @@ using UserInterface::RenewSubscriptionDialog;
 
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
-    m_view(new StartUpView(_parentWidget)),
-    m_loginDialog(new LoginDialog(m_view)),
-    m_changePasswordDialog(new ChangePasswordDialog(m_view))
+	m_view(new StartUpView(_parentWidget)),
+	m_loginDialog(new LoginDialog(m_view)),
+	m_changePasswordDialog(new ChangePasswordDialog(m_view))
 {
-    initView();
+	initView();
 
 	initData();
 	initConnections();
@@ -72,77 +72,86 @@ QWidget* StartUpManager::view() const
 	return m_view;
 }
 
+bool StartUpManager::isUserLogged() const
+{
+	return !m_userEmail.isEmpty();
+}
+
 void StartUpManager::completeLogin(const QString& _userName, const QString& _userEmail)
 {
-    const bool isLogged = true;
-    m_view->setUserLogged(isLogged, _userName, _userEmail);
-    m_loginDialog->unblock();
-    m_loginDialog->hide();
+	m_userEmail = _userEmail;
+
+	const bool isLogged = true;
+	m_view->setUserLogged(isLogged, _userName, m_userEmail);
+	m_loginDialog->unblock();
+	m_loginDialog->hide();
 }
 
 void StartUpManager::verifyUser()
 {
-    //
-    // Покажем пользователю окно с вводом проверочного кода
-    //
-    m_loginDialog->showVerificationSuccess();
+	//
+	// Покажем пользователю окно с вводом проверочного кода
+	//
+	m_loginDialog->showVerificationSuccess();
 }
 
 void StartUpManager::userAfterSignUp()
 {
-    //
-    // После того, как пользователь зарегистрировался, сразу выполним вход
-    //
-    emit loginRequested(m_loginDialog->signUpEmail(), m_loginDialog->signUpPassword());
+	//
+	// После того, как пользователь зарегистрировался, сразу выполним вход
+	//
+	emit loginRequested(m_loginDialog->signUpEmail(), m_loginDialog->signUpPassword());
 }
 
 void StartUpManager::userPassRestored()
 {
-    m_loginDialog->showRestoreSuccess();
+	m_loginDialog->showRestoreSuccess();
 }
 
 void StartUpManager::completeLogout()
 {
-    const bool isLogged = false;
-    m_view->setUserLogged(isLogged);
+	m_userEmail.clear();
+
+	const bool isLogged = false;
+	m_view->setUserLogged(isLogged);
 }
 
 void StartUpManager::passwordChanged()
 {
-    m_changePasswordDialog->stopAndHide();
-    QLightBoxMessage::information(m_view, tr("Password changed"),
-                                  tr("Password successfully changed"));
+	m_changePasswordDialog->stopAndHide();
+	QLightBoxMessage::information(m_view, tr("Password changed"),
+								  tr("Password successfully changed"));
 }
 
 void StartUpManager::showPasswordError(const QString& _error)
 {
-    if (m_loginDialog->isVisible()) {
-        //
-        // Если активно окно авторизации, то покажем ошибку там
-        //
-        retrySignUp(_error);
-    } else {
-        //
-        // Иначе, активно окно смены пароля
-        //
-        m_changePasswordDialog->stopAndHide();
-        QLightBoxMessage::critical(m_view, tr("Can not change password"),
-                                      _error);
-        m_changePasswordDialog->showUnprepared();
-    }
+	if (m_loginDialog->isVisible()) {
+		//
+		// Если активно окно авторизации, то покажем ошибку там
+		//
+		retrySignUp(_error);
+	} else {
+		//
+		// Иначе, активно окно смены пароля
+		//
+		m_changePasswordDialog->stopAndHide();
+		QLightBoxMessage::critical(m_view, tr("Can not change password"),
+									  _error);
+		m_changePasswordDialog->showUnprepared();
+	}
 }
 
-void StartUpManager::subscriptionInfoGot(bool _isActive, const QString &_expDate)
+void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expDate)
 {
-    m_view->setSubscriptionInfo(_isActive, _expDate);
+	m_view->setSubscriptionInfo(_isActive, _expDate);
 }
 
-void StartUpManager::renewSubscriptionShow()
+void StartUpManager::showRenewSubscriptionDialog()
 {
-    RenewSubscriptionDialog dialog(m_view);
-    if(dialog.exec() == QLightBoxDialog::Accepted) {
-        emit renewSubscriptionRequested(dialog.duration(), dialog.paymentSystemType());
-    }
+	RenewSubscriptionDialog dialog(m_view);
+	if(dialog.exec() == QLightBoxDialog::Accepted) {
+		emit renewSubscriptionRequested(dialog.duration(), dialog.paymentSystemType());
+	}
 }
 
 void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
@@ -157,26 +166,26 @@ void StartUpManager::setRemoteProjects(QAbstractItemModel* _model)
 
 void StartUpManager::retryLogin(const QString& _error)
 {
-    //
-    // Покажем пользователю ошибку авторизации
-    //
-    m_loginDialog->setLoginError(_error);
+	//
+	// Покажем пользователю ошибку авторизации
+	//
+	m_loginDialog->setLoginError(_error);
 }
 
 void StartUpManager::retrySignUp(const QString &_error)
 {
-    //
-    // Покажем пользователю ошибку регистрации
-    //
-    m_loginDialog->setSignUpError(_error);
+	//
+	// Покажем пользователю ошибку регистрации
+	//
+	m_loginDialog->setSignUpError(_error);
 }
 
 void StartUpManager::retryVerify(const QString &_error)
 {
-    //
-    // Покажем пользователю ошибку ввода проверочного кода
-    //
-    m_loginDialog->setVerificationError(_error);
+	//
+	// Покажем пользователю ошибку ввода проверочного кода
+	//
+	m_loginDialog->setVerificationError(_error);
 }
 
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
@@ -252,82 +261,65 @@ void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
 
 void StartUpManager::initData()
 {
-	//
-	// Загрузим имя пользователя и пароль из настроек
-	//
-	m_userName =
-			StorageFacade::settingsStorage()->value(
-				"application/user-name",
-				SettingsStorage::ApplicationSettings);
-	m_password =
-			PasswordStorage::load(
-				StorageFacade::settingsStorage()->value(
-					"application/password",
-					SettingsStorage::ApplicationSettings),
-				m_userName
-				);
 }
 
 void StartUpManager::initView()
 {
-    m_loginDialog->hide();
+	m_loginDialog->hide();
 }
 
 void StartUpManager::initConnections()
 {
-    //
-    // Показать пользователю диалог авторизации/регистрации
-    // Предварительно его очистив
-    //
-    connect(m_view, &StartUpView::loginClicked, [this] {
-        m_loginDialog->showPrepared();
-    });
+	//
+	// Показать пользователю диалог авторизации/регистрации
+	// Предварительно его очистив
+	//
+	connect(m_view, &StartUpView::loginClicked, [this] {
+		m_loginDialog->showPrepared();
+	});
 
-    connect(m_view, &StartUpView::logoutClicked,
-            this, &StartUpManager::logoutRequested);
-    connect(m_view, &StartUpView::createProjectClicked,
-            this, &StartUpManager::createProjectRequested);
-    connect(m_view, &StartUpView::openProjectClicked,
-            this, &StartUpManager::openProjectRequested);
-    connect(m_view, &StartUpView::helpClicked,
-            this, &StartUpManager::helpRequested);
+	connect(m_view, &StartUpView::logoutClicked, this, &StartUpManager::logoutRequested);
+	connect(m_view, &StartUpView::createProjectClicked, this, &StartUpManager::createProjectRequested);
+	connect(m_view, &StartUpView::openProjectClicked, this, &StartUpManager::openProjectRequested);
+	connect(m_view, &StartUpView::helpClicked, this, &StartUpManager::helpRequested);
 
+	connect(m_view, &StartUpView::openRecentProjectClicked, this, &StartUpManager::openRecentProjectRequested);
+	connect(m_view, &StartUpView::hideRecentProjectRequested, this, &StartUpManager::hideRecentProjectRequested);
+	connect(m_view, &StartUpView::openRemoteProjectClicked, this, &StartUpManager::openRemoteProjectRequested);
+	connect(m_view, &StartUpView::editRemoteProjectRequested, this, &StartUpManager::editRemoteProjectRequested);
+	connect(m_view, &StartUpView::removeRemoteProjectRequested, this, &StartUpManager::removeRemoteProjectRequested);
+	connect(m_view, &StartUpView::shareRemoteProjectRequested, this, &StartUpManager::shareRemoteProjectRequested);
+	connect(m_view, &StartUpView::unshareRemoteProjectRequested, this, &StartUpManager::unshareRemoteProjectRequested);
+	connect(m_view, &StartUpView::refreshProjects, this, &StartUpManager::refreshProjectsRequested);
 
-    connect(m_view, &StartUpView::openRecentProjectClicked,
-            this, &StartUpManager::openRecentProjectRequested);
-    connect(m_view, &StartUpView::openRemoteProjectClicked,
-            this, &StartUpManager::openRemoteProjectRequested);
-    connect(m_view, &StartUpView::refreshProjects,
-            this, &StartUpManager::refreshProjectsRequested);
+	connect(m_loginDialog, &LoginDialog::loginRequested, [this] {
+		emit loginRequested(m_loginDialog->loginEmail(),
+							m_loginDialog->loginPassword());}
+	);
+	connect(m_loginDialog, &LoginDialog::signUpRequested, [this] {
+		emit signUpRequested(m_loginDialog->signUpEmail(),
+							 m_loginDialog->signUpPassword());
+	});
+	connect(m_loginDialog, &LoginDialog::verifyRequested, [this] {
+		emit verifyRequested(m_loginDialog->verificationCode());
+	});
+	connect(m_loginDialog, &LoginDialog::restoreRequested, [this] {
+		emit restoreRequested(m_loginDialog->loginEmail());
+	});
+	connect(m_view, &StartUpView::userNameChanged,
+			this, &StartUpManager::userNameChangeRequested);
+	connect(m_view, &StartUpView::getSubscriptionInfoClicked,
+			this, &StartUpManager::getSubscriptionInfoRequested);
+	connect(m_view, &StartUpView::renewSubscriptionClicked,
+			this, &StartUpManager::showRenewSubscriptionDialog);
+	connect(m_view, &StartUpView::passwordChangeClicked, [this] {
+		m_changePasswordDialog->showPrepared();
+	});
 
-    connect(m_loginDialog, &LoginDialog::loginRequested, [this] {
-        emit loginRequested(m_loginDialog->loginEmail(),
-                            m_loginDialog->loginPassword());}
-    );
-    connect(m_loginDialog, &LoginDialog::signUpRequested, [this] {
-        emit signUpRequested(m_loginDialog->signUpEmail(),
-                             m_loginDialog->signUpPassword());
-    });
-    connect(m_loginDialog, &LoginDialog::verifyRequested, [this] {
-        emit verifyRequested(m_loginDialog->verificationCode());
-    });
-    connect(m_loginDialog, &LoginDialog::restoreRequested, [this] {
-        emit restoreRequested(m_loginDialog->loginEmail());
-    });
-    connect(m_view, &StartUpView::userNameChanged,
-            this, &StartUpManager::userNameChangeRequested);
-    connect(m_view, &StartUpView::getSubscriptionInfoClicked,
-            this, &StartUpManager::getSubscriptionInfoRequested);
-    connect(m_view, &StartUpView::renewSubscriptionClicked,
-            this, &StartUpManager::renewSubscriptionShow);
-    connect(m_view, &StartUpView::passwordChangeClicked, [this] {
-        m_changePasswordDialog->showPrepared();
-    });
-
-    connect(m_changePasswordDialog, &ChangePasswordDialog::changeRequested, [this] {
-        emit passwordChangeRequested(m_changePasswordDialog->password(),
-                                     m_changePasswordDialog->newPassword());
-    });
+	connect(m_changePasswordDialog, &ChangePasswordDialog::changeRequested, [this] {
+		emit passwordChangeRequested(m_changePasswordDialog->password(),
+									 m_changePasswordDialog->newPassword());
+	});
 }
 
 void StartUpManager::checkNewVersion()

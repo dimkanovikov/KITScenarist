@@ -94,6 +94,11 @@ namespace ManagementLayer
 		int id() const;
 
 		/**
+		 * @brief Является ли пользователь владельцем файла
+		 */
+		bool isUserOwner() const;
+
+		/**
 		 * @brief Сценарий возможно только комментировать?
 		 */
 		bool isCommentOnly() const;

@@ -156,6 +156,11 @@ int Project::id() const
 	return m_id;
 }
 
+bool Project::isUserOwner() const
+{
+	return m_role == Owner;
+}
+
 bool Project::isCommentOnly() const
 {
 	return m_role == Commentator;

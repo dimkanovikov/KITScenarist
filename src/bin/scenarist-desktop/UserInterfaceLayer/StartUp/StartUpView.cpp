@@ -191,7 +191,12 @@ void StartUpView::initConnections()
 
 	connect(ui->localProjects, SIGNAL(toggled(bool)), this, SLOT(aboutFilesSourceChanged()));
 	connect(ui->recentFiles, &ProjectsList::clicked, this, &StartUpView::openRecentProjectClicked);
+	connect(ui->recentFiles, &ProjectsList::hideRequested, this, &StartUpView::hideRecentProjectRequested);
 	connect(ui->remoteFiles, &ProjectsList::clicked, this, &StartUpView::openRemoteProjectClicked);
+	connect(ui->remoteFiles, &ProjectsList::editRequested, this, &StartUpView::editRemoteProjectRequested);
+	connect(ui->remoteFiles, &ProjectsList::removeRequested, this, &StartUpView::removeRemoteProjectRequested);
+	connect(ui->remoteFiles, &ProjectsList::shareRequested, this, &StartUpView::shareRemoteProjectRequested);
+	connect(ui->remoteFiles, &ProjectsList::unshareRequested, this, &StartUpView::unshareRemoteProjectRequested);
 	connect(ui->refreshProjects, SIGNAL(clicked()), this, SIGNAL(refreshProjects()));
 }
 

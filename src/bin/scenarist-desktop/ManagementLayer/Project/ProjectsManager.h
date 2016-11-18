@@ -82,6 +82,16 @@ namespace ManagementLayer
 		 */
 		void closeCurrentProject();
 
+		/**
+		 * @brief Получить проект
+		 */
+		Project project(const QModelIndex& _index, bool _isLocal = true) const;
+
+		/**
+		 * @brief Скрыть проект из списка локальных проектов
+		 */
+		void hideProjectFromLocal(const QModelIndex& _index);
+
 	public slots:
 		/**
 		 * @brief Обновить список проектов

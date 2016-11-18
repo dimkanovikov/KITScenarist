@@ -8,6 +8,8 @@ class QAbstractItemModel;
 
 namespace UserInterface
 {
+	class ProjectFileWidget;
+
 	/**
 	 * @brief Виджет списка проектов
 	 */
@@ -35,15 +37,46 @@ namespace UserInterface
 		void clicked(const QModelIndex& _projectIndex);
 
 		/**
+		 * @brief Запрос на изменение проекта
+		 */
+		void editRequested(const QModelIndex& _projectIndex);
+
+		/**
+		 * @brief Запрос на удаление проекта
+		 */
+		void removeRequested(const QModelIndex& _projectIndex);
+
+		/**
+		 * @brief Запрос на скрытие проекта из списка
+		 */
+		void hideRequested(const QModelIndex& _projectIndex);
+
+		/**
+		 * @brief Запрос на открытие доступа к проекту
+		 */
+		void shareRequested(const QModelIndex& _projectIndex);
+
+		/**
 		 * @brief Удалить пользователя с заданным адресом электронной почты
 		 */
-		void removeUserRequested(const QModelIndex& _projectIndex, const QString& _email);
+		void unshareRequested(const QModelIndex& _projectIndex, const QString& _email);
 
 	private:
 		/**
-		 * @brief Обработать выбор проекта
+		 * @brief Получить порядковый номер заданного проекта
 		 */
+		int projectRow(ProjectFileWidget* _project) const;
+
+		/**
+		 * @brief Обработать нажатия соответствующих кнопок-действий над проектом
+		 */
+		/** @{ */
 		void handleProjectClick();
+		void handleEditClick();
+		void handleRemoveClick();
+		void handleHideClick();
+		void handleShareClick();
+		/** @} */
 
 		/**
 		 * @brief Обработать закрытие доступа к проекту для пользователя

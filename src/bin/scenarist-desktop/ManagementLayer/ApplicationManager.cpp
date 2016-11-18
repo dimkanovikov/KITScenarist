@@ -32,9 +32,11 @@
 #include <3rd_party/Widgets/SideBar/SideBar.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
+#include <3rd_party/Widgets/QLightBoxWidget/qlightboxinputdialog.h>
 
 #include <UserInterfaceLayer/ApplicationView.h>
 #include <UserInterfaceLayer/Project/AddProjectDialog.h>
+#include <UserInterfaceLayer/Project/ShareDialog.h>
 
 #include <QApplication>
 #include <QComboBox>
@@ -57,6 +59,7 @@
 using namespace ManagementLayer;
 using UserInterface::ApplicationView;
 using UserInterface::AddProjectDialog;
+using UserInterface::ShareDialog;
 
 namespace {
 	/**
@@ -234,10 +237,9 @@ void ApplicationManager::aboutCreateNew()
 	//
 	if (saveIfNeeded()) {
 		AddProjectDialog dlg(m_view);
-		//
-		// TODO: SyncManager
-		//
-//		dlg.setIsRemoteAvailable(false);
+		dlg.setIsRemoteAvailable(m_startUpManager->isUserLogged(),
+								 m_synchronizationManagerV2->isSubscriptionActive());
+
 		while (dlg.exec() != AddProjectDialog::Rejected) {
 			//
 			// Если пользователь добавляет локальный проект
@@ -260,7 +262,13 @@ void ApplicationManager::aboutCreateNew()
 			// Проект в облаке
 			//
 			else {
+				if (!dlg.projectName().isEmpty()) {
+					m_synchronizationManagerV2->createProject(dlg.projectName());
 
+					//
+					// TODO: создание проекта, импорт и открытие
+					//
+				}
 			}
 		}
 	}
@@ -704,6 +712,68 @@ void ApplicationManager::aboutLoadFromRemote(const QModelIndex& _projectIndex)
 	}
 }
 
+void ApplicationManager::editRemoteProjectName(const QModelIndex& _index)
+{
+	const bool IS_REMOTE = false;
+	const Project project = m_projectsManager->project(_index, IS_REMOTE);
+	const QString newName =
+			QLightBoxInputDialog::getText(m_view, tr("Change project name"),
+				tr("Enter new name for project"), project.name());
+	if (!newName.isEmpty()) {
+		m_synchronizationManagerV2->updateProjectName(project.id(), newName);
+	}
+}
+
+void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
+{
+	const bool IS_REMOTE = false;
+	const Project project = m_projectsManager->project(_index, IS_REMOTE);
+
+	//
+	// Если пользователь является владельцем файла, то он может его удалить
+	//
+	if (project.isUserOwner()) {
+		if (QLightBoxMessage::question(m_view, tr("Project removing"),
+									   tr("Are you sure to remove project <b>%1</b>").arg(project.name()))
+			== QDialogButtonBox::Yes) {
+			m_synchronizationManagerV2->removeProject(project.id());
+		}
+	}
+	//
+	// А если нет, то только отписаться от него
+	//
+	else {
+		if (QLightBoxMessage::question(m_view, tr("Project unsubscribing"),
+									   tr("Are you sure to remove your subscription to project <b>%1</b>").arg(project.name()))
+			== QDialogButtonBox::Yes) {
+			m_synchronizationManagerV2->unshareProject(project.id());
+		}
+	}
+}
+
+void ApplicationManager::shareRemoteProject(const QModelIndex& _index)
+{
+	const bool IS_REMOTE = false;
+	const Project project = m_projectsManager->project(_index, IS_REMOTE);
+	ShareDialog dlg(m_view);
+	if (dlg.exec() == ShareDialog::Accepted) {
+		m_synchronizationManagerV2->shareProject(project.id(), dlg.email(), dlg.role());
+	}
+}
+
+void ApplicationManager::unshareRemoteProject(const QModelIndex& _index, const QString& _userEmail)
+{
+	const bool IS_REMOTE = false;
+	const Project project = m_projectsManager->project(_index, IS_REMOTE);
+	if (QLightBoxMessage::question(m_view, tr("Project unsubscribing"),
+								   tr("Are you sure to remove subscription of user <b>%1</b> to project <b>%2</b>")
+								   .arg(_userEmail)
+								   .arg(project.name()))
+		== QDialogButtonBox::Yes) {
+		m_synchronizationManagerV2->unshareProject(project.id(), _userEmail);
+	}
+}
+
 void ApplicationManager::aboutShowSyncActiveIndicator()
 {
 	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"), tr("Connection active"), tr("Project sinchronized"));
@@ -790,7 +860,6 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 				//
 				// Переподключаемся
 				//
-				//QTimer::singleShot(0, m_synchronizationManager, SLOT(login()));
 				QTimer::singleShot(0, m_synchronizationManagerV2, &SynchronizationManagerV2::autoLogin);
 				return;
 			} else {
@@ -909,7 +978,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			//
 			m_projectsManager->setRemoteProjectsSyncUnavailable();
 		}
-		}
+	}
 }
 
 void ApplicationManager::aboutImport()
@@ -1511,14 +1580,19 @@ void ApplicationManager::initConnections()
 			m_synchronizationManagerV2, &SynchronizationManagerV2::loadSubscriptionInfo);
 	connect(m_startUpManager, &StartUpManager::passwordChangeRequested,
 			m_synchronizationManagerV2, &SynchronizationManagerV2::changePassword);
-
-	connect(m_startUpManager, SIGNAL(createProjectRequested()), this, SLOT(aboutCreateNew()));
-	connect(m_startUpManager, SIGNAL(openProjectRequested()), this, SLOT(aboutLoad()));
-	connect(m_startUpManager, SIGNAL(helpRequested()), this, SLOT(aboutShowHelp()));
+	//
+	connect(m_startUpManager, &StartUpManager::createProjectRequested, this, &ApplicationManager::aboutCreateNew);
+	connect(m_startUpManager, &StartUpManager::openProjectRequested, [=] { aboutLoad(); });
+	connect(m_startUpManager, &StartUpManager::helpRequested, this, &ApplicationManager::aboutShowHelp);
 	connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_projectsManager, &ProjectsManager::refreshProjects);
 	connect(m_startUpManager, &StartUpManager::refreshProjectsRequested, m_synchronizationManagerV2, &SynchronizationManagerV2::loadProjects);
-	connect(m_startUpManager, SIGNAL(openRecentProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRecent(QModelIndex)));
-	connect(m_startUpManager, SIGNAL(openRemoteProjectRequested(QModelIndex)), this, SLOT(aboutLoadFromRemote(QModelIndex)));
+	connect(m_startUpManager, &StartUpManager::openRecentProjectRequested, this, &ApplicationManager::aboutLoadFromRecent);
+	connect(m_startUpManager, &StartUpManager::hideRecentProjectRequested, m_projectsManager, &ProjectsManager::hideProjectFromLocal);
+	connect(m_startUpManager, &StartUpManager::openRemoteProjectRequested, this, &ApplicationManager::aboutLoadFromRemote);
+	connect(m_startUpManager, &StartUpManager::editRemoteProjectRequested, this, &ApplicationManager::editRemoteProjectName);
+	connect(m_startUpManager, &StartUpManager::removeRemoteProjectRequested, this, &ApplicationManager::removeRemoteProject);
+	connect(m_startUpManager, &StartUpManager::shareRemoteProjectRequested, this, &ApplicationManager::shareRemoteProject);
+	connect(m_startUpManager, &StartUpManager::unshareRemoteProjectRequested, this, &ApplicationManager::unshareRemoteProject);
 
 	connect(m_researchManager, &ResearchManager::scenarioNameChanged, this, &ApplicationManager::updateWindowTitle);
 
@@ -1585,9 +1659,10 @@ void ApplicationManager::initConnections()
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::passwordChanged,
 			m_startUpManager, &StartUpManager::passwordChanged);
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::subscriptionInfoLoaded,
-			m_startUpManager, &StartUpManager::subscriptionInfoGot);
+			m_startUpManager, &StartUpManager::setSubscriptionInfo);
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::syncClosedWithError,
 			this, &ApplicationManager::aboutSyncClosedWithError);
+	//
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::projectsLoaded,
 			m_projectsManager, &ProjectsManager::setRemoteProjects);
 

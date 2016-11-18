@@ -34,19 +34,20 @@ void ProjectFileWidget::setFilePath(const QString& _filePath)
 	m_ui->filePath->setText(_filePath);
 }
 
-void ProjectFileWidget::setIsRemote(bool _isRemote)
+void ProjectFileWidget::configureOptions(bool _isRemote, bool _isOwner)
 {
-	m_ui->change->setVisible(_isRemote);
+	m_ui->change->setVisible(_isRemote && _isOwner);
 	m_ui->remove->setVisible(_isRemote);
-	m_ui->share->setVisible(_isRemote);
+	m_ui->share->setVisible(_isRemote && _isOwner);
 
 	m_ui->hide->setVisible(!_isRemote);
 }
 
-void ProjectFileWidget::addCollaborator(const QString& _email, const QString& _name, const QString& _role)
+void ProjectFileWidget::addCollaborator(const QString& _email, const QString& _name, const QString& _role, bool _isOwner)
 {
 	ProjectUserWidget* user = new ProjectUserWidget(this);
 	user->setUserInfo(_email, _name, _role);
+	user->setDeletable(_isOwner);
 	connect(user, &ProjectUserWidget::removeUserRequested, this, &ProjectFileWidget::removeUserRequested);
 	m_ui->usersLayout->addWidget(user);
 
@@ -121,6 +122,11 @@ void ProjectFileWidget::initConnections()
 			WAF::Animation::slide(m_ui->users, WAF::FromBottomToTop, false, _toggled);
 		}
 	});
+
+	connect(m_ui->change, &FlatButton::clicked, this, &ProjectFileWidget::editClicked);
+	connect(m_ui->remove, &FlatButton::clicked, this, &ProjectFileWidget::removeClicked);
+	connect(m_ui->hide, &FlatButton::clicked, this, &ProjectFileWidget::hideClicked);
+	connect(m_ui->share, &FlatButton::clicked, this, &ProjectFileWidget::shareClicked);
 }
 
 void ProjectFileWidget::initStylesheet()

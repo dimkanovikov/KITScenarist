@@ -102,12 +102,34 @@ namespace ManagementLayer
 		void aboutShowHelp();
 
 		/**
-		 * @brief Загрузить из списка
+		 * @brief Загрузить выбранный из списка локальный проект
 		 */
-		/** @{ */
 		void aboutLoadFromRecent(const QModelIndex& _projectIndex);
+
+		/**
+		 * @brief Загрузить выбранный проект из облака
+		 */
 		void aboutLoadFromRemote(const QModelIndex& _projectIndex);
-		/** @} */
+
+		/**
+		 * @brief Сменить имя проекта из облака
+		 */
+		void editRemoteProjectName(const QModelIndex& _index);
+
+		/**
+		 * @brief Удалить проект из облака
+		 */
+		void removeRemoteProject(const QModelIndex& _index);
+
+		/**
+		 * @brief Открыть доступ к проекту из облака
+		 */
+		void shareRemoteProject(const QModelIndex& _index);
+
+		/**
+		 * @brief Закрыть доступ к проекту из облака
+		 */
+		void unshareRemoteProject(const QModelIndex& _index, const QString& _userEmail);
 
 		/**
 		 * @brief Отобразить индикатор активной синхронизации

@@ -47,6 +47,11 @@ namespace {
 	const QUrl URL_SUBSCRIBE_STATE = QUrl("https://kitscenarist.ru/api/account/subscribe/state/");
 	//
 	const QUrl URL_PROJECTS = QUrl("https://kitscenarist.ru/api/projects/");
+	const QUrl URL_CREATE_PROJECT = QUrl("https://kitscenarist.ru/api/projects/create/");
+	const QUrl URL_UPDATE_PROJECT = QUrl("https://kitscenarist.ru/api/projects/edit/");
+	const QUrl URL_REMOVE_PROJECT = QUrl("https://kitscenarist.ru/api/projects/remove/");
+	const QUrl URL_CREATE_PROJECT_SUBSCRIPTION = QUrl("https://kitscenarist.ru/api/projects/share/create/");
+	const QUrl URL_REMOVE_PROJECT_SUBSCRIPTION = QUrl("https://kitscenarist.ru/api/projects/share/remove/");
 	/** @} */
 
 	/**
@@ -59,6 +64,11 @@ namespace {
 	const QString KEY_PASSWORD = "password";
 	const QString KEY_NEW_PASSWORD = "new_password";
 	const QString KEY_SESSION_KEY = "session_key";
+	const QString KEY_ROLE = "role";
+	//
+	const QString KEY_PROJECT_ID = "project_id";
+	const QString KEY_PROJECT_NAME = "project_name";
+	/** @} */
 
 	/**
 	 * @brief Список кодов ошибок и соответствующих им описаний
@@ -85,10 +95,15 @@ namespace {
 SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _parentView) :
 	QObject(_parent),
 	m_view(_parentView),
-	m_activeSubscribe(false),
+	m_isSubscriptionActive(false),
 	m_loader(new WebLoader(this))
 {
 	initConnections();
+}
+
+bool SynchronizationManagerV2::isSubscriptionActive() const
+{
+	return m_isSubscriptionActive;
 }
 
 void SynchronizationManagerV2::autoLogin()
@@ -157,7 +172,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 		} else if (responseReader.name().toString() == "subscribe_is_active") {
 			isActiveFind = true;
 			responseReader.readNext();
-			m_activeSubscribe = responseReader.text().toString() == "true";
+			m_isSubscriptionActive = responseReader.text().toString() == "true";
 			responseReader.readNext();
 		} else if (responseReader.name().toString() == "subscribe_end") {
 			responseReader.readNext();
@@ -166,7 +181,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 		}
 	}
 
-	if (!isActiveFind || (isActiveFind && m_activeSubscribe && date.isEmpty())) {
+	if (!isActiveFind || (isActiveFind && m_isSubscriptionActive && date.isEmpty())) {
 		handleError(tr("Got wrong result from server"), 404);
 		m_sessionKey.clear();
 		return;
@@ -197,7 +212,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 	//
 	m_userEmail = _email;
 
-	emit subscriptionInfoLoaded(m_activeSubscribe, dateTransform(date));
+	emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
 	emit loginAccepted(userName, m_userEmail);
 }
 
@@ -397,7 +412,7 @@ void SynchronizationManagerV2::loadSubscriptionInfo()
 		if (responseReader.name().toString() == "subscribe_is_active") {
 			isActiveFind = true;
 			responseReader.readNext();
-			m_activeSubscribe = responseReader.text().toString() == "true";
+			m_isSubscriptionActive = responseReader.text().toString() == "true";
 			responseReader.readNext();
 		} else if (responseReader.name().toString() == "subscribe_end") {
 			responseReader.readNext();
@@ -406,12 +421,12 @@ void SynchronizationManagerV2::loadSubscriptionInfo()
 		}
 	}
 
-	if (!isActiveFind || (isActiveFind && m_activeSubscribe && date.isEmpty())) {
+	if (!isActiveFind || (isActiveFind && m_isSubscriptionActive && date.isEmpty())) {
 		handleError(tr("Got wrong result from server"), 404);
 		return;
 	}
 
-	emit subscriptionInfoLoaded(m_activeSubscribe, dateTransform(date));
+	emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
 }
 
 void SynchronizationManagerV2::changePassword(const QString& _password,
@@ -463,6 +478,158 @@ void SynchronizationManagerV2::loadProjects()
 	// Уведомляем о получении проектов
 	//
 	emit projectsLoaded(response);
+}
+
+int SynchronizationManagerV2::createProject(const QString& _projectName)
+{
+	const int INVALID_PROJECT_ID = -1;
+
+	//
+	// Создаём новый проект
+	//
+	m_loader->setRequestMethod(WebLoader::Post);
+	m_loader->clearRequestAttributes();
+	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	m_loader->addRequestAttribute(KEY_PROJECT_NAME, _projectName);
+	const QByteArray response = m_loader->loadSync(URL_CREATE_PROJECT);
+
+	//
+	// Считываем результат
+	//
+	QXmlStreamReader responseReader(response);
+	if (!isOperationSucceed(responseReader)) {
+		return INVALID_PROJECT_ID;
+	}
+
+	//
+	// Считываем идентификатор проекта
+	//
+	int newProjectId = INVALID_PROJECT_ID;
+	while (!responseReader.atEnd()) {
+		responseReader.readNext();
+		if (responseReader.name().toString() == "project") {
+			newProjectId = responseReader.attributes().value("id").toInt();
+			break;
+		}
+	}
+
+	if (newProjectId == INVALID_PROJECT_ID) {
+		handleError(tr("Got wrong result from server"), 404);
+		return INVALID_PROJECT_ID;
+	}
+
+	//
+	// Если проект успешно добавился перечитаем список проектов
+	//
+	loadProjects();
+
+	return newProjectId;
+}
+
+void SynchronizationManagerV2::updateProjectName(int _projectId, const QString& _newProjectName)
+{
+	//
+	// Обновляем проект
+	//
+	m_loader->setRequestMethod(WebLoader::Post);
+	m_loader->clearRequestAttributes();
+	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
+	m_loader->addRequestAttribute(KEY_PROJECT_NAME, _newProjectName);
+	const QByteArray response = m_loader->loadSync(URL_UPDATE_PROJECT);
+
+	//
+	// Считываем результат
+	//
+	QXmlStreamReader responseReader(response);
+	if (!isOperationSucceed(responseReader)) {
+		return;
+	}
+
+	//
+	// Если проект успешно обновился перечитаем список проектов
+	//
+	loadProjects();
+}
+
+void SynchronizationManagerV2::removeProject(int _projectId)
+{
+	//
+	// Удаляем проект
+	//
+	m_loader->setRequestMethod(WebLoader::Post);
+	m_loader->clearRequestAttributes();
+	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
+	const QByteArray response = m_loader->loadSync(URL_REMOVE_PROJECT);
+
+	//
+	// Считываем результат
+	//
+	QXmlStreamReader responseReader(response);
+	if (!isOperationSucceed(responseReader)) {
+		return;
+	}
+
+	//
+	// Если проект успешно удалён перечитаем список проектов
+	//
+	loadProjects();
+}
+
+void SynchronizationManagerV2::shareProject(int _projectId, const QString& _userEmail, int _role)
+{
+	const QString userRole = _role == 0 ? "redactor" : "commentator";
+
+	//
+	// ДОбавляем подписчика в проект
+	//
+	m_loader->setRequestMethod(WebLoader::Post);
+	m_loader->clearRequestAttributes();
+	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
+	m_loader->addRequestAttribute(KEY_EMAIL, _userEmail);
+	m_loader->addRequestAttribute(KEY_ROLE, userRole);
+	const QByteArray response = m_loader->loadSync(URL_CREATE_PROJECT_SUBSCRIPTION);
+
+	//
+	// Считываем результат
+	//
+	QXmlStreamReader responseReader(response);
+	if (!isOperationSucceed(responseReader)) {
+		return;
+	}
+
+	//
+	// Если подписчик добавлен, перечитаем список проектов
+	//
+	loadProjects();
+}
+
+void SynchronizationManagerV2::unshareProject(int _projectId, const QString& _userEmail)
+{
+	//
+	// Убираем подписчика из проекта
+	//
+	m_loader->setRequestMethod(WebLoader::Post);
+	m_loader->clearRequestAttributes();
+	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
+	m_loader->addRequestAttribute(KEY_EMAIL, _userEmail.trimmed());
+	const QByteArray response = m_loader->loadSync(URL_REMOVE_PROJECT_SUBSCRIPTION);
+
+	//
+	// Считываем результат
+	//
+	QXmlStreamReader responseReader(response);
+	if (!isOperationSucceed(responseReader)) {
+		return;
+	}
+
+	//
+	// Если подписчик удалён перечитаем список проектов
+	//
+	loadProjects();
 }
 
 bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseReader)

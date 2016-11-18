@@ -330,7 +330,8 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp \
-    scenarist-core/BusinessLayer/Import/KitScenaristImporter.cpp
+    scenarist-core/BusinessLayer/Import/KitScenaristImporter.cpp \
+    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -601,7 +602,9 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.h \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.h \
-    scenarist-core/BusinessLayer/Import/KitScenaristImporter.h
+    scenarist-core/BusinessLayer/Import/KitScenaristImporter.h \
+    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.h \
+    scenarist-core/3rd_party/Helpers/Validators.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -623,7 +626,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.ui \
-    scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.ui
 
 
 RESOURCES += \
