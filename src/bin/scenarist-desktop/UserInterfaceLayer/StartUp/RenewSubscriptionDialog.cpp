@@ -22,6 +22,11 @@
 
 using UserInterface::RenewSubscriptionDialog;
 
+namespace {
+    const int bankCardPayment = 0;
+    const int oneMonth = 0;
+}
+
 RenewSubscriptionDialog::RenewSubscriptionDialog(QWidget *_parent) :
     QLightBoxDialog(_parent),
     m_ui(new Ui::RenewSubscriptionDialog)
@@ -54,9 +59,9 @@ unsigned RenewSubscriptionDialog::paymentSystemType() const
 
 void RenewSubscriptionDialog::showPrepared()
 {
-    m_ui->stackedWidget->setCurrentIndex(0);
-    m_ui->paymentType->setCurrentIndex(0);
-    m_ui->duration->setCurrentIndex(0);
+    m_ui->stackedWidget->setCurrentWidget(m_ui->settingsPage);
+    m_ui->paymentType->setCurrentIndex(bankCardPayment);
+    m_ui->duration->setCurrentIndex(oneMonth);
     m_acceptButton->show();
     m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
     setWindowWaiting(false);
@@ -70,7 +75,7 @@ void RenewSubscriptionDialog::showThanks(const QString &_expDate)
 {
     setWindowWaiting(false);
     m_ui->subscriptionDate->setText(_expDate);
-    m_ui->stackedWidget->setCurrentIndex(1);
+    m_ui->stackedWidget->setCurrentWidget(m_ui->thanksPage);
     m_acceptButton->hide();
     m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
 }

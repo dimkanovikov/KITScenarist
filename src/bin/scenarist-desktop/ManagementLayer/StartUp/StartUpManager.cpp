@@ -142,19 +142,19 @@ void StartUpManager::showPasswordError(const QString& _error)
 	}
 }
 
-void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expDate)
+void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expiredDate)
 {
     if (m_renewSubscriptionDialog->isVisible()) {
         //
         // Если окно продления подписки показано, значит,
         // необходимо обновлять, пока не получим изменения
         //
-        if (_expDate != m_subscriptionEndDate) {
+        if (_expiredDate != m_subscriptionEndDate) {
             //
             // Обновилось, обновим окно и поле в StartUpView
             //
-            m_renewSubscriptionDialog->showThanks(_expDate);
-            m_view->setSubscriptionInfo(_isActive, _expDate);
+            m_renewSubscriptionDialog->showThanks(_expiredDate);
+            m_view->setSubscriptionInfo(_isActive, _expiredDate);
         } else {
             //
             // Не обновилось, запросим еще раз
@@ -165,8 +165,8 @@ void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expDate
         //
         // Иначе, это обычный запрос на обновление
         //
-        m_subscriptionEndDate = _expDate;
-        m_view->setSubscriptionInfo(_isActive, _expDate);
+        m_subscriptionEndDate = _expiredDate;
+        m_view->setSubscriptionInfo(_isActive, _expiredDate);
     }
 }
 
