@@ -53,8 +53,9 @@ using UserInterface::RenewSubscriptionDialog;
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
 	m_view(new StartUpView(_parentWidget)),
-	m_loginDialog(new LoginDialog(m_view)),
-	m_changePasswordDialog(new ChangePasswordDialog(m_view))
+    m_loginDialog(new LoginDialog(m_view)),
+    m_changePasswordDialog(new ChangePasswordDialog(m_view)),
+    m_renewSubscriptionDialog(new RenewSubscriptionDialog(m_view))
 {
 	initView();
 
@@ -141,17 +142,32 @@ void StartUpManager::showPasswordError(const QString& _error)
 	}
 }
 
-void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expDate)
+void StartUpManager::setSubscriptionInfo(bool _isActive, const QString &_expiredDate)
 {
-	m_view->setSubscriptionInfo(_isActive, _expDate);
-}
-
-void StartUpManager::showRenewSubscriptionDialog()
-{
-	RenewSubscriptionDialog dialog(m_view);
-	if(dialog.exec() == QLightBoxDialog::Accepted) {
-		emit renewSubscriptionRequested(dialog.duration(), dialog.paymentSystemType());
-	}
+    if (m_renewSubscriptionDialog->isVisible()) {
+        //
+        // Если окно продления подписки показано, значит,
+        // необходимо обновлять, пока не получим изменения
+        //
+        if (_expiredDate != m_subscriptionEndDate) {
+            //
+            // Обновилось, обновим окно и поле в StartUpView
+            //
+            m_renewSubscriptionDialog->showThanks(_expiredDate);
+            m_view->setSubscriptionInfo(_isActive, _expiredDate);
+        } else {
+            //
+            // Не обновилось, запросим еще раз
+            //
+            QTimer::singleShot(3000, this, &StartUpManager::getSubscriptionInfoRequested);
+        }
+    } else {
+        //
+        // Иначе, это обычный запрос на обновление
+        //
+        m_subscriptionEndDate = _expiredDate;
+        m_view->setSubscriptionInfo(_isActive, _expiredDate);
+    }
 }
 
 void StartUpManager::setRecentProjects(QAbstractItemModel* _model)
@@ -311,7 +327,7 @@ void StartUpManager::initConnections()
 	connect(m_view, &StartUpView::getSubscriptionInfoClicked,
 			this, &StartUpManager::getSubscriptionInfoRequested);
 	connect(m_view, &StartUpView::renewSubscriptionClicked,
-			this, &StartUpManager::showRenewSubscriptionDialog);
+            m_renewSubscriptionDialog, &RenewSubscriptionDialog::showPrepared);
 	connect(m_view, &StartUpView::passwordChangeClicked, [this] {
 		m_changePasswordDialog->showPrepared();
 	});
@@ -320,6 +336,13 @@ void StartUpManager::initConnections()
 		emit passwordChangeRequested(m_changePasswordDialog->password(),
 									 m_changePasswordDialog->newPassword());
 	});
+
+    connect(m_renewSubscriptionDialog, &RenewSubscriptionDialog::renewSubsciptionRequested, [this] {
+        emit renewSubscriptionRequested(m_renewSubscriptionDialog->duration(), m_renewSubscriptionDialog->paymentSystemType());
+    });
+    connect(m_renewSubscriptionDialog, &RenewSubscriptionDialog::renewSubsciptionRequested, [this] {
+        QTimer::singleShot(3000, this, &StartUpManager::getSubscriptionInfoRequested);
+    });
 }
 
 void StartUpManager::checkNewVersion()

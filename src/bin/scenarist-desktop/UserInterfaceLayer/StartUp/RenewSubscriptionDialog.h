@@ -23,6 +23,8 @@ namespace Ui {
 class RenewSubscriptionDialog;
 }
 
+class QPushButton;
+
 namespace UserInterface
 {
     class RenewSubscriptionDialog : public QLightBoxDialog
@@ -48,14 +50,48 @@ namespace UserInterface
          */
         unsigned paymentSystemType() const;
 
+        /**
+         * @brief Покажем окно, предварительно очистив его
+         */
+        void showPrepared();
+
+        /**
+         * @brief Покажем окно с благодарностью
+         */
+        void showThanks(const QString& _expDate);
+
+    signals:
+        /**
+         * @brief Запрос на оплату в браузере
+         */
+        void renewSubsciptionRequested();
+
+        /**
+         * @brief Запрос, изменилась ли подписка
+         */
+        void subscriptionChangedRequest();
+
     private:
         /**
          * @brief Сменился период запрашиваемой подписки
          */
         void setPaymentText();
 
+        /**
+         * @brief Переводим окно в/из режим ожидания
+         */
+        void setWindowWaiting(bool _isWaiting);
+
+        void initConnections() override;
+        void initView() override;
+
     private:
         Ui::RenewSubscriptionDialog *m_ui;
+
+        /**
+         * @brief Кнопка отправки запроса на платеж в браузер
+         */
+        QPushButton* m_acceptButton;
 
         /**
          * @brief Принимая на вход число месяцев,
