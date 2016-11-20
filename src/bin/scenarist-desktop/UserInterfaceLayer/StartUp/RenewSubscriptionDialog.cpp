@@ -18,6 +18,7 @@
 #include "ui_RenewSubscriptionDialog.h"
 
 #include <QPushButton>
+#include <QTimer>
 
 using UserInterface::RenewSubscriptionDialog;
 
@@ -27,22 +28,8 @@ RenewSubscriptionDialog::RenewSubscriptionDialog(QWidget *_parent) :
 {
     m_ui->setupUi(this);
 
-    m_ui->buttonBox->addButton(new QPushButton(tr("Renew")), QDialogButtonBox::AcceptRole);
-
-    m_ui->duration->addItem(tr("1 month"), 1);
-    m_ui->duration->addItem(tr("2 month"), 2);
-    m_ui->duration->addItem(tr("3 month"), 3);
-    m_ui->duration->addItem(tr("6 month (6% discount)"), 6);
-    m_ui->duration->addItem(tr("12 month (12% discount)"), 12);
-
-    setPaymentText();
-
-    connect(m_ui->duration, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &RenewSubscriptionDialog::setPaymentText);
-    connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &RenewSubscriptionDialog::accept);
-    connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &RenewSubscriptionDialog::reject);
-
-    QLightBoxDialog::initView();
+    initView();
+    initConnections();
 }
 
 RenewSubscriptionDialog::~RenewSubscriptionDialog()
@@ -65,9 +52,45 @@ unsigned RenewSubscriptionDialog::paymentSystemType() const
     return m_ui->paymentType->currentIndex();
 }
 
+void RenewSubscriptionDialog::showPrepared()
+{
+    m_ui->stackedWidget->setCurrentIndex(0);
+    m_ui->paymentType->setCurrentIndex(0);
+    m_ui->duration->setCurrentIndex(0);
+    m_acceptButton->show();
+    m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+    setWindowWaiting(false);
+
+    setPaymentText();
+
+    show();
+}
+
+void RenewSubscriptionDialog::showThanks(const QString &_expDate)
+{
+    setWindowWaiting(false);
+    m_ui->subscriptionDate->setText(_expDate);
+    m_ui->stackedWidget->setCurrentIndex(1);
+    m_acceptButton->hide();
+    m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
+}
+
 void RenewSubscriptionDialog::setPaymentText()
 {
     m_ui->payment->setText(tr("for %1 rubles").arg(amount()));
+}
+
+void RenewSubscriptionDialog::setWindowWaiting(bool _isWaiting)
+{
+    m_ui->duration->setEnabled(!_isWaiting);
+    m_ui->paymentType->setEnabled(!_isWaiting);
+    m_acceptButton->setEnabled(!_isWaiting);
+
+    if (!_isWaiting) {
+        QLightBoxDialog::hideProgress();
+    } else {
+        QLightBoxDialog::showProgress();
+    }
 }
 
 unsigned RenewSubscriptionDialog::durationToAmount(unsigned _duration) const
@@ -83,4 +106,34 @@ unsigned RenewSubscriptionDialog::durationToAmount(unsigned _duration) const
     if(_duration > 5) {
         amount *= 1 - _duration / 100;
     }
+    return amount;
+}
+
+void RenewSubscriptionDialog::initConnections()
+{
+    connect(m_ui->duration, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &RenewSubscriptionDialog::setPaymentText);
+    //connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &RenewSubscriptionDialog::accept);
+    connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &RenewSubscriptionDialog::renewSubsciptionRequested);
+    connect(m_ui->buttonBox, &QDialogButtonBox::accepted, [this] {
+        setWindowWaiting(true);
+    });
+
+    connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &RenewSubscriptionDialog::reject);
+    connect(this, &RenewSubscriptionDialog::rejected, this, &RenewSubscriptionDialog::hide);
+
+    QLightBoxDialog::initConnections();
+}
+
+void RenewSubscriptionDialog::initView()
+{
+    m_acceptButton = m_ui->buttonBox->addButton(tr("Renew"), QDialogButtonBox::AcceptRole);
+
+    m_ui->duration->addItem(tr("1 month"), 1);
+    m_ui->duration->addItem(tr("2 month"), 2);
+    m_ui->duration->addItem(tr("3 month"), 3);
+    m_ui->duration->addItem(tr("6 month (6% discount)"), 6);
+    m_ui->duration->addItem(tr("12 month (12% discount)"), 12);
+    m_ui->duration->setCurrentIndex(0);
+    QLightBoxDialog::initView();
 }

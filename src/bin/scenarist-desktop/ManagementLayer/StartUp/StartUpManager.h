@@ -26,6 +26,7 @@ namespace UserInterface {
 	class StartUpView;
 	class LoginDialog;
 	class ChangePasswordDialog;
+    class RenewSubscriptionDialog;
 }
 
 class QAbstractItemModel;
@@ -92,11 +93,6 @@ namespace ManagementLayer
 		 * @brief Получена информация о подписке
 		 */
 		void setSubscriptionInfo(bool _isActive, const QString& _expDate);
-
-		/**
-		 * @brief Показать диалог продления подписки
-		 */
-		void showRenewSubscriptionDialog();
 
 		/**
 		 * @brief Установить список недавно используемых проектов
@@ -264,6 +260,11 @@ namespace ManagementLayer
 		 */
 		QString m_userEmail;
 
+        /**
+         * @brief Дата окончания подпискиы
+         */
+        QString m_subscriptionEndDate;
+
 		/**
 		 * @brief Окно авторизации/регистрации
 		 */
@@ -273,6 +274,11 @@ namespace ManagementLayer
 		 * @brief Окно смены пароля
 		 */
 		UserInterface::ChangePasswordDialog* m_changePasswordDialog;
+
+        /**
+         * @brief Окно продления подписки
+         */
+        UserInterface::RenewSubscriptionDialog* m_renewSubscriptionDialog;
 
 
 	};
