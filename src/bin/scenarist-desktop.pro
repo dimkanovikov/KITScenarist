@@ -78,8 +78,8 @@ DEPENDPATH += $$PWD/../libs/fileformats
 #
 LIBS += -L$$DESTDIR/../../libs/webloader/ -lwebloader
 
-INCLUDEPATH += $$PWD/../libs/webloader
-DEPENDPATH += $$PWD/../libs/webloader
+INCLUDEPATH += $$PWD/../libs/webloader/src
+DEPENDPATH += $$PWD/../libs/webloader/src
 #
 
 INCLUDEPATH += $$PWD/scenarist-core

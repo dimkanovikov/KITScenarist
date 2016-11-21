@@ -10,7 +10,7 @@ namespace Domain {
 }
 
 class QTimer;
-class WebLoader;
+class NetworkRequest;
 
 
 namespace ManagementLayer
@@ -175,7 +175,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Загрузчик данных
 		 */
-		WebLoader* m_loader;
+        NetworkRequest* m_loader;
 
 		/**
 		 * @brief Ключ сессии

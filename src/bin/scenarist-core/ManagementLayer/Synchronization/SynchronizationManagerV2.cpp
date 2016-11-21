@@ -22,7 +22,7 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Helpers/PasswordStorage.h>
 
-#include <WebLoader.h>
+#include <NetworkRequest.h>
 
 #include <QXmlStreamReader>
 #include <QEventLoop>
@@ -96,7 +96,7 @@ SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _p
 	QObject(_parent),
 	m_view(_parentView),
 	m_isSubscriptionActive(false),
-	m_loader(new WebLoader(this))
+    m_loader(new NetworkRequest(this))
 {
 	initConnections();
 }
@@ -134,7 +134,7 @@ void SynchronizationManagerV2::autoLogin()
 void SynchronizationManagerV2::login(const QString &_email, const QString &_password)
 {
 
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_LOGIN, _email);
 	m_loader->addRequestAttribute(KEY_PASSWORD, _password);
@@ -218,7 +218,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 
 void SynchronizationManagerV2::signUp(const QString& _email, const QString& _password)
 {
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_EMAIL, _email);
 	m_loader->addRequestAttribute(KEY_PASSWORD, _password);
@@ -286,7 +286,7 @@ void SynchronizationManagerV2::verify(const QString& _code)
 
 void SynchronizationManagerV2::restorePassword(const QString &_email)
 {
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_EMAIL, _email);
 	QByteArray response = m_loader->loadSync(URL_RESTORE);
@@ -327,7 +327,7 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
 
 void SynchronizationManagerV2::logout()
 {
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	QByteArray response = m_loader->loadSync(URL_LOGOUT);
@@ -368,7 +368,7 @@ void SynchronizationManagerV2::renewSubscription(unsigned _duration,
 
 void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
 {
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	m_loader->addRequestAttribute(KEY_USERNAME, _newUserName);
@@ -387,7 +387,7 @@ void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
 
 void SynchronizationManagerV2::loadSubscriptionInfo()
 {
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	QByteArray response = m_loader->loadSync(URL_SUBSCRIBE_STATE);
@@ -432,7 +432,7 @@ void SynchronizationManagerV2::loadSubscriptionInfo()
 void SynchronizationManagerV2::changePassword(const QString& _password,
 											  const QString& _newPassword)
 {
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	m_loader->addRequestAttribute(KEY_PASSWORD, _password);
@@ -455,7 +455,7 @@ void SynchronizationManagerV2::loadProjects()
 	//
 	// Получаем список проектов
 	//
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	const QByteArray response = m_loader->loadSync(URL_PROJECTS);
@@ -487,7 +487,7 @@ int SynchronizationManagerV2::createProject(const QString& _projectName)
 	//
 	// Создаём новый проект
 	//
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	m_loader->addRequestAttribute(KEY_PROJECT_NAME, _projectName);
@@ -531,7 +531,7 @@ void SynchronizationManagerV2::updateProjectName(int _projectId, const QString& 
 	//
 	// Обновляем проект
 	//
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
@@ -557,7 +557,7 @@ void SynchronizationManagerV2::removeProject(int _projectId)
 	//
 	// Удаляем проект
 	//
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
@@ -584,7 +584,7 @@ void SynchronizationManagerV2::shareProject(int _projectId, const QString& _user
 	//
 	// ДОбавляем подписчика в проект
 	//
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
@@ -611,7 +611,7 @@ void SynchronizationManagerV2::unshareProject(int _projectId, const QString& _us
 	//
 	// Убираем подписчика из проекта
 	//
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);

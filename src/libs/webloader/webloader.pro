@@ -1,17 +1,14 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2015-03-17T16:41:04
-#
-#-------------------------------------------------
+TEMPLATE = lib
+TARGET = webloader
+DEPENDPATH += src
+INCLUDEPATH += src
 
-QT       -= gui
-QT       += network xml
+CONFIG += c++11
+
+QT += network xml
+QT -= gui
 
 QMAKE_MAC_SDK = macosx10.12
-
-TARGET = webloader
-TEMPLATE = lib
-
 DEFINES += WEBLOADER_LIBRARY
 
 #
@@ -27,22 +24,17 @@ OBJECTS_DIR = $$DESTDIR/.obj
 MOC_DIR = $$DESTDIR/.moc
 RCC_DIR = $$DESTDIR/.qrc
 UI_DIR = $$DESTDIR/.ui
-#
 
-SOURCES += \
-    WebRequest.cpp \
-    WebLoader.cpp \
-    HttpMultiPart.cpp \
-    QFreeDesktopMime/freedesktopmime.cpp
+HEADERS += src/HttpMultiPart_p.h \
+	   src/NetworkQueue_p.h \
+	   src/NetworkRequest.h \
+	   src/NetworkRequestPrivate_p.h \
+	   src/WebLoader_p.h \
+	   src/WebRequest_p.h \
+	   src/NetworkRequestLoader.h
 
-HEADERS += \
-    WebRequest.h \
-    WebLoader.h \
-    HttpMultiPart.h \
-    QFreeDesktopMime/freedesktopmime.h \
-    WebLoaderGlobal.h \
-    WebLoaderGlobal.h
-
-RESOURCES += \
-    resources.qrc
-
+SOURCES += src/HttpMultiPart_p.cpp \
+	   src/WebLoader_p.cpp \
+	   src/WebRequest_p.cpp \
+	   src/NetworkQueue_p.cpp \
+	   src/NetworkRequest.cpp

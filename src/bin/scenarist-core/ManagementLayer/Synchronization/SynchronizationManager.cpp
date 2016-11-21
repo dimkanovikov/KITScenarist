@@ -17,7 +17,7 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Helpers/PasswordStorage.h>
 
-#include <WebLoader.h>
+#include <NetworkRequest.h>
 
 #include <QEventLoop>
 #include <QHash>
@@ -104,7 +104,7 @@ namespace {
 SynchronizationManager::SynchronizationManager(QObject* _parent, QWidget* _parentView) :
 	QObject(_parent),
 	m_view(_parentView),
-	m_loader(new WebLoader(this)),
+    m_loader(new NetworkRequest(this)),
 	m_isInternetConnectionActive(true)
 {
 	initConnections();
@@ -143,7 +143,7 @@ void SynchronizationManager::aboutLogin(const QString& _userName, const QString&
 	//
 	// Авторизуемся
 	//
-	m_loader->setRequestMethod(WebLoader::Post);
+    m_loader->setRequestMethod(NetworkRequest::Post);
 	m_loader->clearRequestAttributes();
 	m_loader->addRequestAttribute(KEY_USER_NAME, _userName);
 	m_loader->addRequestAttribute(KEY_PASSWORD, _password);
@@ -224,7 +224,7 @@ void SynchronizationManager::aboutLogout()
 	// Закрываем авторизацию
 	//
 	if (!m_sessionKey.isEmpty()) {
-		m_loader->setRequestMethod(WebLoader::Post);
+        m_loader->setRequestMethod(NetworkRequest::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		loadSyncWrapper(URL_LOGOUT);
@@ -267,7 +267,7 @@ void SynchronizationManager::aboutLoadProjects()
 		//
 		// Получаем список проектов
 		//
-		m_loader->setRequestMethod(WebLoader::Post);
+        m_loader->setRequestMethod(NetworkRequest::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		QByteArray response = loadSyncWrapper(URL_PROJECTS);
@@ -334,7 +334,7 @@ void SynchronizationManager::aboutFullSyncScenario()
 		//
 		// Получить список патчей проекта
 		//
-		m_loader->setRequestMethod(WebLoader::Post);
+        m_loader->setRequestMethod(NetworkRequest::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
@@ -492,7 +492,7 @@ void SynchronizationManager::aboutWorkSyncScenario()
 		{
 			const int LAST_MINUTES = 2;
 
-			m_loader->setRequestMethod(WebLoader::Post);
+            m_loader->setRequestMethod(NetworkRequest::Post);
 			m_loader->clearRequestAttributes();
 			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
@@ -574,7 +574,7 @@ void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDra
 		//
 		// Загрузим позиции курсоров
 		//
-		m_loader->setRequestMethod(WebLoader::Post);
+        m_loader->setRequestMethod(NetworkRequest::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
@@ -648,8 +648,8 @@ void SynchronizationManager::aboutFullSyncData()
 		//
 		// Получить список всех изменений данных на сервере
 		//
-		WebLoader loader;
-		loader.setRequestMethod(WebLoader::Post);
+        NetworkRequest loader;
+        loader.setRequestMethod(NetworkRequest::Post);
 		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
 		QByteArray response = loader.loadSync(URL_SCENARIO_DATA_LIST);
@@ -765,7 +765,7 @@ void SynchronizationManager::aboutWorkSyncData()
 		{
 			const int LAST_MINUTES = 2;
 
-			m_loader->setRequestMethod(WebLoader::Post);
+            m_loader->setRequestMethod(NetworkRequest::Post);
 			m_loader->clearRequestAttributes();
 			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
@@ -941,7 +941,7 @@ bool SynchronizationManager::uploadScenarioChanges(const QList<QString>& _change
 		//
 		// Отправить данные
 		//
-		m_loader->setRequestMethod(WebLoader::Post);
+        m_loader->setRequestMethod(NetworkRequest::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
@@ -966,7 +966,7 @@ QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(
 		//
 		// ... загружаем изменения
 		//
-		m_loader->setRequestMethod(WebLoader::Post);
+        m_loader->setRequestMethod(NetworkRequest::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
@@ -1078,7 +1078,7 @@ bool SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids
 		//
 		// Отправить данные
 		//
-		m_loader->setRequestMethod(WebLoader::Post);
+        m_loader->setRequestMethod(NetworkRequest::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
@@ -1105,7 +1105,7 @@ void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUui
 		//
 		// ... загружаем изменения
 		//
-		m_loader->setRequestMethod(WebLoader::Post);
+        m_loader->setRequestMethod(NetworkRequest::Post);
 		m_loader->clearRequestAttributes();
 		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
 		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
