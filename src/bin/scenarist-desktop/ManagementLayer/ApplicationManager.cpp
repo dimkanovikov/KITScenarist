@@ -11,8 +11,8 @@
 #include "Settings/SettingsManager.h"
 #include "Import/ImportManager.h"
 #include "Export/ExportManager.h"
-#include "Synchronization/SynchronizationManager.h"
-#include "Synchronization/SynchronizationManagerV2.h"
+#include <ManagementLayer/Synchronization/SynchronizationManager.h>
+#include <ManagementLayer/Synchronization/SynchronizationManagerV2.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>

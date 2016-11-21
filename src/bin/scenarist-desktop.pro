@@ -196,7 +196,7 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.cpp \
     scenarist-core/3rd_party/Widgets/FlatButton/FlatButton.cpp \
     scenarist-core/3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.cpp \
-    scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManager.cpp \
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.cpp \
     scenarist-desktop/ManagementLayer/Settings/SettingsTemplatesManager.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp \
@@ -297,7 +297,7 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphlogic.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphwidget.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/node.cpp \
-    scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManagerV2.cpp \
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManagerV2.cpp \
     scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.cpp \
     scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.cpp \
@@ -448,7 +448,7 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/FlatButton/FlatButton.h \
     scenarist-core/3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.h \
     scenarist-core/3rd_party/Helpers/ShortcutHelper.h \
-    scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManager.h \
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.h \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.h \
     scenarist-desktop/ManagementLayer/Settings/SettingsTemplatesManager.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTemplate.h \
@@ -569,7 +569,7 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphlogic.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphwidget.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/node.h \
-    scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManagerV2.h \
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManagerV2.h \
     scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h \
     scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.h \
