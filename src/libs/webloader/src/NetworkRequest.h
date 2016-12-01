@@ -21,6 +21,8 @@
 #include <QTimer>
 #include <QUrl>
 
+#include "WebLoaderGlobal.h"
+
 class NetworkRequestPrivate;
 class WebRequest;
 class QNetworkCookieJar;
@@ -29,7 +31,7 @@ class QNetworkCookieJar;
  * \brief Пользовательский класс для создания GET и POST запросов
  */
 
-class NetworkRequest : public QObject
+class WEBLOADER_EXPORT NetworkRequest : public QObject
 {
     Q_OBJECT
 public:

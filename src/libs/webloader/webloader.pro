@@ -31,7 +31,8 @@ HEADERS += src/HttpMultiPart_p.h \
 	   src/NetworkRequestPrivate_p.h \
 	   src/WebLoader_p.h \
 	   src/WebRequest_p.h \
-	   src/NetworkRequestLoader.h
+	   src/NetworkRequestLoader.h \
+           src/WebLoaderGlobal.h
 
 SOURCES += src/HttpMultiPart_p.cpp \
 	   src/WebLoader_p.cpp \
