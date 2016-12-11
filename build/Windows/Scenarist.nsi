@@ -20,8 +20,8 @@
   !define pkgdir "files"
 
   ;Name and file
-  Name "КИТ Сценарист"
-  Caption "Установка программы написания сценариев"
+  Name "KIT Scenarist"
+  Caption "Installing application for creating stories"
   OutFile "scenarist-setup.exe"
   BrandingText "DimkaNovikov labs."
 
@@ -74,7 +74,7 @@ Section "App files section" SecFiles
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
   ; Регистрируем ассоциации 
-  ${registerExtension} "$INSTDIR\Scenarist.exe" ".kitsp" "Проект сценария"
+  ${registerExtension} "$INSTDIR\Scenarist.exe" ".kitsp" "KIT Scenarist project"
   
   ; Обновляем эксплорер
   System::Call 'Shell32::SHChangeNotify(i 0x8000000, i 0, i 0, i 0)'
@@ -138,7 +138,7 @@ Section "Uninstall"
   RMDir "$SMPROGRAMS\KIT\Scenarist"
   
   ; Отменяем зарегистрированные ассоциации файлов
-  ${unregisterExtension} ".kitsp" "Проект сценария"
+  ${unregisterExtension} ".kitsp" "KIT Scenarist project"
 
 SectionEnd
 
