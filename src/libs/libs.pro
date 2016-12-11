@@ -10,6 +10,10 @@ CONFIG(debug, debug|release) {
 }
 #
 
-SUBDIRS = hunspell fileformats \
+SUBDIRS = \
+    hunspell \
+    fileformats \
     webloader \
     mythes
+
+win32: SUBDIRS += qBreakpad

@@ -610,7 +610,7 @@ namespace {
 	 * @brief Сформировать строку xml-карточки для элемента
 	 */
 	/** @{ */
-	const bool INVALID_PARENT_ID = -1;
+	const int INVALID_PARENT_ID = -1;
 	static QString cardXmlFor(const ScenarioModelItem* _item, int _id, int _parentId, int _x, int _y, const QSize& _itemSize) {
 		QString cardXml = "<ActionShape ";
 

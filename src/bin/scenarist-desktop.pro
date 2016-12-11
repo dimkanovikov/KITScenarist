@@ -82,6 +82,28 @@ INCLUDEPATH += $$PWD/../libs/webloader
 DEPENDPATH += $$PWD/../libs/webloader
 #
 
+#
+# Подключаем библиотеку qBreakpad и делаем настройки для неё
+#
+win32 {
+CONFIG += debug_and_release warn_on
+CONFIG += thread exceptions rtti stl
+
+# Включить создание pdb-файла для релизной сборки
+QMAKE_CXXFLAGS_RELEASE +=  /Zi
+QMAKE_LFLAGS_RELEASE += /DEBUG /OPT:REF /OPT:ICF
+
+QMAKE_LIBDIR += $$DESTDIR/../../libs/qBreakpad
+LIBS += -L$$DESTDIR/../../libs/qBreakpad -lqBreakpad
+PRE_TARGETDEPS += $$DESTDIR/../../libs/qBreakpad/qBreakpad.lib
+
+INCLUDEPATH += $$PWD/../libs/qBreakpad/handler/
+DEPENDPATH += $$PWD/../libs/qBreakpad/handler/
+
+HEADERS += $$PWD/../libs/qBreakpad/handler/QBreakpadHandler.h
+}
+#
+
 INCLUDEPATH += $$PWD/scenarist-core
 INCLUDEPATH += $$PWD/scenarist-desktop
 
@@ -630,5 +652,3 @@ macx {
 # Включаем поддержку компиляции под Windows XP для MSVC 2012+
 #
 QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
-
-DISTFILES +=

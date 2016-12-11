@@ -79,6 +79,8 @@ QBrush Shape::innerBrush()
  */
 QPointF Shape::flowConnectionPoint (const QPointF &anotherEnd, Flow *flow) const
 {
+	Q_UNUSED(flow);
+
 	QPolygonF poly = shape().toFillPolygon(QTransform());
 	QPointF p1 = poly.at(0), p2, intersectPoint;
 	QLineF line, centerLine(center()+scenePos(), anotherEnd);

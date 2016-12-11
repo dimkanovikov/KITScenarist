@@ -40,6 +40,9 @@ QRectF SizeAnchor::boundingRect() const
 
 void SizeAnchor::paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+
 	painter->setBrush(Qt::darkGray);
 	painter->setPen(Qt::green);
 	painter->drawRect(QRectF(-VISIBLE_SIZE/2, -VISIBLE_SIZE/2, VISIBLE_SIZE, VISIBLE_SIZE));
