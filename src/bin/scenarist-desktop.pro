@@ -347,7 +347,8 @@ SOURCES += \
     scenarist-core/BusinessLayer/Import/FdxImporter.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.cpp \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.cpp \
-    scenarist-core/BusinessLayer/Import/TrelbyImporter.cpp
+    scenarist-core/BusinessLayer/Import/TrelbyImporter.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -613,7 +614,8 @@ HEADERS += \
     scenarist-core/BusinessLayer/Import/FdxImporter.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.h \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.h \
-    scenarist-core/BusinessLayer/Import/TrelbyImporter.h
+    scenarist-core/BusinessLayer/Import/TrelbyImporter.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -630,7 +632,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.ui \
-    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui
+    scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.ui
 
 
 RESOURCES += \

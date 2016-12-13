@@ -4,6 +4,7 @@
 
 #include <UserInterfaceLayer/StartUp/StartUpView.h>
 #include <UserInterfaceLayer/StartUp/LoginDialog.h>
+#include <UserInterfaceLayer/StartUp/CrashReportDialog.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -27,6 +28,7 @@ using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
 using UserInterface::StartUpView;
 using UserInterface::LoginDialog;
+using UserInterface::CrashReportDialog;
 
 
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
@@ -36,6 +38,10 @@ StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	initData();
 	initConnections();
 
+	//
+	// Проверим наличие отчётов об ошибках в работе программы
+	//
+	QTimer::singleShot(0, this, &StartUpManager::checkCrashReports);
 	//
 	// Проверяем наличие новой версии уже после старта программы
 	//
@@ -200,6 +206,29 @@ void StartUpManager::initConnections()
 	connect(m_view, SIGNAL(openRemoteProjectClicked(QModelIndex)),
 			this, SIGNAL(openRemoteProjectRequested(QModelIndex)));
 	connect(m_view, SIGNAL(refreshProjects()), this, SIGNAL(refreshProjectsRequested()));
+}
+
+void StartUpManager::checkCrashReports()
+{
+	//
+	// Если есть необработанные отчёты, показать диалог
+	//
+	CrashReportDialog dialog;
+	if (dialog.exec() == CrashReportDialog::Accepted) {
+		//
+		// Отправляем
+		//
+
+		//
+		// Помечаем отчёт, как отправленный
+		//
+	}
+	//
+	// Помечаем отчёт, как проигнорированный
+	//
+	else {
+
+	}
 }
 
 void StartUpManager::checkNewVersion()
