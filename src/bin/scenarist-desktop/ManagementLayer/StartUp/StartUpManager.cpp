@@ -11,7 +11,10 @@
 
 #include <3rd_party/Helpers/PasswordStorage.h>
 
+#include <WebLoader.h>
+
 #include <QApplication>
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QDateTime>
@@ -20,6 +23,7 @@
 #include <QNetworkReply>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+#include <QStandardPaths>
 #include <QTimer>
 
 using ManagementLayer::StartUpManager;
@@ -210,24 +214,55 @@ void StartUpManager::initConnections()
 
 void StartUpManager::checkCrashReports()
 {
+	const QString SENDED = "sended";
+	const QString IGNORED = "ignored";
+
+	//
+	// Настроим отлавливание ошибок
+	//
+	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+	QString crashReportsFolderPath = appDataFolderPath + QDir::separator() + "CrashReports";
+	bool hasUnhandledReports = false;
+	QString unhandledReportPath;
+	for (const QFileInfo& crashReportFileInfo : QDir(crashReportsFolderPath).entryInfoList(QDir::Files)) {
+		if (crashReportFileInfo.suffix() != SENDED
+			&& crashReportFileInfo.suffix() != IGNORED) {
+			hasUnhandledReports = true;
+			unhandledReportPath = crashReportFileInfo.filePath();
+			break;
+		}
+	}
+
 	//
 	// Если есть необработанные отчёты, показать диалог
 	//
-	CrashReportDialog dialog;
-	if (dialog.exec() == CrashReportDialog::Accepted) {
-		//
-		// Отправляем
-		//
+	if (hasUnhandledReports) {
+		CrashReportDialog dialog(m_view);
+		QString handledReportPath = unhandledReportPath;
+		if (dialog.exec() == CrashReportDialog::Accepted) {
+			dialog.showProgress();
+			//
+			// Отправляем
+			//
+			WebLoader loader;
+			loader.setRequestMethod(WebLoader::Post);
+			loader.addRequestAttribute("email", dialog.email());
+			loader.addRequestAttribute("message", dialog.message());
+			loader.addRequestAttributeFile("report", unhandledReportPath);
+			loader.loadSync(QUrl("https://kitscenarist.ru/api/app/feedback/"));
 
+			//
+			// Помечаем отчёт, как отправленный
+			//
+			handledReportPath += "." + SENDED;
+		}
 		//
-		// Помечаем отчёт, как отправленный
+		// Помечаем отчёт, как проигнорированный
 		//
-	}
-	//
-	// Помечаем отчёт, как проигнорированный
-	//
-	else {
-
+		else {
+			handledReportPath += "." + IGNORED;
+		}
+		QFile::rename(unhandledReportPath, handledReportPath);
 	}
 }
 

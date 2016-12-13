@@ -9,11 +9,24 @@ CrashReportDialog::CrashReportDialog(QWidget* _parent) :
 	m_ui(new Ui::CrashReportDialog)
 {
 	m_ui->setupUi(this);
+
+	initView();
+	initConnections();
 }
 
 CrashReportDialog::~CrashReportDialog()
 {
 	delete m_ui;
+}
+
+QString CrashReportDialog::email() const
+{
+	return m_ui->email->text();
+}
+
+QString CrashReportDialog::message() const
+{
+	return m_ui->message->toPlainText();
 }
 
 QWidget* CrashReportDialog::focusedOnExec() const

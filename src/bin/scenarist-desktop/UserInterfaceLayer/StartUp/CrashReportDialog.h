@@ -21,6 +21,16 @@ namespace UserInterface
 		explicit CrashReportDialog(QWidget *parent = 0);
 		~CrashReportDialog();
 
+		/**
+		 * @brief email отправителя
+		 */
+		QString email() const;
+
+		/**
+		 * @brief Сопроводительное сообщение
+		 */
+		QString message() const;
+
 	protected:
 		/**
 		 * @brief При запуске фокусируемся на поле ввода имени пользователя
