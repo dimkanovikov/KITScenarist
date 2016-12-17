@@ -19,7 +19,7 @@
 
 #include <QObject>
 
-class WebLoader;
+class NetworkRequest;
 class QXmlStreamReader;
 
 
@@ -221,7 +221,7 @@ namespace ManagementLayer
 		/**
 		 * Загрузчик
 		 */
-		WebLoader* m_loader;
+        NetworkRequest* m_loader;
 	};
 }
 

@@ -5,7 +5,7 @@
 #include "ImageLabel.h"
 #include "ImagePreview.h"
 
-#include <WebLoader.h>
+#include <NetworkRequest.h>
 
 #include <QDragEnterEvent>
 #include <QMimeData>
@@ -137,7 +137,7 @@ void ImagesPane::dropEvent(QDropEvent* _event)
 				//
 				else if (url.scheme() == "http"
 						   || url.scheme() == "https") {
-					const QByteArray pixmapData = WebLoader().loadSync(url);
+                    const QByteArray pixmapData = NetworkRequest().loadSync(url);
 					const QImage image = QImage::fromData(pixmapData);
 					const QPixmap pixmap = QPixmap::fromImage(image);
 					addImage(pixmap);
