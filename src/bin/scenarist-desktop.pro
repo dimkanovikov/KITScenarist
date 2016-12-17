@@ -82,6 +82,28 @@ INCLUDEPATH += $$PWD/../libs/webloader
 DEPENDPATH += $$PWD/../libs/webloader
 #
 
+#
+# Подключаем библиотеку qBreakpad и делаем настройки для неё
+#
+win32 {
+CONFIG += debug_and_release warn_on
+CONFIG += thread exceptions rtti stl
+
+# Включить создание pdb-файла для релизной сборки
+QMAKE_CXXFLAGS_RELEASE +=  /Zi
+QMAKE_LFLAGS_RELEASE += /DEBUG /OPT:REF /OPT:ICF
+
+QMAKE_LIBDIR += $$DESTDIR/../../libs/qBreakpad
+LIBS += -L$$DESTDIR/../../libs/qBreakpad -lqBreakpad
+PRE_TARGETDEPS += $$DESTDIR/../../libs/qBreakpad/qBreakpad.lib
+
+INCLUDEPATH += $$PWD/../libs/qBreakpad/handler/
+DEPENDPATH += $$PWD/../libs/qBreakpad/handler/
+
+HEADERS += $$PWD/../libs/qBreakpad/handler/QBreakpadHandler.h
+}
+#
+
 INCLUDEPATH += $$PWD/scenarist-core
 INCLUDEPATH += $$PWD/scenarist-desktop
 
@@ -331,7 +353,8 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp \
     scenarist-core/BusinessLayer/Import/KitScenaristImporter.cpp \
-    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -604,7 +627,8 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.h \
     scenarist-core/BusinessLayer/Import/KitScenaristImporter.h \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.h \
-    scenarist-core/3rd_party/Helpers/Validators.h
+    scenarist-core/3rd_party/Helpers/Validators.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -627,7 +651,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.ui \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui \
-    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.ui
+    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.ui
 
 
 RESOURCES += \
@@ -649,5 +674,3 @@ macx {
 # Включаем поддержку компиляции под Windows XP для MSVC 2012+
 #
 QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
-
-DISTFILES +=

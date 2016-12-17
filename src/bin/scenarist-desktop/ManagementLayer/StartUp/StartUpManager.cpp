@@ -23,6 +23,7 @@
 #include <UserInterfaceLayer/StartUp/LoginDialog.h>
 #include <UserInterfaceLayer/StartUp/ChangePasswordDialog.h>
 #include <UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h>
+#include <UserInterfaceLayer/StartUp/CrashReportDialog.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -30,7 +31,10 @@
 #include <3rd_party/Helpers/PasswordStorage.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
+#include <WebLoader.h>
+
 #include <QApplication>
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QDateTime>
@@ -39,6 +43,7 @@
 #include <QNetworkReply>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+#include <QStandardPaths>
 #include <QTimer>
 
 using ManagementLayer::StartUpManager;
@@ -49,6 +54,8 @@ using UserInterface::StartUpView;
 using UserInterface::LoginDialog;
 using UserInterface::ChangePasswordDialog;
 using UserInterface::RenewSubscriptionDialog;
+using UserInterface::CrashReportDialog;
+
 
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	QObject(_parent),
@@ -61,6 +68,10 @@ StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
 	initData();
 	initConnections();
 
+	//
+	// Проверим наличие отчётов об ошибках в работе программы
+	//
+	QTimer::singleShot(0, this, &StartUpManager::checkCrashReports);
 	//
 	// Проверяем наличие новой версии уже после старта программы
 	//
@@ -320,6 +331,60 @@ void StartUpManager::initConnections()
 		emit passwordChangeRequested(m_changePasswordDialog->password(),
 									 m_changePasswordDialog->newPassword());
 	});
+}
+
+void StartUpManager::checkCrashReports()
+{
+	const QString SENDED = "sended";
+	const QString IGNORED = "ignored";
+
+	//
+	// Настроим отлавливание ошибок
+	//
+	QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+	QString crashReportsFolderPath = appDataFolderPath + QDir::separator() + "CrashReports";
+	bool hasUnhandledReports = false;
+	QString unhandledReportPath;
+	for (const QFileInfo& crashReportFileInfo : QDir(crashReportsFolderPath).entryInfoList(QDir::Files)) {
+		if (crashReportFileInfo.suffix() != SENDED
+			&& crashReportFileInfo.suffix() != IGNORED) {
+			hasUnhandledReports = true;
+			unhandledReportPath = crashReportFileInfo.filePath();
+			break;
+		}
+	}
+
+	//
+	// Если есть необработанные отчёты, показать диалог
+	//
+	if (hasUnhandledReports) {
+		CrashReportDialog dialog(m_view);
+		QString handledReportPath = unhandledReportPath;
+		if (dialog.exec() == CrashReportDialog::Accepted) {
+			dialog.showProgress();
+			//
+			// Отправляем
+			//
+			WebLoader loader;
+			loader.setRequestMethod(WebLoader::Post);
+			loader.addRequestAttribute("email", dialog.email());
+			loader.addRequestAttribute("message", dialog.message());
+			loader.addRequestAttributeFile("report", unhandledReportPath);
+			loader.loadSync(QUrl("https://kitscenarist.ru/api/app/feedback/"));
+
+			//
+			// Помечаем отчёт, как отправленный
+			//
+			handledReportPath += "." + SENDED;
+		}
+		//
+		// Помечаем отчёт, как проигнорированный
+		//
+		else {
+			handledReportPath += "." + IGNORED;
+		}
+		QFile::rename(unhandledReportPath, handledReportPath);
+	}
 }
 
 void StartUpManager::checkNewVersion()

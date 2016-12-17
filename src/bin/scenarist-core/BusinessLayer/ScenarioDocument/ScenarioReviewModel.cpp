@@ -149,7 +149,8 @@ bool ScenarioReviewModel::removeRows(int _row, int _count, const QModelIndex& _p
 				//
 				// Для каждого блока по отдельности
 				//
-				while (cursor.position() <= review.endPosition()) {
+				while (!cursor.atEnd()
+					   && cursor.position() <= review.endPosition()) {
 					cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
 					//
 					// Если ещё в текущем блоке, очищаем формат

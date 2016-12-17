@@ -249,6 +249,11 @@ namespace ManagementLayer
 		void initConnections();
 
 		/**
+		 * @brief Проверить наличие отчётов об ошибке
+		 */
+		void checkCrashReports();
+
+		/**
 		 * @brief Проверить наличие новой версии
 		 */
 		void checkNewVersion();

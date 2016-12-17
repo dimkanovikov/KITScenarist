@@ -70,10 +70,10 @@ void Flow::setFlowKnots (const QList<QPointF> &knots)
 
 void Flow::removeAllFlowKnots()
 {
-    m_knots.clear();
+	m_knots.clear();
 
-    updateAnchors();
-    updateFlow();
+	updateAnchors();
+	updateFlow();
 }
 
 void Flow::setStartShape (Shape *s)
@@ -106,6 +106,9 @@ void Flow::disconnectSignals()
 
 QPointF Flow::flowConnectionPoint (const QPointF &anotherEnd, Flow *flow) const
 {
+	Q_UNUSED(anotherEnd);
+	Q_UNUSED(flow);
+
 	return center();
 }
 
@@ -140,11 +143,14 @@ QPainterPath Flow::shape() const
 
 void Flow::paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+
 	updateAnchors();
 	if (isSelected()) {
 		setPenAndBrushForSelection(painter);
 	} else {
-        QPen pen(QApplication::palette().text(), 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
+		QPen pen(QApplication::palette().text(), 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
 		painter->setPen(pen);
 		painter->setBrush(Qt::transparent);
 	}
@@ -153,6 +159,9 @@ void Flow::paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
 void Flow::paintSelection (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
+
 	setPenAndBrushForSelection(painter);
 	painter->drawPath(shape());
 }
