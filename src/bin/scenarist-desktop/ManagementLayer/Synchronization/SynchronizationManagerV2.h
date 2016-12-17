@@ -163,7 +163,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Успешно запрошена информация о подписке
 		 */
-		void subscriptionInfoLoaded(bool, QString);
+        void subscriptionInfoLoaded(bool _isActive, const QString& _expiredDate);
 
 		/**
 		 * @brief Успешно изменен пароль
