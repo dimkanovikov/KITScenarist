@@ -129,6 +129,12 @@ namespace ManagementLayer
 		 */
 		void unshareProject(int _projectId, const QString& _userEmail = QString::null);
 
+		//
+		// Методы работы с конкретным проектом
+		//
+
+
+
 	signals:
 		/**
 		 * @brief Авторизация пройдена успешно
@@ -163,7 +169,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Успешно запрошена информация о подписке
 		 */
-        void subscriptionInfoLoaded(bool _isActive, const QString& _expiredDate);
+		void subscriptionInfoLoaded(bool _isActive, const QString& _expiredDate);
 
 		/**
 		 * @brief Успешно изменен пароль
@@ -221,7 +227,7 @@ namespace ManagementLayer
 		/**
 		 * Загрузчик
 		 */
-        NetworkRequest* m_loader;
+		NetworkRequest* m_loader;
 	};
 }
 
