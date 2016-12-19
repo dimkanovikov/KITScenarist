@@ -188,7 +188,6 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 	m_settingsManager(new SettingsManager(this, m_view)),
 	m_importManager(new ImportManager(this, m_view)),
 	m_exportManager(new ExportManager(this, m_view)),
-	m_synchronizationManager(new SynchronizationManager(this, m_view)),
 	m_synchronizationManagerV2(new SynchronizationManagerV2(this, m_view))
 {
 	initView();
@@ -465,8 +464,8 @@ void ApplicationManager::aboutSave()
 			// Для проекта из облака отправляем данные на сервер
 			//
 			if (m_projectsManager->currentProject().isRemote()) {
-				m_synchronizationManager->aboutWorkSyncScenario();
-				m_synchronizationManager->aboutWorkSyncData();
+				m_synchronizationManagerV2->aboutWorkSyncScenario();
+				m_synchronizationManagerV2->aboutWorkSyncData();
 			}
 
 			//
@@ -1301,8 +1300,8 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	if (m_projectsManager->currentProject().isRemote()) {
 		progress.setProgressText(QString::null, tr("Sync scenario with cloud service."));
-		m_synchronizationManager->aboutFullSyncScenario();
-		m_synchronizationManager->aboutFullSyncData();
+		m_synchronizationManagerV2->aboutFullSyncScenario();
+		m_synchronizationManagerV2->aboutFullSyncData();
 	}
 
 	//
@@ -1598,9 +1597,9 @@ void ApplicationManager::initConnections()
 
 	connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
 	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), this, SLOT(aboutUpdateLastChangeInfo()));
-	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncScenario()));
-	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManager, SLOT(aboutWorkSyncData()));
-	connect(m_scenarioManager, SIGNAL(cursorPositionUpdated(int,bool)), m_synchronizationManager, SLOT(aboutUpdateCursors(int,bool)));
+	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManagerV2, SLOT(aboutWorkSyncScenario()));
+	connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManagerV2, SLOT(aboutWorkSyncData()));
+	connect(m_scenarioManager, SIGNAL(cursorPositionUpdated(int,bool)), m_synchronizationManagerV2, SLOT(aboutUpdateCursors(int,bool)));
 
 	connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
 			m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
@@ -1636,15 +1635,15 @@ void ApplicationManager::initConnections()
 	connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
 	connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
-	connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),
+	connect(m_synchronizationManagerV2, SIGNAL(applyPatchRequested(QString,bool)),
 			m_scenarioManager, SLOT(aboutApplyPatch(QString,bool)));
-	connect(m_synchronizationManager, SIGNAL(applyPatchesRequested(QList<QString>,bool)),
+	connect(m_synchronizationManagerV2, SIGNAL(applyPatchesRequested(QList<QString>,bool)),
 			m_scenarioManager, SLOT(aboutApplyPatches(QList<QString>,bool)));
-	connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
+	connect(m_synchronizationManagerV2, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
 			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
-	connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
+	connect(m_synchronizationManagerV2, SIGNAL(syncClosedWithError(int,QString)),
 			this, SLOT(aboutSyncClosedWithError(int,QString)));
-	connect(m_synchronizationManager, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
+	connect(m_synchronizationManagerV2, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
 
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted,
 			m_startUpManager, &StartUpManager::completeLogin);

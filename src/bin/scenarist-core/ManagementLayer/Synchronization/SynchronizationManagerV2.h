@@ -132,8 +132,32 @@ namespace ManagementLayer
 		//
 		// Методы работы с конкретным проектом
 		//
+	public slots:
 
+		/**
+		 * @brief Полная синхронизация сценария
+		 */
+		void aboutFullSyncScenario();
 
+		/**
+		 * @brief Синхронизация сценария во время работы над ним
+		 */
+		void aboutWorkSyncScenario();
+
+		/**
+		 * @brief Полная синхронизация данных
+		 */
+		void aboutFullSyncData();
+
+		/**
+		 * @brief Синхронизация данных во время работы
+		 */
+		void aboutWorkSyncData();
+
+		/**
+		 * @brief Загрузить информацию о курсорах соавторов и отправить информацию о своём
+		 */
+		void aboutUpdateCursors(int _cursorPosition, bool _isDraft);
 
 	signals:
 		/**
@@ -182,9 +206,31 @@ namespace ManagementLayer
 		void projectsLoaded(const QString& _projectsXml);
 
 		/**
-		 * @brief Ошибка
+		 * @brief Синхроинзация закрыта с ошибкой
 		 */
-		void syncClosedWithError(int, QString);
+		void syncClosedWithError(int errorCode, const QString& _errorText);
+
+		//
+		// **** Методы из старого менеджера синхронизации
+		//
+
+		/**
+		 * @brief Необходимо применить патч
+		 */
+		/** @{ */
+		void applyPatchRequested(const QString& _patch, bool _isDraft);
+		void applyPatchesRequested(const QList<QString>& _patch, bool _isDraft);
+		/** @} */
+
+		/**
+		 * @brief Получены новые позиции курсоров пользователей
+		 */
+		void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
+
+		/**
+		 * @brief Синхронизация восстановлена
+		 */
+		void syncRestarted();
 
 	private:
 		/**
@@ -196,6 +242,48 @@ namespace ManagementLayer
 		 * Обработка ошибок
 		 */
 		void handleError(const QString& _error, int _code = 0);
+
+		//
+		// **** Методы из старого менеджера синхронизации
+		//
+
+		/**
+		 * @brief Обёртка для вызова функции m_loader->loadSync, отлавливающая отсутствие интернета
+		 */
+		QByteArray loadSyncWrapper(const QUrl& _url);
+
+		/**
+		 * @brief Возможно ли использовать методы синхронизации
+		 */
+		bool isCanSync() const;
+
+		/**
+		 * @brief Отправить изменения сценария на сервер
+		 * @return Удалось ли отправить данные
+		 */
+		bool uploadScenarioChanges(const QList<QString>& _changesUuids);
+
+		/**
+		 * @brief Скачать изменения с сервера
+		 */
+		QList<QHash<QString, QString> > downloadScenarioChanges(const QString& _changesUuids);
+
+		/**
+		 * @brief Отправить изменения данных на сервер
+		 * @return Удалось ли отправить данные
+		 */
+		bool uploadScenarioData(const QList<QString>& _dataUuids);
+
+		/**
+		 * @brief Скачать и сохранить в БД изменения с сервера
+		 */
+		void downloadAndSaveScenarioData(const QString& _dataUuids);
+
+	private slots:
+		/**
+		 * @brief Проверить соединение с интернетом
+		 */
+		void checkInternetConnection();
 
 	private:
 		/**
@@ -228,6 +316,25 @@ namespace ManagementLayer
 		 * Загрузчик
 		 */
 		NetworkRequest* m_loader;
+
+		//
+		// **** Члены из старого менеджера синхронизации
+		//
+
+		/**
+		 * @brief Дата и время последней синхронизации изменений сценария
+		 */
+		QString m_lastChangesSyncDatetime;
+
+		/**
+		 * @brief Дата и время последней синхронизации изменений данных
+		 */
+		QString m_lastDataSyncDatetime;
+
+		/**
+		 * @brief Активно ли соединение с интернетом
+		 */
+		bool m_isInternetConnectionActive = true;
 	};
 }
 

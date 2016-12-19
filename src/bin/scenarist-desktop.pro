@@ -218,7 +218,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.cpp \
     scenarist-core/3rd_party/Widgets/FlatButton/FlatButton.cpp \
     scenarist-core/3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.cpp \
-    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.cpp \
     scenarist-desktop/ManagementLayer/Settings/SettingsTemplatesManager.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp \
@@ -471,7 +470,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/FlatButton/FlatButton.h \
     scenarist-core/3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.h \
     scenarist-core/3rd_party/Helpers/ShortcutHelper.h \
-    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.h \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.h \
     scenarist-desktop/ManagementLayer/Settings/SettingsTemplatesManager.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTemplate.h \
