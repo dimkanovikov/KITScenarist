@@ -17,6 +17,8 @@ CharactersDataEditManager::CharactersDataEditManager(QObject *_parent, QWidget* 
 {
 	initView();
 	initConnections();
+
+	clean();
 }
 
 QWidget* CharactersDataEditManager::view() const
@@ -36,7 +38,7 @@ void CharactersDataEditManager::editCharacter(Domain::Character* _character)
 
 	m_character = _character;
 
-	if (m_character != 0) {
+	if (m_character != nullptr) {
 		m_editor->setEnabled(true);
 		m_editor->setName(m_character->name());
 		m_editor->setRealName(m_character->realName());
@@ -54,7 +56,8 @@ void CharactersDataEditManager::setCommentOnly(bool _isCommentOnly)
 
 void CharactersDataEditManager::aboutSave()
 {
-	if (!m_editor->name().isEmpty()) {
+	if (!m_editor->name().isEmpty()
+		&& m_character != nullptr) {
 		//
 		// Сохраним предыдущее название персонажа
 		//

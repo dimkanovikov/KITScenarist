@@ -31,7 +31,12 @@ private:
 	/**
 	 * @brief Включён/выключен
 	 */
-	bool m_isActive;
+	bool m_isActive = true;
+
+	/**
+	 * @brief Находится ли в процессе выполениня
+	 */
+	bool m_isInProgress = false;
 
 	/**
 	 * @brief Папка, в которую сохранять резервные копии

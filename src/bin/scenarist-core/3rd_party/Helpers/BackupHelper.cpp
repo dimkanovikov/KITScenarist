@@ -15,7 +15,7 @@ namespace {
 	/**
 	 * @brief Расширение файла "Кит сценарист резервная копия"
 	 */
-	const QString BACKUP_VERSIONS_EXTANSION = "kitsrc";
+	const QString BACKUP_VERSIONS_EXTENSION = "kitsrc";
 
 	/**
 	 * @brief Название соединения для БД резервных копий версий сценария
@@ -24,8 +24,7 @@ namespace {
 }
 
 
-BackupHelper::BackupHelper() :
-	m_isActive(false)
+BackupHelper::BackupHelper()
 {
 }
 
@@ -45,11 +44,14 @@ void BackupHelper::setBackupDir(const QString& _dir)
 
 void BackupHelper::saveBackup(const QString& _filePath)
 {
-	if (m_isActive) {
-        //
-        // Создаём папку для хранения резервных копий, если такой ещё нет
-        //
-        QDir::root().mkpath(m_backupDir);
+	if (m_isActive
+		&& !m_isInProgress) {
+		m_isInProgress = true;
+
+		//
+		// Создаём папку для хранения резервных копий, если такой ещё нет
+		//
+		QDir::root().mkpath(m_backupDir);
 
 		//
 		// Сформируем путь к резервной копии
@@ -65,7 +67,7 @@ void BackupHelper::saveBackup(const QString& _filePath)
 		const QString backupFileName =
 				QString("%1%2.full.backup.%3").arg(backupPath, fileInfo.completeBaseName(), fileInfo.completeSuffix());
 		const QString backupVersionsFileName =
-				QString("%1%2.versions.backup.%3").arg(backupPath, fileInfo.completeBaseName(), BACKUP_VERSIONS_EXTANSION);
+				QString("%1%2.versions.backup.%3").arg(backupPath, fileInfo.completeBaseName(), BACKUP_VERSIONS_EXTENSION);
 
 		//
 		// Копируем файл во временную резервную копию
@@ -105,5 +107,7 @@ void BackupHelper::saveBackup(const QString& _filePath)
 
 			QSqlDatabase::removeDatabase(BACKUPDB_CONNECTION_NAME);
 		}
+
+		m_isInProgress = false;
 	}
 }
