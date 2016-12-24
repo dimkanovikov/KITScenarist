@@ -246,6 +246,7 @@ void StartUpManager::checkCrashReports()
 			//
 			WebLoader loader;
 			loader.setRequestMethod(WebLoader::Post);
+			loader.addRequestAttribute("version", QApplication::applicationVersion());
 			loader.addRequestAttribute("email", dialog.email());
 			loader.addRequestAttribute("message", dialog.message());
 			loader.addRequestAttributeFile("report", unhandledReportPath);
