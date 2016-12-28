@@ -772,9 +772,13 @@ void ApplicationManager::unshareRemoteProject(const QModelIndex& _index, const Q
 	}
 }
 
-void ApplicationManager::aboutShowSyncActiveIndicator()
+void ApplicationManager::setSyncIndicator(bool _active)
 {
-	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"), tr("Connection active"), tr("Project sinchronized"));
+    if (_active){
+        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"), tr("Connection active"), tr("Project synchronized"));
+    } else {
+        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"), tr("Connection inactive"), tr("Project didn't sinchronize"));
+    }
 }
 
 void ApplicationManager::aboutUpdateLastChangeInfo()
@@ -942,7 +946,10 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 	//
 	// Сигнализируем об ошибке
 	//
-	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"), title, error);
+    if (m_synchronizationManagerV2->isInternetConnectionActive() &&
+            m_synchronizationManagerV2->isLogged()) {
+        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Editing/add.png"), title, error);
+    }
 
 	//
 	// Если необходимо переключаемся в автономный режим
@@ -1276,8 +1283,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	if (m_projectsManager->currentProject().isRemote()) {
 		int errorCode = 0;
-		if (m_projectsManager->currentProject().isSyncAvailable(&errorCode)) {
-			aboutShowSyncActiveIndicator();
+        if (m_projectsManager->currentProject().isSyncAvailable(&errorCode)) {
 		} else {
 			aboutSyncClosedWithError(errorCode);
 		}
@@ -1642,7 +1648,8 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
 	connect(m_synchronizationManagerV2, SIGNAL(syncClosedWithError(int,QString)),
 			this, SLOT(aboutSyncClosedWithError(int,QString)));
-	connect(m_synchronizationManagerV2, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::networkStatusChanged,
+            this, &ApplicationManager::setSyncIndicator);
 
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted,
 			m_startUpManager, &StartUpManager::completeLogin);
@@ -1663,6 +1670,14 @@ void ApplicationManager::initConnections()
 	//
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::projectsLoaded,
 			m_projectsManager, &ProjectsManager::setRemoteProjects);
+
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished, [this] {
+        m_tabs->removeIndicator();
+    });
+
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted, [this] {
+        m_synchronizationManagerV2->firstStateConnection();
+    });
 
 	//
 	// Когда пользователь вышел из своего аккаунта, закрываем текущий проект, если он из облака

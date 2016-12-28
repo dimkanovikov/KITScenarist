@@ -133,7 +133,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Отобразить индикатор активной синхронизации
 		 */
-		void aboutShowSyncActiveIndicator();
+        void setSyncIndicator(bool _isActive);
 
 		/**
 		 * @brief Обновить информацию о последнем изменении в индикаторе синхронизации

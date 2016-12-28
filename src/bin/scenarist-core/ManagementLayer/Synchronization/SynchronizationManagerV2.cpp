@@ -187,10 +187,26 @@ namespace {
 SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _parentView) :
 	QObject(_parent),
 	m_view(_parentView),
+	m_networkManager(new QNetworkConfigurationManager(_parent)),
 	m_isSubscriptionActive(false),
 	m_loader(new NetworkRequest(this))
 {
 	initConnections();
+}
+
+void SynchronizationManagerV2::firstStateConnection()
+{
+	networkStateChanged(m_networkManager->isOnline());
+}
+
+bool SynchronizationManagerV2::isInternetConnectionActive() const
+{
+	return m_isInternetConnectionActive;
+}
+
+bool SynchronizationManagerV2::isLogged() const
+{
+	return !m_sessionKey.isEmpty();
 }
 
 bool SynchronizationManagerV2::isSubscriptionActive() const
@@ -1292,13 +1308,12 @@ QByteArray SynchronizationManagerV2::loadSyncWrapper(const QUrl& _url)
 		// Если пропало соединение с интернетом, уведомляем об этом и запускаем процесс проверки связи
 		//
 		if (response.isEmpty()) {
-			m_isInternetConnectionActive = false;
 
 			emit syncClosedWithError(OFFLINE_ERROR_CODE, tr("Can't estabilish network connection."));
 			emit cursorsUpdated(QMap<QString, int>());
 			emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
 
-			checkInternetConnection();
+			networkStateChanged(false);
 		}
 	}
 
@@ -1599,19 +1614,24 @@ void SynchronizationManagerV2::downloadAndSaveScenarioData(const QString& _dataU
 	}
 }
 
-void SynchronizationManagerV2::checkInternetConnection()
+void SynchronizationManagerV2::networkStateChanged(bool _state)
 {
-	static QNetworkConfigurationManager s_networkConfigurationManager;
-	if (s_networkConfigurationManager.isOnline()) {
-		m_isInternetConnectionActive = true;
-		emit syncRestarted();
-	} else {
-		s_networkConfigurationManager.updateConfigurations();
-		QTimer::singleShot(5000, this, SLOT(checkInternetConnection()));
+	//
+	// Запомним состояние интернета и кинем соответствующий сигнал
+	//
+	m_isInternetConnectionActive = _state;
+	if (m_isInternetConnectionActive) {
+		//
+		// Переавторизуемся, раз интернет появился
+		//
+		//autoLogin();
 	}
+
+	emit networkStatusChanged(_state);
 }
 
 void SynchronizationManagerV2::initConnections()
 {
 	connect(this, &SynchronizationManagerV2::loginAccepted, this, &SynchronizationManagerV2::loadProjects);
+	connect(m_networkManager, &QNetworkConfigurationManager::onlineStateChanged, this, &SynchronizationManagerV2::networkStateChanged);
 }
