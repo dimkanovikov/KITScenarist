@@ -121,6 +121,7 @@
         <file>Images/corkboard.jpg</file>
         <file>Icons/Editing/account-plus.png</file>
         <file>Icons/Editing/close.png</file>
+        <file>Icons/Indicator/unsynced.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

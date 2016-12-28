@@ -76,6 +76,16 @@ namespace {
 	static QPixmap makeIconDisabled(const QPixmap& _icon) {
 		return colorizeIcon(_icon, QApplication::palette().color(QPalette::Disabled, QPalette::Text));
 	}
+
+    /**
+     * @brief Ключи доступа к тексту индикатора
+     */
+    /** @{ */
+    const char* INDICATOR_ADDITIONAL_ICON_KEY = "additional_icon";
+    const char* INDICATOR_TITLE_KEY = "title";
+    const char* INDICATOR_TEXT_KEY = "text";
+    const char* INDICATOR_FOOTER_KEY = "footer";
+    /** @} */
 }
 
 SideTabBar::SideTabBar(QWidget *parent) :
@@ -92,7 +102,7 @@ SideTabBar::SideTabBar(QWidget *parent) :
 	//
 	// По умолчанию индикатор скрыт
 	//
-	removeIndicator();
+    removeIndicator();
 }
 
 void SideTabBar::addTab(QAction *action)
@@ -169,26 +179,34 @@ int SideTabBar::currentTab() const
 
 int SideTabBar::prevCurrentTab() const
 {
-	return m_prevCurrentIndex;
+    return m_prevCurrentIndex;
 }
 
-void SideTabBar::addIndicator(const QIcon& _icon, const QString& _title, const QString& _message)
+void SideTabBar::addIndicator(const QIcon& _icon)
 {
-	m_indicator->setIcon(_icon);
-	m_indicator->setText(QString("<b>%1</b><p>%2</p>").arg(_title).arg(_message).replace("\n", "<br/>"));
-	m_indicator->setVisible(!_icon.isNull());
-	update();
+    m_indicator->setIcon(_icon);
+    m_indicator->setVisible(!_icon.isNull());
+    update();
 }
 
-void SideTabBar::setIndicatorAdditionalInfo(const QString& _info)
+void SideTabBar::setIndicatorTitle(const QString& _title)
 {
-	m_indicator->setWhatsThis(QString("<p style='font-size:small;font-weight:bold;'>%1</p>").arg(_info));
-	update();
+    setIndicatorText(::INDICATOR_TITLE_KEY, _title);
+}
+
+void SideTabBar::setIndicatorText(const QString& _text)
+{
+    setIndicatorText(::INDICATOR_TEXT_KEY, _text);
+}
+
+void SideTabBar::setIndicatorFooterText(const QString& _text)
+{
+    setIndicatorText(::INDICATOR_FOOTER_KEY, _text);
 }
 
 void SideTabBar::removeIndicator()
 {
-	addIndicator(QIcon());
+    addIndicator(QIcon());
 }
 
 void SideTabBar::setCompactMode(bool _compact)
@@ -297,7 +315,20 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 		//
 		// Иконка индикатора
 		//
-		m_indicator->icon().paint(&p, indicatorRect);
+        const QIcon mainIcon = m_indicator->icon();
+        const QIcon additionalIcon = m_indicator->property(::INDICATOR_ADDITIONAL_ICON_KEY).value<QIcon>();
+        if (mainIcon.isNull()) {
+            mainIcon.paint(&p, indicatorRect);
+        } else if (additionalIcon.isNull()) {
+            mainIcon.paint(&p, indicatorRect);
+        } else {
+            const int iconsMargin = 2;
+            const QRect mainRect(indicatorRect.topLeft(), QSize(indicatorRect.width()/2 - iconsMargin, indicatorRect.height()));
+            QRect additionalRect = mainRect;
+            additionalRect.moveRight(indicatorRect.right());
+            mainIcon.paint(&p, mainRect, Qt::AlignRight | Qt::AlignVCenter);
+            additionalIcon.paint(&p, additionalRect, Qt::AlignLeft | Qt::AlignVCenter);
+        }
 	}
 }
 
@@ -324,12 +355,17 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
 		//
 		QMenu menu(this);
 		QWidgetAction menuText(&menu);
-		QLabel label(m_indicator->text() + m_indicator->whatsThis());
+        const QString text =
+            QString("<b>%1</b><p>%2</p><p style='font-size:small;font-weight:bold;'>%3</p>")
+                .arg(m_indicator->property(::INDICATOR_TITLE_KEY).toString())
+                .arg(m_indicator->property(::INDICATOR_TEXT_KEY).toString().replace("\n", "<br/>"))
+                .arg(m_indicator->property(::INDICATOR_FOOTER_KEY).toString());
+        QLabel label(text);
 		label.setMargin(14);
 		label.setWordWrap(true);
 		menuText.setDefaultWidget(&label);
 		menu.addAction(&menuText);
-		menu.exec(mapToGlobal(QPoint(::sidebarWidth(m_compactMode), height() - menu.sizeHint().height())));
+        menu.exec(mapToGlobal(QPoint(::sidebarWidth(m_compactMode), height() - menu.sizeHint().height())));
 	}
 }
 
@@ -376,5 +412,11 @@ QAction* SideTabBar::tabAt(const QPoint& _pos)
 			tabY += tabRect.height();
 		}
 	}
-	return tabAtPos;
+    return tabAtPos;
+}
+
+void SideTabBar::setIndicatorText(const char* _key, const QString& _text)
+{
+    m_indicator->setProperty(_key, _text);
+    update();
 }

@@ -46,12 +46,22 @@ public:
 	 * @brief Добавить индикатор вниз панели
 	 * @note Вызов с пустыми параметрами удаляет индикатор
 	 */
-	void addIndicator(const QIcon& _icon, const QString& _title = QString::null, const QString& _message = QString::null);
+    void addIndicator(const QIcon& _icon);
+
+    /**
+     * @brief Установить заголовок сообщения индикатора
+     */
+    void setIndicatorTitle(const QString& _title);
+
+    /**
+     * @brief Установить текст сообщения индикатора
+     */
+    void setIndicatorText(const QString& _text);
 
 	/**
-	 * @brief Установить дополнительную информацию для отображения в индикаторе
+     * @brief Установить текст подвала в сообщении индикатора
 	 */
-	void setIndicatorAdditionalInfo(const QString& _info);
+    void setIndicatorFooterText(const QString& _text);
 
 	/**
 	 * @brief Убрать индикатор из панели
@@ -80,6 +90,11 @@ private:
 	 * @brief Определить вкладку в заданной координате
 	 */
 	QAction* tabAt(const QPoint& _pos);
+
+    /**
+     * @brief Установить заданную часть текста индикатора
+     */
+    void setIndicatorText(const char* _key, const QString& _text);
 
 private:
 	/**
