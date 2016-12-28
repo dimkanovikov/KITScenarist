@@ -138,7 +138,6 @@
     <qresource prefix="/Interface">
         <file>UI/menuarrow.png</file>
         <file>UI/comboboxarrow.png</file>
-        <file>UI/loader.gif</file>
         <file>UI/style-mobile.qss</file>
         <file>UI/style-desktop.qss</file>
     </qresource>
