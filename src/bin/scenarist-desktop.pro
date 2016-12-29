@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core core-private gui gui-private sql xml widgets widgets-private printsupport network webengine webenginewidgets concurrent
+QT += core core-private gui gui-private sql xml widgets widgets-private printsupport network concurrent
+!win32-g++: QT += webengine webenginewidgets
 
 TARGET = Scenarist
 TEMPLATE = app
@@ -85,7 +86,7 @@ DEPENDPATH += $$PWD/../libs/webloader/src
 #
 # Подключаем библиотеку qBreakpad и делаем настройки для неё
 #
-win32 {
+win32-msvc* {
 CONFIG += debug_and_release warn_on
 CONFIG += thread exceptions rtti stl
 
@@ -670,4 +671,4 @@ macx {
 #
 # Включаем поддержку компиляции под Windows XP для MSVC 2012+
 #
-QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+win32-msvc*:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
