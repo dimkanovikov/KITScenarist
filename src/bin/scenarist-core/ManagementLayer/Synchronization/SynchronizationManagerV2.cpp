@@ -742,7 +742,8 @@ void SynchronizationManagerV2::unshareProject(int _projectId, const QString& _us
 
 void SynchronizationManagerV2::aboutFullSyncScenario()
 {
-	if (isCanSync()) {
+    if (isCanSync()) {
+        return;
 		//
 		// Запоминаем время синхронизации изменений сценария, в дальнейшем будем отправлять
 		// изменения произведённые с данного момента

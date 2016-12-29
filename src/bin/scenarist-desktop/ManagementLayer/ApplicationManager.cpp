@@ -770,12 +770,37 @@ void ApplicationManager::unshareRemoteProject(const QModelIndex& _index, const Q
 	}
 }
 
-void ApplicationManager::setSyncIndicator(bool _active)
+void ApplicationManager::setSyncIndicator()
 {
-    if (_active){
-        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"), tr("Connection active"), tr("Project synchronized"));
+    bool isActiveInternet = m_synchronizationManagerV2->isInternetConnectionActive();
+    bool isRemoteProject = m_projectsManager->isCurrentProjectValid() &&
+            m_projectsManager->currentProject().isRemote();
+    if (isActiveInternet){
+        //
+        // Если интернет есть, надо понять, с каким типом проекта работает пользователь
+        //
+        if (isRemoteProject) {
+            //
+            // Облачный проект
+            //
+            m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/synced.png"));
+            m_tabs->setIndicatorTitle(tr("Connection active"));
+            m_tabs->setIndicatorText(tr("Project synchronized"));
+        } else {
+            //
+            // Локальный проект
+            //
+            m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"));
+            m_tabs->setIndicatorTitle(tr("Connection active"));
+            m_tabs->setIndicatorText(tr("Local project"));
+        }
     } else {
-        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"), tr("Connection inactive"), tr("Project didn't sinchronize"));
+        //
+        // Если интернета нет, то всегда показываем значок отключенного интернета
+        //
+        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"));
+        m_tabs->setIndicatorTitle(tr("Connection inactive"));
+        m_tabs->setIndicatorText(isRemoteProject ? tr("Project didn't synchronized") : tr("Local project"));
     }
 }
 
@@ -942,18 +967,16 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 	}
 
 	//
-	// Сигнализируем об ошибке
-	//
-<<<<<<< HEAD
+    // Сигнализируем об ошибке
+    // Если не залогинены, то значок не показываем
+    // Если пропал интернет, то значок сам покажется при необходимости
+    //
     if (m_synchronizationManagerV2->isInternetConnectionActive() &&
             m_synchronizationManagerV2->isLogged()) {
-        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Editing/add.png"), title, error);
+        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/unsynced.png"));
+        m_tabs->setIndicatorTitle(title);
+        m_tabs->setIndicatorText(error);
     }
-=======
-	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"));
-	m_tabs->setIndicatorTitle(title);
-	m_tabs->setIndicatorText(error);
->>>>>>> upstream/new-cabin
 
 	//
 	// Если необходимо переключаемся в автономный режим
@@ -1285,15 +1308,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Настроим индикатор
 	//
-	if (m_projectsManager->currentProject().isRemote()) {
-		int errorCode = 0;
-        if (m_projectsManager->currentProject().isSyncAvailable(&errorCode)) {
-		} else {
-			aboutSyncClosedWithError(errorCode);
-		}
-	} else {
-		m_tabs->removeIndicator();
-	}
+    setSyncIndicator();
 
 	//
 	// FIXME: Сделать загрузку сценария  сразу в БД, это заодно позволит избавиться
