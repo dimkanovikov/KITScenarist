@@ -20,6 +20,17 @@ using namespace DataStorageLayer;
 
 QString StorageFacade::username()
 {
+    //
+    // Если пользователь авторизован, то используем его логин
+    //
+    const QString login = settingsStorage()->value("application/email", SettingsStorage::ApplicationSettings);
+    if (!login.isEmpty()) {
+        return login;
+    }
+
+    //
+    // А если не авторизован, то используем имя пользователя из системы
+    //
     return settingsStorage()->value("application/user-name", SettingsStorage::ApplicationSettings);
 }
 
