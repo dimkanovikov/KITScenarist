@@ -18,6 +18,11 @@
 using namespace DataStorageLayer;
 
 
+QString StorageFacade::username()
+{
+    return settingsStorage()->value("application/user-name", SettingsStorage::ApplicationSettings);
+}
+
 void StorageFacade::clearStorages()
 {
 	placeStorage()->clear();

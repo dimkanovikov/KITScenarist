@@ -7,6 +7,9 @@
 #include <QIcon>
 #include <QAction>
 
+class QTimeLine;
+
+
 class SideTabBar : public QWidget
 {
 	Q_OBJECT
@@ -131,7 +134,22 @@ private:
 	/**
 	 * @brief Индикатор внизу панели
 	 */
-	QAction* m_indicator;
+    QAction* m_indicator = nullptr;
+
+    /**
+     * @brief Таймлайн для реализации анимации индикации смены индикатора
+     */
+    QTimeLine* m_timeline = nullptr;
+
+    /**
+     * @brief Количество анимаций иконки (одна анимация - это исчезание или появление)
+     */
+    int m_timelineLoops = 1;
+
+    /**
+     * @brief Новая иконка индикатора
+     */
+    QIcon m_newIndicatorIcon;
 };
 
 #endif // SIDEBAR_H

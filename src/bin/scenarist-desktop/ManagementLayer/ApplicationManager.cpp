@@ -950,15 +950,12 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 	// Если необходимо переключаемся в автономный режим
 	//
 	if (switchToOfflineMode) {
-		const QString loginData =
-			DataStorageLayer::StorageFacade::settingsStorage()->value(
-				"application/user-name",
-				DataStorageLayer::SettingsStorage::ApplicationSettings);
+        const QString login = DataStorageLayer::StorageFacade::username();
 
 		//
 		// Если есть закэшированные данные о прошлой авторизации
 		//
-		if (!loginData.isEmpty()) {
+        if (!login.isEmpty()) {
 			//
 			// Имитируем успешную авторизацию
 			//

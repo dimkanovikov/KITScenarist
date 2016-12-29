@@ -26,9 +26,9 @@ bool DatabaseHistoryStorage::contains(const QString& _uuid) const
 }
 
 void DatabaseHistoryStorage::storeAndApplyHistoryRecord(const QString& _uuid, const QString& _query,
-	const QString& _queryValues, const QString& _datetime)
+    const QString& _queryValues, const QString& _username, const QString& _datetime)
 {
-	MapperFacade::databaseHistoryMapper()->storeHistoryRecord(_uuid, _query, _queryValues, _datetime);
+    MapperFacade::databaseHistoryMapper()->storeHistoryRecord(_uuid, _query, _queryValues, _username, _datetime);
 	MapperFacade::databaseHistoryMapper()->applyHistoryRecord(_query, _queryValues);
 }
 

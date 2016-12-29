@@ -64,10 +64,7 @@ Project::Project(Type _type, const QString& _name, const QString& _path,
 		// Настроим путь к папке с проектами для текущего пользователя
 		//
 		const QString appDataFolderPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-		const QString login =
-				StorageFacade::settingsStorage()->value(
-					"application/user-name",
-					SettingsStorage::ApplicationSettings);
+        const QString login = DataStorageLayer::StorageFacade::username();
 		const QString remoteProjectsFolderPath =
 				QString("%1%4%2%4%3").arg(appDataFolderPath).arg("Projects").arg(login).arg(QDir::separator());
 		//
