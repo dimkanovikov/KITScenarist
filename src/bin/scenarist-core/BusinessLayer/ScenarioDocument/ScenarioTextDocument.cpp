@@ -186,6 +186,32 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 	const QString patchUncopressed = DatabaseHelper::uncompress(_patch);
 	xmlsForUpdate = DiffMatchPatchHelper::changedXml(m_scenarioXml, patchUncopressed);
 
+    int firstStart = xmlsForUpdate.first.xml.indexOf("CDATA") + 6;
+    int secondStart = xmlsForUpdate.second.xml.indexOf("CDATA") + 6;
+
+    int firstEnd = xmlsForUpdate.first.plainLength + firstStart - 2;
+    int secondEnd = xmlsForUpdate.second.plainLength + secondStart - 2;
+
+    while(xmlsForUpdate.first.plainLength > 0 && xmlsForUpdate.second.plainLength > 0 &&
+          xmlsForUpdate.first.xml.at(firstEnd) == xmlsForUpdate.second.xml.at(secondEnd)) {
+        xmlsForUpdate.first.xml.remove(firstEnd, 1);
+        xmlsForUpdate.second.xml.remove(secondEnd, 1);
+        --xmlsForUpdate.first.plainLength;
+        --xmlsForUpdate.second.plainLength;
+        --firstEnd;
+        --secondEnd;
+    }
+
+    while(xmlsForUpdate.first.plainLength > 0 && xmlsForUpdate.second.plainLength > 0 &&
+          xmlsForUpdate.first.xml.at(firstStart) == xmlsForUpdate.second.xml.at(secondStart)) {
+        xmlsForUpdate.first.xml.remove(firstStart, 1);
+        xmlsForUpdate.second.xml.remove(secondStart, 1);
+        --xmlsForUpdate.first.plainLength;
+        --xmlsForUpdate.second.plainLength;
+        ++xmlsForUpdate.first.plainPos;
+        ++xmlsForUpdate.second.plainPos;
+    }
+
 	//
 	// Выделяем текст сценария, соответствующий xml для обновления
 	//
