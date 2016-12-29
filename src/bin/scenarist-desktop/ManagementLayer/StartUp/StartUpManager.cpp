@@ -389,7 +389,7 @@ void StartUpManager::checkCrashReports()
 			// Отправляем
 			//
 			NetworkRequest loader;
-			loader.setRequestMethod(NetworkRequest::Post);
+			loader.addRequestAttribute("version", QApplication::applicationVersion());
 			loader.addRequestAttribute("email", dialog.email());
 			loader.addRequestAttribute("message", dialog.message());
 			loader.addRequestAttributeFile("report", unhandledReportPath);

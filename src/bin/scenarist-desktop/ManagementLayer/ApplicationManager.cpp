@@ -26,8 +26,6 @@
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 
-#include <3rd_party/Helpers/Task.h>
-
 #include <3rd_party/Widgets/SideBar/SideBar.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
@@ -52,6 +50,8 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QWidgetAction>
+
+#include <QtConcurrentRun>
 
 #include <functional>
 
@@ -475,9 +475,7 @@ void ApplicationManager::aboutSave()
 			//
 			// Если необходимо создадим резервную копию закрываемого файла
 			//
-			Task::run([=] {
-				m_backupHelper.saveBackup(ProjectsManager::currentProject().path());
-			}).then([=] {});
+			QtConcurrent::run(&m_backupHelper, &BackupHelper::saveBackup, ProjectsManager::currentProject().path());
 		}
 		//
 		// А если ошибка сохранения, то делаем дополнительные проверки и работаем с пользователем
@@ -492,9 +490,9 @@ void ApplicationManager::aboutSave()
 				//
 				const QDialogButtonBox::StandardButton messageResult =
 						QLightBoxMessage::critical(m_view, tr("Saving error"),
-												   tr("Can't write you changes to project. There is some internal database error. "
+												   tr("Can't write you changes to project. There is some internal database error: %1 "
 													  "Please check that file is exists and you have permissions to write in it. Retry to save?")
-												   .arg(DatabaseLayer::Database::currentFile()),
+												   .arg(DatabaseLayer::Database::lastError()),
 												   QDialogButtonBox::Yes | QDialogButtonBox::No, QDialogButtonBox::Yes);
 				//
 				// ... пробуем повторно открыть базу данных и записать в неё изменения
@@ -795,7 +793,7 @@ void ApplicationManager::aboutUpdateLastChangeInfo()
 			.arg(changeDatetime.toLocalTime().toString("dd.MM.yyyy hh:mm:ss"))
 			.arg(scenarioChange->user());
 	}
-	m_tabs->setIndicatorAdditionalInfo(lastChange);
+	m_tabs->setIndicatorFooterText(lastChange);
 }
 
 void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString& _error)
@@ -946,10 +944,16 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 	//
 	// Сигнализируем об ошибке
 	//
+<<<<<<< HEAD
     if (m_synchronizationManagerV2->isInternetConnectionActive() &&
             m_synchronizationManagerV2->isLogged()) {
         m_tabs->addIndicator(QIcon(":/Graphics/Icons/Editing/add.png"), title, error);
     }
+=======
+	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"));
+	m_tabs->setIndicatorTitle(title);
+	m_tabs->setIndicatorText(error);
+>>>>>>> upstream/new-cabin
 
 	//
 	// Если необходимо переключаемся в автономный режим

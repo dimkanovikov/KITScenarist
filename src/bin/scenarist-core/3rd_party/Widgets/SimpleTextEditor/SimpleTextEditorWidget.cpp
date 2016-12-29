@@ -68,6 +68,7 @@ SimpleTextEditorWidget::SimpleTextEditorWidget(QWidget *parent) :
 
 SimpleTextEditorWidget::~SimpleTextEditorWidget()
 {
+	s_editorWidgets.removeAll(this);
 }
 
 void SimpleTextEditorWidget::setToolbarVisible(bool _visible)
@@ -126,7 +127,7 @@ SimpleTextEditor* SimpleTextEditorWidget::editor() const
 
 void SimpleTextEditorWidget::initView()
 {
-    setFocusProxy(m_editorWrapper);
+	setFocusProxy(m_editorWrapper);
 
 	//
 	// Обновить масштаб
