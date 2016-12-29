@@ -90,7 +90,10 @@ void CharactersNavigator::aboutEditCharacter()
 
 void CharactersNavigator::aboutRemoveCharacters()
 {
-	emit removeCharacters(selectedCharactersNames());
+	const auto charactersNames = selectedCharactersNames();
+	if (!charactersNames.isEmpty()) {
+		emit removeCharacters(selectedCharactersNames());
+	}
 }
 
 QStringList CharactersNavigator::selectedCharactersNames() const

@@ -485,6 +485,14 @@ void Database::updateDatabase(QSqlDatabase& _database)
 				);
 	q_checker.next();
 	QString databaseVersion = q_checker.record().value("version").toString();
+	//
+	// Некоторые версии выходили с ошибками, их заменяем на предыдущие
+	//
+	{
+		if (databaseVersion == "0.7.0 beta 5") {
+			databaseVersion = "0.6.2";
+		}
+	}
 	int versionMajor = databaseVersion.split(".").value(0, "0").toInt();
 	int versionMinor = databaseVersion.split(".").value(1, "0").toInt();
 	int versionBuild = databaseVersion.split(".").value(2, "1").split(" ").value(0, "1").toInt();
@@ -569,7 +577,7 @@ void Database::updateDatabase(QSqlDatabase& _database)
 		// 0.6.x
 		//
 		if (versionMinor <= 6) {
-			if (versionMinor < 5
+			if (versionMinor < 6
 				|| versionBuild <= 2) {
 				updateDatabaseTo_0_7_0(_database);
 			}

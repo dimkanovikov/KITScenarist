@@ -15,7 +15,7 @@ using namespace DataMappingLayer;
 
 ScenariosTable* ScenarioStorage::all()
 {
-	if (m_all == 0) {
+	if (m_all == nullptr) {
 		m_all = MapperFacade::scenarioMapper()->findAll();
 	}
 	return m_all;
@@ -23,7 +23,7 @@ ScenariosTable* ScenarioStorage::all()
 
 Scenario* ScenarioStorage::current(bool _isDraft)
 {
-	Scenario* currentScenario = 0;
+	Scenario* currentScenario = nullptr;
 	if (all()->size() > 0) {
 		foreach (DomainObject* domainObject, all()->toList()) {
 			if (Scenario* scenario = dynamic_cast<Scenario*>(domainObject)) {
@@ -38,7 +38,7 @@ Scenario* ScenarioStorage::current(bool _isDraft)
 	//
 	// Если сценарий ещё не был создан
 	//
-	if (currentScenario == 0) {
+	if (currentScenario == nullptr) {
 		//
 		// ... создаём сценарий
 		//
@@ -68,12 +68,12 @@ void ScenarioStorage::storeScenario(Scenario* _scenario)
 void ScenarioStorage::clear()
 {
 	delete m_all;
-	m_all = 0;
+	m_all = nullptr;
 
 	MapperFacade::scenarioMapper()->clear();
 }
 
 ScenarioStorage::ScenarioStorage() :
-	m_all(0)
+	m_all(nullptr)
 {
 }

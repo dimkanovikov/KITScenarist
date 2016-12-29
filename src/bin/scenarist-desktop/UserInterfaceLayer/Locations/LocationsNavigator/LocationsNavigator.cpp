@@ -89,7 +89,10 @@ void LocationsNavigator::aboutEditLocation()
 
 void LocationsNavigator::aboutRemoveLocation()
 {
-	emit removeLocations(selectedLocationsNames());
+	const auto locationsNames = selectedLocationsNames();
+	if (!locationsNames.isEmpty()) {
+		emit removeLocations(selectedLocationsNames());
+	}
 }
 
 QStringList LocationsNavigator::selectedLocationsNames() const

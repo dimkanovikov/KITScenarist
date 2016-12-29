@@ -19,6 +19,8 @@ LocationsDataEditManager::LocationsDataEditManager(QObject *_parent, QWidget* _p
 {
 	initView();
 	initConnections();
+
+	clean();
 }
 
 QWidget* LocationsDataEditManager::view() const
@@ -38,7 +40,7 @@ void LocationsDataEditManager::editLocation(Location* _location)
 
 	m_location = _location;
 
-	if (m_location != 0) {
+	if (m_location != nullptr) {
 		m_editor->setEnabled(true);
 		m_editor->setName(m_location->name());
 		m_editor->setDescription(m_location->description());
@@ -55,7 +57,8 @@ void LocationsDataEditManager::setCommentOnly(bool _isCommentOnly)
 
 void LocationsDataEditManager::aboutSave()
 {
-	if (!m_editor->name().isEmpty()) {
+	if (!m_editor->name().isEmpty()
+		&& m_location != nullptr) {
 		//
 		// Сохраним предыдущее название локации
 		//

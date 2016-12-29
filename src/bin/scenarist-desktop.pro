@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core core-private gui gui-private sql xml widgets widgets-private printsupport network webengine webenginewidgets
+QT       += core core-private gui gui-private sql xml widgets widgets-private printsupport network webengine webenginewidgets concurrent
 
 TARGET = Scenarist
 TEMPLATE = app
@@ -539,7 +539,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/AnimationPrivate.h \
     scenarist-core/3rd_party/Helpers/ScrollerHelper.h \
     scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
-    scenarist-core/3rd_party/Helpers/Task.h \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.h \
     scenarist-core/BusinessLayer/Statistics/Plots/AbstractPlot.h \
     scenarist-core/BusinessLayer/Statistics/StatisticsParameters.h \
