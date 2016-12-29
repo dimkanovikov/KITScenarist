@@ -1616,15 +1616,29 @@ void SynchronizationManagerV2::downloadAndSaveScenarioData(const QString& _dataU
 
 void SynchronizationManagerV2::networkStateChanged(bool _state)
 {
+    bool prevState = m_isInternetConnectionActive;
+
 	//
 	// Запомним состояние интернета и кинем соответствующий сигнал
-	//
+    //
 	m_isInternetConnectionActive = _state;
-	if (m_isInternetConnectionActive) {
+
+    //
+    // Если появился интернет, которого раньше не было
+    //
+    if (prevState != _state && _state) {
 		//
-		// Переавторизуемся, раз интернет появился
+        // Переавторизуемся
 		//
-		//autoLogin();
+        autoLogin();
+
+        //
+        // А если текущий проект - удаленный, то синхронизуем и его
+        //
+        if (ProjectsManager::currentProject().isRemote()) {
+            aboutFullSyncScenario();
+            aboutFullSyncData();
+        }
 	}
 
 	emit networkStatusChanged(_state);
