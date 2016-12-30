@@ -834,7 +834,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 			title = tr("Network error");
 			error = tr("Can't estabilish network connection.\n\n"
 					   "Continue working in offline mode.");
-			switchToOfflineMode = true;
+            switchToOfflineMode = true;
 			break;
 		}
 
@@ -1692,10 +1692,6 @@ void ApplicationManager::initConnections()
 
     connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished, [this] {
         m_tabs->removeIndicator();
-    });
-
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted, [this] {
-        m_synchronizationManagerV2->firstStateConnection();
     });
 
 	//

@@ -59,7 +59,6 @@ using DataStorageLayer::SettingsStorage;
 
 #include <QEventLoop>
 #include <QHash>
-#include <QNetworkConfigurationManager>
 #include <QScopedPointer>
 #include <QTimer>
 #include <QXmlStreamReader>
@@ -94,6 +93,8 @@ namespace {
 	const QUrl URL_SCENARIO_DATA_LIST = QUrl("https://kitscenarist.ru/api/projects/data/list/");
 	const QUrl URL_SCENARIO_DATA_LOAD = QUrl("https://kitscenarist.ru/api/projects/data/");
 	const QUrl URL_SCENARIO_DATA_SAVE = QUrl("https://kitscenarist.ru/api/projects/data/save/");
+    //
+    const QUrl URL_CHECK_NETWORK_STATE = QUrl("http://kitscenarist.ru/api/app/connection/");
 	/** @} */
 
 	/**
@@ -186,22 +187,18 @@ namespace {
 
 SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _parentView) :
 	QObject(_parent),
-	m_view(_parentView),
-	m_networkManager(new QNetworkConfigurationManager(_parent)),
+    m_view(_parentView),
 	m_isSubscriptionActive(false),
-	m_loader(new NetworkRequest(this))
+    m_loader(new NetworkRequest(this))
 {
 	initConnections();
-}
 
-void SynchronizationManagerV2::firstStateConnection()
-{
-	networkStateChanged(m_networkManager->isOnline());
+    m_loader->setLoadingTimeout(5000);
 }
 
 bool SynchronizationManagerV2::isInternetConnectionActive() const
 {
-	return m_isInternetConnectionActive;
+    return m_isInternetConnectionActive == Active;
 }
 
 bool SynchronizationManagerV2::isLogged() const
@@ -322,6 +319,11 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 
 	emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
 	emit loginAccepted(userName, m_userEmail);
+
+    //
+    // Авторизовались, тепер нас интересует статус интернета
+    //
+    checkNetworkState();
 }
 
 void SynchronizationManagerV2::signUp(const QString& _email, const QString& _password)
@@ -463,6 +465,11 @@ void SynchronizationManagerV2::logout()
 	// Если деавторизация прошла
 	//
 	emit logoutFinished();
+
+    //
+    // Теперь статус интернета не отслеживается, а значит неизвестен
+    //
+    m_isInternetConnectionActive = Undefined;
 }
 
 void SynchronizationManagerV2::renewSubscription(unsigned _duration,
@@ -1313,7 +1320,7 @@ QByteArray SynchronizationManagerV2::loadSyncWrapper(const QUrl& _url)
 			emit cursorsUpdated(QMap<QString, int>());
 			emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
 
-			networkStateChanged(false);
+            checkNetworkState();
 		}
 	}
 
@@ -1614,19 +1621,35 @@ void SynchronizationManagerV2::downloadAndSaveScenarioData(const QString& _dataU
 	}
 }
 
-void SynchronizationManagerV2::networkStateChanged(bool _state)
+void SynchronizationManagerV2::checkNetworkState()
 {
-    bool prevState = m_isInternetConnectionActive;
+    //
+    // Если пользователь не авторизовался, незачем проверять статус интернета
+    //
+    if (m_sessionKey.isEmpty()) {
+        return;
+    }
+
+    InternetStatus prevState = m_isInternetConnectionActive;
+
+    //
+    // Запросим тестовую страницу
+    //
+    m_loader->setRequestMethod(NetworkRequest::Get);
+    m_loader->clearRequestAttributes();
+    m_loader->setLoadingTimeout(5000);
+    QByteArray response = m_loader->loadSync(URL_CHECK_NETWORK_STATE);
 
 	//
 	// Запомним состояние интернета и кинем соответствующий сигнал
     //
-	m_isInternetConnectionActive = _state;
+    m_isInternetConnectionActive = response == "ok" ? Active : Inactive;
 
     //
     // Если появился интернет, которого раньше не было
     //
-    if (prevState != _state && _state) {
+    if (prevState != m_isInternetConnectionActive && m_isInternetConnectionActive == Active &&
+            prevState != Undefined) {
 		//
         // Переавторизуемся
 		//
@@ -1641,11 +1664,23 @@ void SynchronizationManagerV2::networkStateChanged(bool _state)
         }
 	}
 
-	emit networkStatusChanged(_state);
+    //
+    // Изменился статус, уведомим об этом
+    //
+    if (prevState != m_isInternetConnectionActive) {
+        emit networkStatusChanged(m_isInternetConnectionActive);
+    }
+
+    //
+    // Если интернет активен, запрашиваем каждые 5 секунд
+    // Неактивен - каждую секунду
+    //
+    QTimer::singleShot(m_isInternetConnectionActive ? 5000 : 1000, [this] {
+        checkNetworkState();
+    });
 }
 
 void SynchronizationManagerV2::initConnections()
 {
-	connect(this, &SynchronizationManagerV2::loginAccepted, this, &SynchronizationManagerV2::loadProjects);
-	connect(m_networkManager, &QNetworkConfigurationManager::onlineStateChanged, this, &SynchronizationManagerV2::networkStateChanged);
+    connect(this, &SynchronizationManagerV2::loginAccepted, this, &SynchronizationManagerV2::loadProjects);
 }

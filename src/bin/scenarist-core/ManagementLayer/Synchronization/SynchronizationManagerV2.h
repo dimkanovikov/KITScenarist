@@ -21,7 +21,6 @@
 
 class NetworkRequest;
 class QXmlStreamReader;
-class QNetworkConfigurationManager;
 
 
 namespace ManagementLayer
@@ -35,11 +34,6 @@ namespace ManagementLayer
 
 	public:
 		explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
-
-        /**
-         * @brief Необходимо вручную получить начальное состояние интернета
-         */
-        void firstStateConnection();
 
         /**
          * @brief Вернуть, активно ли соединение
@@ -298,7 +292,7 @@ namespace ManagementLayer
         /**
          * @brief Изменился статус соединения с интернетом
          */
-        void networkStateChanged(bool _state);
+        void checkNetworkState();
 
 		/**
 		 * @brief Настроить соединения
@@ -310,12 +304,6 @@ namespace ManagementLayer
 		 * @brief указатель на главную форму приложения
 		 */
 		QWidget* m_view;
-
-        /**
-         * @brief указатель на менеджер интернет конфигураций
-         * нужен для проверки работы интернет
-         */
-        QNetworkConfigurationManager* m_networkManager;
 
 		/**
 		 * Ключ сессии
@@ -351,10 +339,16 @@ namespace ManagementLayer
 		 */
 		QString m_lastDataSyncDatetime;
 
+        enum InternetStatus {
+            Undefined,
+            Inactive,
+            Active
+        };
+
 		/**
 		 * @brief Активно ли соединение с интернетом
 		 */
-		bool m_isInternetConnectionActive = true;
+        InternetStatus m_isInternetConnectionActive = Undefined;
 	};
 }
 
