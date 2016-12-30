@@ -119,6 +119,11 @@ namespace ManagementLayer
 		 */
 		void retryVerify(const QString& _error);
 
+        /**
+         * @brief Возникла неизвестная ошибка. Покажем на последнем окне
+         */
+        void retryLastWidget(const QString& _error);
+
 	signals:
 		/**
 		 * @brief Пользователь хочет авторизоваться

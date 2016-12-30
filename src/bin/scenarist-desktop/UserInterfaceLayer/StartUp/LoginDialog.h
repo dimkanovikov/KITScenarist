@@ -72,6 +72,7 @@ namespace UserInterface
 		void setLoginError(const QString& _error);
 		void setSignUpError(const QString& _error);
 		void setVerificationError(const QString& _error);
+        void setLastWidgetError(const QString& _error);
 
 		/**
 		 * @brief Установить текст для виджета проверочного кода

@@ -806,8 +806,9 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		case 0: {
 			title = tr("Network error");
 			error = tr("Can't estabilish network connection.\n\n"
-					   "Continue working in offline mode.");
-			switchToOfflineMode = true;
+                       "Continue working in offline mode.");
+            switchToOfflineMode = true;
+            m_startUpManager->retryLastWidget(error);
 			break;
 		}
 
