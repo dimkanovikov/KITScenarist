@@ -215,9 +215,9 @@ void StartUpManager::retryVerify(const QString &_error)
     m_loginDialog->setVerificationError(_error);
 }
 
-void StartUpManager::retryLastWidget(const QString &_error)
+void StartUpManager::retryLastAction(const QString &_error)
 {
-    m_loginDialog->setLastWidgetError(_error);
+    m_loginDialog->setLastActionError(_error);
 }
 
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)

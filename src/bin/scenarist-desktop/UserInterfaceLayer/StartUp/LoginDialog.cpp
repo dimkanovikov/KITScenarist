@@ -89,7 +89,7 @@ void LoginDialog::setVerificationError(const QString &_error)
     unblock();
 }
 
-void LoginDialog::setLastWidgetError(const QString &_error)
+void LoginDialog::setLastActionError(const QString &_error)
 {
     if (m_ui->tabs->currentIndex() == 0) {
         setLoginError(_error);

@@ -122,7 +122,7 @@ namespace ManagementLayer
         /**
          * @brief Возникла неизвестная ошибка. Покажем на последнем окне
          */
-        void retryLastWidget(const QString& _error);
+        void retryLastAction(const QString& _error);
 
 	signals:
 		/**
