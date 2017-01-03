@@ -160,6 +160,7 @@ namespace {
 	const QString DBH_ID_KEY = "id";
 	const QString DBH_QUERY_KEY = "query";
 	const QString DBH_QUERY_VALUES_KEY = "query_values";
+    const QString DBH_USERNAME_KEY = "username";
 	const QString DBH_DATETIME_KEY = "datetime";
 	const QString DBH_ORDER_KEY = "order";
 	/** @} */
@@ -1607,9 +1608,9 @@ void SynchronizationManagerV2::downloadAndSaveScenarioData(const QString& _dataU
 		QHash<QString, QString> changeValues;
 		DatabaseLayer::Database::transaction();
 		foreach (changeValues, changes) {
-			DataStorageLayer::StorageFacade::databaseHistoryStorage()->storeAndApplyHistoryRecord(
+            DataStorageLayer::StorageFacade::databaseHistoryStorage()->storeAndApplyHistoryRecord(
 				changeValues.value(DBH_ID_KEY), changeValues.value(DBH_QUERY_KEY),
-				changeValues.value(DBH_QUERY_VALUES_KEY), changeValues.value(DBH_DATETIME_KEY));
+                changeValues.value(DBH_QUERY_VALUES_KEY), changeValues.value(DBH_USERNAME_KEY), changeValues.value(DBH_DATETIME_KEY));
 		}
 		DatabaseLayer::Database::commit();
 

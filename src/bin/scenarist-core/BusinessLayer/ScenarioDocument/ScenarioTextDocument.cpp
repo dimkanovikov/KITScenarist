@@ -50,10 +50,7 @@ namespace {
 	 * @brief Сохранить изменение
 	 */
 	static Domain::ScenarioChange* saveChange(const QString& _undoPatch, const QString& _redoPatch) {
-		const QString username =
-				DataStorageLayer::StorageFacade::settingsStorage()->value(
-					"application/user-name",
-					DataStorageLayer::SettingsStorage::ApplicationSettings);
+        const QString username = DataStorageLayer::StorageFacade::username();
 		return DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(username, _undoPatch, _redoPatch);
 	}
 }

@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QLabel>
 #include <QMenu>
+#include <QTimeLine>
 #include <QWidgetAction>
 
 namespace {
@@ -87,7 +88,7 @@ namespace {
     const char* INDICATOR_FOOTER_KEY = "footer";
     /** @} */
 }
-
+#include <QTimer>
 SideTabBar::SideTabBar(QWidget *parent) :
 	QWidget(parent),
 	m_pressedTab(0),
@@ -95,9 +96,30 @@ SideTabBar::SideTabBar(QWidget *parent) :
 	m_compactMode(false),
 	m_currentIndex(0),
 	m_prevCurrentIndex(0),
-	m_indicator(new QAction(this))
+    m_indicator(new QAction(this)),
+    m_timeline(new QTimeLine(300, this))
 {
 	setFixedWidth(::sidebarWidth(m_compactMode));
+
+    m_timeline->setFrameRange(100, 0);
+    connect(m_timeline, &QTimeLine::frameChanged, [=] { update(); });
+    connect(m_timeline, &QTimeLine::finished, [=] {
+        m_timeline->setDirection(m_timeline->direction() == QTimeLine::Forward ? QTimeLine::Backward : QTimeLine::Forward);
+
+        //
+        // Если нужно, меняем иконку
+        //
+        m_indicator->setIcon(m_newIndicatorIcon);
+        m_indicator->setVisible(!m_newIndicatorIcon.isNull());
+
+        //
+        // Если необходимо, запустить анимацию ещё раз
+        //
+        if (m_timelineLoops > 0) {
+            --m_timelineLoops;
+            m_timeline->start();
+        }
+    });
 
 	//
 	// По умолчанию индикатор скрыт
@@ -184,9 +206,15 @@ int SideTabBar::prevCurrentTab() const
 
 void SideTabBar::addIndicator(const QIcon& _icon)
 {
-    m_indicator->setIcon(_icon);
-    m_indicator->setVisible(!_icon.isNull());
-    update();
+    if (m_timeline->state() == QTimeLine::Running) {
+        m_timeline->stop();
+    }
+
+    m_timeline->setDirection(QTimeLine::Forward);
+    m_newIndicatorIcon = _icon;
+    m_timelineLoops = 5;
+
+    m_timeline->start();
 }
 
 void SideTabBar::setIndicatorTitle(const QString& _title)
@@ -305,16 +333,19 @@ void SideTabBar::paintEvent(QPaintEvent *event)
 	//
 	// Рисуем индикатор
 	//
-	if (m_indicator->isVisible()) {
+    if (m_indicator->isVisible()) {
 		const QRect indicatorRect(0, height() - INDICATOR_HEIGHT, ::sidebarWidth(m_compactMode), INDICATOR_HEIGHT);
+
 		//
 		// Граница сверху
 		//
 		p.setPen(palette().dark().color());
 		p.drawLine(indicatorRect.topLeft(), indicatorRect.topRight());
+
 		//
 		// Иконка индикатора
-		//
+        //
+        p.setOpacity(m_timeline->currentFrame() / 100.);
         const QIcon mainIcon = m_indicator->icon();
         const QIcon additionalIcon = m_indicator->property(::INDICATOR_ADDITIONAL_ICON_KEY).value<QIcon>();
         if (mainIcon.isNull()) {

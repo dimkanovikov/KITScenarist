@@ -35,7 +35,7 @@ namespace DatabaseLayer {
 				result = _data;
 			}
 			return result;
-		}
+        }
 	};
 }
 

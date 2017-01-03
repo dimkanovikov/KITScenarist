@@ -1,6 +1,8 @@
 #ifndef STORAGEFACADE_H
 #define STORAGEFACADE_H
 
+#include <QString>
+
 
 namespace DataStorageLayer
 {
@@ -21,7 +23,12 @@ namespace DataStorageLayer
 
 	class StorageFacade
 	{
-	public:
+    public:
+        /**
+         * @brief Получить имя пользователя
+         */
+        static QString username();
+
 		/**
 		 * @brief Очистить все хранилища
 		 */

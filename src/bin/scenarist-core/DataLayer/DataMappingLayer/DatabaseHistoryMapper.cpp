@@ -18,6 +18,7 @@ namespace {
 	const QString QUERY_KEY = "query";
 	const QString QUERY_VALUES_KEY = "query_values";
 	const QString DATETIME_KEY = "datetime";
+    const QString USERNAME_KEY = "username";
 }
 
 
@@ -41,8 +42,8 @@ QMap<QString, QString> DatabaseHistoryMapper::historyRecord(const QString& _uuid
 {
 	QSqlQuery q_loader = Database::query();
 	q_loader.exec(
-		QString("SELECT %1, %2, %3, %4 FROM _database_history WHERE %1 = '%5'")
-		.arg(ID_KEY, QUERY_KEY, QUERY_VALUES_KEY, DATETIME_KEY, _uuid)
+        QString("SELECT %1, %2, %3, %4, %5 FROM _database_history WHERE %1 = '%6'")
+        .arg(ID_KEY, QUERY_KEY, QUERY_VALUES_KEY, USERNAME_KEY, DATETIME_KEY, _uuid)
 		);
 
 	q_loader.next();
@@ -50,6 +51,7 @@ QMap<QString, QString> DatabaseHistoryMapper::historyRecord(const QString& _uuid
 	historyRecord.insert(ID_KEY, q_loader.value(ID_KEY).toString());
 	historyRecord.insert(QUERY_KEY, q_loader.value(QUERY_KEY).toString());
 	historyRecord.insert(QUERY_VALUES_KEY, q_loader.value(QUERY_VALUES_KEY).toString());
+    historyRecord.insert(USERNAME_KEY, q_loader.value(USERNAME_KEY).toString());
 	historyRecord.insert(DATETIME_KEY, q_loader.value(DATETIME_KEY).toString());
 
 	return historyRecord;
@@ -68,16 +70,17 @@ bool DatabaseHistoryMapper::contains(const QString& _uuid) const
 }
 
 void DatabaseHistoryMapper::storeHistoryRecord(const QString& _uuid, const QString& _query,
-	const QString& _queryValues, const QString& _datetime)
+    const QString& _queryValues, const QString& _username, const QString& _datetime)
 {
 	QSqlQuery q_saver = Database::query();
 	q_saver.prepare(
-		QString("INSERT INTO _database_history (%1, %2, %3, %4) VALUES(?, ?, ?, ?)")
-		.arg(ID_KEY, QUERY_KEY, QUERY_VALUES_KEY, DATETIME_KEY)
+        QString("INSERT INTO _database_history (%1, %2, %3, %4, %5) VALUES(?, ?, ?, ?, ?)")
+        .arg(ID_KEY, QUERY_KEY, QUERY_VALUES_KEY, USERNAME_KEY, DATETIME_KEY)
 		);
 	q_saver.addBindValue(_uuid);
 	q_saver.addBindValue(_query);
 	q_saver.addBindValue(_queryValues);
+    q_saver.addBindValue(_username);
 	q_saver.addBindValue(_datetime);
 	q_saver.exec();
 }

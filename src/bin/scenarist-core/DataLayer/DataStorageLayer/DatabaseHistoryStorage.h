@@ -31,7 +31,7 @@ namespace DataStorageLayer
 		 * @brief Сохранить изменение данных и применить его
 		 */
 		void storeAndApplyHistoryRecord(const QString& _uuid, const QString& _query,
-			const QString& _queryValues, const QString& _datetime);
+            const QString& _queryValues, const QString& _username, const QString& _datetime);
 
 	private:
 		DatabaseHistoryStorage();

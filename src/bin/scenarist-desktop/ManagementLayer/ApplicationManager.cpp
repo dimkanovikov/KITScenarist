@@ -833,8 +833,9 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		case 0: {
 			title = tr("Network error");
 			error = tr("Can't estabilish network connection.\n\n"
-					   "Continue working in offline mode.");
+                 "Continue working in offline mode.");
             switchToOfflineMode = true;
+            m_startUpManager->retryLastAction(error);
 			break;
 		}
 
@@ -982,15 +983,12 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 	// Если необходимо переключаемся в автономный режим
 	//
 	if (switchToOfflineMode) {
-		const QString loginData =
-			DataStorageLayer::StorageFacade::settingsStorage()->value(
-				"application/user-name",
-				DataStorageLayer::SettingsStorage::ApplicationSettings);
+        const QString login = DataStorageLayer::StorageFacade::username();
 
 		//
 		// Если есть закэшированные данные о прошлой авторизации
 		//
-		if (!loginData.isEmpty()) {
+        if (!login.isEmpty()) {
 			//
 			// Имитируем успешную авторизацию
 			//
