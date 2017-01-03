@@ -1939,9 +1939,12 @@ void ApplicationManager::reloadApplicationSettings()
 void ApplicationManager::updateWindowTitle()
 {
 	//
-	// Обновим название текущего проекта
+	// Обновим название текущего проекта, если он локальный
 	//
-	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
+	if (m_projectsManager->currentProject().isLocal()) {
+		m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
+	}
+
 	const QString projectFileName = ProjectsManager::currentProject().name();
 #ifdef Q_OS_MAC
 	m_view->setWindowTitle(projectFileName);

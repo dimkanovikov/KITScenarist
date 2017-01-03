@@ -53,6 +53,11 @@ namespace ManagementLayer
 		Type type() const;
 
 		/**
+		 * @brief Это локальный проект?
+		 */
+		bool isLocal() const;
+
+		/**
 		 * @brief Это проект из облака?
 		 */
 		bool isRemote() const;
