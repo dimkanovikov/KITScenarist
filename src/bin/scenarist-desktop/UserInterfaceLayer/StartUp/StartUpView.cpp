@@ -42,6 +42,11 @@ StartUpView::~StartUpView()
 	delete ui;
 }
 
+bool StartUpView::isOnLocalProjectsTab() const
+{
+	return ui->localProjects->isChecked();
+}
+
 void StartUpView::setRecentProjects(QAbstractItemModel* _recentProjectsModel)
 {
 	//

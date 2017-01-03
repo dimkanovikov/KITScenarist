@@ -24,6 +24,11 @@ namespace UserInterface
 		~StartUpView();
 
 		/**
+		 * @brief Открыт ли в данный момент список локальных проектов (true), или облачных (false)
+		 */
+		bool isOnLocalProjectsTab() const;
+
+		/**
 		 * @brief Установить недавно использованные файлы
 		 */
 		void setRecentProjects(QAbstractItemModel* _recentProjectsModel);

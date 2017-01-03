@@ -89,6 +89,11 @@ bool StartUpManager::isUserLogged() const
 	return !m_userEmail.isEmpty();
 }
 
+bool StartUpManager::isOnLocalProjectsTab() const
+{
+	return m_view->isOnLocalProjectsTab();
+}
+
 void StartUpManager::completeLogin(const QString& _userName, const QString& _userEmail)
 {
 	m_userEmail = _userEmail;
@@ -212,12 +217,12 @@ void StartUpManager::retryVerify(const QString &_error)
 	//
 	// Покажем пользователю ошибку ввода проверочного кода
 	//
-    m_loginDialog->setVerificationError(_error);
+	m_loginDialog->setVerificationError(_error);
 }
 
 void StartUpManager::retryLastAction(const QString &_error)
 {
-    m_loginDialog->setLastActionError(_error);
+	m_loginDialog->setLastActionError(_error);
 }
 
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)

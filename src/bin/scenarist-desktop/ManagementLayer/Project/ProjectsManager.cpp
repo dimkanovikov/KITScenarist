@@ -189,6 +189,28 @@ bool ProjectsManager::setCurrentProject(const QModelIndex& _index, bool _isLocal
 	return setCurrentProject(newCurrentProjectPath, _isLocal);
 }
 
+bool ProjectsManager::setCurrentProject(int _id, bool _isLocal)
+{
+	//
+	// Определим проект
+	//
+	QString newCurrentProjectPath;
+	if (!_isLocal) {
+		for (const Project& project : m_remoteProjects) {
+			if (project.id() == _id) {
+				newCurrentProjectPath = project.path();
+				break;
+			}
+		}
+	} else {
+		Q_ASSERT_X(0, "Can't open local project by id", Q_FUNC_INFO);
+	}
+	//
+	// ... и установим его текущим
+	//
+	return setCurrentProject(newCurrentProjectPath, _isLocal);
+}
+
 void ProjectsManager::setCurrentProjectName(const QString& _projectName)
 {
 	//

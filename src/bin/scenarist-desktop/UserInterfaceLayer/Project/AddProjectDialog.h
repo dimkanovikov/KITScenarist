@@ -24,7 +24,7 @@ namespace UserInterface
 		/**
 		 * @brief Установить возможность добавления проектов из облака
 		 */
-		void setIsRemoteAvailable(bool _isAvailable, bool _isEnabled = false);
+		void setIsRemoteAvailable(bool _isAvailable, bool _isEnabled = false, bool _isSelected = false);
 
 		/**
 		 * @brief Создаётся локальный файл (true) или в облаке (false)

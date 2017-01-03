@@ -235,8 +235,12 @@ void ApplicationManager::aboutCreateNew()
 	//
 	if (saveIfNeeded()) {
 		AddProjectDialog dlg(m_view);
+		//
+		// FIXME: проверять залогинен ли пользователь через менеджер синхронизации
+		//
 		dlg.setIsRemoteAvailable(m_startUpManager->isUserLogged(),
-								 m_synchronizationManagerV2->isSubscriptionActive());
+								 m_synchronizationManagerV2->isSubscriptionActive(),
+								 !m_startUpManager->isOnLocalProjectsTab());
 
 		while (dlg.exec() != AddProjectDialog::Rejected) {
 			//
@@ -261,11 +265,13 @@ void ApplicationManager::aboutCreateNew()
 			//
 			else {
 				if (!dlg.projectName().isEmpty()) {
-					m_synchronizationManagerV2->createProject(dlg.projectName());
-
 					//
-					// TODO: создание проекта, импорт и открытие
+					// Если задано имя, то создаём новый проект в облаке
 					//
+					const QString newProjectName = dlg.projectName();
+					const QString importFilePath = dlg.isNeedImport() ? dlg.importFilePath() : QString::null;
+					createNewRemoteProject(newProjectName, importFilePath);
+					break;
 				}
 			}
 		}
@@ -354,6 +360,50 @@ void ApplicationManager::createNewLocalProject(const QString& _filePath, const Q
 			//
 			QTimer::singleShot(0, this, &ApplicationManager::aboutCreateNew);
 		}
+	}
+}
+
+void ApplicationManager::createNewRemoteProject(const QString& _projectName, const QString& _importFilePath)
+{
+	//
+	// Закроем текущий проект
+	//
+	closeCurrentProject();
+
+	//
+	// Создаём новый проект в облаке
+	//
+	const int newProjectId = m_synchronizationManagerV2->createProject(_projectName);
+
+	//
+	// Переключаемся на работу с новым проектом
+	//
+	const bool isRemote = false;
+	if (m_projectsManager->setCurrentProject(newProjectId, isRemote)) {
+		//
+		// ... перейдём к редактированию
+		//
+		goToEditCurrentProject();
+		//
+		// ... и импортируем, если надо
+		//
+		if (!_importFilePath.isEmpty()) {
+			m_importManager->importScenario(m_scenarioManager->scenario(), _importFilePath);
+		}
+	}
+	//
+	// Если переключиться не удалось, сообщаем пользователю об ошибке
+	//
+	else {
+		QLightBoxMessage::critical(
+			m_view,
+			tr("Can't open project file"),
+			DatabaseLayer::Database::openFileError());
+
+		//
+		// ... и перезапускаем создание проекта
+		//
+		QTimer::singleShot(0, this, &ApplicationManager::aboutCreateNew);
 	}
 }
 
@@ -840,9 +890,9 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 		case 0: {
 			title = tr("Network error");
 			error = tr("Can't estabilish network connection.\n\n"
-                 "Continue working in offline mode.");
-            switchToOfflineMode = true;
-            m_startUpManager->retryLastAction(error);
+					   "Continue working in offline mode.");
+			switchToOfflineMode = true;
+			m_startUpManager->retryLastAction(error);
 			break;
 		}
 
@@ -990,12 +1040,12 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 	// Если необходимо переключаемся в автономный режим
 	//
 	if (switchToOfflineMode) {
-        const QString login = DataStorageLayer::StorageFacade::username();
+		const QString login = DataStorageLayer::StorageFacade::username();
 
 		//
 		// Если есть закэшированные данные о прошлой авторизации
 		//
-        if (!login.isEmpty()) {
+		if (!login.isEmpty()) {
 			//
 			// Имитируем успешную авторизацию
 			//
@@ -1923,9 +1973,12 @@ void ApplicationManager::reloadApplicationSettings()
 void ApplicationManager::updateWindowTitle()
 {
 	//
-	// Обновим название текущего проекта
+	// Обновим название текущего проекта, если он локальный
 	//
-	m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
+	if (m_projectsManager->currentProject().isLocal()) {
+		m_projectsManager->setCurrentProjectName(m_researchManager->scenarioName());
+	}
+
 	const QString projectFileName = ProjectsManager::currentProject().name();
 #ifdef Q_OS_MAC
 	m_view->setWindowTitle(projectFileName);
