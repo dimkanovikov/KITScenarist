@@ -775,33 +775,40 @@ void ApplicationManager::setSyncIndicator()
     bool isActiveInternet = m_synchronizationManagerV2->isInternetConnectionActive();
     bool isRemoteProject = m_projectsManager->isCurrentProjectValid() &&
             m_projectsManager->currentProject().isRemote();
+
+    QString iconPath;
+    QString indicatorTitle;
+    QString indicatorText;
     if (isActiveInternet){
         //
         // Если интернет есть, надо понять, с каким типом проекта работает пользователь
         //
+        indicatorTitle = tr("Connection active");
         if (isRemoteProject) {
             //
             // Облачный проект
             //
-            m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/synced.png"));
-            m_tabs->setIndicatorTitle(tr("Connection active"));
-            m_tabs->setIndicatorText(tr("Project synchronized"));
+            iconPath = ":/Graphics/Icons/Indicator/synced.png";
+            indicatorText = tr("Project synchronized");
         } else {
             //
             // Локальный проект
             //
-            m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"));
-            m_tabs->setIndicatorTitle(tr("Connection active"));
-            m_tabs->setIndicatorText(tr("Local project"));
+            iconPath = ":/Graphics/Icons/Indicator/connected.png";
+            indicatorText = tr("Local project");
         }
     } else {
         //
         // Если интернета нет, то всегда показываем значок отключенного интернета
         //
-        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"));
-        m_tabs->setIndicatorTitle(tr("Connection inactive"));
+        iconPath = ":/Graphics/Icons/Indicator/disconnected.png";
+        indicatorTitle = tr("Connection inactive");
+        indicatorText = isRemoteProject ? tr("Project didn't synchronized") : tr("Local project");
         m_tabs->setIndicatorText(isRemoteProject ? tr("Project didn't synchronized") : tr("Local project"));
     }
+    m_tabs->addIndicator(QIcon(iconPath));
+    m_tabs->setIndicatorTitle(indicatorTitle);
+    m_tabs->setIndicatorText(indicatorText);
 }
 
 void ApplicationManager::aboutUpdateLastChangeInfo()
@@ -1688,9 +1695,8 @@ void ApplicationManager::initConnections()
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::projectsLoaded,
 			m_projectsManager, &ProjectsManager::setRemoteProjects);
 
-    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished, [this] {
-        m_tabs->removeIndicator();
-    });
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished,
+            m_tabs, &SideTabBar::removeIndicator);
 
 	//
 	// Когда пользователь вышел из своего аккаунта, закрываем текущий проект, если он из облака

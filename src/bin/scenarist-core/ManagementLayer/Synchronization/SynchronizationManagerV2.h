@@ -290,7 +290,7 @@ namespace ManagementLayer
 		void downloadAndSaveScenarioData(const QString& _dataUuids);
 
         /**
-         * @brief Изменился статус соединения с интернетом
+         * @brief Проверка статуса соединения с интернетом
          */
         void checkNetworkState();
 
@@ -339,6 +339,10 @@ namespace ManagementLayer
 		 */
 		QString m_lastDataSyncDatetime;
 
+        /**
+         * @brief Статус интернета. Неопределенный, отсутствует подключение,
+         * присутствует подключение
+         */
         enum InternetStatus {
             Undefined,
             Inactive,

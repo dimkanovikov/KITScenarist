@@ -1321,7 +1321,7 @@ QByteArray SynchronizationManagerV2::loadSyncWrapper(const QUrl& _url)
 			emit cursorsUpdated(QMap<QString, int>());
 			emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
 
-            checkNetworkState();
+            m_isInternetConnectionActive = Inactive;
 		}
 	}
 
@@ -1638,7 +1638,6 @@ void SynchronizationManagerV2::checkNetworkState()
     //
     m_loader->setRequestMethod(NetworkRequest::Get);
     m_loader->clearRequestAttributes();
-    m_loader->setLoadingTimeout(5000);
     QByteArray response = m_loader->loadSync(URL_CHECK_NETWORK_STATE);
 
 	//
