@@ -87,10 +87,11 @@ AddProjectDialog::~AddProjectDialog()
 	delete m_ui;
 }
 
-void AddProjectDialog::setIsRemoteAvailable(bool _isAvailable, bool _isEnabled)
+void AddProjectDialog::setIsRemoteAvailable(bool _isAvailable, bool _isEnabled, bool _isSelected)
 {
 	if (_isAvailable) {
 		m_ui->isRemote->setEnabled(_isEnabled);
+		m_ui->isRemote->setChecked(_isSelected);
 	} else {
 		m_ui->isLocal->hide();
 		m_ui->isRemote->hide();

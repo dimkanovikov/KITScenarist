@@ -26,7 +26,7 @@ namespace UserInterface {
 	class StartUpView;
 	class LoginDialog;
 	class ChangePasswordDialog;
-    class RenewSubscriptionDialog;
+	class RenewSubscriptionDialog;
 }
 
 class QAbstractItemModel;
@@ -52,6 +52,11 @@ namespace ManagementLayer
 		 * @brief Авторизован ли пользователь
 		 */
 		bool isUserLogged() const;
+
+		/**
+		 * @brief Открыт ли в данный момент список локальных проектов (true), или облачных (false)
+		 */
+		bool isOnLocalProjectsTab() const;
 
 		/**
 		 * @brief Пользователь с заданным именем успешно авторизован на сервере
@@ -92,7 +97,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Получена информация о подписке
 		 */
-        void setSubscriptionInfo(bool _isActive, const QString& _expiredDate);
+		void setSubscriptionInfo(bool _isActive, const QString& _expiredDate);
 
 		/**
 		 * @brief Установить список недавно используемых проектов
@@ -119,10 +124,10 @@ namespace ManagementLayer
 		 */
 		void retryVerify(const QString& _error);
 
-        /**
-         * @brief Возникла неизвестная ошибка. Покажем на последнем окне
-         */
-        void retryLastAction(const QString& _error);
+		/**
+		 * @brief Возникла неизвестная ошибка. Покажем на последнем окне
+		 */
+		void retryLastAction(const QString& _error);
 
 	signals:
 		/**
@@ -270,10 +275,10 @@ namespace ManagementLayer
 		 */
 		QString m_userEmail;
 
-        /**
-         * @brief Дата окончания подпискиы
-         */
-        QString m_subscriptionEndDate;
+		/**
+		 * @brief Дата окончания подпискиы
+		 */
+		QString m_subscriptionEndDate;
 
 		/**
 		 * @brief Окно авторизации/регистрации
@@ -285,10 +290,10 @@ namespace ManagementLayer
 		 */
 		UserInterface::ChangePasswordDialog* m_changePasswordDialog;
 
-        /**
-         * @brief Окно продления подписки
-         */
-        UserInterface::RenewSubscriptionDialog* m_renewSubscriptionDialog;
+		/**
+		 * @brief Окно продления подписки
+		 */
+		UserInterface::RenewSubscriptionDialog* m_renewSubscriptionDialog;
 
 
 	};

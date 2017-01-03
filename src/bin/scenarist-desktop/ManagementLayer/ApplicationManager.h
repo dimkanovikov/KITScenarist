@@ -66,6 +66,7 @@ namespace ManagementLayer
 		/** @{ */
 		void aboutCreateNew();
 		void createNewLocalProject(const QString& _filePath, const QString& _importFilePath);
+		void createNewRemoteProject(const QString& _projectName, const QString& _importFilePath);
 		/** @} */
 
 		/**
