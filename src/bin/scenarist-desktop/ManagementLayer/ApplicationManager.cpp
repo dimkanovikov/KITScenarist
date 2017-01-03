@@ -820,11 +820,45 @@ void ApplicationManager::unshareRemoteProject(const QModelIndex& _index, const Q
 	}
 }
 
-void ApplicationManager::aboutShowSyncActiveIndicator()
+void ApplicationManager::setSyncIndicator()
 {
-	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/connected.png"));
-	m_tabs->setIndicatorTitle(tr("Connection active"));
-	m_tabs->setIndicatorText(tr("Project sinchronized"));
+    bool isActiveInternet = m_synchronizationManagerV2->isInternetConnectionActive();
+    bool isRemoteProject = m_projectsManager->isCurrentProjectValid() &&
+            m_projectsManager->currentProject().isRemote();
+
+    QString iconPath;
+    QString indicatorTitle;
+    QString indicatorText;
+    if (isActiveInternet){
+        //
+        // Если интернет есть, надо понять, с каким типом проекта работает пользователь
+        //
+        indicatorTitle = tr("Connection active");
+        if (isRemoteProject) {
+            //
+            // Облачный проект
+            //
+            iconPath = ":/Graphics/Icons/Indicator/synced.png";
+            indicatorText = tr("Project synchronized");
+        } else {
+            //
+            // Локальный проект
+            //
+            iconPath = ":/Graphics/Icons/Indicator/connected.png";
+            indicatorText = tr("Local project");
+        }
+    } else {
+        //
+        // Если интернета нет, то всегда показываем значок отключенного интернета
+        //
+        iconPath = ":/Graphics/Icons/Indicator/disconnected.png";
+        indicatorTitle = tr("Connection inactive");
+        indicatorText = isRemoteProject ? tr("Project didn't synchronized") : tr("Local project");
+        m_tabs->setIndicatorText(isRemoteProject ? tr("Project didn't synchronized") : tr("Local project"));
+    }
+    m_tabs->addIndicator(QIcon(iconPath));
+    m_tabs->setIndicatorTitle(indicatorTitle);
+    m_tabs->setIndicatorText(indicatorText);
 }
 
 void ApplicationManager::aboutUpdateLastChangeInfo()
@@ -991,11 +1025,16 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
 	}
 
 	//
-	// Сигнализируем об ошибке
-	//
-	m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/disconnected.png"));
-	m_tabs->setIndicatorTitle(title);
-	m_tabs->setIndicatorText(error);
+    // Сигнализируем об ошибке
+    // Если не залогинены, то значок не показываем
+    // Если пропал интернет, то значок сам покажется при необходимости
+    //
+    if (m_synchronizationManagerV2->isInternetConnectionActive() &&
+            m_synchronizationManagerV2->isLogged()) {
+        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/unsynced.png"));
+        m_tabs->setIndicatorTitle(title);
+        m_tabs->setIndicatorText(error);
+    }
 
 	//
 	// Если необходимо переключаемся в автономный режим
@@ -1324,16 +1363,7 @@ void ApplicationManager::goToEditCurrentProject()
 	//
 	// Настроим индикатор
 	//
-	if (m_projectsManager->currentProject().isRemote()) {
-		int errorCode = 0;
-		if (m_projectsManager->currentProject().isSyncAvailable(&errorCode)) {
-			aboutShowSyncActiveIndicator();
-		} else {
-			aboutSyncClosedWithError(errorCode);
-		}
-	} else {
-		m_tabs->removeIndicator();
-	}
+    setSyncIndicator();
 
 	//
 	// FIXME: Сделать загрузку сценария  сразу в БД, это заодно позволит избавиться
@@ -1692,7 +1722,8 @@ void ApplicationManager::initConnections()
 			m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
 	connect(m_synchronizationManagerV2, SIGNAL(syncClosedWithError(int,QString)),
 			this, SLOT(aboutSyncClosedWithError(int,QString)));
-	connect(m_synchronizationManagerV2, SIGNAL(syncRestarted()), this, SLOT(aboutShowSyncActiveIndicator()));
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::networkStatusChanged,
+            this, &ApplicationManager::setSyncIndicator);
 
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::loginAccepted,
 			m_startUpManager, &StartUpManager::completeLogin);
@@ -1713,6 +1744,9 @@ void ApplicationManager::initConnections()
 	//
 	connect(m_synchronizationManagerV2, &SynchronizationManagerV2::projectsLoaded,
 			m_projectsManager, &ProjectsManager::setRemoteProjects);
+
+    connect(m_synchronizationManagerV2, &SynchronizationManagerV2::logoutFinished,
+            m_tabs, &SideTabBar::removeIndicator);
 
 	//
 	// Когда пользователь вышел из своего аккаунта, закрываем текущий проект, если он из облака

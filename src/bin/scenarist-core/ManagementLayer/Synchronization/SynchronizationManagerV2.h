@@ -35,6 +35,16 @@ namespace ManagementLayer
 	public:
 		explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
 
+        /**
+         * @brief Вернуть, активно ли соединение
+         */
+        bool isInternetConnectionActive() const;
+
+        /**
+         * @brief Вернуть, авторизован ли пользователь
+         */
+        bool isLogged() const;
+
 		//
 		// Методы работы с аккаунтом
 		//
@@ -228,9 +238,9 @@ namespace ManagementLayer
 		void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
 
 		/**
-		 * @brief Синхронизация восстановлена
+         * @brief Изменилось состояние интернета
 		 */
-		void syncRestarted();
+        void networkStatusChanged(bool _isActive);
 
 	private:
 		/**
@@ -279,13 +289,11 @@ namespace ManagementLayer
 		 */
 		void downloadAndSaveScenarioData(const QString& _dataUuids);
 
-	private slots:
-		/**
-		 * @brief Проверить соединение с интернетом
-		 */
-		void checkInternetConnection();
+        /**
+         * @brief Проверка статуса соединения с интернетом
+         */
+        void checkNetworkState();
 
-	private:
 		/**
 		 * @brief Настроить соединения
 		 */
@@ -331,10 +339,20 @@ namespace ManagementLayer
 		 */
 		QString m_lastDataSyncDatetime;
 
+        /**
+         * @brief Статус интернета. Неопределенный, отсутствует подключение,
+         * присутствует подключение
+         */
+        enum InternetStatus {
+            Undefined,
+            Inactive,
+            Active
+        };
+
 		/**
 		 * @brief Активно ли соединение с интернетом
 		 */
-		bool m_isInternetConnectionActive = true;
+        InternetStatus m_isInternetConnectionActive = Undefined;
 	};
 }
 
