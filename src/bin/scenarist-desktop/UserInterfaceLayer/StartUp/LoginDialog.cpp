@@ -86,7 +86,18 @@ void LoginDialog::setSignUpError(const QString &_error)
 void LoginDialog::setVerificationError(const QString &_error)
 {
 	updateLabel(m_ui->verificationError, m_ui->verificationErrorIcon,_error, true);
-	unblock();
+    unblock();
+}
+
+void LoginDialog::setLastActionError(const QString &_error)
+{
+    if (m_ui->tabs->currentIndex() == 0) {
+        setLoginError(_error);
+    } else if (m_isVerify) {
+        setVerificationError(_error);
+    } else {
+        setSignUpError(_error);
+    }
 }
 
 void LoginDialog::showVerificationSuccess()

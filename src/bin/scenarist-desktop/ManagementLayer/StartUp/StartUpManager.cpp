@@ -212,7 +212,12 @@ void StartUpManager::retryVerify(const QString &_error)
 	//
 	// Покажем пользователю ошибку ввода проверочного кода
 	//
-	m_loginDialog->setVerificationError(_error);
+    m_loginDialog->setVerificationError(_error);
+}
+
+void StartUpManager::retryLastAction(const QString &_error)
+{
+    m_loginDialog->setLastActionError(_error);
 }
 
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
