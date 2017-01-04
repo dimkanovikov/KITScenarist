@@ -23,6 +23,7 @@
 #include <3rd_party/Helpers/PasswordStorage.h>
 
 #include <NetworkRequest.h>
+#include <NetworkRequestLoader.h>
 
 #include <QXmlStreamReader>
 #include <QEventLoop>
@@ -93,8 +94,8 @@ namespace {
 	const QUrl URL_SCENARIO_DATA_LIST = QUrl("https://kitscenarist.ru/api/projects/data/list/");
 	const QUrl URL_SCENARIO_DATA_LOAD = QUrl("https://kitscenarist.ru/api/projects/data/");
 	const QUrl URL_SCENARIO_DATA_SAVE = QUrl("https://kitscenarist.ru/api/projects/data/save/");
-    //
-    const QUrl URL_CHECK_NETWORK_STATE = QUrl("http://kitscenarist.ru/api/app/connection/");
+	//
+	const QUrl URL_CHECK_NETWORK_STATE = QUrl("http://kitscenarist.ru/api/app/connection/");
 	/** @} */
 
 	/**
@@ -160,7 +161,7 @@ namespace {
 	const QString DBH_ID_KEY = "id";
 	const QString DBH_QUERY_KEY = "query";
 	const QString DBH_QUERY_VALUES_KEY = "query_values";
-    const QString DBH_USERNAME_KEY = "username";
+	const QString DBH_USERNAME_KEY = "username";
 	const QString DBH_DATETIME_KEY = "datetime";
 	const QString DBH_ORDER_KEY = "order";
 	/** @} */
@@ -188,18 +189,15 @@ namespace {
 
 SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _parentView) :
 	QObject(_parent),
-    m_view(_parentView),
-	m_isSubscriptionActive(false),
-    m_loader(new NetworkRequest(this))
+	m_view(_parentView),
+	m_isSubscriptionActive(false)
 {
 	initConnections();
-
-    m_loader->setLoadingTimeout(5000);
 }
 
 bool SynchronizationManagerV2::isInternetConnectionActive() const
 {
-    return m_isInternetConnectionActive == Active;
+	return m_isInternetConnectionActive == Active;
 }
 
 bool SynchronizationManagerV2::isLogged() const
@@ -239,12 +237,12 @@ void SynchronizationManagerV2::autoLogin()
 
 void SynchronizationManagerV2::login(const QString &_email, const QString &_password)
 {
-
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_LOGIN, _email);
-	m_loader->addRequestAttribute(KEY_PASSWORD, _password);
-	QByteArray response = m_loader->loadSync(URL_LOGIN);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_LOGIN, _email);
+	loader.addRequestAttribute(KEY_PASSWORD, _password);
+	QByteArray response = loader.loadSync(URL_LOGIN);
 
 	//
 	// Считываем результат авторизации
@@ -321,19 +319,20 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
 	emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
 	emit loginAccepted(userName, m_userEmail);
 
-    //
-    // Авторизовались, тепер нас интересует статус интернета
-    //
-    checkNetworkState();
+	//
+	// Авторизовались, тепер нас интересует статус интернета
+	//
+	checkNetworkState();
 }
 
 void SynchronizationManagerV2::signUp(const QString& _email, const QString& _password)
 {
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_EMAIL, _email);
-	m_loader->addRequestAttribute(KEY_PASSWORD, _password);
-	QByteArray response = m_loader->loadSync(URL_SIGNUP);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_EMAIL, _email);
+	loader.addRequestAttribute(KEY_PASSWORD, _password);
+	QByteArray response = loader.loadSync(URL_SIGNUP);
 
 	//
 	// Считываем результат авторизации
@@ -397,10 +396,11 @@ void SynchronizationManagerV2::verify(const QString& _code)
 
 void SynchronizationManagerV2::restorePassword(const QString &_email)
 {
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_EMAIL, _email);
-	QByteArray response = m_loader->loadSync(URL_RESTORE);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_EMAIL, _email);
+	QByteArray response = loader.loadSync(URL_RESTORE);
 
 	//
 	// Считываем результат
@@ -438,10 +438,11 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
 
 void SynchronizationManagerV2::logout()
 {
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	QByteArray response = m_loader->loadSync(URL_LOGOUT);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	QByteArray response = loader.loadSync(URL_LOGOUT);
 
 	m_sessionKey.clear();
 	m_userEmail.clear();
@@ -467,10 +468,10 @@ void SynchronizationManagerV2::logout()
 	//
 	emit logoutFinished();
 
-    //
-    // Теперь статус интернета не отслеживается, а значит неизвестен
-    //
-    m_isInternetConnectionActive = Undefined;
+	//
+	// Теперь статус интернета не отслеживается, а значит неизвестен
+	//
+	m_isInternetConnectionActive = Undefined;
 }
 
 void SynchronizationManagerV2::renewSubscription(unsigned _duration,
@@ -484,11 +485,12 @@ void SynchronizationManagerV2::renewSubscription(unsigned _duration,
 
 void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
 {
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	m_loader->addRequestAttribute(KEY_USERNAME, _newUserName);
-	QByteArray response = m_loader->loadSync(URL_UPDATE);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	loader.addRequestAttribute(KEY_USERNAME, _newUserName);
+	QByteArray response = loader.loadSync(URL_UPDATE);
 
 	//
 	// Считываем результат авторизации
@@ -503,10 +505,11 @@ void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
 
 void SynchronizationManagerV2::loadSubscriptionInfo()
 {
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	QByteArray response = m_loader->loadSync(URL_SUBSCRIBE_STATE);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	QByteArray response = loader.loadSync(URL_SUBSCRIBE_STATE);
 
 	//
 	// Считываем результат авторизации
@@ -548,12 +551,13 @@ void SynchronizationManagerV2::loadSubscriptionInfo()
 void SynchronizationManagerV2::changePassword(const QString& _password,
 											  const QString& _newPassword)
 {
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	m_loader->addRequestAttribute(KEY_PASSWORD, _password);
-	m_loader->addRequestAttribute(KEY_NEW_PASSWORD, _newPassword);
-	QByteArray response = m_loader->loadSync(URL_UPDATE);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	loader.addRequestAttribute(KEY_PASSWORD, _password);
+	loader.addRequestAttribute(KEY_NEW_PASSWORD, _newPassword);
+	QByteArray response = loader.loadSync(URL_UPDATE);
 
 	//
 	// Считываем результат авторизации
@@ -571,10 +575,11 @@ void SynchronizationManagerV2::loadProjects()
 	//
 	// Получаем список проектов
 	//
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	const QByteArray response = m_loader->loadSync(URL_PROJECTS);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	const QByteArray response = loader.loadSync(URL_PROJECTS);
 
 	//
 	// Считываем результат
@@ -603,11 +608,12 @@ int SynchronizationManagerV2::createProject(const QString& _projectName)
 	//
 	// Создаём новый проект
 	//
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	m_loader->addRequestAttribute(KEY_PROJECT_NAME, _projectName);
-	const QByteArray response = m_loader->loadSync(URL_CREATE_PROJECT);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	loader.addRequestAttribute(KEY_PROJECT_NAME, _projectName);
+	const QByteArray response = loader.loadSync(URL_CREATE_PROJECT);
 
 	//
 	// Считываем результат
@@ -647,12 +653,13 @@ void SynchronizationManagerV2::updateProjectName(int _projectId, const QString& 
 	//
 	// Обновляем проект
 	//
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
-	m_loader->addRequestAttribute(KEY_PROJECT_NAME, _newProjectName);
-	const QByteArray response = m_loader->loadSync(URL_UPDATE_PROJECT);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	loader.addRequestAttribute(KEY_PROJECT_ID, _projectId);
+	loader.addRequestAttribute(KEY_PROJECT_NAME, _newProjectName);
+	const QByteArray response = loader.loadSync(URL_UPDATE_PROJECT);
 
 	//
 	// Считываем результат
@@ -673,11 +680,12 @@ void SynchronizationManagerV2::removeProject(int _projectId)
 	//
 	// Удаляем проект
 	//
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
-	const QByteArray response = m_loader->loadSync(URL_REMOVE_PROJECT);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	loader.addRequestAttribute(KEY_PROJECT_ID, _projectId);
+	const QByteArray response = loader.loadSync(URL_REMOVE_PROJECT);
 
 	//
 	// Считываем результат
@@ -700,13 +708,14 @@ void SynchronizationManagerV2::shareProject(int _projectId, const QString& _user
 	//
 	// ДОбавляем подписчика в проект
 	//
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
-	m_loader->addRequestAttribute(KEY_EMAIL, _userEmail);
-	m_loader->addRequestAttribute(KEY_ROLE, userRole);
-	const QByteArray response = m_loader->loadSync(URL_CREATE_PROJECT_SUBSCRIPTION);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	loader.addRequestAttribute(KEY_PROJECT_ID, _projectId);
+	loader.addRequestAttribute(KEY_EMAIL, _userEmail);
+	loader.addRequestAttribute(KEY_ROLE, userRole);
+	const QByteArray response = loader.loadSync(URL_CREATE_PROJECT_SUBSCRIPTION);
 
 	//
 	// Считываем результат
@@ -727,12 +736,13 @@ void SynchronizationManagerV2::unshareProject(int _projectId, const QString& _us
 	//
 	// Убираем подписчика из проекта
 	//
-	m_loader->setRequestMethod(NetworkRequest::Post);
-	m_loader->clearRequestAttributes();
-	m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-	m_loader->addRequestAttribute(KEY_PROJECT_ID, _projectId);
-	m_loader->addRequestAttribute(KEY_EMAIL, _userEmail.trimmed());
-	const QByteArray response = m_loader->loadSync(URL_REMOVE_PROJECT_SUBSCRIPTION);
+	NetworkRequest loader;
+	loader.setRequestMethod(NetworkRequest::Post);
+	loader.clearRequestAttributes();
+	loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+	loader.addRequestAttribute(KEY_PROJECT_ID, _projectId);
+	loader.addRequestAttribute(KEY_EMAIL, _userEmail.trimmed());
+	const QByteArray response = loader.loadSync(URL_REMOVE_PROJECT_SUBSCRIPTION);
 
 	//
 	// Считываем результат
@@ -750,7 +760,7 @@ void SynchronizationManagerV2::unshareProject(int _projectId, const QString& _us
 
 void SynchronizationManagerV2::aboutFullSyncScenario()
 {
-    if (isCanSync()) {
+	if (isCanSync()) {
 		//
 		// Запоминаем время синхронизации изменений сценария, в дальнейшем будем отправлять
 		// изменения произведённые с данного момента
@@ -760,36 +770,30 @@ void SynchronizationManagerV2::aboutFullSyncScenario()
 		//
 		// Получить список патчей проекта
 		//
-		m_loader->setRequestMethod(NetworkRequest::Post);
-		m_loader->clearRequestAttributes();
-		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-		QByteArray response = loadSyncWrapper(URL_SCENARIO_CHANGE_LIST);
+		NetworkRequest loader;
+		loader.setRequestMethod(NetworkRequest::Post);
+		loader.clearRequestAttributes();
+		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		QByteArray response = loader.loadSync(URL_SCENARIO_CHANGE_LIST);
+
+
+		QXmlStreamReader changesReader(response);
+		if (!isOperationSucceed(changesReader)) {
+			return;
+		}
+
 
 		//
 		// ... считываем изменения (uuid)
 		//
 		QList<QString> remoteChanges;
-		QXmlStreamReader changesReader(response);
 		while (!changesReader.atEnd()) {
-			changesReader.readNext();
-			if (changesReader.name().toString() == "status") {
-				const bool success = changesReader.attributes().value("result").toString() == "true";
-				if (success) {
-					changesReader.readNextStartElement();
-					changesReader.readNextStartElement(); // changes
-					while (!changesReader.atEnd()) {
-						changesReader.readNextStartElement();
-						if (changesReader.name() == "change") {
-							const QString changeUuid = changesReader.attributes().value("id").toString();
-							if (!changeUuid.isEmpty()) {
-								remoteChanges.append(changeUuid);
-							}
-						}
-					}
-				} else {
-					handleError(response);
-					break;
+			changesReader.readNextStartElement();
+			if (changesReader.name() == "change") {
+				const QString changeUuid = changesReader.attributes().value("id").toString();
+				if (!changeUuid.isEmpty()) {
+					remoteChanges.append(changeUuid);
 				}
 			}
 		}
@@ -918,37 +922,29 @@ void SynchronizationManagerV2::aboutWorkSyncScenario()
 		{
 			const int LAST_MINUTES = 2;
 
-			m_loader->setRequestMethod(NetworkRequest::Post);
-			m_loader->clearRequestAttributes();
-			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-			m_loader->addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
-			QByteArray response = loadSyncWrapper(URL_SCENARIO_CHANGE_LIST);
+			NetworkRequest loader;
+			loader.setRequestMethod(NetworkRequest::Post);
+			loader.clearRequestAttributes();
+			loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+			loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+			loader.addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
+			QByteArray response = loader.loadSync(URL_SCENARIO_CHANGE_LIST);
+
+			QXmlStreamReader changesReader(response);
+			if (!isOperationSucceed(changesReader)) {
+				return;
+			}
 
 			//
 			// ... считываем uuid'ы новых изменений
 			//
 			QList<QString> remoteChanges;
-			QXmlStreamReader changesReader(response);
 			while (!changesReader.atEnd()) {
-				changesReader.readNext();
-				if (changesReader.name().toString() == "status") {
-					const bool success = changesReader.attributes().value("result").toString() == "true";
-					if (success) {
-						changesReader.readNextStartElement();
-						changesReader.readNextStartElement(); // changes
-						while (!changesReader.atEnd()) {
-							changesReader.readNextStartElement();
-							if (changesReader.name() == "change") {
-								const QString changeUuid = changesReader.attributes().value("id").toString();
-								if (!changeUuid.isEmpty()) {
-									remoteChanges.append(changeUuid);
-								}
-							}
-						}
-					} else {
-						handleError(response);
-						break;
+				changesReader.readNextStartElement();
+				if (changesReader.name() == "change") {
+					const QString changeUuid = changesReader.attributes().value("id").toString();
+					if (!changeUuid.isEmpty()) {
+						remoteChanges.append(changeUuid);
 					}
 				}
 			}
@@ -1123,37 +1119,29 @@ void SynchronizationManagerV2::aboutWorkSyncData()
 		{
 			const int LAST_MINUTES = 2;
 
-			m_loader->setRequestMethod(NetworkRequest::Post);
-			m_loader->clearRequestAttributes();
-			m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-			m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-			m_loader->addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
-			QByteArray response = loadSyncWrapper(URL_SCENARIO_DATA_LIST);
+			NetworkRequest loader;
+			loader.setRequestMethod(NetworkRequest::Post);
+			loader.clearRequestAttributes();
+			loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+			loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+			loader.addRequestAttribute(KEY_FROM_LAST_MINUTES, LAST_MINUTES);
+			QByteArray response = loader.loadSync(URL_SCENARIO_DATA_LIST);
+
+			QXmlStreamReader changesReader(response);
+			if (!isOperationSucceed(changesReader)) {
+				return;
+			}
 
 			//
 			// ... считываем uuid'ы новых изменений
 			//
 			QList<QString> remoteChanges;
-			QXmlStreamReader changesReader(response);
 			while (!changesReader.atEnd()) {
-				changesReader.readNext();
-				if (changesReader.name().toString() == "status") {
-					const bool success = changesReader.attributes().value("result").toString() == "true";
-					if (success) {
-						changesReader.readNextStartElement();
-						changesReader.readNextStartElement(); // changes
-						while (!changesReader.atEnd()) {
-							changesReader.readNextStartElement();
-							if (changesReader.name() == "change") {
-								const QString changeUuid = changesReader.attributes().value("id").toString();
-								if (!changeUuid.isEmpty()) {
-									remoteChanges.append(changeUuid);
-								}
-							}
-						}
-					} else {
-						handleError(response);
-						break;
+				changesReader.readNextStartElement();
+				if (changesReader.name() == "change") {
+					const QString changeUuid = changesReader.attributes().value("id").toString();
+					if (!changeUuid.isEmpty()) {
+						remoteChanges.append(changeUuid);
 					}
 				}
 			}
@@ -1187,56 +1175,49 @@ void SynchronizationManagerV2::aboutUpdateCursors(int _cursorPosition, bool _isD
 		//
 		// Загрузим позиции курсоров
 		//
-		m_loader->setRequestMethod(NetworkRequest::Post);
-		m_loader->clearRequestAttributes();
-		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-		m_loader->addRequestAttribute(KEY_CURSOR_POSITION, _cursorPosition);
-		m_loader->addRequestAttribute(KEY_SCENARIO_IS_DRAFT, _isDraft ? "1" : "0");
-		QByteArray response = loadSyncWrapper(URL_SCENARIO_CURSORS);
+		NetworkRequest loader;
+		loader.setRequestMethod(NetworkRequest::Post);
+		loader.clearRequestAttributes();
+		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		loader.addRequestAttribute(KEY_CURSOR_POSITION, _cursorPosition);
+		loader.addRequestAttribute(KEY_SCENARIO_IS_DRAFT, _isDraft ? "1" : "0");
+		QByteArray response = loader.loadSync(URL_SCENARIO_CURSORS);
 
+		QXmlStreamReader cursorsReader(response);
+		if (!isOperationSucceed(cursorsReader)) {
+			return;
+		}
 
 		//
 		// ... считываем данные о курсорах
 		//
 		QMap<QString, int> cleanCursors;
 		QMap<QString, int> draftCursors;
-		QXmlStreamReader cursorsReader(response);
-		while (!cursorsReader.atEnd()) {
-			cursorsReader.readNext();
-			if (cursorsReader.name().toString() == "status") {
-				const bool success = cursorsReader.attributes().value("result").toString() == "true";
-				if (success) {
+		cursorsReader.readNextStartElement();
+		while (!cursorsReader.atEnd()
+			   && cursorsReader.readNextStartElement()) {
+			//
+			// Курсоры
+			//
+			while (cursorsReader.name() == "cursors"
+				   && cursorsReader.readNextStartElement()) {
+				//
+				// Считываем каждый курсор
+				//
+				while (cursorsReader.name() == "cursor") {
+					const QString username = cursorsReader.attributes().value("username").toString();
+					const int cursorPosition = cursorsReader.attributes().value("position").toInt();
+					const bool isDraft = cursorsReader.attributes().value("is_draft").toInt();
+
+					QMap<QString, int>& cursors = isDraft ? draftCursors : cleanCursors;
+					cursors.insert(username, cursorPosition);
+
+					//
+					// ... переход к следующему курсору
+					//
 					cursorsReader.readNextStartElement();
-					while (!cursorsReader.atEnd()
-						   && cursorsReader.readNextStartElement()) {
-						//
-						// Курсоры
-						//
-						while (cursorsReader.name() == "cursors"
-							   && cursorsReader.readNextStartElement()) {
-							//
-							// Считываем каждый курсор
-							//
-							while (cursorsReader.name() == "cursor") {
-								const QString username = cursorsReader.attributes().value("username").toString();
-								const int cursorPosition = cursorsReader.attributes().value("position").toInt();
-								const bool isDraft = cursorsReader.attributes().value("is_draft").toInt();
-
-								QMap<QString, int>& cursors = isDraft ? draftCursors : cleanCursors;
-								cursors.insert(username, cursorPosition);
-
-								//
-								// ... переход к следующему курсору
-								//
-								cursorsReader.readNextStartElement();
-								cursorsReader.readNextStartElement();
-							}
-						}
-					}
-				} else {
-					handleError(response);
-					break;
+					cursorsReader.readNextStartElement();
 				}
 			}
 		}
@@ -1293,39 +1274,16 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
 	//
 	// Ничего не нашли про статус. Скорее всего пропал интернет
 	//
-	handleError(tr("Can't estabilish network connection."), 0);
+	handleError(tr("Can't estabilish network connection."), OFFLINE_ERROR_CODE);
+	m_isInternetConnectionActive = Inactive;
+	emit cursorsUpdated(QMap<QString, int>());
+	emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
 	return false;
 }
 
 void SynchronizationManagerV2::handleError(const QString &_error, int _code)
 {
 	emit syncClosedWithError(_code, _error);
-}
-
-QByteArray SynchronizationManagerV2::loadSyncWrapper(const QUrl& _url)
-{
-	QByteArray response;
-
-	//
-	// Если соединение активно, делаем запрос
-	//
-	if (m_isInternetConnectionActive) {
-		response = m_loader->loadSync(_url);
-
-		//
-		// Если пропало соединение с интернетом, уведомляем об этом и запускаем процесс проверки связи
-		//
-		if (response.isEmpty()) {
-
-			emit syncClosedWithError(OFFLINE_ERROR_CODE, tr("Can't estabilish network connection."));
-			emit cursorsUpdated(QMap<QString, int>());
-			emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
-
-            m_isInternetConnectionActive = Inactive;
-		}
-	}
-
-	return response;
 }
 
 bool SynchronizationManagerV2::isCanSync() const
@@ -1377,12 +1335,13 @@ bool SynchronizationManagerV2::uploadScenarioChanges(const QList<QString>& _chan
 		//
 		// Отправить данные
 		//
-		m_loader->setRequestMethod(NetworkRequest::Post);
-		m_loader->clearRequestAttributes();
-		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-		m_loader->addRequestAttribute(KEY_CHANGES, changesXml);
-		const QByteArray response = loadSyncWrapper(URL_SCENARIO_CHANGE_SAVE);
+		NetworkRequest loader;
+		loader.setRequestMethod(NetworkRequest::Post);
+		loader.clearRequestAttributes();
+		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		loader.addRequestAttribute(KEY_CHANGES, changesXml);
+		const QByteArray response = loader.loadSync(URL_SCENARIO_CHANGE_SAVE);
 
 		//
 		// Изменения отправлены, если сервер это подтвердил
@@ -1402,62 +1361,55 @@ QList<QHash<QString, QString> > SynchronizationManagerV2::downloadScenarioChange
 		//
 		// ... загружаем изменения
 		//
-		m_loader->setRequestMethod(NetworkRequest::Post);
-		m_loader->clearRequestAttributes();
-		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-		m_loader->addRequestAttribute(KEY_CHANGES_IDS, _changesUuids);
-		QByteArray response = loadSyncWrapper(URL_SCENARIO_CHANGE_LOAD);
+		NetworkRequest loader;
+		loader.setRequestMethod(NetworkRequest::Post);
+		loader.clearRequestAttributes();
+		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		loader.addRequestAttribute(KEY_CHANGES_IDS, _changesUuids);
+		QByteArray response = loader.loadSync(URL_SCENARIO_CHANGE_LOAD);
 
+		QXmlStreamReader changesReader(response);
+		if (!isOperationSucceed(changesReader)) {
+			return changes;
+		}
 
 		//
 		// ... считываем данные об изменениях
 		//
-		QXmlStreamReader changesReader(response);
-		while (!changesReader.atEnd()) {
-			changesReader.readNext();
-			if (changesReader.name().toString() == "status") {
-				const bool success = changesReader.attributes().value("result").toString() == "true";
-				if (success) {
-					changesReader.readNextStartElement();
-					while (!changesReader.atEnd()
-						   && changesReader.readNextStartElement()) {
-						//
-						// Изменения
-						//
-						while (changesReader.name() == "changes"
-							   && changesReader.readNextStartElement()) {
-							//
-							// Считываем каждое изменение
-							//
-							while (changesReader.name() == "change"
-								   && changesReader.readNextStartElement()) {
-								//
-								// Данные изменения
-								//
-								QHash<QString, QString> change;
-								while (changesReader.name() != "change") {
-									const QString key = changesReader.name().toString();
-									const QString value = changesReader.readElementText();
-									if (!value.isEmpty()) {
-										change.insert(key, value);
-									}
-
-									//
-									// ... переходим к следующему элементу
-									//
-									changesReader.readNextStartElement();
-								}
-
-								if (!change.isEmpty()) {
-									changes.append(change);
-								}
-							}
+		changesReader.readNextStartElement();
+		while (!changesReader.atEnd()
+			   && changesReader.readNextStartElement()) {
+			//
+			// Изменения
+			//
+			while (changesReader.name() == "changes"
+				   && changesReader.readNextStartElement()) {
+				//
+				// Считываем каждое изменение
+				//
+				while (changesReader.name() == "change"
+					   && changesReader.readNextStartElement()) {
+					//
+					// Данные изменения
+					//
+					QHash<QString, QString> change;
+					while (changesReader.name() != "change") {
+						const QString key = changesReader.name().toString();
+						const QString value = changesReader.readElementText();
+						if (!value.isEmpty()) {
+							change.insert(key, value);
 						}
+
+						//
+						// ... переходим к следующему элементу
+						//
+						changesReader.readNextStartElement();
 					}
-				} else {
-					handleError(response);
-					break;
+
+					if (!change.isEmpty()) {
+						changes.append(change);
+					}
 				}
 			}
 		}
@@ -1514,15 +1466,13 @@ bool SynchronizationManagerV2::uploadScenarioData(const QList<QString>& _dataUui
 		//
 		// Отправить данные
 		//
-		m_loader->setRequestMethod(NetworkRequest::Post);
-		m_loader->clearRequestAttributes();
-		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-		m_loader->addRequestAttribute(KEY_CHANGES, dataChangesXml);
-		//
-		// NOTE: При отправке большого объёма данных возможно зависание
-		//
-		const QByteArray response = loadSyncWrapper(URL_SCENARIO_DATA_SAVE);
+		NetworkRequest loader;
+		loader.setRequestMethod(NetworkRequest::Post);
+		loader.clearRequestAttributes();
+		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		loader.addRequestAttribute(KEY_CHANGES, dataChangesXml);
+		const QByteArray response = loader.loadSync(URL_SCENARIO_DATA_SAVE);
 
 		//
 		// Данные отправлены, если сервер это подтвердил
@@ -1540,63 +1490,56 @@ void SynchronizationManagerV2::downloadAndSaveScenarioData(const QString& _dataU
 		//
 		// ... загружаем изменения
 		//
-		m_loader->setRequestMethod(NetworkRequest::Post);
-		m_loader->clearRequestAttributes();
-		m_loader->addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
-		m_loader->addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
-		m_loader->addRequestAttribute(KEY_CHANGES_IDS, _dataUuids);
-		QByteArray response = loadSyncWrapper(URL_SCENARIO_DATA_LOAD);
+		NetworkRequest loader;
+		loader.setRequestMethod(NetworkRequest::Post);
+		loader.clearRequestAttributes();
+		loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
+		loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
+		loader.addRequestAttribute(KEY_CHANGES_IDS, _dataUuids);
+		QByteArray response = loader.loadSync(URL_SCENARIO_DATA_LOAD);
 
+		QXmlStreamReader changesReader(response);
+		if (!isOperationSucceed(changesReader)) {
+			return;
+		}
 
 		//
 		// ... считываем данные об изменениях
 		//
-		QList<QHash<QString, QString> > changes;
-		QXmlStreamReader changesReader(response);
-		while (!changesReader.atEnd()) {
-			changesReader.readNext();
-			if (changesReader.name().toString() == "status") {
-				const bool success = changesReader.attributes().value("result").toString() == "true";
-				if (success) {
-					changesReader.readNextStartElement();
-					while (!changesReader.atEnd()
-						   && changesReader.readNextStartElement()) {
-						//
-						// Изменения
-						//
-						while (changesReader.name() == "changes"
-							   && changesReader.readNextStartElement()) {
-							//
-							// Считываем каждое изменение
-							//
-							while (changesReader.name() == "change"
-								   && changesReader.readNextStartElement()) {
-								//
-								// Данные изменения
-								//
-								QHash<QString, QString> change;
-								while (changesReader.name() != "change") {
-									const QString key = changesReader.name().toString();
-									const QString value = changesReader.readElementText();
-									if (!value.isEmpty()) {
-										change.insert(key, value);
-									}
-
-									//
-									// ... переходим к следующему элементу
-									//
-									changesReader.readNextStartElement();
-								}
-
-								if (!change.isEmpty()) {
-									changes.append(change);
-								}
-							}
+		QList<QHash<QString, QString>> changes;
+		changesReader.readNextStartElement();
+		while (!changesReader.atEnd()
+			   && changesReader.readNextStartElement()) {
+			//
+			// Изменения
+			//
+			while (changesReader.name() == "changes"
+				   && changesReader.readNextStartElement()) {
+				//
+				// Считываем каждое изменение
+				//
+				while (changesReader.name() == "change"
+					   && changesReader.readNextStartElement()) {
+					//
+					// Данные изменения
+					//
+					QHash<QString, QString> change;
+					while (changesReader.name() != "change") {
+						const QString key = changesReader.name().toString();
+						const QString value = changesReader.readElementText();
+						if (!value.isEmpty()) {
+							change.insert(key, value);
 						}
+
+						//
+						// ... переходим к следующему элементу
+						//
+						changesReader.readNextStartElement();
 					}
-				} else {
-					handleError(response);
-					break;
+
+					if (!change.isEmpty()) {
+						changes.append(change);
+					}
 				}
 			}
 		}
@@ -1608,9 +1551,9 @@ void SynchronizationManagerV2::downloadAndSaveScenarioData(const QString& _dataU
 		QHash<QString, QString> changeValues;
 		DatabaseLayer::Database::transaction();
 		foreach (changeValues, changes) {
-            DataStorageLayer::StorageFacade::databaseHistoryStorage()->storeAndApplyHistoryRecord(
+			DataStorageLayer::StorageFacade::databaseHistoryStorage()->storeAndApplyHistoryRecord(
 				changeValues.value(DBH_ID_KEY), changeValues.value(DBH_QUERY_KEY),
-                changeValues.value(DBH_QUERY_VALUES_KEY), changeValues.value(DBH_USERNAME_KEY), changeValues.value(DBH_DATETIME_KEY));
+				changeValues.value(DBH_QUERY_VALUES_KEY), changeValues.value(DBH_USERNAME_KEY), changeValues.value(DBH_DATETIME_KEY));
 		}
 		DatabaseLayer::Database::commit();
 
@@ -1624,63 +1567,61 @@ void SynchronizationManagerV2::downloadAndSaveScenarioData(const QString& _dataU
 
 void SynchronizationManagerV2::checkNetworkState()
 {
-    //
-    // Если пользователь не авторизовался, незачем проверять статус интернета
-    //
-    if (m_sessionKey.isEmpty()) {
-        return;
-    }
+	//
+	// Если пользователь не авторизовался, незачем проверять статус интернета
+	//
+	if (m_sessionKey.isEmpty()) {
+		return;
+	}
 
-    InternetStatus prevState = m_isInternetConnectionActive;
+	InternetStatus prevState = m_isInternetConnectionActive;
 
-    //
-    // Запросим тестовую страницу
-    //
-    m_loader->setRequestMethod(NetworkRequest::Get);
-    m_loader->clearRequestAttributes();
-    QByteArray response = m_loader->loadSync(URL_CHECK_NETWORK_STATE);
+	//
+	// Запросим тестовую страницу
+	//
+	NetworkRequest loader;
+	loader.setLoadingTimeout(1000);
+	QByteArray response = loader.loadSync(URL_CHECK_NETWORK_STATE);
 
 	//
 	// Запомним состояние интернета и кинем соответствующий сигнал
-    //
-    m_isInternetConnectionActive = response == "ok" ? Active : Inactive;
+	//
+	m_isInternetConnectionActive = response == "ok" ? Active : Inactive;
 
-    //
-    // Если появился интернет, которого раньше не было
-    //
-    if (prevState != m_isInternetConnectionActive && m_isInternetConnectionActive == Active &&
-            prevState != Undefined) {
+	//
+	// Если появился интернет, которого раньше не было
+	//
+	if (prevState != m_isInternetConnectionActive && m_isInternetConnectionActive == Active &&
+			prevState != Undefined) {
 		//
-        // Переавторизуемся
+		// Переавторизуемся
 		//
-        autoLogin();
+		autoLogin();
 
-        //
-        // А если текущий проект - удаленный, то синхронизуем и его
-        //
-        if (ProjectsManager::currentProject().isRemote()) {
-            aboutFullSyncScenario();
-            aboutFullSyncData();
-        }
+		//
+		// А если текущий проект - удаленный, то синхронизуем и его
+		//
+		if (ProjectsManager::currentProject().isRemote()) {
+			aboutFullSyncScenario();
+			aboutFullSyncData();
+		}
 	}
 
-    //
-    // Изменился статус, уведомим об этом
-    //
-    if (prevState != m_isInternetConnectionActive) {
-        emit networkStatusChanged(m_isInternetConnectionActive);
-    }
+	//
+	// Изменился статус, уведомим об этом
+	//
+	if (prevState != m_isInternetConnectionActive) {
+		emit networkStatusChanged(m_isInternetConnectionActive);
+	}
 
-    //
-    // Если интернет активен, запрашиваем каждые 5 секунд
-    // Неактивен - каждую секунду
-    //
-    QTimer::singleShot(m_isInternetConnectionActive ? 5000 : 1000, [this] {
-        checkNetworkState();
-    });
+	//
+	// Если интернет активен, запрашиваем каждые 5 секунд
+	// Неактивен - каждую секунду
+	//
+	QTimer::singleShot(m_isInternetConnectionActive ? 5000 : 1000, this, &SynchronizationManagerV2::checkNetworkState);
 }
 
 void SynchronizationManagerV2::initConnections()
 {
-    connect(this, &SynchronizationManagerV2::loginAccepted, this, &SynchronizationManagerV2::loadProjects);
+	connect(this, &SynchronizationManagerV2::loginAccepted, this, &SynchronizationManagerV2::loadProjects);
 }

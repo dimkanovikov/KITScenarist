@@ -19,7 +19,6 @@
 
 #include <QObject>
 
-class NetworkRequest;
 class QXmlStreamReader;
 
 
@@ -35,15 +34,15 @@ namespace ManagementLayer
 	public:
 		explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
 
-        /**
-         * @brief Вернуть, активно ли соединение
-         */
-        bool isInternetConnectionActive() const;
+		/**
+		 * @brief Вернуть, активно ли соединение
+		 */
+		bool isInternetConnectionActive() const;
 
-        /**
-         * @brief Вернуть, авторизован ли пользователь
-         */
-        bool isLogged() const;
+		/**
+		 * @brief Вернуть, авторизован ли пользователь
+		 */
+		bool isLogged() const;
 
 		//
 		// Методы работы с аккаунтом
@@ -238,9 +237,9 @@ namespace ManagementLayer
 		void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
 
 		/**
-         * @brief Изменилось состояние интернета
+		 * @brief Изменилось состояние интернета
 		 */
-        void networkStatusChanged(bool _isActive);
+		void networkStatusChanged(bool _isActive);
 
 	private:
 		/**
@@ -256,11 +255,6 @@ namespace ManagementLayer
 		//
 		// **** Методы из старого менеджера синхронизации
 		//
-
-		/**
-		 * @brief Обёртка для вызова функции m_loader->loadSync, отлавливающая отсутствие интернета
-		 */
-		QByteArray loadSyncWrapper(const QUrl& _url);
 
 		/**
 		 * @brief Возможно ли использовать методы синхронизации
@@ -289,10 +283,10 @@ namespace ManagementLayer
 		 */
 		void downloadAndSaveScenarioData(const QString& _dataUuids);
 
-        /**
-         * @brief Проверка статуса соединения с интернетом
-         */
-        void checkNetworkState();
+		/**
+		 * @brief Проверка статуса соединения с интернетом
+		 */
+		void checkNetworkState();
 
 		/**
 		 * @brief Настроить соединения
@@ -320,11 +314,6 @@ namespace ManagementLayer
 		 */
 		bool m_isSubscriptionActive;
 
-		/**
-		 * Загрузчик
-		 */
-		NetworkRequest* m_loader;
-
 		//
 		// **** Члены из старого менеджера синхронизации
 		//
@@ -339,20 +328,20 @@ namespace ManagementLayer
 		 */
 		QString m_lastDataSyncDatetime;
 
-        /**
-         * @brief Статус интернета. Неопределенный, отсутствует подключение,
-         * присутствует подключение
-         */
-        enum InternetStatus {
-            Undefined,
-            Inactive,
-            Active
-        };
+		/**
+		 * @brief Статус интернета. Неопределенный, отсутствует подключение,
+		 * присутствует подключение
+		 */
+		enum InternetStatus {
+			Undefined,
+			Inactive,
+			Active
+		};
 
 		/**
 		 * @brief Активно ли соединение с интернетом
 		 */
-        InternetStatus m_isInternetConnectionActive = Undefined;
+		InternetStatus m_isInternetConnectionActive = Undefined;
 	};
 }
 
