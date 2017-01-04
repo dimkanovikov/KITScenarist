@@ -868,7 +868,9 @@ void ScenarioManager::aboutSaveScenarioChanges()
 	}
 #endif
 
-	emit scenarioChangesSaved();
+	if (change != nullptr || changeDraft != nullptr) {
+		emit scenarioChangesSaved();
+	}
 	emit cursorPositionUpdated(cursorPosition(), m_workModeIsDraft);
 }
 
