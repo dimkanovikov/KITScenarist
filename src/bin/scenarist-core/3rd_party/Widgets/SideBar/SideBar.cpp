@@ -1,6 +1,11 @@
 #include "SideBar.h"
 
+#include <3rd_party/Helpers/ImageHelper.h>
+
+#include <3rd_party/Widgets/FlatButton/FlatButton.h>
+
 #include <QApplication>
+#include <QGridLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QTimeLine>
@@ -82,13 +87,14 @@ namespace {
      * @brief Ключи доступа к тексту индикатора
      */
     /** @{ */
-    const char* INDICATOR_ADDITIONAL_ICON_KEY = "additional_icon";
     const char* INDICATOR_TITLE_KEY = "title";
     const char* INDICATOR_TEXT_KEY = "text";
     const char* INDICATOR_FOOTER_KEY = "footer";
+    const char* INDICATOR_ACTION_ICON_KEY = "action_icon";
     /** @} */
 }
-#include <QTimer>
+
+
 SideTabBar::SideTabBar(QWidget *parent) :
     QWidget(parent),
     m_pressedTab(0),
@@ -237,6 +243,11 @@ void SideTabBar::setIndicatorFooterText(const QString& _text)
     setIndicatorText(::INDICATOR_FOOTER_KEY, _text);
 }
 
+void SideTabBar::setIndicatorActionIcon(const QIcon& _icon)
+{
+    m_indicator->setProperty(::INDICATOR_ACTION_ICON_KEY, _icon);
+}
+
 void SideTabBar::removeIndicator()
 {
     addIndicator(QIcon());
@@ -351,20 +362,7 @@ void SideTabBar::paintEvent(QPaintEvent *event)
         // Иконка индикатора
         //
         p.setOpacity(m_timeline->currentFrame() / 100.);
-        const QIcon mainIcon = m_indicator->icon();
-        const QIcon additionalIcon = m_indicator->property(::INDICATOR_ADDITIONAL_ICON_KEY).value<QIcon>();
-        if (mainIcon.isNull()) {
-            mainIcon.paint(&p, indicatorRect);
-        } else if (additionalIcon.isNull()) {
-            mainIcon.paint(&p, indicatorRect);
-        } else {
-            const int iconsMargin = 2;
-            const QRect mainRect(indicatorRect.topLeft(), QSize(indicatorRect.width()/2 - iconsMargin, indicatorRect.height()));
-            QRect additionalRect = mainRect;
-            additionalRect.moveRight(indicatorRect.right());
-            mainIcon.paint(&p, mainRect, Qt::AlignRight | Qt::AlignVCenter);
-            additionalIcon.paint(&p, additionalRect, Qt::AlignLeft | Qt::AlignVCenter);
-        }
+        m_indicator->icon().paint(&p, indicatorRect);
     }
 }
 
@@ -384,22 +382,42 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
     // Нажат индикатор?
     //
     else if (m_indicator->isVisible()
-             && !m_indicator->text().isEmpty()
              && _event->pos().y() > (height() - INDICATOR_HEIGHT)) {
+        //
+        // Сформируем виджет для отображения
+        //
+        const QString titleText = QString("<b>%1</b>").arg(m_indicator->property(::INDICATOR_TITLE_KEY).toString());
+        const QString bodyText = m_indicator->property(::INDICATOR_TEXT_KEY).toString();
+        const QString footerText =
+            m_indicator->property(::INDICATOR_FOOTER_KEY).toString().isEmpty()
+            ? QString::null
+            : QString("<p style='font-size:small;font-weight:bold;'><br/>%1</p>")
+                     .arg(m_indicator->property(::INDICATOR_FOOTER_KEY).toString());
+
+        QFrame* menuFrame = new QFrame;
+        QGridLayout* layout = new QGridLayout(menuFrame);
+        layout->addWidget(new QLabel(titleText, menuFrame), 0, 0);
+        QIcon icon = m_indicator->property(::INDICATOR_ACTION_ICON_KEY).value<QIcon>();
+        if (!icon.isNull()) {
+            FlatButton* button = new FlatButton(menuFrame);
+            button->setIcons(icon);
+            button->setAutoRaise(true);
+            layout->addWidget(button, 0, 1);
+        }
+        if (!bodyText.isEmpty()) {
+            layout->addWidget(new QLabel(bodyText, menuFrame), 1, 0, 1, -1);
+            if (!footerText.isEmpty()) {
+                layout->addWidget(new QLabel(footerText, menuFrame), 2, 0, 1, -1);
+            }
+        }
+        menuFrame->setFixedSize(menuFrame->sizeHint());
+
         //
         // Покажем информацию
         //
         QMenu menu(this);
         QWidgetAction menuText(&menu);
-        const QString text =
-                QString("<b>%1</b><p>%2</p><p style='font-size:small;font-weight:bold;'>%3</p>")
-                .arg(m_indicator->property(::INDICATOR_TITLE_KEY).toString())
-                .arg(m_indicator->property(::INDICATOR_TEXT_KEY).toString().replace("\n", "<br/>"))
-                .arg(m_indicator->property(::INDICATOR_FOOTER_KEY).toString());
-        QLabel label(text);
-        label.setMargin(14);
-        label.setWordWrap(true);
-        menuText.setDefaultWidget(&label);
+        menuText.setDefaultWidget(menuFrame);
         menu.addAction(&menuText);
         menu.exec(mapToGlobal(QPoint(::sidebarWidth(m_compactMode), height() - menu.sizeHint().height())));
     }

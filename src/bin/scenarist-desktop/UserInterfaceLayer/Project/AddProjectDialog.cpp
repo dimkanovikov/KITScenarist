@@ -134,6 +134,9 @@ QWidget* AddProjectDialog::focusedOnExec() const
 
 void AddProjectDialog::initView()
 {
+    m_ui->browseFile->updateIcons();
+    m_ui->browseImportFile->updateIcons();
+
     m_ui->namePanel->hide();
     m_ui->importPanel->hide();
 

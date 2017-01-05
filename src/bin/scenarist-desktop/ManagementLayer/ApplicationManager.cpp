@@ -237,10 +237,7 @@ void ApplicationManager::aboutCreateNew()
     //
     if (saveIfNeeded()) {
         AddProjectDialog dlg(m_view);
-        //
-        // FIXME: проверять залогинен ли пользователь через менеджер синхронизации
-        //
-        dlg.setIsRemoteAvailable(m_startUpManager->isUserLogged(),
+        dlg.setIsRemoteAvailable(m_synchronizationManagerV2->isLogged(),
                                  m_synchronizationManagerV2->isSubscriptionActive(),
                                  !m_startUpManager->isOnLocalProjectsTab());
 
@@ -852,7 +849,6 @@ void ApplicationManager::setSyncIndicator()
             // Локальный проект
             //
             iconPath = ":/Graphics/Icons/Indicator/connected.png";
-            indicatorText = tr("Local project");
         }
     } else {
         //
@@ -860,11 +856,12 @@ void ApplicationManager::setSyncIndicator()
         //
         iconPath = ":/Graphics/Icons/Indicator/disconnected.png";
         indicatorTitle = tr("Connection inactive");
-        indicatorText = isRemoteProject ? tr("Project didn't synchronized") : tr("Local project");
+        indicatorText = isRemoteProject ? tr("Project didn't synchronized") : QString::null;
     }
     m_tabs->addIndicator(QIcon(iconPath));
     m_tabs->setIndicatorTitle(indicatorTitle);
     m_tabs->setIndicatorText(indicatorText);
+    m_tabs->setIndicatorActionIcon(QIcon());
 }
 
 void ApplicationManager::aboutUpdateLastChangeInfo()
@@ -908,19 +905,29 @@ void ApplicationManager::aboutUpdateLastChangeInfo()
 
 void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString& _error)
 {
-    bool switchToOfflineMode = false;
     QString title;
     QString error = _error;
+    QIcon reactivateIcon;
+    bool disableSyncForCurrentProject = false;
     switch (_errorCode) {
         //
         // Нет связи с интернетом
         //
         case Sync::NetworkError: {
-            title = tr("Network error");
-            error = tr("Can't estabilish network connection.\n\n"
-                       "Continue working in offline mode.");
-            switchToOfflineMode = true;
-            m_startUpManager->retryLastAction(error);
+            //
+            // Если ошибка пришла от окна акторизации, покажем её в нём
+            //
+            if (m_startUpManager->isOnLoginDialog()) {
+                m_startUpManager->retryLastAction(_error);
+            }
+            //
+            // А если ошибка пришла в момент работы с облаком, то покажем её в индикаторе
+            //
+            else {
+                title = tr("Network error");
+                error += "\n\n";
+                error += tr("Project didn't synchronized.");
+            }
             break;
         }
 
@@ -940,9 +947,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         case Sync::SubscriptionEndedError: {
             title = tr("Subscription ended");
             error = tr("Buyed subscription period is finished.\n\n"
-                       "Continue working in offline mode.");
-            QLightBoxMessage::information(m_view, title, error);
-            switchToOfflineMode = true;
+                       "Project didn't synchronized.");
+            disableSyncForCurrentProject = true;
             break;
         }
 
@@ -955,9 +961,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             title = tr("Network Error");
             error = tr("Can't correct load all data from service. "
                        "Please check your internet connection quality and refresh synchronization.\n\n"
-                       "Continue working in offline mode.");
-            QLightBoxMessage::information(m_view, title, error);
-            switchToOfflineMode = true;
+                       "Project didn't synchronized.");
             break;
         }
 
@@ -965,24 +969,13 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         // Сессия закрыта
         //
         case Sync::SessionClosedError: {
-            if (QLightBoxMessage::question(m_view, tr("Session closed"),
-                    tr("New session for you account started at other device. Restart session?"))
-                == QDialogButtonBox::Yes) {
-                //
-                // Переподключаемся
-                //
-                QTimer::singleShot(0, m_synchronizationManagerV2, &SynchronizationManagerV2::autoLogin);
-                return;
-            } else {
-                //
-                // Переходим в автономный режим
-                //
-                title = tr("Session closed");
-                error = tr("New session for you account started at other device.\n\n"
-                           "Continue working in offline mode.");
-                QLightBoxMessage::information(m_view, title, error);
-                switchToOfflineMode = true;
-            }
+            //
+            // Переходим в автономный режим с возможностью переавторизации
+            //
+            title = tr("Session closed");
+            error = tr("New session for you account started at other device.\n\n"
+                       "Project didn't synchronized.");
+            reactivateIcon = QIcon(":/Graphics/Icons/Editing/refresh.png");
             break;
         }
 
@@ -992,9 +985,8 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         case Sync::ProjectUnavailableError: {
             title = tr("Project not available");
             error = tr("Current project is not available for syncronization now, because project's owner subscription is ended.\n\n"
-                       "Continue working in offline mode.");
-            QLightBoxMessage::information(m_view, title, error);
-            m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
+                       "Project didn't synchronized.");
+            disableSyncForCurrentProject = true;
             break;
         }
 
@@ -1047,7 +1039,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         // Остальное
         //
         default: {
-            QLightBoxMessage::warning(m_view, tr("Error"), _error);
+            title = tr("Unknown Error");
             break;
         }
     }
@@ -1057,42 +1049,19 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
     // Если не залогинены, то значок не показываем
     // Если пропал интернет, то значок сам покажется при необходимости
     //
-    if (m_synchronizationManagerV2->isInternetConnectionActive() &&
-            m_synchronizationManagerV2->isLogged()) {
+    if (m_synchronizationManagerV2->isInternetConnectionActive()/* &&
+        m_synchronizationManagerV2->isLogged()*/) {
         m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/unsynced.png"));
         m_tabs->setIndicatorTitle(title);
         m_tabs->setIndicatorText(error);
+        m_tabs->setIndicatorActionIcon(reactivateIcon);
     }
 
     //
-    // Если необходимо переключаемся в автономный режим
+    // Если необходимо отключаем синхронизацию для текущего проекта
     //
-    if (switchToOfflineMode) {
-        const QString login = DataStorageLayer::StorageFacade::username();
-
-        //
-        // Если есть закэшированные данные о прошлой авторизации
-        //
-        if (!login.isEmpty()) {
-            //
-            // Имитируем успешную авторизацию
-            //
-            //m_startUpManager->completeLogin();
-            //
-            // и загружаем список доступных проектов из кэша
-            //
-            QByteArray cachedProjectsXml =
-                    QByteArray::fromBase64(
-                        DataStorageLayer::StorageFacade::settingsStorage()->value(
-                            "application/remote-projects",
-                            DataStorageLayer::SettingsStorage::ApplicationSettings).toUtf8()
-                        );
-            m_projectsManager->setRemoteProjects(cachedProjectsXml);
-            //
-            // говорим, что все проекты недоступны к синхронизации
-            //
-            m_projectsManager->setRemoteProjectsSyncUnavailable();
-        }
+    if (disableSyncForCurrentProject) {
+        m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
     }
 }
 

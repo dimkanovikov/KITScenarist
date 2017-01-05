@@ -1261,8 +1261,6 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
     //
     handleError(Sync::NetworkError);
     m_isInternetConnectionActive = Inactive;
-    emit cursorsUpdated(QMap<QString, int>());
-    emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
     return false;
 }
 
@@ -1274,10 +1272,13 @@ void SynchronizationManagerV2::handleError(int _code)
 void SynchronizationManagerV2::handleError(const QString &_error, int _code)
 {
     switch (_code) {
-        case Sync::UnknownError:
+        case Sync::NetworkError:
         case Sync::NoSessionKeyError:
-        case Sync::SessionClosedError: {
+        case Sync::SessionClosedError:
+        case Sync::UnknownError: {
             m_sessionKey.clear();
+            emit cursorsUpdated(QMap<QString, int>());
+            emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
             break;
         }
 
@@ -1454,6 +1455,8 @@ bool SynchronizationManagerV2::uploadScenarioData(const QList<QString>& _dataUui
             xmlWriter.writeStartElement(DBH_QUERY_VALUES_KEY);
             xmlWriter.writeCDATA(historyRecord.value(DBH_QUERY_VALUES_KEY));
             xmlWriter.writeEndElement();
+            //
+            xmlWriter.writeTextElement(DBH_USERNAME_KEY, historyRecord.value(DBH_USERNAME_KEY));
             //
             xmlWriter.writeTextElement(DBH_DATETIME_KEY, historyRecord.value(DBH_DATETIME_KEY));
             //
