@@ -15,6 +15,7 @@
 */
 
 #include "SynchronizationManagerV2.h"
+#include "Sync.h"
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
@@ -32,6 +33,7 @@
 #include <QDateTime>
 
 using ManagementLayer::SynchronizationManagerV2;
+using ManagementLayer::Sync;
 using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
 
@@ -112,17 +114,6 @@ namespace {
     //
     const QString KEY_PROJECT_ID = "project_id";
     const QString KEY_PROJECT_NAME = "project_name";
-    /** @} */
-
-    /**
-     * @brief Список кодов ошибок и соответствующих им описаний
-     */
-    /** @{ */
-    const int UNKNOWN_ERROR_CODE = 100;
-    const QString UNKNOWN_ERROR_STRING = QObject::tr("Unknown error");
-
-    const int SESSION_KEY_NOT_FOUND_CODE = 101;
-    const QString SESSION_KEY_NOT_FOUND_STRING = QObject::tr("Session key not found");
     /** @} */
 
     //
@@ -258,11 +249,11 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     QString userName;
     QString date;
 
-    bool isActiveFind = false;
     //
     // Найдем наш ключ сессии, имя пользователя, информацию о подписке
     //
     m_sessionKey.clear();
+    bool isActiveFind = false;
     while (!responseReader.atEnd()) {
         responseReader.readNext();
         if (responseReader.name().toString() == "session_key") {
@@ -286,7 +277,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     }
 
     if (!isActiveFind || (isActiveFind && m_isSubscriptionActive && date.isEmpty())) {
-        handleError(tr("Got wrong result from server"), 404);
+        handleError(Sync::UnknownError);
         m_sessionKey.clear();
         return;
     }
@@ -295,7 +286,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     // Не нашли ключ сессии
     //
     if (m_sessionKey.isEmpty()) {
-        handleError(SESSION_KEY_NOT_FOUND_STRING, SESSION_KEY_NOT_FOUND_CODE);
+        handleError(Sync::NoSessionKeyError);
         return;
     }
 
@@ -363,7 +354,7 @@ void SynchronizationManagerV2::signUp(const QString& _email, const QString& _pas
     // Не нашли ключ сессии
     //
     if (m_sessionKey.isEmpty()) {
-        handleError(SESSION_KEY_NOT_FOUND_STRING, SESSION_KEY_NOT_FOUND_CODE);
+        handleError(Sync::NoSessionKeyError);
         return;
     }
 
@@ -386,7 +377,7 @@ void SynchronizationManagerV2::verify(const QString& _code)
     if (_code == "11111") {
         success = true;
     } else {
-        handleError("Wrong code", 505);
+        handleError(Sync::IncorrectValidationCodeError);
     }
 
     if (success) {
@@ -409,7 +400,7 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     //
     // Успешно ли завершилась операция
     //
-    if(!isOperationSucceed(responseReader)) {
+    if (!isOperationSucceed(responseReader)) {
         return;
     }
 
@@ -423,7 +414,7 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
             QString status = responseReader.text().toString();
             responseReader.readNext();
             if (status != "success") {
-                handleError(status, UNKNOWN_ERROR_CODE);
+                handleError(status, Sync::UnknownError);
                 return;
             }
             break;
@@ -541,7 +532,7 @@ void SynchronizationManagerV2::loadSubscriptionInfo()
     }
 
     if (!isActiveFind || (isActiveFind && m_isSubscriptionActive && date.isEmpty())) {
-        handleError(tr("Got wrong result from server"), 404);
+        handleError(Sync::UnknownError);
         return;
     }
 
@@ -636,7 +627,7 @@ int SynchronizationManagerV2::createProject(const QString& _projectName)
     }
 
     if (newProjectId == INVALID_PROJECT_ID) {
-        handleError(tr("Got wrong result from server"), 404);
+        handleError(Sync::UnknownError);
         return INVALID_PROJECT_ID;
     }
 
@@ -1007,30 +998,24 @@ void SynchronizationManagerV2::aboutFullSyncData()
         loader.addRequestAttribute(KEY_SESSION_KEY, m_sessionKey);
         loader.addRequestAttribute(KEY_PROJECT, ProjectsManager::currentProject().id());
         QByteArray response = loader.loadSync(URL_SCENARIO_DATA_LIST);
+
+        QXmlStreamReader changesReader(response);
+        if (!isOperationSucceed(changesReader)) {
+            return;
+        }
+
         //
         // ... считываем изменения (uuid)
         //
         QList<QString> remoteChanges;
-        QXmlStreamReader changesReader(response);
+        changesReader.readNextStartElement();
+        changesReader.readNextStartElement(); // changes
         while (!changesReader.atEnd()) {
-            changesReader.readNext();
-            if (changesReader.name().toString() == "status") {
-                const bool success = changesReader.attributes().value("result").toString() == "true";
-                if (success) {
-                    changesReader.readNextStartElement();
-                    changesReader.readNextStartElement(); // changes
-                    while (!changesReader.atEnd()) {
-                        changesReader.readNextStartElement();
-                        if (changesReader.name() == "change") {
-                            const QString changeUuid = changesReader.attributes().value("id").toString();
-                            if (!changeUuid.isEmpty()) {
-                                remoteChanges.append(changeUuid);
-                            }
-                        }
-                    }
-                } else {
-                    handleError(response);
-                    break;
+            changesReader.readNextStartElement();
+            if (changesReader.name() == "change") {
+                const QString changeUuid = changesReader.attributes().value("id").toString();
+                if (!changeUuid.isEmpty()) {
+                    remoteChanges.append(changeUuid);
                 }
             }
         }
@@ -1250,21 +1235,15 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
                 //
                 // Попытаемся извлечь код ошибки
                 //
-                if (!_responseReader.attributes().hasAttribute("errorCode")) {
-                    //
-                    // Неизвестная ошибка
-                    //
-                    handleError(UNKNOWN_ERROR_STRING, UNKNOWN_ERROR_CODE);
-                    m_sessionKey.clear();
-                    return false;
+                int errorCode = Sync::UnknownError;
+                if (_responseReader.attributes().hasAttribute("errorCode")) {
+                    errorCode = _responseReader.attributes().value("errorCode").toInt();
                 }
-
-                int errorCode = _responseReader.attributes().value("errorCode").toInt();
 
                 //
                 // Попытаемся извлечь текст ошибки
                 //
-                QString errorText = UNKNOWN_ERROR_STRING;
+                QString errorText = Sync::errorText(errorCode);
                 if (_responseReader.attributes().hasAttribute("error")) {
                     errorText = _responseReader.attributes().value("error").toString();
                 }
@@ -1280,15 +1259,31 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
     //
     // Ничего не нашли про статус. Скорее всего пропал интернет
     //
-    handleError(tr("Can't estabilish network connection."), OFFLINE_ERROR_CODE);
+    handleError(Sync::NetworkError);
     m_isInternetConnectionActive = Inactive;
     emit cursorsUpdated(QMap<QString, int>());
     emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
     return false;
 }
 
+void SynchronizationManagerV2::handleError(int _code)
+{
+    handleError(Sync::errorText(_code), _code);
+}
+
 void SynchronizationManagerV2::handleError(const QString &_error, int _code)
 {
+    switch (_code) {
+        case Sync::UnknownError:
+        case Sync::NoSessionKeyError:
+        case Sync::SessionClosedError: {
+            m_sessionKey.clear();
+            break;
+        }
+
+        default: break;
+    }
+
     emit syncClosedWithError(_code, _error);
 }
 

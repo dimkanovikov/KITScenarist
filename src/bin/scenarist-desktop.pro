@@ -626,7 +626,8 @@ HEADERS += \
     scenarist-core/BusinessLayer/Import/KitScenaristImporter.h \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.h \
     scenarist-core/3rd_party/Helpers/Validators.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.h
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.h \
+    scenarist-core/ManagementLayer/Synchronization/Sync.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

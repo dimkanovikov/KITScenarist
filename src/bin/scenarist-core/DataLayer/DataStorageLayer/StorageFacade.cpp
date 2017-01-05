@@ -36,150 +36,150 @@ QString StorageFacade::username()
 
 void StorageFacade::clearStorages()
 {
-	placeStorage()->clear();
-	locationStorage()->clear();
-	locationPhotoStorage()->clear();
-	scenarioDayStorage()->clear();
-	timeStorage()->clear();
-	characterStorage()->clear();
-	characterStateStorage()->clear();
-	characterPhotoStorage()->clear();
-	scenarioStorage()->clear();
-	scenarioChangeStorage()->clear();
-	scenarioDataStorage()->clear();
-	researchStorage()->clear();
+    placeStorage()->clear();
+    locationStorage()->clear();
+    locationPhotoStorage()->clear();
+    scenarioDayStorage()->clear();
+    timeStorage()->clear();
+    characterStorage()->clear();
+    characterStateStorage()->clear();
+    characterPhotoStorage()->clear();
+    scenarioStorage()->clear();
+    scenarioChangeStorage()->clear();
+    scenarioDataStorage()->clear();
+    researchStorage()->clear();
 }
 
 void StorageFacade::refreshStorages()
 {
-	//
-	// Хранилища с фотками обновляем первыми, т.к. другие хранилища зависят от них
-	//
-	locationPhotoStorage()->refresh();
-	characterPhotoStorage()->refresh();
+    //
+    // Хранилища с фотками обновляем первыми, т.к. другие хранилища зависят от них
+    //
+    locationPhotoStorage()->refresh();
+    characterPhotoStorage()->refresh();
 
-	researchStorage()->refresh();
-	placeStorage()->refresh();
-	locationStorage()->refresh();
-	scenarioDayStorage()->refresh();
-	timeStorage()->refresh();
-	characterStorage()->refresh();
-	characterStateStorage()->refresh();
+    researchStorage()->refresh();
+    placeStorage()->refresh();
+    locationStorage()->refresh();
+    scenarioDayStorage()->refresh();
+    timeStorage()->refresh();
+    characterStorage()->refresh();
+    characterStateStorage()->refresh();
 //	scenarioStorage()->refresh();
 //	scenarioChangeStorage()->refresh();
-	scenarioDataStorage()->refresh();
+    scenarioDataStorage()->refresh();
 }
 
 PlaceStorage* StorageFacade::placeStorage()
 {
-	if (s_placeStorage == 0) {
-		s_placeStorage = new PlaceStorage;
-	}
-	return s_placeStorage;
+    if (s_placeStorage == 0) {
+        s_placeStorage = new PlaceStorage;
+    }
+    return s_placeStorage;
 }
 
 LocationStorage* StorageFacade::locationStorage()
 {
-	if (s_locationStorage == 0) {
-		s_locationStorage = new LocationStorage;
-	}
-	return s_locationStorage;
+    if (s_locationStorage == 0) {
+        s_locationStorage = new LocationStorage;
+    }
+    return s_locationStorage;
 }
 
 LocationPhotoStorage* StorageFacade::locationPhotoStorage()
 {
-	if (s_locationPhotoStorage == 0) {
-		s_locationPhotoStorage = new LocationPhotoStorage;
-	}
-	return s_locationPhotoStorage;
+    if (s_locationPhotoStorage == 0) {
+        s_locationPhotoStorage = new LocationPhotoStorage;
+    }
+    return s_locationPhotoStorage;
 }
 
 ScenarioDayStorage* StorageFacade::scenarioDayStorage()
 {
-	if (s_scenarioDayStorage == 0) {
-		s_scenarioDayStorage = new ScenarioDayStorage;
-	}
-	return s_scenarioDayStorage;
+    if (s_scenarioDayStorage == 0) {
+        s_scenarioDayStorage = new ScenarioDayStorage;
+    }
+    return s_scenarioDayStorage;
 }
 
 TimeStorage* StorageFacade::timeStorage()
 {
-	if (s_timeStorage == 0) {
-		s_timeStorage = new TimeStorage;
-	}
-	return s_timeStorage;
+    if (s_timeStorage == 0) {
+        s_timeStorage = new TimeStorage;
+    }
+    return s_timeStorage;
 }
 
 CharacterStorage* StorageFacade::characterStorage()
 {
-	if (s_characterStorage == 0) {
-		s_characterStorage = new CharacterStorage;
-	}
-	return s_characterStorage;
+    if (s_characterStorage == 0) {
+        s_characterStorage = new CharacterStorage;
+    }
+    return s_characterStorage;
 }
 
 CharacterStateStorage*StorageFacade::characterStateStorage()
 {
-	if (s_characterStateStorage == 0) {
-		s_characterStateStorage = new CharacterStateStorage;
-	}
-	return s_characterStateStorage;
+    if (s_characterStateStorage == 0) {
+        s_characterStateStorage = new CharacterStateStorage;
+    }
+    return s_characterStateStorage;
 }
 
 CharacterPhotoStorage* StorageFacade::characterPhotoStorage()
 {
-	if (s_characterPhotoStorage == 0) {
-		s_characterPhotoStorage = new CharacterPhotoStorage;
-	}
-	return s_characterPhotoStorage;
+    if (s_characterPhotoStorage == 0) {
+        s_characterPhotoStorage = new CharacterPhotoStorage;
+    }
+    return s_characterPhotoStorage;
 }
 
 ScenarioStorage* StorageFacade::scenarioStorage()
 {
-	if (s_scenarioStorage == 0) {
-		s_scenarioStorage = new ScenarioStorage;
-	}
-	return s_scenarioStorage;
+    if (s_scenarioStorage == 0) {
+        s_scenarioStorage = new ScenarioStorage;
+    }
+    return s_scenarioStorage;
 }
 
 ScenarioChangeStorage* StorageFacade::scenarioChangeStorage()
 {
-	if (s_scenarioChangeStorage == 0) {
-		s_scenarioChangeStorage = new ScenarioChangeStorage;
-	}
-	return s_scenarioChangeStorage;
+    if (s_scenarioChangeStorage == 0) {
+        s_scenarioChangeStorage = new ScenarioChangeStorage;
+    }
+    return s_scenarioChangeStorage;
 }
 
 ScenarioDataStorage* StorageFacade::scenarioDataStorage()
 {
-	if (s_scenarioDataStorage == 0) {
-		s_scenarioDataStorage = new ScenarioDataStorage;
-	}
-	return s_scenarioDataStorage;
+    if (s_scenarioDataStorage == 0) {
+        s_scenarioDataStorage = new ScenarioDataStorage;
+    }
+    return s_scenarioDataStorage;
 }
 
 ResearchStorage* StorageFacade::researchStorage()
 {
-	if (s_researchStorage == 0) {
-		s_researchStorage = new ResearchStorage;
-	}
-	return s_researchStorage;
+    if (s_researchStorage == 0) {
+        s_researchStorage = new ResearchStorage;
+    }
+    return s_researchStorage;
 }
 
 SettingsStorage* StorageFacade::settingsStorage()
 {
-	if (s_settingsStorage == 0) {
-		s_settingsStorage = new SettingsStorage;
-	}
-	return s_settingsStorage;
+    if (s_settingsStorage == 0) {
+        s_settingsStorage = new SettingsStorage;
+    }
+    return s_settingsStorage;
 }
 
-DatabaseHistoryStorage*StorageFacade::databaseHistoryStorage()
+DatabaseHistoryStorage* StorageFacade::databaseHistoryStorage()
 {
-	if (s_databaseHistoryStorage == 0) {
-		s_databaseHistoryStorage = new DatabaseHistoryStorage;
-	}
-	return s_databaseHistoryStorage;
+    if (s_databaseHistoryStorage == 0) {
+        s_databaseHistoryStorage = new DatabaseHistoryStorage;
+    }
+    return s_databaseHistoryStorage;
 }
 
 PlaceStorage* StorageFacade::s_placeStorage = 0;
