@@ -733,6 +733,11 @@ bool ScenarioTextEdit::keyPressEventReimpl(QKeyEvent* _event)
 
 void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 {
+    //
+    // Ширина области курсора, для отображения имени автора курсора
+    //
+    const unsigned cursorAreaWidth = 20;
+
 	//
 	// Подсветка строки
 	//
@@ -879,7 +884,8 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 							// Если мышь около него, то выводим имя соавтора
 							//
 							QRect extandedCursorR = cursorR;
-							extandedCursorR.setWidth(5);
+                            extandedCursorR.setLeft(extandedCursorR.left() - cursorAreaWidth/2);
+                            extandedCursorR.setWidth(cursorAreaWidth);
 							if (extandedCursorR.contains(mouseCursorPos)) {
 								const QRect usernameRect(
 									cursorR.left() - 1,
