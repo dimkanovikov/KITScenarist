@@ -2,6 +2,7 @@
 #define SCENARIOTEXTDOCUMENT_H
 
 #include "ScenarioTemplate.h"
+#include <3rd_party/Helpers/DiffMatchPatchHelper.h>
 
 #include <QTextDocument>
 #include <QTextCursor>
@@ -9,6 +10,8 @@
 namespace Domain {
 	class ScenarioChange;
 }
+
+class QDomNodeList;
 
 namespace BusinessLogic
 {
@@ -136,6 +139,28 @@ namespace BusinessLogic
 		 */
 		void reviewChanged();
 
+    private:
+        /**
+         * @brief Процедура удаления одинаковый первых и последних частей в xml-строках у _xmls
+         * _reversed = false - удаляем первые, = true - удаляем последние
+         */
+        void removeIdenticalParts(QPair<DiffMatchPatchHelper::ChangeXml, DiffMatchPatchHelper::ChangeXml>& _xmls, bool _reversed);
+
+        /**
+         * @brief Обновляет в структуре ChangeXml поля plainLength и plainPos
+         */
+        void processLenghtPos(DiffMatchPatchHelper::ChangeXml& _xmls, int _k, bool _reversed);
+
+        /**
+         * @brief Возвращает позицию следующего тега после _prev, имеющего внутри себя тег <v>
+         */
+        int getNextChild(QDomNodeList& _list, int _prev);
+
+        /**
+         * @brief Возвращает позицию предыдущего тега перед _prev, имеющего внутри себя тек <v>
+         */
+        int getPrevChild(QDomNodeList& _list, int _prev);
+
 	private:
 		/**
 		 * @brief Обработчик xml
@@ -179,8 +204,8 @@ namespace BusinessLogic
 		/**
 		 * @brief Включён ли режим отображения поэпизодного плана (true) или сценария (false)
 		 */
-		bool m_outlineMode;
-	};
+        bool m_outlineMode;
+    };
 }
 
 
