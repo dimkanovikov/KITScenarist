@@ -833,6 +833,7 @@ void ApplicationManager::setSyncIndicator()
     QString iconPath;
     QString indicatorTitle;
     QString indicatorText;
+    QColor waveColor;
     if (isActiveInternet){
         //
         // Если интернет есть, надо понять, с каким типом проекта работает пользователь
@@ -850,6 +851,7 @@ void ApplicationManager::setSyncIndicator()
             //
             iconPath = ":/Graphics/Icons/Indicator/connected.png";
         }
+        waveColor = QColor(0, 255, 0, 40);
     } else {
         //
         // Если интернета нет, то всегда показываем значок отключенного интернета
@@ -857,11 +859,13 @@ void ApplicationManager::setSyncIndicator()
         iconPath = ":/Graphics/Icons/Indicator/disconnected.png";
         indicatorTitle = tr("Connection inactive");
         indicatorText = isRemoteProject ? tr("Project didn't synchronized") : QString::null;
+        waveColor = QColor(255, 0, 0, 40);
     }
     m_tabs->addIndicator(QIcon(iconPath));
     m_tabs->setIndicatorTitle(indicatorTitle);
     m_tabs->setIndicatorText(indicatorText);
     m_tabs->setIndicatorActionIcon(QIcon());
+    m_tabs->makeIndicatorWave(waveColor);
 }
 
 void ApplicationManager::aboutUpdateLastChangeInfo()
@@ -1049,12 +1053,13 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
     // Если не залогинены, то значок не показываем
     // Если пропал интернет, то значок сам покажется при необходимости
     //
-    if (m_synchronizationManagerV2->isInternetConnectionActive()/* &&
-        m_synchronizationManagerV2->isLogged()*/) {
+    if (m_synchronizationManagerV2->isInternetConnectionActive()
+        && m_synchronizationManagerV2->isLogged()) {
         m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/unsynced.png"));
         m_tabs->setIndicatorTitle(title);
         m_tabs->setIndicatorText(error);
         m_tabs->setIndicatorActionIcon(reactivateIcon);
+        m_tabs->makeIndicatorWave(QColor(255, 0, 0, 40));
     }
 
     //
@@ -1638,6 +1643,13 @@ void ApplicationManager::initConnections()
     connect(m_menu, SIGNAL(clicked()), m_menu, SLOT(showMenu()));
     connect(m_tabs, &SideTabBar::currentChanged, this, &ApplicationManager::currentTabIndexChanged);
     connect(m_tabsSecondary, &SideTabBar::currentChanged, this, &ApplicationManager::currentTabIndexChanged);
+    //
+    // Переавторизуемся
+    //
+    connect(m_tabs, &SideTabBar::indicatorActionClicked, [=] {
+        m_synchronizationManagerV2->restartSession();
+        setSyncIndicator();
+    });
 
     connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
     connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));

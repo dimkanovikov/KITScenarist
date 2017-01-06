@@ -165,7 +165,7 @@ namespace {
     /**
      * @brief Код ошибки означающий работу в автономном режиме
      */
-    const int OFFLINE_ERROR_CODE = 0;
+    const QString INCORRECT_SESSION_KEY = "xxxxxxxxxxxxxxx";
 }
 
 namespace {
@@ -1221,6 +1221,22 @@ void SynchronizationManagerV2::aboutUpdateCursors(int _cursorPosition, bool _isD
     }
 }
 
+void SynchronizationManagerV2::restartSession()
+{
+    //
+    // Переавторизуемся
+    //
+    autoLogin();
+
+    //
+    // А если текущий проект - удаленный, то синхронизуем и его
+    //
+    if (ProjectsManager::currentProject().isRemote()) {
+        aboutFullSyncScenario();
+        aboutFullSyncData();
+    }
+}
+
 bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseReader)
 {
     while (!_responseReader.atEnd()) {
@@ -1276,7 +1292,7 @@ void SynchronizationManagerV2::handleError(const QString &_error, int _code)
         case Sync::NoSessionKeyError:
         case Sync::SessionClosedError:
         case Sync::UnknownError: {
-            m_sessionKey.clear();
+            m_sessionKey = ::INCORRECT_SESSION_KEY;
             emit cursorsUpdated(QMap<QString, int>());
             emit cursorsUpdated(QMap<QString, int>(), IS_DRAFT);
             break;
@@ -1603,20 +1619,10 @@ void SynchronizationManagerV2::checkNetworkState()
     //
     // Если появился интернет, которого раньше не было
     //
-    if (prevState != m_isInternetConnectionActive && m_isInternetConnectionActive == Active &&
-            prevState != Undefined) {
-        //
-        // Переавторизуемся
-        //
-        autoLogin();
-
-        //
-        // А если текущий проект - удаленный, то синхронизуем и его
-        //
-        if (ProjectsManager::currentProject().isRemote()) {
-            aboutFullSyncScenario();
-            aboutFullSyncData();
-        }
+    if (prevState != m_isInternetConnectionActive
+        && m_isInternetConnectionActive == Active
+        && prevState != Undefined) {
+        restartSession();
     }
 
     //

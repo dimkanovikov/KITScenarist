@@ -168,6 +168,11 @@ namespace ManagementLayer
          */
         void aboutUpdateCursors(int _cursorPosition, bool _isDraft);
 
+        /**
+         * @brief Перезапустить сессию
+         */
+        void restartSession();
+
     signals:
         /**
          * @brief Авторизация пройдена успешно

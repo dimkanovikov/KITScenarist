@@ -72,6 +72,11 @@ public:
     void setIndicatorActionIcon(const QIcon& _icon);
 
     /**
+     * @brief Запустить цветовой всполох от индикатора
+     */
+    void makeIndicatorWave(const QColor& _waveColor);
+
+    /**
      * @brief Убрать индикатор из панели
      */
     void removeIndicator();
@@ -160,6 +165,11 @@ private:
      * @brief Новая иконка индикатора
      */
     QIcon m_newIndicatorIcon;
+
+    /**
+     * @brief Последний цвет всполоха
+     */
+    QColor m_waveColor;
 };
 
 #endif // SIDEBAR_H

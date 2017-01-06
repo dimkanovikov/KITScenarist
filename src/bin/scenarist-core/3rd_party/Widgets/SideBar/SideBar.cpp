@@ -3,6 +3,7 @@
 #include <3rd_party/Helpers/ImageHelper.h>
 
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
+#include <3rd_party/Widgets/WAF/Animation/Animation.h>
 
 #include <QApplication>
 #include <QGridLayout>
@@ -248,6 +249,20 @@ void SideTabBar::setIndicatorActionIcon(const QIcon& _icon)
     m_indicator->setProperty(::INDICATOR_ACTION_ICON_KEY, _icon);
 }
 
+void SideTabBar::makeIndicatorWave(const QColor& _waveColor)
+{
+    //
+    // Если нужно запустить волну другого цвета
+    //
+    if (m_waveColor != _waveColor) {
+        m_waveColor = _waveColor;
+        if (m_waveColor.isValid()) {
+            const QPoint waveStartPosition(::sidebarWidth(m_compactMode)/2, height() - ::INDICATOR_HEIGHT/2);
+            WAF::Animation::circleFillIn(parentWidget(), mapToParent(waveStartPosition), m_waveColor);
+        }
+    }
+}
+
 void SideTabBar::removeIndicator()
 {
     addIndicator(QIcon());
@@ -365,7 +380,7 @@ void SideTabBar::paintEvent(QPaintEvent *event)
         m_indicator->icon().paint(&p, indicatorRect);
     }
 }
-
+#include <QTimer>
 void SideTabBar::mousePressEvent(QMouseEvent* _event)
 {
     //
@@ -394,6 +409,7 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
             : QString("<p style='font-size:small;font-weight:bold;'><br/>%1</p>")
                      .arg(m_indicator->property(::INDICATOR_FOOTER_KEY).toString());
 
+        QMenu menu(this);
         QFrame* menuFrame = new QFrame;
         QGridLayout* layout = new QGridLayout(menuFrame);
         layout->addWidget(new QLabel(titleText, menuFrame), 0, 0);
@@ -402,6 +418,9 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
             FlatButton* button = new FlatButton(menuFrame);
             button->setIcons(icon);
             button->setAutoRaise(true);
+            connect(button, &FlatButton::clicked, &menu, &QMenu::close);
+            connect(button, &FlatButton::clicked, button, &FlatButton::hide);
+            connect(button, &FlatButton::clicked, this, &SideTabBar::indicatorActionClicked);
             layout->addWidget(button, 0, 1);
         }
         if (!bodyText.isEmpty()) {
@@ -415,11 +434,11 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
         //
         // Покажем информацию
         //
-        QMenu menu(this);
         QWidgetAction menuText(&menu);
         menuText.setDefaultWidget(menuFrame);
         menu.addAction(&menuText);
         menu.exec(mapToGlobal(QPoint(::sidebarWidth(m_compactMode), height() - menu.sizeHint().height())));
+
     }
 }
 

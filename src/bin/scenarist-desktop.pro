@@ -270,10 +270,6 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.cpp \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.cpp \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Animation.cpp \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.cpp \
     scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp \
     scenarist-core/BusinessLayer/Statistics/StatisticsFacade.cpp \
@@ -311,7 +307,6 @@ SOURCES += \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.cpp \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideForegroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.cpp \
     scenarist-core/3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/commands.cpp \
@@ -354,7 +349,23 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp \
     scenarist-core/BusinessLayer/Import/KitScenaristImporter.cpp \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideBackgroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideForegroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Animation.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -532,12 +543,6 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.h \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.h \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.h \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.h \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.h \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.h \
-    scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
-    scenarist-core/3rd_party/Widgets/WAF/Animation.h \
-    scenarist-core/3rd_party/Widgets/WAF/AnimationPrivate.h \
     scenarist-core/3rd_party/Helpers/ScrollerHelper.h \
     scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.h \
@@ -581,7 +586,6 @@ HEADERS += \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.h \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.h \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideForegroundDecorator.h \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h \
     scenarist-core/3rd_party/Helpers/FileHelper.h \
     scenarist-core/3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h \
@@ -627,7 +631,27 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.h \
     scenarist-core/3rd_party/Helpers/Validators.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.h \
-    scenarist-core/ManagementLayer/Synchronization/Sync.h
+    scenarist-core/ManagementLayer/Synchronization/Sync.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideBackgroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideForegroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Animation.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/AnimationPrivate.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimationPrivate.h \
+    scenarist-core/3rd_party/Widgets/WAF/WAF.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

@@ -8,7 +8,7 @@
 
 #include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
-#include <3rd_party/Widgets/WAF/Animation.h>
+#include <3rd_party/Widgets/WAF/Animation/Animation.h>
 
 #include "ResearchNavigatorItemDelegate.h"
 #include "ResearchNavigatorProxyStyle.h"
