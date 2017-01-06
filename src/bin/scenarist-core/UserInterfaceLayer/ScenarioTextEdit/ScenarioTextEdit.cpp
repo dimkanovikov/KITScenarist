@@ -89,6 +89,12 @@ void ScenarioTextEdit::setScenarioDocument(ScenarioTextDocument* _document)
 {
 	removeEditorConnections();
 
+    //
+    // Удалим курсоры
+    //
+    m_additionalCursors.clear();
+    m_additionalCursorsCorrected.clear();
+
 	m_document = _document;
 	setDocument(m_document);
 	setHighlighterDocument(m_document);
