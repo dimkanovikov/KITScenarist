@@ -19,323 +19,338 @@
 
 #include <QObject>
 
-class NetworkRequest;
 class QXmlStreamReader;
 
 
 namespace ManagementLayer
 {
-	/**
-	 *  @brief Управляющий синхронизацией
-	 */
-	class SynchronizationManagerV2 : public QObject
-	{
-		Q_OBJECT
+    /**
+     *  @brief Управляющий синхронизацией
+     */
+    class SynchronizationManagerV2 : public QObject
+    {
+        Q_OBJECT
 
-	public:
-		explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
+    public:
+        explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
 
-		//
-		// Методы работы с аккаунтом
-		//
+        /**
+         * @brief Вернуть, активно ли соединение
+         */
+        bool isInternetConnectionActive() const;
 
-		/**
-		 * @brief Активна ли подписка у пользователя
-		 */
-		bool isSubscriptionActive() const;
+        /**
+         * @brief Вернуть, авторизован ли пользователь
+         */
+        bool isLogged() const;
 
-		/**
-		 * @brief Авторизоваться на сервере, используя сохраненные логин и пароль
-		 */
-		void autoLogin();
+        //
+        // Методы работы с аккаунтом
+        //
 
-		/**
-		 * @brief Авторизоваться на сервере
-		 */
-		void login(const QString& _email, const QString& _password);
+        /**
+         * @brief Активна ли подписка у пользователя
+         */
+        bool isSubscriptionActive() const;
 
-		/**
-		 * @brief Регистрация на сервере
-		 */
-		void signUp(const QString& _email, const QString& _password);
+        /**
+         * @brief Авторизоваться на сервере, используя сохраненные логин и пароль
+         */
+        void autoLogin();
 
-		/**
-		 * @brief Подтверждение регистрации при помощи проверочного кода
-		 */
-		void verify(const QString& _code);
+        /**
+         * @brief Авторизоваться на сервере
+         */
+        void login(const QString& _email, const QString& _password);
 
-		/**
-		 * @brief Восстановление пароля
-		 */
-		void restorePassword(const QString& _email);
+        /**
+         * @brief Регистрация на сервере
+         */
+        void signUp(const QString& _email, const QString& _password);
 
-		/**
-		 * @brief Закрыть авторизацию
-		 */
-		void logout();
+        /**
+         * @brief Подтверждение регистрации при помощи проверочного кода
+         */
+        void verify(const QString& _code);
 
-		/**
-		 * @brief Продлить подписку
-		 */
-		void renewSubscription(unsigned _duration, unsigned _type);
+        /**
+         * @brief Восстановление пароля
+         */
+        void restorePassword(const QString& _email);
 
-		/**
-		 * @brief Сменить имя пользователя
-		 */
-		void changeUserName(const QString& _newUserName);
+        /**
+         * @brief Закрыть авторизацию
+         */
+        void logout();
 
-		/**
-		 * @brief Получить информацию о подписке
-		 */
-		void loadSubscriptionInfo();
+        /**
+         * @brief Продлить подписку
+         */
+        void renewSubscription(unsigned _duration, unsigned _type);
 
-		/**
-		 * @brief Сменить пароль
-		 */
-		void changePassword(const QString& _password, const QString& _newPassword);
+        /**
+         * @brief Сменить имя пользователя
+         */
+        void changeUserName(const QString& _newUserName);
 
-		//
-		// Методы работы с проектами
-		//
+        /**
+         * @brief Получить информацию о подписке
+         */
+        void loadSubscriptionInfo();
 
-		/**
-		 * @brief Загрузить список доступных проектов
-		 */
-		void loadProjects();
+        /**
+         * @brief Сменить пароль
+         */
+        void changePassword(const QString& _password, const QString& _newPassword);
 
-		/**
-		 * @brief Создать проект в облаке
-		 */
-		int createProject(const QString& _projectName);
+        //
+        // Методы работы с проектами
+        //
 
-		/**
-		 * @brief Обновить название проекта
-		 */
-		void updateProjectName(int _projectId, const QString& _newProjectName);
+        /**
+         * @brief Загрузить список доступных проектов
+         */
+        void loadProjects();
 
-		/**
-		 * @brief Удалить проект
-		 */
-		void removeProject(int _projectId);
+        /**
+         * @brief Создать проект в облаке
+         */
+        int createProject(const QString& _projectName);
 
-		/**
-		 * @brief Добавить подписчика в свой проект
-		 */
-		void shareProject(int _projectId, const QString& _userEmail, int _role);
+        /**
+         * @brief Обновить название проекта
+         */
+        void updateProjectName(int _projectId, const QString& _newProjectName);
 
-		/**
-		 * @brief Убрать подписку на проект для заданного пользователя
-		 * @note Если пользователь не задан, то происходит отписка текущего пользователя
-		 */
-		void unshareProject(int _projectId, const QString& _userEmail = QString::null);
+        /**
+         * @brief Удалить проект
+         */
+        void removeProject(int _projectId);
 
-		//
-		// Методы работы с конкретным проектом
-		//
-	public slots:
+        /**
+         * @brief Добавить подписчика в свой проект
+         */
+        void shareProject(int _projectId, const QString& _userEmail, int _role);
 
-		/**
-		 * @brief Полная синхронизация сценария
-		 */
-		void aboutFullSyncScenario();
+        /**
+         * @brief Убрать подписку на проект для заданного пользователя
+         * @note Если пользователь не задан, то происходит отписка текущего пользователя
+         */
+        void unshareProject(int _projectId, const QString& _userEmail = QString::null);
 
-		/**
-		 * @brief Синхронизация сценария во время работы над ним
-		 */
-		void aboutWorkSyncScenario();
+        //
+        // Методы работы с конкретным проектом
+        //
+    public slots:
 
-		/**
-		 * @brief Полная синхронизация данных
-		 */
-		void aboutFullSyncData();
+        /**
+         * @brief Полная синхронизация сценария
+         */
+        void aboutFullSyncScenario();
 
-		/**
-		 * @brief Синхронизация данных во время работы
-		 */
-		void aboutWorkSyncData();
+        /**
+         * @brief Синхронизация сценария во время работы над ним
+         */
+        void aboutWorkSyncScenario();
 
-		/**
-		 * @brief Загрузить информацию о курсорах соавторов и отправить информацию о своём
-		 */
-		void aboutUpdateCursors(int _cursorPosition, bool _isDraft);
+        /**
+         * @brief Полная синхронизация данных
+         */
+        void aboutFullSyncData();
 
-	signals:
-		/**
-		 * @brief Авторизация пройдена успешно
-		 */
-		void loginAccepted(const QString& _userName, const QString& _userEmail);
+        /**
+         * @brief Синхронизация данных во время работы
+         */
+        void aboutWorkSyncData();
 
-		/**
-		 * @brief Сервер успешно принял данные пользователя на регистрацию
-		 */
-		void signUpFinished();
+        /**
+         * @brief Загрузить информацию о курсорах соавторов и отправить информацию о своём
+         */
+        void aboutUpdateCursors(int _cursorPosition, bool _isDraft);
 
-		/**
-		 * @brief Сервер подтвердил регистрацию
-		 */
-		void verified();
+        /**
+         * @brief Перезапустить сессию
+         */
+        void restartSession();
 
-		/**
-		 * @brief Пароль отправлен на email
-		 */
-		void passwordRestored();
+    signals:
+        /**
+         * @brief Авторизация пройдена успешно
+         */
+        void loginAccepted(const QString& _userName, const QString& _userEmail);
 
-		/**
-		 * @brief Авторизация закрыта
-		 */
-		void logoutFinished();
+        /**
+         * @brief Сервер успешно принял данные пользователя на регистрацию
+         */
+        void signUpFinished();
 
-		/**
-		 * @brief Успешно изменено имя пользователя
-		 */
-		void userNameChanged();
+        /**
+         * @brief Сервер подтвердил регистрацию
+         */
+        void verified();
 
-		/**
-		 * @brief Успешно запрошена информация о подписке
-		 */
-		void subscriptionInfoLoaded(bool _isActive, const QString& _expiredDate);
+        /**
+         * @brief Пароль отправлен на email
+         */
+        void passwordRestored();
 
-		/**
-		 * @brief Успешно изменен пароль
-		 */
-		void passwordChanged();
+        /**
+         * @brief Авторизация закрыта
+         */
+        void logoutFinished();
 
-		/**
-		 * @brief Проекты загружены
-		 */
-		void projectsLoaded(const QString& _projectsXml);
+        /**
+         * @brief Успешно изменено имя пользователя
+         */
+        void userNameChanged();
 
-		/**
-		 * @brief Синхроинзация закрыта с ошибкой
-		 */
-		void syncClosedWithError(int errorCode, const QString& _errorText);
+        /**
+         * @brief Успешно запрошена информация о подписке
+         */
+        void subscriptionInfoLoaded(bool _isActive, const QString& _expiredDate);
 
-		//
-		// **** Методы из старого менеджера синхронизации
-		//
+        /**
+         * @brief Успешно изменен пароль
+         */
+        void passwordChanged();
 
-		/**
-		 * @brief Необходимо применить патч
-		 */
-		/** @{ */
-		void applyPatchRequested(const QString& _patch, bool _isDraft);
-		void applyPatchesRequested(const QList<QString>& _patch, bool _isDraft);
-		/** @} */
+        /**
+         * @brief Проекты загружены
+         */
+        void projectsLoaded(const QString& _projectsXml);
 
-		/**
-		 * @brief Получены новые позиции курсоров пользователей
-		 */
-		void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
+        /**
+         * @brief Синхроинзация закрыта с ошибкой
+         */
+        void syncClosedWithError(int errorCode, const QString& _errorText);
 
-		/**
-		 * @brief Синхронизация восстановлена
-		 */
-		void syncRestarted();
+        //
+        // **** Методы из старого менеджера синхронизации
+        //
 
-	private:
-		/**
-		 * @brief Проверка, что статус ответа - ок
-		 */
-		bool isOperationSucceed(QXmlStreamReader& _reader);
+        /**
+         * @brief Необходимо применить патч
+         */
+        /** @{ */
+        void applyPatchRequested(const QString& _patch, bool _isDraft);
+        void applyPatchesRequested(const QList<QString>& _patch, bool _isDraft);
+        /** @} */
 
-		/**
-		 * Обработка ошибок
-		 */
-		void handleError(const QString& _error, int _code = 0);
+        /**
+         * @brief Получены новые позиции курсоров пользователей
+         */
+        void cursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft = false);
 
-		//
-		// **** Методы из старого менеджера синхронизации
-		//
+        /**
+         * @brief Изменилось состояние интернета
+         */
+        void networkStatusChanged(bool _isActive);
 
-		/**
-		 * @brief Обёртка для вызова функции m_loader->loadSync, отлавливающая отсутствие интернета
-		 */
-		QByteArray loadSyncWrapper(const QUrl& _url);
+    private:
+        /**
+         * @brief Проверка, что статус ответа - ок
+         */
+        bool isOperationSucceed(QXmlStreamReader& _reader);
 
-		/**
-		 * @brief Возможно ли использовать методы синхронизации
-		 */
-		bool isCanSync() const;
+        /**
+         * Обработка ошибок
+         */
+        /** @{ */
+        void handleError(int _code = 0);
+        void handleError(const QString& _error, int _code = 0);
+        /** @} */
 
-		/**
-		 * @brief Отправить изменения сценария на сервер
-		 * @return Удалось ли отправить данные
-		 */
-		bool uploadScenarioChanges(const QList<QString>& _changesUuids);
+        //
+        // **** Методы из старого менеджера синхронизации
+        //
 
-		/**
-		 * @brief Скачать изменения с сервера
-		 */
-		QList<QHash<QString, QString> > downloadScenarioChanges(const QString& _changesUuids);
+        /**
+         * @brief Возможно ли использовать методы синхронизации
+         */
+        bool isCanSync() const;
 
-		/**
-		 * @brief Отправить изменения данных на сервер
-		 * @return Удалось ли отправить данные
-		 */
-		bool uploadScenarioData(const QList<QString>& _dataUuids);
+        /**
+         * @brief Отправить изменения сценария на сервер
+         * @return Удалось ли отправить данные
+         */
+        bool uploadScenarioChanges(const QList<QString>& _changesUuids);
 
-		/**
-		 * @brief Скачать и сохранить в БД изменения с сервера
-		 */
-		void downloadAndSaveScenarioData(const QString& _dataUuids);
+        /**
+         * @brief Скачать изменения с сервера
+         */
+        QList<QHash<QString, QString> > downloadScenarioChanges(const QString& _changesUuids);
 
-	private slots:
-		/**
-		 * @brief Проверить соединение с интернетом
-		 */
-		void checkInternetConnection();
+        /**
+         * @brief Отправить изменения данных на сервер
+         * @return Удалось ли отправить данные
+         */
+        bool uploadScenarioData(const QList<QString>& _dataUuids);
 
-	private:
-		/**
-		 * @brief Настроить соединения
-		 */
-		void initConnections();
+        /**
+         * @brief Скачать и сохранить в БД изменения с сервера
+         */
+        void downloadAndSaveScenarioData(const QString& _dataUuids);
 
-	private:
-		/**
-		 * @brief указатель на главную форму приложения
-		 */
-		QWidget* m_view;
+        /**
+         * @brief Проверка статуса соединения с интернетом
+         */
+        void checkNetworkState();
 
-		/**
-		 * Ключ сессии
-		 */
-		QString m_sessionKey;
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
 
-		/**
-		 * @brief Email пользователя
-		 */
-		QString m_userEmail;
+    private:
+        /**
+         * @brief указатель на главную форму приложения
+         */
+        QWidget* m_view;
 
-		/**
-		 * @brief Активна ли подписка у пользователя
-		 */
-		bool m_isSubscriptionActive;
+        /**
+         * Ключ сессии
+         */
+        QString m_sessionKey;
 
-		/**
-		 * Загрузчик
-		 */
-		NetworkRequest* m_loader;
+        /**
+         * @brief Email пользователя
+         */
+        QString m_userEmail;
 
-		//
-		// **** Члены из старого менеджера синхронизации
-		//
+        /**
+         * @brief Активна ли подписка у пользователя
+         */
+        bool m_isSubscriptionActive;
 
-		/**
-		 * @brief Дата и время последней синхронизации изменений сценария
-		 */
-		QString m_lastChangesSyncDatetime;
+        //
+        // **** Члены из старого менеджера синхронизации
+        //
 
-		/**
-		 * @brief Дата и время последней синхронизации изменений данных
-		 */
-		QString m_lastDataSyncDatetime;
+        /**
+         * @brief Дата и время последней синхронизации изменений сценария
+         */
+        QString m_lastChangesSyncDatetime;
 
-		/**
-		 * @brief Активно ли соединение с интернетом
-		 */
-		bool m_isInternetConnectionActive = true;
-	};
+        /**
+         * @brief Дата и время последней синхронизации изменений данных
+         */
+        QString m_lastDataSyncDatetime;
+
+        /**
+         * @brief Статус интернета. Неопределенный, отсутствует подключение,
+         * присутствует подключение
+         */
+        enum InternetStatus {
+            Undefined,
+            Inactive,
+            Active
+        };
+
+        /**
+         * @brief Активно ли соединение с интернетом
+         */
+        InternetStatus m_isInternetConnectionActive = Undefined;
+    };
 }
 
 #endif // SYNCHRONIZATIONMANAGERV2_H

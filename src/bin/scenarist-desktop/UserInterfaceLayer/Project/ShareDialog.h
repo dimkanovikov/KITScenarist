@@ -4,49 +4,55 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
 namespace Ui {
-	class ShareDialog;
+    class ShareDialog;
 }
 
 namespace UserInterface
 {
-	/**
-	 * @brief Класс диалога открытия доступа к проекту
-	 */
-	class ShareDialog : public QLightBoxDialog
-	{
-		Q_OBJECT
+    /**
+     * @brief Класс диалога открытия доступа к проекту
+     */
+    class ShareDialog : public QLightBoxDialog
+    {
+        Q_OBJECT
 
-	public:
-		explicit ShareDialog(QWidget *parent = 0);
-		~ShareDialog();
+    public:
+        explicit ShareDialog(QWidget *parent = 0);
+        ~ShareDialog();
 
-		/**
-		 * @brief Адрес электронной почты, для которого открывается доступ к проекту
-		 */
-		QString email() const;
+        /**
+         * @brief Адрес электронной почты, для которого открывается доступ к проекту
+         */
+        QString email() const;
 
-		/**
-		 * @brief Роль пользователя в проекте
-		 */
-		int role() const;
+        /**
+         * @brief Роль пользователя в проекте
+         */
+        int role() const;
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView() override;
+    protected:
+        /**
+         * @brief Переопределяем, чтобы фокус устанавливался в поле ввода email
+         */
+        QWidget* focusedOnExec() const override;
 
-		/**
-		 * @brief Настроить соединения для формы
-		 */
-		void initConnections() override;
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView() override;
 
-	private:
-		/**
-		 * @brief Интерфейс
-		 */
-		Ui::ShareDialog* m_ui;
-	};
+        /**
+         * @brief Настроить соединения для формы
+         */
+        void initConnections() override;
+
+    private:
+        /**
+         * @brief Интерфейс
+         */
+        Ui::ShareDialog* m_ui;
+    };
 }
 
 #endif // SHAREDIALOG_H

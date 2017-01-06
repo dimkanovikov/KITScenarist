@@ -16,7 +16,7 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
-#include <NetworkRequest.h>
+#include <NetworkRequestLoader.h>
 
 #include <QApplication>
 #include <QFileDialog>
@@ -323,7 +323,7 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 		//
 		const QString hunspellDictionariesFolderUrl = "https://kitscenarist.ru/downloads/hunspell/";
 		//
-        const QByteArray affFileData = NetworkRequest().loadSync(hunspellDictionariesFolderUrl + affFileName);
+		const QByteArray affFileData = NetworkRequestLoader::loadSync(hunspellDictionariesFolderUrl + affFileName);
 		bool downloadingAffFileSuccess = affFileData.size() > 0;
 		if (downloadingAffFileSuccess) {
 			QFile affFile(hunspellDictionariesFolderPath + affFileName);
@@ -332,7 +332,7 @@ void SettingsManager::scenarioEditSpellCheckLanguageChanged(int _value)
 			affFile.close();
 		}
 		//
-        const QByteArray dicFileData = NetworkRequest().loadSync(hunspellDictionariesFolderUrl + dicFileName);
+		const QByteArray dicFileData = NetworkRequestLoader::loadSync(hunspellDictionariesFolderUrl + dicFileName);
 		bool downloadingDicFileSuccess = dicFileData.size() > 0;
 		if (downloadingDicFileSuccess) {
 			QFile dicFile(hunspellDictionariesFolderPath + dicFileName);

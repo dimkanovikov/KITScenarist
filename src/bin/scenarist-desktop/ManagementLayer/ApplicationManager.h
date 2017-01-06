@@ -66,6 +66,7 @@ namespace ManagementLayer
 		/** @{ */
 		void aboutCreateNew();
 		void createNewLocalProject(const QString& _filePath, const QString& _importFilePath);
+		void createNewRemoteProject(const QString& _projectName, const QString& _importFilePath);
 		/** @} */
 
 		/**
@@ -133,7 +134,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Отобразить индикатор активной синхронизации
 		 */
-		void aboutShowSyncActiveIndicator();
+        void setSyncIndicator();
 
 		/**
 		 * @brief Обновить информацию о последнем изменении в индикаторе синхронизации

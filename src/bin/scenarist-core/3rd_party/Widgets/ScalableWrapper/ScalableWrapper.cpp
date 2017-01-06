@@ -59,7 +59,7 @@ ScalableWrapper::ScalableWrapper(SpellCheckTextEdit* _editor, QWidget* _parent) 
 	//
 	// Настраиваем само представление
 	//
-	m_rect = m_scene->addRect(0, 0, 1, 1, QPen(), Qt::red);
+	m_rect = m_scene->addRect(0, 0, 1, 1, QPen(), Qt::transparent);
 	m_editorProxy = m_scene->addWidget(m_editor);
 	m_editorProxy->setPos(0, 0);
 	setScene(m_scene);
