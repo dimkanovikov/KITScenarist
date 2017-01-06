@@ -117,9 +117,10 @@ void ProjectFileWidget::initView()
 void ProjectFileWidget::initConnections()
 {
     connect(m_ui->options, &FlatButton::toggled, [=] (bool _toggled) {
-        WAF::Animation::slide(m_ui->optionsPanel, WAF::FromRightToLeft, true, _toggled);
+        const bool FIX = true;
+        WAF::Animation::slide(m_ui->optionsPanel, WAF::FromRightToLeft, FIX, !FIX, _toggled);
         if (m_ui->usersLayout->count() > 0) {
-            WAF::Animation::slide(m_ui->users, WAF::FromBottomToTop, false, _toggled);
+            WAF::Animation::slide(m_ui->users, WAF::FromBottomToTop, !FIX, !FIX, _toggled);
         }
     });
 

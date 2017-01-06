@@ -150,7 +150,8 @@ void StartUpView::cabinetChangeVisibility()
     if (!isVisible) {
         ui->cabinetFrame->show();
     }
-    Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, true, !isVisible);
+    const bool FIX = true;
+    Animation::slide(ui->cabinetFrame, AnimationDirection::FromTopToBottom, FIX, !FIX, !isVisible);
     if (isVisible) {
         QTimer::singleShot(300, ui->cabinetFrame, &QWidget::hide);
     }

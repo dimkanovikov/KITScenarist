@@ -491,7 +491,8 @@ void ResearchView::initConnections()
 
         const bool visible = m_ui->search->isChecked();
         if (m_ui->searchWidget->isVisible() != visible) {
-            WAF::Animation::slide(m_ui->searchWidget, WAF::FromBottomToTop, true, visible);
+            const bool FIX = true;
+            WAF::Animation::slide(m_ui->searchWidget, WAF::FromBottomToTop, FIX, !FIX, visible);
             QTimer::singleShot(300, [=] { m_ui->searchWidget->setVisible(visible); });
         }
         if (visible) {
