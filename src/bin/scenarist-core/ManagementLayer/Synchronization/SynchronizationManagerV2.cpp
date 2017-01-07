@@ -243,6 +243,55 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     // Успешно ли завершилась авторизация
     //
     if(!isOperationSucceed(responseReader)) {
+        //
+        // Если неполадки с интернетом, т.е. работает в оффлайн режиме
+        //
+        if (m_sessionKey == INCORRECT_SESSION_KEY) {
+            //
+            // Попробуем загрузить email
+            //
+            const QString userEmail =
+                        DataStorageLayer::StorageFacade::settingsStorage()->value(
+                            "application/email",
+                            DataStorageLayer::SettingsStorage::ApplicationSettings);
+            //
+            // Если ранее были авторизованы
+            //
+            if (!userEmail.isEmpty()) {
+                //
+                // Запомним email
+                //
+                m_userEmail = userEmail;
+
+                //
+                // Загрузим всю требуемую информацию из кэша (имя пользователя,
+                // активность и дату подписки)
+                //
+                const QString userName =
+                            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                                "application/username",
+                                DataStorageLayer::SettingsStorage::ApplicationSettings);
+                m_isSubscriptionActive =
+                            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                                "application/subscriptionIsActive",
+                                DataStorageLayer::SettingsStorage::ApplicationSettings).toInt();
+                const QString date =
+                            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                                "application/subscriptionExpiredDate",
+                                DataStorageLayer::SettingsStorage::ApplicationSettings);
+
+                //
+                // Уведомим об этом
+                //
+                emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
+                emit loginAccepted(userName, m_userEmail);
+
+                //
+                // Хоть как то авторизовались, тепер нас интересует статус интернета
+                //
+                checkNetworkState();
+            }
+        }
         return;
     }
 
@@ -300,6 +349,23 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     StorageFacade::settingsStorage()->setValue(
                 "application/password",
                 PasswordStorage::save(_password, _email),
+                SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
+                "application/username",
+                userName,
+                SettingsStorage::ApplicationSettings);
+
+    //
+    // ... и о подписке
+    //
+    StorageFacade::settingsStorage()->setValue(
+                "application/subscriptionIsActive",
+                QString::number(m_isSubscriptionActive),
+                SettingsStorage::ApplicationSettings);
+
+    StorageFacade::settingsStorage()->setValue(
+                "application/subscriptionExpiredDate",
+                dateTransform(date),
                 SettingsStorage::ApplicationSettings);
 
     //
@@ -450,7 +516,19 @@ void SynchronizationManagerV2::logout()
                 QString::null,
                 SettingsStorage::ApplicationSettings);
     StorageFacade::settingsStorage()->setValue(
+                "application/username",
+                QString::null,
+                SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
                 "application/remote-projects",
+                QString::null,
+                SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
+                "application/subscriptionIsActive",
+                QString::null,
+                SettingsStorage::ApplicationSettings);
+    StorageFacade::settingsStorage()->setValue(
+                "application/subscriptionExpiredDate",
                 QString::null,
                 SettingsStorage::ApplicationSettings);
 
@@ -491,6 +569,15 @@ void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
     if (!isOperationSucceed(responseReader)) {
         return;
     }
+
+    //
+    // Сохраним измененную информацию
+    //
+    StorageFacade::settingsStorage()->setValue(
+                "application/username",
+                _newUserName,
+                SettingsStorage::ApplicationSettings);
+
     emit userNameChanged();
 }
 
@@ -536,6 +623,16 @@ void SynchronizationManagerV2::loadSubscriptionInfo()
         return;
     }
 
+    StorageFacade::settingsStorage()->setValue(
+                "application/subscriptionIsActive",
+                QString::number(m_isSubscriptionActive),
+                SettingsStorage::ApplicationSettings);
+
+    StorageFacade::settingsStorage()->setValue(
+                "application/subscriptionExpiredDate",
+                dateTransform(date),
+                SettingsStorage::ApplicationSettings);
+
     emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
 }
 
@@ -577,6 +674,18 @@ void SynchronizationManagerV2::loadProjects()
     //
     QXmlStreamReader responseReader(response);
     if (!isOperationSucceed(responseReader)) {
+        //
+        // Если работает в автономном режиме, то загрузим из кэша
+        //
+        if (m_sessionKey == INCORRECT_SESSION_KEY) {
+            QByteArray cachedProjectsXml =
+                    QByteArray::fromBase64(
+                        DataStorageLayer::StorageFacade::settingsStorage()->value(
+                            "application/remote-projects",
+                            DataStorageLayer::SettingsStorage::ApplicationSettings).toUtf8()
+                        );
+            emit projectsLoaded(cachedProjectsXml);
+        }
         return;
     }
 
@@ -1276,7 +1385,10 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
     // Ничего не нашли про статус. Скорее всего пропал интернет
     //
     handleError(Sync::NetworkError);
-    m_isInternetConnectionActive = Inactive;
+    //
+    // Не нужно устанавливать статус интернета здесь. Иначе, при смене не испустится сигнал
+    //
+
     return false;
 }
 
@@ -1310,7 +1422,8 @@ bool SynchronizationManagerV2::isCanSync() const
             m_isInternetConnectionActive
             && ProjectsManager::currentProject().isRemote()
             && ProjectsManager::currentProject().isSyncAvailable()
-            && !m_sessionKey.isEmpty();
+            && !m_sessionKey.isEmpty()
+            && m_sessionKey != INCORRECT_SESSION_KEY;
 }
 
 bool SynchronizationManagerV2::uploadScenarioChanges(const QList<QString>& _changesUuids)
