@@ -258,7 +258,7 @@ void SideTabBar::makeIndicatorWave(const QColor& _waveColor)
         m_waveColor = _waveColor;
         if (m_waveColor.isValid()) {
             const QPoint waveStartPosition(::sidebarWidth(m_compactMode)/2, height() - ::INDICATOR_HEIGHT/2);
-            WAF::Animation::circleFillIn(parentWidget(), mapToParent(waveStartPosition), m_waveColor);
+            WAF::Animation::circleFillIn(parentWidget(), mapToGlobal(waveStartPosition), m_waveColor);
         }
     }
 }

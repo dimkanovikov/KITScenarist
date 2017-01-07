@@ -62,7 +62,7 @@ void CircleFillAnimator::fillIn()
     // Определим стартовые и финальные позиции для декораций
     //
     int startRadius = 0;
-    int finalRadius = widgetForFill()->height() + widgetForFill()->width();
+    int finalRadius = sqrt(widgetForFill()->height()*widgetForFill()->height() + widgetForFill()->width()*widgetForFill()->width());
 
     //
     // Позиционируем декораторы
@@ -110,7 +110,7 @@ void CircleFillAnimator::fillOut()
     //
     // Определим стартовые и финальные позиции для декораций
     //
-    int startRadius = widgetForFill()->height() + widgetForFill()->width();
+    int startRadius = sqrt(widgetForFill()->height()*widgetForFill()->height() + widgetForFill()->width()*widgetForFill()->width());
     int finalRadius = 0;
 
     //
