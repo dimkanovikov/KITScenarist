@@ -514,14 +514,6 @@ void ApplicationManager::aboutSave()
         //
         if (!DatabaseLayer::Database::hasError()) {
             //
-            // Для проекта из облака отправляем данные на сервер
-            //
-            if (m_projectsManager->currentProject().isRemote()) {
-                m_synchronizationManagerV2->aboutWorkSyncScenario();
-                m_synchronizationManagerV2->aboutWorkSyncData();
-            }
-
-            //
             // Изменим статус окна на сохранение изменений
             //
             ::updateWindowModified(m_view, false);
@@ -577,6 +569,14 @@ void ApplicationManager::aboutSave()
                 }
             }
         }
+    }
+
+    //
+    // Для проекта из облака синхронизируем данные
+    //
+    if (m_projectsManager->currentProject().isRemote()) {
+        m_synchronizationManagerV2->aboutWorkSyncScenario();
+        m_synchronizationManagerV2->aboutWorkSyncData();
     }
 }
 

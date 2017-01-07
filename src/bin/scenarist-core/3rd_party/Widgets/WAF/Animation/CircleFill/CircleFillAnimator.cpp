@@ -1,6 +1,8 @@
 #include "CircleFillAnimator.h"
 #include "CircleFillDecorator.h"
 
+#include <cmath>
+
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
 
