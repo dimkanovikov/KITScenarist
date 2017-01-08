@@ -23,7 +23,7 @@
 //
 // Для отладки работы с патчами
 //
-#define PATCH_DEBUG
+//#define PATCH_DEBUG
 #ifdef PATCH_DEBUG
 #include <QDebug>
 #endif

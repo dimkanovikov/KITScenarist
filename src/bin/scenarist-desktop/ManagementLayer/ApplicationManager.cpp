@@ -1688,11 +1688,11 @@ void ApplicationManager::initConnections()
 
     connect(m_researchManager, &ResearchManager::scenarioNameChanged, this, &ApplicationManager::updateWindowTitle);
 
-    connect(m_scenarioManager, SIGNAL(showFullscreen()), this, SLOT(aboutShowFullscreen()));
-    connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), this, SLOT(aboutUpdateLastChangeInfo()));
-    connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManagerV2, SLOT(aboutWorkSyncScenario()));
-    connect(m_scenarioManager, SIGNAL(scenarioChangesSaved()), m_synchronizationManagerV2, SLOT(aboutWorkSyncData()));
-    connect(m_scenarioManager, SIGNAL(cursorPositionUpdated(int,bool)), m_synchronizationManagerV2, SLOT(aboutUpdateCursors(int,bool)));
+    connect(m_scenarioManager, &ScenarioManager::showFullscreen, this, &ApplicationManager::aboutShowFullscreen);
+    connect(m_scenarioManager, &ScenarioManager::scenarioChangesSaved, this, &ApplicationManager::aboutUpdateLastChangeInfo);
+    connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManagerV2, &SynchronizationManagerV2::aboutWorkSyncScenario);
+    connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManagerV2, &SynchronizationManagerV2::aboutWorkSyncData);
+    connect(m_scenarioManager, &ScenarioManager::updateCursorsRequest, m_synchronizationManagerV2, &SynchronizationManagerV2::aboutUpdateCursors);
 
     connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
             m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
