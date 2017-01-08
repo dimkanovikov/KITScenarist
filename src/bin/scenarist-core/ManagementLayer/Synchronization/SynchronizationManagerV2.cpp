@@ -1707,49 +1707,60 @@ void SynchronizationManagerV2::checkNetworkState()
         return;
     }
 
-    InternetStatus prevState = m_isInternetConnectionActive;
+    //
+    // Защитимся от множественных выховов
+    //
+    static bool s_isInCheckNetworkState = false;
 
-    //
-    // Делаем три попытки запроса тестовую страницу
-    //
-    NetworkRequest loader;
-    loader.setLoadingTimeout(2000);
-    int leavedTries = 3;
-    while (leavedTries-- > 0) {
-        QByteArray response = loader.loadSync(URL_CHECK_NETWORK_STATE);
+    if (!s_isInCheckNetworkState) {
+        s_isInCheckNetworkState = true;
+
+        InternetStatus prevState = m_isInternetConnectionActive;
 
         //
-        // Запомним состояние интернета и кинем соответствующий сигнал
+        // Делаем три попытки запроса тестовую страницу
         //
-        if (response == "ok") {
-            m_isInternetConnectionActive = Active;
-            break;
-        } else {
-            m_isInternetConnectionActive = Inactive;
+        NetworkRequest loader;
+        loader.setLoadingTimeout(2000);
+        int leavedTries = 3;
+        while (leavedTries-- > 0) {
+            QByteArray response = loader.loadSync(URL_CHECK_NETWORK_STATE);
+
+            //
+            // Запомним состояние интернета и кинем соответствующий сигнал
+            //
+            if (response == "ok") {
+                m_isInternetConnectionActive = Active;
+                break;
+            } else {
+                m_isInternetConnectionActive = Inactive;
+            }
         }
-    }
 
-    //
-    // Если появился интернет, которого раньше не было
-    //
-    if (prevState != m_isInternetConnectionActive
-        && m_isInternetConnectionActive == Active
-        && prevState != Undefined) {
-        restartSession();
-    }
+        //
+        // Если появился интернет, которого раньше не было
+        //
+        if (prevState != m_isInternetConnectionActive
+                && m_isInternetConnectionActive == Active
+                && prevState != Undefined) {
+            restartSession();
+        }
 
-    //
-    // Изменился статус, уведомим об этом
-    //
-    if (prevState != m_isInternetConnectionActive) {
-        emit networkStatusChanged(m_isInternetConnectionActive);
-    }
+        //
+        // Изменился статус, уведомим об этом
+        //
+        if (prevState != m_isInternetConnectionActive) {
+            emit networkStatusChanged(m_isInternetConnectionActive);
+        }
 
-    //
-    // Если интернет активен, запрашиваем каждые 5 секунд
-    // Неактивен - каждую секунду
-    //
-    QTimer::singleShot(m_isInternetConnectionActive ? 5000 : 1000, this, &SynchronizationManagerV2::checkNetworkState);
+        //
+        // Если интернет активен, запрашиваем каждые 5 секунд
+        // Неактивен - каждую секунду
+        //
+        QTimer::singleShot(m_isInternetConnectionActive ? 5000 : 1000, this, &SynchronizationManagerV2::checkNetworkState);
+
+        s_isInCheckNetworkState = false;
+    }
 }
 
 void SynchronizationManagerV2::initConnections()
