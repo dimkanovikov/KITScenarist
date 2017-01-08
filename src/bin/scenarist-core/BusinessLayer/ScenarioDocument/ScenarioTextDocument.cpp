@@ -23,7 +23,7 @@
 //
 // Для отладки работы с патчами
 //
-//#define PATCH_DEBUG
+#define PATCH_DEBUG
 #ifdef PATCH_DEBUG
 #include <QDebug>
 #endif
@@ -73,15 +73,17 @@ ScenarioTextDocument::ScenarioTextDocument(QObject *parent, ScenarioXml* _xmlHan
 
 void ScenarioTextDocument::updateScenarioXml()
 {
-    const QString newScenarioXml = m_xmlHandler->scenarioToXml();
-    const QByteArray newScenarioXmlHash = ::textMd5Hash(newScenarioXml);
+    if (!m_isPatchApplyProcessed) {
+        const QString newScenarioXml = m_xmlHandler->scenarioToXml();
+        const QByteArray newScenarioXmlHash = ::textMd5Hash(newScenarioXml);
 
-    //
-    // Если текущий текст сценария отличается от последнего сохранённого
-    //
-    if (newScenarioXmlHash != m_scenarioXmlHash) {
-        m_scenarioXml = newScenarioXml;
-        m_scenarioXmlHash = newScenarioXmlHash;
+        //
+        // Если текущий текст сценария отличается от последнего сохранённого
+        //
+        if (newScenarioXmlHash != m_scenarioXmlHash) {
+            m_scenarioXml = newScenarioXml;
+            m_scenarioXmlHash = newScenarioXmlHash;
+        }
     }
 }
 
@@ -304,6 +306,13 @@ Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
             }
             m_undoStack.append(change);
             m_redoStack.clear();
+
+#ifdef PATCH_DEBUG
+    qDebug() << "-------------------------------------------------------------------";
+    qDebug() << qPrintable(QByteArray::fromPercentEncoding(undoPatch.toUtf8()));
+    qDebug() << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$";
+    qDebug() << qPrintable(QByteArray::fromPercentEncoding(redoPatch.toUtf8()));
+#endif
         }
     }
 

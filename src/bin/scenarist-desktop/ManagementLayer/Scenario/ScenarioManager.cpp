@@ -67,10 +67,11 @@ namespace {
 
     /**
      * @brief Интервалы формирования патчей для отмены/повтора последнего действия, мс
+     * @note Минимальный интервал = 1 секунда
      */
     /** @{ */
-    const int SLOW_SAVE_CHANGES_INTERVAL = 5000;
-    const int FAST_SAVE_CHANGES_INTERVAL = 500;
+    const int SLOW_SAVE_CHANGES_INTERVAL = 1000;
+    const int FAST_SAVE_CHANGES_INTERVAL = 1000;
     /** @} */
 
     /**
