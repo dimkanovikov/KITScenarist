@@ -313,6 +313,11 @@ void ScenarioManager::loadCurrentProject()
     // Обновим счётчики, когда данные полностью загрузятся
     //
     QTimer::singleShot(100, this, SLOT(aboutUpdateCounters()));
+
+    //
+    // Запросим курсоры
+    //
+    updateCursorsRequest(cursorPosition(), m_workModeIsDraft);
 }
 
 void ScenarioManager::startChangesHandling()
@@ -625,6 +630,17 @@ void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bo
     if (m_workModeIsDraft == _isDraft) {
         m_textEditManager->setAdditionalCursors(_cursors);
     }
+
+    //
+    // Запросим отложенное обновление. Если соавторы есть, то через секунду.
+    // Иначе, через 5 секунд. При этом, чтобы запросы не плодились,
+    // будем запрашивать только для _isDraft = true. Иначе, экспоненциальный рост запросов.
+    //
+    if (_isDraft) {
+        QTimer::singleShot(m_draftCursors.isEmpty() && m_cleanCursors.isEmpty() ? 5000 : 1000, [this] {
+            emit updateCursorsRequest(cursorPosition(), m_workModeIsDraft);
+        });
+    }
 }
 
 void ScenarioManager::aboutUndo()
@@ -880,7 +896,6 @@ void ScenarioManager::aboutSaveScenarioChanges()
     // Запросим обновление данных
     //
     emit updateScenarioRequest();
-    emit updateCursorsRequest(cursorPosition(), m_workModeIsDraft);
 }
 
 void ScenarioManager::initData()
