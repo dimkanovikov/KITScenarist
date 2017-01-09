@@ -66,9 +66,13 @@ namespace {
     const bool IS_DRAFT = true;
 
     /**
-     * @brief Интервал формирования патчей для отмены/повтора последнего действия, мс
+     * @brief Интервалы формирования патчей для отмены/повтора последнего действия, мс
+     * @note Минимальный интервал = 1 секунда
      */
-    const int SAVE_CHANGES_INTERVAL = 5000;
+    /** @{ */
+    const int SLOW_SAVE_CHANGES_INTERVAL = 1000;
+    const int FAST_SAVE_CHANGES_INTERVAL = 1000;
+    /** @} */
 
     /**
      * @brief Обновить текст сценария для нового имени персонажа
@@ -316,7 +320,7 @@ void ScenarioManager::startChangesHandling()
     //
     // Запускаем таймер сохранения изменений
     //
-    m_saveChangesTimer.start(SAVE_CHANGES_INTERVAL);
+    m_saveChangesTimer.start(SLOW_SAVE_CHANGES_INTERVAL);
 }
 
 void ScenarioManager::loadCurrentProjectSettings(const QString& _projectPath)
@@ -873,9 +877,10 @@ void ScenarioManager::aboutSaveScenarioChanges()
     }
 
     //
-    // FIXME: корректировки курсоров соавторов сделать по-нормальному
+    // Запросим обновление данных
     //
-    emit cursorPositionUpdated(cursorPosition(), m_workModeIsDraft);
+    emit updateScenarioRequest();
+    emit updateCursorsRequest(cursorPosition(), m_workModeIsDraft);
 }
 
 void ScenarioManager::initData()

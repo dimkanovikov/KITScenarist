@@ -104,7 +104,7 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
     if (QAbstractItemModel* oldModel = m_ui->researchNavigator->model()) {
         disconnect(m_ui->researchNavigator->selectionModel(), &QItemSelectionModel::selectionChanged,
                 this, &ResearchView::currentResearchChanged);
-        disconnect(oldModel, &QAbstractItemModel::rowsInserted, this, &ResearchView::researchItemAdded);
+        disconnect(oldModel);
     }
 
     //
@@ -129,6 +129,22 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
             if (_parent.isValid()) {
                 emit researchItemAdded();
             }
+        });
+        connect(_model, &QAbstractItemModel::dataChanged, [=] {
+            //
+            // Сохраняем последнюю позицию редактирования
+            //
+            int lastCursorPos = m_ui->textDescription->editor()->textCursor().position();
+            //
+            // Обновляем элемент
+            //
+            currentResearchChanged();
+            //
+            // Восстанавливаем позицию редактирования
+            //
+            QTextCursor cursor = m_ui->textDescription->editor()->textCursor();
+            cursor.setPosition(lastCursorPos);
+            m_ui->textDescription->editor()->setTextCursor(cursor);
         });
     }
 }

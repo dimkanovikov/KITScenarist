@@ -65,9 +65,13 @@ void StorageFacade::refreshStorages()
     timeStorage()->refresh();
     characterStorage()->refresh();
     characterStateStorage()->refresh();
-//	scenarioStorage()->refresh();
-//	scenarioChangeStorage()->refresh();
     scenarioDataStorage()->refresh();
+
+    //
+    // Хранилища со списком изменений сценария и сам сценарий обновляются по другому принципу
+    //
+    //	scenarioStorage()->refresh();
+    //	scenarioChangeStorage()->refresh();
 }
 
 PlaceStorage* StorageFacade::placeStorage()
