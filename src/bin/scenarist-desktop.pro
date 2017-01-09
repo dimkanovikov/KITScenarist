@@ -314,7 +314,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphlogic.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphwidget.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/node.cpp \
-    scenarist-core/ManagementLayer/Synchronization/SynchronizationManagerV2.cpp \
     scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.cpp \
     scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.cpp \
@@ -365,7 +364,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverDecorator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.cpp
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.cpp \
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -594,7 +594,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphlogic.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphwidget.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/node.h \
-    scenarist-core/ManagementLayer/Synchronization/SynchronizationManagerV2.h \
     scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h \
     scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.h \
@@ -651,7 +650,8 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/WAF.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.h \
-    scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h
+    scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
