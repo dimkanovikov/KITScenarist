@@ -14,8 +14,8 @@
 * Full license: http://dimkanovikov.pro/license/GPLv3
 */
 
-#ifndef SYNCHRONIZATIONMANAGERV2_H
-#define SYNCHRONIZATIONMANAGERV2_H
+#ifndef SYNCHRONIZATIONMANAGER_H
+#define SYNCHRONIZATIONMANAGER_H
 
 #include <QObject>
 
@@ -27,12 +27,12 @@ namespace ManagementLayer
     /**
      *  @brief Управляющий синхронизацией
      */
-    class SynchronizationManagerV2 : public QObject
+    class SynchronizationManager : public QObject
     {
         Q_OBJECT
 
     public:
-        explicit SynchronizationManagerV2(QObject* _parent, QWidget* _parentView);
+        explicit SynchronizationManager(QObject* _parent, QWidget* _parentView);
 
         /**
          * @brief Вернуть, активно ли соединение
@@ -353,4 +353,4 @@ namespace ManagementLayer
     };
 }
 
-#endif // SYNCHRONIZATIONMANAGERV2_H
+#endif // SYNCHRONIZATIONMANAGER_H
