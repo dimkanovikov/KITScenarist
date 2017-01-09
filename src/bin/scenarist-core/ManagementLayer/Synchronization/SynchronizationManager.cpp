@@ -14,7 +14,7 @@
 * Full license: http://dimkanovikov.pro/license/GPLv3
 */
 
-#include "SynchronizationManagerV2.h"
+#include "SynchronizationManager.h"
 #include "Sync.h"
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
@@ -32,7 +32,7 @@
 #include <QDesktopServices>
 #include <QDateTime>
 
-using ManagementLayer::SynchronizationManagerV2;
+using ManagementLayer::SynchronizationManager;
 using ManagementLayer::Sync;
 using DataStorageLayer::StorageFacade;
 using DataStorageLayer::SettingsStorage;
@@ -178,7 +178,7 @@ namespace {
     }
 }
 
-SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _parentView) :
+SynchronizationManager::SynchronizationManager(QObject* _parent, QWidget* _parentView) :
     QObject(_parent),
     m_view(_parentView),
     m_isSubscriptionActive(false)
@@ -186,22 +186,22 @@ SynchronizationManagerV2::SynchronizationManagerV2(QObject* _parent, QWidget* _p
     initConnections();
 }
 
-bool SynchronizationManagerV2::isInternetConnectionActive() const
+bool SynchronizationManager::isInternetConnectionActive() const
 {
     return m_isInternetConnectionActive == Active;
 }
 
-bool SynchronizationManagerV2::isLogged() const
+bool SynchronizationManager::isLogged() const
 {
     return !m_sessionKey.isEmpty();
 }
 
-bool SynchronizationManagerV2::isSubscriptionActive() const
+bool SynchronizationManager::isSubscriptionActive() const
 {
     return m_isSubscriptionActive;
 }
 
-void SynchronizationManagerV2::autoLogin()
+void SynchronizationManager::autoLogin()
 {
     //
     // Получим параметры из хранилища
@@ -226,7 +226,7 @@ void SynchronizationManagerV2::autoLogin()
     }
 }
 
-void SynchronizationManagerV2::login(const QString &_email, const QString &_password)
+void SynchronizationManager::login(const QString &_email, const QString &_password)
 {
     NetworkRequest loader;
     loader.setRequestMethod(NetworkRequest::Post);
@@ -382,7 +382,7 @@ void SynchronizationManagerV2::login(const QString &_email, const QString &_pass
     checkNetworkState();
 }
 
-void SynchronizationManagerV2::signUp(const QString& _email, const QString& _password)
+void SynchronizationManager::signUp(const QString& _email, const QString& _password)
 {
     NetworkRequest loader;
     loader.setRequestMethod(NetworkRequest::Post);
@@ -430,7 +430,7 @@ void SynchronizationManagerV2::signUp(const QString& _email, const QString& _pas
     emit signUpFinished();
 }
 
-void SynchronizationManagerV2::verify(const QString& _code)
+void SynchronizationManager::verify(const QString& _code)
 {
     //
     // FIXME: Поменять в рабочей версии
@@ -451,7 +451,7 @@ void SynchronizationManagerV2::verify(const QString& _code)
     }
 }
 
-void SynchronizationManagerV2::restorePassword(const QString &_email)
+void SynchronizationManager::restorePassword(const QString &_email)
 {
     NetworkRequest loader;
     loader.setRequestMethod(NetworkRequest::Post);
@@ -493,7 +493,7 @@ void SynchronizationManagerV2::restorePassword(const QString &_email)
     emit passwordRestored();
 }
 
-void SynchronizationManagerV2::logout()
+void SynchronizationManager::logout()
 {
     NetworkRequest loader;
     loader.setRequestMethod(NetworkRequest::Post);
@@ -543,7 +543,7 @@ void SynchronizationManagerV2::logout()
     m_isInternetConnectionActive = Undefined;
 }
 
-void SynchronizationManagerV2::renewSubscription(unsigned _duration,
+void SynchronizationManager::renewSubscription(unsigned _duration,
                                                  unsigned _type)
 {
     QDesktopServices::openUrl(QUrl(QString("http://kitscenarist.ru/api/account/subscribe/?"
@@ -552,7 +552,7 @@ void SynchronizationManagerV2::renewSubscription(unsigned _duration,
                                    arg(_type == 0 ? "AC" : "PC")));
 }
 
-void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
+void SynchronizationManager::changeUserName(const QString &_newUserName)
 {
     NetworkRequest loader;
     loader.setRequestMethod(NetworkRequest::Post);
@@ -581,7 +581,7 @@ void SynchronizationManagerV2::changeUserName(const QString &_newUserName)
     emit userNameChanged();
 }
 
-void SynchronizationManagerV2::loadSubscriptionInfo()
+void SynchronizationManager::loadSubscriptionInfo()
 {
     NetworkRequest loader;
     loader.setRequestMethod(NetworkRequest::Post);
@@ -636,7 +636,7 @@ void SynchronizationManagerV2::loadSubscriptionInfo()
     emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
 }
 
-void SynchronizationManagerV2::changePassword(const QString& _password,
+void SynchronizationManager::changePassword(const QString& _password,
                                               const QString& _newPassword)
 {
     NetworkRequest loader;
@@ -658,7 +658,7 @@ void SynchronizationManagerV2::changePassword(const QString& _password,
     emit passwordChanged();
 }
 
-void SynchronizationManagerV2::loadProjects()
+void SynchronizationManager::loadProjects()
 {
     //
     // Получаем список проектов
@@ -701,7 +701,7 @@ void SynchronizationManagerV2::loadProjects()
     emit projectsLoaded(response);
 }
 
-int SynchronizationManagerV2::createProject(const QString& _projectName)
+int SynchronizationManager::createProject(const QString& _projectName)
 {
     const int INVALID_PROJECT_ID = -1;
 
@@ -748,7 +748,7 @@ int SynchronizationManagerV2::createProject(const QString& _projectName)
     return newProjectId;
 }
 
-void SynchronizationManagerV2::updateProjectName(int _projectId, const QString& _newProjectName)
+void SynchronizationManager::updateProjectName(int _projectId, const QString& _newProjectName)
 {
     //
     // Обновляем проект
@@ -775,7 +775,7 @@ void SynchronizationManagerV2::updateProjectName(int _projectId, const QString& 
     loadProjects();
 }
 
-void SynchronizationManagerV2::removeProject(int _projectId)
+void SynchronizationManager::removeProject(int _projectId)
 {
     //
     // Удаляем проект
@@ -801,7 +801,7 @@ void SynchronizationManagerV2::removeProject(int _projectId)
     loadProjects();
 }
 
-void SynchronizationManagerV2::shareProject(int _projectId, const QString& _userEmail, int _role)
+void SynchronizationManager::shareProject(int _projectId, const QString& _userEmail, int _role)
 {
     const QString userRole = _role == 0 ? "redactor" : "commentator";
 
@@ -831,7 +831,7 @@ void SynchronizationManagerV2::shareProject(int _projectId, const QString& _user
     loadProjects();
 }
 
-void SynchronizationManagerV2::unshareProject(int _projectId, const QString& _userEmail)
+void SynchronizationManager::unshareProject(int _projectId, const QString& _userEmail)
 {
     //
     // Убираем подписчика из проекта
@@ -858,7 +858,7 @@ void SynchronizationManagerV2::unshareProject(int _projectId, const QString& _us
     loadProjects();
 }
 
-void SynchronizationManagerV2::aboutFullSyncScenario()
+void SynchronizationManager::aboutFullSyncScenario()
 {
     if (isCanSync()) {
         //
@@ -987,7 +987,7 @@ void SynchronizationManagerV2::aboutFullSyncScenario()
     }
 }
 
-void SynchronizationManagerV2::aboutWorkSyncScenario()
+void SynchronizationManager::aboutWorkSyncScenario()
 {
     if (isCanSync()) {
 
@@ -1090,7 +1090,7 @@ void SynchronizationManagerV2::aboutWorkSyncScenario()
     }
 }
 
-void SynchronizationManagerV2::aboutFullSyncData()
+void SynchronizationManager::aboutFullSyncData()
 {
     if (isCanSync()) {
         //
@@ -1179,7 +1179,7 @@ void SynchronizationManagerV2::aboutFullSyncData()
     }
 }
 
-void SynchronizationManagerV2::aboutWorkSyncData()
+void SynchronizationManager::aboutWorkSyncData()
 {
     static bool s_inWorkSyncData = false;
     if (isCanSync() && !s_inWorkSyncData) {
@@ -1269,7 +1269,7 @@ void SynchronizationManagerV2::aboutWorkSyncData()
     }
 }
 
-void SynchronizationManagerV2::aboutUpdateCursors(int _cursorPosition, bool _isDraft)
+void SynchronizationManager::aboutUpdateCursors(int _cursorPosition, bool _isDraft)
 {
     if (isCanSync()) {
         //
@@ -1330,7 +1330,7 @@ void SynchronizationManagerV2::aboutUpdateCursors(int _cursorPosition, bool _isD
     }
 }
 
-void SynchronizationManagerV2::restartSession()
+void SynchronizationManager::restartSession()
 {
     //
     // Переавторизуемся
@@ -1346,7 +1346,7 @@ void SynchronizationManagerV2::restartSession()
     }
 }
 
-bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseReader)
+bool SynchronizationManager::isOperationSucceed(QXmlStreamReader& _responseReader)
 {
     while (!_responseReader.atEnd()) {
         _responseReader.readNext();
@@ -1392,12 +1392,12 @@ bool SynchronizationManagerV2::isOperationSucceed(QXmlStreamReader& _responseRea
     return false;
 }
 
-void SynchronizationManagerV2::handleError(int _code)
+void SynchronizationManager::handleError(int _code)
 {
     handleError(Sync::errorText(_code), _code);
 }
 
-void SynchronizationManagerV2::handleError(const QString &_error, int _code)
+void SynchronizationManager::handleError(const QString &_error, int _code)
 {
     switch (_code) {
         case Sync::NetworkError:
@@ -1416,7 +1416,7 @@ void SynchronizationManagerV2::handleError(const QString &_error, int _code)
     emit syncClosedWithError(_code, _error);
 }
 
-bool SynchronizationManagerV2::isCanSync() const
+bool SynchronizationManager::isCanSync() const
 {
     return
             m_isInternetConnectionActive
@@ -1426,7 +1426,7 @@ bool SynchronizationManagerV2::isCanSync() const
             && m_sessionKey != INCORRECT_SESSION_KEY;
 }
 
-bool SynchronizationManagerV2::uploadScenarioChanges(const QList<QString>& _changesUuids)
+bool SynchronizationManager::uploadScenarioChanges(const QList<QString>& _changesUuids)
 {
     bool changesUploaded = false;
 
@@ -1483,7 +1483,7 @@ bool SynchronizationManagerV2::uploadScenarioChanges(const QList<QString>& _chan
     return changesUploaded;
 }
 
-QList<QHash<QString, QString> > SynchronizationManagerV2::downloadScenarioChanges(const QString& _changesUuids)
+QList<QHash<QString, QString> > SynchronizationManager::downloadScenarioChanges(const QString& _changesUuids)
 {
     QList<QHash<QString, QString> > changes;
 
@@ -1549,7 +1549,7 @@ QList<QHash<QString, QString> > SynchronizationManagerV2::downloadScenarioChange
     return changes;
 }
 
-bool SynchronizationManagerV2::uploadScenarioData(const QList<QString>& _dataUuids)
+bool SynchronizationManager::uploadScenarioData(const QList<QString>& _dataUuids)
 {
     bool dataUploaded = false;
 
@@ -1616,7 +1616,7 @@ bool SynchronizationManagerV2::uploadScenarioData(const QList<QString>& _dataUui
     return dataUploaded;
 }
 
-void SynchronizationManagerV2::downloadAndSaveScenarioData(const QString& _dataUuids)
+void SynchronizationManager::downloadAndSaveScenarioData(const QString& _dataUuids)
 {
     if (isCanSync()
         && !_dataUuids.isEmpty()) {
@@ -1698,7 +1698,7 @@ void SynchronizationManagerV2::downloadAndSaveScenarioData(const QString& _dataU
     }
 }
 
-void SynchronizationManagerV2::checkNetworkState()
+void SynchronizationManager::checkNetworkState()
 {
     //
     // Если пользователь не авторизовался, незачем проверять статус интернета
@@ -1758,13 +1758,13 @@ void SynchronizationManagerV2::checkNetworkState()
         // Неактивен - каждую секунду
         //
         const int checkTimeout = m_isInternetConnectionActive == Active ? 5000 : 1000;
-        QTimer::singleShot(checkTimeout, this, &SynchronizationManagerV2::checkNetworkState);
+        QTimer::singleShot(checkTimeout, this, &SynchronizationManager::checkNetworkState);
 
         s_isInCheckNetworkState = false;
     }
 }
 
-void SynchronizationManagerV2::initConnections()
+void SynchronizationManager::initConnections()
 {
-    connect(this, &SynchronizationManagerV2::loginAccepted, this, &SynchronizationManagerV2::loadProjects);
+    connect(this, &SynchronizationManager::loginAccepted, this, &SynchronizationManager::loadProjects);
 }
