@@ -70,7 +70,7 @@ namespace {
      * @note Минимальный интервал = 1 секунда
      */
     /** @{ */
-    const int SLOW_SAVE_CHANGES_INTERVAL = 1000;
+    const int SLOW_SAVE_CHANGES_INTERVAL = 5000;
     const int FAST_SAVE_CHANGES_INTERVAL = 1000;
     /** @} */
 
@@ -313,11 +313,6 @@ void ScenarioManager::loadCurrentProject()
     // Обновим счётчики, когда данные полностью загрузятся
     //
     QTimer::singleShot(100, this, SLOT(aboutUpdateCounters()));
-
-    //
-    // Запросим курсоры
-    //
-    updateCursorsRequest(cursorPosition(), m_workModeIsDraft);
 }
 
 void ScenarioManager::startChangesHandling()
@@ -632,14 +627,15 @@ void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bo
     }
 
     //
-    // Запросим отложенное обновление. Если соавторы есть, то через секунду.
-    // Иначе, через 5 секунд. При этом, чтобы запросы не плодились,
-    // будем запрашивать только для _isDraft = true. Иначе, экспоненциальный рост запросов.
+    // Изменим время синхронизации документа с облаком.
+    // Конечно, setInterval перезапускает таймер, но в этом нет ничего страшного,
+    // поскольку только что было сохранение и время отсчитывается заново.
+    // Интервал устанавливается только при _isDraft = true, чтобы не устанавливать
+    // его дважды при сохраненнии (на всяки случай)
     //
     if (_isDraft) {
-        QTimer::singleShot(m_draftCursors.isEmpty() && m_cleanCursors.isEmpty() ? 5000 : 1000, [this] {
-            emit updateCursorsRequest(cursorPosition(), m_workModeIsDraft);
-        });
+        m_saveChangesTimer.setInterval((m_draftCursors.isEmpty() && m_cleanCursors.isEmpty())
+                                       ? SLOW_SAVE_CHANGES_INTERVAL : FAST_SAVE_CHANGES_INTERVAL);
     }
 }
 
@@ -896,6 +892,7 @@ void ScenarioManager::aboutSaveScenarioChanges()
     // Запросим обновление данных
     //
     emit updateScenarioRequest();
+    emit updateCursorsRequest(cursorPosition(), m_workModeIsDraft);
 }
 
 void ScenarioManager::initData()
