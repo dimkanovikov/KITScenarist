@@ -434,7 +434,13 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
     //
     m_appSettings.beginGroup("radiobuttons");
     foreach (QRadioButton* radioButton, _widget->findChildren<QRadioButton*>()) {
-        radioButton->setChecked(m_appSettings.value(radioButton->objectName() + "-checked", radioButton->isChecked()).toBool());
+        //
+        // Игнорируем состояние радиокнопок со списками проектов, там всегда должно загружаться предустановленное значение
+        //
+        if (radioButton->objectName() != "localProjects"
+            && radioButton->objectName() != "remoteProjects") {
+            radioButton->setChecked(m_appSettings.value(radioButton->objectName() + "-checked", radioButton->isChecked()).toBool());
+        }
     }
     m_appSettings.endGroup();
 
