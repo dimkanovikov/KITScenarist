@@ -159,11 +159,6 @@ namespace ManagementLayer
         void scenarioChanged();
 
         /**
-         * @brief Изменения сценария сохранены
-         */
-        void scenarioChangesSaved();
-
-        /**
          * @brief Перейти в полноэкранный режим
          */
         void showFullscreen();

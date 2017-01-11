@@ -884,10 +884,6 @@ void ScenarioManager::aboutSaveScenarioChanges()
     }
 #endif
 
-    if (change != nullptr || changeDraft != nullptr) {
-        emit scenarioChangesSaved();
-    }
-
     //
     // Запросим обновление данных
     //

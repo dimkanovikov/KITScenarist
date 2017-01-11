@@ -1689,7 +1689,7 @@ void ApplicationManager::initConnections()
     connect(m_researchManager, &ResearchManager::scenarioNameChanged, this, &ApplicationManager::updateWindowTitle);
 
     connect(m_scenarioManager, &ScenarioManager::showFullscreen, this, &ApplicationManager::aboutShowFullscreen);
-    connect(m_scenarioManager, &ScenarioManager::scenarioChangesSaved, this, &ApplicationManager::aboutUpdateLastChangeInfo);
+    connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, this, &ApplicationManager::aboutUpdateLastChangeInfo);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncScenario);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncData);
     connect(m_scenarioManager, &ScenarioManager::updateCursorsRequest, m_synchronizationManager, &SynchronizationManager::aboutUpdateCursors);
