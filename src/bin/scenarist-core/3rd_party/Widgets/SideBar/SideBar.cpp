@@ -364,7 +364,8 @@ void SideTabBar::paintEvent(QPaintEvent *event)
     //
     // Рисуем индикатор
     //
-    if (m_indicator->isVisible()) {
+    if (m_indicator->isVisible()
+        && !m_indicator->icon().isNull()) {
         const QRect indicatorRect(0, height() - INDICATOR_HEIGHT, ::sidebarWidth(m_compactMode), INDICATOR_HEIGHT);
 
         //
@@ -380,7 +381,7 @@ void SideTabBar::paintEvent(QPaintEvent *event)
         m_indicator->icon().paint(&p, indicatorRect);
     }
 }
-#include <QTimer>
+
 void SideTabBar::mousePressEvent(QMouseEvent* _event)
 {
     //
@@ -397,6 +398,7 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
     // Нажат индикатор?
     //
     else if (m_indicator->isVisible()
+             && !m_indicator->icon().isNull()
              && _event->pos().y() > (height() - INDICATOR_HEIGHT)) {
         //
         // Сформируем виджет для отображения
