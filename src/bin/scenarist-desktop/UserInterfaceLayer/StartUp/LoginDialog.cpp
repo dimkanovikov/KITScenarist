@@ -118,7 +118,7 @@ void LoginDialog::showRestoreSuccess()
 				tr("your e-mail \"%1\" was sent a letter with a password").
 				arg(m_ui->loginEmail->text()),
 				  false);
-	m_ui->restorePassword->hide();
+    m_ui->restorePassword->setEnabled(false);
 
 	unblock();
 }
@@ -271,10 +271,17 @@ void LoginDialog::initConnections()
 	connect(m_ui->buttonsVerification, &QDialogButtonBox::rejected,
 			this, &LoginDialog::hide);
 
-	connect(m_ui->restorePassword, &QPushButton::clicked,
-			this, &LoginDialog::block);
-	connect(m_ui->restorePassword, &QPushButton::clicked,
-			this, &LoginDialog::restoreRequested);
+    connect(m_ui->restorePassword, &QPushButton::clicked, [this] {
+        if (m_ui->loginEmail->text().isEmpty()) {
+            setLoginError(tr("Email is empty"));
+        } else {
+            //
+            // Обязательно в таком порядке, иначе возможен бесконечный блок
+            //
+            block();
+            emit restoreRequested();
+        }
+    });
 
 	connect(m_ui->verificationCode, &QLineEdit::textChanged,
 			this, &LoginDialog::checkVerificationCode);
@@ -306,7 +313,7 @@ void LoginDialog::clear()
 	m_ui->signUpErrorIcon->clear();
 	m_ui->verificationErrorIcon->clear();
 
-	m_ui->restorePassword->show();
+    m_ui->restorePassword->setEnabled(true);
 }
 
 void LoginDialog::updateLabel(QLabel *_label, QLabel* _icon,
