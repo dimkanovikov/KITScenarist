@@ -992,6 +992,15 @@ void SynchronizationManager::aboutFullSyncScenario()
 void SynchronizationManager::aboutWorkSyncScenario()
 {
     if (isCanSync()) {
+        //
+        // Защитимся от множественных выховов
+        //
+        static bool s_isInWorkSync = false;
+        if (s_isInWorkSync) {
+            return;
+        }
+
+        s_isInWorkSync = true;
 
         //
         // Отправляем новые изменения
@@ -1093,6 +1102,8 @@ void SynchronizationManager::aboutWorkSyncScenario()
                 }
             }
         }
+
+        s_isInWorkSync = false;
     }
 }
 
@@ -1714,60 +1725,61 @@ void SynchronizationManager::checkNetworkState()
     }
 
     //
-    // Защитимся от множественных выховов
+    // Защитимся от множественных вызовов
     //
     static bool s_isInCheckNetworkState = false;
-
-    if (!s_isInCheckNetworkState) {
-        s_isInCheckNetworkState = true;
-
-        InternetStatus prevState = m_isInternetConnectionActive;
-
-        //
-        // Делаем три попытки запроса тестовую страницу
-        //
-        NetworkRequest loader;
-        loader.setLoadingTimeout(2000);
-        int leavedTries = 3;
-        while (leavedTries-- > 0) {
-            QByteArray response = loader.loadSync(URL_CHECK_NETWORK_STATE);
-
-            //
-            // Запомним состояние интернета и кинем соответствующий сигнал
-            //
-            if (response == "ok") {
-                m_isInternetConnectionActive = Active;
-                break;
-            } else {
-                m_isInternetConnectionActive = Inactive;
-            }
-        }
-
-        //
-        // Если появился интернет, которого раньше не было
-        //
-        if (prevState != m_isInternetConnectionActive
-                && m_isInternetConnectionActive == Active
-                && prevState != Undefined) {
-            restartSession();
-        }
-
-        //
-        // Изменился статус, уведомим об этом
-        //
-        if (prevState != m_isInternetConnectionActive) {
-            emit networkStatusChanged(m_isInternetConnectionActive);
-        }
-
-        //
-        // Если интернет активен, запрашиваем каждые 5 секунд
-        // Неактивен - каждую секунду
-        //
-        const int checkTimeout = m_isInternetConnectionActive == Active ? 5000 : 1000;
-        QTimer::singleShot(checkTimeout, this, &SynchronizationManager::checkNetworkState);
-
-        s_isInCheckNetworkState = false;
+    if (s_isInCheckNetworkState) {
+        return;
     }
+
+    s_isInCheckNetworkState = true;
+
+    InternetStatus prevState = m_isInternetConnectionActive;
+
+    //
+    // Делаем три попытки запроса тестовую страницу
+    //
+    NetworkRequest loader;
+    loader.setLoadingTimeout(2000);
+    int leavedTries = 3;
+    while (leavedTries-- > 0) {
+        QByteArray response = loader.loadSync(URL_CHECK_NETWORK_STATE);
+
+        //
+        // Запомним состояние интернета и кинем соответствующий сигнал
+        //
+        if (response == "ok") {
+            m_isInternetConnectionActive = Active;
+            break;
+        } else {
+            m_isInternetConnectionActive = Inactive;
+        }
+    }
+
+    //
+    // Если появился интернет, которого раньше не было
+    //
+    if (prevState != m_isInternetConnectionActive
+            && m_isInternetConnectionActive == Active
+            && prevState != Undefined) {
+        restartSession();
+    }
+
+    //
+    // Изменился статус, уведомим об этом
+    //
+    if (prevState != m_isInternetConnectionActive) {
+        emit networkStatusChanged(m_isInternetConnectionActive);
+    }
+
+    //
+    // Если интернет активен, запрашиваем каждые 5 секунд
+    // Неактивен - каждую секунду
+    //
+    const int checkTimeout = m_isInternetConnectionActive == Active ? 5000 : 1000;
+    QTimer::singleShot(checkTimeout, this, &SynchronizationManager::checkNetworkState);
+
+    s_isInCheckNetworkState = false;
 }
 
 void SynchronizationManager::initConnections()

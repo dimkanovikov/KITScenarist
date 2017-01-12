@@ -23,7 +23,7 @@
 //
 // Для отладки работы с патчами
 //
-//#define PATCH_DEBUG
+#define PATCH_DEBUG
 #ifdef PATCH_DEBUG
 #include <QDebug>
 #endif
@@ -174,6 +174,10 @@ void ScenarioTextDocument::insertFromMime(int _insertPosition, const QString& _m
 
 void ScenarioTextDocument::applyPatch(const QString& _patch)
 {
+    qDebug() << "%%%%" << m_isPatchApplyProcessed << m_scenarioXmlHash << "%%%%";
+    updateScenarioXml();
+    qDebug() << "%%%%" << m_isPatchApplyProcessed << m_scenarioXmlHash << "%%%%";
+
     emit beforePatchApply();
     m_isPatchApplyProcessed = true;
 
