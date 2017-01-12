@@ -174,10 +174,6 @@ void ScenarioTextDocument::insertFromMime(int _insertPosition, const QString& _m
 
 void ScenarioTextDocument::applyPatch(const QString& _patch)
 {
-    qDebug() << "%%%%" << m_isPatchApplyProcessed << m_scenarioXmlHash << "%%%%";
-    updateScenarioXml();
-    qDebug() << "%%%%" << m_isPatchApplyProcessed << m_scenarioXmlHash << "%%%%";
-
     emit beforePatchApply();
     m_isPatchApplyProcessed = true;
 
