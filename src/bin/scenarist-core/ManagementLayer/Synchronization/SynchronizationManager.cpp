@@ -957,15 +957,17 @@ void SynchronizationManager::aboutFullSyncScenario()
                     //
                     // ... добавляем
                     //
-                    DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
+                    auto* addedChange =
+                            DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
                                 change.value(SCENARIO_CHANGE_ID), change.value(SCENARIO_CHANGE_DATETIME),
                                 change.value(SCENARIO_CHANGE_USERNAME), change.value(SCENARIO_CHANGE_UNDO_PATCH),
                                 change.value(SCENARIO_CHANGE_REDO_PATCH), change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
-
-                    if (change.value(SCENARIO_CHANGE_IS_DRAFT).toInt()) {
-                        draftPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
-                    } else {
-                        cleanPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
+                    if (addedChange != nullptr) {
+                        if (change.value(SCENARIO_CHANGE_IS_DRAFT).toInt()) {
+                            draftPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
+                        } else {
+                            cleanPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
+                        }
                     }
                 }
             }
@@ -986,7 +988,7 @@ void SynchronizationManager::aboutFullSyncScenario()
         }
     }
 }
-
+#include <QDebug>
 void SynchronizationManager::aboutWorkSyncScenario()
 {
     if (isCanSync()) {
@@ -1074,16 +1076,20 @@ void SynchronizationManager::aboutWorkSyncScenario()
                     //
                     // ... сохраняем
                     //
-                    StorageFacade::scenarioChangeStorage()->append(
-                        change.value(SCENARIO_CHANGE_ID), change.value(SCENARIO_CHANGE_DATETIME),
-                        change.value(SCENARIO_CHANGE_USERNAME), change.value(SCENARIO_CHANGE_UNDO_PATCH),
-                        change.value(SCENARIO_CHANGE_REDO_PATCH), change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
-
-                    //
-                    // ... применяем
-                    //
-                    emit applyPatchRequested(change.value(SCENARIO_CHANGE_REDO_PATCH),
-                                             change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
+                    auto* addedChange =
+                            StorageFacade::scenarioChangeStorage()->append(
+                                change.value(SCENARIO_CHANGE_ID), change.value(SCENARIO_CHANGE_DATETIME),
+                                change.value(SCENARIO_CHANGE_USERNAME), change.value(SCENARIO_CHANGE_UNDO_PATCH),
+                                change.value(SCENARIO_CHANGE_REDO_PATCH), change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
+                    if (addedChange != nullptr) {
+                        //
+                        // ... применяем
+                        //
+                        qDebug() << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+                        qDebug() << change.value(SCENARIO_CHANGE_ID);
+                        emit applyPatchRequested(change.value(SCENARIO_CHANGE_REDO_PATCH),
+                                                 change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
+                    }
                 }
             }
         }
