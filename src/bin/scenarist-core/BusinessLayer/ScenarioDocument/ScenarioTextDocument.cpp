@@ -219,7 +219,7 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
     //
     // Запомним новый текст
     //
-    m_scenarioXml = m_xmlHandler->scenarioToXml();
+    m_scenarioXml = DiffMatchPatchHelper::applyPatchXml(m_scenarioXml, patchUncopressed);//m_xmlHandler->scenarioToXml();
     m_scenarioXmlHash = ::textMd5Hash(m_scenarioXml);
     m_lastSavedScenarioXml = m_scenarioXml;
     m_lastSavedScenarioXmlHash = m_scenarioXmlHash;
