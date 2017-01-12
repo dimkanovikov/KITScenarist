@@ -174,9 +174,10 @@ void ScenarioTextDocument::insertFromMime(int _insertPosition, const QString& _m
 
 void ScenarioTextDocument::applyPatch(const QString& _patch)
 {
-    emit beforePatchApply();
-    m_isPatchApplyProcessed = true;
+    updateScenarioXml();
+    saveChanges();
 
+    m_isPatchApplyProcessed = true;
 
     //
     // Определим xml для применения патча
@@ -219,26 +220,16 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
     //
     // Запомним новый текст
     //
-    m_scenarioXml = DiffMatchPatchHelper::applyPatchXml(m_scenarioXml, patchUncopressed);
-    const QString baseScenarioXml = m_xmlHandler->scenarioToXml();
-    if (DiffMatchPatchHelper::makePatch(m_scenarioXml, baseScenarioXml).isEmpty()) {
-        m_scenarioXml = baseScenarioXml;
-    }
+    m_scenarioXml = m_xmlHandler->scenarioToXml();
     m_scenarioXmlHash = ::textMd5Hash(m_scenarioXml);
     m_lastSavedScenarioXml = m_scenarioXml;
     m_lastSavedScenarioXmlHash = m_scenarioXmlHash;
 
-
     m_isPatchApplyProcessed = false;
-    emit afterPatchApply();
-
-
-    saveChanges();
 }
 
 void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 {
-    emit beforePatchApply();
     m_isPatchApplyProcessed = true;
 
 
@@ -274,7 +265,6 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 
 
     m_isPatchApplyProcessed = false;
-    emit afterPatchApply();
 }
 
 Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
