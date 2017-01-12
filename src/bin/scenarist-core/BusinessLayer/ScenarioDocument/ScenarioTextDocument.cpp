@@ -219,7 +219,11 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
     //
     // Запомним новый текст
     //
-    m_scenarioXml = DiffMatchPatchHelper::applyPatchXml(m_scenarioXml, patchUncopressed);//m_xmlHandler->scenarioToXml();
+    m_scenarioXml = DiffMatchPatchHelper::applyPatchXml(m_scenarioXml, patchUncopressed);
+    const QString baseScenarioXml = m_xmlHandler->scenarioToXml();
+    if (DiffMatchPatchHelper::makePatch(m_scenarioXml, baseScenarioXml).isEmpty()) {
+        m_scenarioXml = baseScenarioXml;
+    }
     m_scenarioXmlHash = ::textMd5Hash(m_scenarioXml);
     m_lastSavedScenarioXml = m_scenarioXml;
     m_lastSavedScenarioXmlHash = m_scenarioXmlHash;
@@ -227,6 +231,9 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
 
     m_isPatchApplyProcessed = false;
     emit afterPatchApply();
+
+
+    saveChanges();
 }
 
 void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
@@ -286,6 +293,10 @@ Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
             const QString undoPatchCompressed = DatabaseHelper::compress(undoPatch);
             const QString redoPatch = DiffMatchPatchHelper::makePatchXml(m_lastSavedScenarioXml, m_scenarioXml);
             const QString redoPatchCompressed = DatabaseHelper::compress(redoPatch);
+
+            if (undoPatchCompressed == "AAAAAA==" || redoPatchCompressed == "AAAAAA==") {
+                qDebug() << "Shit!";
+            }
 
             //
             // Сохраним изменения
