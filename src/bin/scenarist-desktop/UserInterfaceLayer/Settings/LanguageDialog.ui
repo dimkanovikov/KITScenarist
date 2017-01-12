@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>203</height>
+    <height>214</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -34,7 +34,7 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="7" column="0">
     <widget class="QDialogButtonBox" name="buttons">
      <property name="standardButtons">
       <set>QDialogButtonBox::Ok</set>
@@ -75,6 +75,13 @@
     <widget class="QRadioButton" name="kazakh">
      <property name="text">
       <string>Қазақ</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QRadioButton" name="ukrainian">
+     <property name="text">
+      <string>Українська мова</string>
      </property>
     </widget>
    </item>

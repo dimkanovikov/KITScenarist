@@ -25,6 +25,8 @@ LanguageDialog::LanguageDialog(QWidget *parent, int _language) :
 		ui->french->setChecked(true);
 	} else if (_language == 4) {
 		ui->kazakh->setChecked(true);
+	} else if (_language == 5) {
+		ui->ukrainian->setChecked(true);
 	}
 }
 
@@ -48,6 +50,8 @@ int LanguageDialog::language() const
 		result = 3;
 	} else if (ui->kazakh->isChecked()) {
 		result = 4;
+	} else if (ui->ukrainian->isChecked()) {
+		result = 5;
 	}
 
 	return result;

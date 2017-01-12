@@ -148,6 +148,10 @@ void Application::initTranslation()
 		translationSuffix = "kz";
 		qtTranslationSuffix = "ru";
 		currentLanguage = QLocale::Kazakh;
+	} else if (language == 5) {
+		translationSuffix = "ua";
+		qtTranslationSuffix = "ru";
+		currentLanguage = QLocale::Ukrainian;
 	}
 
 	QLocale::setDefault(QLocale(currentLanguage));
