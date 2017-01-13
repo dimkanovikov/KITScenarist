@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>214</height>
+    <height>235</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,28 +20,14 @@
    <string>Choose application language</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="0">
-    <widget class="QRadioButton" name="french">
+   <item row="6" column="0">
+    <widget class="QRadioButton" name="kazakh">
      <property name="text">
-      <string>Français</string>
+      <string>Қазақ</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QRadioButton" name="spanish">
-     <property name="text">
-      <string>Español</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QDialogButtonBox" name="buttons">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
     <widget class="QRadioButton" name="english">
      <property name="text">
       <string>English</string>
@@ -51,13 +37,31 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QRadioButton" name="russian">
-     <property name="text">
-      <string>Русский</string>
+   <item row="10" column="0">
+    <widget class="QDialogButtonBox" name="buttons">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Ok</set>
      </property>
-     <property name="checked">
-      <bool>false</bool>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QRadioButton" name="french">
+     <property name="text">
+      <string>Français</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QRadioButton" name="spanish">
+     <property name="text">
+      <string>Español</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QRadioButton" name="german">
+     <property name="text">
+      <string>Deutsch</string>
      </property>
     </widget>
    </item>
@@ -71,17 +75,20 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QRadioButton" name="kazakh">
-     <property name="text">
-      <string>Қазақ</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
+   <item row="8" column="0">
     <widget class="QRadioButton" name="ukrainian">
      <property name="text">
       <string>Українська мова</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QRadioButton" name="russian">
+     <property name="text">
+      <string>Русский</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -89,9 +96,13 @@
  </widget>
  <tabstops>
   <tabstop>system</tabstop>
-  <tabstop>russian</tabstop>
+  <tabstop>german</tabstop>
   <tabstop>english</tabstop>
   <tabstop>spanish</tabstop>
+  <tabstop>french</tabstop>
+  <tabstop>kazakh</tabstop>
+  <tabstop>russian</tabstop>
+  <tabstop>ukrainian</tabstop>
  </tabstops>
  <resources/>
  <connections/>

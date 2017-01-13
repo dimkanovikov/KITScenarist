@@ -131,6 +131,10 @@
         <file>Translations/qt_fr.qm</file>
         <file>Translations/Scenarist_kz.qm</file>
         <file>Translations/Scenarist_ua.qm</file>
+        <file>Translations/Scenarist_de.qm</file>
+        <file>Translations/qtbase_en.qm</file>
+        <file>Translations/qtbase_de.qm</file>
+        <file>Translations/qt_de.qm</file>
     </qresource>
     <qresource prefix="/Interface">
         <file>UI/menuarrow.png</file>

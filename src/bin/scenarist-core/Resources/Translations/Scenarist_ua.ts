@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="uk">
+<TS version="2.1" language="uk">
 <context>
     <name>AcceptebleLineEdit</name>
     <message>
@@ -956,6 +956,14 @@
         <source>Қазақ</source>
         <translation>Қазақ</translation>
     </message>
+    <message>
+        <source>Deutsch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Українська мова</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LocationsDataEdit</name>
@@ -1047,7 +1055,7 @@
     </message>
     <message>
         <source>Can&apos;t write you changes to project. There is some internal database error. Please check that file is exists and you have permissions to write in it. Retry to save?</source>
-        <translation>Неможливо внести зміни до проекту. Існує певна внутрішня помилка бази даних. Будь ласка, перевірте, чи файл існує і чи є у вас права на його зміну. Повторити спробу зберегти?</translation>
+        <translation type="vanished">Неможливо внести зміни до проекту. Існує певна внутрішня помилка бази даних. Будь ласка, перевірте, чи файл існує і чи є у вас права на його зміну. Повторити спробу зберегти?</translation>
     </message>
     <message>
         <source>Can&apos;t write you changes to project located at &lt;b&gt;%1&lt;/b&gt; becourse file isn&apos;t exist. Please move file back and retry to save. Retry to save?</source>
@@ -1248,6 +1256,10 @@ Continue working in offline mode.</source>
     <message>
         <source>%1[*] - KIT Scenarist</source>
         <translation>%1[*] - КІТ Сценарист</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write you changes to project. There is some internal database error: %1 Please check that file is exists and you have permissions to write in it. Retry to save?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
