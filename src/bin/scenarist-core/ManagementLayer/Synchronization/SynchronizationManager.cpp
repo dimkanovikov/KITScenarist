@@ -1094,8 +1094,8 @@ void SynchronizationManager::aboutWorkSyncScenario()
                         //
                         // ... применяем
                         //
-                        qDebug() << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-                        qDebug() << change.value(SCENARIO_CHANGE_ID);
+//                        qDebug() << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+//                        qDebug() << change.value(SCENARIO_CHANGE_ID);
                         emit applyPatchRequested(change.value(SCENARIO_CHANGE_REDO_PATCH),
                                                  change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
                     }

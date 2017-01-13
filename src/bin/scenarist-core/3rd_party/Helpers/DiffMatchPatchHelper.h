@@ -315,15 +315,15 @@ public:
             int newStartPosForPlain = newStartPosForXml - (newXmlPartLength - newPlainPartLength);
 
 
-            qDebug() << oldStartPosForXml
-                     << oldXmlPartLength
-                     << oldPlainPartLength
-                     << oldStartPosForPlain << "\n\n--------------------------\n"
-                     << oldXmlPart << "\n\n--------------------------\n";
-            qDebug() << qPrintable(oldXml) << "\n\n--------------------------\n"
-                     << qPrintable(newXml) << "\n\n--------------------------\n"
-                     << qPrintable(oldXmlForUpdate) << "\n\n--------------------------\n"
-                     << qPrintable(newXmlForUpdate) << "\n\n\n****\n\n\n";
+//            qDebug() << oldStartPosForXml
+//                     << oldXmlPartLength
+//                     << oldPlainPartLength
+//                     << oldStartPosForPlain << "\n\n--------------------------\n"
+//                     << oldXmlPart << "\n\n--------------------------\n";
+//            qDebug() << qPrintable(oldXml) << "\n\n--------------------------\n"
+//                     << qPrintable(newXml) << "\n\n--------------------------\n"
+//                     << qPrintable(oldXmlForUpdate) << "\n\n--------------------------\n"
+//                     << qPrintable(newXmlForUpdate) << "\n\n\n****\n\n\n";
 
 
             result =
