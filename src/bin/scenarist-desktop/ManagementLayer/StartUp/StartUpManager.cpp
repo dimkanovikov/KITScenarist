@@ -136,8 +136,7 @@ void StartUpManager::completeLogout()
 void StartUpManager::passwordChanged()
 {
     m_changePasswordDialog->stopAndHide();
-    QLightBoxMessage::information(m_view, tr("Password changed"),
-                                  tr("Password successfully changed"));
+    QLightBoxMessage::information(m_view, QString::null, tr("Password successfully changed"));
 }
 
 void StartUpManager::showPasswordError(const QString& _error)

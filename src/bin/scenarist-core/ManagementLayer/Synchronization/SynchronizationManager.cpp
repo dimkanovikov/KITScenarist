@@ -957,15 +957,17 @@ void SynchronizationManager::aboutFullSyncScenario()
                     //
                     // ... добавляем
                     //
-                    DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
+                    auto* addedChange =
+                            DataStorageLayer::StorageFacade::scenarioChangeStorage()->append(
                                 change.value(SCENARIO_CHANGE_ID), change.value(SCENARIO_CHANGE_DATETIME),
                                 change.value(SCENARIO_CHANGE_USERNAME), change.value(SCENARIO_CHANGE_UNDO_PATCH),
                                 change.value(SCENARIO_CHANGE_REDO_PATCH), change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
-
-                    if (change.value(SCENARIO_CHANGE_IS_DRAFT).toInt()) {
-                        draftPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
-                    } else {
-                        cleanPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
+                    if (addedChange != nullptr) {
+                        if (change.value(SCENARIO_CHANGE_IS_DRAFT).toInt()) {
+                            draftPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
+                        } else {
+                            cleanPatches.append(change.value(SCENARIO_CHANGE_REDO_PATCH));
+                        }
                     }
                 }
             }
@@ -986,10 +988,19 @@ void SynchronizationManager::aboutFullSyncScenario()
         }
     }
 }
-
+#include <QDebug>
 void SynchronizationManager::aboutWorkSyncScenario()
 {
     if (isCanSync()) {
+        //
+        // Защитимся от множественных выховов
+        //
+        static bool s_isInWorkSync = false;
+        if (s_isInWorkSync) {
+            return;
+        }
+
+        s_isInWorkSync = true;
 
         //
         // Отправляем новые изменения
@@ -1074,19 +1085,25 @@ void SynchronizationManager::aboutWorkSyncScenario()
                     //
                     // ... сохраняем
                     //
-                    StorageFacade::scenarioChangeStorage()->append(
-                        change.value(SCENARIO_CHANGE_ID), change.value(SCENARIO_CHANGE_DATETIME),
-                        change.value(SCENARIO_CHANGE_USERNAME), change.value(SCENARIO_CHANGE_UNDO_PATCH),
-                        change.value(SCENARIO_CHANGE_REDO_PATCH), change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
-
-                    //
-                    // ... применяем
-                    //
-                    emit applyPatchRequested(change.value(SCENARIO_CHANGE_REDO_PATCH),
-                                             change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
+                    auto* addedChange =
+                            StorageFacade::scenarioChangeStorage()->append(
+                                change.value(SCENARIO_CHANGE_ID), change.value(SCENARIO_CHANGE_DATETIME),
+                                change.value(SCENARIO_CHANGE_USERNAME), change.value(SCENARIO_CHANGE_UNDO_PATCH),
+                                change.value(SCENARIO_CHANGE_REDO_PATCH), change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
+                    if (addedChange != nullptr) {
+                        //
+                        // ... применяем
+                        //
+                        qDebug() << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+                        qDebug() << change.value(SCENARIO_CHANGE_ID);
+                        emit applyPatchRequested(change.value(SCENARIO_CHANGE_REDO_PATCH),
+                                                 change.value(SCENARIO_CHANGE_IS_DRAFT).toInt());
+                    }
                 }
             }
         }
+
+        s_isInWorkSync = false;
     }
 }
 
@@ -1708,60 +1725,61 @@ void SynchronizationManager::checkNetworkState()
     }
 
     //
-    // Защитимся от множественных выховов
+    // Защитимся от множественных вызовов
     //
     static bool s_isInCheckNetworkState = false;
-
-    if (!s_isInCheckNetworkState) {
-        s_isInCheckNetworkState = true;
-
-        InternetStatus prevState = m_isInternetConnectionActive;
-
-        //
-        // Делаем три попытки запроса тестовую страницу
-        //
-        NetworkRequest loader;
-        loader.setLoadingTimeout(2000);
-        int leavedTries = 3;
-        while (leavedTries-- > 0) {
-            QByteArray response = loader.loadSync(URL_CHECK_NETWORK_STATE);
-
-            //
-            // Запомним состояние интернета и кинем соответствующий сигнал
-            //
-            if (response == "ok") {
-                m_isInternetConnectionActive = Active;
-                break;
-            } else {
-                m_isInternetConnectionActive = Inactive;
-            }
-        }
-
-        //
-        // Если появился интернет, которого раньше не было
-        //
-        if (prevState != m_isInternetConnectionActive
-                && m_isInternetConnectionActive == Active
-                && prevState != Undefined) {
-            restartSession();
-        }
-
-        //
-        // Изменился статус, уведомим об этом
-        //
-        if (prevState != m_isInternetConnectionActive) {
-            emit networkStatusChanged(m_isInternetConnectionActive);
-        }
-
-        //
-        // Если интернет активен, запрашиваем каждые 5 секунд
-        // Неактивен - каждую секунду
-        //
-        const int checkTimeout = m_isInternetConnectionActive == Active ? 5000 : 1000;
-        QTimer::singleShot(checkTimeout, this, &SynchronizationManager::checkNetworkState);
-
-        s_isInCheckNetworkState = false;
+    if (s_isInCheckNetworkState) {
+        return;
     }
+
+    s_isInCheckNetworkState = true;
+
+    InternetStatus prevState = m_isInternetConnectionActive;
+
+    //
+    // Делаем три попытки запроса тестовую страницу
+    //
+    NetworkRequest loader;
+    loader.setLoadingTimeout(2000);
+    int leavedTries = 3;
+    while (leavedTries-- > 0) {
+        QByteArray response = loader.loadSync(URL_CHECK_NETWORK_STATE);
+
+        //
+        // Запомним состояние интернета и кинем соответствующий сигнал
+        //
+        if (response == "ok") {
+            m_isInternetConnectionActive = Active;
+            break;
+        } else {
+            m_isInternetConnectionActive = Inactive;
+        }
+    }
+
+    //
+    // Если появился интернет, которого раньше не было
+    //
+    if (prevState != m_isInternetConnectionActive
+            && m_isInternetConnectionActive == Active
+            && prevState != Undefined) {
+        restartSession();
+    }
+
+    //
+    // Изменился статус, уведомим об этом
+    //
+    if (prevState != m_isInternetConnectionActive) {
+        emit networkStatusChanged(m_isInternetConnectionActive);
+    }
+
+    //
+    // Если интернет активен, запрашиваем каждые 5 секунд
+    // Неактивен - каждую секунду
+    //
+    const int checkTimeout = m_isInternetConnectionActive == Active ? 5000 : 1000;
+    QTimer::singleShot(checkTimeout, this, &SynchronizationManager::checkNetworkState);
+
+    s_isInCheckNetworkState = false;
 }
 
 void SynchronizationManager::initConnections()

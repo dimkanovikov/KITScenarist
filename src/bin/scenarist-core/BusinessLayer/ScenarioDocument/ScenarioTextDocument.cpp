@@ -23,7 +23,7 @@
 //
 // Для отладки работы с патчами
 //
-//#define PATCH_DEBUG
+#define PATCH_DEBUG
 #ifdef PATCH_DEBUG
 #include <QDebug>
 #endif
@@ -174,9 +174,10 @@ void ScenarioTextDocument::insertFromMime(int _insertPosition, const QString& _m
 
 void ScenarioTextDocument::applyPatch(const QString& _patch)
 {
-    emit beforePatchApply();
-    m_isPatchApplyProcessed = true;
+    updateScenarioXml();
+    saveChanges();
 
+    m_isPatchApplyProcessed = true;
 
     //
     // Определим xml для применения патча
@@ -233,14 +234,11 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
     m_lastSavedScenarioXml = m_scenarioXml;
     m_lastSavedScenarioXmlHash = m_scenarioXmlHash;
 
-
     m_isPatchApplyProcessed = false;
-    emit afterPatchApply();
 }
 
 void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 {
-    emit beforePatchApply();
     m_isPatchApplyProcessed = true;
 
 
@@ -276,7 +274,6 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
 
 
     m_isPatchApplyProcessed = false;
-    emit afterPatchApply();
 }
 
 Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
@@ -295,6 +292,10 @@ Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
             const QString undoPatchCompressed = DatabaseHelper::compress(undoPatch);
             const QString redoPatch = DiffMatchPatchHelper::makePatchXml(m_lastSavedScenarioXml, m_scenarioXml);
             const QString redoPatchCompressed = DatabaseHelper::compress(redoPatch);
+
+            if (undoPatchCompressed == "AAAAAA==" || redoPatchCompressed == "AAAAAA==") {
+                qDebug() << "Shit!";
+            }
 
             //
             // Сохраним изменения

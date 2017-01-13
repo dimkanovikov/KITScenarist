@@ -784,7 +784,7 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     //
     if (project.isUserOwner()) {
         if (QLightBoxMessage::question(m_view, tr("Project removing"),
-                                       tr("Are you sure to remove project <b>%1</b>").arg(project.name()))
+                                       tr("Are you sure to remove project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
             m_synchronizationManager->removeProject(project.id());
         }
@@ -794,7 +794,7 @@ void ApplicationManager::removeRemoteProject(const QModelIndex& _index)
     //
     else {
         if (QLightBoxMessage::question(m_view, tr("Project unsubscribing"),
-                                       tr("Are you sure to remove your subscription to project <b>%1</b>").arg(project.name()))
+                                       tr("Are you sure to remove your subscription to project <b>%1</b>?").arg(project.name()))
             == QDialogButtonBox::Yes) {
             m_synchronizationManager->unshareProject(project.id());
         }
@@ -816,7 +816,7 @@ void ApplicationManager::unshareRemoteProject(const QModelIndex& _index, const Q
     const bool IS_REMOTE = false;
     const Project project = m_projectsManager->project(_index, IS_REMOTE);
     if (QLightBoxMessage::question(m_view, tr("Project unsubscribing"),
-                                   tr("Are you sure to remove subscription of user <b>%1</b> to project <b>%2</b>")
+                                   tr("Are you sure to remove subscription of user <b>%1</b> to project <b>%2</b>?")
                                    .arg(_userEmail)
                                    .arg(project.name()))
         == QDialogButtonBox::Yes) {
@@ -1689,7 +1689,7 @@ void ApplicationManager::initConnections()
     connect(m_researchManager, &ResearchManager::scenarioNameChanged, this, &ApplicationManager::updateWindowTitle);
 
     connect(m_scenarioManager, &ScenarioManager::showFullscreen, this, &ApplicationManager::aboutShowFullscreen);
-    connect(m_scenarioManager, &ScenarioManager::scenarioChangesSaved, this, &ApplicationManager::aboutUpdateLastChangeInfo);
+    connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, this, &ApplicationManager::aboutUpdateLastChangeInfo);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncScenario);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncData);
     connect(m_scenarioManager, &ScenarioManager::updateCursorsRequest, m_synchronizationManager, &SynchronizationManager::aboutUpdateCursors);
