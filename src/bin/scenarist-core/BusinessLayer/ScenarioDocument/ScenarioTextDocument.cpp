@@ -513,7 +513,6 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
     // В заголовке цикла мы идем до тех пор, пока, либо не прошли все теги хотя бы одного документа,
     // либо обнаружили разные теги у обрабатываемых
     //
-    qDebug() << childs1.size() << childs2.size() << childs1.at(i1).nodeName() << childs2.at(i2).nodeName();
     while (((!_reversed && i1 != childs1.size() && i2 != childs2.size()) ||
            (_reversed && i1 >= 0 && i2 >= 0)) && childs1.at(i1).nodeName() == childs2.at(i2).nodeName()) {
 
@@ -639,10 +638,18 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
             //
             // Обработали всю строку. Удалим текущий тег
             //
-            d1.childNodes().at(1).removeChild(childs1.at(i1));
-            if (!_reversed) {
-                --i1;
+            if (prevNode1 != -1) {
+                //
+                // Удалим его (так же как и ранее)
+                //
+                d1.childNodes().at(1).removeChild(childs1.at(prevNode1));
+                processLenghtPos(_xmls.first, 1, _reversed);
+                prevNode1 = -1;
+                if (!_reversed){
+                    --i1;
+                }
             }
+            prevNode1 = i1;
             processLenghtPos(_xmls.first, k, _reversed);
         }
 
@@ -653,10 +660,15 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
             childs2.at(i2).firstChildElement("v").childNodes().at(0).toCDATASection().setData(res2);
             processLenghtPos(_xmls.second, k, _reversed);
         } else {
-            d2.childNodes().at(1).removeChild(childs2.at(i2));
-            if (!_reversed) {
-                --i2;
+            if (prevNode2 != -1) {
+                d2.childNodes().at(1).removeChild(childs2.at(prevNode2));
+                processLenghtPos(_xmls.second, 1, _reversed);
+                prevNode2 = -1;
+                if (!_reversed) {
+                    --i2;
+                }
             }
+            prevNode2 = i2;
             processLenghtPos(_xmls.second, k, _reversed);
         }
 
