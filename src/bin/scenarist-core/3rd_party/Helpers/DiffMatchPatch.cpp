@@ -167,10 +167,10 @@ QString Patch::toString() {
 diff_match_patch::diff_match_patch() :
   Diff_Timeout(1.0f),
   Diff_EditCost(4),
-  Match_Threshold(0.5f),
+  Match_Threshold(0.3f),
   Match_Distance(1000),
   Patch_DeleteThreshold(0.5f),
-  Patch_Margin(8),
+  Patch_Margin(11),
   Match_MaxBits(32) {
 }
 
