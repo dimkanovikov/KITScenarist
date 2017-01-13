@@ -4,6 +4,7 @@
 #include "qlightboxwidget.h"
 
 class QLabel;
+class QProgressBar;
 
 
 /**
@@ -47,12 +48,17 @@ private:
 	/**
 	 * @brief Заголовок
 	 */
-	QLabel* m_title;
+    QLabel* m_title = nullptr;
 
 	/**
 	 * @brief Описание
 	 */
-	QLabel* m_description;
+    QLabel* m_description = nullptr;
+
+    /**
+     * @brief Полоса прогресса загрузки
+     */
+    QProgressBar* m_progress = nullptr;
 };
 
 #endif // QLIGHTBOXPROGRESS_H

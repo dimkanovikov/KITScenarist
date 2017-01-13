@@ -648,7 +648,7 @@ void ctkCollapsibleButton::paintEvent(QPaintEvent * _event)
 						opt.text, QPalette::ButtonText);
 
   // Draw Frame around contents
-  QStyleOptionFrameV3 fopt;
+  QStyleOptionFrame fopt;
   fopt.init(this);
   // HACK: on some styles, the frame doesn't exactly touch the button.
   // this is because the button has some kind of extra border.

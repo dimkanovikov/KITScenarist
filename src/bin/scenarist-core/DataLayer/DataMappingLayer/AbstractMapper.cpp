@@ -1,5 +1,7 @@
 #include "AbstractMapper.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+
 #include <DataLayer/Database/Database.h>
 #include <DataLayer/Database/DatabaseHelper.h>
 
@@ -287,7 +289,7 @@ bool AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
 			&& !_sqlQuery.lastQuery().contains(" scenario ")) {
 
 			QSqlQuery q_history(_sqlQuery);
-			q_history.prepare("INSERT INTO _database_history (id, query, query_values, datetime) VALUES(?, ?, ?, ?);");
+            q_history.prepare("INSERT INTO _database_history (id, query, query_values, username, datetime) VALUES(?, ?, ?, ?, ?);");
 			//
 			// ... uuid
 			//
@@ -302,6 +304,10 @@ bool AbstractMapper::executeSql(QSqlQuery& _sqlQuery)
 			QString valueString = QVariantMapWriter::mapToDataString(_sqlQuery.boundValues());
 			valueString = DatabaseHelper::compress(valueString);
 			q_history.addBindValue(valueString);
+            //
+            // ... имя пользовтаеля
+            //
+            q_history.addBindValue(DataStorageLayer::StorageFacade::username());
 			//
 			// ... время выполнения
 			//

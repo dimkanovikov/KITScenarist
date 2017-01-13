@@ -63,7 +63,6 @@
  * Кнопка с выравниваем текста по левой стороне
  */
 QPushButton[leftAlignedText=true] {
-    padding: 3px 6px 3px 6px;
     text-align: left;
 }
 
@@ -427,6 +426,7 @@ QRadioButton[chevron=true]:indicator {
 QPushButton {
     padding: 4px 8px 4px 8px;
     min-width: 60px;
+    min-height: 20px;
     background-color: palette(button);
     border: 1px solid palette(dark);
 }

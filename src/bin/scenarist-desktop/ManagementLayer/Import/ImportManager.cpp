@@ -6,6 +6,7 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
+#include <BusinessLayer/Import/KitScenaristImporter.h>
 #include <BusinessLayer/Import/DocumentImporter.h>
 #include <BusinessLayer/Import/FdxImporter.h>
 #include <BusinessLayer/Import/TrelbyImporter.h>
@@ -34,14 +35,19 @@ namespace {
 	const QString MS_DOC_EXTENSION = ".doc";
 
 	/**
+	 * @brief Формат файлов КИТ Сценарист
+	 */
+	const QString KIT_SCENARIST_EXTENSION = ".kitsp";
+
+	/**
 	 * @brief Формат файлов Final Draft
 	 */
 	const QString FINAL_DRAFT_EXTENSION = ".fdx";
 
-    /**
-     * @brief Формат файлов Trelby
-     */
-    const QString TRELBY_EXTENSION = ".trelby";
+	/**
+	 * @brief Формат файлов Trelby
+	 */
+	const QString TRELBY_EXTENSION = ".trelby";
 }
 
 
@@ -53,11 +59,147 @@ ImportManager::ImportManager(QObject* _parent, QWidget* _parentWidget) :
 	initConnections();
 }
 
+void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, int _cursorPosition,
+	const BusinessLogic::ImportParameters& _importParameters)
+{
+	//
+	// Получим xml-представление импортируемого сценария
+	//
+	QString importScenarioXml;
+	if (_importParameters.filePath.toLower().endsWith(KIT_SCENARIST_EXTENSION)) {
+		importScenarioXml = BusinessLogic::KitScenaristImporter().importScenario(_importParameters);
+	} else if (_importParameters.filePath.toLower().endsWith(FINAL_DRAFT_EXTENSION)) {
+		importScenarioXml = BusinessLogic::FdxImporter().importScenario(_importParameters);
+	} else if (_importParameters.filePath.toLower().endsWith(TRELBY_EXTENSION)) {
+		importScenarioXml = BusinessLogic::TrelbyImporter().importScenario(_importParameters);
+	} else {
+		importScenarioXml = BusinessLogic::DocumentImporter().importScenario(_importParameters);
+	}
+
+	//
+	// Загрузим импортируемый текст в сценарий
+	//
+	// ... определим позицию вставки
+	//
+	int insertPosition = 0;
+	switch (_importParameters.insertionMode) {
+		case BusinessLogic::ImportParameters::ReplaceDocument: {
+			_scenario->clear();
+			insertPosition = 0;
+			break;
+		}
+
+		case BusinessLogic::ImportParameters::ToCursorPosition: {
+			insertPosition = _cursorPosition;
+			break;
+		}
+
+		default:
+		case BusinessLogic::ImportParameters::ToDocumentEnd: {
+			insertPosition = _scenario->document()->characterCount() - 1;
+			break;
+		}
+	}
+	//
+	// ... загрузим текст
+	//
+	_scenario->document()->insertFromMime(insertPosition, importScenarioXml);
+
+	//
+	// ... в случае необходимости определяем локации и персонажей
+	//
+	if (_importParameters.findCharactersAndLocations) {
+		//
+		// Персонажи
+		//
+		{
+			QSet<QString> characters = QSet<QString>::fromList(_scenario->findCharacters());
+
+			//
+			// Определить персонажи, которых нет в тексте
+			//
+			QSet<QString> charactersToDelete;
+			foreach (DomainObject* domainObject,
+					 DataStorageLayer::StorageFacade::characterStorage()->all()->toList()) {
+				Character* character = dynamic_cast<Character*>(domainObject);
+				if (!characters.contains(character->name())) {
+					charactersToDelete.insert(character->name());
+				}
+			}
+
+			//
+			// Удалить тех, кого нет
+			//
+			DatabaseLayer::Database::transaction();
+			foreach (const QString& character, charactersToDelete) {
+				DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(character);
+			}
+			DatabaseLayer::Database::commit();
+
+			//
+			// Добавить новых
+			//
+			DatabaseLayer::Database::transaction();
+			foreach (const QString& character, characters) {
+				if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
+					DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
+				}
+			}
+			DatabaseLayer::Database::commit();
+		}
+
+		//
+		// Локации
+		//
+		{
+			QSet<QString> locations = QSet<QString>::fromList(_scenario->findLocations());
+
+			//
+			// Определить локации, которых нет в тексте
+			//
+			QSet<QString> locationsToDelete;
+			foreach (DomainObject* domainObject,
+					 DataStorageLayer::StorageFacade::locationStorage()->all()->toList()) {
+				Location* location = dynamic_cast<Location*>(domainObject);
+				if (!locations.contains(location->name())) {
+					locationsToDelete.insert(location->name());
+				}
+			}
+
+			//
+			// Удалить те, которых нет
+			//
+			DatabaseLayer::Database::transaction();
+			foreach (const QString& location, locationsToDelete) {
+				DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
+			}
+			DatabaseLayer::Database::commit();
+
+			//
+			// Добавить новых
+			//
+			DatabaseLayer::Database::transaction();
+			foreach (const QString& location, locations) {
+				if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
+					DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
+				}
+			}
+			DatabaseLayer::Database::commit();
+		}
+	}
+}
+
+void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, const QString& _importFilePath)
+{
+	BusinessLogic::ImportParameters importParameters;
+	importParameters.filePath = _importFilePath;
+	importScenario(_scenario, 0, importParameters);
+}
+
 void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, int _cursorPosition)
 {
 	if (m_importDialog->exec() == QLightBoxDialog::Accepted) {
 		BusinessLogic::ImportParameters importParameters = m_importDialog->importParameters();
-
 		if (!importParameters.filePath.toLower().endsWith(MS_DOC_EXTENSION)) {
 			//
 			// Покажем уведомление пользователю
@@ -66,128 +208,9 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 			progress.showProgress(tr("Import"), tr("Please wait. Import can take few minutes."));
 
 			//
-			// Получим xml-представление импортируемого сценария
+			// Импортируем
 			//
-			QString importScenarioXml;
-			if (importParameters.filePath.toLower().endsWith(FINAL_DRAFT_EXTENSION)) {
-				importScenarioXml = BusinessLogic::FdxImporter().importScenario(importParameters);
-            } else if (importParameters.filePath.toLower().endsWith(TRELBY_EXTENSION)) {
-                importScenarioXml = BusinessLogic::TrelbyImporter().importScenario(importParameters);
-            } else {
-				importScenarioXml = BusinessLogic::DocumentImporter().importScenario(importParameters);
-			}
-
-			//
-			// Загрузим импортируемый текст в сценарий
-			//
-			// ... определим позицию вставки
-			//
-			int insertPosition = 0;
-			switch (importParameters.insertionMode) {
-				case BusinessLogic::ImportParameters::ReplaceDocument: {
-					_scenario->clear();
-					insertPosition = 0;
-					break;
-				}
-
-				case BusinessLogic::ImportParameters::ToCursorPosition: {
-					insertPosition = _cursorPosition;
-					break;
-				}
-
-				default:
-				case BusinessLogic::ImportParameters::ToDocumentEnd: {
-					insertPosition = _scenario->document()->characterCount() - 1;
-					break;
-				}
-			}
-			//
-			// ... загрузим текст
-			//
-			_scenario->document()->insertFromMime(insertPosition, importScenarioXml);
-
-			//
-			// ... в случае необходимости определяем локации и персонажей
-			//
-			if (importParameters.findCharactersAndLocations) {
-				//
-				// Персонажи
-				//
-				{
-					QSet<QString> characters = QSet<QString>::fromList(_scenario->findCharacters());
-
-					//
-					// Определить персонажи, которых нет в тексте
-					//
-					QSet<QString> charactersToDelete;
-					foreach (DomainObject* domainObject,
-							 DataStorageLayer::StorageFacade::characterStorage()->all()->toList()) {
-						Character* character = dynamic_cast<Character*>(domainObject);
-						if (!characters.contains(character->name())) {
-							charactersToDelete.insert(character->name());
-						}
-					}
-
-					//
-					// Удалить тех, кого нет
-					//
-					DatabaseLayer::Database::transaction();
-					foreach (const QString& character, charactersToDelete) {
-						DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(character);
-					}
-					DatabaseLayer::Database::commit();
-
-					//
-					// Добавить новых
-					//
-					DatabaseLayer::Database::transaction();
-					foreach (const QString& character, characters) {
-						if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
-							DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
-						}
-					}
-					DatabaseLayer::Database::commit();
-				}
-
-				//
-				// Локации
-				//
-				{
-					QSet<QString> locations = QSet<QString>::fromList(_scenario->findLocations());
-
-					//
-					// Определить локации, которых нет в тексте
-					//
-					QSet<QString> locationsToDelete;
-					foreach (DomainObject* domainObject,
-							 DataStorageLayer::StorageFacade::locationStorage()->all()->toList()) {
-						Location* location = dynamic_cast<Location*>(domainObject);
-						if (!locations.contains(location->name())) {
-							locationsToDelete.insert(location->name());
-						}
-					}
-
-					//
-					// Удалить те, которых нет
-					//
-					DatabaseLayer::Database::transaction();
-					foreach (const QString& location, locationsToDelete) {
-						DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
-					}
-					DatabaseLayer::Database::commit();
-
-					//
-					// Добавить новых
-					//
-					DatabaseLayer::Database::transaction();
-					foreach (const QString& location, locations) {
-						if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
-							DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
-						}
-					}
-					DatabaseLayer::Database::commit();
-				}
-			}
+			importScenario(_scenario, _cursorPosition, importParameters);
 
 			//
 			// Закроем уведомление

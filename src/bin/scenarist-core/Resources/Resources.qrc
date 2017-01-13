@@ -111,12 +111,18 @@
         <file>Icons/MindMap/add-child.png</file>
         <file>Icons/MindMap/scale-up.png</file>
         <file>Icons/MindMap/scale-down.png</file>
+        <file>Icons/eye-off.png</file>
+        <file>Icons/eye.png</file>
         <file>Icons/cards.png</file>
         <file>Icons/Cards/vline.png</file>
         <file>Icons/Cards/hline.png</file>
         <file>Icons/Cards/table.png</file>
         <file>Icons/settings-cards.png</file>
         <file>Images/corkboard.jpg</file>
+        <file>Icons/Editing/account-plus.png</file>
+        <file>Icons/Editing/close.png</file>
+        <file>Icons/Indicator/unsynced.png</file>
+        <file>Icons/Indicator/synced.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>
@@ -139,7 +145,6 @@
     <qresource prefix="/Interface">
         <file>UI/menuarrow.png</file>
         <file>UI/comboboxarrow.png</file>
-        <file>UI/loader.gif</file>
         <file>UI/style-mobile.qss</file>
         <file>UI/style-desktop.qss</file>
     </qresource>

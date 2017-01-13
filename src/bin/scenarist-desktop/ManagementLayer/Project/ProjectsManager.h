@@ -58,7 +58,7 @@ namespace ManagementLayer
 		QAbstractItemModel* remoteProjects();
 
 		/**
-		 * @brief Установить текущий проект
+		 * @brief Установить текущий проект по пути к файлу
 		 */
 		bool setCurrentProject(const QString& _path, bool _isLocal = true);
 
@@ -66,6 +66,12 @@ namespace ManagementLayer
 		 * @brief Установить текущий проект из модели проектов
 		 */
 		bool setCurrentProject(const QModelIndex& _index, bool _isLocal = true);
+
+		/**
+		 * @brief Установить текущий проект по идентификатору
+		 * @note Используется только для проектов из облака
+		 */
+		bool setCurrentProject(int _id, bool _isLocal = true);
 
 		/**
 		 * @brief Установить название текущего проекта
@@ -81,6 +87,16 @@ namespace ManagementLayer
 		 * @brief Текущий проект закрыт
 		 */
 		void closeCurrentProject();
+
+		/**
+		 * @brief Получить проект
+		 */
+		Project project(const QModelIndex& _index, bool _isLocal = true) const;
+
+		/**
+		 * @brief Скрыть проект из списка локальных проектов
+		 */
+		void hideProjectFromLocal(const QModelIndex& _index);
 
 	public slots:
 		/**

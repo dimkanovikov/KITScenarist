@@ -6,90 +6,82 @@
 #include <QMovie>
 #include <QProgressBar>
 
-namespace {
-	/**
-	 * @brief Ключ для доступа к свойству, в котором храним исходный текст заголовка
-	 */
-	const char* TITLE_SOURCE_TEXT = "sourceText";
-}
-
 
 QLightBoxProgress::QLightBoxProgress(QWidget* _parent, bool _folowToHeadWidget) :
-	QLightBoxWidget(_parent, _folowToHeadWidget)
+    QLightBoxWidget(_parent, _folowToHeadWidget),
+    m_title(new QLabel("Title", this)),
+    m_description(new QLabel("Description.")),
+    m_progress(new QProgressBar(this))
 {
-	m_title = new QLabel("Title");
-	m_title->setProperty("lightBoxProgressTitle", true);
+    m_title->setProperty("lightBoxProgressTitle", true);
+    m_title->setAlignment(Qt::AlignCenter);
 
-	QLabel* progress = new QLabel;
-	progress->setProperty("lightBoxProgressIndicator", true);
-	QMovie* progressMovie = new QMovie(":/Interface/UI/loader.gif");
-	progress->setMovie(progressMovie);
-	progressMovie->start();
+    m_progress->setTextVisible(false);
+    m_progress->setValue(0);
+    m_progress->setRange(0, 0);
 
-	m_description = new QLabel("Description.");
-	m_description->setProperty("lightBoxProgressDescription", true);
+    m_description->setProperty("lightBoxProgressDescription", true);
+    m_description->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 #ifndef MOBILE_OS
-	m_description->setFixedWidth(500);
+    m_description->setFixedWidth(500);
 #endif
-	m_description->setWordWrap(true);
+    m_description->setWordWrap(true);
 
-	QGridLayout* layout = new QGridLayout;
-	layout->setRowStretch(0, 1);
-	layout->setColumnStretch(0, 5);
-	layout->addWidget(progress, 1, 1, 2, 1, Qt::AlignCenter);
-	layout->addWidget(m_title, 1, 2, Qt::AlignLeft);
-	layout->setColumnStretch(3, 4);
-	layout->addWidget(m_description, 2, 2, Qt::AlignLeft | Qt::AlignTop);
-	layout->setRowMinimumHeight(2, 50);
-
-	layout->setRowStretch(3, 1);
-	setLayout(layout);
+    QGridLayout* layout = new QGridLayout;
+    layout->setContentsMargins(QMargins());
+    layout->addWidget(m_progress, 0, 0, 1, 3);
+    layout->setRowStretch(1, 1);
+    layout->setColumnStretch(0, 1);
+    layout->addWidget(m_title, 2, 1);
+    layout->setColumnStretch(2, 1);
+    layout->addWidget(m_description, 3, 1);
+    layout->setRowMinimumHeight(3, 50);
+    layout->setRowStretch(4, 1);
+    setLayout(layout);
 }
 
 QLightBoxProgress::~QLightBoxProgress()
 {
-	if (s_lastUsedWidget == this) {
-		s_lastUsedWidget = 0;
-	}
+    finish();
+    if (s_lastUsedWidget == this) {
+        s_lastUsedWidget = 0;
+    }
 }
 
 void QLightBoxProgress::showProgress(const QString& _title, const QString& _description)
 {
-	s_lastUsedWidget = this;
+    s_lastUsedWidget = this;
 
-	m_title->setProperty(TITLE_SOURCE_TEXT, _title);
-	m_title->setText(_title);
-	m_description->setText(_description);
+    m_title->setText(_title);
+    m_description->setText(_description);
 
-	show();
+    show();
 }
 
 void QLightBoxProgress::setProgressText(const QString& _title, const QString& _description)
 {
-	if (!_title.isEmpty()) {
-		m_title->setProperty(TITLE_SOURCE_TEXT, _title);
-		m_title->setText(_title);
-	}
-	if (!_description.isEmpty()) {
-		m_description->setText(_description);
-	}
+    if (!_title.isEmpty()) {
+        m_title->setText(_title);
+    }
+    if (!_description.isEmpty()) {
+        m_description->setText(_description);
+    }
 }
 
 void QLightBoxProgress::setProgressValue(int _value)
 {
-	if (s_lastUsedWidget != 0) {
-		QString title = s_lastUsedWidget->m_title->property(TITLE_SOURCE_TEXT).toString();
-		if (_value >= 0 && _value <= 100) {
-			title += " " + QString::number(_value) + "%";
-		}
-		s_lastUsedWidget->m_title->setText(title);
-	}
+    if (s_lastUsedWidget != 0) {
+        if (s_lastUsedWidget->m_progress->maximum() == 0) {
+            s_lastUsedWidget->m_progress->setMaximum(100);
+        }
+        s_lastUsedWidget->m_progress->setValue(_value);
+    }
 }
 
 void QLightBoxProgress::finish()
 {
-	close();
-	QApplication::alert(parentWidget());
+    close();
+    QApplication::alert(parentWidget());
 }
 
 QLightBoxProgress* QLightBoxProgress::s_lastUsedWidget = 0;

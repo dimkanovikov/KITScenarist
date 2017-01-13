@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core core-private gui gui-private sql xml widgets widgets-private printsupport network webengine webenginewidgets concurrent
+QT += core core-private gui gui-private sql xml widgets widgets-private printsupport network concurrent
+!win32-g++: QT += webengine webenginewidgets
 
 TARGET = Scenarist
 TEMPLATE = app
@@ -78,14 +79,14 @@ DEPENDPATH += $$PWD/../libs/fileformats
 #
 LIBS += -L$$DESTDIR/../../libs/webloader/ -lwebloader
 
-INCLUDEPATH += $$PWD/../libs/webloader
-DEPENDPATH += $$PWD/../libs/webloader
+INCLUDEPATH += $$PWD/../libs/webloader/src
+DEPENDPATH += $$PWD/../libs/webloader/src
 #
 
 #
 # Подключаем библиотеку qBreakpad и делаем настройки для неё
 #
-win32 {
+win32-msvc* {
 CONFIG += debug_and_release warn_on
 CONFIG += thread exceptions rtti stl
 
@@ -123,9 +124,6 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp \
     scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.cpp \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.cpp \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.cpp \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectNavigator/ProjectNavigator.cpp \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectCards/ProjectCards.cpp \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp \
     scenarist-desktop/UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp \
@@ -172,8 +170,6 @@ SOURCES += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioXml.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextDocument.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RecentFilesDelegate.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RecentFileWidget.cpp \
     scenarist-core/3rd_party/Widgets/SideBar/SideBar.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.cpp \
@@ -223,7 +219,6 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/HierarchicalHeaderView/HierarchicalTableModel.cpp \
     scenarist-core/3rd_party/Widgets/FlatButton/FlatButton.cpp \
     scenarist-core/3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.cpp \
-    scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.cpp \
     scenarist-desktop/ManagementLayer/Settings/SettingsTemplatesManager.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTemplate.cpp \
@@ -275,10 +270,6 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.cpp \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.cpp \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Animation.cpp \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.cpp \
     scenarist-core/BusinessLayer/Statistics/Plots/StoryStructureAnalisysPlot.cpp \
     scenarist-core/BusinessLayer/Statistics/StatisticsFacade.cpp \
@@ -316,7 +307,6 @@ SOURCES += \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.cpp \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.cpp \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideForegroundDecorator.cpp \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.cpp \
     scenarist-core/3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/commands.cpp \
@@ -324,6 +314,10 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphlogic.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/graphwidget.cpp \
     scenarist-core/3rd_party/Widgets/QtMindMap/src/node.cpp \
+    scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.cpp \
+    scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/anchor/sizeanchor.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.cpp \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.cpp \
@@ -348,7 +342,30 @@ SOURCES += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.cpp \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.cpp \
     scenarist-core/BusinessLayer/Import/TrelbyImporter.cpp \
-    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.cpp
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.cpp \
+    scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.cpp \
+    scenarist-core/BusinessLayer/Import/KitScenaristImporter.cpp \
+    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideBackgroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideForegroundDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Animation.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverDecorator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.cpp \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.cpp \
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -365,9 +382,6 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.h \
     scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.h \
     scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.h \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectDataEdit/ProjectDataEdit.h \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectNavigator/ProjectNavigator.h \
-    scenarist-desktop/UserInterfaceLayer/Project/ProjectCards/ProjectCards.h \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.h \
     scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.h \
     scenarist-desktop/UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.h \
@@ -416,8 +430,6 @@ HEADERS += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioXml.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextDocument.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RecentFilesDelegate.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/RecentFileWidget.h \
     scenarist-core/3rd_party/Widgets/SideBar/SideBar.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioTextEdit/ScenarioTextEditWidget.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h \
@@ -470,7 +482,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/FlatButton/FlatButton.h \
     scenarist-core/3rd_party/Delegates/KeySequenceDelegate/KeySequenceDelegate.h \
     scenarist-core/3rd_party/Helpers/ShortcutHelper.h \
-    scenarist-desktop/ManagementLayer/Synchronization/SynchronizationManager.h \
     scenarist-desktop/UserInterfaceLayer/Settings/TemplateDialog.h \
     scenarist-desktop/ManagementLayer/Settings/SettingsTemplatesManager.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTemplate.h \
@@ -532,12 +543,6 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorItemDelegate.h \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchNavigatorProxyStyle.h \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.h \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideAnimator.h \
-    scenarist-core/3rd_party/Widgets/WAF/SideSlide/SideSlideBackgroundDecorator.h \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideAnimator.h \
-    scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
-    scenarist-core/3rd_party/Widgets/WAF/Animation.h \
-    scenarist-core/3rd_party/Widgets/WAF/AnimationPrivate.h \
     scenarist-core/3rd_party/Helpers/ScrollerHelper.h \
     scenarist-core/3rd_party/Helpers/StyleSheetHelper.h \
     scenarist-core/3rd_party/Widgets/QCutomPlot/qcustomplot.h \
@@ -581,7 +586,6 @@ HEADERS += \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneDescriptionHandler.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioSceneDescription/ScenarioSceneDescription.h \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioSceneDescriptionManager.h \
-    scenarist-core/3rd_party/Widgets/WAF/Slide/SlideForegroundDecorator.h \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxprogress.h \
     scenarist-core/3rd_party/Helpers/FileHelper.h \
     scenarist-core/3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h \
@@ -590,6 +594,10 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphlogic.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/graphwidget.h \
     scenarist-core/3rd_party/Widgets/QtMindMap/include/node.h \
+    scenarist-core/3rd_party/Widgets/TabBarExpanded/TabBarExpanded.h \
+    scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/anchor/sizeanchor.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.h \
     scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.h \
@@ -614,7 +622,36 @@ HEADERS += \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.h \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.h \
     scenarist-core/BusinessLayer/Import/TrelbyImporter.h \
-    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.h
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectsList.h \
+    scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.h \
+    scenarist-core/BusinessLayer/Import/KitScenaristImporter.h \
+    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.h \
+    scenarist-core/3rd_party/Helpers/Validators.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.h \
+    scenarist-core/ManagementLayer/Synchronization/Sync.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/CircleFill/CircleFillDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/SideSlide/SideSlideBackgroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Slide/SlideForegroundDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Animation.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/AnimationPrivate.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetFadeIn/StackedWidgetFadeInDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlide/StackedWidgetSlideDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetSlideOver/StackedWidgetSlideOverDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.h \
+    scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimationPrivate.h \
+    scenarist-core/3rd_party/Widgets/WAF/WAF.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.h \
+    scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.h \
+    scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -629,9 +666,15 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/Settings/LanguageDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchView.ui \
     scenarist-desktop/UserInterfaceLayer/Research/ResearchItemDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/CardsResizer.ui \
     scenarist-desktop/UserInterfaceLayer/_tools/UIConfigurator.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectUserWidget.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.ui \
+    scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.ui \
     scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.ui
 
 
@@ -653,4 +696,4 @@ macx {
 #
 # Включаем поддержку компиляции под Windows XP для MSVC 2012+
 #
-QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+win32-msvc*:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01

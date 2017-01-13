@@ -63,7 +63,11 @@ namespace ManagementLayer
 		/**
 		 * @brief Создать новый
 		 */
+		/** @{ */
 		void aboutCreateNew();
+		void createNewLocalProject(const QString& _filePath, const QString& _importFilePath);
+		void createNewRemoteProject(const QString& _projectName, const QString& _importFilePath);
+		/** @} */
 
 		/**
 		 * @brief Сохранить как...
@@ -98,22 +102,39 @@ namespace ManagementLayer
 		void aboutShowHelp();
 
 		/**
-		 * @brief Загрузить из списка
+		 * @brief Загрузить выбранный из списка локальный проект
 		 */
-		/** @{ */
 		void aboutLoadFromRecent(const QModelIndex& _projectIndex);
-		void aboutLoadFromRemote(const QModelIndex& _projectIndex);
-		/** @} */
 
 		/**
-		 * @brief Обработка выхода пользователя
+		 * @brief Загрузить выбранный проект из облака
 		 */
-		void aboutUserUnlogged();
+		void aboutLoadFromRemote(const QModelIndex& _projectIndex);
+
+		/**
+		 * @brief Сменить имя проекта из облака
+		 */
+		void editRemoteProjectName(const QModelIndex& _index);
+
+		/**
+		 * @brief Удалить проект из облака
+		 */
+		void removeRemoteProject(const QModelIndex& _index);
+
+		/**
+		 * @brief Открыть доступ к проекту из облака
+		 */
+		void shareRemoteProject(const QModelIndex& _index);
+
+		/**
+		 * @brief Закрыть доступ к проекту из облака
+		 */
+		void unshareRemoteProject(const QModelIndex& _index, const QString& _userEmail);
 
 		/**
 		 * @brief Отобразить индикатор активной синхронизации
 		 */
-		void aboutShowSyncActiveIndicator();
+        void setSyncIndicator();
 
 		/**
 		 * @brief Обновить информацию о последнем изменении в индикаторе синхронизации
@@ -340,7 +361,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Управляющий синхронизацией
 		 */
-		SynchronizationManager* m_synchronizationManager;
+        SynchronizationManager* m_synchronizationManager;
 
 		/**
 		 * @brief Таймер автосохранения

@@ -74,6 +74,8 @@ QAbstractItemModel* ProjectsManager::remoteProjects()
 		QStandardItem* item = new QStandardItem;
 		item->setData(project.displayName(), Qt::DisplayRole);
 		item->setData(project.displayPath(), Qt::WhatsThisRole);
+		item->setData(project.users(), Qt::UserRole);
+		item->setData(project.isUserOwner(), Qt::UserRole + 1);
 		remoteProjectsModel->appendRow(item);
 	}
 
@@ -187,6 +189,28 @@ bool ProjectsManager::setCurrentProject(const QModelIndex& _index, bool _isLocal
 	return setCurrentProject(newCurrentProjectPath, _isLocal);
 }
 
+bool ProjectsManager::setCurrentProject(int _id, bool _isLocal)
+{
+	//
+	// Определим проект
+	//
+	QString newCurrentProjectPath;
+	if (!_isLocal) {
+		for (const Project& project : m_remoteProjects) {
+			if (project.id() == _id) {
+				newCurrentProjectPath = project.path();
+				break;
+			}
+		}
+	} else {
+		Q_ASSERT_X(0, "Can't open local project by id", Q_FUNC_INFO);
+	}
+	//
+	// ... и установим его текущим
+	//
+	return setCurrentProject(newCurrentProjectPath, _isLocal);
+}
+
 void ProjectsManager::setCurrentProjectName(const QString& _projectName)
 {
 	//
@@ -259,6 +283,20 @@ void ProjectsManager::closeCurrentProject()
 	s_currentProject = Project();
 }
 
+ManagementLayer::Project ProjectsManager::project(const QModelIndex& _index, bool _isLocal) const
+{
+	return
+			_isLocal
+			? m_recentProjects.value(_index.row())
+			: m_remoteProjects.value(_index.row());
+}
+
+void ProjectsManager::hideProjectFromLocal(const QModelIndex& _index)
+{
+	m_recentProjects.removeAt(_index.row());
+	emit recentProjectsUpdated();
+}
+
 void ProjectsManager::refreshProjects()
 {
 	//
@@ -304,7 +342,17 @@ void ProjectsManager::setRemoteProjects(const QString& _xml)
 			const QString roleText = projectsReader.attributes().value("role").toString();
 			Project::Role role = Project::roleFromString(roleText);
 
-			m_remoteProjects.append(Project(Project::Remote, name, path, lastEditDatetime, id, owner, role));
+			QStringList users;
+			projectsReader.readNextStartElement();
+			while (projectsReader.name().toString() != "project") {
+				if (projectsReader.tokenType() == QXmlStreamReader::StartElement
+					&& projectsReader.name().toString() == "user") {
+					users << projectsReader.readElementText();
+				}
+				projectsReader.readNextStartElement();
+			}
+
+			m_remoteProjects.append(Project(Project::Remote, name, path, lastEditDatetime, id, owner, role, users));
 		}
 	}
 

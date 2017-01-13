@@ -6,39 +6,44 @@
 
 namespace DataStorageLayer
 {
-	/**
-	 * @brief Класс для доступа к изменениям данных сценария
-	 */
-	class DatabaseHistoryStorage
-	{
-	public:
-		/**
-		 * @brief Получить список uuid'ов изменений с указанной даты и времени
-		 */
-		QList<QString> history(const QString& _fromDatetime);
+    /**
+     * @brief Класс для доступа к изменениям данных сценария
+     */
+    class DatabaseHistoryStorage
+    {
+    public:
+        /**
+         * @brief Получить список uuid'ов изменений с указанной даты и времени
+         */
+        QList<QString> history(const QString& _fromDatetime);
 
-		/**
-		 * @brief Получить запись из таблицы изменений по UUID
-		 */
-		QMap<QString, QString> historyRecord(const QString& _uuid);
+        /**
+         * @brief Получить последнюю запись из таблицы изменений
+         */
+        QMap<QString, QString> last();
 
-		/**
-		 * @brief Содержится ли изменение с заданным uuid'ом в БД
-		 */
-		bool contains(const QString& _uuid) const;
+        /**
+         * @brief Получить запись из таблицы изменений по UUID
+         */
+        QMap<QString, QString> historyRecord(const QString& _uuid);
 
-		/**
-		 * @brief Сохранить изменение данных и применить его
-		 */
-		void storeAndApplyHistoryRecord(const QString& _uuid, const QString& _query,
-			const QString& _queryValues, const QString& _datetime);
+        /**
+         * @brief Содержится ли изменение с заданным uuid'ом в БД
+         */
+        bool contains(const QString& _uuid) const;
 
-	private:
-		DatabaseHistoryStorage();
+        /**
+         * @brief Сохранить изменение данных и применить его
+         */
+        void storeAndApplyHistoryRecord(const QString& _uuid, const QString& _query,
+            const QString& _queryValues, const QString& _username, const QString& _datetime);
 
-		// Для доступа к конструктору
-		friend class StorageFacade;
-	};
+    private:
+        DatabaseHistoryStorage();
+
+        // Для доступа к конструктору
+        friend class StorageFacade;
+    };
 }
 
 #endif // DATABASEHISTORYSTORAGE_H

@@ -13,84 +13,84 @@ using UserInterface::LocationsDataEdit;
 
 
 LocationsDataEditManager::LocationsDataEditManager(QObject *_parent, QWidget* _parentWidget) :
-	QObject(_parent),
-	m_editor(new LocationsDataEdit(_parentWidget)),
-	m_location(0)
+    QObject(_parent),
+    m_editor(new LocationsDataEdit(_parentWidget)),
+    m_location(0)
 {
-	initView();
-	initConnections();
+    initView();
+    initConnections();
 
-	clean();
+    clean();
 }
 
 QWidget* LocationsDataEditManager::view() const
 {
-	return m_editor;
+    return m_editor;
 }
 
 void LocationsDataEditManager::clean()
 {
-	m_editor->clean();
-	m_editor->setEnabled(false);
+    m_editor->clean();
+    m_editor->setEnabled(false);
 }
 
 void LocationsDataEditManager::editLocation(Location* _location)
 {
-	clean();
+    clean();
 
-	m_location = _location;
+    m_location = _location;
 
-	if (m_location != nullptr) {
-		m_editor->setEnabled(true);
-		m_editor->setName(m_location->name());
-		m_editor->setDescription(m_location->description());
-		m_editor->setPhotos(m_location->photos());
-	} else {
-		clean();
-	}
+    if (m_location != nullptr) {
+        m_editor->setEnabled(true);
+        m_editor->setName(m_location->name());
+        m_editor->setDescription(m_location->description());
+        m_editor->setPhotos(m_location->photos());
+    } else {
+        clean();
+    }
 }
 
 void LocationsDataEditManager::setCommentOnly(bool _isCommentOnly)
 {
-	m_editor->setCommentOnly(_isCommentOnly);
+    m_editor->setCommentOnly(_isCommentOnly);
 }
 
 void LocationsDataEditManager::aboutSave()
 {
-	if (!m_editor->name().isEmpty()
-		&& m_location != nullptr) {
-		//
-		// Сохраним предыдущее название локации
-		//
-		QString previousName = m_location->name();
+    if (!m_editor->name().isEmpty()
+        && m_location != nullptr) {
+        //
+        // Сохраним предыдущее название локации
+        //
+        QString previousName = m_location->name();
 
-		//
-		// Установим новые значения
-		//
-		m_location->setName(m_editor->name());
-		m_location->setDescription(m_editor->description());
-		m_location->setPhotos(m_editor->photos());
+        //
+        // Установим новые значения
+        //
+        m_location->setName(m_editor->name());
+        m_location->setDescription(m_editor->description());
+        m_location->setPhotos(m_editor->photos());
 
-		//
-		// Уведомим об изменении названия локации
-		//
-		if (previousName != m_location->name()) {
-			//
-			// Обновим заголовок в панели с данными
-			//
-			m_editor->setName(m_location->name());
-			//
-			// Пусть модель знает, что данные изменились
-			//
-			DataStorageLayer::StorageFacade::locationStorage()->all()->itemChanged(m_location);
-			//
-			// Отправляем сигнал, чтобы обновить имена персонажей в тексте сценария
-			//
-			emit locationNameChanged(previousName, m_location->name());
-		}
+        //
+        // Уведомим об изменении названия локации
+        //
+        if (previousName != m_location->name()) {
+            //
+            // Обновим заголовок в панели с данными
+            //
+            m_editor->setName(m_location->name());
+            //
+            // Пусть модель знает, что данные изменились
+            //
+            DataStorageLayer::StorageFacade::locationStorage()->all()->itemChanged(m_location);
+            //
+            // Отправляем сигнал, чтобы обновить имена персонажей в тексте сценария
+            //
+            emit locationNameChanged(previousName, m_location->name());
+        }
 
-		emit locationChanged();
-	}
+        emit locationChanged();
+    }
 }
 
 void LocationsDataEditManager::initView()
@@ -99,5 +99,5 @@ void LocationsDataEditManager::initView()
 
 void LocationsDataEditManager::initConnections()
 {
-	connect(m_editor, SIGNAL(saveLocation()), this, SLOT(aboutSave()));
+    connect(m_editor, SIGNAL(saveLocation()), this, SLOT(aboutSave()));
 }

@@ -257,6 +257,7 @@ void Database::createTables(QSqlDatabase& _database)
 				   "id TEXT PRIMARY KEY, " // uuid
 				   "query TEXT NOT NULL, "
 				   "query_values TEXT NOT NULL, "
+                   "username TEXT NOT NULL, "
 				   "datetime TEXT NOT NULL "
 				   "); "
 				   );
@@ -489,7 +490,7 @@ void Database::updateDatabase(QSqlDatabase& _database)
 	// Некоторые версии выходили с ошибками, их заменяем на предыдущие
 	//
 	{
-		if (databaseVersion == "0.7.0 beta 5") {
+        if (databaseVersion.startsWith("0.7.0 beta")) {
 			databaseVersion = "0.6.2";
 		}
 	}
@@ -1128,6 +1129,11 @@ void Database::updateDatabaseTo_0_7_0(QSqlDatabase& _database)
 		// Добавление поля в таблицу сценария
 		//
 		q_updater.exec("ALTER TABLE scenario ADD COLUMN scheme TEXT NOT NULL DEFAULT('')");
+
+        //
+        // Добавление поля с именем пользователя в таблицу истории изменений данных
+        //
+        q_updater.exec("ALTER TABLE _database_history ADD COLUMN username TEXT NOT NULL DEFAULT('')");
 	}
 
 	_database.commit();
