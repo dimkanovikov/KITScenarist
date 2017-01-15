@@ -61,12 +61,12 @@ namespace UserInterface
         /**
          * @brief Настроить представление
          */
-        void initView();
+        void initView() override;
 
         /**
          * @brief Настроить соединения для формы
          */
-        void initConnections();
+        void initConnections() override;
 
     private:
         /**
