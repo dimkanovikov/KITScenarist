@@ -26,11 +26,12 @@
 #include <NetworkRequest.h>
 #include <NetworkRequestLoader.h>
 
-#include <QXmlStreamReader>
+#include <QDateTime>
+#include <QDebug>
+#include <QDesktopServices>
 #include <QEventLoop>
 #include <QTimer>
-#include <QDesktopServices>
-#include <QDateTime>
+#include <QXmlStreamReader>
 
 using ManagementLayer::SynchronizationManager;
 using ManagementLayer::Sync;
@@ -988,7 +989,7 @@ void SynchronizationManager::aboutFullSyncScenario()
         }
     }
 }
-#include <QDebug>
+
 void SynchronizationManager::aboutWorkSyncScenario()
 {
     if (isCanSync()) {
@@ -1731,6 +1732,17 @@ void SynchronizationManager::checkNetworkState()
     if (s_isInCheckNetworkState) {
         return;
     }
+
+#ifdef Q_OS_MAC
+    //
+    // FIXME: Если есть открытый диалог сохранения, или открытия, то он закрывается
+    // при загрузке страницы, поэтому делаем отсрочку на выполнение события
+    //
+    if (QApplication::activeModalWidget() != 0) {
+        QTimer::singleShot(1000, this, &SynchronizationManager::checkNetworkState);
+        return;
+    }
+#endif
 
     s_isInCheckNetworkState = true;
 
