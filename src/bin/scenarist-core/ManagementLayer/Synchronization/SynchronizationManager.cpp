@@ -426,6 +426,16 @@ void SynchronizationManager::signUp(const QString& _email, const QString& _passw
     }
 
     //
+    // Задаём умолчальное имя пользователя
+    //
+    changeUserName(_email.split("@").first());
+
+    //
+    // Обновим информацию о подписке
+    //
+    loadSubscriptionInfo();
+
+    //
     // Если авторизация прошла
     //
     emit signUpFinished();
@@ -591,7 +601,7 @@ void SynchronizationManager::loadSubscriptionInfo()
     QByteArray response = loader.loadSync(URL_SUBSCRIBE_STATE);
 
     //
-    // Считываем результат авторизации
+    // Считываем результат
     //
     QXmlStreamReader responseReader(response);
     if (!isOperationSucceed(responseReader)) {
@@ -601,9 +611,7 @@ void SynchronizationManager::loadSubscriptionInfo()
     //
     // Распарсим результат
     //
-    bool isActive;
     QString date;
-
     bool isActiveFind = false;
     while (!responseReader.atEnd()) {
         responseReader.readNext();
