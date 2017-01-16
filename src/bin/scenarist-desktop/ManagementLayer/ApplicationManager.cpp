@@ -44,6 +44,7 @@
 #include <QLabel>
 #include <QMenu>
 #include <QMenuBar>
+#include <QProcess>
 #include <QSplitter>
 #include <QStackedWidget>
 #include <QStandardItemModel>
@@ -1512,6 +1513,21 @@ void ApplicationManager::initView()
     m_menu->setPopupMode(QToolButton::MenuButtonPopup);
     m_menu->setMenu(createMenu());
     m_menuSecondary->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+#ifdef Q_OS_MAC
+    //
+    // Добавляем в маке возможность открытия ещё одного окна приложения
+    //
+    QMenu* menu = new QMenu(m_view);
+    QAction* openNewWindow = menu->addAction("Open new window");
+    connect(openNewWindow, &QAction::triggered, [=] {
+        QString appPath = QApplication::applicationFilePath();
+        appPath = appPath.split(".app").first();
+        appPath += ".app";
+        QProcess::startDetached("open", {"-na", appPath});
+    });
+    menu->setAsDockMenu();
+#endif
 
     //
     // Настроим боковую панель
