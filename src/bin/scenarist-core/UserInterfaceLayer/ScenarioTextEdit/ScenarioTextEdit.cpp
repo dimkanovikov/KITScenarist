@@ -920,32 +920,15 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
 
 void ScenarioTextEdit::mousePressEvent(QMouseEvent* _event)
 {
-    //
-    // Событие о клике приходит на 1, 3, 5 и т.д. кликов
-    //
-
-    if (_event->button() == Qt::LeftButton) {
-        const qint64 curMouseClickTime = QDateTime::currentMSecsSinceEpoch();
-        const qint64 timeDelta = curMouseClickTime - m_lastMouseClickTime;
-        if (timeDelta <= (QApplication::styleHints()->mouseDoubleClickInterval())) {
-            m_mouseClicks += 2;
-        } else {
-            m_mouseClicks = 1;
-        }
-        m_lastMouseClickTime = curMouseClickTime;
-    }
-
-    //
-    // Тройной клик обрабатываем самостоятельно
-    //
-    if (m_mouseClicks == 3) {
-        QTextCursor cursor = textCursor();
-        cursor.movePosition(QTextCursor::StartOfBlock);
-        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-        setTextCursor(cursor);
-        _event->accept();
-    } else {
+    if (!selectBlockOnTripleClick(_event)) {
         CompletableTextEdit::mousePressEvent(_event);
+    }
+}
+
+void ScenarioTextEdit::mouseDoubleClickEvent(QMouseEvent* _event)
+{
+    if (!selectBlockOnTripleClick(_event)) {
+        CompletableTextEdit::mouseDoubleClickEvent(_event);
     }
 }
 
@@ -1583,6 +1566,34 @@ bool ScenarioTextEdit::stringEndsWithAbbrev(const QString& _text)
     //
     // FIXME проработать словарь сокращений
     //
+
+    return false;
+}
+
+bool ScenarioTextEdit::selectBlockOnTripleClick(QMouseEvent* _event)
+{
+    if (_event->button() == Qt::LeftButton) {
+        const qint64 curMouseClickTime = QDateTime::currentMSecsSinceEpoch();
+        const qint64 timeDelta = curMouseClickTime - m_lastMouseClickTime;
+        if (timeDelta <= (QApplication::styleHints()->mouseDoubleClickInterval())) {
+            m_mouseClicks += 1;
+        } else {
+            m_mouseClicks = 1;
+        }
+        m_lastMouseClickTime = curMouseClickTime;
+    }
+
+    //
+    // Тройной клик обрабатываем самостоятельно
+    //
+    if (m_mouseClicks > 2) {
+        QTextCursor cursor = textCursor();
+        cursor.movePosition(QTextCursor::StartOfBlock);
+        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+        setTextCursor(cursor);
+        _event->accept();
+        return true;
+    }
 
     return false;
 }
