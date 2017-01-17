@@ -1519,7 +1519,7 @@ void ApplicationManager::initView()
     // Добавляем в маке возможность открытия ещё одного окна приложения
     //
     QMenu* menu = new QMenu(m_view);
-    QAction* openNewWindow = menu->addAction("Open new window");
+    QAction* openNewWindow = menu->addAction(tr("New window"));
     connect(openNewWindow, &QAction::triggered, [=] {
         QString appPath = QApplication::applicationFilePath();
         appPath = appPath.split(".app").first();
