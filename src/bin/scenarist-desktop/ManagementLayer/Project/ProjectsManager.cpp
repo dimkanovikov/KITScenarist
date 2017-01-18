@@ -356,6 +356,23 @@ void ProjectsManager::setRemoteProjects(const QString& _xml)
 		}
 	}
 
+    //
+    // Удаляем все старые проекты
+    //
+    for (const auto& fileInfo : QDir(Project::remoteProjectsDirPath()).entryInfoList(QDir::Files)) {
+        bool needRemoveProject = true;
+        for (const auto& project : m_remoteProjects) {
+            if (project.path() == fileInfo.absoluteFilePath()) {
+                needRemoveProject = false;
+                break;
+            }
+        }
+
+        if (needRemoveProject) {
+            QFile::remove(fileInfo.absoluteFilePath());
+        }
+    }
+
 	//
 	// Уведомляем об обновлении
 	//

@@ -18,9 +18,6 @@ namespace ManagementLayer
 	{
 		Q_OBJECT
 
-	/**
-	 * @brief Ститическая часть класса
-	 */
 	public:
 		/**
 		 * @brief Валиден ли текущий проект
@@ -38,9 +35,6 @@ namespace ManagementLayer
 		 */
 		static Project s_currentProject;
 
-	/**
-	 * Динамическая
-	 */
 	public:
 		explicit ProjectsManager(QObject* _parent);
 		~ProjectsManager();
