@@ -61,7 +61,8 @@ namespace ManagementLayer
         /**
          * @brief Пользователь с заданным именем успешно авторизован на сервере
          */
-        void completeLogin(const QString& _userName, const QString& _userEmail);
+        void completeLogin(const QString& _userName, const QString& _userEmail,
+                           int _paymentMonth);
 
         /**
          * @brief Пользователь успешно отправил данные для регистрации

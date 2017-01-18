@@ -94,9 +94,12 @@ bool StartUpManager::isOnLocalProjectsTab() const
     return m_view->isOnLocalProjectsTab();
 }
 
-void StartUpManager::completeLogin(const QString& _userName, const QString& _userEmail)
+void StartUpManager::completeLogin(const QString& _userName, const QString& _userEmail,
+                                   int _paymentMonth)
 {
     m_userEmail = _userEmail;
+
+    m_renewSubscriptionDialog->setPaymentMonth(_paymentMonth);
 
     const bool isLogged = true;
     m_view->setUserLogged(isLogged, _userName, m_userEmail);
