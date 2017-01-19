@@ -177,7 +177,8 @@ namespace ManagementLayer
         /**
          * @brief Авторизация пройдена успешно
          */
-        void loginAccepted(const QString& _userName, const QString& _userEmail);
+        void loginAccepted(const QString& _userName, const QString& _userEmail,
+                           int _paymentMonth);
 
         /**
          * @brief Сервер успешно принял данные пользователя на регистрацию
