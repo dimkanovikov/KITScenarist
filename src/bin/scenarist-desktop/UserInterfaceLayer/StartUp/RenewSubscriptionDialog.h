@@ -60,11 +60,6 @@ namespace UserInterface
          */
         void showThanks(const QString& _expDate);
 
-        /**
-         * @brief Установить стоимость подписки 1 месяца
-         */
-        void setPaymentMonth(int _paymentMonth);
-
     signals:
         /**
          * @brief Запрос на оплату в браузере
@@ -97,8 +92,6 @@ namespace UserInterface
          * @brief Кнопка отправки запроса на платеж в браузер
          */
         QPushButton* m_acceptButton;
-
-        int m_paymentMonth = 299;
 
         /**
          * @brief Принимая на вход число месяцев,
