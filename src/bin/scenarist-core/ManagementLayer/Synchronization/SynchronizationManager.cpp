@@ -26,11 +26,12 @@
 #include <NetworkRequest.h>
 #include <NetworkRequestLoader.h>
 
-#include <QXmlStreamReader>
+#include <QDateTime>
+#include <QDebug>
+#include <QDesktopServices>
 #include <QEventLoop>
 #include <QTimer>
-#include <QDesktopServices>
-#include <QDateTime>
+#include <QXmlStreamReader>
 
 using ManagementLayer::SynchronizationManager;
 using ManagementLayer::Sync;
@@ -279,12 +280,16 @@ void SynchronizationManager::login(const QString &_email, const QString &_passwo
                             DataStorageLayer::StorageFacade::settingsStorage()->value(
                                 "application/subscriptionExpiredDate",
                                 DataStorageLayer::SettingsStorage::ApplicationSettings);
+                int paymentMonth =
+                            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                                "application/subscriptionPaymentMonth",
+                                DataStorageLayer::SettingsStorage::ApplicationSettings).toInt();
 
                 //
                 // Уведомим об этом
                 //
                 emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
-                emit loginAccepted(userName, m_userEmail);
+                emit loginAccepted(userName, m_userEmail, paymentMonth);
 
                 //
                 // Хоть как то авторизовались, тепер нас интересует статус интернета
@@ -297,6 +302,7 @@ void SynchronizationManager::login(const QString &_email, const QString &_passwo
 
     QString userName;
     QString date;
+    int paymentMonth = -1;
 
     //
     // Найдем наш ключ сессии, имя пользователя, информацию о подписке
@@ -322,10 +328,15 @@ void SynchronizationManager::login(const QString &_email, const QString &_passwo
             responseReader.readNext();
             date = responseReader.text().toString();
             responseReader.readNext();
+        } else if (responseReader.name().toString() == "payment_month") {
+            responseReader.readNext();
+            paymentMonth = responseReader.text().toInt();
+            responseReader.readNext();
         }
     }
 
-    if (!isActiveFind || (isActiveFind && m_isSubscriptionActive && date.isEmpty())) {
+    if (!isActiveFind || (isActiveFind && m_isSubscriptionActive && date.isEmpty())
+            || paymentMonth < 0) {
         handleError(Sync::UnknownError);
         m_sessionKey.clear();
         return;
@@ -368,13 +379,18 @@ void SynchronizationManager::login(const QString &_email, const QString &_passwo
                 dateTransform(date),
                 SettingsStorage::ApplicationSettings);
 
+    StorageFacade::settingsStorage()->setValue(
+                "application/subscriptionPaymentMonth",
+                QString::number(paymentMonth),
+                SettingsStorage::ApplicationSettings);
+
     //
     // Запомним email
     //
     m_userEmail = _email;
 
     emit subscriptionInfoLoaded(m_isSubscriptionActive, dateTransform(date));
-    emit loginAccepted(userName, m_userEmail);
+    emit loginAccepted(userName, m_userEmail, paymentMonth);
 
     //
     // Авторизовались, тепер нас интересует статус интернета
@@ -423,6 +439,16 @@ void SynchronizationManager::signUp(const QString& _email, const QString& _passw
         handleError(Sync::NoSessionKeyError);
         return;
     }
+
+    //
+    // Задаём умолчальное имя пользователя
+    //
+    changeUserName(_email.split("@").first());
+
+    //
+    // Обновим информацию о подписке
+    //
+    loadSubscriptionInfo();
 
     //
     // Если авторизация прошла
@@ -590,7 +616,7 @@ void SynchronizationManager::loadSubscriptionInfo()
     QByteArray response = loader.loadSync(URL_SUBSCRIBE_STATE);
 
     //
-    // Считываем результат авторизации
+    // Считываем результат
     //
     QXmlStreamReader responseReader(response);
     if (!isOperationSucceed(responseReader)) {
@@ -600,9 +626,7 @@ void SynchronizationManager::loadSubscriptionInfo()
     //
     // Распарсим результат
     //
-    bool isActive;
     QString date;
-
     bool isActiveFind = false;
     while (!responseReader.atEnd()) {
         responseReader.readNext();
@@ -988,7 +1012,7 @@ void SynchronizationManager::aboutFullSyncScenario()
         }
     }
 }
-#include <QDebug>
+
 void SynchronizationManager::aboutWorkSyncScenario()
 {
     if (isCanSync()) {
@@ -1731,6 +1755,17 @@ void SynchronizationManager::checkNetworkState()
     if (s_isInCheckNetworkState) {
         return;
     }
+
+#ifdef Q_OS_MAC
+    //
+    // FIXME: Если есть открытый диалог сохранения, или открытия, то он закрывается
+    // при загрузке страницы, поэтому делаем отсрочку на выполнение события
+    //
+    if (QApplication::activeModalWidget() != 0) {
+        QTimer::singleShot(1000, this, &SynchronizationManager::checkNetworkState);
+        return;
+    }
+#endif
 
     s_isInCheckNetworkState = true;
 

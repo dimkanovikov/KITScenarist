@@ -190,7 +190,10 @@ namespace UserInterface
 		/**
 		 * @brief Переопределяется для обработки тройного клика
 		 */
-		void mousePressEvent(QMouseEvent* _event);
+        /** @{ */
+        void mousePressEvent(QMouseEvent* _event);
+        void mouseDoubleClickEvent(QMouseEvent* _event);
+        /** @} */
 
 		/**
 		 * @brief Переопределяется, для того, чтобы блокировать выделение текста мышкой
@@ -265,6 +268,11 @@ namespace UserInterface
 		 * @brief Оканчивается ли строка сокращением
 		 */
 		bool stringEndsWithAbbrev(const QString& _text);
+
+        /**
+         * @brief Выделить блок при тройном клике
+         */
+        bool selectBlockOnTripleClick(QMouseEvent* _event);
 
 	private:
 		void initEditor();

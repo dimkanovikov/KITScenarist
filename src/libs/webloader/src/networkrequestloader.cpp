@@ -1,5 +1,4 @@
 /*
-* Copyright (C) 2015 Dimka Novikov, to@dimkanovikov.pro
 * Copyright (C) 2016 Alexey Polushkin, armijo38@yandex.ru
 *
 * This library is free software; you can redistribute it and/or
@@ -15,15 +14,16 @@
 * Full license: http://dimkanovikov.pro/license/LGPLv3
 */
 
-#ifndef WEBLOADERGLOBAL_H
-#define WEBLOADERGLOBAL_H
+#include "NetworkRequestLoader.h"
 
-#include <QtCore/QtGlobal>
 
-#if defined(WEBLOADER_LIBRARY)
-#  define WEBLOADER_EXPORT Q_DECL_EXPORT
-#else
-#  define WEBLOADER_EXPORT Q_DECL_IMPORT
-#endif
+QByteArray NetworkRequestLoader::loadSync(const QUrl& _urlToLoad)
+{
+	NetworkRequest request;
+	return request.loadSync(_urlToLoad);
+}
 
-#endif // WEBLOADERGLOBAL_H
+QByteArray NetworkRequestLoader::loadSync(const QString& _urlToLoad)
+{
+	return loadSync(QUrl(_urlToLoad));
+}

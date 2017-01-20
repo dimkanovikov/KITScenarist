@@ -41,6 +41,11 @@ namespace ManagementLayer
 		 */
 		static Role roleFromString(const QString& _role);
 
+        /**
+         * @brief Получить путь к папке хранения облачных проектов
+         */
+        static QString remoteProjectsDirPath();
+
 	public:
 		Project();
 		Project(Type _type, const QString& _name, const QString& _path,

@@ -44,6 +44,7 @@
 #include <QLabel>
 #include <QMenu>
 #include <QMenuBar>
+#include <QProcess>
 #include <QSplitter>
 #include <QStackedWidget>
 #include <QStandardItemModel>
@@ -913,6 +914,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
     QString error = _error;
     QIcon reactivateIcon;
     bool disableSyncForCurrentProject = false;
+    bool isCriticalError = true;
     switch (_errorCode) {
         //
         // Нет связи с интернетом
@@ -983,6 +985,13 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
             break;
         }
 
+        case Sync::DisallowToShareSelf: {
+            title = tr("Share error");
+            error = tr("You can't share project with yourself.");
+            isCriticalError = false;
+            break;
+        }
+
         //
         // Проект недоступен
         //
@@ -1049,24 +1058,35 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
     }
 
     //
-    // Сигнализируем об ошибке
-    // Если не залогинены, то значок не показываем
-    // Если пропал интернет, то значок сам покажется при необходимости
+    // Для критичных ошибок
     //
-    if (m_synchronizationManager->isInternetConnectionActive()
-        && m_synchronizationManager->isLogged()) {
-        m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/unsynced.png"));
-        m_tabs->setIndicatorTitle(title);
-        m_tabs->setIndicatorText(error);
-        m_tabs->setIndicatorActionIcon(reactivateIcon);
-        m_tabs->makeIndicatorWave(QColor(255, 0, 0, 40));
-    }
+    if (isCriticalError) {
+        //
+        // Сигнализируем об ошибке
+        // Если не залогинены, то значок не показываем
+        // Если пропал интернет, то значок сам покажется при необходимости
+        //
+        if (m_synchronizationManager->isInternetConnectionActive()
+                && m_synchronizationManager->isLogged()) {
+            m_tabs->addIndicator(QIcon(":/Graphics/Icons/Indicator/unsynced.png"));
+            m_tabs->setIndicatorTitle(title);
+            m_tabs->setIndicatorText(error);
+            m_tabs->setIndicatorActionIcon(reactivateIcon);
+            m_tabs->makeIndicatorWave(QColor(255, 0, 0, 40));
+        }
 
+        //
+        // Если необходимо отключаем синхронизацию для текущего проекта
+        //
+        if (disableSyncForCurrentProject) {
+            m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
+        }
+    }
     //
-    // Если необходимо отключаем синхронизацию для текущего проекта
+    // Для некритичных ошибок просто покажем сообщение с ошибкой
     //
-    if (disableSyncForCurrentProject) {
-        m_projectsManager->setCurrentProjectSyncAvailable(SYNC_UNAVAILABLE);
+    else {
+        QLightBoxMessage::warning(m_view, title, error);
     }
 }
 
@@ -1493,6 +1513,21 @@ void ApplicationManager::initView()
     m_menu->setPopupMode(QToolButton::MenuButtonPopup);
     m_menu->setMenu(createMenu());
     m_menuSecondary->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+#ifdef Q_OS_MAC
+    //
+    // Добавляем в маке возможность открытия ещё одного окна приложения
+    //
+    QMenu* menu = new QMenu(m_view);
+    QAction* openNewWindow = menu->addAction(tr("New window"));
+    connect(openNewWindow, &QAction::triggered, [=] {
+        QString appPath = QApplication::applicationFilePath();
+        appPath = appPath.split(".app").first();
+        appPath += ".app";
+        QProcess::startDetached("open", {"-na", appPath});
+    });
+    menu->setAsDockMenu();
+#endif
 
     //
     // Настроим боковую панель

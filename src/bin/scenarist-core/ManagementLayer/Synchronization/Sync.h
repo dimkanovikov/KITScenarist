@@ -44,6 +44,11 @@ namespace ManagementLayer
             SessionClosedError = 104,
 
             // ****
+            // Попытка открыть доступ самому себе
+            //
+            DisallowToShareSelf = 130,
+
+            // ****
             //
             // Проект недоступен (у хостера закончилась подписка)
             //

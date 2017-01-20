@@ -91,19 +91,12 @@ public:
 	/**
 	 * @brief Загрузить ссылку синхронно
 	 */
-	static QByteArray loadSync(const QUrl& _urlToLoad)
-	{
-		NetworkRequest request;
-		return request.loadSync(_urlToLoad);
-	}
+	static QByteArray loadSync(const QUrl& _urlToLoad);
 
 	/**
 	 * @brief Загрузить ссылку синхронно
 	 */
-	static QByteArray loadSync(const QString& _urlToLoad)
-	{
-		return loadSync(QUrl(_urlToLoad));
-	}
+	static QByteArray loadSync(const QString& _urlToLoad);
 };
 
 #endif // NETWORKREQUESTLOADER_H
