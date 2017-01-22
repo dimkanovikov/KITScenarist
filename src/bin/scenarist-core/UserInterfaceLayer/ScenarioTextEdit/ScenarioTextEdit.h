@@ -246,14 +246,7 @@ namespace UserInterface
 		 * @brief Применить заданный тип к текущему блоку редактора
 		 * @param Тип блока
 		 */
-		void applyScenarioTypeToBlock(BusinessLogic::ScenarioBlockStyle::Type _blockType);
-
-		/**
-		 * @brief Применить стиль группы к блоку группе
-		 * @param Тип для применения
-		 */
-		void applyScenarioGroupTypeToGroupBlock(BusinessLogic::ScenarioBlockStyle::Type _blockType);
-
+        void applyScenarioTypeToBlock(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 
 		/**
 		 * @brief Скорректировать введённый текст
