@@ -3,7 +3,6 @@
 
 #include <QWidget>
 
-class ActivityEdit;
 class FlatButton;
 class QLabel;
 
@@ -86,27 +85,7 @@ namespace UserInterface {
 		/**
 		 * @brief Получить номер выделенной карточки, если нет выделенных, или выделено больше одной, возвращается -1
 		 */
-		QString selectedCardUuid() const;
-
-		/**
-		 * @brief Добавить заметку
-		 */
-		void addNote(const QString& _text);
-
-		/**
-		 * @brief Изменить заметку
-		 */
-		void editNote(const QString& _text);
-
-		/**
-		 * @brief Добавить текст на связь
-		 */
-		void addFlowText(const QString& _text);
-
-		/**
-		 * @brief Изменить текст на связи
-		 */
-		void editFlowText(const QString& _text);
+        QString selectedCardUuid() const;
 
 		/**
 		 * @brief Установить режим работы со сценарием
@@ -138,9 +117,7 @@ namespace UserInterface {
 		 * @brief Запросы на изменение выделенной фигуры
 		 */
 		/** @{ */
-		void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description);
-		void editNoteRequest(const QString& _text);
-		void editFlowTextRequest(const QString& _text);
+        void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description);
 		/** @} */
 
 		/**
@@ -161,17 +138,7 @@ namespace UserInterface {
 		/**
 		 * @brief Запрос на изменение типа карточки
 		 */
-		void itemTypeChanged(const QString& _uuid, int _cardType);
-
-		/**
-		 * @brief Нажата кнопка добавления карточки
-		 */
-		void addNoteClicked();
-
-		/**
-		 * @brief Запрос на добавление текста на связь
-		 */
-		void addFlowTextRequest();
+        void itemTypeChanged(const QString& _uuid, int _cardType);
 
 		/**
 		 * @brief Запрос на переход в полноэкранный режим, или выход из него
@@ -214,27 +181,12 @@ namespace UserInterface {
 		/**
 		 * @brief Редактор карточек
 		 */
-		ActivityEdit* m_cardsEdit;
+        QWidget* m_cardsEdit;
 
 		/**
 		 * @brief Кнопка добавления карточки
 		 */
-		FlatButton* m_addCard;
-
-		/**
-		 * @brief Кнопка добавления заметки
-		 */
-		FlatButton* m_addNote;
-
-		/**
-		 * @brief Кнопка добавления горизонтальной линии
-		 */
-		FlatButton* m_addHLine;
-
-		/**
-		 * @brief Кнопка добавления вертикальной линии
-		 */
-		FlatButton* m_addVLine;
+        FlatButton* m_addCard;
 
 		/**
 		 * @brief Кнопка упорядочивания по таблице

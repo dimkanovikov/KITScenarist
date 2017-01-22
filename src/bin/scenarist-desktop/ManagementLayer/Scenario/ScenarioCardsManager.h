@@ -148,27 +148,7 @@ namespace ManagementLayer
 		/**
 		 * @brief Изменить тип карточки
 		 */
-		void changeCardType(const QString& _uuid, int _cardType);
-
-		/**
-		 * @brief Добавить заметку
-		 */
-		void addNote();
-
-		/**
-		 * @brief Изменить заметку
-		 */
-		void editNote(const QString& _text);
-
-		/**
-		 * @brief Добавить текст связи
-		 */
-		void addFlowText();
-
-		/**
-		 * @brief Изменить текст связи
-		 */
-		void editFlowText(const QString& _text);
+        void changeCardType(const QString& _uuid, int _cardType);
 
 	private:
 		/**

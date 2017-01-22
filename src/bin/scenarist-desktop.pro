@@ -318,24 +318,7 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.cpp \
     scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/anchor/sizeanchor.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/horizontalline.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/note.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/resizableshape.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/shape.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/verticalline.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.cpp \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.cpp \
     scenarist-core/BusinessLayer/Export/FdxExporter.cpp \
     scenarist-core/BusinessLayer/Import/FdxImporter.cpp \
@@ -598,24 +581,7 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/PasswordLineEdit/PasswordLineEdit.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/ChangePasswordDialog.h \
     scenarist-desktop/UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/anchor/sizeanchor.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/arrowflow.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flow.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/flow/flowtext.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/customgraphicsview.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/customgraphicsscene.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/scene/sceneundostack.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/card.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/horizontalline.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/note.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/resizableshape.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/shape.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/textutils.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/shape/verticalline.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/load_xml.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/xml/save_xml.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h \
-    scenarist-core/3rd_party/Widgets/ActivityEdit/gui/activityedit.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h \
     scenarist-core/BusinessLayer/Export/FdxExporter.h \
     scenarist-core/BusinessLayer/Import/FdxImporter.h \

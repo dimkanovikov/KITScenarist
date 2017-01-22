@@ -965,21 +965,21 @@ void ScenarioManager::initConnections()
 {
     connect(m_showFullscreen, SIGNAL(clicked()), this, SIGNAL(showFullscreen()));
 
-    connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
-    connect(m_cardsManager, &ScenarioCardsManager::editCardRequest, this, &ScenarioManager::aboutEditItemFromCards);
-    connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, [=] (const QModelIndex& _index) {
-        //
-        // Удаляем сцены из карточек только в режиме чистовика
-        //
-        setWorkingMode(m_navigatorManager);
+//    connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
+//    connect(m_cardsManager, &ScenarioCardsManager::editCardRequest, this, &ScenarioManager::aboutEditItemFromCards);
+//    connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, [=] (const QModelIndex& _index) {
+//        //
+//        // Удаляем сцены из карточек только в режиме чистовика
+//        //
+//        setWorkingMode(m_navigatorManager);
 
-        aboutRemoveItems({_index});
-    });
-    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
-    connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
-    connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
-    connect(m_cardsManager, &ScenarioCardsManager::undoRequest, this, &ScenarioManager::aboutUndo);
-    connect(m_cardsManager, &ScenarioCardsManager::redoRequest, this, &ScenarioManager::aboutRedo);
+//        aboutRemoveItems({_index});
+//    });
+//    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
+//    connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
+//    connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
+//    connect(m_cardsManager, &ScenarioCardsManager::undoRequest, this, &ScenarioManager::aboutUndo);
+//    connect(m_cardsManager, &ScenarioCardsManager::redoRequest, this, &ScenarioManager::aboutRedo);
 
     connect(m_navigatorManager, SIGNAL(addItem(QModelIndex,int,QString,QColor,QString)), this, SLOT(aboutAddItem(QModelIndex,int,QString,QColor,QString)));
     connect(m_navigatorManager, SIGNAL(removeItems(QModelIndexList)), this, SLOT(aboutRemoveItems(QModelIndexList)));
@@ -1017,7 +1017,7 @@ void ScenarioManager::initConnections()
     //
     // Настраиваем отслеживание изменений документа
     //
-    connect(m_cardsManager, &ScenarioCardsManager::schemeChanged, this, &ScenarioManager::scenarioChanged);
+//    connect(m_cardsManager, &ScenarioCardsManager::schemeChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::titleChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_sceneDescriptionManager, &ScenarioSceneDescriptionManager::descriptionChanged, this, &ScenarioManager::scenarioChanged);
     connect(m_textEditManager, &ScenarioTextEditManager::textChanged, this, &ScenarioManager::scenarioChanged);
