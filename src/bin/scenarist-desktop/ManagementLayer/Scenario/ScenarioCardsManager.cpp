@@ -9,8 +9,6 @@
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
-#include <3rd_party/Widgets/ActivityEdit/shape/card.h>
-
 #include <UserInterfaceLayer/Scenario/ScenarioCards/ScenarioCardsView.h>
 #include <UserInterfaceLayer/Scenario/ScenarioItemDialog/ScenarioSchemeItemDialog.h>
 
@@ -60,6 +58,7 @@ void ScenarioCardsManager::reloadSettings()
 
 QString ScenarioCardsManager::save() const
 {
+    return "";
 //	return m_view->save();
 }
 

@@ -204,8 +204,7 @@ Qt::ItemFlags ScenarioModel::flags(const QModelIndex& _index) const
 	Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled;
 
 	ScenarioModelItem* item = itemForIndex(_index);
-	if (item->type() == ScenarioModelItem::Folder
-		|| item->type() == ScenarioModelItem::SceneGroup
+    if (item->type() == ScenarioModelItem::Folder
 		|| item->type() == ScenarioModelItem::Scenario) {
 		flags |= Qt::ItemIsDropEnabled;
 	}

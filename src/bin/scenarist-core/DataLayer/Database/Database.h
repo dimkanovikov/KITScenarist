@@ -201,7 +201,16 @@ namespace DatabaseLayer
 		 *
 		 * - в таблицу scenario добавляется поле для хранения схемы
 		 */
-		static void updateDatabaseTo_0_7_0(QSqlDatabase& _database);
+        static void updateDatabaseTo_0_7_0(QSqlDatabase& _database);
+
+        /**
+         * @brief Обновить базу данных до версии 0.7.1
+         *
+         * - в таблице scenario группы сцен заменяются на папки
+         * - удаляются все сформированные схемы
+         * - добавляется поля имя пользователя и датавремя изменения данных в истории
+         */
+        static void updateDatabaseTo_0_7_1(QSqlDatabase& _database);
 	};
 
 	Q_DECLARE_OPERATORS_FOR_FLAGS(Database::States)

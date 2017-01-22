@@ -117,13 +117,10 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
     if (outlineMode()
         && scenarioBlockType() == ScenarioBlockStyle::SceneDescription
         && (_blockType == ScenarioBlockStyle::SceneHeading
-            || _blockType == ScenarioBlockStyle::SceneGroupHeader
             || _blockType == ScenarioBlockStyle::FolderHeader)) {
         ScenarioBlockStyle::Type currentBlockType = scenarioBlockType();
         while (!textCursor().atEnd()
                && currentBlockType != ScenarioBlockStyle::SceneHeading
-               && currentBlockType != ScenarioBlockStyle::SceneGroupHeader
-               && currentBlockType != ScenarioBlockStyle::SceneGroupFooter
                && currentBlockType != ScenarioBlockStyle::FolderFooter
                && currentBlockType != ScenarioBlockStyle::FolderHeader) {
             moveCursor(QTextCursor::NextBlock);
@@ -171,7 +168,6 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockTy
     if (outlineMode()
         && scenarioBlockType() == ScenarioBlockStyle::SceneDescription
         && (_blockType == ScenarioBlockStyle::SceneHeading
-            || _blockType == ScenarioBlockStyle::SceneGroupHeader
             || _blockType == ScenarioBlockStyle::FolderHeader)) {
         //
         // Сохраним текст блока, а сам блок удалим
@@ -213,7 +209,6 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockTy
         bool canChangeType =
                 _forced
                 || ((scenarioBlockType() != ScenarioBlockStyle::TitleHeader)
-                    && (scenarioBlockType() != ScenarioBlockStyle::SceneGroupFooter)
                     && (scenarioBlockType() != ScenarioBlockStyle::FolderFooter));
 
         //
@@ -1324,7 +1319,6 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
             cursor.movePosition(QTextCursor::NextBlock);
         } while (!cursor.atEnd()
                  && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneHeading
-                 && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::SceneGroupHeader
                  && ScenarioBlockStyle::forBlock(cursor.block()) != ScenarioBlockStyle::FolderHeader);
 
         //

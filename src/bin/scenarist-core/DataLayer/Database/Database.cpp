@@ -583,6 +583,15 @@ void Database::updateDatabase(QSqlDatabase& _database)
 				updateDatabaseTo_0_7_0(_database);
 			}
 		}
+        //
+        // 0.7.x
+        //
+        if (versionMinor <= 7) {
+            if (versionMinor < 7
+                || versionBuild <= 0) {
+                updateDatabaseTo_0_7_1(_database);
+            }
+        }
 	}
 
 	//
@@ -1128,13 +1137,57 @@ void Database::updateDatabaseTo_0_7_0(QSqlDatabase& _database)
 		//
 		// Добавление поля в таблицу сценария
 		//
-		q_updater.exec("ALTER TABLE scenario ADD COLUMN scheme TEXT NOT NULL DEFAULT('')");
-
-        //
-        // Добавление поля с именем пользователя в таблицу истории изменений данных
-        //
-        q_updater.exec("ALTER TABLE _database_history ADD COLUMN username TEXT NOT NULL DEFAULT('')");
+        q_updater.exec("ALTER TABLE scenario ADD COLUMN scheme TEXT NOT NULL DEFAULT('')");
 	}
 
-	_database.commit();
+    _database.commit();
+}
+
+void Database::updateDatabaseTo_0_7_1(QSqlDatabase& _database)
+{
+
+    QSqlQuery q_updater(_database);
+
+    _database.transaction();
+
+    {
+        //
+        // Преобразуем группы сцен в папки
+        //
+        // ... извлекаем текст сценария
+        //
+        q_updater.exec("SELECT id, text FROM scenario");
+        QMap<int, QString> scenarioTexts;
+        while (q_updater.next()) {
+            const int id = q_updater.record().value("id").toInt();
+            QString text = q_updater.record().value("text").toString();
+            //
+            // Заменяем старые теги на новые
+            //
+            text = text.replace("scene_group", "folder");
+            scenarioTexts.insert(id, text);
+        }
+        //
+        // ... обновим данные
+        //
+        q_updater.prepare("UPDATE scenario SET text = ? WHERE id = ?");
+        foreach (int id, scenarioTexts.keys()) {
+            q_updater.addBindValue(scenarioTexts.value(id));
+            q_updater.addBindValue(id);
+            q_updater.exec();
+        }
+
+        //
+        // Очищаем схемы карточек из прошлой версии
+        //
+        q_updater.exec("UPDATE scenario SET scheme = ''");
+
+        //
+        // Добавление полей с именем пользователя и временем в таблицу истории изменений данных
+        //
+        q_updater.exec("ALTER TABLE _database_history ADD COLUMN username TEXT NOT NULL DEFAULT('')");
+        q_updater.exec("ALTER TABLE _database_history ADD COLUMN datetime TEXT NOT NULL DEFAULT('')");
+    }
+
+    _database.commit();
 }

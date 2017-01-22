@@ -49,9 +49,7 @@ BusinessLogic::ScenarioModelItem::Type ScenarioSchemeItemDialog::cardType() cons
 {
 	if (m_ui->cardIsScene->isChecked()) {
 		return BusinessLogic::ScenarioModelItem::Scene;
-	} else if (m_ui->cardIsScenesGroup->isChecked()) {
-		return BusinessLogic::ScenarioModelItem::SceneGroup;
-	} else {
+    } else {
 		return BusinessLogic::ScenarioModelItem::Folder;
 	}
 }
@@ -63,12 +61,7 @@ void ScenarioSchemeItemDialog::setCardType(BusinessLogic::ScenarioModelItem::Typ
 		case BusinessLogic::ScenarioModelItem::Scene: {
 			m_ui->cardIsScene->setChecked(true);
 			break;
-		}
-
-		case BusinessLogic::ScenarioModelItem::SceneGroup: {
-			m_ui->cardIsScenesGroup->setChecked(true);
-			break;
-		}
+        }
 
 		case BusinessLogic::ScenarioModelItem::Folder: {
 			m_ui->cardIsFolder->setChecked(true);

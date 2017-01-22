@@ -289,8 +289,6 @@ SOURCES += \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/PreHandler.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/PrepareHandler.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneCharactersHandler.cpp \
-    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.cpp \
-    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneHeadingHandler.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/StandardKeyHandler.cpp \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/TitleHandler.cpp \
@@ -550,8 +548,6 @@ HEADERS += \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/PreHandler.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/PrepareHandler.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneCharactersHandler.h \
-    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneGroupFooterHandler.h \
-    scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneGroupHeaderHandler.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/SceneHeadingHandler.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/StandardKeyHandler.h \
     scenarist-core/UserInterfaceLayer/ScenarioTextEdit/Handlers/TitleHandler.h \

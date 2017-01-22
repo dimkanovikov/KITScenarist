@@ -13,7 +13,6 @@
     <qresource prefix="/Graphics">
         <file>Icons/folder.png</file>
         <file>Icons/scene.png</file>
-        <file>Icons/scene_group.png</file>
         <file>Icons/characters.png</file>
         <file>Icons/locations.png</file>
         <file>Icons/script.png</file>
@@ -65,7 +64,6 @@
         <file>Icons/Editing/rect.png</file>
         <file>Icons/help_startpage.png</file>
         <file>Icons/folder_noted.png</file>
-        <file>Icons/scene_group_noted.png</file>
         <file>Icons/scene_noted.png</file>
         <file>Icons/chevron-right.png</file>
         <file>Icons/statistics.png</file>

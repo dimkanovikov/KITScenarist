@@ -19,8 +19,7 @@ using BusinessLogic::ScenarioBlockStyle;
 
 ScenarioItemDialog::ScenarioItemDialog(QWidget *_parent) :
 	QLightBoxDialog(_parent),
-	m_folder(new QRadioButton(this)),
-	m_scenesGroup(new QRadioButton(this)),
+    m_folder(new QRadioButton(this)),
 	m_scene(new QRadioButton(this)),
 	m_header(new ScenarioLineEdit(this)),
 	m_color(new ColoredToolButton(QIcon(":/Graphics/Icons/Editing/rect.png"), this)),
@@ -52,9 +51,7 @@ ScenarioBlockStyle::Type ScenarioItemDialog::itemType() const
 	ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::SceneHeading;
 	if (m_folder->isChecked()) {
 		currentType = ScenarioBlockStyle::FolderHeader;
-	} else if (m_scenesGroup->isChecked()) {
-		currentType = ScenarioBlockStyle::SceneGroupHeader;
-	}
+    }
 
 	return currentType;
 }
@@ -83,8 +80,7 @@ void ScenarioItemDialog::aboutUpdateCurrentTextStyle()
 	// и избежать возни с концами групп
 	//
 	ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::Undefined;
-	if (m_folder->isChecked()
-		|| m_scenesGroup->isChecked()) {
+    if (m_folder->isChecked()) {
 		currentType = ScenarioBlockStyle::Note;
 	} else {
 		currentType = ScenarioBlockStyle::SceneHeading;
@@ -104,7 +100,6 @@ void ScenarioItemDialog::initView()
 
 	m_scene->setText(tr("Scene"));
     m_scene->setChecked(true);
-    m_scenesGroup->setText(tr("Scenes group"));
     m_folder->setText(tr("Folder"));
 
 	m_color->setColorsPane(ColoredToolButton::Google);
@@ -116,7 +111,6 @@ void ScenarioItemDialog::initView()
 
 	QHBoxLayout* topLayout = new QHBoxLayout;
     topLayout->addWidget(m_scene);
-	topLayout->addWidget(m_scenesGroup);
     topLayout->addWidget(m_folder);
     topLayout->addStretch();
     topLayout->addWidget(m_color);
@@ -138,8 +132,7 @@ void ScenarioItemDialog::initView()
 
 void ScenarioItemDialog::initConnections()
 {
-	connect(m_folder, SIGNAL(clicked()), this, SLOT(aboutUpdateCurrentTextStyle()));
-	connect(m_scenesGroup, SIGNAL(clicked()), this, SLOT(aboutUpdateCurrentTextStyle()));
+    connect(m_folder, SIGNAL(clicked()), this, SLOT(aboutUpdateCurrentTextStyle()));
 	connect(m_scene, SIGNAL(clicked()), this, SLOT(aboutUpdateCurrentTextStyle()));
 
 	connect(m_buttons, &QDialogButtonBox::accepted, [=] {

@@ -32,8 +32,7 @@ ShortcutsManager::ShortcutsManager(UserInterface::ScenarioTextEdit* _editor) :
 	createOrUpdateShortcut(ScenarioBlockStyle::Transition);
 	createOrUpdateShortcut(ScenarioBlockStyle::Note);
 	createOrUpdateShortcut(ScenarioBlockStyle::Title);
-	createOrUpdateShortcut(ScenarioBlockStyle::NoprintableText);
-	createOrUpdateShortcut(ScenarioBlockStyle::SceneGroupHeader);
+    createOrUpdateShortcut(ScenarioBlockStyle::NoprintableText);
 	createOrUpdateShortcut(ScenarioBlockStyle::FolderHeader);
 
 	//

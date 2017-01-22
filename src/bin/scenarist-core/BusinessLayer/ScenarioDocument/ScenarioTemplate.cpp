@@ -48,9 +48,7 @@ namespace {
 			s_typeNames.insert(ScenarioBlockStyle::Note, "note");
 			s_typeNames.insert(ScenarioBlockStyle::TitleHeader, "title_header");
 			s_typeNames.insert(ScenarioBlockStyle::Title, "title");
-			s_typeNames.insert(ScenarioBlockStyle::NoprintableText, "noprintable_text");
-			s_typeNames.insert(ScenarioBlockStyle::SceneGroupHeader, "scene_group_header");
-			s_typeNames.insert(ScenarioBlockStyle::SceneGroupFooter, "scene_group_footer");
+            s_typeNames.insert(ScenarioBlockStyle::NoprintableText, "noprintable_text");
 			s_typeNames.insert(ScenarioBlockStyle::FolderHeader, "folder_header");
 			s_typeNames.insert(ScenarioBlockStyle::FolderFooter, "folder_footer");
 			s_typeNames.insert(ScenarioBlockStyle::SceneDescription, "scene_description");
@@ -75,9 +73,7 @@ namespace {
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Note, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Shot"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::TitleHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Title Header"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::Title, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Title"));
-			s_beautifyTypeNames.insert(ScenarioBlockStyle::NoprintableText, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Noprintable Text"));
-			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneGroupHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Group"));
-			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneGroupFooter, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Group Footer"));
+            s_beautifyTypeNames.insert(ScenarioBlockStyle::NoprintableText, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Noprintable Text"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::FolderHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Folder"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::FolderFooter, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Folder Footer"));
 			s_beautifyTypeNames.insert(ScenarioBlockStyle::SceneDescription, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Scene Description"));
@@ -113,11 +109,7 @@ namespace {
 			//: Reduction of Title
 			s_shortTypeNames.insert(ScenarioBlockStyle::Title, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "Ti"));
 			//: Reduction of Noprintable Text
-			s_shortTypeNames.insert(ScenarioBlockStyle::NoprintableText, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "NT"));
-			//: Reduction of Scene Group
-			s_shortTypeNames.insert(ScenarioBlockStyle::SceneGroupHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "SG"));
-			//: Reduction of Scene Group Footer
-			s_shortTypeNames.insert(ScenarioBlockStyle::SceneGroupFooter, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "SGF"));
+            s_shortTypeNames.insert(ScenarioBlockStyle::NoprintableText, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "NT"));
 			//: Reduction of Folder
 			s_shortTypeNames.insert(ScenarioBlockStyle::FolderHeader, QApplication::translate("BusinessLogic::ScenarioBlockStyle", "F"));
 			//: Reduction of Folder Footer
@@ -369,25 +361,20 @@ bool ScenarioBlockStyle::isHeader() const
 
 bool ScenarioBlockStyle::isEmbeddable() const
 {
-	return  m_type == SceneGroupHeader
-			|| m_type == SceneGroupFooter
-			|| m_type == FolderHeader
+    return  m_type == FolderHeader
 			|| m_type == FolderFooter;
 }
 
 bool ScenarioBlockStyle::isEmbeddableHeader() const
 {
-	return  m_type == SceneGroupHeader
-			|| m_type == FolderHeader;
+    return  m_type == FolderHeader;
 }
 
 ScenarioBlockStyle::Type ScenarioBlockStyle::embeddableFooter() const
 {
 	ScenarioBlockStyle::Type footer = Undefined;
 
-	if (m_type == SceneGroupHeader) {
-		footer = SceneGroupFooter;
-	} else if (m_type == FolderHeader) {
+    if (m_type == FolderHeader) {
 		footer = FolderFooter;
 	}
 

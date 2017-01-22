@@ -82,7 +82,7 @@ int ScenarioModelItem::length() const
 	//
 	// + 1 перенос перед закрывающим элементом
 	//
-	if (m_type == Folder || m_type == SceneGroup) {
+    if (m_type == Folder) {
 		length += 1 + m_footer.length();
 	}
 
@@ -215,16 +215,7 @@ QPixmap ScenarioModelItem::icon() const
 				iconPath = ":/Graphics/Icons/scene_noted.png";
 			}
 			break;
-		}
-
-		case SceneGroup: {
-			if (!hasNote()) {
-				iconPath = ":/Graphics/Icons/scene_group.png";
-			} else {
-				iconPath = ":/Graphics/Icons/scene_group_noted.png";
-			}
-			break;
-		}
+        }
 
 		case Folder: {
 			if (!hasNote()) {

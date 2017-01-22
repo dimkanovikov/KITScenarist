@@ -211,11 +211,6 @@ QString ScenarioXml::scenarioToXml()
                     break;
                 }
 
-                case ScenarioBlockStyle::SceneGroupHeader: {
-                    canHaveColors = true;
-                    break;
-                }
-
                 case ScenarioBlockStyle::FolderHeader: {
                     canHaveColors = true;
                     break;
@@ -358,9 +353,8 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
     cursor.setPosition(_startPosition);
 
     //
-    // Подсчитаем кол-во незакрытых групп и папок, и закроем, если необходимо
+    // Подсчитаем кол-во незакрытых папок, и закроем, если необходимо
     //
-    int openedGroups = 0;
     int openedFolders = 0;
 
     QXmlStreamWriter writer(&resultXml);
@@ -439,27 +433,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 
                 case ScenarioBlockStyle::Parenthetical: {
                     needWrite = !textToSave.isEmpty();
-                    break;
-                }
-
-                case ScenarioBlockStyle::SceneGroupHeader: {
-                    canHaveUuidColorsAndTitle = true;
-
-                    ++openedGroups;
-
-                    break;
-                }
-
-                case ScenarioBlockStyle::SceneGroupFooter: {
-                    //
-                    // Закрываем группы, если были открыты, то просто корректируем счётчик,
-                    // а если открытых нет, то не записываем и конец
-                    //
-                    if (openedGroups > 0) {
-                        --openedGroups;
-                    } else {
-                        needWrite = false;
-                    }
                     break;
                 }
 
@@ -620,16 +593,6 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
 
     } while (cursor.position() < _endPosition
              && !cursor.atEnd());
-
-    //
-    // Закроем открытые группы
-    //
-    while (openedGroups > 0) {
-        writer.writeStartElement("scene_group_footer");
-        writer.writeCDATA(QObject::tr("END OF GROUP", "ScenarioXml"));
-        writer.writeEndElement();
-        --openedGroups;
-    }
 
     //
     // Закроем открытые папки
@@ -892,7 +855,6 @@ void ScenarioXml::xmlToScenarioV0(int _position, const QString& _xml)
                 // Если необходимо, загрузить информацию о сцене
                 //
                 if (tokenType == ScenarioBlockStyle::SceneHeading
-                    || tokenType == ScenarioBlockStyle::SceneGroupHeader
                     || tokenType == ScenarioBlockStyle::FolderHeader) {
                     QString synopsis = reader.attributes().value("synopsis").toString();
                     ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
@@ -1029,7 +991,6 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
                     // Если необходимо, загрузить информацию о сцене
                     //
                     if (tokenType == ScenarioBlockStyle::SceneHeading
-                        || tokenType == ScenarioBlockStyle::SceneGroupHeader
                         || tokenType == ScenarioBlockStyle::FolderHeader) {
                         ScenarioTextBlockInfo* info = new ScenarioTextBlockInfo;
                         if (reader.attributes().hasAttribute(ATTRIBUTE_UUID)) {

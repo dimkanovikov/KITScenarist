@@ -687,9 +687,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				cursor.movePosition(QTextCursor::EndOfBlock);
 				currentType = ScenarioBlockStyle::forBlock(cursor.block());
 			} while (!cursor.atEnd()
-					 && currentType != ScenarioBlockStyle::SceneHeading
-					 && currentType != ScenarioBlockStyle::SceneGroupHeader
-					 && currentType != ScenarioBlockStyle::SceneGroupFooter
+                     && currentType != ScenarioBlockStyle::SceneHeading
 					 && currentType != ScenarioBlockStyle::FolderHeader
 					 && currentType != ScenarioBlockStyle::FolderFooter);
 
@@ -702,9 +700,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			// и оступить на один блок назад в виду того, что мы зашли на следующий элемент
 			//
 			if (!cursor.atEnd()
-				|| currentType == ScenarioBlockStyle::SceneHeading
-				|| currentType == ScenarioBlockStyle::SceneGroupHeader
-				|| currentType == ScenarioBlockStyle::SceneGroupFooter
+                || currentType == ScenarioBlockStyle::SceneHeading
 				|| currentType == ScenarioBlockStyle::FolderHeader
 				|| currentType == ScenarioBlockStyle::FolderFooter) {
 				nextBlockType = currentType;
@@ -727,26 +723,13 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			// ... если текущий элемент является группирующим, то нужно включить
 			//     и все входящие в него группирующие элементы
 			//
-			if (currentType == ScenarioBlockStyle::SceneGroupHeader
-				|| currentType == ScenarioBlockStyle::FolderHeader) {
-				int openedScenesGroups = currentType == ScenarioBlockStyle::SceneGroupHeader ? 1 : 0;
+            if (currentType == ScenarioBlockStyle::FolderHeader) {
 				int openedFolders = currentType == ScenarioBlockStyle::FolderHeader ? 1 : 0;
 				QTextCursor endCursor = cursor;
 				while (!endCursor.atEnd()
-					   && (openedScenesGroups != 0
-						   || openedFolders != 0)) {
+                       && openedFolders != 0) {
 					endCursor.movePosition(QTextCursor::EndOfBlock);
-					switch (ScenarioBlockStyle::forBlock(endCursor.block())) {
-						case ScenarioBlockStyle::SceneGroupHeader: {
-							++openedScenesGroups;
-							break;
-						}
-
-						case ScenarioBlockStyle::SceneGroupFooter: {
-							--openedScenesGroups;
-							break;
-						}
-
+                    switch (ScenarioBlockStyle::forBlock(endCursor.block())) {
 						case ScenarioBlockStyle::FolderHeader: {
 							++openedFolders;
 							break;
@@ -767,8 +750,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			//
 			// ... или как минимум его закрывающий блок
 			//
-			else if (currentType == ScenarioBlockStyle::SceneGroupFooter
-					   || currentType == ScenarioBlockStyle::FolderFooter) {
+            else if (currentType == ScenarioBlockStyle::FolderFooter) {
 				QTextCursor endCursor = cursor;
 				endCursor.movePosition(QTextCursor::NextBlock);
 				endCursor.movePosition(QTextCursor::EndOfBlock);
@@ -782,8 +764,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				QTextCursor cursorForCheck(m_document);
 				cursorForCheck.setPosition(currentItemStartPos);
 				ScenarioBlockStyle::Type checkType = ScenarioBlockStyle::forBlock(cursorForCheck.block());
-				if (checkType != ScenarioBlockStyle::SceneGroupFooter
-					&& checkType != ScenarioBlockStyle::FolderFooter) {
+                if (checkType != ScenarioBlockStyle::FolderFooter) {
 					updateItem(currentItem, currentItemStartPos, currentItemEndPos);
 					m_model->updateItem(currentItem);
 				}
@@ -845,7 +826,6 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						break;
 					}
 
-					case ScenarioBlockStyle::SceneGroupHeader:
 					case ScenarioBlockStyle::FolderHeader: {
 						//
 						// Создать новый элемент
@@ -879,7 +859,6 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 						break;
 					}
 
-					case ScenarioBlockStyle::SceneGroupFooter:
 					case ScenarioBlockStyle::FolderFooter: {
 						//
 						// Делаем текущим родителем родителя группирующего элемента, чтобы последующие
@@ -926,10 +905,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 	ScenarioBlockStyle::Type blockType = ScenarioBlockStyle::forBlock(cursor.block());
 	if (blockType == ScenarioBlockStyle::SceneHeading) {
 		itemType = ScenarioModelItem::Scene;
-	} else if (blockType == ScenarioBlockStyle::SceneGroupHeader
-			   || blockType == ScenarioBlockStyle::SceneGroupFooter) {
-		itemType = ScenarioModelItem::SceneGroup;
-	} else if (blockType == ScenarioBlockStyle::FolderHeader
+    } else if (blockType == ScenarioBlockStyle::FolderHeader
 			   || blockType == ScenarioBlockStyle::FolderFooter) {
 		itemType = ScenarioModelItem::Folder;
 	}
@@ -966,29 +942,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
 			case ScenarioBlockStyle::SceneHeading: {
 				isNeedIncludeBlock = false;
 				break;
-			}
-
-			//
-			// Не включаем тект групп сцен
-			//
-			case ScenarioBlockStyle::SceneGroupHeader: {
-				++openedScenesGroups;
-				isNeedIncludeBlock = false;
-				break;
-			}
-			case ScenarioBlockStyle::SceneGroupFooter: {
-				if (openedScenesGroups == 0
-					&& openedFolders == 0) {
-					footer = cursor.block().text();
-				} else {
-					--openedScenesGroups;
-					if (openedScenesGroups == 0
-						&& openedFolders == 0) {
-						isNeedIncludeBlock = true;
-					}
-				}
-				break;
-			}
+            }
 
 			//
 			// Не включаем тект папок

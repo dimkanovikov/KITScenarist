@@ -508,8 +508,6 @@ void ScenarioTextEditWidget::aboutUpdateTextStyle()
     ScenarioBlockStyle::Type currentType = m_editor->scenarioBlockType();
     if (currentType == ScenarioBlockStyle::TitleHeader) {
         currentType = ScenarioBlockStyle::Title;
-    } else if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
-        currentType = ScenarioBlockStyle::SceneGroupHeader;
     } else if (currentType == ScenarioBlockStyle::FolderFooter) {
         currentType = ScenarioBlockStyle::FolderHeader;
     }
@@ -659,7 +657,6 @@ void ScenarioTextEditWidget::initStylesCombo()
             << ScenarioBlockStyle::Note
             << ScenarioBlockStyle::Transition
             << ScenarioBlockStyle::NoprintableText
-            << ScenarioBlockStyle::SceneGroupHeader
             << ScenarioBlockStyle::FolderHeader
             << ScenarioBlockStyle::SceneDescription;
 

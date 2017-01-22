@@ -95,9 +95,7 @@ namespace {
 		static QList<ScenarioBlockStyle::Type> s_outlinePrintableBlocksTypes =
 			QList<ScenarioBlockStyle::Type>()
 			<< ScenarioBlockStyle::SceneHeading
-			<< ScenarioBlockStyle::SceneCharacters
-			<< ScenarioBlockStyle::SceneGroupHeader
-			<< ScenarioBlockStyle::SceneGroupFooter
+            << ScenarioBlockStyle::SceneCharacters
 			<< ScenarioBlockStyle::SceneDescription;
 
 		static QList<ScenarioBlockStyle::Type> s_scenarioPrintableBlocksTypes =
@@ -111,9 +109,7 @@ namespace {
 			<< ScenarioBlockStyle::TitleHeader
 			<< ScenarioBlockStyle::Title
 			<< ScenarioBlockStyle::Note
-			<< ScenarioBlockStyle::Transition
-			<< ScenarioBlockStyle::SceneGroupHeader
-			<< ScenarioBlockStyle::SceneGroupFooter;
+            << ScenarioBlockStyle::Transition;
 
 		return
 				_outline
@@ -857,10 +853,9 @@ namespace {
 		const int linesToEndOfPageCount = linesToEndOfPage(preparedDocument, blockFormat, charFormat, blockLines);
 
 		//
-		// Для блоков "Время и место" и "Группа сцен"
+        // Для блоков "Время и место"
 		//
-		if (currentBlockType == ScenarioBlockStyle::SceneHeading
-			|| currentBlockType == ScenarioBlockStyle::SceneGroupHeader) {
+        if (currentBlockType == ScenarioBlockStyle::SceneHeading) {
 			checkPageBreakForSceneHeading(_destDocumentCursor, blockFormat, charFormat, blockLines, linesToEndOfPageCount);
 		}
 

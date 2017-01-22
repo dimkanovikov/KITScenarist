@@ -344,8 +344,7 @@ void TemplateDialog::initView()
 	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Note));
 	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::TitleHeader));
 	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::Title));
-	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::NoprintableText));
-	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneGroupHeader));
+    ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::NoprintableText));
 	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::FolderHeader));
 	ui->blockStyles->addItem(::makeListWidgetItem(ScenarioBlockStyle::SceneDescription));
 	ui->blockStyles->setAutoFillBackground(true);

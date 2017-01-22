@@ -19,9 +19,7 @@ namespace {
 	 */
 	static int mapItemTypeFromModelToBlock(int _itemType) {
 		int mappedType = BusinessLogic::ScenarioBlockStyle::SceneHeading;
-		if (_itemType == BusinessLogic::ScenarioModelItem::SceneGroup) {
-			mappedType = BusinessLogic::ScenarioBlockStyle::SceneGroupHeader;
-		} else if (_itemType == BusinessLogic::ScenarioModelItem::Folder) {
+        if (_itemType == BusinessLogic::ScenarioModelItem::Folder) {
 			mappedType = BusinessLogic::ScenarioBlockStyle::FolderHeader;
 		}
 

@@ -109,9 +109,7 @@ void FdxExporter::writeContent(QXmlStreamWriter& _writer, ScenarioDocument* _sce
 
 				case ScenarioBlockStyle::SceneDescription:
 				case ScenarioBlockStyle::Action:
-				case ScenarioBlockStyle::TitleHeader:
-				case ScenarioBlockStyle::SceneGroupHeader:
-				case ScenarioBlockStyle::SceneGroupFooter: {
+                case ScenarioBlockStyle::TitleHeader:{
 					paragraphType = "Action";
 					break;
 				}

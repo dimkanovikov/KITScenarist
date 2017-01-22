@@ -563,9 +563,7 @@ QList<int> StandardKeyHandler::findGroupCountsToDelete(int _topCursorPosition, i
 		//
 		// Если найден блок открывающий группу, то нужно удалить закрывающий блок
 		//
-		if (currentType == ScenarioBlockStyle::SceneGroupHeader) {
-			++groupCountsToDelete[SCENE_GROUP_FOOTER];
-		} else if (currentType == ScenarioBlockStyle::FolderHeader) {
+        if (currentType == ScenarioBlockStyle::FolderHeader) {
 			++groupCountsToDelete[FOLDER_FOOTER];
 		}
 
@@ -574,14 +572,7 @@ QList<int> StandardKeyHandler::findGroupCountsToDelete(int _topCursorPosition, i
 		// ... если все группы закрыты, нужно удалить предыдущую открытую
 		// ... в противном случае закрываем открытую группу
 		//
-		else if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
-			if (groupCountsToDelete.value(SCENE_GROUP_FOOTER) == 0) {
-				++groupCountsToDelete[SCENE_GROUP_HEADER];
-			}
-			else {
-				--groupCountsToDelete[SCENE_GROUP_FOOTER];
-			}
-		} else if (currentType == ScenarioBlockStyle::FolderFooter) {
+        else if (currentType == ScenarioBlockStyle::FolderFooter) {
 			if (groupCountsToDelete.value(FOLDER_FOOTER) == 0) {
 				++groupCountsToDelete[FOLDER_HEADER];
 			}
@@ -604,40 +595,7 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 {
 	//
 	// Удалим пары из последующего текста
-	//
-	// ... группы сцен
-	//
-	if (_groupCountsToDelete.value(SCENE_GROUP_FOOTER) > 0) {
-		QTextCursor cursor(editor()->document());
-		cursor.setPosition(_cursorPosition);
-		cursor.movePosition(QTextCursor::NextBlock);
-
-		// ... открытые группы на пути поиска необходимого для удаления блока
-		int openedGroups = 0;
-		int groupsToDeleteCount = _groupCountsToDelete.value(SCENE_GROUP_FOOTER);
-		do {
-			ScenarioBlockStyle::Type currentType =
-					ScenarioBlockStyle::forBlock(cursor.block());
-
-			if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
-				if (openedGroups == 0) {
-					cursor.select(QTextCursor::BlockUnderCursor);
-					cursor.deleteChar();
-					--groupsToDeleteCount;
-				} else {
-					--openedGroups;
-				}
-			} else if (currentType == ScenarioBlockStyle::SceneGroupHeader) {
-				// ... встретилась новая группа, которую не нужно удалять
-				++openedGroups;
-			}
-
-			cursor.movePosition(QTextCursor::NextBlock);
-			cursor.movePosition(QTextCursor::EndOfBlock);
-		} while (groupsToDeleteCount > 0
-				 && !cursor.atEnd());
-	}
-	//
+    //
 	// ... папки
 	//
 	if (_groupCountsToDelete.value(FOLDER_FOOTER) > 0) {
@@ -673,51 +631,7 @@ void StandardKeyHandler::removeGroupsPairs(int _cursorPosition, const QList<int>
 
 	//
 	// Удалим пары из предшествующего текста
-	//
-	// ... группы сцен
-	//
-	if (_groupCountsToDelete.value(SCENE_GROUP_HEADER) > 0) {
-		QTextCursor cursor = editor()->textCursor();
-		cursor.setPosition(_cursorPosition);
-		cursor.movePosition(QTextCursor::PreviousBlock);
-
-		// ... открытые группы на пути поиска необходимого для удаления блока
-		int openedGroups = 0;
-		int groupsToDeleteCount = _groupCountsToDelete.value(SCENE_GROUP_HEADER);
-		do {
-			ScenarioBlockStyle::Type currentType =
-					ScenarioBlockStyle::forBlock(cursor.block());
-
-			if (currentType == ScenarioBlockStyle::SceneGroupHeader) {
-				if (openedGroups == 0) {
-					cursor.select(QTextCursor::BlockUnderCursor);
-					cursor.deleteChar();
-					//
-					// Т.к. курсор после удаления уже находится в предыдущем блоке, смещаем его вперёд
-					//
-					cursor.movePosition(QTextCursor::NextBlock);
-
-					//
-					// Если это был самый первый блок
-					//
-					if (cursor.atStart()) {
-						cursor.deleteChar();
-					}
-
-					--groupsToDeleteCount;
-				} else {
-					--openedGroups;
-				}
-			} else if (currentType == ScenarioBlockStyle::SceneGroupFooter) {
-				// ... встретилась новая группа, которую не нужно удалять
-				++openedGroups;
-			}
-
-			cursor.movePosition(QTextCursor::PreviousBlock);
-		} while (groupsToDeleteCount > 0
-				 && !cursor.atStart());
-	}
-	//
+    //
 	// ... папки
 	//
 	if (_groupCountsToDelete.value(FOLDER_HEADER) > 0) {

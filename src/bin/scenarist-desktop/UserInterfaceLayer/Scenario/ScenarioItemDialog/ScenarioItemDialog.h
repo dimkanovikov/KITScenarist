@@ -77,8 +77,7 @@ namespace UserInterface
 		 * @brief Переключатели для выбора типа элемента
 		 */
 		/** @{ */
-		QRadioButton* m_folder;
-		QRadioButton* m_scenesGroup;
+        QRadioButton* m_folder;
 		QRadioButton* m_scene;
 		/** @} */
 

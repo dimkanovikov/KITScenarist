@@ -13,8 +13,6 @@
 #include "TitleHeaderHandler.h"
 #include "TitleHandler.h"
 #include "NoprintableTextHandler.h"
-#include "SceneGroupHeaderHandler.h"
-#include "SceneGroupFooterHandler.h"
 #include "FolderHeaderHandler.h"
 #include "FolderFooterHandler.h"
 #include "SceneDescriptionHandler.h"
@@ -92,9 +90,7 @@ KeyPressHandlerFacade::KeyPressHandlerFacade(ScenarioTextEdit* _editor) :
 	m_noteHandler = new NoteHandler(_editor);
 	m_titleheaderHandler = new TitleHeaderHandler(_editor);
 	m_titleHandler = new TitleHandler(_editor);
-	m_simpleTextHandler = new NoprintableTextHandler(_editor);
-	m_sceneGroupHeaderHandler = new SceneGroupHeaderHandler(_editor);
-	m_sceneGroupFooterHandler = new SceneGroupFooterHandler(_editor);
+    m_simpleTextHandler = new NoprintableTextHandler(_editor);
 	m_folderHeaderHandler = new FolderHeaderHandler(_editor);
 	m_folderFooterHandler = new FolderFooterHandler(_editor);
 	m_sceneDescriptionHandler = new SceneDescriptionHandler(_editor);
@@ -157,17 +153,7 @@ AbstractKeyHandler* KeyPressHandlerFacade::handlerFor(ScenarioBlockStyle::Type _
 		case ScenarioBlockStyle::NoprintableText: {
 			handler = m_simpleTextHandler;
 			break;
-		}
-
-		case ScenarioBlockStyle::SceneGroupHeader: {
-			handler = m_sceneGroupHeaderHandler;
-			break;
-		}
-
-		case ScenarioBlockStyle::SceneGroupFooter: {
-			handler = m_sceneGroupFooterHandler;
-			break;
-		}
+        }
 
 		case ScenarioBlockStyle::FolderHeader: {
 			handler = m_folderHeaderHandler;

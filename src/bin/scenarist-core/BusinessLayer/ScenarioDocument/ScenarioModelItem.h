@@ -20,8 +20,7 @@ namespace BusinessLogic
 		 */
 		enum Type {
 			Undefined,
-			Scene,
-			SceneGroup,
+            Scene,
 			Folder,
 			Scenario
 		};

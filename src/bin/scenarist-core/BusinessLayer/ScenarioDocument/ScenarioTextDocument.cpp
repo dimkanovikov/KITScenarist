@@ -446,8 +446,6 @@ QList<ScenarioBlockStyle::Type> ScenarioTextDocument::visibleBlocksTypes() const
         QList<ScenarioBlockStyle::Type>()
         << ScenarioBlockStyle::SceneHeading
         << ScenarioBlockStyle::SceneCharacters
-        << ScenarioBlockStyle::SceneGroupHeader
-        << ScenarioBlockStyle::SceneGroupFooter
         << ScenarioBlockStyle::FolderHeader
         << ScenarioBlockStyle::FolderFooter
         << ScenarioBlockStyle::SceneDescription;
@@ -465,8 +463,6 @@ QList<ScenarioBlockStyle::Type> ScenarioTextDocument::visibleBlocksTypes() const
             << ScenarioBlockStyle::Note
             << ScenarioBlockStyle::Transition
             << ScenarioBlockStyle::NoprintableText
-            << ScenarioBlockStyle::SceneGroupHeader
-            << ScenarioBlockStyle::SceneGroupFooter
             << ScenarioBlockStyle::FolderHeader
             << ScenarioBlockStyle::FolderFooter;
 

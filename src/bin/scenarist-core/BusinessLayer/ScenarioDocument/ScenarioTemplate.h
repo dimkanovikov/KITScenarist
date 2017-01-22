@@ -32,9 +32,7 @@ namespace BusinessLogic
 			Note,			//!< Примечание
 			TitleHeader,	//!< Заголовок титра
 			Title,			//!< Текст титра
-			NoprintableText,//!< Непечатный текст
-			SceneGroupHeader,	//!< Заголовок группы сцен
-			SceneGroupFooter,	//!< Окончание группы сцен
+            NoprintableText,//!< Непечатный текст
 			FolderHeader,	//!< Заголовок папки
 			FolderFooter,	//!< Окончание папки
 			SceneDescription	//!< Описание элемента сценария
