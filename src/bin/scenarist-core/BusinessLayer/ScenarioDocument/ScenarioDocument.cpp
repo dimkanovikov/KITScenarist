@@ -677,8 +677,12 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 		}
 
 		do {
+            //
+            // Тип текущего элемента
+            //
+            const ScenarioBlockStyle::Type itemType = ScenarioBlockStyle::forBlock(cursor.block());
 
-			//
+            //
 			// Идём до конца элемента
 			//
 			ScenarioBlockStyle::Type currentType = ScenarioBlockStyle::Undefined;
@@ -723,8 +727,8 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 			// ... если текущий элемент является группирующим, то нужно включить
 			//     и все входящие в него группирующие элементы
 			//
-            if (currentType == ScenarioBlockStyle::FolderHeader) {
-				int openedFolders = currentType == ScenarioBlockStyle::FolderHeader ? 1 : 0;
+            if (itemType == ScenarioBlockStyle::FolderHeader) {
+                int openedFolders = 1;
 				QTextCursor endCursor = cursor;
 				while (!endCursor.atEnd()
                        && openedFolders != 0) {
@@ -746,16 +750,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
 				}
 
 				currentItemEndPos = endCursor.position();
-			}
-			//
-			// ... или как минимум его закрывающий блок
-			//
-            else if (currentType == ScenarioBlockStyle::FolderFooter) {
-				QTextCursor endCursor = cursor;
-				endCursor.movePosition(QTextCursor::NextBlock);
-				endCursor.movePosition(QTextCursor::EndOfBlock);
-				currentItemEndPos = endCursor.position();
-			}
+            }
 
 			//
 			// Сформируем элемент, если это не конец группы
