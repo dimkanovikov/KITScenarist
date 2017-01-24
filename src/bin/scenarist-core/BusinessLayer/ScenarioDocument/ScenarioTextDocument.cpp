@@ -582,9 +582,11 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
     //
     if (sourcePrevNodePosition != -1) {
         sourceChildNodes.at(sourcePrevNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
+        sourceChildNodes.at(sourcePrevNodePosition).removeChild(sourceChildNodes.at(sourcePrevNodePosition).firstChildElement("reviews"));
     }
     if (targetPrevNodePosition != -1) {
         targetChildNodes.at(targetPrevNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
+        targetChildNodes.at(targetPrevNodePosition).removeChild(targetChildNodes.at(targetPrevNodePosition).firstChildElement("reviews"));
     }
 
     //
