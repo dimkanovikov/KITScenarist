@@ -121,6 +121,8 @@
         <file>Icons/Editing/close.png</file>
         <file>Icons/Indicator/unsynced.png</file>
         <file>Icons/Indicator/synced.png</file>
+        <file>Icons/character.png</file>
+        <file>Icons/location.png</file>
     </qresource>
     <qresource prefix="/Translations">
         <file>Translations/Scenarist_ru.qm</file>

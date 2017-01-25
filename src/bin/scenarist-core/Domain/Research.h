@@ -9,165 +9,169 @@
 
 namespace Domain
 {
-	/**
-	 * @brief Класс разработки
-	 */
-	class Research : public DomainObject
-	{
-	public:
-		/**
-		 * @brief Типы разработок
-		 */
-		enum Type {
-			Scenario,
-			TitlePage,
-			Synopsis,
-			ResearchRoot,
-			Folder,
-			Text,
-			Url,
-			ImagesGallery,
-			Image,
-			MindMap
-		};
+    /**
+     * @brief Класс разработки
+     */
+    class Research : public DomainObject
+    {
+    public:
+        /**
+         * @brief Типы разработок
+         */
+        enum Type {
+            Scenario,
+            TitlePage,
+            Synopsis,
+            ResearchRoot,
+            Folder,
+            Text,
+            Url,
+            ImagesGallery,
+            Image,
+            MindMap,
+            CharactersRoot = 100, // оставляем резервное место для новых элементов разработки
+            Character,
+            LocationsRoot = 200,
+            Location
+        };
 
-	public:
-		Research(const Identifier& _id, Research* _parent, Type _type, int _sortOrder,
-			const QString& _name, const QString& _description = QString::null,
-			const QString& _url = QString::null, const QPixmap& _image = QPixmap());
+    public:
+        Research(const Identifier& _id, Research* _parent, Type _type, int _sortOrder,
+            const QString& _name, const QString& _description = QString::null,
+            const QString& _url = QString::null, const QPixmap& _image = QPixmap());
 
-		/**
-		 * @brief Получить родителя
-		 */
-		Research* parent() const;
+        /**
+         * @brief Получить родителя
+         */
+        Research* parent() const;
 
-		/**
-		 * @brief Установить родителя
-		 */
-		void setParent(Research* _parent);
+        /**
+         * @brief Установить родителя
+         */
+        void setParent(Research* _parent);
 
-		/**
-		 * @brief Получить тип
-		 */
-		Type type() const;
+        /**
+         * @brief Получить тип
+         */
+        Type type() const;
 
-		/**
-		 * @brief Установить тип
-		 */
-		void setType(Type _type);
+        /**
+         * @brief Установить тип
+         */
+        void setType(Type _type);
 
-		/**
-		 * @brief Получить название
-		 */
-		QString name() const;
+        /**
+         * @brief Получить название
+         */
+        QString name() const;
 
-		/**
-		 * @brief Установить название
-		 */
-		void setName(const QString& _name);
+        /**
+         * @brief Установить название
+         */
+        void setName(const QString& _name);
 
-		/**
-		 * @brief Получить описание
-		 */
-		QString description() const;
+        /**
+         * @brief Получить описание
+         */
+        QString description() const;
 
-		/**
-		 * @brief Установить описание
-		 */
-		void setDescription(const QString& _description);
+        /**
+         * @brief Установить описание
+         */
+        void setDescription(const QString& _description);
 
-		/**
-		 * @brief Получить ссылку
-		 */
-		QString url() const;
+        /**
+         * @brief Получить ссылку
+         */
+        QString url() const;
 
-		/**
-		 * @brief Установить ссылку
-		 */
-		void setUrl(const QString& _url);
+        /**
+         * @brief Установить ссылку
+         */
+        void setUrl(const QString& _url);
 
-		/**
-		 * @brief Получить изображение
-		 */
-		QPixmap image() const;
+        /**
+         * @brief Получить изображение
+         */
+        QPixmap image() const;
 
-		/**
-		 * @brief Установить изображение
-		 */
-		void setImage(const QPixmap& _image);
+        /**
+         * @brief Установить изображение
+         */
+        void setImage(const QPixmap& _image);
 
-		/**
-		 * @brief Получить позицию сортировки
-		 */
-		int sortOrder() const;
+        /**
+         * @brief Получить позицию сортировки
+         */
+        int sortOrder() const;
 
-		/**
-		 * @brief Установить позицию сортировки
-		 */
-		void setSortOrder(int _sortOrder);
+        /**
+         * @brief Установить позицию сортировки
+         */
+        void setSortOrder(int _sortOrder);
 
-	private:
-		/**
-		 * @brief Родительский элемент
-		 */
-		Research* m_parent;
+    private:
+        /**
+         * @brief Родительский элемент
+         */
+        Research* m_parent;
 
-		/**
-		 * @brief Тип
-		 */
-		Type m_type;
+        /**
+         * @brief Тип
+         */
+        Type m_type;
 
-		/**
-		 * @brief Название
-		 */
-		QString m_name;
+        /**
+         * @brief Название
+         */
+        QString m_name;
 
-		/**
-		 * @brief Описание
-		 * @note Html-форматированный текст. Если в элементе хранится ссылка на интернет-ресурс,
-		 *		 то в этом поле кэшируется содержимое интернет-страницы
-		 */
-		QString m_description;
+        /**
+         * @brief Описание
+         * @note Html-форматированный текст. Если в элементе хранится ссылка на интернет-ресурс,
+         *		 то в этом поле кэшируется содержимое интернет-страницы
+         */
+        QString m_description;
 
-		/**
-		 * @brief Ссылка на интернет-ресурс
-		 */
-		QString m_url;
+        /**
+         * @brief Ссылка на интернет-ресурс
+         */
+        QString m_url;
 
-		/**
-		 * @brief Изображение
-		 */
-		QPixmap m_image;
+        /**
+         * @brief Изображение
+         */
+        QPixmap m_image;
 
-		/**
-		 * @brief Порядок сортировки
-		 */
-		int m_sortOrder;
-	};
+        /**
+         * @brief Порядок сортировки
+         */
+        int m_sortOrder;
+    };
 
-	// ****
+    // ****
 
-	class ResearchTable : public DomainObjectsItemModel
-	{
-		Q_OBJECT
+    class ResearchTable : public DomainObjectsItemModel
+    {
+        Q_OBJECT
 
-	public:
-		explicit ResearchTable(QObject* _parent = 0);
+    public:
+        explicit ResearchTable(QObject* _parent = 0);
 
-	public:
-		enum Column {
-			Undefined,
-			Id,
-			Name
-		};
+    public:
+        enum Column {
+            Undefined,
+            Id,
+            Name
+        };
 
-	public:
-		int columnCount(const QModelIndex&) const;
-		QVariant data(const QModelIndex& _index, int _role) const;
+    public:
+        int columnCount(const QModelIndex&) const;
+        QVariant data(const QModelIndex& _index, int _role) const;
 
-	private:
-		Column sectionToColumn(int _section) const;
-	};
+    private:
+        Column sectionToColumn(int _section) const;
+    };
 }
 
 #endif // RESEARCH_H

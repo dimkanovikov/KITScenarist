@@ -7,103 +7,170 @@ using UserInterface::ResearchItemDialog;
 
 
 ResearchItemDialog::ResearchItemDialog(QWidget* _parent) :
-	QLightBoxDialog(_parent),
-	m_ui(new Ui::ResearchItemDialog)
+    QLightBoxDialog(_parent),
+    m_ui(new Ui::ResearchItemDialog)
 {
-	m_ui->setupUi(this);
+    m_ui->setupUi(this);
 
-	initView();
-	initConnections();
+    initView();
+    initConnections();
 }
 
 ResearchItemDialog::~ResearchItemDialog()
 {
-	delete m_ui;
+    delete m_ui;
 }
 
 void ResearchItemDialog::clear()
 {
-	m_ui->name->clear();
+    m_ui->name->clear();
 }
 
 void ResearchItemDialog::setInsertParent(const QString& _parentName)
 {
-	if (!_parentName.isEmpty()) {
-		m_ui->isInsert->show();
-		m_ui->isInsert->setText(tr("Insert into \"%1\"").arg(_parentName));
-	} else {
-		m_ui->isInsert->hide();
-		m_ui->isInsert->setText(QString::null);
-	}
+    if (!_parentName.isEmpty()) {
+        m_ui->isInsert->show();
+        m_ui->isInsert->setText(tr("Insert into \"%1\"").arg(_parentName));
+    } else {
+        m_ui->isInsert->hide();
+        m_ui->isInsert->setText(QString::null);
+    }
+}
+
+void ResearchItemDialog::setInsertAllow(bool _isCharacterAllow, bool _isLocationAllow)
+{
+    disconnect(m_ui->character, &QRadioButton::toggled, m_ui->isInsert, &QCheckBox::toggle);
+    disconnect(m_ui->location, &QRadioButton::toggled, m_ui->isInsert, &QCheckBox::toggle);
+
+    //
+    // Настроим видимость вариантов выбора персонажей и локаций
+    //
+    m_ui->character->setVisible(_isCharacterAllow);
+    m_ui->location->setVisible(_isLocationAllow);
+
+    if (_isCharacterAllow || _isLocationAllow) {
+        m_ui->isInsert->setChecked(false);
+        m_ui->isInsert->setEnabled(false);
+        connect(m_ui->character, &QRadioButton::toggled, m_ui->isInsert, &QCheckBox::toggle);
+        connect(m_ui->location, &QRadioButton::toggled, m_ui->isInsert, &QCheckBox::toggle);
+    } else {
+        m_ui->isInsert->setEnabled(true);
+    }
+
+    //
+    // Настроим видимость вариантов выбора данных
+    //
+    bool isDataItemsVisible = true;
+    if (_isCharacterAllow || _isLocationAllow) {
+        isDataItemsVisible = !m_ui->isInsert->text().isNull();
+    }
+    m_ui->folder->setVisible(isDataItemsVisible);
+    m_ui->text->setVisible(isDataItemsVisible);
+    m_ui->other->setVisible(isDataItemsVisible);
+    m_ui->otherType->setVisible(isDataItemsVisible);
+
+    //
+    // Если выбран видимый в данный момент элемент
+    //
+    if ((m_ui->character->isVisible() && m_ui->character->isChecked())
+        || (m_ui->location->isVisible() && m_ui->location->isChecked())
+        || (m_ui->folder->isVisible() && m_ui->folder->isChecked())
+        || (m_ui->text->isVisible() && m_ui->text->isChecked())
+        || (m_ui->other->isVisible() && m_ui->other->isChecked())) {
+        //
+        // ... то всё ок, так и оставляем
+        //
+    }
+    //
+    // А если невидимый
+    //
+    else {
+        //
+        // ... то выберем один из видимых
+        //
+        if (_isCharacterAllow) {
+            m_ui->character->setChecked(true);
+        } else {
+            if (_isLocationAllow) {
+                m_ui->location->setChecked(true);
+            } else {
+                m_ui->folder->setChecked(true);
+            }
+        }
+    }
 }
 
 int ResearchItemDialog::researchType() const
 {
-	Domain::Research::Type type = Domain::Research::Text;
-	if (m_ui->folder->isChecked()) {
-		type = Domain::Research::Folder;
-	} else if (m_ui->text->isChecked()) {
-		type = Domain::Research::Text;
-	} else if (m_ui->other->isChecked()) {
-		switch (m_ui->otherType->currentIndex()) {
-			case 0: {
-				type = Domain::Research::MindMap;
-				break;
-			}
+    Domain::Research::Type type = Domain::Research::Text;
+    if (m_ui->character->isChecked()) {
+        type = Domain::Research::Character;
+    } else if (m_ui->location->isChecked()) {
+        type = Domain::Research::Location;
+    } else if (m_ui->folder->isChecked()) {
+        type = Domain::Research::Folder;
+    } else if (m_ui->text->isChecked()) {
+        type = Domain::Research::Text;
+    } else if (m_ui->other->isChecked()) {
+        switch (m_ui->otherType->currentIndex()) {
+            case 0: {
+                type = Domain::Research::MindMap;
+                break;
+            }
 
-			case 1: {
-				type = Domain::Research::ImagesGallery;
-				break;
-			}
+            case 1: {
+                type = Domain::Research::ImagesGallery;
+                break;
+            }
 
-			case 2: {
-				type = Domain::Research::Url;
-				break;
-			}
-		}
-	}
-	return type;
+            case 2: {
+                type = Domain::Research::Url;
+                break;
+            }
+        }
+    }
+    return type;
 }
 
 QString ResearchItemDialog::researchName() const
 {
-	return m_ui->name->text();
+    return m_ui->name->text();
 }
 
 bool ResearchItemDialog::insertResearchInParent() const
 {
-	return !m_ui->isInsert->text().isEmpty() && m_ui->isInsert->isChecked();
+    return !m_ui->isInsert->text().isEmpty() && m_ui->isInsert->isChecked();
 }
 
 QWidget* ResearchItemDialog::focusedOnExec() const
 {
-	return m_ui->name;
+    return m_ui->name;
 }
 
 void ResearchItemDialog::initView()
 {
-	QLightBoxDialog::initView();
+    QLightBoxDialog::initView();
 
 #ifdef Q_OS_WIN
-	//
-	// В виндовс XP webengine не работает, поэтому скрываем пункт с добавлением ссылки
-	//
-	if (QSysInfo::windowsVersion() == QSysInfo::WV_XP) {
-		m_ui->otherType->removeItem(2);
-	}
+    //
+    // В виндовс XP webengine не работает, поэтому скрываем пункт с добавлением ссылки
+    //
+    if (QSysInfo::windowsVersion() == QSysInfo::WV_XP) {
+        m_ui->otherType->removeItem(2);
+    }
 #endif
 }
 
 void ResearchItemDialog::initConnections()
 {
-	connect(m_ui->other, &QRadioButton::toggled, m_ui->otherType, &QComboBox::setEnabled);
+    connect(m_ui->other, &QRadioButton::toggled, m_ui->otherType, &QComboBox::setEnabled);
 
-	connect(m_ui->buttons, &QDialogButtonBox::accepted, [=](){
-		if (!m_ui->name->text().isEmpty()) {
-			accept();
-		}
-	});
-	connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &QLightBoxDialog::reject);
+    connect(m_ui->buttons, &QDialogButtonBox::accepted, [=](){
+        if (!m_ui->name->text().isEmpty()) {
+            accept();
+        }
+    });
+    connect(m_ui->buttons, &QDialogButtonBox::rejected, this, &QLightBoxDialog::reject);
 
-	QLightBoxDialog::initConnections();
+    QLightBoxDialog::initConnections();
 }

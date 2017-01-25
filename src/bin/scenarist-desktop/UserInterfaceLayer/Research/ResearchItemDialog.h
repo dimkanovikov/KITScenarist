@@ -4,65 +4,74 @@
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxdialog.h>
 
 namespace Ui {
-	class ResearchItemDialog;
+    class ResearchItemDialog;
 }
 
 
 namespace UserInterface
 {
-	/**
-	 * @brief Диалог добаления элемента разработки
-	 */
-	class ResearchItemDialog : public QLightBoxDialog
-	{
-		Q_OBJECT
+    /**
+     * @brief Диалог добаления элемента разработки
+     */
+    class ResearchItemDialog : public QLightBoxDialog
+    {
+        Q_OBJECT
 
-	public:
-		explicit ResearchItemDialog(QWidget* _parent = 0);
-		~ResearchItemDialog();
+    public:
+        explicit ResearchItemDialog(QWidget* _parent = 0);
+        ~ResearchItemDialog();
 
-		/**
-		 * @brief Очистить диалог
-		 */
-		void clear();
+        /**
+         * @brief Очистить диалог
+         */
+        void clear();
 
-		void setInsertParent(const QString& _parentName = QString::null);
+        /**
+         * @brief Установить возможность вставки элемент разработки в родителя
+         * @note Должен устанавливаться перед setInsertAllow, т.к. он настраивает доступность вставки
+         */
+        void setInsertParent(const QString& _parentName = QString::null);
 
-		/**
-		 * @brief Тип разработки
-		 */
-		int researchType() const;
+        /**
+         * @brief Установить возможность добавления персонажа и локации
+         */
+        void setInsertAllow(bool _isCharacterAllow, bool _isLocationAllow);
 
-		/**
-		 * @brief Название разработки
-		 */
-		QString researchName() const;
+        /**
+         * @brief Тип разработки
+         */
+        int researchType() const;
 
-		/**
-		 * @brief Нужно ли встраивать в родительский элемент
-		 */
-		bool insertResearchInParent() const;
+        /**
+         * @brief Название разработки
+         */
+        QString researchName() const;
 
-	protected:
-		/**
-		 * @brief Указываем виджет на который нужно установить фокус при отображении диалога
-		 */
-		QWidget* focusedOnExec() const;
+        /**
+         * @brief Нужно ли встраивать в родительский элемент
+         */
+        bool insertResearchInParent() const;
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView();
+    protected:
+        /**
+         * @brief Указываем виджет на который нужно установить фокус при отображении диалога
+         */
+        QWidget* focusedOnExec() const;
 
-		/**
-		 * @brief Настроить соединения
-		 */
-		void initConnections();
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
-	private:
-		Ui::ResearchItemDialog* m_ui;
-	};
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
+
+    private:
+        Ui::ResearchItemDialog* m_ui;
+    };
 }
 
 #endif // RESEARCHITEMDIALOG_H

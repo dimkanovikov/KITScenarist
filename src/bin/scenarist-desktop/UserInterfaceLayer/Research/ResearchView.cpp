@@ -200,6 +200,48 @@ void ResearchView::editSynopsis(const QString& _synopsis)
     setSearchVisible(false);
 }
 
+void ResearchView::editCharactersRoot()
+{
+    m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->charactersRootEdit);
+
+    //
+    // Но кнопку удаления всё-равно скрываем
+    //
+    setResearchManageButtonsVisible(true, false);
+    setSearchVisible(false);
+}
+
+void ResearchView::editCharacter(const QString& _name, const QString& _description)
+{
+    m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->characterEdit);
+    m_ui->characterName->setText(_name);
+    m_ui->characterDescription->setHtml(_description);
+
+    setResearchManageButtonsVisible(true);
+    setSearchVisible(true);
+}
+
+void ResearchView::editLocationsRoot()
+{
+    m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->locationsRootEdit);
+
+    //
+    // Но кнопку удаления всё-равно скрываем
+    //
+    setResearchManageButtonsVisible(true, false);
+    setSearchVisible(false);
+}
+
+void ResearchView::editLocation(const QString& _name, const QString& _description)
+{
+    m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->locationEdit);
+    m_ui->locationName->setText(_name);
+    m_ui->locationDescription->setHtml(_description);
+
+    setResearchManageButtonsVisible(true);
+    setSearchVisible(true);
+}
+
 void ResearchView::editResearchRoot()
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->researchRootEdit);
@@ -207,8 +249,7 @@ void ResearchView::editResearchRoot()
     //
     // Но кнопку удаления всё-равно скрываем
     //
-    setResearchManageButtonsVisible(true);
-    m_ui->removeResearchItem->hide();
+    setResearchManageButtonsVisible(true, false);
     setSearchVisible(false);
 }
 
@@ -390,10 +431,15 @@ bool ResearchView::eventFilter(QObject* _object, QEvent* _event)
     return QWidget::eventFilter(_object, _event);
 }
 
-void ResearchView::setResearchManageButtonsVisible(bool _isVisible)
+void ResearchView::setResearchManageButtonsVisible(bool _isVisible, bool _isDeleteVisible)
 {
-    m_ui->addResearchItem->setVisible(_isVisible);
-    m_ui->removeResearchItem->setVisible(_isVisible);
+    if (_isVisible) {
+        m_ui->addResearchItem->setVisible(_isVisible);
+        m_ui->removeResearchItem->setVisible(_isDeleteVisible);
+    } else {
+        m_ui->addResearchItem->setVisible(_isVisible);
+        m_ui->removeResearchItem->setVisible(_isVisible);
+    }
 }
 
 void ResearchView::setSearchVisible(bool _isVisible)
