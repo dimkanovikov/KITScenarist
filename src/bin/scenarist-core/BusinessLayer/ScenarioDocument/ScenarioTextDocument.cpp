@@ -519,7 +519,8 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
     // В заголовке цикла мы идем до тех пор, пока, либо не прошли все теги хотя бы одного документа,
     // либо обнаружили разные теги у обрабатываемых
     //
-    while (((!_reversed && sourceCurrentNodePosition != sourceChildNodes.size() && targetCurrentNodePosition != targetChildNodes.size())
+    while (((!_reversed && sourceCurrentNodePosition != sourceChildNodes.size()
+             && targetCurrentNodePosition != targetChildNodes.size())
             || (_reversed && sourceCurrentNodePosition >= 0 && targetCurrentNodePosition >= 0))
            && (nodeToString(sourceChildNodes.at(sourceCurrentNodePosition)) ==
                 nodeToString(targetChildNodes.at(targetCurrentNodePosition)))) {
@@ -527,10 +528,12 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
             //
             // Получим текущие обрабатываемые строки
             //
-            QString sourceCurrentNodeValue = TextEditHelper::fromHtmlEscaped(sourceChildNodes.at(sourceCurrentNodePosition).firstChildElement("v")
-                    .childNodes().at(0).toCDATASection().data());
-            QString targetCurrentNodeValue = TextEditHelper::fromHtmlEscaped(targetChildNodes.at(targetCurrentNodePosition).firstChildElement("v")
-                    .childNodes().at(0).toCDATASection().data());
+            QString sourceCurrentNodeValue = TextEditHelper::fromHtmlEscaped(
+                        sourceChildNodes.at(sourceCurrentNodePosition).firstChildElement("v")
+                        .childNodes().at(0).toCDATASection().data());
+            QString targetCurrentNodeValue = TextEditHelper::fromHtmlEscaped(
+                        targetChildNodes.at(targetCurrentNodePosition).firstChildElement("v")
+                        .childNodes().at(0).toCDATASection().data());
 
             //
             // Можем удалить предыдущие теги, если они у нас есть
