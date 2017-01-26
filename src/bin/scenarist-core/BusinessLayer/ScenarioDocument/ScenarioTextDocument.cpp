@@ -535,32 +535,36 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
             //
             // Можем удалить предыдущие теги, если они у нас есть
             //
-            if (sourcePrevNodePosition != -1) {
+            if (!_reversed && sourcePrevNodePosition != -1) {
                 sourceDocument.firstChildElement(SCENARIO_TAG).removeChild(sourceChildNodes.at(sourcePrevNodePosition));
                 //
                 // Раз мы удалили тег, то все справа сдвинулось влево на 1
                 //
-                if (!_reversed) {
-                    --sourceCurrentNodePosition;
-                }
+                --sourceCurrentNodePosition;
+
+            //
+            // А вот в обратном случае, мы сразу удаляем
+            //
+            } else if (_reversed) {
+                sourceDocument.firstChildElement(SCENARIO_TAG).removeChild(sourceChildNodes.at(sourceCurrentNodePosition));
             }
 
             //
             // Аналогично
             //
-            if (targetPrevNodePosition != -1) {
+            if (!_reversed && targetPrevNodePosition != -1) {
                 targetDocument.firstChildElement(SCENARIO_TAG).removeChild(targetChildNodes.at(targetPrevNodePosition));
-                if (!_reversed) {
-                    --targetCurrentNodePosition;
-                }
+                --targetCurrentNodePosition;
+            } else if (_reversed) {
+                targetDocument.firstChildElement(SCENARIO_TAG).removeChild(targetChildNodes.at(targetCurrentNodePosition));
             }
 
             //
             // Обработаем длину и позицию вставки
             // Если какой-то тег удалили, то удалили еще один символ (\n)
             //
-            processLenghtPos(_xmls.first, sourceCurrentNodeValue.size() + (sourcePrevNodePosition == -1 ? 0 : 1), _reversed);
-            processLenghtPos(_xmls.second, targetCurrentNodeValue.size() + (targetPrevNodePosition == -1 ? 0 : 1), _reversed);
+            processLenghtPos(_xmls.first, sourceCurrentNodeValue.size() + (sourcePrevNodePosition == -1 && !_reversed ? 0 : 1), _reversed);
+            processLenghtPos(_xmls.second, targetCurrentNodeValue.size() + (targetPrevNodePosition == -1 && !_reversed ? 0 : 1), _reversed);
 
             //
             // Запомним предыдущие значения
@@ -580,11 +584,11 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
     //
     // Последний тег, подлежащий удалению не удаляем, а делаем его текст пустым
     //
-    if (sourcePrevNodePosition != -1) {
+    if (sourcePrevNodePosition != -1 && !_reversed) {
         sourceChildNodes.at(sourcePrevNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
         sourceChildNodes.at(sourcePrevNodePosition).removeChild(sourceChildNodes.at(sourcePrevNodePosition).firstChildElement("reviews"));
     }
-    if (targetPrevNodePosition != -1) {
+    if (targetPrevNodePosition != -1 && !_reversed) {
         targetChildNodes.at(targetPrevNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
         targetChildNodes.at(targetPrevNodePosition).removeChild(targetChildNodes.at(targetPrevNodePosition).firstChildElement("reviews"));
     }
