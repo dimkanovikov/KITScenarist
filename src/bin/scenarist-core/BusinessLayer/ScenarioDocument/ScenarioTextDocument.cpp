@@ -527,10 +527,10 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
             //
             // Получим текущие обрабатываемые строки
             //
-            QString sourceCurrentNodeValue = sourceChildNodes.at(sourceCurrentNodePosition).firstChildElement("v")
-                    .childNodes().at(0).toCDATASection().data();
-            QString targetCurrentNodeValue = targetChildNodes.at(targetCurrentNodePosition).firstChildElement("v")
-                    .childNodes().at(0).toCDATASection().data();
+            QString sourceCurrentNodeValue = TextEditHelper::fromHtmlEscaped(sourceChildNodes.at(sourceCurrentNodePosition).firstChildElement("v")
+                    .childNodes().at(0).toCDATASection().data());
+            QString targetCurrentNodeValue = TextEditHelper::fromHtmlEscaped(targetChildNodes.at(targetCurrentNodePosition).firstChildElement("v")
+                    .childNodes().at(0).toCDATASection().data());
 
             //
             // Можем удалить предыдущие теги, если они у нас есть
