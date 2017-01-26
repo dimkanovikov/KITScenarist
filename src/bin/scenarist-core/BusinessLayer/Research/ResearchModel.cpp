@@ -404,7 +404,6 @@ Qt::ItemFlags ResearchModel::flags(const QModelIndex& _index) const
 
             case Research::Text:
             case Research::ImagesGallery:
-            case Research::Image:
             case Research::MindMap: {
                 flags |= Qt::ItemIsDragEnabled;
                 break;
