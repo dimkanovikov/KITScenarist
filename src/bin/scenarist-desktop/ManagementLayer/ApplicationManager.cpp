@@ -1685,6 +1685,7 @@ void ApplicationManager::initConnections()
         m_synchronizationManager->restartSession();
         setSyncIndicator();
     });
+    connect(m_tabs, &SideTabBar::coAuthorClicked, m_scenarioManager, &ScenarioManager::scrollToCursor);
 
     connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
     connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
@@ -1769,6 +1770,11 @@ void ApplicationManager::initConnections()
             m_scenarioManager, SLOT(aboutApplyPatches(QList<QString>,bool)));
     connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
             m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
+    connect(m_synchronizationManager, &SynchronizationManager::cursorsUpdated, [this] (const QMap<QString, int>& _cursors, bool _isDraft) {
+        if (_isDraft == m_scenarioManager->workModeIsDraft()) {
+            m_tabs->setIndicatorActions(QVector<QString>::fromList(_cursors.keys()));
+        }
+    });
     connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
             this, SLOT(aboutSyncClosedWithError(int,QString)));
     connect(m_synchronizationManager, &SynchronizationManager::networkStatusChanged,

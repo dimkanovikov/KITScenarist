@@ -418,6 +418,11 @@ void ScenarioManager::setCommentOnly(bool _isCommentOnly)
     m_textEditManager->setCommentOnly(_isCommentOnly);
 }
 
+bool ScenarioManager::workModeIsDraft() const
+{
+    return m_workModeIsDraft;
+}
+
 void ScenarioManager::aboutCardsSettingsUpdated()
 {
     m_cardsManager->reloadSettings();
@@ -637,6 +642,11 @@ void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bo
         m_saveChangesTimer.setInterval((m_draftCursors.isEmpty() && m_cleanCursors.isEmpty())
                                        ? SLOW_SAVE_CHANGES_INTERVAL : FAST_SAVE_CHANGES_INTERVAL);
     }
+}
+
+void ScenarioManager::scrollToCursor(int _index)
+{
+    m_textEditManager->scrollToCursor(_index);
 }
 
 void ScenarioManager::aboutUndo()
