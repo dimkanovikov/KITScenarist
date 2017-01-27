@@ -67,6 +67,11 @@ namespace ManagementLayer
 		 */
 		void setCommentOnly(bool _isCommentOnly);
 
+        /**
+         * @brief Пролистать сценарий, чтобы был виден курсор
+         */
+        void scrollToCursor(int _index);
+
 	public slots:
 		/**
 		 * @brief Добавить элемент сценария в указанной позиции

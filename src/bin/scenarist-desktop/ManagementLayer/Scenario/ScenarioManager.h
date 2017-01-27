@@ -93,6 +93,11 @@ namespace ManagementLayer
          */
         void setCommentOnly(bool _isCommentOnly);
 
+        /**
+         * @brief Узнать текущий режим
+         */
+        bool workModeIsDraft() const;
+
     public slots:
         /**
          * @brief Обновить параметры редактора карточек
@@ -151,6 +156,11 @@ namespace ManagementLayer
          * @brief Получены новые позиции курсоров пользователей
          */
         void aboutCursorsUpdated(const QMap<QString, int>& _cursors, bool _isDraft);
+
+        /**
+         * @brief Пролистать сценарий, чтобы курсор соавтора был виден
+         */
+        void scrollToCursor(int _index);
 
     signals:
         /**

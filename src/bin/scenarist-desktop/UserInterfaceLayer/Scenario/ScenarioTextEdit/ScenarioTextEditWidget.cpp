@@ -457,6 +457,11 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
     }
 }
 
+void ScenarioTextEditWidget::scrollToCursor(int _index)
+{
+    m_editor->scrollToCursor(_index);
+}
+
 void ScenarioTextEditWidget::aboutShowSearch()
 {
     const bool visible = m_search->isChecked();

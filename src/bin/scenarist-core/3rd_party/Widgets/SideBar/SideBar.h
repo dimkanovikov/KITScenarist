@@ -72,6 +72,11 @@ public:
     void setIndicatorActionIcon(const QIcon& _icon);
 
     /**
+     * @brief Установить список из action
+     */
+    void setIndicatorActions(const QVector<QString>& _indicatorActions);
+
+    /**
      * @brief Запустить цветовой всполох от индикатора
      */
     void makeIndicatorWave(const QColor& _waveColor);
@@ -96,6 +101,11 @@ signals:
      * @brief Нажата кнопка действия индикатора
      */
     void indicatorActionClicked();
+
+    /**
+     * @brief Нажат action, соответствующий соавтору
+     */
+    void coAuthorClicked(int _index);
 
 protected:
     void paintEvent(QPaintEvent* event);
@@ -130,6 +140,11 @@ private:
      * @brief Текущая активная вкладка
      */
     QAction* m_checkedTab;
+
+    /**
+     * @brief Список action для тела индикатора
+     */
+    QVector<QString> m_indicatorActions;
 
     /**
      * @brief Флаг компактного режима

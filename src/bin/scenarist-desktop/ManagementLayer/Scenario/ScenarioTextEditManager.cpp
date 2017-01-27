@@ -167,7 +167,12 @@ void ScenarioTextEditManager::setAdditionalCursors(const QMap<QString, int>& _cu
 
 void ScenarioTextEditManager::setCommentOnly(bool _isCommentOnly)
 {
-	m_view->setCommentOnly(_isCommentOnly);
+    m_view->setCommentOnly(_isCommentOnly);
+}
+
+void ScenarioTextEditManager::scrollToCursor(int _index)
+{
+    m_view->scrollToCursor(_index);
 }
 
 void ScenarioTextEditManager::addScenarioItemFromCards(int _position, int _type,

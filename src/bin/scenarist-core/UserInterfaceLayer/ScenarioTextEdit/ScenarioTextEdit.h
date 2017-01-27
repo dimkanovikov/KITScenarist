@@ -139,6 +139,11 @@ namespace UserInterface
 		 */
 		void setAdditionalCursors(const QMap<QString, int>& _cursors);
 
+        /**
+         * @brief Пролистать сценарий, чтобы был виден курсор
+         */
+        void scrollToCursor(int _index);
+
 	signals:
 		/**
 		 * @brief Запрос на отмену последнего действия
