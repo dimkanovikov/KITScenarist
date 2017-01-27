@@ -497,103 +497,117 @@ void ScenarioTextDocument::removeIdenticalParts(QPair<DiffMatchPatchHelper::Chan
     //
     // Получим список обрабатываемых тегов
     //
-    QDomNodeList sourceChildNodes = sourceDocument.firstChildElement(SCENARIO_TAG).childNodes();
-    QDomNodeList targetChildNodes = targetDocument.firstChildElement(SCENARIO_TAG).childNodes();
+    QDomNodeList sourceNodes = sourceDocument.firstChildElement(SCENARIO_TAG).childNodes();
+    QDomNodeList targetNodes = targetDocument.firstChildElement(SCENARIO_TAG).childNodes();
 
     //
     // Позиции первых/последних (в зависимости от _reversed) тегов из childs, содержащих тег <v>
     //
-    int sourceCurrentNodePosition = _reversed ? getPrevChild(sourceChildNodes, sourceChildNodes.size())
-                                              : getNextChild(sourceChildNodes, -1);
-    int targetCurrentNodePosition = _reversed ? getPrevChild(targetChildNodes, targetChildNodes.size())
-                                              : getNextChild(targetChildNodes, -1);
+    int sourceCurrentNodePosition = _reversed ? getPrevChild(sourceNodes, sourceNodes.size())
+                                              : getNextChild(sourceNodes, -1);
+    int targetCurrentNodePosition = _reversed ? getPrevChild(targetNodes, targetNodes.size())
+                                              : getNextChild(targetNodes, -1);
 
     //
     // Предыдущие значения i1 и i2. Необходимы, поскольку последний удаляемые тег удалять не нужно.
     // Нужно заменить его текст пустой строкой
     //
-    int sourcePrevNodePosition = -1;
-    int targetPrevNodePosition = -1;
+    int sourcePreviousNodePosition = -1;
+    int targetPreviousNodePosition = -1;
 
     //
-    // В заголовке цикла мы идем до тех пор, пока, либо не прошли все теги хотя бы одного документа,
-    // либо обнаружили разные теги у обрабатываемых
+    // Разбираем текст
     //
-    while (((!_reversed && sourceCurrentNodePosition != sourceChildNodes.size()
-             && targetCurrentNodePosition != targetChildNodes.size())
-            || (_reversed && sourceCurrentNodePosition >= 0 && targetCurrentNodePosition >= 0))
-           && (nodeToString(sourceChildNodes.at(sourceCurrentNodePosition)) ==
-                nodeToString(targetChildNodes.at(targetCurrentNodePosition)))) {
+    while (((!_reversed                                                        // пока не дошли до конца, для прохода вперёд
+             && sourceCurrentNodePosition < sourceNodes.size() - 1
+             && targetCurrentNodePosition < targetNodes.size() - 1)
+            || (_reversed                                                      // или пока не дошли до начала, для прохода назад
+                && sourceCurrentNodePosition > 0
+                && targetCurrentNodePosition > 0))
+           && (nodeToString(sourceNodes.at(sourceCurrentNodePosition))         // и текст элементов совпадает
+               == nodeToString(targetNodes.at(targetCurrentNodePosition)))) {
 
-            //
-            // Получим текущие обрабатываемые строки
-            //
-            QString sourceCurrentNodeValue = TextEditHelper::fromHtmlEscaped(
-                        sourceChildNodes.at(sourceCurrentNodePosition).firstChildElement("v")
-                        .childNodes().at(0).toCDATASection().data());
-            QString targetCurrentNodeValue = TextEditHelper::fromHtmlEscaped(
-                        targetChildNodes.at(targetCurrentNodePosition).firstChildElement("v")
-                        .childNodes().at(0).toCDATASection().data());
+        //
+        // Получим текущие обрабатываемые строки
+        //
+        const QString sourceCurrentNodeText =
+                TextEditHelper::fromHtmlEscaped(
+                    sourceNodes
+                    .at(sourceCurrentNodePosition)
+                    .firstChildElement("v")
+                    .childNodes()
+                    .at(0).toCDATASection().data());
+        const QString targetCurrentNodeText =
+                TextEditHelper::fromHtmlEscaped(
+                    targetNodes
+                    .at(targetCurrentNodePosition)
+                    .firstChildElement("v")
+                    .childNodes()
+                    .at(0).toCDATASection().data());
 
+        //
+        // Если идёт проход вперёд, то
+        //
+        if (!_reversed) {
             //
-            // Можем удалить предыдущие теги, если они у нас есть
+            // ... удаляем предыдущую пустую ячейку, если есть
             //
-            if (!_reversed && sourcePrevNodePosition != -1) {
-                sourceDocument.firstChildElement(SCENARIO_TAG).removeChild(sourceChildNodes.at(sourcePrevNodePosition));
-                //
-                // Раз мы удалили тег, то все справа сдвинулось влево на 1
-                //
+            if (sourcePreviousNodePosition != -1
+                && targetPreviousNodePosition != -1) {
+                sourceDocument.firstChildElement(SCENARIO_TAG).removeChild(sourceNodes.at(sourcePreviousNodePosition));
                 --sourceCurrentNodePosition;
-
-            //
-            // А вот в обратном случае, мы сразу удаляем
-            //
-            } else if (_reversed) {
-                sourceDocument.firstChildElement(SCENARIO_TAG).removeChild(sourceChildNodes.at(sourceCurrentNodePosition));
-            }
-
-            //
-            // Аналогично
-            //
-            if (!_reversed && targetPrevNodePosition != -1) {
-                targetDocument.firstChildElement(SCENARIO_TAG).removeChild(targetChildNodes.at(targetPrevNodePosition));
+                //
+                targetDocument.firstChildElement(SCENARIO_TAG).removeChild(targetNodes.at(targetPreviousNodePosition));
                 --targetCurrentNodePosition;
-            } else if (_reversed) {
-                targetDocument.firstChildElement(SCENARIO_TAG).removeChild(targetChildNodes.at(targetCurrentNodePosition));
+
+                //
+                // ... скорректируем позицию затрагиваемую патчем на символ переноса строки
+                //
+                _xmls.first.plainPos += 1;
+                _xmls.first.plainLength -= 1;
             }
 
             //
-            // Обработаем длину и позицию вставки
-            // Если какой-то тег удалили, то удалили еще один символ (\n)
+            // ... затираем текст ячеек
             //
-            processLenghtPos(_xmls.first, sourceCurrentNodeValue.size() + (sourcePrevNodePosition == -1 && !_reversed ? 0 : 1), _reversed);
-            processLenghtPos(_xmls.second, targetCurrentNodeValue.size() + (targetPrevNodePosition == -1 && !_reversed ? 0 : 1), _reversed);
+            sourceNodes.at(sourceCurrentNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
+            targetNodes.at(targetCurrentNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
 
             //
-            // Запомним предыдущие значения
+            // ... скорректируем позицию затрагиваемую патчем на длину стёртой строки
             //
-            sourcePrevNodePosition = sourceCurrentNodePosition;
-            targetPrevNodePosition = targetCurrentNodePosition;
+            _xmls.first.plainPos += sourceCurrentNodeText.size();
+            _xmls.first.plainLength -= sourceCurrentNodeText.size();
+        }
+        //
+        // Если идёт проход назад, то
+        //
+        else {
+            //
+            // ... убираем блок полностью
+            //
+            sourceDocument.firstChildElement(SCENARIO_TAG).removeChild(sourceNodes.at(sourceCurrentNodePosition));
+            targetDocument.firstChildElement(SCENARIO_TAG).removeChild(targetNodes.at(targetCurrentNodePosition));
 
             //
-            // Получим новые
+            // ... скорректируем позицию затрагиваемую патчем на длину строки + символ переноса строки
             //
-            sourceCurrentNodePosition = _reversed ? getPrevChild(sourceChildNodes, sourceCurrentNodePosition)
-                                                  : getNextChild(sourceChildNodes, sourceCurrentNodePosition);
-            targetCurrentNodePosition = _reversed ? getPrevChild(targetChildNodes, targetCurrentNodePosition)
-                                                  : getNextChild(targetChildNodes, targetCurrentNodePosition);
-    }
+            _xmls.first.plainLength -= sourceCurrentNodeText.size() + 1;
+        }
 
-    //
-    // Последний тег, подлежащий удалению не удаляем, а делаем его текст пустым
-    //
-    if (sourcePrevNodePosition != -1 && !_reversed) {
-        sourceChildNodes.at(sourcePrevNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
-        sourceChildNodes.at(sourcePrevNodePosition).removeChild(sourceChildNodes.at(sourcePrevNodePosition).firstChildElement("reviews"));
-    }
-    if (targetPrevNodePosition != -1 && !_reversed) {
-        targetChildNodes.at(targetPrevNodePosition).firstChildElement("v").firstChild().toCDATASection().setData("");
-        targetChildNodes.at(targetPrevNodePosition).removeChild(targetChildNodes.at(targetPrevNodePosition).firstChildElement("reviews"));
+        //
+        // Запомним предыдущие значения
+        //
+        sourcePreviousNodePosition = sourceCurrentNodePosition;
+        targetPreviousNodePosition = targetCurrentNodePosition;
+
+        //
+        // Получим новые
+        //
+        sourceCurrentNodePosition = _reversed ? getPrevChild(sourceNodes, sourceCurrentNodePosition)
+                                              : getNextChild(sourceNodes, sourceCurrentNodePosition);
+        targetCurrentNodePosition = _reversed ? getPrevChild(targetNodes, targetCurrentNodePosition)
+                                              : getNextChild(targetNodes, targetCurrentNodePosition);
     }
 
     //
