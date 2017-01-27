@@ -457,10 +457,10 @@ void ScenarioTextEdit::setAdditionalCursors(const QMap<QString, int>& _cursors)
     }
 }
 
-void ScenarioTextEdit::scrollToCursor(int _index)
+void ScenarioTextEdit::scrollToAdditionalCursor(int _additionalCursorIndex)
 {
     QTextCursor cursor(m_document);
-    m_document->setCursorPosition(cursor, (m_additionalCursorsCorrected.begin() + _index).value());
+    m_document->setCursorPosition(cursor, (m_additionalCursorsCorrected.begin() + _additionalCursorIndex).value());
     ensureCursorVisible(cursor);
 }
 

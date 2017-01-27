@@ -5,149 +5,149 @@
 
 
 namespace UserInterface {
-	class ScenarioTextEditWidget;
+    class ScenarioTextEditWidget;
 }
 
 namespace BusinessLogic {
-	class ScenarioTextDocument;
+    class ScenarioTextDocument;
 }
 
 namespace ManagementLayer
 {
-	/**
-	 * @brief Управляющий редактированием сценария
-	 */
-	class ScenarioTextEditManager : public QObject
-	{
-		Q_OBJECT
+    /**
+     * @brief Управляющий редактированием сценария
+     */
+    class ScenarioTextEditManager : public QObject
+    {
+        Q_OBJECT
 
-	public:
-		explicit ScenarioTextEditManager(QObject* _parent, QWidget* _parentWidget);
+    public:
+        explicit ScenarioTextEditManager(QObject* _parent, QWidget* _parentWidget);
 
-		QWidget* toolbar() const;
-		QWidget* view() const;
-
-		/**
-		 * @brief Установить документ для редактирования
-		 */
-		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document, bool _isDraft = false);
-
-		/**
-		 * @brief Установить хронометраж
-		 */
-		void setDuration(const QString& _duration);
-
-		/**
-		 * @brief Установить значения счётчиков
-		 */
-		void setCountersInfo(const QString& _counters);
-
-		/**
-		 * @brief Установить позицию курсора
-		 */
-		void setCursorPosition(int _position);
-
-		/**
-		 * @brief Перезагрузить параметры текстового редактора
-		 */
-		void reloadTextEditSettings();
-
-		/**
-		 * @brief Получить текущую позицию курсора
-		 */
-		int cursorPosition() const;
-
-		/**
-		 * @brief Установить список дополнительных курсоров для отрисовки
-		 */
-		void setAdditionalCursors(const QMap<QString, int>& _cursors);
-
-		/**
-		 * @brief Установить режим работы со сценарием
-		 */
-		void setCommentOnly(bool _isCommentOnly);
+        QWidget* toolbar() const;
+        QWidget* view() const;
 
         /**
-         * @brief Пролистать сценарий, чтобы был виден курсор
+         * @brief Установить документ для редактирования
          */
-        void scrollToCursor(int _index);
+        void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document, bool _isDraft = false);
 
-	public slots:
-		/**
-		 * @brief Добавить элемент сценария в указанной позиции
-		 */
-		/** @{ */
-		void addScenarioItemFromCards(int _position, int _type, const QString& _title,
-			const QColor& _color, const QString& _description);
-		void addScenarioItem(int _position, int _type, const QString& _header,
-			const QColor& _color, const QString& _description);
-		/** @{ */
+        /**
+         * @brief Установить хронометраж
+         */
+        void setDuration(const QString& _duration);
 
-		/**
-		 * @brief Изменить элемент сценария
-		 */
-		void editScenarioItem(int _startPosition, int _endPosition, int _type,
-			const QString& _title, const QColor& _color, const QString& _description);
+        /**
+         * @brief Установить значения счётчиков
+         */
+        void setCountersInfo(const QString& _counters);
 
-		/**
-		 * @brief Удалить заданный текст сценария
-		 */
-		void removeScenarioText(int _from, int _to);
+        /**
+         * @brief Установить позицию курсора
+         */
+        void setCursorPosition(int _position);
 
-		/**
-		 * @brief Установить в заданной позиции заданный тип блока
-		 */
-		void changeItemType(int _position, int _type);
+        /**
+         * @brief Перезагрузить параметры текстового редактора
+         */
+        void reloadTextEditSettings();
 
-	signals:
-		/**
-		 * @brief Изменился текст сценария
-		 */
-		void textChanged();
+        /**
+         * @brief Получить текущую позицию курсора
+         */
+        int cursorPosition() const;
 
-		/**
-		 * @brief Изменилась позиция курсора
-		 */
-		void cursorPositionChanged(int _position);
+        /**
+         * @brief Установить список дополнительных курсоров для отрисовки
+         */
+        void setAdditionalCursors(const QMap<QString, int>& _cursors);
 
-		/**
-		 * @brief Запрос отмены действия
-		 */
-		void undoRequest();
+        /**
+         * @brief Установить режим работы со сценарием
+         */
+        void setCommentOnly(bool _isCommentOnly);
 
-		/**
-		 * @brief Запрос повтора действия
-		 */
-		void redoRequest();
+        /**
+         * @brief Пролистать сценарий, чтобы был виден заданный курсор соавтора
+         */
+        void scrollToAdditionalCursor(int _additionalCursorIndex);
 
-		/**
-		 * @brief Изменился режим отображения сценария
-		 */
-		void textModeChanged();
+    public slots:
+        /**
+         * @brief Добавить элемент сценария в указанной позиции
+         */
+        /** @{ */
+        void addScenarioItemFromCards(int _position, int _type, const QString& _title,
+            const QColor& _color, const QString& _description);
+        void addScenarioItem(int _position, int _type, const QString& _header,
+            const QColor& _color, const QString& _description);
+        /** @{ */
 
-	private slots:
-		/**
-		 * @brief Реакция на изменение коэффициента масштабирования редактора сценария
-		 */
-		void aboutTextEditZoomRangeChanged(qreal _zoomRange);
+        /**
+         * @brief Изменить элемент сценария
+         */
+        void editScenarioItem(int _startPosition, int _endPosition, int _type,
+            const QString& _title, const QColor& _color, const QString& _description);
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView();
+        /**
+         * @brief Удалить заданный текст сценария
+         */
+        void removeScenarioText(int _from, int _to);
 
-		/**
-		 * @brief Настроить соединения
-		 */
-		void initConnections();
+        /**
+         * @brief Установить в заданной позиции заданный тип блока
+         */
+        void changeItemType(int _position, int _type);
 
-	private:
-		/**
-		 * @brief Редактор
-		 */
-		UserInterface::ScenarioTextEditWidget* m_view;
-	};
+    signals:
+        /**
+         * @brief Изменился текст сценария
+         */
+        void textChanged();
+
+        /**
+         * @brief Изменилась позиция курсора
+         */
+        void cursorPositionChanged(int _position);
+
+        /**
+         * @brief Запрос отмены действия
+         */
+        void undoRequest();
+
+        /**
+         * @brief Запрос повтора действия
+         */
+        void redoRequest();
+
+        /**
+         * @brief Изменился режим отображения сценария
+         */
+        void textModeChanged();
+
+    private slots:
+        /**
+         * @brief Реакция на изменение коэффициента масштабирования редактора сценария
+         */
+        void aboutTextEditZoomRangeChanged(qreal _zoomRange);
+
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
+
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
+
+    private:
+        /**
+         * @brief Редактор
+         */
+        UserInterface::ScenarioTextEditWidget* m_view;
+    };
 }
 
 #endif // SCENARIOTEXTEDITMANAGER_H

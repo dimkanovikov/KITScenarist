@@ -160,7 +160,7 @@ namespace ManagementLayer
         /**
          * @brief Пролистать сценарий, чтобы курсор соавтора был виден
          */
-        void scrollToCursor(int _index);
+        void scrollToAdditionalCursor(int _additionalCursorIndex);
 
     signals:
         /**

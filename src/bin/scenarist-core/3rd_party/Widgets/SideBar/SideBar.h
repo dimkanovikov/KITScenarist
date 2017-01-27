@@ -74,7 +74,7 @@ public:
     /**
      * @brief Установить список из action
      */
-    void setIndicatorActions(const QVector<QString>& _indicatorActions);
+    void setIndicatorMenu(const QVector<QString>& _menuActions);
 
     /**
      * @brief Запустить цветовой всполох от индикатора
@@ -105,7 +105,7 @@ signals:
     /**
      * @brief Нажат action, соответствующий соавтору
      */
-    void coAuthorClicked(int _index);
+    void indicatorMenuClicked(int _index);
 
 protected:
     void paintEvent(QPaintEvent* event);

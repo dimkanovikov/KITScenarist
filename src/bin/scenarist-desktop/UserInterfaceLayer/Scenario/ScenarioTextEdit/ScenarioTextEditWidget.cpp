@@ -457,9 +457,9 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
     }
 }
 
-void ScenarioTextEditWidget::scrollToCursor(int _index)
+void ScenarioTextEditWidget::scrollToAdditionalCursor(int _additionalCursorIndex)
 {
-    m_editor->scrollToCursor(_index);
+    m_editor->scrollToAdditionalCursor(_additionalCursorIndex);
 }
 
 void ScenarioTextEditWidget::aboutShowSearch()

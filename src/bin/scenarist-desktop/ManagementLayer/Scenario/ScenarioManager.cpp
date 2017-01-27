@@ -644,9 +644,9 @@ void ScenarioManager::aboutCursorsUpdated(const QMap<QString, int>& _cursors, bo
     }
 }
 
-void ScenarioManager::scrollToCursor(int _index)
+void ScenarioManager::scrollToAdditionalCursor(int _additionalCursorIndex)
 {
-    m_textEditManager->scrollToCursor(_index);
+    m_textEditManager->scrollToAdditionalCursor(_additionalCursorIndex);
 }
 
 void ScenarioManager::aboutUndo()
