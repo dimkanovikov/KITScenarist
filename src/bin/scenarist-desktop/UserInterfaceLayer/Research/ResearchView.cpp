@@ -13,12 +13,14 @@
 #include "ResearchNavigatorItemDelegate.h"
 #include "ResearchNavigatorProxyStyle.h"
 
+#include <QDomDocument>
 #include <QFileDialog>
 #include <QScrollBar>
 #include <QShortcut>
 #include <QStandardPaths>
 #include <QStringListModel>
 #include <QTimer>
+#include <QXmlStreamReader>
 
 using UserInterface::ResearchView;
 using UserInterface::ResearchNavigatorItemDelegate;
@@ -215,7 +217,13 @@ void ResearchView::editCharacter(const QString& _name, const QString& _descripti
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->characterEdit);
     m_ui->characterName->setText(_name);
-    m_ui->characterDescription->setHtml(_description);
+    QDomDocument xmlDocument;
+    xmlDocument.setContent(_description);
+    QDomNode characterNode = xmlDocument.namedItem("character");
+    QDomNode realNameNode = characterNode.namedItem("real_name");
+    m_ui->characterRealName->setText(realNameNode.toElement().text());
+    QDomNode descriptionNode = characterNode.namedItem("description");
+    m_ui->characterDescription->setHtml(TextEditHelper::fromHtmlEscaped(descriptionNode.toElement().text()));
 
     setResearchManageButtonsVisible(true);
     setSearchVisible(true);
@@ -648,6 +656,39 @@ void ResearchView::initConnections()
     //
     connect(m_ui->synopsisText, &SimpleTextEditorWidget::textChanged, [=]{
         emit synopsisTextChanged(TextEditHelper::removeDocumentTags(m_ui->synopsisText->toHtml()));
+    });
+    //
+    // ... персонаж
+    //
+    connect(m_ui->characterName, &QLineEdit::textChanged, this, &ResearchView::characterNameChanged);
+    auto emitCharacterDescriptionChanged = [=] {
+        QString description;
+        QXmlStreamWriter writer(&description);
+        writer.writeStartDocument();
+        writer.writeStartElement("character");
+        writer.writeTextElement("real_name", m_ui->characterRealName->text());
+        writer.writeStartElement("description");
+        writer.writeCDATA(
+                    TextEditHelper::toHtmlEscaped(
+                        TextEditHelper::removeDocumentTags(
+                            m_ui->characterDescription->toHtml()
+                            )
+                        )
+                    );
+        writer.writeEndElement();
+        writer.writeEndElement();
+        writer.writeEndDocument();
+
+        emit characterDescriptionChanged(description);
+    };
+    connect(m_ui->characterRealName, &QLineEdit::textChanged, emitCharacterDescriptionChanged);
+    connect(m_ui->characterDescription, &SimpleTextEditorWidget::textChanged, emitCharacterDescriptionChanged);
+    //
+    // ... локация
+    //
+    connect(m_ui->locationName, &QLineEdit::textChanged, this, &ResearchView::locationNameChanged);
+    connect(m_ui->locationDescription, &SimpleTextEditorWidget::textChanged, [=] {
+        emit locationDescriptionChanged(TextEditHelper::removeDocumentTags(m_ui->locationDescription->toHtml()));
     });
     //
     // ... текстовый элемент

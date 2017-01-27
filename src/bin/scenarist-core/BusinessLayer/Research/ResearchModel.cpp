@@ -221,15 +221,30 @@ void ResearchModel::clear()
     //
     // Пересоздаём корень разработки
     //
-    emit beginRemoveRows(QModelIndex(), 1, 1);
+    emit beginRemoveRows(QModelIndex(), 1, 3);
+    m_rootItem->removeItem(m_charactersRoot);
+    m_rootItem->removeItem(m_locationsRoot);
     m_rootItem->removeItem(m_researchRoot);
     emit endRemoveRows();
+    //
+    m_charactersRoot =
+        new ResearchModelItem(
+            new Research(Domain::Identifier(), 0, Research::CharactersRoot, 1, tr("Characters"))
+        );
+    //
+    m_locationsRoot =
+        new ResearchModelItem(
+            new Research(Domain::Identifier(), 0, Research::LocationsRoot, 2, tr("Locations"))
+        );
     //
     m_researchRoot =
         new ResearchModelItem(
             new Research(Domain::Identifier(), 0, Research::ResearchRoot, 1, tr("Research"))
         );
-    emit beginInsertRows(QModelIndex(), 1, 1);
+    //
+    emit beginInsertRows(QModelIndex(), 1, 3);
+    m_rootItem->appendItem(m_charactersRoot);
+    m_rootItem->appendItem(m_locationsRoot);
     m_rootItem->appendItem(m_researchRoot);
     emit endInsertRows();
 }
@@ -790,9 +805,24 @@ void ResearchModel::researchDataChanged(const QModelIndex& _topLeft, const QMode
             //
             ResearchModelItem* researchParent = 0;
             if (research->parent() == 0) {
-                researchParent = m_researchRoot;
+                if (research->type() == Research::Character) {
+                    researchParent = m_charactersRoot;
+                } else if (research->type() == Research::Location) {
+                    researchParent = m_locationsRoot;
+                } else {
+                    researchParent = m_researchRoot;
+                }
             } else {
+                //
+                // Ищем родителя по всем возможным местам
+                //
                 researchParent = findResearchModelItem(m_researchRoot, research->parent());
+                if (researchParent == nullptr) {
+                    researchParent = findResearchModelItem(m_charactersRoot, research->parent());
+                }
+                if (researchParent == nullptr) {
+                    researchParent = findResearchModelItem(m_locationsRoot, research->parent());
+                }
             }
 
             //

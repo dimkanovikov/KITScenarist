@@ -18,6 +18,9 @@ namespace DataStorageLayer
 	class ResearchStorage
 	{
 	public:
+        // ****
+        // API для работы с разработкой в целом
+
 		/**
 		 * @brief Получить все разработки
 		 */
@@ -57,6 +60,40 @@ namespace DataStorageLayer
 		 * @brief Обновить хранилище
 		 */
 		void refresh();
+
+        // ****
+        // API для работы с персонажами
+
+        /**
+         * @brief Все персонажи сценария
+         */
+        ResearchTable* characters();
+
+        /**
+         * @brief Получить персонажа по названию
+         */
+        Research* character(const QString& _name);
+
+        /**
+         * @brief Сохранить персонажа
+         */
+        Research* storeCharacter(const QString& _name);
+
+        /**
+         * @brief Обновить персонажа
+         */
+        void updateCharacter(Research* _character);
+
+        /**
+         * @brief Удалить персонажа
+         */
+        void removeCharacter(const QString& _name);
+        void removeCharacters(const QStringList& _names);
+
+        /**
+         * @brief Проверить наличие заданного персонажа
+         */
+        bool hasCharacter(const QString& _name);
 
 	private:
 		ResearchTable* m_all;

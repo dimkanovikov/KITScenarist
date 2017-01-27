@@ -49,10 +49,10 @@ void ResearchItemDialog::setInsertAllow(bool _isCharacterAllow, bool _isLocation
     m_ui->location->setVisible(_isLocationAllow);
 
     if (_isCharacterAllow || _isLocationAllow) {
-        m_ui->isInsert->setChecked(false);
-        m_ui->isInsert->setEnabled(false);
         connect(m_ui->character, &QRadioButton::toggled, m_ui->isInsert, &QCheckBox::toggle);
         connect(m_ui->location, &QRadioButton::toggled, m_ui->isInsert, &QCheckBox::toggle);
+        m_ui->isInsert->setChecked(false);
+        m_ui->isInsert->setEnabled(false);
     } else {
         m_ui->isInsert->setEnabled(true);
     }

@@ -159,6 +159,10 @@ namespace UserInterface
         void titlePageContactsChanged(const QString& _contacts);
         void titlePageYearChanged(const QString& _year);
         void synopsisTextChanged(const QString& _synopsis);
+        void characterNameChanged(const QString& _name);
+        void characterDescriptionChanged(const QString& _description);
+        void locationNameChanged(const QString& _name);
+        void locationDescriptionChanged(const QString& _description);
         void textNameChanged(const QString& _name);
         void textDescriptionChanged(const QString& _description);
         void urlNameChanged(const QString& _name);

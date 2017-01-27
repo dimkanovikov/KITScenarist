@@ -473,6 +473,47 @@ void ResearchManager::initConnections()
         updateScenarioData(ScenarioData::SYNOPSIS_KEY, _synopsis);
     });
 
+    //
+    // ... персонаж
+    //
+    connect(m_view, &ResearchView::characterNameChanged, [=] (const QString& _name) {
+        if (m_currentResearch != 0
+            && m_currentResearch->type() == Research::Character
+            && m_currentResearch->name() != _name) {
+            m_currentResearch->setName(_name);
+            emit researchChanged();
+        }
+    });
+    connect(m_view, &ResearchView::characterDescriptionChanged, [=] (const QString& _description) {
+        if (m_currentResearch != 0
+            && m_currentResearch->type() == Research::Character
+            && m_currentResearch->description() != _description) {
+            m_currentResearch->setDescription(_description);
+            emit researchChanged();
+        }
+    });
+    //
+    // ... локация
+    //
+    connect(m_view, &ResearchView::locationNameChanged, [=] (const QString& _name) {
+        if (m_currentResearch != 0
+            && m_currentResearch->type() == Research::Location
+            && m_currentResearch->name() != _name) {
+            m_currentResearch->setName(_name);
+            emit researchChanged();
+        }
+    });
+    connect(m_view, &ResearchView::locationDescriptionChanged, [=] (const QString& _description) {
+        if (m_currentResearch != 0
+            && m_currentResearch->type() == Research::Location
+            && m_currentResearch->description() != _description) {
+            m_currentResearch->setDescription(_description);
+            emit researchChanged();
+        }
+    });
+    //
+    // ... текстовый элемент
+    //
     connect(m_view, &ResearchView::textNameChanged, [=](const QString& _name){
         if (m_currentResearch != 0
             && (m_currentResearch->type() == Research::Folder
