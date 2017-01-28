@@ -86,7 +86,7 @@ QWidget* StartUpManager::view() const
 
 bool StartUpManager::isOnLoginDialog() const
 {
-    return m_loginDialog->isVisible();
+    return m_loginDialog->isVisible() || m_changePasswordDialog->isVisible();
 }
 
 bool StartUpManager::isOnLocalProjectsTab() const
@@ -224,7 +224,14 @@ void StartUpManager::retryVerify(const QString &_error)
 
 void StartUpManager::retryLastAction(const QString &_error)
 {
-    m_loginDialog->setLastActionError(_error);
+    if (m_loginDialog->isVisible()) {
+        m_loginDialog->setLastActionError(_error);
+    } else if(m_changePasswordDialog->isVisible()) {
+        m_changePasswordDialog->stopAndHide();
+        QLightBoxMessage::critical(m_view, tr("Can not change password"),
+                                      _error);
+        m_changePasswordDialog->showUnprepared();
+    }
 }
 
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
