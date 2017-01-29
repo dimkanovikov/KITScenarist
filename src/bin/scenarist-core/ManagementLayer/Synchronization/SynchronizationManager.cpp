@@ -1425,10 +1425,8 @@ bool SynchronizationManager::isOperationSucceed(QXmlStreamReader& _responseReade
     //
     // Ничего не нашли про статус. Скорее всего пропал интернет
     //
+    switchNetworkState(Inactive);
     handleError(Sync::NetworkError);
-    //
-    // Не нужно устанавливать статус интернета здесь. Иначе, при смене не испустится сигнал
-    //
 
     return false;
 }
@@ -1769,14 +1767,13 @@ void SynchronizationManager::checkNetworkState()
 
     s_isInCheckNetworkState = true;
 
-    InternetStatus prevState = m_isInternetConnectionActive;
-
     //
     // Делаем три попытки запроса тестовую страницу
     //
     NetworkRequest loader;
     loader.setLoadingTimeout(2000);
     int leavedTries = 3;
+    InternetStatus newState;
     while (leavedTries-- > 0) {
         QByteArray response = loader.loadSync(URL_CHECK_NETWORK_STATE);
 
@@ -1784,13 +1781,29 @@ void SynchronizationManager::checkNetworkState()
         // Запомним состояние интернета и кинем соответствующий сигнал
         //
         if (response == "ok") {
-            m_isInternetConnectionActive = Active;
+            newState = Active;
             break;
         } else {
-            m_isInternetConnectionActive = Inactive;
+            newState = Inactive;
         }
     }
 
+    switchNetworkState(newState);
+
+    //
+    // Если интернет активен, запрашиваем каждые 5 секунд
+    // Неактивен - каждую секунду
+    //
+    const int checkTimeout = m_isInternetConnectionActive == Active ? 5000 : 1000;
+    QTimer::singleShot(checkTimeout, this, &SynchronizationManager::checkNetworkState);
+
+    s_isInCheckNetworkState = false;
+}
+
+void SynchronizationManager::switchNetworkState(SynchronizationManager::InternetStatus _newStatus)
+{
+    InternetStatus prevState = m_isInternetConnectionActive;
+    m_isInternetConnectionActive = _newStatus;
     //
     // Если появился интернет, которого раньше не было
     //
@@ -1806,15 +1819,6 @@ void SynchronizationManager::checkNetworkState()
     if (prevState != m_isInternetConnectionActive) {
         emit networkStatusChanged(m_isInternetConnectionActive);
     }
-
-    //
-    // Если интернет активен, запрашиваем каждые 5 секунд
-    // Неактивен - каждую секунду
-    //
-    const int checkTimeout = m_isInternetConnectionActive == Active ? 5000 : 1000;
-    QTimer::singleShot(checkTimeout, this, &SynchronizationManager::checkNetworkState);
-
-    s_isInCheckNetworkState = false;
 }
 
 void SynchronizationManager::initConnections()
