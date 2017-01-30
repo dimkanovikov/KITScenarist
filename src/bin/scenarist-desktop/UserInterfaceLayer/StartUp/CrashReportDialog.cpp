@@ -21,7 +21,12 @@ CrashReportDialog::~CrashReportDialog()
 
 QString CrashReportDialog::email() const
 {
-	return m_ui->email->text();
+    return m_ui->email->text();
+}
+
+void CrashReportDialog::setEmail(const QString &_email)
+{
+    m_ui->email->setText(_email);
 }
 
 QString CrashReportDialog::message() const

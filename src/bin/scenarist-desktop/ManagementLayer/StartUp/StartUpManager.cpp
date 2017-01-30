@@ -401,6 +401,18 @@ void StartUpManager::checkCrashReports()
     //
     if (hasUnhandledReports) {
         CrashReportDialog dialog(m_view);
+
+        //
+        // Возьмем email из хранилища (тот же, что и для авторизации)
+        //
+        const QString email =
+            StorageFacade::settingsStorage()->value(
+                "application/email",
+                SettingsStorage::ApplicationSettings);
+        if (!email.isEmpty()) {
+            dialog.setEmail(email);
+        }
+
         QString handledReportPath = unhandledReportPath;
         if (dialog.exec() == CrashReportDialog::Accepted) {
             dialog.showProgress();
@@ -418,6 +430,16 @@ void StartUpManager::checkCrashReports()
             // Помечаем отчёт, как отправленный
             //
             handledReportPath += "." + SENDED;
+
+            //
+            // Сохраняем email, если ранее не было никакого
+            //
+            if (email.isEmpty()) {
+                StorageFacade::settingsStorage()->setValue(
+                "application/email",
+                dialog.email(),
+                SettingsStorage::ApplicationSettings);
+            }
         }
         //
         // Помечаем отчёт, как проигнорированный
