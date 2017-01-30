@@ -49,7 +49,7 @@ namespace ManagementLayer
 
     public slots:
         /**
-         * @brief Открыт ли в данный момент диалог авторизации/регистрации
+         * @brief Открыт ли в данный момент диалог авторизации/регистрации или смены пароля
          */
         bool isOnLoginDialog() const;
 

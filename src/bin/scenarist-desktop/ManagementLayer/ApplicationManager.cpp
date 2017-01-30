@@ -921,7 +921,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case Sync::NetworkError: {
             //
-            // Если ошибка пришла от окна акторизации, покажем её в нём
+            // Если ошибка пришла от окна акторизации или смены пароля, покажем её в нём
             //
             if (m_startUpManager->isOnLoginDialog()) {
                 m_startUpManager->retryLastAction(_error);
