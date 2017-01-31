@@ -312,7 +312,7 @@ namespace ManagementLayer
          * @brief Изменить информацию о состоянии
          * 		  и кинуть сигнал при необходимости
          */
-        void switchNetworkState(InternetStatus _newStatus);
+        void setInternetConnectionStatus(InternetStatus _newStatus);
 
         /**
          * @brief Настроить соединения
@@ -357,7 +357,7 @@ namespace ManagementLayer
         /**
          * @brief Активно ли соединение с интернетом
          */
-        InternetStatus m_isInternetConnectionActive = Undefined;
+        InternetStatus m_internetConnectionStatus = Undefined;
     };
 }
 
