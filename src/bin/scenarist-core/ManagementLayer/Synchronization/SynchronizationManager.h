@@ -298,6 +298,23 @@ namespace ManagementLayer
         void checkNetworkState();
 
         /**
+         * @brief Статус интернета. Неопределенный, отсутствует подключение,
+         * присутствует подключение. Находится в этом месте, поскольку,
+         * необходимо определить до функции switchNetworkState
+         */
+        enum InternetStatus {
+            Undefined,
+            Inactive,
+            Active
+        };
+
+        /**
+         * @brief Изменить информацию о состоянии
+         * 		  и кинуть сигнал при необходимости
+         */
+        void setInternetConnectionStatus(InternetStatus _newStatus);
+
+        /**
          * @brief Настроить соединения
          */
         void initConnections();
@@ -338,19 +355,9 @@ namespace ManagementLayer
         QString m_lastDataSyncDatetime;
 
         /**
-         * @brief Статус интернета. Неопределенный, отсутствует подключение,
-         * присутствует подключение
-         */
-        enum InternetStatus {
-            Undefined,
-            Inactive,
-            Active
-        };
-
-        /**
          * @brief Активно ли соединение с интернетом
          */
-        InternetStatus m_isInternetConnectionActive = Undefined;
+        InternetStatus m_internetConnectionStatus = Undefined;
     };
 }
 
