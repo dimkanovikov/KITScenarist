@@ -201,7 +201,9 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
     QTimer::singleShot(0, [this] {
         m_startUpManager->setProgressLoginLabel(true);
-        m_synchronizationManager->autoLogin();
+        if (!m_synchronizationManager->autoLogin()) {
+            m_startUpManager->setProgressLoginLabel(false);
+        }
     });
     initStyleSheet();
 }
