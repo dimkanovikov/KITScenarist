@@ -47,6 +47,11 @@ namespace ManagementLayer
 
         QWidget* view() const;
 
+        /**
+         * @brief Для процесса автологина меняет строку "Авторизация" на "Подключение"
+         */
+        void setProgressLoginLabel(bool _enable);
+
     public slots:
         /**
          * @brief Открыт ли в данный момент диалог авторизации/регистрации или смены пароля

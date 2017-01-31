@@ -199,7 +199,10 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
     reloadApplicationSettings();
 
-    QTimer::singleShot(0, m_synchronizationManager, &SynchronizationManager::autoLogin);
+    QTimer::singleShot(0, [this] {
+        m_startUpManager->setProgressLoginLabel(true);
+        m_synchronizationManager->autoLogin();
+    });
     initStyleSheet();
 }
 
@@ -933,6 +936,11 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
                 title = tr("Network error");
                 error += "\n\n";
                 error += tr("Project didn't synchronized.");
+
+                //
+                // Нет интернета в момент автологина. Текст о соединении
+                //
+                m_startUpManager->setProgressLoginLabel(false);
             }
             break;
         }
@@ -943,6 +951,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         case Sync::IncorrectLoginError:
         case Sync::IncorrectPasswordError: {
             error = tr("Incorrect username or password.");
+            m_startUpManager->setProgressLoginLabel(false);
             m_startUpManager->retryLogin(error);
             break;
         }
@@ -1796,10 +1805,8 @@ void ApplicationManager::initConnections()
             m_startUpManager, &StartUpManager::setSubscriptionInfo);
     connect(m_synchronizationManager, &SynchronizationManager::syncClosedWithError,
             this, &ApplicationManager::aboutSyncClosedWithError);
-    //
     connect(m_synchronizationManager, &SynchronizationManager::projectsLoaded,
             m_projectsManager, &ProjectsManager::setRemoteProjects);
-
     connect(m_synchronizationManager, &SynchronizationManager::logoutFinished,
             m_tabs, &SideTabBar::removeIndicator);
 
