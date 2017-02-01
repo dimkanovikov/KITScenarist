@@ -1803,9 +1803,8 @@ void SynchronizationManager::checkNetworkState()
 void SynchronizationManager::setInternetConnectionStatus(SynchronizationManager::InternetStatus _newStatus)
 {
     if (m_internetConnectionStatus != _newStatus) {
-        InternetStatus prevStatus = m_internetConnectionStatus;
         m_internetConnectionStatus = _newStatus;
-        if (prevStatus != Undefined) {
+        if (m_internetConnectionStatus == Active) {
             restartSession();
         }
         emit networkStatusChanged(m_internetConnectionStatus);
