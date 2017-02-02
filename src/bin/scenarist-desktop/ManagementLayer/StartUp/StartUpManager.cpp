@@ -84,6 +84,15 @@ QWidget* StartUpManager::view() const
     return m_view;
 }
 
+void StartUpManager::setProgressLoginLabel(bool _enable)
+{
+    if (_enable) {
+        m_view->enableProgressLoginLabel(0, true);
+    } else {
+        m_view->disableProgressLoginLabel();
+    }
+}
+
 bool StartUpManager::isOnLoginDialog() const
 {
     return m_loginDialog->isVisible() || m_changePasswordDialog->isVisible();
@@ -97,6 +106,7 @@ bool StartUpManager::isOnLocalProjectsTab() const
 void StartUpManager::completeLogin(const QString& _userName, const QString& _userEmail,
                                    int _paymentMonth)
 {
+    m_view->disableProgressLoginLabel();
     m_userEmail = _userEmail;
 
     m_renewSubscriptionDialog->setPaymentMonth(_paymentMonth);

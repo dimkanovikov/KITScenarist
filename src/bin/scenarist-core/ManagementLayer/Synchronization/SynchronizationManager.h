@@ -56,7 +56,7 @@ namespace ManagementLayer
         /**
          * @brief Авторизоваться на сервере, используя сохраненные логин и пароль
          */
-        void autoLogin();
+        bool autoLogin();
 
         /**
          * @brief Авторизоваться на сервере

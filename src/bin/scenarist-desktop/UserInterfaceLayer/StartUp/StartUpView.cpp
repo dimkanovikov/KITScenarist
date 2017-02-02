@@ -125,6 +125,26 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
     ui->remoteFiles->setModel(_remoteProjectsModel, PROJECTS_IS_REMOTE);
 }
 
+void StartUpView::enableProgressLoginLabel(int _dots, bool _firstUpdate)
+{
+    if (_firstUpdate) {
+        m_isProcessLogin = true;
+    }
+
+    if (m_isProcessLogin) {
+        ui->login->setText(QString("Connect") + QString(".").repeated(_dots));
+        QTimer::singleShot(500, [this, _dots] {
+            enableProgressLoginLabel((_dots + 1) % 4, false);
+        });
+    }
+}
+
+void StartUpView::disableProgressLoginLabel()
+{
+    m_isProcessLogin = false;
+    ui->login->setText(tr("<a href=\"#\" style=\"color:#2b78da;\">Login</a>"));
+}
+
 bool StartUpView::event(QEvent* _event)
 {
     if (_event->type() == QEvent::PaletteChange) {

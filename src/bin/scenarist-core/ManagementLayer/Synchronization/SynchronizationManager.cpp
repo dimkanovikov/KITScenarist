@@ -202,7 +202,7 @@ bool SynchronizationManager::isSubscriptionActive() const
     return m_isSubscriptionActive;
 }
 
-void SynchronizationManager::autoLogin()
+bool SynchronizationManager::autoLogin()
 {
     //
     // Получим параметры из хранилища
@@ -224,7 +224,9 @@ void SynchronizationManager::autoLogin()
     //
     if (!email.isEmpty() && !password.isEmpty()) {
         login(email, password);
+        return true;
     }
+    return false;
 }
 
 void SynchronizationManager::login(const QString &_email, const QString &_password)
