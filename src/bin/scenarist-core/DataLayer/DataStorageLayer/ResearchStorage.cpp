@@ -126,7 +126,13 @@ bool ResearchStorage::hasResearch(Research* _research)
 void ResearchStorage::clear()
 {
 	delete m_all;
-	m_all = 0;
+    m_all = nullptr;
+
+    delete m_characters;
+    m_characters = nullptr;
+
+    delete m_locations;
+    m_locations = nullptr;
 
 	MapperFacade::researchMapper()->clear();
 }
@@ -136,7 +142,14 @@ void ResearchStorage::refresh()
 	MapperFacade::researchMapper()->refresh(all());
 }
 
-ResearchStorage::ResearchStorage() :
-	m_all(0)
+ResearchTable* ResearchStorage::characters()
+{
+    if (m_characters == 0) {
+        m_characters = MapperFacade::researchMapper()->findCharacters();
+    }
+    return m_all;
+}
+
+ResearchStorage::ResearchStorage()
 {
 }

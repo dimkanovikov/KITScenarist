@@ -96,14 +96,27 @@ namespace DataStorageLayer
         bool hasCharacter(const QString& _name);
 
 	private:
-		ResearchTable* m_all;
+        /**
+         * @brief Список со всеми элементами разработки
+         */
+        ResearchTable* m_all = nullptr;
+
+        /**
+         * @brief Список персонажей
+         */
+        ResearchTable* m_characters = nullptr;
+
+        /**
+         * @brief Список локаций
+         */
+        ResearchTable* m_locations = nullptr;
 
 	private:
 		ResearchStorage();
 
 		// Для доступа к конструктору
-		friend class StorageFacade;
-	};
+        friend class StorageFacade;
+    };
 }
 
 #endif // RESEARCHSTORAGE_H

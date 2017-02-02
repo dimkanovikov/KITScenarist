@@ -24,7 +24,21 @@ ResearchTable* ResearchMapper::findAll()
 	//
 	const QString sortQuery = " ORDER BY parent_id, sort_order";
 
-	return qobject_cast<ResearchTable*>(abstractFindAll(sortQuery));
+    return qobject_cast<ResearchTable*>(abstractFindAll(sortQuery));
+}
+
+ResearchTable* ResearchMapper::findCharacters()
+{
+    const QString filterQuery = QString(" WHERE type = %1 ORDER BY name").arg(Research::Character);
+
+    return qobject_cast<ResearchTable*>(abstractFindAll(filterQuery));
+}
+
+ResearchTable* ResearchMapper::findLocations()
+{
+    const QString filterQuery = QString(" WHERE type = %1 ORDER BY name").arg(Research::Location);
+
+    return qobject_cast<ResearchTable*>(abstractFindAll(filterQuery));
 }
 
 void ResearchMapper::insert(Research* _research)

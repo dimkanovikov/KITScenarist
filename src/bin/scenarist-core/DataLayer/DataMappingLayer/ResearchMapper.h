@@ -19,6 +19,8 @@ namespace DataMappingLayer
 	public:
 		Research* find(const Identifier& _id);
 		ResearchTable* findAll();
+        ResearchTable* findCharacters();
+        ResearchTable* findLocations();
 		void insert(Research* _place);
 		void update(Research* _place);
 		void remove(Research* _place);
