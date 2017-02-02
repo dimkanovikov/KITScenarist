@@ -191,7 +191,7 @@ namespace UserInterface
 	private:
 		Ui::StartUpView *ui;
 
-        bool isProcessLogin = false;
+        bool m_isProcessLogin = false;
 	};
 }
 
