@@ -95,6 +95,11 @@ namespace ManagementLayer
         void refreshCharacters();
 
         /**
+         * @brief Было изменено имя персонажа
+         */
+        void characterNameChanged(const QString& _oldName, const QString& _newName);
+
+        /**
          * @brief Обновить список локаций
          */
         void refreshLocations();

@@ -1722,16 +1722,14 @@ void ApplicationManager::initConnections()
     connect(m_startUpManager, &StartUpManager::unshareRemoteProjectRequested, this, &ApplicationManager::unshareRemoteProject);
 
     connect(m_researchManager, &ResearchManager::scenarioNameChanged, this, &ApplicationManager::updateWindowTitle);
+    connect(m_researchManager, &ResearchManager::characterNameChanged, m_scenarioManager, &ScenarioManager::aboutCharacterNameChanged);
+    connect(m_researchManager, &ResearchManager::refreshCharacters, m_scenarioManager, &ScenarioManager::aboutRefreshCharacters);
 
     connect(m_scenarioManager, &ScenarioManager::showFullscreen, this, &ApplicationManager::aboutShowFullscreen);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, this, &ApplicationManager::aboutUpdateLastChangeInfo);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncScenario);
     connect(m_scenarioManager, &ScenarioManager::updateScenarioRequest, m_synchronizationManager, &SynchronizationManager::aboutWorkSyncData);
     connect(m_scenarioManager, &ScenarioManager::updateCursorsRequest, m_synchronizationManager, &SynchronizationManager::aboutUpdateCursors);
-
-    connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
-            m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
-    connect(m_researchManager, &ResearchManager::refreshCharacters, m_scenarioManager, &ScenarioManager::aboutRefreshCharacters);
 
     connect(m_locationsManager, SIGNAL(locationNameChanged(QString,QString)),
             m_scenarioManager, SLOT(aboutLocationNameChanged(QString,QString)));

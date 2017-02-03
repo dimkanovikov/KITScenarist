@@ -502,11 +502,14 @@ void ResearchManager::initConnections()
     // ... персонаж
     //
     connect(m_view, &ResearchView::characterNameChanged, [=] (const QString& _name) {
+        const QString newName = _name.toUpper();
         if (m_currentResearch != 0
             && m_currentResearch->type() == Research::Character
-            && m_currentResearch->name() != _name) {
-            m_currentResearch->setName(_name);
+            && m_currentResearch->name() != newName) {
+            const QString oldName = m_currentResearch->name();
+            m_currentResearch->setName(newName);
             emit researchChanged();
+            emit characterNameChanged(oldName, newName);
         }
     });
     connect(m_view, &ResearchView::characterDescriptionChanged, [=] (const QString& _description) {

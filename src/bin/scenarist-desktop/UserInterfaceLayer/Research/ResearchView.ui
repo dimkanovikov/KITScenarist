@@ -134,7 +134,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>6</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -418,7 +418,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="characterName">
+            <widget class="AcceptebleLineEdit" name="characterName">
              <property name="maxLength">
               <number>300</number>
              </property>
@@ -985,15 +985,26 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>FlatButton</class>
+   <extends>QToolButton</extends>
+   <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SimpleTextEditorWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AcceptebleLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">3rd_party/Widgets/AcceptebleLineEdit/AcceptebleLineEdit.h</header>
+  </customwidget>
+  <customwidget>
    <class>ImagesPane</class>
    <extends>QScrollArea</extends>
    <header location="global">3rd_party/Widgets/ImagesPane/ImagesPane.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>FlatButton</class>
-   <extends>QToolButton</extends>
-   <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
   </customwidget>
   <customwidget>
    <class>QWebEngineView</class>
@@ -1022,12 +1033,6 @@
    <class>ColoredToolButton</class>
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/ColoredToolButton/ColoredToolButton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>SimpleTextEditorWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">3rd_party/Widgets/SimpleTextEditor/SimpleTextEditorWidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

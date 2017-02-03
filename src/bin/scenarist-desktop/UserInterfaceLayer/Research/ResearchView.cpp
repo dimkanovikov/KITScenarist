@@ -217,7 +217,7 @@ void ResearchView::editCharactersRoot()
 void ResearchView::editCharacter(const QString& _name, const QString& _description)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->characterEdit);
-    m_ui->characterName->setText(_name);
+    m_ui->characterName->setAcceptedText(_name);
     QDomDocument xmlDocument;
     xmlDocument.setContent(_description);
     QDomNode characterNode = xmlDocument.namedItem("character");
@@ -510,6 +510,11 @@ void ResearchView::initView()
 
     m_ui->synopsisText->setUsePageMode(true);
 
+    QFont nameFont = m_ui->characterName->font();
+    nameFont.setCapitalization(QFont::AllUppercase);
+    m_ui->characterName->setFont(nameFont);
+    m_ui->characterName->setQuestionPrefix(tr("Character name"));
+
     m_ui->imagesGalleryPane->setLastSelectedImagePath(::imagesFolderPath());
 
     m_ui->imagePreview->setReadOnly(true);
@@ -676,7 +681,7 @@ void ResearchView::initConnections()
     //
     // ... персонаж
     //
-    connect(m_ui->characterName, &QLineEdit::textChanged, this, &ResearchView::characterNameChanged);
+    connect(m_ui->characterName, &AcceptebleLineEdit::textAccepted, this, &ResearchView::characterNameChanged);
     auto emitCharacterDescriptionChanged = [=] {
         QString description;
         QXmlStreamWriter writer(&description);
