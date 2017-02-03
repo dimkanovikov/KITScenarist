@@ -95,6 +95,14 @@ namespace DataStorageLayer
          */
         bool hasCharacter(const QString& _name);
 
+        // ****
+        // API для работы с локациями
+
+        /**
+         * @brief Все персонажи сценария
+         */
+        ResearchTable* locations();
+
 	private:
         /**
          * @brief Список со всеми элементами разработки

@@ -6,10 +6,10 @@
 #include <BusinessLayer/Counters/CountersFacade.h>
 #include <BusinessLayer/Counters/Counter.h>
 
-#include <Domain/Character.h>
+#include <Domain/Research.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
-#include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
 
 #include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
@@ -91,8 +91,8 @@ QString SummaryReport::makeReport(QTextDocument* _scenario, const BusinessLogic:
 	QStringList scenes;
 	// - персонаж - кол-во реплик
 	QMap<QString, int> characters;
-	foreach (DomainObject* characterObject, DataStorageLayer::StorageFacade::characterStorage()->all()->toList()) {
-		Character* character = dynamic_cast<Character*>(characterObject);
+    foreach (DomainObject* characterObject, DataStorageLayer::StorageFacade::researchStorage()->characters()->toList()) {
+        Research* character = dynamic_cast<Research*>(characterObject);
 		characters.insert(character->name(), 0);
 	}
 	//

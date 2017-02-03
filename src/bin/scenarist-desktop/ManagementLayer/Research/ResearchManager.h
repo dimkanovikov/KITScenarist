@@ -89,6 +89,16 @@ namespace ManagementLayer
          */
         void researchChanged();
 
+        /**
+         * @brief Обновить список персонажей
+         */
+        void refreshCharacters();
+
+        /**
+         * @brief Обновить список локаций
+         */
+        void refreshLocations();
+
     private:
         /**
          * @brief Добавить разработку
@@ -104,6 +114,11 @@ namespace ManagementLayer
          * @brief Удалить разработку
          */
         void removeResearch(const QModelIndex& _index);
+
+        /**
+         * @brief Обновить поддерево разработки
+         */
+        void refreshResearchSubtree(const QModelIndex& _index);
 
         /**
          * @brief Показать контекстное меню навигатора

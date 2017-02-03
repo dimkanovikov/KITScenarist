@@ -80,6 +80,17 @@
        <item row="1" column="0" colspan="4">
         <widget class="QTreeView" name="researchNavigator"/>
        </item>
+       <item row="0" column="3">
+        <widget class="FlatButton" name="refreshResearchSubtree">
+         <property name="toolTip">
+          <string>Delete research item (Del)</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../scenarist-core/Resources/Resources.qrc">
+           <normaloff>:/Graphics/Icons/Editing/refresh.png</normaloff>:/Graphics/Icons/Editing/refresh.png</iconset>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="layoutWidget">

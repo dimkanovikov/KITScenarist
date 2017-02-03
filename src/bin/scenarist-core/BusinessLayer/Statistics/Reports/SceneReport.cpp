@@ -6,9 +6,9 @@
 #include <BusinessLayer/Chronometry/ChronometerFacade.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
-#include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
 
-#include <Domain/Character.h>
+#include <Domain/Research.h>
 
 #include <3rd_party/Widgets/PagesTextEdit/PageTextEdit.h>
 
@@ -49,8 +49,8 @@ QString SceneReport::makeReport(QTextDocument* _scenario,
 	//
 	QString rxPattern;
 	foreach (DomainObject* characterObject,
-			 DataStorageLayer::StorageFacade::characterStorage()->all()->toList()) {
-		Character* character = dynamic_cast<Character*>(characterObject);
+             DataStorageLayer::StorageFacade::researchStorage()->characters()->toList()) {
+        Research* character = dynamic_cast<Research*>(characterObject);
 		if (rxPattern.isEmpty()) {
 			rxPattern.append(character->name());
 		} else {

@@ -4,11 +4,11 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 
-#include <Domain/Character.h>
+#include <Domain/Research.h>
 #include <Domain/CharacterState.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
-#include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
 #include <DataLayer/DataStorageLayer/CharacterStateStorage.h>
 
 #include <QKeyEvent>
@@ -87,7 +87,7 @@ void CharacterHandler::prehandle()
 			m_sceneCharactersModel->setStringList(QStringList() << previousCharacter.toUpper());
 			model = m_sceneCharactersModel;
 		} else {
-			model = StorageFacade::characterStorage()->all();
+            model = StorageFacade::researchStorage()->characters();
 		}
 		editor()->complete(model, QString::null);
 	}
@@ -349,7 +349,7 @@ void CharacterHandler::handleOther(QKeyEvent*)
 				m_sceneCharactersModel->setStringList(sceneCharacters);
 				sectionModel = m_sceneCharactersModel;
 			} else {
-				sectionModel = StorageFacade::characterStorage()->all();
+                sectionModel = StorageFacade::researchStorage()->characters();
 			}
 			sectionText = CharacterParser::name(currentBlockText);
 			break;
@@ -392,7 +392,7 @@ void CharacterHandler::storeCharacter() const
 		//
 		// Сохраняем персонажа
 		//
-		StorageFacade::characterStorage()->storeCharacter(characterName);
+        StorageFacade::researchStorage()->storeCharacter(characterName);
 		StorageFacade::characterStateStorage()->storeCharacterState(characterState);
 	}
 }

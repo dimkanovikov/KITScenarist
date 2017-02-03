@@ -138,6 +138,11 @@ namespace UserInterface
         void removeResearchRequested(const QModelIndex& _index);
 
         /**
+         * @brief Нажата кнопка обновить список элементов
+         */
+        void refeshResearchSubtreeRequested(const QModelIndex& _index);
+
+        /**
          * @brief Выбрана разработка для изменения
          */
         void editResearchRequested(const QModelIndex& _index);
@@ -192,7 +197,7 @@ namespace UserInterface
         /**
          * @brief Скрыть/показать кнопки добавления и удаления разработки
          */
-        void setResearchManageButtonsVisible(bool _isVisible, bool _isDeleteVisible = true);
+        void setResearchManageButtonsVisible(bool _isVisible, bool _isDeleteVisible = true, bool _isRefreshVisible = false);
 
         /**
          * @brief Скрыть/показать кнопку поиска и панель поиска

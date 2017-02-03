@@ -4,10 +4,10 @@
 #include <BusinessLayer/Statistics/StatisticsFacade.h>
 #include <BusinessLayer/Statistics/Reports/AbstractReport.h>
 
-#include <Domain/Character.h>
+#include <Domain/Research.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
-#include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
 
 #include <UserInterfaceLayer/Statistics/StatisticsView.h>
 
@@ -18,13 +18,6 @@
 using BusinessLogic::ScenarioBlockStyle;
 using ManagementLayer::StatisticsManager;
 using UserInterface::StatisticsView;
-
-namespace {
-	/**
-	 * @brief Флаг для получения красивых названий блоков
-	 */
-	const bool BEAUTIFY_BLOCK_NAME = true;
-}
 
 
 StatisticsManager::StatisticsManager(QObject* _parent, QWidget* _parentWidget) :
@@ -54,7 +47,7 @@ void StatisticsManager::loadCurrentProject()
 	//
 	// Загрузить персонажей
 	//
-	m_view->setCharacters(DataStorageLayer::StorageFacade::characterStorage()->all());
+    m_view->setCharacters(DataStorageLayer::StorageFacade::researchStorage()->characters());
 }
 
 void StatisticsManager::scenarioTextChanged()

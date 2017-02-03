@@ -4,10 +4,10 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 
-#include <Domain/Character.h>
+#include <Domain/Research.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
-#include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
 
 #include <QKeyEvent>
 #include <QRegularExpression>
@@ -158,7 +158,7 @@ void SceneCharactersHandler::handleOther(QKeyEvent*)
 	//
 	// Получим модель подсказок для текущей секции и выведем пользователю
 	//
-	QAbstractItemModel* characterModel = StorageFacade::characterStorage()->all();
+    QAbstractItemModel* characterModel = StorageFacade::researchStorage()->characters();
 
 	//
 	// Убрать из модели уже использованные элементы
@@ -205,7 +205,7 @@ void SceneCharactersHandler::storeCharacters() const
 			//
 			// Сохраняем персонажа
 			//
-			StorageFacade::characterStorage()->storeCharacter(character);
+            StorageFacade::researchStorage()->storeCharacter(character);
 		}
 	}
 }

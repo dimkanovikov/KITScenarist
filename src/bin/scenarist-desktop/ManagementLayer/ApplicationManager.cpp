@@ -1731,13 +1731,11 @@ void ApplicationManager::initConnections()
 
     connect(m_charactersManager, SIGNAL(characterNameChanged(QString,QString)),
             m_scenarioManager, SLOT(aboutCharacterNameChanged(QString,QString)));
-    connect(m_charactersManager, SIGNAL(refreshCharacters()),
-            m_scenarioManager, SLOT(aboutRefreshCharacters()));
+    connect(m_researchManager, &ResearchManager::refreshCharacters, m_scenarioManager, &ScenarioManager::aboutRefreshCharacters);
 
     connect(m_locationsManager, SIGNAL(locationNameChanged(QString,QString)),
             m_scenarioManager, SLOT(aboutLocationNameChanged(QString,QString)));
-    connect(m_locationsManager, SIGNAL(refreshLocations()),
-            m_scenarioManager, SLOT(aboutRefreshLocations()));
+    connect(m_researchManager, &ResearchManager::refreshLocations, m_scenarioManager, &ScenarioManager::aboutRefreshLocations);
 
     connect(m_statisticsManager, SIGNAL(needNewExportedScenario()), this, SLOT(aboutPrepareScenarioForStatistics()));
     connect(m_statisticsManager, &StatisticsManager::linkActivated, this, &ApplicationManager::aboutInnerLinkActivated);

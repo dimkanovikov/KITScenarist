@@ -375,14 +375,31 @@ void ResearchManager::removeResearch(const QModelIndex& _index)
     }
 }
 
+void ResearchManager::refreshResearchSubtree(const QModelIndex& _index)
+{
+    ResearchModelItem* researchItem = m_model->itemForIndex(_index);
+    Research* research = researchItem->research();
+    if (research->type() == Research::CharactersRoot) {
+        emit refreshCharacters();
+    } else if (research->type() == Research::LocationsRoot) {
+        emit refreshLocations();
+    }
+}
+
 void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const QPoint& _pos)
 {
     ResearchModelItem* researchItem = m_model->itemForIndex(_index);
     bool showAdd = false;
     bool showRemove = false;
+    bool showUpdate = false;
     switch (researchItem->research()->type()) {
         case Research::CharactersRoot:
-        case Research::LocationsRoot:
+        case Research::LocationsRoot: {
+            showAdd = true;
+            showUpdate = true;
+            break;
+        }
+
         case Research::ResearchRoot: {
             showAdd = true;
             break;
@@ -412,12 +429,19 @@ void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const 
         addAction->setVisible(showAdd);
         QAction* removeAction = menu.addAction(tr("Remove"));
         removeAction->setVisible(showRemove);
+        QAction* updateAction =
+                menu.addAction(researchItem->research()->type() == Research::CharactersRoot
+                               ? tr("Find All Characters from Script")
+                               : tr("Find All Locations from Script"));
+        updateAction->setVisible(showUpdate);
 
         QAction* toggledAction = menu.exec(_pos);
         if (toggledAction == addAction) {
             addResearch(_index);
         } else if (toggledAction == removeAction) {
             removeResearch(_index);
+        } else if (toggledAction == updateAction) {
+            refreshResearchSubtree(_index);
         }
     }
 }
@@ -444,6 +468,7 @@ void ResearchManager::initConnections()
     connect(m_view, &ResearchView::addResearchRequested, this, &ResearchManager::addResearch);
     connect(m_view, &ResearchView::editResearchRequested, this, &ResearchManager::editResearch);
     connect(m_view, &ResearchView::removeResearchRequested, this, &ResearchManager::removeResearch);
+    connect(m_view, &ResearchView::refeshResearchSubtreeRequested, this, &ResearchManager::refreshResearchSubtree);
     connect(m_view, &ResearchView::navigatorContextMenuRequested, this, &ResearchManager::showNavigatorContextMenu);
     connect(m_view, &ResearchView::researchItemAdded, this, &ResearchManager::researchChanged);
 

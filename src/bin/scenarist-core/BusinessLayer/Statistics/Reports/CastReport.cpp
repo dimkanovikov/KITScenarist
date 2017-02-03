@@ -4,9 +4,9 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
-#include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
 
-#include <Domain/Character.h>
+#include <Domain/Research.h>
 
 #include <QApplication>
 #include <QTextBlock>
@@ -38,8 +38,8 @@ QString CastReport::makeReport(QTextDocument* _scenario,
 	//
 	QString rxPattern;
 	foreach (DomainObject* characterObject,
-			 DataStorageLayer::StorageFacade::characterStorage()->all()->toList()) {
-		Character* character = dynamic_cast<Character*>(characterObject);
+             DataStorageLayer::StorageFacade::researchStorage()->characters()->toList()) {
+        Research* character = dynamic_cast<Research*>(characterObject);
 		if (rxPattern.isEmpty()) {
 			rxPattern.append(character->name());
 		} else {

@@ -5,9 +5,9 @@
 #include "ScenarioSceneDescriptionManager.h"
 #include "ScenarioTextEditManager.h"
 
+#include <Domain/Research.h>
 #include <Domain/Scenario.h>
 #include <Domain/ScenarioChange.h>
-#include <Domain/Character.h>
 #include <Domain/Location.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
@@ -22,7 +22,7 @@
 #include <DataLayer/DataStorageLayer/ScenarioStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioChangeStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
-#include <DataLayer/DataStorageLayer/CharacterStorage.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 #include <DataLayer/DataStorageLayer/LocationStorage.h>
 
@@ -473,8 +473,8 @@ void ScenarioManager::aboutRefreshCharacters()
     //
     QSet<QString> charactersToDelete;
     foreach (DomainObject* domainObject,
-             DataStorageLayer::StorageFacade::characterStorage()->all()->toList()) {
-        Character* character = dynamic_cast<Character*>(domainObject);
+             DataStorageLayer::StorageFacade::researchStorage()->characters()->toList()) {
+        Research* character = dynamic_cast<Research*>(domainObject);
         if (!characters.contains(character->name())) {
             charactersToDelete.insert(character->name());
         }
@@ -501,7 +501,7 @@ void ScenarioManager::aboutRefreshCharacters()
         //
         DatabaseLayer::Database::transaction();
         foreach (const QString& character, charactersToDelete) {
-            DataStorageLayer::StorageFacade::characterStorage()->removeCharacter(character);
+            DataStorageLayer::StorageFacade::researchStorage()->removeCharacter(character);
         }
         DatabaseLayer::Database::commit();
 
@@ -510,8 +510,8 @@ void ScenarioManager::aboutRefreshCharacters()
         //
         DatabaseLayer::Database::transaction();
         foreach (const QString& character, characters) {
-            if (!DataStorageLayer::StorageFacade::characterStorage()->hasCharacter(character)) {
-                DataStorageLayer::StorageFacade::characterStorage()->storeCharacter(character);
+            if (!DataStorageLayer::StorageFacade::researchStorage()->hasCharacter(character)) {
+                DataStorageLayer::StorageFacade::researchStorage()->storeCharacter(character);
             }
         }
         DatabaseLayer::Database::commit();

@@ -209,7 +209,8 @@ void ResearchView::editCharactersRoot()
     //
     // Но кнопку удаления всё-равно скрываем
     //
-    setResearchManageButtonsVisible(true, false);
+    setResearchManageButtonsVisible(true, false, true);
+    m_ui->refreshResearchSubtree->setToolTip(tr("Find All Characters from Script"));
     setSearchVisible(false);
 }
 
@@ -236,7 +237,8 @@ void ResearchView::editLocationsRoot()
     //
     // Но кнопку удаления всё-равно скрываем
     //
-    setResearchManageButtonsVisible(true, false);
+    setResearchManageButtonsVisible(true, false, true);
+    m_ui->refreshResearchSubtree->setToolTip(tr("Find All Locations from Script"));
     setSearchVisible(false);
 }
 
@@ -439,14 +441,21 @@ bool ResearchView::eventFilter(QObject* _object, QEvent* _event)
     return QWidget::eventFilter(_object, _event);
 }
 
-void ResearchView::setResearchManageButtonsVisible(bool _isVisible, bool _isDeleteVisible)
+void ResearchView::setResearchManageButtonsVisible(bool _isVisible, bool _isDeleteVisible, bool _isRefreshVisible)
 {
     if (_isVisible) {
         m_ui->addResearchItem->setVisible(_isVisible);
-        m_ui->removeResearchItem->setVisible(_isDeleteVisible);
+        if (!_isDeleteVisible) {
+            m_ui->removeResearchItem->setVisible(_isDeleteVisible);
+            m_ui->refreshResearchSubtree->setVisible(_isRefreshVisible);
+        } else {
+            m_ui->refreshResearchSubtree->setVisible(_isRefreshVisible);
+            m_ui->removeResearchItem->setVisible(_isDeleteVisible);
+        }
     } else {
         m_ui->addResearchItem->setVisible(_isVisible);
         m_ui->removeResearchItem->setVisible(_isVisible);
+        m_ui->refreshResearchSubtree->setVisible(_isVisible);
     }
 }
 
@@ -477,6 +486,7 @@ void ResearchView::initView()
                 .arg(QKeySequence(QKeySequence::New).toString(QKeySequence::NativeText)));
 
     m_ui->removeResearchItem->setIcons(m_ui->removeResearchItem->icon());
+    m_ui->refreshResearchSubtree->setIcons(m_ui->refreshResearchSubtree->icon());
 
     m_ui->researchNavigator->setItemDelegate(new ResearchNavigatorItemDelegate(m_ui->researchNavigator));
     m_ui->researchNavigator->setDragDropMode(QAbstractItemView::DragDrop);
@@ -543,6 +553,7 @@ void ResearchView::initConnections()
     QShortcut* addResearchShortcut = new QShortcut(QKeySequence::New, m_ui->researchNavigator);
     addResearchShortcut->setContext(Qt::WidgetShortcut);
     connect(addResearchShortcut, &QShortcut::activated, m_ui->addResearchItem, &FlatButton::click);
+    //
     connect(m_ui->removeResearchItem, &FlatButton::clicked, [=] {
         emit removeResearchRequested(currentResearchIndex());
     });
@@ -552,6 +563,11 @@ void ResearchView::initConnections()
     QShortcut* removeShortcut2 = new QShortcut(QKeySequence("Backspace", QKeySequence::PortableText), m_ui->researchNavigator);
     removeShortcut2->setContext(Qt::WidgetShortcut);
     connect(removeShortcut2, &QShortcut::activated, m_ui->removeResearchItem, &FlatButton::click);
+    //
+    connect(m_ui->refreshResearchSubtree, &FlatButton::clicked, [=] {
+        emit refeshResearchSubtreeRequested(currentResearchIndex());
+    });
+    //
     connect(m_ui->search, &FlatButton::toggled, [=] (bool _toggle) {
         if (!_toggle
             && m_ui->searchWidget->isVisible()
@@ -788,6 +804,7 @@ void ResearchView::initStyleSheet()
 
     m_ui->addResearchItem->setProperty("inTopPanel", true);
     m_ui->removeResearchItem->setProperty("inTopPanel", true);
+    m_ui->refreshResearchSubtree->setProperty("inTopPanel", true);
 
     m_ui->search->setProperty("inTopPanel", true);
 

@@ -105,6 +105,8 @@ void ResearchStorage::removeResearch(Research* _research)
 			// ... удалим из локального списка и базы данных
 			//
 			all()->remove(research);
+            characters()->remove(research);
+            locations()->remove(research);
 			MapperFacade::researchMapper()->remove(research);
 		}
 	}
@@ -147,7 +149,92 @@ ResearchTable* ResearchStorage::characters()
     if (m_characters == 0) {
         m_characters = MapperFacade::researchMapper()->findCharacters();
     }
-    return m_all;
+    return m_characters;
+}
+
+Research* ResearchStorage::character(const QString& _name)
+{
+    return research(_name);
+}
+
+Research* ResearchStorage::storeCharacter(const QString& _name)
+{
+    Research* newCharacter = 0;
+
+    QString characterName = _name.toUpper().trimmed();
+
+    //
+    // Если персонажа можно сохранить
+    //
+    if (!characterName.isEmpty()) {
+        //
+        // Проверяем наличие данного персонажа
+        //
+        foreach (DomainObject* domainObject, characters()->toList()) {
+            Research* character = dynamic_cast<Research*>(domainObject);
+            if (character->name() == characterName) {
+                newCharacter = character;
+                break;
+            }
+        }
+
+        //
+        // Если такого персонажа ещё нет, то сохраним его
+        //
+        if (!DomainObject::isValid(newCharacter)) {
+            //
+            // ... в базе данных и полном списке разработок
+            //
+            newCharacter = storeResearch(nullptr, Research::Character, characters()->size(), characterName);
+
+            //
+            // ... в текущем списке персонажей
+            //
+            characters()->append(newCharacter);
+        }
+    }
+
+    return newCharacter;
+}
+
+void ResearchStorage::updateCharacter(Research* _character)
+{
+    updateResearch(_character);
+}
+
+void ResearchStorage::removeCharacter(const QString& _name)
+{
+    if (hasCharacter(_name)) {
+        removeResearch(character(_name));
+    }
+}
+
+void ResearchStorage::removeCharacters(const QStringList& _names)
+{
+    for (const QString& name : _names) {
+        removeCharacter(name);
+    }
+}
+
+bool ResearchStorage::hasCharacter(const QString& _name)
+{
+    bool contains = false;
+    foreach (DomainObject* domainObject, characters()->toList()) {
+        Research* character = dynamic_cast<Research*>(domainObject);
+        if (character->name() == _name) {
+            contains = true;
+            break;
+        }
+    }
+    return contains;
+}
+
+ResearchTable* ResearchStorage::locations()
+{
+    if (m_locations == nullptr) {
+        m_locations = MapperFacade::researchMapper()->findLocations();
+    }
+    return m_locations;
 }
 
 ResearchStorage::ResearchStorage()
