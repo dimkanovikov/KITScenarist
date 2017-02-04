@@ -245,7 +245,7 @@ void ResearchView::editLocationsRoot()
 void ResearchView::editLocation(const QString& _name, const QString& _description)
 {
     m_ui->researchDataEditsContainer->setCurrentWidget(m_ui->locationEdit);
-    m_ui->locationName->setText(_name);
+    m_ui->locationName->setAcceptedText(_name);
     m_ui->locationDescription->setHtml(_description);
 
     setResearchManageButtonsVisible(true);
@@ -514,6 +514,8 @@ void ResearchView::initView()
     nameFont.setCapitalization(QFont::AllUppercase);
     m_ui->characterName->setFont(nameFont);
     m_ui->characterName->setQuestionPrefix(tr("Character name"));
+    m_ui->locationName->setFont(nameFont);
+    m_ui->locationName->setQuestionPrefix(tr("Location name"));
 
     m_ui->imagesGalleryPane->setLastSelectedImagePath(::imagesFolderPath());
 
@@ -707,7 +709,7 @@ void ResearchView::initConnections()
     //
     // ... локация
     //
-    connect(m_ui->locationName, &QLineEdit::textChanged, this, &ResearchView::locationNameChanged);
+    connect(m_ui->locationName, &AcceptebleLineEdit::textAccepted, this, &ResearchView::locationNameChanged);
     connect(m_ui->locationDescription, &SimpleTextEditorWidget::textChanged, [=] {
         emit locationDescriptionChanged(TextEditHelper::removeDocumentTags(m_ui->locationDescription->toHtml()));
     });

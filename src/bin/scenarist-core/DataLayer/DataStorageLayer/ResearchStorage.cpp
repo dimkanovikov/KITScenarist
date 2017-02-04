@@ -200,6 +200,13 @@ Research* ResearchStorage::storeCharacter(const QString& _name)
 void ResearchStorage::updateCharacter(Research* _character)
 {
     updateResearch(_character);
+
+    //
+    // Уведомим об обновлении
+    //
+    int indexRow = characters()->toList().indexOf(_character);
+    QModelIndex updateIndex = characters()->index(indexRow, 0, QModelIndex());
+    emit characters()->dataChanged(updateIndex, updateIndex);
 }
 
 void ResearchStorage::removeCharacter(const QString& _name)
@@ -235,6 +242,90 @@ ResearchTable* ResearchStorage::locations()
         m_locations = MapperFacade::researchMapper()->findLocations();
     }
     return m_locations;
+}
+
+Research* ResearchStorage::location(const QString& _name)
+{
+    return research(_name);
+}
+
+Research* ResearchStorage::storeLocation(const QString& _name)
+{
+    Research* newLocation = 0;
+
+    QString locationName = _name.toUpper().trimmed();
+
+    //
+    // Если локацию можно сохранить
+    //
+    if (!locationName.isEmpty()) {
+        //
+        // Проверяем наличие данной локации
+        //
+        foreach (DomainObject* domainObject, locations()->toList()) {
+            Research* location = dynamic_cast<Research*>(domainObject);
+            if (location->name() == locationName) {
+                newLocation = location;
+                break;
+            }
+        }
+
+        //
+        // Если такой локации ещё нет, то сохраним её
+        //
+        if (!DomainObject::isValid(newLocation)) {
+            //
+            // ... в базе данных и полном списке разработок
+            //
+            newLocation = storeResearch(nullptr, Research::Location, locations()->size(), locationName);
+
+            //
+            // ... в текущем списке локаций
+            //
+            locations()->append(newLocation);
+        }
+    }
+
+    return newLocation;
+}
+
+void ResearchStorage::updateLocation(Research* _location)
+{
+    updateResearch(_location);
+
+    //
+    // Уведомим об обновлении
+    //
+    int indexRow = locations()->toList().indexOf(_location);
+    QModelIndex updateIndex = locations()->index(indexRow, 0, QModelIndex());
+    emit locations()->dataChanged(updateIndex, updateIndex);
+}
+
+void ResearchStorage::removeLocation(const QString& _name)
+{
+    if (hasLocation(_name)) {
+        removeResearch(location(_name));
+    }
+}
+
+void ResearchStorage::removeLocations(const QStringList& _names)
+{
+    for (const QString& name : _names) {
+        removeLocation(name);
+    }
+}
+
+bool ResearchStorage::hasLocation(const QString& _name)
+{
+    bool contains = false;
+    foreach (DomainObject* domainObject, locations()->toList()) {
+        Research* location = dynamic_cast<Research*>(domainObject);
+        if (location->name() == _name) {
+            contains = true;
+            break;
+        }
+    }
+    return contains;
 }
 
 ResearchStorage::ResearchStorage()

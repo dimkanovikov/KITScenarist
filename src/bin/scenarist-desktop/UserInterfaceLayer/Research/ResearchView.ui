@@ -134,7 +134,7 @@
           <string notr="true"/>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>6</number>
          </property>
          <widget class="QWidget" name="scenarioEdit">
           <layout class="QGridLayout" name="gridLayout_3">
@@ -502,7 +502,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="locationName">
+            <widget class="AcceptebleLineEdit" name="locationName">
              <property name="maxLength">
               <number>300</number>
              </property>

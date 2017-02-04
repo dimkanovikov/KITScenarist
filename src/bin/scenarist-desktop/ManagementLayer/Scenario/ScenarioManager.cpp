@@ -540,8 +540,8 @@ void ScenarioManager::aboutRefreshLocations()
     //
     QSet<QString> locationsToDelete;
     foreach (DomainObject* domainObject,
-             DataStorageLayer::StorageFacade::locationStorage()->all()->toList()) {
-        Location* location = dynamic_cast<Location*>(domainObject);
+             DataStorageLayer::StorageFacade::researchStorage()->locations()->toList()) {
+        Research* location = dynamic_cast<Research*>(domainObject);
         if (!locations.contains(location->name())) {
             locationsToDelete.insert(location->name());
         }
@@ -569,7 +569,7 @@ void ScenarioManager::aboutRefreshLocations()
         //
         DatabaseLayer::Database::transaction();
         foreach (const QString& location, locationsToDelete) {
-            DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
+            DataStorageLayer::StorageFacade::researchStorage()->removeLocation(location);
         }
         DatabaseLayer::Database::commit();
 
@@ -578,8 +578,8 @@ void ScenarioManager::aboutRefreshLocations()
         //
         DatabaseLayer::Database::transaction();
         foreach (const QString& location, locations) {
-            if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
-                DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
+            if (!DataStorageLayer::StorageFacade::researchStorage()->hasLocation(location)) {
+                DataStorageLayer::StorageFacade::researchStorage()->storeLocation(location);
             }
         }
         DatabaseLayer::Database::commit();

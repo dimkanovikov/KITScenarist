@@ -159,8 +159,8 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 			//
 			QSet<QString> locationsToDelete;
 			foreach (DomainObject* domainObject,
-					 DataStorageLayer::StorageFacade::locationStorage()->all()->toList()) {
-				Location* location = dynamic_cast<Location*>(domainObject);
+                     DataStorageLayer::StorageFacade::researchStorage()->characters()->toList()) {
+                Research* location = dynamic_cast<Research*>(domainObject);
 				if (!locations.contains(location->name())) {
 					locationsToDelete.insert(location->name());
 				}
@@ -171,7 +171,7 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 			//
 			DatabaseLayer::Database::transaction();
 			foreach (const QString& location, locationsToDelete) {
-				DataStorageLayer::StorageFacade::locationStorage()->removeLocation(location);
+                DataStorageLayer::StorageFacade::researchStorage()->removeLocation(location);
 			}
 			DatabaseLayer::Database::commit();
 
@@ -180,8 +180,8 @@ void ImportManager::importScenario(BusinessLogic::ScenarioDocument* _scenario, i
 			//
 			DatabaseLayer::Database::transaction();
 			foreach (const QString& location, locations) {
-				if (!DataStorageLayer::StorageFacade::locationStorage()->hasLocation(location)) {
-					DataStorageLayer::StorageFacade::locationStorage()->storeLocation(location);
+                if (!DataStorageLayer::StorageFacade::researchStorage()->hasLocation(location)) {
+                    DataStorageLayer::StorageFacade::researchStorage()->storeLocation(location);
 				}
 			}
 			DatabaseLayer::Database::commit();

@@ -100,6 +100,11 @@ namespace ManagementLayer
         void characterNameChanged(const QString& _oldName, const QString& _newName);
 
         /**
+         * @brief Было изменено название локации
+         */
+        void locationNameChanged(const QString& _oldName, const QString& _newName);
+
+        /**
          * @brief Обновить список локаций
          */
         void refreshLocations();

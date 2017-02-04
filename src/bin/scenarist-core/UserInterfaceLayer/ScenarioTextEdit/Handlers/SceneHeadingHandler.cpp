@@ -5,13 +5,13 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
 
 #include <Domain/Place.h>
-#include <Domain/Location.h>
+#include <Domain/Research.h>
 #include <Domain/ScenarioDay.h>
 #include <Domain/Time.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/PlaceStorage.h>
-#include <DataLayer/DataStorageLayer/LocationStorage.h>
+#include <DataLayer/DataStorageLayer/ResearchStorage.h>
 #include <DataLayer/DataStorageLayer/ScenarioDayStorage.h>
 #include <DataLayer/DataStorageLayer/TimeStorage.h>
 
@@ -38,8 +38,8 @@ namespace {
 			//
 			const bool FORCE = true;
 			const QString locationFromBlock = SceneHeadingParser::locationName(_blockText, FORCE);
-			foreach (DomainObject* object, StorageFacade::locationStorage()->all()->toList()) {
-				if (Location* location = dynamic_cast<Location*>(object)) {
+            foreach (DomainObject* object, StorageFacade::researchStorage()->locations()->toList()) {
+                if (Research* location = dynamic_cast<Research*>(object)) {
 					if (location->name().startsWith(locationFromBlock, Qt::CaseInsensitive)) {
 						section = SceneHeadingParser::SectionLocation;
 						break;
@@ -319,7 +319,7 @@ void SceneHeadingHandler::handleOther(QKeyEvent*)
 		}
 
 		case SceneHeadingParser::SectionLocation: {
-			sectionModel = StorageFacade::locationStorage()->all();
+            sectionModel = StorageFacade::researchStorage()->locations();
 			bool force = SceneHeadingParser::section(cursorBackwardText) == SceneHeadingParser::SectionTime;
 			sectionText = SceneHeadingParser::locationName(currentBlockText, force);
 			break;
@@ -340,8 +340,8 @@ void SceneHeadingHandler::handleOther(QKeyEvent*)
 			bool useLocations = false;
 			const bool FORCE = true;
 			const QString locationFromBlock = SceneHeadingParser::locationName(currentBlockText, FORCE);
-			foreach (DomainObject* object, StorageFacade::locationStorage()->all()->toList()) {
-				if (Location* location = dynamic_cast<Location*>(object)) {
+            foreach (DomainObject* object, StorageFacade::researchStorage()->locations()->toList()) {
+                if (Research* location = dynamic_cast<Research*>(object)) {
 					if (location->name().startsWith(locationFromBlock, Qt::CaseInsensitive)) {
 						useLocations = true;
 						break;
@@ -349,7 +349,7 @@ void SceneHeadingHandler::handleOther(QKeyEvent*)
 				}
 			}
 			if (useLocations) {
-				sectionModel = StorageFacade::locationStorage()->all();
+                sectionModel = StorageFacade::researchStorage()->locations();
 				sectionText = locationFromBlock;
 			}
 			//
@@ -396,7 +396,7 @@ void SceneHeadingHandler::storeSceneParameters() const
 		// Сохраняем локацию
 		//
 		QString locationName = SceneHeadingParser::locationName(currentBlockText);
-		StorageFacade::locationStorage()->storeLocation(locationName);
+        StorageFacade::researchStorage()->storeLocation(locationName);
 
 		//
 		// Сохраняем место

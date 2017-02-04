@@ -524,11 +524,14 @@ void ResearchManager::initConnections()
     // ... локация
     //
     connect(m_view, &ResearchView::locationNameChanged, [=] (const QString& _name) {
+        const QString newName = _name.toUpper();
         if (m_currentResearch != 0
             && m_currentResearch->type() == Research::Location
-            && m_currentResearch->name() != _name) {
-            m_currentResearch->setName(_name);
+            && m_currentResearch->name() != newName) {
+            const QString oldName = m_currentResearch->name();
+            m_currentResearch->setName(newName);
             emit researchChanged();
+            emit locationNameChanged(oldName, newName);
         }
     });
     connect(m_view, &ResearchView::locationDescriptionChanged, [=] (const QString& _description) {

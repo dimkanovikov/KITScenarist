@@ -103,6 +103,32 @@ namespace DataStorageLayer
          */
         ResearchTable* locations();
 
+        /**
+         * @brief Получить локацию по названию
+         */
+        Research* location(const QString& _name);
+
+        /**
+         * @brief Сохранить локацию
+         */
+        Research* storeLocation(const QString& _name);
+
+        /**
+         * @brief Обновить локацию
+         */
+        void updateLocation(Research* _location);
+
+        /**
+         * @brief Удалить локацию
+         */
+        void removeLocation(const QString& _name);
+        void removeLocations(const QStringList& _names);
+
+        /**
+         * @brief Проверить наличие заданной локации
+         */
+        bool hasLocation(const QString& _name);
+
 	private:
         /**
          * @brief Список со всеми элементами разработки
