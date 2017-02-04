@@ -115,19 +115,9 @@ SOURCES += \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioTextEditManager.cpp \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioNavigatorManager.cpp \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioCardsManager.cpp \
-    scenarist-desktop/ManagementLayer/Locations/LocationsNavigatorManager.cpp \
-    scenarist-desktop/ManagementLayer/Locations/LocationsManager.cpp \
-    scenarist-desktop/ManagementLayer/Characters/CharactersManager.cpp \
-    scenarist-desktop/ManagementLayer/Characters/CharactersNavigatorManager.cpp \
     scenarist-desktop/ManagementLayer/Settings/SettingsManager.cpp \
     scenarist-desktop/ManagementLayer/StartUp/StartUpManager.cpp \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.cpp \
-    scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.cpp \
-    scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.cpp \
-    scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.cpp \
-    scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.cpp \
-    scenarist-desktop/UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.cpp \
-    scenarist-desktop/UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioDocument.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioModel.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioModelItem.cpp \
@@ -136,26 +126,20 @@ SOURCES += \
     scenarist-core/BusinessLayer/Chronometry/ConfigurableChronometer.cpp \
     scenarist-core/DataLayer/Database/Database.cpp \
     scenarist-core/DataLayer/DataMappingLayer/AbstractMapper.cpp \
-    scenarist-core/DataLayer/DataMappingLayer/CharacterMapper.cpp \
-    scenarist-core/DataLayer/DataMappingLayer/LocationMapper.cpp \
     scenarist-core/DataLayer/DataMappingLayer/MapperFacade.cpp \
     scenarist-core/DataLayer/DataMappingLayer/PlaceMapper.cpp \
     scenarist-core/DataLayer/DataMappingLayer/ScenarioDayMapper.cpp \
     scenarist-core/DataLayer/DataMappingLayer/ScenarioMapper.cpp \
     scenarist-core/DataLayer/DataMappingLayer/SettingsMapper.cpp \
     scenarist-core/DataLayer/DataMappingLayer/TimeMapper.cpp \
-    scenarist-core/DataLayer/DataStorageLayer/CharacterStorage.cpp \
-    scenarist-core/DataLayer/DataStorageLayer/LocationStorage.cpp \
     scenarist-core/DataLayer/DataStorageLayer/PlaceStorage.cpp \
     scenarist-core/DataLayer/DataStorageLayer/ScenarioDayStorage.cpp \
     scenarist-core/DataLayer/DataStorageLayer/ScenarioStorage.cpp \
     scenarist-core/DataLayer/DataStorageLayer/SettingsStorage.cpp \
     scenarist-core/DataLayer/DataStorageLayer/StorageFacade.cpp \
     scenarist-core/DataLayer/DataStorageLayer/TimeStorage.cpp \
-    scenarist-core/Domain/Character.cpp \
     scenarist-core/Domain/DomainObject.cpp \
     scenarist-core/Domain/Identifier.cpp \
-    scenarist-core/Domain/Location.cpp \
     scenarist-core/Domain/Place.cpp \
     scenarist-core/Domain/Scenario.cpp \
     scenarist-core/Domain/ScenarioDay.cpp \
@@ -175,21 +159,11 @@ SOURCES += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.cpp \
     scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.cpp \
     scenarist-desktop/UserInterfaceLayer/ApplicationView.cpp \
-    scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemDelegate.cpp \
-    scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemWidget.cpp \
-    scenarist-desktop/UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.cpp \
-    scenarist-desktop/UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.cpp \
     scenarist-core/3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.cpp \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotosChooser.cpp \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotoLabel.cpp \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxwidget.cpp \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotoPreview.cpp \
-    scenarist-core/Domain/LocationPhoto.cpp \
-    scenarist-core/DataLayer/DataMappingLayer/LocationPhotoMapper.cpp \
-    scenarist-core/DataLayer/DataStorageLayer/LocationPhotoStorage.cpp \
-    scenarist-core/Domain/CharacterPhoto.cpp \
-    scenarist-core/DataLayer/DataMappingLayer/CharacterPhotoMapper.cpp \
-    scenarist-core/DataLayer/DataStorageLayer/CharacterPhotoStorage.cpp \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.cpp \
     scenarist-core/3rd_party/Widgets/TabBar/TabBar.cpp \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.cpp \
@@ -354,19 +328,9 @@ HEADERS += \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioTextEditManager.h \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioNavigatorManager.h \
     scenarist-desktop/ManagementLayer/Scenario/ScenarioCardsManager.h \
-    scenarist-desktop/ManagementLayer/Locations/LocationsNavigatorManager.h \
-    scenarist-desktop/ManagementLayer/Locations/LocationsManager.h \
-    scenarist-desktop/ManagementLayer/Characters/CharactersManager.h \
-    scenarist-desktop/ManagementLayer/Characters/CharactersNavigatorManager.h \
     scenarist-desktop/ManagementLayer/Settings/SettingsManager.h \
     scenarist-desktop/ManagementLayer/StartUp/StartUpManager.h \
     scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioNavigator/ScenarioNavigator.h \
-    scenarist-desktop/ManagementLayer/Locations/LocationsDataEditManager.h \
-    scenarist-desktop/ManagementLayer/Characters/CharactersDataEditManager.h \
-    scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.h \
-    scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigator.h \
-    scenarist-desktop/UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.h \
-    scenarist-desktop/UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigator.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioDocument.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioModel.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioModelItem.h \
@@ -376,26 +340,20 @@ HEADERS += \
     scenarist-core/BusinessLayer/Chronometry/ConfigurableChronometer.h \
     scenarist-core/DataLayer/Database/Database.h \
     scenarist-core/DataLayer/DataMappingLayer/AbstractMapper.h \
-    scenarist-core/DataLayer/DataMappingLayer/CharacterMapper.h \
-    scenarist-core/DataLayer/DataMappingLayer/LocationMapper.h \
     scenarist-core/DataLayer/DataMappingLayer/MapperFacade.h \
     scenarist-core/DataLayer/DataMappingLayer/PlaceMapper.h \
     scenarist-core/DataLayer/DataMappingLayer/ScenarioDayMapper.h \
     scenarist-core/DataLayer/DataMappingLayer/ScenarioMapper.h \
     scenarist-core/DataLayer/DataMappingLayer/SettingsMapper.h \
     scenarist-core/DataLayer/DataMappingLayer/TimeMapper.h \
-    scenarist-core/DataLayer/DataStorageLayer/CharacterStorage.h \
-    scenarist-core/DataLayer/DataStorageLayer/LocationStorage.h \
     scenarist-core/DataLayer/DataStorageLayer/PlaceStorage.h \
     scenarist-core/DataLayer/DataStorageLayer/ScenarioDayStorage.h \
     scenarist-core/DataLayer/DataStorageLayer/ScenarioStorage.h \
     scenarist-core/DataLayer/DataStorageLayer/SettingsStorage.h \
     scenarist-core/DataLayer/DataStorageLayer/StorageFacade.h \
     scenarist-core/DataLayer/DataStorageLayer/TimeStorage.h \
-    scenarist-core/Domain/Character.h \
     scenarist-core/Domain/DomainObject.h \
     scenarist-core/Domain/Identifier.h \
-    scenarist-core/Domain/Location.h \
     scenarist-core/Domain/Place.h \
     scenarist-core/Domain/Scenario.h \
     scenarist-core/Domain/ScenarioDay.h \
@@ -416,21 +374,11 @@ HEADERS += \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h \
     scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.h \
     scenarist-desktop/UserInterfaceLayer/ApplicationView.h \
-    scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemDelegate.h \
-    scenarist-desktop/UserInterfaceLayer/Characters/CharactersNavigator/CharactersNavigatorItemWidget.h \
-    scenarist-desktop/UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemDelegate.h \
-    scenarist-desktop/UserInterfaceLayer/Locations/LocationsNavigator/LocationsNavigatorItemWidget.h \
     scenarist-core/3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotosChooser.h \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotoLabel.h \
     scenarist-core/3rd_party/Widgets/QLightBoxWidget/qlightboxwidget.h \
     scenarist-core/3rd_party/Widgets/PhotosChooser/PhotoPreview.h \
-    scenarist-core/Domain/LocationPhoto.h \
-    scenarist-core/DataLayer/DataMappingLayer/LocationPhotoMapper.h \
-    scenarist-core/DataLayer/DataStorageLayer/LocationPhotoStorage.h \
-    scenarist-core/Domain/CharacterPhoto.h \
-    scenarist-core/DataLayer/DataMappingLayer/CharacterPhotoMapper.h \
-    scenarist-core/DataLayer/DataStorageLayer/CharacterPhotoStorage.h \
     scenarist-core/BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h \
     scenarist-core/3rd_party/Widgets/TabBar/TabBar.h \
     scenarist-core/3rd_party/Widgets/SpellCheckTextEdit/SyntaxHighlighter.h \
@@ -617,8 +565,6 @@ HEADERS += \
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
-    scenarist-desktop/UserInterfaceLayer/Characters/CharactersDataEdit/CharactersDataEdit.ui \
-    scenarist-desktop/UserInterfaceLayer/Locations/LocationsDataEdit/LocationsDataEdit.ui \
     scenarist-desktop/UserInterfaceLayer/Settings/SettingsView.ui \
     scenarist-desktop/UserInterfaceLayer/Export/ExportDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Import/ImportDialog.ui \

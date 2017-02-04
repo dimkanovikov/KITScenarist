@@ -20,32 +20,10 @@ using UserInterface::ScenarioReviewItemDelegate;
 using UserInterface::ScenarioTextEdit;
 
 namespace {
-
-	/**
-	 * @brief Размер иконок в кнопках
-	 */
-	const QSize ICON_SIZE(16, 16);
-
-	/**
-	 * @brief Размер кнопок
-	 */
-	const QSize BUTTON_SIZE(22, 22);
-
-	/**
-	 * @brief Ширина пенели с комментариями
-	 */
-	const int REVIEW_VIEW_MIN_WIDTH = 100;
-
 	/**
 	 * @brief Текст для заметки без комментария
 	 */
-	const QString EMPTY_REVIEW_TEXT = " ";
-
-
-	/**
-	 * @brief Ширина цветовой метки комментария
-	 */
-	const int COLOR_MARK_WIDTH = 12;
+    const QString EMPTY_REVIEW_TEXT = " ";
 }
 
 

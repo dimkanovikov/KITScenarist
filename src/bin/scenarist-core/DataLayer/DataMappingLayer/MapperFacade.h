@@ -4,14 +4,10 @@
 
 namespace DataMappingLayer
 {
-	class PlaceMapper;
-	class LocationMapper;
-	class LocationPhotoMapper;
+    class PlaceMapper;
 	class ScenarioDayMapper;
-	class TimeMapper;
-	class CharacterMapper;
-	class CharacterStateMapper;
-	class CharacterPhotoMapper;
+    class TimeMapper;
+    class CharacterStateMapper;
 	class ScenarioMapper;
 	class ScenarioChangeMapper;
 	class ScenarioDataMapper;
@@ -22,14 +18,10 @@ namespace DataMappingLayer
 	class MapperFacade
 	{
 	public:
-		static PlaceMapper* placeMapper();
-		static LocationMapper* locationMapper();
-		static LocationPhotoMapper* locationPhotoMapper();
+        static PlaceMapper* placeMapper();
 		static ScenarioDayMapper* scenarioDayMapper();
-		static TimeMapper* timeMapper();
-		static CharacterMapper* characterMapper();
-		static CharacterStateMapper* characterStateMapper();
-		static CharacterPhotoMapper* characterPhotoMapper();
+        static TimeMapper* timeMapper();
+        static CharacterStateMapper* characterStateMapper();
 		static ScenarioMapper* scenarioMapper();
 		static ScenarioChangeMapper* scenarioChangeMapper();
 		static ScenarioDataMapper* scenarioDataMapper();
@@ -38,14 +30,10 @@ namespace DataMappingLayer
 		static DatabaseHistoryMapper* databaseHistoryMapper();
 
 	private:
-		static PlaceMapper* s_placeMapper;
-		static LocationMapper* s_locationMapper;
-		static LocationPhotoMapper* s_locationPhotoMapper;
+        static PlaceMapper* s_placeMapper;
 		static ScenarioDayMapper* s_scenarioDayMapper;
-		static TimeMapper* s_timeMapper;
-		static CharacterMapper* s_characterMapper;
-		static CharacterStateMapper* s_characterStateMapper;
-		static CharacterPhotoMapper* s_characterPhotoMapper;
+        static TimeMapper* s_timeMapper;
+        static CharacterStateMapper* s_characterStateMapper;
 		static ScenarioMapper* s_scenarioMapper;
 		static ScenarioChangeMapper* s_scenarioChangeMapper;
 		static ScenarioDataMapper* s_scenarioDataMapper;

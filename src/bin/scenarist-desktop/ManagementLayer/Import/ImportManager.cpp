@@ -1,6 +1,5 @@
 #include "ImportManager.h"
 
-#include <Domain/Location.h>
 #include <Domain/Research.h>
 #include <Domain/Scenario.h>
 
@@ -13,7 +12,6 @@
 
 #include <DataLayer/Database/Database.h>
 
-#include <DataLayer/DataStorageLayer/LocationStorage.h>
 #include <DataLayer/DataStorageLayer/ResearchStorage.h>
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 

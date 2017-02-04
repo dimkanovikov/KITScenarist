@@ -56,9 +56,7 @@ namespace UserInterface
 		void setApplicationTwoPanelMode(bool _use);
 		void setApplicationModuleResearch(bool _use);
 		void setApplicationModuleCards(bool _use);
-		void setApplicationModuleScenario(bool _use);
-		void setApplicationModuleCharacters(bool _use);
-		void setApplicationModuleLocations(bool _use);
+        void setApplicationModuleScenario(bool _use);
 		void setApplicationModuleStatistics(bool _use);
 
 		void setCardsUseCorkboardBackground(bool _use);

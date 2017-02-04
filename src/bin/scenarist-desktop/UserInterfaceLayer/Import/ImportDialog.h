@@ -47,12 +47,12 @@ namespace UserInterface
 		/**
 		 * @brief
 		 */
-		void initView();
+        void initView() override;
 
 		/**
 		 * @brief Настроить соединения
 		 */
-		void initConnections();
+        void initConnections() override;
 
 	private:
 		Ui::ImportDialog *ui;

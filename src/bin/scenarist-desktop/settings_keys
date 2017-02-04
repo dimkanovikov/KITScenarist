@@ -124,8 +124,6 @@ application/modules/... - включённые/выключенные модул
 application/modules/research
 application/modules/cards
 application/modules/scenario
-application/modules/characters
-application/modules/locations
 application/modules/statistics
 
 application/recent-files/list/... - последние использованые файлы программы (в виде ключ - путь, значение - название проекта (если не задано, то имя файла без расширения))

@@ -162,12 +162,12 @@ namespace UserInterface
 		/**
 		 * @brief Настроить представление
 		 */
-		void initView();
+        void initView() override;
 
 		/**
 		 * @brief Настроить соединения
 		 */
-		void initConnections();
+        void initConnections() override;
 
 	private:
 		Ui::ExportDialog* ui;

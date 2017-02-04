@@ -35,18 +35,18 @@ namespace UserInterface
 		/**
 		 * @brief При запуске фокусируемся на поле ввода имени пользователя
 		 */
-		QWidget* focusedOnExec() const;
+        QWidget* focusedOnExec() const override;
 
 	private:
 		/**
 		 * @brief Настроить представление
 		 */
-		void initView();
+        void initView() override;
 
 		/**
 		 * @brief Настроить соединения для формы
 		 */
-		void initConnections();
+        void initConnections() override;
 
 	private:
 		Ui::CrashReportDialog* m_ui;

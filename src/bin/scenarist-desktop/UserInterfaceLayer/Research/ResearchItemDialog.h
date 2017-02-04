@@ -56,18 +56,18 @@ namespace UserInterface
         /**
          * @brief Указываем виджет на который нужно установить фокус при отображении диалога
          */
-        QWidget* focusedOnExec() const;
+        QWidget* focusedOnExec() const override;
 
     private:
         /**
          * @brief Настроить представление
          */
-        void initView();
+        void initView() override;
 
         /**
          * @brief Настроить соединения
          */
-        void initConnections();
+        void initConnections() override;
 
     private:
         Ui::ResearchItemDialog* m_ui;

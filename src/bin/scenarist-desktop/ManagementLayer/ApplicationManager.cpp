@@ -5,8 +5,6 @@
 #include "Research/ResearchManager.h"
 #include "Scenario/ScenarioCardsManager.h"
 #include "Scenario/ScenarioManager.h"
-#include "Characters/CharactersManager.h"
-#include "Locations/LocationsManager.h"
 #include "Statistics/StatisticsManager.h"
 #include "Settings/SettingsManager.h"
 #include "Import/ImportManager.h"
@@ -80,10 +78,8 @@ namespace {
     const int RESEARCH_TAB_INDEX = 1;
     const int SCENARIO_CARDS_TAB_INDEX = 2;
     const int SCENARIO_TAB_INDEX = 3;
-    const int CHARACTERS_TAB_INDEX = 4;
-    const int LOCATIONS_TAB_INDEX = 5;
-    const int STATISTICS_TAB_INDEX = 6;
-    const int SETTINGS_TAB_INDEX = 7;
+    const int STATISTICS_TAB_INDEX = 4;
+    const int SETTINGS_TAB_INDEX = 5;
     /** @} */
 
     /**
@@ -184,8 +180,6 @@ ApplicationManager::ApplicationManager(QObject *parent) :
     m_startUpManager(new StartUpManager(this, m_view)),
     m_researchManager(new ResearchManager(this, m_view)),
     m_scenarioManager(new ScenarioManager(this, m_view)),
-    m_charactersManager(new CharactersManager(this, m_view)),
-    m_locationsManager(new LocationsManager(this, m_view)),
     m_statisticsManager(new StatisticsManager(this, m_view)),
     m_settingsManager(new SettingsManager(this, m_view)),
     m_importManager(new ImportManager(this, m_view)),
@@ -501,8 +495,6 @@ void ApplicationManager::aboutSave()
         DatabaseLayer::Database::transaction();
         m_researchManager->saveResearch();
         m_scenarioManager->saveCurrentProject();
-        m_charactersManager->saveCharacters();
-        m_locationsManager->saveLocations();
         DatabaseLayer::Database::commit();
 
         //
@@ -1284,8 +1276,6 @@ void ApplicationManager::currentTabIndexChanged()
                     case RESEARCH_TAB_INDEX: result = m_researchManager->view(); break;
                     case SCENARIO_CARDS_TAB_INDEX: result = m_scenarioManager->cardsView(); break;
                     case SCENARIO_TAB_INDEX: result = m_scenarioManager->view(); break;
-                    case CHARACTERS_TAB_INDEX: result = m_charactersManager->view(); break;
-                    case LOCATIONS_TAB_INDEX: result = m_locationsManager->view(); break;
                     case STATISTICS_TAB_INDEX: result = m_statisticsManager->view(); break;
                     case SETTINGS_TAB_INDEX: result = m_settingsManager->view(); break;
                 }
@@ -1374,8 +1364,6 @@ void ApplicationManager::goToEditCurrentProject()
     const bool isCommentOnly = ProjectsManager::currentProject().isCommentOnly();
     m_researchManager->setCommentOnly(isCommentOnly);
     m_scenarioManager->setCommentOnly(isCommentOnly);
-    m_charactersManager->setCommentOnly(isCommentOnly);
-    m_locationsManager->setCommentOnly(isCommentOnly);
 
     //
     // Активируем вкладки
@@ -1410,8 +1398,6 @@ void ApplicationManager::goToEditCurrentProject()
     // Делать это нужно после того, как все данные синхронизировались
     //
     m_researchManager->loadCurrentProject();
-    m_charactersManager->loadCurrentProject();
-    m_locationsManager->loadCurrentProject();
     m_statisticsManager->loadCurrentProject();
 
     //
@@ -1468,8 +1454,6 @@ void ApplicationManager::closeCurrentProject()
         //
         m_researchManager->closeCurrentProject();
         m_scenarioManager->closeCurrentProject();
-        m_charactersManager->closeCurrentProject();
-        m_locationsManager->closeCurrentProject();
 
         //
         // Очистим все загруженные на текущий момент данные
@@ -1538,8 +1522,6 @@ void ApplicationManager::initView()
     g_disableOnStartActions << m_tabs->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
     g_disableOnStartActions << m_tabs->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
     g_disableOnStartActions << m_tabs->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
-    g_disableOnStartActions << m_tabs->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
     g_disableOnStartActions << m_tabs->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
     m_tabs->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
     //
@@ -1550,8 +1532,6 @@ void ApplicationManager::initView()
     g_disableOnStartActions << m_tabsSecondary->addTab(tr("Research"), QIcon(":/Graphics/Icons/research.png"));
     g_disableOnStartActions << m_tabsSecondary->addTab(tr("Cards"), QIcon(":/Graphics/Icons/cards.png"));
     g_disableOnStartActions << m_tabsSecondary->addTab(tr("Scenario"), QIcon(":/Graphics/Icons/script.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Characters"), QIcon(":/Graphics/Icons/characters.png"));
-    g_disableOnStartActions << m_tabsSecondary->addTab(tr("Locations"), QIcon(":/Graphics/Icons/locations.png"));
     g_disableOnStartActions << m_tabsSecondary->addTab(tr("Statistics"), QIcon(":/Graphics/Icons/statistics.png"));
     m_tabsSecondary->addTab(tr("Settings"), QIcon(":/Graphics/Icons/settings.png"));
     m_tabsSecondary->setCurrentTab(SETTINGS_TAB_INDEX);
@@ -1564,8 +1544,6 @@ void ApplicationManager::initView()
     m_tabsWidgets->addWidget(m_researchManager->view());
     m_tabsWidgets->addWidget(m_scenarioManager->cardsView());
     m_tabsWidgets->addWidget(m_scenarioManager->view());
-    m_tabsWidgets->addWidget(m_charactersManager->view());
-    m_tabsWidgets->addWidget(m_locationsManager->view());
     m_tabsWidgets->addWidget(m_statisticsManager->view());
     m_tabsWidgetsSecondary->setObjectName("tabsWidgetsSecondary");
     m_tabsWidgetsSecondary->addWidget(m_settingsManager->view());
@@ -1753,8 +1731,6 @@ void ApplicationManager::initConnections()
 
     connect(m_researchManager, SIGNAL(researchChanged()), this, SLOT(aboutProjectChanged()));
     connect(m_scenarioManager, SIGNAL(scenarioChanged()), this, SLOT(aboutProjectChanged()));
-    connect(m_charactersManager, SIGNAL(characterChanged()), this, SLOT(aboutProjectChanged()));
-    connect(m_locationsManager, SIGNAL(locationChanged()), this, SLOT(aboutProjectChanged()));
     connect(m_exportManager, SIGNAL(scenarioTitleListDataChanged()), this, SLOT(aboutProjectChanged()));
 
     connect(m_synchronizationManager, SIGNAL(applyPatchRequested(QString,bool)),
@@ -1987,22 +1963,6 @@ void ApplicationManager::reloadApplicationSettings()
             .toInt();
     m_tabs->tab(SCENARIO_TAB_INDEX)->setVisible(showScenarioModule);
     m_tabsSecondary->tab(SCENARIO_TAB_INDEX)->setVisible(showScenarioModule);
-    //
-    const bool showCharactersModule =
-            DataStorageLayer::StorageFacade::settingsStorage()->value(
-                "application/modules/characters",
-                DataStorageLayer::SettingsStorage::ApplicationSettings)
-            .toInt();
-    m_tabs->tab(CHARACTERS_TAB_INDEX)->setVisible(showCharactersModule);
-    m_tabsSecondary->tab(CHARACTERS_TAB_INDEX)->setVisible(showCharactersModule);
-    //
-    const bool showLocationsModule =
-            DataStorageLayer::StorageFacade::settingsStorage()->value(
-                "application/modules/locations",
-                DataStorageLayer::SettingsStorage::ApplicationSettings)
-            .toInt();
-    m_tabs->tab(LOCATIONS_TAB_INDEX)->setVisible(showLocationsModule);
-    m_tabsSecondary->tab(LOCATIONS_TAB_INDEX)->setVisible(showLocationsModule);
     //
     const bool showStatisticsModule =
             DataStorageLayer::StorageFacade::settingsStorage()->value(

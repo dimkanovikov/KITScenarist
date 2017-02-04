@@ -8,7 +8,6 @@
 #include <Domain/Research.h>
 #include <Domain/Scenario.h>
 #include <Domain/ScenarioChange.h>
-#include <Domain/Location.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
@@ -24,7 +23,6 @@
 #include <DataLayer/DataStorageLayer/ScenarioDataStorage.h>
 #include <DataLayer/DataStorageLayer/ResearchStorage.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
-#include <DataLayer/DataStorageLayer/LocationStorage.h>
 
 #include <3rd_party/Helpers/DiffMatchPatchHelper.h>
 #include <3rd_party/Helpers/ShortcutHelper.h>

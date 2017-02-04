@@ -15,7 +15,7 @@ namespace TextEditHelper
 	/**
 	 * @brief Преобразовать специфичные символы к html-виду
 	 */
-	static QString toHtmlEscaped(const QString& _text)
+    inline static QString toHtmlEscaped(const QString& _text)
 	{
 		QString escapedText = _text;
 		escapedText = escapedText.replace("&", "&amp;");
@@ -30,7 +30,7 @@ namespace TextEditHelper
 	/**
 	 * @brief Преобразовать html-специфичные символы к обычному виду
 	 */
-	static QString fromHtmlEscaped(const QString& _escapedText)
+    inline static QString fromHtmlEscaped(const QString& _escapedText)
 	{
 		QString text = _escapedText;
 		text = text.replace("&amp;", "&");
@@ -45,7 +45,7 @@ namespace TextEditHelper
 	/**
 	 * @brief Оставить только текст внутри тэгов body
 	 */
-	static QString removeDocumentTags(const QString& _text)
+    inline static QString removeDocumentTags(const QString& _text)
 	{
 		//
 		// Регулярное выражение для изъятия из текста html-документа его содержимого
@@ -66,7 +66,7 @@ namespace TextEditHelper
 	/**
 	 * @brief Удалить все html-тэги из текста
 	 */
-	static QString removeHtmlTags(const QString& _text)
+    inline static QString removeHtmlTags(const QString& _text)
 	{
 		const QRegularExpression RX_HTML_TAGS_CLEANER(
 				"<([^>]*)>",
@@ -82,7 +82,7 @@ namespace TextEditHelper
 	 * @brief Удалить все xml-тэги из текста
 	 */
 
-	static QString removeXmlTags(const QString& _text)
+    inline static QString removeXmlTags(const QString& _text)
 	{
 		const QString STR_CDATA_START = "<![CDATA[";
 		const QString STR_CDATA_END = "]]>";
@@ -99,7 +99,7 @@ namespace TextEditHelper
 	/**
 	 * @brief Рассчитать высоту строки заданного шрифта
 	 */
-	static qreal fontLineHeight(const QFont& _font) {
+    inline static qreal fontLineHeight(const QFont& _font) {
 		return QFontMetricsF(_font).lineSpacing();
 	}
 
@@ -107,7 +107,7 @@ namespace TextEditHelper
 	 * @brief Функции для получения корректных кавычек в зависимости от локали приложения
 	 */
 	/** @{ */
-	static QString localeQuote(bool _open) {
+    inline static QString localeQuote(bool _open) {
 		QString quote = "";
 		switch (QLocale().language()) {
 			default: {
@@ -138,8 +138,8 @@ namespace TextEditHelper
 
 		return quote;
 	}
-	static QString localOpenQuote() { return localeQuote(true); }
-	static QString localCloseQuote() { return localeQuote(false); }
+    inline static QString localOpenQuote() { return localeQuote(true); }
+    inline static QString localCloseQuote() { return localeQuote(false); }
 	/** @{ */
 
 	/**
@@ -147,7 +147,7 @@ namespace TextEditHelper
 	 *
 	 * Например подмена многоточий и т.п.
 	 */
-	static void beautifyDocument(QTextDocument* _document, bool _replaceThreeDots, bool _smartQuotes) {
+    inline static void beautifyDocument(QTextDocument* _document, bool _replaceThreeDots, bool _smartQuotes) {
 		if (_document != 0) {
 			QTextCursor cursor(_document);
 
@@ -208,7 +208,7 @@ namespace TextEditHelper
 	 *
 	 * Оптимизация, чтобы не просматривать весь документ
 	 */
-	static void beautifyDocument(QTextCursor _cursor, const QString& _enteredText,
+    inline static void beautifyDocument(QTextCursor _cursor, const QString& _enteredText,
 		bool _replaceThreeDots, bool _smartQuotes) {
 		if (_replaceThreeDots && _enteredText == ".") {
 			//

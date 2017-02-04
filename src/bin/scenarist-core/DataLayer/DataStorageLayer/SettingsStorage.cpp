@@ -482,8 +482,6 @@ SettingsStorage::SettingsStorage()
     m_defaultValues.insert("application/modules/research", "1");
     m_defaultValues.insert("application/modules/cards", "1");
     m_defaultValues.insert("application/modules/scenario", "1");
-    m_defaultValues.insert("application/modules/characters", "1");
-    m_defaultValues.insert("application/modules/locations", "1");
     m_defaultValues.insert("application/modules/statistics", "1");
 
     m_defaultValues.insert("cards/use-corkboard", "1");

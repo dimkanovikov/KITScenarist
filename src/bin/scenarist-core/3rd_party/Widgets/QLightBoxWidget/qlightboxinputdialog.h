@@ -42,17 +42,17 @@ private:
 	/**
 	 * @brief Настроить представление
 	 */
-	void initView();
+    void initView() override;
 
 	/**
 	 * @brief Настроить соединения
 	 */
-	void initConnections();
+    void initConnections() override;
 
 	/**
 	 * @brief Виджет на который установить фокус при отображении
 	 */
-	QWidget* focusedOnExec() const;
+    QWidget* focusedOnExec() const override;
 
 private:
 	/**

@@ -59,9 +59,7 @@ namespace ManagementLayer
 		void applicationTwoPanelModeChanged(bool _value);
 		void applicationModuleResearchChanged(bool _value);
 		void applicationModuleCardsChanged(bool _value);
-		void applicationModuleScenarioChanged(bool _value);
-		void applicationModuleCharactersChanged(bool _value);
-		void applicationModuleLocationsChanged(bool _value);
+        void applicationModuleScenarioChanged(bool _value);
 		void applicationModuleStatisticsChanged(bool _value);
 
 		void cardsUseCorkboardBackgroundChanged(bool);

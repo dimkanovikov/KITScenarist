@@ -197,16 +197,6 @@ void SettingsView::setApplicationModuleScenario(bool _use)
     ui->applicationModuleScenario->setChecked(_use);
 }
 
-void SettingsView::setApplicationModuleCharacters(bool _use)
-{
-    ui->applicationModuleCharacters->setChecked(_use);
-}
-
-void SettingsView::setApplicationModuleLocations(bool _use)
-{
-    ui->applicationModuleLocations->setChecked(_use);
-}
-
 void SettingsView::setApplicationModuleStatistics(bool _use)
 {
     ui->applicationModuleStatistics->setChecked(_use);
@@ -756,8 +746,6 @@ void SettingsView::initConnections()
     connect(ui->applicationModuleResearch, &QCheckBox::toggled, this, &SettingsView::applicationModuleResearchChanged);
     connect(ui->applicationModuleCards, &QCheckBox::toggled, this, &SettingsView::applicationModuleCardsChanged);
     connect(ui->applicationModuleScenario, &QCheckBox::toggled, this, &SettingsView::applicationModuleScenarioChanged);
-    connect(ui->applicationModuleCharacters, &QCheckBox::toggled, this, &SettingsView::applicationModuleCharactersChanged);
-    connect(ui->applicationModuleLocations, &QCheckBox::toggled, this, &SettingsView::applicationModuleLocationsChanged);
     connect(ui->applicationModuleStatistics, &QCheckBox::toggled, this, &SettingsView::applicationModuleStatisticsChanged);
     // ... карточки
     connect(ui->cardsUseCorkboardBackground, &QRadioButton::toggled, this, &SettingsView::cardsUseCorkboardBackgroundChanged);

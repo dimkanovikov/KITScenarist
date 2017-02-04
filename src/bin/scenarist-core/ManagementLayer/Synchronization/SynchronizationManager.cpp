@@ -160,8 +160,6 @@ namespace {
 
     const bool IS_CLEAN = false;
     const bool IS_DRAFT = true;
-    const bool IS_ASYNC = true;
-    const bool IS_SYNC = false;
 
     /**
      * @brief Код ошибки означающий работу в автономном режиме

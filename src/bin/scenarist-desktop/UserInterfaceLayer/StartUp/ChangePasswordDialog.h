@@ -80,8 +80,8 @@ namespace UserInterface
          */
         void setAcceptButtonAvailability();
 
-        void initConnections();
-        void initView();
+        void initConnections() override;
+        void initView() override;
 
     private:
         Ui::ChangePasswordDialog *m_ui;

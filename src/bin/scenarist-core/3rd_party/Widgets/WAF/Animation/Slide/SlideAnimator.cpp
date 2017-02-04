@@ -127,7 +127,7 @@ void SlideAnimator::slideIn()
 	//
 	// Определим размер неизменяемой стороны выкатываемого виджета
 	//
-	switch (m_direction) {
+    switch (m_direction) {
 		case WAF::FromLeftToRight:
 		case WAF::FromRightToLeft: {
 			widgetForSlide()->setMaximumWidth(0);
@@ -139,6 +139,8 @@ void SlideAnimator::slideIn()
 			widgetForSlide()->setMaximumHeight(0);
 			break;
 		}
+
+        default: Q_ASSERT_X(0, Q_FUNC_INFO, "Not setted animation direction");
 	}
 	widgetForSlide()->show();
 	const QSize currentSize = widgetForSlide()->size();
@@ -159,6 +161,8 @@ void SlideAnimator::slideIn()
 			finalSize.setHeight(m_startSize.height());
 			break;
 		}
+
+        default: Q_ASSERT_X(0, Q_FUNC_INFO, "Not setted animation direction");
 	}
 
 	//
@@ -243,6 +247,8 @@ void SlideAnimator::slideOut()
 			finalSize.setHeight(0);
 			break;
 		}
+
+        default: Q_ASSERT_X(0, Q_FUNC_INFO, "Not setted animation direction");
 	}
 
 	//
@@ -304,6 +310,8 @@ bool SlideAnimator::eventFilter(QObject* _object, QEvent* _event)
 				//
 				break;
 			}
+
+            default: Q_ASSERT_X(0, Q_FUNC_INFO, "Not setted animation direction");
 		}
 	}
 

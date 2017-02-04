@@ -15,15 +15,6 @@
 
 using namespace BusinessLogic;
 
-namespace {
-	/**
-	 * @brief Стиль документа
-	 */
-	static ScenarioTemplate editorStyle() {
-		return ScenarioTemplateFacade::getTemplate();
-	}
-}
-
 
 QString CastReport::reportName(const StatisticsParameters&) const
 {

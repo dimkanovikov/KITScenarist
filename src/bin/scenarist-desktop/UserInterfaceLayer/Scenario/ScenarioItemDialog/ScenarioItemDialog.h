@@ -60,12 +60,12 @@ namespace UserInterface
 		/**
 		 * @brief Настроить представление
 		 */
-		void initView();
+        void initView() override;
 
 		/**
 		 * @brief Настроить соединения
 		 */
-		void initConnections();
+        void initConnections() override;
 
 		/**
 		 * @brief Настроить внешний вид диалога

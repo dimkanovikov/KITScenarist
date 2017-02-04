@@ -535,16 +535,14 @@ void StandardKeyHandler::removeCharacters(bool _backward)
 }
 
 namespace {
-	const int SCENE_GROUP_HEADER = 0;
-	const int SCENE_GROUP_FOOTER = 1;
-	const int FOLDER_HEADER = 2;
-	const int FOLDER_FOOTER = 3;
+    const int FOLDER_HEADER = 0;
+    const int FOLDER_FOOTER = 1;
 }
 
 QList<int> StandardKeyHandler::findGroupCountsToDelete(int _topCursorPosition, int _bottomCursorPosition)
 {
 	QList<int> groupCountsToDelete;
-	groupCountsToDelete << 0 << 0 << 0 << 0;
+    groupCountsToDelete << 0 << 0;
 
 	//
 	// Начнём поиск с заданной позиции

@@ -42,17 +42,17 @@ private:
 	/**
 	 * @brief Настроить представление
 	 */
-	void initView();
+    void initView() override;
 
 	/**
 	 * @brief Настроить соединения
 	 */
-	void initConnections();
+    void initConnections() override;
 
 	/**
 	 * @brief Устанавливаем фокус на кнопки
 	 */
-	QWidget* focusedOnExec() const;
+    QWidget* focusedOnExec() const override;
 
 private slots:
 	/**

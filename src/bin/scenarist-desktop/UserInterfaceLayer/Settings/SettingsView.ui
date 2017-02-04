@@ -386,20 +386,6 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QCheckBox" name="applicationModuleCharacters">
-                    <property name="text">
-                     <string>Characters module</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="applicationModuleLocations">
-                    <property name="text">
-                     <string>Locations module</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
                    <widget class="QCheckBox" name="applicationModuleStatistics">
                     <property name="text">
                      <string>Statistics module</string>
@@ -2547,8 +2533,6 @@ Paragraph</string>
   <tabstop>changeLanguage</tabstop>
   <tabstop>applicationModuleResearch</tabstop>
   <tabstop>applicationModuleScenario</tabstop>
-  <tabstop>applicationModuleCharacters</tabstop>
-  <tabstop>applicationModuleLocations</tabstop>
   <tabstop>applicationModuleStatistics</tabstop>
   <tabstop>pageView</tabstop>
   <tabstop>textColor</tabstop>
