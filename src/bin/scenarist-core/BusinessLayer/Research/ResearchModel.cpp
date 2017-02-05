@@ -405,15 +405,32 @@ Qt::ItemFlags ResearchModel::flags(const QModelIndex& _index) const
 
         ResearchModelItem* item = itemForIndex(_index);
         switch (item->research()->type()) {
-            case Research::ResearchRoot:
-            case Research::Character:
-            case Research::Location: {
+            case Research::CharactersRoot:
+            case Research::LocationsRoot:
+            case Research::ResearchRoot: {
                 flags |= Qt::ItemIsDropEnabled;
                 break;
             }
 
+            case Research::Character:
+            case Research::Location:
             case Research::Folder: {
-                flags |= Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
+                //
+                // Если в настоящий момент перемещается локация или персонаж, то опускаем флаг вложения
+                //
+                bool ignoreFlags = false;
+                for (ResearchModelItem* researchItem : m_lastMimeItems) {
+                    Domain::Research* research = researchItem->research();
+                    if (research->type() == Research::Character
+                        || research->type() == Research::Location) {
+                        ignoreFlags = true;
+                        break;
+                    }
+                }
+                if (!ignoreFlags) {
+                    flags |= Qt::ItemIsDropEnabled;
+                }
+                flags |= Qt::ItemIsDragEnabled;
                 break;
             }
 
@@ -470,12 +487,11 @@ QVariant ResearchModel::data(const QModelIndex& _index, int _role) const
     return result;
 }
 
-bool ResearchModel::canDropMimeData(const QMimeData *_data, Qt::DropAction _action, int _row,
-    int _column, const QModelIndex &_parent) const
+bool ResearchModel::canDropMimeData(const QMimeData* _data, Qt::DropAction _action, int _row,
+    int _column, const QModelIndex& _parent) const
 {
     Q_UNUSED(_action);
     Q_UNUSED(_row);
-    Q_UNUSED(_parent);
 
     if (!_data->hasFormat(MIME_TYPE))
         return false;
@@ -483,6 +499,52 @@ bool ResearchModel::canDropMimeData(const QMimeData *_data, Qt::DropAction _acti
     if (_column > 0)
         return false;
 
+    //
+    // Обработка конкретных случаев
+    //
+    ResearchModelItem* parentItem = itemForIndex(_parent);
+    Domain::Research* parent  = parentItem->research();
+    if (parent != nullptr) {
+        for (ResearchModelItem* researchItem : m_lastMimeItems) {
+            Domain::Research* research = researchItem->research();
+            switch (research->type()) {
+                case Research::Character: {
+                    //
+                    // ... персонажей только в список персонажей
+                    //
+                    if (parent->type() != Research::CharactersRoot) {
+                        return false;
+                    }
+                    break;
+                }
+
+                case Research::Location: {
+                    //
+                    // ... локации только в список локаций
+                    //
+                    if (parent->type() != Research::LocationsRoot) {
+                        return false;
+                    }
+                    break;
+                }
+
+                default: {
+                    //
+                    // ... остальных нельзя вставлять в общие списки локаций и персонажей
+                    //
+                    if (parent->type() == Research::CharactersRoot
+                        || parent->type() == Research::LocationsRoot) {
+                        return false;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    //
+    // Во всех остальных случаях можно
+    //
     return true;
 }
 
@@ -490,11 +552,11 @@ bool ResearchModel::dropMimeData(
         const QMimeData* _data, Qt::DropAction _action,
         int _row, int _column, const QModelIndex& _parent)
 {
-    if (!canDropMimeData(_data, _action, _row, _column, _parent))
+    if (!canDropMimeData(_data, _action, _row, _column, _parent)
+        || !_parent.isValid()) {
+        m_lastMimeItems.clear();
         return false;
-
-    if (!_parent.isValid())
-        return false;
+    }
 
     if (_action == Qt::IgnoreAction)
         return true;
