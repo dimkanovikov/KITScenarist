@@ -10,323 +10,328 @@ class ScalableWrapper;
 class SearchWidget;
 
 namespace BusinessLogic {
-	class ScenarioTextDocument;
+    class ScenarioTextDocument;
 }
 
 namespace UserInterface
 {
-	class ScenarioTextEdit;
-	class ScenarioFastFormatWidget;
-	class ScenarioReviewPanel;
-	class ScenarioReviewView;
+    class ScenarioTextEdit;
+    class ScenarioFastFormatWidget;
+    class ScenarioReviewPanel;
+    class ScenarioReviewView;
 
 
-	/**
-	 * @brief Виджет расширенного редактора текста сценария
-	 */
-	class ScenarioTextEditWidget : public QFrame
-	{
-		Q_OBJECT
+    /**
+     * @brief Виджет расширенного редактора текста сценария
+     */
+    class ScenarioTextEditWidget : public QFrame
+    {
+        Q_OBJECT
 
-	public:
-		explicit ScenarioTextEditWidget(QWidget* _parent = 0);
+    public:
+        explicit ScenarioTextEditWidget(QWidget* _parent = 0);
 
-		/**
-		 * @brief Получить панель инструментов
-		 */
-		QWidget* toolbar() const;
+        /**
+         * @brief Получить панель инструментов
+         */
+        QWidget* toolbar() const;
 
-		/**
-		 * @brief Получить текущий редактируемый документ
-		 */
-		BusinessLogic::ScenarioTextDocument* scenarioDocument() const;
+        /**
+         * @brief Получить текущий редактируемый документ
+         */
+        BusinessLogic::ScenarioTextDocument* scenarioDocument() const;
 
-		/**
-		 * @brief Установить документ для редактирования
-		 */
-		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document, bool _isDraft = false);
+        /**
+         * @brief Установить документ для редактирования
+         */
+        void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document, bool _isDraft = false);
 
-		/**
-		 * @brief Установить хронометраж
-		 */
-		void setDuration(const QString& _duration);
+        /**
+         * @brief Установить хронометраж
+         */
+        void setDuration(const QString& _duration);
 
-		/**
-		 * @brief Установить значения счётчиков
-		 */
-		void setCountersInfo(const QString& _counters);
+        /**
+         * @brief Установить значения счётчиков
+         */
+        void setCountersInfo(const QString& _counters);
 
-		/**
-		 * @brief Включить/выключить отображение номеров сцен
-		 */
-		void setShowScenesNumbers(bool _show);
+        /**
+         * @brief Включить/выключить отображение номеров сцен
+         */
+        void setShowScenesNumbers(bool _show);
 
-		/**
-		 * @brief Установить значение необходимости подсвечивать текущую строку
-		 */
-		void setHighlightCurrentLine(bool _highlight);
+        /**
+         * @brief Установить значение необходимости подсвечивать текущую строку
+         */
+        void setHighlightCurrentLine(bool _highlight);
 
-		/**
-		 * @brief Установить необходимость автоматических замен
-		 */
-		void setAutoReplacing(bool _capitalizeFirstWord, bool _correctDoubleCapitals,
-			bool _replaceThreeDots, bool _smartQuotes);
+        /**
+         * @brief Установить необходимость автоматических замен
+         */
+        void setAutoReplacing(bool _capitalizeFirstWord, bool _correctDoubleCapitals,
+            bool _replaceThreeDots, bool _smartQuotes);
 
-		/**
-		 * @brief Включить/выключить постраничное отображение
-		 */
-		void setUsePageView(bool _use);
+        /**
+         * @brief Включить/выключить постраничное отображение
+         */
+        void setUsePageView(bool _use);
 
-		/**
-		 * @brief Включить/выключить проверку правописания
-		 */
-		void setUseSpellChecker(bool _use);
+        /**
+         * @brief Включить/выключить проверку правописания
+         */
+        void setUseSpellChecker(bool _use);
 
-		/**
-		 * @brief Показывать ли автодополнения в пустых блоках
-		 */
-		void setShowSuggestionsInEmptyBlocks(bool _show);
+        /**
+         * @brief Показывать ли автодополнения в пустых блоках
+         */
+        void setShowSuggestionsInEmptyBlocks(bool _show);
 
-		/**
-		 * @brief Установить язык проверки орфографии
-		 */
-		void setSpellCheckLanguage(int _language);
+        /**
+         * @brief Установить язык проверки орфографии
+         */
+        void setSpellCheckLanguage(int _language);
 
-		/**
-		 * @brief Настроить цвета текстового редактора
-		 */
-		void setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor);
+        /**
+         * @brief Настроить цвета текстового редактора
+         */
+        void setTextEditColors(const QColor& _textColor, const QColor& _backgroundColor);
 
-		/**
-		 * @brief Настроить масштабирование редактора сценария
-		 */
-		void setTextEditZoomRange(qreal _zoomRange);
+        /**
+         * @brief Настроить масштабирование редактора сценария
+         */
+        void setTextEditZoomRange(qreal _zoomRange);
 
-		/**
-		 * @brief Получить текущую позицию курсора
-		 */
-		int cursorPosition() const;
+        /**
+         * @brief Получить текущую позицию курсора
+         */
+        int cursorPosition() const;
 
-		/**
-		 * @brief Установить позицию курсора
-		 */
-		void setCursorPosition(int _position);
+        /**
+         * @brief Установить позицию курсора
+         */
+        void setCursorPosition(int _position);
 
-		/**
-		 * @brief Установить тип текущего блока
-		 */
-		void setCurrentBlockType(int _type);
+        /**
+         * @brief Установить тип текущего блока
+         */
+        void setCurrentBlockType(int _type);
 
-		/**
-		 * @brief Добавить элемент в указанной позиции с заданным текстом и типом
-		 */
-		void addItem(int _position, int _type, const QString& _header, const QString& _title,
-			const QColor& _color, const QString& _description);
+        /**
+         * @brief Добавить элемент в указанной позиции с заданным текстом и типом
+         */
+        void addItem(int _position, int _type, const QString& _header, const QString& _title,
+            const QColor& _color, const QString& _description);
 
-		/**
-		 * @brief Изменить элемент в указанной позиции с заданным текстом и типом
-		 */
-		void editItem(int _startPosition, int _endPosition, int _type, const QString& _title,
-			const QColor& _color, const QString& _description);
+        /**
+         * @brief Изменить элемент в указанной позиции с заданным текстом и типом
+         */
+        void editItem(int _startPosition, int _endPosition, int _type, const QString& _title,
+            const QColor& _color, const QString& _description);
 
-		/**
-		 * @brief Удалить текст в заданном интервале
-		 */
-		void removeText(int _from, int _to);
+        /**
+         * @brief Удалить текст в заданном интервале
+         */
+        void removeText(int _from, int _to);
 
-		/**
-		 * @brief Обновить все элементы связанные с перечнем стилей блоков стиля сценария
-		 */
-		void updateStylesElements();
+        /**
+         * @brief Обновить все элементы связанные с перечнем стилей блоков стиля сценария
+         */
+        void updateStylesElements();
 
-		/**
-		 * @brief Обновить горячие клавиши смены блоков
-		 */
-		void updateShortcuts();
+        /**
+         * @brief Обновить горячие клавиши смены блоков
+         */
+        void updateShortcuts();
 
-		/**
-		 * @brief Установить список дополнительных курсоров для отрисовки
-		 */
-		void setAdditionalCursors(const QMap<QString, int>& _cursors);
+        /**
+         * @brief Установить список дополнительных курсоров для отрисовки
+         */
+        void setAdditionalCursors(const QMap<QString, int>& _cursors);
 
-		/**
-		 * @brief Установить режим работы со сценарием
-		 */
-		void setCommentOnly(bool _isCommentOnly);
+        /**
+         * @brief Установить режим работы со сценарием
+         */
+        void setCommentOnly(bool _isCommentOnly);
 
-	public slots:
-		/**
-		 * @brief Показать/скрыть поле поиска
-		 */
-		void aboutShowSearch();
+        /**
+         * @brief Пролистать сценарий, чтобы был виден заданный курсор соавтора
+         */
+        void scrollToAdditionalCursor(int _additionalCursorIndex);
 
-		/**
-		 * @brief Показать/скрыть виджет быстрого форматирования
-		 */
-		void aboutShowFastFormat();
+    public slots:
+        /**
+         * @brief Показать/скрыть поле поиска
+         */
+        void aboutShowSearch();
 
-	signals:
-		/**
-		 * @brief Запрос на отмену последнего действия
-		 */
-		void undoRequest();
+        /**
+         * @brief Показать/скрыть виджет быстрого форматирования
+         */
+        void aboutShowFastFormat();
 
-		/**
-		 * @brief Запрос на повтор последнего действия
-		 */
-		void redoRequest();
+    signals:
+        /**
+         * @brief Запрос на отмену последнего действия
+         */
+        void undoRequest();
 
-		/**
-		 * @brief Изменился режим отображения сценария
-		 */
-		void textModeChanged();
+        /**
+         * @brief Запрос на повтор последнего действия
+         */
+        void redoRequest();
 
-		/**
-		 * @brief Изменился текст сценария
-		 */
-		void textChanged();
+        /**
+         * @brief Изменился режим отображения сценария
+         */
+        void textModeChanged();
 
-		/**
-		 * @brief Изменилась позиция курсора
-		 */
-		void cursorPositionChanged(int _position);
+        /**
+         * @brief Изменился текст сценария
+         */
+        void textChanged();
 
-		/**
-		 * @brief Изменился коэффициент масштабирования текстового редактора
-		 */
-		void zoomRangeChanged(qreal _zoomRange);
+        /**
+         * @brief Изменилась позиция курсора
+         */
+        void cursorPositionChanged(int _position);
 
-	private slots:
-		/**
-		 * @brief Обновить текущий режим (поэпизодник или текст)
-		 */
-		void updateTextMode(bool _outlineMode);
+        /**
+         * @brief Изменился коэффициент масштабирования текстового редактора
+         */
+        void zoomRangeChanged(qreal _zoomRange);
 
-		/**
-		 * @brief Обновить текущий стиль текста
-		 */
-		void aboutUpdateTextStyle();
+    private slots:
+        /**
+         * @brief Обновить текущий режим (поэпизодник или текст)
+         */
+        void updateTextMode(bool _outlineMode);
 
-		/**
-		 * @brief Сменить стиль текста
-		 */
-		void aboutChangeTextStyle();
+        /**
+         * @brief Обновить текущий стиль текста
+         */
+        void aboutUpdateTextStyle();
 
-		/**
-		 * @brief Обработчик изменения позиции курсора
-		 */
-		void aboutCursorPositionChanged();
+        /**
+         * @brief Сменить стиль текста
+         */
+        void aboutChangeTextStyle();
 
-		/**
-		 * @brief Обработка изменения текста
-		 */
-		void aboutTextChanged();
+        /**
+         * @brief Обработчик изменения позиции курсора
+         */
+        void aboutCursorPositionChanged();
 
-		/**
-		 * @brief Обработка изменения стиля текста
-		 */
-		void aboutStyleChanged();
+        /**
+         * @brief Обработка изменения текста
+         */
+        void aboutTextChanged();
 
-	private:
-		/**
-		 * @brief Настроить представление
-		 */
-		void initView();
+        /**
+         * @brief Обработка изменения стиля текста
+         */
+        void aboutStyleChanged();
 
-		/**
-		 * @brief Настроить выпадающий список стилей в зависимости от текущего стиля
-		 */
-		void initStylesCombo();
-		void updateStylesCombo();
+    private:
+        /**
+         * @brief Настроить представление
+         */
+        void initView();
 
-		/**
-		 * @brief Настроить соединения
-		 */
-		void initConnections();
-		void initEditorConnections();
-		void removeEditorConnections();
+        /**
+         * @brief Настроить выпадающий список стилей в зависимости от текущего стиля
+         */
+        void initStylesCombo();
+        void updateStylesCombo();
 
-		/**
-		 * @brief Настроить внешний вид
-		 */
-		void initStyleSheet();
+        /**
+         * @brief Настроить соединения
+         */
+        void initConnections();
+        void initEditorConnections();
+        void removeEditorConnections();
 
-	private:
-		/**
-		 * @brief Собственно редактор текста
-		 */
-		ScenarioTextEdit* m_editor;
+        /**
+         * @brief Настроить внешний вид
+         */
+        void initStyleSheet();
 
-		/**
-		 * @brief Обёртка редактора, позволяющая его масштабировать
-		 */
-		ScalableWrapper* m_editorWrapper;
+    private:
+        /**
+         * @brief Собственно редактор текста
+         */
+        ScenarioTextEdit* m_editor;
 
-		/**
-		 * @brief Панель инструментов
-		 */
-		QWidget* m_toolbar;
+        /**
+         * @brief Обёртка редактора, позволяющая его масштабировать
+         */
+        ScalableWrapper* m_editorWrapper;
 
-		/**
-		 * @brief Кнопка включения режима поэпизодника
-		 */
-		FlatButton* m_outline;
+        /**
+         * @brief Панель инструментов
+         */
+        QWidget* m_toolbar;
 
-		/**
-		 * @brief Стили текста документа
-		 */
-		QComboBox* m_textStyles;
+        /**
+         * @brief Кнопка включения режима поэпизодника
+         */
+        FlatButton* m_outline;
 
-		/**
-		 * @brief Кнопка отмены действия
-		 */
-		FlatButton* m_undo;
+        /**
+         * @brief Стили текста документа
+         */
+        QComboBox* m_textStyles;
 
-		/**
-		 * @brief Кнопка повтора действия
-		 */
-		FlatButton* m_redo;
+        /**
+         * @brief Кнопка отмены действия
+         */
+        FlatButton* m_undo;
 
-		/**
-		 * @brief Кнопка панели поиска
-		 */
-		FlatButton* m_search;
+        /**
+         * @brief Кнопка повтора действия
+         */
+        FlatButton* m_redo;
 
-		/**
-		 * @brief Кнопка панели быстрого форматирования
-		 */
-		FlatButton* m_fastFormat;
+        /**
+         * @brief Кнопка панели поиска
+         */
+        FlatButton* m_search;
 
-		/**
-		 * @brief Кнопка и панель рецензирования
-		 */
-		ScenarioReviewPanel* m_review;
+        /**
+         * @brief Кнопка панели быстрого форматирования
+         */
+        FlatButton* m_fastFormat;
 
-		/**
-		 * @brief Хронометраж сценария
-		 */
-		QLabel* m_duration;
+        /**
+         * @brief Кнопка и панель рецензирования
+         */
+        ScenarioReviewPanel* m_review;
 
-		/**
-		 * @brief Счётчики сценария
-		 */
-		QLabel* m_countersInfo;
+        /**
+         * @brief Хронометраж сценария
+         */
+        QLabel* m_duration;
 
-		/**
-		 * @brief Виджет поиска
-		 */
-		SearchWidget* m_searchLine;
+        /**
+         * @brief Счётчики сценария
+         */
+        QLabel* m_countersInfo;
 
-		/**
-		 * @brief Виджет быстрого форматирования текста
-		 */
-		ScenarioFastFormatWidget* m_fastFormatWidget;
+        /**
+         * @brief Виджет поиска
+         */
+        SearchWidget* m_searchLine;
 
-		/**
-		 * @brief Панель со списком комментариев
-		 */
-		ScenarioReviewView* m_reviewView;
-	};
+        /**
+         * @brief Виджет быстрого форматирования текста
+         */
+        ScenarioFastFormatWidget* m_fastFormatWidget;
+
+        /**
+         * @brief Панель со списком комментариев
+         */
+        ScenarioReviewView* m_reviewView;
+    };
 }
 
 #endif // SCENARIOTEXTEDITWIDGET_H

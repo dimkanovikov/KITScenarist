@@ -9,7 +9,7 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioReviewModel.h>
 
 #include <3rd_party/Helpers/TextEditHelper.h>
-
+#include <3rd_party/Helpers/ColorHelper.h>
 
 #include <QAbstractItemView>
 #include <QAbstractTextDocumentLayout>
@@ -39,24 +39,6 @@ namespace {
      * @note Используется для корректировки скрола при совместном редактировании
      */
     const char* CURSOR_RECT = "cursorRect";
-
-    /**
-     * @brief Получить цвет для курсора соавтора
-     */
-    static QColor cursorColor(int _index) {
-        QColor color;
-        switch (_index) {
-            case 0: color = Qt::red; break;
-            case 1: color = Qt::darkGreen; break;
-            case 2: color = Qt::blue; break;
-            case 3: color = Qt::darkCyan; break;
-            case 4: color = Qt::magenta; break;
-            case 5: color = Qt::darkMagenta; break;
-            case 6: color = Qt::darkRed; break;
-            case 7: color = Qt::darkYellow; break;
-        }
-        return color;
-    }
 }
 
 
@@ -450,6 +432,13 @@ void ScenarioTextEdit::setAdditionalCursors(const QMap<QString, int>& _cursors)
             }
         }
     }
+}
+
+void ScenarioTextEdit::scrollToAdditionalCursor(int _additionalCursorIndex)
+{
+    QTextCursor cursor(m_document);
+    m_document->setCursorPosition(cursor, (m_additionalCursorsCorrected.begin() + _additionalCursorIndex).value());
+    ensureCursorVisible(cursor);
 }
 
 void ScenarioTextEdit::keyPressEvent(QKeyEvent* _event)
@@ -857,7 +846,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
                         //
                         // ... рисуем его
                         //
-                        painter.fillRect(cursorR, ::cursorColor(cursorIndex));
+                        painter.fillRect(cursorR, ColorHelper::cursorColor(cursorIndex));
 
                         //
                         // ... декорируем
@@ -875,7 +864,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
                                     cursorR.top() - painter.fontMetrics().height() - 2,
                                     painter.fontMetrics().width(username) + 2,
                                     painter.fontMetrics().height() + 2);
-                                painter.fillRect(usernameRect, ::cursorColor(cursorIndex));
+                                painter.fillRect(usernameRect, ColorHelper::cursorColor(cursorIndex));
                                 painter.drawText(usernameRect, Qt::AlignCenter, username);
                             }
                             //
@@ -883,7 +872,7 @@ void ScenarioTextEdit::paintEvent(QPaintEvent* _event)
                             //
                             else {
                                 painter.fillRect(cursorR.left() - 2, cursorR.top() - 5, 5, 5,
-                                    ::cursorColor(cursorIndex));
+                                    ColorHelper::cursorColor(cursorIndex));
                             }
                         }
                     }

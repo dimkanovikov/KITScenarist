@@ -26,6 +26,11 @@ namespace UserInterface
 		 */
 		QString email() const;
 
+        /**
+         * @brief задать email отправителя
+         */
+        void setEmail(const QString& _email);
+
 		/**
 		 * @brief Сопроводительное сообщение
 		 */

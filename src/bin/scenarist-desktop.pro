@@ -561,7 +561,8 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.h \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
-    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.h
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.h \
+    scenarist-core/3rd_party/Helpers/ColorHelper.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

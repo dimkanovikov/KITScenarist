@@ -5,191 +5,196 @@
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 
 namespace BusinessLogic {
-	class ScenarioTextDocument;
+    class ScenarioTextDocument;
 }
 
 class QCompleter;
 
 namespace UserInterface
 {
-	class ShortcutsManager;
+    class ShortcutsManager;
 
 
-	/**
-	 * @brief Текстовый редактор сценария
-	 */
-	class ScenarioTextEdit : public CompletableTextEdit
-	{
-		Q_OBJECT
+    /**
+     * @brief Текстовый редактор сценария
+     */
+    class ScenarioTextEdit : public CompletableTextEdit
+    {
+        Q_OBJECT
 
-	public:
-		explicit ScenarioTextEdit(QWidget* _parent);
+    public:
+        explicit ScenarioTextEdit(QWidget* _parent);
 
-		/**
-		 * @brief Установить документ для редактирования
-		 */
-		void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document);
+        /**
+         * @brief Установить документ для редактирования
+         */
+        void setScenarioDocument(BusinessLogic::ScenarioTextDocument* _document);
 
-		/**
-		 * @brief Вставить новый блок
-		 * @param Тип блока
-		 */
-		void addScenarioBlock(BusinessLogic::ScenarioBlockStyle::Type _blockType);
+        /**
+         * @brief Вставить новый блок
+         * @param Тип блока
+         */
+        void addScenarioBlock(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 
-		/**
-		 * @brief Установить вид текущего блока
-		 * @param Тип блока
-		 */
-		void changeScenarioBlockType(BusinessLogic::ScenarioBlockStyle::Type _blockType, bool _forced = false);
+        /**
+         * @brief Установить вид текущего блока
+         * @param Тип блока
+         */
+        void changeScenarioBlockType(BusinessLogic::ScenarioBlockStyle::Type _blockType, bool _forced = false);
 
-		/**
-		 * @brief Применить тип блока ко всему тексту в блоке
-		 * @param Тип для применения
-		 */
-		void applyScenarioTypeToBlockText(BusinessLogic::ScenarioBlockStyle::Type _blockType);
+        /**
+         * @brief Применить тип блока ко всему тексту в блоке
+         * @param Тип для применения
+         */
+        void applyScenarioTypeToBlockText(BusinessLogic::ScenarioBlockStyle::Type _blockType);
 
-		/**
-		 * @brief Получить вид блока в котором находится курсор
-		 */
-		BusinessLogic::ScenarioBlockStyle::Type scenarioBlockType() const;
+        /**
+         * @brief Получить вид блока в котором находится курсор
+         */
+        BusinessLogic::ScenarioBlockStyle::Type scenarioBlockType() const;
 
-		/**
-		 * @brief Своя реализация установки курсора
-		 */
-		void setTextCursorReimpl(const QTextCursor& _cursor);
+        /**
+         * @brief Своя реализация установки курсора
+         */
+        void setTextCursorReimpl(const QTextCursor& _cursor);
 
-		/**
-		 * @brief Получить значение флага сигнализирующего сохранять ли данные во время редактирования
-		 */
-		bool storeDataWhenEditing() const;
+        /**
+         * @brief Получить значение флага сигнализирующего сохранять ли данные во время редактирования
+         */
+        bool storeDataWhenEditing() const;
 
-		/**
-		 * @brief Установить значение флага сигнализирующего сохранять ли данные во время редактирования
-		 */
-		void setStoreDataWhenEditing(bool _store);
+        /**
+         * @brief Установить значение флага сигнализирующего сохранять ли данные во время редактирования
+         */
+        void setStoreDataWhenEditing(bool _store);
 
-		/**
-		 * @brief Показываются ли в редакторе номера сцен
-		 */
-		bool showSceneNumbers() const;
+        /**
+         * @brief Показываются ли в редакторе номера сцен
+         */
+        bool showSceneNumbers() const;
 
-		/**
-		 * @brief Установить значение необходимости отображать номера сцен
-		 */
-		void setShowSceneNumbers(bool _show);
+        /**
+         * @brief Установить значение необходимости отображать номера сцен
+         */
+        void setShowSceneNumbers(bool _show);
 
-		/**
-		 * @brief Подсвечивается ли текущая строка в редакторе
-		 */
-		bool highlightCurrentLine() const;
+        /**
+         * @brief Подсвечивается ли текущая строка в редакторе
+         */
+        bool highlightCurrentLine() const;
 
-		/**
-		 * @brief Установить значение необходимости подсвечивать текущую строку
-		 */
-		void setHighlightCurrentLine(bool _highlight);
+        /**
+         * @brief Установить значение необходимости подсвечивать текущую строку
+         */
+        void setHighlightCurrentLine(bool _highlight);
 
-		/**
-		 * @brief Установить необходимость автоматических замен
-		 */
-		void setAutoReplacing(bool _capitalizeFirstWord, bool _correctDoubleCapitals,
-			bool _replaceThreeDots, bool _smartQuotes);
+        /**
+         * @brief Установить необходимость автоматических замен
+         */
+        void setAutoReplacing(bool _capitalizeFirstWord, bool _correctDoubleCapitals,
+            bool _replaceThreeDots, bool _smartQuotes);
 
-		/**
-		 * @brief Показывать ли автодополнения в пустых блоках
-		 */
-		void setShowSuggestionsInEmptyBlocks(bool _show);
+        /**
+         * @brief Показывать ли автодополнения в пустых блоках
+         */
+        void setShowSuggestionsInEmptyBlocks(bool _show);
 
-		/**
-		 * @brief Установить доступность выделения текста мышью
-		 */
-		void setTextSelectionEnable(bool _enable);
+        /**
+         * @brief Установить доступность выделения текста мышью
+         */
+        void setTextSelectionEnable(bool _enable);
 
-		/**
-		 * @brief Редактор в режиме отображения поэпизодника или сценария
-		 */
-		bool outlineMode() const;
+        /**
+         * @brief Редактор в режиме отображения поэпизодника или сценария
+         */
+        bool outlineMode() const;
 
-		/**
-		 * @brief Установить режим отображения поэпизодника или сценария
-		 */
-		void setOutlineMode(bool _outlineMode);
+        /**
+         * @brief Установить режим отображения поэпизодника или сценария
+         */
+        void setOutlineMode(bool _outlineMode);
 
-		/**
-		 * @brief Получить список видимых блоков в зависимости от режима отображения поэпизодника или сценария
-		 */
-		QList<BusinessLogic::ScenarioBlockStyle::Type> visibleBlocksTypes() const;
+        /**
+         * @brief Получить список видимых блоков в зависимости от режима отображения поэпизодника или сценария
+         */
+        QList<BusinessLogic::ScenarioBlockStyle::Type> visibleBlocksTypes() const;
 
-		/**
-		 * @brief Обновить сочетания клавиш для переходов между блоками
-		 */
-		void updateShortcuts();
+        /**
+         * @brief Обновить сочетания клавиш для переходов между блоками
+         */
+        void updateShortcuts();
 
-		/**
-		 * @brief Получить сочетание смены для блока
-		 */
-		QString shortcut(BusinessLogic::ScenarioBlockStyle::Type _forType) const;
+        /**
+         * @brief Получить сочетание смены для блока
+         */
+        QString shortcut(BusinessLogic::ScenarioBlockStyle::Type _forType) const;
 
-		/**
-		 * @brief Переопределяем для корректировки вызова отмены/повтора последнего действия
-		 */
-		QMenu* createContextMenu(const QPoint &_pos, QWidget* _parent = 0);
+        /**
+         * @brief Переопределяем для корректировки вызова отмены/повтора последнего действия
+         */
+        QMenu* createContextMenu(const QPoint &_pos, QWidget* _parent = 0);
 
-		/**
-		 * @brief Установить список дополнительных курсоров для отрисовки
-		 */
-		void setAdditionalCursors(const QMap<QString, int>& _cursors);
+        /**
+         * @brief Установить список дополнительных курсоров для отрисовки
+         */
+        void setAdditionalCursors(const QMap<QString, int>& _cursors);
 
-	signals:
-		/**
-		 * @brief Запрос на отмену последнего действия
-		 */
-		void undoRequest();
+        /**
+         * @brief Пролистать сценарий, чтобы был виден заданный курсор соавтора
+         */
+        void scrollToAdditionalCursor(int _index);
 
-		/**
-		 * @brief Запрос на повтор последнего действия
-		 */
-		void redoRequest();
+    signals:
+        /**
+         * @brief Запрос на отмену последнего действия
+         */
+        void undoRequest();
 
-		/**
-		 * @brief Сменился стиль под курсором
-		 */
-		void currentStyleChanged();
+        /**
+         * @brief Запрос на повтор последнего действия
+         */
+        void redoRequest();
 
-		/**
-		 * @brief Изменён стиль блока
-		 */
-		void styleChanged();
+        /**
+         * @brief Сменился стиль под курсором
+         */
+        void currentStyleChanged();
 
-		/**
-		 * @brief В документ были внесены редакторские примечания
-		 */
-		void reviewChanged();
+        /**
+         * @brief Изменён стиль блока
+         */
+        void styleChanged();
 
-	protected:
-		/**
-		 * @brief Нажатия многих клавиш обрабатываются вручную
-		 */
-		void keyPressEvent(QKeyEvent* _event);
+        /**
+         * @brief В документ были внесены редакторские примечания
+         */
+        void reviewChanged();
 
-		/**
-		 * @brief Переопределяем, чтобы самостоятельно обрабатывать вводимый пользователем текст
-		 */
-		void inputMethodEvent(QInputMethodEvent* _event);
+    protected:
+        /**
+         * @brief Нажатия многих клавиш обрабатываются вручную
+         */
+        void keyPressEvent(QKeyEvent* _event);
 
-		/**
-		 * @brief Дополнительная функция для обработки нажатий самим редактором
-		 * @return Обработано ли событие
-		 */
-		bool keyPressEventReimpl(QKeyEvent* _event);
+        /**
+         * @brief Переопределяем, чтобы самостоятельно обрабатывать вводимый пользователем текст
+         */
+        void inputMethodEvent(QInputMethodEvent* _event);
 
-		/**
-		 * @brief Переопределяется для корректной загрузки больших документов
-		 */
-		void paintEvent(QPaintEvent* _event);
+        /**
+         * @brief Дополнительная функция для обработки нажатий самим редактором
+         * @return Обработано ли событие
+         */
+        bool keyPressEventReimpl(QKeyEvent* _event);
 
-		/**
-		 * @brief Переопределяется для обработки тройного клика
-		 */
+        /**
+         * @brief Переопределяется для корректной загрузки больших документов
+         */
+        void paintEvent(QPaintEvent* _event);
+
+        /**
+         * @brief Переопределяется для обработки тройного клика
+         */
         /** @{ */
         void mousePressEvent(QMouseEvent* _event);
         void mouseDoubleClickEvent(QMouseEvent* _event);
@@ -260,86 +265,85 @@ namespace UserInterface
 		/**
 		 * @brief Оканчивается ли строка сокращением
 		 */
-		bool stringEndsWithAbbrev(const QString& _text);
-
+        bool stringEndsWithAbbrev(const QString& _text);
         /**
          * @brief Выделить блок при тройном клике
          */
         bool selectBlockOnTripleClick(QMouseEvent* _event);
 
-	private:
-		void initEditor();
-		void initEditorConnections();
-		void removeEditorConnections();
-		void initView();
-		void initConnections();
+    private:
+        void initEditor();
+        void initEditorConnections();
+        void removeEditorConnections();
+        void initView();
+        void initConnections();
 
-	private:
-		/**
-		 * @brief Документ
-		 */
-		BusinessLogic::ScenarioTextDocument* m_document;
+    private:
+        /**
+         * @brief Документ
+         */
+        BusinessLogic::ScenarioTextDocument* m_document;
 
-		/**
-		 * @brief Количеств
-		 */
-		int m_mouseClicks;
+        /**
+         * @brief Количеств
+         */
+        int m_mouseClicks;
 
-		/**
-		 * @brief Время последнего клика мышки, мс
-		 */
-		qint64 m_lastMouseClickTime;
+        /**
+         * @brief Время последнего клика мышки, мс
+         */
+        qint64 m_lastMouseClickTime;
 
-		/**
-		 * @brief Необходимо ли сохранять данные при вводе
-		 */
-		bool m_storeDataWhenEditing;
+        /**
+         * @brief Необходимо ли сохранять данные при вводе
+         */
+        bool m_storeDataWhenEditing;
 
-		/**
-		 * @brief Отображать ли номер сцен
-		 */
-		bool m_showSceneNumbers;
+        /**
+         * @brief Отображать ли номер сцен
+         */
+        bool m_showSceneNumbers;
 
-		/**
-		 * @brief Подсвечивать текущую линию
-		 */
-		bool m_highlightCurrentLine;
+        /**
+         * @brief Подсвечивать текущую линию
+         */
+        bool m_highlightCurrentLine;
 
-		/**
-		 * @brief Использовать автозамены для особых случаев
-		 */
-		/** @{ */
-		bool m_capitalizeFirstWord;
-		bool m_correctDoubleCapitals;
-		bool m_replaceThreeDots;
-		bool m_smartQuotes;
-		/** @} */
+        /**
+         * @brief Использовать автозамены для особых случаев
+         */
+        /** @{ */
+        bool m_capitalizeFirstWord;
+        bool m_correctDoubleCapitals;
+        bool m_replaceThreeDots;
+        bool m_smartQuotes;
+        /** @} */
 
-		/**
-		 * @brief Показывать автодополения в пустых блоках
-		 */
-		bool m_showSuggestionsInEmptyBlocks;
+        /**
+         * @brief Показывать автодополения в пустых блоках
+         */
+        bool m_showSuggestionsInEmptyBlocks;
 
-		/**
-		 * @brief Включена ли возможность выделения текста
-		 */
-		bool m_textSelectionEnable;
+        /**
+         * @brief Включена ли возможность выделения текста
+         */
+        bool m_textSelectionEnable;
 
-		/**
-		 * @brief Курсоры соавторов
-		 */
-		QMap<QString, int> m_additionalCursors;
+        /**
+         * @brief Курсоры соавторов
+         */
+        QMap<QString, int> m_additionalCursors;
 
-		/**
-		 * @brief Скорректированные позиции курсоров, после локальных изменений текста
-		 */
-		QMap<QString, int> m_additionalCursorsCorrected;
+        /**
+         * @brief Скорректированные позиции курсоров, после локальных изменений текста
+         */
+        QMap<QString, int> m_additionalCursorsCorrected;
 
-		/**
-		 * @brief Управляющий шорткатами
-		 */
-		ShortcutsManager* m_shortcutsManager;
-	};
+        /**
+         * @brief Управляющий шорткатами
+         */
+        ShortcutsManager* m_shortcutsManager;
+    };
 }
 
 #endif // SCENARIOTEXTEDIT_H

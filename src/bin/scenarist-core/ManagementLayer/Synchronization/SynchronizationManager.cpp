@@ -187,7 +187,7 @@ SynchronizationManager::SynchronizationManager(QObject* _parent, QWidget* _paren
 
 bool SynchronizationManager::isInternetConnectionActive() const
 {
-    return m_isInternetConnectionActive == Active;
+    return m_internetConnectionStatus == Active;
 }
 
 bool SynchronizationManager::isLogged() const
@@ -200,7 +200,7 @@ bool SynchronizationManager::isSubscriptionActive() const
     return m_isSubscriptionActive;
 }
 
-void SynchronizationManager::autoLogin()
+bool SynchronizationManager::autoLogin()
 {
     //
     // Получим параметры из хранилища
@@ -222,7 +222,9 @@ void SynchronizationManager::autoLogin()
     //
     if (!email.isEmpty() && !password.isEmpty()) {
         login(email, password);
+        return true;
     }
+    return false;
 }
 
 void SynchronizationManager::login(const QString &_email, const QString &_password)
@@ -564,7 +566,7 @@ void SynchronizationManager::logout()
     //
     // Теперь статус интернета не отслеживается, а значит неизвестен
     //
-    m_isInternetConnectionActive = Undefined;
+    m_internetConnectionStatus = Undefined;
 }
 
 void SynchronizationManager::renewSubscription(unsigned _duration,
@@ -1423,10 +1425,8 @@ bool SynchronizationManager::isOperationSucceed(QXmlStreamReader& _responseReade
     //
     // Ничего не нашли про статус. Скорее всего пропал интернет
     //
+    setInternetConnectionStatus(Inactive);
     handleError(Sync::NetworkError);
-    //
-    // Не нужно устанавливать статус интернета здесь. Иначе, при смене не испустится сигнал
-    //
 
     return false;
 }
@@ -1458,7 +1458,7 @@ void SynchronizationManager::handleError(const QString &_error, int _code)
 bool SynchronizationManager::isCanSync() const
 {
     return
-            m_isInternetConnectionActive
+            m_internetConnectionStatus
             && ProjectsManager::currentProject().isRemote()
             && ProjectsManager::currentProject().isSyncAvailable()
             && !m_sessionKey.isEmpty()
@@ -1767,14 +1767,13 @@ void SynchronizationManager::checkNetworkState()
 
     s_isInCheckNetworkState = true;
 
-    InternetStatus prevState = m_isInternetConnectionActive;
-
     //
     // Делаем три попытки запроса тестовую страницу
     //
     NetworkRequest loader;
     loader.setLoadingTimeout(2000);
     int leavedTries = 3;
+    InternetStatus newState;
     while (leavedTries-- > 0) {
         QByteArray response = loader.loadSync(URL_CHECK_NETWORK_STATE);
 
@@ -1782,37 +1781,34 @@ void SynchronizationManager::checkNetworkState()
         // Запомним состояние интернета и кинем соответствующий сигнал
         //
         if (response == "ok") {
-            m_isInternetConnectionActive = Active;
+            newState = Active;
             break;
         } else {
-            m_isInternetConnectionActive = Inactive;
+            newState = Inactive;
         }
     }
 
-    //
-    // Если появился интернет, которого раньше не было
-    //
-    if (prevState != m_isInternetConnectionActive
-            && m_isInternetConnectionActive == Active
-            && prevState != Undefined) {
-        restartSession();
-    }
-
-    //
-    // Изменился статус, уведомим об этом
-    //
-    if (prevState != m_isInternetConnectionActive) {
-        emit networkStatusChanged(m_isInternetConnectionActive);
-    }
+    setInternetConnectionStatus(newState);
 
     //
     // Если интернет активен, запрашиваем каждые 5 секунд
     // Неактивен - каждую секунду
     //
-    const int checkTimeout = m_isInternetConnectionActive == Active ? 5000 : 1000;
+    const int checkTimeout = m_internetConnectionStatus == Active ? 5000 : 1000;
     QTimer::singleShot(checkTimeout, this, &SynchronizationManager::checkNetworkState);
 
     s_isInCheckNetworkState = false;
+}
+
+void SynchronizationManager::setInternetConnectionStatus(SynchronizationManager::InternetStatus _newStatus)
+{
+    if (m_internetConnectionStatus != _newStatus) {
+        m_internetConnectionStatus = _newStatus;
+        if (m_internetConnectionStatus == Active) {
+            restartSession();
+        }
+        emit networkStatusChanged(m_internetConnectionStatus);
+    }
 }
 
 void SynchronizationManager::initConnections()

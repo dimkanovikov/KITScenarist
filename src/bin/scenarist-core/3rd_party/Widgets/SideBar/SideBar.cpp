@@ -1,6 +1,7 @@
 #include "SideBar.h"
 
 #include <3rd_party/Helpers/ImageHelper.h>
+#include <3rd_party/Helpers/ColorHelper.h>
 
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
@@ -249,6 +250,11 @@ void SideTabBar::setIndicatorActionIcon(const QIcon& _icon)
     m_indicator->setProperty(::INDICATOR_ACTION_ICON_KEY, _icon);
 }
 
+void SideTabBar::setIndicatorMenu(const QVector<QString> &_menuActions)
+{
+    m_indicatorActions = _menuActions;
+}
+
 void SideTabBar::makeIndicatorWave(const QColor& _waveColor)
 {
     //
@@ -439,8 +445,24 @@ void SideTabBar::mousePressEvent(QMouseEvent* _event)
         QWidgetAction menuText(&menu);
         menuText.setDefaultWidget(menuFrame);
         menu.addAction(&menuText);
-        menu.exec(mapToGlobal(QPoint(::sidebarWidth(m_compactMode), height() - menu.sizeHint().height())));
+        if (!m_indicatorActions.empty()) {
+            menu.addSeparator();
+            QIcon icon(":/Graphics/Icons/Editing/rect.png");
+            for (int actionIndex = 0; actionIndex != m_indicatorActions.size(); ++actionIndex) {
+                ImageHelper::setIconColor(icon, QSize(10, 10), ColorHelper::cursorColor(actionIndex));
+                QAction* action = new QAction(icon, m_indicatorActions[actionIndex], &menu);
+                action->setData(actionIndex);
+                menu.addAction(action);
+            }
+        }
 
+        QAction* pressedAction = menu.exec(mapToGlobal(QPoint(::sidebarWidth(m_compactMode), height() - menu.sizeHint().height())));
+
+        if (pressedAction
+            && pressedAction->data() >= 0
+            && pressedAction->data().toInt() < m_indicatorActions.size()) {
+            emit indicatorMenuClicked(pressedAction->data().toInt());
+        }
     }
 }
 

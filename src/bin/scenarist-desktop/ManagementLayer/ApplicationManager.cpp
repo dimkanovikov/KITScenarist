@@ -193,7 +193,12 @@ ApplicationManager::ApplicationManager(QObject *parent) :
 
     reloadApplicationSettings();
 
-    QTimer::singleShot(0, m_synchronizationManager, &SynchronizationManager::autoLogin);
+    QTimer::singleShot(0, [this] {
+        m_startUpManager->setProgressLoginLabel(true);
+        if (!m_synchronizationManager->autoLogin()) {
+            m_startUpManager->setProgressLoginLabel(false);
+        }
+    });
     initStyleSheet();
 }
 
@@ -913,7 +918,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         //
         case Sync::NetworkError: {
             //
-            // Если ошибка пришла от окна акторизации, покажем её в нём
+            // Если ошибка пришла от окна акторизации или смены пароля, покажем её в нём
             //
             if (m_startUpManager->isOnLoginDialog()) {
                 m_startUpManager->retryLastAction(_error);
@@ -925,6 +930,11 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
                 title = tr("Network error");
                 error += "\n\n";
                 error += tr("Project didn't synchronized.");
+
+                //
+                // Нет интернета в момент автологина. Текст о соединении
+                //
+                m_startUpManager->setProgressLoginLabel(false);
             }
             break;
         }
@@ -935,6 +945,7 @@ void ApplicationManager::aboutSyncClosedWithError(int _errorCode, const QString&
         case Sync::IncorrectLoginError:
         case Sync::IncorrectPasswordError: {
             error = tr("Incorrect username or password.");
+            m_startUpManager->setProgressLoginLabel(false);
             m_startUpManager->retryLogin(error);
             break;
         }
@@ -1663,6 +1674,7 @@ void ApplicationManager::initConnections()
         m_synchronizationManager->restartSession();
         setSyncIndicator();
     });
+    connect(m_tabs, &SideTabBar::indicatorMenuClicked, m_scenarioManager, &ScenarioManager::scrollToAdditionalCursor);
 
     connect(m_projectsManager, SIGNAL(recentProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
     connect(m_projectsManager, SIGNAL(remoteProjectsUpdated()), this, SLOT(aboutUpdateProjectsList()));
@@ -1739,6 +1751,11 @@ void ApplicationManager::initConnections()
             m_scenarioManager, SLOT(aboutApplyPatches(QList<QString>,bool)));
     connect(m_synchronizationManager, SIGNAL(cursorsUpdated(QMap<QString,int>,bool)),
             m_scenarioManager, SLOT(aboutCursorsUpdated(QMap<QString,int>,bool)));
+    connect(m_synchronizationManager, &SynchronizationManager::cursorsUpdated, [this] (const QMap<QString, int>& _cursors, bool _isDraft) {
+        if (_isDraft == m_scenarioManager->workModeIsDraft()) {
+            m_tabs->setIndicatorMenu(QVector<QString>::fromList(_cursors.keys()));
+        }
+    });
     connect(m_synchronizationManager, SIGNAL(syncClosedWithError(int,QString)),
             this, SLOT(aboutSyncClosedWithError(int,QString)));
     connect(m_synchronizationManager, &SynchronizationManager::networkStatusChanged,
@@ -1760,10 +1777,8 @@ void ApplicationManager::initConnections()
             m_startUpManager, &StartUpManager::setSubscriptionInfo);
     connect(m_synchronizationManager, &SynchronizationManager::syncClosedWithError,
             this, &ApplicationManager::aboutSyncClosedWithError);
-    //
     connect(m_synchronizationManager, &SynchronizationManager::projectsLoaded,
             m_projectsManager, &ProjectsManager::setRemoteProjects);
-
     connect(m_synchronizationManager, &SynchronizationManager::logoutFinished,
             m_tabs, &SideTabBar::removeIndicator);
 

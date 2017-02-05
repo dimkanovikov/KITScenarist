@@ -172,6 +172,18 @@ int ScenarioTextEditWidget::cursorPosition() const
 void ScenarioTextEditWidget::setCursorPosition(int _position)
 {
     //
+    // Если виджет пока ещё не видно, откладываем событие назначения позиции до этого момента.
+    // Делаем это потому что иногда установка курсора происходит до первой отрисовки обёртки
+    // масштабирования, что приводит в свою очередь к тому, что полосы прокрутки остаются в начале.
+    //
+    if (!isVisible()) {
+        QTimer::singleShot(300, Qt::PreciseTimer, [=] {
+            setCursorPosition(_position);
+        });
+        return;
+    }
+
+    //
     // Устанавливаем позицию курсора
     //
     QTextCursor cursor = m_editor->textCursor();
@@ -455,6 +467,11 @@ void ScenarioTextEditWidget::setCommentOnly(bool _isCommentOnly)
         m_fastFormat->setChecked(false);
         m_fastFormatWidget->hide();
     }
+}
+
+void ScenarioTextEditWidget::scrollToAdditionalCursor(int _additionalCursorIndex)
+{
+    m_editor->scrollToAdditionalCursor(_additionalCursorIndex);
 }
 
 void ScenarioTextEditWidget::aboutShowSearch()

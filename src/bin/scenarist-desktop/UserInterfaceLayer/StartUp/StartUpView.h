@@ -40,8 +40,8 @@ namespace UserInterface
 
 		/**
 		 * @brief Установить информацию о том, авторизован пользователь или нет
-		 */
-		void setUserLogged(bool isLogged, const QString& _userName = QString::null,
+         */
+        void setUserLogged(bool isLogged, const QString& _userName = QString::null,
 						   const QString& _userEmail = QString::null);
 
 		/**
@@ -53,6 +53,16 @@ namespace UserInterface
 		 * @brief Установить список доступных проектов
 		 */
 		void setRemoteProjects(QAbstractItemModel* _remoteProjectsModel);
+
+        /**
+         * @brief Установим текст о прогресса авторизации
+         */
+        void enableProgressLoginLabel(int _dots, bool _firstUpdate = false);
+
+        /**
+         * @brief Отключить текст о прогрессе авторизации
+         */
+        void disableProgressLoginLabel();
 
 	signals:
 		/**
@@ -180,6 +190,8 @@ namespace UserInterface
 
 	private:
 		Ui::StartUpView *ui;
+
+        bool m_isProcessLogin = false;
 	};
 }
 

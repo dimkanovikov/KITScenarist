@@ -84,9 +84,18 @@ QWidget* StartUpManager::view() const
     return m_view;
 }
 
+void StartUpManager::setProgressLoginLabel(bool _enable)
+{
+    if (_enable) {
+        m_view->enableProgressLoginLabel(0, true);
+    } else {
+        m_view->disableProgressLoginLabel();
+    }
+}
+
 bool StartUpManager::isOnLoginDialog() const
 {
-    return m_loginDialog->isVisible();
+    return m_loginDialog->isVisible() || m_changePasswordDialog->isVisible();
 }
 
 bool StartUpManager::isOnLocalProjectsTab() const
@@ -97,6 +106,7 @@ bool StartUpManager::isOnLocalProjectsTab() const
 void StartUpManager::completeLogin(const QString& _userName, const QString& _userEmail,
                                    int _paymentMonth)
 {
+    m_view->disableProgressLoginLabel();
     m_userEmail = _userEmail;
 
     m_renewSubscriptionDialog->setPaymentMonth(_paymentMonth);
@@ -224,7 +234,14 @@ void StartUpManager::retryVerify(const QString &_error)
 
 void StartUpManager::retryLastAction(const QString &_error)
 {
-    m_loginDialog->setLastActionError(_error);
+    if (m_loginDialog->isVisible()) {
+        m_loginDialog->setLastActionError(_error);
+    } else if(m_changePasswordDialog->isVisible()) {
+        m_changePasswordDialog->stopAndHide();
+        QLightBoxMessage::critical(m_view, tr("Can not change password"),
+                                      _error);
+        m_changePasswordDialog->showUnprepared();
+    }
 }
 
 void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
@@ -394,6 +411,18 @@ void StartUpManager::checkCrashReports()
     //
     if (hasUnhandledReports) {
         CrashReportDialog dialog(m_view);
+
+        //
+        // Возьмем email из хранилища (тот же, что и для авторизации)
+        //
+        const QString email =
+            StorageFacade::settingsStorage()->value(
+                "application/email",
+                SettingsStorage::ApplicationSettings);
+        if (!email.isEmpty()) {
+            dialog.setEmail(email);
+        }
+
         QString handledReportPath = unhandledReportPath;
         if (dialog.exec() == CrashReportDialog::Accepted) {
             dialog.showProgress();
@@ -411,6 +440,16 @@ void StartUpManager::checkCrashReports()
             // Помечаем отчёт, как отправленный
             //
             handledReportPath += "." + SENDED;
+
+            //
+            // Сохраняем email, если ранее не было никакого
+            //
+            if (email.isEmpty()) {
+                StorageFacade::settingsStorage()->setValue(
+                "application/email",
+                dialog.email(),
+                SettingsStorage::ApplicationSettings);
+            }
         }
         //
         // Помечаем отчёт, как проигнорированный
