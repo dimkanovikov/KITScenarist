@@ -227,7 +227,7 @@ void ResearchView::editCharacter(const QString& _name, const QString& _descripti
     m_ui->characterDescription->setHtml(TextEditHelper::fromHtmlEscaped(descriptionNode.toElement().text()));
 
     setResearchManageButtonsVisible(true);
-    setSearchVisible(true);
+    setSearchVisible(false);
 }
 
 void ResearchView::editLocationsRoot()
@@ -249,7 +249,7 @@ void ResearchView::editLocation(const QString& _name, const QString& _descriptio
     m_ui->locationDescription->setHtml(_description);
 
     setResearchManageButtonsVisible(true);
-    setSearchVisible(true);
+    setSearchVisible(false);
 }
 
 void ResearchView::editResearchRoot()

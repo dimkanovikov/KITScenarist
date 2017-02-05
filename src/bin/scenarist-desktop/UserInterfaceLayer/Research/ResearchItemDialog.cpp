@@ -90,9 +90,11 @@ void ResearchItemDialog::setInsertAllow(bool _isCharacterAllow, bool _isLocation
         //
         if (_isCharacterAllow) {
             m_ui->character->setChecked(true);
+            m_ui->isInsert->setChecked(false);
         } else {
             if (_isLocationAllow) {
                 m_ui->location->setChecked(true);
+                m_ui->isInsert->setChecked(false);
             } else {
                 m_ui->folder->setChecked(true);
             }
@@ -134,6 +136,11 @@ int ResearchItemDialog::researchType() const
 
 QString ResearchItemDialog::researchName() const
 {
+    if (m_ui->character->isChecked()
+        || m_ui->location->isChecked()) {
+        return m_ui->name->text().toUpper();
+    }
+
     return m_ui->name->text();
 }
 

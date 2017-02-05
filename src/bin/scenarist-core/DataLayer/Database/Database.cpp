@@ -2,6 +2,8 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioXml.h>
 
+#include <Domain/Research.h>
+
 #include <3rd_party/Helpers/DiffMatchPatchHelper.h>
 
 #include <QApplication>
@@ -13,6 +15,7 @@
 #include <QTextCodec>
 #include <QUuid>
 #include <QVariant>
+#include <QXmlStreamWriter>
 
 using namespace DatabaseLayer;
 
@@ -278,24 +281,6 @@ void Database::createTables(QSqlDatabase& _database)
 				   "); "
 				   );
 
-	// Таблица "Локация"
-	q_creator.exec("CREATE TABLE locations "
-				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-				   "name TEXT UNIQUE NOT NULL, "
-				   "description TEXT DEFAULT(NULL) "
-				   "); "
-				   );
-
-	// Таблица "Фотографии локаций"
-	q_creator.exec("CREATE TABLE locations_photo "
-				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-				   "fk_location_id INTEGER NOT NULL, "
-				   "photo BLOB NOT NULL, "
-				   "sort_order INTEGER NOT NULL DEFAULT(0) "
-				   ")"
-				   );
 
 	// Таблица "Сценарний день"
 	q_creator.exec("CREATE TABLE scenary_days "
@@ -311,17 +296,7 @@ void Database::createTables(QSqlDatabase& _database)
 				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
 				   "name TEXT UNIQUE NOT NULL "
 				   "); "
-				   );
-
-	// Таблица "Персонажи"
-	q_creator.exec("CREATE TABLE characters "
-				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-				   "name TEXT UNIQUE NOT NULL, "
-				   "real_name TEXT DEFAULT(NULL), "
-				   "description TEXT DEFAULT(NULL) "
-				   "); "
-				   );
+                   );
 
 	// Таблица "Состояния персонажей"
 	q_creator.exec("CREATE TABLE character_states "
@@ -331,15 +306,6 @@ void Database::createTables(QSqlDatabase& _database)
 				   "); "
 				   );
 
-	// Таблица "Фотографии персонажей"
-	q_creator.exec("CREATE TABLE characters_photo "
-				   "( "
-				   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-				   "fk_character_id INTEGER NOT NULL, "
-				   "photo BLOB NOT NULL, "
-				   "sort_order INTEGER NOT NULL DEFAULT(0) "
-				   ")"
-				   );
 
 	// Таблица "Текст сценария"
 	q_creator.exec("CREATE TABLE scenario "
@@ -1187,7 +1153,168 @@ void Database::updateDatabaseTo_0_7_1(QSqlDatabase& _database)
         //
         q_updater.exec("ALTER TABLE _database_history ADD COLUMN username TEXT NOT NULL DEFAULT('')");
         q_updater.exec("ALTER TABLE _database_history ADD COLUMN datetime TEXT NOT NULL DEFAULT('')");
+
+        //
+        // Удаляем таблицы персонажей, перенося данные в разработку
+        //
+        {
+            QMap<int, QPair<QString, QString>> characters;
+            q_updater.exec("SELECT id, name, real_name, description FROM characters");
+            while (q_updater.next()) {
+                const int id = q_updater.record().value("id").toInt();
+                const QString name = q_updater.record().value("name").toString();
+                const QString realName = q_updater.record().value("real_name").toString();
+                const QString description = q_updater.record().value("description").toString();
+                //
+                // формируем данные для сохранения в новом хранилище
+                //
+                QString newDescription;
+                QXmlStreamWriter writer(&newDescription);
+                writer.writeStartDocument();
+                writer.writeStartElement("character");
+                writer.writeTextElement("real_name", realName);
+                writer.writeStartElement("description");
+                writer.writeCDATA(TextEditHelper::toHtmlEscaped(description));
+                writer.writeEndElement();
+                writer.writeEndElement();
+                writer.writeEndDocument();
+                //
+                // запомним персонажа
+                //
+                characters.insert(id, qMakePair(name, newDescription));
+            }
+            //
+            // ... проходим всех персонажей
+            //
+            for (const int& oldId : characters.keys()) {
+                //
+                // ... переносим персонажа в разработку
+                //
+                q_updater.prepare("INSERT INTO research (type, name, description) VALUES(?,?,?)");
+                q_updater.addBindValue(Domain::Research::Character);
+                q_updater.addBindValue(characters[oldId].first);
+                q_updater.addBindValue(characters[oldId].second);
+                q_updater.exec();
+                const int newId = q_updater.lastInsertId().toInt();
+
+                //
+                // ... если у него есть фотки
+                //
+                q_updater.prepare("SELECT photo FROM characters_photo WHERE fk_character_id = ?");
+                q_updater.addBindValue(oldId);
+                q_updater.exec();
+                QVector<QByteArray> photos;
+                while (q_updater.next()) {
+                    photos.append(q_updater.record().value("photo").toByteArray());
+                }
+                if (!photos.isEmpty()) {
+                    //
+                    // ... создаём вложенный элемент с фотками
+                    //
+                    q_updater.prepare("INSERT INTO research (parent_id, type, name) VALUES(?,?,?)");
+                    q_updater.addBindValue(newId);
+                    q_updater.addBindValue(Domain::Research::ImagesGallery);
+                    q_updater.addBindValue(QApplication::translate("DatabaseLayer::Database", "Photos"));
+                    q_updater.exec();
+                    const int photosId = q_updater.lastInsertId().toInt();
+
+                    //
+                    // ...  переносим фотки в него
+                    //
+                    for (const QByteArray& photo : photos) {
+                        q_updater.prepare("INSERT INTO research (parent_id, type, name, image) VALUES(?,?,?,?)");
+                        q_updater.addBindValue(photosId);
+                        q_updater.addBindValue(Domain::Research::Image);
+                        q_updater.addBindValue(QApplication::translate("DatabaseLayer::Database", "Unnamed image"));
+                        q_updater.addBindValue(photo);
+                        q_updater.exec();
+                    }
+                }
+            }
+
+            //
+            // ... удаляем данные из БД
+            //
+            q_updater.exec("DROP TABLE characters");
+            q_updater.exec("DROP TABLE characters_photo");
+        }
+
+        //
+        // Аналогично и для локаций
+        //
+        {
+            QMap<int, QPair<QString, QString>> locations;
+            q_updater.exec("SELECT id, name, description FROM locations");
+            while (q_updater.next()) {
+                const int id = q_updater.record().value("id").toInt();
+                const QString name = q_updater.record().value("name").toString();
+                const QString description = q_updater.record().value("description").toString();
+                //
+                // запомним локацию
+                //
+                locations.insert(id, qMakePair(name, description));
+            }
+            //
+            // ... проходим все локации
+            //
+            for (const int& oldId : locations.keys()) {
+                //
+                // ... переносим локацию в разработку
+                //
+                q_updater.prepare("INSERT INTO research (type, name, description) VALUES(?,?,?)");
+                q_updater.addBindValue(Domain::Research::Location);
+                q_updater.addBindValue(locations[oldId].first);
+                q_updater.addBindValue(locations[oldId].second);
+                q_updater.exec();
+                const int newId = q_updater.lastInsertId().toInt();
+
+                //
+                // ... если у неё есть фотки
+                //
+                q_updater.prepare("SELECT photo FROM locations_photo WHERE fk_location_id = ?");
+                q_updater.addBindValue(oldId);
+                q_updater.exec();
+                QVector<QByteArray> photos;
+                while (q_updater.next()) {
+                    photos.append(q_updater.record().value("photo").toByteArray());
+                }
+                if (!photos.isEmpty()) {
+                    //
+                    // ... создаём вложенный элемент с фотками
+                    //
+                    q_updater.prepare("INSERT INTO research (parent_id, type, name) VALUES(?,?,?)");
+                    q_updater.addBindValue(newId);
+                    q_updater.addBindValue(Domain::Research::ImagesGallery);
+                    q_updater.addBindValue(QApplication::translate("DatabaseLayer::Database", "Photos"));
+                    q_updater.exec();
+                    const int photosId = q_updater.lastInsertId().toInt();
+
+                    //
+                    // ...  переносим фотки в него
+                    //
+                    for (const QByteArray& photo : photos) {
+                        q_updater.prepare("INSERT INTO research (parent_id, type, name, image) VALUES(?,?,?,?)");
+                        q_updater.addBindValue(photosId);
+                        q_updater.addBindValue(Domain::Research::Image);
+                        q_updater.addBindValue(QApplication::translate("DatabaseLayer::Database", "Unnamed image"));
+                        q_updater.addBindValue(photo);
+                        q_updater.exec();
+                    }
+                }
+            }
+
+            //
+            // ... удаляем данные из БД
+            //
+            q_updater.exec("DROP TABLE locations");
+            q_updater.exec("DROP TABLE locations_photo");
+        }
     }
 
     _database.commit();
+
+    //
+    // Уменьшим размер файла
+    //
+    q_updater.exec("VACUUM");
 }

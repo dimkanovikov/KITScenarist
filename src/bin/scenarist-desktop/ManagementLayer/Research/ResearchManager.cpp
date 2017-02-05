@@ -508,6 +508,7 @@ void ResearchManager::initConnections()
             && m_currentResearch->name() != newName) {
             const QString oldName = m_currentResearch->name();
             m_currentResearch->setName(newName);
+            m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
             emit researchChanged();
             emit characterNameChanged(oldName, newName);
         }
@@ -530,6 +531,7 @@ void ResearchManager::initConnections()
             && m_currentResearch->name() != newName) {
             const QString oldName = m_currentResearch->name();
             m_currentResearch->setName(newName);
+            m_model->updateItem(m_model->itemForIndex(m_view->currentResearchIndex()));
             emit researchChanged();
             emit locationNameChanged(oldName, newName);
         }
