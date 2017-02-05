@@ -773,7 +773,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
             // ... или как минимум его закрывающий блок
             //
             else if (currentType == ScenarioBlockStyle::SceneGroupFooter
-                       || currentType == ScenarioBlockStyle::FolderFooter) {
+                     || currentType == ScenarioBlockStyle::FolderFooter) {
                 QTextCursor endCursor = cursor;
                 endCursor.movePosition(QTextCursor::NextBlock);
                 endCursor.movePosition(QTextCursor::EndOfBlock);
@@ -973,9 +973,9 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
                 break;
             }
 
-            //
-            // Не включаем тект групп сцен
-            //
+                //
+                // Не включаем тект групп сцен
+                //
             case ScenarioBlockStyle::SceneGroupHeader: {
                 ++openedScenesGroups;
                 isNeedIncludeBlock = false;
@@ -995,9 +995,9 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
                 break;
             }
 
-            //
-            // Не включаем тект папок
-            //
+                //
+                // Не включаем тект папок
+                //
             case ScenarioBlockStyle::FolderHeader: {
                 ++openedFolders;
                 isNeedIncludeBlock = false;
@@ -1017,9 +1017,9 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
                 break;
             }
 
-            //
-            // Описание сохраняем в описание
-            //
+                //
+                // Описание сохраняем в описание
+                //
             case ScenarioBlockStyle::SceneDescription: {
                 if (isNeedIncludeBlock) {
                     if (!isFirstDescriptionBlock) {
@@ -1033,9 +1033,9 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
                 break;
             }
 
-            //
-            // Весь остальной текст - текст сцены
-            //
+                //
+                // Весь остальной текст - текст сцены
+                //
             default: {
                 if (isNeedIncludeBlock) {
                     if (!isFirstTextBlock) {
