@@ -1,11 +1,14 @@
 #include "ResearchView.h"
 #include "ui_ResearchView.h"
 
+#include <Domain/Research.h>
+
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <BusinessLayer/Research/ResearchModel.h>
 
+#include <3rd_party/Helpers/ImageHelper.h>
 #include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Widgets/SimpleTextEditor/SimpleTextEditor.h>
 #include <3rd_party/Widgets/WAF/Animation/Animation.h>
@@ -86,6 +89,7 @@ ResearchView::ResearchView(QWidget *parent) :
     initView();
     initConnections();
     initStyleSheet();
+    initIconsColor();
 }
 
 ResearchView::~ResearchView()
@@ -429,6 +433,16 @@ void ResearchView::setExpandedIndexes(const QStringList& _indexes)
     }
 }
 
+bool ResearchView::event(QEvent* _event)
+{
+    if (_event->type() == QEvent::PaletteChange) {
+        initStyleSheet();
+        initIconsColor();
+    }
+
+    return QWidget::event(_event);
+}
+
 bool ResearchView::eventFilter(QObject* _object, QEvent* _event)
 {
     if (_object == m_ui->researchNavigator
@@ -592,6 +606,21 @@ void ResearchView::initConnections()
             m_ui->searchWidget->selectText();
             m_ui->searchWidget->setFocus();
         }
+    });
+    connect(m_ui->addFolder, &QPushButton::clicked, [=] {
+        emit addResearchRequested(currentResearchIndex(), Domain::Research::Folder);
+    });
+    connect(m_ui->addText, &QPushButton::clicked, [=] {
+        emit addResearchRequested(currentResearchIndex(), Domain::Research::Text);
+    });
+    connect(m_ui->addMindMap, &QPushButton::clicked, [=] {
+        emit addResearchRequested(currentResearchIndex(), Domain::Research::MindMap);
+    });
+    connect(m_ui->addImagesGallery, &QPushButton::clicked, [=] {
+        emit addResearchRequested(currentResearchIndex(), Domain::Research::ImagesGallery);
+    });
+    connect(m_ui->addUrl, &QPushButton::clicked, [=] {
+        emit addResearchRequested(currentResearchIndex(), Domain::Research::Url);
     });
 
     //
@@ -815,6 +844,12 @@ void ResearchView::initStyleSheet()
 
     m_ui->search->setProperty("inTopPanel", true);
 
+    m_ui->addFolder->setProperty("leftAlignedText", true);
+    m_ui->addText->setProperty("leftAlignedText", true);
+    m_ui->addMindMap->setProperty("leftAlignedText", true);
+    m_ui->addImagesGallery->setProperty("leftAlignedText", true);
+    m_ui->addUrl->setProperty("leftAlignedText", true);
+
     m_ui->addRootNode->setProperty("inTopPanel", true);
     m_ui->addNode->setProperty("inTopPanel", true);
     m_ui->addSiblingNode->setProperty("inTopPanel", true);
@@ -834,4 +869,29 @@ void ResearchView::initStyleSheet()
     m_ui->imagesGalleryName->setProperty("editableLabel", true);
     m_ui->imageName->setProperty("editableLabel", true);
     m_ui->mindMapName->setProperty("editableLabel", true);
+}
+
+void ResearchView::initIconsColor()
+{
+    const QSize iconSize = m_ui->addFolder->iconSize();
+
+    QIcon folder = m_ui->addFolder->icon();
+    ImageHelper::setIconColor(folder, iconSize, palette().text().color());
+    m_ui->addFolder->setIcon(folder);
+
+    QIcon text = m_ui->addText->icon();
+    ImageHelper::setIconColor(text, iconSize, palette().text().color());
+    m_ui->addText->setIcon(text);
+
+    QIcon mindMap = m_ui->addMindMap->icon();
+    ImageHelper::setIconColor(mindMap, iconSize, palette().text().color());
+    m_ui->addMindMap->setIcon(mindMap);
+
+    QIcon imagesGallery = m_ui->addImagesGallery->icon();
+    ImageHelper::setIconColor(imagesGallery, iconSize, palette().text().color());
+    m_ui->addImagesGallery->setIcon(imagesGallery);
+
+    QIcon url = m_ui->addUrl->icon();
+    ImageHelper::setIconColor(url, iconSize, palette().text().color());
+    m_ui->addUrl->setIcon(url);
 }

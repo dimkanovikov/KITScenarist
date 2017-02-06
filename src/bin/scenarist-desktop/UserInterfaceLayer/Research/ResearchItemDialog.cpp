@@ -102,6 +102,51 @@ void ResearchItemDialog::setInsertAllow(bool _isCharacterAllow, bool _isLocation
     }
 }
 
+void ResearchItemDialog::setResearchType(int _type)
+{
+    switch (_type) {
+        case Domain::Research::Character: {
+            m_ui->character->setChecked(true);
+            break;
+        }
+
+        case Domain::Research::Location: {
+            m_ui->location->setChecked(true);
+            break;
+        }
+
+        case Domain::Research::Folder: {
+            m_ui->folder->setChecked(true);
+            break;
+        }
+
+        case Domain::Research::Text: {
+            m_ui->text->setChecked(true);
+            break;
+        }
+
+        case Domain::Research::MindMap: {
+            m_ui->other->setChecked(true);
+            m_ui->otherType->setCurrentIndex(0);
+            break;
+        }
+
+        case Domain::Research::ImagesGallery: {
+            m_ui->other->setChecked(true);
+            m_ui->otherType->setCurrentIndex(1);
+            break;
+        }
+
+        case Domain::Research::Url: {
+            m_ui->other->setChecked(true);
+            m_ui->otherType->setCurrentIndex(2);
+            break;
+        }
+
+        default: break;
+    }
+}
+
 int ResearchItemDialog::researchType() const
 {
     Domain::Research::Type type = Domain::Research::Text;

@@ -172,7 +172,7 @@ QMap<QString, QString> ResearchManager::scenarioData() const
     return m_scenarioData;
 }
 
-void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)
+void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex, int _type)
 {
     //
     // Определим выделенный элемент дерева
@@ -212,6 +212,9 @@ void ResearchManager::addResearch(const QModelIndex& _selectedItemIndex)
             m_dialog->setInsertAllow(false, false);
             break;
         }
+    }
+    if (_type != -1) {
+        m_dialog->setResearchType(_type);
     }
 
     if (m_dialog->exec() == QLightBoxDialog::Accepted) {

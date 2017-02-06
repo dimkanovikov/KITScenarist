@@ -38,6 +38,11 @@ namespace UserInterface
         void setInsertAllow(bool _isCharacterAllow, bool _isLocationAllow);
 
         /**
+         * @brief Задать тип разработки
+         */
+        void setResearchType(int _type);
+
+        /**
          * @brief Тип разработки
          */
         int researchType() const;
