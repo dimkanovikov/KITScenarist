@@ -362,7 +362,7 @@ void ProjectsManager::setRemoteProjects(const QString& _xml)
     for (const auto& fileInfo : QDir(Project::remoteProjectsDirPath()).entryInfoList(QDir::Files)) {
         bool needRemoveProject = true;
         for (const auto& project : m_remoteProjects) {
-            if (project.path() == fileInfo.absoluteFilePath()) {
+            if (project.path() == QDir::toNativeSeparators(fileInfo.absoluteFilePath())) {
                 needRemoveProject = false;
                 break;
             }
