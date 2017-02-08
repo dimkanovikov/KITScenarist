@@ -24,11 +24,13 @@
 #include <UserInterfaceLayer/StartUp/ChangePasswordDialog.h>
 #include <UserInterfaceLayer/StartUp/RenewSubscriptionDialog.h>
 #include <UserInterfaceLayer/StartUp/CrashReportDialog.h>
+#include <UserInterfaceLayer/StartUp/UpdateDialog.h>
 
 #include <DataLayer/DataStorageLayer/StorageFacade.h>
 #include <DataLayer/DataStorageLayer/SettingsStorage.h>
 
 #include <3rd_party/Helpers/PasswordStorage.h>
+#include <3rd_party/Helpers/TextEditHelper.h>
 #include <3rd_party/Widgets/QLightBoxWidget/qlightboxmessage.h>
 
 #include <NetworkRequest.h>
@@ -38,13 +40,16 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDateTime>
+#include <QDesktopServices>
 #include <QMutableMapIterator>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QStandardPaths>
+#include <QTemporaryDir>
 #include <QTimer>
+#include <QXmlStreamReader>
 
 using ManagementLayer::StartUpManager;
 using ManagementLayer::ProjectsManager;
@@ -55,6 +60,11 @@ using UserInterface::LoginDialog;
 using UserInterface::ChangePasswordDialog;
 using UserInterface::RenewSubscriptionDialog;
 using UserInterface::CrashReportDialog;
+using UserInterface::UpdateDialog;
+
+namespace {
+    QUrl UPDATE_URL = QString("https://kitscenarist.ru/api/app/updates/");
+}
 
 
 StartUpManager::StartUpManager(QObject *_parent, QWidget* _parentWidget) :
@@ -244,75 +254,98 @@ void StartUpManager::retryLastAction(const QString &_error)
     }
 }
 
-void StartUpManager::aboutLoadUpdatesInfo(QNetworkReply* _reply)
+void StartUpManager::downloadUpdate(const QString &_fileTemplate)
 {
-    if (_reply != 0) {
-        QString updatesPageData = _reply->readAll().simplified();
+    NetworkRequest loader;
 
-        //
-        // Извлекаем все версии и формируем ссылку на последнюю из них
-        //
-#ifdef Q_OS_WIN
-        QRegularExpression rx_updateFiner("scenarist-setup-(\\d+.\\d+.\\d+).exe");
-#elif defined Q_OS_LINUX
-        QRegularExpression rx_updateFiner("scenarist-setup-(\\d+.\\d+.\\d+)_i386.deb");
-#elif defined Q_OS_MAC
-        QRegularExpression rx_updateFiner("scenarist-setup-(\\d+.\\d+.\\d+).dmg");
-#endif
+    connect(&loader, &NetworkRequest::downloadProgress, this, &StartUpManager::downloadProgressForUpdate);
+    //connect(this, &StartUpManager::stopDownloadForUpdate, &loader, &NetworkRequest::stop); // Пока NR не умеет
 
-        QRegularExpressionMatch match = rx_updateFiner.match(updatesPageData);
-        QList<QString> versions;
-        while (match.hasMatch()) {
-            versions.append(match.captured(1));
-            match = rx_updateFiner.match(updatesPageData, match.capturedEnd(1));
-        }
+    loader.setRequestMethod(NetworkRequest::Get);
+    loader.clearRequestAttributes();
 
-        //
-        // Если версии найдены
-        //
-        if (versions.count() > 0) {
-            //
-            // Сортируем
-            //
-            qSort(versions);
-
-            //
-            // Извлекаем последнюю версию
-            //
-            QString maxVersion = versions.last();
-
-            //
-            // Если она больше текущей версии программы, выводим информацию
-            //
-            if (QApplication::applicationVersion() < maxVersion) {
-                QString localeSuffix;
-                if (QLocale().language() == QLocale::English) {
-                    localeSuffix = "_en";
-                } else if (QLocale().language() == QLocale::Spanish) {
-                    localeSuffix = "_es";
-                } else if (QLocale().language() == QLocale::French) {
-                    localeSuffix = "_fr";
-                }
-                QString updateInfo =
-                        tr("Released version %1 ").arg(maxVersion)
-#ifdef Q_OS_WIN
-                        + "<a href=\"https://kitscenarist.ru/downloads/windows/scenarist-setup-" + maxVersion + ".exe\" "
-#elif defined Q_OS_LINUX
-#ifdef Q_PROCESSOR_X86_64
-                        + "<a href=\"https://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + localeSuffix + "_amd64.deb\" "
-#else
-                        + "<a href=\"https://kitscenarist.ru/downloads/linux/scenarist-setup-" + maxVersion + localeSuffix + "_i386.deb\" "
-#endif
-#elif defined Q_OS_MAC
-                        + "<a href=\"https://kitscenarist.ru/downloads/mac/scenarist-setup-" + maxVersion + localeSuffix + ".dmg\" "
-#endif
-                        + "style=\"color:#2b78da;\">" + tr("download") + "</a> "
-                        + tr("or") + " <a href=\"https://kitscenarist.ru/history.html\" "
-                        + "style=\"color:#2b78da;\">" + tr("read more") + "</a>.";
-                m_view->setUpdateInfo(updateInfo);
-            }
-        }
+    //
+    // Языковой суффикс
+    //
+    QString localeSuffix;
+    if (QLocale().language() == QLocale::English) {
+        localeSuffix = "_en";
+    } else if (QLocale().language() == QLocale::Spanish) {
+        localeSuffix = "_es";
+    } else if (QLocale().language() == QLocale::French) {
+        localeSuffix = "_fr";
     }
+
+    //
+    // URL до новой версии в соответствии с ОС, архитектурой и языком
+    //
+#ifdef Q_OS_WIN
+    QString updateUrl = QString("windows/%1.exe").arg(_fileTemplate);
+#elif defined Q_OS_LINUX
+    ifdef Q_PROCESSOR_X86_32
+        QString arch = "_i386";
+    elif
+        QString arch = "_amd64";
+    endif
+
+    QString updateUrl = QString("linux/%1%2%3.deb").arg(_fileTemplate, localeSuffix, arch);
+#elif defined Q_OS_MAC
+    QString updateUrl = QString("mac/%1%2.dmg").arg(_fileTemplate, localeSuffix);
+#endif
+
+    const QString prefixUrl = "https://kitscenarist.ru/downloads/";
+    QUrl updateInfoUrl(prefixUrl + updateUrl);
+    QString tempDirPath(QStandardPaths::displayName(QStandardPaths::TempLocation));
+    QDir().mkpath(tempDirPath);
+    m_updateFile = QDir(tempDirPath).filePath(updateInfoUrl.fileName());
+    QByteArray response = loader.loadSync(updateInfoUrl);
+    if (response.isEmpty()) {
+        //TODO показать ошибку
+        return;
+    }
+    QFile tempFile(m_updateFile);
+    tempFile.open(QIODevice::WriteOnly);
+    tempFile.write(response);
+    tempFile.close();
+    emit downloadFinishedForUpdate();
+}
+
+void StartUpManager::showUpdateDialog()
+{
+        UpdateDialog dialog(m_view);
+
+        auto saveVersionName = [this] {
+            StorageFacade::settingsStorage()->setValue(
+                        "application/latest_version",
+                        m_updateVersion,
+                        SettingsStorage::ApplicationSettings);
+        };
+
+        connect(&dialog, &UpdateDialog::skipUpdate, saveVersionName);
+        connect(&dialog, &UpdateDialog::downloadUpdate, [this] {
+            downloadUpdate(m_updateFileTemplate);
+        });
+
+        connect(this, &StartUpManager::downloadProgressForUpdate, &dialog, &UpdateDialog::setProgressValue);
+        connect(this, &StartUpManager::downloadFinishedForUpdate, &dialog, &UpdateDialog::downloadFinished);
+
+        //
+        // Покажем окно с обновлением
+        //
+        if (dialog.showUpdate(m_updateVersion, m_updateDescription,
+                              m_updateIsBeta) == UpdateDialog::Accepted) {
+            //
+            // Нажали "Установить"
+            //
+            saveVersionName();
+            QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile));
+            exit(0);
+        };
+
+        //
+        // Отменили или пропустили. Остановим загрузку
+        //
+        emit stopDownloadForUpdate();
 }
 
 void StartUpManager::initData()
@@ -338,6 +371,7 @@ void StartUpManager::initConnections()
     connect(m_view, &StartUpView::createProjectClicked, this, &StartUpManager::createProjectRequested);
     connect(m_view, &StartUpView::openProjectClicked, this, &StartUpManager::openProjectRequested);
     connect(m_view, &StartUpView::helpClicked, this, &StartUpManager::helpRequested);
+    connect(m_view, &StartUpView::updateRequested, this, &StartUpManager::showUpdateDialog);
 
     connect(m_view, &StartUpView::openRecentProjectClicked, this, &StartUpManager::openRecentProjectRequested);
     connect(m_view, &StartUpView::hideRecentProjectRequested, this, &StartUpManager::hideRecentProjectRequested);
@@ -463,9 +497,8 @@ void StartUpManager::checkCrashReports()
 
 void StartUpManager::checkNewVersion()
 {
-    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
-    connect(manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(aboutLoadUpdatesInfo(QNetworkReply*)));
+    NetworkRequest loader;
+    loader.setRequestMethod(NetworkRequest::Get);
 
     //
     // Сформируем uuid для приложения, по которому будем идентифицировать данного пользователя
@@ -479,10 +512,8 @@ void StartUpManager::checkNewVersion()
     //
     // Построим ссылку, чтобы учитывать запрос на проверку обновлений
     //
-    QString url = QString("https://kitscenarist.ru/api/app/updates/");
 
-    url.append("?system_type=");
-    url.append(
+    loader.addRequestAttribute("system_type",
 #ifdef Q_OS_WIN
                 "windows"
 #elif defined Q_OS_LINUX
@@ -494,15 +525,78 @@ void StartUpManager::checkNewVersion()
 #endif
                 );
 
-    url.append("&system_name=");
-    url.append(QSysInfo::prettyProductName().toUtf8().toPercentEncoding());
+    loader.addRequestAttribute("system_name", QSysInfo::prettyProductName().toUtf8().toPercentEncoding());
+    loader.addRequestAttribute("uuid", uuid);
+    loader.addRequestAttribute("application_version", QApplication::applicationVersion());
 
-    url.append("&uuid=");
-    url.append(uuid);
+    //TODO: К релизу вернуть в нормальное
+    //QByteArray response = loader.loadSync(UPDATE_URL);
+    QByteArray response = loader.loadSync("file:////Users/armijo/Downloads/VK/updates.xml");
 
-    url.append("&application_version=");
-    url.append(QApplication::applicationVersion());
+    if (!response.isEmpty()) {
+        QXmlStreamReader responseReader(response);
 
-    QNetworkRequest request = QNetworkRequest(QUrl(url));
-    manager->get(request);
+        //
+        // Распарсим ответ. Нам нужна версия, ее описание, шаблон на скачивание и является ли бетой
+        //
+        while (!responseReader.atEnd()) {
+            responseReader.readNext();
+            if (responseReader.name().toString() == "update"
+                    && responseReader.tokenType() == QXmlStreamReader::StartElement) {
+                QXmlStreamAttributes attrs = responseReader.attributes();
+                m_updateVersion = attrs.value("version").toString();
+                m_updateFileTemplate = attrs.value("file_template").toString();
+                m_updateIsBeta = attrs.value("is_beta").toString() == "true"; // :)
+                responseReader.readNext();
+            } else if (responseReader.name().toString() == "description"
+                    && responseReader.tokenType() == QXmlStreamReader::StartElement) {
+                QString lang = responseReader.attributes().value("language").toString();
+                if ((lang == "ru"
+                     && QLocale().language() == QLocale::Russian)
+                    || (lang != "ru"
+                        && QLocale().language() != QLocale::Russian)) {
+                    //
+                    // Либо русская локаль и русский текст, либо нерусская локаль и нерусский текст
+                    //
+                    responseReader.readNext();
+                    responseReader.readNext();
+                    m_updateDescription = TextEditHelper::fromHtmlEscaped(responseReader.text().toString());
+                }
+                responseReader.readNext();
+            }
+        }
+
+        //
+        // Загрузим версию, либо которая установлена, либо которую пропустили
+        //
+        const QString prevVersion =
+                    DataStorageLayer::StorageFacade::settingsStorage()->value(
+                        "application/latest_version",
+                        DataStorageLayer::SettingsStorage::ApplicationSettings);
+        if (prevVersion.isEmpty()) {
+            //
+            // Нет сохраненной информации о версии. Будем пользоваться текущей
+            //
+            prevVersion = QApplication::applicationVersion();
+        }
+
+        if (!m_updateVersion.isEmpty()
+                && m_updateVersion != prevVersion) {
+            //
+            // Есть новая версия. Покажем диалог
+            //
+            showUpdateDialog();
+        }
+
+
+        if (QApplication::applicationVersion() != m_updateVersion) {
+            //
+            // Если оказались здесь, значит либо отменили установку, либо пропустили обновление.
+            // Будем показывать пользователю кнопку-ссылку на обновление
+            //
+            QString updateInfo = tr("Released version %1. "
+                                    "<a href=\"#\" style=\"color:#2b78da;\">Install</a>").arg(m_updateVersion);
+            m_view->setUpdateInfo(updateInfo);
+        }
+    }
 }

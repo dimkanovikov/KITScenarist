@@ -205,6 +205,7 @@ void StartUpView::initConnections()
 {
     connect(ui->login, SIGNAL(linkActivated(QString)), this, SIGNAL(loginClicked()));
     connect(ui->userEmail, &QLabel::linkActivated, this, &StartUpView::cabinetChangeVisibility);
+    connect(ui->updateInfo, &QLabel::linkActivated, this, &StartUpView::updateRequested);
     connect(ui->logout, &QPushButton::clicked, this, &StartUpView::logoutClicked);
     connect(ui->createProject, SIGNAL(clicked(bool)), this, SIGNAL(createProjectClicked()));
     connect(ui->openProject, SIGNAL(clicked(bool)), this, SIGNAL(openProjectClicked()));

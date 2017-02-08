@@ -320,7 +320,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.cpp \
-    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.cpp
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.cpp \
+    scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -562,7 +563,8 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
     scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.h \
-    scenarist-core/3rd_party/Helpers/ColorHelper.h
+    scenarist-core/3rd_party/Helpers/ColorHelper.h \
+    scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -584,7 +586,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.ui \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.ui \
-    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.ui
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/StartUp/UpdateDialog.ui
 
 
 RESOURCES += \
