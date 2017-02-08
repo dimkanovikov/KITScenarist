@@ -2,8 +2,9 @@
 
 #include "ActItem.h"
 
-#include "ImageHelper.h"
 #include "TextUtils.h"
+
+#include <3rd_party/Helpers/ImageHelper.h>
 
 #include <QDrag>
 #include <QGraphicsScene>

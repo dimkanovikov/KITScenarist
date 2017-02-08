@@ -574,7 +574,6 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsScene.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsUndoStack.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsView.h \
-    scenarist-core/3rd_party/Widgets/CardsEdit/ImageHelper.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/TextUtils.h
 

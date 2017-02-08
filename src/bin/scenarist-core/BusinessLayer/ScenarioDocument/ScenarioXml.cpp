@@ -1089,19 +1089,6 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
                     QString textToInsert = TextEditHelper::fromHtmlEscaped(reader.text().toString());
 
                     //
-                    // Если необходимо так же вставляем префикс и постфикс стиля
-                    //
-                    ScenarioBlockStyle currentStyle = ScenarioTemplateFacade::getTemplate().blockStyle(lastTokenType);
-                    if (!currentStyle.prefix().isEmpty()
-                        && !textToInsert.startsWith(currentStyle.prefix())) {
-                        textToInsert.prepend(currentStyle.prefix());
-                    }
-                    if (!currentStyle.postfix().isEmpty()
-                        && !textToInsert.endsWith(currentStyle.postfix())) {
-                        textToInsert.append(currentStyle.postfix());
-                    }
-
-                    //
                     // Пишем сам текст
                     //
                     cursor.insertText(textToInsert);

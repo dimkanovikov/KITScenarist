@@ -103,6 +103,7 @@ void ScenarioCardsView::selectCard(const QString& _uuid)
 QString ScenarioCardsView::selectedCardUuid() const
 {
 //	return m_cards->selectedCardUuid();
+    return "";
 }
 void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 {

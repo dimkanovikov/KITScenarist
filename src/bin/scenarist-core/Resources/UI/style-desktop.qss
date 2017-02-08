@@ -92,7 +92,6 @@ QLabel[inTopPanel=true] {
  * Кнопка меню
  */
 QToolButton[inTopPanel=true] {
-    font-size: 11pt;
     background: palette(button);
     color: palette(button-text);
     border: none;
