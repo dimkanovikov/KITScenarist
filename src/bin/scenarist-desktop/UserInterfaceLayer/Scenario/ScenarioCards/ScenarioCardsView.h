@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+class CardsView;
 class FlatButton;
 class QLabel;
 
@@ -18,7 +19,7 @@ namespace UserInterface {
 		Q_OBJECT
 
 	public:
-		explicit ScenarioCardsView(QWidget* _parent = 0);
+        explicit ScenarioCardsView(bool _isDraft, QWidget* _parent = 0);
 
 		/**
 		 * @brief Очистить схему
@@ -133,12 +134,7 @@ namespace UserInterface {
 		/**
 		 * @brief Изменились цвета карточки
 		 */
-		void cardColorsChanged(const QString& _uuid, const QString& _colors);
-
-		/**
-		 * @brief Запрос на изменение типа карточки
-		 */
-        void itemTypeChanged(const QString& _uuid, int _cardType);
+        void cardColorsChanged(const QString& _uuid, const QString& _colors);
 
 		/**
 		 * @brief Запрос на переход в полноэкранный режим, или выход из него
@@ -160,7 +156,7 @@ namespace UserInterface {
 		/**
 		 * @brief Настроить представление
 		 */
-		void initView();
+        void initView(bool _isDraft);
 
 		/**
 		 * @brief Настроить соединения
@@ -177,36 +173,41 @@ namespace UserInterface {
 		 */
 		void initStyleSheet();
 
-	private:
-		/**
-		 * @brief Редактор карточек
-		 */
-        QWidget* m_cardsEdit;
+    private:
+        /**
+         * @brief Редактор карточек сценария
+         */
+        CardsView* m_cards = nullptr;
+
+        /**
+         * @brief Активированы ли карточки
+         */
+        FlatButton* m_active = nullptr;
 
 		/**
 		 * @brief Кнопка добавления карточки
 		 */
-        FlatButton* m_addCard;
+        FlatButton* m_addCard = nullptr;
 
 		/**
 		 * @brief Кнопка упорядочивания по таблице
 		 */
-		FlatButton* m_sort;
+        FlatButton* m_sort = nullptr;
 
 		/**
 		 * @brief Виджет настройки размера и упорядочивания карточек
 		 */
-		CardsResizer* m_resizer;
+        CardsResizer* m_resizer = nullptr;
 
 		/**
 		 * @brief Перейти в полноэкранный режим
 		 */
-		FlatButton* m_fullscreen;
+        FlatButton* m_fullscreen = nullptr;
 
 		/**
 		 * @brief Метка, для закрашивания пространства в панели инструментов
 		 */
-		QLabel* m_toolbarSpacer;
+        QLabel* m_toolbarSpacer = nullptr;
 	};
 }
 

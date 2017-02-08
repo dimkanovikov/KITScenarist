@@ -38,6 +38,11 @@ void CardsView::setBackgroundColor(const QColor& _color)
     }
 }
 
+void CardsView::clear()
+{
+    m_scene->load(QString::null);
+}
+
 void CardsView::setCanAddActs(bool _can)
 {
     m_scene->setCanAddActs(_can);

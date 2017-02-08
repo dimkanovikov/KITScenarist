@@ -320,7 +320,13 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/WAF/StackedWidgetAnimation/StackedWidgetAnimation.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandAnimator.cpp \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.cpp \
-    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.cpp
+    scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.cpp \
+    scenarist-core/3rd_party/Widgets/CardsEdit/ActItem.cpp \
+    scenarist-core/3rd_party/Widgets/CardsEdit/CardItem.cpp \
+    scenarist-core/3rd_party/Widgets/CardsEdit/CardsScene.cpp \
+    scenarist-core/3rd_party/Widgets/CardsEdit/CardsUndoStack.cpp \
+    scenarist-core/3rd_party/Widgets/CardsEdit/CardsView.cpp \
+    scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -562,7 +568,15 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/WAF/Animation/Expand/ExpandDecorator.h \
     scenarist-core/3rd_party/Widgets/WAF/AbstractAnimator.h \
     scenarist-core/ManagementLayer/Synchronization/SynchronizationManager.h \
-    scenarist-core/3rd_party/Helpers/ColorHelper.h
+    scenarist-core/3rd_party/Helpers/ColorHelper.h \
+    scenarist-core/3rd_party/Widgets/CardsEdit/ActItem.h \
+    scenarist-core/3rd_party/Widgets/CardsEdit/CardItem.h \
+    scenarist-core/3rd_party/Widgets/CardsEdit/CardsScene.h \
+    scenarist-core/3rd_party/Widgets/CardsEdit/CardsUndoStack.h \
+    scenarist-core/3rd_party/Widgets/CardsEdit/CardsView.h \
+    scenarist-core/3rd_party/Widgets/CardsEdit/ImageHelper.h \
+    scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.h \
+    scenarist-core/3rd_party/Widgets/CardsEdit/TextUtils.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \

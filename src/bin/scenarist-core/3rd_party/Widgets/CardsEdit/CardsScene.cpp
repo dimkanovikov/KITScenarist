@@ -3,6 +3,8 @@
 #include "ActItem.h"
 #include "CardItem.h"
 
+#include "cmath"
+
 #include <QDomDocument>
 #include <QDomNode>
 #include <QGraphicsSceneContextMenuEvent>
@@ -266,11 +268,6 @@ QString CardsScene::save() const
 
 bool CardsScene::load(const QString& _xml)
 {
-    QDomDocument doc;
-    if (!doc.setContent(_xml)) {
-        return false;
-    }
-
     //
     // Очищаем текущие данные
     //
@@ -279,6 +276,12 @@ bool CardsScene::load(const QString& _xml)
         delete item;
     }
     m_items.clear();
+
+
+    QDomDocument doc;
+    if (!doc.setContent(_xml)) {
+        return false;
+    }
 
     //
     // Считываем настройки вида

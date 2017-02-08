@@ -92,6 +92,7 @@ QLabel[inTopPanel=true] {
  * Кнопка меню
  */
 QToolButton[inTopPanel=true] {
+    font-size: 11pt;
     background: palette(button);
     color: palette(button-text);
     border: none;
@@ -144,6 +145,10 @@ FlatButton:pressed[hasMenu=true] {
     padding-top: 0px;
     padding-left: 4px;
     padding-right: 14px;
+}
+
+FlatButton::checked[inTopPanel=true] {
+    color: palette(highlight);
 }
 
 FlatButton::menu-button[inTopPanel=true] {

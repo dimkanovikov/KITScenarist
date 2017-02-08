@@ -16,9 +16,15 @@ using ManagementLayer::ScenarioCardsManager;
 using UserInterface::ScenarioCardsView;
 using UserInterface::ScenarioSchemeItemDialog;
 
+namespace {
+    const bool ISDRAFT = true;
+    const bool IS_SCRIPT = false;
+}
+
+
 ScenarioCardsManager::ScenarioCardsManager(QObject* _parent, QWidget* _parentWidget) :
 	QObject(_parent),
-	m_view(new ScenarioCardsView(_parentWidget)),
+    m_view(new ScenarioCardsView(IS_SCRIPT, _parentWidget)),
 	m_addItemDialog(new ScenarioSchemeItemDialog(_parentWidget)),
 	m_scenario(nullptr),
 	m_model(nullptr)
@@ -34,37 +40,36 @@ QWidget* ScenarioCardsManager::view() const
 
 void ScenarioCardsManager::reloadSettings()
 {
-//	m_view->setUseCorkboardBackground(
-//				DataStorageLayer::StorageFacade::settingsStorage()->value(
-//					"cards/use-corkboard",
-//					DataStorageLayer::SettingsStorage::ApplicationSettings)
-//				.toInt()
-//				);
+    m_view->setUseCorkboardBackground(
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "cards/use-corkboard",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings)
+                .toInt()
+                );
 
-//	const bool useDarkTheme =
-//			DataStorageLayer::StorageFacade::settingsStorage()->value(
-//				"application/use-dark-theme",
-//				DataStorageLayer::SettingsStorage::ApplicationSettings)
-//			.toInt();
-//	const QString colorSuffix = useDarkTheme ? "-dark" : "";
-//	m_view->setBackgroundColor(
-//				QColor(
-//					DataStorageLayer::StorageFacade::settingsStorage()->value(
-//						"cards/background-color" + colorSuffix,
-//						DataStorageLayer::SettingsStorage::ApplicationSettings)
-//					)
-//				);
+    const bool useDarkTheme =
+            DataStorageLayer::StorageFacade::settingsStorage()->value(
+                "application/use-dark-theme",
+                DataStorageLayer::SettingsStorage::ApplicationSettings)
+            .toInt();
+    const QString colorSuffix = useDarkTheme ? "-dark" : "";
+    m_view->setBackgroundColor(
+                QColor(
+                    DataStorageLayer::StorageFacade::settingsStorage()->value(
+                        "cards/background-color" + colorSuffix,
+                        DataStorageLayer::SettingsStorage::ApplicationSettings)
+                    )
+                );
 }
 
 QString ScenarioCardsManager::save() const
 {
-    return "";
-//	return m_view->save();
+    return m_view->save();
 }
 
 void ScenarioCardsManager::saveChanges(bool _hasChangesInText)
 {
-//	m_view->saveChanges(_hasChangesInText);
+    m_view->saveChanges(_hasChangesInText);
 }
 
 void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QString& _xml)
@@ -147,26 +152,26 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 
 void ScenarioCardsManager::clear()
 {
-//	if (m_model != nullptr) {
-//		m_model->disconnect();
-//		m_model = nullptr;
-//	}
-//	m_view->clear();
+    if (m_model != nullptr) {
+        m_model->disconnect();
+        m_model = nullptr;
+    }
+    m_view->clear();
 }
 
 void ScenarioCardsManager::undo()
 {
-//	m_view->undo();
+    m_view->undo();
 }
 
 void ScenarioCardsManager::redo()
 {
-//	m_view->redo();
+    m_view->redo();
 }
 
 void ScenarioCardsManager::setCommentOnly(bool _isCommentOnly)
 {
-//	m_view->setCommentOnly(_isCommentOnly);
+    m_view->setCommentOnly(_isCommentOnly);
 }
 
 void ScenarioCardsManager::addCard()
