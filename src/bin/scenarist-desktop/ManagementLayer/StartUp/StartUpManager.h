@@ -248,6 +248,11 @@ namespace ManagementLayer
         void downloadFinishedForUpdate();
 
         /**
+         * @brief Не удалось загрузить файл с обновлением
+         */
+        void errorDownloadForUpdate();
+
+        /**
          * @brief Прерываем загрузку установочного файла новой версии
          */
         void stopDownloadForUpdate();

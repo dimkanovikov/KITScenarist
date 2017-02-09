@@ -32,6 +32,11 @@ namespace UserInterface {
          */
         void downloadFinished();
 
+        /**
+         * @brief Ошибка загрузки файла обновления
+         */
+        void showDownloadError();
+
     signals:
         /**
          * @brief Пропустить обновление

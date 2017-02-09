@@ -39,6 +39,13 @@ void UpdateDialog::downloadFinished()
     m_ui->download->setText(tr("Install"));
 }
 
+void UpdateDialog::showDownloadError()
+{
+    m_ui->text->setText(tr("Error during download update"));
+    hideProgress();
+    m_ui->download->setEnabled(true);
+}
+
 void UpdateDialog::initView()
 {
     m_ui->text->setOpenExternalLinks(true);

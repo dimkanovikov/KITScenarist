@@ -300,7 +300,7 @@ void StartUpManager::downloadUpdate(const QString &_fileTemplate)
     m_updateFile = QDir(tempDirPath).filePath(updateInfoUrl.fileName());
     QByteArray response = loader.loadSync(updateInfoUrl);
     if (response.isEmpty()) {
-        //TODO показать ошибку
+        emit errorDownloadForUpdate();
         return;
     }
     QFile tempFile(m_updateFile);
@@ -314,20 +314,19 @@ void StartUpManager::showUpdateDialog()
 {
         UpdateDialog dialog(m_view);
 
-        auto saveVersionName = [this] {
+        connect(&dialog, &UpdateDialog::skipUpdate, [this] {
             StorageFacade::settingsStorage()->setValue(
                         "application/latest_version",
                         m_updateVersion,
                         SettingsStorage::ApplicationSettings);
-        };
-
-        connect(&dialog, &UpdateDialog::skipUpdate, saveVersionName);
+        });
         connect(&dialog, &UpdateDialog::downloadUpdate, [this] {
             downloadUpdate(m_updateFileTemplate);
         });
 
         connect(this, &StartUpManager::downloadProgressForUpdate, &dialog, &UpdateDialog::setProgressValue);
         connect(this, &StartUpManager::downloadFinishedForUpdate, &dialog, &UpdateDialog::downloadFinished);
+        connect(this, &StartUpManager::errorDownloadForUpdate, &dialog, &UpdateDialog::showDownloadError);
 
         //
         // Покажем окно с обновлением
@@ -337,7 +336,6 @@ void StartUpManager::showUpdateDialog()
             //
             // Нажали "Установить"
             //
-            saveVersionName();
             QDesktopServices::openUrl(QUrl::fromLocalFile(m_updateFile));
             exit(0);
         };
@@ -529,9 +527,7 @@ void StartUpManager::checkNewVersion()
     loader.addRequestAttribute("uuid", uuid);
     loader.addRequestAttribute("application_version", QApplication::applicationVersion());
 
-    //TODO: К релизу вернуть в нормальное
-    //QByteArray response = loader.loadSync(UPDATE_URL);
-    QByteArray response = loader.loadSync("file:////Users/armijo/Downloads/VK/updates.xml");
+    QByteArray response = loader.loadSync(UPDATE_URL);
 
     if (!response.isEmpty()) {
         QXmlStreamReader responseReader(response);
@@ -569,7 +565,7 @@ void StartUpManager::checkNewVersion()
         //
         // Загрузим версию, либо которая установлена, либо которую пропустили
         //
-        const QString prevVersion =
+        QString prevVersion =
                     DataStorageLayer::StorageFacade::settingsStorage()->value(
                         "application/latest_version",
                         DataStorageLayer::SettingsStorage::ApplicationSettings);
