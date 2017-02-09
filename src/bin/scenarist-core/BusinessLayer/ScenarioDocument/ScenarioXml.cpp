@@ -243,7 +243,7 @@ QString ScenarioXml::scenarioToXml()
                         uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
                     }
                     if (!info->title().isEmpty()) {
-                        uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, info->title());
+                        uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, TextEditHelper::toHtmlEscaped(info->title()));
                     }
                 }
 
@@ -488,7 +488,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
                         writer.writeAttribute(ATTRIBUTE_COLOR, info->colors());
                     }
                     if (!info->title().isEmpty()) {
-                        writer.writeAttribute(ATTRIBUTE_TITLE, info->title());
+                        writer.writeAttribute(ATTRIBUTE_TITLE, TextEditHelper::toHtmlEscaped(info->title()));
                     }
                 }
 
@@ -1000,7 +1000,7 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
                             info->setColors(reader.attributes().value(ATTRIBUTE_COLOR).toString());
                         }
                         if (reader.attributes().hasAttribute(ATTRIBUTE_TITLE)) {
-                            info->setTitle(reader.attributes().value(ATTRIBUTE_TITLE).toString());
+                            info->setTitle(TextEditHelper::fromHtmlEscaped(reader.attributes().value(ATTRIBUTE_TITLE).toString()));
                         }
                         cursor.block().setUserData(info);
                     }
