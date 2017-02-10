@@ -282,11 +282,11 @@ void StartUpManager::downloadUpdate(const QString &_fileTemplate)
 #ifdef Q_OS_WIN
     QString updateUrl = QString("windows/%1.exe").arg(_fileTemplate);
 #elif defined Q_OS_LINUX
-    ifdef Q_PROCESSOR_X86_32
+    #ifdef Q_PROCESSOR_X86_32
         QString arch = "_i386";
-    elif
+    #else
         QString arch = "_amd64";
-    endif
+    #endif
 
     QString updateUrl = QString("linux/%1%2%3.deb").arg(_fileTemplate, localeSuffix, arch);
 #elif defined Q_OS_MAC
