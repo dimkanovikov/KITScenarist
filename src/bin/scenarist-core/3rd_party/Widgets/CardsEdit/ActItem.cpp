@@ -32,7 +32,8 @@ ActItem::ActItem(QGraphicsItem* _parent) :
 
     setCacheMode(QGraphicsItem::NoCache);
 
-    m_shadowEffect->setBlurRadius(7);
+    m_shadowEffect->setBlurRadius(12);
+    m_shadowEffect->setColor(QColor(63, 63, 63, 210));
     m_shadowEffect->setXOffset(0);
     m_shadowEffect->setYOffset(1);
     setGraphicsEffect(m_shadowEffect.data());
@@ -150,10 +151,11 @@ void ActItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option,
             //
             if (!colorsNamesList.isEmpty()) {
                 const qreal additionalColorWidth = 20;
+                const int colorsCount = colorsNamesList.size() - 1;
                 QRectF colorRect(actRect.left(), actRect.top(), additionalColorWidth, actRect.height());
-                for (int colorIndex = colorsNamesList.size(); colorIndex > 0; --colorIndex) {
-                    colorRect.moveLeft(actRect.right() - colorIndex*additionalColorWidth);
-                    _painter->fillRect(colorRect, QColor(colorsNamesList.value(colorIndex - 1)));
+                for (int colorIndex = colorsCount; colorIndex >= 0; --colorIndex) {
+                    colorRect.moveLeft(actRect.right() - (colorsCount - colorIndex + 1)*additionalColorWidth);
+                    _painter->fillRect(colorRect, QColor(colorsNamesList.value(colorIndex)));
                 }
             }
         }
@@ -180,6 +182,15 @@ void ActItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option,
         const int spacing = titleRect.height() / 2;
         const QRectF descriptionRect(titleRect.right() + spacing, 9, actRect.size().width() - titleRect.width() - spacing - 7, titleHeight);
         _painter->drawText(descriptionRect, m_description, textoption);
+
+        //
+        // Рисуем рамку выделения
+        //
+        if (isSelected()) {
+            _painter->setBrush(Qt::transparent);
+            _painter->setPen(QPen(palette.highlight(), 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+            _painter->drawRect(actRect);
+        }
     }
 
     _painter->restore();

@@ -229,8 +229,9 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
                 //
                 // Выссчитываем ширину занимаемую одним цветом
                 //
+                const qreal fullCardHeight = boundingRect().height();
                 const qreal colorRectWidth = cardRect.width() / colorsNamesList.size();
-                QRectF colorRect(0, cardRect.height() - additionalColorsHeight, colorRectWidth, additionalColorsHeight);
+                QRectF colorRect(0, fullCardHeight - additionalColorsHeight, colorRectWidth, additionalColorsHeight);
                 for (const QString& colorName : colorsNamesList) {
                     _painter->fillRect(colorRect, QColor(colorName));
                     colorRect.moveLeft(colorRect.right());

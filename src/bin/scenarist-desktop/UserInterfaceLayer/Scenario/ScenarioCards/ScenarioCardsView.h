@@ -70,7 +70,7 @@ namespace UserInterface {
         /**
          * @brief Обновить карточку с заданным uuid
          */
-        void updateCard(const QString& _uuid, int _type, const QString& _title,
+        void updateCard(const QString& _uuid, bool _isFolder, const QString& _title,
             const QString& _description, const QString& _colors);
 
         /**

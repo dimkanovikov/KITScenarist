@@ -120,18 +120,18 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 //				m_view->removeCard(currentCard->uuid());
 //			}
 //		});
-//		connect(m_model, &BusinessLogic::ScenarioModel::dataChanged, [=] (const QModelIndex& _topLeft, const QModelIndex& _bottomRight) {
-//			for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
-//				const QModelIndex index = m_model->index(row, 0, _topLeft.parent());
-//				const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
-//				m_view->updateCard(
-//					item->uuid(),
-//					item->type(),
-//					item->title().isEmpty() ? item->header() : item->title(),
-//					item->description(),
-//					item->colors());
-//			}
-//		});
+        connect(m_model, &BusinessLogic::ScenarioModel::dataChanged, [=] (const QModelIndex& _topLeft, const QModelIndex& _bottomRight) {
+            for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
+                const QModelIndex index = m_model->index(row, 0, _topLeft.parent());
+                const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
+                m_view->updateCard(
+                    item->uuid(),
+                    item->type() == BusinessLogic::ScenarioModelItem::Folder,
+                    item->title().isEmpty() ? item->header() : item->title(),
+                    item->description(),
+                    item->colors());
+            }
+        });
     }
 
     //

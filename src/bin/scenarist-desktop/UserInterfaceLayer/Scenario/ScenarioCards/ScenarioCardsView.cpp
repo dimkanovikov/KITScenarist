@@ -84,10 +84,10 @@ void ScenarioCardsView::addCard(const QString& _uuid, bool _isFolder, const QStr
     m_cards->addCard(_uuid, _isFolder, _title, _description, _stamp, _colors, m_newCardPosition);
 }
 
-void ScenarioCardsView::updateCard(const QString& _uuid, int _type, const QString& _title,
+void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, const QString& _title,
     const QString& _description, const QString& _colors)
 {
-//	m_cards->updateCard(_uuid, _type, _title, _description, _colors);
+    m_cards->updateItem(_uuid, _isFolder, _title, _description, _colors);
 }
 
 void ScenarioCardsView::removeCard(const QString& _uuid)

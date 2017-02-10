@@ -194,6 +194,39 @@ void CardsScene::insertCard(const QString& _uuid, bool _isFolder, const QString&
     emit cardAdded(card->uuid());
 }
 
+void CardsScene::updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description, const QString& _colors)
+{
+    if (m_itemsMap.contains(_uuid)) {
+        //
+        // Обновляем акт
+        //
+        if (ActItem* act = qgraphicsitem_cast<ActItem*>(m_itemsMap[_uuid])) {
+            act->setTitle(_title);
+            act->setDescription(_description);
+            act->setColors(_colors);
+
+            //
+            // Уведомляем подписчиков
+            //
+            emit actChanged(_uuid);
+        }
+        //
+        // ... карточку
+        //
+        else if (CardItem* card = qgraphicsitem_cast<CardItem*>(m_itemsMap[_uuid])) {
+            card->setIsFolder(_isFolder);
+            card->setTitle(_title);
+            card->setDescription(_description);
+            card->setColors(_colors);
+
+            //
+            // Уведомляем подписчиков
+            //
+            emit cardChanged(_uuid);
+        }
+    }
+}
+
 void CardsScene::removeAct(const QString& _uuid)
 {
     if (m_itemsMap.contains(_uuid)) {

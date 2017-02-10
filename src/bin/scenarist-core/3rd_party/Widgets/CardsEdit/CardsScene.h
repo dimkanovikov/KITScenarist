@@ -71,6 +71,12 @@ public:
         const QString& _stamp, const QString& _colors, const QPointF& _position, const QString& _previousItemUuid);
 
     /**
+     * @brief Обновить заданную карточку
+     */
+    void updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
+        const QString& _colors);
+
+    /**
      * @brief Удалить акт
      */
     void removeAct(const QString& _uuid);

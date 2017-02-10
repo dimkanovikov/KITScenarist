@@ -85,9 +85,9 @@ void CardsView::insertAct(const QString& _uuid, const QString& _title, const QSt
 }
 
 void CardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-    const QString& _state, const QString& _colors)
+    const QString& _stamp, const QString& _colors)
 {
-    addCard(_uuid, _isFolder, _title, _description, _state, _colors, QPointF());
+    addCard(_uuid, _isFolder, _title, _description, _stamp, _colors, QPointF());
 }
 
 void CardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
@@ -102,9 +102,14 @@ void CardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _ti
 }
 
 void CardsView::insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-    const QString& _state, const QString& _colors, const QPointF& _position, const QString& _previousItemUuid)
+    const QString& _stamp, const QString& _colors, const QPointF& _position, const QString& _previousItemUuid)
 {
-    m_scene->insertCard(_uuid, _isFolder, _title, _description, _state, _colors, _position, _previousItemUuid);
+    m_scene->insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _position, _previousItemUuid);
+}
+
+void CardsView::updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description, const QString& _colors)
+{
+    m_scene->updateItem(_uuid, _isFolder, _title, _description, _colors);
 }
 
 void CardsView::removeAct(const QString& _uuid)
