@@ -77,6 +77,11 @@ public:
         const QString& _colors);
 
     /**
+     * @brief Удалить элемент по идентификатору
+     */
+    void removeSceneItem(const QString& _uuid);
+
+    /**
      * @brief Удалить акт
      */
     void removeAct(const QString& _uuid);

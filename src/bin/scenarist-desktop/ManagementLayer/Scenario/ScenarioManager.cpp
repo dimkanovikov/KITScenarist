@@ -778,6 +778,16 @@ void ScenarioManager::aboutUpdateItemFromCards(const QModelIndex& _itemIndex, in
     m_textEditManager->editScenarioItem(startPosition, endPosition, _itemType, _header, _colors, _description);
 }
 
+void ScenarioManager::aboutRemoveItemFromCards(const QModelIndex& _index)
+{
+    //
+    // Удаляем сцены из карточек только в режиме чистовика
+    //
+    setWorkingMode(m_navigatorManager);
+
+    aboutRemoveItems({ _index });
+}
+
 void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
 {
     setWorkingMode(sender());
@@ -975,14 +985,7 @@ void ScenarioManager::initConnections()
 
     connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::updateCardRequest, this, &ScenarioManager::aboutUpdateItemFromCards);
-//    connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, [=] (const QModelIndex& _index) {
-//        //
-//        // Удаляем сцены из карточек только в режиме чистовика
-//        //
-//        setWorkingMode(m_navigatorManager);
-
-//        aboutRemoveItems({_index});
-//    });
+    connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, this, &ScenarioManager::aboutRemoveItemFromCards);
 //    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
 //    connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
 //    connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);

@@ -227,6 +227,17 @@ void CardsScene::updateItem(const QString& _uuid, bool _isFolder, const QString&
     }
 }
 
+void CardsScene::removeSceneItem(const QString& _uuid)
+{
+    if (m_itemsMap.contains(_uuid)) {
+        if (m_itemsMap[_uuid]->type() == ActItem::Type) {
+            removeAct(_uuid);
+        } else if (m_itemsMap[_uuid]->type() == CardItem::Type) {
+            removeCard(_uuid);
+        }
+    }
+}
+
 void CardsScene::removeAct(const QString& _uuid)
 {
     if (m_itemsMap.contains(_uuid)) {

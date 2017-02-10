@@ -112,14 +112,9 @@ void CardsView::updateItem(const QString& _uuid, bool _isFolder, const QString& 
     m_scene->updateItem(_uuid, _isFolder, _title, _description, _colors);
 }
 
-void CardsView::removeAct(const QString& _uuid)
+void CardsView::removeItem(const QString& _uuid)
 {
-    m_scene->removeAct(_uuid);
-}
-
-void CardsView::removeCard(const QString& _uuid)
-{
-    m_scene->removeCard(_uuid);
+    m_scene->removeSceneItem(_uuid);
 }
 
 void CardsView::refresh()

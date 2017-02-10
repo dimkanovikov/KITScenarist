@@ -92,8 +92,7 @@ void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, const Q
 
 void ScenarioCardsView::removeCard(const QString& _uuid)
 {
-//	m_cards->selectCard(_uuid);
-//	m_cards->deleteSelectedItems();
+    m_cards->removeItem(_uuid);
 }
 
 void ScenarioCardsView::selectCard(const QString& _uuid)
@@ -240,7 +239,6 @@ void ScenarioCardsView::initConnections()
 
 
     connect(ui->script, &CardsView::actRemoveRequest, ui->script, &CardsView::removeAct);
-    connect(ui->script, &CardsView::cardRemoveRequest, ui->script, &CardsView::removeCard);
 
     // ****
 
@@ -289,15 +287,18 @@ void ScenarioCardsView::initConnections()
     connect(m_cards, &CardsView::actChangeRequest, this, &ScenarioCardsView::editCardRequest);
     connect(m_cards, &CardsView::cardChangeRequest, this, &ScenarioCardsView::editCardRequest);
 
-//	connect(m_cards, &ActivityEdit::removeCardRequest, this, &ScenarioCardsView::removeCardRequest);
+    connect(m_cards, &CardsView::actRemoveRequest, this, &ScenarioCardsView::removeCardRequest);
+    connect(m_cards, &CardsView::cardRemoveRequest, this, &ScenarioCardsView::removeCardRequest);
+
     connect(m_cards, &CardsView::cardMoved, this, &ScenarioCardsView::cardMoved);
+
 //	connect(m_cards, &ActivityEdit::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
 //	connect(m_cards, &ActivityEdit::itemTypeChanged, this, &ScenarioCardsView::itemTypeChanged);
 
     connect(m_sort, &FlatButton::clicked, this, &ScenarioCardsView::resortCards);
     connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);
 
-//	connect(m_fullscreen, &FlatButton::clicked, this, &ScenarioCardsView::fullscreenRequest);
+    connect(m_fullscreen, &FlatButton::clicked, this, &ScenarioCardsView::fullscreenRequest);
 }
 
 void ScenarioCardsView::initShortcuts()

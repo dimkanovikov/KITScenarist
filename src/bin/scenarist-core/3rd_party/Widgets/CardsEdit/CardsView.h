@@ -99,14 +99,9 @@ public:
     void updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description, const QString& _colors);
 
     /**
-     * @brief Удалить акт
+     * @brief Удалить заданную карточку
      */
-    void removeAct(const QString& _uuid);
-
-    /**
-     * @brief Удалить карточку
-     */
-    void removeCard(const QString& _uuid);
+    void removeItem(const QString& _uuid);
 
     /**
      * @brief Обновить сцену
