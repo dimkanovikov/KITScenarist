@@ -126,7 +126,11 @@ protected:
     /**
      * @brief Переопределяем для реализации анимации снятия выделения
      */
+    /** @{ */
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* _event) override;
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent* _event) override;
+    /** @} */
 
 private:
     /**

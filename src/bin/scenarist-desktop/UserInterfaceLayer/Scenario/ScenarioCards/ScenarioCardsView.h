@@ -123,7 +123,7 @@ namespace UserInterface {
          * @brief Запросы на изменение выделенной фигуры
          */
         /** @{ */
-        void editCardRequest(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description);
+        void editCardRequest(const QString& _uuid);
         /** @} */
 
         /**

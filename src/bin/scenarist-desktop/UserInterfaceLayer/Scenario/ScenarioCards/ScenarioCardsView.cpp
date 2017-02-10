@@ -286,7 +286,9 @@ void ScenarioCardsView::initConnections()
         emit addCopyCardRequest(_isFolder, _title, _description, _stamp, _colors);
     });
 
-//	connect(m_cards, &ActivityEdit::editCardRequest, this, &ScenarioCardsView::editCardRequest);
+    connect(m_cards, &CardsView::actChangeRequest, this, &ScenarioCardsView::editCardRequest);
+    connect(m_cards, &CardsView::cardChangeRequest, this, &ScenarioCardsView::editCardRequest);
+
 //	connect(m_cards, &ActivityEdit::removeCardRequest, this, &ScenarioCardsView::removeCardRequest);
     connect(m_cards, &CardsView::cardMoved, this, &ScenarioCardsView::cardMoved);
 //	connect(m_cards, &ActivityEdit::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);

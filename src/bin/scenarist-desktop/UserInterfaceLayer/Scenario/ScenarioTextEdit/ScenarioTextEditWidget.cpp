@@ -317,7 +317,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
 }
 
 void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int _type,
-    const QString& _title, const QColor& _color, const QString& _description)
+    const QString& _title, const QString& _colors, const QString& _description)
 {
     QTextCursor cursor = m_editor->textCursor();
     cursor.beginEditBlock();
@@ -341,9 +341,7 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
     //
     if (ScenarioTextBlockInfo* blockInfo = dynamic_cast<ScenarioTextBlockInfo*>(cursor.block().userData())) {
         blockInfo->setTitle(_title);
-        if (_color.isValid()) {
-            blockInfo->setColors(_color.name());
-        }
+        blockInfo->setColors(_colors);
         blockInfo->setDescription(_description);
         cursor.block().setUserData(blockInfo);
     }

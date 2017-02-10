@@ -205,31 +205,35 @@ void ScenarioCardsManager::addCard()
     }
 }
 
-void ScenarioCardsManager::editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description)
+void ScenarioCardsManager::editCard(const QString& _uuid)
 {
-//	m_addItemDialog->showCardPage();
-//	m_addItemDialog->clear();
-//	m_addItemDialog->setCardType((BusinessLogic::ScenarioModelItem::Type)_cardType);
-//	m_addItemDialog->setCardTitle(_title);
-//	m_addItemDialog->setCardColor(_color);
-//	m_addItemDialog->setCardDescription(_description);
+    m_addItemDialog->clear();
 
-//	//
-//	// Если пользователь действительно хочет добавить элемент
-//	//
-//	if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
-//		const int type = m_addItemDialog->cardType();
-//		const QString title = m_addItemDialog->cardTitle();
-//		const QString color = m_addItemDialog->cardColor();
-//		const QString description = m_addItemDialog->cardDescription();
+    const QModelIndex indexForUpdate = m_model->indexForUuid(_uuid);
+    const auto* itemForUpdate = m_model->itemForIndex(indexForUpdate);
+    m_addItemDialog->setCardType(itemForUpdate->type());
+    m_addItemDialog->setCardTitle(itemForUpdate->title());
+    const QString firstColor = itemForUpdate->colors().split(";").first();
+    m_addItemDialog->setCardColor(firstColor);
+    m_addItemDialog->setCardDescription(itemForUpdate->description());
 
-//		//
-//		// Если задан заголовок
-//		//
-//		if (!title.isEmpty()) {
-//			emit editCardRequest(m_model->indexForUuid(_uuid), type, title, QColor(color), description);
-//		}
-//	}
+    //
+    // Если пользователь действительно хочет изменить элемент
+    //
+    if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
+        const int type = m_addItemDialog->cardType();
+        const QString title = m_addItemDialog->cardTitle();
+        QString colors = itemForUpdate->colors();
+        if (firstColor != m_addItemDialog->cardColor()) {
+            colors.replace(firstColor, m_addItemDialog->cardColor());
+        }
+        const QString description = m_addItemDialog->cardDescription();
+
+        //
+        // Испускаем запрос на изменение
+        //
+        emit updateCardRequest(indexForUpdate, type, title, colors, description);
+    }
 }
 
 void ScenarioCardsManager::removeCard(const QString& _uuid)
@@ -291,7 +295,7 @@ void ScenarioCardsManager::initConnections()
     connect(m_view, &ScenarioCardsView::redoRequest, this, &ScenarioCardsManager::redoRequest);
 
     connect(m_view, &ScenarioCardsView::addCardClicked, this, &ScenarioCardsManager::addCard);
-//	connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
+    connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
 //	connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
     connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
 //	connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);

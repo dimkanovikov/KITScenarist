@@ -410,3 +410,17 @@ void CardItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 
     putOnBoard();
 }
+
+void CardItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event)
+{
+    QGraphicsItem::mouseDoubleClickEvent(_event);
+
+    putOnBoard();
+}
+
+void CardItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* _event)
+{
+    QGraphicsItem::hoverLeaveEvent(_event);
+
+    putOnBoard();
+}

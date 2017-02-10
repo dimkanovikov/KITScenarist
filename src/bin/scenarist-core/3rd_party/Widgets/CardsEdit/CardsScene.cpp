@@ -705,29 +705,33 @@ void CardsScene::reorderSelectedItem()
                     --cardNewIndex;
                 }
             }
-            if (cardNewIndex != cardCurrentIndex) {
-                m_items.move(cardCurrentIndex, cardNewIndex);
-            }
 
             //
-            // Уведомляем подписчиков о перемещении
+            // Если карточка в самом деле сместилась
             //
-            QString actId;
-            QString previusCardId;
-            if (previousItem != nullptr) {
-                if (ActItem* act = qgraphicsitem_cast<ActItem*>(previousItem)) {
-                    actId = act->uuid();
-                } else if (CardItem* card = qgraphicsitem_cast<CardItem*>(previousItem)) {
-                    previusCardId = card->uuid();
-                    for (int searchIndex = cardNewIndex; searchIndex >= 0; --searchIndex) {
-                        if (ActItem* act = qgraphicsitem_cast<ActItem*>(m_items[searchIndex])) {
-                            actId = act->uuid();
-                            break;
+            if (cardNewIndex != cardCurrentIndex) {
+                m_items.move(cardCurrentIndex, cardNewIndex);
+
+                //
+                // Уведомляем подписчиков о перемещении
+                //
+                QString actId;
+                QString previusCardId;
+                if (previousItem != nullptr) {
+                    if (ActItem* act = qgraphicsitem_cast<ActItem*>(previousItem)) {
+                        actId = act->uuid();
+                    } else if (CardItem* card = qgraphicsitem_cast<CardItem*>(previousItem)) {
+                        previusCardId = card->uuid();
+                        for (int searchIndex = cardNewIndex; searchIndex >= 0; --searchIndex) {
+                            if (ActItem* act = qgraphicsitem_cast<ActItem*>(m_items[searchIndex])) {
+                                actId = act->uuid();
+                                break;
+                            }
                         }
                     }
                 }
+                emit cardMoved(movedCard->uuid(), actId, previusCardId);
             }
-            emit cardMoved(movedCard->uuid(), actId, previusCardId);
         }
     }
 }

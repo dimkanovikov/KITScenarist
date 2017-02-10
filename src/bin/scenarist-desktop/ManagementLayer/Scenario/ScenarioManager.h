@@ -251,8 +251,8 @@ namespace ManagementLayer
         /**
          * @brief Изменить заданный элемент
          */
-        void aboutEditItemFromCards(const QModelIndex& _itemIndex, int _itemType, const QString& _header,
-            const QColor& _color, const QString& _description);
+        void aboutUpdateItemFromCards(const QModelIndex& _itemIndex, int _itemType, const QString& _header,
+            const QString& _colors, const QString& _description);
 
         /**
          * @brief Удалить заданныё элемент

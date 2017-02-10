@@ -96,8 +96,8 @@ namespace ManagementLayer
         /**
          * @brief Запрос на изменение элемента
          */
-        void editCardRequest(const QModelIndex& _index, int _type, const QString& _title,
-            const QColor& _color, const QString& _description);
+        void updateCardRequest(const QModelIndex& _index, int _type, const QString& _title,
+            const QString& _colors, const QString& _description);
 
         /**
          * @brief Запрос на удаление элемента
@@ -128,7 +128,7 @@ namespace ManagementLayer
         /**
          * @brief Изменить карточку
          */
-        void editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description);
+        void editCard(const QString& _uuid);
 
         /**
          * @brief Удалить карточку
