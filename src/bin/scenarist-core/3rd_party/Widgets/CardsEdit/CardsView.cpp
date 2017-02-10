@@ -43,6 +43,21 @@ void CardsView::clear()
     m_scene->load(QString::null);
 }
 
+void CardsView::setCardsSize(const QSizeF& _size)
+{
+    m_scene->setCardsSize(_size);
+}
+
+void CardsView::setCardsDistance(qreal _distance)
+{
+    m_scene->setCardsDistance(_distance);
+}
+
+void CardsView::setCardsInRow(int _count)
+{
+    m_scene->setCardsInRow(_count);
+}
+
 void CardsView::setCanAddActs(bool _can)
 {
     m_scene->setCanAddActs(_can);
@@ -51,6 +66,11 @@ void CardsView::setCanAddActs(bool _can)
 void CardsView::setFixedMode(bool _isFixed)
 {
     m_scene->setFixedMode(_isFixed);
+}
+
+QString CardsView::lastItemUuid() const
+{
+    return m_scene->lastItemUuid();
 }
 
 void CardsView::addAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors)
@@ -67,14 +87,18 @@ void CardsView::insertAct(const QString& _uuid, const QString& _title, const QSt
 void CardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
     const QString& _state, const QString& _colors)
 {
-    const QPoint viewCenter = m_view->rect().center();
-    const QPointF viewCenterMapped = m_view->mapToScene(viewCenter);
-    addCard(_uuid, _isFolder, _title, _description, _state, _colors, viewCenterMapped);
+    addCard(_uuid, _isFolder, _title, _description, _state, _colors, QPointF());
 }
 
-void CardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description, const QString& _state, const QString& _colors, const QPointF& _position)
+void CardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
+    const QString& _stamp, const QString& _colors, const QPointF& _position)
 {
-    m_scene->addCard(_uuid, _isFolder, _title, _description, _state, _colors, _position);
+    QPointF addPosition = _position;
+    if (addPosition.isNull()) {
+        const QPoint viewCenter = m_view->rect().center();
+        addPosition = m_view->mapToScene(viewCenter);
+    }
+    m_scene->addCard(_uuid, _isFolder, _title, _description, _stamp, _colors, addPosition);
 }
 
 void CardsView::insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,

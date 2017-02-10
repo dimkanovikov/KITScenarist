@@ -23,19 +23,19 @@ namespace {
 
 
 ScenarioCardsManager::ScenarioCardsManager(QObject* _parent, QWidget* _parentWidget) :
-	QObject(_parent),
+    QObject(_parent),
     m_view(new ScenarioCardsView(IS_SCRIPT, _parentWidget)),
-	m_addItemDialog(new ScenarioSchemeItemDialog(_parentWidget)),
-	m_scenario(nullptr),
-	m_model(nullptr)
+    m_addItemDialog(new ScenarioSchemeItemDialog(_parentWidget)),
+    m_scenario(nullptr),
+    m_model(nullptr)
 {
-	initConnections();
-	reloadSettings();
+    initConnections();
+    reloadSettings();
 }
 
 QWidget* ScenarioCardsManager::view() const
 {
-	return m_view;
+    return m_view;
 }
 
 void ScenarioCardsManager::reloadSettings()
@@ -74,11 +74,11 @@ void ScenarioCardsManager::saveChanges(bool _hasChangesInText)
 
 void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QString& _xml)
 {
-//	//
-//	// Сохраним модель
-//	//
-//	if (m_model != _model) {
-//		m_model = _model;
+    //
+    // Сохраним модель
+    //
+    if (m_model != _model) {
+        m_model = _model;
 //		connect(m_model, &BusinessLogic::ScenarioModel::rowsInserted, [=] (const QModelIndex& _parent, int _first, int _last) {
 //			for (int row = _first; row <= _last; ++row) {
 //				const QModelIndex index = m_model->index(row, 0, _parent);
@@ -132,22 +132,22 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
 //					item->colors());
 //			}
 //		});
-//	}
+    }
 
-//	//
-//	// Загрузим сценарий
-//	//
-//	// ... если схема есть, то просто загружаем её
-//	//
-//	if (!_xml.isEmpty()) {
-//		m_view->load(_xml);
-//	}
-//	//
-//	// ... а если схема пуста, сформируем её на основе модели
-//	//
-//	else {
-//		m_view->load(m_model->simpleScheme());
-//	}
+    //
+    // Загрузим сценарий
+    //
+    // ... если схема есть, то просто загружаем её
+    //
+    if (!_xml.isEmpty()) {
+        m_view->load(_xml);
+    }
+    //
+    // ... а если схема пуста, сформируем её на основе модели
+    //
+    else {
+        m_view->load(m_model->simpleScheme());
+    }
 }
 
 void ScenarioCardsManager::clear()
@@ -176,34 +176,33 @@ void ScenarioCardsManager::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioCardsManager::addCard()
 {
-//	m_addItemDialog->showCardPage();
-//	m_addItemDialog->clear();
+    m_addItemDialog->clear();
 
-//	//
-//	// Если пользователь действительно хочет добавить элемент
-//	//
-//	if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
-//		const int type = m_addItemDialog->cardType();
-//		const QString title = m_addItemDialog->cardTitle();
-//		const QString color = m_addItemDialog->cardColor();
-//		const QString description = m_addItemDialog->cardDescription();
+    //
+    // Если пользователь действительно хочет добавить элемент
+    //
+    if (m_addItemDialog->exec() == QLightBoxDialog::Accepted) {
+        const int type = m_addItemDialog->cardType();
+        const QString title = m_addItemDialog->cardTitle();
+        const QString color = m_addItemDialog->cardColor();
+        const QString description = m_addItemDialog->cardDescription();
 
-//		//
-//		// Если задан заголовок
-//		//
-//		if (!title.isEmpty()) {
-//			//
-//			// Определим карточку, после которой нужно добавить элемент
-//			//
-//			QModelIndex index;
-//			const QString selectedItemUuid = m_view->selectedCardUuid();
-//			if (!selectedItemUuid.isEmpty()) {
-//				index = m_model->indexForUuid(selectedItemUuid);
-//			}
+        //
+        // Если задан заголовок
+        //
+        if (!title.isEmpty()) {
+            //
+            // Определим карточку, после которой нужно добавить элемент
+            //
+            QModelIndex index;
+            const QString lastItemUuid = m_view->lastItemUuid();
+            if (!lastItemUuid.isEmpty()) {
+                index = m_model->indexForUuid(lastItemUuid);
+            }
 
-//			emit addCardRequest(index, type, title, QColor(color), description);
-//		}
-//	}
+            emit addCardRequest(index, type, title, QColor(color), description);
+        }
+    }
 }
 
 void ScenarioCardsManager::editCard(const QString& _uuid, int _cardType, const QString& _title, const QString& _color, const QString& _description)
@@ -238,23 +237,23 @@ void ScenarioCardsManager::removeCard(const QString& _uuid)
 //	emit removeCardRequest(m_model->indexForUuid(_uuid));
 }
 
-void ScenarioCardsManager::moveCard(const QString& _parentUuid, const QString& _previousUuid, const QString& _movedUuid)
+void ScenarioCardsManager::moveCard(const QString& _cardId, const QString& _actId, const QString& _previousCardId)
 {
-//	if (!_movedUuid.isEmpty()) {
-//		const QModelIndex parentIndex = m_model->indexForUuid(_parentUuid);
-//		const QModelIndex previousIndex = m_model->indexForUuid(_previousUuid);
-//		const QModelIndex movedIndex = m_model->indexForUuid(_movedUuid);
+    if (!_cardId.isEmpty()) {
+        const QModelIndex parentIndex = m_model->indexForUuid(_actId);
+        const QModelIndex previousIndex = m_model->indexForUuid(_previousCardId);
+        const QModelIndex movedIndex = m_model->indexForUuid(_cardId);
 
-//		//
-//		// Синхронизируем перемещение с моделью
-//		//
-//		int previousRow = 0;
-//		if (previousIndex.isValid()) {
-//			previousRow = previousIndex.row() + 1;
-//		}
-//		QMimeData* mime = m_model->mimeData({movedIndex});
-//		m_model->dropMimeData(mime, Qt::MoveAction, previousRow, 0, parentIndex);
-//	}
+        //
+        // Синхронизируем перемещение с моделью
+        //
+        int previousRow = 0;
+        if (previousIndex.isValid()) {
+            previousRow = previousIndex.row() + 1;
+        }
+        QMimeData* mime = m_model->mimeData({ movedIndex });
+        m_model->dropMimeData(mime, Qt::MoveAction, previousRow, 0, parentIndex);
+    }
 }
 
 void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString& _colors)
@@ -281,30 +280,24 @@ void ScenarioCardsManager::changeCardType(const QString& _uuid, int _cardType)
 
 void ScenarioCardsManager::initConnections()
 {
-//	//
-//	// Если не удалось загрузить сохранённую схему, построим её заново
-//	//
-//	connect(m_view, &ScenarioCardsView::schemeNotLoaded, [=] {
-//		m_view->load(m_model->simpleScheme());
-//	});
+    //
+    // Если не удалось загрузить сохранённую схему, построим её заново
+    //
+    connect(m_view, &ScenarioCardsView::schemeNotLoaded, [=] {
+        m_view->load(m_model->simpleScheme());
+    });
 
-//	connect(m_view, &ScenarioCardsView::undoRequest, this, &ScenarioCardsManager::undoRequest);
-//	connect(m_view, &ScenarioCardsView::redoRequest, this, &ScenarioCardsManager::redoRequest);
+    connect(m_view, &ScenarioCardsView::undoRequest, this, &ScenarioCardsManager::undoRequest);
+    connect(m_view, &ScenarioCardsView::redoRequest, this, &ScenarioCardsManager::redoRequest);
 
-//	connect(m_view, &ScenarioCardsView::addCardClicked, this, &ScenarioCardsManager::addCard);
+    connect(m_view, &ScenarioCardsView::addCardClicked, this, &ScenarioCardsManager::addCard);
 //	connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
 //	connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
-//	connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
+    connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
 //	connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
 //	connect(m_view, &ScenarioCardsView::itemTypeChanged, this, &ScenarioCardsManager::changeCardType);
 
-//	connect(m_view, &ScenarioCardsView::addNoteClicked, this, &ScenarioCardsManager::addNote);
-//	connect(m_view, &ScenarioCardsView::editNoteRequest, this, &ScenarioCardsManager::editNote);
-
-//	connect(m_view, &ScenarioCardsView::addFlowTextRequest, this, &ScenarioCardsManager::addFlowText);
-//	connect(m_view, &ScenarioCardsView::editFlowTextRequest, this, &ScenarioCardsManager::editFlowText);
-
-//	connect(m_view, &ScenarioCardsView::fullscreenRequest, this, &ScenarioCardsManager::fullscreenRequest);
+    connect(m_view, &ScenarioCardsView::fullscreenRequest, this, &ScenarioCardsManager::fullscreenRequest);
 
 //	connect(m_view, &ScenarioCardsView::schemeChanged, this, &ScenarioCardsManager::schemeChanged);
 }

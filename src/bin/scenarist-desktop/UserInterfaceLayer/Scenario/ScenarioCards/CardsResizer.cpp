@@ -34,15 +34,15 @@ int CardsResizer::distance() const
     return m_ui->distance->value();
 }
 
-int CardsResizer::cardsInLine() const
+int CardsResizer::cardsInRow() const
 {
-    return m_ui->cardsInLine->value();
-}
+    if (m_ui->arrangeCards->isChecked())
+        return m_ui->cardsInLine->value();
 
-bool CardsResizer::cardsInRow() const
-{
-    return true;
-//	return m_ui->cardsInRow->isChecked();
+    //
+    // Автоматическая сортировка
+    //
+    return 0;
 }
 
 void CardsResizer::initView()
@@ -52,9 +52,11 @@ void CardsResizer::initView()
 
 void CardsResizer::initConnections()
 {
+    connect(m_ui->arrangeCards, &QCheckBox::toggled, m_ui->cardsInLine, &QSpinBox::setEnabled);
+
     connect(m_ui->cardSize, &QSlider::valueChanged, this, &CardsResizer::parametersChanged);
     connect(m_ui->cardRatio, &QSlider::valueChanged, this, &CardsResizer::parametersChanged);
     connect(m_ui->distance, &QSlider::valueChanged, this, &CardsResizer::parametersChanged);
+    connect(m_ui->arrangeCards, &QCheckBox::toggled, this, &CardsResizer::parametersChanged);
     connect(m_ui->cardsInLine, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &CardsResizer::parametersChanged);
-//	connect(m_ui->cardsInRow, &QRadioButton::toggled, this, &CardsResizer::parametersChanged);
 }

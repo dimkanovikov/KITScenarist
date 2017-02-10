@@ -115,8 +115,8 @@ namespace {
 QString ScenarioXml::defaultCardsXml()
 {
     return "<?xml version=\"1.0\"?>\n"
-           "<cards_xml scale=\"0\" scale_x=\"0\" scale_y=\"0\">\n"
-           "<ActionShape id=\"0\" x=\"60\" y=\"60\" width=\"210\" height=\"100\" uuid=\"{000000-0000000-000000}\" card_type=\"0\" title=\"\" description=\"\"/>\n"
+           "<cards x=\"0\" y=\"0\" width=\"0\" height=\"0\" scale=\"1\" >\n"
+           "<Card id=\"{000000-0000000-000000}\" is_folder=\"false\" title=\"\" description=\"\" stamp=\"\" colors=\"\" x=\"0\" y=\"0\" />\n"
            "</cards_xml>";
 }
 

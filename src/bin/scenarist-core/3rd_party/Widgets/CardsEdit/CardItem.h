@@ -78,6 +78,11 @@ public:
     /** @} */
 
     /**
+     * @brief Установить размер карточки
+     */
+    void setSize(const QSizeF& _size);
+
+    /**
      * @brief Установить режим перемещения между сценами (true) или по сцене (false)
      */
     void setInDragOutMode(bool _inDragOutMode);
@@ -102,13 +107,26 @@ public:
      */
     void paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option, QWidget* _widget) override;
 
+    /**
+     * @brief Взять карточку с доски
+     */
+    void takeFromBoard();
+
+    /**
+     * @brief Положить карточку обратно на доску
+     */
+    void putOnBoard();
+
 protected:
     /**
-     * @brief Переопределяем для реализации возможности перетаскивания сцен между двумя сценами
+     * @brief Переопределяем для реализации возможности перетаскивания сцен между двумя сценами, а так же для анимации выделения
      */
-    void mousePressEvent(QGraphicsSceneMouseEvent* _event);
+    void mousePressEvent(QGraphicsSceneMouseEvent* _event) override;
 
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* _event);
+    /**
+     * @brief Переопределяем для реализации анимации снятия выделения
+     */
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* _event) override;
 
 private:
     /**
@@ -140,6 +158,11 @@ private:
      * @brief Цвета карточки
      */
     QString m_colors;
+
+    /**
+     * @brief Размер карточки
+     */
+    QSizeF m_size = QSizeF(200, 150);
 
     /**
      * @brief Находится ли карточка в состояния переноса между сценами

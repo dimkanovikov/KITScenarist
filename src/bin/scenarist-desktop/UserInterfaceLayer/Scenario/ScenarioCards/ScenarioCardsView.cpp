@@ -22,15 +22,16 @@ ScenarioCardsView::ScenarioCardsView(bool _isDraft, QWidget* _parent) :
     m_cards(new CardsView(_parent)),
     m_active(new FlatButton(_parent)),
     m_addCard(new FlatButton(_parent)),
-	m_sort(new FlatButton(_parent)),
-	m_resizer(new CardsResizer(m_sort)),
-	m_fullscreen(new FlatButton(_parent)),
-	m_toolbarSpacer(new QLabel(_parent))
+    m_removeCard(new FlatButton(_parent)),
+    m_sort(new FlatButton(_parent)),
+    m_resizer(new CardsResizer(m_sort)),
+    m_fullscreen(new FlatButton(_parent)),
+    m_toolbarSpacer(new QLabel(_parent))
 {
     initView(_isDraft);
-	initConnections();
-	initShortcuts();
-	initStyleSheet();
+    initConnections();
+    initShortcuts();
+    initStyleSheet();
 }
 
 void ScenarioCardsView::clear()
@@ -60,11 +61,11 @@ void ScenarioCardsView::setBackgroundColor(const QColor& _color)
 
 void ScenarioCardsView::load(const QString& _xml)
 {
-//	if (m_cards->load(_xml)) {
-//		m_cards->saveChanges(true);
-//	} else {
-//		emit schemeNotLoaded();
-//	}
+    if (m_cards->load(_xml)) {
+        m_cards->saveChanges(true);
+    } else {
+        emit schemeNotLoaded();
+    }
 }
 
 QString ScenarioCardsView::save() const
@@ -77,14 +78,14 @@ void ScenarioCardsView::saveChanges(bool _hasChangesInText)
     m_cards->saveChanges(_hasChangesInText);
 }
 
-void ScenarioCardsView::addCard(const QString& _uuid, int _cardType, const QString& _title,
-	const QString& _description, const QString& _colors, bool _isCardFirstInParent)
+void ScenarioCardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors)
 {
-//	m_cards->addCard(_uuid, _cardType, _title, _description, _colors, _isCardFirstInParent);
+    m_cards->addCard(_uuid, _isFolder, _title, _description, _stamp, _colors, m_newCardPosition);
 }
 
 void ScenarioCardsView::updateCard(const QString& _uuid, int _type, const QString& _title,
-	const QString& _description, const QString& _colors)
+    const QString& _description, const QString& _colors)
 {
 //	m_cards->updateCard(_uuid, _type, _title, _description, _colors);
 }
@@ -100,10 +101,9 @@ void ScenarioCardsView::selectCard(const QString& _uuid)
 //	m_cards->selectCard(_uuid);
 }
 
-QString ScenarioCardsView::selectedCardUuid() const
+QString ScenarioCardsView::lastItemUuid() const
 {
-//	return m_cards->selectedCardUuid();
-    return "";
+    return m_cards->lastItemUuid();
 }
 void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 {
@@ -113,8 +113,36 @@ void ScenarioCardsView::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioCardsView::resortCards()
 {
-//	m_cards->arrangeCards(m_resizer->cardSize(), m_resizer->cardRatio(), m_resizer->distance(),
-//							  m_resizer->cardsInLine(), m_resizer->cardsInRow());
+    //
+    // Вычисляем размер карточки
+    //
+    qreal widthDivider = 1;
+    qreal heightDivider = 1;
+    switch (m_resizer->cardRatio()) {
+        case 0: heightDivider = 0.2; break; // 5x1
+        case 1: heightDivider = 0.4; break; // 5x2
+        case 2: heightDivider = 0.6; break; // 5x3
+        case 3: heightDivider = 0.8; break; // 5x4
+        case 4: break; // 5x5
+        case 5: widthDivider = 0.8; break; // 4x5
+        case 6: widthDivider = 0.6; break; // 3x5
+        case 7: widthDivider = 0.4; break; // 2x5
+        case 8: widthDivider = 0.2; break; // 1x5
+    }
+    const qreal cardWidth = (qreal)m_resizer->cardSize() * widthDivider;
+    const qreal cardHeight = (qreal)m_resizer->cardSize() * heightDivider;
+    const QSizeF cardSize(cardWidth, cardHeight);
+    m_cards->setCardsSize(cardSize);
+
+    //
+    // Расстояние между карточками
+    //
+    m_cards->setCardsDistance(m_resizer->distance());
+
+    //
+    // Количество карточек в строке
+    //
+    m_cards->setCardsInRow(m_resizer->cardsInRow());
 }
 
 void ScenarioCardsView::initView(bool _isDraft)
@@ -132,6 +160,9 @@ void ScenarioCardsView::initView(bool _isDraft)
 
     m_addCard->setIcons(QIcon(":/Graphics/Icons/Editing/add.png"));
     m_addCard->setToolTip(tr("Add new card"));
+
+    m_removeCard->setIcons(QIcon(":/Graphics/Icons/Editing/delete.png"));
+    m_removeCard->setToolTip(tr("Remove selected card"));
 
     m_sort->setIcons(QIcon(":/Graphics/Icons/Cards/table.png"));
     m_sort->setToolTip(tr("Sort cards"));
@@ -160,6 +191,7 @@ void ScenarioCardsView::initView(bool _isDraft)
     toolbarLayout->setSpacing(0);
     toolbarLayout->addWidget(m_active);
     toolbarLayout->addWidget(m_addCard);
+    toolbarLayout->addWidget(m_removeCard);
     toolbarLayout->addWidget(m_sort);
     toolbarLayout->addWidget(m_toolbarSpacer);
     toolbarLayout->addWidget(m_fullscreen);
@@ -176,33 +208,6 @@ void ScenarioCardsView::initView(bool _isDraft)
 void ScenarioCardsView::initConnections()
 {
     /*
-    connect(ui->addCard, &QPushButton::clicked, [=] {
-        ui->draft->addCard(QUuid::createUuid().toString(), false, "Text", "Description", "", "#ffca12");
-    });
-
-    connect(ui->draft, &CardsView::cardAddRequest, [=] (const QPointF& _position) {
-
-        ui->draft->addCard(QUuid::createUuid().toString(), false, "Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                                                     "Sed pretium, risus eget porta sollicitudin, justo tortor "
-                                                     "fermentum massa, ut dictum lacus risus ut dolor. Praesent "
-                                                     "sodales ultrices leo. Maecenas pharetra ipsum eu est aliquet,"
-                                                     " ac bibendum nisi sollicitudin. In congue rutrum maximus. Nam "
-                                                     "pharetra pellentesque quam, vel pulvinar sem ornare eu. Donec "
-                                                     "lorem nibh, blandit sit amet vulputate eleifend, dictum a urna. "
-                                                     "Aenean ut lorem posuere, auctor ante ac, tincidunt nibh. Sed "
-                                                     "dignissim odio sed lectus blandit, eget volutpat purus maximus. "
-                                                     "Sed eget odio mollis, rutrum leo a, ornare diam. Maecenas "
-                                                     "condimentum tellus eget turpis dictum, vel mattis erat facilisis. "
-                                                     "Pellentesque habitant morbi tristique senectus et netus et "
-                                                     "malesuada fames ac turpis egestas.",
-                              "First draft", "", _position);
-    });
-
-    connect(ui->draft, &CardsView::cardAddCopyRequest,
-        [=] (bool _isFolder, const QString& _title, const QString& _description, const QString& _state,
-             const QString& _colors, const QPointF& _position) {
-        ui->draft->addCard(QUuid::createUuid().toString(), _isFolder, _title, _description, _state, _colors, _position);
-    });
 
     connect(ui->saveChanges, &QPushButton::clicked, [=] { ui->draft->saveChanges(); });
     connect(ui->undo, &QPushButton::clicked, ui->draft, &CardsView::undo);
@@ -232,28 +237,7 @@ void ScenarioCardsView::initConnections()
                                                                "malesuada fames ac turpis egestas.", "#cd01a0;#ffac32;#93fac3");
     });
 
-    connect(ui->script, &CardsView::cardAddRequest, [=] (const QPointF& _position) {
-        ui->script->addCard(QUuid::createUuid().toString(), true, "Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                                                     "Sed pretium, risus eget porta sollicitudin, justo tortor "
-                                                     "fermentum massa, ut dictum lacus risus ut dolor. Praesent "
-                                                     "sodales ultrices leo. Maecenas pharetra ipsum eu est aliquet,"
-                                                     " ac bibendum nisi sollicitudin. In congue rutrum maximus. Nam "
-                                                     "pharetra pellentesque quam, vel pulvinar sem ornare eu. Donec "
-                                                     "lorem nibh, blandit sit amet vulputate eleifend, dictum a urna. "
-                                                     "Aenean ut lorem posuere, auctor ante ac, tincidunt nibh. Sed "
-                                                     "dignissim odio sed lectus blandit, eget volutpat purus maximus. "
-                                                     "Sed eget odio mollis, rutrum leo a, ornare diam. Maecenas "
-                                                     "condimentum tellus eget turpis dictum, vel mattis erat facilisis. "
-                                                     "Pellentesque habitant morbi tristique senectus et netus et "
-                                                     "malesuada fames ac turpis egestas.",
-                              "First draft", "", _position);
-    });
 
-    connect(ui->script, &CardsView::cardAddCopyRequest,
-        [=] (bool _isFolder, const QString& _title, const QString& _description, const QString& _state,
-             const QString& _colors, const QPointF& _position) {
-        ui->script->addCard(QUuid::createUuid().toString(), _isFolder, _title, _description, _state, _colors, _position);
-    });
 
     connect(ui->script, &CardsView::actRemoveRequest, ui->script, &CardsView::removeAct);
     connect(ui->script, &CardsView::cardRemoveRequest, ui->script, &CardsView::removeCard);
@@ -287,25 +271,29 @@ void ScenarioCardsView::initConnections()
 
 //	connect(m_cards, &ActivityEdit::schemeChanged, this, &ScenarioCardsView::schemeChanged);
 
-//	connect(m_addCard, &FlatButton::clicked, this, &ScenarioCardsView::addCardClicked);
-//	connect(m_cards, &ActivityEdit::addCardRequest, this, &ScenarioCardsView::addCardClicked);
+    connect(m_addCard, &FlatButton::clicked, [=] {
+        m_newCardPosition = QPointF();
+        emit addCardClicked();
+    });
+    connect(m_cards, &CardsView::cardAddRequest, [=] (const QPointF& _position) {
+        m_newCardPosition =_position;
+        emit addCardClicked();
+    });
+    connect(m_cards, &CardsView::cardAddCopyRequest,
+        [=] (bool _isFolder, const QString& _title, const QString& _description, const QString& _stamp,
+             const QString& _colors, const QPointF& _position) {
+        m_newCardPosition = _position;
+        emit addCopyCardRequest(_isFolder, _title, _description, _stamp, _colors);
+    });
+
 //	connect(m_cards, &ActivityEdit::editCardRequest, this, &ScenarioCardsView::editCardRequest);
 //	connect(m_cards, &ActivityEdit::removeCardRequest, this, &ScenarioCardsView::removeCardRequest);
-//	connect(m_cards, &ActivityEdit::cardMoved, this, &ScenarioCardsView::cardMoved);
+    connect(m_cards, &CardsView::cardMoved, this, &ScenarioCardsView::cardMoved);
 //	connect(m_cards, &ActivityEdit::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
 //	connect(m_cards, &ActivityEdit::itemTypeChanged, this, &ScenarioCardsView::itemTypeChanged);
 
-//	connect(m_addNote, &FlatButton::clicked, this, &ScenarioCardsView::addNoteClicked);
-//	connect(m_cards, &ActivityEdit::editNoteRequest, this, &ScenarioCardsView::editNoteRequest);
-
-//	connect(m_cards, &ActivityEdit::addFlowTextRequest, this, &ScenarioCardsView::addFlowTextRequest);
-//	connect(m_cards, &ActivityEdit::editFlowTextRequest, this, &ScenarioCardsView::editFlowTextRequest);
-
-//	connect(m_addHLine, &FlatButton::clicked, m_cards, &ActivityEdit::addHorizontalLine);
-//	connect(m_addVLine, &FlatButton::clicked, m_cards, &ActivityEdit::addVerticalLine);
-
-//	connect(m_sort, &FlatButton::clicked, this, &ScenarioCardsView::resortCards);
-//	connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);
+    connect(m_sort, &FlatButton::clicked, this, &ScenarioCardsView::resortCards);
+    connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);
 
 //	connect(m_fullscreen, &FlatButton::clicked, this, &ScenarioCardsView::fullscreenRequest);
 }
@@ -356,6 +344,7 @@ void ScenarioCardsView::initStyleSheet()
 {
     m_active->setProperty("inTopPanel", true);
     m_addCard->setProperty("inTopPanel", true);
+    m_removeCard->setProperty("inTopPanel", true);
     m_sort->setProperty("inTopPanel", true);
     m_sort->setProperty("hasMenu", true);
     m_fullscreen->setProperty("inTopPanel", true);

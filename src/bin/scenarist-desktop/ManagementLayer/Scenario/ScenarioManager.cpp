@@ -973,7 +973,7 @@ void ScenarioManager::initConnections()
 {
     connect(m_showFullscreen, SIGNAL(clicked()), this, SIGNAL(showFullscreen()));
 
-//    connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
+    connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
 //    connect(m_cardsManager, &ScenarioCardsManager::editCardRequest, this, &ScenarioManager::aboutEditItemFromCards);
 //    connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, [=] (const QModelIndex& _index) {
 //        //

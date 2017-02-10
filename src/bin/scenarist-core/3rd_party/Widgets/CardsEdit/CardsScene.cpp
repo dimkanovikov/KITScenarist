@@ -27,6 +27,39 @@ CardsScene::CardsScene(QObject *parent) :
 {
 }
 
+void CardsScene::setCardsSize(const QSizeF& _size)
+{
+    if (m_cardsSize != _size) {
+        m_cardsSize = _size;
+
+        for (QGraphicsItem* item : m_items) {
+            if (CardItem* card = qgraphicsitem_cast<CardItem*>(item)) {
+                card->setSize(m_cardsSize);
+            }
+        }
+
+        reorderItemsOnScene();
+    }
+}
+
+void CardsScene::setCardsDistance(qreal _distance)
+{
+    if (m_cardsDistance != _distance) {
+        m_cardsDistance =_distance;
+
+        reorderItemsOnScene();
+    }
+}
+
+void CardsScene::setCardsInRow(int _count)
+{
+    if (m_cardsInRowCount != _count) {
+        m_cardsInRowCount = _count;
+
+        reorderItemsOnScene();
+    }
+}
+
 void CardsScene::setCanAddActs(bool _can)
 {
     if (m_isCanAddActs != _can) {
@@ -42,19 +75,26 @@ void CardsScene::setFixedMode(bool _isFixed)
     }
 }
 
+QString CardsScene::lastItemUuid() const
+{
+    QString lastItemUuid;
+    if (!m_items.isEmpty()) {
+        if (ActItem* act = qgraphicsitem_cast<ActItem*>(m_items.last())) {
+            lastItemUuid = act->uuid();
+        } else if (CardItem* card = qgraphicsitem_cast<CardItem*>(m_items.last())) {
+            lastItemUuid = card->uuid();
+        }
+    }
+
+    return lastItemUuid;
+}
+
 void CardsScene::addAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors)
 {
     //
     // Вставим акт после самого последнего элемента
     //
-    QString previousItemUuid;
-    if (!m_items.isEmpty()) {
-        if (ActItem* act = qgraphicsitem_cast<ActItem*>(m_items.last())) {
-            previousItemUuid = act->uuid();
-        } else if (CardItem* card = qgraphicsitem_cast<CardItem*>(m_items.last())) {
-            previousItemUuid = card->uuid();
-        }
-    }
+    QString previousItemUuid = lastItemUuid();
     insertAct(_uuid, _title, _description, _colors, previousItemUuid);
 }
 
@@ -106,14 +146,7 @@ void CardsScene::addCard(const QString& _uuid, bool _isFolder, const QString& _t
     //
     // Вставим карточку после самого последнего элемента
     //
-    QString previousItemUuid;
-    if (!m_items.isEmpty()) {
-        if (ActItem* act = qgraphicsitem_cast<ActItem*>(m_items.last())) {
-            previousItemUuid = act->uuid();
-        } else if (CardItem* card = qgraphicsitem_cast<CardItem*>(m_items.last())) {
-            previousItemUuid = card->uuid();
-        }
-    }
+    QString previousItemUuid = lastItemUuid();
     insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _position, previousItemUuid);
 }
 
@@ -128,6 +161,7 @@ void CardsScene::insertCard(const QString& _uuid, bool _isFolder, const QString&
     card->setStamp(_stamp);
     card->setColors(_colors);
     card->setPos(_position);
+    card->setSize(m_cardsSize);
     addItem(card);
 
     //
@@ -157,7 +191,7 @@ void CardsScene::insertCard(const QString& _uuid, bool _isFolder, const QString&
     //
     // Уведомляем подписчиков о том, что карточка была добавлена
     //
-    emit actAdded(card->uuid());
+    emit cardAdded(card->uuid());
 }
 
 void CardsScene::removeAct(const QString& _uuid)
@@ -253,7 +287,7 @@ QString CardsScene::save() const
             writer.writeAttribute("is_folder", card->isFolder() ? "true" : "false");
             writer.writeAttribute("title", card->title());
             writer.writeAttribute("description", card->description());
-            writer.writeAttribute("state", card->stamp());
+            writer.writeAttribute("stamp", card->stamp());
             writer.writeAttribute("colors", card->colors());
             writer.writeAttribute("x", QString::number(card->pos().x()));
             writer.writeAttribute("y", QString::number(card->pos().y()));
@@ -332,11 +366,11 @@ bool CardsScene::load(const QString& _xml)
             const bool isFolder = attributes.namedItem("is_folder").toAttr().value() == "true";
             const QString title = attributes.namedItem("title").toAttr().value();
             const QString description = attributes.namedItem("description").toAttr().value();
-            const QString state = attributes.namedItem("state").toAttr().value();
+            const QString stamp = attributes.namedItem("stamp").toAttr().value();
             const QString colors = attributes.namedItem("colors").toAttr().value();
             const qreal x = attributes.namedItem("x").toAttr().value().toDouble();
             const qreal y = attributes.namedItem("y").toAttr().value().toDouble();
-            addCard(uuid, isFolder, title, description, state, colors, QPointF(x, y));
+            addCard(uuid, isFolder, title, description, stamp, colors, QPointF(x, y));
         }
     }
 
@@ -382,6 +416,8 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
             editCardAction->setVisible(false);
             removeCardAction->setVisible(false);
         } else if (CardItem* card = qgraphicsitem_cast<CardItem*>(selectedItems().first())) {
+            card->putOnBoard();
+            //
             editActAction->setVisible(false);
             removeActAction->setVisible(false);
             //
@@ -477,13 +513,13 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
 
 void CardsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 {
+    QGraphicsScene::mouseReleaseEvent(_event);
+
     //
     // Упорядочим карточки, если нужно
     //
     reorderSelectedItem();
     reorderItemsOnScene();
-
-    QGraphicsScene::mouseReleaseEvent(_event);
 }
 
 void CardsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event)
@@ -697,11 +733,11 @@ void CardsScene::reorderItemsOnScene()
     //
     int cardsInRowCount = m_cardsInRowCount;
     if (cardsInRowCount == 0) {
-        cardsInRowCount = actRect.width() / (cardRect.width() + m_spacing);
+        cardsInRowCount = actRect.width() / (cardRect.width() + m_cardsDistance);
     }
 
-    int x = sceneRect().left() + m_spacing;
-    int y = sceneRect().top() + m_spacing;
+    int x = sceneRect().left() + m_cardsDistance;
+    int y = sceneRect().top() + m_cardsDistance;
     int lastItemHeight = -1;
     int currentCardInRow = 0;
 
@@ -716,18 +752,18 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... возвращаем х в начальное положение
             //
-            x = sceneRect().left() + m_spacing;
+            x = sceneRect().left() + m_cardsDistance;
             //
             // ... если вставляется после карточки, то добавим вертикальный отступ
             //
             if (lastItemHeight > 0) {
-                y += lastItemHeight + m_spacing;
+                y += lastItemHeight + m_cardsDistance;
             }
             //
             // ... если вставляется после другого акта, то оставим место для того, чтобы можно было встроить карточку
             //
             else if (lastItemHeight == 0) {
-                y += cardRect.height() + m_spacing;
+                y += cardRect.height() + m_cardsDistance;
             }
             //
             // ... сдвигаем акт
@@ -740,7 +776,7 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... корректируем координату y и сбрасываем счётчик карточек в ряду
             //
-            y += act->boundingRect().height() + m_spacing;
+            y += act->boundingRect().height() + m_cardsDistance;
             lastItemHeight = 0;
             currentCardInRow = 0;
         }
@@ -753,8 +789,8 @@ void CardsScene::reorderItemsOnScene()
             //
             if (currentCardInRow == cardsInRowCount) {
                 currentCardInRow = 0;
-                x = sceneRect().left() + m_spacing;
-                y += lastItemHeight + m_spacing;
+                x = sceneRect().left() + m_cardsDistance;
+                y += lastItemHeight + m_cardsDistance;
             }
             ++currentCardInRow;
             //
@@ -768,7 +804,7 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... и корректируем координаты для позиционирования следующих элементов
             //
-            x += card->boundingRect().width() + m_spacing;
+            x += card->boundingRect().width() + m_cardsDistance;
             lastItemHeight = card->boundingRect().height();
         }
     }

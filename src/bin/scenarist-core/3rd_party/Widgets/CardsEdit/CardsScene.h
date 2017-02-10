@@ -19,6 +19,21 @@ public:
     explicit CardsScene(QObject *parent = 0);
 
     /**
+     * @brief Задать размер карточек
+     */
+    void setCardsSize(const QSizeF& _size);
+
+    /**
+     * @brief Задать расстояние между элементами
+     */
+    void setCardsDistance(qreal _distance);
+
+    /**
+     * @brief Установить количество карточек в ряду
+     */
+    void setCardsInRow(int _count);
+
+    /**
      * @brief Установить доступность возможности добавления актов
      */
     void setCanAddActs(bool _can);
@@ -27,6 +42,11 @@ public:
      * @brief Установить режим привязки карточек к сетке
      */
     void setFixedMode(bool _isFixed);
+
+    /**
+     * @brief Получить идентификатор последнего элемента
+     */
+    QString lastItemUuid() const;
 
     /**
      * @brief Добавить акт
@@ -208,6 +228,13 @@ private:
 
 private:
     /**
+     * @brief Размер карточек
+     */
+    QSizeF m_cardsSize = QSizeF(200, 150);
+
+
+
+    /**
      * @brief Можно ли добавлять акты в сцену
      */
     bool m_isCanAddActs = false;
@@ -220,7 +247,7 @@ private:
     /**
      * @brief Расстояние между элементами в режиме привязки к сетке
      */
-    qreal m_spacing = 30.;
+    qreal m_cardsDistance = 30.;
 
     /**
      * @brief Количество карточек в ряду в режиме привязки к сетке

@@ -29,6 +29,8 @@ CardItem::CardItem(QGraphicsItem* _parent) :
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 
+    setAcceptHoverEvents(true);
+
     m_shadowEffect->setBlurRadius(7);
     m_shadowEffect->setXOffset(0);
     m_shadowEffect->setYOffset(1);
@@ -43,6 +45,8 @@ CardItem::CardItem(const QByteArray& mimeData, QGraphicsItem* _parent) :
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+
+    setAcceptHoverEvents(true);
 
     QDataStream mimeStream(mimeData);
     mimeStream >> m_isFolder >> m_title >> m_description >> m_stamp >> m_colors;
@@ -129,6 +133,14 @@ QString CardItem::colors() const
     return m_colors;
 }
 
+void CardItem::setSize(const QSizeF& _size)
+{
+    if (m_size != _size) {
+        m_size = _size;
+        update();
+    }
+}
+
 void CardItem::setInDragOutMode(bool _inDragOutMode)
 {
     if (m_isInDragOutMode != _inDragOutMode) {
@@ -143,7 +155,7 @@ int CardItem::type() const
 
 QRectF CardItem::boundingRect() const
 {
-    return QRectF(0, 0, 200, 150);
+    return QRectF(QPointF(0, 0), m_size);
 }
 
 QRectF CardItem::boundingRectCorrected() const
@@ -294,6 +306,67 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
     _painter->restore();
 }
 
+void CardItem::takeFromBoard()
+{
+    setCursor(Qt::ClosedHandCursor);
+
+    setZValue(10000);
+
+    QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
+    radiusAnimation->setDuration(100);
+    radiusAnimation->setStartValue(7);
+    radiusAnimation->setEndValue(34);
+    QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
+    colorAnimation->setDuration(100);
+    colorAnimation->setStartValue(QColor(63, 63, 63, 180));
+    colorAnimation->setEndValue(QColor(63, 63, 63, 240));
+    QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
+    yOffsetAnimation->setDuration(100);
+    yOffsetAnimation->setStartValue(1);
+    yOffsetAnimation->setEndValue(6);
+
+    QParallelAnimationGroup *group = new QParallelAnimationGroup;
+    group->addAnimation(radiusAnimation);
+    group->addAnimation(colorAnimation);
+    group->addAnimation(yOffsetAnimation);
+    group->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+void CardItem::putOnBoard()
+{
+    setCursor(Qt::OpenHandCursor);
+
+    if (zValue() == 10000) {
+        qreal newZValue = 1;
+        for (QGraphicsItem* item : collidingItems()) {
+            if (item->zValue() >= newZValue) {
+                newZValue = item->zValue() + 0.1;
+            }
+        }
+        setZValue(newZValue);
+
+        QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
+        radiusAnimation->setDuration(100);
+        radiusAnimation->setStartValue(7);
+        radiusAnimation->setEndValue(34);
+        QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
+        colorAnimation->setDuration(100);
+        colorAnimation->setStartValue(QColor(63, 63, 63, 180));
+        colorAnimation->setEndValue(QColor(63, 63, 63, 240));
+        QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
+        yOffsetAnimation->setDuration(100);
+        yOffsetAnimation->setStartValue(1);
+        yOffsetAnimation->setEndValue(6);
+
+        QParallelAnimationGroup *group = new QParallelAnimationGroup;
+        group->addAnimation(radiusAnimation);
+        group->addAnimation(colorAnimation);
+        group->addAnimation(yOffsetAnimation);
+        group->setDirection(QAbstractAnimation::Backward);
+        group->start(QAbstractAnimation::DeleteWhenStopped);
+    }
+}
+
 void CardItem::mousePressEvent(QGraphicsSceneMouseEvent* _event)
 {
     //
@@ -326,28 +399,7 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent* _event)
     else {
         QGraphicsItem::mousePressEvent(_event);
 
-        setCursor(Qt::ClosedHandCursor);
-
-        setZValue(10000);
-
-        QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
-        radiusAnimation->setDuration(100);
-        radiusAnimation->setStartValue(7);
-        radiusAnimation->setEndValue(34);
-        QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
-        colorAnimation->setDuration(100);
-        colorAnimation->setStartValue(QColor(63, 63, 63, 180));
-        colorAnimation->setEndValue(QColor(63, 63, 63, 240));
-        QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
-        yOffsetAnimation->setDuration(100);
-        yOffsetAnimation->setStartValue(1);
-        yOffsetAnimation->setEndValue(6);
-
-        QParallelAnimationGroup *group = new QParallelAnimationGroup;
-        group->addAnimation(radiusAnimation);
-        group->addAnimation(colorAnimation);
-        group->addAnimation(yOffsetAnimation);
-        group->start(QAbstractAnimation::DeleteWhenStopped);
+        takeFromBoard();
     }
 }
 
@@ -355,33 +407,5 @@ void CardItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 {
     QGraphicsItem::mouseReleaseEvent(_event);
 
-    setCursor(Qt::OpenHandCursor);
-
-    qreal newZValue = 1;
-    for (QGraphicsItem* item : collidingItems()) {
-        if (item->zValue() >= newZValue) {
-            newZValue = item->zValue() + 0.1;
-        }
-    }
-    setZValue(newZValue);
-
-    QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
-    radiusAnimation->setDuration(100);
-    radiusAnimation->setStartValue(7);
-    radiusAnimation->setEndValue(34);
-    QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
-    colorAnimation->setDuration(100);
-    colorAnimation->setStartValue(QColor(63, 63, 63, 180));
-    colorAnimation->setEndValue(QColor(63, 63, 63, 240));
-    QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
-    yOffsetAnimation->setDuration(100);
-    yOffsetAnimation->setStartValue(1);
-    yOffsetAnimation->setEndValue(6);
-
-    QParallelAnimationGroup *group = new QParallelAnimationGroup;
-    group->addAnimation(radiusAnimation);
-    group->addAnimation(colorAnimation);
-    group->addAnimation(yOffsetAnimation);
-    group->setDirection(QAbstractAnimation::Backward);
-    group->start(QAbstractAnimation::DeleteWhenStopped);
+    putOnBoard();
 }

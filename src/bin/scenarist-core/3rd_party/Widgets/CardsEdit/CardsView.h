@@ -38,6 +38,21 @@ public:
     void clear();
 
     /**
+     * @brief Задать размер карточек
+     */
+    void setCardsSize(const QSizeF& _size);
+
+    /**
+     * @brief Задать расстояние между элементами
+     */
+    void setCardsDistance(qreal _distance);
+
+    /**
+     * @brief Установить количество карточек в ряду
+     */
+    void setCardsInRow(int _count);
+
+    /**
      * @brief Установить доступность возможности добавления актов
      */
     void setCanAddActs(bool _can);
@@ -46,6 +61,11 @@ public:
      * @brief Установить режим привязки карточек к сетке
      */
     void setFixedMode(bool _isFixed);
+
+    /**
+     * @brief Получить идентификатор последнего элемента
+     */
+    QString lastItemUuid() const;
 
     /**
      * @brief Добавить акт
@@ -64,7 +84,7 @@ public:
     void addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
         const QString& _state, const QString& _colors);
     void addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _state, const QString& _colors, const QPointF& _position);
+        const QString& _stamp, const QString& _colors, const QPointF& _position);
     /** @} */
 
     /**
