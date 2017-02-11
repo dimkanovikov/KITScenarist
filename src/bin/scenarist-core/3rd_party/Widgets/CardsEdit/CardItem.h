@@ -13,6 +13,7 @@ class CardItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
     Q_PROPERTY(QPointF pos READ pos WRITE setPos)
+    Q_PROPERTY(qreal scale READ scale WRITE setScale)
 
 public:
     /**
@@ -86,9 +87,12 @@ public:
     /** @} */
 
     /**
-     * @brief Установить размер карточки
+     * @brief Размер карточки
      */
+    /** @{ */
     void setSize(const QSizeF& _size);
+    QSizeF size() const;
+    /** @} */
 
     /**
      * @brief Установить режим перемещения между сценами (true) или по сцене (false)

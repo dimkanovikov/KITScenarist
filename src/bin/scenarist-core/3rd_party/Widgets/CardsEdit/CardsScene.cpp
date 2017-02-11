@@ -75,6 +75,11 @@ void CardsScene::setFixedMode(bool _isFixed)
     }
 }
 
+bool CardsScene::isFixedMode() const
+{
+    return m_isFixedMode;
+}
+
 QString CardsScene::lastItemUuid() const
 {
     QString lastItemUuid;

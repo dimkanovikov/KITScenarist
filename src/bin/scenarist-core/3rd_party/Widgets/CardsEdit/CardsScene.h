@@ -44,6 +44,11 @@ public:
     void setFixedMode(bool _isFixed);
 
     /**
+     * @brief Находится ли сцена в режиме привязки к сетке
+     */
+    bool isFixedMode() const;
+
+    /**
      * @brief Получить идентификатор последнего элемента
      */
     QString lastItemUuid() const;

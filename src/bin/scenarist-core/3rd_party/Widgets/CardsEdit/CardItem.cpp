@@ -1,6 +1,7 @@
 #include "CardItem.h"
 
 #include "ActItem.h"
+#include "CardsScene.h"
 
 #include "TextUtils.h"
 
@@ -152,6 +153,11 @@ void CardItem::setSize(const QSizeF& _size)
         m_size = _size;
         update();
     }
+}
+
+QSizeF CardItem::size() const
+{
+    return m_size;
 }
 
 void CardItem::setInDragOutMode(bool _inDragOutMode)
@@ -338,11 +344,21 @@ void CardItem::takeFromBoard()
     yOffsetAnimation->setDuration(100);
     yOffsetAnimation->setStartValue(1);
     yOffsetAnimation->setEndValue(6);
+    QPropertyAnimation* sizeAnimation = new QPropertyAnimation(this, "scale");
+    sizeAnimation->setDuration(100);
+    sizeAnimation->setStartValue(scale());
+    sizeAnimation->setEndValue(scale() + 0.1);
+    QPropertyAnimation* posAnimation = new QPropertyAnimation(this, "pos");
+    posAnimation->setDuration(100);
+    posAnimation->setStartValue(pos());
+    posAnimation->setEndValue(pos() - QPointF(12, 12));
 
-    QParallelAnimationGroup *group = new QParallelAnimationGroup;
+    QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
     group->addAnimation(radiusAnimation);
     group->addAnimation(colorAnimation);
     group->addAnimation(yOffsetAnimation);
+    group->addAnimation(sizeAnimation);
+    group->addAnimation(posAnimation);
     group->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
@@ -371,11 +387,35 @@ void CardItem::putOnBoard()
         yOffsetAnimation->setDuration(100);
         yOffsetAnimation->setStartValue(1);
         yOffsetAnimation->setEndValue(6);
+        QPropertyAnimation* sizeAnimation = new QPropertyAnimation(this, "scale");
+        sizeAnimation->setDuration(100);
+        sizeAnimation->setStartValue(scale() - 0.1);
+        sizeAnimation->setEndValue(scale());
 
-        QParallelAnimationGroup *group = new QParallelAnimationGroup;
+
+        QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+        group->duration();
         group->addAnimation(radiusAnimation);
         group->addAnimation(colorAnimation);
         group->addAnimation(yOffsetAnimation);
+        group->addAnimation(sizeAnimation);
+
+        //
+        // Небольшой хак ради красоты
+        // Возвращать позицию надо только в случае, если карточки не привязаны к сетке в сцене,
+        // в противном случае анимация не завершается корректно, т.к. при растановке по сетке
+        // перехватывается владение параметром карточки pos
+        //
+        if (CardsScene* scene = qobject_cast<CardsScene*>(this->scene())) {
+            if (scene->isFixedMode() == false) {
+                QPropertyAnimation* posAnimation = new QPropertyAnimation(this, "pos");
+                posAnimation->setDuration(100);
+                posAnimation->setStartValue(pos() + QPointF(12, 12));
+                posAnimation->setEndValue(pos());
+                group->addAnimation(posAnimation);
+            }
+        }
+
         group->setDirection(QAbstractAnimation::Backward);
         group->start(QAbstractAnimation::DeleteWhenStopped);
     }
