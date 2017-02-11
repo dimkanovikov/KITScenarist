@@ -36,13 +36,14 @@ UpdateDialog::~UpdateDialog()
 }
 
 int UpdateDialog::showUpdate(const QString &_version, const QString &_text,
-                             bool _isBeta)
+                             bool _isBeta, bool _isSupported)
 {
     setWindowTitle(QString("New version %1 is available").arg(_version));
     m_ui->text->setText(_text);
-    m_ui->betaAgree->setVisible(_isBeta);
-    m_ui->whatIsBeta->setVisible(_isBeta);
-    m_ui->download->setEnabled(!_isBeta);
+    m_ui->betaAgree->setVisible(_isBeta && _isSupported);
+    m_ui->whatIsBeta->setVisible(_isBeta && _isSupported);
+    m_ui->notSupportedLabel->setVisible(!_isSupported);
+    m_ui->download->setEnabled(!_isBeta && _isSupported);
 
     return exec();
 }

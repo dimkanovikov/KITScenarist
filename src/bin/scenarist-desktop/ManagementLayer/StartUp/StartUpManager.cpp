@@ -314,6 +314,8 @@ void StartUpManager::showUpdateDialog()
 {
         UpdateDialog dialog(m_view);
 
+        bool isSupported = true;
+
         connect(&dialog, &UpdateDialog::skipUpdate, [this] {
             StorageFacade::settingsStorage()->setValue(
                         "application/latest_version",
@@ -328,11 +330,23 @@ void StartUpManager::showUpdateDialog()
         connect(this, &StartUpManager::downloadFinishedForUpdate, &dialog, &UpdateDialog::downloadFinished);
         connect(this, &StartUpManager::errorDownloadForUpdate, &dialog, &UpdateDialog::showDownloadError);
 
+#ifdef Q_OS_LINUX
+        isSupported = false;
+        QString distroName = QSysInfo::prettyProductName().toLower();
+        QStringList supportedDistros({"ubuntu", "mint", "elemntary", "debian"});
+        for(QString& supportedDistro : supportedDistros) {
+            if (supportedDistro.contains(distroName)) {
+                isSupported = true;
+                break;
+            }
+        }
+#endif
+
         //
         // Покажем окно с обновлением
         //
         if (dialog.showUpdate(m_updateVersion, m_updateDescription,
-                              m_updateIsBeta) == UpdateDialog::Accepted) {
+                              m_updateIsBeta, isSupported) == UpdateDialog::Accepted) {
             //
             // Нажали "Установить"
             //

@@ -36,7 +36,7 @@ namespace UserInterface {
          * @brief Донастроить окно и показать его
          */
         int showUpdate(const QString& _version, const QString& _text,
-                       bool _isBeta);
+                       bool _isBeta, bool _isSupported);
 
         /**
          * @brief Обновить прогресс загрузки
