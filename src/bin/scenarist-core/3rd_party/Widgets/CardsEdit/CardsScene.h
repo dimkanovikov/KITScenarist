@@ -243,8 +243,6 @@ private:
      */
     QSizeF m_cardsSize = QSizeF(200, 150);
 
-
-
     /**
      * @brief Можно ли добавлять акты в сцену
      */
@@ -279,6 +277,11 @@ private:
      * @brief Находятся ли карточки сцены в режиме перемещения между сценами
      */
     bool m_isInDragOutMode = false;
+
+    /**
+     * @brief Заблокированы ли изменения извне
+     */
+    bool m_isChangesBlocked = false;
 };
 
 #endif // CARDSSCENE_H

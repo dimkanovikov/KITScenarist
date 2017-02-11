@@ -91,6 +91,10 @@ QString CardsScene::lastItemUuid() const
 
 void CardsScene::addAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors)
 {
+    if (m_isChangesBlocked) {
+        return;
+    }
+
     //
     // Вставим акт после самого последнего элемента
     //
@@ -101,6 +105,10 @@ void CardsScene::addAct(const QString& _uuid, const QString& _title, const QStri
 void CardsScene::insertAct(const QString& _uuid, const QString& _title, const QString& _description,
     const QString& _colors, const QString& _previousItemUuid)
 {
+    if (m_isChangesBlocked) {
+        return;
+    }
+
     ActItem* act = new ActItem;
     act->setUuid(_uuid);
     act->setTitle(_title);
@@ -155,6 +163,10 @@ void CardsScene::insertAct(const QString& _uuid, const QString& _title, const QS
 
 void CardsScene::addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position)
 {
+    if (m_isChangesBlocked) {
+        return;
+    }
+
     //
     // Вставим карточку после самого последнего элемента
     //
@@ -165,6 +177,10 @@ void CardsScene::addCard(const QString& _uuid, bool _isFolder, const QString& _t
 void CardsScene::insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
     const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid)
 {
+    if (m_isChangesBlocked) {
+        return;
+    }
+
     CardItem* card = new CardItem;
     card->setUuid(_uuid);
     card->setIsFolder(_isFolder);
@@ -304,6 +320,10 @@ void CardsScene::updateItem(const QString& _uuid, bool _isFolder, const QString&
 
 void CardsScene::removeSceneItem(const QString& _uuid)
 {
+    if (m_isChangesBlocked) {
+        return;
+    }
+
     if (m_itemsMap.contains(_uuid)) {
         if (m_itemsMap[_uuid]->type() == ActItem::Type) {
             removeAct(_uuid);
@@ -315,6 +335,10 @@ void CardsScene::removeSceneItem(const QString& _uuid)
 
 void CardsScene::removeAct(const QString& _uuid)
 {
+    if (m_isChangesBlocked) {
+        return;
+    }
+
     if (m_itemsMap.contains(_uuid)) {
         if (ActItem* act = qgraphicsitem_cast<ActItem*>(m_itemsMap.take(_uuid))) {
             //
@@ -340,6 +364,10 @@ void CardsScene::removeAct(const QString& _uuid)
 
 void CardsScene::removeCard(const QString& _uuid)
 {
+    if (m_isChangesBlocked) {
+        return;
+    }
+
     if (m_itemsMap.contains(_uuid)) {
         if (CardItem* card = qgraphicsitem_cast<CardItem*>(m_itemsMap.take(_uuid))) {
             //
@@ -820,7 +848,10 @@ void CardsScene::reorderSelectedItem()
                         }
                     }
                 }
+
+                m_isChangesBlocked = true;
                 emit cardMoved(movedCard->uuid(), actId, previusCardId);
+                m_isChangesBlocked = false;
             }
         }
     }
@@ -896,12 +927,12 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... сдвигаем акт
             //
-            act->setPos(x, y);
-//            QPropertyAnimation* moveAnimation = new QPropertyAnimation(act, "pos");
-//            moveAnimation->setDuration(100);
-//            moveAnimation->setStartValue(act->pos());
-//            moveAnimation->setEndValue(QPointF(x, y));
-//            moveAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+//            act->setPos(x, y);
+            QPropertyAnimation* moveAnimation = new QPropertyAnimation(act, "pos");
+            moveAnimation->setDuration(100);
+            moveAnimation->setStartValue(act->pos());
+            moveAnimation->setEndValue(QPointF(x, y));
+            moveAnimation->start(QAbstractAnimation::DeleteWhenStopped);
             //
             // ... корректируем координату y и сбрасываем счётчик карточек в ряду
             //
@@ -929,12 +960,12 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... позиционируем карточку
             //
-            card->setPos(x,  y);
-//            QPropertyAnimation* moveAnimation = new QPropertyAnimation(card, "pos");
-//            moveAnimation->setDuration(100);
-//            moveAnimation->setStartValue(card->pos());
-//            moveAnimation->setEndValue(QPointF(x, y));
-//            moveAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+//            card->setPos(x,  y);
+            QPropertyAnimation* moveAnimation = new QPropertyAnimation(card, "pos");
+            moveAnimation->setDuration(100);
+            moveAnimation->setStartValue(card->pos());
+            moveAnimation->setEndValue(QPointF(x, y));
+            moveAnimation->start(QAbstractAnimation::DeleteWhenStopped);
             //
             // ... и корректируем координаты для позиционирования следующих элементов
             //
