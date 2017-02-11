@@ -68,35 +68,22 @@ public:
     QString lastItemUuid() const;
 
     /**
-     * @brief Добавить акт
-     */
-    void addAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors);
-
-    /**
      * @brief Вставить акт после заданного элемента
      */
-    void insertAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors, const QString& _previousItemUuid);
-
-    /**
-     * @brief Добавить карточку
-     */
-    /** @{ */
-    void addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors);
-    void addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, const QPointF& _position);
-    /** @} */
+    void insertAct(const QString& _uuid, const QString& _title, const QString& _description,
+        const QString& _colors, const QString& _previousItemUuid);
 
     /**
      * @brief Вставить карточку после заданного элемента
      */
     void insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, const QPointF& _position, const QString& _previousItemUuid);
+        const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid);
 
     /**
      * @brief Обновить заданную карточку
      */
-    void updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description, const QString& _colors);
+    void updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
+        const QString& _stamp, const QString& _colors, bool _isEmbedded, bool _isAct);
 
     /**
      * @brief Удалить заданную карточку

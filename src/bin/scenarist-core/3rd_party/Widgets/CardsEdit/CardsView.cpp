@@ -73,43 +73,22 @@ QString CardsView::lastItemUuid() const
     return m_scene->lastItemUuid();
 }
 
-void CardsView::addAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors)
-{
-    m_scene->addAct(_uuid, _title, _description, _colors);
-}
-
 void CardsView::insertAct(const QString& _uuid, const QString& _title, const QString& _description,
     const QString& _colors, const QString& _previousItemUuid)
 {
     m_scene->insertAct(_uuid, _title, _description, _colors, _previousItemUuid);
 }
 
-void CardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-    const QString& _stamp, const QString& _colors)
-{
-    addCard(_uuid, _isFolder, _title, _description, _stamp, _colors, QPointF());
-}
-
-void CardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-    const QString& _stamp, const QString& _colors, const QPointF& _position)
-{
-    QPointF addPosition = _position;
-    if (addPosition.isNull()) {
-        const QPoint viewCenter = m_view->rect().center();
-        addPosition = m_view->mapToScene(viewCenter);
-    }
-    m_scene->addCard(_uuid, _isFolder, _title, _description, _stamp, _colors, addPosition);
-}
-
 void CardsView::insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-    const QString& _stamp, const QString& _colors, const QPointF& _position, const QString& _previousItemUuid)
+    const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid)
 {
-    m_scene->insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _position, _previousItemUuid);
+    m_scene->insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _position, _previousItemUuid);
 }
 
-void CardsView::updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description, const QString& _colors)
+void CardsView::updateItem(const QString& _uuid, bool _isFolder, const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded, bool _isAct)
 {
-    m_scene->updateItem(_uuid, _isFolder, _title, _description, _colors);
+    m_scene->updateItem(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
 }
 
 void CardsView::removeItem(const QString& _uuid)

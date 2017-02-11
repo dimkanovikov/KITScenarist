@@ -62,26 +62,23 @@ namespace UserInterface {
         void saveChanges(bool _hasChangesInText);
 
         /**
-         * @brief Добавить карточку
+         * @brief Вставить карточку после заданной
          */
-        void addCard(const QString& _uuid, bool _isFolder, const QString& _title,
-            const QString& _description, const QString& _stamp, const QString& _colors);
+        void insertCard(const QString& _uuid, bool _isFolder, const QString& _title,
+            const QString& _description, const QString& _stamp, const QString& _colors,
+            bool _isEmbedded, const QString& _previousCardUuid);
 
         /**
          * @brief Обновить карточку с заданным uuid
          */
         void updateCard(const QString& _uuid, bool _isFolder, const QString& _title,
-            const QString& _description, const QString& _colors);
+            const QString& _description, const QString& _stamp, const QString& _colors,
+            bool _isEmbedded, bool _isAct);
 
         /**
          * @brief Удалить карточку с заданным uuid
          */
         void removeCard(const QString& _uuid);
-
-        /**
-         * @brief Сделать активной карточку с заданным номером
-         */
-        void selectCard(const QString& _uuid);
 
         /**
          * @brief Получить идентификатор последнего элемента

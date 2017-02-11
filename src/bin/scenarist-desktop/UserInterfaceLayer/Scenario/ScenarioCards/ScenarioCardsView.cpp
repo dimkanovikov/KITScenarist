@@ -78,26 +78,23 @@ void ScenarioCardsView::saveChanges(bool _hasChangesInText)
     m_cards->saveChanges(_hasChangesInText);
 }
 
-void ScenarioCardsView::addCard(const QString& _uuid, bool _isFolder, const QString& _title,
-    const QString& _description, const QString& _stamp, const QString& _colors)
+void ScenarioCardsView::insertCard(const QString& _uuid, bool _isFolder, const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
+    const QString& _previousCardUuid)
 {
-    m_cards->addCard(_uuid, _isFolder, _title, _description, _stamp, _colors, m_newCardPosition);
+    m_cards->insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, m_newCardPosition, _previousCardUuid);
 }
 
 void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, const QString& _title,
-    const QString& _description, const QString& _colors)
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
+    bool _isAct)
 {
-    m_cards->updateItem(_uuid, _isFolder, _title, _description, _colors);
+    m_cards->updateItem(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
 }
 
 void ScenarioCardsView::removeCard(const QString& _uuid)
 {
     m_cards->removeItem(_uuid);
-}
-
-void ScenarioCardsView::selectCard(const QString& _uuid)
-{
-//	m_cards->selectCard(_uuid);
 }
 
 QString ScenarioCardsView::lastItemUuid() const

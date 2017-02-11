@@ -79,34 +79,48 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
     //
     if (m_model != _model) {
         m_model = _model;
-//        connect(m_model, &BusinessLogic::ScenarioModel::rowsInserted, [=] (const QModelIndex& _parent, int _first, int _last) {
-//            for (int row = _first; row <= _last; ++row) {
-//                const QModelIndex index = m_model->index(row, 0, _parent);
-//                BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
-//                QModelIndex currentCardIndex = _parent;
-//                if (row > 0) {
-//                    //
-//                    // -1 т.к. нужен предыдущий элемент
-//                    //
-//                    const int itemRow = row - 1;
-//                    if (_parent.isValid()) {
-//                        currentCardIndex = _parent.child(itemRow, 0);
-//                    } else {
-//                        currentCardIndex = m_model->index(itemRow, 0);
-//                    }
-//                }
+        connect(m_model, &BusinessLogic::ScenarioModel::rowsInserted, [=] (const QModelIndex& _parent, int _first, int _last) {
+            //
+            // Пробегаем каждый добавленный элемент
+            //
+            for (int row = _first; row <= _last; ++row) {
+                const QModelIndex index = m_model->index(row, 0, _parent);
+                BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
 
-//                BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
-//                m_view->selectCard(currentCard->uuid());
-//                m_view->addCard(
-//                    item->uuid(),
-//                    item->type() == BusinessLogic::ScenarioModelItem::Folder,
-//                    item->title().isEmpty() ? item->header() : item->title(),
-//                    item->description(),
-//                    QString::null,
-//                    item->colors());
-//            }
-//        });
+                //
+                // ... определим предыдущий элемент
+                //
+                QModelIndex currentCardIndex = _parent;
+                if (row > 0) {
+                    //
+                    // -1 т.к. нужен предыдущий элемент
+                    //
+                    const int itemRow = row - 1;
+                    if (_parent.isValid()) {
+                        currentCardIndex = _parent.child(itemRow, 0);
+                    } else {
+                        currentCardIndex = m_model->index(itemRow, 0);
+                    }
+                }
+                BusinessLogic::ScenarioModelItem* currentCard = m_model->itemForIndex(currentCardIndex);
+
+                //
+                // ... вставляем
+                //
+                const bool isEmbedded =
+                        item->hasParent()
+                        && item->parent()->type() != BusinessLogic::ScenarioModelItem::Scenario;
+                m_view->insertCard(
+                    item->uuid(),
+                    item->type() == BusinessLogic::ScenarioModelItem::Folder,
+                    item->title().isEmpty() ? item->header() : item->title(),
+                    item->description(),
+                    QString::null,
+                    item->colors(),
+                    isEmbedded,
+                    currentCard->uuid());
+            }
+        });
         connect(m_model, &BusinessLogic::ScenarioModel::rowsAboutToBeRemoved, [=] (const QModelIndex& _parent, int _first, int _last) {
             for (int row = _last; row >= _first; --row) {
                 QModelIndex currentCardIndex = _parent;
@@ -123,12 +137,22 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
             for (int row = _topLeft.row(); row <= _bottomRight.row(); ++row) {
                 const QModelIndex index = m_model->index(row, 0, _topLeft.parent());
                 const BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
+                const bool isAct =
+                        item->type() == BusinessLogic::ScenarioModelItem::Folder
+                        && item->hasParent()
+                        && item->parent()->type() == BusinessLogic::ScenarioModelItem::Scenario;
+                const bool isEmbedded =
+                        item->hasParent()
+                        && item->parent()->type() != BusinessLogic::ScenarioModelItem::Scenario;
                 m_view->updateCard(
                     item->uuid(),
                     item->type() == BusinessLogic::ScenarioModelItem::Folder,
                     item->title().isEmpty() ? item->header() : item->title(),
                     item->description(),
-                    item->colors());
+                    QString::null,
+                    item->colors(),
+                    isEmbedded,
+                    isAct);
             }
         });
     }
@@ -197,6 +221,13 @@ void ScenarioCardsManager::addCard()
             const QString lastItemUuid = m_view->lastItemUuid();
             if (!lastItemUuid.isEmpty()) {
                 index = m_model->indexForUuid(lastItemUuid);
+            }
+
+            //
+            // Если добавляется акт, то нужно взять корневой индекс
+            //
+            if (type == BusinessLogic::ScenarioModelItem::Folder) {
+                index = index.parent();
             }
 
             emit addCardRequest(index, type, title, QColor(color), description);

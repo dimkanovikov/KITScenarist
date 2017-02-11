@@ -78,6 +78,14 @@ public:
     /** @} */
 
     /**
+     * @brief Вложена ли карточка в папку
+     */
+    /** @{ */
+    void setIsEmbedded(bool _embedded);
+    bool isEmbedded() const;
+    /** @} */
+
+    /**
      * @brief Установить размер карточки
      */
     void setSize(const QSizeF& _size);
@@ -162,6 +170,11 @@ private:
      * @brief Цвета карточки
      */
     QString m_colors;
+
+    /**
+     * @brief Вложена ли карточка в папку
+     */
+    bool m_isEmbedded = false;
 
     /**
      * @brief Размер карточки

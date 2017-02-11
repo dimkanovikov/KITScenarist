@@ -62,19 +62,19 @@ public:
      * @brief Добавить карточку
      */
     void addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, const QPointF& _position);
+        const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position);
 
     /**
      * @brief Вставить карточку после заданного элемента
      */
     void insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, const QPointF& _position, const QString& _previousItemUuid);
+        const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid);
 
     /**
      * @brief Обновить заданную карточку
      */
     void updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _colors);
+        const QString& _stamp, const QString& _colors, bool _isEmbedded, bool _isAct);
 
     /**
      * @brief Удалить элемент по идентификатору
