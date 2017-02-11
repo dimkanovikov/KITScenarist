@@ -359,25 +359,25 @@ void CardItem::putOnBoard()
         }
         setZValue(newZValue);
 
-//        QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
-//        radiusAnimation->setDuration(100);
-//        radiusAnimation->setStartValue(7);
-//        radiusAnimation->setEndValue(34);
-//        QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
-//        colorAnimation->setDuration(100);
-//        colorAnimation->setStartValue(QColor(63, 63, 63, 180));
-//        colorAnimation->setEndValue(QColor(63, 63, 63, 240));
-//        QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
-//        yOffsetAnimation->setDuration(100);
-//        yOffsetAnimation->setStartValue(1);
-//        yOffsetAnimation->setEndValue(6);
+        QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
+        radiusAnimation->setDuration(100);
+        radiusAnimation->setStartValue(7);
+        radiusAnimation->setEndValue(34);
+        QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
+        colorAnimation->setDuration(100);
+        colorAnimation->setStartValue(QColor(63, 63, 63, 180));
+        colorAnimation->setEndValue(QColor(63, 63, 63, 240));
+        QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
+        yOffsetAnimation->setDuration(100);
+        yOffsetAnimation->setStartValue(1);
+        yOffsetAnimation->setEndValue(6);
 
-//        QParallelAnimationGroup *group = new QParallelAnimationGroup;
-//        group->addAnimation(radiusAnimation);
-//        group->addAnimation(colorAnimation);
-//        group->addAnimation(yOffsetAnimation);
-//        group->setDirection(QAbstractAnimation::Backward);
-//        group->start(QAbstractAnimation::DeleteWhenStopped);
+        QParallelAnimationGroup *group = new QParallelAnimationGroup;
+        group->addAnimation(radiusAnimation);
+        group->addAnimation(colorAnimation);
+        group->addAnimation(yOffsetAnimation);
+        group->setDirection(QAbstractAnimation::Backward);
+        group->start(QAbstractAnimation::DeleteWhenStopped);
     }
 }
 

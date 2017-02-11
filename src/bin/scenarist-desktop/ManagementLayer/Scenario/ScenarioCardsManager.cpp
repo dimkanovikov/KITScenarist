@@ -88,6 +88,15 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                 BusinessLogic::ScenarioModelItem* item = m_model->itemForIndex(index);
 
                 //
+                // ... пропускаем сцены если их уровень вложенности больше второго
+                //
+                if (item->hasParent()
+                    && item->parent()->hasParent()
+                    && item->parent()->parent()->hasParent()) {
+                    continue;
+                }
+
+                //
                 // ... определим предыдущий элемент
                 //
                 QModelIndex currentCardIndex = _parent;

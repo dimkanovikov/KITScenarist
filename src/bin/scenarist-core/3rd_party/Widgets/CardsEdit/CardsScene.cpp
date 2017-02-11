@@ -927,7 +927,6 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... сдвигаем акт
             //
-//            act->setPos(x, y);
             QPropertyAnimation* moveAnimation = new QPropertyAnimation(act, "pos");
             moveAnimation->setDuration(100);
             moveAnimation->setStartValue(act->pos());
@@ -960,7 +959,6 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... позиционируем карточку
             //
-//            card->setPos(x,  y);
             QPropertyAnimation* moveAnimation = new QPropertyAnimation(card, "pos");
             moveAnimation->setDuration(100);
             moveAnimation->setStartValue(card->pos());
