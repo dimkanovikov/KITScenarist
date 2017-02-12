@@ -332,33 +332,29 @@ void CardItem::takeFromBoard()
 
     setZValue(10000);
 
+    const int duration = 100;
     QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
-    radiusAnimation->setDuration(100);
+    radiusAnimation->setDuration(duration);
     radiusAnimation->setStartValue(7);
     radiusAnimation->setEndValue(34);
     QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
-    colorAnimation->setDuration(100);
+    colorAnimation->setDuration(duration);
     colorAnimation->setStartValue(QColor(63, 63, 63, 180));
-    colorAnimation->setEndValue(QColor(63, 63, 63, 240));
+    colorAnimation->setEndValue(QColor(23, 23, 23, 240));
     QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
-    yOffsetAnimation->setDuration(100);
+    yOffsetAnimation->setDuration(duration);
     yOffsetAnimation->setStartValue(1);
     yOffsetAnimation->setEndValue(6);
-    QPropertyAnimation* sizeAnimation = new QPropertyAnimation(this, "scale");
-    sizeAnimation->setDuration(100);
-    sizeAnimation->setStartValue(scale());
-    sizeAnimation->setEndValue(scale() + 0.1);
-    QPropertyAnimation* posAnimation = new QPropertyAnimation(this, "pos");
-    posAnimation->setDuration(100);
-    posAnimation->setStartValue(pos());
-    posAnimation->setEndValue(pos() - QPointF(12, 12));
+    QPropertyAnimation* scaleAnimation = new QPropertyAnimation(this, "scale");
+    scaleAnimation->setDuration(duration);
+    scaleAnimation->setStartValue(scale());
+    scaleAnimation->setEndValue(scale() + 0.005);
 
     QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
     group->addAnimation(radiusAnimation);
     group->addAnimation(colorAnimation);
     group->addAnimation(yOffsetAnimation);
-    group->addAnimation(sizeAnimation);
-    group->addAnimation(posAnimation);
+    group->addAnimation(scaleAnimation);
     group->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
@@ -375,22 +371,23 @@ void CardItem::putOnBoard()
         }
         setZValue(newZValue);
 
+        const int duration = 100;
         QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
-        radiusAnimation->setDuration(100);
+        radiusAnimation->setDuration(duration);
         radiusAnimation->setStartValue(7);
         radiusAnimation->setEndValue(34);
         QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
-        colorAnimation->setDuration(100);
+        colorAnimation->setDuration(duration);
         colorAnimation->setStartValue(QColor(63, 63, 63, 180));
-        colorAnimation->setEndValue(QColor(63, 63, 63, 240));
+        colorAnimation->setEndValue(QColor(23, 23, 23, 240));
         QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
-        yOffsetAnimation->setDuration(100);
+        yOffsetAnimation->setDuration(duration);
         yOffsetAnimation->setStartValue(1);
         yOffsetAnimation->setEndValue(6);
-        QPropertyAnimation* sizeAnimation = new QPropertyAnimation(this, "scale");
-        sizeAnimation->setDuration(100);
-        sizeAnimation->setStartValue(scale() - 0.1);
-        sizeAnimation->setEndValue(scale());
+        QPropertyAnimation* scaleAnimation = new QPropertyAnimation(this, "scale");
+        scaleAnimation->setDuration(duration);
+        scaleAnimation->setStartValue(scale() - 0.005);
+        scaleAnimation->setEndValue(scale());
 
 
         QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
@@ -398,23 +395,7 @@ void CardItem::putOnBoard()
         group->addAnimation(radiusAnimation);
         group->addAnimation(colorAnimation);
         group->addAnimation(yOffsetAnimation);
-        group->addAnimation(sizeAnimation);
-
-        //
-        // Небольшой хак ради красоты
-        // Возвращать позицию надо только в случае, если карточки не привязаны к сетке в сцене,
-        // в противном случае анимация не завершается корректно, т.к. при растановке по сетке
-        // перехватывается владение параметром карточки pos
-        //
-        if (CardsScene* scene = qobject_cast<CardsScene*>(this->scene())) {
-            if (scene->isFixedMode() == false) {
-                QPropertyAnimation* posAnimation = new QPropertyAnimation(this, "pos");
-                posAnimation->setDuration(100);
-                posAnimation->setStartValue(pos() + QPointF(12, 12));
-                posAnimation->setEndValue(pos());
-                group->addAnimation(posAnimation);
-            }
-        }
+        group->addAnimation(scaleAnimation);
 
         group->setDirection(QAbstractAnimation::Backward);
         group->start(QAbstractAnimation::DeleteWhenStopped);
