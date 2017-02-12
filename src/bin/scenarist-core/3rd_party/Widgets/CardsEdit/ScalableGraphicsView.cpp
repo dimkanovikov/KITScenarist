@@ -14,6 +14,12 @@ ScalableGraphicsView::ScalableGraphicsView(QWidget *parent) :
 {
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+    //
+    // Отслеживаем жесты
+    //
+    grabGesture(Qt::PinchGesture);
+    grabGesture(Qt::SwipeGesture);
 }
 
 void ScalableGraphicsView::zoomIn()

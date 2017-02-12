@@ -2,6 +2,7 @@
 
 #include "TextUtils.h"
 
+#include <QApplication>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QPainter>
@@ -113,12 +114,13 @@ QRectF ActItem::boundingRect() const
 
 void ActItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option, QWidget* _widget)
 {
+    Q_UNUSED(_option);
     Q_UNUSED(_widget);
 
     _painter->save();
 
     {
-        const QPalette palette = _option->palette;
+        const QPalette palette = QApplication::palette();
         const QRectF actRect = boundingRect();
         const QStringList colors = m_colors.split(";", QString::SkipEmptyParts);
 

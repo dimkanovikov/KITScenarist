@@ -53,6 +53,7 @@ void CardsResizer::initView()
 void CardsResizer::initConnections()
 {
     connect(m_ui->arrangeCards, &QCheckBox::toggled, m_ui->cardsInLine, &QSpinBox::setEnabled);
+    connect(m_ui->arrangeCards, &QCheckBox::toggled, m_ui->cardsInLineLabel, &QSpinBox::setEnabled);
 
     connect(m_ui->cardSize, &QSlider::valueChanged, this, &CardsResizer::parametersChanged);
     connect(m_ui->cardRatio, &QSlider::valueChanged, this, &CardsResizer::parametersChanged);

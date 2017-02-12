@@ -986,9 +986,9 @@ void ScenarioManager::initConnections()
     connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::updateCardRequest, this, &ScenarioManager::aboutUpdateItemFromCards);
     connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, this, &ScenarioManager::aboutRemoveItemFromCards);
-//    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
-//    connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
-//    connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
+    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
+    connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
+    connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);
 //    connect(m_cardsManager, &ScenarioCardsManager::undoRequest, this, &ScenarioManager::aboutUndo);
 //    connect(m_cardsManager, &ScenarioCardsManager::redoRequest, this, &ScenarioManager::aboutRedo);
 

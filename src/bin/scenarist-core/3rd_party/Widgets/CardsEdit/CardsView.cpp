@@ -4,6 +4,7 @@
 #include "CardsUndoStack.h"
 #include "ScalableGraphicsView.h"
 
+#include <QEvent>
 #include <QVBoxLayout>
 
 
@@ -154,6 +155,18 @@ void CardsView::saveChanges(bool _hasChangesInText)
     }
 }
 
+bool CardsView::event(QEvent* _event)
+{
+    //
+    // Самый простой способ перерисовать всю сцену
+    //
+    if (_event->type() == QEvent::PaletteChange) {
+        m_view->rotate(0.0000000001);
+    }
+
+    return QWidget::event(_event);
+}
+
 void CardsView::initView()
 {
     m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
@@ -184,6 +197,7 @@ void CardsView::initConnections()
     connect(m_scene, &CardsScene::cardMoved, this, &CardsView::cardMoved);
     connect(m_scene, &CardsScene::cardMovedToGroup, this, &CardsView::cardMovedToGroup);
     connect(m_scene, &CardsScene::cardColorsChanged, this, &CardsView::cardColorsChanged);
+    connect(m_scene, &CardsScene::cardTypeChanged, this, &CardsView::cardTypeChanged);
 
     connect(m_view, &ScalableGraphicsView::scaleChanged, m_scene, &CardsScene::refresh);
 }

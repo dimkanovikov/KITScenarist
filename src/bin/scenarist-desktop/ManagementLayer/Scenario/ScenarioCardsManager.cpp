@@ -301,24 +301,22 @@ void ScenarioCardsManager::moveCard(const QString& _cardId, const QString& _actI
 
 void ScenarioCardsManager::changeCardColors(const QString& _uuid, const QString& _colors)
 {
-//	if (!_uuid.isEmpty()) {
-//		const QModelIndex index = m_model->indexForUuid(_uuid);
-//		emit cardColorsChanged(index, _colors);
-//	}
+    if (!_uuid.isEmpty()) {
+        const QModelIndex index = m_model->indexForUuid(_uuid);
+        emit cardColorsChanged(index, _colors);
+    }
 }
 
-void ScenarioCardsManager::changeCardType(const QString& _uuid, int _cardType)
+void ScenarioCardsManager::changeCardType(const QString& _uuid, bool _isFolder)
 {
-//	if (!_uuid.isEmpty()) {
-//		const QModelIndex index = m_model->indexForUuid(_uuid);
-//		int mappedType = BusinessLogic::ScenarioModelItem::Scene;
-//		if (_cardType == CardShape::TypeScenesGroup) {
-//			mappedType = BusinessLogic::ScenarioModelItem::SceneGroup;
-//		} else if (_cardType == CardShape::TypeFolder) {
-//			mappedType = BusinessLogic::ScenarioModelItem::Folder;
-//		}
-//		emit cardTypeChanged(index, mappedType);
-//	}
+    if (!_uuid.isEmpty()) {
+        const QModelIndex index = m_model->indexForUuid(_uuid);
+        int mappedType = BusinessLogic::ScenarioModelItem::Scene;
+        if (_isFolder) {
+            mappedType = BusinessLogic::ScenarioModelItem::Folder;
+        }
+        emit cardTypeChanged(index, mappedType);
+    }
 }
 
 void ScenarioCardsManager::initConnections()
@@ -337,8 +335,8 @@ void ScenarioCardsManager::initConnections()
     connect(m_view, &ScenarioCardsView::editCardRequest, this, &ScenarioCardsManager::editCard);
     connect(m_view, &ScenarioCardsView::removeCardRequest, this, &ScenarioCardsManager::removeCard);
     connect(m_view, &ScenarioCardsView::cardMoved, this, &ScenarioCardsManager::moveCard);
-//	connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
-//	connect(m_view, &ScenarioCardsView::itemTypeChanged, this, &ScenarioCardsManager::changeCardType);
+    connect(m_view, &ScenarioCardsView::cardColorsChanged, this, &ScenarioCardsManager::changeCardColors);
+    connect(m_view, &ScenarioCardsView::cardTypeChanged, this, &ScenarioCardsManager::changeCardType);
 
     connect(m_view, &ScenarioCardsView::fullscreenRequest, this, &ScenarioCardsManager::fullscreenRequest);
 

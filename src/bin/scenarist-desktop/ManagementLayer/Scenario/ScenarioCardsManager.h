@@ -148,7 +148,7 @@ namespace ManagementLayer
         /**
          * @brief Изменить тип карточки
          */
-        void changeCardType(const QString& _uuid, int _cardType);
+        void changeCardType(const QString& _uuid, bool _isFolder);
 
     private:
         /**

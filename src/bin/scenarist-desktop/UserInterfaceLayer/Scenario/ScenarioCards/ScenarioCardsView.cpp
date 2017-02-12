@@ -289,8 +289,8 @@ void ScenarioCardsView::initConnections()
 
     connect(m_cards, &CardsView::cardMoved, this, &ScenarioCardsView::cardMoved);
 
-//	connect(m_cards, &ActivityEdit::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
-//	connect(m_cards, &ActivityEdit::itemTypeChanged, this, &ScenarioCardsView::itemTypeChanged);
+    connect(m_cards, &CardsView::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
+    connect(m_cards, &CardsView::cardTypeChanged, this, &ScenarioCardsView::cardTypeChanged);
 
     connect(m_sort, &FlatButton::clicked, this, &ScenarioCardsView::resortCards);
     connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);

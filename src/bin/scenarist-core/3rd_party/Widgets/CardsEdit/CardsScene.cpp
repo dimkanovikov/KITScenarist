@@ -3,6 +3,8 @@
 #include "ActItem.h"
 #include "CardItem.h"
 
+#include <3rd_party/Widgets/ColoredToolButton/GoogleColorsPane.h>
+
 #include "cmath"
 
 #include <QDomDocument>
@@ -213,9 +215,10 @@ void CardsScene::insertCard(const QString& _uuid, bool _isFolder, const QString&
         QGraphicsItem* previousItem = m_itemsMap[_previousItemUuid];
         insertIndex = m_items.indexOf(previousItem) + 1;
         //
-        // Если карточка вкладывается после акта
+        // Если карточка кладётся после акта без вложения
         //
-        if (previousItem->type() == ActItem::Type) {
+        if (previousItem->type() == ActItem::Type
+            && _isEmbedded == false) {
             //
             // ... сдвигаем индекс, пока не дойдём до конца вложенных в этот акт элементов
             //
@@ -547,39 +550,110 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
         break;
     }
 
+    const bool hasSelectedItem = !selectedItems().isEmpty();
+    ActItem* act = nullptr;
+    CardItem* card = nullptr;
+    if (hasSelectedItem) {
+        act = qgraphicsitem_cast<ActItem*>(selectedItems().first());
+        card = qgraphicsitem_cast<CardItem*>(selectedItems().first());
+    }
 
     //
     // Сформируем контекстное меню в зависимости от того, выбраны ли карточки на экране
     //
     QMenu* menu = new QMenu(views().value(0, nullptr));
-    QAction* addActAction = menu->addAction(tr("Add act"));
-    QAction* addCardAction = menu->addAction(tr("Add card"));
-    QAction* editActAction = menu->addAction(tr("Edit act"));
-    QAction* editCardAction = menu->addAction(tr("Edit card"));
-    QAction* removeActAction = menu->addAction(tr("Remove act"));
-    QAction* removeCardAction = menu->addAction(tr("Remove card"));
-    if (selectedItems().isEmpty()) {
-        editActAction->setVisible(false);
-        editCardAction->setVisible(false);
-        removeActAction->setVisible(false);
-        removeCardAction->setVisible(false);
+
+    QAction* convertToSceneAction = menu->addAction(tr("Convert to scene"));
+    QAction* convertToFolderAction = menu->addAction(tr("Convert to folder"));
+
+    //
+    // Цвета
+    //
+    QAction* propertiesSeparator = menu->addSeparator();
+    QString colorsNames;
+    if (act != nullptr) {
+        colorsNames = act->colors();
+    } else if (card != nullptr) {
+        colorsNames = card->colors();
+    }
+    int colorIndex = 1;
+    QList<GoogleColorsPane*> colorsPanesList;
+    //
+    // ... добавляем каждый цвет
+    //
+    foreach (const QString& colorName, colorsNames.split(";", QString::SkipEmptyParts)) {
+        QAction* color = menu->addAction(tr("Color %1").arg(colorIndex));
+        QMenu* colorMenu = new QMenu(views().value(0, nullptr));
+        QAction* removeColor = colorMenu->addAction(tr("Remove"));
+        removeColor->setData(QString("removeColor:%1").arg(colorIndex));
+        QWidgetAction* wa = new QWidgetAction(colorMenu);
+        GoogleColorsPane* colorsPane = new GoogleColorsPane(colorMenu);
+        colorsPane->setCurrentColor(QColor(colorName));
+        wa->setDefaultWidget(colorsPane);
+        colorMenu->addAction(wa);
+        color->setMenu(colorMenu);
+
+        connect(colorsPane, &GoogleColorsPane::selected, menu, &QMenu::close);
+
+        colorsPanesList.append(colorsPane);
+
+        ++colorIndex;
+    }
+    //
+    // ... пункт для нового цвета
+    //
+    QAction* color = menu->addAction(tr("Add color"));
+    {
+        QMenu* colorMenu = new QMenu(views().value(0, nullptr));
+        QWidgetAction* wa = new QWidgetAction(colorMenu);
+        GoogleColorsPane* colorsPane = new GoogleColorsPane(colorMenu);
+        wa->setDefaultWidget(colorsPane);
+        colorMenu->addAction(wa);
+        color->setMenu(colorMenu);
+
+        connect(colorsPane, &GoogleColorsPane::selected, menu, &QMenu::close);
+
+        colorsPanesList.append(colorsPane);
+    }
+
+    //
+    // Остальное
+    //
+    QAction* endSeparator = menu->addSeparator();
+    QAction* addAction = menu->addAction(tr("Create card"));
+    QAction* editAction = menu->addAction(tr("Edit"));
+    QAction* removeAction = menu->addAction(tr("Remove"));
+
+    //
+    // Определим видимые
+    //
+    if (!hasSelectedItem) {
+        convertToSceneAction->setVisible(false);
+        convertToFolderAction->setVisible(false);
+        color->setVisible(false);
+        propertiesSeparator->setVisible(false);
+        endSeparator->setVisible(false);
+        editAction->setVisible(false);
+        removeAction->setVisible(false);
     } else {
-        addActAction->setVisible(false);
-        addCardAction->setVisible(false);
-        if (qgraphicsitem_cast<ActItem*>(selectedItems().first())) {
-            editCardAction->setVisible(false);
-            removeCardAction->setVisible(false);
-        } else if (CardItem* card = qgraphicsitem_cast<CardItem*>(selectedItems().first())) {
+        if (act != nullptr) {
+            convertToFolderAction->setVisible(false);
+            convertToSceneAction->setVisible(false);
+            propertiesSeparator->setVisible(false);
+        }
+        if (card != nullptr) {
             card->putOnBoard();
-            //
-            editActAction->setVisible(false);
-            removeActAction->setVisible(false);
+            if (card->isFolder()) {
+                convertToFolderAction->setVisible(false);
+            } else {
+                convertToSceneAction->setVisible(false);
+            }
+
             //
             // ... виджет редактирования штампа
             //
             QWidgetAction* stateAction = new QWidgetAction(menu);
             QWidget* stampWidget = new QWidget;
-            stampWidget->setStyleSheet("margin-left:30px; min-height:24px;");
             QLineEdit* stampEditor = new QLineEdit(stampWidget);
             stampEditor->setText(card->stamp());
             connect(stampEditor, &QLineEdit::textChanged, [=] (const QString& _text) {
@@ -587,23 +661,14 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
                     card->setStamp(_text);
                 }
             });
-            QVBoxLayout* stampLayout = new QVBoxLayout(stampWidget);
-            stampLayout->setContentsMargins(QMargins());
-            stampLayout->setSpacing(0);
+            QHBoxLayout* stampLayout = new QHBoxLayout(stampWidget);
+            stampLayout->setContentsMargins(QMargins(27, 2, 5, 3));
+            stampLayout->setSpacing(2);
             stampLayout->addWidget(new QLabel(tr("Stamp:"), stampWidget));
             stampLayout->addWidget(stampEditor);
             stateAction->setDefaultWidget(stampWidget);
-            menu->insertAction(editCardAction, stateAction);
-            menu->insertSeparator(editCardAction);
+            menu->insertAction(menu->actions().at(3), stateAction);
         }
-    }
-    //
-    // ... если нельзя добавлять акты, то принудительно скрываем все действия над ними
-    //
-    if (!m_isCanAddActs) {
-        addActAction->setVisible(false);
-        editActAction->setVisible(false);
-        removeActAction->setVisible(false);
     }
 
     //
@@ -616,46 +681,90 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
     //
     if (triggered != nullptr) {
         //
-        // Пользователь хочет добавить акт
+        // Пользователь хочет добавить карточку
         //
-        if (triggered == addActAction) {
-            const QPointF insertPosition = fixCollidesForCardPosition(_event->scenePos());
-            emit actAddRequest(insertPosition);
-        }
-        //
-        // ... или карточку
-        //
-        else if (triggered == addCardAction) {
+        if (triggered == addAction) {
             const QPointF insertPosition = fixCollidesForCardPosition(_event->scenePos());
             emit cardAddRequest(insertPosition);
         }
         //
-        // Пользователь хочет изменить акт
+        // Пользователь хочет изменить карточку
         //
-        else if (triggered == editActAction) {
-            const ActItem* act = qgraphicsitem_cast<ActItem*>(selectedItems().first());
-            emit cardChangeRequest(act->uuid());
+        else if (triggered == editAction) {
+            if (act != nullptr) {
+                emit actChangeRequest(act->uuid());
+            } else if (card != nullptr) {
+                emit cardChangeRequest(card->uuid());
+            }
         }
         //
-        // ... или карточку
+        // Пользователь хочет удалить карточку
         //
-        else if (triggered == editCardAction) {
-            const CardItem* card = qgraphicsitem_cast<CardItem*>(selectedItems().first());
-            emit cardChangeRequest(card->uuid());
+        else if (triggered == removeAction) {
+            if (act != nullptr) {
+                emit actRemoveRequest(act->uuid());
+            } else if (card != nullptr) {
+                emit cardRemoveRequest(card->uuid());
+            }
         }
         //
-        // Пользователь хочет удалить акт
+        // Сменить тип карточки на папку
         //
-        else if (triggered == removeActAction) {
-            const ActItem* act = qgraphicsitem_cast<ActItem*>(selectedItems().first());
-            emit actRemoveRequest(act->uuid());
+        else if (triggered == convertToFolderAction ) {
+            const QString uuid = act != nullptr ? act->uuid() : card->uuid();
+            emit cardTypeChanged(uuid, true);
         }
         //
-        // ... или карточку
+        // ... или на сцену
         //
-        else if (triggered == removeCardAction) {
-            const CardItem* card = qgraphicsitem_cast<CardItem*>(selectedItems().first());
-            emit cardRemoveRequest(card->uuid());
+        else if (triggered == convertToSceneAction) {
+            const QString uuid = act != nullptr ? act->uuid() : card->uuid();
+            emit cardTypeChanged(uuid, false);
+        }
+        //
+        // Удалить цвет
+        //
+        else if (triggered->data().toString().startsWith("removeColor")) {
+            //
+            // Удаляем выбранный цвет из списка и обновляемся
+            //
+            const int removeColorIndex = triggered->data().toString().split(":").last().toInt();
+            QString newColorsNames;
+            int colorIndex = 1;
+            foreach (const QString& colorName, colorsNames.split(";", QString::SkipEmptyParts)) {
+                if (colorIndex != removeColorIndex) {
+                    if (!newColorsNames.isEmpty()) {
+                        newColorsNames.append(";");
+                    }
+                    newColorsNames.append(colorName);
+                }
+
+                ++colorIndex;
+            }
+
+            const QString uuid = act != nullptr ? act->uuid() : card->uuid();
+            emit cardColorsChanged(uuid, newColorsNames);
+        }
+    }
+    //
+    // Возможно было изменение цвета
+    //
+    else {
+        if (hasSelectedItem) {
+            //
+            // Добавляем новый цвет и обновляемся
+            //
+            QString newColorsNames;
+            foreach (GoogleColorsPane* colorsPane, colorsPanesList) {
+                if (colorsPane->currentColor().isValid()) {
+                    if (!newColorsNames.isEmpty()) {
+                        newColorsNames.append(";");
+                    }
+                    newColorsNames.append(colorsPane->currentColor().name());
+                }
+            }
+            const QString uuid = act != nullptr ? act->uuid() : card->uuid();
+            emit cardColorsChanged(uuid, newColorsNames);
         }
     }
 

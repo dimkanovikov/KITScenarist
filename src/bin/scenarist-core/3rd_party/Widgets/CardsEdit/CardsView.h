@@ -197,6 +197,17 @@ signals:
      */
     void cardColorsChanged(const QString& _uuid, const QString& _colors);
 
+    /**
+     * @brief Запрос на изменение типа карточки
+     */
+    void cardTypeChanged(const QString& _uuid, bool _isFolder);
+
+protected:
+    /**
+     * @brief Переопределяем для обработки события смены палитры
+     */
+    bool event(QEvent* _event);
+
 private:
     /**
      * @brief Настройка представления

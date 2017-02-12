@@ -7,6 +7,7 @@
 
 #include <3rd_party/Helpers/ImageHelper.h>
 
+#include <QApplication>
 #include <QDrag>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
@@ -187,12 +188,13 @@ QRectF CardItem::boundingRectCorrected() const
 
 void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option, QWidget* _widget)
 {
+    Q_UNUSED(_option);
     Q_UNUSED(_widget);
 
     _painter->save();
 
     {
-        const QPalette palette = _option->palette;
+        const QPalette palette = QApplication::palette();
         const QRectF cardRect = boundingRect().adjusted(0, 9, 0, 0);
         const QStringList colors = m_colors.split(";", QString::SkipEmptyParts);
         const int additionalColorsHeight = (colors.size() > 1) ? 10 : 0;
@@ -278,7 +280,7 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         //
         _painter->setOpacity(0.33);
         QFont stateFont = font;
-        stateFont.setPointSize(stateFont.pointSize()*6);
+        stateFont.setPointSize(stateFont.pointSize()*8);
         stateFont.setBold(true);
         stateFont.setCapitalization(QFont::AllUppercase);
         //
@@ -434,7 +436,9 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent* _event)
     else {
         QGraphicsItem::mousePressEvent(_event);
 
-        takeFromBoard();
+        if (_event->button() == Qt::LeftButton) {
+            takeFromBoard();
+        }
     }
 }
 

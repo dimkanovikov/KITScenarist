@@ -78,7 +78,10 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="cardsInLineLabel">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>cards in Row</string>
        </property>

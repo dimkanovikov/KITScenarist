@@ -139,6 +139,11 @@ namespace UserInterface {
         void cardColorsChanged(const QString& _uuid, const QString& _colors);
 
         /**
+         * @brief Запрос на изменение типа карточки
+         */
+        void cardTypeChanged(const QString& _uuid, bool _isFolder);
+
+        /**
          * @brief Запрос на переход в полноэкранный режим, или выход из него
          */
         void fullscreenRequest();
