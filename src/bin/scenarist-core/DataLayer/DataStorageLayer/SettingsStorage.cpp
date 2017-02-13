@@ -8,6 +8,7 @@
 #include <3rd_party/Helpers/ShortcutHelper.h>
 
 #include <QApplication>
+#include <QCheckBox>
 #include <QHeaderView>
 #include <QRadioButton>
 #include <QSpinBox>
@@ -331,6 +332,15 @@ void SettingsStorage::saveApplicationStateAndGeometry(QWidget* _widget)
     m_appSettings.endGroup();
 
     //
+    // Сохраняем состояния чекбоксов
+    //
+    m_appSettings.beginGroup("checkboxes");
+    foreach (QCheckBox* checkBox, _widget->findChildren<QCheckBox*>()) {
+        m_appSettings.setValue(checkBox->objectName() + "-checked", checkBox->isChecked());
+    }
+    m_appSettings.endGroup();
+
+    //
     // Сохраняем состояния слайдеров
     //
     m_appSettings.beginGroup("sliders");
@@ -441,6 +451,15 @@ void SettingsStorage::loadApplicationStateAndGeometry(QWidget* _widget)
             && radioButton->objectName() != "remoteProjects") {
             radioButton->setChecked(m_appSettings.value(radioButton->objectName() + "-checked", radioButton->isChecked()).toBool());
         }
+    }
+    m_appSettings.endGroup();
+
+    //
+    // Чекбоксов
+    //
+    m_appSettings.beginGroup("checkboxes");
+    foreach (QCheckBox* checkBox, _widget->findChildren<QCheckBox*>()) {
+        checkBox->setChecked(m_appSettings.value(checkBox->objectName() + "-checked", checkBox->isChecked()).toBool());
     }
     m_appSettings.endGroup();
 

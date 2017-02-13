@@ -113,7 +113,7 @@ namespace ManagementLayer
         /**
          * @brief Добавить разработку
          */
-        void addResearch(const QModelIndex& _index);
+        void addResearch(const QModelIndex& _index, int _type = -1);
 
         /**
          * @brief Изменить разработку

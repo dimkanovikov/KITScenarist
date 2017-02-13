@@ -115,8 +115,8 @@ namespace {
 QString ScenarioXml::defaultCardsXml()
 {
     return "<?xml version=\"1.0\"?>\n"
-           "<cards_xml scale=\"0\" scale_x=\"0\" scale_y=\"0\">\n"
-           "<ActionShape id=\"0\" x=\"60\" y=\"60\" width=\"210\" height=\"100\" uuid=\"{000000-0000000-000000}\" card_type=\"0\" title=\"\" description=\"\"/>\n"
+           "<cards x=\"0\" y=\"0\" width=\"0\" height=\"0\" scale=\"1\" >\n"
+           "<Card id=\"{000000-0000000-000000}\" is_folder=\"false\" title=\"\" description=\"\" stamp=\"\" colors=\"\" x=\"0\" y=\"0\" />\n"
            "</cards_xml>";
 }
 
@@ -243,7 +243,7 @@ QString ScenarioXml::scenarioToXml()
                         uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_COLOR, info->colors());
                     }
                     if (!info->title().isEmpty()) {
-                        uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, info->title());
+                        uuidColorsAndTitle += QString(" %1=\"%2\"").arg(ATTRIBUTE_TITLE, TextEditHelper::toHtmlEscaped(info->title()));
                     }
                 }
 
@@ -488,7 +488,7 @@ QString ScenarioXml::scenarioToXml(int _startPosition, int _endPosition, bool _c
                         writer.writeAttribute(ATTRIBUTE_COLOR, info->colors());
                     }
                     if (!info->title().isEmpty()) {
-                        writer.writeAttribute(ATTRIBUTE_TITLE, info->title());
+                        writer.writeAttribute(ATTRIBUTE_TITLE, TextEditHelper::toHtmlEscaped(info->title()));
                     }
                 }
 
@@ -1000,7 +1000,7 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
                             info->setColors(reader.attributes().value(ATTRIBUTE_COLOR).toString());
                         }
                         if (reader.attributes().hasAttribute(ATTRIBUTE_TITLE)) {
-                            info->setTitle(reader.attributes().value(ATTRIBUTE_TITLE).toString());
+                            info->setTitle(TextEditHelper::fromHtmlEscaped(reader.attributes().value(ATTRIBUTE_TITLE).toString()));
                         }
                         cursor.block().setUserData(info);
                     }
@@ -1087,19 +1087,6 @@ void ScenarioXml::xmlToScenarioV1(int _position, const QString& _xml)
             case QXmlStreamReader::Characters: {
                 if (!reader.isWhitespace()) {
                     QString textToInsert = TextEditHelper::fromHtmlEscaped(reader.text().toString());
-
-                    //
-                    // Если необходимо так же вставляем префикс и постфикс стиля
-                    //
-                    ScenarioBlockStyle currentStyle = ScenarioTemplateFacade::getTemplate().blockStyle(lastTokenType);
-                    if (!currentStyle.prefix().isEmpty()
-                        && !textToInsert.startsWith(currentStyle.prefix())) {
-                        textToInsert.prepend(currentStyle.prefix());
-                    }
-                    if (!currentStyle.postfix().isEmpty()
-                        && !textToInsert.endsWith(currentStyle.postfix())) {
-                        textToInsert.append(currentStyle.postfix());
-                    }
 
                     //
                     // Пишем сам текст

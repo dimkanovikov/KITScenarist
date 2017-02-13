@@ -130,7 +130,7 @@ namespace UserInterface
         /**
          * @brief Нажата кнопка добавления элемента разработки
          */
-        void addResearchRequested(const QModelIndex& _currentIndex);
+        void addResearchRequested(const QModelIndex& _currentIndex, int type = -1);
 
         /**
          * @brief Нажата кнопка удаления элемента разработки
@@ -189,6 +189,11 @@ namespace UserInterface
 
     protected:
         /**
+         * @brief Переопределяем для обновления цвета иконок, при смене палитры
+         */
+        bool event(QEvent* _event);
+
+        /**
          * @brief Переопределяется для реализации контекстного меню дерева разработки
          */
         bool eventFilter(QObject* _object, QEvent* _event);
@@ -229,6 +234,11 @@ namespace UserInterface
          * @brief Настроить внешний вид
          */
         void initStyleSheet();
+
+        /**
+         * @brief Настроить цвет иконок
+         */
+        void initIconsColor();
 
     private:
         Ui::ResearchView* m_ui;

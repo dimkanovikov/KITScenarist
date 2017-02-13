@@ -247,17 +247,21 @@ namespace ManagementLayer
             const QColor& _color, const QString& _description);
         void aboutAddItem(const QModelIndex& _afterItemIndex, int _itemType, const QString& _header,
             const QColor& _color, const QString& _description);
+        /** @}*/
 
         /**
          * @brief Изменить заданный элемент
          */
-        void aboutEditItemFromCards(const QModelIndex& _itemIndex, int _itemType, const QString& _header,
-            const QColor& _color, const QString& _description);
+        void aboutUpdateItemFromCards(const QModelIndex& _itemIndex, int _itemType, const QString& _header,
+            const QString& _colors, const QString& _description);
 
         /**
-         * @brief Удалить заданныё элемент
+         * @brief Удалить заданный элемент
          */
+        /** @{ */
+        void aboutRemoveItemFromCards(const QModelIndex& _itemIndex);
         void aboutRemoveItems(const QModelIndexList& _itemIndex);
+        /** @} */
 
         /**
          * @brief Установить цвет элемента

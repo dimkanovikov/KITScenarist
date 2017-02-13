@@ -594,7 +594,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
         // Если нажат энтер, то нужно сместить все элементы, включая тот, перед блоком
         // которого он нажат, а если не энтер, то все, после нажатого символа
         //
-        if (_charsAdded == 1 && _charsRemoved == 0) {
+        if (_charsAdded > 0 && _charsRemoved == 0) {
             if (m_document->characterAt(_position) == QChar(QChar::ParagraphSeparator)) {
                 --position;
             } else {

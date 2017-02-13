@@ -765,8 +765,8 @@ void ScenarioManager::aboutAddItem(const QModelIndex& _afterItemIndex, int _item
     m_textEditManager->addScenarioItem(position, _itemType, _header, _color, _description);
 }
 
-void ScenarioManager::aboutEditItemFromCards(const QModelIndex& _itemIndex, int _itemType,
-    const QString& _header, const QColor& _color, const QString& _description)
+void ScenarioManager::aboutUpdateItemFromCards(const QModelIndex& _itemIndex, int _itemType,
+    const QString& _header, const QString& _colors, const QString& _description)
 {
     //
     // Изменение элемента из карточек только в режиме чистовика
@@ -775,7 +775,17 @@ void ScenarioManager::aboutEditItemFromCards(const QModelIndex& _itemIndex, int 
 
     const int startPosition = workingScenario()->itemStartPosition(_itemIndex);
     const int endPosition = workingScenario()->itemEndPosition(_itemIndex);
-    m_textEditManager->editScenarioItem(startPosition, endPosition, _itemType, _header, _color, _description);
+    m_textEditManager->editScenarioItem(startPosition, endPosition, _itemType, _header, _colors, _description);
+}
+
+void ScenarioManager::aboutRemoveItemFromCards(const QModelIndex& _index)
+{
+    //
+    // Удаляем сцены из карточек только в режиме чистовика
+    //
+    setWorkingMode(m_navigatorManager);
+
+    aboutRemoveItems({ _index });
 }
 
 void ScenarioManager::aboutRemoveItems(const QModelIndexList& _indexes)
@@ -973,16 +983,9 @@ void ScenarioManager::initConnections()
 {
     connect(m_showFullscreen, SIGNAL(clicked()), this, SIGNAL(showFullscreen()));
 
-//    connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
-//    connect(m_cardsManager, &ScenarioCardsManager::editCardRequest, this, &ScenarioManager::aboutEditItemFromCards);
-//    connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, [=] (const QModelIndex& _index) {
-//        //
-//        // Удаляем сцены из карточек только в режиме чистовика
-//        //
-//        setWorkingMode(m_navigatorManager);
-
-//        aboutRemoveItems({_index});
-//    });
+    connect(m_cardsManager, &ScenarioCardsManager::addCardRequest, this, &ScenarioManager::aboutAddItemFromCards);
+    connect(m_cardsManager, &ScenarioCardsManager::updateCardRequest, this, &ScenarioManager::aboutUpdateItemFromCards);
+    connect(m_cardsManager, &ScenarioCardsManager::removeCardRequest, this, &ScenarioManager::aboutRemoveItemFromCards);
 //    connect(m_cardsManager, &ScenarioCardsManager::cardColorsChanged, this, &ScenarioManager::aboutSetItemColors);
 //    connect(m_cardsManager, &ScenarioCardsManager::cardTypeChanged, this, &ScenarioManager::aboutChangeItemType);
 //    connect(m_cardsManager, &ScenarioCardsManager::fullscreenRequest, this, &ScenarioManager::showFullscreen);

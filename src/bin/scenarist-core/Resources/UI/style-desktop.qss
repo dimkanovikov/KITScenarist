@@ -146,6 +146,10 @@ FlatButton:pressed[hasMenu=true] {
     padding-right: 14px;
 }
 
+FlatButton::checked[inTopPanel=true] {
+    color: palette(highlight);
+}
+
 FlatButton::menu-button[inTopPanel=true] {
     border-right: none;
 }
