@@ -127,6 +127,8 @@ void StartUpView::setRemoteProjects(QAbstractItemModel* _remoteProjectsModel)
 
 void StartUpView::enableProgressLoginLabel(int _dots, bool _firstUpdate)
 {
+    QApplication::processEvents();
+
     if (_firstUpdate) {
         m_isProcessLogin = true;
     }

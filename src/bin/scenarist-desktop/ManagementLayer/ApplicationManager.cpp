@@ -637,7 +637,23 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
             //
             // ... переключаемся на работу с выбранным файлом
             //
-            if (m_projectsManager->setCurrentProject(loadProjectFileName)) {
+            bool canOpenProject = m_projectsManager->setCurrentProject(loadProjectFileName);
+            if (!canOpenProject) {
+                //
+                // ... если переключиться не удалось, сообщаем пользователю об ошибке,
+                //     но даём возможность игнорировать её и всё равно попробовать открыть файл
+                //
+                if (QLightBoxMessage::critical(m_view, tr("Can't open project file"),
+                        DatabaseLayer::Database::openFileError() + "\n\n" + tr("Ignore and try to open project?"),
+                        QDialogButtonBox::No | QDialogButtonBox::Open)
+                    == QDialogButtonBox::Open) {
+                    const bool isLocal = true;
+                    const bool forced = true;
+                    canOpenProject = m_projectsManager->setCurrentProject(loadProjectFileName, isLocal, forced);
+                }
+            }
+
+            if (canOpenProject) {
                 //
                 // ... сохраняем путь
                 //
@@ -647,15 +663,6 @@ void ApplicationManager::aboutLoad(const QString& _fileName)
                 // ... перейдём к редактированию
                 //
                 goToEditCurrentProject();
-            }
-            //
-            // Если переключиться не удалось, сообщаем пользователю об ошибке
-            //
-            else {
-                QLightBoxMessage::critical(
-                    m_view,
-                    tr("Can't open project file"),
-                    DatabaseLayer::Database::openFileError());
             }
         }
 
@@ -708,21 +715,27 @@ void ApplicationManager::aboutLoadFromRecent(const QModelIndex& _projectIndex)
         //
         // ... переключаемся на работу с выбранным файлом
         //
-        if (m_projectsManager->setCurrentProject(_projectIndex)) {
+        bool canOpenProject = m_projectsManager->setCurrentProject(_projectIndex);
+        if (!canOpenProject) {
+            //
+            // ... если переключиться не удалось, сообщаем пользователю об ошибке,
+            //     но даём возможность игнорировать её и всё равно попробовать открыть файл
+            //
+            if (QLightBoxMessage::critical(m_view, tr("Can't open project file"),
+                    DatabaseLayer::Database::openFileError() + "\n\n" + tr("Ignore and try to open project?"),
+                    QDialogButtonBox::No | QDialogButtonBox::Open)
+                == QDialogButtonBox::Open) {
+                const bool isLocal = true;
+                const bool forced = true;
+                canOpenProject = m_projectsManager->setCurrentProject(_projectIndex, isLocal, forced);
+            }
+        }
 
+        if (canOpenProject) {
             //
             // ... перейдём к редактированию
             //
             goToEditCurrentProject();
-        }
-        //
-        // Если переключиться не удалось, сообщаем пользователю об ошибке
-        //
-        else {
-            QLightBoxMessage::critical(
-                m_view,
-                tr("Can't open project file"),
-                DatabaseLayer::Database::openFileError());
         }
     }
 }

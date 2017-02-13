@@ -82,7 +82,7 @@ QAbstractItemModel* ProjectsManager::remoteProjects()
 	return remoteProjectsModel;
 }
 
-bool ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
+bool ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal, bool _forceOpen)
 {
 	//
 	// Приведём путь к нативному виду
@@ -92,7 +92,7 @@ bool ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 	//
 	// Проверяем можем ли мы открыть файл проекта
 	//
-	bool canOpen = DatabaseLayer::Database::canOpenFile(projectPath, _isLocal);
+    const bool canOpen = _forceOpen ? true : DatabaseLayer::Database::canOpenFile(projectPath, _isLocal);
 	if (canOpen) {
 		//
 		// Делаем проект текущим и загружаем из него БД
@@ -168,7 +168,7 @@ bool ProjectsManager::setCurrentProject(const QString& _path, bool _isLocal)
 	return canOpen;
 }
 
-bool ProjectsManager::setCurrentProject(const QModelIndex& _index, bool _isLocal)
+bool ProjectsManager::setCurrentProject(const QModelIndex& _index, bool _isLocal, bool _forceOpen)
 {
 	//
 	// Определим проект
@@ -186,10 +186,10 @@ bool ProjectsManager::setCurrentProject(const QModelIndex& _index, bool _isLocal
 	//
 	// ... и установим его текущим
 	//
-	return setCurrentProject(newCurrentProjectPath, _isLocal);
+    return setCurrentProject(newCurrentProjectPath, _isLocal, _forceOpen);
 }
 
-bool ProjectsManager::setCurrentProject(int _id, bool _isLocal)
+bool ProjectsManager::setCurrentProject(int _id, bool _isLocal, bool _forceOpen)
 {
 	//
 	// Определим проект
@@ -208,7 +208,7 @@ bool ProjectsManager::setCurrentProject(int _id, bool _isLocal)
 	//
 	// ... и установим его текущим
 	//
-	return setCurrentProject(newCurrentProjectPath, _isLocal);
+    return setCurrentProject(newCurrentProjectPath, _isLocal, _forceOpen);
 }
 
 void ProjectsManager::setCurrentProjectName(const QString& _projectName)
