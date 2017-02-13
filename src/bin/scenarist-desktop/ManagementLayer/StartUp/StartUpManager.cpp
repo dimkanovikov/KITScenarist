@@ -335,7 +335,7 @@ void StartUpManager::showUpdateDialog()
         QString distroName = QSysInfo::prettyProductName().toLower();
         QStringList supportedDistros({"ubuntu", "mint", "elemntary", "debian"});
         for(QString& supportedDistro : supportedDistros) {
-            if (supportedDistro.contains(distroName)) {
+            if (distroName.contains(supportedDistro)) {
                 isSupported = true;
                 break;
             }
