@@ -122,7 +122,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                 m_view->insertCard(
                     item->uuid(),
                     item->type() == BusinessLogic::ScenarioModelItem::Folder,
-                    item->title().isEmpty() ? item->header() : item->title(),
+                    item->title().isEmpty() ? item->header().toUpper() : item->title().toUpper(),
                     item->description(),
                     QString::null,
                     item->colors(),
@@ -156,7 +156,7 @@ void ScenarioCardsManager::load(BusinessLogic::ScenarioModel* _model, const QStr
                 m_view->updateCard(
                     item->uuid(),
                     item->type() == BusinessLogic::ScenarioModelItem::Folder,
-                    item->title().isEmpty() ? item->header() : item->title(),
+                    item->title().isEmpty() ? item->header().toUpper() : item->title().toUpper(),
                     item->description(),
                     QString::null,
                     item->colors(),

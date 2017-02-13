@@ -221,7 +221,12 @@ protected:
     /**
      * @brief Переопределяем для обработки события смены палитры
      */
-    bool event(QEvent* _event);
+    bool event(QEvent* _event) override;
+
+    /**
+     * @brief Переопределяем для переупорядочивания карточек
+     */
+    void resizeEvent(QResizeEvent* _event) override;
 
 private:
     /**

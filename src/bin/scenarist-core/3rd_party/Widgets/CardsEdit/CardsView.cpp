@@ -177,6 +177,13 @@ bool CardsView::event(QEvent* _event)
     return QWidget::event(_event);
 }
 
+void CardsView::resizeEvent(QResizeEvent* _event)
+{
+    m_scene->refresh();
+
+    QWidget::resizeEvent(_event);
+}
+
 void CardsView::initView()
 {
     m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

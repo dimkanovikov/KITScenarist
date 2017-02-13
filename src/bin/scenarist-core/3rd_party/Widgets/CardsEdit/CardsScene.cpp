@@ -1009,6 +1009,7 @@ void CardsScene::reorderItemsOnScene()
     int cardsInRowCount = m_cardsInRowCount;
     if (cardsInRowCount == 0) {
         cardsInRowCount = actRect.width() / (cardRect.width() + m_cardsDistance);
+        --cardsInRowCount;
     }
 
     int x = sceneRect().left() + m_cardsDistance;
