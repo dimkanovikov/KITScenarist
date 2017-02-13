@@ -236,7 +236,6 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
     //
     cursor.removeSelectedText();
     m_xmlHandler->xmlToScenario(selectionStartPos, xmlsForUpdate.second.xml);
-    cursor.endEditBlock();
 
     //
     // Запомним новый текст
@@ -246,7 +245,18 @@ void ScenarioTextDocument::applyPatch(const QString& _patch)
     m_lastSavedScenarioXml = m_scenarioXml;
     m_lastSavedScenarioXmlHash = m_scenarioXmlHash;
 
+    //
+    // Патч применён
+    //
     m_isPatchApplyProcessed = false;
+
+    //
+    // Завершаем изменение документа
+    // если завершить изменение сразу после вставки текста, но до запоминания его хэша, то
+    // может случиться проблема, что текущий хэш и хэш документа совпадут, что приведёт к
+    // отсутствию одного патча в истории изменений
+    //
+    cursor.endEditBlock();
 }
 
 void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
@@ -267,14 +277,17 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
     }
 
     //
-    // Перезагружаем текст документа
+    // Начинаем изменение текста
     //
     QTextCursor cursor(this);
     cursor.beginEditBlock();
+
+    //
+    // Загружаем текст документа
+    //
     cursor.select(QTextCursor::Document);
     cursor.removeSelectedText();
     m_xmlHandler->xmlToScenario(0, ScenarioXml::makeMimeFromXml(newXml));
-    cursor.endEditBlock();
 
     //
     // Запомним новый текст
@@ -284,8 +297,18 @@ void ScenarioTextDocument::applyPatches(const QList<QString>& _patches)
     m_lastSavedScenarioXml = m_scenarioXml;
     m_lastSavedScenarioXmlHash = m_scenarioXmlHash;
 
-
+    //
+    // Патч применён
+    //
     m_isPatchApplyProcessed = false;
+
+    //
+    // Завершаем изменение документа
+    // если завершить изменение сразу после вставки текста, но до запоминания его хэша, то
+    // может случиться проблема, что текущий хэш и хэш документа совпадут, что приведёт к
+    // отсутствию одного патча в истории изменений
+    //
+    cursor.endEditBlock();
 }
 
 Domain::ScenarioChange* ScenarioTextDocument::saveChanges()
