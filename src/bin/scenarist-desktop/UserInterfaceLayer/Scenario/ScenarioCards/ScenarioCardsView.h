@@ -151,7 +151,7 @@ namespace UserInterface {
         /**
          * @brief Схема карточек изменена
          */
-        void schemeChanged();
+        void cardsChanged();
 
     private:
         /**

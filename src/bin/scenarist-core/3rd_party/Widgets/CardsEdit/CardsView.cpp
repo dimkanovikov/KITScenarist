@@ -112,11 +112,21 @@ bool CardsView::load(const QString& _xml)
     return m_scene->load(_xml);
 }
 
+bool CardsView::needSyncUndo() const
+{
+    return m_undoStack->needSyncUndo();
+}
+
 void CardsView::undo()
 {
     if (m_undoStack->canUndo()) {
         m_scene->load(m_undoStack->undo());
     }
+}
+
+bool CardsView::needSyncRedo() const
+{
+    return m_undoStack->needSyncRedo();
 }
 
 void CardsView::redo()
@@ -198,6 +208,7 @@ void CardsView::initConnections()
     connect(m_scene, &CardsScene::cardMovedToGroup, this, &CardsView::cardMovedToGroup);
     connect(m_scene, &CardsScene::cardColorsChanged, this, &CardsView::cardColorsChanged);
     connect(m_scene, &CardsScene::cardTypeChanged, this, &CardsView::cardTypeChanged);
+    connect(m_scene, &CardsScene::cardsChanged, this, &CardsView::cardsChanged);
 
     connect(m_view, &ScalableGraphicsView::scaleChanged, m_scene, &CardsScene::refresh);
 }

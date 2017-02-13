@@ -190,6 +190,11 @@ signals:
      */
     void cardTypeChanged(const QString& _uuid, bool _isFolder);
 
+    /**
+     * @brief Карточки были изменены
+     */
+    void cardsChanged();
+
 protected:
     /**
      * @brief Отображаем собственное контекстное меню

@@ -340,5 +340,5 @@ void ScenarioCardsManager::initConnections()
 
     connect(m_view, &ScenarioCardsView::fullscreenRequest, this, &ScenarioCardsManager::fullscreenRequest);
 
-//	connect(m_view, &ScenarioCardsView::schemeChanged, this, &ScenarioCardsManager::schemeChanged);
+    connect(m_view, &ScenarioCardsView::cardsChanged, this, &ScenarioCardsManager::cardsChanged);
 }

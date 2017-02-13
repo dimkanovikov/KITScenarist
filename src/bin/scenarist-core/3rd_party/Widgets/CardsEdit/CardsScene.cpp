@@ -659,6 +659,7 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
             connect(stampEditor, &QLineEdit::textChanged, [=] (const QString& _text) {
                 if (CardItem* card = qgraphicsitem_cast<CardItem*>(selectedItems().first())) {
                     card->setStamp(_text);
+                    emit cardsChanged();
                 }
             });
             QHBoxLayout* stampLayout = new QHBoxLayout(stampWidget);
@@ -783,6 +784,8 @@ void CardsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
     //
     reorderSelectedItem();
     reorderItemsOnScene();
+
+    emit cardsChanged();
 }
 
 void CardsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event)

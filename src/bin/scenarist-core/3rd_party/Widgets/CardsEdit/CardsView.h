@@ -109,9 +109,19 @@ public:
     // Методы для работы непосредственно с доской
 
     /**
+     * @brief Необходимо ли синхронизировать отмену последенго действия с текстом
+     */
+    bool needSyncUndo() const;
+
+    /**
      * @brief Отменить последнее действие
      */
     void undo();
+
+    /**
+     * @brief Необходимо ли синхронизировать повтор последенго действия с текстом
+     */
+    bool needSyncRedo() const;
 
     /**
      * @brief Повторить последнее действие
@@ -201,6 +211,11 @@ signals:
      * @brief Запрос на изменение типа карточки
      */
     void cardTypeChanged(const QString& _uuid, bool _isFolder);
+
+    /**
+     * @brief Карточки были изменены
+     */
+    void cardsChanged();
 
 protected:
     /**

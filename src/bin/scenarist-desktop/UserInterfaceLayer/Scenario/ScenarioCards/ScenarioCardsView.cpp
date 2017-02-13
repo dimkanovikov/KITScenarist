@@ -264,7 +264,7 @@ void ScenarioCardsView::initConnections()
     });
      */
 
-//	connect(m_cards, &ActivityEdit::schemeChanged, this, &ScenarioCardsView::schemeChanged);
+    connect(m_cards, &CardsView::cardsChanged, this, &ScenarioCardsView::cardsChanged);
 
     connect(m_addCard, &FlatButton::clicked, [=] {
         m_newCardPosition = QPointF();
@@ -300,44 +300,44 @@ void ScenarioCardsView::initConnections()
 
 void ScenarioCardsView::initShortcuts()
 {
-//	QShortcut* undo = new QShortcut(QKeySequence::Undo, this);
-//	undo->setContext(Qt::WidgetWithChildrenShortcut);
-//	connect(undo, &QShortcut::activated, [=] {
-//		//
-//		// Если отмену необходимо синхронизировать с текстом, уведомляем об этом
-//		//
-//		if (m_cards->needSyncUndo()) {
-//			emit undoRequest();
-//		}
-//		//
-//		// А если синхронизировать не нужно, просто отменяем последнее изменение
-//		//
-//		else {
-//			m_cards->saveChanges(false);
-//			m_cards->undo();
-//		}
-//	});
+    QShortcut* undo = new QShortcut(QKeySequence::Undo, this);
+    undo->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(undo, &QShortcut::activated, [=] {
+        //
+        // Если отмену необходимо синхронизировать с текстом, уведомляем об этом
+        //
+        if (m_cards->needSyncUndo()) {
+            emit undoRequest();
+        }
+        //
+        // А если синхронизировать не нужно, просто отменяем последнее изменение
+        //
+        else {
+            m_cards->saveChanges(false);
+            m_cards->undo();
+        }
+    });
 
-//	QShortcut* redo = new QShortcut(QKeySequence::Redo, this);
-//	redo->setContext(Qt::WidgetWithChildrenShortcut);
-//	connect(redo, &QShortcut::activated, [=] {
-//		//
-//		// Если повтор необходимо синхронизировать с текстом, уведомляем об этом
-//		//
-//		if (m_cards->needSyncRedo()) {
-//			emit redoRequest();
-//		}
-//		//
-//		// А если синхронизировать не нужно, просто повторяем последнее изменение
-//		//
-//		else {
-//			m_cards->redo();
-//		}
-//	});
+    QShortcut* redo = new QShortcut(QKeySequence::Redo, this);
+    redo->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(redo, &QShortcut::activated, [=] {
+        //
+        // Если повтор необходимо синхронизировать с текстом, уведомляем об этом
+        //
+        if (m_cards->needSyncRedo()) {
+            emit redoRequest();
+        }
+        //
+        // А если синхронизировать не нужно, просто повторяем последнее изменение
+        //
+        else {
+            m_cards->redo();
+        }
+    });
 
-//	QShortcut* fullscreen = new QShortcut(Qt::Key_F5, this);
-//	fullscreen->setContext(Qt::WidgetWithChildrenShortcut);
-//	connect(fullscreen, &QShortcut::activated, m_fullscreen, &FlatButton::click);
+    QShortcut* fullscreen = new QShortcut(Qt::Key_F5, this);
+    fullscreen->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(fullscreen, &QShortcut::activated, m_fullscreen, &FlatButton::click);
 }
 
 void ScenarioCardsView::initStyleSheet()

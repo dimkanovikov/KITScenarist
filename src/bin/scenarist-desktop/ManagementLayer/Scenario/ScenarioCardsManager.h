@@ -85,7 +85,7 @@ namespace ManagementLayer
         /**
          * @brief Схема карточек изменена
          */
-        void schemeChanged();
+        void cardsChanged();
 
         /**
          * @brief Запрос на добавление элемента
