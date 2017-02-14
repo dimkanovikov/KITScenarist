@@ -139,6 +139,21 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
 
 void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockType, bool _forced)
 {
+    //
+    // Если работаем в режиме поэпизодника, то запрещаем менять стиль блока на персонажей, реплики и пр.
+    //
+    if (outlineMode()
+        && (_blockType == ScenarioBlockStyle::Action
+            || _blockType == ScenarioBlockStyle::Character
+            || _blockType == ScenarioBlockStyle::Parenthetical
+            || _blockType == ScenarioBlockStyle::Dialogue
+            || _blockType == ScenarioBlockStyle::Transition
+            || _blockType == ScenarioBlockStyle::Note
+            || _blockType == ScenarioBlockStyle::TitleHeader
+            || _blockType == ScenarioBlockStyle::Title
+            || _blockType == ScenarioBlockStyle::NoprintableText)) {
+        return;
+    }
 
     QTextCursor cursor = textCursor();
     cursor.beginEditBlock();
