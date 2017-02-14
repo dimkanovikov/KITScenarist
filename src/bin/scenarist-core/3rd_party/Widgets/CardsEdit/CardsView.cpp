@@ -186,7 +186,7 @@ void CardsView::resizeEvent(QResizeEvent* _event)
 
 void CardsView::initView()
 {
-    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+//    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     m_view->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
     m_view->setScene(m_scene);
 

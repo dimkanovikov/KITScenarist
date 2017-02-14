@@ -406,7 +406,7 @@ QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const
         // Для того, чтобы запретить разрывать папки проверяем выделены ли элементы одного уровня
         //
         bool itemsHaveSameParent = true;
-        {
+        if (!correctedIndexes.isEmpty()) {
             const QModelIndex& genericParent = correctedIndexes.first().parent();
             foreach (const QModelIndex& index, correctedIndexes) {
                 if (index.parent() != genericParent) {
@@ -414,6 +414,8 @@ QMimeData* ScenarioModel::mimeData(const QModelIndexList& _indexes) const
                     break;
                 }
             }
+        } else {
+            itemsHaveSameParent = false;
         }
 
         //
