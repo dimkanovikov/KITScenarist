@@ -120,7 +120,7 @@ bool CardsView::needSyncUndo() const
 void CardsView::undo()
 {
     if (m_undoStack->canUndo()) {
-        m_scene->load(m_undoStack->undo());
+//        m_scene->load(m_undoStack->undo());
     }
 }
 
@@ -132,7 +132,7 @@ bool CardsView::needSyncRedo() const
 void CardsView::redo()
 {
     if (m_undoStack->canRedo()) {
-        m_scene->load(m_undoStack->redo());
+//        m_scene->load(m_undoStack->redo());
     }
 }
 
@@ -186,7 +186,7 @@ void CardsView::resizeEvent(QResizeEvent* _event)
 
 void CardsView::initView()
 {
-//    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     m_view->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
     m_view->setScene(m_scene);
 

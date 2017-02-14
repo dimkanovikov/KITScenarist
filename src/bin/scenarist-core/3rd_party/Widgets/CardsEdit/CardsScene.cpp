@@ -657,10 +657,8 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
             QLineEdit* stampEditor = new QLineEdit(stampWidget);
             stampEditor->setText(card->stamp());
             connect(stampEditor, &QLineEdit::textChanged, [=] (const QString& _text) {
-                if (CardItem* card = qgraphicsitem_cast<CardItem*>(selectedItems().first())) {
-                    card->setStamp(_text);
-                    emit cardsChanged();
-                }
+                card->setStamp(_text);
+                emit cardsChanged();
             });
             QHBoxLayout* stampLayout = new QHBoxLayout(stampWidget);
             stampLayout->setContentsMargins(QMargins(27, 2, 5, 3));

@@ -119,12 +119,17 @@ void ScenarioModel::removeItem(ScenarioModelItem* _item)
     // Затем удаляем сам элемент
     //
     ScenarioModelItem* itemParent = _item->parent();
-    QModelIndex itemParentIndex = indexForItem(_item).parent();
-    int itemRowIndex = itemParent->rowOfChild(_item);
-
-    beginRemoveRows(itemParentIndex, itemRowIndex, itemRowIndex);
-    itemParent->removeItem(_item);
-    endRemoveRows();
+    const QModelIndex itemParentIndex = indexForItem(_item).parent();
+    const int itemRowIndex = itemParent->rowOfChild(_item);
+    //
+    // ... если его удалось найти
+    //     иногда это может случатся, когда дети родителя были удалены, но удаляющий не учёл этого
+    //
+    if (itemRowIndex >= 0) {
+        beginRemoveRows(itemParentIndex, itemRowIndex, itemRowIndex);
+        itemParent->removeItem(_item);
+        endRemoveRows();
+    }
 }
 
 void ScenarioModel::updateItem(ScenarioModelItem* _item)

@@ -4,6 +4,7 @@
 #include <QGraphicsItem>
 
 #include <QGraphicsDropShadowEffect>
+#include <QParallelAnimationGroup>
 
 
 /**
@@ -194,6 +195,11 @@ private:
      * @brief Эффект отбрасывания тени
      */
     QScopedPointer<QGraphicsDropShadowEffect> m_shadowEffect;
+
+    /**
+     * @brief Анимация карточки
+     */
+    QScopedPointer<QParallelAnimationGroup> m_animation;
 };
 
 #endif // CARDITEM_H

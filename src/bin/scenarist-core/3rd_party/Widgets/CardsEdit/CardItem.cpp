@@ -13,7 +13,6 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QMimeData>
 #include <QPainter>
-#include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QStyleOptionGraphicsItem>
 
@@ -23,7 +22,8 @@ const QString CardItem::MimeType = "application/kit-card";
 CardItem::CardItem(QGraphicsItem* _parent) :
     QObject(),
     QGraphicsItem(_parent),
-    m_shadowEffect(new QGraphicsDropShadowEffect)
+    m_shadowEffect(new QGraphicsDropShadowEffect),
+    m_animation(new QParallelAnimationGroup)
 {
     setCursor(Qt::OpenHandCursor);
 
@@ -332,9 +332,14 @@ void CardItem::takeFromBoard()
 {
     setCursor(Qt::ClosedHandCursor);
 
+    if (m_animation->state() == QAbstractAnimation::Running) {
+        m_animation->stop();
+    }
+    m_animation.reset(new QParallelAnimationGroup);
+
     setZValue(10000);
 
-    const int duration = 100;
+    const int duration = 80;
     QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
     radiusAnimation->setDuration(duration);
     radiusAnimation->setStartValue(7);
@@ -352,12 +357,11 @@ void CardItem::takeFromBoard()
     scaleAnimation->setStartValue(scale());
     scaleAnimation->setEndValue(scale() + 0.005);
 
-    QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
-    group->addAnimation(radiusAnimation);
-    group->addAnimation(colorAnimation);
-    group->addAnimation(yOffsetAnimation);
-    group->addAnimation(scaleAnimation);
-    group->start(QAbstractAnimation::DeleteWhenStopped);
+    m_animation->addAnimation(radiusAnimation);
+    m_animation->addAnimation(colorAnimation);
+    m_animation->addAnimation(yOffsetAnimation);
+    m_animation->addAnimation(scaleAnimation);
+    m_animation->start();
 }
 
 void CardItem::putOnBoard()
@@ -365,6 +369,10 @@ void CardItem::putOnBoard()
     setCursor(Qt::OpenHandCursor);
 
     if (zValue() == 10000) {
+        if (m_animation->state() == QAbstractAnimation::Running) {
+            m_animation->stop();
+        }
+
         qreal newZValue = 1;
         for (QGraphicsItem* item : collidingItems()) {
             if (item->zValue() >= newZValue) {
@@ -373,34 +381,8 @@ void CardItem::putOnBoard()
         }
         setZValue(newZValue);
 
-        const int duration = 100;
-        QPropertyAnimation* radiusAnimation = new QPropertyAnimation(m_shadowEffect.data(), "blurRadius");
-        radiusAnimation->setDuration(duration);
-        radiusAnimation->setStartValue(7);
-        radiusAnimation->setEndValue(34);
-        QPropertyAnimation* colorAnimation = new QPropertyAnimation(m_shadowEffect.data(), "color");
-        colorAnimation->setDuration(duration);
-        colorAnimation->setStartValue(QColor(63, 63, 63, 180));
-        colorAnimation->setEndValue(QColor(23, 23, 23, 240));
-        QPropertyAnimation* yOffsetAnimation = new QPropertyAnimation(m_shadowEffect.data(), "yOffset");
-        yOffsetAnimation->setDuration(duration);
-        yOffsetAnimation->setStartValue(1);
-        yOffsetAnimation->setEndValue(6);
-        QPropertyAnimation* scaleAnimation = new QPropertyAnimation(this, "scale");
-        scaleAnimation->setDuration(duration);
-        scaleAnimation->setStartValue(scale() - 0.005);
-        scaleAnimation->setEndValue(scale());
-
-
-        QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
-        group->duration();
-        group->addAnimation(radiusAnimation);
-        group->addAnimation(colorAnimation);
-        group->addAnimation(yOffsetAnimation);
-        group->addAnimation(scaleAnimation);
-
-        group->setDirection(QAbstractAnimation::Backward);
-        group->start(QAbstractAnimation::DeleteWhenStopped);
+        m_animation->setDirection(QAbstractAnimation::Backward);
+        m_animation->start();
     }
 }
 
