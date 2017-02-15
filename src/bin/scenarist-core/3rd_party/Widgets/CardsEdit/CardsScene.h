@@ -216,19 +216,19 @@ protected:
      * @brief Переопределяем для инициилизации события перетаскивания карточек между сценами
      */
     /** @{ */
-    void keyPressEvent(QKeyEvent* _event);
-    void keyReleaseEvent(QKeyEvent* _event);
-    void focusOutEvent(QFocusEvent* _event);
+    void keyPressEvent(QKeyEvent* _event) override;
+    void keyReleaseEvent(QKeyEvent* _event) override;
+    void focusOutEvent(QFocusEvent* _event) override;
     /** @} */
 
     /**
      * @brief Переопределяем для реализации возможности перетаскивания карточек между сценами
      */
     /** @{ */
-    virtual void dragEnterEvent(QGraphicsSceneDragDropEvent*) {}
-    virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent*) {}
-    virtual void dragMoveEvent(QGraphicsSceneDragDropEvent*) {}
-    virtual void dropEvent(QGraphicsSceneDragDropEvent* _event);
+    virtual void dragEnterEvent(QGraphicsSceneDragDropEvent*) override {}
+    virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent*) override {}
+    virtual void dragMoveEvent(QGraphicsSceneDragDropEvent*) override {}
+    virtual void dropEvent(QGraphicsSceneDragDropEvent* _event) override;
     /** @} */
 
 private:

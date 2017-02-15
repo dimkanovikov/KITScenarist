@@ -988,30 +988,31 @@ void CardsScene::reorderItemsOnScene()
     //
 
     //
-    // Определим размеры акта и карточки
+    // Определим размер окна
     //
-    QRectF actRect = ActItem().boundingRect();
+    qreal viewWidth = 100;
     if (!views().isEmpty()) {
         const QGraphicsView* view = views().first();
         const QPointF viewTopLeftPoint = view->mapToScene(QPoint(0, 0));
         const int scrollDelta = view->verticalScrollBar()->isVisible() ? view->verticalScrollBar()->width() : 0;
         const QPointF viewTopRightPoint = view->mapToScene(QPoint(view->width() - scrollDelta, 0));
-        actRect.setLeft(viewTopLeftPoint.x());
-        actRect.setWidth(viewTopRightPoint.x() - viewTopLeftPoint.x());
+        viewWidth = viewTopRightPoint.x() - viewTopLeftPoint.x();
     }
-    const QRectF cardRect = CardItem().boundingRect();
 
     //
     // Определим количество карточек в ряду
     //
     int cardsInRowCount = m_cardsInRowCount;
     if (cardsInRowCount == 0) {
-        cardsInRowCount = actRect.width() / (cardRect.width() + m_cardsDistance);
-        --cardsInRowCount;
+        cardsInRowCount = viewWidth / (m_cardsSize.width() + m_cardsDistance);
+        if (cardsInRowCount < 1) {
+            cardsInRowCount = 1;
+        }
     }
 
-    int x = sceneRect().left() + m_cardsDistance;
-    int y = sceneRect().top() + m_cardsDistance;
+    const QRectF sceneRect = this->sceneRect();
+    int x = sceneRect.left() + m_cardsDistance;
+    int y = sceneRect.top() + m_cardsDistance;
     int lastItemHeight = -1;
     int currentCardInRow = 0;
     bool lastCardIsEmbedded = false;
@@ -1027,7 +1028,7 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... возвращаем х в начальное положение
             //
-            x = sceneRect().left() + m_cardsDistance;
+            x = sceneRect.left() + m_cardsDistance;
             //
             // ... если вставляется после карточки, то добавим вертикальный отступ
             //
@@ -1038,7 +1039,7 @@ void CardsScene::reorderItemsOnScene()
             // ... если вставляется после другого акта, то оставим место для того, чтобы можно было встроить карточку
             //
             else if (lastItemHeight == 0) {
-                y += cardRect.height() + m_cardsDistance;
+                y += m_cardsSize.height() + m_cardsDistance;
             }
             //
             // ... сдвигаем акт
@@ -1068,7 +1069,7 @@ void CardsScene::reorderItemsOnScene()
                 || (lastCardIsEmbedded == true
                     && card->isEmbedded() == false)) {
                 currentCardInRow = 0;
-                x = sceneRect().left() + m_cardsDistance;
+                x = sceneRect.left() + m_cardsDistance;
                 y += lastItemHeight + m_cardsDistance;
             }
             ++currentCardInRow;
@@ -1083,9 +1084,21 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... и корректируем координаты для позиционирования следующих элементов
             //
-            x += card->boundingRect().width() + m_cardsDistance;
-            lastItemHeight = card->boundingRect().height();
+            x += m_cardsSize.width() + m_cardsDistance;
+            lastItemHeight = m_cardsSize.height();
             lastCardIsEmbedded = card->isEmbedded();
+        }
+    }
+
+    //
+    // Скорректируем области папок
+    //
+    for (QGraphicsItem* item : m_items) {
+        if (ActItem* act = qgraphicsitem_cast<ActItem*>(item)) {
+            QRectF actRect = act->boundingRect();
+            actRect.setLeft(sceneRect.left());
+            actRect.setWidth(sceneRect.width());
+            act->setBoundingRect(actRect);
         }
     }
 }

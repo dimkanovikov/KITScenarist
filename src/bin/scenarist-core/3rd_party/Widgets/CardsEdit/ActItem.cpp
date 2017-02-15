@@ -9,19 +9,6 @@
 #include <QScrollBar>
 #include <QStyleOptionGraphicsItem>
 
-namespace {
-    /**
-     * @brief Минимальная ширина акта
-     * @brief Используется, если ещё не задана сцена
-     */
-    const int ACT_MIN_WIDTH = 100;
-
-    /**
-     * @brief Высота акта
-     */
-    const int ACT_HEIGHT = 30;
-}
-
 
 ActItem::ActItem(QGraphicsItem* _parent) :
     QObject(),
@@ -96,20 +83,17 @@ int ActItem::type() const
     return Type;
 }
 
+void ActItem::setBoundingRect(const QRectF& _boundingRect)
+{
+    if (m_boundingRect != _boundingRect) {
+        m_boundingRect = _boundingRect;
+        update();
+    }
+}
+
 QRectF ActItem::boundingRect() const
 {
-    QRectF result(0, 0, ACT_MIN_WIDTH, ACT_HEIGHT);
-    if (scene() != nullptr
-        && !scene()->views().isEmpty()) {
-        const QGraphicsView* view = scene()->views().first();
-        const QPointF viewTopLeftPoint = view->mapToScene(QPoint(0, 0));
-        const int scrollDelta = view->verticalScrollBar()->isVisible() ? view->verticalScrollBar()->width() : 0;
-        const QPointF viewTopRightPoint = view->mapToScene(QPoint(view->width() - scrollDelta, 0));
-        result.setLeft(viewTopLeftPoint.x());
-        result.setWidth(viewTopRightPoint.x() - viewTopLeftPoint.x());
-    }
-
-    return result;
+    return m_boundingRect;
 }
 
 void ActItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option, QWidget* _widget)
@@ -120,8 +104,18 @@ void ActItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option,
     _painter->save();
 
     {
+        QRectF actRect = m_boundingRect;
+        if (scene() != nullptr
+            && !scene()->views().isEmpty()) {
+            const QGraphicsView* view = scene()->views().first();
+            const QPointF viewTopLeftPoint = view->mapToScene(QPoint(0, 0));
+            const int scrollDelta = view->verticalScrollBar()->isVisible() ? view->verticalScrollBar()->width() : 0;
+            const QPointF viewTopRightPoint = view->mapToScene(QPoint(view->width() - scrollDelta, 0));
+
+            actRect.setLeft(viewTopLeftPoint.x());
+            actRect.setWidth(viewTopRightPoint.x() - viewTopLeftPoint.x());
+        }
         const QPalette palette = QApplication::palette();
-        const QRectF actRect = boundingRect();
         const QStringList colors = m_colors.split(";", QString::SkipEmptyParts);
 
         //
