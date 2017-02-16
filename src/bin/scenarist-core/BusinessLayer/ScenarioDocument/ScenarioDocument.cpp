@@ -735,6 +735,7 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
             if (itemType == ScenarioBlockStyle::FolderHeader) {
                 int openedFolders = 1;
                 QTextCursor endCursor = cursor;
+                endCursor.movePosition(QTextCursor::NextBlock);
                 while (!endCursor.atEnd()
                        && openedFolders != 0) {
                     endCursor.movePosition(QTextCursor::EndOfBlock);

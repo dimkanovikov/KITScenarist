@@ -112,8 +112,11 @@ void ActItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option,
             const int scrollDelta = view->verticalScrollBar()->isVisible() ? view->verticalScrollBar()->width() : 0;
             const QPointF viewTopRightPoint = view->mapToScene(QPoint(view->width() - scrollDelta, 0));
 
-            actRect.setLeft(viewTopLeftPoint.x());
-            actRect.setWidth(viewTopRightPoint.x() - viewTopLeftPoint.x());
+            const qreal actWidth = viewTopRightPoint.x() - viewTopLeftPoint.x();
+            if (actWidth < actRect.width()) {
+                actRect.setLeft(viewTopLeftPoint.x());
+                actRect.setWidth(actWidth);
+            }
         }
         const QPalette palette = QApplication::palette();
         const QStringList colors = m_colors.split(";", QString::SkipEmptyParts);

@@ -23,10 +23,37 @@
 #include <QXmlStreamReader>
 #include <QVBoxLayout>
 
+namespace {
+    /**
+     * @brief Обновить область отрисовки акта
+     */
+    void updateActBoundingRect(const QRectF& _sceneRect, ActItem* _act) {
+        QRectF actRect = _act->boundingRect();
+        actRect.setLeft(_sceneRect.left());
+        actRect.setWidth(_sceneRect.width());
+        _act->setBoundingRect(actRect);
+    }
+}
+
 
 CardsScene::CardsScene(QObject *parent) :
     QGraphicsScene(parent)
 {
+    connect(this, &CardsScene::sceneRectChanged, [=] (const QRectF& _rect) {
+        //
+        // Сохраним новое значение
+        //
+        m_sceneRect = _rect;
+
+        //
+        // Скорректируем области папок
+        //
+        for (QGraphicsItem* item : m_items) {
+            if (ActItem* act = qgraphicsitem_cast<ActItem*>(item)) {
+                updateActBoundingRect(m_sceneRect, act);
+            }
+        }
+    });
 }
 
 void CardsScene::setCardsSize(const QSizeF& _size)
@@ -121,6 +148,7 @@ void CardsScene::insertAct(const QString& _uuid, const QString& _title, const QS
     act->setTitle(_title);
     act->setDescription(_description);
     act->setColors(_colors);
+    updateActBoundingRect(m_sceneRect, act);
 
     //
     // Добавляем новый акт
@@ -563,8 +591,15 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
     //
     QMenu* menu = new QMenu(views().value(0, nullptr));
 
+    QAction* editAction = menu->addAction(tr("Edit"));
+
+    //
+    // FIXME: не работают эти пункты почему-то, поэтому пока убираю их
+    //
     QAction* convertToSceneAction = menu->addAction(tr("Convert to scene"));
+    convertToSceneAction->setVisible(false);
     QAction* convertToFolderAction = menu->addAction(tr("Convert to folder"));
+    convertToFolderAction->setVisible(false);
 
     //
     // Цвета
@@ -621,7 +656,6 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
     //
     QAction* endSeparator = menu->addSeparator();
     QAction* addAction = menu->addAction(tr("Create card"));
-    QAction* editAction = menu->addAction(tr("Edit"));
     QAction* removeAction = menu->addAction(tr("Remove"));
 
     //
@@ -1010,12 +1044,13 @@ void CardsScene::reorderItemsOnScene()
         }
     }
 
-    const QRectF sceneRect = this->sceneRect();
-    int x = sceneRect.left() + m_cardsDistance;
-    int y = sceneRect.top() + m_cardsDistance;
+    int x = m_sceneRect.left() + m_cardsDistance;
+    int y = m_sceneRect.top() + m_cardsDistance;
     int lastItemHeight = -1;
     int currentCardInRow = 0;
     bool lastCardIsEmbedded = false;
+
+
 
     //
     // Проходим все элементы (они упорядочены так, как должны идти элементы в сценарии
@@ -1028,7 +1063,7 @@ void CardsScene::reorderItemsOnScene()
             //
             // ... возвращаем х в начальное положение
             //
-            x = sceneRect.left() + m_cardsDistance;
+            x = m_sceneRect.left() + m_cardsDistance;
             //
             // ... если вставляется после карточки, то добавим вертикальный отступ
             //
@@ -1069,7 +1104,7 @@ void CardsScene::reorderItemsOnScene()
                 || (lastCardIsEmbedded == true
                     && card->isEmbedded() == false)) {
                 currentCardInRow = 0;
-                x = sceneRect.left() + m_cardsDistance;
+                x = m_sceneRect.left() + m_cardsDistance;
                 y += lastItemHeight + m_cardsDistance;
             }
             ++currentCardInRow;
@@ -1087,18 +1122,6 @@ void CardsScene::reorderItemsOnScene()
             x += m_cardsSize.width() + m_cardsDistance;
             lastItemHeight = m_cardsSize.height();
             lastCardIsEmbedded = card->isEmbedded();
-        }
-    }
-
-    //
-    // Скорректируем области папок
-    //
-    for (QGraphicsItem* item : m_items) {
-        if (ActItem* act = qgraphicsitem_cast<ActItem*>(item)) {
-            QRectF actRect = act->boundingRect();
-            actRect.setLeft(sceneRect.left());
-            actRect.setWidth(sceneRect.width());
-            act->setBoundingRect(actRect);
         }
     }
 }
