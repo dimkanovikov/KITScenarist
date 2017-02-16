@@ -591,20 +591,20 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
     //
     QMenu* menu = new QMenu(views().value(0, nullptr));
 
-    QAction* editAction = menu->addAction(tr("Edit"));
-
     //
-    // FIXME: не работают эти пункты почему-то, поэтому пока убираю их
+    // Возможность конвертирования
     //
     QAction* convertToSceneAction = menu->addAction(tr("Convert to scene"));
-    convertToSceneAction->setVisible(false);
     QAction* convertToFolderAction = menu->addAction(tr("Convert to folder"));
-    convertToFolderAction->setVisible(false);
 
+    //
+    // Настройка карточки
+    //
+    QAction* propertiesSeparator = menu->addSeparator();
+    QAction* editAction = menu->addAction(tr("Edit"));
     //
     // Цвета
     //
-    QAction* propertiesSeparator = menu->addSeparator();
     QString colorsNames;
     if (act != nullptr) {
         colorsNames = act->colors();
@@ -700,7 +700,7 @@ void CardsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent* _event)
             stampLayout->addWidget(new QLabel(tr("Stamp:"), stampWidget));
             stampLayout->addWidget(stampEditor);
             stateAction->setDefaultWidget(stampWidget);
-            menu->insertAction(menu->actions().at(3), stateAction);
+            menu->insertAction(menu->actions().at(4), stateAction);
         }
     }
 
