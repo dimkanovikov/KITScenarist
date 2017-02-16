@@ -151,8 +151,8 @@ bool CardItem::isEmbedded() const
 void CardItem::setSize(const QSizeF& _size)
 {
     if (m_size != _size) {
+        prepareGeometryChange();
         m_size = _size;
-        update();
     }
 }
 

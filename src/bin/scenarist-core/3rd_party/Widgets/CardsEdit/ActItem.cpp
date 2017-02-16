@@ -86,8 +86,8 @@ int ActItem::type() const
 void ActItem::setBoundingRect(const QRectF& _boundingRect)
 {
     if (m_boundingRect != _boundingRect) {
+        prepareGeometryChange();
         m_boundingRect = _boundingRect;
-        update();
     }
 }
 
