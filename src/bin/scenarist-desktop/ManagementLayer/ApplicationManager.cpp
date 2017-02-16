@@ -254,7 +254,7 @@ void ApplicationManager::aboutCreateNew()
                     // Если задан, то создаём новый проект в заданном файле
                     //
                     const QString newProjectPath = dlg.projectFilePath();
-                    const QString importFilePath = dlg.isNeedImport() ? dlg.importFilePath() : QString::null;
+                    const QString importFilePath = dlg.importFilePath();
                     createNewLocalProject(newProjectPath, importFilePath);
                     break;
                 }
@@ -268,7 +268,7 @@ void ApplicationManager::aboutCreateNew()
                     // Если задано имя, то создаём новый проект в облаке
                     //
                     const QString newProjectName = dlg.projectName();
-                    const QString importFilePath = dlg.isNeedImport() ? dlg.importFilePath() : QString::null;
+                    const QString importFilePath = dlg.importFilePath();
                     createNewRemoteProject(newProjectName, importFilePath);
                     break;
                 }

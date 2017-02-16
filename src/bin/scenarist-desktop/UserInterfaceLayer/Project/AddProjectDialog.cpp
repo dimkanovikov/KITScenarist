@@ -110,35 +110,30 @@ QString AddProjectDialog::projectName() const
 
 QString AddProjectDialog::projectFilePath() const
 {
-    return m_ui->file->text();
-}
-
-bool AddProjectDialog::isNeedImport() const
-{
-    return m_ui->needImport->isChecked();
+    return m_ui->saveDir->text() + QDir::separator() + projectName();
 }
 
 QString AddProjectDialog::importFilePath() const
 {
-    return m_ui->importFile->text();
+    if (!m_ui->importFile->text().isEmpty()) {
+        return m_ui->importFile->text();
+    }
+
+    return QString::null;
 }
 
 QWidget* AddProjectDialog::focusedOnExec() const
 {
-    if (m_ui->isRemote->isChecked()) {
-        return m_ui->projectName;
-    }
-
-    return m_ui->file;
+    return m_ui->projectName;
 }
 
 void AddProjectDialog::initView()
 {
-    m_ui->browseFile->updateIcons();
+    m_ui->browseSaveDir->updateIcons();
     m_ui->browseImportFile->updateIcons();
 
-    m_ui->namePanel->hide();
-    m_ui->importPanel->hide();
+    m_ui->advancedPanel->hide();
+    m_ui->saveDir->setText(QDir::toNativeSeparators(::projectsFolderPath()));
 
     m_ui->buttons->addButton(tr("Create"), QDialogButtonBox::AcceptRole);
 
@@ -147,24 +142,21 @@ void AddProjectDialog::initView()
 
 void AddProjectDialog::initConnections()
 {
-    connect(m_ui->isLocal, &QRadioButton::toggled, m_ui->filePanel, &QFrame::setVisible);
-    connect(m_ui->isRemote, &QRadioButton::toggled, m_ui->namePanel, &QFrame::setVisible);
-    connect(m_ui->needImport, &QCheckBox::toggled, m_ui->importPanel, &QFrame::setVisible);
+    connect(m_ui->advanced, &QCheckBox::toggled, m_ui->advancedPanel, &QFrame::setVisible);
 
-    connect(m_ui->browseFile, &FlatButton::clicked, [=] {
+    connect(m_ui->browseSaveDir, &FlatButton::clicked, [=] {
         QString folderPath =
-                QFileDialog::getSaveFileName(
+                QFileDialog::getExistingDirectory(
                     this,
                     tr("Choose file for new project"),
-                    ::projectsFolderPath(),
-                    tr("Scenarist project files (*%1)").arg(PROJECT_FILE_EXTENSION)
+                    ::projectsFolderPath()
                     );
 
         if (!folderPath.isEmpty()) {
             //
             // Сохраним путь к файлу
             //
-            m_ui->file->setText(folderPath);
+            m_ui->saveDir->setText(folderPath);
             ::saveProjectsFolderPath(folderPath);
         }
     });

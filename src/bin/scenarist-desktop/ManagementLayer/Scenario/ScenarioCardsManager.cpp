@@ -208,6 +208,7 @@ void ScenarioCardsManager::setCommentOnly(bool _isCommentOnly)
 
 void ScenarioCardsManager::addCard()
 {
+    m_addItemDialog->setWindowTitle(tr("Add card"));
     m_addItemDialog->clear();
 
     //
@@ -246,6 +247,7 @@ void ScenarioCardsManager::addCard()
 
 void ScenarioCardsManager::editCard(const QString& _uuid)
 {
+    m_addItemDialog->setWindowTitle(tr("Edit card"));
     m_addItemDialog->clear();
 
     const QModelIndex indexForUpdate = m_model->indexForUuid(_uuid);
