@@ -117,6 +117,16 @@ int ScenarioDocument::itemStartPosition(const QModelIndex& _index) const
     return item->position();
 }
 
+int ScenarioDocument::itemMiddlePosition(const QModelIndex& _index) const
+{
+    ScenarioModelItem* item = m_model->itemForIndex(_index);
+    if (item->type() != ScenarioModelItem::Folder) {
+        return item->endPosition();
+    }
+
+    return item->endPosition() - item->footer().length() - 1;
+}
+
 int ScenarioDocument::itemEndPosition(const QModelIndex& _index) const
 {
     ScenarioModelItem* item = m_model->itemForIndex(_index);
@@ -271,7 +281,7 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
             QTextDocument descriptionDoc;
             descriptionDoc.setHtml(_description);
             const QString descriptionPlainText = descriptionDoc.toPlainText();
-            item->setDescription(descriptionPlainText);
+            item->setDescription(!descriptionPlainText.isEmpty() ? descriptionPlainText : QString::null);
             m_model->updateItem(item);
 
             //

@@ -289,7 +289,7 @@ void ScenarioTextEditWidget::addItem(int _position, int _type, const QString& _h
             cursor.movePosition(QTextCursor::NextBlock);
             cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
         }
-        cursor.insertText(Helpers::footerText(_header));
+        cursor.insertText(Helpers::footerText(!_header.isEmpty() ? _header : _title));
     }
 
     //

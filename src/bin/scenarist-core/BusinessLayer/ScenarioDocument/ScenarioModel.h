@@ -142,9 +142,9 @@ namespace BusinessLogic
 		ScenarioModelItem* m_rootItem;
 
 		/**
-		 * @brief Обработчик xml
-		 */
-		ScenarioXml* m_xmlHandler;
+         * @brief Обработчик xml
+         */
+        ScenarioXml* m_xmlHandler;
 
 		/**
 		 * @brief Указатель на последний созданный майм-объект

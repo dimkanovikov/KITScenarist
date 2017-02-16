@@ -17,7 +17,7 @@ using UserInterface::ScenarioCardsView;
 using UserInterface::ScenarioSchemeItemDialog;
 
 namespace {
-    const bool ISDRAFT = true;
+    const bool IS_DRAFT = true;
     const bool IS_SCRIPT = false;
 }
 
@@ -236,7 +236,8 @@ void ScenarioCardsManager::addCard()
             //
             // Если добавляется акт, то нужно взять корневой индекс
             //
-            if (type == BusinessLogic::ScenarioModelItem::Folder) {
+            if (type == BusinessLogic::ScenarioModelItem::Folder
+                && index.parent().isValid()) {
                 index = index.parent();
             }
 

@@ -51,7 +51,7 @@ void ScenarioModelItem::setPosition(int _position)
 
 int ScenarioModelItem::endPosition() const
 {
-	return position() + length();
+    return position() + length();
 }
 
 int ScenarioModelItem::length() const

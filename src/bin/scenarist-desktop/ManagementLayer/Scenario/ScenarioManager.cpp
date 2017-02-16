@@ -10,6 +10,7 @@
 #include <Domain/ScenarioChange.h>
 
 #include <BusinessLayer/ScenarioDocument/ScenarioDocument.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextDocument.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTemplate.h>
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
@@ -752,7 +753,12 @@ void ScenarioManager::aboutAddItemFromCards(const QModelIndex& _afterItemIndex, 
     //
     setWorkingMode(m_navigatorManager);
 
-    const int position = workingScenario()->itemEndPosition(_afterItemIndex);
+    int position = 0;
+    if (_itemType == BusinessLogic::ScenarioModelItem::Folder) {
+        position = workingScenario()->itemEndPosition(_afterItemIndex);
+    } else {
+        position = workingScenario()->itemMiddlePosition(_afterItemIndex);
+    }
     m_textEditManager->addScenarioItemFromCards(position, _itemType, _title, _color, _description);
 }
 
