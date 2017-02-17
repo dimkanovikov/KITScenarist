@@ -303,29 +303,40 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
             //
             cursor.beginEditBlock();
             ScenarioBlockStyle descriptionBlockStyle = ScenarioTemplateFacade::getTemplate().blockStyle(ScenarioBlockStyle::SceneDescription);
-            cursor.movePosition(QTextCursor::NextBlock);
-            if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
-                cursor.movePosition(QTextCursor::NextBlock);
+            //
+            // ... если это не последний блок в документе проверяем следующие блоки
+            //
+            if (cursor.movePosition(QTextCursor::NextBlock)) {
+                if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
+                    cursor.movePosition(QTextCursor::NextBlock);
+                }
+                //
+                // ... затираем старый текст
+                //
+                ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
+                if (currentBlockType == ScenarioBlockStyle::SceneDescription) {
+                    while (currentBlockType == ScenarioBlockStyle::SceneDescription
+                           && !cursor.atEnd()) {
+                        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+                        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+                        currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
+                    }
+                    if (!cursor.atEnd()) {
+                        cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
+                    }
+                    cursor.removeSelectedText();
+                } else {
+                    if (!cursor.atEnd()) {
+                        cursor.movePosition(QTextCursor::PreviousCharacter);
+                    }
+                    cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
+                }
             }
             //
-            // ... затираем старый текст
+            // ... если это последний блок в документе, просто переходим в конец
             //
-            ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
-            if (currentBlockType == ScenarioBlockStyle::SceneDescription) {
-                while (currentBlockType == ScenarioBlockStyle::SceneDescription
-                       && !cursor.atEnd()) {
-                    cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-                    cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
-                    currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
-                }
-                if (!cursor.atEnd()) {
-                    cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
-                }
-                cursor.removeSelectedText();
-            } else {
-                if (!cursor.atEnd()) {
-                    cursor.movePosition(QTextCursor::PreviousCharacter);
-                }
+            else {
+                cursor.movePosition(QTextCursor::EndOfBlock);
                 cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
             }
             //
@@ -605,7 +616,8 @@ void ScenarioDocument::aboutContentsChange(int _position, int _charsRemoved, int
         // которого он нажат, а если не энтер, то все, после нажатого символа
         //
         if (_charsAdded > 0 && _charsRemoved == 0) {
-            if (m_document->characterAt(_position) == QChar(QChar::ParagraphSeparator)) {
+            if (_position > 0
+                && m_document->characterAt(_position) == QChar(QChar::ParagraphSeparator)) {
                 --position;
             } else {
                 ++position;

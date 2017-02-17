@@ -276,6 +276,10 @@ void ScenarioCardsView::initShortcuts()
         }
     });
 
+    QShortcut* add = new QShortcut(Qt::Key_New, this);
+    add->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(add, &QShortcut::activated, this, &ScenarioCardsView::addCardClicked);
+
     QShortcut* remove = new QShortcut(Qt::Key_Delete, this);
     remove->setContext(Qt::WidgetWithChildrenShortcut);
     connect(remove, &QShortcut::activated, m_cards, &CardsView::removeSelectedItem);

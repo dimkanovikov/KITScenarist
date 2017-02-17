@@ -337,6 +337,13 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
     }
 
     //
+    // Если не задан заголовок, установим его таким же, как и название
+    //
+    if (cursor.block().text().isEmpty()) {
+        cursor.insertText(_title);
+    }
+
+    //
     // Устанавливаем название блока и описание
     //
     if (ScenarioTextBlockInfo* blockInfo = dynamic_cast<ScenarioTextBlockInfo*>(cursor.block().userData())) {
@@ -351,14 +358,20 @@ void ScenarioTextEditWidget::editItem(int _startPosition, int _endPosition, int 
     //
     cursor.setPosition(_startPosition);
     //
-    // ... сперва выделив старое описание
+    // ... сперва выделив старое описание, если после текущего блока есть другие блоки
     //
-    cursor.movePosition(QTextCursor::NextBlock);
-    while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
-           && cursor.position() <= _endPosition
-           && !cursor.atEnd()) {
-        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+    if (cursor.movePosition(QTextCursor::NextBlock)) {
+        if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
+            cursor.movePosition(QTextCursor::NextBlock);
+        }
+        while (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneDescription
+               && cursor.position() <= _endPosition
+               && !cursor.atEnd()) {
+            cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+            cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+        }
+    } else {
+        cursor.movePosition(QTextCursor::EndOfBlock);
     }
     //
     // ... шаг назад, если до этого мы перескочили в следующий блок
