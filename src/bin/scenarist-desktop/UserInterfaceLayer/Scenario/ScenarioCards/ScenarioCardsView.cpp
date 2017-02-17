@@ -203,67 +203,6 @@ void ScenarioCardsView::initView(bool _isDraft)
 
 void ScenarioCardsView::initConnections()
 {
-    /*
-
-    connect(ui->saveChanges, &QPushButton::clicked, [=] { ui->draft->saveChanges(); });
-    connect(ui->undo, &QPushButton::clicked, ui->draft, &CardsView::undo);
-    connect(ui->redo, &QPushButton::clicked, ui->draft, &CardsView::redo);
-
-
-    // ****
-    // Act
-
-    connect(ui->addAct, &QPushButton::clicked, [=] {
-        ui->script->addAct(QUuid::createUuid().toString(), "Act", "With some description", "#af51cc");
-    });
-
-    connect(ui->script, &CardsView::actAddRequest, [=] {
-        ui->script->addAct(QUuid::createUuid().toString(), "Act", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                                                               "Sed pretium, risus eget porta sollicitudin, justo tortor "
-                                                               "fermentum massa, ut dictum lacus risus ut dolor. Praesent "
-                                                               "sodales ultrices leo. Maecenas pharetra ipsum eu est aliquet,"
-                                                               " ac bibendum nisi sollicitudin. In congue rutrum maximus. Nam "
-                                                               "pharetra pellentesque quam, vel pulvinar sem ornare eu. Donec "
-                                                               "lorem nibh, blandit sit amet vulputate eleifend, dictum a urna. "
-                                                               "Aenean ut lorem posuere, auctor ante ac, tincidunt nibh. Sed "
-                                                               "dignissim odio sed lectus blandit, eget volutpat purus maximus. "
-                                                               "Sed eget odio mollis, rutrum leo a, ornare diam. Maecenas "
-                                                               "condimentum tellus eget turpis dictum, vel mattis erat facilisis. "
-                                                               "Pellentesque habitant morbi tristique senectus et netus et "
-                                                               "malesuada fames ac turpis egestas.", "#cd01a0;#ffac32;#93fac3");
-    });
-
-
-
-    connect(ui->script, &CardsView::actRemoveRequest, ui->script, &CardsView::removeAct);
-
-    // ****
-
-    connect(ui->save, &QPushButton::clicked, [=] {
-        QFile draft("c:\\draft.xml");
-        draft.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        draft.write(ui->draft->save().toUtf8().data());
-        draft.close();
-        //
-        QFile script("c:\\script.xml");
-        script.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        script.write(ui->script->save().toUtf8().data());
-        script.close();
-    });
-
-    connect(ui->load, &QPushButton::clicked, [=] {
-        QFile draft("c:\\draft.xml");
-        draft.open(QIODevice::ReadOnly);
-        ui->draft->load(draft.readAll());
-        draft.close();
-        //
-        QFile script("c:\\script.xml");
-        script.open(QIODevice::ReadOnly);
-        ui->script->load(script.readAll());
-        script.close();
-    });
-     */
-
     connect(m_cards, &CardsView::cardsChanged, this, &ScenarioCardsView::cardsChanged);
 
     connect(m_addCard, &FlatButton::clicked, [=] {
@@ -280,6 +219,8 @@ void ScenarioCardsView::initConnections()
         m_newCardPosition = _position;
         emit addCopyCardRequest(_isFolder, _title, _description, _stamp, _colors);
     });
+
+    connect(m_removeCard, &FlatButton::clicked, m_cards, &CardsView::removeSelectedItem);
 
     connect(m_cards, &CardsView::actChangeRequest, this, &ScenarioCardsView::editCardRequest);
     connect(m_cards, &CardsView::cardChangeRequest, this, &ScenarioCardsView::editCardRequest);
@@ -334,6 +275,13 @@ void ScenarioCardsView::initShortcuts()
             m_cards->redo();
         }
     });
+
+    QShortcut* remove = new QShortcut(Qt::Key_Delete, this);
+    remove->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(remove, &QShortcut::activated, m_cards, &CardsView::removeSelectedItem);
+    QShortcut* backspace = new QShortcut(Qt::Key_Backspace, this);
+    backspace->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(backspace, &QShortcut::activated, m_cards, &CardsView::removeSelectedItem);
 
     QShortcut* fullscreen = new QShortcut(Qt::Key_F5, this);
     fullscreen->setContext(Qt::WidgetWithChildrenShortcut);

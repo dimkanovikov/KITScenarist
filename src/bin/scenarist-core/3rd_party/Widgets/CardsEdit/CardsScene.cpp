@@ -39,6 +39,8 @@ namespace {
 CardsScene::CardsScene(QObject *parent) :
     QGraphicsScene(parent)
 {
+    setItemIndexMethod(QGraphicsScene::NoIndex);
+
     connect(this, &CardsScene::sceneRectChanged, [=] (const QRectF& _rect) {
         //
         // Сохраним новое значение
@@ -380,10 +382,9 @@ void CardsScene::removeAct(const QString& _uuid)
             //
             // Удаляем сам акт
             //
-            m_items.removeAll(act);
             removeItem(act);
-            delete act;
-            act = nullptr;
+            m_items.removeAll(act);
+            act->deleteLater();
 
             //
             // Упорядочим, если надо
@@ -409,10 +410,9 @@ void CardsScene::removeCard(const QString& _uuid)
             //
             // Удаляем саму карточку
             //
-            m_items.removeAll(card);
             removeItem(card);
-            delete card;
-            card = nullptr;
+            m_items.removeAll(card);
+            card->deleteLater();
 
             //
             // Упорядочим, если надо
@@ -423,6 +423,18 @@ void CardsScene::removeCard(const QString& _uuid)
             // Уведомляем подписчиков
             //
             emit actRemoved(_uuid);
+        }
+    }
+}
+
+void CardsScene::removeSelectedItem()
+{
+    if (!selectedItems().isEmpty()) {
+        QGraphicsItem* item = selectedItems().first();
+        if (ActItem* act = qgraphicsitem_cast<ActItem*>(item)) {
+            emit actRemoveRequest(act->uuid());
+        } else if (CardItem* card = qgraphicsitem_cast<CardItem*>(item)) {
+            emit cardRemoveRequest(card->uuid());
         }
     }
 }
@@ -1158,7 +1170,7 @@ void CardsScene::setInDragOutMode(bool _inDragOutMode)
 {
     if (m_isInDragOutMode != _inDragOutMode) {
         m_isInDragOutMode = _inDragOutMode;
-        for (QGraphicsItem* item : items()) {
+        for (QGraphicsItem* item : m_items) {
             if (CardItem* card = qgraphicsitem_cast<CardItem*>(item)) {
                 card->setInDragOutMode(m_isInDragOutMode);
             }

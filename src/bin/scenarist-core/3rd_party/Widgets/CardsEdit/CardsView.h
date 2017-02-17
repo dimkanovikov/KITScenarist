@@ -91,6 +91,11 @@ public:
     void removeItem(const QString& _uuid);
 
     /**
+     * @brief Удалить выделенный элемент
+     */
+    void removeSelectedItem();
+
+    /**
      * @brief Обновить сцену
      */
     void refresh();

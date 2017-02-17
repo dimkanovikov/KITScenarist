@@ -3,6 +3,7 @@
 #include "../ScenarioTextEdit.h"
 
 #include <BusinessLayer/ScenarioDocument/ScenarioTextBlockParsers.h>
+#include <BusinessLayer/ScenarioDocument/ScenarioTextBlockInfo.h>
 
 #include <Domain/Place.h>
 #include <Domain/Research.h>
@@ -161,6 +162,18 @@ void SceneHeadingHandler::handleEnter(QKeyEvent* _event)
 					// Вставка блока заголовка перед собой
 					//
 					editor()->addScenarioBlock(ScenarioBlockStyle::SceneHeading);
+
+                    //
+                    // Перенесём параметры из блока в котором они остались к текущему блоку
+                    //
+                    QTextCursor cursor = editor()->textCursor();
+                    cursor.movePosition(QTextCursor::PreviousBlock);
+                    if (ScenarioTextBlockInfo* info = dynamic_cast<ScenarioTextBlockInfo*> (cursor.block().userData())) {
+                        ScenarioTextBlockInfo* movedInfo = info->clone();
+                        cursor.block().setUserData(nullptr);
+                        cursor.movePosition(QTextCursor::NextBlock);
+                        cursor.block().setUserData(movedInfo);
+                    }
 				} else if (cursorForwardText.isEmpty()) {
 					//! В конце блока
 

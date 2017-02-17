@@ -97,6 +97,11 @@ void CardsView::removeItem(const QString& _uuid)
     m_scene->removeSceneItem(_uuid);
 }
 
+void CardsView::removeSelectedItem()
+{
+    m_scene->removeSelectedItem();
+}
+
 void CardsView::refresh()
 {
     m_scene->refresh();
