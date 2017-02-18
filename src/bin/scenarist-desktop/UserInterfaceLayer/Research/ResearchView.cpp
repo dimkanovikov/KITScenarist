@@ -136,22 +136,27 @@ void ResearchView::setResearchModel(QAbstractItemModel* _model)
                 emit researchItemAdded();
             }
         });
-        connect(_model, &QAbstractItemModel::dataChanged, [=] {
-            //
-            // Сохраняем последнюю позицию редактирования
-            //
-            int lastCursorPos = m_ui->textDescription->editor()->textCursor().position();
-            //
-            // Обновляем элемент
-            //
-            currentResearchChanged();
-            //
-            // Восстанавливаем позицию редактирования
-            //
-            QTextCursor cursor = m_ui->textDescription->editor()->textCursor();
-            cursor.setPosition(lastCursorPos);
-            m_ui->textDescription->editor()->setTextCursor(cursor);
-        });
+        //
+        // TODO: тут должен быть НОРМАЛЬНЫЙ код, который обновляет текущий редактор, если данные сменились
+        //
+//        connect(_model, &QAbstractItemModel::dataChanged, [=] (const QModelIndex& _index) {
+//            if (_index == currentResearchIndex()) {
+//                //
+//                // Сохраняем последнюю позицию редактирования
+//                //
+//                int lastCursorPos = m_ui->textDescription->editor()->textCursor().position();
+//                //
+//                // Обновляем элемент
+//                //
+//                currentResearchChanged();
+//                //
+//                // Восстанавливаем позицию редактирования
+//                //
+//                QTextCursor cursor = m_ui->textDescription->editor()->textCursor();
+//                cursor.setPosition(lastCursorPos);
+//                m_ui->textDescription->editor()->setTextCursor(cursor);
+//            }
+//        });
     }
 }
 
