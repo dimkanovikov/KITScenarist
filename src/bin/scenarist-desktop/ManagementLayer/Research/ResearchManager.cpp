@@ -391,6 +391,10 @@ void ResearchManager::refreshResearchSubtree(const QModelIndex& _index)
 
 void ResearchManager::showNavigatorContextMenu(const QModelIndex& _index, const QPoint& _pos)
 {
+    if (!_index.isValid()) {
+        return;
+    }
+
     ResearchModelItem* researchItem = m_model->itemForIndex(_index);
     bool showAdd = false;
     bool showRemove = false;
