@@ -48,6 +48,14 @@ public:
     /** @} */
 
     /**
+     * @brief Номер сцены
+     */
+    /** @{ */
+    void setNumber(int _number);
+    int number() const;
+    /** @} */
+
+    /**
      * @brief Заголовок
      */
     /** @{ */
@@ -155,6 +163,11 @@ private:
      * @brief Является ли карточка папкой (true) или сценой (false)
      */
     bool m_isFolder = false;
+
+    /**
+     * @brief Номер сцены
+     */
+    int m_number = 0;
 
     /**
      * @brief Заголовок карточки

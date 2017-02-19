@@ -17,6 +17,7 @@ class CardsScene : public QGraphicsScene
 
 public:
     explicit CardsScene(QObject *parent = 0);
+    ~CardsScene();
 
     /**
      * @brief Задать размер карточек
@@ -56,30 +57,35 @@ public:
     /**
      * @brief Добавить акт
      */
-    void addAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors);
+    void addAct(const QString& _uuid, const QString& _title, const QString& _description,
+        const QString& _colors);
 
     /**
      * @brief Вставить акт после заданного элемента
      */
-    void insertAct(const QString& _uuid, const QString& _title, const QString& _description, const QString& _colors, const QString& _previousItemUuid);
+    void insertAct(const QString& _uuid, const QString& _title, const QString& _description,
+        const QString& _colors, const QString& _previousItemUuid);
 
     /**
      * @brief Добавить карточку
      */
-    void addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position);
+    void addCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        const QString& _description, const QString& _stamp, const QString& _colors,
+        bool _isEmbedded, const QPointF& _position);
 
     /**
      * @brief Вставить карточку после заданного элемента
      */
-    void insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid);
+    void insertCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        const QString& _description, const QString& _stamp, const QString& _colors,
+        bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid);
 
     /**
      * @brief Обновить заданную карточку
      */
-    void updateItem(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-        const QString& _stamp, const QString& _colors, bool _isEmbedded, bool _isAct);
+    void updateItem(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+        const QString& _description, const QString& _stamp, const QString& _colors,
+        bool _isEmbedded, bool _isAct);
 
     /**
      * @brief Удалить элемент по идентификатору
@@ -105,6 +111,11 @@ public:
      * @brief Обновить сцену
      */
     void refresh();
+
+    /**
+     * @brief Перерисовать акты
+     */
+    void updateActs();
 
     /**
      * @brief Сформировать xml на основе сцены
@@ -292,7 +303,7 @@ private:
     /**
      * @brief Список элементов сцены
      */
-    QVector<QGraphicsItem*> m_items;
+    QList<QGraphicsItem*> m_items;
 
     /**
      * @brief Навигационная карта по элементам <uuid, item>

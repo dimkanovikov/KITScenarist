@@ -43,6 +43,18 @@ using BusinessLogic::ScenarioTemplate;
 using BusinessLogic::ScenarioBlockStyle;
 using BusinessLogic::ScenarioTextBlockInfo;
 
+namespace {
+    /**
+     * @brief Нерабочая позиция курсора
+     */
+    const int INVALID_CURSOR_POSITION = -1;
+
+    /**
+     * @brief Исходная позиция курсора после загрузки программы
+     */
+    int initCursorPosition = INVALID_CURSOR_POSITION;
+}
+
 
 ScenarioTextEditWidget::ScenarioTextEditWidget(QWidget* _parent) :
     QFrame(_parent),
@@ -177,10 +189,18 @@ void ScenarioTextEditWidget::setCursorPosition(int _position)
     // масштабирования, что приводит в свою очередь к тому, что полосы прокрутки остаются в начале.
     //
     if (!isVisible()) {
-        QTimer::singleShot(300, Qt::PreciseTimer, [=] {
-            setCursorPosition(_position);
-        });
-        return;
+        //
+        // ... но делаем это только в случае, когда курсор устанавливается в виджет в первый раз,
+        //     если позиция курсора потом меняется ещё раз, то устанавливаем её
+        //
+        if (initCursorPosition == INVALID_CURSOR_POSITION) {
+            initCursorPosition = _position;
+        } else if (initCursorPosition == _position) {
+            QTimer::singleShot(300, Qt::PreciseTimer, [=] {
+                setCursorPosition(_position);
+            });
+            return;
+        }
     }
 
     //

@@ -160,7 +160,7 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockTy
 
     //
     // Если работаем в режиме поэпизодника и описание сцены меняется на заголовок сцены,
-    // группы сцен, или папки, то текущий блок нужно перенести в конец текущей сцены
+    // или папки, то текущий блок нужно перенести в конец текущей сцены
     //
     if (outlineMode()
         && scenarioBlockType() == ScenarioBlockStyle::SceneDescription
@@ -1192,6 +1192,12 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
     if (outlineMode() && _blockType == ScenarioBlockStyle::Action) {
         _blockType = ScenarioBlockStyle::SceneDescription;
     }
+    //
+    // И наоборот
+    //
+    else if (!outlineMode() && _blockType == ScenarioBlockStyle::SceneDescription) {
+        _blockType = ScenarioBlockStyle::Action;
+    }
 
 
     QTextCursor cursor = textCursor();
@@ -1287,7 +1293,7 @@ void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockT
     }
 
     //
-    // Для заголовка группы нужно создать завершение, захватив всё содержимое сцены
+    // Для заголовка папки нужно создать завершение, захватив всё содержимое сцены
     //
     if (newBlockStyle.isEmbeddableHeader()) {
         ScenarioBlockStyle footerStyle = ScenarioTemplateFacade::getTemplate().blockStyle(newBlockStyle.embeddableFooter());

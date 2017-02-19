@@ -74,6 +74,8 @@ namespace {
         hash.append(_block.revision());
         if (ScenarioTextBlockInfo* blockInfo = dynamic_cast<ScenarioTextBlockInfo*>(_block.userData())) {
             hash.append("#");
+            hash.append(blockInfo->uuid());
+            hash.append("#");
             hash.append(QString::number(blockInfo->sceneNumber()));
             hash.append("#");
             hash.append(blockInfo->colors());

@@ -74,7 +74,7 @@ void CardItem::setIsFolder(bool _isFolder)
 {
     if (m_isFolder != _isFolder) {
         m_isFolder = _isFolder;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -83,11 +83,24 @@ bool CardItem::isFolder() const
     return m_isFolder;
 }
 
+void CardItem::setNumber(int _number)
+{
+    if (m_number != _number) {
+        m_number = _number;
+        prepareGeometryChange();
+    }
+}
+
+int CardItem::number() const
+{
+    return m_number;
+}
+
 void CardItem::setTitle(const QString& _title)
 {
     if (m_title != _title) {
         m_title = _title;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -100,7 +113,7 @@ void CardItem::setDescription(const QString& _description)
 {
     if (m_description != _description) {
         m_description = _description;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -113,7 +126,7 @@ void CardItem::setStamp(const QString& _stamp)
 {
     if (m_stamp != _stamp) {
         m_stamp = _stamp;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -126,7 +139,7 @@ void CardItem::setColors(const QString& _colors)
 {
     if (m_colors != _colors) {
         m_colors = _colors;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -139,7 +152,7 @@ void CardItem::setIsEmbedded(bool _embedded)
 {
     if (m_isEmbedded != _embedded) {
         m_isEmbedded = _embedded;
-        update();
+        prepareGeometryChange();
     }
 }
 
@@ -151,8 +164,8 @@ bool CardItem::isEmbedded() const
 void CardItem::setSize(const QSizeF& _size)
 {
     if (m_size != _size) {
-        prepareGeometryChange();
         m_size = _size;
+        prepareGeometryChange();
     }
 }
 
@@ -272,7 +285,11 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         _painter->setPen(palette.text().color());
         const int titleHeight = _painter->fontMetrics().height();
         const QRectF titleRect(7, 18, cardRect.size().width() - 7*2, titleHeight);
-        const QString titleText = TextUtils::elidedText(title(), _painter->font(), titleRect.size(), textoption);
+        QString titleText = title();
+        if (!isFolder()) {
+            titleText.prepend(QString("%1. ").arg(number()));
+        }
+        titleText = TextUtils::elidedText(titleText, _painter->font(), titleRect.size(), textoption);
         _painter->drawText(titleRect, titleText, textoption);
 
         //
@@ -285,7 +302,7 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         stateFont.setCapitalization(QFont::AllUppercase);
         //
         // Нужно, чтобы состояние влезало в пределы карточки, если не влезает уменьшаем его шрифт
-        // до тех пор, пока не будет найден подходящий размер, или пока он не будет рабен двум
+        // до тех пор, пока не будет найден подходящий размер, или пока он не будет равен двум
         // размерам базового шрифта
         //
         QFontMetricsF stateFontMetrics(stateFont);

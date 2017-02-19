@@ -58,6 +58,10 @@ CardsScene::CardsScene(QObject *parent) :
     });
 }
 
+CardsScene::~CardsScene()
+{
+}
+
 void CardsScene::setCardsSize(const QSizeF& _size)
 {
     if (m_cardsSize != _size) {
@@ -145,6 +149,10 @@ void CardsScene::insertAct(const QString& _uuid, const QString& _title, const QS
         return;
     }
 
+    if (m_itemsMap.contains(_uuid)) {
+        Q_ASSERT_X(false, Q_FUNC_INFO, "Try to add contained item to scene");
+    }
+
     ActItem* act = new ActItem;
     act->setUuid(_uuid);
     act->setTitle(_title);
@@ -198,7 +206,9 @@ void CardsScene::insertAct(const QString& _uuid, const QString& _title, const QS
     emit actAdded(act->uuid());
 }
 
-void CardsScene::addCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position)
+void CardsScene::addCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
+    const QPointF& _position)
 {
     if (m_isChangesBlocked) {
         return;
@@ -208,19 +218,26 @@ void CardsScene::addCard(const QString& _uuid, bool _isFolder, const QString& _t
     // Вставим карточку после самого последнего элемента
     //
     QString previousItemUuid = lastItemUuid();
-    insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _position, previousItemUuid);
+    insertCard(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, _position, previousItemUuid);
 }
 
-void CardsScene::insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-    const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid)
+void CardsScene::insertCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
+    const QPointF& _position, const QString& _previousItemUuid)
 {
     if (m_isChangesBlocked) {
         return;
     }
 
+    if (m_itemsMap.contains(_uuid)) {
+        return;
+//        Q_ASSERT_X(false, Q_FUNC_INFO, "Try to add contained item to scene");
+    }
+
     CardItem* card = new CardItem;
     card->setUuid(_uuid);
     card->setIsFolder(_isFolder);
+    card->setNumber(_number);
     card->setTitle(_title);
     card->setDescription(_description);
     card->setStamp(_stamp);
@@ -229,7 +246,6 @@ void CardsScene::insertCard(const QString& _uuid, bool _isFolder, const QString&
     card->setPos(_position);
     card->setSize(m_cardsSize);
     addItem(card);
-
     //
     // Выделяем добавленную карточку
     //
@@ -277,8 +293,9 @@ void CardsScene::insertCard(const QString& _uuid, bool _isFolder, const QString&
     emit cardAdded(card->uuid());
 }
 
-void CardsScene::updateItem(const QString& _uuid, bool _isFolder, const QString& _title,
-    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded, bool _isAct)
+void CardsScene::updateItem(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
+    bool _isAct)
 {
     if (m_itemsMap.contains(_uuid)) {
         //
@@ -313,7 +330,7 @@ void CardsScene::updateItem(const QString& _uuid, bool _isFolder, const QString&
                 }
 
                 removeAct(act->uuid());
-                insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, false, QPointF(), previousItemUuid);
+                insertCard(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, false, QPointF(), previousItemUuid);
             }
         }
         //
@@ -325,6 +342,7 @@ void CardsScene::updateItem(const QString& _uuid, bool _isFolder, const QString&
             //
             if (_isAct == false) {
                 card->setIsFolder(_isFolder);
+                card->setNumber(_number);
                 card->setTitle(_title);
                 card->setDescription(_description);
                 card->setColors(_colors);
@@ -444,6 +462,15 @@ void CardsScene::refresh()
     reorderItemsOnScene();
 }
 
+void CardsScene::updateActs()
+{
+    for (QGraphicsItem* item : m_items) {
+        if (ActItem* act = qgraphicsitem_cast<ActItem*>(item)) {
+            act->update();
+        }
+    }
+}
+
 QString CardsScene::save() const
 {
     QString xml;
@@ -480,6 +507,7 @@ QString CardsScene::save() const
             writer.writeEmptyElement("card");
             writer.writeAttribute("id", card->uuid());
             writer.writeAttribute("is_folder", card->isFolder() ? "true" : "false");
+            writer.writeAttribute("number", QString::number(card->number()));
             writer.writeAttribute("title", card->title());
             writer.writeAttribute("description", card->description());
             writer.writeAttribute("stamp", card->stamp());
@@ -506,6 +534,7 @@ bool CardsScene::load(const QString& _xml)
         delete item;
     }
     m_items.clear();
+    m_itemsMap.clear();
 
 
     QDomDocument doc;
@@ -560,6 +589,7 @@ bool CardsScene::load(const QString& _xml)
         } else if (item.tagName() == "card") {
             const QString uuid = attributes.namedItem("id").toAttr().value();
             const bool isFolder = attributes.namedItem("is_folder").toAttr().value() == "true";
+            const int number = attributes.namedItem("number").toAttr().value().toInt();
             const QString title = attributes.namedItem("title").toAttr().value();
             const QString description = attributes.namedItem("description").toAttr().value();
             const QString stamp = attributes.namedItem("stamp").toAttr().value();
@@ -567,7 +597,7 @@ bool CardsScene::load(const QString& _xml)
             const bool isEmbedded = attributes.namedItem("is_embedded").toAttr().value() == "true";
             const qreal x = attributes.namedItem("x").toAttr().value().toDouble();
             const qreal y = attributes.namedItem("y").toAttr().value().toDouble();
-            addCard(uuid, isFolder, title, description, stamp, colors, isEmbedded, QPointF(x, y));
+            addCard(uuid, isFolder, number, title, description, stamp, colors, isEmbedded, QPointF(x, y));
         }
     }
 
@@ -1062,8 +1092,6 @@ void CardsScene::reorderItemsOnScene()
     int currentCardInRow = 0;
     bool lastCardIsEmbedded = false;
 
-
-
     //
     // Проходим все элементы (они упорядочены так, как должны идти элементы в сценарии
     //
@@ -1136,6 +1164,8 @@ void CardsScene::reorderItemsOnScene()
             lastCardIsEmbedded = card->isEmbedded();
         }
     }
+
+    setSceneRect(QRectF());
 }
 
 QPointF CardsScene::fixCollidesForCardPosition(const QPointF& _position)

@@ -5,6 +5,7 @@
 #include "ScalableGraphicsView.h"
 
 #include <QEvent>
+#include <QScrollBar>
 #include <QVBoxLayout>
 
 
@@ -80,16 +81,18 @@ void CardsView::insertAct(const QString& _uuid, const QString& _title, const QSt
     m_scene->insertAct(_uuid, _title, _description, _colors, _previousItemUuid);
 }
 
-void CardsView::insertCard(const QString& _uuid, bool _isFolder, const QString& _title, const QString& _description,
-    const QString& _stamp, const QString& _colors, bool _isEmbedded, const QPointF& _position, const QString& _previousItemUuid)
+void CardsView::insertCard(const QString& _uuid, bool _isFolder, int _number, const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
+    const QPointF& _position, const QString& _previousItemUuid)
 {
-    m_scene->insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _position, _previousItemUuid);
+    m_scene->insertCard(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, _position, _previousItemUuid);
 }
 
-void CardsView::updateItem(const QString& _uuid, bool _isFolder, const QString& _title,
-    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded, bool _isAct)
+void CardsView::updateItem(const QString& _uuid, bool _isFolder, int _number,  const QString& _title,
+    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
+    bool _isAct)
 {
-    m_scene->updateItem(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
+    m_scene->updateItem(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
 }
 
 void CardsView::removeItem(const QString& _uuid)
@@ -191,7 +194,7 @@ void CardsView::resizeEvent(QResizeEvent* _event)
 
 void CardsView::initView()
 {
-    m_view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    m_view->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     m_view->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
     m_view->setScene(m_scene);
 
@@ -223,6 +226,7 @@ void CardsView::initConnections()
     connect(m_scene, &CardsScene::cardsChanged, this, &CardsView::cardsChanged);
 
     connect(m_view, &ScalableGraphicsView::scaleChanged, m_scene, &CardsScene::refresh);
+    connect(m_view->horizontalScrollBar(), &QScrollBar::valueChanged, m_scene, &CardsScene::updateActs);
 }
 
 void CardsView::updateBackgroundBrush()

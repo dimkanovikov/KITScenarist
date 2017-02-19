@@ -78,18 +78,18 @@ void ScenarioCardsView::saveChanges(bool _hasChangesInText)
     m_cards->saveChanges(_hasChangesInText);
 }
 
-void ScenarioCardsView::insertCard(const QString& _uuid, bool _isFolder, const QString& _title,
-    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
-    const QString& _previousCardUuid)
+void ScenarioCardsView::insertCard(const QString& _uuid, bool _isFolder, int _number,
+    const QString& _title, const QString& _description, const QString& _stamp,
+    const QString& _colors, bool _isEmbedded, const QString& _previousCardUuid)
 {
-    m_cards->insertCard(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, m_newCardPosition, _previousCardUuid);
+    m_cards->insertCard(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, m_newCardPosition, _previousCardUuid);
 }
 
-void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, const QString& _title,
-    const QString& _description, const QString& _stamp, const QString& _colors, bool _isEmbedded,
-    bool _isAct)
+void ScenarioCardsView::updateCard(const QString& _uuid, bool _isFolder, int _number,
+    const QString& _title, const QString& _description, const QString& _stamp,
+    const QString& _colors, bool _isEmbedded, bool _isAct)
 {
-    m_cards->updateItem(_uuid, _isFolder, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
+    m_cards->updateItem(_uuid, _isFolder, _number, _title, _description, _stamp, _colors, _isEmbedded, _isAct);
 }
 
 void ScenarioCardsView::removeCard(const QString& _uuid)
@@ -244,6 +244,9 @@ void ScenarioCardsView::initShortcuts()
     QShortcut* undo = new QShortcut(QKeySequence::Undo, this);
     undo->setContext(Qt::WidgetWithChildrenShortcut);
     connect(undo, &QShortcut::activated, [=] {
+        emit undoRequest();
+        return;
+
         //
         // Если отмену необходимо синхронизировать с текстом, уведомляем об этом
         //
@@ -262,6 +265,9 @@ void ScenarioCardsView::initShortcuts()
     QShortcut* redo = new QShortcut(QKeySequence::Redo, this);
     redo->setContext(Qt::WidgetWithChildrenShortcut);
     connect(redo, &QShortcut::activated, [=] {
+        emit redoRequest();
+        return;
+
         //
         // Если повтор необходимо синхронизировать с текстом, уведомляем об этом
         //
