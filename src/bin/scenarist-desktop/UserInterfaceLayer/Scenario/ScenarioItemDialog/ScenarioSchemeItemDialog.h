@@ -5,6 +5,8 @@
 
 #include <BusinessLayer/ScenarioDocument/ScenarioModelItem.h>
 
+class QPushButton;
+
 namespace Ui {
     class ScenarioSchemeItemDialog;
 }
@@ -35,6 +37,7 @@ namespace UserInterface
 
         /**
          * @brief Установить тип карточки
+         * @note При этом блокируется возможность выбора типа и изменяется текст кнопки сохранения
          */
         void setCardType(BusinessLogic::ScenarioModelItem::Type _type);
 
@@ -91,7 +94,15 @@ namespace UserInterface
         void initStyleSheet();
 
     private:
-        Ui::ScenarioSchemeItemDialog* m_ui;
+        /**
+         * @brief Интерфейс
+         */
+        Ui::ScenarioSchemeItemDialog* m_ui = nullptr;
+
+        /**
+         * @brief Кнопка сохранения
+         */
+        QPushButton* m_saveButton = nullptr;
     };
 }
 

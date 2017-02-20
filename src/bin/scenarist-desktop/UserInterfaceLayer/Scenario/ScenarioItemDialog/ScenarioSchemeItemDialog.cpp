@@ -1,6 +1,8 @@
 #include "ScenarioSchemeItemDialog.h"
 #include "ui_ScenarioSchemeItemDialog.h"
 
+#include <QPushButton>
+
 using UserInterface::ScenarioSchemeItemDialog;
 
 
@@ -22,8 +24,11 @@ ScenarioSchemeItemDialog::~ScenarioSchemeItemDialog()
 
 void ScenarioSchemeItemDialog::clear()
 {
+    m_ui->cardIsScene->setEnabled(true);
+    m_ui->cardIsFolder->setEnabled(true);
     m_ui->cardTitle->clear();
     m_ui->cardDescription->clear();
+    m_saveButton->setText(tr("Add"));
 }
 
 BusinessLogic::ScenarioModelItem::Type ScenarioSchemeItemDialog::cardType() const
@@ -49,6 +54,10 @@ void ScenarioSchemeItemDialog::setCardType(BusinessLogic::ScenarioModelItem::Typ
             break;
         }
     }
+
+    m_ui->cardIsScene->setEnabled(false);
+    m_ui->cardIsFolder->setEnabled(false);
+    m_saveButton->setText(tr("Save"));
 }
 
 QString ScenarioSchemeItemDialog::cardTitle() const
@@ -96,7 +105,7 @@ void ScenarioSchemeItemDialog::initView()
 
     m_ui->cardDescription->setToolbarVisible(false);
 
-    m_ui->buttons->addButton(tr("Add"), QDialogButtonBox::AcceptRole);
+    m_saveButton = m_ui->buttons->addButton(tr("Add"), QDialogButtonBox::AcceptRole);
 
     QLightBoxDialog::initView();
 }
