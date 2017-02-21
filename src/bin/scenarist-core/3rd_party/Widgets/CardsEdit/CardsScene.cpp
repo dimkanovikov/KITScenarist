@@ -230,7 +230,7 @@ void CardsScene::insertCard(const QString& _uuid, bool _isFolder, int _number, c
     }
 
     if (m_itemsMap.contains(_uuid)) {
-        Q_ASSERT_X(false, Q_FUNC_INFO, "Try to add contained item to scene");
+        return;//Q_ASSERT_X(false, Q_FUNC_INFO, "Try to add contained item to scene");
     }
 
     CardItem* card = new CardItem;
@@ -396,6 +396,26 @@ void CardsScene::removeAct(const QString& _uuid)
 
     if (m_itemsMap.contains(_uuid)) {
         if (ActItem* act = qgraphicsitem_cast<ActItem*>(m_itemsMap.take(_uuid))) {
+            //
+            // Сперва удаляем карточки вложенные в акт
+            //
+            const int actIndex = m_items.indexOf(act);
+            QVector<QString> cardsToRemoveUuids;
+            for (int cardIndex= actIndex + 1; cardIndex < m_items.size(); ++cardIndex) {
+                if (CardItem* card = qgraphicsitem_cast<CardItem*>(m_items[cardIndex])) {
+                    if (card->isEmbedded()) {
+                        cardsToRemoveUuids.append(card->uuid());
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            for (const QString& cardUuid : cardsToRemoveUuids) {
+                removeCard(cardUuid);
+            }
+
             //
             // Удаляем сам акт
             //
