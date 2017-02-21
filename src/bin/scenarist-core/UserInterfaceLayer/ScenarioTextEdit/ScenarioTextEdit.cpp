@@ -1442,6 +1442,7 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
                 //
                 if (!right3Characters.contains(" ")
                     && right3Characters.length() == 3
+                    && right3Characters != right3Characters.toUpper()
                     && right3Characters.left(2) == right3Characters.left(2).toUpper()
                     && right3Characters.left(2).at(0).isLetter()
                     && right3Characters.left(2).at(1).isLetter()
