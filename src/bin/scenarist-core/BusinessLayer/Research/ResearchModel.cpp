@@ -606,14 +606,19 @@ bool ResearchModel::dropMimeData(
     }
 
     //
+    // Удаляем старые данные разработки
+    // NOTE: Это необходимо делать перед обновлением порядка сортировки,
+    //       чтобы не смешались старые и новые элементы в одном родителе
+    //
+    while (!m_lastMimeItems.isEmpty()) {
+        removeItem(m_lastMimeItems.takeLast());
+    }
+
+    //
     // Обновляем порядок сортировки
     //
     for (int row = 0; row < parentItem->childCount(); ++row) {
         parentItem->childAt(row)->research()->setSortOrder(row);
-    }
-
-    while (!m_lastMimeItems.isEmpty()) {
-        removeItem(m_lastMimeItems.takeLast());
     }
 
     return true;
