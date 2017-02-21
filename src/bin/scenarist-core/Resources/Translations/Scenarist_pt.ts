@@ -61,6 +61,10 @@
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File exists. It will be replaced after creating.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BusinessLogic::AbstractExporter</name>
@@ -1796,10 +1800,6 @@ Project didn&apos;t synchronized.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>words:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2017,6 +2017,10 @@ Project didn&apos;t synchronized.</source>
     </message>
     <message>
         <source>&lt;h2&gt;Images Gallery&lt;/h2&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Tab</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3192,6 +3196,22 @@ Paragraph</source>
     </message>
     <message>
         <source>Remove selected card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cards.png</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG files (*.png)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save cards to file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
