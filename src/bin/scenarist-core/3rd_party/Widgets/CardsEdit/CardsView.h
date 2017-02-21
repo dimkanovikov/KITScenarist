@@ -108,6 +108,11 @@ public:
     QString save() const;
 
     /**
+     * @brief Сохранить в картинку
+     */
+    void saveToImage(const QString& _filePath);
+
+    /**
      * @brief Загрузить сцены из xml
      */
     bool load(const QString& _xml);

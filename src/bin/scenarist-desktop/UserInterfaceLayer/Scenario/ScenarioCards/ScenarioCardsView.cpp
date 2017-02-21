@@ -1,20 +1,60 @@
 #include "ScenarioCardsView.h"
 #include "CardsResizer.h"
 
+#include <DataLayer/DataStorageLayer/StorageFacade.h>
+#include <DataLayer/DataStorageLayer/SettingsStorage.h>
+
 #include <3rd_party/Helpers/ShortcutHelper.h>
 
 #include <3rd_party/Widgets/CardsEdit/CardsView.h>
 #include <3rd_party/Widgets/FlatButton/FlatButton.h>
 
+#include <QFileInfo>
+#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QShortcut>
+#include <QStandardPaths>
 #include <QVariant>
 #include <QWidgetAction>
 
 using UserInterface::ScenarioCardsView;
 using UserInterface::CardsResizer;
+
+namespace {
+    /**
+     * @brief Получить путь к последней используемой папке
+     */
+    static QString cardsFolderPath() {
+        QString cardsFolderPath =
+                DataStorageLayer::StorageFacade::settingsStorage()->value(
+                    "cards/save-folder",
+                    DataStorageLayer::SettingsStorage::ApplicationSettings);
+        if (cardsFolderPath.isEmpty()) {
+            cardsFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+        }
+        return cardsFolderPath;
+    }
+
+    /**
+     * @brief Получить путь к сохраняемому файлу
+     */
+    static QString cardsFilePath(const QString& _fileName) {
+        QString filePath = cardsFolderPath() + QDir::separator() + _fileName;
+        return QDir::toNativeSeparators(filePath);
+    }
+
+    /**
+     * @brief Сохранить путь к последней используемой папке
+     */
+    static void saveCardsFolderPath(const QString& _path) {
+        DataStorageLayer::StorageFacade::settingsStorage()->setValue(
+                    "cards/save-folder",
+                    QFileInfo(_path).absoluteDir().absolutePath(),
+                    DataStorageLayer::SettingsStorage::ApplicationSettings);
+    }
+}
 
 
 ScenarioCardsView::ScenarioCardsView(bool _isDraft, QWidget* _parent) :
@@ -25,6 +65,7 @@ ScenarioCardsView::ScenarioCardsView(bool _isDraft, QWidget* _parent) :
     m_removeCard(new FlatButton(_parent)),
     m_sort(new FlatButton(_parent)),
     m_resizer(new CardsResizer(m_sort)),
+    m_save(new FlatButton(_parent)),
     m_fullscreen(new FlatButton(_parent)),
     m_toolbarSpacer(new QLabel(_parent))
 {
@@ -71,6 +112,20 @@ void ScenarioCardsView::load(const QString& _xml)
 QString ScenarioCardsView::save() const
 {
     return m_cards->save();
+}
+
+void ScenarioCardsView::saveToImage()
+{
+    const QString saveFileName = ::cardsFilePath(tr("Cards.png"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save cards"), saveFileName, tr("PNG files (*.png)"));
+    if (!fileName.isEmpty()) {
+        if (!fileName.endsWith(".png")) {
+            fileName.append(".png");
+        }
+        m_cards->saveToImage(fileName);
+
+        ::saveCardsFolderPath(fileName);
+    }
 }
 
 void ScenarioCardsView::saveChanges(bool _hasChangesInText)
@@ -174,6 +229,9 @@ void ScenarioCardsView::initView(bool _isDraft)
         m_sort->setMenu(menu);
     }
 
+    m_save->setIcons(QIcon(":/Graphics/Icons/Editing/download.png"));
+    m_save->setToolTip(tr("Save cards to file"));
+
     m_fullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
         QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
     m_fullscreen->setToolTip(tr("On/off fullscreen mode (F5)"));
@@ -189,6 +247,7 @@ void ScenarioCardsView::initView(bool _isDraft)
     toolbarLayout->addWidget(m_addCard);
     toolbarLayout->addWidget(m_removeCard);
     toolbarLayout->addWidget(m_sort);
+    toolbarLayout->addWidget(m_save);
     toolbarLayout->addWidget(m_toolbarSpacer);
     toolbarLayout->addWidget(m_fullscreen);
 
@@ -233,8 +292,10 @@ void ScenarioCardsView::initConnections()
     connect(m_cards, &CardsView::cardColorsChanged, this, &ScenarioCardsView::cardColorsChanged);
     connect(m_cards, &CardsView::cardTypeChanged, this, &ScenarioCardsView::cardTypeChanged);
 
-    connect(m_sort, &FlatButton::clicked, this, &ScenarioCardsView::resortCards);
+    connect(m_sort, &FlatButton::clicked, m_sort, &FlatButton::showMenu);
     connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);
+
+    connect(m_save, &FlatButton::clicked, this, &ScenarioCardsView::saveToImage);
 
     connect(m_fullscreen, &FlatButton::clicked, this, &ScenarioCardsView::fullscreenRequest);
 }
@@ -305,6 +366,7 @@ void ScenarioCardsView::initStyleSheet()
     m_removeCard->setProperty("inTopPanel", true);
     m_sort->setProperty("inTopPanel", true);
     m_sort->setProperty("hasMenu", true);
+    m_save->setProperty("inTopPanel", true);
     m_fullscreen->setProperty("inTopPanel", true);
 
     m_toolbarSpacer->setProperty("inTopPanel", true);

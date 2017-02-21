@@ -1107,6 +1107,8 @@ void CardsScene::reorderItemsOnScene()
 
     int x = m_sceneRect.left() + m_cardsDistance;
     int y = m_sceneRect.top() + m_cardsDistance;
+    int maxX = 0;
+    int maxY = 0;
     int lastItemHeight = -1;
     int currentCardInRow = 0;
     bool lastCardIsEmbedded = false;
@@ -1182,9 +1184,20 @@ void CardsScene::reorderItemsOnScene()
             lastItemHeight = m_cardsSize.height();
             lastCardIsEmbedded = card->isEmbedded();
         }
+
+        if (maxX < x) {
+            maxX = x;
+        }
+        if (maxY < y) {
+            maxY = y + m_cardsSize.height() + m_cardsDistance;
+        }
     }
 
-    setSceneRect(QRectF());
+    QRectF newSceneRect = sceneRect();
+    newSceneRect.setRight(maxX);
+    newSceneRect.setBottom(maxY);
+    setSceneRect(newSceneRect);
+    updateActs();
 }
 
 QPointF CardsScene::fixCollidesForCardPosition(const QPointF& _position)

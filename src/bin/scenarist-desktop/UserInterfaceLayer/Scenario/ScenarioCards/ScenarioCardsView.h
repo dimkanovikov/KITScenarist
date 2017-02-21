@@ -57,6 +57,11 @@ namespace UserInterface {
         QString save() const;
 
         /**
+         * @brief Сохранить в изображение
+         */
+        void saveToImage();
+
+        /**
          * @brief Сохранить изменения схемы
          */
         void saveChanges(bool _hasChangesInText);
@@ -210,6 +215,11 @@ namespace UserInterface {
          * @brief Виджет настройки размера и упорядочивания карточек
          */
         CardsResizer* m_resizer = nullptr;
+
+        /**
+         * @brief Кнопка сохранения изображения
+         */
+        FlatButton* m_save = nullptr;
 
         /**
          * @brief Перейти в полноэкранный режим

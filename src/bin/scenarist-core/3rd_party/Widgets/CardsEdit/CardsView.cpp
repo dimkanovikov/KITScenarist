@@ -115,6 +115,17 @@ QString CardsView::save() const
     return m_scene->save();
 }
 
+void CardsView::saveToImage(const QString& _filePath)
+{
+    m_scene->clearSelection();
+    QImage image(m_scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
+
+    QPainter painter(&image);
+    painter.fillRect(image.rect(), m_view->backgroundBrush());
+    m_scene->render(&painter);
+    image.save(_filePath);
+}
+
 bool CardsView::load(const QString& _xml)
 {
     return m_scene->load(_xml);
