@@ -1193,6 +1193,9 @@ void CardsScene::reorderItemsOnScene()
         }
     }
 
+    //
+    // Обновляем размер сцены
+    //
     QRectF newSceneRect = sceneRect();
     newSceneRect.setRight(maxX);
     newSceneRect.setBottom(maxY);

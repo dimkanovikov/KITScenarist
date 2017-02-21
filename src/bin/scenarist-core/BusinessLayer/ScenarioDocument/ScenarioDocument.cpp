@@ -307,38 +307,60 @@ void ScenarioDocument::setItemDescriptionAtPosition(int _position, const QString
             // ... если это не последний блок в документе проверяем следующие блоки
             //
             if (cursor.movePosition(QTextCursor::NextBlock)) {
-                if (ScenarioBlockStyle::forBlock(cursor.block()) == ScenarioBlockStyle::SceneCharacters) {
-                    cursor.movePosition(QTextCursor::NextBlock);
-                }
-                //
-                // ... затираем старый текст
-                //
+                int descriptionStartPosition = cursor.position() - 1;
                 ScenarioBlockStyle::Type currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
-                if (currentBlockType == ScenarioBlockStyle::SceneDescription) {
-                    while (currentBlockType == ScenarioBlockStyle::SceneDescription
-                           && !cursor.atEnd()) {
-                        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-                        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
+
+                //
+                // ... если после заголовка идёт блок со списком персонажей, переносим курсор за этот блок
+                //
+                if (currentBlockType == ScenarioBlockStyle::SceneCharacters) {
+                    cursor.movePosition(QTextCursor::EndOfBlock);
+                    descriptionStartPosition = cursor.position();
+
+                    if (cursor.movePosition(QTextCursor::NextBlock)) {
                         currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
                     }
-                    if (!cursor.atEnd()) {
-                        cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor);
-                    }
-                    cursor.removeSelectedText();
-                } else {
-                    if (!cursor.atEnd()) {
-                        cursor.movePosition(QTextCursor::PreviousCharacter);
-                    }
-                    cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
                 }
+
+                //
+                // ... затираем старое описание до тех пор пока не дойдём до новой сцены или конца документа
+                //
+                while (!cursor.atEnd()
+                       && currentBlockType != ScenarioBlockStyle::SceneHeading
+                       && currentBlockType != ScenarioBlockStyle::FolderHeader
+                       && currentBlockType != ScenarioBlockStyle::FolderFooter) {
+                    //
+                    // ... обнаружили описание сцены - удалим его
+                    //
+                    if (currentBlockType == ScenarioBlockStyle::SceneDescription) {
+                        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+                        cursor.removeSelectedText();
+                        cursor.deleteChar();
+                    }
+                    //
+                    // ... нет - идём к следующему блоку
+                    //
+                    else {
+                        cursor.movePosition(QTextCursor::EndOfBlock);
+                        cursor.movePosition(QTextCursor::NextBlock);
+                    }
+
+                    currentBlockType = ScenarioBlockStyle::forBlock(cursor.block());
+                }
+
+                //
+                // ... после того, как стёрли все описания действия, возвращаем курсор в позицию,
+                //     куда будем вставлять описание действия
+                //
+                cursor.setPosition(descriptionStartPosition);
             }
             //
             // ... если это последний блок в документе, просто переходим в конец
             //
             else {
                 cursor.movePosition(QTextCursor::EndOfBlock);
-                cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
             }
+            cursor.insertBlock(descriptionBlockStyle.blockFormat(), descriptionBlockStyle.charFormat());
             //
             // ... вставляем новый
             //

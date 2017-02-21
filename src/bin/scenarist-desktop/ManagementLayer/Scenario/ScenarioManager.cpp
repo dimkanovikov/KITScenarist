@@ -705,8 +705,8 @@ void ScenarioManager::aboutUpdateCurrentSceneTitleAndDescription(int _cursorPosi
     }
     m_sceneDescriptionManager->setTitle(itemTitle);
 
-    QString synopsis = workingScenario()->itemDescriptionAtPosition(_cursorPosition);
-    m_sceneDescriptionManager->setDescription(synopsis);
+    const QString description = workingScenario()->itemDescriptionAtPosition(_cursorPosition);
+    m_sceneDescriptionManager->setDescription(description);
 }
 
 void ScenarioManager::aboutUpdateCurrentSceneTitle(const QString& _title)

@@ -60,6 +60,20 @@ namespace TextEditHelper
         if (match.hasMatch()) {
             textWithoutDocumentTags = match.captured(2);
         }
+
+        //
+        // Аналогично и для тэгов таблицы
+        //
+        const QRegularExpression RX_TABLE_DOCUMENT_CLEANER(
+                    "<td([^>]*)>(.*)</td>",
+                    QRegularExpression::MultilineOption
+                    | QRegularExpression::DotMatchesEverythingOption);
+
+        match = RX_TABLE_DOCUMENT_CLEANER.match(textWithoutDocumentTags);
+        if (match.hasMatch()) {
+            textWithoutDocumentTags = match.captured(2);
+        }
+
         return textWithoutDocumentTags;
     }
 
