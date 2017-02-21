@@ -160,12 +160,15 @@ void ScenarioTextEdit::changeScenarioBlockType(ScenarioBlockStyle::Type _blockTy
 
     //
     // Если работаем в режиме поэпизодника и описание сцены меняется на заголовок сцены,
-    // или папки, то текущий блок нужно перенести в конец текущей сцены
+    // или папки, и после текущего блока не идёт блок с описанием сцены (т.е. мы внутри сцены с текстом),
+    // то текущий блок нужно перенести в конец текущей сцены
     //
+    const ScenarioBlockStyle::Type nextBlockType = ScenarioBlockStyle::forBlock(cursor.block().next());
     if (outlineMode()
         && scenarioBlockType() == ScenarioBlockStyle::SceneDescription
         && (_blockType == ScenarioBlockStyle::SceneHeading
-            || _blockType == ScenarioBlockStyle::FolderHeader)) {
+            || _blockType == ScenarioBlockStyle::FolderHeader)
+        && nextBlockType != ScenarioBlockStyle::SceneDescription) {
         //
         // Сохраним текст блока, а сам блок удалим
         //
