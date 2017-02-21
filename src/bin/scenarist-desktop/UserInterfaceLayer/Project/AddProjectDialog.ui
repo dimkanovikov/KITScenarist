@@ -54,32 +54,38 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="projectName"/>
-      </item>
-      <item row="0" column="1">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
          <string>Enter Name of New Project:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="projectName"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="ToolTipLabel" name="existsLabel">
+        <property name="maximumSize">
          <size>
-          <width>0</width>
-          <height>29</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
-       </spacer>
+        <property name="toolTip">
+         <string>File exists. It will be replaced after creating.</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../../../scenarist-core/Resources/Resources.qrc">:/Graphics/Icons/alert.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -210,6 +216,11 @@
    <class>FlatButton</class>
    <extends>QToolButton</extends>
    <header location="global">3rd_party/Widgets/FlatButton/FlatButton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ToolTipLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">3rd_party/Widgets/ToolTipLabel/ToolTipLabel.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -110,7 +110,7 @@ QString AddProjectDialog::projectName() const
 
 QString AddProjectDialog::projectFilePath() const
 {
-    return m_ui->saveDir->text() + QDir::separator() + projectName();
+    return m_ui->saveDir->text() + QDir::separator() + projectName() + PROJECT_FILE_EXTENSION;
 }
 
 QString AddProjectDialog::importFilePath() const
@@ -142,6 +142,13 @@ void AddProjectDialog::initView()
 
 void AddProjectDialog::initConnections()
 {
+    //
+    // Проверим не существует ли уже такого файла
+    //
+    connect(m_ui->projectName, &QLineEdit::textChanged, [=] {
+        m_ui->existsLabel->setVisible(QFile::exists(projectFilePath()));
+    });
+
     connect(m_ui->advanced, &QCheckBox::toggled, m_ui->advancedPanel, &QFrame::setVisible);
 
     connect(m_ui->browseSaveDir, &FlatButton::clicked, [=] {
