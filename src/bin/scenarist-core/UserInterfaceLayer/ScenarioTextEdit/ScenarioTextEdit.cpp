@@ -1360,6 +1360,8 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
     QString currentBlockText = currentBlock.text();
     // ... текст до курсора
     QString cursorBackwardText = currentBlockText.left(cursor.positionInBlock());
+    // ... текст после курсора
+    QString cursorForwardText = currentBlockText.mid(cursor.positionInBlock());
     // ... стиль шрифта блока
     QTextCharFormat currentCharFormat = currentBlock.charFormat();
     // ... текст события
@@ -1403,12 +1405,13 @@ void ScenarioTextEdit::updateEnteredText(QKeyEvent* _event)
         //
         else {
             //
-            // Если перед нами конец предложения и не сокращение
+            // Если перед нами конец предложения и не сокращение и после курсора нет текста
             //
             QString endOfSentancePattern = QString("([.]|[?]|[!]|[…]) %1$").arg(eventText);
             if (m_capitalizeFirstWord
                 && cursorBackwardText.contains(QRegularExpression(endOfSentancePattern))
-                && !stringEndsWithAbbrev(cursorBackwardText)) {
+                && !stringEndsWithAbbrev(cursorBackwardText)
+                && cursorForwardText.isEmpty()) {
                 //
                 // Сделаем первую букву заглавной
                 //
