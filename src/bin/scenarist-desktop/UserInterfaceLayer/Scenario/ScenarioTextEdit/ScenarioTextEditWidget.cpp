@@ -23,16 +23,17 @@
 #include <QApplication>
 #include <QComboBox>
 #include <QCryptographicHash>
-#include <QLabel>
+#include <QHeaderView>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QLabel>
 #include <QScrollBar>
+#include <QShortcut>
 #include <QSplitter>
+#include <QStandardItemModel>
 #include <QTextBlock>
 #include <QTimer>
 #include <QTreeView>
-#include <QHeaderView>
-#include <QStandardItemModel>
+#include <QVBoxLayout>
 
 using UserInterface::ScenarioTextEditWidget;
 using UserInterface::ScenarioReviewPanel;
@@ -517,6 +518,8 @@ void ScenarioTextEditWidget::aboutShowSearch()
     if (visible) {
         m_searchLine->selectText();
         m_searchLine->setFocus();
+    } else {
+        m_editorWrapper->setFocus();
     }
 }
 
@@ -621,7 +624,6 @@ void ScenarioTextEditWidget::initView()
     m_search->setIcons(QIcon(":/Graphics/Icons/Editing/search.png"));
     m_search->setToolTip(ShortcutHelper::makeToolTip(tr("Search and Replace"), "Ctrl+F"));
     m_search->setCheckable(true);
-    m_search->setShortcut(QKeySequence("Ctrl+F"));
 
     m_fastFormat->setObjectName("scenarioFastFormat");
     m_fastFormat->setIcons(QIcon(":/Graphics/Icons/Editing/format.png"));
@@ -729,21 +731,31 @@ void ScenarioTextEditWidget::updateStylesCombo()
 
 void ScenarioTextEditWidget::initConnections()
 {
-    connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
-    connect(m_undo, &FlatButton::clicked, this, &ScenarioTextEditWidget::undoRequest);
-    connect(m_redo, &FlatButton::clicked, this, &ScenarioTextEditWidget::redoRequest);
-    connect(m_search, &FlatButton::toggled, [=] (bool _toggle) {
+    QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+F"), this);
+    shortcut->setContext(Qt::WidgetWithChildrenShortcut);
+    connect(shortcut, &QShortcut::activated, [=] {
         //
         // Если поиск виден, но в нём нет фокуса - установим фокус в него
         // В остальных случаях просто покажем, или скроем поиск
         //
-        if (!_toggle
+        if (m_search->isChecked()
             && m_searchLine->isVisible()
             && !m_searchLine->hasFocus()) {
-            m_search->setChecked(true);
+            m_searchLine->selectText();
+            m_searchLine->setFocus();
         }
-        aboutShowSearch();
+        //
+        // В противном случае сменим видимость
+        //
+        else {
+            m_search->toggle();
+        }
     });
+
+    connect(m_textStyles, SIGNAL(activated(int)), this, SLOT(aboutChangeTextStyle()));
+    connect(m_undo, &FlatButton::clicked, this, &ScenarioTextEditWidget::undoRequest);
+    connect(m_redo, &FlatButton::clicked, this, &ScenarioTextEditWidget::redoRequest);
+    connect(m_search, &FlatButton::toggled, this, &ScenarioTextEditWidget::aboutShowSearch);
     connect(m_fastFormat, SIGNAL(toggled(bool)), this, SLOT(aboutShowFastFormat()));
     connect(m_fastFormatWidget, &UserInterface::ScenarioFastFormatWidget::focusMovedToEditor,
             [=] { m_editorWrapper->setFocus(); });

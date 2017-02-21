@@ -111,7 +111,7 @@
            <normaloff>:/Graphics/Icons/Editing/search.png</normaloff>:/Graphics/Icons/Editing/search.png</iconset>
          </property>
          <property name="shortcut">
-          <string>Ctrl+F</string>
+          <string>Ctrl+Tab</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
