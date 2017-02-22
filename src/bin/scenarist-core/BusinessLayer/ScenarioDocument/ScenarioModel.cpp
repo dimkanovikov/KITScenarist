@@ -616,9 +616,12 @@ namespace {
         actXml.append(QString("id=\"%1\" ").arg(_item->uuid()));
         actXml.append(QString("title=\"%1\" ")
                        .arg(_item->title().isEmpty()
-                            ? TextEditHelper::toHtmlEscaped(_item->header())
-                            : TextEditHelper::toHtmlEscaped(_item->title())));
-        actXml.append(QString("description=\"%1\" ").arg(TextEditHelper::toHtmlEscaped(_item->description())));
+                            ? TextEditHelper::toHtmlEscaped(_item->header().toUpper())
+                            : TextEditHelper::toHtmlEscaped(_item->title().toUpper())));
+        actXml.append(QString("description=\"%1\" ")
+                       .arg(_item->description().isEmpty()
+                            ? TextEditHelper::toHtmlEscaped(_item->fullText())
+                            : TextEditHelper::toHtmlEscaped(_item->description())));
         actXml.append(QString("colors=\"%1\" ").arg(_item->colors()));
         actXml.append(QString("x=\"%1\" ").arg(_x));
         actXml.append(QString("y=\"%1\" ").arg(_y));
@@ -637,9 +640,12 @@ namespace {
         cardXml.append(QString("number=\"%1\" ").arg(_item->sceneNumber()));
         cardXml.append(QString("title=\"%1\" ")
                        .arg(_item->title().isEmpty()
-                            ? TextEditHelper::toHtmlEscaped(_item->header())
-                            : TextEditHelper::toHtmlEscaped(_item->title())));
-        cardXml.append(QString("description=\"%1\" ").arg(TextEditHelper::toHtmlEscaped(_item->description())));
+                            ? TextEditHelper::toHtmlEscaped(_item->header().toUpper())
+                            : TextEditHelper::toHtmlEscaped(_item->title().toUpper())));
+        cardXml.append(QString("description=\"%1\" ")
+                       .arg(_item->description().isEmpty()
+                            ? TextEditHelper::toHtmlEscaped(_item->fullText())
+                            : TextEditHelper::toHtmlEscaped(_item->description())));
         cardXml.append(QString("stamp=\"\" "));
         cardXml.append(QString("colors=\"%1\" ").arg(_item->colors()));
         cardXml.append(QString("is_embedded=\"%1\" ").arg(_isEmbedded ? "true" : "false"));

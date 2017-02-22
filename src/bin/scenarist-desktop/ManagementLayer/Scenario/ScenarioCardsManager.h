@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+class QPrinter;
+
 namespace Domain {
     class Scenario;
 }
@@ -12,6 +14,7 @@ namespace BusinessLogic {
 }
 
 namespace UserInterface {
+    class PrintCardsDialog;
     class ScenarioCardsView;
     class ScenarioSchemeItemDialog;
 }
@@ -153,7 +156,10 @@ namespace ManagementLayer
         /**
          * @brief Напечатать карточки
          */
+        /** @{ */
         void print();
+        void printCards(QPrinter* _printer);
+        /** @} */
 
     private:
         /**
@@ -165,22 +171,27 @@ namespace ManagementLayer
         /**
          * @brief Представление редактора карт
          */
-        UserInterface::ScenarioCardsView* m_view;
+        UserInterface::ScenarioCardsView* m_view = nullptr;
 
         /**
          * @brief Диалог добавления элемента
          */
-        UserInterface::ScenarioSchemeItemDialog* m_addItemDialog;
+        UserInterface::ScenarioSchemeItemDialog* m_addItemDialog = nullptr;
+
+        /**
+         * @brief Диалог печати
+         */
+        UserInterface::PrintCardsDialog* m_printDialog = nullptr;
 
         /**
          * @brief Сценарий
          */
-        Domain::Scenario* m_scenario;
+        Domain::Scenario* m_scenario = nullptr;
 
         /**
          * @brief Модель сценария
          */
-        BusinessLogic::ScenarioModel* m_model;
+        BusinessLogic::ScenarioModel* m_model = nullptr;
     };
 }
 

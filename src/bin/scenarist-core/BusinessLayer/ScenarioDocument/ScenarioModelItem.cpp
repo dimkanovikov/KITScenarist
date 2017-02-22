@@ -170,13 +170,20 @@ QString ScenarioModelItem::text() const
     return m_text;
 }
 
+QString ScenarioModelItem::fullText() const
+{
+    return m_fullText;
+}
+
 void ScenarioModelItem::setText(const QString& _text)
 {
     m_textLength = _text.length();
-    const QString newText = _text.left(MAX_TEXT_LENGTH);
+    QString newText = _text.left(MAX_TEXT_LENGTH);
+    newText.replace("\n", " ");
     if (m_text.isNull() != newText.isNull()
         || m_text != newText) {
         m_text = newText;
+        m_fullText = _text;
     }
 }
 

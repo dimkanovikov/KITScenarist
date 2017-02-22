@@ -91,6 +91,7 @@ namespace BusinessLogic
          * @brief Текст элемента
          */
         QString text() const;
+        QString fullText() const;
         void setText(const QString& _text);
 
         /**
@@ -184,9 +185,14 @@ namespace BusinessLogic
         QString m_description;
 
         /**
-         * @brief Текст элемента
+         * @brief Текст элемента (сокращённый, для оптимизации вывода в навигаторе)
          */
         QString m_text;
+
+        /**
+         * @brief Полный текст
+         */
+        QString m_fullText;
 
         /**
          * @brief Размер текста элемента

@@ -21,6 +21,28 @@ PrintCardsDialog::~PrintCardsDialog()
     delete m_ui;
 }
 
+int PrintCardsDialog::cardsCount() const
+{
+    int cardsCount = 1;
+    if (m_ui->oneCard->isChecked()) {
+        cardsCount = 1;
+    } else if (m_ui->twoCards->isChecked()) {
+        cardsCount = 2;
+    } else if (m_ui->fourCards->isChecked()) {
+        cardsCount = 4;
+    } else if (m_ui->sixCards->isChecked()) {
+        cardsCount = 6;
+    } else {
+        cardsCount = 8;
+    }
+    return cardsCount;
+}
+
+bool PrintCardsDialog::isPortrait() const
+{
+    return m_ui->portrait->isChecked();
+}
+
 void PrintCardsDialog::initView()
 {
     m_ui->layoutsStack->setCurrentWidget(m_ui->pageP1);
@@ -69,22 +91,7 @@ void PrintCardsDialog::initConnections()
     connect(m_ui->landscape, &QRadioButton::toggled, changeLayoutSample);
 
     connect(m_ui->cancel, &QPushButton::clicked, this, &PrintCardsDialog::reject);
-    connect(m_ui->printPreview, &QPushButton::clicked, [=] {
-        int cardsCount = 1;
-        if (m_ui->oneCard->isChecked()) {
-            cardsCount = 1;
-        } else if (m_ui->twoCards->isChecked()) {
-            cardsCount = 2;
-        } else if (m_ui->fourCards->isChecked()) {
-            cardsCount = 4;
-        } else if (m_ui->sixCards->isChecked()) {
-            cardsCount = 6;
-        } else {
-            cardsCount = 8;
-        }
-        bool isPortrait = m_ui->portrait->isChecked();
-        emit printPreview(cardsCount, isPortrait);
-    });
+    connect(m_ui->printPreview, &QPushButton::clicked, this, &PrintCardsDialog::printPreview);
 
     QLightBoxDialog::initConnections();
 }

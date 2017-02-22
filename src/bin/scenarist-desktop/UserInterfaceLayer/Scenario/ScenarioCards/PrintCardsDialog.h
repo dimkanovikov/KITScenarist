@@ -20,11 +20,21 @@ namespace UserInterface
         explicit PrintCardsDialog(QWidget *parent = 0);
         ~PrintCardsDialog();
 
+        /**
+         * @brief Количество карточек на странице
+         */
+        int cardsCount() const;
+
+        /**
+         * @brief Портретная ли ориентация страницы
+         */
+        bool isPortrait() const;
+
     signals:
         /**
          * @brief Запрос на предварительный просмотр печатаемых карточек
          */
-        void printPreview(int _cardsCount, bool _isPortrait);
+        void printPreview();
 
     private:
         /**

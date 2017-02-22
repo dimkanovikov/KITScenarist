@@ -1033,7 +1033,7 @@ void ScenarioDocument::updateItem(ScenarioModelItem* _item, int _itemStartPos, i
             default: {
                 if (isNeedIncludeBlock) {
                     if (!isFirstTextBlock) {
-                        itemText.append(" ");
+                        itemText.append("\n");
                     } else {
                         itemText = "";
                         isFirstTextBlock = false;

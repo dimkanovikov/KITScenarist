@@ -328,7 +328,8 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         _painter->setFont(font);
         const int spacing = titleRect.height() / 2;
         const QRectF descriptionRect(9, titleRect.bottom() + spacing, cardRect.size().width() - 18, cardRect.size().height() - titleRect.bottom() - spacing - 9);
-        const QString descriptionText = TextUtils::elidedText(m_description, _painter->font(), descriptionRect.size(), textoption);
+        QString descriptionText = TextUtils::elidedText(m_description, _painter->font(), descriptionRect.size(), textoption);
+        descriptionText.replace("\n", "\n\n");
         _painter->drawText(descriptionRect, descriptionText, textoption);
 
         //
