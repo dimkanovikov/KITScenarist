@@ -1597,6 +1597,57 @@ Project didn&apos;t synchronized.</source>
     </message>
 </context>
 <context>
+    <name>PrintCardsDialog</name>
+    <message>
+        <source>Print cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cards on page:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page orientation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProjectFileWidget</name>
     <message>
         <source>Form</source>
@@ -3212,6 +3263,10 @@ Paragraph</source>
     </message>
     <message>
         <source>Save cards to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print cards</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
