@@ -110,7 +110,7 @@ void NetworkRequest::addRequestAttribute(const QString& _name, const QVariant& _
 void NetworkRequest::addRequestAttributeFile(const QString& _name, const QString& _filePath)
 {
     stop();
-    m_internal->m_request->addAttribute(_name, _filePath);
+    m_internal->m_request->addAttributeFile(_name, _filePath);
 }
 
 void NetworkRequest::setRawRequest(const QByteArray &_data)
