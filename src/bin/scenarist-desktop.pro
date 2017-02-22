@@ -326,7 +326,8 @@ SOURCES += \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsScene.cpp \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsUndoStack.cpp \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsView.cpp \
-    scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.cpp
+    scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.cpp \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.cpp
 
 HEADERS += \
     scenarist-desktop/ManagementLayer/ApplicationManager.h \
@@ -575,7 +576,8 @@ HEADERS += \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsUndoStack.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/CardsView.h \
     scenarist-core/3rd_party/Widgets/CardsEdit/ScalableGraphicsView.h \
-    scenarist-core/3rd_party/Widgets/CardsEdit/TextUtils.h
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.h \
+    scenarist-core/3rd_party/Helpers/TextUtils.h
 
 FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/StartUpView.ui \
@@ -597,7 +599,8 @@ FORMS += \
     scenarist-desktop/UserInterfaceLayer/StartUp/ProjectFileWidget.ui \
     scenarist-desktop/UserInterfaceLayer/Project/AddProjectDialog.ui \
     scenarist-desktop/UserInterfaceLayer/Project/ShareDialog.ui \
-    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.ui
+    scenarist-desktop/UserInterfaceLayer/StartUp/CrashReportDialog.ui \
+    scenarist-desktop/UserInterfaceLayer/Scenario/ScenarioCards/PrintCardsDialog.ui
 
 
 RESOURCES += \

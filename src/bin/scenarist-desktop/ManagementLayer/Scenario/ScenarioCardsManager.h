@@ -150,6 +150,11 @@ namespace ManagementLayer
          */
         void changeCardType(const QString& _uuid, bool _isFolder);
 
+        /**
+         * @brief Напечатать карточки
+         */
+        void print();
+
     private:
         /**
          * @brief Настроить соединения

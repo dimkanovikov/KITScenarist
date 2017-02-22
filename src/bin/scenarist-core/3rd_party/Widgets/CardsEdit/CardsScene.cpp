@@ -1198,7 +1198,7 @@ void CardsScene::reorderItemsOnScene()
     //
     QRectF newSceneRect = sceneRect();
     newSceneRect.setRight(maxX);
-    newSceneRect.setBottom(maxY);
+    newSceneRect.setBottom(maxY + m_cardsSize.height() + m_cardsDistance);
     setSceneRect(newSceneRect);
     updateActs();
 }

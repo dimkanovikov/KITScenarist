@@ -149,6 +149,11 @@ namespace UserInterface {
         void cardTypeChanged(const QString& _uuid, bool _isFolder);
 
         /**
+         * @brief Запрос на печать карточек
+         */
+        void printRequest();
+
+        /**
          * @brief Запрос на переход в полноэкранный режим, или выход из него
          */
         void fullscreenRequest();
@@ -220,6 +225,11 @@ namespace UserInterface {
          * @brief Кнопка сохранения изображения
          */
         FlatButton* m_save = nullptr;
+
+        /**
+         * @brief Кнопка печати
+         */
+        FlatButton* m_print = nullptr;
 
         /**
          * @brief Перейти в полноэкранный режим

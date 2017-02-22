@@ -66,6 +66,7 @@ ScenarioCardsView::ScenarioCardsView(bool _isDraft, QWidget* _parent) :
     m_sort(new FlatButton(_parent)),
     m_resizer(new CardsResizer(m_sort)),
     m_save(new FlatButton(_parent)),
+    m_print(new FlatButton(_parent)),
     m_fullscreen(new FlatButton(_parent)),
     m_toolbarSpacer(new QLabel(_parent))
 {
@@ -232,6 +233,9 @@ void ScenarioCardsView::initView(bool _isDraft)
     m_save->setIcons(QIcon(":/Graphics/Icons/Editing/download.png"));
     m_save->setToolTip(tr("Save cards to file"));
 
+    m_print->setIcons(QIcon(":/Graphics/Icons/printer.png"));
+    m_print->setToolTip(tr("Print cards"));
+
     m_fullscreen->setIcons(QIcon(":/Graphics/Icons/Editing/fullscreen.png"),
         QIcon(":/Graphics/Icons/Editing/fullscreen_active.png"));
     m_fullscreen->setToolTip(tr("On/off fullscreen mode (F5)"));
@@ -248,6 +252,7 @@ void ScenarioCardsView::initView(bool _isDraft)
     toolbarLayout->addWidget(m_removeCard);
     toolbarLayout->addWidget(m_sort);
     toolbarLayout->addWidget(m_save);
+    toolbarLayout->addWidget(m_print);
     toolbarLayout->addWidget(m_toolbarSpacer);
     toolbarLayout->addWidget(m_fullscreen);
 
@@ -296,6 +301,8 @@ void ScenarioCardsView::initConnections()
     connect(m_resizer, &CardsResizer::parametersChanged, this, &ScenarioCardsView::resortCards);
 
     connect(m_save, &FlatButton::clicked, this, &ScenarioCardsView::saveToImage);
+
+    connect(m_print, &FlatButton::clicked, this, &ScenarioCardsView::printRequest);
 
     connect(m_fullscreen, &FlatButton::clicked, this, &ScenarioCardsView::fullscreenRequest);
 }
@@ -367,6 +374,7 @@ void ScenarioCardsView::initStyleSheet()
     m_sort->setProperty("inTopPanel", true);
     m_sort->setProperty("hasMenu", true);
     m_save->setProperty("inTopPanel", true);
+    m_print->setProperty("inTopPanel", true);
     m_fullscreen->setProperty("inTopPanel", true);
 
     m_toolbarSpacer->setProperty("inTopPanel", true);

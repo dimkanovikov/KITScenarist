@@ -1,6 +1,6 @@
 #include "ActItem.h"
 
-#include "TextUtils.h"
+#include <3rd_party/Helpers/TextUtils.h>
 
 #include <QApplication>
 #include <QGraphicsScene>
