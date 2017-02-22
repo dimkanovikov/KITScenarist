@@ -1397,7 +1397,9 @@ void ApplicationManager::goToEditCurrentProject()
     //
     // Настроим индикатор
     //
-    setSyncIndicator();
+    if (m_projectsManager->currentProject().isRemote()) {
+        setSyncIndicator();
+    }
 
     //
     // FIXME: Сделать загрузку сценария  сразу в БД, это заодно позволит избавиться
