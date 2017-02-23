@@ -451,6 +451,8 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
             }
 
             painter.setClipRect(pageRect);
+            painter.save();
+            painter.setPen(QPen(Qt::gray, 1, Qt::DashLine));
             switch (cardsCount) {
                 default:
                 case 1: {
@@ -499,6 +501,7 @@ void ScenarioCardsManager::printCards(QPrinter* _printer)
                     break;
                 }
             }
+            painter.restore();
         }
 
         //
