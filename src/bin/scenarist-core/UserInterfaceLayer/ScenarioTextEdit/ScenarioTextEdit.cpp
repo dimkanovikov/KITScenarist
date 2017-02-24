@@ -113,7 +113,8 @@ void ScenarioTextEdit::addScenarioBlock(ScenarioBlockStyle::Type _blockType)
         // Если дошли не до конца документа, а до начала новой сцены,
         // возвращаем курсор в конец предыдущего блока
         //
-        if (!textCursor().atEnd()) {
+        if (!textCursor().atEnd()
+            || currentBlockType == ScenarioBlockStyle::FolderFooter) {
             moveCursor(QTextCursor::PreviousBlock);
             moveCursor(QTextCursor::EndOfBlock);
         }
