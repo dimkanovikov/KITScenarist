@@ -1189,20 +1189,6 @@ void ScenarioTextEdit::cleanScenarioTypeFromBlock()
 
 void ScenarioTextEdit::applyScenarioTypeToBlock(ScenarioBlockStyle::Type _blockType)
 {
-    //
-    // Если находимся в режиме поэпизодника, то заменить все описания действия на описания сцены
-    //
-    if (outlineMode() && _blockType == ScenarioBlockStyle::Action) {
-        _blockType = ScenarioBlockStyle::SceneDescription;
-    }
-    //
-    // И наоборот
-    //
-    else if (!outlineMode() && _blockType == ScenarioBlockStyle::SceneDescription) {
-        _blockType = ScenarioBlockStyle::Action;
-    }
-
-
     QTextCursor cursor = textCursor();
     cursor.beginEditBlock();
 
