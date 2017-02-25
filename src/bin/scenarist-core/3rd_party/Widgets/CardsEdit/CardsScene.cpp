@@ -19,6 +19,7 @@
 #include <QMimeData>
 #include <QPropertyAnimation>
 #include <QScrollBar>
+#include <QSequentialAnimationGroup>
 #include <QWidgetAction>
 #include <QXmlStreamReader>
 #include <QVBoxLayout>
@@ -872,11 +873,68 @@ void CardsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 {
     QGraphicsScene::mouseReleaseEvent(_event);
 
-    //
-    // Упорядочим карточки, если нужно
-    //
-    reorderSelectedItem();
-    reorderItemsOnScene();
+    if (!selectedItems().isEmpty()) {
+        //
+        // Проверим, не вкладывается ли карточка в папку
+        //
+        bool isCardProcceed = false;
+        if (CardItem* movedCard = qgraphicsitem_cast<CardItem*>(selectedItems().first())) {
+            const QString folderUuid = movedCard->cardForEmbedUuid();
+            if (!folderUuid.isEmpty()) {
+                CardItem* folder = qgraphicsitem_cast<CardItem*>(m_itemsMap[folderUuid]);
+                folder->setIsReadyForEmbed(false);
+
+
+                const int duration = 200;
+                QPropertyAnimation* scaleAnimation = new QPropertyAnimation(movedCard, "scale");
+                scaleAnimation->setDuration(duration);
+                scaleAnimation->setStartValue(movedCard->scale());
+                scaleAnimation->setEndValue(movedCard->scale() - 0.2);
+                QPropertyAnimation* moveToTopAnimation = new QPropertyAnimation(movedCard, "pos");
+                moveToTopAnimation->setDuration(duration);
+                moveToTopAnimation->setEasingCurve(QEasingCurve::OutQuart);
+                moveToTopAnimation->setStartValue(movedCard->pos());
+                moveToTopAnimation->setEndValue(folder->pos() - QPointF(-0.1 * folder->size().width(), folder->size().height() -0.1 * folder->size().height()));
+                QPropertyAnimation* zAnimation = new QPropertyAnimation(folder, "zValue");
+                zAnimation->setDuration(0);
+                zAnimation->setStartValue(folder->zValue());
+                zAnimation->setEndValue(movedCard->zValue() + 1);
+                QPropertyAnimation* moveToBottomAnimation = new QPropertyAnimation(movedCard, "pos");
+                moveToBottomAnimation->setDuration(duration);
+                moveToBottomAnimation->setEasingCurve(QEasingCurve::InQuad);
+                moveToBottomAnimation->setStartValue(folder->pos() - QPointF(-0.1 * folder->size().width(), folder->size().height() -0.1 * folder->size().height()));
+                moveToBottomAnimation->setEndValue(folder->pos() - QPointF(-0.1 * folder->size().width(), 0));
+
+                QParallelAnimationGroup* moveToTopGroup = new QParallelAnimationGroup;
+                moveToTopGroup->addAnimation(scaleAnimation);
+                moveToTopGroup->addAnimation(moveToTopAnimation);
+                QSequentialAnimationGroup* group = new QSequentialAnimationGroup;
+                group->addPause(100);
+                group->addAnimation(moveToTopGroup);
+                group->addAnimation(zAnimation);
+                group->addAnimation(moveToBottomAnimation);
+                connect(group, &QSequentialAnimationGroup::finished, [=] {
+                   removeCard(movedCard->uuid());
+                   folder->setZValue(1);
+                });
+                group->start(QAbstractAnimation::DeleteWhenStopped);
+
+                m_isChangesBlocked = true;
+                emit cardMovedToGroup(movedCard->uuid(), folderUuid);
+                m_isChangesBlocked = false;
+
+                isCardProcceed = true;
+            }
+        }
+
+        //
+        // Упорядочим карточки, если нужно
+        //
+        if (!isCardProcceed) {
+            reorderSelectedItem();
+            reorderItemsOnScene();
+        }
+    }
 
     emit cardsChanged();
 }
@@ -1145,7 +1203,7 @@ void CardsScene::reorderItemsOnScene()
             // ... сдвигаем акт
             //
             QPropertyAnimation* moveAnimation = new QPropertyAnimation(act, "pos");
-            moveAnimation->setDuration(100);
+            moveAnimation->setDuration(160);
             moveAnimation->setStartValue(act->pos());
             moveAnimation->setEndValue(QPointF(x, y));
             moveAnimation->start(QAbstractAnimation::DeleteWhenStopped);
@@ -1177,7 +1235,7 @@ void CardsScene::reorderItemsOnScene()
             // ... позиционируем карточку
             //
             QPropertyAnimation* moveAnimation = new QPropertyAnimation(card, "pos");
-            moveAnimation->setDuration(100);
+            moveAnimation->setDuration(160);
             moveAnimation->setStartValue(card->pos());
             moveAnimation->setEndValue(QPointF(x, y));
             moveAnimation->start(QAbstractAnimation::DeleteWhenStopped);

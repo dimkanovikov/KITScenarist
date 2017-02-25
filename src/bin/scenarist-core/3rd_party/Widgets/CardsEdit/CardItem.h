@@ -15,6 +15,7 @@ class CardItem : public QObject, public QGraphicsItem
     Q_OBJECT
     Q_PROPERTY(QPointF pos READ pos WRITE setPos)
     Q_PROPERTY(qreal scale READ scale WRITE setScale)
+    Q_PROPERTY(qreal zValue READ zValue WRITE setZValue)
 
 public:
     /**
@@ -104,6 +105,11 @@ public:
     /** @} */
 
     /**
+     * @brief Установить флаг, что папка готова принять карточку
+     */
+    void setIsReadyForEmbed(bool _isReady);
+
+    /**
      * @brief Установить режим перемещения между сценами (true) или по сцене (false)
      */
     void setInDragOutMode(bool _inDragOutMode);
@@ -138,7 +144,17 @@ public:
      */
     void putOnBoard();
 
+    /**
+     * @brief Определить идентификатор папки, в которую будет вкладываться карточка
+     */
+    QString cardForEmbedUuid() const;
+
 protected:
+    /**
+     * @brief Переопределяем для проверки возможности вложить карточку в папку
+     */
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* _event) override;
+
     /**
      * @brief Переопределяем для реализации возможности перетаскивания сцен между двумя сценами, а так же для анимации выделения
      */
@@ -198,6 +214,11 @@ private:
      * @brief Размер карточки
      */
     QSizeF m_size = QSizeF(200, 150);
+
+    /**
+     * @brief Находится ли папка в состоянии готовности вставки карточки
+     */
+    bool m_isReadyForEmbed = false;
 
     /**
      * @brief Находится ли карточка в состояния переноса между сценами

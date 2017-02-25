@@ -173,6 +173,14 @@ QSizeF CardItem::size() const
     return m_size;
 }
 
+void CardItem::setIsReadyForEmbed(bool _isReady)
+{
+    if (m_isReadyForEmbed != _isReady) {
+        m_isReadyForEmbed = _isReady;
+        prepareGeometryChange();
+    }
+}
+
 void CardItem::setInDragOutMode(bool _inDragOutMode)
 {
     if (m_isInDragOutMode != _inDragOutMode) {
@@ -214,9 +222,16 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         //
         // Рисуем фон
         //
+        // ... выделенным, если идёт вложение
+        //
+        if (m_isReadyForEmbed) {
+            _painter->setBrush(palette.highlight());
+            _painter->setPen(palette.highlight().color());
+        }
+        //
         // ... заданным цветом, если он задан
         //
-        if (!colors.isEmpty()) {
+        else if (!colors.isEmpty()) {
             _painter->setBrush(QColor(colors.first()));
             _painter->setPen(QColor(colors.first()));
         }
@@ -252,7 +267,7 @@ void CardItem::paint(QPainter* _painter, const QStyleOptionGraphicsItem* _option
         //
         // Рисуем дополнительные цвета
         //
-        if (!m_colors.isEmpty()) {
+        if (!m_isReadyForEmbed && !m_colors.isEmpty()) {
             QStringList colorsNamesList = m_colors.split(";", QString::SkipEmptyParts);
             colorsNamesList.removeFirst();
             //
@@ -403,6 +418,33 @@ void CardItem::putOnBoard()
     }
 }
 
+QString CardItem::cardForEmbedUuid() const
+{
+    QString cardForEmbedUuid;
+    for (QGraphicsItem* item : collidingItems()) {
+        if (CardItem* card = qgraphicsitem_cast<CardItem*>(item)) {
+            if (card->isFolder()) {
+                QRectF cardRect = card->boundingRect();
+                cardRect.moveTopLeft(card->pos());
+                if (cardRect.contains(boundingRect().center() + pos())) {
+                    card->setIsReadyForEmbed(true);
+                    cardForEmbedUuid = card->uuid();
+                } else {
+                    card->setIsReadyForEmbed(false);
+                }
+            }
+        }
+    }
+    return cardForEmbedUuid;
+}
+
+void CardItem::mouseMoveEvent(QGraphicsSceneMouseEvent* _event)
+{
+    cardForEmbedUuid();
+
+    QGraphicsItem::mouseMoveEvent(_event);
+}
+
 void CardItem::mousePressEvent(QGraphicsSceneMouseEvent* _event)
 {
     //
@@ -445,7 +487,12 @@ void CardItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* _event)
 {
     QGraphicsItem::mouseReleaseEvent(_event);
 
-    putOnBoard();
+    //
+    // Положим карточку обратно, если это не вложение
+    //
+//    if (cardForEmbedUuid().isEmpty()) {
+        putOnBoard();
+//    }
 }
 
 void CardItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* _event)
@@ -459,5 +506,12 @@ void CardItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* _event)
 {
     QGraphicsItem::hoverLeaveEvent(_event);
 
-    putOnBoard();
+    //
+    // Положим карточку обратно, если это не вложение
+    //
+//    if (cardForEmbedUuid().isEmpty()) {
+        putOnBoard();
+//    } else {
+
+//    }
 }
